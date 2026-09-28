@@ -626,6 +626,24 @@ PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE (Đính chính da
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (72516eb5… -> 5d8eb3af…, product commit 5dd9f2b2)
 - **CACHE_CHANGE:** NO (CACHE_VERSION 102, fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR
 - **SUPERSEDES:** NONE (repairs the regression identified by `GENERIC_TIER_A_BROWSER_EVIDENCE_SEMANTIC_CORRECTION`; does not rewrite that historical finding)
 - **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+
+## WAVE_ID = CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR
+- **DATE:** 2026-09-28
+- **REPORT:** docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/
+- **START_BASE:** 532d436611d58023cfabac6020f1ad85e2446e16
+- **CODE_COMMIT:** 50a31e0b7124cb038ff5c56dd9c856778a263725
+- **ORACLE_HARNESS_COMMIT:** 1dab0f7db516e8ce8eee1280ded4d220a10018d5
+- **MEASUREMENT_COMMIT:** e115c31df24efc35fe1d5590e3cab6737b5b13d8
+- **EVIDENCE_COMMIT_ROLE:** 09934eb7d0850d3f1f6d5c4f4c79f93b33bb92d9
+- **CLASSIFICATION:** VERIFICATION_NOT_CLEAN
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 5d8eb3af… -> 31725284…, CACHE_VERSION unchanged)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 102, fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **SUPERSEDES:** NONE (additively corrects the prior readiness conclusion; historical artifacts remain intact)
+- **THESIS_USE:** AUTHORITATIVE_CORRECTION_NOT_READY_FOR_HUMAN_REVIEW

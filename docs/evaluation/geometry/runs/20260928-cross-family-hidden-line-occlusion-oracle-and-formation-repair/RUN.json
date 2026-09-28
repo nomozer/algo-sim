@@ -1,0 +1,57 @@
+{
+  "schema_version": "cross-family-occlusion-oracle-run/1",
+  "task": "CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR",
+  "run_id": "20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair",
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "start_head": "532d436611d58023cfabac6020f1ad85e2446e16",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce",
+  "product_commit_sha": "50a31e0b7124cb038ff5c56dd9c856778a263725",
+  "oracle_harness_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "expectation_registration_commit_sha": "80766b909d09fc71d6ff05f79b29bd1091ea7d40",
+  "candidate_commit_sha": "e115c31df24efc35fe1d5590e3cab6737b5b13d8",
+  "measurement_commit_sha": "e115c31df24efc35fe1d5590e3cab6737b5b13d8",
+  "evidence_commit_sha": "09934eb7d0850d3f1f6d5c4f4c79f93b33bb92d9",
+  "final_docs_commit_sha": "SELF_EXCLUDED_RESOLVE_FROM_GIT",
+  "candidate_product_path_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "candidate_product_hash": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "cache_version": "102",
+  "cache_fingerprint": "b1714b566e25c912",
+  "cache_fingerprint_changed": false,
+  "default_mode": "LLM_ONLY",
+  "live_gemini_requests": 0,
+  "status": "VERIFICATION_NOT_CLEAN",
+  "report": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/REPORT.md",
+  "manifest": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/MANIFEST.json",
+  "corrects": ["CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR"],
+  "occlusion": {
+    "product_oracle_exact_sets": "PASS",
+    "product_oracle_spans": "PASS",
+    "perspective_reference": "PASS",
+    "oracle_independence": "PASS",
+    "frozen_camera_identity": "FAIL",
+    "frozen_camera_mismatch_count": 2
+  },
+  "browser": {
+    "families_passed": 1,
+    "families_total": 6,
+    "semantic_and_visual_assertions_except_performance": "PASS",
+    "immutable_120_mobile": "FAIL",
+    "application_llm_calls": 0
+  },
+  "recovery": {
+    "temp_worktrees_found": 5,
+    "temp_worktrees_removed": 5,
+    "temp_worktrees_retained": 0,
+    "required_evidence_not_canonicalized": 0,
+    "unknown_artifact_count": 0,
+    "unique_commits_at_risk": 0
+  },
+  "policy": {
+    "push_executed": false,
+    "merge_executed": false,
+    "commits_squashed": false,
+    "history_rewritten": false,
+    "user_favicon_deletion_preserved": true,
+    "merge_ready_emitted": false
+  }
+}

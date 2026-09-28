@@ -2,12 +2,15 @@
   "schema_version": "worktree-recovery-inventory/1",
   "generated_at": "2026-09-28T07:45:45+00:00",
   "canonical_comparison_root": "docs/evaluation",
-  "policy": "Every untracked file is SHA-256 classified before cleanup; unique diagnostics are copied before any source removal.",
+  "policy": "Every untracked file is SHA-256 classified before cleanup; unique diagnostics are copied before any source removal. Ignored dependency junctions use a hash of the resolved target string; bytecode and dist files use file-byte SHA-256 and are reproducible GENERATED_BUILD_OUTPUT.",
   "summary": {
     "TEMP_WORKTREES_FOUND": 5,
     "TEMP_WORKTREES_REMOVED_AT_INVENTORY_TIME": 0,
     "TEMP_WORKTREES_RETAINED_AT_INVENTORY_TIME": 5,
     "PENDING_ELIGIBLE_REMOVAL_AFTER_RECOVERY_COMMIT": 5,
+    "TEMP_WORKTREES_REMOVED": 5,
+    "TEMP_WORKTREES_RETAINED": 0,
+    "MEASUREMENT_WORKTREE_REMOVED": true,
     "REQUIRED_EVIDENCE_NOT_CANONICALIZED": 0,
     "UNKNOWN_ARTIFACT_COUNT": 0,
     "UNIQUE_COMMITS_AT_RISK": 0,
@@ -15,9 +18,10 @@
       "DUPLICATE_OF_CANONICAL": 244,
       "UNIQUE_DIAGNOSTIC": 153,
       "UNIQUE_REQUIRED_EVIDENCE": 0,
-      "GENERATED_BUILD_OUTPUT": 0,
+      "GENERATED_BUILD_OUTPUT": 331,
       "UNKNOWN_REQUIRES_REVIEW": 0
-    }
+    },
+    "IGNORED_GENERATED_ARTIFACT_COUNT": 331
   },
   "worktrees": [
     {
@@ -30,6 +34,7 @@
       "untracked_file_count": 109,
       "browser_run_status": "SUPERSEDED",
       "cleanup_eligible_after_recovery_commit": true,
+      "cleanup_result": "REMOVED_AFTER_RECOVERY_COMMIT",
       "artifacts": [
         {
           "source_relative_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/FIXTURE_MANIFEST.json",
@@ -1072,6 +1077,693 @@
           "recovered_sha256": "29d3f0c8be554e07c305c4da1871785ad6b9255f92d0db1a00a1587700c74926",
           "diagnostic_status": "SUPERSEDED"
         }
+      ],
+      "ignored_generated_roots": [
+        "backend/.venv",
+        "backend/app/__pycache__",
+        "backend/app/ai/__pycache__",
+        "backend/app/simulation/__pycache__",
+        "backend/app/simulation/geometry/__pycache__",
+        "backend/app/simulation/geometry_compiler/__pycache__",
+        "backend/app/simulation/semantic_program/__pycache__",
+        "backend/scripts/__pycache__",
+        "backend/tests/geometry/__pycache__",
+        "frontend/dist",
+        "frontend/node_modules"
+      ],
+      "ignored_generated_artifacts": [
+        {
+          "source_relative_path": "backend/.venv",
+          "sha256": "b1a40686a28a933612b2cc9027570a849c0d7d180fb65e216f3d80bb7784b634",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\backend\\.venv"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "398d56d0680ef9c04131af98bc1440cce98b795a875106c336c0058848ebadba",
+          "sha256_basis": "file_bytes",
+          "bytes": 169,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/learner_messages.cpython-312.pyc",
+          "sha256": "729fb74f1a55033bf63c8b5081c27aa280047c198cd7074515dd0d3fdfa19bb5",
+          "sha256_basis": "file_bytes",
+          "bytes": 6724,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "3b939ef62f466153625228c2e26960fe8dc1506e88ecfa1db7a5fa3ca0fba63f",
+          "sha256_basis": "file_bytes",
+          "bytes": 172,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/gemini.cpython-312.pyc",
+          "sha256": "50a0e0c07255daa72f98073bd26467160cf7f58c697acf46cc28b9aee94af93f",
+          "sha256_basis": "file_bytes",
+          "bytes": 11600,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/pipeline.cpython-312.pyc",
+          "sha256": "6c08e3db172f47377cd9241eee09ada2dc19c0a167c99d46b12c40617274d750",
+          "sha256_basis": "file_bytes",
+          "bytes": 37144,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/telemetry.cpython-312.pyc",
+          "sha256": "49cee39768574e73ac9948a951dcac8310d4950f19f724b74bcb559b71678c0d",
+          "sha256_basis": "file_bytes",
+          "bytes": 4737,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "e421ba0b702f143ea76980d22113b32d604b89e42716994511360b649b0cb141",
+          "sha256_basis": "file_bytes",
+          "bytes": 180,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/error_codes.cpython-312.pyc",
+          "sha256": "9e5c837d1ebfd84a573767b8bbacba832a806057852f9e01b0fe292d4b91fd88",
+          "sha256_basis": "file_bytes",
+          "bytes": 3373,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "f608b02964fb1721d3713147330e5ba7d8bee3fdf35341e9b84df83886cd3f08",
+          "sha256_basis": "file_bytes",
+          "bytes": 1493,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/curved.cpython-312.pyc",
+          "sha256": "1227ab5ebc4a1690a8ee95ec13d7df3c62873929d51e4018b553e73480b9f8d1",
+          "sha256_basis": "file_bytes",
+          "bytes": 50324,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/exact.cpython-312.pyc",
+          "sha256": "ba8ab9debcedbc09dfeaa9fe96ea62a3a3247b2cbb4fcef8e3810f7130f506e7",
+          "sha256_basis": "file_bytes",
+          "bytes": 16567,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/kernel.cpython-312.pyc",
+          "sha256": "ac8592eeebefb1cd28a53e002ac0a4153d6bd6bb1eb0c5d58171aacdf6cec442",
+          "sha256_basis": "file_bytes",
+          "bytes": 11047,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/measure.cpython-312.pyc",
+          "sha256": "5671af1353161eca188a82946fbeb4faf0b5ce21929b6e1931711cfdbf8a18fc",
+          "sha256_basis": "file_bytes",
+          "bytes": 21615,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/predicates.cpython-312.pyc",
+          "sha256": "c27520b0abdf3b49e55fb4099d3a2133f21823bc2f26f790d144e7d0d67d7fd1",
+          "sha256_basis": "file_bytes",
+          "bytes": 7152,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/radical.cpython-312.pyc",
+          "sha256": "035664df69dacbb58d82f3c698a1e389482e29929d5e65d9e623eda1a8904be3",
+          "sha256_basis": "file_bytes",
+          "bytes": 25310,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/section.cpython-312.pyc",
+          "sha256": "7213e8000ba3ef15daf259593cc83bf3a0a1519ead9565ccf9eee18a35ac4a36",
+          "sha256_basis": "file_bytes",
+          "bytes": 35923,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "a0a9e87845699d49d54101ae45df6e356393585ce7b44c4f97f0c29b223903ad",
+          "sha256_basis": "file_bytes",
+          "bytes": 1020,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/compiler.cpython-312.pyc",
+          "sha256": "fdcb100c97ac09ae852fd820b016ffd94e79215c904dc80c0cb25159b72e7929",
+          "sha256_basis": "file_bytes",
+          "bytes": 80529,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/contract_adapter.cpython-312.pyc",
+          "sha256": "7ecae4b4dccd45a001dc6b3348c71c6d4a1e1d0553367b9cce213d379df01906",
+          "sha256_basis": "file_bytes",
+          "bytes": 15759,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/fact_graph.cpython-312.pyc",
+          "sha256": "1a2abfa0cc80c89719667b8104be6e488ca42bfd66ac5290c42a9a4decea7867",
+          "sha256_basis": "file_bytes",
+          "bytes": 20385,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/primitives.cpython-312.pyc",
+          "sha256": "02d17ead633424e06f5c772dd9ba09a3f2fffc2f5f97cd9907f00786506e9147",
+          "sha256_basis": "file_bytes",
+          "bytes": 11066,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/routing.cpython-312.pyc",
+          "sha256": "f249b732de09dfbc7a75b4c8d77a212025090678e46a9b3450adf9e0985b7648",
+          "sha256_basis": "file_bytes",
+          "bytes": 5107,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "baa35446f8a264e2368131a0bba68ac1cd9507d88fb356d349c45e8adc179c9b",
+          "sha256_basis": "file_bytes",
+          "bytes": 1115,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/analyze_contract.cpython-312.pyc",
+          "sha256": "52cbcc66a0893c1bf6458af631962cce17cdec510445e0f38d583c5a45f7b70b",
+          "sha256_basis": "file_bytes",
+          "bytes": 33374,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coercion_stats.cpython-312.pyc",
+          "sha256": "511feb28c876ca0ecb2afcf3871090970e0b96cbe82825be093fef5a8d078173",
+          "sha256_basis": "file_bytes",
+          "bytes": 4387,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/contract.cpython-312.pyc",
+          "sha256": "b29d31148d241030263cf996179b6f35bfb641dd43df9396b4ff4534fcaafd08",
+          "sha256_basis": "file_bytes",
+          "bytes": 104344,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coverage_gate.cpython-312.pyc",
+          "sha256": "d71628ab1df5f7aa085bb2c5e3af2e84f877d684d71e9ae4408131d7a379077a",
+          "sha256_basis": "file_bytes",
+          "bytes": 59649,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/display_names.cpython-312.pyc",
+          "sha256": "0a153e5762f64109484e913cf168af503db24108c55b0aa5de37c3b2968ca5ed",
+          "sha256_basis": "file_bytes",
+          "bytes": 23959,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/domain_profile.cpython-312.pyc",
+          "sha256": "92094a0cc8241d42009e9626fdf5cf3e60d1c4d5f1f43b548d6d915bc41581fd",
+          "sha256_basis": "file_bytes",
+          "bytes": 26977,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_exec.cpython-312.pyc",
+          "sha256": "0590a55e98e94f773bdb038205021847ad56cd05322eb3524aac0fdaa05964e0",
+          "sha256_basis": "file_bytes",
+          "bytes": 48486,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_obligations.cpython-312.pyc",
+          "sha256": "aeab7442f9e764b887e3814ae2330b7eefd0a39e1f9cf50b41976e11a1873853",
+          "sha256_basis": "file_bytes",
+          "bytes": 27478,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/grounding_gate.cpython-312.pyc",
+          "sha256": "0bb9c050298c0ce82f767950e6ee21fde95bdaf8753236b2eabbe608123d030f",
+          "sha256_basis": "file_bytes",
+          "bytes": 20345,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/hoisting.cpython-312.pyc",
+          "sha256": "a73704a1230fe47c67eeccd4585ab108bae90b1837e111c3090222f3be712e3c",
+          "sha256_basis": "file_bytes",
+          "bytes": 16142,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/interpreter.cpython-312.pyc",
+          "sha256": "acc797eba95753385d8a1eb07a9ff3e372610067ebaab5550cce8c4fcc101be9",
+          "sha256_basis": "file_bytes",
+          "bytes": 39416,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/ir_static_check.cpython-312.pyc",
+          "sha256": "770adc1a2f5aee012abcd59bd6c57625c4632384c8513cb2d9caf645aa6b5832",
+          "sha256_basis": "file_bytes",
+          "bytes": 20890,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/learner_surface.cpython-312.pyc",
+          "sha256": "a2b7489be100db7fd1b4aa5e0888eb60760a22d5ded2505c74651cbb2e9be72b",
+          "sha256_basis": "file_bytes",
+          "bytes": 16186,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/literal_extractor.cpython-312.pyc",
+          "sha256": "abe009982084e617bb7c1a368c5852dedce382f7b87214d78adf4959ec449849",
+          "sha256_basis": "file_bytes",
+          "bytes": 11590,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/measure_contract.cpython-312.pyc",
+          "sha256": "c373d6bd7d91f1815b5545b17c951544f31d00c018c645755915b02261462e06",
+          "sha256_basis": "file_bytes",
+          "bytes": 12041,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/obligations.cpython-312.pyc",
+          "sha256": "fd7f465af98cb185b10dfc1c87e9d43a6d757a68a7283079a21c62ce9d269777",
+          "sha256_basis": "file_bytes",
+          "bytes": 8849,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pacer.cpython-312.pyc",
+          "sha256": "6d164453a6fd12a583dc52ab37e40627c99f0c590f255a3f51f2f9d6821743df",
+          "sha256_basis": "file_bytes",
+          "bytes": 3814,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pipeline_adapter.cpython-312.pyc",
+          "sha256": "c0d7f29c7cc35ca0c742ad13fe118a29e0e08747ebdf97566952af941ba54248",
+          "sha256_basis": "file_bytes",
+          "bytes": 9396,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/plane_equation.cpython-312.pyc",
+          "sha256": "69b20884a9f830f77727d3ff73fe3fbfb5a97e2ae4d50ebf56b150ee0b64d6de",
+          "sha256_basis": "file_bytes",
+          "bytes": 17958,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/point_coordinate.cpython-312.pyc",
+          "sha256": "6b5659c15f797e1f5c7050e3d265e29f81eca14b7e04b6ca5225cab939d14204",
+          "sha256_basis": "file_bytes",
+          "bytes": 9524,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/postconditions.cpython-312.pyc",
+          "sha256": "412a3a6ed6202423d074447aef66f0bdc90e7b06d9bbf7a449621366dc5c3f4d",
+          "sha256_basis": "file_bytes",
+          "bytes": 54286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/request_contract.cpython-312.pyc",
+          "sha256": "265e181380d0a5ed17822fdd1319319b010fa26dc7e06e43c24cd09521afa893",
+          "sha256_basis": "file_bytes",
+          "bytes": 9574,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/route.cpython-312.pyc",
+          "sha256": "5c9589df9cecb96230c6a012c075d28cdd6e4ffa71296f9fa3a308c75f0309ed",
+          "sha256_basis": "file_bytes",
+          "bytes": 17523,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scale_normalization.cpython-312.pyc",
+          "sha256": "abadc22c1f42e7a0821ade0a2ed5e63cf0c10b938e7448a47477dfcf4548ad62",
+          "sha256_basis": "file_bytes",
+          "bytes": 17572,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scene3d.cpython-312.pyc",
+          "sha256": "ccff7d2c8538640414e138b4c9aabb57cbdfb4f98d1c21edc9a5343b7cc9874c",
+          "sha256_basis": "file_bytes",
+          "bytes": 21015,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/section_provenance.cpython-312.pyc",
+          "sha256": "63c7853b3ce37c0cf5efa5a0613dd04beda38c0e81fd97b844a5c01a8958338e",
+          "sha256_basis": "file_bytes",
+          "bytes": 12573,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/segment_relation.cpython-312.pyc",
+          "sha256": "f788951049d3d1a067c70b7a35dbe0458358a33bc121c9d55757caa742b2f969",
+          "sha256_basis": "file_bytes",
+          "bytes": 23435,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/simulation_state.cpython-312.pyc",
+          "sha256": "a736c90ae53a5296f2edaa641befac18bfc535360b45f7e2dfc51ed99e232fc9",
+          "sha256_basis": "file_bytes",
+          "bytes": 34098,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/source_entities.cpython-312.pyc",
+          "sha256": "80084c879f600d0c4cf9d1866212f98b9fed52a677200b3abe6aeb929f60c659",
+          "sha256_basis": "file_bytes",
+          "bytes": 15498,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/structured_relations.cpython-312.pyc",
+          "sha256": "5c34230404a689b0f765b4e91be346efa92c829ae3e1e4e4575466eeab553f96",
+          "sha256_basis": "file_bytes",
+          "bytes": 14888,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/transport.cpython-312.pyc",
+          "sha256": "fac33b2a9090a599cc39b780fd58bb5a0e654e23bfdd3f52bd8b911b15660938",
+          "sha256_basis": "file_bytes",
+          "bytes": 11790,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/validator.cpython-312.pyc",
+          "sha256": "816f232985447ef8a2b79eafd29d949bf166565946dc726d0de40ce1b03b3d91",
+          "sha256_basis": "file_bytes",
+          "bytes": 38762,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_adapter.cpython-312.pyc",
+          "sha256": "4790c185769cab1eb424ad980c8e5447c3eb6c6840033474849671fcbe60511f",
+          "sha256_basis": "file_bytes",
+          "bytes": 9694,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_obligations.cpython-312.pyc",
+          "sha256": "a1f520dd8166ef77fac32a2d1f412b949b7356ec42cf90194bfa33bf67d27304",
+          "sha256_basis": "file_bytes",
+          "bytes": 24398,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/scripts/__pycache__/replay_negative_boundaries.cpython-312.pyc",
+          "sha256": "0745e7a5830b9cbc6b6f8a206013c1863ec0bf0b6c13261fcb64fbc96fbe29a4",
+          "sha256_basis": "file_bytes",
+          "bytes": 23655,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_cuboid_cube_production_route.cpython-312.pyc",
+          "sha256": "d356421c35696bf029518797a59bf37ee5860615e2356015fd6cc1186a500213",
+          "sha256_basis": "file_bytes",
+          "bytes": 17292,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_prism_production_route.cpython-312.pyc",
+          "sha256": "daf3fb52537efa1f0872773d2dda58c3b3720dcce2730e1b18996d1ac13ea138",
+          "sha256_basis": "file_bytes",
+          "bytes": 13286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_rectangular_pyramid_production_route.cpython-312.pyc",
+          "sha256": "63a7e737fd43a2126858e624081641eac44ce3935061954ed407ea8118300c23",
+          "sha256_basis": "file_bytes",
+          "bytes": 9786,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-DzH0oAaO.js",
+          "sha256": "25997939e78721638803e75dda60e765847a7d0d442eef3e9efb8263cf677440",
+          "sha256_basis": "file_bytes",
+          "bytes": 908072,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-vyrswjuH.css",
+          "sha256": "28ec932dd3ad48e25c9ffbf522e5bc5f572eaf656bc46c7db543360f88f38852",
+          "sha256_basis": "file_bytes",
+          "bytes": 78768,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/favicon.svg",
+          "sha256": "84c60f2115425c3de7bf435556cf39fa0ccfee6b0e9a590b0f0ded4db8c3a83a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1122,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/index.html",
+          "sha256": "d602eebbf44d24d1baa26b35fcf13d84a0aba3eef8fec5aa311c1260437e15cf",
+          "sha256_basis": "file_bytes",
+          "bytes": 499,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/node_modules",
+          "sha256": "0c3af821e5e9caf8bf3d19df2a077f9a7e2d2b344d7fa2ce108283a689c57770",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+        }
       ]
     },
     {
@@ -1084,6 +1776,7 @@
       "untracked_file_count": 56,
       "browser_run_status": "SUPERSEDED",
       "cleanup_eligible_after_recovery_commit": true,
+      "cleanup_result": "REMOVED_AFTER_RECOVERY_COMMIT",
       "artifacts": [
         {
           "source_relative_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/FIXTURE_MANIFEST.json",
@@ -1618,6 +2311,693 @@
           "canonical_target_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/screenshots/triangular_pyramid/negative/mobile/refusal.png",
           "canonical_sha256": "a915f72780a5d90082241064a34c335eda95f897b2a922d0860315c2fea98317"
         }
+      ],
+      "ignored_generated_roots": [
+        "backend/.venv",
+        "backend/app/__pycache__",
+        "backend/app/ai/__pycache__",
+        "backend/app/simulation/__pycache__",
+        "backend/app/simulation/geometry/__pycache__",
+        "backend/app/simulation/geometry_compiler/__pycache__",
+        "backend/app/simulation/semantic_program/__pycache__",
+        "backend/scripts/__pycache__",
+        "backend/tests/geometry/__pycache__",
+        "frontend/dist",
+        "frontend/node_modules"
+      ],
+      "ignored_generated_artifacts": [
+        {
+          "source_relative_path": "backend/.venv",
+          "sha256": "b1a40686a28a933612b2cc9027570a849c0d7d180fb65e216f3d80bb7784b634",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\backend\\.venv"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "f72b179f4f1e87b0fca65c7c7bf37c258f281385abb817b086d524cb0cf22050",
+          "sha256_basis": "file_bytes",
+          "bytes": 169,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/learner_messages.cpython-312.pyc",
+          "sha256": "514c680d2e408bc4c42936f4805953acaafa458a223b475629d73179a48e7701",
+          "sha256_basis": "file_bytes",
+          "bytes": 6724,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "937a4decf925f748d5e3fd096b063fb02f8293400adeebb271c3f4bafc3bc672",
+          "sha256_basis": "file_bytes",
+          "bytes": 172,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/gemini.cpython-312.pyc",
+          "sha256": "36248e4e5dcfb1955be67df49a0e36d8eb43f59c31cf1694cf717bda0915eb03",
+          "sha256_basis": "file_bytes",
+          "bytes": 11600,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/pipeline.cpython-312.pyc",
+          "sha256": "817101518c9b2a82af0e2f7f9cd7818741d1da09e73c976bfb4c030ec5187648",
+          "sha256_basis": "file_bytes",
+          "bytes": 37144,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/telemetry.cpython-312.pyc",
+          "sha256": "5472abdb6ccfe9ed21cd97cc0aa2c78d8e7c7f47f7bef1a697773f78a206ea68",
+          "sha256_basis": "file_bytes",
+          "bytes": 4737,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "30184f8da426ad79861806ed8efcccab18bcdd2b763c48db11cc104d630bf9fb",
+          "sha256_basis": "file_bytes",
+          "bytes": 180,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/error_codes.cpython-312.pyc",
+          "sha256": "5c4af94b53c0e1d226efb227f2cff6b96b20a3452a78be26a80d85956a29a11d",
+          "sha256_basis": "file_bytes",
+          "bytes": 3373,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "6abf19d88b740b01184c4f81b1a136fd71b592feb961f3448401b51c147f5c9a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1493,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/curved.cpython-312.pyc",
+          "sha256": "35d4eb714e002883680376dfe819fd5d2774d33efe1fabf9d38894df8db65087",
+          "sha256_basis": "file_bytes",
+          "bytes": 50324,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/exact.cpython-312.pyc",
+          "sha256": "7350f7b6a4549a0d136b7536498d02c665008a72b6106ac0dd89e9deb43d4011",
+          "sha256_basis": "file_bytes",
+          "bytes": 16567,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/kernel.cpython-312.pyc",
+          "sha256": "c12179a843a8f90987b3ed788dff7cc4b7ebb0e7844ffb60c30cced2d14c8650",
+          "sha256_basis": "file_bytes",
+          "bytes": 11047,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/measure.cpython-312.pyc",
+          "sha256": "77aea7fc73e2c2411f9a5a0bd8f25b7b448a6d26fa255742ccbb0e3dbd898d90",
+          "sha256_basis": "file_bytes",
+          "bytes": 21615,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/predicates.cpython-312.pyc",
+          "sha256": "1aaf87c376b538d3c12c12bed3ecf1020bc5270b1219a7cec2fd916f707ec420",
+          "sha256_basis": "file_bytes",
+          "bytes": 7152,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/radical.cpython-312.pyc",
+          "sha256": "86ec59c7d83cd1c097e335cad719610fb27dbba2b76564291d6314ccdcc5618b",
+          "sha256_basis": "file_bytes",
+          "bytes": 25310,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/section.cpython-312.pyc",
+          "sha256": "33523762ca6c4af351220aa3e6b3c4ab57f0a332920a0ecbcd006a8a105e4c21",
+          "sha256_basis": "file_bytes",
+          "bytes": 35923,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "20ce73398270a7bf03d9ab5bbcad58581f3e99c8b18cc602b16a47e18be7a7d8",
+          "sha256_basis": "file_bytes",
+          "bytes": 1020,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/compiler.cpython-312.pyc",
+          "sha256": "4b673985482f1fcd4bc630b300fe21bc9927ba6b7ae3bef207cd7909da7af443",
+          "sha256_basis": "file_bytes",
+          "bytes": 80529,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/contract_adapter.cpython-312.pyc",
+          "sha256": "8e793c406e1decdec0bfdc57d735d78f87f0de3bb76a5973a01578a477eb0e41",
+          "sha256_basis": "file_bytes",
+          "bytes": 15759,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/fact_graph.cpython-312.pyc",
+          "sha256": "d28c050fb9fa54609ef3e6a20a92d54c4baebfa7d95166a2c8f7dd0ec98b2ee9",
+          "sha256_basis": "file_bytes",
+          "bytes": 20385,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/primitives.cpython-312.pyc",
+          "sha256": "d827c732bbe646a7aa9a98ce86412d3a05d3ed20794c1c3880d5e0a76a687724",
+          "sha256_basis": "file_bytes",
+          "bytes": 11066,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/routing.cpython-312.pyc",
+          "sha256": "7f46839d08bac926bc6fe5bbbbb003ebd55914c2e3cb7d988e7e051cba895ae1",
+          "sha256_basis": "file_bytes",
+          "bytes": 5107,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "371a153f77fd3cc410e5f6dc8b5faf940f14c9ec14e35b97774c40363ceaa28e",
+          "sha256_basis": "file_bytes",
+          "bytes": 1115,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/analyze_contract.cpython-312.pyc",
+          "sha256": "bbbfff2c2f2f5adda84579cc4eaddc7b79146ebf6edb1cb52d0d784bdc2e47cc",
+          "sha256_basis": "file_bytes",
+          "bytes": 33374,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coercion_stats.cpython-312.pyc",
+          "sha256": "33ffef2fcc4e1cac20225d9ccc049c910429b560a74ac79b3c4b7de4160c3530",
+          "sha256_basis": "file_bytes",
+          "bytes": 4387,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/contract.cpython-312.pyc",
+          "sha256": "918a681f88d880b0f0d8888104d67e4edacd2473a4fa80bff8575cdaba93c833",
+          "sha256_basis": "file_bytes",
+          "bytes": 104344,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coverage_gate.cpython-312.pyc",
+          "sha256": "aea6485709d197e912200f12e1fe685d5d9ad71cb2579c59059b264e768dd4e0",
+          "sha256_basis": "file_bytes",
+          "bytes": 59649,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/display_names.cpython-312.pyc",
+          "sha256": "180266f1543f9fca948b2154dcc27173da719a8b2b3dcf61baf4b323f7fa9888",
+          "sha256_basis": "file_bytes",
+          "bytes": 23959,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/domain_profile.cpython-312.pyc",
+          "sha256": "6051d154f472d667e3d730863cf5e4ca581e8419a3a12d1ec38d51977171d183",
+          "sha256_basis": "file_bytes",
+          "bytes": 26977,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_exec.cpython-312.pyc",
+          "sha256": "91b2137cce5bde278895f6e58548bf1b6773477799c6456e2a3c47d1c9d9d6a1",
+          "sha256_basis": "file_bytes",
+          "bytes": 48486,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_obligations.cpython-312.pyc",
+          "sha256": "8d55ba8781ab39c2746a3d9695aa2b81490be22e2e9ef65ea3d15293a2a6db4d",
+          "sha256_basis": "file_bytes",
+          "bytes": 27478,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/grounding_gate.cpython-312.pyc",
+          "sha256": "bbc910d32d96cc7bec37cb67eddebaa2f728d4e566aa78727d8cbfed9c4f2055",
+          "sha256_basis": "file_bytes",
+          "bytes": 20345,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/hoisting.cpython-312.pyc",
+          "sha256": "102b2dd1eb3b038d13738f3951c82d73e55d886f892d6b9c443f112e2d0facbd",
+          "sha256_basis": "file_bytes",
+          "bytes": 16142,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/interpreter.cpython-312.pyc",
+          "sha256": "3f1a8293d06134161d4771d6ed964dae7630c2168cec135f64ee3fa6a76aec0a",
+          "sha256_basis": "file_bytes",
+          "bytes": 39416,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/ir_static_check.cpython-312.pyc",
+          "sha256": "d0682e00fbe6e4b493c1f2ff709a22b3a9a67a3a447de9d34bf86ffb4768fd55",
+          "sha256_basis": "file_bytes",
+          "bytes": 20890,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/learner_surface.cpython-312.pyc",
+          "sha256": "2c531220dffda834bcb897294fe176bab2e26078d117d286258d119b024ce5bc",
+          "sha256_basis": "file_bytes",
+          "bytes": 16186,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/literal_extractor.cpython-312.pyc",
+          "sha256": "27f3316684f7fa8358109e1a540990629ed3700d7693576aecb0b9bbabc6d85f",
+          "sha256_basis": "file_bytes",
+          "bytes": 11590,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/measure_contract.cpython-312.pyc",
+          "sha256": "7ea2cf59431babca1d7971828c332e22aac6adb4778c33b26aab7bf247f526f7",
+          "sha256_basis": "file_bytes",
+          "bytes": 12041,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/obligations.cpython-312.pyc",
+          "sha256": "6b4bd17bdbdbab9e2f88e64b5131c73bb59e4787868e030dea24be44cabbb17d",
+          "sha256_basis": "file_bytes",
+          "bytes": 8849,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pacer.cpython-312.pyc",
+          "sha256": "6ea4681272e495b092f9c028400964df9844995ac1f4feaf2ddd3cd58b21d593",
+          "sha256_basis": "file_bytes",
+          "bytes": 3814,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pipeline_adapter.cpython-312.pyc",
+          "sha256": "b3817a5bb8c451e2d311091b9a342dea2defc7e3c890a7bed5ec1c14d922bb50",
+          "sha256_basis": "file_bytes",
+          "bytes": 9396,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/plane_equation.cpython-312.pyc",
+          "sha256": "3cd6bf0a74b103875f966ec1243d9dd98aa39d026c063f93c47a3860cd7d51ca",
+          "sha256_basis": "file_bytes",
+          "bytes": 17958,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/point_coordinate.cpython-312.pyc",
+          "sha256": "fabc2094428508f36d6095fb4d48dead1e686f5c485927fa462fa96ce7ef25ea",
+          "sha256_basis": "file_bytes",
+          "bytes": 9524,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/postconditions.cpython-312.pyc",
+          "sha256": "3a42945fdca0f177b4892454f5626437442f5f98f303404cf811bb28d2b913c1",
+          "sha256_basis": "file_bytes",
+          "bytes": 54286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/request_contract.cpython-312.pyc",
+          "sha256": "0e7b0b8a1e7da2a13de6072023779082173a2ce05bfa2ffb6f7cd0dd11e65ad5",
+          "sha256_basis": "file_bytes",
+          "bytes": 9574,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/route.cpython-312.pyc",
+          "sha256": "437f96f32b4138250aa1bf166a0c9364a4bcd78255e3f0ed367229dbf1fe8fd5",
+          "sha256_basis": "file_bytes",
+          "bytes": 17523,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scale_normalization.cpython-312.pyc",
+          "sha256": "d041fe33ea4ce0a76d1581d76ef2a39d169ed9a68da52e8288e12cc4c5cafce9",
+          "sha256_basis": "file_bytes",
+          "bytes": 17572,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scene3d.cpython-312.pyc",
+          "sha256": "378eddfa98585ae28748bb9a9e7c8226dbae078cdbb95fa9fc5b0af3fc36e9a4",
+          "sha256_basis": "file_bytes",
+          "bytes": 21015,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/section_provenance.cpython-312.pyc",
+          "sha256": "acad1832fe536e7fef2f2661a9a9ed900e580c8dcb49964667f924c585d5a00d",
+          "sha256_basis": "file_bytes",
+          "bytes": 12573,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/segment_relation.cpython-312.pyc",
+          "sha256": "00f02806a182ffaaebd9007f7050ec571694c94d2ba86deac020a484eaa87136",
+          "sha256_basis": "file_bytes",
+          "bytes": 23435,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/simulation_state.cpython-312.pyc",
+          "sha256": "a8dcebd86fe262a43e44613378f4c80215e1881c5c46eda0dc37d573ef2f674c",
+          "sha256_basis": "file_bytes",
+          "bytes": 34098,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/source_entities.cpython-312.pyc",
+          "sha256": "095b59c10b683c053bc2d6aedf811e156b61b1d35082c295da87d0818ba2bdd4",
+          "sha256_basis": "file_bytes",
+          "bytes": 15498,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/structured_relations.cpython-312.pyc",
+          "sha256": "70b5d9d3099217abebea27ef3ce5febc6f8d17b892a2115f65e8ed081b6c553d",
+          "sha256_basis": "file_bytes",
+          "bytes": 14888,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/transport.cpython-312.pyc",
+          "sha256": "fdea1e739fd20459c2044dc1221dcc70db9ee3ffc5c26e2502bba9c906e22058",
+          "sha256_basis": "file_bytes",
+          "bytes": 11790,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/validator.cpython-312.pyc",
+          "sha256": "4e58e2ab1699612213732d8ade90187a33b7f7be6d0c589751022ae86d662a1f",
+          "sha256_basis": "file_bytes",
+          "bytes": 38762,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_adapter.cpython-312.pyc",
+          "sha256": "f15d1e71c665bfa7f0a4cf095dd8db69ee51b79f675f87cef640f0058a68efa6",
+          "sha256_basis": "file_bytes",
+          "bytes": 9694,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_obligations.cpython-312.pyc",
+          "sha256": "5e577320a7c29d5a38e20f20d11eef67949bfe461aee2424fa15d3b17f2f5fdc",
+          "sha256_basis": "file_bytes",
+          "bytes": 24398,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/scripts/__pycache__/replay_negative_boundaries.cpython-312.pyc",
+          "sha256": "619c45799f693fa0be7ed535031babfd0f262d4adcdbdbfec1ee19af98977844",
+          "sha256_basis": "file_bytes",
+          "bytes": 23655,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_cuboid_cube_production_route.cpython-312.pyc",
+          "sha256": "d735521c2e14fa61ef195af330d9832386c6661e55ad94e92541a9eb12610243",
+          "sha256_basis": "file_bytes",
+          "bytes": 17292,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_prism_production_route.cpython-312.pyc",
+          "sha256": "44b802183e96c6267306e9c5a7fedc82632808e13f746dd69ac25c302bfeeb8b",
+          "sha256_basis": "file_bytes",
+          "bytes": 13286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_rectangular_pyramid_production_route.cpython-312.pyc",
+          "sha256": "c6f9837b8b010d8cdbf63b2f683a86a6789e706f11770380aa1ef8531122c0ca",
+          "sha256_basis": "file_bytes",
+          "bytes": 9786,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-DzH0oAaO.js",
+          "sha256": "25997939e78721638803e75dda60e765847a7d0d442eef3e9efb8263cf677440",
+          "sha256_basis": "file_bytes",
+          "bytes": 908072,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-vyrswjuH.css",
+          "sha256": "28ec932dd3ad48e25c9ffbf522e5bc5f572eaf656bc46c7db543360f88f38852",
+          "sha256_basis": "file_bytes",
+          "bytes": 78768,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/favicon.svg",
+          "sha256": "84c60f2115425c3de7bf435556cf39fa0ccfee6b0e9a590b0f0ded4db8c3a83a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1122,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/index.html",
+          "sha256": "d602eebbf44d24d1baa26b35fcf13d84a0aba3eef8fec5aa311c1260437e15cf",
+          "sha256_basis": "file_bytes",
+          "bytes": 499,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/node_modules",
+          "sha256": "0c3af821e5e9caf8bf3d19df2a077f9a7e2d2b344d7fa2ce108283a689c57770",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+        }
       ]
     },
     {
@@ -1630,6 +3010,7 @@
       "untracked_file_count": 13,
       "browser_run_status": "SUPERSEDED",
       "cleanup_eligible_after_recovery_commit": true,
+      "cleanup_result": "REMOVED_AFTER_RECOVERY_COMMIT",
       "artifacts": [
         {
           "source_relative_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/FIXTURE_MANIFEST.json",
@@ -1748,6 +3129,652 @@
           "canonical_target_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/fixtures/triangular_pyramid_positive.json",
           "canonical_sha256": "1d885fcd619338977c26b11178cbe4a49e7dafd131f5fd0e0e4cd0891b7ca3ac"
         }
+      ],
+      "ignored_generated_roots": [
+        "backend/.venv",
+        "backend/app/__pycache__",
+        "backend/app/ai/__pycache__",
+        "backend/app/simulation/__pycache__",
+        "backend/app/simulation/geometry/__pycache__",
+        "backend/app/simulation/geometry_compiler/__pycache__",
+        "backend/app/simulation/semantic_program/__pycache__",
+        "backend/scripts/__pycache__",
+        "backend/tests/geometry/__pycache__",
+        "frontend/node_modules"
+      ],
+      "ignored_generated_artifacts": [
+        {
+          "source_relative_path": "backend/.venv",
+          "sha256": "b1a40686a28a933612b2cc9027570a849c0d7d180fb65e216f3d80bb7784b634",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\backend\\.venv"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "f5512c6ae6d7bc7c6aeb8f1163bd323f4a5ffe91112da1eb6827e28f32e6d99d",
+          "sha256_basis": "file_bytes",
+          "bytes": 169,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/learner_messages.cpython-312.pyc",
+          "sha256": "87c34380d4cc9b3aecd8e3559ad5eefdaaf3183a143ee9f38a1e7923b4c4d5a1",
+          "sha256_basis": "file_bytes",
+          "bytes": 6724,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "ab197cc05c8fd2211f667c8ad656e24f6ddafd13176dc39dc826e60419ebdd81",
+          "sha256_basis": "file_bytes",
+          "bytes": 172,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/gemini.cpython-312.pyc",
+          "sha256": "0bff083aac938d92ec6fcffbf55ef32af57bc92d7ea59b4b24c420e685032d9e",
+          "sha256_basis": "file_bytes",
+          "bytes": 11600,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/pipeline.cpython-312.pyc",
+          "sha256": "22765c37a673d61103c419ff4a37a63ad2d58f711280f7df8a7319ac6c40c859",
+          "sha256_basis": "file_bytes",
+          "bytes": 37144,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/telemetry.cpython-312.pyc",
+          "sha256": "c76e283aa3faba882f9280d34d6196a77f884e78a44424767a4f0b4217510805",
+          "sha256_basis": "file_bytes",
+          "bytes": 4737,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "9a3d270513c5c48e3fa52114399be7a1a794aa4ecc3850cac19380ec154f8baa",
+          "sha256_basis": "file_bytes",
+          "bytes": 180,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/error_codes.cpython-312.pyc",
+          "sha256": "bed9274c6d7c653714e2eaf603d02da71349ad8d634a6016923a7414b490866d",
+          "sha256_basis": "file_bytes",
+          "bytes": 3373,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "1cfa5fe8e5bc833043ad85dc966135b54ff4e2db5928897ca0ccba43d2c3a278",
+          "sha256_basis": "file_bytes",
+          "bytes": 1493,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/curved.cpython-312.pyc",
+          "sha256": "5646c28ddd0a3358a9465141ebc2d3645eef1c5800089226a84967db1bb4b730",
+          "sha256_basis": "file_bytes",
+          "bytes": 50324,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/exact.cpython-312.pyc",
+          "sha256": "7f0ce6fffbc305b9909aea15010cfac29a1ce9439f326cae24bb8d7fd4b479c3",
+          "sha256_basis": "file_bytes",
+          "bytes": 16567,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/kernel.cpython-312.pyc",
+          "sha256": "5dceb6340ecd323a8715b844365fcddb4bf7607817343fbde96040e4988e4a41",
+          "sha256_basis": "file_bytes",
+          "bytes": 11047,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/measure.cpython-312.pyc",
+          "sha256": "d9009d7f65e3719773fe60db06a342d25b8b47522c36acdd22377e2d755266dd",
+          "sha256_basis": "file_bytes",
+          "bytes": 21615,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/predicates.cpython-312.pyc",
+          "sha256": "efc5f221176c06f74d60b56c95e0d2fb6ef51c70bfc90f00daff9a7791fc6196",
+          "sha256_basis": "file_bytes",
+          "bytes": 7152,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/radical.cpython-312.pyc",
+          "sha256": "4486019b76932ea2fd29c924132be30f2692607ee04be87479cb4f1d1593cbd5",
+          "sha256_basis": "file_bytes",
+          "bytes": 25310,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/section.cpython-312.pyc",
+          "sha256": "2ab14f839d91eaaada920fe3d74482791434467a778362c1ca27085e60be34b7",
+          "sha256_basis": "file_bytes",
+          "bytes": 35923,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "84a83f67bd8af2eb4b91cdf7453c6ce4a97ff7baac1b3babfed7f071000b86ff",
+          "sha256_basis": "file_bytes",
+          "bytes": 1020,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/compiler.cpython-312.pyc",
+          "sha256": "0206ccc3fa71c23a099ad867ee4a03b6bd807e97455681810aab62f5b7cc419f",
+          "sha256_basis": "file_bytes",
+          "bytes": 80529,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/contract_adapter.cpython-312.pyc",
+          "sha256": "d7e901d32c7bbb44fcd314b56affd01c27efef75c99174f5ec3aeee784621a6a",
+          "sha256_basis": "file_bytes",
+          "bytes": 15759,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/fact_graph.cpython-312.pyc",
+          "sha256": "576f393a6dc3d65d77322949ca552f1de11d3fdd72132b6fe6fc1b7f53ffe1ac",
+          "sha256_basis": "file_bytes",
+          "bytes": 20385,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/primitives.cpython-312.pyc",
+          "sha256": "9c17a1e8a3815097ea52a9c8e0d1eae65b2a618659a4e159c1b40d8b57b41318",
+          "sha256_basis": "file_bytes",
+          "bytes": 11066,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/routing.cpython-312.pyc",
+          "sha256": "724e4212a8417d06f6d9f4edcdb96ed49e466524086a9c9018ae30caa514495f",
+          "sha256_basis": "file_bytes",
+          "bytes": 5107,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "2f3370b8c885ad77bfeb4a633989db66e95f0aa5633bec2ea3ea7cb55cb11d6b",
+          "sha256_basis": "file_bytes",
+          "bytes": 1115,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/analyze_contract.cpython-312.pyc",
+          "sha256": "28f30a3568145b4892c5c7bade2f2086bd2e3144e4e89a604382a1822cbc78c8",
+          "sha256_basis": "file_bytes",
+          "bytes": 33374,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coercion_stats.cpython-312.pyc",
+          "sha256": "3fc2b61e3ad125310f03db44a9d0f1c34bc1f1e64c53fc4dba32a1015aa8955f",
+          "sha256_basis": "file_bytes",
+          "bytes": 4387,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/contract.cpython-312.pyc",
+          "sha256": "4a6549ee0670c916a570852bd1d2bd189a979e47d2d85f57e18cbae243afb0e6",
+          "sha256_basis": "file_bytes",
+          "bytes": 104344,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coverage_gate.cpython-312.pyc",
+          "sha256": "214f59c6c9cfce8b7cbbc1c72d181a3d4544825698c7b6b46b8178f0d7e38773",
+          "sha256_basis": "file_bytes",
+          "bytes": 59649,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/display_names.cpython-312.pyc",
+          "sha256": "f949a01d9f2780c59826b91f9d0ce80c37a12ce0715562a382b137ab0f38d466",
+          "sha256_basis": "file_bytes",
+          "bytes": 23959,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/domain_profile.cpython-312.pyc",
+          "sha256": "d0eb7f569d94be585b77505746e8086a2232e6bdd47e4a2daa0c93c251bb9e7c",
+          "sha256_basis": "file_bytes",
+          "bytes": 26977,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_exec.cpython-312.pyc",
+          "sha256": "98c91f6bd4281e05369de7b58ab8caef2cc2abd08b1b884ef0754edbfcb332b9",
+          "sha256_basis": "file_bytes",
+          "bytes": 48486,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_obligations.cpython-312.pyc",
+          "sha256": "d2e88fe9de1c1aaf58f4bc5b25eab448ea8e8760c645103ded26cd0a69d154a2",
+          "sha256_basis": "file_bytes",
+          "bytes": 27478,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/grounding_gate.cpython-312.pyc",
+          "sha256": "6abba2edd7e92c6571da4c572acac287af8f58419374018534b3efe2fc5f08b4",
+          "sha256_basis": "file_bytes",
+          "bytes": 20345,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/hoisting.cpython-312.pyc",
+          "sha256": "2c3e511ea5da046fefa4460192ed8063d412abf8f718778f1183ac8de8e0a198",
+          "sha256_basis": "file_bytes",
+          "bytes": 16142,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/interpreter.cpython-312.pyc",
+          "sha256": "2360906d4ed850edf1a50f3680a283c64bf2833cc2f4fa2760717f70254f8e5c",
+          "sha256_basis": "file_bytes",
+          "bytes": 39416,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/ir_static_check.cpython-312.pyc",
+          "sha256": "dee3ee7cfe12aa68b4316c4ac0a9114b6930859d3022f122c721df1d54ed07a8",
+          "sha256_basis": "file_bytes",
+          "bytes": 20890,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/learner_surface.cpython-312.pyc",
+          "sha256": "89f79be34aa7005987d09fe9ffce8407f61bedb4571a631c48bd4285a89ef08c",
+          "sha256_basis": "file_bytes",
+          "bytes": 16186,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/literal_extractor.cpython-312.pyc",
+          "sha256": "c7a691b676c7604d771bebbb9f95c7bf2a066d41c60fcb87736c3f83d33160f1",
+          "sha256_basis": "file_bytes",
+          "bytes": 11590,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/measure_contract.cpython-312.pyc",
+          "sha256": "64659dc3b163a2ce4b484c9e90d94faab7336c8f41d093d56ea3bb1cf5ec8552",
+          "sha256_basis": "file_bytes",
+          "bytes": 12041,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/obligations.cpython-312.pyc",
+          "sha256": "ba89e82c704eb60fea4623d52c6a2354acac2ed52dcce4ae1570effb250683a7",
+          "sha256_basis": "file_bytes",
+          "bytes": 8849,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pacer.cpython-312.pyc",
+          "sha256": "93b7369d44eafa09d3ae42453d0c696b4c31479abe7e5b3f1840c75ef3a90d54",
+          "sha256_basis": "file_bytes",
+          "bytes": 3814,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pipeline_adapter.cpython-312.pyc",
+          "sha256": "89651b37993b087f797a220eff69faebafbed3e91f52247f73b63430e82af6ca",
+          "sha256_basis": "file_bytes",
+          "bytes": 9396,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/plane_equation.cpython-312.pyc",
+          "sha256": "bd19aea4ff1a1436b7a2059e84d95020122bb4418e4d3195add81e97f0ca41c6",
+          "sha256_basis": "file_bytes",
+          "bytes": 17958,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/point_coordinate.cpython-312.pyc",
+          "sha256": "9630379b6c46930b71aaaef7b11e41f1f9eb40a755917364849ae9e24f1d2ea8",
+          "sha256_basis": "file_bytes",
+          "bytes": 9524,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/postconditions.cpython-312.pyc",
+          "sha256": "584b100e61ef7743af90a14309e7ef97c636137b80235d658974fe7c5a7aa4e6",
+          "sha256_basis": "file_bytes",
+          "bytes": 54286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/request_contract.cpython-312.pyc",
+          "sha256": "1d3850a7bf8be81f92982a71e06baae4933b16a763927740cf8db8b0ce957156",
+          "sha256_basis": "file_bytes",
+          "bytes": 9574,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/route.cpython-312.pyc",
+          "sha256": "2d5e9f73b78e43a0e3b989b90fdd6f2d664e8aabeaabf6c57653e9ba0321c0fe",
+          "sha256_basis": "file_bytes",
+          "bytes": 17523,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scale_normalization.cpython-312.pyc",
+          "sha256": "6c49dec1b7a7d5da967fa00ea6a6ddddc39e0ef9e9fa40797ae309166d8661cc",
+          "sha256_basis": "file_bytes",
+          "bytes": 17572,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scene3d.cpython-312.pyc",
+          "sha256": "2c15025eecafc0b143a2d452161721748455b17f40d28d52bbaddf87b0d13de2",
+          "sha256_basis": "file_bytes",
+          "bytes": 21015,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/section_provenance.cpython-312.pyc",
+          "sha256": "e1b3d2a0741d1ec56ee97a3d765f5e17f074891441791a2403a34b6826a6905e",
+          "sha256_basis": "file_bytes",
+          "bytes": 12573,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/segment_relation.cpython-312.pyc",
+          "sha256": "96023e04fe4ace58e48e4e7062006e006b91e065e46e5f0354a876394e96f9f9",
+          "sha256_basis": "file_bytes",
+          "bytes": 23435,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/simulation_state.cpython-312.pyc",
+          "sha256": "fa0fc5d84111aaac05366b21d39fd764c1503806a221a38083cff6b3d5c8dd60",
+          "sha256_basis": "file_bytes",
+          "bytes": 34098,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/source_entities.cpython-312.pyc",
+          "sha256": "0922cc3536b293c9c747fa636b92716e6fb872a6fb606c970875febdefe7229e",
+          "sha256_basis": "file_bytes",
+          "bytes": 15498,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/structured_relations.cpython-312.pyc",
+          "sha256": "b04914fedd0c1b82374e2f0431e18314c72b2103cb88a122db23b8a8bf12fc8a",
+          "sha256_basis": "file_bytes",
+          "bytes": 14888,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/transport.cpython-312.pyc",
+          "sha256": "581122388d467d6b79118a1a2d6e19feeb10f2e0b5e0c155da058bb9ac17404b",
+          "sha256_basis": "file_bytes",
+          "bytes": 11790,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/validator.cpython-312.pyc",
+          "sha256": "60e81a1e0724b71049bd58f0e6478d03b4aa1081bc17558377bfee24bbec81c5",
+          "sha256_basis": "file_bytes",
+          "bytes": 38762,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_adapter.cpython-312.pyc",
+          "sha256": "fe6d46363d01ba720d1bc98ed143f61c9bc79f587b6eb3d625bbdc60e5699cce",
+          "sha256_basis": "file_bytes",
+          "bytes": 9694,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_obligations.cpython-312.pyc",
+          "sha256": "f4b25e0d15115df0eccf681dd41e7425114704b2928e9580ec7ab3f9310eb424",
+          "sha256_basis": "file_bytes",
+          "bytes": 24398,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/scripts/__pycache__/replay_negative_boundaries.cpython-312.pyc",
+          "sha256": "e3858fe045648fbb1b5b940a94e64ce0a15071c9e1e3599f218a40842d06c937",
+          "sha256_basis": "file_bytes",
+          "bytes": 23655,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_cuboid_cube_production_route.cpython-312.pyc",
+          "sha256": "087fd88ec66ab7f92c4125d5d35ff5715120a3afeed71668e152a9926793a0a2",
+          "sha256_basis": "file_bytes",
+          "bytes": 17292,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_prism_production_route.cpython-312.pyc",
+          "sha256": "d6ace3e57fb8ca106b8692103312ad3367bdf64f81b8ea7c9cf959f815d1374f",
+          "sha256_basis": "file_bytes",
+          "bytes": 13286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_rectangular_pyramid_production_route.cpython-312.pyc",
+          "sha256": "99115adb71d0e09cafc9ecdbcd702f9ddfe5a1ee3e74f26b775bb5c74b009757",
+          "sha256_basis": "file_bytes",
+          "bytes": 9786,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/node_modules",
+          "sha256": "0c3af821e5e9caf8bf3d19df2a077f9a7e2d2b344d7fa2ce108283a689c57770",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+        }
       ]
     },
     {
@@ -1760,6 +3787,7 @@
       "untracked_file_count": 109,
       "browser_run_status": "FAILED_DIAGNOSTIC",
       "cleanup_eligible_after_recovery_commit": true,
+      "cleanup_result": "REMOVED_AFTER_RECOVERY_COMMIT",
       "artifacts": [
         {
           "source_relative_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/inputs/FIXTURE_MANIFEST.json",
@@ -2806,6 +4834,693 @@
           "recovered_sha256": "4f717a57b0611a83fd3c5df53e21ec500075ba99590bbe6824f67ba70cc4b1a3",
           "diagnostic_status": "FAILED_DIAGNOSTIC"
         }
+      ],
+      "ignored_generated_roots": [
+        "backend/.venv",
+        "backend/app/__pycache__",
+        "backend/app/ai/__pycache__",
+        "backend/app/simulation/__pycache__",
+        "backend/app/simulation/geometry/__pycache__",
+        "backend/app/simulation/geometry_compiler/__pycache__",
+        "backend/app/simulation/semantic_program/__pycache__",
+        "backend/scripts/__pycache__",
+        "backend/tests/geometry/__pycache__",
+        "frontend/dist",
+        "frontend/node_modules"
+      ],
+      "ignored_generated_artifacts": [
+        {
+          "source_relative_path": "backend/.venv",
+          "sha256": "b1a40686a28a933612b2cc9027570a849c0d7d180fb65e216f3d80bb7784b634",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\backend\\.venv"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "0d7b80f27acd2c69c8909a355510265f2ef9c805925be1b90ddf9ffddd92dbc6",
+          "sha256_basis": "file_bytes",
+          "bytes": 169,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/learner_messages.cpython-312.pyc",
+          "sha256": "96235893718f2661f5951b7d21e6a58cdd9a9924bc2ab1c77bd5a80a83d5e3db",
+          "sha256_basis": "file_bytes",
+          "bytes": 6724,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "84e4e42fb9c0502b5eb2e1cfec6da481357267ada5fa06b350b0b8b33bc2f340",
+          "sha256_basis": "file_bytes",
+          "bytes": 172,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/gemini.cpython-312.pyc",
+          "sha256": "dd3437eddf7642e8310f82c442766a469fb95a149bf06bf63d0f95a1072dabb2",
+          "sha256_basis": "file_bytes",
+          "bytes": 11600,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/pipeline.cpython-312.pyc",
+          "sha256": "aceafbd054b5578394ebc56fdcd3694e885a980b4a15c8e901bf2f5328a57ac3",
+          "sha256_basis": "file_bytes",
+          "bytes": 37144,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/telemetry.cpython-312.pyc",
+          "sha256": "1ff8522316b5185f1b835efa72f5d648405a6ee35c82fbe6a65794b99a58ecbc",
+          "sha256_basis": "file_bytes",
+          "bytes": 4737,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "971027532b505772cac75de32b676f5b688cbae622094a4ca77ba6caa1f1879c",
+          "sha256_basis": "file_bytes",
+          "bytes": 180,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/error_codes.cpython-312.pyc",
+          "sha256": "27927ab30b18a8c7fb47073d877fb4a70c16483d0d29e8600b506b33b25a8807",
+          "sha256_basis": "file_bytes",
+          "bytes": 3373,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "d2986504f406413a58bad085f198dd1000c0f7c3b5b48b546c3d84a114d611af",
+          "sha256_basis": "file_bytes",
+          "bytes": 1493,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/curved.cpython-312.pyc",
+          "sha256": "f3ed6e1f861ffa95b69f5b8571be992eb389a7f3bbb66f889733880e6927ab7c",
+          "sha256_basis": "file_bytes",
+          "bytes": 50324,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/exact.cpython-312.pyc",
+          "sha256": "7f24e041408e978a1012f4f94491799753f38c51eda5180d505fcf5486e22897",
+          "sha256_basis": "file_bytes",
+          "bytes": 16567,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/kernel.cpython-312.pyc",
+          "sha256": "77f7826873bed8a1a3feb47a456dce87e226419d46384f8c26e3ee31ea7bf601",
+          "sha256_basis": "file_bytes",
+          "bytes": 11047,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/measure.cpython-312.pyc",
+          "sha256": "3ea9c55af9aa60ff608184ad5d42d29c023a6089ddc537a4b03ab6f83201a991",
+          "sha256_basis": "file_bytes",
+          "bytes": 21615,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/predicates.cpython-312.pyc",
+          "sha256": "44fa8883c81480d79de2631d59e85a412cfae12165befa4c47449c4d0fe7095b",
+          "sha256_basis": "file_bytes",
+          "bytes": 7152,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/radical.cpython-312.pyc",
+          "sha256": "ffcd394dc71605c4bc2c287cd123fb8163fc8acc433bacbb981ef037e8eaba1e",
+          "sha256_basis": "file_bytes",
+          "bytes": 25310,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/section.cpython-312.pyc",
+          "sha256": "142421e814a3884ff005c07df867b54e656777e6e35ce553151b237f765ab5c1",
+          "sha256_basis": "file_bytes",
+          "bytes": 35923,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "2fa0efeff063281e172138d24ad863d280819f7fec97d465eac4a4406d38f825",
+          "sha256_basis": "file_bytes",
+          "bytes": 1020,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/compiler.cpython-312.pyc",
+          "sha256": "d7c55334f37c1b19b81dfc6b3f3a62cddd2bd1a42dfb5d7182ad152113eeefee",
+          "sha256_basis": "file_bytes",
+          "bytes": 80529,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/contract_adapter.cpython-312.pyc",
+          "sha256": "b43f09e3c88c69c8264a30f38a8436eb9020fc7e24ed62bb4ce0eb8b9177d65f",
+          "sha256_basis": "file_bytes",
+          "bytes": 15759,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/fact_graph.cpython-312.pyc",
+          "sha256": "cae0fae89e6a30382aaa0ab4f1a3c47cc0f6e9ecdaad153f519ef2b44148bcbf",
+          "sha256_basis": "file_bytes",
+          "bytes": 20385,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/primitives.cpython-312.pyc",
+          "sha256": "b28a91516408eb37672aa2b6b10ef3f7769bb8ef6daa455ed0075c513020f409",
+          "sha256_basis": "file_bytes",
+          "bytes": 11066,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/routing.cpython-312.pyc",
+          "sha256": "a2af42f6efb52de4634a4d2319e1b18ab6605aeea274ddc1baeef194d012a6d5",
+          "sha256_basis": "file_bytes",
+          "bytes": 5107,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "a3b6fc52a34fb23f5504f89b1cc2ae4682bfbaa5c6fa754d5a7d1cb7d9717ca0",
+          "sha256_basis": "file_bytes",
+          "bytes": 1115,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/analyze_contract.cpython-312.pyc",
+          "sha256": "cb46c643f96d310531699e82052cc13d86a91d5fe68d986aa1aea0ef79badc78",
+          "sha256_basis": "file_bytes",
+          "bytes": 33374,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coercion_stats.cpython-312.pyc",
+          "sha256": "5868a369cb561ff4e00b62f47848ef66e11ff1d975724799bd672678624dc99d",
+          "sha256_basis": "file_bytes",
+          "bytes": 4387,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/contract.cpython-312.pyc",
+          "sha256": "ba3d822367698031c0d77f1a571ec5264262dc782c998fd1f3a69bbd6c67da8a",
+          "sha256_basis": "file_bytes",
+          "bytes": 104344,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coverage_gate.cpython-312.pyc",
+          "sha256": "7f1e72c975d4846eb85c2459c7ee8dbd4d7647207e5dd6ffb2d974be85077461",
+          "sha256_basis": "file_bytes",
+          "bytes": 59649,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/display_names.cpython-312.pyc",
+          "sha256": "d61fd4474640af88d0068dff0efd6d7f70be982bbbd76c919375ea1afc6dedf9",
+          "sha256_basis": "file_bytes",
+          "bytes": 23959,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/domain_profile.cpython-312.pyc",
+          "sha256": "b2b92eccd206f82d46f89cca98635537501acf2936cc3a56866740d5a7931ee3",
+          "sha256_basis": "file_bytes",
+          "bytes": 26977,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_exec.cpython-312.pyc",
+          "sha256": "69e1041b5eaf6164361f9199f578d7cd3a5cbe4a92c7ad79bd460a81d3e0a63c",
+          "sha256_basis": "file_bytes",
+          "bytes": 48486,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_obligations.cpython-312.pyc",
+          "sha256": "4a5bdf186804f2d4da662ee34c69d9319d4b5c7e39270d6e7399093aff82b0e7",
+          "sha256_basis": "file_bytes",
+          "bytes": 27478,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/grounding_gate.cpython-312.pyc",
+          "sha256": "8a3c90fd296af441103b78dcd8e5bf05b312faca3d2d0acc39ac8ddcb52a48b6",
+          "sha256_basis": "file_bytes",
+          "bytes": 20345,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/hoisting.cpython-312.pyc",
+          "sha256": "bafd8a0616e314a573279a84a43b4d6f2f1f3bee61a322679b8b8001f11a5476",
+          "sha256_basis": "file_bytes",
+          "bytes": 16142,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/interpreter.cpython-312.pyc",
+          "sha256": "55542fbe9c64522d24432af2c18eb6a9190a2c57a8e2b409211c043bad485ca3",
+          "sha256_basis": "file_bytes",
+          "bytes": 39416,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/ir_static_check.cpython-312.pyc",
+          "sha256": "3395dcd2c7478d3259fa7e9acabd9b3aff5187a2f28d9b83dc0ad904163f40e4",
+          "sha256_basis": "file_bytes",
+          "bytes": 20890,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/learner_surface.cpython-312.pyc",
+          "sha256": "18d3b81df88995f938ea3877c21708251af419afd0f385bfef949fc2c208f133",
+          "sha256_basis": "file_bytes",
+          "bytes": 16186,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/literal_extractor.cpython-312.pyc",
+          "sha256": "4598874a846e3e2fd3a84f686af5ce4b55652183870cc971a4a4fd199e1217ca",
+          "sha256_basis": "file_bytes",
+          "bytes": 11590,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/measure_contract.cpython-312.pyc",
+          "sha256": "aa227f89c24df019335d0b32f846ef7c111bcc2736128e726098e87e528692d8",
+          "sha256_basis": "file_bytes",
+          "bytes": 12041,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/obligations.cpython-312.pyc",
+          "sha256": "566eea5bb13d9ba404d06499b6157e30149a33ed762d00baa5029d3ff2d1778f",
+          "sha256_basis": "file_bytes",
+          "bytes": 8849,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pacer.cpython-312.pyc",
+          "sha256": "17e429e47f41b707da1ea94db0f87e45231bde12ec4be5ee0b458f15fd11d8a0",
+          "sha256_basis": "file_bytes",
+          "bytes": 3814,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pipeline_adapter.cpython-312.pyc",
+          "sha256": "2e2081f57037942259a9a854e1f11418aa0affe56bc7c172d85456593f40965b",
+          "sha256_basis": "file_bytes",
+          "bytes": 9396,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/plane_equation.cpython-312.pyc",
+          "sha256": "a346d0d0c170ca8ae48e4892a3694a36847fcf3ec1169a5a76d9bc6da65e4404",
+          "sha256_basis": "file_bytes",
+          "bytes": 17958,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/point_coordinate.cpython-312.pyc",
+          "sha256": "002879efcdb6b2c28680806f1dbd5e0de0630e6fcbd91925255ae393c015828d",
+          "sha256_basis": "file_bytes",
+          "bytes": 9524,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/postconditions.cpython-312.pyc",
+          "sha256": "0f492824920eb72443b4481bb9605993e6c2fc55067b4612696319202e6d542c",
+          "sha256_basis": "file_bytes",
+          "bytes": 54286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/request_contract.cpython-312.pyc",
+          "sha256": "5cabb45d5eba56dd000945cf9c4924c95d8ba74aff9a1650b20bd7d34f151e96",
+          "sha256_basis": "file_bytes",
+          "bytes": 9574,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/route.cpython-312.pyc",
+          "sha256": "05b3a68d58934884757c52cee5c2fc03c11f289d2f99b8e275d6c44cbce0f078",
+          "sha256_basis": "file_bytes",
+          "bytes": 17523,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scale_normalization.cpython-312.pyc",
+          "sha256": "cefb82b56fa72e74b7b43cade5e54c2658bacf80252872c35156799282192534",
+          "sha256_basis": "file_bytes",
+          "bytes": 17572,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scene3d.cpython-312.pyc",
+          "sha256": "39a75b832c725bafaaabd094a05f3626c94bd61a7aa42e724915a90b1b2d32f5",
+          "sha256_basis": "file_bytes",
+          "bytes": 21015,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/section_provenance.cpython-312.pyc",
+          "sha256": "e961a63c1277e93d4f99ff9303952676d7914c5d699d0a0436f7c859bd2dfa66",
+          "sha256_basis": "file_bytes",
+          "bytes": 12573,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/segment_relation.cpython-312.pyc",
+          "sha256": "862b051b24924a0f43b37122241aa3b1d7faa1c907cae22c2bb8512afce3c792",
+          "sha256_basis": "file_bytes",
+          "bytes": 23435,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/simulation_state.cpython-312.pyc",
+          "sha256": "0ff3abf185e4eb730afb0587bfd45d3a1084375334f58674d000473142ccd793",
+          "sha256_basis": "file_bytes",
+          "bytes": 34098,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/source_entities.cpython-312.pyc",
+          "sha256": "5f95b9df2705a090cd2b82aa252c6714c1c6c553033bedbbd3442c83d539eb44",
+          "sha256_basis": "file_bytes",
+          "bytes": 15498,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/structured_relations.cpython-312.pyc",
+          "sha256": "97a7a46366131b2b49e525503dbef7d811faa4c44a507e6e63536c2d5834424e",
+          "sha256_basis": "file_bytes",
+          "bytes": 14888,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/transport.cpython-312.pyc",
+          "sha256": "ace4970b64debbc1bf72c10596dfd0efa61247ee2089395059b38313c79863d7",
+          "sha256_basis": "file_bytes",
+          "bytes": 11790,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/validator.cpython-312.pyc",
+          "sha256": "4fafd68ebede7fc61472b35ae2d6f8a4a8ddf03aac803b86e05a53bf61ec56a8",
+          "sha256_basis": "file_bytes",
+          "bytes": 38762,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_adapter.cpython-312.pyc",
+          "sha256": "6705d8695579fe9ca4b07ae306529544bc097811146cd4f09490e2f1c5bea051",
+          "sha256_basis": "file_bytes",
+          "bytes": 9694,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_obligations.cpython-312.pyc",
+          "sha256": "61f6c4444dcef5dfd7e19c060a77b2c6a3447848285e1cd39f9fb7b967756a79",
+          "sha256_basis": "file_bytes",
+          "bytes": 24398,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/scripts/__pycache__/replay_negative_boundaries.cpython-312.pyc",
+          "sha256": "e193797bdb74a44fb9e9e454f55e17d11e3baeb935860ce4483cb4214a3c528e",
+          "sha256_basis": "file_bytes",
+          "bytes": 23655,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_cuboid_cube_production_route.cpython-312.pyc",
+          "sha256": "79b43a58662e76774a4fbf5dab1e4aa56ff2fb0f51ce6e70b64d377326385542",
+          "sha256_basis": "file_bytes",
+          "bytes": 17292,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_prism_production_route.cpython-312.pyc",
+          "sha256": "d398bc3b264e8a93d44bff0967d6e08c5c535516b876bc6333c10fafde625189",
+          "sha256_basis": "file_bytes",
+          "bytes": 13286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_rectangular_pyramid_production_route.cpython-312.pyc",
+          "sha256": "9a134904735e81a9b1a2badd870a39017c60b582d0558bed3d5ec9da96a7d837",
+          "sha256_basis": "file_bytes",
+          "bytes": 9786,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-DzH0oAaO.js",
+          "sha256": "25997939e78721638803e75dda60e765847a7d0d442eef3e9efb8263cf677440",
+          "sha256_basis": "file_bytes",
+          "bytes": 908072,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-vyrswjuH.css",
+          "sha256": "28ec932dd3ad48e25c9ffbf522e5bc5f572eaf656bc46c7db543360f88f38852",
+          "sha256_basis": "file_bytes",
+          "bytes": 78768,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/favicon.svg",
+          "sha256": "84c60f2115425c3de7bf435556cf39fa0ccfee6b0e9a590b0f0ded4db8c3a83a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1122,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/index.html",
+          "sha256": "d602eebbf44d24d1baa26b35fcf13d84a0aba3eef8fec5aa311c1260437e15cf",
+          "sha256_basis": "file_bytes",
+          "bytes": 499,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/node_modules",
+          "sha256": "0c3af821e5e9caf8bf3d19df2a077f9a7e2d2b344d7fa2ce108283a689c57770",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+        }
       ]
     },
     {
@@ -2818,6 +5533,7 @@
       "untracked_file_count": 110,
       "browser_run_status": "SUPERSEDED",
       "cleanup_eligible_after_recovery_commit": true,
+      "cleanup_result": "REMOVED_AFTER_RECOVERY_COMMIT",
       "artifacts": [
         {
           "source_relative_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/contact-sheet.png",
@@ -3808,6 +6524,693 @@
           "classification": "DUPLICATE_OF_CANONICAL",
           "canonical_target_path": "docs/evaluation/geometry/runs/20260927-cross-family-scene3d-product-semantic-repair/screenshots/triangular_pyramid/negative/mobile/refusal.png",
           "canonical_sha256": "a915f72780a5d90082241064a34c335eda95f897b2a922d0860315c2fea98317"
+        }
+      ],
+      "ignored_generated_roots": [
+        "backend/.venv",
+        "backend/app/__pycache__",
+        "backend/app/ai/__pycache__",
+        "backend/app/simulation/__pycache__",
+        "backend/app/simulation/geometry/__pycache__",
+        "backend/app/simulation/geometry_compiler/__pycache__",
+        "backend/app/simulation/semantic_program/__pycache__",
+        "backend/scripts/__pycache__",
+        "backend/tests/geometry/__pycache__",
+        "frontend/dist",
+        "frontend/node_modules"
+      ],
+      "ignored_generated_artifacts": [
+        {
+          "source_relative_path": "backend/.venv",
+          "sha256": "b1a40686a28a933612b2cc9027570a849c0d7d180fb65e216f3d80bb7784b634",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\backend\\.venv"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "da0e5dbac3d5408dcd366d7d461dfdaa97a8a3dd48ac11e109e93dfd96c6c9d9",
+          "sha256_basis": "file_bytes",
+          "bytes": 169,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/__pycache__/learner_messages.cpython-312.pyc",
+          "sha256": "16b85ece41e0f6b3365753ce1a71e7132f361a48f3f7e76a6c0a3ed0d98d3c13",
+          "sha256_basis": "file_bytes",
+          "bytes": 6724,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "b25b14ec1069e6f8208a68efb5d755240a66b6bdde450f1ae32aaa7f48d555d1",
+          "sha256_basis": "file_bytes",
+          "bytes": 172,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/gemini.cpython-312.pyc",
+          "sha256": "f46ed5b5a455ade39ad5ef75fedf38072996152b2c4df0f6b83d826ef443e6fe",
+          "sha256_basis": "file_bytes",
+          "bytes": 11600,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/pipeline.cpython-312.pyc",
+          "sha256": "6046b8ed7e27f45e2deb19c06f17b02426d01f89d81586ffbf54233567fd5c52",
+          "sha256_basis": "file_bytes",
+          "bytes": 37144,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/ai/__pycache__/telemetry.cpython-312.pyc",
+          "sha256": "18e4902794c7f3027b3ce495ad2e8c1644d41903dd589f474a5179c69bd7d69c",
+          "sha256_basis": "file_bytes",
+          "bytes": 4737,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "c5775f0bcdfad29e199dc62d655d4f0cdafa9e67cca32924f3afbbd63c64039a",
+          "sha256_basis": "file_bytes",
+          "bytes": 180,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/__pycache__/error_codes.cpython-312.pyc",
+          "sha256": "9891be7f38ebd978d8d6e3aca7a0faf8ee539046a7eb726e58ecd97c1a386522",
+          "sha256_basis": "file_bytes",
+          "bytes": 3373,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "7c2ef7be53d9c56c46d162d875631efe926d1e7dbd3152b273337cfd2611f14a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1493,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/curved.cpython-312.pyc",
+          "sha256": "d4d419490abf4cc3ffcc019ef8048d069ca4731084daf0ac7d02ad7752ab0f5b",
+          "sha256_basis": "file_bytes",
+          "bytes": 50324,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/exact.cpython-312.pyc",
+          "sha256": "e3389d9615a19446968a31af8ddd15bfe3e9804dcdcf2cf45a16b506f2f38a13",
+          "sha256_basis": "file_bytes",
+          "bytes": 16567,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/kernel.cpython-312.pyc",
+          "sha256": "c554f59e8f3475b695b1326df637af116266813495522a177ca133c96f3d0539",
+          "sha256_basis": "file_bytes",
+          "bytes": 11047,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/measure.cpython-312.pyc",
+          "sha256": "d01fc691430f93d3bbc218336f79d2cfd99fd2daf3c91c5d76f03e5fca4a9846",
+          "sha256_basis": "file_bytes",
+          "bytes": 21615,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/predicates.cpython-312.pyc",
+          "sha256": "0e3f293a4f1396c1ad410c09c718bf8544f7f53104d92159de8e67267ab5d795",
+          "sha256_basis": "file_bytes",
+          "bytes": 7152,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/radical.cpython-312.pyc",
+          "sha256": "cc95e346654523dc1f0106044725449ad47812f5bdd057582cfbad51718a2c6d",
+          "sha256_basis": "file_bytes",
+          "bytes": 25310,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry/__pycache__/section.cpython-312.pyc",
+          "sha256": "8e91975e8edd5a801935a121e7bce96b6284a14e27664712d354200e1f8373a5",
+          "sha256_basis": "file_bytes",
+          "bytes": 35923,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "132186a15427b174e1f470c7b8fa3fef486c547554ae4ad2c7a5850ccef4f4ec",
+          "sha256_basis": "file_bytes",
+          "bytes": 1020,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/compiler.cpython-312.pyc",
+          "sha256": "d876ba75a812f70a1d4eab446dff575f68d7bbe3da062a66ddf72d132da4a112",
+          "sha256_basis": "file_bytes",
+          "bytes": 80529,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/contract_adapter.cpython-312.pyc",
+          "sha256": "b9d8d0e69eac2c8025eac77fdba86ca6bafa1959e28b112af0ddef74454b6aef",
+          "sha256_basis": "file_bytes",
+          "bytes": 15759,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/fact_graph.cpython-312.pyc",
+          "sha256": "8cb3934059d5df5ab7fdba2e4bb9a1330321e0ccf89a4a7728d83a113342af2e",
+          "sha256_basis": "file_bytes",
+          "bytes": 20385,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/primitives.cpython-312.pyc",
+          "sha256": "942e7d627019fab9484ab7e9415c9364fd0ff6ee2faf0a1fd4a02a9677e864df",
+          "sha256_basis": "file_bytes",
+          "bytes": 11066,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/geometry_compiler/__pycache__/routing.cpython-312.pyc",
+          "sha256": "3cd7486f318eb2efa8fc2d9b34f6a3b6528d13df7ac21f2442ae88c8ccc9bb86",
+          "sha256_basis": "file_bytes",
+          "bytes": 5107,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/__init__.cpython-312.pyc",
+          "sha256": "4a7244f15225f20a4c992198f3c18e84688bfd3017393788fb7e94f669e0d2ac",
+          "sha256_basis": "file_bytes",
+          "bytes": 1115,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/analyze_contract.cpython-312.pyc",
+          "sha256": "7422ded52def03e169689c3764e8ebfea0a19b04c201f6207aea63f5d0a655ba",
+          "sha256_basis": "file_bytes",
+          "bytes": 33374,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coercion_stats.cpython-312.pyc",
+          "sha256": "fba4100a1741c3efddf6102a02556623f116a5068158c16fdd44e09a262d5503",
+          "sha256_basis": "file_bytes",
+          "bytes": 4387,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/contract.cpython-312.pyc",
+          "sha256": "ffaf83e440872ac4a6f7cf3cf6a4f263fe1b69bd2082450060e2f991c8364dfd",
+          "sha256_basis": "file_bytes",
+          "bytes": 104344,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/coverage_gate.cpython-312.pyc",
+          "sha256": "99327c34e0f887882114bcf747b55f95ea28fa25c7715396e609a4ef2974eed0",
+          "sha256_basis": "file_bytes",
+          "bytes": 59649,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/display_names.cpython-312.pyc",
+          "sha256": "c64ad13c8daecf9c2e73090817ce6e92a8556cf7eb8ba1ff2fe79c8b48ebf741",
+          "sha256_basis": "file_bytes",
+          "bytes": 23959,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/domain_profile.cpython-312.pyc",
+          "sha256": "57ee114580469744c9c2796f35dd4806c52a3157c972adab1554d6cbe8d8143f",
+          "sha256_basis": "file_bytes",
+          "bytes": 26977,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_exec.cpython-312.pyc",
+          "sha256": "de2a39d7fb13f8638d4b1f297049fdfc3ced592bc674f8e62a684ddcfec0e50d",
+          "sha256_basis": "file_bytes",
+          "bytes": 48486,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/geometry_obligations.cpython-312.pyc",
+          "sha256": "ad6ddea15f8cf5f870f4502de358dbab4faaa7b9064e0ec237908ad611c75caf",
+          "sha256_basis": "file_bytes",
+          "bytes": 27478,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/grounding_gate.cpython-312.pyc",
+          "sha256": "66ec193dfeac0edf135862465583f178a5da8e650742df5be6082befda9ad1f9",
+          "sha256_basis": "file_bytes",
+          "bytes": 20345,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/hoisting.cpython-312.pyc",
+          "sha256": "888abf97616abfed5fef26b0053060405b5ab0bf6698021e437935a279ed6c0c",
+          "sha256_basis": "file_bytes",
+          "bytes": 16142,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/interpreter.cpython-312.pyc",
+          "sha256": "247d0fcc312995121348f4e93fc9a9e2a4c1a8075e493bd667aba24fddb84147",
+          "sha256_basis": "file_bytes",
+          "bytes": 39416,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/ir_static_check.cpython-312.pyc",
+          "sha256": "fd47323158d4b150b20cd214a3ad6a9fed2f6c1826ecbc233782268a1b7d8c7a",
+          "sha256_basis": "file_bytes",
+          "bytes": 20890,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/learner_surface.cpython-312.pyc",
+          "sha256": "39ac3a2e630d341ac7d593b77e7b46670d55c6fd4771e1f4ec77f7f23c952eb2",
+          "sha256_basis": "file_bytes",
+          "bytes": 16186,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/literal_extractor.cpython-312.pyc",
+          "sha256": "77d7bda2817e9bdd9ee43454782a52317c3f4953d5846bce02aedc95c4bfa971",
+          "sha256_basis": "file_bytes",
+          "bytes": 11590,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/measure_contract.cpython-312.pyc",
+          "sha256": "a786e7f7aaff28064e083ad41ed1d6de5748c6a223192a36c274d4eb920ce8ef",
+          "sha256_basis": "file_bytes",
+          "bytes": 12041,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/obligations.cpython-312.pyc",
+          "sha256": "3dcedf5130a631ddd12245e0f8349960a23de4bfb47222874cab044a472cd779",
+          "sha256_basis": "file_bytes",
+          "bytes": 8849,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pacer.cpython-312.pyc",
+          "sha256": "35f8db5bb7756110048b6113144ebd807bf7bb2d1b0285238d7958f39249f4ea",
+          "sha256_basis": "file_bytes",
+          "bytes": 3814,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/pipeline_adapter.cpython-312.pyc",
+          "sha256": "642e8cc9fa4797f8cba3a74632760ac49cf14a53cdb0b62784ace4685f98d86a",
+          "sha256_basis": "file_bytes",
+          "bytes": 9396,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/plane_equation.cpython-312.pyc",
+          "sha256": "fee2f9b928fe6872c4ae54f5f31b8f8704260980d19dd43f56080749a831e70f",
+          "sha256_basis": "file_bytes",
+          "bytes": 17958,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/point_coordinate.cpython-312.pyc",
+          "sha256": "c0eaa0e147c9312dcc2e416c98414a0dfc7291db1c0f5a1038afe5aaf0dd35f2",
+          "sha256_basis": "file_bytes",
+          "bytes": 9524,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/postconditions.cpython-312.pyc",
+          "sha256": "e37dfab3a696d0f2fa3985f968af8470fb157f688f86577da67b73d6f153b082",
+          "sha256_basis": "file_bytes",
+          "bytes": 54286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/request_contract.cpython-312.pyc",
+          "sha256": "ddd393b3680bc21ef208c3e23c2c3aedeba8810a7cddc7a8f67ba51feba02131",
+          "sha256_basis": "file_bytes",
+          "bytes": 9574,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/route.cpython-312.pyc",
+          "sha256": "80faa502423b6dcf14190c6e574c6c3637c90a41585f67b783fca5ae71e1a231",
+          "sha256_basis": "file_bytes",
+          "bytes": 17523,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scale_normalization.cpython-312.pyc",
+          "sha256": "44e62f640dc6e145adf30957bb73d03032811dbd36397d05b2f7fcb233b8e5ba",
+          "sha256_basis": "file_bytes",
+          "bytes": 17572,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/scene3d.cpython-312.pyc",
+          "sha256": "83529bb6885a0d52de3c993741bf102bdff2f2361c8a030909833f6256403955",
+          "sha256_basis": "file_bytes",
+          "bytes": 21015,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/section_provenance.cpython-312.pyc",
+          "sha256": "1abf580321904a4d6e4d8c9623d53792b69c5a8dd27b1164404bf306a0af9d18",
+          "sha256_basis": "file_bytes",
+          "bytes": 12573,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/segment_relation.cpython-312.pyc",
+          "sha256": "74cf641c8b7eb36ecd4f23d3dfc2847016e76dadf8e366589b9fdf974071616c",
+          "sha256_basis": "file_bytes",
+          "bytes": 23435,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/simulation_state.cpython-312.pyc",
+          "sha256": "2568064202b0e13366a1404af87e45ecf81847235eecb11b6177f51dd56488a9",
+          "sha256_basis": "file_bytes",
+          "bytes": 34098,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/source_entities.cpython-312.pyc",
+          "sha256": "7a717dbb133e8950a13a4ccd88ab6998275d0d039c03db2399e931faf4192aea",
+          "sha256_basis": "file_bytes",
+          "bytes": 15498,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/structured_relations.cpython-312.pyc",
+          "sha256": "9a16988f764b4cd2bb9734de4971bcf2fac7ff21c18b1baa6756c363b310dbb1",
+          "sha256_basis": "file_bytes",
+          "bytes": 14888,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/transport.cpython-312.pyc",
+          "sha256": "ae1c69a3362c803d8eed71af94dc9a14926709987d6c95163f13149464c424db",
+          "sha256_basis": "file_bytes",
+          "bytes": 11790,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/validator.cpython-312.pyc",
+          "sha256": "26403f016aa26d4b2ed6a1d589bd4614c94f7a9c6829c045a52fc2a6af39e9a0",
+          "sha256_basis": "file_bytes",
+          "bytes": 38762,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_adapter.cpython-312.pyc",
+          "sha256": "bf49a6e6a3a40b84ab100a95fcc88612fd8630159d6b55b762b918f05697c8c9",
+          "sha256_basis": "file_bytes",
+          "bytes": 9694,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/app/simulation/semantic_program/__pycache__/visual_obligations.cpython-312.pyc",
+          "sha256": "2b4ef3bafe679e52f52e8f0ac54f7e57a210fb064b44e4e59aa0fcb3a284492e",
+          "sha256_basis": "file_bytes",
+          "bytes": 24398,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/scripts/__pycache__/replay_negative_boundaries.cpython-312.pyc",
+          "sha256": "9515cad406d58b8f0f1ad1a4dca0d451ef229f8ad0f94b66278c4d0414316b57",
+          "sha256_basis": "file_bytes",
+          "bytes": 23655,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_cuboid_cube_production_route.cpython-312.pyc",
+          "sha256": "6de4e421d06047e378dba2cf523babe337011a608f73a18d2e998c3f5e08f911",
+          "sha256_basis": "file_bytes",
+          "bytes": 17292,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_prism_production_route.cpython-312.pyc",
+          "sha256": "326b55dc9363bf34fe7581fb32882a5e2c8b3ed5f1b8d253d76aeb7c10242591",
+          "sha256_basis": "file_bytes",
+          "bytes": 13286,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "backend/tests/geometry/__pycache__/test_rectangular_pyramid_production_route.cpython-312.pyc",
+          "sha256": "c6fd98d62599581f4d5b914d6a8cadd0336f0c471eb86024cc0200f96f912577",
+          "sha256_basis": "file_bytes",
+          "bytes": 9786,
+          "file_type": "python_bytecode",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "python import/pytest",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-DzH0oAaO.js",
+          "sha256": "25997939e78721638803e75dda60e765847a7d0d442eef3e9efb8263cf677440",
+          "sha256_basis": "file_bytes",
+          "bytes": 908072,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/assets/index-vyrswjuH.css",
+          "sha256": "28ec932dd3ad48e25c9ffbf522e5bc5f572eaf656bc46c7db543360f88f38852",
+          "sha256_basis": "file_bytes",
+          "bytes": 78768,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/favicon.svg",
+          "sha256": "84c60f2115425c3de7bf435556cf39fa0ccfee6b0e9a590b0f0ded4db8c3a83a",
+          "sha256_basis": "file_bytes",
+          "bytes": 1122,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/dist/index.html",
+          "sha256": "d602eebbf44d24d1baa26b35fcf13d84a0aba3eef8fec5aa311c1260437e15cf",
+          "sha256_basis": "file_bytes",
+          "bytes": 499,
+          "file_type": "generated_build_asset",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "npm run build",
+          "disposition": "SAFE_TO_DISCARD"
+        },
+        {
+          "source_relative_path": "frontend/node_modules",
+          "sha256": "0c3af821e5e9caf8bf3d19df2a077f9a7e2d2b344d7fa2ce108283a689c57770",
+          "sha256_basis": "resolved_junction_target_string",
+          "bytes": 0,
+          "file_type": "directory_junction",
+          "classification": "GENERATED_BUILD_OUTPUT",
+          "regeneration_source": "recreate dependency junction from canonical workspace",
+          "disposition": "SAFE_TO_DISCARD",
+          "junction_target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
         }
       ]
     }

@@ -1,0 +1,31 @@
+{
+  "schema_version": "cross-family-occlusion-oracle-manifest/1",
+  "task": "CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR",
+  "run_id": "20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair",
+  "product_commit_sha": "50a31e0b7124cb038ff5c56dd9c856778a263725",
+  "oracle_harness_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "expectation_registration_commit_sha": "80766b909d09fc71d6ff05f79b29bd1091ea7d40",
+  "candidate_commit_sha": "e115c31df24efc35fe1d5590e3cab6737b5b13d8",
+  "measurement_commit_sha": "e115c31df24efc35fe1d5590e3cab6737b5b13d8",
+  "evidence_commit_sha": "09934eb7d0850d3f1f6d5c4f4c79f93b33bb92d9",
+  "candidate_product_hash": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "hash_basis": "sha256_lf_normalized_for_text_raw_bytes_for_png",
+  "principal_artifact_hashes": {
+    "REPORT.md": "2dcb9d72380907a442659613b8bfbdc1f93e8cece63f96a03ba13c20cc3f6942",
+    "RUN.json": "a7115937e156a6f43b8a9cfb99b75e617c91418095858df89cde5c3e48764ff1",
+    "HANDOFF.md": "421b0bb403c6eae818564f0bee0cb7c2ebe7e79b31e70dfc9a94ed42a5aab6c1",
+    "inputs/human_expected_visibility.json": "8fead2e6dbab3e66fb101d3953e6ba490eba21d371f1a97aa3fb836f3bafaa0f",
+    "inputs/FIXTURE_MANIFEST.json": "1b734a9691f3026898bfa28de13df15eec9814991c969f576f032a7fd8fbea68",
+    "results/BROWSER_EVIDENCE.json": "b3599ef751ad8b05925a760dbbd5427862afe6325701bf8f682025ad3e7d00ad",
+    "results/OCCLUSION_MEASUREMENT.json": "eebdb0f804cf1fb51ed837e6c298543fd6384acc9aefac0bd9f5c61214feaad1",
+    "results/VERIFICATION_SUMMARY.json": "de86194b9afbed92b4729296bead2835b7c350bd38e37af260cfa6438a22e749",
+    "contact-sheet.png": "8e262b9cd440158cc5c09f5aa31bd6a8cd67c2ca01f69d201fa54be91cac971c",
+    "../../worktree-recovery/WORKTREE_RECOVERY_INVENTORY.json": "83542eabf4c7626ad4f462a5e9dcd0db4cfd42ff056aa86ebf9eb233b0c9f7f9"
+  },
+  "self_hash_policy": {
+    "manifest_sha256": "EXCLUDED",
+    "final_docs_commit_sha": "EXCLUDED",
+    "reason": "A file cannot truthfully embed the hash or containing commit identity that changes when embedded."
+  },
+  "final_decision": "VERIFICATION_NOT_CLEAN"
+}
