@@ -319,10 +319,18 @@ export function updateCanonicalEdgeVisibility(
     const source = candidate.userData?.solidSceneObject as SceneObject | undefined;
     if (!source) return;
     const localCamera = candidate.worldToLocal(camera.position.clone());
+    // `OrbitControls` (damping) round-trips the pose through spherical
+    // coordinates every frame, so an idle camera walks in its last ULPs and an
+    // exact-float key recomputed every mobile frame. 10 significant digits move
+    // a projected point by ~1e-6 physical px here — far below the 0.5 px
+    // product↔oracle tolerance; ±0 and sub-1e-12 noise collapse to 0.
+    const khoa = (v: number) => (Math.abs(v) < 1e-12 ? 0 : Number(v.toPrecision(10)));
     const signature = [
-      localCamera.x, localCamera.y, localCamera.z,
-      ...camera.matrixWorldInverse.elements,
-      ...camera.projectionMatrix.elements,
+      ...[
+        localCamera.x, localCamera.y, localCamera.z,
+        ...camera.matrixWorldInverse.elements,
+        ...camera.projectionMatrix.elements,
+      ].map(khoa),
       renderSignature,
     ].join("|");
     let audit = candidate.userData.edgeVisibilityAudit as EdgeVisibilityAudit | undefined;

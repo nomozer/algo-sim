@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import type { SceneObject } from "./scene3d-model";
 import { classifySolidEdgeVisibility } from "./scene3d-edge-visibility";
 import {
@@ -88,6 +89,58 @@ describe("Scene3D occlusion fault gates", () => {
     camera.lookAt(0, 0, 0);
     camera.updateMatrixWorld(true);
     expect(updateCanonicalEdgeVisibility(root, camera, "800x600@1").recomputed_solid_count).toBe(1);
+  });
+
+  it("OrbitControls damping float drift does not recompute; a real pose change still does", () => {
+    // Mobile evidence 2026-09-28: `dieuKhien.update()` round-trips the camera
+    // through spherical coordinates every frame and the position walks in the
+    // last ULPs forever, so an exact-float signature recomputed 841/841 frames.
+    const root = new THREE.Group();
+    root.add(buildObject3D(PARTIAL, false)!);
+    const camera = new THREE.PerspectiveCamera(50, 340 / 418, 0.1, 1000);
+    camera.up.set(0, 0, 1);
+    camera.position.set(13.219735978431286, 6.394900991911706, 11.289801983823384);
+    // Node test env has no DOM; OrbitControls only needs listeners + style here.
+    const element = Object.assign(new EventTarget(), {
+      style: {}, ownerDocument: new EventTarget(), getRootNode() { return element; },
+    }) as unknown as HTMLElement;
+    const controls = new OrbitControls(camera, element);
+    controls.enableDamping = true;
+    controls.target.set(0.5, 0.25, 0.5);
+    controls.update();
+    camera.updateMatrixWorld(true);
+    camera.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(root, camera, "340x418@1");
+    const start = camera.position.clone();
+    let recomputed = 0;
+    for (let frame = 0; frame < 240; frame += 1) {
+      controls.update();
+      camera.updateMatrixWorld(true);
+      recomputed += updateCanonicalEdgeVisibility(root, camera, "340x418@1").recomputed_solid_count;
+    }
+    expect(camera.position.distanceTo(start), "damping must keep drifting (product behavior)")
+      .toBeLessThan(1e-9);
+    expect(recomputed).toBe(0);
+    // Every pose change that moves a projected vertex by more than the 0.5 px
+    // product↔oracle tolerance must invalidate, whichever axis it moves on.
+    const px = (p: THREE.Vector3) => {
+      const n = p.clone().project(camera);
+      return new THREE.Vector2(n.x * 340 / 2, n.y * 418 / 2);
+    };
+    const vertex = new THREE.Vector3(2, 0, 0);
+    for (const axis of [[1, 0, 0], [0, 1, 0], [0, 0, 1], [1, -1, 0], [0, 1, -1]]) {
+      const before = px(vertex);
+      const step = new THREE.Vector3(...axis).normalize().multiplyScalar(1e-4);
+      let moved = 0;
+      while (moved < 0.6) {
+        camera.position.add(step);
+        camera.updateMatrixWorld(true);
+        moved = px(vertex).distanceTo(before);
+      }
+      expect(moved).toBeLessThan(1);
+      expect(updateCanonicalEdgeVisibility(root, camera, "340x418@1").recomputed_solid_count,
+        `axis ${axis}`).toBe(1);
+    }
   });
 
   it("duplicate logical owner is named by the renderer audit", () => {

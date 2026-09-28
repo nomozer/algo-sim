@@ -10,12 +10,14 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   assessCssReadiness,
   assessFormationSnapshots,
+  assessImmutableWindow,
   compareClosures,
   detectRawTokenLeakage,
   evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedVisibleIds,
   pollUntil,
+  settleCamera,
   sha256File,
   sha256GitBlob,
   solidTopology,
@@ -38,6 +40,33 @@ const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 function assertion(pass, details = undefined) {
   return { pass: Boolean(pass), ...(details === undefined ? {} : { details }) };
+}
+
+const VISIBILITY_STATE = "visible_edge_ids:window.__geo3d_visible_edge_ids||[],"
+  + "hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],"
+  + "mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],"
+  + "edge_spans:window.__geo3d_edge_spans||[],";
+const EDGE_STATE = VISIBILITY_STATE
+  + "duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[],"
+  + "highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],"
+  + "selected_id:window.__geo3d_selected_id||null,"
+  + "dash_signature:window.__geo3d_edge_dash_signature||{},";
+
+/** Settle the camera; a camera that never settles is recorded as a failed
+ *  `camera_settled_<state>` assertion (with diagnostic) instead of aborting. */
+async function settleOrRecord(session, result, state) {
+  try {
+    const settled = await settleCamera(() => jsonEval(session,
+      "({snapshot:window.__geo3d_camera_snapshot||null,"
+      + "frame_count:(window.__geo3d_occlusion_performance||{}).frame_count||0})"));
+    result.camera_settle = { ...result.camera_settle,
+      [state]: { samples: settled.settle_samples, max_motion: settled.settle_max_motion } };
+    return settled;
+  } catch (error) {
+    if (!String(error.message).startsWith("SETTLING_TIMEOUT")) throw error;
+    result.assertions[`camera_settled_${state}`] = assertion(false, error.diagnostic);
+    return null;
+  }
 }
 
 async function setTextarea(session, text) {
@@ -417,20 +446,17 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.assertions.css_readiness = assertion(css.pass, css.checks);
     result.canvas_box = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
 
-    const edgeDefault = await pollUntil(
-      () => jsonEval(session, `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
-        + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
-        + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],`
-        + `edge_spans:window.__geo3d_edge_spans||[],`
-        + `duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[],`
-        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
-        + `selected_id:window.__geo3d_selected_id||null,`
-        + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
+    await pollUntil(
+      () => jsonEval(session, `({${EDGE_STATE}})`),
       (edge) => edge.visible_edge_ids.length > 0 && edge.hidden_edge_ids.length > 0,
       { timeoutMs: 8_000 },
     );
+    // Auto-fit + damping keep moving the camera after the edge sets first
+    // appear; snapshot and sets are read together only once it has settled.
+    const neutralSettled = await settleOrRecord(session, result, "neutral_final");
+    const { camera: neutralCamera, ...edgeDefault } = await jsonEval(session,
+      `({${EDGE_STATE}camera:window.__geo3d_camera_snapshot||null})`);
     result.edge_semantics_neutral_final = edgeDefault;
-    const neutralCamera = await jsonEval(session, `window.__geo3d_camera_snapshot||null`);
     result.camera_snapshots = {
       neutral_final: { snapshot: neutralCamera, sha256: sha256(JSON.stringify(neutralCamera)) },
     };
@@ -446,10 +472,15 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // Default phải được chụp trước causal/orbit/formation.
     result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
     result.capture_order.push("neutral_final");
+    // The window opens only after settling (the capture above may itself
+    // have scheduled frames), so settle again right before resetting.
+    const windowSettled = neutralSettled
+      && await settleOrRecord(session, result, "immutable_window");
     await session.eval(`window.__geo3d_reset_occlusion_performance?.()`);
-    const immutable = await pollUntil(
-      () => jsonEval(session, `window.__geo3d_occlusion_performance||{frame_count:0}`),
-      (value) => value.frame_count >= 120,
+    const { perf: immutable, camera: windowEnd } = await pollUntil(
+      () => jsonEval(session, `({perf:window.__geo3d_occlusion_performance||{frame_count:0},`
+        + `camera:window.__geo3d_camera_snapshot||null})`),
+      (value) => value.perf.frame_count >= 120,
       { timeoutMs: 8_000, intervalMs: 20 },
     );
     const timings = [...(immutable.recomputation_times_ms ?? [])].sort((a, b) => a - b);
@@ -462,10 +493,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       max_recomputation_ms: timings.at(-1) ?? 0,
       immutable_frame_recomputations: immutable.recompute_count,
     };
-    result.assertions.immutable_120_frames = assertion(
-      immutable.frame_count >= 120 && immutable.recompute_count === 0,
-      result.occlusion_performance,
-    );
+    const windowVerdict = assessImmutableWindow({
+      settled: windowSettled || null, end: windowEnd, perf: immutable,
+    });
+    result.occlusion_performance.immutable_window = windowVerdict;
+    result.assertions.immutable_120_frames = assertion(windowVerdict.pass, result.occlusion_performance);
     const causalBeforeFrame = await canvasFrame(session);
     const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
@@ -562,8 +594,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       }
       if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify(attempts)}`);
       const after = observedOrbit.points;
-      const hiddenAfter = observedOrbit.sets;
-      const rotatedCamera = await jsonEval(session, `window.__geo3d_camera_snapshot||null`);
+      // Damping is still carrying the orbit here: settle, then read the sets
+      // and the camera in ONE evaluation so the oracle sees the same camera.
+      await settleOrRecord(session, result, "rotated_neutral");
+      const { camera: rotatedCamera, ...hiddenAfter } = await jsonEval(session,
+        `({${VISIBILITY_STATE}camera:window.__geo3d_camera_snapshot||null})`);
       result.camera_snapshots.rotated_neutral = {
         snapshot: rotatedCamera,
         sha256: sha256(JSON.stringify(rotatedCamera)),

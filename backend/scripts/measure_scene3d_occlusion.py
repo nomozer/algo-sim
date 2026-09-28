@@ -8,12 +8,85 @@ refreezes expectations.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 import statistics
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from scene3d_occlusion_oracle import CameraSnapshot, OracleFailure, cross_check
+from scene3d_occlusion_oracle import CameraSnapshot, OracleFailure, _project, cross_check
+
+PHYSICAL_PIXEL_TOLERANCE = 0.5
+
+
+def _sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def canonical_camera(snapshot: dict[str, Any]) -> dict[str, Any]:
+    """Pose/projection at 10 significant digits; ±0 and sub-1e-12 noise → 0.
+
+    OrbitControls damping rewrites an idle pose in its last ULPs, so a raw-float
+    hash is not a camera identity. 10 digits keep every change a learner could
+    see (≫ 1e-6 px) and drop only float noise.
+    """
+    def q(value: float) -> float:
+        value = float(value)
+        return 0.0 if abs(value) < 1e-12 else float(f"{value:.9e}")
+
+    return {
+        "position": [q(v) for v in snapshot.get("position", [])],
+        "view": [q(v) for v in snapshot["view_matrix_column_major"]],
+        "projection": [q(v) for v in snapshot["projection_matrix_column_major"]],
+        "viewport": [int(snapshot["viewport_width"]), int(snapshot["viewport_height"])],
+        "device_pixel_ratio": float(snapshot["device_pixel_ratio"]),
+    }
+
+
+def canonical_camera_sha256(snapshot: dict[str, Any]) -> str:
+    return _sha256(json.dumps(canonical_camera(snapshot), sort_keys=True,
+                              separators=(",", ":")).encode())
+
+
+def load_camera_preimages(path: Path, registry_path: Path) -> dict[str, dict[str, Any]]:
+    """Registered hash → snapshot, only for strings whose sha256 IS that hash."""
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if data["source_registry_sha256"] != _sha256(Path(registry_path).read_bytes()):
+        raise ValueError("PREIMAGE_REGISTRY_MISMATCH")
+    out: dict[str, dict[str, Any]] = {}
+    for item in data["preimages"]:
+        if _sha256(item["snapshot_json"].encode("utf-8")) != item["camera_snapshot_sha256"]:
+            raise ValueError(f"PREIMAGE_HASH_MISMATCH:{item.get('scenario_id')}")
+        out[item["camera_snapshot_sha256"]] = json.loads(item["snapshot_json"])
+    return out
+
+
+def camera_identity(registered_sha: str, actual: dict[str, Any], scene: dict[str, Any],
+                    preimages: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Is the measured camera the reviewed one? Exact hash, else projection-equivalent
+    (same viewport/DPR, every solid vertex within 0.5 physical px)."""
+    if actual["sha256"] == registered_sha:
+        return {"status": "EXACT", "max_projected_delta_px": 0.0}
+    registered = preimages.get(registered_sha)
+    if registered is None:
+        return {"status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+                "reason": "REGISTERED_PREIMAGE_UNAVAILABLE", "max_projected_delta_px": None}
+    a, b = _camera(registered), _camera(actual["snapshot"])
+    if (a.viewport_width, a.viewport_height, a.device_pixel_ratio) != (
+            b.viewport_width, b.viewport_height, b.device_pixel_ratio):
+        return {"status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+                "reason": "VIEWPORT_OR_DPR_CHANGED", "max_projected_delta_px": None}
+    points = [tuple(float(Fraction(c)) for c in vertex) for obj in scene["objects"]
+              if obj.get("type") == "solid" for vertex in obj["vertices"]]
+    delta = max(math.dist(_project(p, a).screen, _project(p, b).screen) for p in points)
+    return {
+        "status": ("CANONICAL_EQUIVALENT" if delta < PHYSICAL_PIXEL_TOLERANCE
+                   else "FROZEN_CAMERA_IDENTITY_MISMATCH"),
+        "max_projected_delta_px": delta,
+        "canonical_sha256_equal": canonical_camera_sha256(registered) == canonical_camera_sha256(actual["snapshot"]),
+    }
 
 
 def _rows(column_major: list[float]) -> tuple[tuple[float, float, float, float], ...]:
@@ -79,10 +152,13 @@ def _frozen_record(registry: dict[str, Any], scenario_id: str, viewport: str,
                  and record.get("state") == state), None)
 
 
-def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None) -> dict[str, Any]:
+def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
+        preimages_path: Path | None = None) -> dict[str, Any]:
     browser = json.loads(browser_path.read_text(encoding="utf-8"))
     registry = (json.loads(expectations_path.read_text(encoding="utf-8"))
                 if expectations_path else {"scenarios": []})
+    preimages = (load_camera_preimages(preimages_path, expectations_path)
+                 if preimages_path and expectations_path else {})
     report: dict[str, Any] = {
         "schema_version": "scene3d-occlusion-measurement/1",
         "oracle_implementation": "analytic_projected_interval_clip_w",
@@ -114,12 +190,16 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None) 
                     analytic = None
                     failures = [{"code": error.code, "detail": str(error)}]
                 frozen = _frozen_record(registry, scenario_id, viewport, state)
+                identity = None
                 if frozen:
-                    if (frozen.get("camera_snapshot_sha256") != snapshot_record["sha256"]
+                    identity = camera_identity(frozen["camera_snapshot_sha256"], snapshot_record,
+                                               scene, preimages or {})
+                    if (identity["status"] == "FROZEN_CAMERA_IDENTITY_MISMATCH"
                             or frozen.get("scene3d_envelope_sha256")
                             != positive.get("scene3d_envelope_sha256")):
                         failures.append({
                             "code": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+                            "identity": identity,
                             "registered_camera": frozen.get("camera_snapshot_sha256"),
                             "actual_camera": snapshot_record["sha256"],
                             "registered_scene": frozen.get("scene3d_envelope_sha256"),
@@ -137,6 +217,7 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None) 
                             "oracle": _sets(analytic or {}),
                         })
                 state_result = {
+                    "frozen_camera_identity": identity,
                     "product": _sets(positive[product_key]),
                     "oracle": _sets(analytic or {}),
                     "witnesses": (analytic or {}).get("witnesses", []),
@@ -174,9 +255,11 @@ def main() -> int:
     parser.add_argument("--fixture-root", required=True, type=Path)
     parser.add_argument("--browser", required=True, type=Path)
     parser.add_argument("--expectations", type=Path)
+    parser.add_argument("--camera-preimages", type=Path,
+                        help="verified preimages of the registered camera hashes")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    result = run(args.fixture_root, args.browser, args.expectations)
+    result = run(args.fixture_root, args.browser, args.expectations, args.camera_preimages)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0 if result["pass"] else 1

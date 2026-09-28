@@ -6,6 +6,9 @@ import test from "node:test";
 import {
   assessCssReadiness,
   assessFormationSnapshots,
+  assessImmutableWindow,
+  cameraMotion,
+  settleCamera,
   compareClosures,
   detectRawTokenLeakage,
   evaluateEvidenceGates,
@@ -200,4 +203,58 @@ test("all required fault injections fail with their exact reason code", () => {
     assert.equal(result.pass, false, name);
     assert.ok(result.reason_codes.includes(reason), `${name}:${result.reason_codes.join(",")}`);
   }
+});
+
+const camera = (dx = 0, overrides = {}) => ({
+  position: [11 + dx, 5, 9],
+  view_matrix_column_major: [0.4, -0.3, 0.8, 0, 0.9, 0.1, -0.4, 0, 0, 0.9, 0.4, 0, -0.1 - dx, -0.2, -15, 1],
+  projection_matrix_column_major: [0.75, 0, 0, 0, 0, 2.1, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0],
+  viewport_width: 390, viewport_height: 844, device_pixel_ratio: 2, ...overrides,
+});
+
+function sampler(frames) {
+  let i = 0;
+  let clock = 0;
+  return {
+    read: async () => frames[Math.min(i++, frames.length - 1)],
+    opts: { now: () => clock, pause: async (ms) => { clock += ms; }, intervalMs: 50, timeoutMs: 2_000 },
+  };
+}
+
+test("ULP drift counts as settled; a real move does not", () => {
+  assert.ok(cameraMotion(camera(), camera(3e-15)) < 1e-9);
+  assert.ok(cameraMotion(camera(), camera(1e-4)) > 1e-9);
+  assert.equal(cameraMotion(camera(), camera(0, { device_pixel_ratio: 1 })), Infinity);
+});
+
+test("settle gate waits for consecutive stable frames, then returns the settled camera", async () => {
+  const frames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((k) => ({
+    snapshot: camera(k < 4 ? k * 0.01 : 0.03 + k * 1e-15), frame_count: k * 3,
+  }));
+  const { read, opts } = sampler(frames);
+  const settled = await settleCamera(read, { ...opts, stableSamples: 3, minFrames: 6 });
+  assert.ok(settled.frame_count >= 6);
+  assert.ok(cameraMotion(settled.snapshot, camera(0.03)) < 1e-9);
+});
+
+test("camera that never settles fails with SETTLING_TIMEOUT and a diagnostic", async () => {
+  const frames = Array.from({ length: 100 }, (_, k) => ({ snapshot: camera(k * 0.01), frame_count: k }));
+  const { read, opts } = sampler(frames);
+  await assert.rejects(settleCamera(read, { ...opts, stableSamples: 3, minFrames: 6 }), (e) => {
+    assert.match(e.message, /^SETTLING_TIMEOUT:/);
+    assert.ok(e.diagnostic.max_motion > 1e-9 && e.diagnostic.samples > 0);
+    return true;
+  });
+});
+
+test("immutable window: only a settled, unchanged, zero-recompute window of 120 frames passes", () => {
+  const settled = { snapshot: camera(), frame_count: 40 };
+  const perf = { frame_count: 121, recompute_count: 0 };
+  assert.equal(assessImmutableWindow({ settled, end: camera(2e-15), perf }).pass, true);
+  assert.equal(assessImmutableWindow({ settled: null, end: camera(), perf }).code, "MEASURED_BEFORE_SETTLE");
+  assert.equal(assessImmutableWindow({ settled, end: camera(),
+    perf: { frame_count: 90, recompute_count: 0 } }).code, "IMMUTABLE_WINDOW_TOO_SHORT");
+  assert.equal(assessImmutableWindow({ settled, end: camera(1e-3), perf }).code, "CAMERA_CHANGED_AFTER_SETTLE");
+  assert.equal(assessImmutableWindow({ settled, end: camera(),
+    perf: { frame_count: 121, recompute_count: 2 } }).code, "IMMUTABLE_FRAME_RECOMPUTE");
 });

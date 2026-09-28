@@ -312,3 +312,77 @@ export async function pollUntil(read, predicate, {
   } while (now() <= deadline);
   throw new Error(`POLL_TIMEOUT:${JSON.stringify(last)}`);
 }
+
+/* ─── CAMERA SETTLING (w09) ─────────────────────────────────────────────────
+ * OrbitControls damping keeps rewriting the pose in its last ULPs after
+ * auto-fit (mobile: every frame, forever), so "settled" cannot mean
+ * byte-identical. Relative matrix motion ≤ 1e-9 moves a projected point by
+ * ≤ ~1e-6 px at ≤ 2000 physical px — far below the 0.5 px oracle tolerance —
+ * while any pose change a learner could see is orders of magnitude larger. */
+export const CAMERA_SETTLE_TOLERANCE = 1e-9;
+
+export function cameraMotion(a, b) {
+  if (!a || !b || a.viewport_width !== b.viewport_width || a.viewport_height !== b.viewport_height
+      || a.device_pixel_ratio !== b.device_pixel_ratio) return Infinity;
+  let worst = 0;
+  for (const key of ["view_matrix_column_major", "projection_matrix_column_major"]) {
+    a[key].forEach((value, index) => {
+      worst = Math.max(worst, Math.abs(value - b[key][index]) / Math.max(1, Math.abs(value)));
+    });
+  }
+  return worst;
+}
+
+/** Poll `read()` → `{snapshot, frame_count}` until the camera has stayed within
+ *  tolerance for `stableSamples` consecutive samples spanning ≥ `minFrames`
+ *  animation frames. Never settling is a failure with a diagnostic. */
+export async function settleCamera(read, {
+  stableSamples = 5, minFrames = 30, tolerance = CAMERA_SETTLE_TOLERANCE,
+  timeoutMs = 10_000, intervalMs = 50,
+  now = () => Date.now(),
+  pause = (ms) => new Promise((resolvePause) => setTimeout(resolvePause, ms)),
+} = {}) {
+  const deadline = now() + timeoutMs;
+  let previous = null;
+  let streakStart = null;
+  let streak = 0;
+  let samples = 0;
+  let maxMotion = 0;
+  let lastMotion = null;
+  do {
+    const current = await read();
+    samples += 1;
+    if (previous) {
+      lastMotion = cameraMotion(previous.snapshot, current.snapshot);
+      maxMotion = Math.max(maxMotion, lastMotion);
+      if (lastMotion <= tolerance) {
+        streak += 1;
+        streakStart ??= previous;
+      } else {
+        streak = 0;
+        streakStart = null;
+      }
+      if (streak >= stableSamples && current.frame_count - streakStart.frame_count >= minFrames) {
+        return { ...current, settle_samples: samples, settle_max_motion: maxMotion };
+      }
+    }
+    previous = current;
+    await pause(intervalMs);
+  } while (now() <= deadline);
+  const error = new Error(`SETTLING_TIMEOUT:${JSON.stringify({ samples, last_motion: lastMotion })}`);
+  error.diagnostic = { samples, streak, last_motion: lastMotion, max_motion: maxMotion, tolerance };
+  throw error;
+}
+
+/** The 120-frame window only means "immutable" after settling: zero
+ *  recomputation, and the camera at the end still equals the settled one. */
+export function assessImmutableWindow({ settled, end, perf, frames = 120 }) {
+  const details = { frames: perf?.frame_count ?? 0, recompute_count: perf?.recompute_count ?? null,
+    motion_since_settle: settled ? cameraMotion(settled.snapshot, end) : null };
+  const fail = (code) => ({ pass: false, code, ...details });
+  if (!settled) return fail("MEASURED_BEFORE_SETTLE");
+  if (details.frames < frames) return fail("IMMUTABLE_WINDOW_TOO_SHORT");
+  if (details.motion_since_settle > CAMERA_SETTLE_TOLERANCE) return fail("CAMERA_CHANGED_AFTER_SETTLE");
+  if (details.recompute_count !== 0) return fail("IMMUTABLE_FRAME_RECOMPUTE");
+  return { pass: true, code: "IMMUTABLE_WINDOW_PASS", ...details };
+}
