@@ -1,11 +1,12 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "CROSS_FAMILY_SCENE3D_PRODUCT_SEMANTIC_REPAIR",
-  "product_commit_sha": "5dd9f2b2851cdef64de0272f9a3d2b41bb05ad45",
-  "product_tree_sha": "5d8eb3af49a14a52e5fc3f9517ada06bbb4612711c0921b3ccdc1cb1971d4e2a",
+  "task_id": "CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR",
+  "product_commit_sha": "1dab0f7db516e8ce8eee1280ded4d220a10018d5",
+  "product_tree_sha": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
+  "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
-    { "id": "desktop", "width": 1440, "height": 900, "formation": true, "orbit": true },
-    { "id": "mobile", "width": 390, "height": 844, "formation": false, "orbit": false }
+    { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
+    { "id": "mobile", "width": 390, "height": 844, "formation": "representative", "orbit": true }
   ],
   "section_contract_gate": {
     "semantics": "requested_non_empty_section_must_fail_closed",
@@ -13,12 +14,12 @@
     "sources": [
       {
         "path": "backend/app/simulation/geometry/section.py",
-        "sha256": "7dc36a538247b94210989a300bfa1c3452a6181b60dd25e1644970a87076add3",
+        "sha256": "520a8ea68ac8ad2a9c58765e4057798c2bec75a2a9259671e819c1b209add198",
         "hash_basis": "git_blob_at_measurement_commit"
       },
       {
         "path": "backend/tests/geometry/test_section.py",
-        "sha256": "e12bea87c3ebafcae1d7db4a98a3d3cd563244984d73018676d3b680ada85ec2",
+        "sha256": "a346a644c24bc9ed7ea1cafecf3549cd0bf206396f65562f5048c5d558a63205",
         "hash_basis": "git_blob_at_measurement_commit"
       },
       {
