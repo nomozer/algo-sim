@@ -476,7 +476,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // have scheduled frames), so settle again right before resetting.
     const windowSettled = neutralSettled
       && await settleOrRecord(session, result, "immutable_window");
-    await session.eval(`window.__geo3d_reset_occlusion_performance?.()`);
+    // The published counters only refresh on the next rendered frame: zero them
+    // in the same task as the reset, or the poll reads the pre-reset window
+    // (seen in w09: frame_count 138 >= 120 before any window frame ran).
+    await session.eval(`(()=>{window.__geo3d_reset_occlusion_performance?.();`
+      + `window.__geo3d_occlusion_performance={frame_count:0,recompute_count:0}})()`);
     const { perf: immutable, camera: windowEnd } = await pollUntil(
       () => jsonEval(session, `({perf:window.__geo3d_occlusion_performance||{frame_count:0},`
         + `camera:window.__geo3d_camera_snapshot||null})`),
