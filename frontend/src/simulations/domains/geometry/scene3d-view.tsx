@@ -303,7 +303,11 @@ export function updateCanonicalEdgeVisibility(
 ): EdgeVisibilityAudit & {
   highlighted_render_owner_ids: string[];
   recomputed_solid_count: number;
+  recomputation_ms: number;
+  edge_count: number;
+  span_count: number;
 } {
+  const started = globalThis.performance?.now?.() ?? Date.now();
   const status = new Map<string, Set<"visible" | "hidden">>();
   const counts = new Map<string, number>();
   const highlighted = new Set<string>();
@@ -381,6 +385,9 @@ export function updateCanonicalEdgeVisibility(
     sample_count: sampleCount,
     highlighted_render_owner_ids: [...highlighted].sort(),
     recomputed_solid_count: recomputedSolidCount,
+    recomputation_ms: (globalThis.performance?.now?.() ?? Date.now()) - started,
+    edge_count: status.size,
+    span_count: allSpans.length,
   };
 }
 
@@ -975,7 +982,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       new Set(
         tuongTac?.selected_id
           ? highlightSet(scene, tuongTac.selected_id, true)
-          : highlightedAt(scene, buoc),
+          : buoc >= stepCount(scene) - 1 ? [] : highlightedAt(scene, buoc),
       ),
     [scene, tuongTac.selected_id, buoc],
   );
@@ -1169,8 +1176,46 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
         (window as any).__geo3d_mixed_edge_ids = edgeAudit.mixed_edge_ids;
         (window as any).__geo3d_duplicate_visual_owner_ids =
           edgeAudit.duplicate_visual_owner_ids;
+        (window as any).__geo3d_edge_spans = edgeAudit.edge_spans;
+        (window as any).__geo3d_camera_snapshot = {
+          position: cam.position.toArray(),
+          view_matrix_column_major: [...cam.matrixWorldInverse.elements],
+          projection_matrix_column_major: [...cam.projectionMatrix.elements],
+          viewport_width: renderer.domElement.clientWidth,
+          viewport_height: renderer.domElement.clientHeight,
+          device_pixel_ratio: renderer.getPixelRatio(),
+        };
         (window as any).__geo3d_highlighted_render_owner_ids =
           edgeAudit.highlighted_render_owner_ids;
+        const dashSignature: Record<string, string[]> = {};
+        goc.traverse((node) => {
+          const ownerId = node.userData?.visualOwnerId as string | undefined;
+          if (!ownerId || !(node as THREE.Group).isGroup) return;
+          dashSignature[ownerId] = node.children.map((child) =>
+            child.userData?.hidden === true ? "HIDDEN_DASHED" : "VISIBLE_SOLID");
+        });
+        (window as any).__geo3d_edge_dash_signature = dashSignature;
+        const perf = goc.userData.occlusionPerformance ?? {
+          frame_count: 0, recompute_count: 0, recomputation_times_ms: [],
+          edge_count: 0, triangle_count: 0, sample_count: 0, span_count: 0,
+        };
+        perf.frame_count += 1;
+        perf.recompute_count += edgeAudit.recomputed_solid_count;
+        if (edgeAudit.recomputed_solid_count > 0) {
+          perf.recomputation_times_ms.push(edgeAudit.recomputation_ms);
+        }
+        perf.edge_count = edgeAudit.edge_count;
+        perf.triangle_count = edgeAudit.triangle_count;
+        perf.sample_count = edgeAudit.sample_count;
+        perf.span_count = edgeAudit.span_count;
+        goc.userData.occlusionPerformance = perf;
+        (window as any).__geo3d_occlusion_performance = { ...perf };
+        (window as any).__geo3d_reset_occlusion_performance = () => {
+          goc.userData.occlusionPerformance = {
+            frame_count: 0, recompute_count: 0, recomputation_times_ms: [],
+            edge_count: 0, triangle_count: 0, sample_count: 0, span_count: 0,
+          };
+        };
       }
       renderer.render(scene3, cam);
       chieuNhan();

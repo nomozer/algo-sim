@@ -305,7 +305,7 @@ async function observeTree(session, scene, expectedIds) {
   return { objects: checks, pass: checks.every((item) => item.pass) };
 }
 
-async function formationEvidence(session, scene, outDir) {
+async function formationEvidence(session, scene, outDir, captureMode = "full") {
   await goToStart(session);
   const steps = [];
   const observations = { forward: [], backward: [] };
@@ -325,7 +325,12 @@ async function formationEvidence(session, scene, outDir) {
     const expectedReadoutIds = expectedReadoutObjects.map((object) => object.id).sort();
     const actualReadoutIds = expectedReadoutObjects.filter((object) =>
       readoutTexts.includes(object.notation || object.label)).map((object) => object.id).sort();
-    const image = await capture(session, join(outDir, `formation_step_${index}.png`));
+    const representative = Math.floor((stepTotal - 1) / 2);
+    const shouldCapture = captureMode === "full" || index === representative;
+    const image = shouldCapture
+      ? await capture(session, join(outDir,
+          index === representative ? "formation_current_step.png" : `formation_step_${index}.png`))
+      : null;
     const canvas = await canvasHash(session);
     const learnerText = await session.eval(
       `document.querySelector('.geo3d-buoc-loi')?.textContent||''`,
@@ -410,24 +415,57 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const css = await cssReadiness(session, viewport);
     result.css_readiness = css;
     result.assertions.css_readiness = assertion(css.pass, css.checks);
+    result.canvas_box = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
 
     const edgeDefault = await pollUntil(
       () => jsonEval(session, `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
         + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
         + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],`
+        + `edge_spans:window.__geo3d_edge_spans||[],`
         + `duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[],`
-        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`),
+        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
+        + `selected_id:window.__geo3d_selected_id||null,`
+        + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
       (edge) => edge.visible_edge_ids.length > 0 && edge.hidden_edge_ids.length > 0,
       { timeoutMs: 8_000 },
     );
-    result.edge_semantics_default = edgeDefault;
+    result.edge_semantics_neutral_final = edgeDefault;
+    const neutralCamera = await jsonEval(session, `window.__geo3d_camera_snapshot||null`);
+    result.camera_snapshots = {
+      neutral_final: { snapshot: neutralCamera, sha256: sha256(JSON.stringify(neutralCamera)) },
+    };
+    result.scene3d_envelope_sha256 = sha256(JSON.stringify(scene));
+    result.assertions.neutral_has_no_emphasis = assertion(
+      edgeDefault.selected_id === null && edgeDefault.highlighted_render_owner_ids.length === 0,
+      edgeDefault,
+    );
     const visibleText = await session.eval(`document.body.innerText||''`);
     result.raw_token_leakage = detectRawTokenLeakage(scene, visibleText);
     result.formula_entity_coherence = validateFormulaReferences(scene);
 
     // Default phải được chụp trước causal/orbit/formation.
-    result.screenshots.default = await capture(session, join(outDir, "default.png"));
-    result.capture_order.push("default");
+    result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
+    result.capture_order.push("neutral_final");
+    await session.eval(`window.__geo3d_reset_occlusion_performance?.()`);
+    const immutable = await pollUntil(
+      () => jsonEval(session, `window.__geo3d_occlusion_performance||{frame_count:0}`),
+      (value) => value.frame_count >= 120,
+      { timeoutMs: 8_000, intervalMs: 20 },
+    );
+    const timings = [...(immutable.recomputation_times_ms ?? [])].sort((a, b) => a - b);
+    const percentile = (p) => timings.length
+      ? timings[Math.min(timings.length - 1, Math.floor((timings.length - 1) * p))] : 0;
+    result.occlusion_performance = {
+      ...immutable,
+      median_recomputation_ms: percentile(0.5),
+      p95_recomputation_ms: percentile(0.95),
+      max_recomputation_ms: timings.at(-1) ?? 0,
+      immutable_frame_recomputations: immutable.recompute_count,
+    };
+    result.assertions.immutable_120_frames = assertion(
+      immutable.frame_count >= 120 && immutable.recompute_count === 0,
+      result.occlusion_performance,
+    );
     const causalBeforeFrame = await canvasFrame(session);
     const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
@@ -444,7 +482,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const causalState = await pollUntil(
       () => jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
         + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
-        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`),
+        + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
+        + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
       (state) => state.selected_id === scenario.causal_target_id
         && state.highlighted_render_owner_ids.length > 0,
       { timeoutMs: 8_000 },
@@ -466,23 +505,35 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         !== JSON.stringify(causalState.highlighted_render_owner_ids),
       canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
       pixel_delta: delta,
+      dash_signature_preserved:
+        JSON.stringify(edgeDefault.dash_signature) === JSON.stringify(causalState.dash_signature),
     };
     causal.pass = causal.pass && causalState.selected_id === scenario.causal_target_id
       && causal.visual.selected_changed && causal.visual.closure_changed
-      && causal.visual.render_owners_changed && causal.visual.canvas_changed && delta.pass;
+      && causal.visual.render_owners_changed && causal.visual.canvas_changed && delta.pass
+      && causal.visual.dash_signature_preserved;
     result.causal_closure = causal;
     result.assertions.causal_closure = assertion(causal.pass, causal);
-    result.screenshots.causal = await capture(session, join(outDir, "causal_closure.png"));
-    result.capture_order.push("causal");
+    result.screenshots.causal_selected = await capture(session, join(outDir, "causal_selected.png"));
+    result.capture_order.push("causal_selected");
 
     await clickText(session, "Xem lại toàn hình");
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
       (id) => id === null, { timeoutMs: 5_000 });
+    const resetEmphasis = await jsonEval(session,
+      `({selected_id:window.__geo3d_selected_id||null,highlighted_ids:window.__geo3d_highlighted_ids||[],`
+      + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`);
+    result.assertions.emphasis_reset_before_rotation = assertion(
+      resetEmphasis.selected_id === null && resetEmphasis.highlighted_render_owner_ids.length === 0,
+      resetEmphasis,
+    );
     await goToEnd(session);
     if (viewport.orbit) {
       const before = await projectedLabels(session);
       const hiddenBefore = await jsonEval(session,
-        `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`);
+        `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
+        + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
+        + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],edge_spans:window.__geo3d_edge_spans||[]})`);
       const gestures = [
         { dx: 190, dy: 48, startX: 0.52, startY: 0.48 },
         { dx: -170, dy: 84, startX: 0.67, startY: 0.42 },
@@ -496,7 +547,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           observedOrbit = await pollUntil(async () => ({
             points: await projectedLabels(session),
             sets: await jsonEval(session,
-              `({visible:window.__geo3d_visible_edge_ids||[],hidden:window.__geo3d_hidden_edge_ids||[]})`),
+              `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
+              + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
+              + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],`
+              + `edge_spans:window.__geo3d_edge_spans||[]})`),
           }), (observed) => projectionComparison(before, observed.points).moved_ids.length >= 2
             && JSON.stringify(observed.sets) !== JSON.stringify(hiddenBefore),
           { timeoutMs: 4_000 });
@@ -509,21 +563,30 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify(attempts)}`);
       const after = observedOrbit.points;
       const hiddenAfter = observedOrbit.sets;
+      const rotatedCamera = await jsonEval(session, `window.__geo3d_camera_snapshot||null`);
+      result.camera_snapshots.rotated_neutral = {
+        snapshot: rotatedCamera,
+        sha256: sha256(JSON.stringify(rotatedCamera)),
+      };
       const orbit = projectionComparison(before, after);
       orbit.attempts = attempts;
       orbit.visibility_before = hiddenBefore;
       orbit.visibility_after = hiddenAfter;
+      result.edge_semantics_rotated_neutral = hiddenAfter;
       orbit.visibility_recomputed = JSON.stringify(hiddenBefore) !== JSON.stringify(hiddenAfter);
       orbit.pass = orbit.pass && orbit.visibility_recomputed;
       result.orbit = orbit;
       result.assertions.orbit = assertion(orbit.pass, orbit);
-      result.screenshots.rotated = await capture(session, join(outDir, "rotated.png"));
+      result.screenshots.rotated_neutral = await capture(session, join(outDir, "rotated_neutral.png"));
       await clickText(session, "Xem lại toàn hình");
     }
 
     if (viewport.formation) {
       await clickText(session, "Xem lại toàn hình");
-      result.formation = await formationEvidence(session, scene, join(outDir, "formation"));
+      result.formation = await formationEvidence(
+        session, scene, join(outDir, "formation"),
+        viewport.formation === "representative" ? "representative" : "full",
+      );
       result.assertions.formation = assertion(result.formation.pass, {
         steps: result.formation.steps.length,
         distinct_canvas_frames: result.formation.distinct_canvas_frames,
@@ -553,6 +616,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         render_owners_changed: causal.visual.render_owners_changed,
         canvas_changed: causal.visual.canvas_changed,
         bounded_pixel_delta: causal.visual.pixel_delta.pass,
+        dash_signature_preserved: causal.visual.dash_signature_preserved,
       },
       capture_order: result.capture_order,
       formation_required: Boolean(viewport.formation),

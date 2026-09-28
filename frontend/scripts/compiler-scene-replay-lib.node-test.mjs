@@ -153,7 +153,7 @@ function passingFacts() {
     orbit_visibility_changed: true,
     causal: {
       selected_changed: true, closure_changed: true, render_owners_changed: true,
-      canvas_changed: true, bounded_pixel_delta: true,
+      canvas_changed: true, bounded_pixel_delta: true, dash_signature_preserved: true,
     },
     capture_order: ["default", "causal"],
     formation_required: true,
@@ -179,6 +179,8 @@ test("all required fault injections fail with their exact reason code", () => {
       "CAUSAL_CANVAS_UNCHANGED"],
     ["default-after-causal", (f) => { f.capture_order = ["causal", "default"]; },
       "DEFAULT_CAPTURE_AFTER_CAUSAL"],
+    ["highlight-dash-overwrite", (f) => { f.causal.dash_signature_preserved = false; },
+      "HIGHLIGHT_DASH_OVERWRITE"],
     ["future-object", (f) => { f.formation.future_object_leakage = ["V"]; },
       "FUTURE_OBJECT_LEAK"],
     ["raw-id", (f) => { f.raw_token_leakage.leaked_tokens = ["the_tich_khoi"]; },

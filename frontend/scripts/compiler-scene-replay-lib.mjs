@@ -207,9 +207,13 @@ export function evaluateEvidenceGates(facts) {
   if (facts.causal?.render_owners_changed !== true) reasons.push("CAUSAL_RENDER_OWNERS_UNCHANGED");
   if (facts.causal?.canvas_changed !== true) reasons.push("CAUSAL_CANVAS_UNCHANGED");
   if (facts.causal?.bounded_pixel_delta !== true) reasons.push("CAUSAL_PIXEL_DELTA_UNBOUNDED");
+  if (facts.causal?.dash_signature_preserved !== true) reasons.push("HIGHLIGHT_DASH_OVERWRITE");
   const order = facts.capture_order ?? [];
-  if (order.indexOf("default") < 0 || order.indexOf("causal") < 0
-      || order.indexOf("default") > order.indexOf("causal")) {
+  const neutral = order.indexOf("neutral_final") >= 0
+    ? order.indexOf("neutral_final") : order.indexOf("default");
+  const causal = order.indexOf("causal_selected") >= 0
+    ? order.indexOf("causal_selected") : order.indexOf("causal");
+  if (neutral < 0 || causal < 0 || neutral > causal) {
     reasons.push("DEFAULT_CAPTURE_AFTER_CAUSAL");
   }
   if ((facts.formation?.future_object_leakage ?? []).length > 0) {
