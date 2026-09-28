@@ -335,7 +335,19 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
     // không đổi một mệnh đề toán học nào — đó là bằng chứng chúng đúng chỗ.
     expect(PLANE_DISPLAY_SIZE).toBeGreaterThan(0);
     expect(LINE_DISPLAY_HALF_LENGTH).toBeGreaterThan(0);
-    expect(model).not.toMatch(/boundary|corners|extent/);
+    // Soi TÊN TRƯỜNG khai báo, không soi mọi chữ: bản cũ cấm cả chuỗi con
+    // `boundary`, nên bắt oan `boundary_edge_ids` — danh sách ID cạnh (topo),
+    // không phải một biên hình học. Biên hình học vẫn bị cấm như trước.
+    const truongKhai = (src: string) =>
+      [...src.matchAll(/^\s*(?:readonly\s+)?([A-Za-z_]\w*)\??\s*:/gm)].map((m) => m[1]);
+    const BIEN_HINH_HOC = new Set(["boundary", "corners", "extent", "bounds"]);
+    const cam = (src: string) => truongKhai(src).filter((n) => BIEN_HINH_HOC.has(n));
+    expect(cam("  boundary: Vec3[];\n  corners?: string[];\n  extent: number;"))
+      .toEqual(["boundary", "corners", "extent"]);
+    expect(cam("  boundary_edge_ids?: string[];\n  // boundary: chỉ là lời bình")).toEqual([]);
+    expect(truongKhai(model), "cửa sổ chứng: bộ đọc phải thấy trường thật")
+      .toContain("boundary_edge_ids");
+    expect(cam(model)).toEqual([]);
   });
 });
 
