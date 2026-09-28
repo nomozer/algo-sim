@@ -29,6 +29,7 @@ import {
   setStep,
   show,
   showAll,
+  tangNhanManh,
   taoTrangThai,
   visualTransformOf,
 } from "./interaction-state";
@@ -230,6 +231,20 @@ describe("H · tô sáng phụ thuộc", () => {
 
   it("chọn V ⇒ tô V và khối, KHÔNG tô các đỉnh (gián tiếp)", () => {
     expect(highlightSet(CANH, "V")).toEqual(["V", "chop"]);
+  });
+});
+
+// ══ H2 · tầng nhấn mạnh của chuỗi nhân quả (w10) ════════════════════════
+describe("H2 · tầng nhấn mạnh causal", () => {
+  it("chọn V: V là đích, khối là trung gian, bốn đỉnh là dữ kiện", () => {
+    expect(Object.fromEntries(tangNhanManh(CANH, "V"))).toEqual({
+      V: "dich", chop: "trung_gian", A: "du_kien", B: "du_kien", C: "du_kien", S: "du_kien",
+    });
+  });
+
+  it("vật ngoài bao đóng KHÔNG có tầng (renderer làm dịu nó)", () => {
+    expect(tangNhanManh(CANH, "M").has("chop")).toBe(false);
+    expect(tangNhanManh(CANH, "M").has("C")).toBe(false);
   });
 });
 

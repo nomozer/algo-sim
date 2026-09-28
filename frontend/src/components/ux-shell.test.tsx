@@ -309,6 +309,18 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     expect(khoi).toMatch(/\.geo3d-san:has\(\.geo3d-soi\)[^}]*grid-template-columns/s);
   });
 
+  /* w10 — ảnh 390×844: ô soi neo đáy SÂN KHẤU, mà sân khấu chứa cả dòng số đo
+     lẫn thanh điều khiển ⇒ nó che đúng dòng đáp số đang chọn và nút "Xem lại".
+     Khổ hẹp: ô soi chảy DƯỚI sân khấu, không phủ lên gì. */
+  it("ô soi ở khổ hẹp nằm dưới sân khấu, không phủ lên số đo và nút điều khiển", () => {
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
+    const i = css.indexOf("@media (max-width: 48rem)");
+    // Cắt tới `@media` KẾ TIẾP — không tới "\n}\n": file CRLF làm mốc ấy trượt
+    // sang khối 1100px (vốn cũng có `.geo3d-soi … static`) và test xanh oan.
+    const khoi = css.slice(i, css.indexOf("@media", i + 1));
+    expect(khoi).toMatch(/\n\s*\.geo3d-soi \{[^}]*position:\s*static/s);
+  });
+
   it("một khay điều khiển trên một màn hình — khay 2D ẩn khi cảnh là 3D", () => {
     const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
     // Hai trạng thái bước THẬT SỰ khác nhau (store vs InteractionState), nên

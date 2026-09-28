@@ -120,6 +120,16 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).toContain('type="range"');
   });
 
+  it("bước cuối ⇒ nút Phát thành Xem lại, bấm được (w10)", () => {
+    // Trước w10 nút Phát bị vô hiệu ở bước cuối: không có đường nào để học
+    // sinh xem lại quá trình ngoài việc kéo thanh bước về đầu.
+    const html = renderToString(<Scene3DPlayer scene={scene()} initialStep={1} />);
+    const nut = /<button[^>]*aria-label="Xem lại quá trình dựng"[^>]*>/.exec(html)?.[0];
+    expect(nut, "thiếu nút Xem lại ở bước cuối").toBeTruthy();
+    expect(nut).not.toContain("disabled");
+    expect(html).not.toContain("aria-label=\"Phát lại quá trình dựng\"");
+  });
+
   it("bước đầu ⇒ nút lùi bị vô hiệu", () => {
     const html = renderToString(<Scene3DPlayer scene={scene()} />);
     expect(html).toMatch(/Bước trước[\s\S]{0,80}/);

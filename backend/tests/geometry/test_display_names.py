@@ -188,17 +188,60 @@ def test_ky_hieu_ghep_tu_ky_hieu_cua_toan_hang(dd):
 def test_thieu_MOT_ky_hieu_toan_hang_thi_HONG_CA(dd):
     """Fail-closed, và đây là ca chứng minh nó.
 
-    `chop` trong hợp đồng này KHÔNG được mô hình đặt nhãn, và không phép ghép
-    nào dựng lại được ký hiệu `S.ABCD` — thứ tự đỉnh–đáy không suy ra từ bảng
-    mặt. Nên `V(…)` thiếu toán hạng, và câu trả lời đúng là **không có ký
-    hiệu**, không phải `V(chop)` hay `V(?)`.
+    `chop` trong hợp đồng này KHÔNG được mô hình đặt nhãn. Trước w10 không phép
+    ghép nào dựng lại được `S.ABCD`, nên câu trả lời đúng là không có ký hiệu.
+    Từ w10 thứ tự đỉnh–đáy SUY RA được từ bảng mặt (đỉnh chóp là đỉnh duy nhất
+    nằm ngoài một mặt chứa mọi đỉnh còn lại — `display_names._phan_loai_khoi`),
+    nên `S.ABCD` là ký hiệu DẪN XUẤT, không phải bịa. Fail-closed vẫn nguyên cho
+    khối KHÔNG nhận ra được: xem `test_khoi_la_KHONG_duoc_dat_ky_hieu`.
 
     `(M?P)` trông như một ký hiệu thật và tệ hơn hẳn không có ký hiệu nào.
     """
-    assert dd["chop"]["notation"] is None
-    assert dd["V"]["notation"] is None
-    # …nhưng TÊN thì vẫn phải có: hai vai độc lập nhau.
+    assert dd["chop"]["notation"] == "S.ABCD"
+    assert dd["V"]["notation"] == "V(S.ABCD)"
+    # …và TÊN vẫn là một câu, không phải ký hiệu trần: hai vai độc lập nhau.
     assert dd["V"]["label"] != "V"
+
+
+def test_khoi_la_KHONG_duoc_dat_ky_hieu():
+    """Khối topology không nhận ra (song tháp tam giác: 5 đỉnh, 6 mặt tam giác)
+    ⇒ không loại, không ký hiệu ghép — fail-closed như trước w10."""
+    from app.simulation.geometry import Vec3
+    from app.simulation.semantic_program.display_names import _phan_loai_khoi, ten_hien_thi
+
+    v = [Vec3.of(0, 0, 0), Vec3.of(2, 0, 0), Vec3.of(0, 2, 0), Vec3.of(0, 0, 3), Vec3.of(0, 0, -3)]
+    f = [[0, 1, 3], [1, 2, 3], [2, 0, 3], [0, 1, 4], [1, 2, 4], [2, 0, 4]]
+    assert _phan_loai_khoi(v, f) is None
+    names = ["A", "B", "C", "P", "Q"]
+    info = {n: {"type": "point3", "producer": None, "sources": [], "label": n} for n in names}
+    info["k"] = {"type": "solid", "producer": "construct_solid", "sources": names,
+                 "label": None, "solid": {"vertices": v, "faces": f}}
+    assert ten_hien_thi(info)["k"]["notation"] is None
+
+
+@pytest.mark.parametrize("hinh,loai", [
+    ("chop", "pyramid"), ("lang_tru_xien", "prism"), ("lang_tru_dung", "right_prism"),
+    ("hop", "cuboid"), ("lap_phuong", "cube"),
+])
+def test_loai_khoi_suy_tu_TOPOLOGY(hinh, loai):
+    from app.simulation.geometry import Vec3
+    from app.simulation.semantic_program.display_names import _phan_loai_khoi
+
+    day = [Vec3.of(0, 0, 0), Vec3.of(2, 0, 0), Vec3.of(2, 3, 0), Vec3.of(0, 3, 0)]
+    if hinh == "chop":
+        v, f = day + [Vec3.of(0, 0, 4)], [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]]
+    else:
+        cao = {"lang_tru_xien": Vec3.of(1, 1, 4), "lang_tru_dung": Vec3.of(0, 0, 4),
+               "hop": Vec3.of(0, 0, 5), "lap_phuong": Vec3.of(0, 0, 2)}[hinh]
+        if hinh == "lap_phuong":
+            day = [Vec3.of(0, 0, 0), Vec3.of(2, 0, 0), Vec3.of(2, 2, 0), Vec3.of(0, 2, 0)]
+        v = day + [p + cao for p in day]
+        f = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]
+        if hinh == "lang_tru_dung":  # đáy tam giác vuông, không phải chữ nhật
+            v = [Vec3.of(0, 0, 0), Vec3.of(3, 0, 0), Vec3.of(0, 4, 0)]
+            v = v + [p + cao for p in v]
+            f = [[0, 1, 2], [3, 4, 5], [0, 1, 4, 3], [1, 2, 5, 4], [2, 0, 3, 5]]
+    assert _phan_loai_khoi(v, f)[0] == loai
 
 
 def test_nhan_mo_hinh_dat_ĐƯỢC_nhan_la_ky_hieu_khi_no_dung_la_ky_hieu():
