@@ -354,8 +354,9 @@ export function semanticTree(scene: Scene3D): TreeNode[] {
     scene.objects.filter((o) => o.type === "solid").map((o) => o.id),
   );
   for (const o of scene.objects) {
-    // Bí danh đáp số là MỘT kết luận với nguồn, cùng nhãn — không thành dòng thứ hai.
-    if (o.alias_of) continue;
+    // Bí danh ĐÁP SỐ (không hiện ở đâu) là MỘT kết luận với nguồn — không thành
+    // dòng thứ hai. Bí danh vẫn hiện (AD := AB ở hình lập phương) giữ dòng riêng.
+    if (o.alias_of && o.render === "non_visual") continue;
     if (o.parent && laKhoi.has(o.parent)) {
       const ds = con.get(o.parent) ?? [];
       ds.push(o);

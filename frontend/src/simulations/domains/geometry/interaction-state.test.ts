@@ -404,6 +404,18 @@ describe("cây phân rã ngữ nghĩa", () => {
     expect(ids).not.toContain("v");
   });
 
+  /* …nhưng bí danh VẪN HIỆN (hình lập phương: AD := AB, AA′ := AB là dữ kiện có
+     dòng số đo riêng) phải giữ dòng của nó — lượt đo w10 thứ 4 bắt được bản
+     sửa đầu đã xoá AD, AA′ khỏi cây. */
+  it("bí danh vẫn hiện trên số đo giữ dòng riêng trong cây", () => {
+    const voiBiDanh = { ...CANH, objects: [...CANH.objects,
+      { ...CANH.objects.find((o) => o.id === "V")!, id: "AD", label: "AD", alias_of: "V" }] } as Scene3D;
+    const ids: string[] = [];
+    const di = (ns: ReturnType<typeof semanticTree>) => ns.forEach((n) => { ids.push(n.id); di(n.children); });
+    di(semanticTree(voiBiDanh));
+    expect(ids).toContain("AD");
+  });
+
   it("KHÔNG dựng hạng mục rỗng", () => {
     const cay = semanticTree(CANH);
     const di = (ns: ReturnType<typeof semanticTree>): boolean =>
