@@ -1,0 +1,56 @@
+{
+  "schema_version": "generic-tier-a-fixtures/1",
+  "product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "product_tree_sha": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "application_llm_calls": 0,
+  "fixtures": {
+    "cross_section_negative.json": {
+      "sha256": "c4e7ccc826d268deea822380ae2ca04f2f3beccd298cc3d61b905052f61545b7",
+      "bytes": 1894
+    },
+    "cross_section_positive.json": {
+      "sha256": "b4da4f0a6b3f209b2caf5566bbbe9fbd78601d71f3c7c21de3199f57f3e4ec0b",
+      "bytes": 61925
+    },
+    "cube_negative.json": {
+      "sha256": "f1acc74d2a6f2b9e23f4b8f17528cf72963c4b31d91e68c936d13e04924e963c",
+      "bytes": 1291
+    },
+    "cube_positive.json": {
+      "sha256": "4d99340191dc98a1e14cd8468c60ba8df57ba5740bf4609923b55a7ce26234cd",
+      "bytes": 62886
+    },
+    "cuboid_negative.json": {
+      "sha256": "d0cbca58d7b82385cb99b614d759057b26dff330a735366a07d08933a08bc9ad",
+      "bytes": 1313
+    },
+    "cuboid_positive.json": {
+      "sha256": "ed2677d39c5c136e1325104fff29e4016295e724bc7eba18f3d3587a2a17430e",
+      "bytes": 59984
+    },
+    "rectangular_pyramid_negative.json": {
+      "sha256": "0ee80ec76a24f24c3502fc40955034a3f1a04754c882d29b7b4e7e4fa8e61956",
+      "bytes": 1374
+    },
+    "rectangular_pyramid_positive.json": {
+      "sha256": "1d2c64ba8d937da7621524ef927fc4e7bc7a99d3ab1a3d0c53b34b72a82bffe2",
+      "bytes": 45557
+    },
+    "triangular_prism_negative.json": {
+      "sha256": "f1a4f0e77176a450e1f2334484fc7e243c5aeb3e5c22e35805a0a3ed1516aab4",
+      "bytes": 1356
+    },
+    "triangular_prism_positive.json": {
+      "sha256": "9f648c3cb29df8a160d4b07195877d63f3f2d583501dea630e58a8f4d53ee99a",
+      "bytes": 36225
+    },
+    "triangular_pyramid_negative.json": {
+      "sha256": "1db6f0b9e6329fae242a89b112e965d7e5b8fcf635ba17c9bac22e60ac23d974",
+      "bytes": 1362
+    },
+    "triangular_pyramid_positive.json": {
+      "sha256": "d0bceeac716570dc20752665a447af2d984f9c8ca0652e05266f9c648f98954a",
+      "bytes": 31736
+    }
+  }
+}

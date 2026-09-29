@@ -1,0 +1,1322 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_prism",
+  "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+  "source": "deterministic_compiler_production_route",
+  "product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "product_tree_sha": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Thể tích khối lăng trụ đứng có đáy là tam giác vuông",
+    "description": "Thể tích khối lăng trụ đứng có đáy là tam giác vuông",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Thể tích khối lăng trụ đứng có đáy là tam giác vuông",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng đa giác Tam giác đáy dưới.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Dựng khối đa diện từ 6 đỉnh và 5 mặt.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Tính diện tích của hình đã dựng: 6.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 4,
+          "narration": "Tính thể tích khối: 30.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Ghi nhận giá trị vừa tính được: 30.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng đa giác Tam giác đáy dưới."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Dựng khối đa diện từ 6 đỉnh và 5 mặt."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Tính diện tích của hình đã dựng: 6."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Tính thể tích khối: 30."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Ghi nhận giá trị vừa tính được: 30."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "AB_length",
+          "label": "AB",
+          "notation": "AB",
+          "reference": "AB",
+          "role": "Độ dài cho trong đề",
+          "display_label": "AB",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "fact_len_AB",
+            "provenance": "GIVEN"
+          },
+          "value": "3",
+          "exact": {
+            "kind": "rational",
+            "value": "3"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "AB = 3",
+            "references": []
+          }
+        },
+        {
+          "id": "AC_length",
+          "label": "AC",
+          "notation": "AC",
+          "reference": "AC",
+          "role": "Độ dài cho trong đề",
+          "display_label": "AC",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "fact_len_AC",
+            "provenance": "GIVEN"
+          },
+          "value": "4",
+          "exact": {
+            "kind": "rational",
+            "value": "4"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "AC = 4",
+            "references": []
+          }
+        },
+        {
+          "id": "AD_length",
+          "label": "AD",
+          "notation": "AD",
+          "reference": "AD",
+          "role": "Độ dài cho trong đề",
+          "display_label": "AD",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "fact_len_AD",
+            "provenance": "GIVEN"
+          },
+          "value": "5",
+          "exact": {
+            "kind": "rational",
+            "value": "5"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "AD = 5",
+            "references": []
+          }
+        },
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm",
+          "display_label": "Điểm B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "3",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "reference": "C",
+          "role": "Điểm",
+          "display_label": "Điểm C",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "0",
+            "4",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "reference": "D",
+          "role": "Điểm",
+          "display_label": "Điểm D",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "5"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "E",
+          "label": "Điểm E",
+          "notation": "E",
+          "reference": "E",
+          "role": "Điểm",
+          "display_label": "Điểm E",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "3",
+            "0",
+            "5"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "F",
+          "label": "Điểm F",
+          "notation": "F",
+          "reference": "F",
+          "role": "Điểm",
+          "display_label": "Điểm F",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "xyz": [
+            "0",
+            "4",
+            "5"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "day_ABC",
+          "label": "Tam giác đáy dưới",
+          "notation": "ABC",
+          "reference": "ABC",
+          "role": "Đa giác A, B, C",
+          "display_label": "Tam giác đáy dưới",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": "solid_ABCDEF",
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C"
+          ],
+          "occludes_edges": false,
+          "surface_role": "BASE_REGION",
+          "boundary_edge_ids": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:A-C"
+          ]
+        },
+        {
+          "id": "solid_ABCDEF",
+          "label": "Lăng trụ đứng ABC.DEF",
+          "notation": "ABC.DEF",
+          "reference": "ABC.DEF",
+          "role": "Hai đáy ABC và DEF",
+          "display_label": "Lăng trụ đứng ABC.DEF",
+          "type": "solid",
+          "render": "mesh",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "D",
+              "relation": "topological"
+            },
+            {
+              "source_id": "E",
+              "relation": "topological"
+            },
+            {
+              "source_id": "F",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "solid",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_solid"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "4",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "5"
+            ],
+            [
+              "3",
+              "0",
+              "5"
+            ],
+            [
+              "0",
+              "4",
+              "5"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "faces": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              3,
+              4,
+              5
+            ],
+            [
+              0,
+              1,
+              4,
+              3
+            ],
+            [
+              1,
+              2,
+              5,
+              4
+            ],
+            [
+              2,
+              0,
+              3,
+              5
+            ]
+          ],
+          "edge_ownership": [
+            {
+              "edge_id": "solid_ABCDEF::edge:A-B",
+              "endpoint_ids": [
+                "A",
+                "B"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:0",
+                "solid_ABCDEF::face:2"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:B-C",
+              "endpoint_ids": [
+                "B",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:0",
+                "solid_ABCDEF::face:3"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "endpoint_ids": [
+                "A",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:0",
+                "solid_ABCDEF::face:4"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:D-E",
+              "endpoint_ids": [
+                "D",
+                "E"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:1",
+                "solid_ABCDEF::face:2"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:E-F",
+              "endpoint_ids": [
+                "E",
+                "F"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:1",
+                "solid_ABCDEF::face:3"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:D-F",
+              "endpoint_ids": [
+                "D",
+                "F"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:1",
+                "solid_ABCDEF::face:4"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:B-E",
+              "endpoint_ids": [
+                "B",
+                "E"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:2",
+                "solid_ABCDEF::face:3"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-D",
+              "endpoint_ids": [
+                "A",
+                "D"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:2",
+                "solid_ABCDEF::face:4"
+              ]
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:C-F",
+              "endpoint_ids": [
+                "C",
+                "F"
+              ],
+              "adjacent_surface_ids": [
+                "solid_ABCDEF::face:3",
+                "solid_ABCDEF::face:4"
+              ]
+            }
+          ],
+          "surfaces": [
+            {
+              "surface_id": "solid_ABCDEF::face:0",
+              "vertex_indices": [
+                0,
+                1,
+                2
+              ],
+              "boundary_edge_ids": [
+                "solid_ABCDEF::edge:A-B",
+                "solid_ABCDEF::edge:B-C",
+                "solid_ABCDEF::edge:A-C"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "solid_ABCDEF::face:1",
+              "vertex_indices": [
+                3,
+                4,
+                5
+              ],
+              "boundary_edge_ids": [
+                "solid_ABCDEF::edge:D-E",
+                "solid_ABCDEF::edge:E-F",
+                "solid_ABCDEF::edge:D-F"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "solid_ABCDEF::face:2",
+              "vertex_indices": [
+                0,
+                1,
+                4,
+                3
+              ],
+              "boundary_edge_ids": [
+                "solid_ABCDEF::edge:A-B",
+                "solid_ABCDEF::edge:B-E",
+                "solid_ABCDEF::edge:D-E",
+                "solid_ABCDEF::edge:A-D"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "solid_ABCDEF::face:3",
+              "vertex_indices": [
+                1,
+                2,
+                5,
+                4
+              ],
+              "boundary_edge_ids": [
+                "solid_ABCDEF::edge:B-C",
+                "solid_ABCDEF::edge:C-F",
+                "solid_ABCDEF::edge:E-F",
+                "solid_ABCDEF::edge:B-E"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "solid_ABCDEF::face:4",
+              "vertex_indices": [
+                2,
+                0,
+                3,
+                5
+              ],
+              "boundary_edge_ids": [
+                "solid_ABCDEF::edge:A-C",
+                "solid_ABCDEF::edge:A-D",
+                "solid_ABCDEF::edge:D-F",
+                "solid_ABCDEF::edge:C-F"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            }
+          ]
+        },
+        {
+          "id": "dien_tich_day_ABC",
+          "label": "Diện tích ABC",
+          "notation": "S(ABC)",
+          "reference": "S(ABC)",
+          "role": "Diện tích",
+          "display_label": "Diện tích ABC",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "AB_length",
+            "AC_length",
+            "day_ABC"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "AB_length",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "AC_length",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "day_ABC",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "value": "6",
+          "exact": {
+            "kind": "rational",
+            "value": "6"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "S(ABC) = 6",
+            "references": []
+          }
+        },
+        {
+          "id": "the_tich_solid_ABCDEF",
+          "label": "Thể tích ABC.DEF",
+          "notation": "V(ABC.DEF)",
+          "reference": "V(ABC.DEF)",
+          "role": "Thể tích khối",
+          "display_label": "Thể tích ABC.DEF",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "AD_length",
+            "dien_tich_day_ABC",
+            "solid_ABCDEF"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "AD_length",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "dien_tich_day_ABC",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "solid_ABCDEF",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "value": "30",
+          "exact": {
+            "kind": "rational",
+            "value": "30"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "V = S(ABC) × AD = 30",
+            "references": [
+              {
+                "entity_id": "dien_tich_day_ABC",
+                "display_label": "S(ABC)",
+                "relation": "numerical"
+              },
+              {
+                "entity_id": "AD_length",
+                "display_label": "AD",
+                "relation": "numerical"
+              }
+            ]
+          }
+        },
+        {
+          "id": "the_tich_lang_tru",
+          "label": "Thể tích ABC.DEF",
+          "notation": "V(ABC.DEF)",
+          "reference": "V(ABC.DEF)",
+          "role": "Kết quả cuối",
+          "display_label": "Thể tích ABC.DEF",
+          "type": "quantity",
+          "render": "non_visual",
+          "display_role": "non_visual",
+          "origin": "derived",
+          "producer": "assign",
+          "depends": [
+            "the_tich_solid_ABCDEF"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "the_tich_solid_ABCDEF",
+              "relation": "numerical"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "assign"
+          },
+          "value": "30",
+          "exact": {
+            "kind": "rational",
+            "value": "30"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "V(ABC.DEF) = 30",
+            "references": []
+          },
+          "alias_of": "the_tich_solid_ABCDEF"
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+          "display_label": "Bước dựng hình",
+          "semantic_kind": "EXPLANATION",
+          "details": {},
+          "learner_text": "Dữ kiện đề cho: AB = 3, AC = 4, AD = 5."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "day_ABC",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng đa giác Tam giác đáy dưới.",
+          "display_label": "Tam giác đáy dưới",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Tam giác đáy dưới",
+            "dinh": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "learner_text": "Dựng tam giác đáy dưới."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "solid_ABCDEF",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "explanation": "Dựng khối đa diện từ 6 đỉnh và 5 mặt.",
+          "display_label": "Lăng trụ đứng ABC.DEF",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "dinh": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "so_mat": 5
+          },
+          "learner_text": "Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 3,
+          "action": "MEASURE",
+          "object": "dien_tich_day_ABC",
+          "depends": [
+            "day_ABC",
+            "AB_length",
+            "AC_length"
+          ],
+          "explanation": "Tính diện tích của hình đã dựng: 6.",
+          "display_label": "Diện tích ABC",
+          "semantic_kind": "MEASUREMENT",
+          "details": {
+            "value": "6"
+          },
+          "learner_text": "Tính diện tích ABC: S(ABC) = 6."
+        },
+        {
+          "step_index": 4,
+          "action": "MEASURE",
+          "object": "the_tich_solid_ABCDEF",
+          "depends": [
+            "solid_ABCDEF",
+            "dien_tich_day_ABC",
+            "AD_length"
+          ],
+          "explanation": "Tính thể tích khối: 30.",
+          "display_label": "Thể tích ABC.DEF",
+          "semantic_kind": "MEASUREMENT",
+          "details": {
+            "value": "30"
+          },
+          "learner_text": "Tính thể tích ABC.DEF: V = S(ABC) × AD = 30."
+        },
+        {
+          "step_index": 5,
+          "action": "MEASURE",
+          "object": "the_tich_solid_ABCDEF",
+          "depends": [
+            "solid_ABCDEF",
+            "dien_tich_day_ABC",
+            "AD_length"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 30.",
+          "display_label": "Thể tích ABC.DEF",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "30"
+          },
+          "learner_text": "Kết luận: thể tích ABC.DEF bằng 30.",
+          "alias_object": "the_tich_lang_tru"
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "focus_ids": [],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length"
+            ],
+            "learner_text": "Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+            "semantic_kind": "EXPLANATION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "day_ABC"
+            ],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length"
+            ],
+            "learner_text": "Dựng tam giác đáy dưới.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "day_ABC",
+              "solid_ABCDEF"
+            ],
+            "focus_ids": [
+              "solid_ABCDEF"
+            ],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length"
+            ],
+            "learner_text": "Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "solid_ABCDEF"
+            ],
+            "focus_ids": [
+              "dien_tich_day_ABC"
+            ],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "dien_tich_day_ABC"
+            ],
+            "learner_text": "Tính diện tích ABC: S(ABC) = 6.",
+            "semantic_kind": "MEASUREMENT",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "solid_ABCDEF",
+              "the_tich_solid_ABCDEF"
+            ],
+            "focus_ids": [
+              "the_tich_solid_ABCDEF"
+            ],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "dien_tich_day_ABC",
+              "the_tich_solid_ABCDEF"
+            ],
+            "learner_text": "Tính thể tích ABC.DEF: V = S(ABC) × AD = 30.",
+            "semantic_kind": "MEASUREMENT",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "solid_ABCDEF",
+              "the_tich_lang_tru",
+              "the_tich_solid_ABCDEF"
+            ],
+            "focus_ids": [
+              "the_tich_solid_ABCDEF"
+            ],
+            "readout_ids": [
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "dien_tich_day_ABC",
+              "the_tich_solid_ABCDEF"
+            ],
+            "learner_text": "Kết luận: thể tích ABC.DEF bằng 30.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": []
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "AB_length",
+        "AC_length",
+        "AD_length",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  }
+}
