@@ -27,7 +27,7 @@ def _learner_label(obj: dict) -> str:
 
 def _panel(scene: dict, obj: dict, event: dict | None) -> dict:
     """What the causal card and the 'Dựa trên' line can show — same rules as
-    ``coherentFormula`` / ``basisAt`` in the frontend, restated for the trace."""
+    ``coherentFormula`` / ``numericalBasis`` in the frontend, restated for the trace."""
     by_id = {o["id"]: o for o in scene["objects"]}
     formula = obj.get("formula") or {}
     refs = formula.get("references") or []
@@ -36,7 +36,8 @@ def _panel(scene: dict, obj: dict, event: dict | None) -> dict:
         and r["display_label"] in formula["text"] for r in refs)
     numerical = [e["source_id"] for e in obj.get("dependency_edges", [])
                  if e.get("relation") == "numerical" and e.get("source_id") in by_id]
-    basis = numerical or list((event or {}).get("depends", []))
+    in_text_order = [r["entity_id"] for r in refs] if coherent else []
+    basis = in_text_order or numerical or list((event or {}).get("depends", []))
     return {
         "formula_card": formula.get("text") if coherent else None,
         "dua_tren": [_learner_label(by_id[i]) for i in basis if i in by_id],

@@ -113,6 +113,16 @@ def test_every_formula_references_exactly_what_its_text_names(case, scenes):
         assert labels == sorted(labels, key=formula["text"].index), (o["id"], formula)
 
 
+@pytest.mark.parametrize("case", sorted(EXPECTED))
+def test_trace_panel_restates_the_frontend_basis_in_formula_order(case, scenes):
+    """`trace_formula_provenance._panel` says it restates the frontend; since w11
+    `numericalBasis` reads the coherent formula's references first, in text order."""
+    from scripts import trace_formula_provenance as T
+    scene = scenes[case]
+    area, height, _ = EXPECTED[case]
+    assert T._panel(scene, _volume(scene), None)["dua_tren"] == [area, height]
+
+
 @pytest.mark.parametrize("case,init", [
     ("triangular_pyramid", "Dữ kiện đề cho: AB = 3, AC = 4, SA = 5."),
     ("triangular_prism", "Dữ kiện đề cho: AB = 3, AC = 4, AD = 5."),
