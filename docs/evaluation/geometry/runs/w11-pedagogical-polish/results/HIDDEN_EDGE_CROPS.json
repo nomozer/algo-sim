@@ -1,0 +1,3386 @@
+{
+  "schema_version": "scene3d-hidden-edge-crops/2",
+  "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+  "family_sheets": {
+    "triangular_pyramid": {
+      "family": "triangular_pyramid",
+      "sheet": "images/triangular-pyramid/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/6 — Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/6 — Dựng tam giác đáy.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/6 — Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/6 — Tính diện tích ABC: S(ABC) = 6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/6 — Tính thể tích S.ABC: V = 1/3 × S(ABC) × SA = 10.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/6 — Kết luận: thể tích S.ABC bằng 10.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/formation/formation_step_5.png"
+        }
+      ]
+    },
+    "triangular_prism": {
+      "family": "triangular_prism",
+      "sheet": "images/triangular-prism/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/6 — Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/6 — Dựng tam giác đáy dưới.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/6 — Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/6 — Tính diện tích ABC: S(ABC) = 6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/6 — Tính thể tích ABC.DEF: V = S(ABC) × AD = 30.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/6 — Kết luận: thể tích ABC.DEF bằng 30.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/formation/formation_step_5.png"
+        }
+      ]
+    },
+    "rectangular_pyramid": {
+      "family": "rectangular_pyramid",
+      "sheet": "images/rectangular-pyramid/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/8 — Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/8 — Dựng đáy ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/8 — Dựng chiều cao SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/8 — Dựng các cạnh bên SB, SC, SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/8 — Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/8 — Tính diện tích ABCD: S(ABCD) = 12.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_5.png"
+        },
+        {
+          "state": "desktop/formation/6",
+          "label": "Formation · bước 7/8 — Tính thể tích S.ABCD: V = 1/3 × S(ABCD) × SA = 24.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_6.png"
+        },
+        {
+          "state": "desktop/formation/7",
+          "label": "Formation · bước 8/8 — Kết luận: thể tích S.ABCD bằng 24.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/formation/formation_step_7.png"
+        }
+      ]
+    },
+    "cuboid": {
+      "family": "cuboid",
+      "sheet": "images/cuboid/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/9 — Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/9 — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/9 — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/9 — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/9 — Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/9 — Tính diện tích ABCD: S(ABCD) = 12.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_5.png"
+        },
+        {
+          "state": "desktop/formation/6",
+          "label": "Formation · bước 7/9 — Tính khoảng cách giữa A và A′: d(A, A′) = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_6.png"
+        },
+        {
+          "state": "desktop/formation/7",
+          "label": "Formation · bước 8/9 — Tính thể tích ABCD.A′B′C′D′: V = S(ABCD) × AA′ = 60.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_7.png"
+        },
+        {
+          "state": "desktop/formation/8",
+          "label": "Formation · bước 9/9 — Kết luận: thể tích ABCD.A′B′C′D′ bằng 60.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/formation/formation_step_8.png"
+        }
+      ]
+    },
+    "cube": {
+      "family": "cube",
+      "sheet": "images/cube/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/11 — Dữ kiện đề cho: AB = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/11 — Suy ra AD = AB = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/11 — Suy ra AA′ = AB = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/11 — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/11 — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/11 — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/6",
+          "label": "Formation · bước 7/11 — Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_6.png"
+        },
+        {
+          "state": "desktop/formation/7",
+          "label": "Formation · bước 8/11 — Tính diện tích ABCD: S(ABCD) = 16.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_7.png"
+        },
+        {
+          "state": "desktop/formation/8",
+          "label": "Formation · bước 9/11 — Tính khoảng cách giữa A và A′: d(A, A′) = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_8.png"
+        },
+        {
+          "state": "desktop/formation/9",
+          "label": "Formation · bước 10/11 — Tính thể tích ABCD.A′B′C′D′: V = S(ABCD) × AA′ = 64.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_9.png"
+        },
+        {
+          "state": "desktop/formation/10",
+          "label": "Formation · bước 11/11 — Kết luận: thể tích ABCD.A′B′C′D′ bằng 64.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/formation/formation_step_10.png"
+        }
+      ]
+    },
+    "cross_section": {
+      "family": "cross_section",
+      "sheet": "images/cross-section/SHEET.png",
+      "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/formation/0",
+          "label": "Formation · bước 1/13 — Đặt các điểm đề cho vào không gian.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/formation/1",
+          "label": "Formation · bước 2/13 — Dựng đáy hình vuông ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/formation/2",
+          "label": "Formation · bước 3/13 — Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/formation/3",
+          "label": "Formation · bước 4/13 — Dựng mặt phẳng (α): z = 3.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/formation/4",
+          "label": "Formation · bước 5/13 — Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/formation/5",
+          "label": "Formation · bước 6/13 — Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_5.png"
+        },
+        {
+          "state": "desktop/formation/6",
+          "label": "Formation · bước 7/13 — Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_current_step.png"
+        },
+        {
+          "state": "desktop/formation/7",
+          "label": "Formation · bước 8/13 — Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_7.png"
+        },
+        {
+          "state": "desktop/formation/8",
+          "label": "Formation · bước 9/13 — Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_8.png"
+        },
+        {
+          "state": "desktop/formation/9",
+          "label": "Formation · bước 10/13 — Thể tích S.ABCD bằng 72.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_9.png"
+        },
+        {
+          "state": "desktop/formation/10",
+          "label": "Formation · bước 11/13 — Diện tích thiết diện bằng 9.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_10.png"
+        },
+        {
+          "state": "desktop/formation/11",
+          "label": "Formation · bước 12/13 — Dựng đường thẳng BD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_11.png"
+        },
+        {
+          "state": "desktop/formation/12",
+          "label": "Formation · bước 13/13 — Tính khoảng cách giữa S và BD: d(S, BD) = 3√6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w11-d1/docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/formation/formation_step_12.png"
+        }
+      ]
+    }
+  },
+  "overview": {
+    "schema_version": "scene3d-evidence-overview/1",
+    "role": "INDEX_ONLY",
+    "families": [
+      {
+        "family": "triangular_pyramid",
+        "family_dir": "triangular-pyramid",
+        "sheet": "images/triangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "triangular_prism",
+        "family_dir": "triangular-prism",
+        "sheet": "images/triangular-prism/SHEET.png"
+      },
+      {
+        "family": "rectangular_pyramid",
+        "family_dir": "rectangular-pyramid",
+        "sheet": "images/rectangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "cuboid",
+        "family_dir": "cuboid",
+        "sheet": "images/cuboid/SHEET.png"
+      },
+      {
+        "family": "cube",
+        "family_dir": "cube",
+        "sheet": "images/cube/SHEET.png"
+      },
+      {
+        "family": "cross_section",
+        "family_dir": "cross-section",
+        "sheet": "images/cross-section/SHEET.png"
+      }
+    ],
+    "legend": "CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi."
+  },
+  "playback_films": {
+    "triangular_pyramid": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/playback/mobile/step-05.png"
+    ],
+    "triangular_prism": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/playback/mobile/step-05.png"
+    ],
+    "rectangular_pyramid": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/playback/mobile/step-07.png"
+    ],
+    "cuboid": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/desktop/step-08.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/playback/mobile/step-08.png"
+    ],
+    "cube": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-08.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-09.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/desktop/step-10.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-08.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-09.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/playback/mobile/step-10.png"
+    ],
+    "cross_section": [
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-08.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-09.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-10.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-11.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/desktop/step-12.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-07.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-08.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-09.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-10.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-11.png",
+      "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/playback/mobile/step-12.png"
+    ]
+  },
+  "crops": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.862457627833,
+          287.86161396082497
+        ],
+        [
+          527.4016589676376,
+          375.2672900398895
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        375,
+        692,
+        508
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "e194a0dc3dbc8f552e346e11d131e91b7762decf4560301acdb8ffed3f3c72fd"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.862457627833,
+          287.86161396082497
+        ],
+        [
+          790.8363952646417,
+          387.8444056573036
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        645,
+        375,
+        848,
+        521
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "65c75d8eda8fc2d74067919e491728c7505d05a82150be5e72851aef0be6cd37"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          622.4660804164798,
+          74.23999999999822
+        ],
+        [
+          632.862457627833,
+          287.86161396082497
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        616,
+        164,
+        711,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "e840a5c9ac9555473a89dbb895df02763b10534cb6892089ed56600a3e8e001d"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          583.5142498025917,
+          325.6870175152057
+        ],
+        [
+          712.4295787433547,
+          271.1489758932881
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        597,
+        359,
+        770,
+        459
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "5581b1762be573fb2ca75fb17b74f6ab68e5d7d51d532094986b9457ba35c539"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.9743865401887,
+          258.2107449119941
+        ],
+        [
+          54.541208223124386,
+          334.6966317309808
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        111,
+        858,
+        392,
+        1107
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "804493fe3b0ab7bab9500743ff68421ba14bffbd4244f9b577f3f261b4f9c50a"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.9743865401887,
+          258.2107449119941
+        ],
+        [
+          285.600000000002,
+          345.65128857491067
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        295,
+        858,
+        669,
+        1129
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "80a3c902ae54092db923477cb009f610f67388a5836d267653fc9f58d00cd912"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          138.0964246972406,
+          71.2346548867516
+        ],
+        [
+          146.9743865401887,
+          258.2107449119941
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        239,
+        484,
+        431,
+        954
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "78d1070d4d02e3a86587fa800279c7d10625d07d3f800cd724426093fa8f742f"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          103.81220132218307,
+          291.1014721695911
+        ],
+        [
+          217.06803438382724,
+          243.46886000100275
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        209,
+        828,
+        532,
+        1021
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "53733c9788ee998897f3bfaa1f9aeb54b114b61af3023cba1fd14b30d1b02914"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          527.2529904816587,
+          389.16346790301276
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        388,
+        679,
+        522
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "279f8179f3308e003ae8921131c29fa89ccf9d28078ca41c60ceb9883c642b11"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          793.3942592629671,
+          365.02606246816174
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        632,
+        388,
+        850,
+        498
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "4c2ff05b29e403d1c984fdf4ee987a00c6704970f978f5c4ab18d4c928c6680a"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          608.6081704424985,
+          74.23999999999971
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        164,
+        697,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "6e87c11943cbbdf70a6b7e90c1ad7831e012a2ddd7faac6d9e904ba74e501fcc"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          559.9745206090156,
+          341.578539393997
+        ],
+        [
+          708.4409513338193,
+          288.23897610436825
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        573,
+        376,
+        767,
+        475
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/desktop/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "f3e5e6422ad9ff1fd7a8ea055bf68a673ff2bd5cb7e515b3e8faff36d4808c51"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          78.75027551309911,
+          316.31214304617816
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        159,
+        857,
+        380,
+        1071
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "f710a776aa0420f868501beb37ce666b88f7076823848ae2e3dd97c986aaa43e"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          262.1920408147615,
+          301.00408514130726
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        283,
+        852,
+        622,
+        1045
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "4220b544b5d71db42d182e7212c2a26557cadb4ffa5cbee81de5a5408ee3f02a"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          134.65192774656188,
+          101.46636142408842
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        229,
+        544,
+        422,
+        954
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "5f8f4fc4ada9664508424b98edd8d96496909668f3903bb1ccdeef80d8760d8f"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          100.59568089596452,
+          285.6433679678465
+        ],
+        [
+          204.30384076193286,
+          249.23925266494206
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        203,
+        828,
+        507,
+        1021
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/triangular-prism/mobile/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "c18b2dfa71e14142d5d6525e7175dea50135f7e74dc3ff62311094e82e28d7e0"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          569.7205180513049,
+          324.9924140943475
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        583,
+        348,
+        688,
+        458
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "96b5054cf78263e37490ad805508a709f536ec5b5e0a4e79f2dccd00ff5c96a6"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          748.2183038798686,
+          308.3651705218009
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        642,
+        348,
+        806,
+        442
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "013bf514cb7eeb9f70337e1ca70e39bc4e327b8631d8f753b9af5ba8e6109171"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.0905452543299,
+          74.23999999999987
+        ],
+        [
+          628.9586874977945,
+          259.8575510164736
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        613,
+        164,
+        707,
+        394
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "de13ba3dd7b086f6b7cee5a308fa9049417dfb1308a576455572769ea96b9ed3"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          589.7182505783463,
+          338.69724091933847
+        ],
+        [
+          639.2622455167574,
+          253.42960828467997
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        341,
+        698,
+        472
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "02a3d75fda206e38cccc9f593debc52a2f575de638aa84f179b8efa28b806b8f"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          721.2517553061534,
+          273.7252346978541
+        ],
+        [
+          639.2622455167574,
+          253.42960828467997
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        652,
+        327,
+        779,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "b364b973a8e222d73edcdaabc721802fb5744855975c780c3de4b7ba04bef814"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          565.3666314110062,
+          167.7935813841216
+        ],
+        [
+          639.2622455167574,
+          253.42960828467997
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        579,
+        257,
+        698,
+        388
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "8fce1240c8bda4d641df6cb26e2efb7cfdf9cf7d8893d502900cca8eb07d94b1"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          89.57150117552902,
+          292.773338559132
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        181,
+        810,
+        384,
+        1024
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "5a36bb06c5f5d2ba557d6865fac142f5eb86ae189b7ee14f8a3faa197fcfaf78"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          250.37338582281257,
+          277.7944855131741
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        287,
+        805,
+        599,
+        998
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "3abdf93b449b8c037680d6d4d1bd8c15bd17fb3e2a076e1e8768432dfa9cfc44"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          134.04708602652988,
+          66.87999999999987
+        ],
+        [
+          142.93692106482345,
+          234.09581104501288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        230,
+        475,
+        423,
+        906
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "d5cf978c1adb462ec32393f53ab603b5240ede08d7e2be3d30a86fbda676001a"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          107.48116617595656,
+          304.9594584194871
+        ],
+        [
+          152.41659012540686,
+          228.26718400016497
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        213,
+        798,
+        406,
+        1048
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "c8c7587a41c5465d012c568efdf6181f8456b1488fc11876f1190c92beec162e"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          226.21604985502898,
+          246.71474322045032
+        ],
+        [
+          152.41659012540686,
+          228.26718400016497
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        306,
+        768,
+        550,
+        961
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "1666d0a0005b89481477a9c841c9ddffbcbe45e9416086caa7473078ba0a292b"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.51668652988867,
+          151.01312047627707
+        ],
+        [
+          152.41659012540686,
+          228.26718400016497
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        644,
+        403,
+        895
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "4b95dc05cc9faa11edbd7bec424e9bc97c24573e9622cfae96aa10f144ca2b44"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          633.1565398045498,
+          74.36067412367743
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        164,
+        718,
+        390
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "9bd4c53a5ebed49084f72abfc684ba059c529b4f6cf65c4b44165c8abe32e824"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          554.5629684364096,
+          307.45767830345585
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        568,
+        344,
+        697,
+        441
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "38ccbec4eac4c09938d68719ea349af426e8feb26954ee037df61eb943482514"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          762.9157762471036,
+          314.72332747151455
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        650,
+        344,
+        820,
+        448
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "6170f6869edcca51e46a687a41496fce7d650ac3715a3d5a6dc577610e879ccc"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          567.4536315142772,
+          292.02145781841244
+        ],
+        [
+          692.2229817631212,
+          259.045361165556
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        581,
+        339,
+        751,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "c3b9dd055bdfee3884c08336a086c8b2d27502fe0091efb4eb7328799aca733b"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          746.3789729889555,
+          315.17861734703206
+        ],
+        [
+          692.2229817631212,
+          259.045361165556
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        704,
+        347,
+        804,
+        449
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "5367d06f71c011eeeaf3c492a95e6bb6861e5fc973a0a2b9b1cce31137d70ce7"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          692.2229817631212,
+          259.045361165556
+        ],
+        [
+          698.6038780412563,
+          98.73170926222325
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        683,
+        189,
+        778,
+        393
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "d759839b9cf65e3ba50a981b98a3cae35db1bcb40a5a8c3c119f7f6f9149ef4b"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          147.25696556163274,
+          70.29535889449568
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        252,
+        482,
+        444,
+        899
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "1aa04ba187525a62d9e4241fc473717d653f34c66177bf53d3d70ad1acb6fb4b"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          77.91839518077242,
+          275.74013629494004
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        157,
+        800,
+        400,
+        992
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "c7c740089323a7604977216fbec14eec3e540e185192621444bc0d1db39da421"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          261.6389190511468,
+          282.12119776826006
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        802,
+        621,
+        1002
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "e366e9fad2fb937fd86abc44e4e1cbe944a8f29ed48c0e8d9e201ccce17daa24"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          99.98653705731222,
+          254.80746889584094
+        ],
+        [
+          196.5302211797515,
+          230.31896125845773
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        201,
+        779,
+        491,
+        971
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "8a8c347b81c0b8d491a179260812a553957d731d7a9b798a00dd3ccf38383daa"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          236.49985278578555,
+          272.8202175994891
+        ],
+        [
+          196.5302211797515,
+          230.31896125845773
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        387,
+        797,
+        579,
+        989
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "7900116569eba35f784695bb5f044c38d25a35a18baa5fea95baee50c4fed3fa"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          196.5302211797515,
+          230.31896125845773
+        ],
+        [
+          200.8284677718352,
+          108.00066712811895
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        351,
+        558,
+        543,
+        899
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "367bfeab808b64d0d4d92cc0a4909a4f94858d707ab4bf6e5068650e77131c4e"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          635.391721906552,
+          75.11878133063801
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        625,
+        165,
+        720,
+        372
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "94ded9b0b74ad3d54bff3dfc0cfb57f02d9e4cb0eda080a4209f508fbc042e33"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          527.8429120749828,
+          315.93848326209473
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        542,
+        326,
+        697,
+        450
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "4205ff0362c00967e9ef37a57c139a47349ed4909f9c37751800fac36e87cbe0"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          793.2864790035081,
+          277.46705218693876
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        651,
+        322,
+        850,
+        416
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "d5661b7093a94c3876e056003d1387c1d7dedac6ee43d996b97a63837f798571"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          561.6866195221853,
+          265.23685554642134
+        ],
+        [
+          679.4634410148037,
+          235.71418238762791
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        575,
+        314,
+        738,
+        409
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "65e1224b3b3b20d6846c2efaaf7610cb4503051d073d640ae43efa193c2cbfb8"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          760.301264781429,
+          292.7452233580007
+        ],
+        [
+          679.4634410148037,
+          235.71418238762791
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        691,
+        324,
+        818,
+        427
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "3a8d731ce12930c4ca195c4939344455e1d1842c738befcba17b85abb1dce4ce"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          679.4634410148037,
+          235.71418238762791
+        ],
+        [
+          681.8546164295759,
+          111.47425513904622
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        669,
+        201,
+        763,
+        370
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "8074621894d12c7cce0278118328d20d679a85d52bcc76e9e2d09a5e09b66a69"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          150.75113610198008,
+          92.74245882617167
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        257,
+        527,
+        450,
+        870
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "9b67694e8502b5869f6cf592a0047c2a6460f08bc96f54183725659d28ad97df"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          71.21571079303438,
+          274.5253513282365
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        144,
+        774,
+        404,
+        987
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "ea9489ad6c7684abb37392331a15e8bcfef4e7d6e40949b47fb69c172f1654bf"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          270.48014422854783,
+          246.39192970857383
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        307,
+        756,
+        639,
+        949
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "f1a88337a9f0070db562cad8fe19656c6be0acc973dcd0949a4e310d250fa57e"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.53444890110521,
+          240.947598957031
+        ],
+        [
+          187.36289557953822,
+          214.5995711590681
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        749,
+        473,
+        942
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "4eeb25ebae01c2a8fd99275a418c39cbd2b44eba2b73cc4fc849e250f8d0f323"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          257.898492642316,
+          264.0348056319965
+        ],
+        [
+          187.36289557953822,
+          214.5995711590681
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        376,
+        771,
+        614,
+        966
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "5690931a4c13e3cd492ce5bfc36115d6c8b74756259bf74dd5cd9034526354f1"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          187.36289557953822,
+          214.5995711590681
+        ],
+        [
+          189.31586306758015,
+          107.1173703475016
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        330,
+        556,
+        523,
+        867
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "ba08f6370d2c35b59cd32f53bab5e02c2b7760e13bd65eea430ca48f22d5e96f"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          517.1060875889154,
+          318.35055131815017
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        531,
+        335,
+        696,
+        452
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "cd1a842335a1931a37d399e995de6448f3a012f7bc093f711151f4c038025610"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          800.1684484981176,
+          282.60636743582245
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        649,
+        328,
+        857,
+        423
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "a1dd3db9bbde613235ac0446d56c6e5dc9f0f755fad1657b0a04e8a2fa6dea9c"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          633.9801545519734,
+          75.63794206634071
+        ],
+        [
+          636.792035395796,
+          246.8358384145178
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        166,
+        718,
+        381
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "3e903ad95cc35106367d01fb171e53258329efdde118f2ef319833743c51eba9"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          525.8680546641983,
+          289.7742835299206
+        ],
+        [
+          653.3223559134752,
+          243.49544378853912
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        540,
+        330,
+        712,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "3f1b3b1204c74fb001a2ba6f872df8b871c6c40393fe940b59a9056fa4532bd8"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          778.9323092346655,
+          289.2595372299813
+        ],
+        [
+          653.3223559134752,
+          243.49544378853912
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        666,
+        330,
+        836,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "4a1df17a9cb849aeb47b547d7424001e065881c75cb2edc3f62f830da856d6da"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          507.1718693596921,
+          105.92350581615536
+        ],
+        [
+          653.3223559134752,
+          243.49544378853912
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        521,
+        196,
+        712,
+        378
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "eaa9b193e08b32c008f62c486b4fb36b6578ade643a6c69705f94da36c037a6b"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          54.399999999999935,
+          281.2714584906155
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        110,
+        788,
+        400,
+        1001
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "a0ff05d216b3327e0a40d530a58d13ed3dc6e19a73868d365bbce5d6eaed132d"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          285.38519196973164,
+          252.58769960613813
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        769,
+        669,
+        962
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "e28b1cedc7fe8535dd9c2b8b5dc6fd812cda18383857efaec6cf13957117533d"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          148.83491339514043,
+          81.98073048716282
+        ],
+        [
+          151.03344026730878,
+          223.0893253416244
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        253,
+        505,
+        446,
+        884
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "ebd6a0de8787028afdf2c847bbe0734d8c23962086ab20d185d7585d7e0f4e2f"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          62.101991817979176,
+          257.7081376139751
+        ],
+        [
+          166.20958045718012,
+          220.0769425675687
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        126,
+        771,
+        430,
+        964
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "aa1caa56e072862bf6459b2fe86a2a1f66a3923b37ba6a6ebb7fdba551783718"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          268.4744983961819,
+          257.82300530414057
+        ],
+        [
+          166.20958045718012,
+          220.0769425675687
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        334,
+        771,
+        635,
+        964
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "b375e7fe7ff6e4e16a7e9d3424664ac3ce081780fdf24d1d6b4f722bd9a37691"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          48.58517163061423,
+          109.54444357166736
+        ],
+        [
+          166.20958045718012,
+          220.0769425675687
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        99,
+        561,
+        430,
+        878
+      ],
+      "source": "docs/evaluation/geometry/runs/w11-pedagogical-polish/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "acb5a0b154e26bb0a801c5a048acd614f0e0cf9278ccff0efa0b1a2a902cc9ba"
+    }
+  ],
+  "all_endpoints_inside": true,
+  "oracle_disagreements": [],
+  "duplicate_owner_edges": []
+}

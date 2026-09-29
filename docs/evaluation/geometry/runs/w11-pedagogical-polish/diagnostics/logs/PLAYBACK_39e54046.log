@@ -1,0 +1,14 @@
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+Wrote D:\tmp\w11-d1\docs\evaluation\geometry\runs\w11-pedagogical-polish\images\PLAYBACK_EVIDENCE.json: PASS f33c53af86be
+exit 0

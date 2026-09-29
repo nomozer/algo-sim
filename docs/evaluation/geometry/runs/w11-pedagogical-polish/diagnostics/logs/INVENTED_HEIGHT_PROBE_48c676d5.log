@@ -1,0 +1,31 @@
+# INVENTED_HEIGHT_PROBE — offline, 0 model calls
+# product tree = candidate df04a613 (main tree at 48c676d5; only docs dirty)
+# run: cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe <this script>
+# ---- script ----
+import asyncio, json, sys
+from pathlib import Path
+sys.path.insert(0, "D:/Documents/projects/algo-sim/backend")
+from scripts import generate_generic_tier_a_fixtures as G
+from app.simulation.geometry_compiler.compiler import bien_dich
+from app.simulation.geometry_compiler.contract_adapter import build_fact_graph
+from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
+from app.simulation.semantic_program.validator import validate_semantic_program
+
+for name, factory, drop in (("pyramid", G._pyramid_control_contract, {"A", "S"}),
+                            ("prism", G._prism_p01_contract, {"A", "D"})):
+    text, contract = factory()
+    program = bien_dich(build_fact_graph(contract).graph).program
+    spec = validate_semantic_program({"spec_version": "1.0", **program}).spec
+    inv = tuple(s for s in contract.source_invariants if set(s.points) != drop)
+    k = "SA = 5" if name == "pyramid" else "AD = 5"
+    text2 = text.replace(", " + k, "").replace(k, "")
+    c2 = contract.model_copy(update={"source_invariants": inv, "problem_text": text2})
+    qd = quyet_dinh_dinh_tuyen(c2, {"GEOMETRY_COMPILER_MODE": "DETERMINISTIC_FIRST"})
+    print(name, "compiler decision:", qd.decision, qd.reason_code, qd.diagnostics)
+    env = asyncio.run(G._run_frozen_program(text2, c2, spec))
+    print(name, "frozen invented-height program ->", env.get("status"), env.get("error_code"), env.get("stage_reached"), str(env.get("reason"))[:300])
+# ---- output ----
+pyramid compiler decision: FALLBACK_TO_LLM STRUCTURED_RELATION_REFERENCE_UNKNOWN ('STRUCTURED_RELATION_REFERENCE_UNKNOWN',)
+pyramid frozen invented-height program -> unsupported input_not_grounded grounding Chương trình dùng dữ liệu không truy được về đề bài.
+prism compiler decision: FALLBACK_TO_LLM REQUIRED_FACT_MISSING ('REQUIRED_LENGTH_MISSING', 'AD')
+prism frozen invented-height program -> ok None None None

@@ -1,0 +1,364 @@
+{
+  "schema_version": "verification-summary/1",
+  "task": "W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW",
+  "measurement_commit_sha": "39e5404686fdf25ddae310759c87c8c64dd8dc41",
+  "occlusion_measurement_commit_sha": "39e5404686fdf25ddae310759c87c8c64dd8dc41",
+  "playback_measurement_commit_sha": "39e5404686fdf25ddae310759c87c8c64dd8dc41",
+  "product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "product_tree_sha": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "browser_suite": {
+    "pass": true,
+    "positive": "12/12",
+    "negative": "12/12",
+    "immutable_120_frames": "12/12",
+    "causal_closure_and_tiers": "12/12",
+    "orbit_non_degenerate": "12/12",
+    "orbit_first_planned_gesture_passed": 12,
+    "formation": "12/12",
+    "measurement_steps_keep_geometry": "12/12",
+    "vertex_marker_px": "12/12",
+    "neutral_has_no_emphasis": "12/12",
+    "emphasis_reset_before_rotation": "12/12",
+    "evidence_gates": "12/12",
+    "formula_entity_coherence": "12/12",
+    "vertex_marker_diameters_css_px": {
+      "desktop:thuong": [
+        6
+      ],
+      "mobile:thuong": [
+        7.5
+      ]
+    },
+    "orbit": {
+      "triangular_pyramid/desktop": {
+        "offset_deg": -70,
+        "zoom_out_notches": 6,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 1.2709584495951276e-9,
+        "measured_on": "perspective_screen"
+      },
+      "triangular_pyramid/mobile": {
+        "offset_deg": -70,
+        "zoom_out_notches": 6,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 3.404764843395469e-7,
+        "measured_on": "perspective_screen"
+      },
+      "triangular_prism/desktop": {
+        "offset_deg": -60,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 1.1391776411073806e-9,
+        "measured_on": "perspective_screen"
+      },
+      "triangular_prism/mobile": {
+        "offset_deg": -60,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 4.420352901490787e-7,
+        "measured_on": "perspective_screen"
+      },
+      "rectangular_pyramid/desktop": {
+        "offset_deg": -100,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 1.9424568620252103e-9,
+        "measured_on": "perspective_screen"
+      },
+      "rectangular_pyramid/mobile": {
+        "offset_deg": -100,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 3.639040251357528e-7,
+        "measured_on": "perspective_screen"
+      },
+      "cuboid/desktop": {
+        "offset_deg": -65,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 2.8414604003046406e-9,
+        "measured_on": "perspective_screen"
+      },
+      "cuboid/mobile": {
+        "offset_deg": -65,
+        "zoom_out_notches": 6,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 5.123749744484485e-7,
+        "measured_on": "perspective_screen"
+      },
+      "cube/desktop": {
+        "offset_deg": -60,
+        "zoom_out_notches": 6,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 2.3200126264555365e-9,
+        "measured_on": "perspective_screen"
+      },
+      "cube/mobile": {
+        "offset_deg": -60,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 5.841497952019381e-7,
+        "measured_on": "perspective_screen"
+      },
+      "cross_section/desktop": {
+        "offset_deg": -75,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 5.454975138263762e-9,
+        "measured_on": "perspective_screen"
+      },
+      "cross_section/mobile": {
+        "offset_deg": -75,
+        "zoom_out_notches": 3,
+        "first_planned_gesture_passed": true,
+        "attempts": 1,
+        "prediction_max_view_matrix_error": 9.587176279524101e-7,
+        "measured_on": "perspective_screen"
+      }
+    },
+    "application_llm_calls": 0
+  },
+  "occlusion": {
+    "pass": true,
+    "visual_states_product_equals_oracle": "24/24",
+    "performance_records": "12/12",
+    "failures": 0,
+    "frozen_expectations": [
+      "triangular_pyramid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "triangular_prism/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "rectangular_pyramid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cuboid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cube/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cross_section/desktop/neutral_final:DECLARED_CAMERA_CHANGE"
+    ],
+    "declared_camera_change": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS"
+  },
+  "learner_playback": {
+    "pass": true,
+    "runs": "12/12",
+    "per_check": {
+      "starts_at_step_zero": "12/12",
+      "no_causal_selection": "12/12",
+      "detail_panel_stays_closed": "12/12",
+      "advances_one_step_at_a_time": "12/12",
+      "reaches_final_step": "12/12",
+      "stops_at_final_step": "12/12",
+      "construction_steps_change_geometry": "12/12",
+      "measurement_steps_show_a_value": "12/12",
+      "final_result_shown_once": "12/12",
+      "replay_resets_step_selection_highlight": "12/12",
+      "orbit_preserves_timeline": "12/12",
+      "no_uncaught_exception": "12/12",
+      "causal_layers_dim_outside": "12/12",
+      "close_panel_restores_neutral": "12/12",
+      "neutral_final_view_quality": "12/12",
+      "rotated_neutral_non_degenerate": "12/12",
+      "vertex_marker_px": "12/12",
+      "orbit_repeatable": "12/12"
+    },
+    "orbit_laps": "60/60",
+    "playback_interval_ms": 1400
+  },
+  "hidden_edge_crops": {
+    "count": 64,
+    "all_endpoints_inside": true,
+    "oracle_disagreements": 0,
+    "duplicate_owner_edges": 0,
+    "family_sheets": {
+      "triangular_pyramid": "images/triangular-pyramid/SHEET.png",
+      "triangular_prism": "images/triangular-prism/SHEET.png",
+      "rectangular_pyramid": "images/rectangular-pyramid/SHEET.png",
+      "cuboid": "images/cuboid/SHEET.png",
+      "cube": "images/cube/SHEET.png",
+      "cross_section": "images/cross-section/SHEET.png"
+    }
+  },
+  "formula_provenance_after": {
+    "git_head": "ac19e03da2f57a31d62e451d4da65dfadbae9d52",
+    "product_paths_dirty": false,
+    "cases": [
+      {
+        "case": "triangular_pyramid",
+        "volumes": [
+          {
+            "id": "the_tich_khoi_chop",
+            "value": "10",
+            "formula": "V = 1/3 × S(ABC) × SA = 10",
+            "numerical_edges": [
+              "SA_length",
+              "dien_tich_day_ABC"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AC_length",
+              "SA_length",
+              "dien_tich_day_ABC"
+            ],
+            "dua_tren": [
+              "S(ABC)",
+              "SA"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "triangular_prism",
+        "volumes": [
+          {
+            "id": "the_tich_solid_ABCDEF",
+            "value": "30",
+            "formula": "V = S(ABC) × AD = 30",
+            "numerical_edges": [
+              "AD_length",
+              "dien_tich_day_ABC"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "dien_tich_day_ABC"
+            ],
+            "dua_tren": [
+              "S(ABC)",
+              "AD"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "rectangular_pyramid",
+        "volumes": [
+          {
+            "id": "the_tich_khoi_chop",
+            "value": "24",
+            "formula": "V = 1/3 × S(ABCD) × SA = 24",
+            "numerical_edges": [
+              "SA_length",
+              "dien_tich_day_ABCD"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AD_length",
+              "SA_length",
+              "dien_tich_day_ABCD"
+            ],
+            "dua_tren": [
+              "S(ABCD)",
+              "SA"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "cuboid",
+        "volumes": [
+          {
+            "id": "the_tich_khoi_hop",
+            "value": "60",
+            "formula": "V = S(ABCD) × AA′ = 60",
+            "numerical_edges": [
+              "AA_prime_length",
+              "dien_tich_day_ABCD"
+            ],
+            "numerical_closure": [
+              "AA_prime_length",
+              "AB_length",
+              "AD_length",
+              "dien_tich_day_ABCD"
+            ],
+            "dua_tren": [
+              "S(ABCD)",
+              "AA′"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "cube",
+        "volumes": [
+          {
+            "id": "the_tich_khoi_hop",
+            "value": "64",
+            "formula": "V = S(ABCD) × AA′ = 64",
+            "numerical_edges": [
+              "AA_prime_length",
+              "dien_tich_day_ABCD"
+            ],
+            "numerical_closure": [
+              "AA_prime_length",
+              "AB_length",
+              "AD_length",
+              "dien_tich_day_ABCD"
+            ],
+            "dua_tren": [
+              "S(ABCD)",
+              "AA′"
+            ]
+          }
+        ]
+      },
+      {
+        "case": "cross_section",
+        "volumes": [
+          {
+            "id": "the_volume_sabcd",
+            "value": "72",
+            "formula": null,
+            "numerical_edges": [],
+            "numerical_closure": [],
+            "dua_tren": [
+              "S.ABCD"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "other_gates": {
+    "evidence_builder": {
+      "commit": "39e5404686fdf25ddae310759c87c8c64dd8dc41",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_39e54046.log"
+    },
+    "formula_provenance_trace_after": {
+      "commit": "ac19e03d",
+      "note": "trace tool corrected after its first AFTER output restated the pre-w11 basis order; first output kept as diagnostics/FORMULA_PROVENANCE_TRACE_AFTER_attempt1_39e54046.json"
+    },
+    "candidate_verify": {
+      "commit": "ac19e03d",
+      "result": "PASS",
+      "tree_hash": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+      "files": 103
+    },
+    "cache_identity_verify": {
+      "commit": "ac19e03d",
+      "result": "PASS",
+      "cache_version": "104",
+      "fingerprint": "b1714b566e25c912"
+    },
+    "schema_export_twice": {
+      "commit": "ac19e03d",
+      "result": "BYTE_IDENTICAL",
+      "sha256_prefix": "d852b47c08b7ac0e",
+      "copies": [
+        "docs/schemas/semantic_program.schema.json",
+        "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+      ],
+      "git_diff_after_export": "empty"
+    },
+    "harness_node_tests": {
+      "commit": "ac19e03d",
+      "result": "29/29"
+    }
+  }
+}

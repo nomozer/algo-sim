@@ -1,0 +1,721 @@
+{
+  "schema_version": "formula-provenance-trace/1",
+  "git_head": "39e5404686fdf25ddae310759c87c8c64dd8dc41",
+  "product_paths_dirty": false,
+  "candidate_product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "application_llm_calls": 0,
+  "cases": [
+    {
+      "case": "triangular_pyramid",
+      "canonical_input": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+      "request_contract": {
+        "source_invariants": [
+          {
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "source_fact_id": "f_ab"
+          },
+          {
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "4",
+            "source_fact_id": "f_ac"
+          },
+          {
+            "points": [
+              "A",
+              "S"
+            ],
+            "expected": "5",
+            "source_fact_id": "f_sa"
+          }
+        ],
+        "relations": [
+          "perpendicular_lines",
+          "perpendicular_line_plane"
+        ]
+      },
+      "fact_graph": {
+        "length_facts": [
+          {
+            "args": [
+              "A",
+              "B"
+            ],
+            "value": "3",
+            "status": "GIVEN",
+            "source_fact_id": "f_ab"
+          },
+          {
+            "args": [
+              "A",
+              "C"
+            ],
+            "value": "4",
+            "status": "GIVEN",
+            "source_fact_id": "f_ac"
+          },
+          {
+            "args": [
+              "A",
+              "S"
+            ],
+            "value": "5",
+            "status": "GIVEN",
+            "source_fact_id": "f_sa"
+          }
+        ]
+      },
+      "semantic_program": {
+        "status": "COMPILED",
+        "quantity_memory": [
+          {
+            "name": "AB_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "f_ab",
+            "initial_value": "3"
+          },
+          {
+            "name": "AC_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "f_ac",
+            "initial_value": "4"
+          },
+          {
+            "name": "SA_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "f_sa",
+            "initial_value": "5"
+          },
+          {
+            "name": "dien_tich_day_ABC"
+          },
+          {
+            "name": "the_tich_khoi_chop"
+          },
+          {
+            "name": "the_tich_khoi"
+          }
+        ],
+        "measure_statements": [
+          "dien_tich_day_ABC := measure.area(day_ABC)",
+          "the_tich_khoi_chop := measure.volume(khoi_chop)"
+        ]
+      },
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+        "readouts": [
+          "AB = 3",
+          "AC = 4",
+          "SA = 5",
+          "S(ABC) = 6",
+          "V(S.ABC) = 10"
+        ],
+        "volumes": [
+          {
+            "id": "the_tich_khoi_chop",
+            "value": "10",
+            "numerical_edges": [
+              "SA_length",
+              "dien_tich_day_ABC"
+            ],
+            "structural_edges": [
+              "khoi_chop"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AC_length",
+              "SA_length",
+              "dien_tich_day_ABC"
+            ],
+            "formula": "V = 1/3 × S(ABC) × SA = 10",
+            "event_learner_text": "Kết luận: thể tích S.ABC bằng 10.",
+            "learner_panel": {
+              "formula_card": "V = 1/3 × S(ABC) × SA = 10",
+              "dua_tren": [
+                "SA",
+                "S(ABC)"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "triangular_prism",
+      "canonical_input": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "request_contract": {
+        "source_invariants": [
+          {
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "source_fact_id": "fact_len_AB"
+          },
+          {
+            "points": [
+              "A",
+              "C"
+            ],
+            "expected": "4",
+            "source_fact_id": "fact_len_AC"
+          },
+          {
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "5",
+            "source_fact_id": "fact_len_AD"
+          }
+        ],
+        "relations": [
+          "perpendicular_lines",
+          "perpendicular_line_plane"
+        ]
+      },
+      "fact_graph": {
+        "length_facts": [
+          {
+            "args": [
+              "A",
+              "B"
+            ],
+            "value": "3",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_AB"
+          },
+          {
+            "args": [
+              "A",
+              "C"
+            ],
+            "value": "4",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_AC"
+          },
+          {
+            "args": [
+              "A",
+              "D"
+            ],
+            "value": "5",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_AD"
+          }
+        ]
+      },
+      "semantic_program": {
+        "status": "COMPILED",
+        "quantity_memory": [
+          {
+            "name": "AB_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_AB",
+            "initial_value": "3"
+          },
+          {
+            "name": "AC_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_AC",
+            "initial_value": "4"
+          },
+          {
+            "name": "AD_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_AD",
+            "initial_value": "5"
+          },
+          {
+            "name": "dien_tich_day_ABC"
+          },
+          {
+            "name": "the_tich_solid_ABCDEF"
+          },
+          {
+            "name": "the_tich_lang_tru"
+          }
+        ],
+        "measure_statements": [
+          "dien_tich_day_ABC := measure.area(day_ABC)",
+          "the_tich_solid_ABCDEF := measure.volume(solid_ABCDEF)"
+        ]
+      },
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+        "readouts": [
+          "AB = 3",
+          "AC = 4",
+          "AD = 5",
+          "S(ABC) = 6",
+          "V(ABC.DEF) = 30"
+        ],
+        "volumes": [
+          {
+            "id": "the_tich_solid_ABCDEF",
+            "value": "30",
+            "numerical_edges": [
+              "AD_length",
+              "dien_tich_day_ABC"
+            ],
+            "structural_edges": [
+              "solid_ABCDEF"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AC_length",
+              "AD_length",
+              "dien_tich_day_ABC"
+            ],
+            "formula": "V = S(ABC) × AD = 30",
+            "event_learner_text": "Kết luận: thể tích ABC.DEF bằng 30.",
+            "learner_panel": {
+              "formula_card": "V = S(ABC) × AD = 30",
+              "dua_tren": [
+                "AD",
+                "S(ABC)"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "rectangular_pyramid",
+      "canonical_input": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+      "request_contract": {
+        "source_invariants": [
+          {
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "source_fact_id": "fact_len_AB"
+          },
+          {
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "4",
+            "source_fact_id": "fact_len_AD"
+          },
+          {
+            "points": [
+              "A",
+              "S"
+            ],
+            "expected": "6",
+            "source_fact_id": "fact_len_SA"
+          }
+        ],
+        "relations": [
+          "perpendicular_lines",
+          "perpendicular_line_plane"
+        ]
+      },
+      "fact_graph": {
+        "length_facts": [
+          {
+            "args": [
+              "A",
+              "B"
+            ],
+            "value": "3",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_AB"
+          },
+          {
+            "args": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_AD"
+          },
+          {
+            "args": [
+              "A",
+              "S"
+            ],
+            "value": "6",
+            "status": "GIVEN",
+            "source_fact_id": "fact_len_SA"
+          }
+        ]
+      },
+      "semantic_program": {
+        "status": "COMPILED",
+        "quantity_memory": [
+          {
+            "name": "AB_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_AB",
+            "initial_value": "3"
+          },
+          {
+            "name": "AD_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_AD",
+            "initial_value": "4"
+          },
+          {
+            "name": "SA_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_len_SA",
+            "initial_value": "6"
+          },
+          {
+            "name": "dien_tich_day_ABCD"
+          },
+          {
+            "name": "the_tich_khoi_chop"
+          },
+          {
+            "name": "v"
+          }
+        ],
+        "measure_statements": [
+          "dien_tich_day_ABCD := measure.area(day_ABCD)",
+          "the_tich_khoi_chop := measure.volume(khoi_chop)"
+        ]
+      },
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+        "readouts": [
+          "AB = 3",
+          "AD = 4",
+          "SA = 6",
+          "S(ABCD) = 12",
+          "V(S.ABCD) = 24"
+        ],
+        "volumes": [
+          {
+            "id": "the_tich_khoi_chop",
+            "value": "24",
+            "numerical_edges": [
+              "SA_length",
+              "dien_tich_day_ABCD"
+            ],
+            "structural_edges": [
+              "khoi_chop"
+            ],
+            "numerical_closure": [
+              "AB_length",
+              "AD_length",
+              "SA_length",
+              "dien_tich_day_ABCD"
+            ],
+            "formula": "V = 1/3 × S(ABCD) × SA = 24",
+            "event_learner_text": "Kết luận: thể tích S.ABCD bằng 24.",
+            "learner_panel": {
+              "formula_card": "V = 1/3 × S(ABCD) × SA = 24",
+              "dua_tren": [
+                "SA",
+                "S(ABCD)"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "cuboid",
+      "canonical_input": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "request_contract": {
+        "source_invariants": [
+          {
+            "points": [
+              "A",
+              "A'"
+            ],
+            "expected": "5",
+            "source_fact_id": "fact_aa_prime"
+          },
+          {
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "3",
+            "source_fact_id": "fact_ab"
+          },
+          {
+            "points": [
+              "A",
+              "D"
+            ],
+            "expected": "4",
+            "source_fact_id": "fact_ad"
+          }
+        ],
+        "relations": [
+          "perpendicular_lines",
+          "perpendicular_line_plane"
+        ]
+      },
+      "fact_graph": {
+        "length_facts": [
+          {
+            "args": [
+              "A",
+              "A_prime"
+            ],
+            "value": "5",
+            "status": "GIVEN",
+            "source_fact_id": "fact_aa_prime"
+          },
+          {
+            "args": [
+              "A",
+              "B"
+            ],
+            "value": "3",
+            "status": "GIVEN",
+            "source_fact_id": "fact_ab"
+          },
+          {
+            "args": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "status": "GIVEN",
+            "source_fact_id": "fact_ad"
+          }
+        ]
+      },
+      "semantic_program": {
+        "status": "COMPILED",
+        "quantity_memory": [
+          {
+            "name": "AB_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_ab",
+            "initial_value": "3"
+          },
+          {
+            "name": "AD_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_ad",
+            "initial_value": "4"
+          },
+          {
+            "name": "AA_prime_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_aa_prime",
+            "initial_value": "5"
+          },
+          {
+            "name": "dien_tich_day_ABCD"
+          },
+          {
+            "name": "chieu_cao_AA_prime"
+          },
+          {
+            "name": "the_tich_khoi_hop"
+          },
+          {
+            "name": "V"
+          }
+        ],
+        "measure_statements": [
+          "dien_tich_day_ABCD := measure.area(day_ABCD)",
+          "chieu_cao_AA_prime := measure.distance(A)",
+          "the_tich_khoi_hop := measure.volume(khoi_hop)"
+        ]
+      },
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.",
+        "readouts": [
+          "AB = 3",
+          "AD = 4",
+          "AA′ = 5",
+          "S(ABCD) = 12",
+          "d(A, A′) = 5",
+          "V(ABCD.A′B′C′D′) = 60"
+        ],
+        "volumes": [
+          {
+            "id": "the_tich_khoi_hop",
+            "value": "60",
+            "numerical_edges": [
+              "AA_prime_length",
+              "dien_tich_day_ABCD"
+            ],
+            "structural_edges": [
+              "khoi_hop"
+            ],
+            "numerical_closure": [
+              "AA_prime_length",
+              "AB_length",
+              "AD_length",
+              "dien_tich_day_ABCD"
+            ],
+            "formula": "V = S(ABCD) × AA′ = 60",
+            "event_learner_text": "Kết luận: thể tích ABCD.A′B′C′D′ bằng 60.",
+            "learner_panel": {
+              "formula_card": "V = S(ABCD) × AA′ = 60",
+              "dua_tren": [
+                "AA′",
+                "S(ABCD)"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "cube",
+      "canonical_input": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+      "request_contract": {
+        "source_invariants": [
+          {
+            "points": [
+              "A",
+              "B"
+            ],
+            "expected": "4",
+            "source_fact_id": "fact_edge"
+          }
+        ],
+        "relations": [
+          "perpendicular_lines"
+        ]
+      },
+      "fact_graph": {
+        "length_facts": [
+          {
+            "args": [
+              "A",
+              "B"
+            ],
+            "value": "4",
+            "status": "GIVEN",
+            "source_fact_id": "fact_edge"
+          }
+        ]
+      },
+      "semantic_program": {
+        "status": "COMPILED",
+        "quantity_memory": [
+          {
+            "name": "AB_length",
+            "provenance": "GIVEN",
+            "source_fact_id": "fact_edge",
+            "initial_value": "4"
+          },
+          {
+            "name": "AD_length"
+          },
+          {
+            "name": "AA_prime_length"
+          },
+          {
+            "name": "dien_tich_day_ABCD"
+          },
+          {
+            "name": "chieu_cao_AA_prime"
+          },
+          {
+            "name": "the_tich_khoi_hop"
+          },
+          {
+            "name": "V"
+          }
+        ],
+        "measure_statements": [
+          "dien_tich_day_ABCD := measure.area(day_ABCD)",
+          "chieu_cao_AA_prime := measure.distance(A)",
+          "the_tich_khoi_hop := measure.volume(khoi_hop)"
+        ]
+      },
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Dữ kiện đề cho: AB = 4.",
+        "readouts": [
+          "AB = 4",
+          "AD = 4",
+          "AA′ = 4",
+          "S(ABCD) = 16",
+          "d(A, A′) = 4",
+          "V(ABCD.A′B′C′D′) = 64"
+        ],
+        "volumes": [
+          {
+            "id": "the_tich_khoi_hop",
+            "value": "64",
+            "numerical_edges": [
+              "AA_prime_length",
+              "dien_tich_day_ABCD"
+            ],
+            "structural_edges": [
+              "khoi_hop"
+            ],
+            "numerical_closure": [
+              "AA_prime_length",
+              "AB_length",
+              "AD_length",
+              "dien_tich_day_ABCD"
+            ],
+            "formula": "V = S(ABCD) × AA′ = 64",
+            "event_learner_text": "Kết luận: thể tích ABCD.A′B′C′D′ bằng 64.",
+            "learner_panel": {
+              "formula_card": "V = S(ABCD) × AA′ = 64",
+              "dua_tren": [
+                "AA′",
+                "S(ABCD)"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "cross_section",
+      "canonical_input": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "route": "canonical_program_through_current_production_replay",
+      "scene3d": {
+        "status": "ok",
+        "init_learner_text": "Đặt các điểm đề cho vào không gian.",
+        "readouts": [
+          "V(S.ABCD) = 72",
+          "Diện tích thiết diện = 9",
+          "d(S, BD) = 3√6"
+        ],
+        "volumes": [
+          {
+            "id": "the_volume_sabcd",
+            "value": "72",
+            "numerical_edges": [],
+            "structural_edges": [
+              "S.ABCD"
+            ],
+            "numerical_closure": [],
+            "formula": null,
+            "event_learner_text": "Thể tích S.ABCD bằng 72.",
+            "learner_panel": {
+              "formula_card": null,
+              "dua_tren": [
+                "S.ABCD"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

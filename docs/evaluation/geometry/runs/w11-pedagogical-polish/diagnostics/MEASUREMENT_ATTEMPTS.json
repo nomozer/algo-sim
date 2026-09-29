@@ -1,0 +1,99 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every browser/oracle attempt of this wave is listed, diagnostic ones and failed ones included. Diagnostic attempts (DIAG-*) ran BEFORE the single candidate refreeze and are not evidence of the frozen candidate; they are kept because each one found something. Authoritative attempts (BROWSER-*) ran in the detached clean worktree D:/tmp/w11-d1 at the commit shown, with node_modules from `npm ci --offline` and Python from the main-tree backend/.venv. No attempt was overwritten in place.",
+  "times": "UTC",
+  "screenshot_paths_in_other_attempts": "Paths inside diagnostics/*_diag*.json and *_attempt*.json were written for THAT attempt's output folder; their images were not kept (only JSON and logs). The same relative paths in this run now hold the authoritative images — do not read them as another attempt's pixels.",
+  "attempts": [
+    {
+      "id": "DIAG-1",
+      "at": "2026-09-29T08:56Z",
+      "commit": "main tree at e90363a4 with the wave's changes still uncommitted",
+      "gate": "compiler-scene-replay.mjs --suite",
+      "result": "aborted before the first scenario: `npm run build` EPERM on frontend/dist/assets",
+      "classification": "ENVIRONMENT",
+      "root_cause": "frontend/dist/assets in the main working tree is owned by another account (CodexSandboxOffline); the build cannot replace it. The build succeeds in a worktree",
+      "repair": "no product or ACL change; every build and measurement of this wave runs in the detached worktree D:/tmp/w11-d1. Tracked as ISSUE-OPS-DIST-ACL-OWNERSHIP",
+      "log": "diagnostics/logs/DIAG1_SUITE_BUILD_EPERM_main-tree.log"
+    },
+    {
+      "id": "DIAG-2",
+      "at": "2026-09-29T12:24Z",
+      "commit": "5f44eb85",
+      "gate": "compiler-scene-replay.mjs --suite (pre-refreeze candidate 8539acbc)",
+      "result": "aborted at triangular_pyramid/mobile: ORBIT_EVIDENCE_NOT_NON_DEGENERATE — all 11 planned rotations failed KEY_VERTEX_NOT_READABLE (a base vertex OUTSIDE_CANVAS)",
+      "classification": "HARNESS_GESTURE_TOO_NARROW",
+      "root_cause": "on the 340 px mobile canvas a rotation alone pushes B or C out of frame; the new gate (5f44eb85) rightly refuses it, but the planner only offered rotations",
+      "repair": "planned zoom-out notches after the rotation (tried uncommitted in DIAG-3, committed in e633ad0c)",
+      "log": "diagnostics/logs/DIAG2_SUITE_5f44eb85.log"
+    },
+    {
+      "id": "DIAG-3",
+      "at": "2026-09-29T12:27Z",
+      "commit": "5f44eb85 + two harness scripts copied uncommitted from the main tree, --bo-qua-build on the DIAG-2 dist",
+      "gate": "compiler-scene-replay.mjs --suite (pre-refreeze candidate 8539acbc)",
+      "result": "6/6 PASS",
+      "classification": "EVIDENCE_GATE_TOO_WEAK (found by inspecting the images, not by a gate)",
+      "root_cause": "the rotated triangular-pyramid image showed A 9 px from SB (0.05 of the figure radius) although the gate passed: the gate measured collinearity in an orthographic projection along the view direction, and the camera is close enough that perspective changes it",
+      "repair": "e633ad0c — the gate is measured on the perspective screen projection (triples = two edges sharing a vertex, vertex-edge clearance, face tilt along rays from the eye); the gesture is simulated with OrbitControls' own maths before it is sent, and the product exposes __geo3d_camera_target",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_diag3_5f44eb85.json",
+      "log": "diagnostics/logs/DIAG3_SUITE_5f44eb85.log"
+    },
+    {
+      "id": "DIAG-4",
+      "at": "2026-09-29T13:07Z",
+      "commit": "e633ad0c",
+      "gate": "suite + scene3d-playback-check.mjs --theo-ho --lap-orbit 5 (pre-refreeze candidate 8539acbc)",
+      "result": "suite 6/6 PASS; playback 12/12 PASS",
+      "classification": "HARNESS_DEFECT + REAL_PRODUCT_DEFECT (found by the new prediction error and by a probe)",
+      "root_cause": "(a) mobile: predicted and actual view matrices differed by 0.73-2.3 — under DPR-2 emulation Chrome halves the CDP wheel deltaY (100 -> 50), so three notches dollied (1/0.95)^1.5 instead of (1/0.95)^3. (b) a probe of the playback states (`probe_fit.mjs`, d1 at e633ad0c): 'Xem lại toàn hình' at the LAST step of the cross-section moved the target (3.401, 2.903, 2.179) -> (5.694, 0.272, 2.427): the fit walked into the child strokes of the infinite line BD (the voHan flag sits on the group) and into the zoom-scaled vertex markers",
+      "repair": "(a) 7efdae4a — wheel deltaY = 100 x devicePixelRatio (mobile prediction error now <= 1e-6). (b) product 60292ecf — diemKhungNhin skips nodes with a voHan/chieuSau ancestor and the vertex markers; red -> green unit test in scene3d-hidden-lines.test.tsx",
+      "evidence": ["diagnostics/BROWSER_EVIDENCE_diag4_e633ad0c.json", "diagnostics/PLAYBACK_EVIDENCE_diag4_e633ad0c.json"],
+      "log": ["diagnostics/logs/DIAG4_SUITE_e633ad0c.log", "diagnostics/logs/DIAG4_PLAYBACK_e633ad0c.log"]
+    },
+    {
+      "id": "DIAG-5",
+      "at": "2026-09-29T13:27Z",
+      "commit": "7efdae4a",
+      "gate": "suite + playback (pre-refreeze candidate 8539acbc)",
+      "result": "suite 6/6 PASS (prediction error <= 1e-6); playback 12/12 PASS, 60/60 laps",
+      "classification": "CLEAN_DIAGNOSTIC",
+      "root_cause": "none — the last product change of the wave (60292ecf) was in; the candidate was refrozen once after this attempt (a39028de)",
+      "repair": "none",
+      "evidence": ["diagnostics/BROWSER_EVIDENCE_diag5_7efdae4a.json", "diagnostics/PLAYBACK_EVIDENCE_diag5_7efdae4a.json"],
+      "log": ["diagnostics/logs/DIAG5_SUITE_7efdae4a.log", "diagnostics/logs/DIAG5_PLAYBACK_7efdae4a.log"]
+    },
+    {
+      "id": "BROWSER-1",
+      "at": "2026-09-29T13:58Z",
+      "commit": "48c676d5",
+      "gate": "suite (frozen candidate df04a613) + measure_scene3d_occlusion.py --declared-camera-change",
+      "result": "suite 6/6 PASS (12/12 positive, 12/12 negative); occlusion FAIL 22/24 — SCENE_GEOMETRY_CHANGED at triangular_pyramid and triangular_prism desktop neutral_final",
+      "classification": "MEASUREMENT_TOOL_FALSE_POSITIVE",
+      "root_cause": "the only difference from the reviewed scenes is three new `quantity` objects (AB/AC/SA or AD: readouts, nothing drawn); geometry_signature counted every object because `type` is one of its fields. Every drawn object's geometry is byte-identical",
+      "repair": "39e54046 — geometry_signature skips the known non-drawing type `quantity` (an unknown type still counts); red on the real w11 fixtures (2 families) and on an added readout, still red for an added point3/segment3/unknown type. The same browser evidence re-measured by the fixed oracle: PASS, 0 failures (pre-check only; the whole run was repeated at 39e54046)",
+      "evidence": ["diagnostics/BROWSER_EVIDENCE_attempt1_48c676d5.json", "diagnostics/OCCLUSION_MEASUREMENT_attempt1_48c676d5.json"],
+      "log": "diagnostics/logs/BROWSER_SUITE_attempt1_48c676d5.log"
+    },
+    {
+      "id": "BROWSER-2",
+      "at": "2026-09-29T14:10Z",
+      "commit": "39e54046",
+      "gate": "suite + occlusion + playback + evidence builder (frozen candidate df04a613) — AUTHORITATIVE",
+      "result": "suite 12/12 positive + 12/12 negative, planned rotation passed first time 12/12, predicted = actual view matrix within 1e-6; oracle 24/24 visual states, frozen expectations DECLARED_CAMERA_CHANGE 6/6; playback 12/12 runs x 18 checks, 60/60 orbit laps; 64 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners",
+      "classification": "AUTHORITATIVE",
+      "evidence": ["results/BROWSER_EVIDENCE.json", "results/OCCLUSION_MEASUREMENT.json", "results/PLAYBACK_EVIDENCE.json", "results/HIDDEN_EDGE_CROPS.json", "results/VERIFICATION_SUMMARY.json"],
+      "log": ["diagnostics/logs/BROWSER_SUITE_39e54046.log", "diagnostics/logs/OCCLUSION_39e54046.log", "diagnostics/logs/PLAYBACK_39e54046.log", "diagnostics/logs/EVIDENCE_BUILDER_39e54046.log"]
+    },
+    {
+      "id": "POST-1",
+      "at": "2026-09-29T14:36Z",
+      "commit": "ac19e03d",
+      "gate": "backend/scripts/trace_formula_provenance.py (diagnostic, 0 model calls)",
+      "result": "first AFTER trace (at 39e54046) listed 'Dựa trên' as [SA, S(ABC)] while the screen shows S(ABC), SA",
+      "classification": "DIAGNOSTIC_TOOL_DRIFT",
+      "root_cause": "the trace restates the frontend's panel rules and still carried the pre-w11 rule (numerical edges); w11's numericalBasis reads the coherent formula's references first, in text order",
+      "repair": "ac19e03d — the restatement follows numericalBasis; red on the five volume families before the fix. The trace was regenerated at ac19e03d (product paths clean); browser evidence at 39e54046 is unaffected (the trace script is not on its path)",
+      "evidence": ["diagnostics/FORMULA_PROVENANCE_TRACE_AFTER.json", "diagnostics/FORMULA_PROVENANCE_TRACE_AFTER_attempt1_39e54046.json"]
+    }
+  ]
+}
