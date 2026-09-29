@@ -177,3 +177,93 @@ def test_canonical_identity_absorbs_float_noise_but_not_real_changes():
         assert verdict(other)["status"] == "FROZEN_CAMERA_IDENTITY_MISMATCH"
     assert verdict(translated)["max_projected_delta_px"] > 0.5
     assert verdict(wider)["max_projected_delta_px"] > 0.5
+
+
+# ── Declared camera change (w10): the default camera is CHOSEN from scene
+#    metrics now, so the reviewed camera is intentionally gone. The registry
+#    stays byte-identical; an expectation transfers only when the registered
+#    scene is the one reviewed, the geometry is unchanged, and the oracle
+#    reproduces the reviewed sets at BOTH the registered and the new camera.
+W10_FIXTURES = (ROOT / "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback"
+                / "inputs/fixtures")
+FAMILIES = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid",
+            "cuboid", "cube", "cross_section"]
+
+
+def _w10_scene(scenario_id: str) -> dict:
+    fixture = W10_FIXTURES / f"{scenario_id}_positive.json"
+    return json.loads(fixture.read_text(encoding="utf-8"))["envelope"]["scene3d"]
+
+
+def _look_from(base: dict, position: list[float], target: list[float]) -> dict:
+    """A snapshot with the reviewed projection, looking from `position` (Z-up)."""
+    import math
+    z = [p - t for p, t in zip(position, target)]
+    n = math.hypot(*z); z = [c / n for c in z]
+    x = [-z[1], z[0], 0.0]
+    n = math.hypot(*x); x = [c / n for c in x]
+    y = [z[1] * x[2] - z[2] * x[1], z[2] * x[0] - z[0] * x[2], z[0] * x[1] - z[1] * x[0]]
+    d = lambda a: -sum(u * v for u, v in zip(a, position))  # noqa: E731
+    view = [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, d(x), d(y), d(z), 1]
+    return {**copy.deepcopy(base), "position": position, "view_matrix_column_major": view}
+
+
+@pytest.mark.parametrize("scenario_id", FAMILIES)
+def test_registered_scene_is_the_reviewed_one_and_w10_keeps_its_geometry(scenario_id):
+    assert M.scene_sha256(_scene(scenario_id)) == _registered(scenario_id)["scene3d_envelope_sha256"]
+    assert M.scene_sha256(_w10_scene(scenario_id)) != _registered(scenario_id)["scene3d_envelope_sha256"]
+    assert M.geometry_signature(_w10_scene(scenario_id)) == M.geometry_signature(_scene(scenario_id))
+
+
+@pytest.mark.parametrize("scenario_id", FAMILIES)
+def test_declared_camera_change_transfers_only_what_the_oracle_reproduces(scenario_id):
+    preimages = M.load_camera_preimages(PREIMAGES, REGISTRY)
+    frozen = _registered(scenario_id)
+    reviewed = preimages[frozen["camera_snapshot_sha256"]]
+    held = M.transfer_expectation(frozen, _scene(scenario_id), _w10_scene(scenario_id), reviewed, preimages)
+    assert held["status"] == "EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE", held
+
+    # From the opposite side the reviewed hidden set cannot hold ⇒ fail closed.
+    solid = next(o for o in _w10_scene(scenario_id)["objects"] if o["type"] == "solid")
+    target = [sum(float(M.Fraction(v[i])) for v in solid["vertices"]) / len(solid["vertices"]) for i in range(3)]
+    p = reviewed["position"]
+    behind = _look_from(reviewed, [2 * target[0] - p[0], 2 * target[1] - p[1], p[2]], target)
+    moved = M.transfer_expectation(frozen, _scene(scenario_id), _w10_scene(scenario_id), behind, preimages)
+    assert moved["status"] == "FROZEN_EXPECTATION_NOT_TRANSFERABLE", moved
+
+
+def test_run_fails_closed_without_a_declaration_and_transfers_with_one(tmp_path):
+    preimages = M.load_camera_preimages(PREIMAGES, REGISTRY)
+    frozen = _registered("rectangular_pyramid")
+    snapshot = preimages[frozen["camera_snapshot_sha256"]]
+    scene = _w10_scene("rectangular_pyramid")
+    oracle = M.cross_check(scene, M._camera(snapshot))["analytic"]
+    browser = {"scenarios": {"rectangular_pyramid": {"positive": {"desktop": {
+        "camera_snapshots": {"neutral_final": {"snapshot": snapshot, "sha256": "new-camera"}},
+        "edge_semantics_neutral_final": {**M._sets(oracle), "edge_spans": [
+            {"edge_id": k, **s} for k, spans in oracle["edge_spans"].items() for s in spans]},
+        "scene3d_envelope_sha256": M.scene_sha256(scene),
+    }}}}}
+    path = tmp_path / "BROWSER_EVIDENCE.json"
+    path.write_text(json.dumps(browser), encoding="utf-8")
+    root = W10_FIXTURES.parent
+    silent = M.run(root, path, REGISTRY, PREIMAGES)
+    assert [f["code"] for f in silent["failures"]] == ["FROZEN_CAMERA_IDENTITY_MISMATCH"]
+    declared = M.run(root, path, REGISTRY, PREIMAGES, declared_camera_change="W10_TEST",
+                     registered_fixture_root=PRIOR_RUN / "inputs")
+    assert declared["pass"], declared["failures"]
+    identity = declared["scenarios"]["rectangular_pyramid"]["desktop"]["neutral_final"]["frozen_camera_identity"]
+    assert identity["status"] == "DECLARED_CAMERA_CHANGE" and identity["declaration"] == "W10_TEST"
+
+
+def test_declared_camera_change_rejects_a_moved_vertex_or_a_foreign_registered_scene():
+    preimages = M.load_camera_preimages(PREIMAGES, REGISTRY)
+    frozen = _registered("cube")
+    reviewed = preimages[frozen["camera_snapshot_sha256"]]
+    moved = copy.deepcopy(_w10_scene("cube"))
+    solid = next(o for o in moved["objects"] if o["type"] == "solid")
+    solid["vertices"][0] = ["1/2", "0", "0"]
+    assert M.transfer_expectation(frozen, _scene("cube"), moved, reviewed, preimages)["status"] \
+        == "SCENE_GEOMETRY_CHANGED"
+    assert M.transfer_expectation(frozen, _scene("cuboid"), _w10_scene("cube"), reviewed, preimages)["status"] \
+        == "REGISTERED_SCENE_MISMATCH"

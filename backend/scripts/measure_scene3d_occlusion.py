@@ -91,6 +91,57 @@ def camera_identity(registered_sha: str, actual: dict[str, Any], scene: dict[str
     }
 
 
+#: Fields that carry geometry. Everything else in a scene object is presentation
+#: (label, role, learner_text, …) and may change without moving a single edge.
+GEOMETRY_FIELDS = ("type", "xyz", "vertices", "vertex_ids", "faces", "polygon", "point",
+                   "direction", "normal", "point_a", "point_b", "endpoints", "endpoint_ids",
+                   "center", "radius_sq", "anchor", "apex_or_top", "rim_point", "curved_kind",
+                   "edge_ownership", "surfaces")
+
+
+def scene_sha256(scene: dict[str, Any]) -> str:
+    """Same bytes as the suite's `sha256(JSON.stringify(scene))`."""
+    return _sha256(json.dumps(scene, ensure_ascii=False, separators=(",", ":")).encode())
+
+
+def geometry_signature(scene: dict[str, Any]) -> list[tuple[str, str]]:
+    return sorted((obj["id"], json.dumps({k: obj[k] for k in GEOMETRY_FIELDS if k in obj},
+                                         sort_keys=True, ensure_ascii=False))
+                  for obj in scene.get("objects", []))
+
+
+def transfer_expectation(frozen: dict[str, Any], registered_scene: dict[str, Any],
+                         scene: dict[str, Any], camera_now: dict[str, Any],
+                         preimages: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """A DECLARED camera change (w10: the default camera is chosen from scene
+    metrics) keeps a frozen human expectation only if (1) `registered_scene` is
+    the scene that was reviewed, (2) the geometry is unchanged, and (3) the
+    independent oracle reproduces the reviewed sets at BOTH the registered and
+    the new camera. The registry itself is never edited."""
+    expected = {
+        "visible_edge_ids": sorted(frozen.get("expected_visible_ids", [])),
+        "hidden_edge_ids": sorted(frozen.get("expected_hidden_ids", [])),
+        "mixed_edge_ids": sorted(frozen.get("expected_mixed_ids", [])),
+    }
+    if scene_sha256(registered_scene) != frozen.get("scene3d_envelope_sha256"):
+        return {"status": "REGISTERED_SCENE_MISMATCH"}
+    if geometry_signature(registered_scene) != geometry_signature(scene):
+        return {"status": "SCENE_GEOMETRY_CHANGED"}
+    registered = preimages.get(frozen.get("camera_snapshot_sha256"))
+    if registered is None:
+        return {"status": "REGISTERED_PREIMAGE_UNAVAILABLE"}
+    at_registered = _sets(cross_check(scene, _camera(registered))["analytic"])
+    at_new = _sets(cross_check(scene, _camera(camera_now))["analytic"])
+    holds = at_registered == expected and at_new == expected
+    return {
+        "status": ("EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE" if holds
+                   else "FROZEN_EXPECTATION_NOT_TRANSFERABLE"),
+        "oracle_at_registered_camera": at_registered,
+        "oracle_at_new_camera": at_new,
+        "expected": expected,
+    }
+
+
 def _rows(column_major: list[float]) -> tuple[tuple[float, float, float, float], ...]:
     return tuple(tuple(float(column_major[column * 4 + row]) for column in range(4))
                  for row in range(4))
@@ -155,7 +206,8 @@ def _frozen_record(registry: dict[str, Any], scenario_id: str, viewport: str,
 
 
 def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
-        preimages_path: Path | None = None) -> dict[str, Any]:
+        preimages_path: Path | None = None, declared_camera_change: str | None = None,
+        registered_fixture_root: Path | None = None) -> dict[str, Any]:
     browser = json.loads(browser_path.read_text(encoding="utf-8"))
     registry = (json.loads(expectations_path.read_text(encoding="utf-8"))
                 if expectations_path else {"scenarios": []})
@@ -196,9 +248,23 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
                 if frozen:
                     identity = camera_identity(frozen["camera_snapshot_sha256"], snapshot_record,
                                                scene, preimages or {})
-                    if (identity["status"] == "FROZEN_CAMERA_IDENTITY_MISMATCH"
-                            or frozen.get("scene3d_envelope_sha256")
-                            != positive.get("scene3d_envelope_sha256")):
+                    drifted = (identity["status"] == "FROZEN_CAMERA_IDENTITY_MISMATCH"
+                               or frozen.get("scene3d_envelope_sha256")
+                               != positive.get("scene3d_envelope_sha256"))
+                    if drifted and declared_camera_change and registered_fixture_root:
+                        registered_scene = json.loads(
+                            (registered_fixture_root / "fixtures" / f"{scenario_id}_positive.json")
+                            .read_text(encoding="utf-8"))["envelope"]["scene3d"]
+                        transfer = transfer_expectation(frozen, registered_scene, scene,
+                                                        snapshot_record["snapshot"], preimages or {})
+                        if transfer["status"] == "EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE":
+                            identity = {"status": "DECLARED_CAMERA_CHANGE",
+                                        "declaration": declared_camera_change,
+                                        "measured_identity": identity, "transfer": transfer}
+                        else:
+                            failures.append({"code": transfer["status"], "transfer": transfer,
+                                             "declaration": declared_camera_change})
+                    elif drifted:
                         failures.append({
                             "code": "FROZEN_CAMERA_IDENTITY_MISMATCH",
                             "identity": identity,
@@ -259,9 +325,15 @@ def main() -> int:
     parser.add_argument("--expectations", type=Path)
     parser.add_argument("--camera-preimages", type=Path,
                         help="verified preimages of the registered camera hashes")
+    parser.add_argument("--declared-camera-change",
+                        help="id of an intended default-camera change (w10); requires "
+                             "--registered-fixture-root")
+    parser.add_argument("--registered-fixture-root", type=Path,
+                        help="fixture root the frozen registry was reviewed on")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    result = run(args.fixture_root, args.browser, args.expectations, args.camera_preimages)
+    result = run(args.fixture_root, args.browser, args.expectations, args.camera_preimages,
+                 args.declared_camera_change, args.registered_fixture_root)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0 if result["pass"] else 1

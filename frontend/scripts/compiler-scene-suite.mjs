@@ -629,7 +629,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       orbit.attempts = attempts;
       orbit.visibility_before = hiddenBefore;
       orbit.visibility_after = hiddenAfter;
-      result.edge_semantics_rotated_neutral = hiddenAfter;
+      // Chữ ký nét đứt + owner của trạng thái xoay (cho crop có metadata) —
+      // đọc RIÊNG: gộp vào `hiddenAfter` thì phép so tập khuất bên dưới luôn đúng.
+      result.edge_semantics_rotated_neutral = { ...hiddenAfter, ...await jsonEval(session,
+        "({dash_signature:window.__geo3d_edge_dash_signature||{},"
+        + "duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[]})") };
       orbit.visibility_recomputed = JSON.stringify(hiddenBefore) !== JSON.stringify(hiddenAfter);
       orbit.pass = orbit.pass && orbit.visibility_recomputed;
       result.orbit = orbit;
