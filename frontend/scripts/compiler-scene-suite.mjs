@@ -252,8 +252,12 @@ export async function trustedZoomOut(session, nac) {
   if (!await session.eval(`document.elementFromPoint(${x},${y})===document.querySelector('.geo3d-canvas canvas')`)) {
     throw new Error("ZOOM_POINT_NOT_ON_CANVAS");
   }
+  // Giả lập mobile (DPR 2) chia `deltaY` của CDP cho DPR trước khi tới trang
+  // (đo được: 100 ⇒ 50, nên 3 nấc chỉ lùi (1/0.95)^1,5). Nhân lại để trang nhận
+  // đúng 100 mỗi nấc — mô hình `cameraSauCuChi` giả định đúng điều đó.
+  const dpr = Number(await session.eval("window.devicePixelRatio")) || 1;
   for (let i = 0; i < nac; i += 1) {
-    await session._send("Input.dispatchMouseEvent", { type: "mouseWheel", x, y, deltaX: 0, deltaY: 100 });
+    await session._send("Input.dispatchMouseEvent", { type: "mouseWheel", x, y, deltaX: 0, deltaY: 100 * dpr });
   }
 }
 
