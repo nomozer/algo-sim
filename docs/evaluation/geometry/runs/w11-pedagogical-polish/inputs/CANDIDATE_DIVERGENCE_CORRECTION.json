@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW",
+  "corrects": "docs/evaluation/geometry/runs/w10-pedagogical-playback/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "current_candidate_source_commit": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "current_candidate_frozen_at": "7efdae4a1ab1c116ab15d7da5723065023300ef7",
+  "current_candidate_note": "Frozen ONCE, after the last product change of the wave, in the clean detached worktree D:/tmp/w11-d1. Product commits of the wave: f147dde6 (backend), e186b4cf, e633ad0c, 60292ecf (frontend/src). No intermediate candidate was frozen in this wave.",
+  "previous_candidate_hash": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "w11 answers the w10 human review (FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR). backend/app changes: the right-triangle-base pyramid and prism compilers declare the given lengths as GIVEN quantities (provenance and source copied from the FactGraph), so the volume depends numerically on base area + height and gets a formula; the grounding gate accepts an `XY_length` literal that matches a length invariant of the contract (same segment, value and cited fact; rejected -> served); formula references name exactly the entities in the formula text, ordered as written, and an ambiguous height yields no formula. CACHE_VERSION 103 -> 104 because cached `ok` envelopes change in those three places; the provider-facing fingerprint b1714b566e25c912 is unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate df04a613 is a new product identity and must not be used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 104
+}

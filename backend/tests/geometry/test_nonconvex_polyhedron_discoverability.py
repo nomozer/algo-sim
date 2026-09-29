@@ -378,7 +378,9 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    mở rộng solid_topology cho cuboid và cube.
     # 102 → 103 (HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE, 2026-09-28):
     #    nội dung cảnh trong envelope `ok` đổi (bề mặt học sinh).
-    assert CACHE_VERSION == "103"
+    # 103 → 104 (W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW, 2026-09-29):
+    #    envelope `ok` đổi (công thức thể tích, grounding độ dài theo bất biến).
+    assert CACHE_VERSION == "104"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):
