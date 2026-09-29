@@ -322,6 +322,13 @@ async function observeTree(session, scene, expectedIds) {
   const checks = [];
   for (const object of scene.objects ?? []) {
     const matches = rows.filter((row) => row.text === object.label);
+    // w10: bí danh đáp số mang nhãn của nguồn và KHÔNG có dòng riêng — hợp đồng
+    // là đúng MỘT dòng mang nhãn ấy (dòng của nguồn), không phải "có mặt".
+    if (object.alias_of) {
+      checks.push({ id: object.id, label: object.label, alias_of: object.alias_of,
+        matches: matches.length, observed_present: null, pass: matches.length === 1 });
+      continue;
+    }
     const observedPresent = matches.some((row) => !row.disabled);
     checks.push({
       id: object.id,

@@ -136,6 +136,24 @@ test("formation uses exact snapshots and proves forward plus backward playback",
   assert.deepEqual(result.future_object_leakage, []);
 });
 
+/* w10 — bí danh đáp số không phải một dòng riêng trong cây (cùng nhãn với
+   nguồn), nên nó không phải vật QUAN SÁT được; cây không liệt kê nó ở bước
+   nào cả mà formation vẫn phải đạt. Một vật thường vắng mặt thì vẫn trượt. */
+test("formation ignores answer aliases, which the tree never lists separately", () => {
+  const scene = { ...typedScene, objects: [...typedScene.objects,
+    { id: "v", alias_of: "the_tich_khoi" }] };
+  scene.formation = { steps: [{ visible_ids: ["A"] }, { visible_ids: ["A", "day_ABC"] },
+    { visible_ids: ["A", "day_ABC", "the_tich_khoi", "v"] }] };
+  const seen = (index) => expectedVisibleIds(scene, index).filter((id) => id !== "v");
+  const obs = (drop = []) => ({
+    forward: [0, 1, 2].map((index) => ({ index, direction: "forward",
+      visible_ids: seen(index).filter((id) => !drop.includes(id)) })),
+    backward: [2, 1, 0].map((index) => ({ index, direction: "backward", visible_ids: seen(index) })),
+  });
+  assert.equal(assessFormationSnapshots(scene, obs()).pass, true);
+  assert.equal(assessFormationSnapshots(scene, obs(["day_ABC"])).pass, false);
+});
+
 test("raw token leakage and formula references are payload-driven", () => {
   assert.equal(detectRawTokenLeakage(typedScene, "Tính thể tích khối.").pass, true);
   assert.deepEqual(
