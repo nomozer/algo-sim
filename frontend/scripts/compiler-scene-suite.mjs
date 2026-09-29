@@ -7,18 +7,25 @@ import { dirname, join, relative, resolve } from "node:path";
 
 import { BrowserSession } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
+// Token chấm đỉnh của CHÍNH sản phẩm (module không import gì ⇒ Node nạp thẳng).
+import { DAU_DINH_PX, KHUNG_HEP_PX } from "../src/simulations/domains/geometry/pick-target.ts";
 import {
+  LOP_SO_DO_THEO_TANG,
   aliasTreeRowCheck,
   assessCssReadiness,
   isHiddenAlias,
   assessFormationSnapshots,
   assessImmutableWindow,
   compareClosures,
+  danhGiaAnhXoayThuc,
   detectRawTokenLeakage,
+  doCoDauDinh,
   evaluateEvidenceGates,
   eventDeclaredClosure,
+  expectedCausalTiers,
   expectedVisibleIds,
-  planOrbit,
+  measurementStepsKeepGeometry,
+  orbitCandidates,
   pollUntil,
   settleCamera,
   sha256File,
@@ -81,6 +88,27 @@ async function setTextarea(session, text) {
 async function rectFor(session, expression) {
   return jsonEval(session, `(()=>{const e=${expression};if(!e)return null;const r=e.getBoundingClientRect();`
     + `return{x:r.left,y:r.top,w:r.width,h:r.height}})()`);
+}
+
+/** Lớp phủ trên sân khấu (thanh số đo, nút nổi, ô soi) — hộp px CSS TƯƠNG ĐỐI
+ *  canvas, cho cổng ảnh xoay biết đỉnh nào bị che (w11). */
+export async function overlayRects(session) {
+  return jsonEval(session, `(()=>{const c=document.querySelector('.geo3d-canvas canvas');if(!c)return[];`
+    + `const k=c.getBoundingClientRect();return['.geo3d-readout','.geo3d-noi','.geo3d-soi']`
+    + `.map(s=>document.querySelector(s)).filter(Boolean).map(e=>e.getBoundingClientRect())`
+    + `.filter(r=>r.width>0&&r.height>0).map(r=>({x:r.left-k.left-4,y:r.top-k.top-4,w:r.width+8,h:r.height+8}))})()`);
+}
+
+/** Cỡ chấm đỉnh ĐO qua ma trận camera, so với token của sản phẩm (w11, W10-H5). */
+export async function vertexMarkerCheck(session) {
+  const { markers, camera } = await jsonEval(session,
+    "({markers:window.__geo3d_vertex_markers||[],camera:window.__geo3d_camera_snapshot||null})");
+  const doDuoc = camera ? doCoDauDinh(camera, markers) : [];
+  const kyVong = (state) => (state === "chon" ? DAU_DINH_PX.chon
+    : camera.viewport_width < KHUNG_HEP_PX ? DAU_DINH_PX.hep : DAU_DINH_PX.thuong);
+  const lech = doDuoc.filter((m) => Math.abs(m.diameter_px - kyVong(m.state)) > 0.25);
+  return assertion(doDuoc.length > 0 && lech.length === 0,
+    { token: DAU_DINH_PX, markers: doDuoc, mismatched: lech });
 }
 
 export async function trustedClick(session, expression) {
@@ -505,9 +533,13 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       edgeDefault.selected_id === null && edgeDefault.highlighted_render_owner_ids.length === 0,
       edgeDefault,
     );
+    result.assertions.vertex_marker_px = await vertexMarkerCheck(session);
     const visibleText = await session.eval(`document.body.innerText||''`);
     result.raw_token_leakage = detectRawTokenLeakage(scene, visibleText);
     result.formula_entity_coherence = validateFormulaReferences(scene);
+    // Bước đo/kết luận chỉ đổi số đo và lời kể — không làm hình hiện sai lúc.
+    const doGiuHinh = measurementStepsKeepGeometry(scene);
+    result.assertions.measurement_steps_keep_geometry = assertion(doGiuHinh.pass, doGiuHinh);
 
     // Default phải được chụp trước causal/orbit/formation.
     result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
@@ -566,13 +598,17 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${targetText}`);
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
       (id) => id === causalId, { timeoutMs: 5_000 });
+    // w11: chờ bảng TẦNG causal của sản phẩm, không chờ owner cạnh được tô —
+    // chọn một con số (V) thì khối chỉ là ngữ cảnh, không cạnh nào đổi màu.
     const causalState = await pollUntil(
       () => jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
         + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
         + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
+        + `tiers:window.__geo3d_causal_tiers||null,`
+        + `readout_rows:[...document.querySelectorAll('.geo3d-readout li')].map(e=>({`
+        + `text:(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim(),classes:[...e.classList]})),`
         + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
-      (state) => state.selected_id === causalId
-        && state.highlighted_render_owner_ids.length > 0,
+      (state) => state.selected_id === causalId && state.tiers?.[causalId] === "dich",
       { timeoutMs: 8_000 },
     );
     const declared = eventDeclaredClosure(scene.events, causalId);
@@ -583,12 +619,27 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const delta = causalBeforeFrame.sha256 === causalAfterFrame.sha256
       ? { changed_pixels: 0, changed_ratio: 0, bounds: null, pass: false }
       : await pixelDelta(session, causalBeforeFrame, causalAfterFrame);
+    // Tầng kỳ vọng tính ĐỘC LẬP từ cảnh; mỗi dòng số đo phải mang đúng lớp
+    // của tầng mình (ngoài chuỗi ⇒ `la-diu`).
+    const tierExpected = expectedCausalTiers(scene, causalId);
+    const readoutIds = new Map(scene.objects.filter((o) => o.render === "readout")
+      .map((o) => [o.notation || o.label, o.id]));
+    const readoutTiers = causalState.readout_rows.map((row) => {
+      const tier = tierExpected[readoutIds.get(row.text)];
+      const want = tier ? LOP_SO_DO_THEO_TANG[tier] : "la-diu";
+      return { ...row, tier: tier ?? null, expected_class: want ?? null,
+        pass: want ? row.classes.includes(want) : !row.classes.some((c) => c.startsWith("la-")) };
+    });
     causal.visual = {
       selected_changed: causalBeforeState.selected_id !== causalState.selected_id,
       closure_changed: JSON.stringify(causalBeforeState.highlighted_ids)
         !== JSON.stringify(causalState.highlighted_ids),
-      render_owners_changed: JSON.stringify(causalBeforeState.highlighted_render_owner_ids)
-        !== JSON.stringify(causalState.highlighted_render_owner_ids),
+      tiers_match: JSON.stringify(causalState.tiers, Object.keys(causalState.tiers ?? {}).sort())
+        === JSON.stringify(tierExpected, Object.keys(tierExpected).sort()),
+      tiers_expected: tierExpected,
+      tiers_observed: causalState.tiers,
+      readout_tiers: readoutTiers,
+      readout_classes_match: readoutTiers.length > 0 && readoutTiers.every((r) => r.pass),
       canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
       pixel_delta: delta,
       dash_signature_preserved:
@@ -596,7 +647,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     };
     causal.pass = causal.pass && causalState.selected_id === causalId
       && causal.visual.selected_changed && causal.visual.closure_changed
-      && causal.visual.render_owners_changed && causal.visual.canvas_changed && delta.pass
+      && causal.visual.tiers_match && causal.visual.readout_classes_match
+      && causal.visual.canvas_changed && delta.pass
       && causal.visual.dash_signature_preserved;
     result.causal_closure = causal;
     result.assertions.causal_closure = assertion(causal.pass, causal);
@@ -621,24 +673,29 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         `({visible_edge_ids:window.__geo3d_visible_edge_ids||[],`
         + `hidden_edge_ids:window.__geo3d_hidden_edge_ids||[],`
         + `mixed_edge_ids:window.__geo3d_mixed_edge_ids||[],edge_spans:window.__geo3d_edge_spans||[]})`);
-      // w10: cử chỉ HOẠCH ĐỊNH trước (`planOrbit`: đạt ngưỡng góc nhìn + đổi
-      // tập khuất dự đoán) đi đầu; ba cú kéo cố định cũ chỉ còn là dự phòng.
+      // w11 (review W10-H4): CHỈ cử chỉ hoạch định. Ứng viên = mọi góc quanh Z
+      // đạt cổng không suy biến VÀ đổi tập khuất dự đoán, theo thứ tự tất định.
+      // Ảnh chỉ được nhận khi CAMERA THẬT sau cử chỉ cũng đạt cổng (đỉnh khối
+      // trong khung, không dưới lớp phủ); trượt ⇒ về khung mặc định, thử ứng
+      // viên sau. Cú kéo pixel cố định w10 đã bỏ: nó từng nhận ảnh dẹt.
       // OrbitControls: Δφ = 2π·dx / chiều cao khung, kéo phải làm phương vị GIẢM.
       const cam0 = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
       const m0 = cam0?.view_matrix_column_major;
-      const plan = m0 ? planOrbit(scene, [m0[2], m0[6], m0[10]]) : null;
+      const candidates = m0 ? orbitCandidates(scene, [m0[2], m0[6], m0[10]]) : [];
       const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
-      const gestures = [
-        ...(plan ? [{ dx: Math.round((-plan.offset_deg / 360) * cao), dy: 0, startX: 0.52, startY: 0.48,
-          planned: true }] : []),
-        { dx: 190, dy: 48, startX: 0.52, startY: 0.48 },
-        { dx: -170, dy: 84, startX: 0.67, startY: 0.42 },
-        { dx: 120, dy: -110, startX: 0.43, startY: 0.63 },
-      ];
       let observedOrbit = null;
+      let rotatedCamera = null;
+      let hiddenAfter = null;
+      let accepted = null;
       const attempts = [];
       const t0 = Date.now();
-      for (const gesture of gestures) {
+      for (const candidate of candidates) {
+        if (attempts.length > 0) {
+          await clickText(session, "Xem lại toàn hình");
+          await settleOrRecord(session, result, "rotated_retry_reset");
+        }
+        const gesture = { dx: Math.round((-candidate.offset_deg / 360) * cao), dy: 0,
+          startX: 0.52, startY: 0.48, planned_offset_deg: candidate.offset_deg };
         const started_ms = Date.now() - t0;
         await trustedOrbit(session, gesture);
         try {
@@ -652,21 +709,27 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           }), (observed) => projectionComparison(before, observed.points).moved_ids.length >= 2
             && JSON.stringify(observed.sets) !== JSON.stringify(hiddenBefore),
           { timeoutMs: 4_000 });
-          attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: true,
-            state: "GESTURE_SENT→MOTION_AND_VISIBILITY_CHANGE" });
-          break;
         } catch (error) {
           attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: false,
             state: "GESTURE_SENT→TIMEOUT", reason: String(error) });
+          observedOrbit = null;
+          continue;
         }
+        // Damping is still carrying the orbit here: settle, then read the sets
+        // and the camera in ONE evaluation so the oracle sees the same camera.
+        await settleOrRecord(session, result, "rotated_neutral");
+        ({ camera: rotatedCamera, ...hiddenAfter } = await jsonEval(session,
+          `({${VISIBILITY_STATE}camera:window.__geo3d_camera_snapshot||null})`));
+        const gate = danhGiaAnhXoayThuc(scene, rotatedCamera, await overlayRects(session));
+        attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: gate.pass,
+          state: gate.pass ? "GESTURE_SENT→SETTLED→GATE_PASS" : "GESTURE_SENT→SETTLED→GATE_FAIL",
+          gate });
+        if (gate.pass) { accepted = { ...candidate, actual_gate: gate }; break; }
       }
-      if (!observedOrbit) throw new Error(`ORBIT_EVIDENCE_TIMEOUT:${JSON.stringify({ plan, attempts })}`);
+      if (!accepted) throw new Error(`ORBIT_EVIDENCE_NOT_NON_DEGENERATE:${JSON.stringify({
+        candidates: candidates.map((c) => c.offset_deg), attempts })}`);
+      const plan = accepted;
       const after = observedOrbit.points;
-      // Damping is still carrying the orbit here: settle, then read the sets
-      // and the camera in ONE evaluation so the oracle sees the same camera.
-      await settleOrRecord(session, result, "rotated_neutral");
-      const { camera: rotatedCamera, ...hiddenAfter } = await jsonEval(session,
-        `({${VISIBILITY_STATE}camera:window.__geo3d_camera_snapshot||null})`);
       result.camera_snapshots.rotated_neutral = {
         snapshot: rotatedCamera,
         sha256: sha256(JSON.stringify(rotatedCamera)),
@@ -682,7 +745,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         "({dash_signature:window.__geo3d_edge_dash_signature||{},"
         + "duplicate_visual_owner_ids:window.__geo3d_duplicate_visual_owner_ids||[]})") };
       orbit.visibility_recomputed = JSON.stringify(hiddenBefore) !== JSON.stringify(hiddenAfter);
-      orbit.pass = orbit.pass && orbit.visibility_recomputed;
+      orbit.non_degenerate = plan.actual_gate.pass;
+      orbit.pass = orbit.pass && orbit.visibility_recomputed && orbit.non_degenerate;
       result.orbit = orbit;
       result.assertions.orbit = assertion(orbit.pass, orbit);
       result.screenshots.rotated_neutral = await capture(session, join(outDir, "rotated_neutral.png"));
@@ -719,10 +783,12 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       edge: edgeDefault,
       orbit_required: Boolean(viewport.orbit),
       orbit_visibility_changed: viewport.orbit ? result.orbit?.visibility_recomputed : true,
+      orbit_non_degenerate: viewport.orbit ? result.orbit?.non_degenerate : true,
       causal: {
         selected_changed: causal.visual.selected_changed,
         closure_changed: causal.visual.closure_changed,
-        render_owners_changed: causal.visual.render_owners_changed,
+        tiers_match: causal.visual.tiers_match,
+        readout_classes_match: causal.visual.readout_classes_match,
         canvas_changed: causal.visual.canvas_changed,
         bounded_pixel_delta: causal.visual.pixel_delta.pass,
         dash_signature_preserved: causal.visual.dash_signature_preserved,
@@ -866,7 +932,9 @@ export async function runSuite({
     for (const scenario of suite.scenarios) {
       const positive = JSON.parse(readFileSync(join(root, scenario.positive_fixture), "utf-8"));
       const negative = JSON.parse(readFileSync(join(root, scenario.negative_fixture), "utf-8"));
-      const scenarioOut = join(screenshots, scenario.id);
+      // w11: manifest có thể đặt thư mục ảnh của họ (`images/<họ>/`), để ảnh
+      // nguồn nằm ngay cạnh contact sheet của họ; manifest cũ vẫn dùng `id`.
+      const scenarioOut = join(screenshots, scenario.evidence_dir ?? scenario.id);
       const record = { positive: {}, negative: {} };
       for (const viewport of suite.viewports) {
         record.positive[viewport.id] = await runPositive({

@@ -7,7 +7,7 @@ import { relative, resolve } from "node:path";
 // không import gì) — không một định nghĩa thứ hai trong bộ đo.
 import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
 import {
-  NGUONG_GOC_NHIN, danhGiaGocNhin, datNguong, doLuoiGocNhin,
+  GOC_NHIN_THAM_CHIEU, HUONG, NGUONG_GOC_NHIN, danhGiaGocNhin, datNguong, doLuoiGocNhin,
 } from "../src/simulations/domains/geometry/scene3d-camera.ts";
 
 const cameraModules = { cauTrucGocNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, NGUONG_GOC_NHIN };
@@ -135,35 +135,221 @@ function predictedHidden(scene, d) {
   return hidden.sort();
 }
 
-export const ORBIT_OFFSETS_DEG = [60, -60, 45, -45, 75, -75, 90, -90, 120, -120, 30, -30];
+/** Góc xoay ứng viên, TẤT ĐỊNH: |góc| 30°–150° bước 5°, gần 60° trước, dương
+ *  trước âm. Đủ lớn để ảnh xoay khác hẳn khung mặc định. */
+export const ORBIT_OFFSETS_DEG = Array.from({ length: 25 }, (_, i) => 30 + 5 * i)
+  .sort((a, b) => Math.abs(a - 60) - Math.abs(b - 60) || a - b).flatMap((a) => [a, -a]);
 
-/** Ảnh ĐÃ XOAY chỉ cần CHIỀU SÂU: hình vẫn choán, có độ sâu, không mặt nào bị
- *  ép thành một đường. Ngưỡng NHÃN (khoảng đỉnh, đỉnh–cạnh) là của khung mặc
- *  định; cảnh đông điểm hầu như không phương vị nào đạt nó (đo w10: thiết diện
- *  chỉ 30°/60°), nên đòi nó ở đây là không bao giờ xoay được. */
+/** Khung "đã xoay" (w10): hình vẫn choán, có độ sâu, không mặt ép thành đường. */
 export function hasDepth(q, tran, nguong = cameraModules.NGUONG_GOC_NHIN) {
   return q.dienTichBao >= nguong.tiLeDienTichBao * tran.dienTichBao
     && q.doSau >= nguong.tiLeDoSau * tran.doSau
     && q.matNghiengMin >= nguong.matNghiengMin;
 }
 
-export function planOrbit(scene, direction, { offsets = ORBIT_OFFSETS_DEG, camera = cameraModules } = {}) {
-  const { diem, canh, mat } = camera.cauTrucGocNhin(scene.objects ?? []);
-  const { tran } = camera.doLuoiGocNhin(diem, canh, mat);
-  const before = predictedHidden(scene, direction);
-  for (const offset of offsets) {
-    const a = (offset * Math.PI) / 180;
-    const d = [direction[0] * Math.cos(a) - direction[1] * Math.sin(a),
-      direction[0] * Math.sin(a) + direction[1] * Math.cos(a), direction[2]];
-    const after = predictedHidden(scene, d);
-    const quality = camera.danhGiaGocNhin(diem, canh, mat, d);
-    const pass = canh.length === 0 || hasDepth(quality, tran, camera.NGUONG_GOC_NHIN);
-    if (pass && JSON.stringify(after) !== JSON.stringify(before)) {
-      return { offset_deg: offset, direction_after: d, quality, depth_pass: pass,
-        predicted_hidden_before: before, predicted_hidden_after: after };
+/* ─── ẢNH XOAY KHÔNG SUY BIẾN (w11, review W10-H4) ─────────────────────────
+ * Ảnh xoay w10 chỉ cần `hasDepth` và đã nhận A nằm trên SC, S–A–B gần thẳng
+ * hàng. Cổng này đo trên các ĐỈNH KHỐI (đỉnh chủ chốt, không kể điểm thiết
+ * diện): choán + sâu như cũ; mặt khối ≥ 12° so với tia nhìn; không bộ ba đỉnh
+ * nào gần thẳng hàng hơn, và không đỉnh nào sát cạnh hơn, so với khối lập
+ * phương tham chiếu ở hướng mặc định cũ (`HUONG` — cùng tham chiếu của
+ * `NGUONG_GOC_NHIN`). */
+const _tru = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const _cheo = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const _tich = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const _chuan = (a) => { const d = Math.hypot(...a) || 1; return a.map((x) => x / d); };
+
+/** Chiều cao nhỏ nhất (chia bán kính cảnh) của các tam giác chiếu từ mọi bộ ba
+ *  đỉnh KHÔNG thẳng hàng trong 3D — nhỏ ⇔ ba đỉnh gần thẳng hàng trên ảnh. */
+export function baDinhGanThangHang(diem, huong) {
+  const d = _chuan(huong);
+  const phai = _chuan(Math.abs(d[2]) > 0.999 ? _cheo([0, 1, 0], d) : _cheo([0, 0, 1], d));
+  const len = _cheo(d, phai);
+  const tam = diem.reduce((s, p) => s.map((x, i) => x + p[i] / diem.length), [0, 0, 0]);
+  const R = Math.max(1e-9, ...diem.map((p) => Math.hypot(..._tru(p, tam))));
+  const uv = diem.map((p) => [_tich(_tru(p, tam), phai) / R, _tich(_tru(p, tam), len) / R]);
+  let min = Infinity;
+  let bo = null;
+  for (let i = 0; i < diem.length; i += 1) {
+    for (let j = i + 1; j < diem.length; j += 1) {
+      for (let k = j + 1; k < diem.length; k += 1) {
+        if (Math.hypot(..._cheo(_tru(diem[j], diem[i]), _tru(diem[k], diem[i]))) < 1e-9 * R * R) continue;
+        const [a, b, c] = [uv[i], uv[j], uv[k]];
+        const s2 = Math.abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
+        const dai = Math.max(Math.hypot(b[0] - a[0], b[1] - a[1]), Math.hypot(c[0] - a[0], c[1] - a[1]),
+          Math.hypot(c[0] - b[0], c[1] - b[1]));
+        if (s2 / dai < min) { min = s2 / dai; bo = [i, j, k]; }
+      }
     }
   }
-  return null;
+  return { min: Number.isFinite(min) ? min : 1, triple: bo };
+}
+
+const _LP = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]];
+export const NGUONG_ANH_XOAY = {
+  tiLeDienTich: 0.6,
+  tiLeDoSau: 0.5,
+  matNghiengDo: 12,
+  baDinhMin: baDinhGanThangHang(_LP, [...HUONG]).min,
+  dinhCanhMin: 0.5 * GOC_NHIN_THAM_CHIEU.khoangDinhCanhMin,
+};
+
+/** Đỉnh / cạnh / mặt của mọi KHỐI trong cảnh — các đỉnh chủ chốt. */
+export function cauTrucKhoi(scene) {
+  const diem = [];
+  const ten = [];
+  const canh = new Map();
+  const mat = [];
+  for (const k of (scene?.objects ?? []).filter((o) => o.type === "solid" && o.vertices && o.faces)) {
+    const goc = diem.length;
+    k.vertices.forEach((v, i) => { diem.push(v.map(num)); ten.push(k.vertex_ids?.[i] ?? `${k.id}#${i}`); });
+    for (const f of k.faces) {
+      mat.push(f.map((i) => goc + i));
+      f.forEach((a, i) => {
+        const [x, y] = [goc + a, goc + f[(i + 1) % f.length]].sort((p, q) => p - q);
+        canh.set(`${x}:${y}`, [x, y]);
+      });
+    }
+  }
+  return { diem, ten, canh: [...canh.values()], mat };
+}
+
+const _khoiDaDo = new WeakMap();   // cảnh → cấu trúc khối + cực đại lưới (đo một lần)
+
+/** Cổng ảnh xoay trên HƯỚNG (tâm → camera). Ghi số đo và từng lý do trượt. */
+export function danhGiaAnhXoay(scene, huong, camera = cameraModules) {
+  if (!_khoiDaDo.has(scene)) {
+    const k = cauTrucKhoi(scene);
+    _khoiDaDo.set(scene, { ...k, tran: k.diem.length < 3 ? null : camera.doLuoiGocNhin(k.diem, k.canh, k.mat).tran });
+  }
+  const { diem, ten, canh, mat, tran } = _khoiDaDo.get(scene);
+  if (diem.length < 3) return { pass: true, failures: [], metrics: null };
+  const q = camera.danhGiaGocNhin(diem, canh, mat, huong);
+  const ba = baDinhGanThangHang(diem, huong);
+  const metrics = {
+    dien_tich_ti_le: q.dienTichBao / (tran.dienTichBao || 1),
+    do_sau_ti_le: q.doSau / (tran.doSau || 1),
+    mat_nghieng_min_do: (Math.asin(Math.min(1, q.matNghiengMin)) * 180) / Math.PI,
+    ba_dinh_min: ba.min,
+    ba_dinh_gan_thang_hang: ba.triple?.map((i) => ten[i]) ?? null,
+    dinh_canh_min: q.khoangDinhCanhMin,
+  };
+  const n = NGUONG_ANH_XOAY;
+  const failures = [
+    metrics.dien_tich_ti_le < n.tiLeDienTich && "PROJECTED_AREA_TOO_SMALL",
+    metrics.do_sau_ti_le < n.tiLeDoSau && "DEPTH_TOO_SHALLOW",
+    metrics.mat_nghieng_min_do < n.matNghiengDo && "FACE_NEAR_EDGE_ON",
+    metrics.ba_dinh_min < n.baDinhMin && "THREE_KEY_VERTICES_NEAR_COLLINEAR",
+    metrics.dinh_canh_min < n.dinhCanhMin && "VERTEX_ON_FOREIGN_EDGE",
+  ].filter(Boolean);
+  return { pass: failures.length === 0, failures, metrics };
+}
+
+const _xoayZ = (d, doXoay) => {
+  const a = (doXoay * Math.PI) / 180;
+  return [d[0] * Math.cos(a) - d[1] * Math.sin(a), d[0] * Math.sin(a) + d[1] * Math.cos(a), d[2]];
+};
+
+/** MỌI góc xoay đạt cổng VÀ đổi tập cạnh khuất dự đoán, theo thứ tự ứng viên. */
+export function orbitCandidates(scene, direction, { offsets = ORBIT_OFFSETS_DEG, camera = cameraModules } = {}) {
+  const before = predictedHidden(scene, direction);
+  const ra = [];
+  for (const offset of offsets) {
+    const d = _xoayZ(direction, offset);
+    const gate = danhGiaAnhXoay(scene, d, camera);
+    const after = predictedHidden(scene, d);
+    if (gate.pass && JSON.stringify(after) !== JSON.stringify(before)) {
+      ra.push({ offset_deg: offset, direction_after: d, gate,
+        predicted_hidden_before: before, predicted_hidden_after: after });
+    }
+  }
+  return ra;
+}
+
+export function planOrbit(scene, direction, options = {}) {
+  const ra = orbitCandidates(scene, direction, options);
+  return ra.length ? { ...ra[0], candidate_offsets_deg: ra.map((c) => c.offset_deg) } : null;
+}
+
+/** Điểm thế giới → px CSS trong canvas, bằng ma trận camera THẬT (cột-trước). */
+export function chieuManHinh(snapshot, p) {
+  const nhan = (m, v) => [0, 1, 2, 3].map((r) => m[r] * v[0] + m[4 + r] * v[1] + m[8 + r] * v[2] + m[12 + r] * v[3]);
+  const c = nhan(snapshot.projection_matrix_column_major,
+    nhan(snapshot.view_matrix_column_major, [p[0], p[1], p[2], 1]));
+  return { x: ((c[0] / c[3] + 1) / 2) * snapshot.viewport_width,
+    y: ((1 - c[1] / c[3]) / 2) * snapshot.viewport_height, behind: c[3] <= 0 };
+}
+
+/** Cổng ảnh xoay trên camera THẬT sau cử chỉ: số đo hướng + mọi đỉnh khối (và
+ *  chỗ nhãn của nó) nằm trong khung, không dưới lớp phủ (`overlays`: hộp px CSS
+ *  tương đối canvas — thanh số đo, nút nổi, ô soi). */
+export function danhGiaAnhXoayThuc(scene, snapshot, overlays = []) {
+  const m = snapshot.view_matrix_column_major;
+  const gate = danhGiaAnhXoay(scene, [m[2], m[6], m[10]]);
+  const { diem, ten } = cauTrucKhoi(scene);
+  const le = 0.03 * Math.min(snapshot.viewport_width, snapshot.viewport_height);
+  const trong = (s, r) => s.x >= r.x && s.x <= r.x + r.w && s.y >= r.y && s.y <= r.y + r.h;
+  const lech = [];
+  diem.forEach((p, i) => {
+    const s = chieuManHinh(snapshot, p);
+    const nhan = { x: s.x, y: s.y - 18 };   // nhãn đặt ngay trên đỉnh
+    if (s.behind || s.x < le || s.y < le || s.x > snapshot.viewport_width - le
+        || s.y > snapshot.viewport_height - le) lech.push({ vertex: ten[i], reason: "OUTSIDE_CANVAS", ...s });
+    else if (overlays.some((r) => trong(s, r) || trong(nhan, r))) lech.push({ vertex: ten[i], reason: "UNDER_OVERLAY", ...s });
+  });
+  const failures = [...gate.failures, ...(lech.length ? ["KEY_VERTEX_NOT_READABLE"] : [])];
+  return { pass: failures.length === 0, failures, metrics: gate.metrics, unreadable_vertices: lech };
+}
+
+/** Tầng causal kỳ vọng (w11), tính ĐỘC LẬP với `tangNhanManh`: bao đóng qua
+ *  `depends`; chuỗi số qua cạnh `numerical`; gốc tự do trong chuỗi số là dữ
+ *  kiện số, còn lại trong chuỗi số là trung gian, ngoài chuỗi số là ngữ cảnh. */
+export function expectedCausalTiers(scene, id) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const dong = (next) => {
+    const thay = new Set();
+    const hang = [id];
+    while (hang.length) {
+      for (const x of next(byId.get(hang.shift()))) {
+        if (x !== id && !thay.has(x)) { thay.add(x); hang.push(x); }
+      }
+    }
+    return thay;
+  };
+  const tatCa = dong((o) => o?.depends ?? []);
+  const so = dong((o) => (o?.dependency_edges ?? []).filter((e) => e.relation === "numerical").map((e) => e.source_id));
+  const ra = { [id]: "dich" };
+  for (const x of tatCa) ra[x] = !so.has(x) ? "boi_canh" : byId.get(x)?.origin === "free" ? "du_kien_so" : "trung_gian";
+  return ra;
+}
+
+/** Lớp CSS mà một dòng số đo phải mang theo tầng của nó. */
+export const LOP_SO_DO_THEO_TANG = { dich: "la-chon", du_kien_so: "la-so-lieu", trung_gian: "la-trung-gian" };
+
+/** Đường kính px CSS của từng chấm đỉnh, đo bằng ma trận camera — không đọc
+ *  con số renderer tự báo. */
+export function doCoDauDinh(snapshot, markers) {
+  const m = snapshot.view_matrix_column_major;
+  const phai = [m[0], m[4], m[8]];
+  return markers.map((k) => {
+    const a = chieuManHinh(snapshot, k.center);
+    const b = chieuManHinh(snapshot, k.center.map((x, i) => x + phai[i] * k.radius_world));
+    return { id: k.id, state: k.state, diameter_px: 2 * Math.hypot(b.x - a.x, b.y - a.y) };
+  });
+}
+
+/** Bước ĐO không được làm hình học xuất hiện hay biến mất: tập vật HÌNH HỌC
+ *  thấy được ở bước đo trùng bước liền trước (review W10: formation). */
+export function measurementStepsKeepGeometry(scene) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const hinh = (k) => sortedUnique(expectedVisibleIds(scene, k).filter((x) => byId.get(x)?.type !== "quantity"));
+  const lech = [];
+  for (const e of scene?.events ?? []) {
+    if (!["MEASUREMENT", "FINAL_RESULT"].includes(e.semantic_kind) || !e.step_index) continue;
+    const diff = setDiff(hinh(e.step_index - 1), hinh(e.step_index));
+    if (diff.missing.length || diff.unexpected.length) lech.push({ step: e.step_index, ...diff });
+  }
+  return { pass: lech.length === 0, mismatches: lech };
 }
 
 /** Bí danh KHÔNG hiện ở đâu (bí danh đáp số, `render: "non_visual"`). Bí danh
@@ -294,7 +480,13 @@ export function evaluateEvidenceGates(facts) {
   }
   if (facts.causal?.selected_changed !== true) reasons.push("CAUSAL_SELECTION_UNCHANGED");
   if (facts.causal?.closure_changed !== true) reasons.push("CAUSAL_CLOSURE_UNCHANGED");
-  if (facts.causal?.render_owners_changed !== true) reasons.push("CAUSAL_RENDER_OWNERS_UNCHANGED");
+  if (facts.orbit_required && facts.orbit_non_degenerate !== true) {
+    reasons.push("ORBIT_DEGENERATE_PROJECTION");
+  }
+  // w11: tầng causal (đích > dữ kiện số > trung gian số > ngữ cảnh) thay cho
+  // "owner cạnh đổi" — chọn một con số thì khối chỉ là ngữ cảnh, nét giữ mực.
+  if (facts.causal?.tiers_match !== true) reasons.push("CAUSAL_TIERS_MISMATCH");
+  if (facts.causal?.readout_classes_match !== true) reasons.push("CAUSAL_READOUT_TIER_CLASS");
   if (facts.causal?.canvas_changed !== true) reasons.push("CAUSAL_CANVAS_UNCHANGED");
   if (facts.causal?.bounded_pixel_delta !== true) reasons.push("CAUSAL_PIXEL_DELTA_UNBOUNDED");
   if (facts.causal?.dash_signature_preserved !== true) reasons.push("HIGHLIGHT_DASH_OVERWRITE");

@@ -64,6 +64,54 @@ def test_edge_records_carry_the_review_metadata():
     assert len(rec["endpoints_px"]) == 2
 
 
+def _anh(path: Path, size: tuple[int, int], color: str) -> Path:
+    from PIL import Image
+    path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", size, color).save(path)
+    return path
+
+
+def _ban_ghi(tmp: Path, viewport: str, width_css: int, size: tuple[int, int], steps: int) -> dict:
+    shots = {s: str(_anh(tmp / viewport / f"{s}.png", size, c)) for s, c in
+             (("neutral_final", "white"), ("causal_selected", "orange"), ("rotated_neutral", "gray"))}
+    return {"viewport": {"id": viewport, "width": width_css}, "screenshots": shots,
+            "canvas_boxes": {s: {"x": 10, "y": 100, "w": 900, "h": 400} for s in shots},
+            "formation": {"steps": [
+                {"index": k, "learner_text": f"Bước dựng số {k}",
+                 "screenshot": str(_anh(tmp / viewport / f"f{k}.png", size, "white"))}
+                for k in range(steps)]}}
+
+
+def test_w11_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
+    """Review W10-H8: phụ lục formation quá nhỏ để đọc. Sheet của MỘT họ giữ
+    trung tính, causal, xoay, mobile và MỌI bước formation ở độ phân giải gốc
+    (không thu nhỏ), có dải chú giải và nhãn chữ lớn cho từng ô."""
+    desktop = _ban_ghi(tmp_path, "desktop", 1400, (1400, 800), steps=5)
+    mobile = _ban_ghi(tmp_path, "mobile", 390, (780, 1600), steps=1)
+    meta = B.family_sheet("triangular_pyramid", {"desktop": desktop, "mobile": mobile},
+                          tmp_path / "images")
+    from PIL import Image
+    sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
+    assert [c["state"] for c in meta["cells"]][:4] == [
+        "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final"]
+    assert [c["state"] for c in meta["cells"]][4:] == [f"desktop/formation/{k}" for k in range(5)]
+    # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang.
+    assert all(c["scale"] == 1.0 for c in meta["cells"])
+    assert sheet.width >= 2 * 1400 and meta["legend"] and meta["label_font_px"] >= 24
+    assert meta["cells"][4]["label"].endswith("Bước dựng số 0")
+
+
+def test_w11_overview_is_only_an_index_of_the_six_families(tmp_path):
+    meta = {f: {"sheet": f"images/{B.family_dir(f)}/SHEET.png", "thumbnail": None}
+            for f in ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
+                      "cuboid", "cube", "cross_section")}
+    index = B.overview_index(meta, tmp_path / "images")
+    assert (tmp_path / "images" / "overview" / "INDEX.png").exists()
+    assert [r["family_dir"] for r in index["families"]] == [
+        "triangular-pyramid", "triangular-prism", "rectangular-pyramid", "cuboid", "cube", "cross-section"]
+    assert index["role"] == "INDEX_ONLY"
+
+
 def test_oracle_disagreement_is_recorded_not_hidden():
     scene = json.loads(FIXTURE.read_text(encoding="utf-8"))["envelope"]["scene3d"]
     snapshot = json.loads(json.loads(PREIMAGES.read_text(encoding="utf-8"))["preimages"][0]["snapshot_json"])

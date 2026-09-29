@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Contact sheets and hidden-edge crops from the authoritative PNGs (w10).
+"""Contact sheets and hidden-edge crops from the authoritative PNGs (w10 → w11).
 
-Main sheet: one row per family, LARGE cells — desktop neutral_final ·
-causal_selected · rotated_neutral · mobile neutral_final. Formation and
-playback filmstrips go to an appendix sheet. Every crop contains BOTH
-endpoints of its edge (projected by the independent oracle from the recorded
-camera) and is listed in ``crops/CROPS_INDEX.json`` with its review metadata.
-The w09 crops were 128 px around one witness point; a reviewer could not see
-where the hidden edge started or ended.
+w11 layout (review W10-H8: the formation appendix was too small to read):
+``images/<family>/SHEET.png`` holds ONE family at NATIVE resolution — desktop
+neutral · causal · rotated, mobile neutral, then every formation step with its
+narration as a large label — under a legend band. ``images/overview/`` is only
+an index of the six family sheets. Source screenshots stay full-resolution in
+the family folder; diagnostics never enter an acceptance sheet.
+
+Every crop contains BOTH endpoints of its edge (projected by the independent
+oracle from the recorded camera) and is listed in ``results/HIDDEN_EDGE_CROPS.json``.
 """
 from __future__ import annotations
 
@@ -18,15 +20,24 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 from measure_scene3d_occlusion import _camera
 from scene3d_occlusion_oracle import _project
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-MAIN_COLUMNS = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
+FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
+                "cuboid", "cube", "cross_section")
+SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
-CELL = (640, 420)
+STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
+                "causal_selected": "causal — đã chọn đáp số",
+                "rotated_neutral": "đã xoay (qua cổng không suy biến)"}
+LEGEND = ("CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  "
+          "Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · "
+          "khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.")
+LABEL_PX = 28
+HEADER_CSS = 44   # hàng tiêu đề + chip ngay trên canvas: giữ, bỏ thanh điều hướng
 STATES = ("neutral_final", "rotated_neutral")
 
 
@@ -137,41 +148,123 @@ def stage_box(record: dict[str, Any], state: str, size: tuple[int, int],
     return (x0, y0, x1, y1) if x1 > x0 and y1 > y0 else None
 
 
-def _sheet(cells: list[list[tuple]], out: Path, cell=CELL) -> None:
-    rows, cols = len(cells), max((len(r) for r in cells), default=1)
-    sheet = Image.new("RGB", (cols * cell[0], rows * (cell[1] + 24)), "white")
-    draw = ImageDraw.Draw(sheet)
-    for r, row in enumerate(cells):
-        for c, (label, path, *crop) in enumerate(row):
-            x, y = c * cell[0], r * (cell[1] + 24)
-            draw.text((x + 8, y + 6), label, fill="black")
-            if path and path.exists():
-                image = Image.open(path).convert("RGB")
-                if crop and crop[0]:
-                    image = image.crop(crop[0])
-                image.thumbnail(cell)
-                sheet.paste(image, (x, y + 24))
+def family_dir(family: str) -> str:
+    return family.replace("_", "-")
+
+
+def _font(size: int) -> tuple[Any, str]:
+    """Phông có dấu tiếng Việt; phông bitmap mặc định chỉ cao ~10 px."""
+    for name in ("arial.ttf", "segoeui.ttf", "DejaVuSans.ttf"):
+        try:
+            return ImageFont.truetype(name, size), name
+        except OSError:
+            continue
+    return ImageFont.load_default(size=size), "pillow-default"
+
+
+def page_box(record: dict[str, Any], state: str, size: tuple[int, int]) -> tuple[int, int, int, int]:
+    """Cả trang từ hàng tiêu đề ngay trên canvas tới đáy (số đo, điều khiển,
+    "Đang dựng/Dựa trên", lời kể) — bỏ thanh điều hướng. KHÔNG thu nhỏ."""
+    box = (record.get("canvas_boxes") or {}).get(state) or record.get("canvas_box") or {"y": 0}
+    top = max(0, int((box["y"] - HEADER_CSS) * image_scale(record, size[0])))
+    return 0, min(top, size[1] - 1), size[0], size[1]
+
+
+def _save_png(image: Image.Image, out: Path) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
-    sheet.save(out)
+    image.save(out, optimize=True)
+
+
+def family_sheet(family: str, records: dict[str, dict[str, Any]], images_root: Path) -> dict[str, Any]:
+    """Sheet của MỘT họ, độ phân giải gốc: 4 trạng thái rồi mọi bước formation."""
+    cells: list[dict[str, Any]] = []
+    for vp, state in SHEET_STATES:
+        record = records.get(vp, {})
+        cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
+                      "path": _path(record.get("screenshots", {}).get(state)), "record": record,
+                      "box_state": state})
+    steps = [s for s in records.get("desktop", {}).get("formation", {}).get("steps", []) if s.get("screenshot")]
+    for s in steps:
+        cells.append({"state": f"desktop/formation/{s['index']}",
+                      "label": f"Formation · bước {s['index'] + 1}/{len(steps)} — {s.get('learner_text', '').strip()}",
+                      "path": _path(s.get("screenshot")), "record": records.get("desktop", {}),
+                      "box_state": "neutral_final"})
+    font, font_name = _font(LABEL_PX)
+    band = LABEL_PX * 2
+    images = []
+    for c in cells:
+        if c["path"] and c["path"].exists():
+            image = Image.open(c["path"]).convert("RGB")
+            c["crop_box_px"] = list(page_box(c["record"], c["box_state"], image.size))
+            images.append(image.crop(tuple(c["crop_box_px"])))
+        else:
+            c["crop_box_px"] = None
+            images.append(None)
+    col_w = max((i.width for i in images if i), default=640)
+    heights = [(i.height if i else 200) + band for i in images]
+    rows = [max(heights[k:k + 2]) for k in range(0, len(cells), 2)]
+    legend_font, _ = _font(LABEL_PX - 2)
+    legend_h = LABEL_PX * 4
+    sheet = Image.new("RGB", (2 * col_w, legend_h + sum(rows)), "white")
+    draw = ImageDraw.Draw(sheet)
+    draw.text((16, 12), f"{family_dir(family)} — chú giải", fill="black", font=font)
+    draw.text((16, 12 + LABEL_PX + 12), LEGEND, fill="black", font=legend_font)
+    y = legend_h
+    for r, h in enumerate(rows):
+        for k in (2 * r, 2 * r + 1):
+            if k >= len(cells):
+                continue
+            x = (k % 2) * col_w
+            draw.text((x + 12, y + 10), cells[k]["label"], fill="black", font=font)
+            if images[k] is not None:
+                sheet.paste(images[k], (x, y + band))
+        y += h
+    out = images_root / family_dir(family) / "SHEET.png"
+    _save_png(sheet, out)
+    return {
+        "family": family, "sheet": out, "legend": LEGEND, "label_font_px": LABEL_PX, "font": font_name,
+        "cells": [{"state": c["state"], "label": c["label"], "scale": 1.0, "crop_box_px": c["crop_box_px"],
+                   "source": c["path"].as_posix() if c["path"] else None} for c in cells],
+    }
+
+
+def overview_index(families: dict[str, dict[str, Any]], images_root: Path) -> dict[str, Any]:
+    """Mục lục sáu họ — ảnh nhỏ + đường dẫn sheet. KHÔNG thay sheet của họ."""
+    font, _ = _font(LABEL_PX)
+    rows = [{"family": f, "family_dir": family_dir(f), "sheet": families[f]["sheet"]}
+            for f in FAMILY_ORDER if f in families]
+    cell = (720, 520)
+    sheet = Image.new("RGB", (3 * cell[0], 2 * cell[1]), "white")
+    draw = ImageDraw.Draw(sheet)
+    for k, row in enumerate(rows):
+        x, y = (k % 3) * cell[0], (k // 3) * cell[1]
+        draw.text((x + 12, y + 8), row["family_dir"], fill="black", font=font)
+        draw.text((x + 12, y + cell[1] - LABEL_PX - 12), f"→ {row['sheet']}", fill="black", font=font)
+        thumb = families[row["family"]].get("thumbnail")
+        if thumb and Path(thumb).exists():
+            image = Image.open(thumb).convert("RGB")
+            image.thumbnail((cell[0] - 24, cell[1] - 3 * LABEL_PX - 24))
+            sheet.paste(image, (x + 12, y + LABEL_PX + 20))
+    _save_png(sheet, images_root / "overview" / "INDEX.png")
+    index = {"schema_version": "scene3d-evidence-overview/1", "role": "INDEX_ONLY",
+             "families": rows, "legend": LEGEND}
+    (images_root / "overview" / "INDEX.json").write_text(
+        json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return index
 
 
 def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], fixture_root: Path,
           expectations: dict[str, Any] | None, playback: dict[str, Any] | None) -> dict[str, Any]:
     images = run_dir / "images"
-    main_rows, appendix_rows, crops = [], [], []
+    crops, sheets = [], {}
     for family, scenario in browser.get("scenarios", {}).items():
         scene = json.loads((fixture_root / "fixtures" / f"{family}_positive.json")
                            .read_text(encoding="utf-8"))["envelope"]["scene3d"]
         positive = scenario.get("positive", {})
-        row = []
-        for vp, state in MAIN_COLUMNS:
-            shot = _path(positive.get(vp, {}).get("screenshots", {}).get(state))
-            size = Image.open(shot).size if shot and shot.exists() else (0, 0)
-            row.append((f"{family} · {vp} · {state}", shot, stage_box(positive.get(vp, {}), state, size)))
-        main_rows.append(row)
-        formation = positive.get("desktop", {}).get("formation", {}).get("steps", [])
-        appendix_rows.append([(f"{family} · formation {s.get('index')}", _path(s.get("screenshot")))
-                              for s in formation if s.get("screenshot")])
+        meta = family_sheet(family, positive, images)
+        meta["thumbnail"] = _path(positive.get("desktop", {}).get("screenshots", {}).get("neutral_final"))
+        meta["sheet"] = meta["sheet"].relative_to(run_dir).as_posix()
+        sheets[family] = meta
         for viewport, record in positive.items():
             for state in STATES:
                 # Hộp canvas lúc chụp CHÍNH ảnh ấy; `canvas_box` chung chỉ là dự phòng.
@@ -199,26 +292,28 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
                     rec["endpoints_inside_image"] = all(0 <= x <= image.width and 0 <= y <= image.height
                                                         for x, y in pts)
                     name = f"{state}__{rec['display_label']}__{rec['observed_visibility'].lower()}.png"
-                    target = images / "crops" / family / viewport / name
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    image.crop(crop).save(target)
+                    target = images / family_dir(family) / "hidden-edges" / viewport / name
+                    _save_png(image.crop(crop), target)
                     crops.append({"family": family, "viewport": viewport, "state": state, **rec,
                                   "crop_box_px": list(crop), "source": shot.relative_to(REPO_ROOT).as_posix(),
                                   "path": target.relative_to(run_dir).as_posix(), "sha256": _sha(target)})
+    overview = overview_index(sheets, images)
+    for meta in sheets.values():
+        meta.pop("thumbnail", None)
+    # Phim playback người học: nguồn tham khảo cạnh sheet, không vào sheet.
+    films: dict[str, list[str]] = {}
     for run in (playback or {}).get("runs", []):
-        appendix_rows.append([(f"{run['family']} · {run['viewport']} · playback {f.get('step')}",
-                               _path(f.get("path"))) for f in run.get("film", [])])
-    _sheet(main_rows, images / "contact-sheet.png")
-    _sheet([r for r in appendix_rows if r], images / "contact-sheet-appendix-formation.png", (360, 240))
-    index = {"schema_version": "scene3d-hidden-edge-crops/1",
+        films.setdefault(run["family"], []).extend(str(f.get("path")) for f in run.get("film", []))
+    index = {"schema_version": "scene3d-hidden-edge-crops/2",
              "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+             "family_sheets": sheets, "overview": overview, "playback_films": films,
              "crops": crops,
              "all_endpoints_inside": all(c["endpoints_inside_image"] for c in crops),
              "oracle_disagreements": [c for c in crops if not c["oracle_agreement"]],
              "duplicate_owner_edges": [c for c in crops if c["visual_owner_count"] != 1]}
-    (images / "crops").mkdir(parents=True, exist_ok=True)
-    (images / "crops" / "CROPS_INDEX.json").write_text(
-        json.dumps(index, ensure_ascii=False, indent=2), encoding="utf-8")
+    (run_dir / "results").mkdir(parents=True, exist_ok=True)
+    (run_dir / "results" / "HIDDEN_EDGE_CROPS.json").write_text(
+        json.dumps(index, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     return index
 
 

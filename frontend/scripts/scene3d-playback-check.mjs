@@ -13,6 +13,7 @@
  * Cờ: `--fixture-root <thư mục có fixtures/>` `--ra <thư mục ra>`
  *     `--families a,b` `--viewports desktop,mobile` `--bo-qua-build`
  *     `--lap-orbit N` (lặp orbit N lần mỗi lượt, ghi chuyển trạng thái)
+ *     `--theo-ho` (phim ghi vào `<ra>/<họ-kebab>/playback/<viewport>/`)
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -22,10 +23,11 @@ import { fileURLToPath } from "node:url";
 import { sleep } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
-  assessPlayback, cameraMotion, hasDepth, planOrbit, pollUntil, settleCamera, sha256File,
+  LOP_SO_DO_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
+  expectedCausalTiers, orbitCandidates, planOrbit, pollUntil, settleCamera, sha256File,
 } from "./compiler-scene-replay-lib.mjs";
 import {
-  capture, jsonEval, openFixture, trustedClick, trustedOrbit,
+  capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, vertexMarkerCheck,
 } from "./compiler-scene-suite.mjs";
 // Node ≥ 22.18 bóc kiểu TS; hai module này không import gì nên nạp thẳng được.
 import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
@@ -65,14 +67,15 @@ async function observe(session) {
 
 /** Số đo góc nhìn của camera THẬT (hàng z của ma trận nhìn = hướng tâm→camera),
  *  bằng CHÍNH bộ đo của sản phẩm — không một định nghĩa thứ hai. */
-function chatLuongGocNhin(scene, snap) {
+function chatLuongGocNhin(scene, snap, overlays = []) {
   const { diem, canh, mat } = cauTrucGocNhin(scene.objects);
   const m = snap.view_matrix_column_major;
   const huong = [m[2], m[6], m[10]];
   const q = danhGiaGocNhin(diem, canh, mat, huong);
   const { tran } = doLuoiGocNhin(diem, canh, mat);
+  // `non_degenerate`: cổng ảnh xoay w11 trên camera THẬT (đỉnh khối, lớp phủ).
   return { direction: huong, ...q, pass: canh.length === 0 || datNguong(q, tran),
-    depth_pass: canh.length === 0 || hasDepth(q, tran) };
+    non_degenerate: danhGiaAnhXoayThuc(scene, snap, overlays) };
 }
 
 
@@ -171,27 +174,42 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
       states[ten] = { ...await capture(session, join(outDir, `${ten}.png`)), ...await observe(session),
         dimmed_labels: await session.eval("document.querySelectorAll('.geo3d-label.la-diu').length"),
         dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-readout li.la-diu').length"),
-        // nhãn điểm: dịu ⇔ nằm ngoài tập tô sáng; số đo: mọi dòng mang đúng một tầng
+        // nhãn điểm: dịu ⇔ nằm ngoài tập tô sáng; số đo: lớp của từng dòng (w11:
+        // đích / dữ kiện số / trung gian số / ngoài chuỗi)
         label_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-label')]"
           + ".map(e=>({id:e.dataset.id,dimmed:e.classList.contains('la-diu')}))"),
         readout_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-readout li')]"
-          + ".map(e=>['la-chon','la-nguon','la-diu'].filter(c=>e.classList.contains(c)))"),
-        view: snap ? chatLuongGocNhin(scene, snap) : null };
+          + ".map(e=>({text:(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim(),"
+          + "classes:['la-chon','la-so-lieu','la-trung-gian','la-nguon','la-diu'].filter(c=>e.classList.contains(c))}))"),
+        causal_tiers: await jsonEval(session, "window.__geo3d_causal_tiers||null"),
+        vertex_marker_px: await vertexMarkerCheck(session),
+        view: snap ? chatLuongGocNhin(scene, snap, await overlayRects(session)) : null };
     };
     await chup("neutral_final");
 
     // ── SAU quan sát: orbit không được đụng timeline ─────────────────────
-    // Góc xoay chọn TRƯỚC bằng chính bộ đo góc nhìn: hướng xoay đầu tiên (quanh
-    // Z, giữ góc ngẩng) mà hình vẫn đạt ngưỡng — ảnh "đã xoay" phải còn chiều
-    // sâu, không phải một mặt bị ép dẹt. OrbitControls: Δφ = 2π·dx / chiều cao,
-    // kéo sang phải làm phương vị GIẢM.
+    // w11: ứng viên HOẠCH ĐỊNH (cổng không suy biến + đổi tập khuất dự đoán);
+    // ảnh chỉ nhận khi camera THẬT đạt cổng — trượt ⇒ về khung mặc định, thử
+    // ứng viên sau. OrbitControls: Δφ = 2π·dx / chiều cao, kéo phải ⇒ phương vị GIẢM.
     const orbitBefore = await observe(session);
     const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
     const huong = states.neutral_final?.view?.direction;
-    const plan = huong ? planOrbit(scene, huong) : null;
-    await trustedOrbit(session, { dx: Math.round(-(plan?.offset_deg ?? 60) / 360 * cao), dy: 0 });
-    states.orbit_plan = plan;
-    await sleep(1500);
+    const ungVien = huong ? orbitCandidates(scene, huong) : [];
+    const thuXoay = [];
+    for (const [i, c] of ungVien.entries()) {
+      if (i > 0) {
+        await trustedClick(session,
+          "[...document.querySelectorAll('button')].find(e=>e.textContent.includes('Xem lại toàn hình'))");
+        await sleep(900);
+      }
+      await trustedOrbit(session, { dx: Math.round((-c.offset_deg / 360) * cao), dy: 0 });
+      await sleep(1500);
+      const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
+      const gate = snap ? danhGiaAnhXoayThuc(scene, snap, await overlayRects(session)) : null;
+      thuXoay.push({ offset_deg: c.offset_deg, pass: Boolean(gate?.pass), failures: gate?.failures ?? ["NO_CAMERA"] });
+      if (gate?.pass) break;
+    }
+    states.orbit_plan = { candidates: ungVien.map((c) => c.offset_deg), attempts: thuXoay };
     const orbitAfter = await observe(session);
     await chup("rotated_neutral");
 
@@ -238,17 +256,31 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     verdict.checks.no_uncaught_exception = { pass: uncaught.length === 0, details: uncaught };
     const c = states.causal_selected;
+    // w11: tầng kỳ vọng tính ĐỘC LẬP từ cảnh; từng dòng số đo mang đúng lớp tầng.
+    const tangKyVong = c?.selected ? expectedCausalTiers(scene, c.selected) : null;
+    const theoKyHieu = new Map(scene.objects.filter((o) => o.render === "readout")
+      .map((o) => [o.notation || o.label, o.id]));
+    const lopDung = (row) => {
+      const t = tangKyVong?.[theoKyHieu.get(row.text)];
+      const lop = t ? LOP_SO_DO_THEO_TANG[t] : "la-diu";
+      return lop ? row.classes.length === 1 && row.classes[0] === lop : row.classes.length === 0;
+    };
     verdict.checks.causal_layers_dim_outside = { pass: !c || (c.selected !== null && c.panel_open
       && c.label_tiers.every((l) => l.dimmed === !c.highlighted.includes(l.id))
-      && c.readout_tiers.every((t) => t.length === 1)
-      && c.readout_tiers.filter((t) => t[0] === "la-chon").length === 1),
-    details: c ? { selected: c.selected, label_tiers: c.label_tiers, readout_tiers: c.readout_tiers } : null };
+      && JSON.stringify(c.causal_tiers, Object.keys(c.causal_tiers ?? {}).sort())
+        === JSON.stringify(tangKyVong, Object.keys(tangKyVong ?? {}).sort())
+      && c.readout_tiers.every(lopDung)),
+    details: c ? { selected: c.selected, label_tiers: c.label_tiers, readout_tiers: c.readout_tiers,
+      causal_tiers: c.causal_tiers, expected_tiers: tangKyVong } : null };
     verdict.checks.close_panel_restores_neutral = { pass: causal.restored !== false, details: causal };
-    // Khung mặc định: đủ ngưỡng góc nhìn. Ảnh đã xoay: phải còn CHIỀU SÂU (`hasDepth`).
+    // Khung mặc định: đủ ngưỡng góc nhìn. Ảnh đã xoay: cổng KHÔNG SUY BIẾN (w11).
     verdict.checks.neutral_final_view_quality = { pass: states.neutral_final?.view?.pass === true,
       details: states.neutral_final?.view };
-    verdict.checks.rotated_neutral_has_depth = { pass: states.rotated_neutral?.view?.depth_pass === true,
-      details: states.rotated_neutral?.view };
+    verdict.checks.rotated_neutral_non_degenerate = {
+      pass: states.rotated_neutral?.view?.non_degenerate?.pass === true,
+      details: { view: states.rotated_neutral?.view, plan: states.orbit_plan } };
+    verdict.checks.vertex_marker_px = { pass: states.neutral_final?.vertex_marker_px?.pass === true,
+      details: states.neutral_final?.vertex_marker_px };
     if (orbitRepeat) {
       verdict.checks.orbit_repeatable = { pass: orbitRepeat.every((a) => a.pass), details: orbitRepeat };
     }
@@ -261,7 +293,7 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
 }
 
 export async function runPlaybackCheck({ fixtureRoot, outDir, families = FAMILIES,
-  viewports = Object.keys(VIEWPORTS), skipBuild = false, lapOrbit = 0 }) {
+  viewports = Object.keys(VIEWPORTS), skipBuild = false, lapOrbit = 0, byFamily = false }) {
   if (!skipBuild) {
     execFileSync("npm", ["run", "build"], { cwd: FRONTEND, stdio: "inherit", shell: true, timeout: 600_000 });
     kiemDistMoi();
@@ -282,8 +314,10 @@ export async function runPlaybackCheck({ fixtureRoot, outDir, families = FAMILIE
     for (const family of families) {
       const fixture = JSON.parse(readFileSync(join(fixtureRoot, "fixtures", `${family}_positive.json`), "utf-8"));
       for (const viewportId of viewports) {
-        const result = await runOne({ port: cong, family, viewportId, fixture, lapOrbit,
-          outDir: join(out, "filmstrip", family, viewportId) });
+        // `--theo-ho` (w11): phim playback nằm trong thư mục của họ, cạnh sheet.
+        const outDir = byFamily ? join(out, family.replaceAll("_", "-"), "playback", viewportId)
+          : join(out, "filmstrip", family, viewportId);
+        const result = await runOne({ port: cong, family, viewportId, fixture, lapOrbit, outDir });
         for (const item of result.film) item.path = item.path.replaceAll("\\", "/");
         report.runs.push(result);
         const failed = Object.entries(result.checks).filter(([, c]) => !c.pass).map(([k]) => k);
@@ -307,6 +341,7 @@ if (import.meta.filename === process.argv[1]) {
     viewports: CO.viewports ? String(CO.viewports).split(",") : undefined,
     skipBuild: Boolean(CO["bo-qua-build"]),
     lapOrbit: CO["lap-orbit"] ? Number(CO["lap-orbit"]) : 0,
+    byFamily: Boolean(CO["theo-ho"]),
   });
   process.exit(report.pass ? 0 : 1);
 }

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
 import test from "node:test";
 
 import {
@@ -9,20 +9,46 @@ import {
   assessImmutableWindow,
   assessPlayback,
   cameraMotion,
+  chieuManHinh,
   settleCamera,
   compareClosures,
+  danhGiaAnhXoayThuc,
   detectRawTokenLeakage,
+  doCoDauDinh,
   evaluateEvidenceGates,
   eventDeclaredClosure,
+  expectedCausalTiers,
   expectedVisibleIds,
   aliasTreeRowCheck,
   isHiddenAlias,
+  measurementStepsKeepGeometry,
+  orbitCandidates,
   planOrbit,
   pollUntil,
   solidTopology,
   validateFormulaReferences,
   validateSuiteManifest,
 } from "./compiler-scene-replay-lib.mjs";
+
+/** Camera tổng hợp (Z lên, fov 50°) theo đúng khuôn `__geo3d_camera_snapshot`. */
+function cameraSnapshot(eye, target, W, H) {
+  const tru = (a, b) => a.map((x, i) => x - b[i]);
+  const chuan = (a) => { const d = Math.hypot(...a); return a.map((x) => x / d); };
+  const cheo = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const tich = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const z = chuan(tru(eye, target));
+  const x = chuan(cheo([0, 0, 1], z));
+  const y = cheo(z, x);
+  const f = 1 / Math.tan((25 * Math.PI) / 180);
+  const [n, xa] = [0.1, 200];
+  return {
+    view_matrix_column_major: [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+      -tich(x, eye), -tich(y, eye), -tich(z, eye), 1],
+    projection_matrix_column_major: [f / (W / H), 0, 0, 0, 0, f, 0, 0, 0, 0, (xa + n) / (n - xa), -1,
+      0, 0, (2 * xa * n) / (n - xa), 0],
+    viewport_width: W, viewport_height: H,
+  };
+}
 
 test("causal closure reports every pair independently", () => {
   const result = compareClosures(["A", "B"], ["A", "C"], ["A", "B", "D"]);
@@ -192,8 +218,9 @@ function passingFacts() {
     },
     orbit_required: true,
     orbit_visibility_changed: true,
+    orbit_non_degenerate: true,
     causal: {
-      selected_changed: true, closure_changed: true, render_owners_changed: true,
+      selected_changed: true, closure_changed: true, tiers_match: true, readout_classes_match: true,
       canvas_changed: true, bounded_pixel_delta: true, dash_signature_preserved: true,
     },
     capture_order: ["default", "causal"],
@@ -216,6 +243,11 @@ test("all required fault injections fail with their exact reason code", () => {
       "DUPLICATE_VISUAL_OWNER"],
     ["frozen-hidden-set", (f) => { f.orbit_visibility_changed = false; },
       "ORBIT_VISIBILITY_FROZEN"],
+    ["flat-rotated-view", (f) => { f.orbit_non_degenerate = false; },
+      "ORBIT_DEGENERATE_PROJECTION"],
+    ["tiers-collapsed", (f) => { f.causal.tiers_match = false; }, "CAUSAL_TIERS_MISMATCH"],
+    ["readout-tier-class", (f) => { f.causal.readout_classes_match = false; },
+      "CAUSAL_READOUT_TIER_CLASS"],
     ["hook-without-canvas", (f) => { f.causal.canvas_changed = false; },
       "CAUSAL_CANVAS_UNCHANGED"],
     ["default-after-causal", (f) => { f.capture_order = ["causal", "default"]; },
@@ -330,9 +362,72 @@ test("orbit plan: rotated view keeps quality AND changes the hidden-edge set", (
   const d = [8, 3, 6].map((x) => x / Math.hypot(8, 3, 6));
   const plan = planOrbit(CUBE, d);
   assert.ok(plan, "a qualifying orbit exists for a cube");
-  assert.ok(plan.depth_pass);
+  assert.ok(plan.gate.pass, JSON.stringify(plan.gate));
   assert.notDeepEqual(plan.predicted_hidden_after, plan.predicted_hidden_before);
   assert.deepEqual(plan.predicted_hidden_before.sort(), ["A-B", "A-D", "A-E"].sort());
+  for (const c of orbitCandidates(CUBE, d)) assert.ok(c.gate.pass && Math.abs(c.offset_deg) >= 30);
+});
+
+/* w11 — review W10-H4: ảnh xoay w10 được nhận chỉ vì còn "chiều sâu". Chính
+   các camera ấy (bằng chứng w10, bất biến) phải trượt cổng không suy biến —
+   chóp tam giác (A trên SC, C ra khỏi khung), chóp chữ nhật (S–A–B). */
+test("rotated gate rejects the w10 rotated cameras the reviewer flagged", () => {
+  const run = resolve(import.meta.dirname, "..", "..", "docs", "evaluation", "geometry", "runs",
+    "w10-pedagogical-playback");
+  const ev = JSON.parse(readFileSync(join(run, "results", "BROWSER_EVIDENCE.json"), "utf-8"));
+  for (const family of ["triangular_pyramid", "rectangular_pyramid"]) {
+    const fx = JSON.parse(readFileSync(join(run, "inputs", "fixtures", `${family}_positive.json`),
+      "utf-8")).envelope.scene3d;
+    for (const r of Object.values(ev.scenarios[family].positive)) {
+      const g = danhGiaAnhXoayThuc(fx, r.camera_snapshots.rotated_neutral.snapshot);
+      assert.equal(g.pass, false, family);
+      assert.ok(g.failures.includes("FACE_NEAR_EDGE_ON") && g.failures.includes("VERTEX_ON_FOREIGN_EDGE"),
+        `${family}: ${g.failures}`);
+      assert.ok(g.metrics.ba_dinh_gan_thang_hang.includes("S"));
+    }
+  }
+});
+
+test("rotated gate: a key vertex under an overlay is not readable evidence", () => {
+  const snap = cameraSnapshot([4, -6, 3], [0.5, 0.5, 0.5], 800, 600);
+  const s = chieuManHinh(snap, [0, 0, 0]);
+  const g = danhGiaAnhXoayThuc(CUBE, snap, [{ x: s.x - 5, y: s.y - 5, w: 10, h: 10 }]);
+  assert.ok(g.failures.includes("KEY_VERTEX_NOT_READABLE"));
+  assert.equal(g.unreadable_vertices[0].vertex, "A");
+});
+
+test("causal tiers: numerical givens, numerical intermediates, structural context", () => {
+  const q = (id, origin, edges) => ({ id, type: "quantity", origin, depends: edges.map(([s]) => s),
+    dependency_edges: edges.map(([source_id, relation]) => ({ source_id, relation })) });
+  const scene = { objects: [
+    { id: "A", origin: "free", depends: [] }, { id: "K", origin: "derived", depends: ["A"] },
+    q("AB", "free", []), q("S", "derived", [["AB", "numerical"], ["K", "structural"]]),
+    q("V", "derived", [["S", "numerical"], ["K", "structural"]]), q("X", "free", []) ] };
+  assert.deepEqual(expectedCausalTiers(scene, "V"),
+    { V: "dich", S: "trung_gian", AB: "du_kien_so", K: "boi_canh", A: "boi_canh" });
+});
+
+test("vertex marker diameter is measured through the camera, in CSS px", () => {
+  const snap = cameraSnapshot([0, -10, 0], [0, 0, 0], 800, 600);
+  const donVi = (2 * 10 * Math.tan((50 * Math.PI) / 360)) / 600;
+  const [m] = doCoDauDinh(snap, [{ id: "A", state: "thuong", center: [0, 0, 0], radius_world: 3 * donVi }]);
+  assert.ok(Math.abs(m.diameter_px - 6) < 0.05, String(m.diameter_px));
+});
+
+test("measurement steps never make geometry appear; an injected one is caught", () => {
+  const run = resolve(import.meta.dirname, "..", "..", "docs", "evaluation", "geometry", "runs",
+    "w10-pedagogical-playback", "inputs", "fixtures");
+  for (const family of ["triangular_pyramid", "cuboid", "cube", "cross_section"]) {
+    const sc = JSON.parse(readFileSync(join(run, `${family}_positive.json`), "utf-8")).envelope.scene3d;
+    assert.ok(measurementStepsKeepGeometry(sc).pass, family);
+  }
+  const sc = JSON.parse(readFileSync(join(run, "cube_positive.json"), "utf-8")).envelope.scene3d;
+  const bad = structuredClone(sc);
+  const k = bad.events.find((e) => e.semantic_kind === "MEASUREMENT").step_index;
+  bad.formation.steps[k].visible_ids.push("khoi_hop");
+  const r = measurementStepsKeepGeometry(bad);
+  assert.equal(r.pass, false);
+  assert.deepEqual(r.mismatches[0].unexpected, ["khoi_hop"]);
 });
 
 /* Cảnh đông điểm (chóp có đỉnh trên A + thiết diện): hầu như không phương vị
@@ -344,7 +439,7 @@ test("orbit plan: a crowded section scene still gets a rotation that keeps depth
     "inputs", "fixtures", "cross_section_positive.json"), "utf-8")).envelope.scene3d;
   const plan = planOrbit(fx, [0.81, 0.47, 0.34]);
   assert.ok(plan, "no rotation found");
-  assert.ok(plan.depth_pass);
+  assert.ok(plan.gate.pass);
   assert.notDeepEqual(plan.predicted_hidden_after, plan.predicted_hidden_before);
 });
 
