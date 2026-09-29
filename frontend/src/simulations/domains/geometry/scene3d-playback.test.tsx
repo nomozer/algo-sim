@@ -192,6 +192,51 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).not.toContain("S_ABCD");
   });
 
+  /* w11 (review W10-H3): bước đo thể tích "Dựa trên" ĐÚNG các đại lượng số
+   * trực tiếp — diện tích đáy và chiều cao, theo thứ tự chữ công thức — không
+   * phải khối (ngữ cảnh cấu trúc). Bước không có nguồn số giữ phụ thuộc hình. */
+  const canhTheTich = (): Scene3D => ({
+    free_objects: ["khoi", "SA_length"],
+    objects: [
+      { id: "khoi", label: "Hình chóp S.ABC", notation: "S.ABC", reference: "S.ABC",
+        type: "solid", render: "mesh", origin: "derived", producer: null,
+        depends: [], vertices: [], faces: [] },
+      { id: "SA_length", label: "SA", notation: "SA", reference: "SA", type: "quantity",
+        render: "readout", origin: "free", producer: null, depends: [], value: "5" },
+      { id: "dt", label: "Diện tích ABC", notation: "S(ABC)", reference: "S(ABC)",
+        type: "quantity", render: "readout", origin: "derived", producer: "measure.area",
+        depends: ["khoi"], value: "6" },
+      { id: "tt", label: "Thể tích S.ABC", notation: "V(S.ABC)", reference: "V(S.ABC)",
+        type: "quantity", render: "readout", origin: "derived", producer: "measure.volume",
+        depends: ["SA_length", "dt", "khoi"], value: "10",
+        dependency_edges: [
+          { source_id: "SA_length", relation: "numerical" },
+          { source_id: "dt", relation: "numerical" },
+          { source_id: "khoi", relation: "structural" }],
+        formula: { text: "V = 1/3 × S(ABC) × SA = 10", references: [
+          { entity_id: "dt", display_label: "S(ABC)", relation: "numerical" },
+          { entity_id: "SA_length", display_label: "SA", relation: "numerical" }] } },
+    ],
+    events: [
+      { step_index: 0, action: "INIT", object: null, depends: [], explanation: "" },
+      { step_index: 1, action: "MEASURE", object: "dt", depends: ["khoi"], explanation: "" },
+      { step_index: 2, action: "MEASURE", object: "tt",
+        depends: ["khoi", "dt", "SA_length"], explanation: "" },
+    ],
+  });
+  const duaTren = (html: string) =>
+    /<dt>Dựa trên<\/dt><dd>([^<]*)<\/dd>/.exec(html)?.[1];
+
+  it("`Dựa trên` của bước thể tích là S(ABC), SA — không kèm khối", () => {
+    const html = renderToString(<Scene3DPlayer scene={canhTheTich()} initialStep={2} />);
+    expect(duaTren(html)).toBe("S(ABC), SA");
+  });
+
+  it("bước không có nguồn số vẫn kể phụ thuộc hình học", () => {
+    const html = renderToString(<Scene3DPlayer scene={canhTheTich()} initialStep={1} />);
+    expect(duaTren(html)).toBe("S.ABC");
+  });
+
   it("mọi điều khiển đều có nhãn cho trình đọc màn hình", () => {
     const html = renderToString(<Scene3DPlayer scene={scene()} />);
     for (const nhan of ["Bước trước", "Bước sau", "Chọn bước dựng",

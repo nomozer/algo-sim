@@ -6,6 +6,7 @@ import {
   isFirstStep,
   isLastStep,
   nextStep,
+  numericalBasis,
   prefersReducedMotion,
   prevStep,
   stepCount,
@@ -152,6 +153,9 @@ export function Scene3DPlayer({
     const o = vat(id);
     return o ? o.reference ?? o.notation ?? o.label : null;
   };
+  // Bước ĐO: "Dựa trên" = đúng các đại lượng số trực tiếp (w11), không kèm
+  // khối — khối là ngữ cảnh cấu trúc. Bước dựng hình giữ phụ thuộc của trace.
+  const nguonSo = numericalBasis(scene, tieuDiem.created ? vat(tieuDiem.created) : null);
 
   return (
     <div className="geo3d-player">
@@ -229,7 +233,7 @@ export function Scene3DPlayer({
         </dd>
         <dt>Dựa trên</dt>
         <dd>
-          {tieuDiem.depends
+          {(nguonSo.length > 0 ? nguonSo : tieuDiem.depends)
             .map(tenNgan)
             .filter((t): t is string => !!t)
             .join(", ") || "—"}

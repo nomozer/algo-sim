@@ -8,14 +8,52 @@
 import { describe, expect, it } from "vitest";
 import {
   BAN_KINH_NHIN,
+  DAU_DINH_PX,
   DICH_CANH_PX,
   DICH_DIEM_PX,
   KHOANG_CAM_MAC_DINH,
+  KHUNG_HEP_PX,
   banKinhBamDiem,
+  banKinhBamPx,
+  coDauDinhPx,
+  donViMoiPx,
   hangCuThe,
   nguongBam,
   nguongBamCanh,
 } from "./pick-target";
+
+// ══ W11 · CHẤM ĐỈNH THEO ĐIỂM ẢNH MÀN HÌNH (review W10-H5) ══════════════
+describe("W11 · chấm đỉnh là token điểm ảnh, không phải bán kính thế giới", () => {
+  it("một token cho mọi họ: desktop ≈ 6, hẹp 7–8, đang chọn 8–10 (đường kính px CSS)", () => {
+    expect(coDauDinhPx(false, KHUNG_HEP_PX + 200)).toBe(DAU_DINH_PX.thuong);
+    expect(DAU_DINH_PX.thuong).toBe(6);
+    expect(coDauDinhPx(false, KHUNG_HEP_PX - 1)).toBeGreaterThanOrEqual(7);
+    expect(coDauDinhPx(false, KHUNG_HEP_PX - 1)).toBeLessThanOrEqual(8);
+    for (const rong of [360, 1200]) {
+      expect(coDauDinhPx(true, rong)).toBeGreaterThanOrEqual(8);
+      expect(coDauDinhPx(true, rong)).toBeLessThanOrEqual(10);
+    }
+  });
+
+  it("vùng bấm luôn rộng hơn chấm lớn nhất", () => {
+    for (const rong of [360, 1200]) {
+      expect(2 * banKinhBamPx(rong)).toBeGreaterThan(2 * DAU_DINH_PX.chon);
+    }
+  });
+
+  it("quy đổi px → thế giới: hình cầu bán kính px/2·đơn vị chiếu ra đúng px, mọi độ sâu", () => {
+    const [fov, cao] = [50, 480];
+    for (const sau of [4, 11, 30]) {
+      const r = (DAU_DINH_PX.thuong / 2) * donViMoiPx(sau, fov, cao);
+      const chieu = (2 * r) / (2 * sau * Math.tan((fov * Math.PI) / 360)) * cao;
+      expect(chieu).toBeCloseTo(DAU_DINH_PX.thuong, 9);
+    }
+  });
+
+  it("không nhận devicePixelRatio: cỡ theo px CSS, màn hình dày điểm không làm chấm to ra", () => {
+    expect(donViMoiPx.length).toBe(3);
+  });
+});
 import { chonCuThe } from "./scene3d-view";
 
 const loai: Record<string, string> = {

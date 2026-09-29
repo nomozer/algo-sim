@@ -176,15 +176,26 @@ export function highlightSet(scene: Scene3D, id: string, sau = false): string[] 
   return [...new Set([id, ...d])].sort();
 }
 
-/** Tầng nhấn mạnh quanh vật đang chọn: đích > trung gian > dữ kiện (vật tự do
- *  của đề). Vật KHÔNG có trong map nằm ngoài chuỗi nhân quả — renderer làm dịu. */
-export type TangNhanManh = "dich" | "trung_gian" | "du_kien";
+/** Tầng nhấn mạnh quanh vật đang chọn (w11, review W10-H6):
+ *  đích > dữ kiện SỐ > trung gian SỐ > ngữ cảnh cấu trúc/tô-pô. Chuỗi số đi
+ *  theo cạnh `numerical` do backend gõ loại, không đoán từ tên hay kiểu vật.
+ *  Vật KHÔNG có trong map nằm ngoài chuỗi nhân quả — renderer làm dịu. */
+export type TangNhanManh = "dich" | "du_kien_so" | "trung_gian" | "boi_canh";
 
 export function tangNhanManh(scene: Scene3D, id: string): Map<string, TangNhanManh> {
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  const so = new Set<string>();
+  const hangDoi = [id];
+  while (hangDoi.length > 0) {
+    for (const e of theoId.get(hangDoi.pop()!)?.dependency_edges ?? []) {
+      if (e.relation !== "numerical" || e.source_id === id || so.has(e.source_id)) continue;
+      so.add(e.source_id);
+      hangDoi.push(e.source_id);
+    }
+  }
   const ra = new Map<string, TangNhanManh>([[id, "dich"]]);
   for (const x of dependencyClosure(scene, id)) {
-    ra.set(x, theoId.get(x)?.origin === "free" ? "du_kien" : "trung_gian");
+    ra.set(x, !so.has(x) ? "boi_canh" : theoId.get(x)?.origin === "free" ? "du_kien_so" : "trung_gian");
   }
   return ra;
 }

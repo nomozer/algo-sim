@@ -5324,6 +5324,19 @@ html {
   color: var(--ink-quiet);
 }
 
+/* Tầng causal của số đo (w11): đích (`la-chon`) > dữ kiện số > trung gian số.
+   Hai kênh — độ đậm vạch trái và độ đậm nền — chứ không chỉ một sắc màu. */
+.geo3d-readout li.la-so-lieu {
+  background: color-mix(in srgb, var(--accent-orange) 18%, transparent);
+  border-left: 3px solid var(--accent-orange);
+  font-weight: 600;
+}
+
+.geo3d-readout li.la-trung-gian {
+  background: color-mix(in srgb, var(--accent-orange) 7%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent-orange) 45%, transparent);
+}
+
 .geo3d-readout-ten {
   color: var(--ink-muted);
   font-size: 0.8125rem;

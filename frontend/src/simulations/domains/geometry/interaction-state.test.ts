@@ -234,11 +234,32 @@ describe("H · tô sáng phụ thuộc", () => {
   });
 });
 
-// ══ H2 · tầng nhấn mạnh của chuỗi nhân quả (w10) ════════════════════════
+// ══ H2 · tầng nhấn mạnh của chuỗi nhân quả (w10 → w11) ══════════════════
 describe("H2 · tầng nhấn mạnh causal", () => {
-  it("chọn V: V là đích, khối là trung gian, bốn đỉnh là dữ kiện", () => {
+  it("không có cạnh số: khối và đỉnh chỉ là ngữ cảnh cấu trúc", () => {
     expect(Object.fromEntries(tangNhanManh(CANH, "V"))).toEqual({
-      V: "dich", chop: "trung_gian", A: "du_kien", B: "du_kien", C: "du_kien", S: "du_kien",
+      V: "dich", chop: "boi_canh", A: "boi_canh", B: "boi_canh", C: "boi_canh", S: "boi_canh",
+    });
+  });
+
+  it("chuỗi SỐ theo cạnh `numerical`: dữ kiện số > trung gian số > ngữ cảnh (review W10-H6)", () => {
+    const q = (id: string, origin: "free" | "derived", edges: [string, string][]) => ({
+      id, label: id, type: "quantity", render: "readout", origin, producer: null,
+      depends: edges.map(([s]) => s),
+      dependency_edges: edges.map(([source_id, relation]) => ({ source_id, relation })),
+    }) as unknown as Scene3D["objects"][number];
+    const canh: Scene3D = {
+      ...CANH,
+      objects: [
+        ...CANH.objects.filter((o) => o.id !== "V"),
+        q("AB", "free", []), q("SA", "free", []),
+        q("S_day", "derived", [["AB", "numerical"], ["A", "topological"]]),
+        q("V", "derived", [["S_day", "numerical"], ["SA", "numerical"], ["chop", "structural"]]),
+      ],
+    };
+    expect(Object.fromEntries(tangNhanManh(canh, "V"))).toEqual({
+      V: "dich", SA: "du_kien_so", AB: "du_kien_so", S_day: "trung_gian",
+      chop: "boi_canh", A: "boi_canh", B: "boi_canh", C: "boi_canh", S: "boi_canh",
     });
   });
 

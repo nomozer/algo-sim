@@ -620,6 +620,22 @@ export function coherentFormula(
 }
 
 /**
+ * "Dựa trên" của một vật (w11, review W10-H3): ĐÚNG các nguồn SỐ trực tiếp —
+ * theo thứ tự chữ công thức khi có công thức nhất quán, không thì theo cạnh
+ * `numerical` backend gõ loại. Rỗng ⇒ vật không có nguồn số; nơi gọi giữ phụ
+ * thuộc hình học. Không tính gì — chỉ đọc provenance có cấu trúc.
+ */
+export function numericalBasis(scene: Scene3D, object: SceneObject | null | undefined): string[] {
+  if (!object) return [];
+  const refs = coherentFormula(scene, object)?.references ?? [];
+  if (refs.length > 0) return refs.map((r) => r.entity_id);
+  const ids = new Set(scene.objects.map((o) => o.id));
+  return (object.dependency_edges ?? [])
+    .filter((e) => e.relation === "numerical" && ids.has(e.source_id))
+    .map((e) => e.source_id);
+}
+
+/**
  * Kích thước hiển thị của mặt phẳng và độ dài nửa đoạn của đường thẳng.
  *
  * `plane3` và `line3` là **VÔ HẠN** — backend cố ý không gửi biên, vì cắt chúng

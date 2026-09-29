@@ -4,12 +4,14 @@ import {
   buildObject3D,
   canonicalEdgeMaterial,
   classifySolidEdgeVisibility,
+  datCoDauDinh,
   datKhungNhin,
   doanNhuongCanh,
   lamDiu,
   updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
 import type { SceneObject } from "./scene3d-model";
+import { DAU_DINH_PX, banKinhBamPx, coDauDinhPx, donViMoiPx } from "./pick-target";
 
 /**
  * NÉT LIỀN / NÉT KHUẤT THEO CAMERA — hợp đồng CẤU TRÚC.
@@ -327,5 +329,78 @@ describe("hidden-line — cấu trúc cảnh", () => {
     const khoi = con.find((c) => (c as THREE.Mesh).isMesh && !c.userData?.chieuSau);
     expect((cs as THREE.Mesh).geometry)
       .toBe((khoi as THREE.Mesh).geometry);
+  });
+
+  /* w11 — review W10-H6: ngữ cảnh cấu trúc NHẸ hơn mọi tầng nhấn mạnh. Nó giữ
+     mực trung tính (không tô màu tầng, không làm dịu); chỉ vật ngoài bao đóng
+     mới dịu. Và "cam = vật mới dựng" phải là cam thật, đọc được trên nền sáng. */
+  const mauCanh = (o: THREE.Object3D) => new Set(gom(o)
+    .filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId)
+    .map((c) => ((c as THREE.Line).material as THREE.LineBasicMaterial).color.getHex()));
+
+  it("tầng ngữ cảnh giữ mực cạnh trung tính", () => {
+    expect(mauCanh(buildObject3D(KHOI, "boi_canh")!)).toEqual(mauCanh(buildObject3D(KHOI, false)!));
+  });
+
+  it("vật mới dựng ở bước (formation) mang màu cam, không vàng nhạt", () => {
+    const [mau] = [...mauCanh(buildObject3D(KHOI, true)!)];
+    const c = new THREE.Color(mau);
+    const hsl = { h: 0, s: 0, l: 0 };
+    c.getHSL(hsl, THREE.SRGBColorSpace);   // mặc định là không gian TUYẾN TÍNH
+    expect(hsl.h * 360).toBeGreaterThan(15);
+    expect(hsl.h * 360).toBeLessThan(35);   // cam: 15°–35°, không phải hổ phách/vàng
+    expect(hsl.l).toBeLessThan(0.5);        // đủ đậm cho nét 1 px trên nền sáng
+  });
+});
+
+// ══ w11 · CHẤM ĐỈNH THEO ĐIỂM ẢNH · ĐƯỜNG PHỤ NHẸ Ở TRẠNG THÁI CUỐI ═════════
+describe("w11 · chấm đỉnh và đường phụ", () => {
+  const DIEM: SceneObject = {
+    id: "A", label: "A", type: "point3", render: "point_marker",
+    origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"],
+  };
+  const DUONG: SceneObject = {
+    id: "BD", label: "Đường thẳng BD", type: "line3", render: "line",
+    origin: "derived", producer: "construct_line", depends: ["B", "D"],
+    point: ["0", "0", "0"], direction: ["1", "1", "0"],
+  };
+  const duKien = (o: THREE.Object3D, ten: string) => {
+    let ra: THREE.Object3D | undefined;
+    o.traverse((x) => { if (x.userData?.[ten]) ra = x; });
+    return ra!;
+  };
+  const gom = (o: THREE.Object3D) => {
+    const ra: THREE.Object3D[] = [];
+    o.traverse((x) => { ra.push(x); });
+    return ra;
+  };
+
+  it("chấm và vùng bấm chiếu ra đúng token px CSS ở mọi khoảng camera", () => {
+    for (const [kc, chon, rong, px] of [
+      [6, false, 1000, DAU_DINH_PX.thuong], [20, false, 1000, DAU_DINH_PX.thuong],
+      [12, false, 360, coDauDinhPx(false, 360)], [12, true, 1000, DAU_DINH_PX.chon],
+    ] as const) {
+      const goc = new THREE.Group();
+      goc.add(buildObject3D(DIEM, chon ? "dich" : false)!);
+      const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+      cam.position.set(0, -kc, 0);
+      cam.lookAt(0, 0, 0);
+      cam.updateMatrixWorld();
+      datCoDauDinh(goc, cam, rong, 480);
+      const donVi = donViMoiPx(kc, 50, 480);
+      const cham = duKien(goc, "dauDinh") as THREE.Mesh;
+      const r = (cham.geometry as THREE.SphereGeometry).parameters.radius * cham.scale.x;
+      expect((2 * r) / donVi).toBeCloseTo(px, 6);
+      const bam = duKien(goc, "vungBam") as THREE.Mesh;
+      const rb = (bam.geometry as THREE.SphereGeometry).parameters.radius * bam.scale.x;
+      expect(rb / donVi).toBeCloseTo(banKinhBamPx(rong), 6);
+    }
+  });
+
+  it("đường vô hạn không được nhấn thì nhạt; đang dựng/được chọn thì rõ", () => {
+    const op = (o: THREE.Object3D) => gom(o).filter((c) => (c as THREE.Line).isLine)
+      .map((c) => ((c as THREE.Line).material as THREE.Material).opacity);
+    expect(Math.max(...op(buildObject3D(DUONG, false)!))).toBeLessThanOrEqual(0.5);
+    expect(Math.max(...op(buildObject3D(DUONG, true)!))).toBe(1);
   });
 });

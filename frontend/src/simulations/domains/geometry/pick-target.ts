@@ -25,8 +25,36 @@
  * như không đổi.
  */
 
-/** Bán kính chấm NHÌN THẤY. Đổi nó là đổi hình học trông thế nào. */
+/** Bán kính HÌNH HỌC của lưới chấm. Cỡ thật trên màn hình do `DAU_DINH_PX`
+ *  quyết mỗi khung (w11) — hằng này chỉ còn là đơn vị gốc của phép co giãn. */
 export const BAN_KINH_NHIN = 0.09;
+
+/**
+ * CHẤM ĐỈNH theo ĐIỂM ẢNH CSS (đường kính) — MỘT token cho mọi họ bài (w11,
+ * review W10-H5: chấm hơi to). Bán kính thế giới cố định cho chấm to/nhỏ theo
+ * cỡ hình và camera; token px thì đứng yên khi xoay, phóng và đổi màn hình.
+ * Tính theo px CSS nên màn hình dày điểm (DPR 2) không làm chấm to ra.
+ */
+export const DAU_DINH_PX = { thuong: 6, hep: 7.5, chon: 9 } as const;
+/** Khung hẹp hơn mức này dùng cỡ màn hình nhỏ — cùng mốc `48rem` của CSS. */
+export const KHUNG_HEP_PX = 768;
+/** Vùng bấm của điểm trên màn hình hẹp (bán kính px) — ngón tay, không chuột. */
+export const DICH_DIEM_HEP_PX = 16;
+
+export function coDauDinhPx(chon: boolean, rongKhungPx: number): number {
+  if (chon) return DAU_DINH_PX.chon;
+  return rongKhungPx < KHUNG_HEP_PX ? DAU_DINH_PX.hep : DAU_DINH_PX.thuong;
+}
+
+/** Bán kính VÙNG BẤM của điểm, px CSS — luôn rộng hơn chấm lớn nhất. */
+export function banKinhBamPx(rongKhungPx: number): number {
+  return rongKhungPx < KHUNG_HEP_PX ? DICH_DIEM_HEP_PX : DICH_DIEM_PX;
+}
+
+/** Đơn vị thế giới ứng với MỘT px CSS ở độ sâu `sau` của camera phối cảnh. */
+export function donViMoiPx(sau: number, fovDo: number, caoKhungPx: number): number {
+  return (2 * Math.max(sau, 1e-6) * Math.tan((fovDo * Math.PI) / 360)) / Math.max(caoKhungPx, 1);
+}
 
 /**
  * Vùng bấm quy ra ĐIỂM ẢNH, ở góc nhìn mặc định.
