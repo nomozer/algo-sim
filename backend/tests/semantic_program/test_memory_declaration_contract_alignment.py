@@ -61,7 +61,7 @@ LOI_CU_BYTE, MANH_CU_BYTE = 331, 1587
 #: P1 đổi băm ở wave occlusion (50a31e0b) chỉ vì `_bam(default=str)` băm theo
 #: repr: `Section` thêm trường provenance `vertex_sources` ở CUỐI, repr cũ là
 #: tiền tố chặt của repr mới — polygon/steps không đổi. Semantic diff:
-#: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/results/BACKEND_FAILURE_RECONCILIATION.json`.
+#: `docs/evaluation/geometry/runs/w09-verify-cleanup/results/BACKEND_FAILURE_RECONCILIATION.json`.
 FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
                       CA_P6: "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b"}
 # P1 intentionally includes the later canonical solid notation (S.ABCD).
@@ -74,7 +74,7 @@ FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b03637405
 # display_label, reference, notation, learner_text, semantic_kind, fill_visible
 # (mặt thiết diện tô ở bước khép); 0 trường hình học/giá trị, final_memory
 # giống hệt, số vật giữ nguyên. Review:
-# `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/results/GOLDEN_REVIEW.json`.
+# `docs/evaluation/geometry/runs/w10-pedagogical-playback/results/GOLDEN_REVIEW.json`.
 SCENE_START = {CA_P1: "65424e33e314fabbe8861a1dad06ec0975c258071577eb2efc7e97f780808aaa",
                CA_P6: "a87ac745e7ade6c16e2d1fdeff98986605953a7f3f1622598b32ab3b390a2b0c"}
 SO_VAT_START = {CA_P1: 13, CA_P6: 7}

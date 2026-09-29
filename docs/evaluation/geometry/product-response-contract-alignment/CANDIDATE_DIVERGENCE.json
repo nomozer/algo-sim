@@ -119,7 +119,7 @@
   {
    "hash": "31725284b92c87f1de4bb8ebf08d7d178082e097c2a6198a39770d2b86a3b6d1",
    "sau_wave": "CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR",
-   "ghi_chu": "GHI BÙ ở w10 — wave ấy đóng băng lại candidate mà không cập nhật file này (xem run 20260928-w09-verify-cleanup/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json); CACHE_VERSION giữ 102"
+   "ghi_chu": "GHI BÙ ở w10 — wave ấy đóng băng lại candidate mà không cập nhật file này (xem run w09-verify-cleanup/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json); CACHE_VERSION giữ 102"
   },
   {
    "hash": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",

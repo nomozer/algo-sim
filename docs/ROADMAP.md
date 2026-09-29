@@ -14,7 +14,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVID
 ```
 
 - **Mục tiêu:** Người duyệt bằng chứng của run
-  `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/` theo
+  `docs/evaluation/geometry/runs/w10-pedagogical-playback/` theo
   `HANDOFF.md` của run: contact sheet chính (ảnh lớn), crop cạnh khuất chứa trọn
   hai đầu mút, filmstrip playback người học, trạng thái causal/xoay/trung tính ở
   desktop và mobile. Review w09 là `FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`; mọi

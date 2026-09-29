@@ -660,8 +660,8 @@ VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → 
 
 ## WAVE_ID = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
 - **DATE:** 2026-09-28
-- **REPORT:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md
-- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/
+- **REPORT:** docs/evaluation/geometry/runs/w09-verify-cleanup/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w09-verify-cleanup/
 - **START_BASE:** 42c736ead3433d32d4cd2b1c3fd93c41e691d3ae
 - **CODE_COMMIT:** f337323f599964246507017613cfe3c016e71a32 (backend) · 7b8528a95d364c6a624922d9acff789239ed3ef8 (frontend + harness)
 - **MEASUREMENT_COMMIT:** defb77ede20bd952b08ac4996d3a2bf40bcfdb1a
@@ -679,8 +679,8 @@ VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → 
 
 ## WAVE_ID = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE
 - **DATE:** 2026-09-29
-- **REPORT:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/REPORT.md
-- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/
+- **REPORT:** docs/evaluation/geometry/runs/w10-pedagogical-playback/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w10-pedagogical-playback/
 - **START_BASE:** be23e88d
 - **CODE_COMMIT:** 9dc56ae1 · f5a3adf2 (backend + frontend) · 7a03e50d · f0deaa0d (frontend)
 - **MEASUREMENT_COMMIT:** 40ce889fe83b7220195a89f50c22757a02770511 (post-processing 52de6f22)

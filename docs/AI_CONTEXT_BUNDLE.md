@@ -108,11 +108,11 @@ human visual acceptance; automation không phát `MERGE_READY`.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/w10-pedagogical-playback/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
   `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
 - Wave trước (bất biến, review người FAIL ghi bổ sung ở w10):
-  `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`.
+  `docs/evaluation/geometry/runs/w09-verify-cleanup/`.
 - Wave bị đính chính (bất biến):
   `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/`.
 - Frozen human sets (bất biến): `.../inputs/human_expected_visibility.json` của

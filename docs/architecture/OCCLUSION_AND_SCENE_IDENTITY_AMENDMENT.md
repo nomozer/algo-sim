@@ -69,14 +69,14 @@ phải được đọc qua amendment này và correction chain trong `EVIDENCE_I
 
 **w10 (`HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE`):** review người của
 w09 là `FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR` (ghi bổ sung ở run w10). Kết quả
-tự động của wave sửa: [`REPORT.md`](../evaluation/geometry/runs/20260928-w10-pedagogical-playback/REPORT.md).
+tự động của wave sửa: [`REPORT.md`](../evaluation/geometry/runs/w10-pedagogical-playback/REPORT.md).
 Chưa có human visual acceptance, chưa merge.
 
 **w09 (measurement `defb77ed`, trước review người):** mọi cổng tự động PASS — T3 trong
 detached worktree, browser 6 family × desktop/mobile, 12/12 cửa sổ bất biến,
 camera đóng băng 3 `EXACT` + 3 `CANONICAL_EQUIVALENT`, product ↔ oracle 0
 mismatch ⇒ `READY_FOR_HUMAN_VISUAL_REVIEW`. Chưa có human visual acceptance, chưa
-merge. Nguồn: [`REPORT.md`](../evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md).
+merge. Nguồn: [`REPORT.md`](../evaluation/geometry/runs/w09-verify-cleanup/REPORT.md).
 
 Lịch sử (wave occlusion, đã được w09 đính chính):
 

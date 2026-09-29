@@ -1358,8 +1358,8 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/REPORT.md
-- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w09-verify-cleanup/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w09-verify-cleanup/
 - **PASS:** inventory 40 records / 0 unresolved · T3 detached FULL_PRODUCT_GATE_PASS (pytest 6314/0 fail, vitest 906/0 fail, build, demo) · browser 12/12 positive + 12/12 negative · immutable windows 12/12, 0 recompute · frozen camera 3 EXACT + 3 CANONICAL_EQUIVALENT · product/oracle 0 mismatch · backend reconciliation 34/0 unaccounted
 - **OPEN (non-blocking):** ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH · ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
 - **PUSH / MERGE:** NO / NO
@@ -1379,8 +1379,8 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/REPORT.md
-- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w10-pedagogical-playback/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w10-pedagogical-playback/
 - **PASS:** T3 from a path with a space FULL_PRODUCT_GATE_PASS (pytest 6368/0 fail, vitest 946/0 fail, build, demo) · browser 12/12 positive + 12/12 negative · occlusion 24/24, frozen expectations DECLARED_CAMERA_CHANGE 6/6 · learner playback 12/12 × 17 checks, orbit laps 60/60 · 60 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners · candidate/cache/schema verify
 - **CLOSED:** ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH · ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
 - **OPEN (non-blocking):** ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH · 1 px lines (WebGL `linewidth`) · per-solid visibility (multi-solid scenes need `occluders`)

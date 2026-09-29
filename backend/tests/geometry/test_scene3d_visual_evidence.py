@@ -13,9 +13,9 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "backend" / "scripts"))
 import build_scene3d_visual_evidence as B  # noqa: E402
 
-PREIMAGES = (ROOT / "docs/evaluation/geometry/runs/20260928-w09-verify-cleanup"
+PREIMAGES = (ROOT / "docs/evaluation/geometry/runs/w09-verify-cleanup"
              / "inputs/REGISTERED_CAMERA_PREIMAGES.json")
-FIXTURE = (ROOT / "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback"
+FIXTURE = (ROOT / "docs/evaluation/geometry/runs/w10-pedagogical-playback"
            / "inputs/fixtures/rectangular_pyramid_positive.json")
 
 

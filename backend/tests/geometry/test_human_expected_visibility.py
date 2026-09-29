@@ -87,7 +87,7 @@ sys.path.insert(0, str(ROOT / "backend" / "scripts"))
 import measure_scene3d_occlusion as M  # noqa: E402
 
 PRIOR_RUN = REGISTRY.parents[1]
-PREIMAGES = (ROOT / "docs/evaluation/geometry/runs/20260928-w09-verify-cleanup"
+PREIMAGES = (ROOT / "docs/evaluation/geometry/runs/w09-verify-cleanup"
              / "inputs/REGISTERED_CAMERA_PREIMAGES.json")
 #: sha256 prefix of the registry as committed at 80766b90 — byte identity.
 REGISTRY_SHA256 = "8fead2e6dbab3e66"
@@ -184,7 +184,7 @@ def test_canonical_identity_absorbs_float_noise_but_not_real_changes():
 #    stays byte-identical; an expectation transfers only when the registered
 #    scene is the one reviewed, the geometry is unchanged, and the oracle
 #    reproduces the reviewed sets at BOTH the registered and the new camera.
-W10_FIXTURES = (ROOT / "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback"
+W10_FIXTURES = (ROOT / "docs/evaluation/geometry/runs/w10-pedagogical-playback"
                 / "inputs/fixtures")
 FAMILIES = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid",
             "cuboid", "cube", "cross_section"]

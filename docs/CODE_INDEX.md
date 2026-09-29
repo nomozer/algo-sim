@@ -8321,7 +8321,7 @@ Wave `CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR` — trạn
 
 ### Verification cleanup after occlusion repair — w09 (2026-09-28)
 
-Run `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`. Mỗi mục trả lời một bản ghi trong `diagnostics/VERIFICATION_FAILURE_INVENTORY.json`.
+Run `docs/evaluation/geometry/runs/w09-verify-cleanup/`. Mỗi mục trả lời một bản ghi trong `diagnostics/VERIFICATION_FAILURE_INVENTORY.json`.
 
 | Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
 |---|---|---|---|---|
@@ -8329,7 +8329,7 @@ Run `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`. Mỗi mục tr
 | Khoá camera chuẩn hoá của classifier | `frontend/src/simulations/domains/geometry/scene3d-view.tsx` (`updateCanonicalEdgeVisibility`, hàm `khoa`) | 10 chữ số có nghĩa, ±0/nhiễu < 1e-12 → 0: nhiễu ULP của damping không còn tính lại mỗi frame; dịch chuyển > 0,5 px vẫn tính lại | camera → edge spans | `npx vitest run src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts` |
 | Cổng settle + cửa sổ 120 frame | `frontend/scripts/compiler-scene-replay-lib.mjs` (`cameraMotion`, `settleCamera`, `assessImmutableWindow`, `CAMERA_SETTLE_TOLERANCE`) | Chỉ chụp camera / mở cửa sổ bất biến sau khi camera đứng yên trong ngưỡng 1e-9 tương đối; không hội tụ ⇒ `SETTLING_TIMEOUT` kèm chẩn đoán | `compiler-scene-suite.mjs` (`settleOrRecord`) | `node --test frontend/scripts/compiler-scene-replay-lib.node-test.mjs` |
 | Danh tính camera đóng băng | `backend/scripts/measure_scene3d_occlusion.py` (`canonical_camera`, `canonical_camera_sha256`, `load_camera_preimages`, `camera_identity`, `--camera-preimages`) | Hash thô khớp ⇒ `EXACT`; không khớp ⇒ preimage đã xác minh sha256 + tương đương phép chiếu ≤ 0,5 px ⇒ `CANONICAL_EQUIVALENT`. Registry giữ nguyên từng byte | preimages + browser → `OCCLUSION_MEASUREMENT.json` | `pytest tests/geometry/test_human_expected_visibility.py -q` |
-| Preimage camera đã đăng ký | `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/inputs/REGISTERED_CAMERA_PREIMAGES.json` | Chuỗi snapshot có sha256 = đúng hash trong registry 80766b90, khôi phục bằng replay trình duyệt; buộc vào sha256 của registry | → `load_camera_preimages` | `pytest tests/geometry/test_human_expected_visibility.py -q` |
+| Preimage camera đã đăng ký | `docs/evaluation/geometry/runs/w09-verify-cleanup/inputs/REGISTERED_CAMERA_PREIMAGES.json` | Chuỗi snapshot có sha256 = đúng hash trong registry 80766b90, khôi phục bằng replay trình duyệt; buộc vào sha256 của registry | → `load_camera_preimages` | `pytest tests/geometry/test_human_expected_visibility.py -q` |
 | Interpreter của T3 | `frontend/scripts/full-gate.mjs` (`repoRootOf`, `resolvePython`, `PythonEnvError`, `runGate`) | Root qua `fileURLToPath` (đường dẫn có dấu cách); `--python`/`ALGO_SIM_PYTHON` → venv đang kích hoạt → venv của cây → venv của worktree chính (git common dir) → lỗi có cấu trúc, không rơi về `python` trên PATH; lỗi spawn được in ra | → năm cổng con T3 | `node --test frontend/scripts/full-gate.node-test.mjs` |
 | Test của interpreter T3 | `frontend/scripts/full-gate.node-test.mjs` | Đường dẫn có dấu cách · interpreter tường minh / thiếu / sai / lệch phiên bản · worktree không venv · truyền exit code và lỗi spawn | — | `node --test frontend/scripts/full-gate.node-test.mjs` |
 | Cửa sổ bất biến bắt đầu từ bộ đếm 0 | `frontend/scripts/compiler-scene-suite.mjs` (lệnh reset) | Trang chỉ công bố lại `__geo3d_occlusion_performance` ở frame kế tiếp ⇒ xoá bản công bố cùng task với reset, poll không đọc được cửa sổ cũ | → `assessImmutableWindow` | chạy suite; `immutable_window.frames` ≥ 120 thật |
@@ -8338,7 +8338,7 @@ Run `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`. Mỗi mục tr
 
 ### Human visual review + pedagogical playback — w10 (2026-09-29)
 
-Run `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`. Trả lời review người của w09 (`FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`). Mọi giải pháp đọc topology/ngữ nghĩa cảnh — không rẽ nhánh theo tên họ bài, case ID, đề hay tên đỉnh.
+Run `docs/evaluation/geometry/runs/w10-pedagogical-playback/`. Trả lời review người của w09 (`FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`). Mọi giải pháp đọc topology/ngữ nghĩa cảnh — không rẽ nhánh theo tên họ bài, case ID, đề hay tên đỉnh.
 
 | Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
 |---|---|---|---|---|

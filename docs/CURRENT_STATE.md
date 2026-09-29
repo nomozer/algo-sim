@@ -80,7 +80,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
 > | Merge | **NOT_EXECUTED** |
 >
-> Nguồn: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
+> Nguồn: `docs/evaluation/geometry/runs/w10-pedagogical-playback/`
 > (`REPORT.md`, `HANDOFF.md`, `results/VERIFICATION_SUMMARY.json`). Bảng w09 dưới
 > đây giữ làm lịch sử.
 
@@ -102,7 +102,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Automation chỉ được phát tối đa `READY_FOR_HUMAN_VISUAL_REVIEW`; **không** phải
 > `MERGE_READY`. Giới hạn còn mở: `ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH`, orbit
 > evidence chập chờn (1 lần hủy, chạy lại PASS). Nguồn:
-> `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/` (đính chính wave
+> `docs/evaluation/geometry/runs/w09-verify-cleanup/` (đính chính wave
 > `…-cross-family-hidden-line-occlusion-oracle-and-formation-repair`, bất biến).
 
 

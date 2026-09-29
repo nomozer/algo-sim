@@ -8,10 +8,10 @@
 
 ### ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH
 - **description:** 11 frontend test files build repository paths from `new URL(..., import.meta.url).pathname`, which keeps `%20`; from a worktree path containing a space they fail with ENOENT (and `spawnSync git` with a bad cwd).
-- **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log` (vitest 23 failed / 860).
+- **evidence:** `docs/evaluation/geometry/runs/w09-verify-cleanup/diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log` (vitest 23 failed / 860).
 - **impact:** Authoritative runs must use a path without spaces; `full-gate.mjs` itself is space-safe (`repoRootOf`).
 - **scope:** Frontend test path resolution only.
-- **status:** RESOLVED (w10, `1eca93d7` + `c7fee8f8`) — 12 test files and the two scripts they import (`evidence.mjs`, `certify-sweep-w12.mjs`) use `fileURLToPath`/`URL`; a guard in `src/test-tiers.test.ts` follows test imports transitively and forbids the old pattern (red on 12 files, then on the 2 scripts, before the fixes). T3 from `D:/tmp/w10 space/algo-sim` at `40ce889f`: `FULL_PRODUCT_GATE_PASS`. Evidence: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log`. Residual (hand-run browser scripts): `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`
+- **status:** RESOLVED (w10, `1eca93d7` + `c7fee8f8`) — 12 test files and the two scripts they import (`evidence.mjs`, `certify-sweep-w12.mjs`) use `fileURLToPath`/`URL`; a guard in `src/test-tiers.test.ts` follows test imports transitively and forbids the old pattern (red on 12 files, then on the 2 scripts, before the fixes). T3 from `D:/tmp/w10 space/algo-sim` at `40ce889f`: `FULL_PRODUCT_GATE_PASS`. Evidence: `docs/evaluation/geometry/runs/w10-pedagogical-playback/diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log`. Residual (hand-run browser scripts): `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** after human visual review
 - **default_switch_blocker:** NO
@@ -32,10 +32,10 @@
 
 ### ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
 - **description:** The browser orbit evidence can abort with `ORBIT_EVIDENCE_TIMEOUT` when point labels are still at their unprojected positions; the immediate rerun at the same commit passes.
-- **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/BROWSER_ATTEMPT1_ORBIT_TIMEOUT_defb77ed.log`, `diagnostics/MEASUREMENT_ATTEMPTS.json`.
+- **evidence:** `docs/evaluation/geometry/runs/w09-verify-cleanup/diagnostics/logs/BROWSER_ATTEMPT1_ORBIT_TIMEOUT_defb77ed.log`, `diagnostics/MEASUREMENT_ATTEMPTS.json`.
 - **impact:** An authoritative run may need a second attempt; every attempt is recorded, none is hidden.
 - **scope:** Browser evidence harness (label readiness before orbit).
-- **status:** RESOLVED (w10) — root causes named: fixed pixel drags could end at a view that changes no hidden edge (the gate then waited for something that never came), and clicks/drags acted blind (a click under the sticky navigation bar opened the sign-in overlay). Now the orbit is PLANNED from the product's own view metrics (`planOrbit`: keeps depth AND changes the predicted hidden set), readiness is condition-based (camera settle within tolerance → gesture → hidden set changed) with transitions and timeout reasons recorded, and `trustedClick`/`trustedOrbit` verify the target is uncovered (`5e6e1583`, `40ce889f`). Authoritative run `40ce889f`: suite orbit 12/12 with the planned gesture passing first time 12/12; learner runner 60/60 orbit laps (5 per family × viewport). Evidence: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
+- **status:** RESOLVED (w10) — root causes named: fixed pixel drags could end at a view that changes no hidden edge (the gate then waited for something that never came), and clicks/drags acted blind (a click under the sticky navigation bar opened the sign-in overlay). Now the orbit is PLANNED from the product's own view metrics (`planOrbit`: keeps depth AND changes the predicted hidden set), readiness is condition-based (camera settle within tolerance → gesture → hidden set changed) with transitions and timeout reasons recorded, and `trustedClick`/`trustedOrbit` verify the target is uncovered (`5e6e1583`, `40ce889f`). Authoritative run `40ce889f`: suite orbit 12/12 with the planned gesture passing first time 12/12; learner runner 60/60 orbit laps (5 per family × viewport). Evidence: `docs/evaluation/geometry/runs/w10-pedagogical-playback/`
 - **owner_class:** EVALUATION
 - **suggested_wave:** after human visual review
 - **default_switch_blocker:** NO
@@ -47,7 +47,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/results/VERIFICATION_SUMMARY.json` (`FROZEN_CAMERA_IDENTITY_MISMATCH`).
 - **impact:** Frozen human expected sets không thể được dùng làm authority cho hai case cho tới khi terminal camera được canonicalize và đăng ký bằng commit test-only riêng.
 - **scope:** Browser evidence harness / camera snapshot registration.
-- **status:** RESOLVED (w09, 7b8528a9 + fe3eccee) — verified preimages of the registered hashes + projection equivalence ≤ 0.5 px; 3 EXACT, 3 CANONICAL_EQUIVALENT; registry byte-identical. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
+- **status:** RESOLVED (w09, 7b8528a9 + fe3eccee) — verified preimages of the registered hashes + projection equivalence ≤ 0.5 px; 3 EXACT, 3 CANONICAL_EQUIVALENT; registry byte-identical. Evidence: `docs/evaluation/geometry/runs/w09-verify-cleanup/`
 - **owner_class:** EVALUATION / VISUALIZATION
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -59,7 +59,7 @@
 - **evidence:** Cùng `VERIFICATION_SUMMARY.json`, mobile `immutable_120_frames` failures.
 - **impact:** Performance evidence chưa sạch dù product classifier correctness đã khớp oracle.
 - **scope:** Browser/performance gate scheduling.
-- **status:** RESOLVED (w09, 7b8528a9 + 91d3e9c3) — root cause was also in the product: the classifier keyed on raw floats while idle damping rewrote the pose every mobile frame; canonical camera key, settle gate, and zeroed window counters. 12/12 windows, 0 recomputes. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
+- **status:** RESOLVED (w09, 7b8528a9 + 91d3e9c3) — root cause was also in the product: the classifier keyed on raw floats while idle damping rewrote the pose every mobile frame; canonical camera key, settle gate, and zeroed window counters. 12/12 windows, 0 recomputes. Evidence: `docs/evaluation/geometry/runs/w09-verify-cleanup/`
 - **owner_class:** EVALUATION / PERFORMANCE
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -71,7 +71,7 @@
 - **evidence:** Frontend full result 904 pass, 1 fail trong correction report 2026-09-28.
 - **impact:** Full frontend gate đỏ dù failure hiện được chẩn đoán là guard defect; phải thay bằng assertion đúng ranh giới trước khi gọi sạch.
 - **scope:** Frontend architecture/source guard test only.
-- **status:** RESOLVED (w09, 1f151f8d) — assertion on declared field names; frontend full 906/0. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
+- **status:** RESOLVED (w09, 1f151f8d) — assertion on declared field names; frontend full 906/0. Evidence: `docs/evaluation/geometry/runs/w09-verify-cleanup/`
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -83,7 +83,7 @@
 - **evidence:** Backend full result 6268 pass, 35 fail, 1 skip, 1 deselect trong correction report 2026-09-28.
 - **impact:** Không được suy tất cả là stale test hoặc tất cả là product regression; verification vẫn đỏ cho tới khi từng failure có classification và rerun evidence.
 - **scope:** Backend full regression triage.
-- **status:** RESOLVED (w09) — fresh reproduction 31 (main) + 3 (detached-only) = 34, each reconciled; 28 were a REAL_PRODUCT_REGRESSION (raw kernel objects in scene3d.events, HTTP 500 at the cache write), fixed in f337323f. The 35th of the prior count was never itemized: NOT_RECOVERABLE. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`results/BACKEND_FAILURE_RECONCILIATION.json
+- **status:** RESOLVED (w09) — fresh reproduction 31 (main) + 3 (detached-only) = 34, each reconciled; 28 were a REAL_PRODUCT_REGRESSION (raw kernel objects in scene3d.events, HTTP 500 at the cache write), fixed in f337323f. The 35th of the prior count was never itemized: NOT_RECOVERABLE. Evidence: `docs/evaluation/geometry/runs/w09-verify-cleanup/`results/BACKEND_FAILURE_RECONCILIATION.json
 - **owner_class:** EVALUATION / TEST HARNESS / PRODUCT
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
@@ -95,7 +95,7 @@
 - **evidence:** Handoff và verification summary của run occlusion 2026-09-28.
 - **impact:** Authoritative clean-worktree verification có thể thất bại do environment path thay vì product state.
 - **scope:** Full-gate runner / detached-worktree environment discovery.
-- **status:** RESOLVED (w09, 1d1397fa + defb77ed) — resolvePython with structured failure; detached T3 FULL_PRODUCT_GATE_PASS with main_worktree_venv. Evidence: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
+- **status:** RESOLVED (w09, 1d1397fa + defb77ed) — resolvePython with structured failure; detached T3 FULL_PRODUCT_GATE_PASS with main_worktree_venv. Evidence: `docs/evaluation/geometry/runs/w09-verify-cleanup/`
 - **owner_class:** OPERATIONS / TEST HARNESS
 - **suggested_wave:** `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`
 - **default_switch_blocker:** NO
