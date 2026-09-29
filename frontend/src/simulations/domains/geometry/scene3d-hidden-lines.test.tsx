@@ -6,6 +6,7 @@ import {
   classifySolidEdgeVisibility,
   datCoDauDinh,
   datKhungNhin,
+  diemKhungNhin,
   doanNhuongCanh,
   lamDiu,
   updateCanonicalEdgeVisibility,
@@ -394,6 +395,19 @@ describe("w11 · chấm đỉnh và đường phụ", () => {
       const bam = duKien(goc, "vungBam") as THREE.Mesh;
       const rb = (bam.geometry as THREE.SphereGeometry).parameters.radius * bam.scale.x;
       expect(rb / donVi).toBeCloseTo(banKinhBamPx(rong), 6);
+    }
+  });
+
+  /* w11 — "Xem lại toàn hình" ở bước cuối của bài thiết diện dời tâm nhìn
+     (3,40; 2,90; 2,18) → (5,69; 0,27; 2,43): cờ `voHan` nằm trên NHÓM của
+     đường BD còn phép duyệt vẫn đi vào nét con, nên đoạn hiển thị do renderer
+     tự chọn độ dài kéo khung đi. Chấm đỉnh (co giãn theo zoom) cũng lọt vào. */
+  it("khung nhìn không tính đường vô hạn (kể cả nét con) và chấm đỉnh", () => {
+    const goc = new THREE.Group();
+    goc.add(buildObject3D(DUONG, false)!);
+    goc.add(buildObject3D(DIEM, false)!);
+    for (const p of diemKhungNhin(goc)) {
+      expect(Math.hypot(...p)).toBeLessThan(1e-9);   // chỉ còn đúng điểm A ở gốc
     }
   });
 

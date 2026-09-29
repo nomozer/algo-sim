@@ -490,6 +490,44 @@ export function datKhungNhin(
   cam.updateProjectionMatrix();
 }
 
+/**
+ * Điểm thế giới mà khung nhìn phải ôm — đỉnh THẬT của những gì đang dựng.
+ *
+ * ⚠️ BỎ VẬT VÔ HẠN KHỎI PHÉP TÍNH KHUNG NHÌN. `setFromObject(goc)` ôm trọn mọi
+ * thứ đang dựng — kể cả miếng mặt phẳng và đoạn đại diện của đường thẳng, hai
+ * thứ có cỡ do CHÍNH tầng trình bày chọn. Để chúng vào thì quyết định trình
+ * bày tự khuếch đại: miếng to ra ⇒ hộp bao to ra ⇒ camera lùi ⇒ hình thật bé
+ * lại. ĐỈNH THẬT (toạ độ thế giới, đã tính tách khối), không phải góc hộp bao:
+ * khung vừa theo HÌNH CHIẾU, và góc hộp bao chiếu ra ngoài hình.
+ */
+export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
+  const diem: [number, number, number][] = [];
+  const p = new THREE.Vector3();
+  // Cờ nằm trên NHÓM (đường vô hạn là một nhóm hai nét): hỏi cả tổ tiên, không
+  // chỉ chính nút — bỏ sót thì nét con kéo khung theo đoạn do renderer tự chọn
+  // (w11: "Xem lại toàn hình" ở bước cuối bài thiết diện dời hẳn tâm nhìn).
+  const boQua = (vat: THREE.Object3D) => {
+    for (let x: THREE.Object3D | null = vat; x && x !== goc; x = x.parent) {
+      if (x.userData?.voHan || x.userData?.chieuSau) return true;
+    }
+    return false;
+  };
+  goc.updateMatrixWorld(true);
+  goc.traverse((vat) => {
+    if (boQua(vat)) return;
+    if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
+    // Hình cầu bắt chuột và chấm đỉnh (co giãn theo zoom) không phải hình; toạ
+    // độ điểm đã vào khung qua `diemHuuHan`.
+    if (vat.name === "pick-proxy" || vat.userData?.dauDinh) return;
+    const pos = (vat as THREE.Mesh).geometry?.getAttribute?.("position");
+    for (let i = 0; pos && i < pos.count; i++) {
+      p.fromBufferAttribute(pos, i).applyMatrix4(vat.matrixWorld);
+      diem.push([p.x, p.y, p.z]);
+    }
+  });
+  return diem;
+}
+
 /** Lớp CSS một dòng số đo. Có chọn: tầng causal (đích > dữ kiện số > trung
  *  gian số; ngoài chuỗi dịu). Không chọn: tô theo bước dựng (w11). */
 function lopSoDo(
@@ -1410,28 +1448,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     // Đọc hộp bao của những gì ĐANG dựng trong nhóm gốc, không đọc `scene` —
     // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
     vuaKhungRef.current = () => {
-      const diem: [number, number, number][] = [];
-      // ⚠️ BỎ VẬT VÔ HẠN KHỎI PHÉP TÍNH KHUNG NHÌN.
-      //
-      // `setFromObject(goc)` ôm trọn mọi thứ đang dựng — kể cả miếng mặt phẳng
-      // và đoạn đại diện của đường thẳng, hai thứ có cỡ do CHÍNH tầng trình bày
-      // chọn. Để chúng vào thì quyết định trình bày tự khuếch đại: miếng to ra
-      // ⇒ hộp bao to ra ⇒ camera lùi ⇒ hình thật bé lại. Vòng lặp ấy không có
-      // điểm dừng nào ngoài may rủi.
-      // ĐỈNH THẬT (toạ độ thế giới, đã tính tách khối), không phải góc hộp bao:
-      // khung nay vừa theo HÌNH CHIẾU, và góc hộp bao chiếu ra ngoài hình.
-      const p = new THREE.Vector3();
-      goc.updateMatrixWorld(true);
-      goc.traverse((vat) => {
-        if (vat.userData?.voHan || vat.userData?.chieuSau) return;
-        if (!(vat as THREE.Mesh).isMesh && !(vat as THREE.Line).isLine) return;
-        if (vat.name === "pick-proxy") return;   // hình cầu bắt chuột, không phải hình
-        const pos = (vat as THREE.Mesh).geometry?.getAttribute?.("position");
-        for (let i = 0; pos && i < pos.count; i++) {
-          p.fromBufferAttribute(pos, i).applyMatrix4(vat.matrixWorld);
-          diem.push([p.x, p.y, p.z]);
-        }
-      });
+      const diem = diemKhungNhin(goc);
       // Cảnh CHỈ có mặt phẳng/đường thẳng: thà lấy hộp bao đầy đủ còn hơn
       // không đặt được khung nhìn nào.
       if (diem.length === 0) {
