@@ -10,8 +10,8 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in.
-- `CACHE_VERSION = 102`; provider-facing fingerprint
-  `b1714b566e25c912…` không đổi trong wave gần nhất.
+- `CACHE_VERSION = 103` (w10 bump: nội dung cảnh của envelope `ok` đổi);
+  provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi test/repair gần nhất offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -19,12 +19,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-MEASUREMENT_COMMIT = defb77ede20bd952b08ac4996d3a2bf40bcfdb1a
-EVIDENCE_COMMIT = 774377dd
+CURRENT_WAVE = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10)
+MEASUREMENT_COMMIT = 40ce889fe83b7220195a89f50c22757a02770511
+EVIDENCE_COMMIT = 8a09a5d8 (post-processing 52de6f22)
 ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce
-CANDIDATE = 3bc9415b87c78a8f… (was 31725284…)
+CANDIDATE = 8539acbc5c17dd72… (was 3bc9415b…), product commit f0deaa0d
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-HUMAN_VISUAL_REVIEW = NOT_APPROVED
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (w09 review = FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR; w10 pending)
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -66,34 +67,52 @@ Wave w09 (`VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`) đã khép năm nhóm �
 Các gate sau PASS: exact product↔oracle edge IDs/spans, perspective reference,
 formation semantics, section identity và worktree recovery.
 
+Wave w10 (`HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE`) trả lời review
+người của w09 (`FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`):
+- Playback: bấm Phát một lần đi hết, dừng ở bước cuối, "Xem lại" về bước 0 và
+  bỏ chọn; playback không bao giờ tự tạo causal.
+- Camera mặc định CHỌN theo số đo cảnh (Z-up, diện tích bao chiếu, độ sâu, khoảng
+  đỉnh/đỉnh–cạnh, độ nghiêng mặt), vừa khít theo hình chiếu; "Xem lại toàn hình"
+  huỷ đà xoay.
+- Nét: cạnh khuất từng KHÔNG có điểm ảnh (GPU kiểm chiều sâu lần hai) — nay phân
+  loại CPU là thẩm quyền cho cả hai lớp; mực cạnh riêng; một cạnh một nét.
+- Bề mặt học sinh: tên khối theo topology, đáp số + bí danh là một kết luận, lời
+  kể có cấu trúc, mặt thiết diện tô ở bước khép; causal phân tầng + làm dịu.
+- Bộ đo: kỳ vọng người chuyển sang camera mới chỉ qua khai báo + oracle ở cả hai
+  camera; crop chứa trọn cạnh; bấm/kéo không mù.
+
 ## 4. Còn mở — không được che
 
 - **Human visual acceptance: NOT_APPROVED** — việc kế tiếp; chưa merge.
-- `ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH`: test frontend hỏng khi worktree có dấu
-  cách trong đường dẫn ⇒ đo có thẩm quyền ở đường dẫn không dấu cách.
-- `ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT`: một lần hủy `ORBIT_EVIDENCE_TIMEOUT`,
-  chạy lại PASS; mọi lần thử ghi ở `diagnostics/MEASUREMENT_ATTEMPTS.json`.
+- Nét vẫn 1 px (WebGL bỏ qua `linewidth`); phân loại khuất theo từng khối (cảnh
+  nhiều khối cần `occluders`); script trình duyệt chạy tay còn `URL.pathname`
+  (`ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`).
+- `ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH` và `ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT`
+  **đã đóng ở w10** (xem `docs/OPEN_ISSUES.md`).
 
-Tự động đã xanh tại `defb77ed` (detached): T3 PASS (pytest 6314/0, vitest
-906/0, build, demo) · browser 12/12 + 12/12 âm · immutable 12/12 · camera 3
-EXACT + 3 CANONICAL_EQUIVALENT · product/oracle 0 mismatch.
+Tự động đã xanh tại `40ce889f` (detached): T3 từ đường dẫn CÓ dấu cách PASS
+(pytest 6368/0, vitest 946/0, build, demo) · browser 12/12 + 12/12 âm · oracle
+24/24 · kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 · playback người học 12/12 ×
+17 kiểm, 60/60 lượt xoay · 60 crop, 0 bất đồng, 0 owner trùng.
 
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
 ```
 
-Người duyệt `images/contact-sheet.png`, ảnh full-resolution và crop của run
-w09 (xem `HANDOFF.md` của run). Không mở family, image/OCR, composite geometry
-trước khi có human visual acceptance; automation không phát `MERGE_READY`.
+Người duyệt theo `HANDOFF.md` của run w10 (contact sheet chính, crop cạnh khuất,
+filmstrip playback). Không mở family, image/OCR, composite geometry trước khi có
+human visual acceptance; automation không phát `MERGE_READY`.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
-  `results/VERIFICATION_SUMMARY.json`, `results/BACKEND_FAILURE_RECONCILIATION.json`).
+  `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
+- Wave trước (bất biến, review người FAIL ghi bổ sung ở w10):
+  `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/`.
 - Wave bị đính chính (bất biến):
   `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/`.
 - Frozen human sets (bất biến): `.../inputs/human_expected_visibility.json` của

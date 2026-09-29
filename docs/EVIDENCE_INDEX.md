@@ -671,8 +671,28 @@ VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → 
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 31725284… -> 3bc9415b…, CACHE_VERSION unchanged)
 - **CACHE_CHANGE:** NO (CACHE_VERSION 102, fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (human review FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR, recorded additively in the w10 run; this run's files stay byte-identical)
 - **SUPERSEDES:** NONE (additively corrects VERIFICATION_NOT_CLEAN of the occlusion wave; its artifacts and frozen registry remain byte-identical)
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **THESIS_USE:** HISTORICAL_AUTOMATION — human visual review FAILED afterwards; do not cite as visual acceptance. `inputs/REGISTERED_CAMERA_PREIMAGES.json` stays authoritative for the frozen registry.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `results/VERIFICATION_SUMMARY.json` · `results/BACKEND_FAILURE_RECONCILIATION.json` · `diagnostics/VERIFICATION_FAILURE_INVENTORY.json` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `inputs/REGISTERED_CAMERA_PREIMAGES.json` · `images/contact-sheet.png`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE
+- **DATE:** 2026-09-29
+- **REPORT:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/
+- **START_BASE:** be23e88d
+- **CODE_COMMIT:** 9dc56ae1 · f5a3adf2 (backend + frontend) · 7a03e50d · f0deaa0d (frontend)
+- **MEASUREMENT_COMMIT:** 40ce889fe83b7220195a89f50c22757a02770511 (post-processing 52de6f22)
+- **EVIDENCE_COMMIT_ROLE:** 8a09a5d8
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 3bc9415b… -> 875bc19c… -> 8539acbc…)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 102 -> 103, user decision; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (human review FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR)
+- **SUPERSEDES:** NONE (w09 and occlusion-wave artifacts and the frozen registry remain byte-identical; the registry's expectations transfer to the new default camera only under `DECLARED_CAMERA_CHANGE`)
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/GOLDEN_REVIEW.json` · `images/playback/PLAYBACK_EVIDENCE.json` · `images/crops/CROPS_INDEX.json` · `images/contact-sheet.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `inputs/W09_HUMAN_VISUAL_REVIEW.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`docs/evaluation/RUN_NAMING.md`)

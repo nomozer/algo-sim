@@ -53,20 +53,38 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 774377dd (measurement commit defb77ed)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 8a09a5d8 (measurement commit 40ce889f, post-processing 52de6f22)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 102
-> CANDIDATE = 3bc9415b… (was 31725284…)
+> CACHE_VERSION = 103
+> CANDIDATE = 8539acbc… (was 3bc9415b…), product commit f0deaa0d
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR
+> CURRENT_WAVE = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
 > ```
 
 
-> **Occlusion/formation — trạng thái authoritative hiện tại (w09, measurement `defb77ed`, detached clean worktree):**
+> **Playback · góc nhìn · nét khuất · bề mặt học sinh — trạng thái authoritative hiện tại (w10, measurement `40ce889f`, detached clean worktrees):**
+>
+> | Gate | Kết quả |
+> |---|---|
+> | Review người của w09 | **FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR** — ghi bổ sung ở `inputs/W09_HUMAN_VISUAL_REVIEW.json` của run w10 |
+> | T3 full gate từ đường dẫn CÓ dấu cách | **PASS** — pytest 6368/0 fail · vitest 946/0 fail · build · demo · bề mặt sập |
+> | Browser 6 family × desktop/mobile | **PASS** — 12/12 dương, 12/12 âm; causal 12/12; orbit 12/12 (cử chỉ hoạch định đạt ngay lần đầu 12/12); formation 12/12 |
+> | Product ↔ oracle | **PASS** — 24/24 trạng thái; kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 (registry giữ nguyên byte) |
+> | Playback người học (bấm Phát một lần) | **PASS** — 12/12 × 17 kiểm; lặp orbit 60/60 |
+> | Crop cạnh khuất | **PASS** — 60, trọn hai đầu mút, 0 bất đồng oracle, 0 owner trùng |
+> | `CACHE_VERSION` | **103** (bump có chủ đích; fingerprint provider không đổi) |
+> | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
+> | Merge | **NOT_EXECUTED** |
+>
+> Nguồn: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
+> (`REPORT.md`, `HANDOFF.md`, `results/VERIFICATION_SUMMARY.json`). Bảng w09 dưới
+> đây giữ làm lịch sử.
+
+> **Occlusion/formation — w09 (measurement `defb77ed`, detached clean worktree; review người sau đó = FAIL):**
 >
 > | Gate | Kết quả |
 > |---|---|

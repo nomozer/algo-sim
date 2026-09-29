@@ -1367,6 +1367,28 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (VERIFICATION_NOT_CLEAN)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
+- **HUMAN_REVIEW_AFTERWARDS:** FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR (recorded additively in the w10 run, `inputs/W09_HUMAN_VISUAL_REVIEW.json`)
+
+### WAVE_ID = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE
+- **DATE:** 2026-09-29
+- **START_BASE:** be23e88d
+- **CODE_COMMIT_OR_NONE:** 9dc56ae1 (playback, camera, hidden lines, learner surface, causal, narrow panel) · f5a3adf2 (alias conclusion dependencies) · 7a03e50d + f0deaa0d (tree aliases, narrow floating buttons)
+- **COMMITS:** 22f162f5 red tests · 9dc56ae1 · 1eca93d7 tooling · 48226ef6 / c13d2712 / bd7b4c27 / 7f5205ca refreezes · 14de613a / 28a5dece declarations · 554df6d8 · c7fee8f8 · dce4aa87 fixtures · f5a3adf2 · c1947f57 · 7a03e50d · 3f24b943 · ea18ee79 · f0deaa0d · 26dfba43 · 5e6e1583 · 40ce889f (measurement) · 52de6f22 (post-processing) · 8a09a5d8 evidence
+- **CANDIDATE:** 3bc9415b… → 875bc19c… → 8539acbc… (clean worktrees; last refreeze 7f5205ca, product commit f0deaa0d) · CACHE_VERSION 102 → 103 (user decision; fingerprint b1714b56… unchanged)
+- **EVIDENCE_COMMIT_ROLE:** 8a09a5d8 (measurement commit 40ce889f, detached clean worktrees)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/
+- **PASS:** T3 from a path with a space FULL_PRODUCT_GATE_PASS (pytest 6368/0 fail, vitest 946/0 fail, build, demo) · browser 12/12 positive + 12/12 negative · occlusion 24/24, frozen expectations DECLARED_CAMERA_CHANGE 6/6 · learner playback 12/12 × 17 checks, orbit laps 60/60 · 60 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners · candidate/cache/schema verify
+- **CLOSED:** ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH · ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
+- **OPEN (non-blocking):** ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH · 1 px lines (WebGL `linewidth`) · per-solid visibility (multi-solid scenes need `occluders`)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (human review FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
 
 
 

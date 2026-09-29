@@ -11,19 +11,31 @@
 - **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log` (vitest 23 failed / 860).
 - **impact:** Authoritative runs must use a path without spaces; `full-gate.mjs` itself is space-safe (`repoRootOf`).
 - **scope:** Frontend test path resolution only.
-- **status:** OPEN
+- **status:** RESOLVED (w10, `1eca93d7` + `c7fee8f8`) — 12 test files and the two scripts they import (`evidence.mjs`, `certify-sweep-w12.mjs`) use `fileURLToPath`/`URL`; a guard in `src/test-tiers.test.ts` follows test imports transitively and forbids the old pattern (red on 12 files, then on the 2 scripts, before the fixes). T3 from `D:/tmp/w10 space/algo-sim` at `40ce889f`: `FULL_PRODUCT_GATE_PASS`. Evidence: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log`. Residual (hand-run browser scripts): `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** after human visual review
 - **default_switch_blocker:** NO
 - **acceptance:** every test resolves paths with `fileURLToPath`; `npm run test:full` passes from a detached worktree whose path contains a space.
 - **verify:** `git worktree add --detach "<tmp with space>" HEAD` then `cd "<tmp with space>/frontend" && npm ci --offline && npm run test:full`
 
+### ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH
+- **description:** About twenty hand-run browser scripts in `frontend/scripts/` (`accept-*.mjs`, `certify-*.mjs`, `audit-composition.mjs`, …) still build paths from `new URL(...).pathname`, which keeps `%20`.
+- **evidence:** `grep -n "\.pathname" frontend/scripts/*.mjs` (w10); the test graph itself is clean (`src/test-tiers.test.ts` guard).
+- **impact:** Those scripts fail when run by hand from a checkout whose path contains a space; no gate or test depends on them.
+- **scope:** Hand-run browser tooling only.
+- **status:** OPEN
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO
+- **acceptance:** every script under `frontend/scripts/` resolves paths with `fileURLToPath`; the guard is extended from the test import graph to the whole directory.
+- **verify:** `grep -c "\.pathname\.replace" frontend/scripts/*.mjs` = 0
+
 ### ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT
 - **description:** The browser orbit evidence can abort with `ORBIT_EVIDENCE_TIMEOUT` when point labels are still at their unprojected positions; the immediate rerun at the same commit passes.
 - **evidence:** `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/diagnostics/logs/BROWSER_ATTEMPT1_ORBIT_TIMEOUT_defb77ed.log`, `diagnostics/MEASUREMENT_ATTEMPTS.json`.
 - **impact:** An authoritative run may need a second attempt; every attempt is recorded, none is hidden.
 - **scope:** Browser evidence harness (label readiness before orbit).
-- **status:** OPEN
+- **status:** RESOLVED (w10) — root causes named: fixed pixel drags could end at a view that changes no hidden edge (the gate then waited for something that never came), and clicks/drags acted blind (a click under the sticky navigation bar opened the sign-in overlay). Now the orbit is PLANNED from the product's own view metrics (`planOrbit`: keeps depth AND changes the predicted hidden set), readiness is condition-based (camera settle within tolerance → gesture → hidden set changed) with transitions and timeout reasons recorded, and `trustedClick`/`trustedOrbit` verify the target is uncovered (`5e6e1583`, `40ce889f`). Authoritative run `40ce889f`: suite orbit 12/12 with the planned gesture passing first time 12/12; learner runner 60/60 orbit laps (5 per family × viewport). Evidence: `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/`
 - **owner_class:** EVALUATION
 - **suggested_wave:** after human visual review
 - **default_switch_blocker:** NO
@@ -212,7 +224,7 @@
 
 ### ISSUE-OPS-ORPHANED-TEMP-DIRECTORIES
 - **description:** Các thư mục tạm được tạo trong quá trình chạy test worktree (ví dụ `D:/tmp/mvep-*`, `D:/tmp/algo-sim-*`) có thể tồn đọng nếu quy trình dọn dẹp gặp sự cố ngoài ý muốn.
-- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước.
+- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước. w10 để lại, NGOÀI git: `D:/tmp/w10-out` và `D:/tmp/w10-build.log` (bản dựng/thử nghiệm dev), `D:/tmp/w10-freeze4` (worktree đóng băng đã gỡ khỏi git; xoá thư mục bị từ chối vì một tiến trình đang giữ — chỉ còn bản sao file đã commit), `D:/Documents/projects/tmp-dist-exp` (bản dựng thử nghiệm depth test). Không chứa gì cần giữ; mọi bằng chứng đã nằm trong run w10.
 - **impact:** Chiếm dụng dung lượng đĩa và có nguy cơ gây nhầm lẫn nếu không được quản lý vòng đời rõ ràng.
 - **scope:** Scripts & Test harnesses
 - **status:** OPEN

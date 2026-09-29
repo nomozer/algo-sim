@@ -9,17 +9,19 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OCCLUSION_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
 ```
 
-- **Mục tiêu:** Người duyệt contact sheet, ảnh full-resolution và crop của run
-  `docs/evaluation/geometry/runs/20260928-w09-verify-cleanup/` (nét khuất đứt,
-  nét thấy liền, điểm chuyển của cạnh mixed, không cắt/khó đọc). Mọi cổng tự
-  động của wave `VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR` đã xanh.
+- **Mục tiêu:** Người duyệt bằng chứng của run
+  `docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/` theo
+  `HANDOFF.md` của run: contact sheet chính (ảnh lớn), crop cạnh khuất chứa trọn
+  hai đầu mút, filmstrip playback người học, trạng thái causal/xoay/trung tính ở
+  desktop và mobile. Review w09 là `FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`; mọi
+  cổng tự động của wave w10 đã xanh.
 - **Điều kiện dừng:** Automation không phát `MERGE_READY`; chưa push/merge cho
   tới khi người duyệt chấp nhận.
-- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 102`
+- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 103`
   khi provider fingerprint không đổi và 0 live Gemini request. Không mở rộng
   family, image/OCR hoặc composite geometry trước khi có human visual acceptance.
 
