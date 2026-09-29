@@ -5,14 +5,21 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-  "current_candidate_hash": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
-  "current_candidate_source_commit": "1eca93d75b877aeadc225de8fedb612897a46071",
+  "current_candidate_hash": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
+  "current_candidate_source_commit": "f5a3adf277f006a1f685807f3bf04ff3e6cc886d",
   "previous_candidate_hash": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",
+  "intermediate_candidates_in_this_wave": [
+    {
+      "candidate_hash": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
+      "refrozen_at": "48226ef6",
+      "superseded_because": "the authoritative browser run found the conclusion event of an answer alias declaring the source's own id as its dependency (EVENT_DEPENDENCY_CONFLICT); fixed in f5a3adf2"
+    }
+  ],
   "diverged": true,
   "reason": "w10 answers the w09 human review (FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR). backend/app changes: solid nouns derived from topology (display_names), one conclusion for an answer and its aliases, structured learner narration, section completion typed as a construction step whose fill appears only at that step (fill_visible), segments lying on a solid edge point to the canonical edge owner (boundary_edge_ids). No geometry or value field changed: final_memory is byte-identical for P1/P6 and the scene diff touches presentation fields only (results/GOLDEN_REVIEW.json). CACHE_VERSION 102 -> 103 because the scene content of cached `ok` envelopes changed; the provider-facing fingerprint (prompts, schemas, grammar card, capability) is unchanged.",
   "hieu_luc_len_ket_qua_da_do": {
     "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
-    "candidate_hien_tai": "Candidate 875bc19c is a new product identity and must not be used to rescore the historical run.",
+    "candidate_hien_tai": "Candidate 8539acbc is a new product identity and must not be used to rescore the historical run.",
     "live_requests": 0
   },
   "cache_version_hien_tai": 103

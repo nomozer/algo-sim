@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
+ "current_candidate_hash": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -130,6 +130,11 @@
    "hash": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
    "sau_wave": "HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
    "ghi_chu": "Bề mặt học sinh của cảnh 3D: tên khối suy từ topology, bí danh đáp số là một kết luận, lời kể có cấu trúc, mặt thiết diện tô ở bước khép, đoạn trùng cạnh khối trỏ owner chuẩn. CACHE_VERSION 102 → 103 vì nội dung cảnh của envelope `ok` đổi mà cache trả nguyên envelope; năm băm model-facing KHÔNG đổi (khoá danh tính cache chỉ đổi `cache_version`)"
+  },
+  {
+   "hash": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
+   "sau_wave": "HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
+   "ghi_chu": "Cùng wave: sự kiện kết luận của bí danh đáp số mang đúng phụ thuộc của nguồn (bộ đo trình duyệt bắt EVENT_DEPENDENCY_CONFLICT); CACHE_VERSION giữ 103"
   }
  ],
  "diverged": true,
