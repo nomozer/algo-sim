@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
-  "product_commit_sha": "f0deaa0d657754ff03ac8cfd8bd5883da4cf7957",
-  "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
+  "task_id": "W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW",
+  "product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
+  "product_tree_sha": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
@@ -32,6 +32,7 @@
   "scenarios": [
     {
       "id": "triangular_pyramid",
+      "evidence_dir": "triangular-pyramid",
       "family": "right_triangle_base_pyramid_volume",
       "positive_fixture": "fixtures/triangular_pyramid_positive.json",
       "negative_fixture": "fixtures/triangular_pyramid_negative.json",
@@ -40,8 +41,8 @@
       "expected_answer": "10",
       "causal_target_id": "the_tich_khoi",
       "oracle_expected_closure": [
-        "A", "B", "C", "S", "day_ABC", "dien_tich_day_ABC", "khoi_chop",
-        "the_tich_khoi", "the_tich_khoi_chop"
+        "A", "AB_length", "AC_length", "B", "C", "S", "SA_length", "day_ABC",
+        "dien_tich_day_ABC", "khoi_chop", "the_tich_khoi", "the_tich_khoi_chop"
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
@@ -58,6 +59,7 @@
     },
     {
       "id": "triangular_prism",
+      "evidence_dir": "triangular-prism",
       "family": "right_triangle_base_right_prism_volume",
       "positive_fixture": "fixtures/triangular_prism_positive.json",
       "negative_fixture": "fixtures/triangular_prism_negative.json",
@@ -66,8 +68,9 @@
       "expected_answer": "30",
       "causal_target_id": "the_tich_lang_tru",
       "oracle_expected_closure": [
-        "A", "B", "C", "D", "E", "F", "day_ABC", "dien_tich_day_ABC",
-        "solid_ABCDEF", "the_tich_lang_tru", "the_tich_solid_ABCDEF"
+        "A", "AB_length", "AC_length", "AD_length", "B", "C", "D", "E", "F",
+        "day_ABC", "dien_tich_day_ABC", "solid_ABCDEF", "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
       ],
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
@@ -84,6 +87,7 @@
     },
     {
       "id": "rectangular_pyramid",
+      "evidence_dir": "rectangular-pyramid",
       "family": "rectangular_base_pyramid_volume",
       "positive_fixture": "fixtures/rectangular_pyramid_positive.json",
       "negative_fixture": "fixtures/rectangular_pyramid_negative.json",
@@ -110,6 +114,7 @@
     },
     {
       "id": "cuboid",
+      "evidence_dir": "cuboid",
       "family": "rectangular_cuboid_volume",
       "positive_fixture": "fixtures/cuboid_positive.json",
       "negative_fixture": "fixtures/cuboid_negative.json",
@@ -137,6 +142,7 @@
     },
     {
       "id": "cube",
+      "evidence_dir": "cube",
       "family": "cube_volume",
       "positive_fixture": "fixtures/cube_positive.json",
       "negative_fixture": "fixtures/cube_negative.json",
@@ -164,6 +170,7 @@
     },
     {
       "id": "cross_section",
+      "evidence_dir": "cross-section",
       "family": "cross_section_plane_polyhedron",
       "positive_fixture": "fixtures/cross_section_positive.json",
       "negative_fixture": "fixtures/cross_section_negative.json",
