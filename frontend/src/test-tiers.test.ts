@@ -175,22 +175,36 @@ describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", (
 /* ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH (w10). `new URL(…).pathname` giữ nguyên
    `%20`: chạy từ một đường dẫn có dấu cách thì mọi `readFileSync` trỏ vào một
    thư mục không tồn tại (w09 đo được: 11 file, 23 test đỏ). Chỉ `fileURLToPath`
-   giải mã đúng. Quét mã test, cấm mẫu cũ. */
+   giải mã đúng. Quét mã test VÀ mọi script test kéo vào (bắc cầu) — lượt chạy
+   thật từ đường dẫn có dấu cách ở w10 lộ ra `evidence.mjs` và
+   `certify-sweep-w12.mjs`, hai script mà bản guard chỉ-quét-test bỏ sót. */
 describe("đường dẫn test chịu được dấu cách", () => {
-  it("không test nào dựng đường dẫn file bằng `URL.pathname`", async () => {
-    const { readdirSync } = await import("node:fs");
-    const { join } = await import("node:path");
+  it("không test (hay script test import) nào dựng đường dẫn bằng `URL.pathname`", async () => {
+    const { readdirSync, existsSync } = await import("node:fs");
+    const { join, dirname, resolve } = await import("node:path");
     const src = fileURLToPath(new URL(".", import.meta.url));
-    const vi: string[] = [];
+    const hang: string[] = [];
     const di = (d: string) => {
       for (const e of readdirSync(d, { withFileTypes: true })) {
         const p = join(d, e.name);
         if (e.isDirectory()) di(p);
-        else if (/\.test\.tsx?$/.test(e.name)
-          && readFileSync(p, "utf-8").includes(".pathname.replace(/^\\/([A-")) vi.push(e.name);
+        else if (/\.test\.tsx?$/.test(e.name)) hang.push(p);
       }
     };
     di(src);
+    const daXet = new Set<string>();
+    const vi: string[] = [];
+    while (hang.length) {
+      const p = hang.pop()!;
+      if (daXet.has(p)) continue;
+      daXet.add(p);
+      const text = readFileSync(p, "utf-8");
+      if (text.includes(".pathname.replace(/^\\/([A-")) vi.push(p.slice(src.length - 4));
+      for (const m of text.matchAll(/from\s+["']((?:\.\.?\/)+(?:[\w.-]+\/)*[\w.-]+\.mjs)["']/g)) {
+        const q = resolve(dirname(p), m[1]);
+        if (existsSync(q)) hang.push(q);
+      }
+    }
     expect(vi).toEqual([]);
   });
 });

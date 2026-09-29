@@ -39,12 +39,13 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   crossCheckFreshness, provenance, sweepBegin, sweepEnd, sweepVerdict, SWEEP_VALID,
 } from "./evidence.mjs";
 
-const FRONTEND = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
-const REPO = new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const FRONTEND = fileURLToPath(new URL("..", import.meta.url));
+const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const artifact = (name) => resolve(REPO, "docs/evaluation/m20", name);
 
 /**
@@ -88,7 +89,7 @@ export const GATES = [
 
 /* Chạy trực tiếp thì thi hành; `import` thì chỉ lấy `GATES` cho test. */
 const invokedDirectly = process.argv[1]
-  && resolve(process.argv[1]) === resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+  && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
 if (invokedDirectly) await main();
 
 async function main() {

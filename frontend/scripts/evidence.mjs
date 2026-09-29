@@ -39,6 +39,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 /** Phiên bản HỢP ĐỒNG xuất xứ. Đổi hình dạng khối này thì tăng số. */
 export const PROVENANCE_VERSION = 2;
@@ -64,7 +65,8 @@ export const SOURCE_PATHS = [
  * tay ra sha256 của chuỗi rỗng — giống hệt nhau ở MỌI trạng thái nguồn, tức
  * `STALE_SOURCE` không bao giờ kích hoạt được. Một cổng luôn xanh.
  */
-const REPO_ROOT = new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+// `fileURLToPath`, không `URL.pathname` (giữ `%20` ⇒ đường dẫn có dấu cách vỡ).
+const REPO_ROOT = fileURLToPath(new URL("../..", import.meta.url));
 
 const git = (...a) =>
   execFileSync("git", a, { encoding: "utf-8", cwd: REPO_ROOT, stdio: ["ignore", "pipe", "ignore"] });
