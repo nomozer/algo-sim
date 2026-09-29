@@ -1,0 +1,104 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every authoritative attempt of this wave is listed, failed ones included. Each ran in a fresh detached clean worktree at the commit shown, with node_modules from `npm ci --offline`. Nothing is hidden and no failed attempt was overwritten in place.",
+  "screenshot_paths_in_failed_attempts": "Paths inside the diagnostics/*_attempt*.json files were written relative to THAT attempt's worktree; the images of failed attempts were not kept (only their JSON and logs). The same relative paths in the main tree now hold the authoritative run's images — do not read them as the failed attempt's pixels.",
+  "attempts": [
+    {
+      "id": "T3-1",
+      "commit": "554df6d8",
+      "gate": "frontend/scripts/full-gate.mjs (detached, D:/tmp/w10-measure)",
+      "result": "FULL_PRODUCT_GATE_FAIL — pytest 16 failed / 6346 passed; vitest, build, demo, crash surface PASS",
+      "classification": "EVIDENCE_ORDERING_DEFECT",
+      "root_cause": "measurement-side tests read the w10 Tier-A fixtures, which were still uncommitted in the main tree",
+      "repair": "dce4aa87 commits the fixtures before measuring",
+      "log": "diagnostics/logs/T3_FULL_GATE_554df6d8.log"
+    },
+    {
+      "id": "SPACE-1",
+      "commit": "554df6d8",
+      "gate": "vitest from `D:/tmp/w10 space/algo-sim`",
+      "result": "11 failed / 932 passed in 2 files",
+      "classification": "REAL_TOOLING_DEFECT",
+      "root_cause": "evidence.mjs and certify-sweep-w12.mjs (scripts imported by tests) still built paths with URL.pathname; the first guard scanned test files only",
+      "repair": "c7fee8f8 — both scripts use fileURLToPath; the guard follows imports transitively (red on exactly those two files)"
+    },
+    {
+      "id": "BROWSER-1",
+      "commit": "dce4aa87",
+      "gate": "compiler-scene-replay.mjs --suite",
+      "result": "aborted at triangular_pyramid: POLL_TIMEOUT waiting for selected_id = the declared causal target",
+      "classification": "HARNESS_CONTRACT_DRIFT + REAL_PRODUCT_DEFECT",
+      "root_cause": "the manifest names an answer ALIAS as causal target; since w10 the alias is one conclusion with its source and has no readout row. Checking the event closure offline then showed the conclusion event declaring the source's own id as its dependency (EVENT_DEPENDENCY_CONFLICT)",
+      "repair": "f5a3adf2 (product: conclusion carries the source's dependencies) · c1947f57 (suite resolves alias_of to the source; manifest untouched)",
+      "log": "diagnostics/logs/BROWSER_SUITE_attempt1_dce4aa87.log"
+    },
+    {
+      "id": "BROWSER-2",
+      "commit": "28a5dece",
+      "result": "4/6 families PASS; triangular_pyramid and triangular_prism FAIL formation (FUTURE_OBJECT_LEAK)",
+      "classification": "REAL_PRODUCT_DEFECT + HARNESS_CONTRACT_DRIFT",
+      "root_cause": "the answer alias borrowed the source label, so the component tree listed TWO rows 'Thể tích S.ABC'; the label-based tree observer saw the source and reported the alias present one step early. The same run's mobile screenshot showed vertex S under the floating 'Xem lại toàn hình' button",
+      "repair": "7a03e50d (tree de-duplicates answer aliases; narrow-screen floating buttons move into the flow above the canvas) · 3f24b943 (observer)",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_attempt2_28a5dece.json"
+    },
+    {
+      "id": "BROWSER-3",
+      "commit": "bd7b4c27",
+      "result": "3/6 PASS; rectangular_pyramid, cuboid, cube FAIL formation",
+      "classification": "HARNESS_CRITERION_DEFECT",
+      "root_cause": "the observer required exactly ONE tree row carrying an alias label; aliases with their own label (`v`, `V`) correctly have zero",
+      "repair": "ea18ee79 aliasTreeRowCheck: rows with the alias label = non-alias objects with that label",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_attempt3_bd7b4c27.json"
+    },
+    {
+      "id": "BROWSER-4",
+      "commit": "ea18ee79",
+      "result": "5/6 PASS; cube FAIL formation",
+      "classification": "REAL_PRODUCT_REGRESSION (introduced in this wave by 7a03e50d)",
+      "root_cause": "7a03e50d dropped EVERY object with alias_of from the tree; in the cube AD and AA′ are given lengths assigned from AB (alias_of = AB) that still have readout rows, so they vanished from the tree",
+      "repair": "f0deaa0d (only non-visual answer aliases leave the tree) · 26dfba43 (observer uses the same rule, isHiddenAlias)",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_attempt4_ea18ee79.json"
+    },
+    {
+      "id": "BROWSER-5 + PLAYBACK-1",
+      "commit": "7f5205ca",
+      "result": "suite 6/6 positive + 6/6 negative PASS; occlusion 24/24 PASS; learner playback 9/12 PASS — mobile rectangular_pyramid, cuboid, cube orbit_repeatable 0/5",
+      "classification": "HARNESS_CLICK_DEFECT",
+      "root_cause": "after the detail panel closed the page was scrolled 155 px; scrollIntoView({block:'nearest'}) left 'Xem lại toàn hình' under the sticky navigation bar, the click opened the sign-in overlay and every later gesture landed on it (reproduced step by step in a probe)",
+      "repair": "5e6e1583 — trustedClick/trustedOrbit centre the target and verify elementFromPoint before acting",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_attempt5_7f5205ca.json, diagnostics/OCCLUSION_MEASUREMENT_attempt5_7f5205ca.json, diagnostics/PLAYBACK_EVIDENCE_attempt1_7f5205ca.json"
+    },
+    {
+      "id": "BROWSER-6 + PLAYBACK-2",
+      "commit": "5e6e1583",
+      "result": "suite 3/6 PASS — rectangular_pyramid, cuboid, cube FAIL on mobile causal (CAUSAL_CANVAS_UNCHANGED); occlusion 24/24 PASS; learner playback 12/12 PASS incl. 5/5 orbit laps everywhere; evidence build: 9 of 60 crops with endpoints outside the image",
+      "classification": "HARNESS_SIDE_EFFECT (introduced by 5e6e1583)",
+      "root_cause": "centering EVERY click scrolled the page when the readout row was clicked, so the before/after canvas frames of the causal check no longer covered the same region; the canvas box used for crops was recorded once while the page was scrolled (y = -226)",
+      "repair": "40ce889f — scroll only when the target is covered or off-screen; per-state `canvas_boxes` recorded at each capture and used by the crop builder",
+      "evidence": "diagnostics/BROWSER_EVIDENCE_attempt6_5e6e1583.json, diagnostics/PLAYBACK_EVIDENCE_attempt2_5e6e1583.json, diagnostics/CROPS_INDEX_attempt6_5e6e1583.json"
+    },
+    {
+      "id": "BROWSER-7 + OCCLUSION-7 + PLAYBACK-3 (AUTHORITATIVE)",
+      "commit": "40ce889f",
+      "gate": "suite → measure_scene3d_occlusion (declared camera change) → scene3d-playback-check --lap-orbit 5, detached clean worktree D:/tmp/w10-m7",
+      "result": "suite 12/12 positive + 12/12 negative; occlusion 24/24 states, product = oracle 24/24, six frozen expectations DECLARED_CAMERA_CHANGE; learner playback 12/12 runs, 17/17 checks each, orbit laps 60/60",
+      "evidence": "results/BROWSER_EVIDENCE.json, results/OCCLUSION_MEASUREMENT.json, images/playback/PLAYBACK_EVIDENCE.json",
+      "post_processing": "images/ contact sheets and crops rebuilt offline at 52de6f22 (stage-cropped main sheet; image scale from the CSS viewport — the 40ce889f builder had cut mobile crops at 1× on 2× images). No browser rerun."
+    },
+    {
+      "id": "T3-2 (AUTHORITATIVE, spaced path)",
+      "commit": "40ce889f",
+      "gate": "frontend/scripts/full-gate.mjs from `D:/tmp/w10 space/algo-sim`",
+      "result": "FULL_PRODUCT_GATE_PASS — pytest 6368 passed / 0 failed (1 skipped, 1 deselected), vitest 946/0, typecheck + build, demo, crash surface",
+      "python": "active_venv 3.12 (main-tree backend/.venv); the worktree has no venv of its own",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log"
+    },
+    {
+      "id": "SPACE-2",
+      "commit": "c7fee8f8",
+      "gate": "vitest + node tests from `D:/tmp/w10 space/algo-sim`",
+      "result": "vitest 943/943; node tests 25 passed, 2 skipped by design (full-gate interpreter tests need a venv inside the worktree)",
+      "log": "diagnostics/logs/SPACED_PATH_VITEST_c7fee8f8.log"
+    }
+  ]
+}

@@ -1,0 +1,2109 @@
+{
+  "schema_version": "scene3d-hidden-edge-crops/1",
+  "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+  "crops": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          633.4813796082612,
+          286.5089710498712
+        ],
+        [
+          531.2704082959605,
+          371.0707575611011
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        545,
+        374,
+        693,
+        504
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/desktop/neutral_final__AB__hidden.png",
+      "sha256": "68ff53646c43fedd9a184f12eb129cbabc4708b00c4b932850505f75feba3f8c"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          633.4813796082612,
+          286.5089710498712
+        ],
+        [
+          786.7778791344406,
+          383.17412290232363
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        646,
+        374,
+        844,
+        516
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/desktop/neutral_final__AC__hidden.png",
+      "sha256": "52ee1d8402c5b392f09461e5adfcfe122146bc13e0c26b6326102d5cee582cb9"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          623.6857391351056,
+          79.83014423237545
+        ],
+        [
+          633.4813796082612,
+          286.5089710498712
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        617,
+        170,
+        712,
+        420
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/desktop/neutral_final__SA__hidden.png",
+      "sha256": "491d16dcca0e61656d15886a027960035e8f4701a51ed05d9af788edebc94793"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          716.038600249245,
+          299.37461593031804
+        ],
+        [
+          588.0611778389963,
+          283.2165441838462
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        601,
+        355,
+        774,
+        449
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/desktop/rotated_neutral.png",
+      "path": "images/crops/triangular_pyramid/desktop/rotated_neutral__AB__hidden.png",
+      "sha256": "0af6d1f011a9f3c3a41ddf991aefb1852f3b8b3b740527c64757376c5face157"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          147.63292817997362,
+          256.75268710470965
+        ],
+        [
+          58.56549356899954,
+          330.29507226843936
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        119,
+        855,
+        393,
+        1099
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/mobile/neutral_final__AB__hidden.png",
+      "sha256": "e58ad8e338301dd002cc006048557a9f34c8cfd09be528808663ecece47e05f6"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          147.63292817997362,
+          256.75268710470965
+        ],
+        [
+          281.4100738375709,
+          340.76363077083596
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        297,
+        855,
+        661,
+        1120
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/mobile/neutral_final__AC__hidden.png",
+      "sha256": "1a8ab9bb8ba4ec42c467882aa0c5e5d6c2e425b9e4a93a08b1362274f62a8f90"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          139.36296891215667,
+          76.91443057306877
+        ],
+        [
+          147.63292817997362,
+          256.75268710470965
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        240,
+        495,
+        433,
+        952
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/triangular_pyramid/mobile/neutral_final__SA__hidden.png",
+      "sha256": "eceb96a673294115ca9a2dd92674f4a900fcdf1b632ad617bf0c81016336234b"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          220.55935816343535,
+          268.35445289611334
+        ],
+        [
+          108.57698586523995,
+          253.4618100261832
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        219,
+        815,
+        539,
+        1008
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_pyramid/mobile/rotated_neutral.png",
+      "path": "images/crops/triangular_pyramid/mobile/rotated_neutral__AB__hidden.png",
+      "sha256": "322fc7c20dc353e9f44bec69f890a76a64a5dbcf4635c7c5fa7131ddc746e5dc"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          620.7466195971338,
+          298.6910537601688
+        ],
+        [
+          531.3406561353046,
+          384.23027188394207
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        545,
+        386,
+        680,
+        517
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/desktop/neutral_final.png",
+      "path": "images/crops/triangular_prism/desktop/neutral_final__AB__hidden.png",
+      "sha256": "c8f4b0be983cfdd77c284c3fd66ca40fb914d88de88389d72b793e0c50af9355"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          620.7466195971338,
+          298.6910537601688
+        ],
+        [
+          789.3721568459299,
+          361.06882612960044
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        633,
+        386,
+        846,
+        494
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/desktop/neutral_final.png",
+      "path": "images/crops/triangular_prism/desktop/neutral_final__AC__hidden.png",
+      "sha256": "0c0b28761ab6971f9788a252cdc5795b3e5e00f3a3f23f480959e26dfbe34fcf"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          620.7466195971338,
+          298.6910537601688
+        ],
+        [
+          610.1909076345206,
+          79.30380887105427
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        604,
+        169,
+        699,
+        433
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/desktop/neutral_final.png",
+      "path": "images/crops/triangular_prism/desktop/neutral_final__AD__hidden.png",
+      "sha256": "78996390740a70270206df938a8061956517baec2c7ef17b7f22e8ce8e89988a"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          549.6324015102246,
+          353.0032905301838
+        ],
+        [
+          712.8199740086947,
+          293.24644877995286
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        563,
+        381,
+        771,
+        486
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/desktop/rotated_neutral.png",
+      "path": "images/crops/triangular_prism/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "3a5aaff533b83e7ced4019d04aa7952d2b469f832df77f941fbc8f740db89668"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          141.62269337311128,
+          256.7571704994821
+        ],
+        [
+          81.41424838876972,
+          313.1651837556469
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        164,
+        855,
+        381,
+        1064
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/mobile/neutral_final.png",
+      "path": "images/crops/triangular_prism/mobile/neutral_final__AB__hidden.png",
+      "sha256": "72f9bc445f174e399d97374d3d214e1d01288fe07f5f96ac93bab3997c10264d"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          141.62269337311128,
+          256.7571704994821
+        ],
+        [
+          259.59092049963726,
+          298.4153525890669
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        285,
+        849,
+        617,
+        1041
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/mobile/neutral_final.png",
+      "path": "images/crops/triangular_prism/mobile/neutral_final__AC__hidden.png",
+      "sha256": "8c992afae5b79f7db5f19909aa9c769cd631d702fc2d65eb4e781cb945bac2c5"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          141.62269337311128,
+          256.7571704994821
+        ],
+        [
+          135.6992635389966,
+          104.68061885779349
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        231,
+        551,
+        423,
+        952
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/mobile/neutral_final.png",
+      "path": "images/crops/triangular_prism/mobile/neutral_final__AD__hidden.png",
+      "sha256": "e51120867cae451dafba65a1281f930f41934acf224ad7c758ea1b59f1af7a3b"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          92.78010547833775,
+          294.2699182703221
+        ],
+        [
+          207.6985296911456,
+          253.2289213711235
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        187,
+        841,
+        513,
+        1033
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/triangular_prism/mobile/rotated_neutral.png",
+      "path": "images/crops/triangular_prism/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "980b7ded837044b57a6ce9492db351ad695a355c16a598b37aea73d35c7a61fa"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          629.528672338757,
+          259.3539264359901
+        ],
+        [
+          571.6302429623827,
+          323.03331095229044
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        585,
+        347,
+        689,
+        457
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/desktop/neutral_final__AB__hidden.png",
+      "sha256": "617783d93d9f3e97e2df6e4e736dc1008ead66a0f464edc2061315570f7bf129"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          629.528672338757,
+          259.3539264359901
+        ],
+        [
+          746.3969820662688,
+          306.8104438956791
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        642,
+        347,
+        804,
+        441
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/desktop/neutral_final__AD__hidden.png",
+      "sha256": "807ff1f5b28001eb0af478128dcb975e52ab8ff663cf1a86f3dd6a7211b82d1d"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          620.0852567702792,
+          78.12862191977855
+        ],
+        [
+          629.528672338757,
+          259.3539264359901
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        613,
+        168,
+        708,
+        394
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/desktop/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/desktop/neutral_final__SA__hidden.png",
+      "sha256": "621384a71012ea22bff3abfedbd77a9719dd28bb04ee1a69956936b1fa402653"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          583.1725850397116,
+          289.7990871328284
+        ],
+        [
+          709.7004100359935,
+          265.74207379925485
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        596,
+        341,
+        768,
+        436
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/desktop/rotated_neutral.png",
+      "path": "images/crops/rectangular_pyramid/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "72dc6e5e2aef145b15c1830c7964d7ecd7757a1c25c0c9b2f87fbd8451ec945e"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          143.45039878793213,
+          233.64211476345645
+        ],
+        [
+          91.29189991007763,
+          291.00845684926145
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        184,
+        809,
+        385,
+        1020
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/mobile/neutral_final__AB__hidden.png",
+      "sha256": "e61fc69a255ebf3da1b66907286d86557b0f7a9d12066b7e324972854b48a61e"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          143.45039878793213,
+          233.64211476345645
+        ],
+        [
+          248.73262608556126,
+          276.39389126809016
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        288,
+        804,
+        595,
+        996
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/mobile/neutral_final__AD__hidden.png",
+      "sha256": "e2f8dd479940cd478f4590b332e83b3676378fc47fe11f5515c919fbc83330de"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          134.9431839008121,
+          70.3831119880763
+        ],
+        [
+          143.45039878793213,
+          233.64211476345645
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        232,
+        482,
+        424,
+        905
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/mobile/neutral_final.png",
+      "path": "images/crops/rectangular_pyramid/mobile/neutral_final__SA__hidden.png",
+      "sha256": "fa5798e3c584c575c31ef8d8fe162e0309c06ffdfe3789565a55cf1400ff36dd"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          101.8262751622886,
+          260.88138437985776
+        ],
+        [
+          215.89912564257435,
+          239.51650969324928
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        205,
+        794,
+        530,
+        986
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/rectangular_pyramid/mobile/rotated_neutral.png",
+      "path": "images/crops/rectangular_pyramid/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "6a41110d409009c9eba294d2dcb50d94c2d6bcfc71fb17132fb19fd13d3641e3"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.1684692418714,
+          255.47921551851468
+        ],
+        [
+          633.7637963622196,
+          78.23526052843201
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        168,
+        719,
+        390
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/neutral_final.png",
+      "path": "images/crops/cuboid/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "3d493bde60ebc8d924869e4784542b92d96b743ffb0a8b383149c3730aeb8cdd"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.1684692418714,
+          255.47921551851468
+        ],
+        [
+          557.016644403802,
+          305.62147164087753
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        570,
+        343,
+        697,
+        439
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/neutral_final.png",
+      "path": "images/crops/cuboid/desktop/neutral_final__AB__hidden.png",
+      "sha256": "76e80bbe26a8cafebeb36ae44c2b2c344d9e5f0cfe3a5aab5530e0effc46dcbc"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.1684692418714,
+          255.47921551851468
+        ],
+        [
+          760.3590116913049,
+          312.6748353783517
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        651,
+        343,
+        818,
+        446
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/neutral_final.png",
+      "path": "images/crops/cuboid/desktop/neutral_final__AD__hidden.png",
+      "sha256": "0058e3b5b53139da1cbcfcd8f7c7938ed7de7551d081818e1f838516e9f3e23e"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          728.8220934035315,
+          270.3874400361347
+        ],
+        [
+          622.370699731577,
+          260.24041197448395
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        635,
+        329,
+        787,
+        424
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/rotated_neutral.png",
+      "path": "images/crops/cuboid/desktop/rotated_neutral__AB__hidden.png",
+      "sha256": "be51b5d1533f66a9903245264cb16dcc63405f6bd6d4ea10ab9869b18ab4e95d"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:B-B_prime",
+      "display_label": "BB′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          622.370699731577,
+          260.24041197448395
+        ],
+        [
+          614.4814700120663,
+          80.72110013017353
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        607,
+        171,
+        702,
+        395
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/rotated_neutral.png",
+      "path": "images/crops/cuboid/desktop/rotated_neutral__BB′__hidden.png",
+      "sha256": "539f5468fc4b3c02042e75057fd034d0e63598519c2d106132aebcea53e6490f"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:B-C",
+      "display_label": "BC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          622.370699731577,
+          260.24041197448395
+        ],
+        [
+          579.1857839191487,
+          360.969766131532
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        590,
+        348,
+        684,
+        494
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/desktop/rotated_neutral.png",
+      "path": "images/crops/cuboid/desktop/rotated_neutral__BC__hidden.png",
+      "sha256": "4bb2ee1a0c83c467e32d35aa3bb39e90f7a931a60586cc77356fe9dd5768720e"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.67492940580257,
+          229.89222464712742
+        ],
+        [
+          147.90279411391387,
+          74.39309351927061
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        253,
+        490,
+        446,
+        898
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/neutral_final.png",
+      "path": "images/crops/cuboid/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "76e189098dcb38d14ec01e0ab0ee26e34491ac94d8a5d6da75fd0945e4696e88"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.67492940580257,
+          229.89222464712742
+        ],
+        [
+          80.49494139228203,
+          273.8751597516523
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        162,
+        797,
+        401,
+        990
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/neutral_final.png",
+      "path": "images/crops/cuboid/mobile/neutral_final__AB__hidden.png",
+      "sha256": "01016059613699e395971192ff05b411eda8d5785eacba040f84868a04d43ace"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.67492940580257,
+          229.89222464712742
+        ],
+        [
+          258.98122040365837,
+          280.037210974529
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        305,
+        801,
+        616,
+        998
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/neutral_final.png",
+      "path": "images/crops/cuboid/mobile/neutral_final__AD__hidden.png",
+      "sha256": "c1ed32893015be8e05e1f9d133bedfc807e769d6e6a259525d3f1bddd48b0839"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          231.99426715311915,
+          243.31908506036132
+        ],
+        [
+          138.36996784342108,
+          233.90072807582277
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        278,
+        771,
+        562,
+        963
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/rotated_neutral.png",
+      "path": "images/crops/cuboid/mobile/rotated_neutral__AB__hidden.png",
+      "sha256": "ef1a1172e41d7b8739775f42a3a193ec957e8e5af53fcfc525528e9a427dd2b8"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:B-B_prime",
+      "display_label": "BB′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          138.36996784342108,
+          233.90072807582277
+        ],
+        [
+          131.74619806100674,
+          76.54545396790587
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        224,
+        495,
+        416,
+        906
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/rotated_neutral.png",
+      "path": "images/crops/cuboid/mobile/rotated_neutral__BB′__hidden.png",
+      "sha256": "a8273fd354f206b4c14ddd9bdb36292534cd886f743e481ca98116227d571cf6"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:B-C",
+      "display_label": "BC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          138.36996784342108,
+          233.90072807582277
+        ],
+        [
+          99.56835465004133,
+          321.5613183724954
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        191,
+        809,
+        384,
+        1081
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cuboid/mobile/rotated_neutral.png",
+      "path": "images/crops/cuboid/mobile/rotated_neutral__BC__hidden.png",
+      "sha256": "d71349a696985150ab70ed44bf654652d2335c1524c0d87e3dd3f54d264922a3"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.9874744597245,
+          237.73289268389343
+        ],
+        [
+          635.9967254652701,
+          79.14094836604404
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        626,
+        169,
+        720,
+        372
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/neutral_final.png",
+      "path": "images/crops/cube/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "b1e4c416a18d2a2ec1c13702e84513d85926b102c36a515a16074db1716c1e98"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.9874744597245,
+          237.73289268389343
+        ],
+        [
+          531.7265455474934,
+          313.4092448554322
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        546,
+        326,
+        698,
+        447
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/neutral_final.png",
+      "path": "images/crops/cube/desktop/neutral_final__AB__hidden.png",
+      "sha256": "53b428def883660497f09de8930ad5286886f6ee59e3b5091fd3b1b12e7cf025"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.9874744597245,
+          237.73289268389343
+        ],
+        [
+          789.7704867681173,
+          276.2434443134792
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        651,
+        321,
+        847,
+        415
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/neutral_final.png",
+      "path": "images/crops/cube/desktop/neutral_final__AD__hidden.png",
+      "sha256": "f33efeac9175299976b4c3fea46aadb4beb86d9a2234e7a28a4dde3136fd3cf0"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          534.9755381003408,
+          274.32489864015196
+        ],
+        [
+          684.2910974853028,
+          236.5672317000467
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        549,
+        319,
+        743,
+        414
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/rotated_neutral.png",
+      "path": "images/crops/cube/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "727364d91885cd0f36874633a11866f080d4c5451e78a0394f79fcd798a7fad3"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          791.8535945989724,
+          311.6423596662369
+        ],
+        [
+          684.2910974853028,
+          236.5672317000467
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        696,
+        325,
+        849,
+        445
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/rotated_neutral.png",
+      "path": "images/crops/cube/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "367bf3fa1e4db501656090fed5881b965975a0cb08d9a233933dbae5e08c8b3a"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          684.2910974853028,
+          236.5672317000467
+        ],
+        [
+          688.049410416322,
+          78.69523682197872
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        674,
+        169,
+        769,
+        371
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/desktop/rotated_neutral.png",
+      "path": "images/crops/cube/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "4da8686d3e526b85557e6a6944a60f0e9eca5f9e50fef715131a4f984af06949"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          153.35285065591876,
+          215.96998279133715
+        ],
+        [
+          151.257337232434,
+          95.8567151763185
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        258,
+        533,
+        451,
+        870
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/neutral_final.png",
+      "path": "images/crops/cube/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "30f3c3a67a9dd9ad89bb642ae9fc11e2645205a5fe67c8dca0d8b3633b9c2396"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          153.35285065591876,
+          215.96998279133715
+        ],
+        [
+          74.16758269892604,
+          272.566501744707
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        150,
+        773,
+        405,
+        983
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/neutral_final.png",
+      "path": "images/crops/cube/mobile/neutral_final__AB__hidden.png",
+      "sha256": "2bed0856a73d3e0b5489c5c12d3175de823f7956ff253e5cf728304c15f11a9e"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          153.35285065591876,
+          215.96998279133715
+        ],
+        [
+          267.7594760266979,
+          245.3877333830543
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        308,
+        755,
+        634,
+        947
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/neutral_final.png",
+      "path": "images/crops/cube/mobile/neutral_final__AD__hidden.png",
+      "sha256": "ed4dba4761afd0acbb161ebf631bb791058b7b2ec3f168217e81618743d5e37c"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          75.76139716779468,
+          244.65088762489546
+        ],
+        [
+          189.12722588340844,
+          215.17606896958674
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        153,
+        753,
+        476,
+        946
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/rotated_neutral.png",
+      "path": "images/crops/cube/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "47d24d46496f5344926882ccaa4a80f8e11bbd71c11ba60a853f1ea0eb166b94"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          269.1626113057804,
+          271.0977417891794
+        ],
+        [
+          189.12722588340844,
+          215.17606896958674
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        380,
+        772,
+        636,
+        980
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/rotated_neutral.png",
+      "path": "images/crops/cube/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "7f1a61c3c5300214107d6b192977691f5bdaea1d75b47999b112471675e10bc7"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          189.12722588340844,
+          215.17606896958674
+        ],
+        [
+          191.52496659769608,
+          95.46016968970213
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        334,
+        532,
+        527,
+        868
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cube/mobile/rotated_neutral.png",
+      "path": "images/crops/cube/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "a85a74f751a7548fea2497a199b4c78ee288abe5210cac617d13a8fe7ebc5bdf"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.1674326314097,
+          246.59464973770224
+        ],
+        [
+          520.1657812593627,
+          316.4994118612796
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        534,
+        335,
+        696,
+        450
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/neutral_final.png",
+      "path": "images/crops/cross_section/desktop/neutral_final__AB__hidden.png",
+      "sha256": "f1b0c900eceb3ed21a9f7548157c74df2b1ad7a01ba0cac888cfba2f03d76667"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.1674326314097,
+          246.59464973770224
+        ],
+        [
+          797.5866568055956,
+          281.65976681570487
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        650,
+        328,
+        855,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/neutral_final.png",
+      "path": "images/crops/cross_section/desktop/neutral_final__AD__hidden.png",
+      "sha256": "df9045284815eada4ff84222e85bc13cda0e0c4fdf5ab0a26976b51990c94f2b"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          634.4518783826335,
+          78.388680371912
+        ],
+        [
+          637.1674326314097,
+          246.59464973770224
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        168,
+        719,
+        381
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/neutral_final.png",
+      "path": "images/crops/cross_section/desktop/neutral_final__SA__hidden.png",
+      "sha256": "d9548c87f36d9d7a375b6f646aa1c66ab6e01c44801d53d72037205f24177c2c"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          537.8019407700094,
+          259.929464727043
+        ],
+        [
+          658.7245794752397,
+          220.7984884619563
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        552,
+        304,
+        717,
+        399
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/rotated_neutral.png",
+      "path": "images/crops/cross_section/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "e33583e63b981b2c328ddf2a839c3202cf815f2d2411ae17820bdd28c3d9f0c7"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          780.3651195505643,
+          259.4976816862922
+        ],
+        [
+          658.7245794752397,
+          220.7984884619563
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        671,
+        304,
+        838,
+        399
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/rotated_neutral.png",
+      "path": "images/crops/cross_section/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "376d5e89d912928ed3ec33ae800ecb1c41d70610c2358f135256b7aed6b26b2e"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          521.5822329359768,
+          80.7321594454507
+        ],
+        [
+          658.7245794752397,
+          220.7984884619563
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        536,
+        171,
+        717,
+        356
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/desktop/rotated_neutral.png",
+      "path": "images/crops/cross_section/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "99c4414f74ffc70af09fd76a6785daadc405ba4f40d48ab5016b9487972a2b16"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.37576460177013,
+          222.87917325278272
+        ],
+        [
+          57.12431496656084,
+          279.62583538835315
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        116,
+        787,
+        401,
+        997
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/neutral_final.png",
+      "path": "images/crops/cross_section/mobile/neutral_final__AB__hidden.png",
+      "sha256": "c7c79673c4439d5bdc50f1787d5164f6271b1083b8a4526011b3cbf5ba434b96"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.37576460177013,
+          222.87917325278272
+        ],
+        [
+          283.00112633398504,
+          251.7324325371247
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        768,
+        664,
+        961
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/neutral_final.png",
+      "path": "images/crops/cross_section/mobile/neutral_final__AD__hidden.png",
+      "sha256": "ec14c131a6ccc270be69d8ab667dfa7a9fd99da81d96e82252b531adb29aba8e"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          149.2597261455549,
+          84.54473111622139
+        ],
+        [
+          151.37576460177013,
+          222.87917325278272
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        254,
+        511,
+        447,
+        884
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/neutral_final.png",
+      "path": "images/crops/cross_section/mobile/neutral_final__SA__hidden.png",
+      "sha256": "38c5900bba4af555d31111f4f9c6156deb7f10ba962c6ecdd5787681fe6bc4c3"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          108.52385069462812,
+          230.8677713626405
+        ],
+        [
+          170.8809363966997,
+          209.4904251190976
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        219,
+        734,
+        440,
+        926
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/rotated_neutral.png",
+      "path": "images/crops/cross_section/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "5900063913e1b8832b8c13a1c1e3361f6c0099a4d55c243b41075dfdc7d3244f"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          233.3326289892324,
+          230.92843117477102
+        ],
+        [
+          170.8809363966997,
+          209.4904251190976
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        343,
+        734,
+        565,
+        926
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/rotated_neutral.png",
+      "path": "images/crops/cross_section/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "92842a11d3434a73c3513dcca403859b8cd7ca34bb3426270f7fdd3fc1646ba5"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          104.08554901604177,
+          143.54319545079613
+        ],
+        [
+          170.8809363966997,
+          209.4904251190976
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        210,
+        629,
+        440,
+        857
+      ],
+      "source": "docs/evaluation/geometry/runs/20260928-w10-pedagogical-playback/images/screenshots/cross_section/mobile/rotated_neutral.png",
+      "path": "images/crops/cross_section/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "98bffdc9624b69d4eec8ff7059cd577e8f03bf8b7fbee494c9c01a988629e083"
+    }
+  ],
+  "all_endpoints_inside": true,
+  "oracle_disagreements": [],
+  "duplicate_owner_edges": []
+}

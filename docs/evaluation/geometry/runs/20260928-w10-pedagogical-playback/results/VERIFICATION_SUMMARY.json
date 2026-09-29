@@ -1,0 +1,209 @@
+{
+  "schema_version": "verification-summary/1",
+  "task": "HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
+  "measurement_commit_sha": "40ce889fe83b7220195a89f50c22757a02770511",
+  "playback_measurement_commit_sha": "40ce889fe83b7220195a89f50c22757a02770511",
+  "browser_suite": {
+    "pass": true,
+    "positive": "12/12",
+    "negative": "12/12",
+    "immutable_120_frames": "12/12",
+    "causal_closure": "12/12",
+    "orbit": "12/12",
+    "orbit_first_gesture_planned_and_passed": 12,
+    "formation": "12/12",
+    "application_llm_calls": 0
+  },
+  "occlusion": {
+    "pass": true,
+    "states": 24,
+    "passing_states": 24,
+    "product_equals_oracle": 24,
+    "frozen_expectations": [
+      "triangular_pyramid:DECLARED_CAMERA_CHANGE",
+      "triangular_prism:DECLARED_CAMERA_CHANGE",
+      "rectangular_pyramid:DECLARED_CAMERA_CHANGE",
+      "cuboid:DECLARED_CAMERA_CHANGE",
+      "cube:DECLARED_CAMERA_CHANGE",
+      "cross_section:DECLARED_CAMERA_CHANGE"
+    ],
+    "declared_camera_change": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS"
+  },
+  "learner_playback": {
+    "pass": true,
+    "runs": "12/12",
+    "per_check": {
+      "starts_at_step_zero": "12/12",
+      "no_causal_selection": "12/12",
+      "detail_panel_stays_closed": "12/12",
+      "advances_one_step_at_a_time": "12/12",
+      "reaches_final_step": "12/12",
+      "stops_at_final_step": "12/12",
+      "construction_steps_change_geometry": "12/12",
+      "measurement_steps_show_a_value": "12/12",
+      "final_result_shown_once": "12/12",
+      "replay_resets_step_selection_highlight": "12/12",
+      "orbit_preserves_timeline": "12/12",
+      "no_uncaught_exception": "12/12",
+      "causal_layers_dim_outside": "12/12",
+      "close_panel_restores_neutral": "12/12",
+      "neutral_final_view_quality": "12/12",
+      "rotated_neutral_has_depth": "12/12",
+      "orbit_repeatable": "12/12"
+    },
+    "orbit_laps": "60/60",
+    "playback_interval_ms": 1400,
+    "view": {
+      "triangular_pyramid/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.587,
+            0.492,
+            0.643
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": 60
+      },
+      "triangular_pyramid/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.587,
+            0.492,
+            0.643
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": 60
+      },
+      "triangular_prism/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.75,
+            0.433,
+            0.5
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -60
+      },
+      "triangular_prism/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.75,
+            0.433,
+            0.5
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -60
+      },
+      "rectangular_pyramid/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.663,
+            0.383,
+            0.643
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -45
+      },
+      "rectangular_pyramid/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.663,
+            0.383,
+            0.643
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -45
+      },
+      "cuboid/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.663,
+            0.557,
+            0.5
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": 60
+      },
+      "cuboid/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.663,
+            0.557,
+            0.5
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": 60
+      },
+      "cube/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.785,
+            0.453,
+            0.423
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -60
+      },
+      "cube/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.785,
+            0.453,
+            0.423
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -60
+      },
+      "cross_section/desktop": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.814,
+            0.47,
+            0.342
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -75
+      },
+      "cross_section/mobile": {
+        "neutral_final": {
+          "pass": true,
+          "direction": [
+            0.814,
+            0.47,
+            0.342
+          ]
+        },
+        "rotated_neutral_depth": true,
+        "orbit_offset_deg": -75
+      }
+    }
+  },
+  "hidden_edge_crops": {
+    "count": 60,
+    "all_endpoints_inside": true,
+    "oracle_disagreements": 0,
+    "duplicate_owner_edges": 0
+  }
+}

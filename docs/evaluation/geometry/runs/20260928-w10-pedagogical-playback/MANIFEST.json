@@ -1,0 +1,1877 @@
+{
+  "schema_version": "run-manifest/1",
+  "run_id": "20260928-w10-pedagogical-playback",
+  "layout": {
+    "inputs/": "fixtures, w09 human verdict, candidate divergence declaration",
+    "results/": "authoritative browser, occlusion, summary, golden review",
+    "images/": "screenshots, playback filmstrips, crops, contact sheets",
+    "diagnostics/": "every measurement attempt incl. failures, gate logs"
+  },
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 3339,
+      "sha256": "af9ab56117553f9b2d9b268ed3c88261af2ae9b07cd7d951bcf9cfdda5f36653",
+      "producer": "hand-written run document"
+    },
+    "README.md": {
+      "bytes": 1959,
+      "sha256": "9225cd861ffe021952c1cc0bfd9a8548b9087fa85ecb49ed47a950980a13b924",
+      "producer": "hand-written run document"
+    },
+    "REPORT.md": {
+      "bytes": 6786,
+      "sha256": "5f9bf66cded82b55ad15b0c689e0a75f9671bb947fbe32e51c046df745fad4d3",
+      "producer": "hand-written run document"
+    },
+    "RUN.json": {
+      "bytes": 4128,
+      "sha256": "2feb3930eb40639ebdb3ea615c39402a7b20ddebe7d87c65457af69051ea36c5",
+      "producer": "hand-written run document"
+    },
+    "diagnostics/BROWSER_EVIDENCE_attempt2_28a5dece.json": {
+      "bytes": 1460874,
+      "sha256": "bea83496931b411d75036f764dcec7c785b7cce19d5b20a8cd9b59daecac7c58",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/BROWSER_EVIDENCE_attempt3_bd7b4c27.json": {
+      "bytes": 1454678,
+      "sha256": "6f3bd62ace4627a8799fbd3bcfdd6a7846a3ba1e09fa5309b6af6825a93fe9f2",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/BROWSER_EVIDENCE_attempt4_ea18ee79.json": {
+      "bytes": 1459836,
+      "sha256": "2c481dcc4475f9e9477218741a6b6ddec13d38b485e48d32ebad206da453df5e",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/BROWSER_EVIDENCE_attempt5_7f5205ca.json": {
+      "bytes": 1460757,
+      "sha256": "49c5f7e1c305e7de8949da410c7acd25f88df0302522f4f329b0447304ae1fff",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/BROWSER_EVIDENCE_attempt6_5e6e1583.json": {
+      "bytes": 1460140,
+      "sha256": "d581c21041d0ec535157872dbfb74a56b852c0f78c08bd08aad5a9d6efebc23d",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/CROPS_INDEX_attempt6_5e6e1583.json": {
+      "bytes": 64345,
+      "sha256": "a26e0ad2917891e4a5294c591738c6eee33bac9896ee185be61570f0252ac93a",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/MEASUREMENT_ATTEMPTS.json": {
+      "bytes": 8139,
+      "sha256": "e0dab1dc33d5bcd240f028fbd02be853651db5064eb82d61f75b33d9408a5ce3",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/OCCLUSION_MEASUREMENT_attempt5_7f5205ca.json": {
+      "bytes": 146523,
+      "sha256": "3c8e1eef289412d8528103fbe4967c55ccfba0045b98ba99dd299a965d0db039",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/PLAYBACK_EVIDENCE_attempt1_7f5205ca.json": {
+      "bytes": 483307,
+      "sha256": "e74fa1a3b806953bab3921f1877c4fa9077472c01c61f3bc01e2e5fb9ba108c8",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/PLAYBACK_EVIDENCE_attempt2_5e6e1583.json": {
+      "bytes": 477655,
+      "sha256": "cc37ee9c1e11dd7b685f8a146412a8c082384461b1c72ac1c32a24b9e8673999",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt1_dce4aa87.log": {
+      "bytes": 1796,
+      "sha256": "fc02a48c3bcbe8f724a387d88d4e06a32c46f1846ade24551bdf925ce2ff3101",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt2_28a5dece.log": {
+      "bytes": 1426,
+      "sha256": "42ba42c028e0261f3e12ad72271a2f548ceeb378e5f4d1b998d129503ee2d016",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt3_bd7b4c27.log": {
+      "bytes": 1426,
+      "sha256": "b598f92d195597398c374465bd10883ed79c01898b1b72d9f104d9e18adc33d6",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt4_ea18ee79.log": {
+      "bytes": 1426,
+      "sha256": "f416a09154b13b8309fa05f8de30c5d39f586927cdc0ca1bdbd7eb705e82b930",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt5_7f5205ca.log": {
+      "bytes": 1426,
+      "sha256": "4bf6f5b0b04f1ad646b31a695f75c267d8863136ae400207d9091715a41553c6",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt6_5e6e1583.log": {
+      "bytes": 1419,
+      "sha256": "f657a86ec4fa92d1ec875013d0293912c730b2c67d748eec8b6fa4b4cf2c14ec",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/BROWSER_SUITE_attempt7_40ce889f.log": {
+      "bytes": 1419,
+      "sha256": "728b6171b3e40b4209c4a4534e674bf1a832d8d06b31f9d43c95c2fb5e2e3bc1",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/EVIDENCE_BUILD_attempt7_40ce889f.log": {
+      "bytes": 86,
+      "sha256": "d7a2a9d32d38434e7dad6672e2e26c1ec5565e45f24d1cc1dd25c0a4d3589a9c",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/OCCLUSION_attempt7_40ce889f.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/PLAYBACK_attempt1_7f5205ca.log": {
+      "bytes": 1706,
+      "sha256": "4847a2c7faf28a7b53b06c7f65236d600df295ef70e98e743e4e0fd8f5ff7d13",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/PLAYBACK_attempt2_5e6e1583.log": {
+      "bytes": 468,
+      "sha256": "005d08dba0f92ad28ca26db21d8f417c56b2398d4af59133384b01490c82245f",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/PLAYBACK_attempt3_40ce889f.log": {
+      "bytes": 468,
+      "sha256": "5564c87aaad248051d84145ed9f2dfb7e07a5dbeae03d386a063aeefed85f998",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/SPACED_PATH_VITEST_c7fee8f8.log": {
+      "bytes": 81,
+      "sha256": "1cf96f80b08a0038e0c8be270cf44ccd3e3bc73070a3b4f57f6db66622e8af4c",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/T3_FULL_GATE_554df6d8.log": {
+      "bytes": 50376,
+      "sha256": "4eb28b6cf61a254e4e1869c283f46989c5eb4342415fbc847177e8edabf4c416",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log": {
+      "bytes": 13000,
+      "sha256": "5bc57c4ea9e773710044974d5fba8568373dbeb531924835a747ab5754fad8be",
+      "producer": "earlier measurement attempts and gate logs (see diagnostics/MEASUREMENT_ATTEMPTS.json)"
+    },
+    "images/contact-sheet-appendix-formation.png": {
+      "bytes": 1399127,
+      "sha256": "d98d0ec209252bd352e57c7aed5a9b629b309a8d71e34bbe6e2aca1d2a96a969",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/contact-sheet.png": {
+      "bytes": 1355526,
+      "sha256": "288ee3e6d60ce1779f43cb6594c040d0e05a0b898a2de3a7c877c5ee51261bc8",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/CROPS_INDEX.json": {
+      "bytes": 64388,
+      "sha256": "9bd48864747c56e472281ae00ec726937d9a78c3693000c9f1534732a4262aca",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 5964,
+      "sha256": "f1b0c900eceb3ed21a9f7548157c74df2b1ad7a01ba0cac888cfba2f03d76667",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/neutral_final__AD__hidden.png": {
+      "bytes": 6572,
+      "sha256": "df9045284815eada4ff84222e85bc13cda0e0c4fdf5ab0a26976b51990c94f2b",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/neutral_final__SA__hidden.png": {
+      "bytes": 7854,
+      "sha256": "d9548c87f36d9d7a375b6f646aa1c66ab6e01c44801d53d72037205f24177c2c",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/rotated_neutral__AD__hidden.png": {
+      "bytes": 5971,
+      "sha256": "e33583e63b981b2c328ddf2a839c3202cf815f2d2411ae17820bdd28c3d9f0c7",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/rotated_neutral__CD__hidden.png": {
+      "bytes": 5323,
+      "sha256": "376d5e89d912928ed3ec33ae800ecb1c41d70610c2358f135256b7aed6b26b2e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/desktop/rotated_neutral__SD__hidden.png": {
+      "bytes": 11814,
+      "sha256": "99c4414f74ffc70af09fd76a6785daadc405ba4f40d48ab5016b9487972a2b16",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 21752,
+      "sha256": "c7c79673c4439d5bdc50f1787d5164f6271b1083b8a4526011b3cbf5ba434b96",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/neutral_final__AD__hidden.png": {
+      "bytes": 27478,
+      "sha256": "ec14c131a6ccc270be69d8ab667dfa7a9fd99da81d96e82252b531adb29aba8e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/neutral_final__SA__hidden.png": {
+      "bytes": 29958,
+      "sha256": "38c5900bba4af555d31111f4f9c6156deb7f10ba962c6ecdd5787681fe6bc4c3",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/rotated_neutral__AD__hidden.png": {
+      "bytes": 24382,
+      "sha256": "5900063913e1b8832b8c13a1c1e3361f6c0099a4d55c243b41075dfdc7d3244f",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/rotated_neutral__CD__hidden.png": {
+      "bytes": 21537,
+      "sha256": "92842a11d3434a73c3513dcca403859b8cd7ca34bb3426270f7fdd3fc1646ba5",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cross_section/mobile/rotated_neutral__SD__hidden.png": {
+      "bytes": 27385,
+      "sha256": "98bffdc9624b69d4eec8ff7059cd577e8f03bf8b7fbee494c9c01a988629e083",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/neutral_final__AA′__hidden.png": {
+      "bytes": 4817,
+      "sha256": "b1e4c416a18d2a2ec1c13702e84513d85926b102c36a515a16074db1716c1e98",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 5399,
+      "sha256": "53b428def883660497f09de8930ad5286886f6ee59e3b5091fd3b1b12e7cf025",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/neutral_final__AD__hidden.png": {
+      "bytes": 5446,
+      "sha256": "f33efeac9175299976b4c3fea46aadb4beb86d9a2234e7a28a4dde3136fd3cf0",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/rotated_neutral__AD__hidden.png": {
+      "bytes": 5536,
+      "sha256": "727364d91885cd0f36874633a11866f080d4c5451e78a0394f79fcd798a7fad3",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/rotated_neutral__CD__hidden.png": {
+      "bytes": 5246,
+      "sha256": "367bf3fa1e4db501656090fed5881b965975a0cb08d9a233933dbae5e08c8b3a",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/desktop/rotated_neutral__DD′__hidden.png": {
+      "bytes": 4734,
+      "sha256": "4da8686d3e526b85557e6a6944a60f0e9eca5f9e50fef715131a4f984af06949",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/neutral_final__AA′__hidden.png": {
+      "bytes": 17794,
+      "sha256": "30f3c3a67a9dd9ad89bb642ae9fc11e2645205a5fe67c8dca0d8b3633b9c2396",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 17141,
+      "sha256": "2bed0856a73d3e0b5489c5c12d3175de823f7956ff253e5cf728304c15f11a9e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/neutral_final__AD__hidden.png": {
+      "bytes": 20591,
+      "sha256": "ed4dba4761afd0acbb161ebf631bb791058b7b2ec3f168217e81618743d5e37c",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/rotated_neutral__AD__hidden.png": {
+      "bytes": 20562,
+      "sha256": "47d24d46496f5344926882ccaa4a80f8e11bbd71c11ba60a853f1ea0eb166b94",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/rotated_neutral__CD__hidden.png": {
+      "bytes": 17238,
+      "sha256": "7f1a61c3c5300214107d6b192977691f5bdaea1d75b47999b112471675e10bc7",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cube/mobile/rotated_neutral__DD′__hidden.png": {
+      "bytes": 17993,
+      "sha256": "a85a74f751a7548fea2497a199b4c78ee288abe5210cac617d13a8fe7ebc5bdf",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/neutral_final__AA′__hidden.png": {
+      "bytes": 5167,
+      "sha256": "3d493bde60ebc8d924869e4784542b92d96b743ffb0a8b383149c3730aeb8cdd",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 4026,
+      "sha256": "76e80bbe26a8cafebeb36ae44c2b2c344d9e5f0cfe3a5aab5530e0effc46dcbc",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/neutral_final__AD__hidden.png": {
+      "bytes": 5019,
+      "sha256": "0058e3b5b53139da1cbcfcd8f7c7938ed7de7551d081818e1f838516e9f3e23e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/rotated_neutral__AB__hidden.png": {
+      "bytes": 4192,
+      "sha256": "be51b5d1533f66a9903245264cb16dcc63405f6bd6d4ea10ab9869b18ab4e95d",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/rotated_neutral__BB′__hidden.png": {
+      "bytes": 5669,
+      "sha256": "539f5468fc4b3c02042e75057fd034d0e63598519c2d106132aebcea53e6490f",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/desktop/rotated_neutral__BC__hidden.png": {
+      "bytes": 4816,
+      "sha256": "4bb2ee1a0c83c467e32d35aa3bb39e90f7a931a60586cc77356fe9dd5768720e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/neutral_final__AA′__hidden.png": {
+      "bytes": 22992,
+      "sha256": "76e189098dcb38d14ec01e0ab0ee26e34491ac94d8a5d6da75fd0945e4696e88",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 14839,
+      "sha256": "01016059613699e395971192ff05b411eda8d5785eacba040f84868a04d43ace",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/neutral_final__AD__hidden.png": {
+      "bytes": 19110,
+      "sha256": "c1ed32893015be8e05e1f9d133bedfc807e769d6e6a259525d3f1bddd48b0839",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/rotated_neutral__AB__hidden.png": {
+      "bytes": 18507,
+      "sha256": "ef1a1172e41d7b8739775f42a3a193ec957e8e5af53fcfc525528e9a427dd2b8",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/rotated_neutral__BB′__hidden.png": {
+      "bytes": 21786,
+      "sha256": "a8273fd354f206b4c14ddd9bdb36292534cd886f743e481ca98116227d571cf6",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/cuboid/mobile/rotated_neutral__BC__hidden.png": {
+      "bytes": 17121,
+      "sha256": "d71349a696985150ab70ed44bf654652d2335c1524c0d87e3dd3f54d264922a3",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 4423,
+      "sha256": "617783d93d9f3e97e2df6e4e736dc1008ead66a0f464edc2061315570f7bf129",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/desktop/neutral_final__AD__hidden.png": {
+      "bytes": 5478,
+      "sha256": "807ff1f5b28001eb0af478128dcb975e52ab8ff663cf1a86f3dd6a7211b82d1d",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/desktop/neutral_final__SA__hidden.png": {
+      "bytes": 8044,
+      "sha256": "621384a71012ea22bff3abfedbd77a9719dd28bb04ee1a69956936b1fa402653",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/desktop/rotated_neutral__AD__hidden.png": {
+      "bytes": 5939,
+      "sha256": "72dc6e5e2aef145b15c1830c7964d7ecd7757a1c25c0c9b2f87fbd8451ec945e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 15558,
+      "sha256": "e61fc69a255ebf3da1b66907286d86557b0f7a9d12066b7e324972854b48a61e",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/mobile/neutral_final__AD__hidden.png": {
+      "bytes": 22522,
+      "sha256": "e2f8dd479940cd478f4590b332e83b3676378fc47fe11f5515c919fbc83330de",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/mobile/neutral_final__SA__hidden.png": {
+      "bytes": 32960,
+      "sha256": "fa5798e3c584c575c31ef8d8fe162e0309c06ffdfe3789565a55cf1400ff36dd",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/rectangular_pyramid/mobile/rotated_neutral__AD__hidden.png": {
+      "bytes": 25540,
+      "sha256": "6a41110d409009c9eba294d2dcb50d94c2d6bcfc71fb17132fb19fd13d3641e3",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 5576,
+      "sha256": "c8f4b0be983cfdd77c284c3fd66ca40fb914d88de88389d72b793e0c50af9355",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/desktop/neutral_final__AC__hidden.png": {
+      "bytes": 5638,
+      "sha256": "0c0b28761ab6971f9788a252cdc5795b3e5e00f3a3f23f480959e26dfbe34fcf",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/desktop/neutral_final__AD__hidden.png": {
+      "bytes": 6028,
+      "sha256": "78996390740a70270206df938a8061956517baec2c7ef17b7f22e8ce8e89988a",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/desktop/rotated_neutral__AC__hidden.png": {
+      "bytes": 7071,
+      "sha256": "3a5aaff533b83e7ced4019d04aa7952d2b469f832df77f941fbc8f740db89668",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 14874,
+      "sha256": "72f9bc445f174e399d97374d3d214e1d01288fe07f5f96ac93bab3997c10264d",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/mobile/neutral_final__AC__hidden.png": {
+      "bytes": 18702,
+      "sha256": "8c992afae5b79f7db5f19909aa9c769cd631d702fc2d65eb4e781cb945bac2c5",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/mobile/neutral_final__AD__hidden.png": {
+      "bytes": 21453,
+      "sha256": "e51120867cae451dafba65a1281f930f41934acf224ad7c758ea1b59f1af7a3b",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_prism/mobile/rotated_neutral__AC__hidden.png": {
+      "bytes": 23550,
+      "sha256": "980b7ded837044b57a6ce9492db351ad695a355c16a598b37aea73d35c7a61fa",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/desktop/neutral_final__AB__hidden.png": {
+      "bytes": 5864,
+      "sha256": "68ff53646c43fedd9a184f12eb129cbabc4708b00c4b932850505f75feba3f8c",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/desktop/neutral_final__AC__hidden.png": {
+      "bytes": 6471,
+      "sha256": "52ee1d8402c5b392f09461e5adfcfe122146bc13e0c26b6326102d5cee582cb9",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/desktop/neutral_final__SA__hidden.png": {
+      "bytes": 7141,
+      "sha256": "491d16dcca0e61656d15886a027960035e8f4701a51ed05d9af788edebc94793",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/desktop/rotated_neutral__AB__hidden.png": {
+      "bytes": 5045,
+      "sha256": "0af6d1f011a9f3c3a41ddf991aefb1852f3b8b3b740527c64757376c5face157",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/mobile/neutral_final__AB__hidden.png": {
+      "bytes": 21166,
+      "sha256": "e58ad8e338301dd002cc006048557a9f34c8cfd09be528808663ecece47e05f6",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/mobile/neutral_final__AC__hidden.png": {
+      "bytes": 28818,
+      "sha256": "1a8ab9bb8ba4ec42c467882aa0c5e5d6c2e425b9e4a93a08b1362274f62a8f90",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/mobile/neutral_final__SA__hidden.png": {
+      "bytes": 28816,
+      "sha256": "eceb96a673294115ca9a2dd92674f4a900fcdf1b632ad617bf0c81016336234b",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/crops/triangular_pyramid/mobile/rotated_neutral__AB__hidden.png": {
+      "bytes": 22672,
+      "sha256": "322fc7c20dc353e9f44bec69f890a76a64a5dbcf4635c7c5fa7131ddc746e5dc",
+      "producer": "backend/scripts/build_scene3d_visual_evidence.py @ 52de6f22"
+    },
+    "images/playback/PLAYBACK_EVIDENCE.json": {
+      "bytes": 476583,
+      "sha256": "ea013aa64ec45543b62bd14281e7bf993fa849c0f46901b311b607e940f2ab18",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/causal_selected.png": {
+      "bytes": 155230,
+      "sha256": "d2ed45738438636ba8615ca553fcdf77384cab66b0f2b7cd7fa9f8a48821bbfb",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/neutral_final.png": {
+      "bytes": 156048,
+      "sha256": "84dd633bd0fd3d6db46a8a8a67abfccf936e459ef471ddbf89f78eee3a1896b5",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/neutral_restored.png": {
+      "bytes": 143540,
+      "sha256": "688938b0d1a6cbcdc30d9dcb1f01c9ca9b0ed243594815b366e290a7fe8cbc7c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/rotated_neutral.png": {
+      "bytes": 145996,
+      "sha256": "62425700faed392c7a5769501cf63433ae152611b08bf351d0752c25d6c09b00",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-00.png": {
+      "bytes": 111810,
+      "sha256": "1e061e0c6695fec392c6b53ea8785814cda2b093d9d2ba20bc93da1983dd9fd2",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-01.png": {
+      "bytes": 113717,
+      "sha256": "ca6a0f76764926fd2cd8601732790e76667266a402b0a60cd23408fd1e662561",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-02.png": {
+      "bytes": 141537,
+      "sha256": "d75c749b5c0b13fb870b183ef3a4513b10f86bc78a19d7c7757727fd889364e7",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-03.png": {
+      "bytes": 148439,
+      "sha256": "41b8e0279d7897eee93a80bab85f4d8b6f778d8cdc0b2ad932876deee58b0349",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-04.png": {
+      "bytes": 152911,
+      "sha256": "17b0c2e1c864e803e53a55729fedc0754ea3fbdb01bab755504b2948315d2568",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-05.png": {
+      "bytes": 152864,
+      "sha256": "3ea780e910a0c3c90841c16f0945ac0e777e0614729a61c9912c44620a328c70",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-06.png": {
+      "bytes": 151826,
+      "sha256": "f3712c5c4da0fca4e163aab61e11716765c22ade4ef6e72c23b7847178d71cea",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-07.png": {
+      "bytes": 152412,
+      "sha256": "b1d3be03d2fb18ab0a5ac2dc2df81de538b1f84ff5b425f3595ad994513dfa24",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-08.png": {
+      "bytes": 152158,
+      "sha256": "44b0e9d8a0deb6f27c5fe7db886ad6013ce15a782d618401e6b42a3edb1a436d",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-09.png": {
+      "bytes": 152340,
+      "sha256": "7c1329847692f01863105d0f65fa4ad6e28a6ce288e7952e3770205e5089a99b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-10.png": {
+      "bytes": 153620,
+      "sha256": "26f84495035ee20937754ae4d0c5a4ae26ea3627d854601e78361cb535ee453b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-11.png": {
+      "bytes": 153460,
+      "sha256": "39879784866cdeb102fd82103c75f665a6dbf0f0b75ebee1fdc53366befb0434",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/desktop/step-12.png": {
+      "bytes": 156048,
+      "sha256": "84dd633bd0fd3d6db46a8a8a67abfccf936e459ef471ddbf89f78eee3a1896b5",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/causal_selected.png": {
+      "bytes": 258523,
+      "sha256": "7ec41cc3ea327dfcb8e6337b527163fa0e20a20836d28a39ef88698ebb20b5f0",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/neutral_final.png": {
+      "bytes": 249069,
+      "sha256": "8fad44db5a1edf10c2d0d818ed107537a8cb9c1222a017135c53ac9981e03481",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/neutral_restored.png": {
+      "bytes": 171714,
+      "sha256": "da1f6ef37f5ab2a1ccfb9def34a1df6d465f27b2fd67f9878c39c3926c16ab5c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/rotated_neutral.png": {
+      "bytes": 253683,
+      "sha256": "1152aafc8280897ba98f980c346cb5425a43ee89005e98f12aefb60993afa44b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-00.png": {
+      "bytes": 182454,
+      "sha256": "60907ecfc17c97653371e9d61dc3f5b09c5630003d6825bb4a4fadabad094164",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-01.png": {
+      "bytes": 195357,
+      "sha256": "a144953cf8780115af26dd2b63bd8d51b5e01317bfb57716e9823a4d3b2c6f11",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-02.png": {
+      "bytes": 242649,
+      "sha256": "921670a2366dee8853aeac57a6a118fbc0bb4cf9f6559d45f07cecc95fbb97be",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-03.png": {
+      "bytes": 239876,
+      "sha256": "75a7bc7ebca0c8161584f775b05febbe4a25ea0b99e90230806ee3a0341d430a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-04.png": {
+      "bytes": 256693,
+      "sha256": "b266ab0d619b9b1ce7bd073dab3273fb5634b5ab989bebc234029c9cf718a596",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-05.png": {
+      "bytes": 257084,
+      "sha256": "1521d591d9c03a194ea372e6e68190d8184de700613b42b51dbc1ada4791d899",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-06.png": {
+      "bytes": 257195,
+      "sha256": "2a204adc4b44250a34a151b611770e910cae290c401b5f549d6e9eb5871b399c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-07.png": {
+      "bytes": 258492,
+      "sha256": "24bdb2e0a72b29de7ab984c916db4a6d91a9e3b8c2c454e60a714b585bd49d09",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-08.png": {
+      "bytes": 257592,
+      "sha256": "effb72104bda3f5ae066f7e6e5a39f65e4791c2ad370aadf894a392985a6984b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-09.png": {
+      "bytes": 251362,
+      "sha256": "13582e27eecd17d5a502e1f388ee37c67f7866e18b7ad1c7acd46a69702a052f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-10.png": {
+      "bytes": 250428,
+      "sha256": "c5a809daadb70be1a9a15684a69e0d05e93f4873ab7a79a36f00bc87fbebf5d5",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-11.png": {
+      "bytes": 252708,
+      "sha256": "e3b578e815a80284c1ff590f065e476f02c3302f2b85d4c1c4de2ad6ecda4d7e",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cross_section/mobile/step-12.png": {
+      "bytes": 249069,
+      "sha256": "8fad44db5a1edf10c2d0d818ed107537a8cb9c1222a017135c53ac9981e03481",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/causal_selected.png": {
+      "bytes": 169368,
+      "sha256": "5fc65a06548ece8e262483274de79b93224f655159f2638e300e98b7435eac84",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/neutral_final.png": {
+      "bytes": 169159,
+      "sha256": "4e213e8d06e0dbed9f94d99e67a743a00c8dcad1ccabb80b1aff056005d5f7d8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/neutral_restored.png": {
+      "bytes": 169471,
+      "sha256": "02fc83f08c09e2b097adfb693f883e0ebfb54994eb27eb919f043ad7a57be9b0",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/rotated_neutral.png": {
+      "bytes": 168226,
+      "sha256": "7e2bba176815d706f3a3e71a13838b6fe1fd69eae3f32750cc030cd333544e2d",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-00.png": {
+      "bytes": 122143,
+      "sha256": "489e92df59c53d8094171d0991353d1b3ac73e5ebd61b6b09992484dcf939716",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-01.png": {
+      "bytes": 121789,
+      "sha256": "a5247a033d664a00d1101a91bcb4d9bec49800a7b31b4e3383c6d2f80849e159",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-02.png": {
+      "bytes": 122260,
+      "sha256": "4ecbaf61293654f71fb6b0a2c466999e268979b3b432b16c7e70b03df0e01488",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-03.png": {
+      "bytes": 125511,
+      "sha256": "5d582156a141c10b7240f1a0433642c6f9735fe4f29a7d2ee0f7fe513e6ba855",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-04.png": {
+      "bytes": 126601,
+      "sha256": "d7e17ea53443db017ff0332781460a9ef69e1fc0db6058f4d4a94d82949c6086",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-05.png": {
+      "bytes": 168042,
+      "sha256": "767fecd0aba2e11d6e172802c9bbc8a94bbec94eda4a80b464e284d02b80275a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-06.png": {
+      "bytes": 163466,
+      "sha256": "66fd09cfee1c80433124230dea62b5758e560d24b99a48ce7a4281a37abbc1e4",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-07.png": {
+      "bytes": 166550,
+      "sha256": "3afc2fe1a0f288cb37cdec3c6c6759a774c531ff62d90c1e30453ade77a56c94",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-08.png": {
+      "bytes": 166928,
+      "sha256": "a2789fa5b77ebdc5ec99cd28dfa93bfe48862fd05826f2e3235bbf81eea203f9",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-09.png": {
+      "bytes": 169939,
+      "sha256": "1caec326d141a7b1a7acc90a23202aebaf14cde771e63535c56581a9119bd678",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/desktop/step-10.png": {
+      "bytes": 169159,
+      "sha256": "4e213e8d06e0dbed9f94d99e67a743a00c8dcad1ccabb80b1aff056005d5f7d8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/causal_selected.png": {
+      "bytes": 237832,
+      "sha256": "4c252341ae97a7db61a13f8915ba4c3a67d6d03d4ef3bd074f9beddf93519c8f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/neutral_final.png": {
+      "bytes": 226295,
+      "sha256": "d0c3a07a3660309bea623a9c65469f1363ce84ffe4fd46635fc5b51d153bdb6c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/neutral_restored.png": {
+      "bytes": 112129,
+      "sha256": "e2a737f06d8bd93ca202ba87e3b1fca4df00754097b71b4fc7274d24cec26c3a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/rotated_neutral.png": {
+      "bytes": 224971,
+      "sha256": "3eb14fa9b2dd544a4038ea5c17f74bf02e2e20b57132188b26b4b875682fffd4",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-00.png": {
+      "bytes": 194650,
+      "sha256": "272bfd5ce29141a40b14ca9a156bd72c3dab1cdbbad053a83827404dc532c3ce",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-01.png": {
+      "bytes": 191218,
+      "sha256": "71745a70d50367a650f3a238e1e0916670342f8cae3925a8e08fa0e0b4d4b318",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-02.png": {
+      "bytes": 188104,
+      "sha256": "d6c9176adf67966421bab5573170f4b74dbc2d3dfd1e49407e9142584e02c499",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-03.png": {
+      "bytes": 197381,
+      "sha256": "8de45279cd18593600a9b27fa0e1a6c9db0cddc067fab1fd9af0310f8cbccd95",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-04.png": {
+      "bytes": 201049,
+      "sha256": "c5d0143770ca234e9d2ad03b597e813862ffa72e9a15e8ecb97fcd4f27f199a6",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-05.png": {
+      "bytes": 223669,
+      "sha256": "5eae824a1a68c72f96559d69659875cf91276fe8a8c4c26a1c58fbb778b49293",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-06.png": {
+      "bytes": 221404,
+      "sha256": "6c25a062326410ad7a78fcb80d5b9acd48aa5f22b284270f1fbdae05359d6d53",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-07.png": {
+      "bytes": 227003,
+      "sha256": "e13727a46a66ba6535d7f6f9db95bad92f62dfd98bc2949dfe08f0e21169b38e",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-08.png": {
+      "bytes": 224307,
+      "sha256": "f7eabac837ad943ff2f6f299f310a9721e32819ef1e46e3cd536dd3d38b86a73",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-09.png": {
+      "bytes": 226619,
+      "sha256": "fb6ae2192c407d552621c7c2ecc1290e25ad5d6236b940bb937b2e0f82f53d70",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cube/mobile/step-10.png": {
+      "bytes": 226295,
+      "sha256": "d0c3a07a3660309bea623a9c65469f1363ce84ffe4fd46635fc5b51d153bdb6c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/causal_selected.png": {
+      "bytes": 167895,
+      "sha256": "87f29e1f271b76e23b9885824155bc1b24a16135c533738fa9b25dfc8c74cc46",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/neutral_final.png": {
+      "bytes": 167721,
+      "sha256": "f0f2c622bd77dafff9406ea593933928ec7816d7ede89b1df9ca287da545c011",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/neutral_restored.png": {
+      "bytes": 170781,
+      "sha256": "b874cf1fddf00ad933464804cce14b7600b8d8f06cb127c7581fbe9a8afa0bd1",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/rotated_neutral.png": {
+      "bytes": 171574,
+      "sha256": "d44dd64eed293ebeed3ec6a2ccbbebead389e0cd8b4149233b3a3f0053cffac2",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-00.png": {
+      "bytes": 122381,
+      "sha256": "42f1caa77907075fc7bde23a9558576f66153c097c3fde39d6329b79a5a19f31",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-01.png": {
+      "bytes": 123964,
+      "sha256": "f5522ef26b5ce6c21497a18e24b9f6c42042be9d894933f1ab03bea5e92f525a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-02.png": {
+      "bytes": 126161,
+      "sha256": "df6553e92ca70c088658f4ef3857be823c697840067e2acce111f60fb9698adc",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-03.png": {
+      "bytes": 168760,
+      "sha256": "d56783fed3948fd8b1494ea661835ed5ee855cef173fe2bde83e54212e13da34",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-04.png": {
+      "bytes": 162077,
+      "sha256": "2303088dd05fead01fa788f6b0103a0139a6d597267975e5c560c86629912aa3",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-05.png": {
+      "bytes": 165001,
+      "sha256": "47f48f3d6d1d35a6ff6d690d045c2d10dd2779a1fa7dd8e89e73764ac80cf429",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-06.png": {
+      "bytes": 165508,
+      "sha256": "b393dfc70b62578d19a1fb9259ea93ff5c87c5a82158e20b4038bcc222816857",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-07.png": {
+      "bytes": 168718,
+      "sha256": "3c0ae5b8cc57e82b2054dbbf0c1fecaefbf8da655030b2a52807c88782a6df7b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/desktop/step-08.png": {
+      "bytes": 167721,
+      "sha256": "f0f2c622bd77dafff9406ea593933928ec7816d7ede89b1df9ca287da545c011",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/causal_selected.png": {
+      "bytes": 238566,
+      "sha256": "576d78d3f91fa29347e17ec6cea98042a450883a35366335a1770fe121a5c514",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/neutral_final.png": {
+      "bytes": 235555,
+      "sha256": "08336855e063c5cece85c5b40f5ae31121b2352f942c406ff98c87beb8ffa720",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/neutral_restored.png": {
+      "bytes": 117156,
+      "sha256": "db4cfaf92b8870235621f7eeaa5ef40c02b38ab43900f92c6a39ff556380034f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/rotated_neutral.png": {
+      "bytes": 230965,
+      "sha256": "84e08d210ab7ebefa4b387c3e9107d9a372988eb0b1552c189b82d50fb8037b5",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-00.png": {
+      "bytes": 192611,
+      "sha256": "2673affc4e061740fe157752bf100c2aa7af99f51263f67e1da2fdfc6f5e3147",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-01.png": {
+      "bytes": 196147,
+      "sha256": "e231ef9d24461d07353b1ef738e77f510a4686fa78a5022e41b8d1aa30384bfc",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-02.png": {
+      "bytes": 198738,
+      "sha256": "f66637963d56f811f8194ba6afe8a27e223df64d91f2db021496abb4ef4abd78",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-03.png": {
+      "bytes": 235980,
+      "sha256": "d51c34bd42b32e32f3dc58e88ef7b06b5e84308d6d312410a34c4ffcbc54afcd",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-04.png": {
+      "bytes": 230001,
+      "sha256": "be863714a6a1ba56e09c9614acc70a54405d47ac21f50f98dd6455c55cffb0c2",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-05.png": {
+      "bytes": 235575,
+      "sha256": "65bbb1b453cb324fdf2c150eaba36e9d8fd64133a8d7a42f1406b720a57c737f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-06.png": {
+      "bytes": 232949,
+      "sha256": "22cd05c5dccbfbb319d449f6e4d9abb6d2ba9be1e8108bfbbda9f1b5880b72cd",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-07.png": {
+      "bytes": 235896,
+      "sha256": "3dba67d3945e7c965055329f3525f066f250ccc3aa3de93e4945f8c0a5fef3af",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/cuboid/mobile/step-08.png": {
+      "bytes": 235555,
+      "sha256": "08336855e063c5cece85c5b40f5ae31121b2352f942c406ff98c87beb8ffa720",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/causal_selected.png": {
+      "bytes": 156641,
+      "sha256": "468146b443e0b89b34b7b290051152f9b964f16d8b732cd319a50c3dcf16e3c2",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/neutral_final.png": {
+      "bytes": 158106,
+      "sha256": "89f123dcbe47690c3190f78c1b2326eb3d12e455d16ccb6f2e850983451193f8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/neutral_restored.png": {
+      "bytes": 145280,
+      "sha256": "1d38fcc9600c855f97c998254e490ba375313e0aa6aeb9371f1bfa5aea6e3167",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/rotated_neutral.png": {
+      "bytes": 147334,
+      "sha256": "765a1f4518170ed64c2bcdea10c49f4ab955d70c820dbfd1bdd6462f62cae401",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-00.png": {
+      "bytes": 114562,
+      "sha256": "4f141a4114074f81e827db7d5b2d5af1c9efbfaa20d171c3e3873da2de7fc65c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-01.png": {
+      "bytes": 116080,
+      "sha256": "ae9a2eec3df48bd71d840c3f9073d8dc7c5d666732fc2d8f6be1071b2f26c787",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-02.png": {
+      "bytes": 136220,
+      "sha256": "3a9ebd36218ff8aa2d40387caedb01537623a678f86c8229dedaeb8b850380cf",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-03.png": {
+      "bytes": 156844,
+      "sha256": "61e548f1f0858946238ccb41aeb0200f60a49f42cbdb2f78b2fe220de1f1206e",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-04.png": {
+      "bytes": 150775,
+      "sha256": "ad46425d896b7304b7815d15ffb2a733832e98682d1bbebf67d5a4a17a50ace5",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-05.png": {
+      "bytes": 156956,
+      "sha256": "cbeabd52d3f917503094b3710dff36a6cdc85e1fe8bf2f14881765db9c1c6eb6",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-06.png": {
+      "bytes": 159251,
+      "sha256": "a1a94e3dc7602706ce3377a2e3c1283970ced54c489120242e58102f5942c937",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/desktop/step-07.png": {
+      "bytes": 158106,
+      "sha256": "89f123dcbe47690c3190f78c1b2326eb3d12e455d16ccb6f2e850983451193f8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/causal_selected.png": {
+      "bytes": 232851,
+      "sha256": "fd116c48bb45f527c7cabcd66e9f0e18a2bfee3510d15f3bbb4d06d92a84a8fc",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/neutral_final.png": {
+      "bytes": 244511,
+      "sha256": "6384f255ad4f84745a9fe5d930093f313eaa04390c86bc8ff70a03519e72328a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/neutral_restored.png": {
+      "bytes": 145629,
+      "sha256": "1027cc176c7740efb8c74e28ca22fdbaefc0f421f37b6b97e2c5b6490d6d3699",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/rotated_neutral.png": {
+      "bytes": 225805,
+      "sha256": "575375da93709b82d47feec6046aab83bad44d1b683709ae3c3acd83d1f755bf",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-00.png": {
+      "bytes": 178459,
+      "sha256": "87e24b54eefbe0d01ef268918645bec0c75e73f7aac88184c28eb11dcba3e7d6",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-01.png": {
+      "bytes": 184993,
+      "sha256": "2e08c20541811956849d6926080dc44669b7effb93598057c6826121c422dcd0",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-02.png": {
+      "bytes": 215202,
+      "sha256": "4cbcb49c5a57fe600473efb12faddc8417983899410fc135a7716736d836d349",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-03.png": {
+      "bytes": 240557,
+      "sha256": "b8d8ae9d3e4c9ad951c56bfb4c50295065654163958501de9d3d2e8207b71cdf",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-04.png": {
+      "bytes": 239012,
+      "sha256": "ab96daf6c4a7d76a96b7f26bcd70eeb8a5843fe51485a21c2f2ea31b8d9953ee",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-05.png": {
+      "bytes": 245810,
+      "sha256": "6ebc4db4c043837727e4a9943ebdf84ec345fee8ab623c2ab0125a940b726e52",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-06.png": {
+      "bytes": 244749,
+      "sha256": "6f3bc0bbd1a260ef84cab830380f3e0f7987c553262a5c679ad2b6b46612c353",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/rectangular_pyramid/mobile/step-07.png": {
+      "bytes": 244511,
+      "sha256": "6384f255ad4f84745a9fe5d930093f313eaa04390c86bc8ff70a03519e72328a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/causal_selected.png": {
+      "bytes": 175178,
+      "sha256": "17e48cb3d4c4fa1d7f7c406ac23057c5310524061144224a5d5e532390c4d468",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/neutral_final.png": {
+      "bytes": 161926,
+      "sha256": "9cd590b2c4e854faae65debc9d157d2585a730053b82396850712bfaeeec4e7a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/neutral_restored.png": {
+      "bytes": 181239,
+      "sha256": "868b6bafe466e359e59c6fc7b0ec2b6aa2724ede4a823f52ab66cff864b58c73",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/rotated_neutral.png": {
+      "bytes": 181132,
+      "sha256": "4be8ebd7cf75450caa534a670918affe1368079b3b65da96542bf0a577b1b129",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-00.png": {
+      "bytes": 113740,
+      "sha256": "60ac00286c704a1cd90090ed8fb360428e422ac3894955b3c906c6074f6d0542",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-01.png": {
+      "bytes": 114468,
+      "sha256": "2e5ab2936c1ac0786841be18ffc25d3032426e7dd8b2953207bf3f3a5aaa829c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-02.png": {
+      "bytes": 157097,
+      "sha256": "c47c3c68fad2e207ef67b876cd5bd5bbeda264766e793cf8092335ff96b12ff3",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-03.png": {
+      "bytes": 158703,
+      "sha256": "9667a85624f41b0e30ffb5eb1624781535b7c29e31f3c4b48f02b83cb8a76704",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-04.png": {
+      "bytes": 161013,
+      "sha256": "d65f809c088996edef676b2af73be1247637ca68c5c24d422e681f77e397bdea",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/desktop/step-05.png": {
+      "bytes": 161926,
+      "sha256": "9cd590b2c4e854faae65debc9d157d2585a730053b82396850712bfaeeec4e7a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/causal_selected.png": {
+      "bytes": 247278,
+      "sha256": "8548533091069a77af3b6ecc53969a5172b5b89bbb81b7d7d5efb1f6182af469",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/neutral_final.png": {
+      "bytes": 219881,
+      "sha256": "687e4a5ad2b4a7d0c4477de55f6c1c04590fe4b6873a68a7cce5779838f6ec5c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/neutral_restored.png": {
+      "bytes": 189585,
+      "sha256": "8d1681f0523bd5adcdfd81e6b100f81b8b9862ac11e08edc57209d3dab08e33f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/rotated_neutral.png": {
+      "bytes": 245432,
+      "sha256": "47e4d290f86b12a89ffebc0eb8651936f243d7e4f4b199f51363c09457f08c27",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-00.png": {
+      "bytes": 185104,
+      "sha256": "5fd9ab560241c4caf50463c0db0f2615521eedf0e07093739b4d0cabdbb1d737",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-01.png": {
+      "bytes": 191246,
+      "sha256": "3b254898ffaf7e836b970037673c5aca1145b4c79a1b5a494ef0dae7a7a0928a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-02.png": {
+      "bytes": 224102,
+      "sha256": "535469f4383c8fb71ed3bb01c6a0a6cf4efa608f37d91f0bc6c7e5f8a5fb699c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-03.png": {
+      "bytes": 220406,
+      "sha256": "2a90c7129c3d8ec34cb19c9ee078155bb1b711880d8f2997a903fa7d3e82819b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-04.png": {
+      "bytes": 220678,
+      "sha256": "d39b5861e65fb2a1f829c00d06ee14e7c10bacc4de74c8e1c74de3e6a49e16eb",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_prism/mobile/step-05.png": {
+      "bytes": 219881,
+      "sha256": "687e4a5ad2b4a7d0c4477de55f6c1c04590fe4b6873a68a7cce5779838f6ec5c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/causal_selected.png": {
+      "bytes": 167271,
+      "sha256": "07d9173a960c9e9f6ce29684946600befe44c3fc150ff022fbef6abc6ccc5a8d",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/neutral_final.png": {
+      "bytes": 148267,
+      "sha256": "6a4099413fb2fbd439b81f6faf342a42c5b73bc3a43233414744fba60cf8dcd8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/neutral_restored.png": {
+      "bytes": 170627,
+      "sha256": "fb030883691040d7bc78bbeca41757e887e5ad75caae84007c5d6ad9ea25e9c8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/rotated_neutral.png": {
+      "bytes": 169077,
+      "sha256": "afc69f2699b78178fe34c65b8c769239c04da284b86d775a8e552c2e4faa7bd7",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-00.png": {
+      "bytes": 109111,
+      "sha256": "90c8b370f2eac63d8a01889ca9bd3c1b63b106fe6feb929ed4338165c78208ad",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-01.png": {
+      "bytes": 109406,
+      "sha256": "a8389bde1d0c4f295115d34221349859c3c69539d2dc7fb724111e473e54e402",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-02.png": {
+      "bytes": 138264,
+      "sha256": "ea2ac7c0061eb51a03651573fb269e7f50252b298febf6f3cd40f4154f90a2f0",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-03.png": {
+      "bytes": 145515,
+      "sha256": "426d61591e00c1b1f642861914d2e2851a53363c9712787f55d7dd24fc95516a",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-04.png": {
+      "bytes": 147336,
+      "sha256": "b4dfb205da912fc61cd9174d63cd4bf4347c9245b879b25618753929574eeafc",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/desktop/step-05.png": {
+      "bytes": 148267,
+      "sha256": "6a4099413fb2fbd439b81f6faf342a42c5b73bc3a43233414744fba60cf8dcd8",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/causal_selected.png": {
+      "bytes": 252527,
+      "sha256": "030bdab55e4ee5ced36555993f846395d5e03a10cdd1a437134ef556386e299f",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/neutral_final.png": {
+      "bytes": 239994,
+      "sha256": "d543decf6d2da7a0f92aac648c5d68c69cd300b605155fbc2f133b65dad2c298",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/neutral_restored.png": {
+      "bytes": 195233,
+      "sha256": "aa0c1a89fb76877985c4c30dd82ce2290f9698cb0e9e84422efc546230360d3c",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/rotated_neutral.png": {
+      "bytes": 252102,
+      "sha256": "77243fda01e43dc55b5d6c08c504e39f0f1a8c0b217a8bf7d889396422367a3b",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-00.png": {
+      "bytes": 179168,
+      "sha256": "90c1eee4eb1acd771b6cc58f46d2178df35000910b255b2cd71edf919ba43c00",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-01.png": {
+      "bytes": 187137,
+      "sha256": "0baf7e8f441e5c0bcda0bcecd83da9b6c52857bfc774c237690c7628119a22a7",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-02.png": {
+      "bytes": 241734,
+      "sha256": "ff27d02b7369e8ee78ad585d708aae730e633f562aaaa23c3975f630adfbcf88",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-03.png": {
+      "bytes": 240807,
+      "sha256": "d83785d5ec3df33646abb859956f5aee0746a3a7e8d944981e98100df8cddeb3",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-04.png": {
+      "bytes": 240709,
+      "sha256": "8e389022cb5820b8a2665f39f3a9651a35ea71f76cacee1af70aface0ca5c159",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/playback/filmstrip/triangular_pyramid/mobile/step-05.png": {
+      "bytes": 239994,
+      "sha256": "d543decf6d2da7a0f92aac648c5d68c69cd300b605155fbc2f133b65dad2c298",
+      "producer": "frontend/scripts/scene3d-playback-check.mjs --lap-orbit 5 @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/causal_selected.png": {
+      "bytes": 154900,
+      "sha256": "d9a75dbac7f9c7d12752561c8c9702d064cdedd755a466ac649bdae335478e57",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_current_step.png": {
+      "bytes": 147113,
+      "sha256": "86258762c96c264ab25e0d1edfed97c018247222938d26c38c7f988aa4aa2173",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_0.png": {
+      "bytes": 111291,
+      "sha256": "d35b62eadb076daec0b419b1165a7d2ac97bd475e9bfb8f38cb36bad5f4195be",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_1.png": {
+      "bytes": 113392,
+      "sha256": "4d39fc95bcb5146edfe10195b9d61a7103cc465aeaf36866b21446198c46b1a6",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_10.png": {
+      "bytes": 148901,
+      "sha256": "66a33d1e28b108783841b3afb4d09a918ac26ab030e64040fc412c71673a3bb3",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_11.png": {
+      "bytes": 148498,
+      "sha256": "f368b389099b6a9620d37379161c8cc9bfdb604df912083af7b57825ddcfa282",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_12.png": {
+      "bytes": 151189,
+      "sha256": "6f2f4c232af8ae710eee2c0713637467dbd011912495bba5a6a32c66c81c32c4",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_2.png": {
+      "bytes": 137160,
+      "sha256": "9e915ac79e13f5e74f7a4b1b1ae6a9920354a3c18bac9b2211d78fb0aa152f13",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_3.png": {
+      "bytes": 145407,
+      "sha256": "19d0c9174a68c4428a5102658e47e740a12b5788ead85dc746c3bfadad358016",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_4.png": {
+      "bytes": 148228,
+      "sha256": "fbcad411ab5c23094c8524a36c66a60f29cca7dabc40d27e05d868be76adf118",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_5.png": {
+      "bytes": 147799,
+      "sha256": "4c4a5e96a3b1415e919a886fb539e237c7d7b4b9ec22f7718a1967c18671f6ea",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_7.png": {
+      "bytes": 148102,
+      "sha256": "de7fd9a9087dd77a412f2e8449bc35b863a542158788abaff1fe686b23f8e255",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_8.png": {
+      "bytes": 147839,
+      "sha256": "9fb75e91da8887865677f410206a67af2beb2b064852b2fadb8c38c60d4dbdf1",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/formation/formation_step_9.png": {
+      "bytes": 147701,
+      "sha256": "2a9a78ba21765e53b2baa6751a5e2a206b9dc9abf49c315587c139e5006c564f",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/neutral_final.png": {
+      "bytes": 155610,
+      "sha256": "9e0b47ef4c16bbbba97cd29d70f0cb43b04698419987a4dac1f20c9c8dd9ca38",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/desktop/rotated_neutral.png": {
+      "bytes": 151716,
+      "sha256": "a6ad726d28ba1a0a518c90d23d4fe91b8de4f040e7e8bf149a67df77d79b32f5",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/mobile/causal_selected.png": {
+      "bytes": 244931,
+      "sha256": "4af2776d429701a1e2a5df729ab4a1374e993ed343de80111b9f2227003515ac",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/mobile/formation/formation_current_step.png": {
+      "bytes": 226803,
+      "sha256": "c845bc8c7d816ca154ce5448e07cd9bd9bd1df1d2278cca51be96dae3f610443",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/mobile/neutral_final.png": {
+      "bytes": 248786,
+      "sha256": "5740fc5ac26ae3df5a5fb2bd56b4f726ec02d66ccf9ec5b1bf328a7946e70bac",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/mobile/rotated_neutral.png": {
+      "bytes": 220600,
+      "sha256": "2c3a8dcefc2e395eb067deb13d23d9e53f0e2c544b97e42eeef4378ff14a00f4",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/negative/desktop/refusal.png": {
+      "bytes": 59760,
+      "sha256": "3a28d3486bc7f69bd1c5e599b561e62a899b7a7396ddcfbd3cedf9439723f888",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cross_section/negative/mobile/refusal.png": {
+      "bytes": 157187,
+      "sha256": "86433345cc78f11678785a8672e82216aa4373481328a09fcdd5e5e60dc1f0a2",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/causal_selected.png": {
+      "bytes": 167200,
+      "sha256": "330edf3403f2858dd82d34c4610cfb9622ce57f228dfcbfa5eb6dc9a1527510a",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_current_step.png": {
+      "bytes": 168095,
+      "sha256": "4fc3f964706defdf2c3c04d95498b56ccc228daa13a32bb6729c87362b131613",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_0.png": {
+      "bytes": 122143,
+      "sha256": "489e92df59c53d8094171d0991353d1b3ac73e5ebd61b6b09992484dcf939716",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_1.png": {
+      "bytes": 121884,
+      "sha256": "77b2e5e8fe7ecf0401a0f1a029c15aeb297473393f6ec6536c8f8542624dfde1",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_10.png": {
+      "bytes": 169159,
+      "sha256": "4e213e8d06e0dbed9f94d99e67a743a00c8dcad1ccabb80b1aff056005d5f7d8",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_2.png": {
+      "bytes": 122355,
+      "sha256": "5ebfed548bf93707c295d488dd6a8800f95aaf170dd39031101ffecbda4c2808",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_3.png": {
+      "bytes": 125606,
+      "sha256": "81d78f6de4acbd75d292c2e13176d5683bbda40fdd7d3c77f2f4b29232dd6d32",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_4.png": {
+      "bytes": 126692,
+      "sha256": "78daa4f41dc832447c9be9f4ca827eacfaa1df864d52900cf3743f7c4047ace3",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_6.png": {
+      "bytes": 163558,
+      "sha256": "84d92bf8529ef1c45c8d11d946c5345bf130403bfeee1f90da95a49d6234849d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_7.png": {
+      "bytes": 166645,
+      "sha256": "f4b1e2c5b8439b0a4c35cdbf81b408ce32929f0aac253c6ec3d33d4f1487f5c4",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_8.png": {
+      "bytes": 167019,
+      "sha256": "5cf7e945e1d16174bd9c69e9a5e3ef40607ccf97bd5e8ceeb1864987d869cf71",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/formation/formation_step_9.png": {
+      "bytes": 170025,
+      "sha256": "a736d07f606f06ee2b54b755253be0577801e2a625b823713581ae09e5c8dab4",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/neutral_final.png": {
+      "bytes": 169159,
+      "sha256": "4e213e8d06e0dbed9f94d99e67a743a00c8dcad1ccabb80b1aff056005d5f7d8",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/desktop/rotated_neutral.png": {
+      "bytes": 169279,
+      "sha256": "7a548a2194d6b880c97ea76466002989f11f9bf95084835e06b7cd90bdceda0d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/mobile/causal_selected.png": {
+      "bytes": 238303,
+      "sha256": "ad2978f9bded337bc99f42ae61738848b13634580b609b690d229bc6ea72d94b",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/mobile/formation/formation_current_step.png": {
+      "bytes": 229044,
+      "sha256": "69f7068c8804de1e69742741390471fcaec9a6d13845e696cd3e079646dca1bf",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/mobile/neutral_final.png": {
+      "bytes": 225993,
+      "sha256": "41a1547bd5c40f45e7f89a5c934b30fa7019f309b87e2e83c9d0a6c894827b20",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/mobile/rotated_neutral.png": {
+      "bytes": 225648,
+      "sha256": "8b1c9419b6fcb90f851adae162bac1d88528563e9c097719209ca254b4ffdf74",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/negative/desktop/refusal.png": {
+      "bytes": 52923,
+      "sha256": "466912ce9853c141c8da408c36976756e51582f12a68d49e71c74dd92dd6dcee",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cube/negative/mobile/refusal.png": {
+      "bytes": 136882,
+      "sha256": "b9443fdb3abdff5cab32865c12186bcda7505cb985c798f39f76722958e8f368",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/causal_selected.png": {
+      "bytes": 167400,
+      "sha256": "9338deecd06ee74f23c6bc3b938a933fe4c22e78e3148c00fda954717ae59c59",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_current_step.png": {
+      "bytes": 162171,
+      "sha256": "d42ced09b6af41c597149992a1fcd51cf8de3de8318b0c245ff6b7e00c058b56",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_0.png": {
+      "bytes": 122381,
+      "sha256": "42f1caa77907075fc7bde23a9558576f66153c097c3fde39d6329b79a5a19f31",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_1.png": {
+      "bytes": 124058,
+      "sha256": "5ebb311e2086bf3aab2abe93d44175bf56c74345868142b6167bf5206e5dae96",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_2.png": {
+      "bytes": 126257,
+      "sha256": "52d1388b85440530e7a747d2a9b684eb3448a7674552fc54bc5f7f64359b3ea5",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_3.png": {
+      "bytes": 168852,
+      "sha256": "f486dae173d0fc005b7028b2c10888deab895f8f0c5aa2f81f64c5c378109801",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_5.png": {
+      "bytes": 165096,
+      "sha256": "41d4c7e16eb391598ef803763533705e912b691f4cd8941b918ac2d39b4f4b83",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_6.png": {
+      "bytes": 165598,
+      "sha256": "6417d3dcb4169c89b351c9a724520f9b16d619fadc9cc79ce5e131835fe7a185",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_7.png": {
+      "bytes": 168809,
+      "sha256": "707034b45c3782e45ed72e5d7e23d8ebff5d8bb163f5545290ce191e73078f0c",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/formation/formation_step_8.png": {
+      "bytes": 167721,
+      "sha256": "f0f2c622bd77dafff9406ea593933928ec7816d7ede89b1df9ca287da545c011",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/neutral_final.png": {
+      "bytes": 167721,
+      "sha256": "f0f2c622bd77dafff9406ea593933928ec7816d7ede89b1df9ca287da545c011",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/desktop/rotated_neutral.png": {
+      "bytes": 170790,
+      "sha256": "c57767aede33e09244073afe3095a172d54c2b82455a1acbb184f310c7117cdb",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/mobile/causal_selected.png": {
+      "bytes": 248042,
+      "sha256": "32d7ef36e6c893d5080935358fecfbd9bda062354c55cd83d27e1b46a40d49e7",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/mobile/formation/formation_current_step.png": {
+      "bytes": 238213,
+      "sha256": "231504d072b714e612dbdc8f96c1afcc0fb7b13586a7a7acf4a139c0fd1f530f",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/mobile/neutral_final.png": {
+      "bytes": 235246,
+      "sha256": "926ded2755dfb0cd4a9d91ac39093a384e1b136d88cbe900f8c2a2aa240dae76",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/mobile/rotated_neutral.png": {
+      "bytes": 230968,
+      "sha256": "b420853acf5be59f1891ca70bbe191935b443fe4cfc4813ed2b9489f53a9d647",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/negative/desktop/refusal.png": {
+      "bytes": 54291,
+      "sha256": "3bc91277ff2affde78bbc377458ee0c61da16698fbf40efd8dc4b1dfef39b857",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/cuboid/negative/mobile/refusal.png": {
+      "bytes": 140586,
+      "sha256": "c0336dc1f53bec694cda522cfbf8fe271e971a1b84c730b7cecf3b2b5d324aa4",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/causal_selected.png": {
+      "bytes": 160665,
+      "sha256": "c2a56ed3ee552fe6914fbf55418432ee48b81bbe0367cd3d3593677a9eeab096",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_current_step.png": {
+      "bytes": 156940,
+      "sha256": "12b272833f6d4c86129b6538d5131d3bb2857cca8eb2431d954676e0f64172cf",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_0.png": {
+      "bytes": 114562,
+      "sha256": "4f141a4114074f81e827db7d5b2d5af1c9efbfaa20d171c3e3873da2de7fc65c",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_1.png": {
+      "bytes": 116175,
+      "sha256": "33541163eac4540598a8d2db6107d86c70c28ffa74b0b05e293380d7464f5b57",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_2.png": {
+      "bytes": 136306,
+      "sha256": "6997d37cb7956553950e40156a8894e8510accf91a41be766533642b89326302",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_4.png": {
+      "bytes": 150863,
+      "sha256": "4edcb64ae09ede7d5f5f4b5402119c4d6ac5ca973d64126b40f0a152d62a429a",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_5.png": {
+      "bytes": 157047,
+      "sha256": "cade6bede473bb6023c2480645c103249c2904fda40b46af9cf2cb6f5b5c2b9e",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_6.png": {
+      "bytes": 159341,
+      "sha256": "888bb04666b96770b016e458cef87aa6ad6d0da9cadec450b0db9e2af0e07c77",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/formation/formation_step_7.png": {
+      "bytes": 158106,
+      "sha256": "89f123dcbe47690c3190f78c1b2326eb3d12e455d16ccb6f2e850983451193f8",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/neutral_final.png": {
+      "bytes": 158106,
+      "sha256": "89f123dcbe47690c3190f78c1b2326eb3d12e455d16ccb6f2e850983451193f8",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/desktop/rotated_neutral.png": {
+      "bytes": 145562,
+      "sha256": "14114c91190cca1d7c5a26ce1bbbed313831f9aa37afbf44edd99fe4d75cf2e0",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/mobile/causal_selected.png": {
+      "bytes": 246183,
+      "sha256": "e248b9b8110c876cbd1dabc296b986c27f36623264409e1f67486849c59a98eb",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/mobile/formation/formation_current_step.png": {
+      "bytes": 246020,
+      "sha256": "7bcd02dca882096bd162810f2cb339928f623f53798748dfe6c03d17b783751d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/mobile/neutral_final.png": {
+      "bytes": 244216,
+      "sha256": "a0ae6bbeddadf811cb5e363b52e23ad47452b9df906c815dd16372980c3febb6",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/mobile/rotated_neutral.png": {
+      "bytes": 225806,
+      "sha256": "129bd6db423e4a281fa6ab3629d8b32b541e023aa0b5dc59c5f34ce345b2543d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/negative/desktop/refusal.png": {
+      "bytes": 55532,
+      "sha256": "ead2a819fa5ebec45258028a17999ea5987c56baac8b387ebdda331788a5e77f",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/rectangular_pyramid/negative/mobile/refusal.png": {
+      "bytes": 142766,
+      "sha256": "097da8905150997f903f09564842affbdd71d5ee1be4c2433c9c35d63e60fbf5",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/causal_selected.png": {
+      "bytes": 159109,
+      "sha256": "891af21585bf35ffca7915de66bfbe6f8dd179f75c6afe25dd8dc298bb316b5b",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_current_step.png": {
+      "bytes": 157193,
+      "sha256": "ecaf2c9b96b87b782247947dcc5e7965b1be264b02f095fb38eb850f105e92a3",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_step_0.png": {
+      "bytes": 113740,
+      "sha256": "60ac00286c704a1cd90090ed8fb360428e422ac3894955b3c906c6074f6d0542",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_step_1.png": {
+      "bytes": 114565,
+      "sha256": "a2afb04fdaa22050c4cbf8c8f9ef37ac5c5b4fb91ad14014c9f8d081b46bc462",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_step_3.png": {
+      "bytes": 158796,
+      "sha256": "7a012ae4ddd88b168a758d216ec862f7938d5d226296b652d54163546c61a7f1",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_step_4.png": {
+      "bytes": 161108,
+      "sha256": "26a903ef6fd8f53e652b67bdb6ae7c749e57946a464ba06361e9927f9771eb17",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/formation/formation_step_5.png": {
+      "bytes": 161298,
+      "sha256": "51bd908d208ca41e28458940478c622dc8afcd4118967915be6e2135dc5f362c",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/neutral_final.png": {
+      "bytes": 161298,
+      "sha256": "51bd908d208ca41e28458940478c622dc8afcd4118967915be6e2135dc5f362c",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/desktop/rotated_neutral.png": {
+      "bytes": 181178,
+      "sha256": "86a3b2ce7090c163fd1add85bf9098cf313cdc602bf3525ac344cf91c8717e68",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/mobile/causal_selected.png": {
+      "bytes": 227835,
+      "sha256": "4e715e10883d0313759bde815ed902251d776ef5b38b46b0b42d6accefb6b508",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/mobile/formation/formation_current_step.png": {
+      "bytes": 222017,
+      "sha256": "364283b8584496a5c21ff0a88059790cdae8227865040d747eb4c6ba8995926d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/mobile/neutral_final.png": {
+      "bytes": 219578,
+      "sha256": "c1a6d0c1095f513305ed254b99b78c23ab50ad30b701c022ceed39154fb74ea7",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/mobile/rotated_neutral.png": {
+      "bytes": 245473,
+      "sha256": "cc1efc082ae7056b46a9541fd6fc4c241072115693a6ca439ff585f9e310b39b",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/negative/desktop/refusal.png": {
+      "bytes": 54670,
+      "sha256": "e6e845162396d287d57dafca4c2c837d23dbcb89ddec2295a44a3df72dd33f17",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_prism/negative/mobile/refusal.png": {
+      "bytes": 138970,
+      "sha256": "ca7ba8959983036b446c6548bd770d7184ceddfa7acc502748d687fbb60cd13d",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/causal_selected.png": {
+      "bytes": 149642,
+      "sha256": "b6130158c5dc369aa6b85cbb9cae03191c51933208e841f0934884fbb6511d6b",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_current_step.png": {
+      "bytes": 138357,
+      "sha256": "153b6c00a5d415656088de6d170c21a70d4af651db7e501d5dc5a2426dd94f27",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_step_0.png": {
+      "bytes": 109111,
+      "sha256": "90c8b370f2eac63d8a01889ca9bd3c1b63b106fe6feb929ed4338165c78208ad",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_step_1.png": {
+      "bytes": 109505,
+      "sha256": "659199ba9aef248284267561a76423431a402087d319370cb9855d0445d7e814",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_step_3.png": {
+      "bytes": 145606,
+      "sha256": "f12eeba9c9365083b3e9a4b42ac2b3653f56c53b5135b74fcef26fcedeb32acc",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_step_4.png": {
+      "bytes": 147427,
+      "sha256": "bc20654efa13c4d0b29e2db91de3178bb54317fa27b0f99268bad8bed12d6475",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/formation/formation_step_5.png": {
+      "bytes": 147794,
+      "sha256": "6727aedaeb766c6ef46ffe694f00b93f9a07c78274596a91ef7fb65e6c33e899",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/neutral_final.png": {
+      "bytes": 147794,
+      "sha256": "6727aedaeb766c6ef46ffe694f00b93f9a07c78274596a91ef7fb65e6c33e899",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/desktop/rotated_neutral.png": {
+      "bytes": 170752,
+      "sha256": "e1330589fc6d9ccf0df27b63a5a9f878807520500b26c3ec259da537d3a27910",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/mobile/causal_selected.png": {
+      "bytes": 240841,
+      "sha256": "9f1bd86a033aa10003dae7febc184a72b4b411b93922a641bd97de01471da206",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/mobile/formation/formation_current_step.png": {
+      "bytes": 239829,
+      "sha256": "6370c45ff072da8692bb3d9d1fe60512fac2555c2182a1e8eae9b2309b4806e7",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/mobile/neutral_final.png": {
+      "bytes": 239738,
+      "sha256": "29390a7315212f5fba2d0b000983adcc9b1697aa6d6cbc432bfbfda90c768658",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/mobile/rotated_neutral.png": {
+      "bytes": 252458,
+      "sha256": "4bedc65f7202cb002aec3781f2b13bc54c35a4eb64092485420ddc372d3d322b",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/negative/desktop/refusal.png": {
+      "bytes": 55710,
+      "sha256": "5ccaa3f452a1a8ab10abb42c297d1947c8f687bbedcb2ab1793e8d5e76227b69",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "images/screenshots/triangular_pyramid/negative/mobile/refusal.png": {
+      "bytes": 141212,
+      "sha256": "e77e40b203c7fa366268b32727712e84203eaee48ec877e48a4cf7eb9fa24fe7",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "inputs/CANDIDATE_DIVERGENCE_CORRECTION.json": {
+      "bytes": 2557,
+      "sha256": "b1e3e5392f118f2e90cdbd1f7efc5d7cb67f50074e3de246ba3898d91db89235",
+      "producer": "hand-written run document"
+    },
+    "inputs/FIXTURE_MANIFEST.json": {
+      "bytes": 2092,
+      "sha256": "2f5f42fbe7b289dc17ffdee628ecd0c34fd6894e506021891f5143ce3abed98a",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/W09_HUMAN_VISUAL_REVIEW.json": {
+      "bytes": 2169,
+      "sha256": "3432cd1f2c59e00b691803f7a598cba3b15aacc551db6bd8fc818740b05ae1ac",
+      "producer": "hand-written run document"
+    },
+    "inputs/fixtures/cross_section_negative.json": {
+      "bytes": 1894,
+      "sha256": "47d4d5e876fc323d8e475b338d145b38e9ee2834ca51dbcb031f1b7aa757a682",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/cross_section_positive.json": {
+      "bytes": 61925,
+      "sha256": "4732a61c063d4e1a7b36e2f9f90066e8b6f252536593c02475d3573343a54f24",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/cube_negative.json": {
+      "bytes": 1291,
+      "sha256": "664c6f179c1dcb06446b82c861395a985bb600886c0d59824e74a5fdc1461b41",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/cube_positive.json": {
+      "bytes": 63763,
+      "sha256": "ff670659654b989246d609e3985308a382aa63cac9ab28624852cc18ad7d5d08",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/cuboid_negative.json": {
+      "bytes": 1313,
+      "sha256": "01ec50c657843164353523bf239560093dde5e243be35a68eeac550974694a62",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/cuboid_positive.json": {
+      "bytes": 60517,
+      "sha256": "661ebce5e4df0ff235092f43186a227041acfee017477ac3a7caf4c6564f4db3",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/rectangular_pyramid_negative.json": {
+      "bytes": 1374,
+      "sha256": "200ab45f3097d8577c487644ae9bdfc5ba08b8c8eee97dba97da5ca686b9e77b",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/rectangular_pyramid_positive.json": {
+      "bytes": 46076,
+      "sha256": "dd914c17bed4a0b7049dbf181cccfd482cf1073b84f2bdf85512c16153d38490",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/triangular_prism_negative.json": {
+      "bytes": 1356,
+      "sha256": "136a328b5abf48e13b7dcc4c0760f38de976e91956ae7cf0e0178fae6c29094a",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/triangular_prism_positive.json": {
+      "bytes": 31002,
+      "sha256": "c1fb23aafdea1b132b6281f70ed671edb4979d75927f1461c6239dd7f264538a",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/triangular_pyramid_negative.json": {
+      "bytes": 1362,
+      "sha256": "d220ebc1e0798a1b3867b4364475dda77b42a76c93436f8919a7beed0b226200",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "inputs/fixtures/triangular_pyramid_positive.json": {
+      "bytes": 26508,
+      "sha256": "bea430669a523c54565daeffedbfc8b3676ddecf995e815eb86abceab780625c",
+      "producer": "backend/scripts/generate_generic_tier_a_fixtures.py (clean worktree, candidate 8539acbc)"
+    },
+    "results/BROWSER_EVIDENCE.json": {
+      "bytes": 1466287,
+      "sha256": "72e2f45837ddcd5936c51fec9a72bf6811d845132307c16155ea9c3032eb759f",
+      "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ 40ce889f"
+    },
+    "results/GOLDEN_REVIEW.json": {
+      "bytes": 1953,
+      "sha256": "2ab807d0df9886a7fa206f0a801e0bddf8b78cf032e5b4faebe0f4965f2c490f",
+      "producer": "semantic scene diff (test helpers) — baseline be23e88d vs w10"
+    },
+    "results/OCCLUSION_MEASUREMENT.json": {
+      "bytes": 146511,
+      "sha256": "08152ff364c4e578fc7d4c0a01947560652edc51c66bd52e94745e595aefd9a8",
+      "producer": "backend/scripts/measure_scene3d_occlusion.py --declared-camera-change @ 40ce889f"
+    },
+    "results/VERIFICATION_SUMMARY.json": {
+      "bytes": 5311,
+      "sha256": "a49db6b1ff9470dabd3bd4d6f8aa05989b6d58abd3dcd176e3e0b17f00219dfe",
+      "producer": "generated from results/*.json, images/playback/PLAYBACK_EVIDENCE.json, images/crops/CROPS_INDEX.json"
+    }
+  }
+}
