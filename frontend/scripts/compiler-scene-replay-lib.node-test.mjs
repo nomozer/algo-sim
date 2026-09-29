@@ -16,6 +16,7 @@ import {
   eventDeclaredClosure,
   expectedVisibleIds,
   aliasTreeRowCheck,
+  isHiddenAlias,
   planOrbit,
   pollUntil,
   solidTopology,
@@ -142,7 +143,9 @@ test("formation uses exact snapshots and proves forward plus backward playback",
    nào cả mà formation vẫn phải đạt. Một vật thường vắng mặt thì vẫn trượt. */
 test("formation ignores answer aliases, which the tree never lists separately", () => {
   const scene = { ...typedScene, objects: [...typedScene.objects,
-    { id: "v", alias_of: "the_tich_khoi" }] };
+    { id: "v", alias_of: "the_tich_khoi", render: "non_visual" }] };
+  // Bí danh VẪN HIỆN (AD := AB) là vật quan sát được như mọi vật khác.
+  assert.equal(isHiddenAlias({ id: "AD", alias_of: "AB", render: "readout" }), false);
   scene.formation = { steps: [{ visible_ids: ["A"] }, { visible_ids: ["A", "day_ABC"] },
     { visible_ids: ["A", "day_ABC", "the_tich_khoi", "v"] }] };
   const seen = (index) => expectedVisibleIds(scene, index).filter((id) => id !== "v");
@@ -159,8 +162,9 @@ test("formation ignores answer aliases, which the tree never lists separately", 
    vật KHÔNG-bí-danh cùng nhãn — 1 khi mượn nhãn nguồn, 0 khi có nhãn riêng
    (`v`). Lần đo w10 thứ 3 đỏ oan vì tiêu chí cũ đòi đúng 1 cho mọi bí danh. */
 test("alias tree rows: none of its own, whether or not it shares the source label", () => {
-  const scene = { objects: [{ id: "V", label: "Thể tích" }, { id: "v", label: "v", alias_of: "V" },
-    { id: "w", label: "Thể tích", alias_of: "V" }] };
+  const scene = { objects: [{ id: "V", label: "Thể tích" },
+    { id: "v", label: "v", alias_of: "V", render: "non_visual" },
+    { id: "w", label: "Thể tích", alias_of: "V", render: "non_visual" }] };
   const rows = (...texts) => texts.map((text) => ({ text, disabled: false }));
   assert.equal(aliasTreeRowCheck(scene, scene.objects[1], rows("Thể tích")).pass, true);
   assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích")).pass, true);

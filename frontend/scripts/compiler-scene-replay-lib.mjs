@@ -166,12 +166,16 @@ export function planOrbit(scene, direction, { offsets = ORBIT_OFFSETS_DEG, camer
   return null;
 }
 
+/** Bí danh KHÔNG hiện ở đâu (bí danh đáp số, `render: "non_visual"`). Bí danh
+ *  vẫn hiện — AD := AB ở hình lập phương — là một vật bình thường của cây. */
+export const isHiddenAlias = (o) => Boolean(o?.alias_of) && o.render === "non_visual";
+
 /** Bí danh đáp số (w10) không có dòng riêng trong cây: số dòng mang nhãn của
- *  nó phải bằng số vật KHÔNG-bí-danh cùng nhãn (1 khi mượn nhãn nguồn, 0 khi
- *  có nhãn riêng). Cây nhận dạng theo nhãn nên đây là cách đếm duy nhất đúng. */
+ *  nó phải bằng số vật khác cùng nhãn (1 khi mượn nhãn nguồn, 0 khi có nhãn
+ *  riêng). Cây nhận dạng theo nhãn nên đây là cách đếm duy nhất đúng. */
 export function aliasTreeRowCheck(scene, alias, rows) {
   const matches = rows.filter((row) => row.text === alias.label).length;
-  const owners = (scene?.objects ?? []).filter((o) => !o.alias_of && o.label === alias.label).length;
+  const owners = (scene?.objects ?? []).filter((o) => !isHiddenAlias(o) && o.label === alias.label).length;
   return { id: alias.id, label: alias.label, alias_of: alias.alias_of, matches,
     expected_rows: owners, observed_present: null, pass: matches === owners };
 }
@@ -254,7 +258,7 @@ export function assessFormationSnapshots(scene, observations) {
   const mismatch = [];
   // Bí danh đáp số (w10) là MỘT kết luận với nguồn, không có dòng riêng trong
   // cây ⇒ không phải vật quan sát được; nguồn của nó vẫn được kiểm như mọi vật.
-  const aliases = new Set((scene?.objects ?? []).filter((o) => o.alias_of).map((o) => o.id));
+  const aliases = new Set((scene?.objects ?? []).filter(isHiddenAlias).map((o) => o.id));
   for (const observation of [...forward, ...backward]) {
     const expected = expectedVisibleIds(scene, observation.index).filter((id) => !aliases.has(id));
     const diff = setDiff(expected, observation.visible_ids);

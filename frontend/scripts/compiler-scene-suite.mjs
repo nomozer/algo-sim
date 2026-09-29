@@ -10,6 +10,7 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   aliasTreeRowCheck,
   assessCssReadiness,
+  isHiddenAlias,
   assessFormationSnapshots,
   assessImmutableWindow,
   compareClosures,
@@ -324,7 +325,7 @@ async function observeTree(session, scene, expectedIds) {
   for (const object of scene.objects ?? []) {
     const matches = rows.filter((row) => row.text === object.label);
     // w10: bí danh đáp số KHÔNG có dòng riêng trong cây (`aliasTreeRowCheck`).
-    if (object.alias_of) {
+    if (isHiddenAlias(object)) {
       checks.push(aliasTreeRowCheck(scene, object, rows));
       continue;
     }
