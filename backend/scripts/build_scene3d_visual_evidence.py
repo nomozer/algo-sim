@@ -108,16 +108,47 @@ def _path(value: Any) -> Path | None:
     return path if path.is_absolute() else REPO_ROOT / path
 
 
-def _sheet(cells: list[list[tuple[str, Path | None]]], out: Path, cell=CELL) -> None:
+def image_scale(record: dict[str, Any], image_width: int) -> float:
+    """Điểm ảnh của ẢNH chụp trên một CSS px. Không lấy dpr của renderer: ảnh
+    mobile 780 px cho khung 390 CSS px trong khi renderer khai dpr 1 — dùng dpr
+    ấy thì crop mobile cắt sai vùng (w10)."""
+    width = (record.get("viewport") or {}).get("width")
+    return image_width / width if width else 1.0
+
+
+def to_image_px(box: dict[str, float], screen: tuple[float, float], render_dpr: float,
+                scale: float) -> tuple[float, float]:
+    """Điểm oracle (px vật lý của canvas theo dpr renderer) → px của ẢNH."""
+    return ((box["x"] + screen[0] / render_dpr) * scale, (box["y"] + screen[1] / render_dpr) * scale)
+
+
+def stage_box(record: dict[str, Any], state: str, size: tuple[int, int],
+              readout_css: int = 80) -> tuple[int, int, int, int] | None:
+    """Vùng SÂN KHẤU của một ảnh: hộp canvas lúc chụp + dải số đo ngay dưới.
+    Sheet chính cắt vùng này thay vì thu cả trang — nếu không hình chỉ còn
+    một góc nhỏ của mỗi ô."""
+    box = (record.get("canvas_boxes") or {}).get(state) or record.get("canvas_box")
+    if not box:
+        return None
+    s = image_scale(record, size[0])
+    x0, y0 = max(0, int(box["x"] * s)), max(0, int(box["y"] * s))
+    x1 = min(size[0], int((box["x"] + box["w"]) * s))
+    y1 = min(size[1], int((box["y"] + box["h"] + readout_css) * s))
+    return (x0, y0, x1, y1) if x1 > x0 and y1 > y0 else None
+
+
+def _sheet(cells: list[list[tuple]], out: Path, cell=CELL) -> None:
     rows, cols = len(cells), max((len(r) for r in cells), default=1)
     sheet = Image.new("RGB", (cols * cell[0], rows * (cell[1] + 24)), "white")
     draw = ImageDraw.Draw(sheet)
     for r, row in enumerate(cells):
-        for c, (label, path) in enumerate(row):
+        for c, (label, path, *crop) in enumerate(row):
             x, y = c * cell[0], r * (cell[1] + 24)
             draw.text((x + 8, y + 6), label, fill="black")
             if path and path.exists():
                 image = Image.open(path).convert("RGB")
+                if crop and crop[0]:
+                    image = image.crop(crop[0])
                 image.thumbnail(cell)
                 sheet.paste(image, (x, y + 24))
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -132,9 +163,12 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
         scene = json.loads((fixture_root / "fixtures" / f"{family}_positive.json")
                            .read_text(encoding="utf-8"))["envelope"]["scene3d"]
         positive = scenario.get("positive", {})
-        main_rows.append([(f"{family} · {vp} · {state}",
-                           _path(positive.get(vp, {}).get("screenshots", {}).get(state)))
-                          for vp, state in MAIN_COLUMNS])
+        row = []
+        for vp, state in MAIN_COLUMNS:
+            shot = _path(positive.get(vp, {}).get("screenshots", {}).get(state))
+            size = Image.open(shot).size if shot and shot.exists() else (0, 0)
+            row.append((f"{family} · {vp} · {state}", shot, stage_box(positive.get(vp, {}), state, size)))
+        main_rows.append(row)
         formation = positive.get("desktop", {}).get("formation", {}).get("steps", [])
         appendix_rows.append([(f"{family} · formation {s.get('index')}", _path(s.get("screenshot")))
                               for s in formation if s.get("screenshot")])
@@ -158,9 +192,10 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
                         expected = {k: v for k, v in expected.items() if v != "VISIBLE"}
                 image = Image.open(shot).convert("RGB")
                 dpr = float(snap.get("device_pixel_ratio", 1))
+                scale = image_scale(record, image.width)
                 for rec in edge_records(scene, snap, product, oracle, expected):
-                    pts = [(box["x"] * dpr + x, box["y"] * dpr + y) for x, y in rec["endpoints_px"]]
-                    crop = crop_box(pts[0], pts[1], image.size, int(24 * dpr), int(96 * dpr))
+                    pts = [to_image_px(box, (x, y), dpr, scale) for x, y in rec["endpoints_px"]]
+                    crop = crop_box(pts[0], pts[1], image.size, int(24 * scale), int(96 * scale))
                     rec["endpoints_inside_image"] = all(0 <= x <= image.width and 0 <= y <= image.height
                                                         for x, y in pts)
                     name = f"{state}__{rec['display_label']}__{rec['observed_visibility'].lower()}.png"

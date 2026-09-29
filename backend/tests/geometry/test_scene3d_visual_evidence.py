@@ -27,6 +27,26 @@ def test_crop_box_contains_both_endpoints_with_margin_and_stays_in_the_image():
     assert B.crop_box((150.0, 20.0), (190.0, 30.0), (200, 200), margin=24, min_size=96)[2] == 200
 
 
+def test_main_sheet_cells_crop_the_stage_not_the_whole_page():
+    # Ảnh mobile 780 px cho khung 390 CSS px: tỉ lệ ẢNH là 2 dù renderer khai dpr 1.
+    record = {"viewport": {"width": 390},
+              "canvas_boxes": {"neutral_final": {"x": 25, "y": 40, "w": 340, "h": 418}},
+              "camera_snapshots": {"neutral_final": {"snapshot": {"device_pixel_ratio": 1}}}}
+    assert B.image_scale(record, 780) == 2
+    assert B.stage_box(record, "neutral_final", (780, 1688)) == (50, 80, 730, 1076)
+    # hộp theo trạng thái vắng ⇒ dùng hộp chung; không hộp nào ⇒ không cắt
+    assert B.stage_box({"canvas_box": {"x": 0, "y": 0, "w": 10, "h": 10}}, "rotated_neutral", (50, 50)) \
+        == (0, 0, 10, 50)
+    assert B.stage_box({}, "neutral_final", (50, 50)) is None
+
+
+def test_oracle_screen_point_maps_to_image_pixels_through_css():
+    # renderer dpr 1, ảnh ×2: điểm (100, 50) của canvas ở hộp (25, 195) → (250, 490)
+    assert B.to_image_px({"x": 25, "y": 195}, (100.0, 50.0), 1.0, 2.0) == (250.0, 490.0)
+    # renderer dpr 2, ảnh ×2: toạ độ oracle đã là điểm ảnh vật lý của canvas
+    assert B.to_image_px({"x": 25, "y": 195}, (200.0, 100.0), 2.0, 2.0) == (250.0, 490.0)
+
+
 def test_edge_records_carry_the_review_metadata():
     scene = json.loads(FIXTURE.read_text(encoding="utf-8"))["envelope"]["scene3d"]
     snapshot = json.loads(next(p["snapshot_json"] for p in json.loads(PREIMAGES.read_text(encoding="utf-8"))
