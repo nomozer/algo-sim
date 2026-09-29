@@ -1,55 +1,55 @@
 {
   "schema_version": "generic-tier-a-fixtures/1",
-  "product_commit_sha": "f5a3adf277f006a1f685807f3bf04ff3e6cc886d",
+  "product_commit_sha": "7a03e50d1894176d60499ddec0aded042643b38a",
   "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "application_llm_calls": 0,
   "fixtures": {
     "cross_section_negative.json": {
-      "sha256": "6e3aa0fde46ba0a78b3965dc194c2c4cf9cbb881742ec11a9635567566a00fb5",
+      "sha256": "a641c64591187e424ad09b1b3732ebcec58a744e68dea2fb77d06ad7cb197dc9",
       "bytes": 1894
     },
     "cross_section_positive.json": {
-      "sha256": "cb49955698ad8a4f05908759c1c14962a33ca962e54e139b95da16953794ace9",
+      "sha256": "d9e098efd015aca812dd54b89ef807355dabaac53a95f3422149d93b6b9ce11e",
       "bytes": 61925
     },
     "cube_negative.json": {
-      "sha256": "966af29166d06c0239b0d6d0e3d99fdccf33a502e769e69d39429cd6ac814f82",
+      "sha256": "0c48cfad9045fcb458ddf64e100d4a11a9ff253909ff689885daab7d8671aa5c",
       "bytes": 1291
     },
     "cube_positive.json": {
-      "sha256": "a2e63aa285736d2799f7580a49a4ac4cb300efb1364a73277f150ae2ea4027b6",
+      "sha256": "ef7c4471119adc2e812af45d0d807e5a11675a437e38f059c797d9c2efc1b903",
       "bytes": 63763
     },
     "cuboid_negative.json": {
-      "sha256": "2385e1523a85219606e4008dfb808ebc895e30ec8ee9386b0b0c5f04a9094386",
+      "sha256": "c45952804c633d94b8adf128f59a4fa160690d8d68a6d82629e3e3c25a96bbde",
       "bytes": 1313
     },
     "cuboid_positive.json": {
-      "sha256": "0f5cb38e986d2a19861bfbf0bc253c5a267a47abfc92676bfcfc45dd5a7dfd40",
+      "sha256": "e7b91f402cfef131c324447191bce2a806f38f0bee98881032b151042ad1cf08",
       "bytes": 60517
     },
     "rectangular_pyramid_negative.json": {
-      "sha256": "929c0dc33fbf2acd6dba0e83cafe7a22766c24def55970c677eecb5de0a95765",
+      "sha256": "f45c6837e3df88695cff8d7b3dda36b682eefe4c8f50705313b58557c6bb0af7",
       "bytes": 1374
     },
     "rectangular_pyramid_positive.json": {
-      "sha256": "8fe18e0036ad6667ceec78a8c422183c8e531c136db98b5915e49b69e669512c",
+      "sha256": "4c4449e1b1d7624df3a88999b74414fb976d3fc0555bf61ee659502aa31c332b",
       "bytes": 46076
     },
     "triangular_prism_negative.json": {
-      "sha256": "91ab16e53d72e0c352879809eeb48bfbc34f30283c58a299b3afbb3a70639060",
+      "sha256": "0fe6b72cd2ea3337dcbe541566c224423175050b94197fbbd7049a4076c52728",
       "bytes": 1356
     },
     "triangular_prism_positive.json": {
-      "sha256": "4fe929e434c597f267d896096be8438dfcec8b15800f8bc1e772c6928832aac5",
+      "sha256": "35c1a8eea1f06a69e616517faafc00f9afac4b0247a872572f04df7a69ee2230",
       "bytes": 31002
     },
     "triangular_pyramid_negative.json": {
-      "sha256": "081ac6e506e66f683019d6b1a2311a4fdd30dee7fc61a088b93d4a6bfb0e15aa",
+      "sha256": "6a975595b39083b79775740276994ec7d3e3d9d014f69f18a4d703648ffde7bd",
       "bytes": 1362
     },
     "triangular_pyramid_positive.json": {
-      "sha256": "fc458c26612191b8c6e4768aa1fe5d6867da458724b16544cd960399e145860f",
+      "sha256": "94720c52424f898fa63f7e40930cd0fd2db49bd0e629151878b62245fde70ddd",
       "bytes": 26508
     }
   }

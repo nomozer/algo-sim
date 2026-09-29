@@ -1,0 +1,22 @@
+{
+  "schema_version": "human-visual-review-record/1",
+  "reviewed_run": "docs/evaluation/geometry/runs/20260928-w09-verify-cleanup",
+  "reviewed_run_status_before_review": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "verdict": "FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR",
+  "recorded_by": "agent, from the user's task statement HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
+  "recording_rule": "Additive record: the w09 run directory is immutable and is not edited. Only the verdict and the defect classes named in the task are recorded; no reviewer wording is invented.",
+  "defect_classes": [
+    "PLAYBACK_STATE_MACHINE — one press of Play must play every step once, stop at the final step, never create a causal selection by itself; replay must reset step, selection and highlight; orbit must not move the timeline",
+    "PEDAGOGICAL_CAMERA — the default view must frame the whole figure and read in depth (w09 image: figure small in the frame, base squeezed, vertex label in the middle of the figure)",
+    "HIDDEN_EDGE_LEGIBILITY — hidden edges must be readable dashes over filled faces, visible edges must contrast, highlight must keep solid/dashed layers, one visual owner per edge",
+    "LEARNER_SURFACE — solids named by kind, stable section names, concrete quantity names, one final result, no machine IDs or generic fallback text",
+    "CAUSAL_INTERACTION — layered emphasis (target, intermediates, givens) only after a user action; neutral state restored on closing the panel or 'Xem lại toàn hình'"
+  ],
+  "agent_determinations": {
+    "CAUSAL_COLOR_CHANGE_IN_W09": "EXPECTED_HARNESS_ACTION",
+    "basis": "The w09 suite clicks a readout row on purpose (compiler-scene-suite.mjs, causal block) to produce causal_selected; the product playback never sets selected_id (verified in w10 by the learner-only runner: no_causal_selection over every sample of every family and viewport)."
+  },
+  "w09_automated_findings_confirmed_by_w10_measurement": [
+    "Hidden edges A-B and A-D of the rectangular pyramid were classified HIDDEN yet drew no pixel: the dashed span still depth-tested against the solid's own depth layer (fixed in 9dc56ae1)."
+  ]
+}

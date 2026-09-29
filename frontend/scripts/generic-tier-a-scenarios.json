@@ -1,7 +1,7 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE",
-  "product_commit_sha": "f5a3adf277f006a1f685807f3bf04ff3e6cc886d",
+  "product_commit_sha": "7a03e50d1894176d60499ddec0aded042643b38a",
   "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
