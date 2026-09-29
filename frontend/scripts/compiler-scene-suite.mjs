@@ -8,6 +8,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { BrowserSession } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
+  aliasTreeRowCheck,
   assessCssReadiness,
   assessFormationSnapshots,
   assessImmutableWindow,
@@ -322,11 +323,9 @@ async function observeTree(session, scene, expectedIds) {
   const checks = [];
   for (const object of scene.objects ?? []) {
     const matches = rows.filter((row) => row.text === object.label);
-    // w10: bí danh đáp số mang nhãn của nguồn và KHÔNG có dòng riêng — hợp đồng
-    // là đúng MỘT dòng mang nhãn ấy (dòng của nguồn), không phải "có mặt".
+    // w10: bí danh đáp số KHÔNG có dòng riêng trong cây (`aliasTreeRowCheck`).
     if (object.alias_of) {
-      checks.push({ id: object.id, label: object.label, alias_of: object.alias_of,
-        matches: matches.length, observed_present: null, pass: matches.length === 1 });
+      checks.push(aliasTreeRowCheck(scene, object, rows));
       continue;
     }
     const observedPresent = matches.some((row) => !row.disabled);

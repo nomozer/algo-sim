@@ -15,6 +15,7 @@ import {
   evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedVisibleIds,
+  aliasTreeRowCheck,
   planOrbit,
   pollUntil,
   solidTopology,
@@ -152,6 +153,19 @@ test("formation ignores answer aliases, which the tree never lists separately", 
   });
   assert.equal(assessFormationSnapshots(scene, obs()).pass, true);
   assert.equal(assessFormationSnapshots(scene, obs(["day_ABC"])).pass, false);
+});
+
+/* Bí danh không đóng góp dòng nào vào cây: số dòng mang nhãn của nó bằng số
+   vật KHÔNG-bí-danh cùng nhãn — 1 khi mượn nhãn nguồn, 0 khi có nhãn riêng
+   (`v`). Lần đo w10 thứ 3 đỏ oan vì tiêu chí cũ đòi đúng 1 cho mọi bí danh. */
+test("alias tree rows: none of its own, whether or not it shares the source label", () => {
+  const scene = { objects: [{ id: "V", label: "Thể tích" }, { id: "v", label: "v", alias_of: "V" },
+    { id: "w", label: "Thể tích", alias_of: "V" }] };
+  const rows = (...texts) => texts.map((text) => ({ text, disabled: false }));
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[1], rows("Thể tích")).pass, true);
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích")).pass, true);
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[1], rows("Thể tích", "v")).pass, false);
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích", "Thể tích")).pass, false);
 });
 
 test("raw token leakage and formula references are payload-driven", () => {

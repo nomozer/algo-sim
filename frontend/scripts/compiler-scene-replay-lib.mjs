@@ -166,6 +166,16 @@ export function planOrbit(scene, direction, { offsets = ORBIT_OFFSETS_DEG, camer
   return null;
 }
 
+/** Bí danh đáp số (w10) không có dòng riêng trong cây: số dòng mang nhãn của
+ *  nó phải bằng số vật KHÔNG-bí-danh cùng nhãn (1 khi mượn nhãn nguồn, 0 khi
+ *  có nhãn riêng). Cây nhận dạng theo nhãn nên đây là cách đếm duy nhất đúng. */
+export function aliasTreeRowCheck(scene, alias, rows) {
+  const matches = rows.filter((row) => row.text === alias.label).length;
+  const owners = (scene?.objects ?? []).filter((o) => !o.alias_of && o.label === alias.label).length;
+  return { id: alias.id, label: alias.label, alias_of: alias.alias_of, matches,
+    expected_rows: owners, observed_present: null, pass: matches === owners };
+}
+
 export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth) {
   const checks = {
     scene_layout: Boolean(actual.scene)
