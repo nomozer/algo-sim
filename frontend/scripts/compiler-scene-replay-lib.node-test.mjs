@@ -9,6 +9,7 @@ import {
   assessImmutableWindow,
   assessPlayback,
   cameraMotion,
+  cameraSauCuChi,
   chieuManHinh,
   settleCamera,
   compareClosures,
@@ -23,6 +24,7 @@ import {
   isHiddenAlias,
   measurementStepsKeepGeometry,
   orbitCandidates,
+  orbitPlanThuc,
   planOrbit,
   pollUntil,
   solidTopology,
@@ -385,6 +387,30 @@ test("rotated gate rejects the w10 rotated cameras the reviewer flagged", () => 
         `${family}: ${g.failures}`);
       assert.ok(g.metrics.ba_dinh_gan_thang_hang.includes("S"));
     }
+  }
+});
+
+test("planned gesture camera: rotating about Z through the target keeps distance and elevation", () => {
+  const tam = [0.5, 0.5, 0.5];
+  const snap = cameraSnapshot([6, -5, 4], tam, 800, 600);
+  cameraSauCuChi(snap, tam, 0, 0).view_matrix_column_major
+    .forEach((x, i) => assert.ok(Math.abs(x - snap.view_matrix_column_major[i]) < 1e-9));
+  const r = cameraSauCuChi(snap, tam, 60, 3);
+  const d0 = Math.hypot(5.5, -5.5, 3.5);
+  const d1 = Math.hypot(...r.position.map((x, i) => x - tam[i]));
+  assert.ok(Math.abs(d1 - d0 / 0.95 ** 3) < 1e-9, "each notch dollies out by 1/0.95");
+  assert.ok(Math.abs((r.position[2] - 0.5) / d1 - 3.5 / d0) < 1e-9, "elevation unchanged");
+  const az = (p) => Math.atan2(p[1] - 0.5, p[0] - 0.5) * 180 / Math.PI;
+  assert.ok(Math.abs(((az(r.position) - az([6, -5, 4]) + 540) % 360) - 180 - 60) < 1e-9);
+});
+
+test("planned orbit: every candidate passes the perspective gate on its simulated camera", () => {
+  const snap = cameraSnapshot([6, -5, 4], [0.5, 0.5, 0.5], 800, 600);
+  const plan = orbitPlanThuc(CUBE, snap, [0.5, 0.5, 0.5]);
+  assert.ok(plan.length > 0);
+  for (const c of plan) {
+    assert.ok(c.predicted_gate.pass && [3, 6].includes(c.zoom_out_notches));
+    assert.notDeepEqual(c.predicted_hidden_after, c.predicted_hidden_before);
   }
 });
 

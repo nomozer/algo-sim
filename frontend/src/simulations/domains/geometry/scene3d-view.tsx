@@ -1344,6 +1344,8 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
         (window as any).__geo3d_duplicate_visual_owner_ids =
           edgeAudit.duplicate_visual_owner_ids;
         (window as any).__geo3d_edge_spans = edgeAudit.edge_spans;
+        // Tâm quỹ đạo: bộ đo mô phỏng đúng camera SAU cử chỉ xoay/lùi (w11).
+        (window as any).__geo3d_camera_target = dieuKhien.target.toArray();
         (window as any).__geo3d_camera_snapshot = {
           position: cam.position.toArray(),
           view_matrix_column_major: [...cam.matrixWorldInverse.elements],

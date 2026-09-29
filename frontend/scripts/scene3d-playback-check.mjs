@@ -24,10 +24,11 @@ import { sleep } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   LOP_SO_DO_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
-  expectedCausalTiers, orbitCandidates, planOrbit, pollUntil, settleCamera, sha256File,
+  expectedCausalTiers, orbitPlanThuc, planOrbit, pollUntil, settleCamera, sha256File,
 } from "./compiler-scene-replay-lib.mjs";
 import {
-  capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, vertexMarkerCheck,
+  capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, trustedZoomOut,
+  vertexMarkerCheck,
 } from "./compiler-scene-suite.mjs";
 // Node ≥ 22.18 bóc kiểu TS; hai module này không import gì nên nạp thẳng được.
 import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
@@ -192,9 +193,11 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // ảnh chỉ nhận khi camera THẬT đạt cổng — trượt ⇒ về khung mặc định, thử
     // ứng viên sau. OrbitControls: Δφ = 2π·dx / chiều cao, kéo phải ⇒ phương vị GIẢM.
     const orbitBefore = await observe(session);
-    const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
-    const huong = states.neutral_final?.view?.direction;
-    const ungVien = huong ? orbitCandidates(scene, huong) : [];
+    // Cùng bộ hoạch định với suite: chấm trước trên camera mô phỏng (xoay quanh
+    // Z qua tâm quỹ đạo + lùi nấc), chỉ gửi cử chỉ cho ứng viên đạt cổng.
+    const cam0 = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
+    const tam0 = await jsonEval(session, "window.__geo3d_camera_target||null");
+    const ungVien = cam0 && tam0 ? orbitPlanThuc(scene, cam0, tam0, await overlayRects(session)) : [];
     const thuXoay = [];
     for (const [i, c] of ungVien.entries()) {
       if (i > 0) {
@@ -202,14 +205,17 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
           "[...document.querySelectorAll('button')].find(e=>e.textContent.includes('Xem lại toàn hình'))");
         await sleep(900);
       }
-      await trustedOrbit(session, { dx: Math.round((-c.offset_deg / 360) * cao), dy: 0 });
+      await trustedOrbit(session, { dx: c.dx, dy: 0 });
       await sleep(1500);
+      await trustedZoomOut(session, c.zoom_out_notches);
+      await sleep(1200);
       const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
       const gate = snap ? danhGiaAnhXoayThuc(scene, snap, await overlayRects(session)) : null;
-      thuXoay.push({ offset_deg: c.offset_deg, pass: Boolean(gate?.pass), failures: gate?.failures ?? ["NO_CAMERA"] });
+      thuXoay.push({ offset_deg: c.offset_deg, zoom_out_notches: c.zoom_out_notches, pass: Boolean(gate?.pass),
+        failures: gate?.failures ?? ["NO_CAMERA"] });
       if (gate?.pass) break;
     }
-    states.orbit_plan = { candidates: ungVien.map((c) => c.offset_deg), attempts: thuXoay };
+    states.orbit_plan = { candidates: ungVien.map((c) => [c.offset_deg, c.zoom_out_notches]), attempts: thuXoay };
     const orbitAfter = await observe(session);
     await chup("rotated_neutral");
 

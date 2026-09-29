@@ -16,6 +16,7 @@ import {
   isHiddenAlias,
   assessFormationSnapshots,
   assessImmutableWindow,
+  cameraSauCuChi,
   compareClosures,
   danhGiaAnhXoayThuc,
   detectRawTokenLeakage,
@@ -25,7 +26,7 @@ import {
   expectedCausalTiers,
   expectedVisibleIds,
   measurementStepsKeepGeometry,
-  orbitCandidates,
+  orbitPlanThuc,
   pollUntil,
   settleCamera,
   sha256File,
@@ -239,6 +240,21 @@ export async function trustedOrbit(session, {
     type: "mouseReleased", x: x + dx, y: y + dy,
     button: "left", buttons: 0, clickCount: 1,
   });
+}
+
+/** Lùi camera `nac` nấc con lăn tại giữa canvas (OrbitControls: mỗi nấc 100
+ *  ⇒ khoảng cách ×1/0.95). Là một phần của cử chỉ HOẠCH ĐỊNH cho ảnh xoay (w11):
+ *  khung mặc định lấp 68% khung, nên xoay 60–90° kéo đỉnh đáy xuống dưới mép. */
+export async function trustedZoomOut(session, nac) {
+  const r = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
+  if (!r) throw new Error("NO_CANVAS_FOR_ZOOM");
+  const [x, y] = [r.x + r.w * 0.52, r.y + r.h * 0.48];
+  if (!await session.eval(`document.elementFromPoint(${x},${y})===document.querySelector('.geo3d-canvas canvas')`)) {
+    throw new Error("ZOOM_POINT_NOT_ON_CANVAS");
+  }
+  for (let i = 0; i < nac; i += 1) {
+    await session._send("Input.dispatchMouseEvent", { type: "mouseWheel", x, y, deltaX: 0, deltaY: 100 });
+  }
 }
 
 export async function capture(session, path) {
@@ -680,9 +696,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       // viên sau. Cú kéo pixel cố định w10 đã bỏ: nó từng nhận ảnh dẹt.
       // OrbitControls: Δφ = 2π·dx / chiều cao khung, kéo phải làm phương vị GIẢM.
       const cam0 = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
-      const m0 = cam0?.view_matrix_column_major;
-      const candidates = m0 ? orbitCandidates(scene, [m0[2], m0[6], m0[10]]) : [];
-      const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
+      const tam0 = await jsonEval(session, "window.__geo3d_camera_target||null");
+      // Ứng viên chấm TRƯỚC trên camera mô phỏng (xoay quanh Z qua tâm quỹ đạo +
+      // lùi nấc) bằng chính cổng phối cảnh; cử chỉ thật chỉ gửi cho ứng viên đạt.
+      const candidates = cam0 && tam0 ? orbitPlanThuc(scene, cam0, tam0, await overlayRects(session)) : [];
       let observedOrbit = null;
       let rotatedCamera = null;
       let hiddenAfter = null;
@@ -694,8 +711,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           await clickText(session, "Xem lại toàn hình");
           await settleOrRecord(session, result, "rotated_retry_reset");
         }
-        const gesture = { dx: Math.round((-candidate.offset_deg / 360) * cao), dy: 0,
-          startX: 0.52, startY: 0.48, planned_offset_deg: candidate.offset_deg };
+        const gesture = { dx: candidate.dx, dy: 0, startX: 0.52, startY: 0.48,
+          planned_offset_deg: candidate.offset_deg, zoom_out_notches: candidate.zoom_out_notches };
         const started_ms = Date.now() - t0;
         await trustedOrbit(session, gesture);
         try {
@@ -715,15 +732,20 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           observedOrbit = null;
           continue;
         }
+        // Phần thứ hai của cử chỉ: lùi đúng số nấc đã hoạch định.
+        await trustedZoomOut(session, candidate.zoom_out_notches);
         // Damping is still carrying the orbit here: settle, then read the sets
         // and the camera in ONE evaluation so the oracle sees the same camera.
         await settleOrRecord(session, result, "rotated_neutral");
         ({ camera: rotatedCamera, ...hiddenAfter } = await jsonEval(session,
           `({${VISIBILITY_STATE}camera:window.__geo3d_camera_snapshot||null})`));
         const gate = danhGiaAnhXoayThuc(scene, rotatedCamera, await overlayRects(session));
+        const du = cameraSauCuChi(cam0, tam0, candidate.effective_offset_deg, candidate.zoom_out_notches);
+        const saiSo = Math.max(...du.view_matrix_column_major.map((x, i) =>
+          Math.abs(x - rotatedCamera.view_matrix_column_major[i])));
         attempts.push({ gesture, started_ms, ended_ms: Date.now() - t0, pass: gate.pass,
-          state: gate.pass ? "GESTURE_SENT→SETTLED→GATE_PASS" : "GESTURE_SENT→SETTLED→GATE_FAIL",
-          gate });
+          state: gate.pass ? "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS" : "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_FAIL",
+          prediction_max_view_matrix_error: saiSo, gate });
         if (gate.pass) { accepted = { ...candidate, actual_gate: gate }; break; }
       }
       if (!accepted) throw new Error(`ORBIT_EVIDENCE_NOT_NON_DEGENERATE:${JSON.stringify({
