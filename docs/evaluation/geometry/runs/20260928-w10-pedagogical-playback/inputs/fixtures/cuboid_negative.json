@@ -3,7 +3,7 @@
   "case_id": "cuboid_non_positive",
   "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 0, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
   "source": "deterministic_compiler_production_refusal",
-  "product_commit_sha": "7a03e50d1894176d60499ddec0aded042643b38a",
+  "product_commit_sha": "f0deaa0d657754ff03ac8cfd8bd5883da4cf7957",
   "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "application_llm_calls": 0,
   "envelope": {

@@ -3,7 +3,7 @@
   "case_id": "triangular_prism",
   "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
   "source": "deterministic_compiler_production_route",
-  "product_commit_sha": "7a03e50d1894176d60499ddec0aded042643b38a",
+  "product_commit_sha": "f0deaa0d657754ff03ac8cfd8bd5883da4cf7957",
   "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "application_llm_calls": 0,
   "envelope": {

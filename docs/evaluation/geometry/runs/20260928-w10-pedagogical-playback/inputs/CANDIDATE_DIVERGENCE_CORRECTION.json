@@ -6,8 +6,8 @@
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
-  "current_candidate_source_commit": "7a03e50d1894176d60499ddec0aded042643b38a",
-  "current_candidate_note": "7a03e50d changed frontend/src only (tree de-duplication of answer aliases, narrow-screen floating buttons); the measured-system hash stays 8539acbc because those files lie outside MEASURED_SYSTEM_PATHS.",
+  "current_candidate_source_commit": "f0deaa0d657754ff03ac8cfd8bd5883da4cf7957",
+  "current_candidate_note": "7a03e50d and f0deaa0d changed frontend/src only (tree de-duplication of answer aliases, narrow-screen floating buttons, rendered aliases keep their tree row); the measured-system hash stays 8539acbc because those files lie outside MEASURED_SYSTEM_PATHS.",
   "previous_candidate_hash": "3bc9415b87c78a8f4842abfc8d9a49537013de9bc60776d1190863572280d1b5",
   "intermediate_candidates_in_this_wave": [
     {

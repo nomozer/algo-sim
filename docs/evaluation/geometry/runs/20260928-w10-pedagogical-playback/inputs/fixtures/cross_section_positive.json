@@ -3,7 +3,7 @@
   "case_id": "cross_section",
   "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
   "source": "canonical_program_through_current_production_replay",
-  "product_commit_sha": "7a03e50d1894176d60499ddec0aded042643b38a",
+  "product_commit_sha": "f0deaa0d657754ff03ac8cfd8bd5883da4cf7957",
   "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "application_llm_calls": 0,
   "envelope": {
