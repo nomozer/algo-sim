@@ -3,8 +3,8 @@
   "case_id": "triangular_pyramid",
   "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
   "source": "deterministic_compiler_production_route",
-  "product_commit_sha": "1eca93d75b877aeadc225de8fedb612897a46071",
-  "product_tree_sha": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
+  "product_commit_sha": "f5a3adf277f006a1f685807f3bf04ff3e6cc886d",
+  "product_tree_sha": "8539acbc5c17dd72cd29acfea01853110b5b4363a8a40f07bee9534736004822",
   "application_llm_calls": 0,
   "envelope": {
     "status": "ok",
@@ -806,7 +806,8 @@
           "action": "MEASURE",
           "object": "the_tich_khoi_chop",
           "depends": [
-            "the_tich_khoi_chop"
+            "khoi_chop",
+            "dien_tich_day_ABC"
           ],
           "explanation": "Ghi nhận giá trị vừa tính được: 10.",
           "display_label": "Thể tích S.ABC",
