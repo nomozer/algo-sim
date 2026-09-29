@@ -86,6 +86,22 @@ def test_final_answer_is_shown_once(scenes, family):
 
 
 @pytest.mark.parametrize("family", FAMILIES)
+def test_every_event_of_one_object_declares_the_same_dependencies(scenes, family):
+    """Kết luận trỏ về NGUỒN của bí danh thì mang đúng phụ thuộc của nguồn —
+    không tự phụ thuộc chính nó (w10: bộ đo trình duyệt bắt
+    EVENT_DEPENDENCY_CONFLICT ở sự kiện kết luận)."""
+    seen: dict[str, list[str]] = {}
+    for event in scenes[family]["events"]:
+        deps = sorted(set(event.get("depends") or []))
+        # Vật tiêu điểm không tự phụ thuộc. (Sự kiện NHÓM — `objects` là thành
+        # viên, `depends` là chính các thành viên — là mẫu có từ trước, hợp lệ.)
+        assert event.get("object") not in deps, (event.get("object"), event["step_index"])
+        ids = [event["object"]] if event.get("object") else list(event.get("objects") or [])
+        for oid in ids:
+            assert seen.setdefault(oid, deps) == deps, (oid, event["step_index"])
+
+
+@pytest.mark.parametrize("family", FAMILIES)
 def test_segment_on_a_solid_edge_points_to_the_canonical_owner(scenes, family):
     """Một cạnh, MỘT nét: đoạn thẳng trùng cạnh khối (theo TÊN đầu mút) trỏ về
     cạnh chuẩn của khối, để renderer không vẽ hai nét chồng lên nhau (w09: SA

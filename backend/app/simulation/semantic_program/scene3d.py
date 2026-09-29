@@ -778,6 +778,10 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
         if oid in bi_danh_dap_so:
             goc = by_id[bi_danh_dap_so[oid]]
             # Tiêu điểm là dòng đáp số HỌC SINH THẤY; bí danh của trace vẫn ghi lại.
+            # Mang ĐÚNG phụ thuộc của nguồn: giữ `[nguồn]` của bí danh thì nguồn
+            # tự phụ thuộc chính nó và mâu thuẫn với sự kiện đo của nó.
+            do_goc = next((x for x in events if x is not e and x.get("object") == goc["id"]), None)
+            e["depends"] = list(do_goc["depends"] if do_goc else goc.get("depends", []))
             e.update(object=goc["id"], alias_object=oid, display_label=goc["label"],
                      semantic_kind="FINAL_RESULT",
                      learner_text=f"Kết luận: {_giua_cau(goc['label'])} bằng {goc.get('value')}.")
