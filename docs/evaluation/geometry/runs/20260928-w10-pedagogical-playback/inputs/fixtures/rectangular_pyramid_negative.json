@@ -1,0 +1,20 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "rectangular_pyramid_non_positive",
+  "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 0, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+  "source": "deterministic_compiler_production_refusal",
+  "product_commit_sha": "1eca93d75b877aeadc225de8fedb612897a46071",
+  "product_tree_sha": "875bc19c97118947fe1c10ea2f265a3b6c5c751c9d7f79cbf8177787cb5ed325",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "NON_POSITIVE_LENGTH",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "semantic_analyze",
+    "representation_plan": {},
+    "analysis": {},
+    "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+  },
+  "source_reason_code": "NON_POSITIVE_LENGTH"
+}
