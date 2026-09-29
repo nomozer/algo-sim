@@ -86,19 +86,27 @@ async function rectFor(session, expression) {
 export async function trustedClick(session, expression) {
   // Như người dùng: cuộn tới phần tử trước khi bấm. Không cuộn thì phần tử
   // nằm dưới khung nhìn (ô soi mobile, w10) nhận một cú bấm ở toạ độ ngoài màn hình.
-  // Cuộn vào GIỮA, không `nearest`: `nearest` đặt phần tử sát mép trên, DƯỚI
-  // thanh điều hướng dính — cú bấm rơi vào thanh nav và mở lớp phủ đăng nhập
-  // (w10, mobile). Và kiểm phần tử tại điểm bấm ĐÚNG là đích: bị che thì báo
-  // không bấm được, không bấm mù vào thứ đang che.
-  await session.eval(`(()=>{const e=${expression};if(e)e.scrollIntoView({block:"center"});return true})()`);
-  const rect = await rectFor(session, expression);
-  if (!rect || rect.w <= 0 || rect.h <= 0) return false;
-  const x = rect.x + rect.w / 2;
-  const y = rect.y + rect.h / 2;
-  const onTop = await session.eval(`(()=>{const e=${expression};const h=document.elementFromPoint(${x},${y});`
-    + `return !!(e&&h&&(e===h||e.contains(h)))})()`);
-  if (!onTop) return false;
-  await session.mouse(x, y);
+  // Kiểm phần tử tại điểm bấm ĐÚNG là đích — không bấm mù vào thứ đang che.
+  // Chỉ cuộn khi đích bị che/ngoài khung nhìn, và cuộn vào GIỮA: `nearest` đặt
+  // nó sát mép trên, DƯỚI thanh điều hướng dính — cú bấm từng mở lớp phủ đăng
+  // nhập (w10, mobile). Không cuộn khi đích đã thấy rõ: cuộn làm khung canvas
+  // dời chỗ và phép so canvas trước/sau causal mất nghĩa (lần đo w10 thứ 6).
+  const trenCung = async () => {
+    const rect = await rectFor(session, expression);
+    if (!rect || rect.w <= 0 || rect.h <= 0) return null;
+    const x = rect.x + rect.w / 2;
+    const y = rect.y + rect.h / 2;
+    const ok = await session.eval(`(()=>{const e=${expression};const h=document.elementFromPoint(${x},${y});`
+      + `return !!(e&&h&&(e===h||e.contains(h)))})()`);
+    return ok ? { x, y } : null;
+  };
+  let diem = await trenCung();
+  if (!diem) {
+    await session.eval(`(()=>{const e=${expression};if(e)e.scrollIntoView({block:"center"});return true})()`);
+    diem = await trenCung();
+  }
+  if (!diem) return false;
+  await session.mouse(diem.x, diem.y);
   return true;
 }
 
@@ -170,15 +178,21 @@ export async function trustedOrbit(session, {
   dx = 190, dy = 48, startX = 0.52, startY = 0.48,
 } = {}) {
   const canvas = `document.querySelector('.geo3d-canvas canvas')`;
-  await session.eval(`(()=>{const e=${canvas};if(e)e.scrollIntoView({block:"center"});return true})()`);
-  const rect = await rectFor(session, canvas);
-  if (!rect) throw new Error("NO_CANVAS_FOR_ORBIT");
-  const x = rect.x + rect.w * startX;
-  const y = rect.y + rect.h * startY;
-  // Điểm bắt đầu kéo phải nằm TRÊN canvas, không trên lớp phủ nào (w10).
-  if (!await session.eval(`document.elementFromPoint(${x},${y})===${canvas}`)) {
-    throw new Error("ORBIT_START_NOT_ON_CANVAS");
+  // Điểm bắt đầu kéo phải nằm TRÊN canvas, không trên lớp phủ nào (w10); chỉ
+  // cuộn khi nó chưa như thế.
+  const diemBatDau = async () => {
+    const r = await rectFor(session, canvas);
+    if (!r) throw new Error("NO_CANVAS_FOR_ORBIT");
+    const p = { x: r.x + r.w * startX, y: r.y + r.h * startY };
+    return await session.eval(`document.elementFromPoint(${p.x},${p.y})===${canvas}`) ? p : null;
+  };
+  let p = await diemBatDau();
+  if (!p) {
+    await session.eval(`(()=>{const e=${canvas};if(e)e.scrollIntoView({block:"center"});return true})()`);
+    p = await diemBatDau();
   }
+  if (!p) throw new Error("ORBIT_START_NOT_ON_CANVAS");
+  const { x, y } = p;
   await session._send("Input.dispatchMouseEvent", {
     type: "mouseMoved", x, y, button: "left", buttons: 0,
   });
@@ -497,6 +511,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
 
     // Default phải được chụp trước causal/orbit/formation.
     result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
+    // Hộp canvas NGAY lúc chụp — trang có thể đã cuộn khác lúc ghi `canvas_box`
+    // (w10: crop mobile lệch vì hộp ghi ở y = -226).
+    result.canvas_boxes = { neutral_final: await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`) };
     result.capture_order.push("neutral_final");
     // The window opens only after settling (the capture above may itself
     // have scheduled frames), so settle again right before resetting.
@@ -584,6 +601,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.causal_closure = causal;
     result.assertions.causal_closure = assertion(causal.pass, causal);
     result.screenshots.causal_selected = await capture(session, join(outDir, "causal_selected.png"));
+    result.canvas_boxes.causal_selected = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
     result.capture_order.push("causal_selected");
 
     await clickText(session, "Xem lại toàn hình");
@@ -668,6 +686,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       result.orbit = orbit;
       result.assertions.orbit = assertion(orbit.pass, orbit);
       result.screenshots.rotated_neutral = await capture(session, join(outDir, "rotated_neutral.png"));
+      result.canvas_boxes.rotated_neutral = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
       await clickText(session, "Xem lại toàn hình");
     }
 

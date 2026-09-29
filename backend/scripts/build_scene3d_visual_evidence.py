@@ -139,8 +139,10 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
         appendix_rows.append([(f"{family} · formation {s.get('index')}", _path(s.get("screenshot")))
                               for s in formation if s.get("screenshot")])
         for viewport, record in positive.items():
-            box = record.get("canvas_box") or {"x": 0, "y": 0}
             for state in STATES:
+                # Hộp canvas lúc chụp CHÍNH ảnh ấy; `canvas_box` chung chỉ là dự phòng.
+                box = ((record.get("canvas_boxes") or {}).get(state)
+                       or record.get("canvas_box") or {"x": 0, "y": 0})
                 shot = _path(record.get("screenshots", {}).get(state))
                 snap = record.get("camera_snapshots", {}).get(state, {}).get("snapshot")
                 product = record.get(f"edge_semantics_{state}")
