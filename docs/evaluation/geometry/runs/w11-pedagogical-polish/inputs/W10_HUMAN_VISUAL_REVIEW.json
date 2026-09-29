@@ -1,0 +1,34 @@
+{
+  "schema_version": "human-visual-review-record/1",
+  "reviewed_run": "docs/evaluation/geometry/runs/w10-pedagogical-playback",
+  "reviewed_run_status_before_review": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "verdict": "FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR",
+  "verdict_key": "HUMAN_VISUAL_REVIEW_W10",
+  "recorded_by": "agent, from the user's task statement W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW",
+  "recording_rule": "Additive record: the w10 run directory is immutable and is not edited. It is linked to this run as SUPERSEDED_FOR_HUMAN_VERDICT in docs/EVIDENCE_INDEX.md. Only the verdict and the findings named in the task are recorded; no reviewer wording is invented.",
+  "findings": [
+    {"id": "W10-H1", "area": "FORMULA", "finding": "triangular_pyramid causal card has no formula"},
+    {"id": "W10-H2", "area": "FORMULA", "finding": "triangular_prism causal card has no formula"},
+    {"id": "W10-H3", "area": "PROVENANCE", "finding": "triangular_pyramid and triangular_prism lack the height in the learner-facing 'Dựa trên' line or in the numerical closure"},
+    {"id": "W10-H4", "area": "CAMERA_EVIDENCE", "finding": "some rotated pyramid evidence is close to a degenerate projection"},
+    {"id": "W10-H5", "area": "VERTEX_MARKER", "finding": "vertex markers are slightly large"},
+    {"id": "W10-H6", "area": "CAUSAL_STYLING", "finding": "causal highlighting does not distinguish numerical, intermediate and structural context"},
+    {"id": "W10-H7", "area": "CROSS_SECTION", "finding": "the cross-section infinite line is too prominent in the final state"},
+    {"id": "W10-H8", "area": "EVIDENCE_LAYOUT", "finding": "the formation appendix is too small for the reviewer to check"},
+    {"id": "W10-H9", "area": "VERIFICATION_REPORTING", "finding": "full-backend counts 6368 and 6370 are not reconciled"}
+  ],
+  "agent_determinations": {
+    "W10-H1_H2_H3": {
+      "classification": "PRODUCT_DEFECT_AT_SEMANTIC_PROGRAM_LAYER",
+      "basis": "The w10 fixtures triangular_pyramid_positive.json and triangular_prism_positive.json carry no quantity for AB, AC or the height (SA / AD), although the problem text states them and the compiler binding reads them (len_1, len_2, len_cao). geometry_compiler/compiler.py bien_dich and _bien_dich_prism declare only points, the base polygon, the solid and the measured quantities; the rectangular-pyramid and cuboid compilers declare the given lengths as GIVEN memory. With no *_length memory, simulation_state._provenance cannot attach the height to the volume, the volume's numerical edges are [base area] only, and scene3d._attach_formulas skips the formula (area or height missing)."
+    },
+    "W10-H4": {
+      "classification": "EVIDENCE_GATE_TOO_WEAK",
+      "basis": "The w10 planned orbit accepted a rotation when projected area, depth range and face tilt passed (hasDepth); it did not check key-vertex collinearity or that the figure stays inside the canvas. The w10 rotated images show A on SC (triangular pyramid, vertex C clipped by the readout bar) and S, A, B nearly collinear (rectangular pyramid)."
+    },
+    "W10-H9": {
+      "classification": "TWO_CORRECT_COUNTS_AT_TWO_COMMITS",
+      "basis": "6368 passed is the T3 full gate at measurement commit 40ce889f. Commit 52de6f22 (evidence post-processing) then added exactly two tests to backend/tests/geometry/test_scene3d_visual_evidence.py (test_main_sheet_cells_crop_the_stage_not_the_whole_page, test_oracle_screen_point_maps_to_image_pixels_through_css), giving 6370 at b9193766. w11 publishes one count with its log and hash."
+    }
+  }
+}
