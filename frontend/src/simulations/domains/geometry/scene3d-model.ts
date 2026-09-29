@@ -207,6 +207,8 @@ export interface SceneObject {
   closed?: boolean;
   /** Tầng trình bày chép từ `geometry_progress`: viền đã khép nhưng mặt chưa tô. */
   fill_visible?: boolean;
+  /** Bí danh của đáp số (backend `_danh_dau_bi_danh`): MỘT kết luận với nguồn này. */
+  alias_of?: string;
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *

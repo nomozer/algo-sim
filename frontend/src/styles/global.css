@@ -5242,6 +5242,22 @@ html {
     box-shadow: none;
   }
 
+  /* Hai nút nổi vào dòng chảy PHÍA TRÊN khung: ở khổ hẹp, góc trên-trái nơi
+     chúng đứng chính là chỗ đỉnh cao nhất của hình rơi vào (ảnh w10: đỉnh S
+     nằm dưới "Xem lại toàn hình"). Camera không phải biết giao diện có gì. */
+  .geo3d-san {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .geo3d-noi {
+    position: static;
+    order: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-sm);
+  }
+
   .geo3d-ngan {
     width: 100%;
     border-radius: var(--rounded-lg);

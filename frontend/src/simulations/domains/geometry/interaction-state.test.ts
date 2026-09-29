@@ -391,6 +391,19 @@ describe("cây phân rã ngữ nghĩa", () => {
     expect(gocHM["Đại lượng"].children.map((c) => c.id)).toEqual(["V"]);
   });
 
+  /* w10 — bí danh đáp số (`alias_of`) là MỘT kết luận với nguồn và mang cùng
+     nhãn; liệt kê nó là hai dòng "Thể tích S.ABC" trong cây (suite trình duyệt
+     bắt ở hai họ hình chóp/lăng trụ tam giác). */
+  it("bí danh đáp số KHÔNG thành một dòng riêng trong cây", () => {
+    const voiBiDanh = { ...CANH, objects: [...CANH.objects,
+      { ...CANH.objects.find((o) => o.id === "V")!, id: "v", render: "non_visual", alias_of: "V" }] } as Scene3D;
+    const ids: string[] = [];
+    const di = (ns: ReturnType<typeof semanticTree>) => ns.forEach((n) => { ids.push(n.id); di(n.children); });
+    di(semanticTree(voiBiDanh));
+    expect(ids).toContain("V");
+    expect(ids).not.toContain("v");
+  });
+
   it("KHÔNG dựng hạng mục rỗng", () => {
     const cay = semanticTree(CANH);
     const di = (ns: ReturnType<typeof semanticTree>): boolean =>

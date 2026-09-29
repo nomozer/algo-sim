@@ -321,6 +321,18 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     expect(khoi).toMatch(/\n\s*\.geo3d-soi \{[^}]*position:\s*static/s);
   });
 
+  /* w10 — ảnh 390×844 của suite: đỉnh S nằm DƯỚI nút nổi "Xem lại toàn hình".
+     Camera lấp 68% khung theo hình chiếu, và ở khổ hẹp góc trên-trái nơi hai
+     nút nổi đứng chính là chỗ đỉnh cao nhất rơi vào. Khổ hẹp: hai nút vào dòng
+     chảy PHÍA TRÊN khung, không đè lên hình. */
+  it("nút nổi ở khổ hẹp nằm trên khung, không đè lên hình", () => {
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
+    const i = css.indexOf("@media (max-width: 48rem)");
+    const khoi = css.slice(i, css.indexOf("@media", i + 1));
+    expect(khoi).toMatch(/\n\s*\.geo3d-noi \{[^}]*position:\s*static[^}]*order:\s*-1/s);
+    expect(khoi).toMatch(/\n\s*\.geo3d-san \{[^}]*flex-direction:\s*column/s);
+  });
+
   it("một khay điều khiển trên một màn hình — khay 2D ẩn khi cảnh là 3D", () => {
     const app = readFileSync(new URL("../App.tsx", import.meta.url), "utf8");
     // Hai trạng thái bước THẬT SỰ khác nhau (store vs InteractionState), nên
