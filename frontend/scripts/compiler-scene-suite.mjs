@@ -511,27 +511,34 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
       + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`);
 
-    const target = scene.objects.find((object) => object.id === scenario.causal_target_id);
+    // w10: bí danh đáp số (`alias_of`) là MỘT kết luận với nguồn — không có dòng
+    // số đo riêng, người học bấm dòng đáp số là chọn NGUỒN. Bao đóng kỳ vọng
+    // (manifest độc lập) chỉ bỏ đúng id bí danh; mọi id khác giữ nguyên.
+    const declaredTarget = scene.objects.find((object) => object.id === scenario.causal_target_id);
+    const causalId = declaredTarget?.alias_of ?? scenario.causal_target_id;
+    const expectedClosure = declaredTarget?.alias_of
+      ? scenario.oracle_expected_closure.filter((id) => id !== declaredTarget.id)
+      : scenario.oracle_expected_closure;
+    const target = scene.objects.find((object) => object.id === causalId);
     const targetText = target?.notation || target?.label;
     if (!targetText) throw new Error(`MISSING_CAUSAL_TARGET:${scenario.causal_target_id}`);
     const clicked = await trustedClick(session,
       `[...document.querySelectorAll('.geo3d-readout li')].find(e=>(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim()===${JSON.stringify(targetText)})`);
     if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${targetText}`);
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
-      (id) => id === scenario.causal_target_id, { timeoutMs: 5_000 });
+      (id) => id === causalId, { timeoutMs: 5_000 });
     const causalState = await pollUntil(
       () => jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
         + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
         + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
         + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
-      (state) => state.selected_id === scenario.causal_target_id
+      (state) => state.selected_id === causalId
         && state.highlighted_render_owner_ids.length > 0,
       { timeoutMs: 8_000 },
     );
-    const declared = eventDeclaredClosure(scene.events, scenario.causal_target_id);
-    const causal = compareClosures(
-      scenario.oracle_expected_closure, declared, causalState.highlighted_ids,
-    );
+    const declared = eventDeclaredClosure(scene.events, causalId);
+    const causal = compareClosures(expectedClosure, declared, causalState.highlighted_ids);
+    causal.declared_target_id = scenario.causal_target_id;
     causal.selected_id = causalState.selected_id;
     const causalAfterFrame = await canvasFrame(session);
     const delta = causalBeforeFrame.sha256 === causalAfterFrame.sha256
@@ -548,7 +555,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       dash_signature_preserved:
         JSON.stringify(edgeDefault.dash_signature) === JSON.stringify(causalState.dash_signature),
     };
-    causal.pass = causal.pass && causalState.selected_id === scenario.causal_target_id
+    causal.pass = causal.pass && causalState.selected_id === causalId
       && causal.visual.selected_changed && causal.visual.closure_changed
       && causal.visual.render_owners_changed && causal.visual.canvas_changed && delta.pass
       && causal.visual.dash_signature_preserved;
