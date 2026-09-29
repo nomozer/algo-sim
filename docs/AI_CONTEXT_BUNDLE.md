@@ -10,8 +10,9 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in.
-- `CACHE_VERSION = 103` (w10 bump: nội dung cảnh của envelope `ok` đổi);
-  provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 104` (w11 bump: envelope `ok` đổi — độ dài đề cho được khai,
+  grounding nhận chúng, tham chiếu công thức); provider-facing fingerprint
+  `b1714b566e25c912…` không đổi.
 - Mọi test/repair gần nhất offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -19,13 +20,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10)
-MEASUREMENT_COMMIT = 40ce889fe83b7220195a89f50c22757a02770511
-EVIDENCE_COMMIT = 8a09a5d8 (post-processing 52de6f22)
+CURRENT_WAVE = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11)
+MEASUREMENT_COMMIT = 39e5404686fdf25ddae310759c87c8c64dd8dc41
+EVIDENCE_COMMIT = 5e3dbab4 (trace post-processing ac19e03d)
 ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce
-CANDIDATE = 8539acbc5c17dd72… (was 3bc9415b…), product commit f0deaa0d
+CANDIDATE = df04a613db9c5dd0… (was 8539acbc…), product commit 60292ecf
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (w09 review = FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR; w10 pending)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (w10 review = FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR; w11 pending)
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -81,37 +82,54 @@ người của w09 (`FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`):
 - Bộ đo: kỳ vọng người chuyển sang camera mới chỉ qua khai báo + oracle ở cả hai
   camera; crop chứa trọn cạnh; bấm/kéo không mù.
 
+Wave w11 (`W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW`) trả lời
+review người của w10 (`FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR`, W10-H1…H9):
+- Công thức: compiler chóp/lăng trụ đáy tam giác vuông khai AB, AC, SA/AD là GIVEN
+  (xuất xứ chép từ FactGraph); grounding nhận `XY_length` khớp bất biến độ dài
+  của hợp đồng; `references` = đúng vật chữ công thức nhắc tới; "Dựa trên" = nguồn
+  số theo thứ tự công thức. Hai ứng viên chiều cao ⇒ không công thức.
+- Thị giác: chấm đỉnh theo px CSS (6 / 7,5 hẹp / 9 chọn, token `DAU_DINH_PX`);
+  causal bốn tầng theo cạnh `numerical`; đường vô hạn nhạt khi không nhấn; "Xem lại
+  toàn hình" bỏ đường vô hạn và chấm đỉnh khỏi khung.
+- Bộ đo: cổng ảnh xoay trên ẢNH PHỐI CẢNH, cử chỉ mô phỏng trước (sai số ma trận
+  nhìn ≤ 1e-6); nấc con lăn ×DPR; sheet theo họ `images/<họ>/SHEET.png`; chữ ký hình
+  của oracle bỏ `quantity` (readout không vẽ).
+
 ## 4. Còn mở — không được che
 
 - **Human visual acceptance: NOT_APPROVED** — việc kế tiếp; chưa merge.
+- Mới ở w11: `ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED` (tuyến LLM: độ dài chỉ
+  có trong fact analyze vẫn làm căn cứ cho GIVEN), `ISSUE-OPS-OFFLINE-SAMPLES-STALE`,
+  `ISSUE-OPS-DIST-ACL-OWNERSHIP` (`dist/` cây chính không build được — đo trong worktree).
 - Nét vẫn 1 px (WebGL bỏ qua `linewidth`); phân loại khuất theo từng khối (cảnh
   nhiều khối cần `occluders`); script trình duyệt chạy tay còn `URL.pathname`
   (`ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`).
-- `ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH` và `ISSUE-EVAL-ORBIT-EVIDENCE-INTERMITTENT`
-  **đã đóng ở w10** (xem `docs/OPEN_ISSUES.md`).
 
-Tự động đã xanh tại `40ce889f` (detached): T3 từ đường dẫn CÓ dấu cách PASS
-(pytest 6368/0, vitest 946/0, build, demo) · browser 12/12 + 12/12 âm · oracle
-24/24 · kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 · playback người học 12/12 ×
-17 kiểm, 60/60 lượt xoay · 60 crop, 0 bất đồng, 0 owner trùng.
+Tự động tại `39e54046` (detached): browser 12/12 + 12/12 âm, xoay hoạch định đạt
+ngay 12/12 · oracle 24/24 · kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 · playback
+12/12 × 18 kiểm, 60/60 lượt xoay · 64 crop, 0 bất đồng, 0 owner trùng · T3 tại
+`5e3dbab4` từ đường dẫn CÓ dấu cách: `FULL_PRODUCT_GATE_PASS` (pytest 6411/0,
+vitest 958/0, build, demo, bề mặt sập; 6368/6370/6411 đối soát trong run).
 
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
 ```
 
-Người duyệt theo `HANDOFF.md` của run w10 (contact sheet chính, crop cạnh khuất,
-filmstrip playback). Không mở family, image/OCR, composite geometry trước khi có
-human visual acceptance; automation không phát `MERGE_READY`.
+Người duyệt theo `HANDOFF.md` của run w11 (sheet từng họ, công thức chóp/lăng trụ
+tam giác, crop cạnh khuất, filmstrip playback). Không mở family, image/OCR,
+composite geometry trước khi có human visual acceptance; automation không phát
+`MERGE_READY`.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/w10-pedagogical-playback/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/w11-pedagogical-polish/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
   `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
-- Wave trước (bất biến, review người FAIL ghi bổ sung ở w10):
+- Hai wave trước (bất biến, review người FAIL ghi bổ sung ở run sau):
+  `docs/evaluation/geometry/runs/w10-pedagogical-playback/`,
   `docs/evaluation/geometry/runs/w09-verify-cleanup/`.
 - Wave bị đính chính (bất biến):
   `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/`.
@@ -124,7 +142,7 @@ human visual acceptance; automation không phát `MERGE_READY`.
   `docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`.
 
 Historical run artifacts are immutable. Run mới phải theo
-`docs/evaluation/RUN_NAMING.md` (`YYYYMMDD-wNN-short-slug`).
+`docs/evaluation/RUN_NAMING.md` (`wNN-short-slug`; ngày giờ nằm trong `RUN.json`).
 
 ## 7. Thứ tự đọc
 

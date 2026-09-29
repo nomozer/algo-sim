@@ -1,0 +1,30 @@
+{
+  "schema_version": "backend-count-reconciliation/1",
+  "answers": "W10-H9 — full-backend counts 6368 and 6370 are not reconciled",
+  "authoritative_count": {
+    "passed": 6411,
+    "failed": 0,
+    "skipped": 1,
+    "deselected": 1,
+    "commit": "5e3dbab4",
+    "gate": "frontend/scripts/full-gate.mjs (T3) from the detached worktree `D:/tmp/w11 space/algo-sim` (path WITH a space); Python = main-tree backend/.venv 3.12",
+    "log": "diagnostics/logs/T3_FULL_GATE_SPACED_5e3dbab4.log",
+    "log_sha256": "6f7c18fd61da093f78d35c41ecb3f8b552b94fd0b1bebe7e4e35bd4655236045",
+    "result": "FULL_PRODUCT_GATE_PASS"
+  },
+  "chain": [
+    {"commit": "40ce889f", "passed": 6368, "source": "w10 T3 (docs/evaluation/geometry/runs/w10-pedagogical-playback/diagnostics/logs/T3_FULL_GATE_SPACED_40ce889f.log)"},
+    {"commit": "52de6f22", "delta": 2, "tests": ["tests/geometry/test_scene3d_visual_evidence.py::test_main_sheet_cells_crop_the_stage_not_the_whole_page", "tests/geometry/test_scene3d_visual_evidence.py::test_oracle_screen_point_maps_to_image_pixels_through_css"], "note": "w10 evidence post-processing"},
+    {"commit": "b9193766", "passed": 6370, "note": "w11 base = 6368 + 2; collect-only here gives 6371 = 6370 passed + 1 skipped"},
+    {"commit": "5e3dbab4", "passed": 6411, "delta": 41, "note": "collect-only gives 6412 = 6411 passed + 1 skipped"}
+  ],
+  "w11_delta_by_file": {
+    "method": "pytest --collect-only -q at b9193766 (worktree D:/tmp/w11-d1, moved there and back) and at 5e3dbab4 (T3 worktree), ids counted per file",
+    "tests/geometry/test_formula_provenance_closure.py": "+28 (new file: given lengths, numerical edges, formula text/references, INIT narration, cross-section control, missing/ambiguous height, trace panel order)",
+    "tests/geometry/test_human_expected_visibility.py": "+7 (w11 fixtures keep the reviewed geometry ×6, readout vs drawn-geometry window ×1)",
+    "tests/geometry/test_scene3d_visual_evidence.py": "+2 (per-family sheet, overview index)",
+    "tests/semantic_program/test_grounding_gate.py": "+2 (length-invariant channel accepts / refuses)",
+    "tests/semantic_program/test_domain_string.py": "+2 (file unchanged; two tests parametrised over backend/scripts/*.py pick up the new trace_formula_provenance.py)",
+    "net": 41
+  }
+}

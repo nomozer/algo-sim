@@ -1389,6 +1389,28 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (human review FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
+- **HUMAN_REVIEW_AFTERWARDS:** FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR, W10-H1…H9 (recorded additively in the w11 run, `inputs/W10_HUMAN_VISUAL_REVIEW.json`)
+
+### WAVE_ID = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW
+- **DATE:** 2026-09-29
+- **START_BASE:** b9193766
+- **CODE_COMMIT_OR_NONE:** f147dde6 (given lengths, grounding by length invariant, formula references; CACHE_VERSION 103 → 104) · e186b4cf (causal tiers, px vertex markers, light auxiliary lines, numerical "Dựa trên") · e633ad0c (camera target for the harness) · 60292ecf ("Xem lại toàn hình" ignores infinite lines and markers)
+- **COMMITS:** e90363a4 run renames · ca77665d w10 verdict + BEFORE trace · f147dde6 · e186b4cf · 5f44eb85 / e633ad0c / 7efdae4a tooling · 60292ecf · a39028de refreeze + cache locks · df52e745 scenarios · 48c676d5 fixtures · 39e54046 (oracle signature; measurement) · ac19e03d (trace; post-processing) · 5e3dbab4 evidence
+- **CANDIDATE:** 8539acbc… → df04a613… (refrozen ONCE in a clean worktree at 7efdae4a, product commit 60292ecf) · CACHE_VERSION 103 → 104 (fingerprint b1714b56… unchanged)
+- **EVIDENCE_COMMIT_ROLE:** 5e3dbab4 (measurement commit 39e54046, detached clean worktree)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w11-pedagogical-polish/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w11-pedagogical-polish/
+- **PASS:** T3 from a path with a space FULL_PRODUCT_GATE_PASS at 5e3dbab4 (pytest 6411/0 fail, vitest 958/0 fail, build, demo, crash surface; 6368 → 6370 → 6411 reconciled) · browser 12/12 positive + 12/12 negative, planned rotation first time 12/12 · occlusion 24/24, frozen expectations DECLARED_CAMERA_CHANGE 6/6 · learner playback 12/12 × 18 checks, orbit laps 60/60 · 64 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners · formula provenance 5/5 volume families · candidate/cache/schema verify
+- **OPENED:** ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED · ISSUE-OPS-OFFLINE-SAMPLES-STALE · ISSUE-OPS-DIST-ACL-OWNERSHIP
+- **OPEN (non-blocking):** ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH · 1 px lines · per-solid visibility
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (human review FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
 
 
 

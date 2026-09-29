@@ -9,19 +9,20 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
 ```
 
-- **Mục tiêu:** Người duyệt bằng chứng của run
-  `docs/evaluation/geometry/runs/w10-pedagogical-playback/` theo
-  `HANDOFF.md` của run: contact sheet chính (ảnh lớn), crop cạnh khuất chứa trọn
-  hai đầu mút, filmstrip playback người học, trạng thái causal/xoay/trung tính ở
-  desktop và mobile. Review w09 là `FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`; mọi
-  cổng tự động của wave w10 đã xanh.
+- **Mục tiêu:** Người duyệt lại bằng chứng của run
+  `docs/evaluation/geometry/runs/w11-pedagogical-polish/` theo `HANDOFF.md` của
+  run: sheet từng họ `images/<họ>/SHEET.png` (trung tính · causal · xoay · mobile ·
+  mọi bước formation, có chú giải), công thức thể tích chóp/lăng trụ đáy tam giác,
+  crop cạnh khuất, filmstrip playback. Review w10 là
+  `FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR` (W10-H1…H9); mọi cổng tự động của
+  w11 đã xanh.
 - **Điều kiện dừng:** Automation không phát `MERGE_READY`; chưa push/merge cho
   tới khi người duyệt chấp nhận.
-- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 103`
+- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 104`
   khi provider fingerprint không đổi và 0 live Gemini request. Không mở rộng
   family, image/OCR hoặc composite geometry trước khi có human visual acceptance.
 

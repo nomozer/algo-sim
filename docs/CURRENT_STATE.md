@@ -18,7 +18,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
 > giới hạn: **`docs/THESIS_READINESS.md`**.
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-09-28)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-09-30)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
 > dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28 |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29): ref cục bộ không đổi, là tổ tiên của HEAD |
 > | `CACHE_VERSION` | **104** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,20 +53,38 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 8a09a5d8 (measurement commit 40ce889f, post-processing 52de6f22)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 5e3dbab4 (measurement commit 39e54046, trace post-processing ac19e03d)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 103
-> CANDIDATE = 8539acbc… (was 3bc9415b…), product commit f0deaa0d
+> CACHE_VERSION = 104
+> CANDIDATE = df04a613… (was 8539acbc…), product commit 60292ecf
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10)
+> CURRENT_WAVE = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PEDAGOGICAL_PLAYBACK_EVIDENCE
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
 > ```
 
 
-> **Playback · góc nhìn · nét khuất · bề mặt học sinh — trạng thái authoritative hiện tại (w10, measurement `40ce889f`, detached clean worktrees):**
+> **Công thức · provenance · polish thị giác — trạng thái authoritative hiện tại (w11, measurement `39e54046`, detached clean worktree):**
+>
+> | Gate | Kết quả |
+> |---|---|
+> | Review người của w10 | **FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR** (W10-H1…H9) — ghi bổ sung ở `inputs/W10_HUMAN_VISUAL_REVIEW.json` của run w11 |
+> | Công thức + provenance thể tích | **PASS** — 5/5 họ thể tích: công thức đáy × chiều cao, "Dựa trên" = nguồn số theo thứ tự công thức; thiếu chiều cao ⇒ không biên dịch; hai ứng viên ⇒ không công thức |
+> | T3 full gate từ đường dẫn CÓ dấu cách (`5e3dbab4`) | **PASS** — pytest 6411/0 fail (1 skipped, 1 deselected) · vitest 958/0 fail · build · demo · bề mặt sập; 6368 → 6370 → 6411 đối soát ở `results/BACKEND_COUNT_RECONCILIATION.json` |
+> | Browser 6 family × desktop/mobile | **PASS** — 12/12 dương, 12/12 âm; causal bốn tầng 12/12; xoay qua cổng ảnh phối cảnh, cử chỉ hoạch định đạt ngay 12/12; chấm đỉnh 6 / 7,5 px; formation 12/12 |
+> | Product ↔ oracle | **PASS** — 24/24 trạng thái; kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 (registry giữ nguyên byte) |
+> | Playback người học | **PASS** — 12/12 × 18 kiểm; lặp orbit 60/60 |
+> | Crop cạnh khuất · sheet theo họ | **PASS** — 64 crop, 0 bất đồng oracle, 0 owner trùng; `images/<họ>/SHEET.png` |
+> | `CACHE_VERSION` | **104** (bump một lần ở `f147dde6`; fingerprint provider không đổi) |
+> | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
+> | Merge | **NOT_EXECUTED** |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w11-pedagogical-polish/` (`REPORT.md`,
+> `HANDOFF.md`, `results/VERIFICATION_SUMMARY.json`). Bảng w10 và w09 dưới đây giữ làm lịch sử.
+
+> **Playback · góc nhìn · nét khuất · bề mặt học sinh — w10 (measurement `40ce889f`; review người sau đó = FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR):**
 >
 > | Gate | Kết quả |
 > |---|---|

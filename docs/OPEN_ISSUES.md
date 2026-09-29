@@ -224,7 +224,7 @@
 
 ### ISSUE-OPS-ORPHANED-TEMP-DIRECTORIES
 - **description:** Các thư mục tạm được tạo trong quá trình chạy test worktree (ví dụ `D:/tmp/mvep-*`, `D:/tmp/algo-sim-*`) có thể tồn đọng nếu quy trình dọn dẹp gặp sự cố ngoài ý muốn.
-- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước. w10 để lại, NGOÀI git: `D:/tmp/w10-out` và `D:/tmp/w10-build.log` (bản dựng/thử nghiệm dev), `D:/tmp/w10-freeze4` (worktree đóng băng đã gỡ khỏi git; xoá thư mục bị từ chối vì một tiến trình đang giữ — chỉ còn bản sao file đã commit), `D:/Documents/projects/tmp-dist-exp` (bản dựng thử nghiệm depth test). Không chứa gì cần giữ; mọi bằng chứng đã nằm trong run w10.
+- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước. w10 để lại, NGOÀI git: `D:/tmp/w10-out` và `D:/tmp/w10-build.log` (bản dựng/thử nghiệm dev), `D:/tmp/w10-freeze4` (worktree đóng băng đã gỡ khỏi git; xoá thư mục bị từ chối vì một tiến trình đang giữ — chỉ còn bản sao file đã commit), `D:/Documents/projects/tmp-dist-exp` (bản dựng thử nghiệm depth test). Không chứa gì cần giữ; mọi bằng chứng đã nằm trong run w10. w11 để lại: hai worktree detached CÒN ĐĂNG KÝ — `D:/tmp/w11-d1` (đo) và `D:/tmp/w11 space/algo-sim` (T3) — gỡ bằng `git worktree remove <path>`; `D:/tmp/w11-before` (đã gỡ đăng ký, xoá bị từ chối quyền); `D:/tmp/w11-gen`, `D:/tmp/w11-attempt1`, `D:/tmp/w11-*.log`, `D:/tmp/w11-schema-*.txt`. Mọi thứ cần giữ đã nằm trong run w11.
 - **impact:** Chiếm dụng dung lượng đĩa và có nguy cơ gây nhầm lẫn nếu không được quản lý vòng đời rõ ràng.
 - **scope:** Scripts & Test harnesses
 - **status:** OPEN
@@ -251,5 +251,41 @@
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
+
+### ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED
+- **description:** On the default `LLM_ONLY` route a length that exists only in an analyze-authored `input_fact` — not in the problem text, so absent from the server-extracted length invariants — can ground a GIVEN quantity: the grounding gate checks program ↔ contract, not contract ↔ text. A volume problem whose height is not stated can then be served with an invented height.
+- **evidence:** `docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/INVENTED_HEIGHT_PROBE_48c676d5.log` (offline, 0 model calls): prism contract with the `AD` invariant removed and `AD = 5` removed from the text — compiler route `FALLBACK_TO_LLM` (`REQUIRED_LENGTH_MISSING AD`), the program is served `ok` because the analyze fact still carries `5`; the pyramid analogue is refused (`input_not_grounded`) because its SA fact carries no value. The fact-value channel dates from `2bdd2f73` (before w11); the w11 channel `_do_dai_bat_bien` requires a server-extracted invariant and does not widen this.
+- **impact:** A hallucinated length in the analyze output is not caught deterministically on the LLM route; the opt-in compiler route fails closed.
+- **scope:** `backend/app/simulation/semantic_program/grounding_gate.py` (fact-value channel) and analyze-contract provenance.
+- **status:** OPEN — found in w11, not changed (it is a grounding policy change, measured separately).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO (an argument for compiler-first)
+- **acceptance:** a GIVEN `XY_length` whose literal has no server-extracted length invariant is refused or labelled; the probe returns `unsupported` for the prism case.
+- **verify:** rerun the script embedded in the probe log.
+
+### ISSUE-OPS-OFFLINE-SAMPLES-STALE
+- **description:** `frontend/src/data/geometry-samples.json` (offline demo problems) is no longer what `backend/scripts/build_geometry_samples.py` produces from the current product, and the drift test its header names (`frontend/src/data/geometry-samples.test.ts`) does not exist.
+- **evidence:** measured in the w11 worktree at `ac19e03d` (restored afterwards): regenerating changes the file by +4343/−274 lines; the committed samples date from `47c255d9` (2026-09-03), 66 `backend/app` commits ago, and lack `dependency_edges`, `edge_ownership`, `surfaces`, `occludes_edges`, `display_label` — so offline scenes have no typed provenance (causal tiers) and no canonical edge ownership.
+- **impact:** Opening the app without an API key shows scenes built by an older engine; no gate reads these samples.
+- **scope:** Offline demo data (`frontend/src/data/`).
+- **status:** OPEN — not regenerated in w11 (a product-file change outside the reviewed families).
+- **owner_class:** OPERATIONS
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO
+- **acceptance:** samples regenerated in a product commit; a test fails when the committed JSON differs from the generator's output.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/build_geometry_samples.py` then `git diff --stat frontend/src/data/geometry-samples.json` (empty).
+
+### ISSUE-OPS-DIST-ACL-OWNERSHIP
+- **description:** In the main working tree `frontend/dist/assets` is owned by another Windows account (`CodexSandboxOffline`); `npm run build` cannot replace it and fails with `EPERM`.
+- **evidence:** `docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/DIAG1_SUITE_BUILD_EPERM_main-tree.log`.
+- **impact:** Builds, browser measurements and T3 must run in a worktree; running them in the main tree fails at the build step.
+- **scope:** Local environment (ACL outside git).
+- **status:** OPEN — ownership not changed by the agent (needs the user).
+- **owner_class:** OPERATIONS
+- **suggested_wave:** any
+- **default_switch_blocker:** NO
+- **acceptance:** `cd frontend && npm run build` succeeds in the main tree.
+- **verify:** `icacls frontend\dist\assets`
 
 

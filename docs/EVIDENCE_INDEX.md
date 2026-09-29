@@ -45,6 +45,12 @@ CROSS_FAMILY_HIDDEN_LINE_OCCLUSION_ORACLE_AND_FORMATION_REPAIR (sửa occlusion/
   │  phát hiện: 28 lỗi "runner fixture" thật ra là REAL_PRODUCT_REGRESSION (HTTP 500); mobile recompute do khoá camera float thô
   ▼ CORRECTED_BY
 VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → READY_FOR_HUMAN_VISUAL_REVIEW)
+  │  review người: FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR (cạnh khuất không có điểm ảnh, playback, camera)
+  ▼ CORRECTED_BY
+HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10 → READY_FOR_HUMAN_VISUAL_REVIEW)
+  │  review người: FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR (W10-H1…H9: chóp/lăng trụ tam giác không công thức, ảnh xoay gần suy biến, …)
+  ▼ CORRECTED_BY · SUPERSEDED_FOR_HUMAN_VERDICT
+W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11 → READY_FOR_HUMAN_VISUAL_REVIEW)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -690,9 +696,30 @@ VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (mọi cổng tự động xanh → 
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 3bc9415b… -> 875bc19c… -> 8539acbc…)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 102 -> 103, user decision; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (human review FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR, recorded additively in the w11 run; this run's files stay byte-identical)
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW — its images are no longer the ones a reviewer should judge; its automation stays valid for the w10 candidate `8539acbc…`
 - **CORRECTS:** VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR (human review FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR)
 - **SUPERSEDES:** NONE (w09 and occlusion-wave artifacts and the frozen registry remain byte-identical; the registry's expectations transfer to the new default camera only under `DECLARED_CAMERA_CHANGE`)
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **THESIS_USE:** HISTORICAL_AUTOMATION — human visual review FAILED afterwards (W10-H1…H9); do not cite as visual acceptance.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/GOLDEN_REVIEW.json` · `images/playback/PLAYBACK_EVIDENCE.json` · `images/crops/CROPS_INDEX.json` · `images/contact-sheet.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `inputs/W09_HUMAN_VISUAL_REVIEW.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW
+- **DATE:** 2026-09-29
+- **REPORT:** docs/evaluation/geometry/runs/w11-pedagogical-polish/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w11-pedagogical-polish/
+- **START_BASE:** b9193766
+- **CODE_COMMIT:** f147dde6 (backend) · e186b4cf · e633ad0c · 60292ecf (frontend)
+- **MEASUREMENT_COMMIT:** 39e5404686fdf25ddae310759c87c8c64dd8dc41 (trace post-processing ac19e03d)
+- **EVIDENCE_COMMIT_ROLE:** 5e3dbab4
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 8539acbc… -> df04a613…, refrozen once)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 103 -> 104; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (human review FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR)
+- **SUPERSEDES:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE for the human verdict only (w10, w09, the occlusion wave and the frozen registry remain byte-identical; the registry's expectations transfer under `DECLARED_CAMERA_CHANGE`)
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/FORMULA_PROVENANCE_TRACE_BEFORE.json` · `diagnostics/FORMULA_PROVENANCE_TRACE_AFTER.json` · `inputs/W10_HUMAN_VISUAL_REVIEW.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
