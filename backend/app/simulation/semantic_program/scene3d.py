@@ -594,8 +594,18 @@ def _formula_symbol(obj: dict[str, Any]) -> str:
 
 
 def _attach_formulas(objects: list[dict[str, Any]]) -> None:
-    """Gắn formula có references tới entity thật; thiếu nguồn thì ẩn."""
+    """Gắn formula có references tới entity thật; thiếu nguồn thì ẩn.
+
+    `references` = ĐÚNG các vật chữ công thức nhắc tới, theo thứ tự trong chữ
+    (w11). Bản w10 gắn mọi nguồn số vào cả `S(ABCD) = 12`, nên frontend thấy
+    không nhất quán và ẩn thẻ; nguồn số vẫn nằm nguyên ở `dependency_edges`.
+    """
     by_id = {obj["id"]: obj for obj in objects}
+
+    def ref(o: dict[str, Any]) -> dict[str, Any]:
+        return {"entity_id": o["id"], "display_label": _formula_symbol(o),
+                "relation": "numerical"}
+
     for obj in objects:
         if obj.get("type") != "quantity":
             continue
@@ -605,14 +615,6 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
             if edge.get("relation") == "numerical"
             and edge.get("source_id") in by_id
         ]
-        references = [
-            {
-                "entity_id": source_id,
-                "display_label": _formula_symbol(by_id[source_id]),
-                "relation": "numerical",
-            }
-            for source_id in numerical
-        ]
         producer = obj.get("producer")
         value = obj.get("value")
         if producer == "measure.volume":
@@ -621,11 +623,12 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
                  if by_id[source_id].get("producer") == "measure.area"),
                 None,
             )
-            height = next(
-                (by_id[source_id] for source_id in numerical
-                 if source_id != (area or {}).get("id")),
-                None,
-            )
+            # ĐÚNG MỘT ứng viên chiều cao. Hai độ dài cùng qua được luật tên
+            # (`SA` và cạnh bên `SB`) thì chọn cái đầu là in một công thức có
+            # thể sai — không in còn hơn in sai.
+            cao = [by_id[source_id] for source_id in numerical
+                   if source_id != (area or {}).get("id")]
+            height = cao[0] if len(cao) == 1 else None
             solid = next(
                 (by_id[edge["source_id"]]
                  for edge in obj.get("dependency_edges", [])
@@ -646,12 +649,9 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
             )
             if value is not None:
                 text += f" = {value}"
-            obj["formula"] = {"text": text, "references": references}
+            obj["formula"] = {"text": text, "references": [ref(area), ref(height)]}
         elif value is not None:
-            obj["formula"] = {
-                "text": f"{_formula_symbol(obj)} = {value}",
-                "references": references,
-            }
+            obj["formula"] = {"text": f"{_formula_symbol(obj)} = {value}", "references": []}
 
 
 _TEN_DA_GIAC = {3: "tam giác", 4: "tứ giác", 5: "ngũ giác", 6: "lục giác"}

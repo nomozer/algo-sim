@@ -21,6 +21,7 @@ Gate này là điều kiện CẦN, CHƯA ĐỦ.
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -32,7 +33,7 @@ from .contract import SemanticProgramSpec
 from .coverage_gate import _producers
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
-from .source_entities import chuan_hoa_ten, la_ten_nguon, la_ten_suy_ra
+from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
 #:
@@ -166,6 +167,32 @@ def _canon(value: Any) -> tuple[Any, ...]:
 
     di(value)
     return tuple(ra)
+
+
+def _do_dai_bat_bien(decl, fact_ids: set[str], contract) -> bool:
+    """`XY_length` khớp một BẤT BIẾN ĐỘ DÀI của hợp đồng.
+
+    Bất biến do server dựng (`bat_bien_do_dai` đọc `SA = 5` từ CÂU ĐỀ) và hậu
+    điều kiện kiểm nó trên hình đã dựng. Server neo nó vào mục có nhắc S, A — có
+    khi là mục QUAN HỆ không mang số, vì analyze bỏ sót mục độ dài (đo ở
+    `test_J_bis…`). Con số vẫn có trong đề. Kênh hẹp: đúng đoạn (tên), đúng giá
+    trị, đúng mục được trích — lệch một thứ thì vẫn là "đề không cho".
+    """
+    khai = _canon(decl.initial_value)
+    if decl.type != "float" or not decl.name.endswith("_length") or len(khai) != 1:
+        return False
+    for b in getattr(contract, "source_invariants", None) or ():
+        if (b.kind != "segment_length" or b.source_fact_id not in fact_ids
+                or len(b.points or ()) != 2):
+            continue
+        a, z = (dinh_danh_thuc_the(str(p))[0] for p in b.points)
+        try:
+            cung_so = Fraction(str(khai[0])) == Fraction(str(b.expected))
+        except (ValueError, ZeroDivisionError):
+            cung_so = False
+        if cung_so and decl.name in (f"{a}{z}_length", f"{z}{a}_length"):
+            return True
+    return False
 
 
 def _diem_phai_dung(contract) -> frozenset[str]:
@@ -434,6 +461,11 @@ def check_grounding(
             continue
 
         fact, cach = contract.fact_noi_long(fid)
+        if fact is None and _do_dai_bat_bien(decl, {fid}, contract):
+            # Mục chỉ sống trong bất biến độ dài (hợp đồng dựng không qua
+            # analyze): bất biến CHÍNH LÀ bản ghi của hợp đồng cho mục ấy.
+            _ghi(decl, "B", f"ghim về bất biến độ dài '{fid}'")
+            continue
         if fact is None:
             # ── TRÍCH DẪN KHÔNG GIẢI ĐƯỢC (Wave 3, 2026-08-25) ─────────────
             #
@@ -592,7 +624,9 @@ def check_grounding(
             v for v in khai
             if v not in cho and not any(bang_huu_ti(v, c) for c in cho)
         ]
-        if thua:
+        if thua and not la_toa_do and _do_dai_bat_bien(decl, {fid, fact.fact_id}, contract):
+            _ghi(decl, "B", f"ghim về '{fid}' ({fact.label}) — khớp bất biến độ dài")
+        elif thua:
             # Với TOẠ ĐỘ, nói thêm đúng một điều: có hai kênh, và đây là kênh
             # sai. Không phải gợi ý cách giải — một toạ độ SUY RA từ ràng buộc
             # (chân đường cao, đỉnh của một tam giác vuông) không bằng số nào

@@ -136,3 +136,41 @@ def test_gia_tri_khong_phai_hat_khoi_tao_thi_van_phai_ghim():
     res = check_grounding(_CONTRACT, spec)
     assert not res.ok
     assert any("bat_dau" in u for u in res.unresolved)
+
+
+# ══ w11 — ĐỘ DÀI SERVER NEO TỪ CÂU ĐỀ ══════════════════════════════════════
+#
+# `bat_bien_do_dai` đọc `SA = 5` từ ĐỀ rồi neo vào mục dữ kiện có nhắc S, A —
+# có khi là mục QUAN HỆ không mang số (`SA ⊥ (ABC)`), vì mô hình analyze bỏ
+# sót mục độ dài (`test_J_bis…`). Con số vẫn có trong đề; P2 phải nhìn thấy.
+def _hop_dong_neo():
+    from app.simulation.semantic_program.scale_normalization import SourceInvariant
+    return RequestContract(
+        input_facts=(InputFact(fact_id="f_perp", label="SA vuông góc (ABC)", values=()),),
+        source_invariants=(SourceInvariant(
+            kind="segment_length", points=("A", "S"), expected="5",
+            source_fact_id="f_perp", scale_symbol="", source_text="SA = 5"),),
+    )
+
+
+def _do_dai(name="SA_length", value="5", fact_id="f_perp"):
+    return SemanticProgramSpec(
+        title="Kiểm độ dài neo từ đề",
+        memory_declarations=[
+            MemoryDeclaration(name=name, type="float", initial_value=value,
+                              source_fact_id=fact_id, provenance="GIVEN"),
+            MemoryDeclaration(name="m", type="int", initial_value=0),
+        ],
+        statements=[AssignStmt(target_var="m", expr=LiteralExpr(value=0))],
+    )
+
+
+def test_do_dai_khop_bat_bien_neo_tu_de_thi_pass():
+    assert check_grounding(_hop_dong_neo(), _do_dai()).ok
+
+
+def test_do_dai_neo_tu_de_sai_gia_tri_sai_doan_sai_muc_van_fail():
+    """Kênh mới hẹp: đúng đoạn, đúng số, đúng mục — lệch một thứ là chết."""
+    for spec in (_do_dai(value="6"), _do_dai(name="SB_length"),
+                 _do_dai(fact_id="f_khac")):
+        assert not check_grounding(_hop_dong_neo(), spec).ok

@@ -689,7 +689,18 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       một kết luận, lời kể dựng từ cảnh có cấu trúc, bước khép thiết diện là
 #       bước DỰNG. `main.py` cache nguyên `envelope_json` và trả thẳng khi trúng,
 #       nên không bump thì đề đã cache vẫn hiện "Đại lượng đo" / "Ghi nhận …".
-CACHE_VERSION = "103"
+#   104 (2026-09-29, W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW):
+#       BỀ MẶT MÔ HÌNH KHÔNG ĐỔI (fingerprint provider giữ nguyên). Envelope `ok`
+#       đổi ở ĐÚNG ba thành phần: (1) `scene3d._attach_formulas` — `references`
+#       của công thức chỉ còn các vật chữ công thức nhắc tới (`S(ABCD) = 12` hết
+#       mang AB/AD), thể tích mang [đáy, chiều cao] theo thứ tự chữ, hai ứng viên
+#       chiều cao ⇒ không in công thức; (2) compiler chóp/lăng trụ đáy tam giác
+#       vuông khai độ dài đề cho ⇒ cảnh có AB, AC, SA/AD, công thức thể tích và
+#       lời kể dữ kiện; (3) `grounding_gate` nhận độ dài `XY_length` khớp một bất
+#       biến độ dài của hợp đồng — chiều **rejected → served** (lời từ chối không
+#       được cache, nên không row nào hoá sai). Không bump thì cache trả lại cảnh
+#       thiếu công thức của review w10.
+CACHE_VERSION = "104"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

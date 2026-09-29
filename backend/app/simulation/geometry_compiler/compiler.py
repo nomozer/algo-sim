@@ -895,6 +895,25 @@ def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
 
 
 # ══ COMPILER ════════════════════════════════════════════════════════════════
+def _khai_do_dai_de_cho(graph: GeometryFactGraph,
+                        cap: tuple[tuple[str, str], ...]) -> list[dict[str, Any]]:
+    """Độ dài ĐỀ CHO thành đại lượng `<đầu><cuối>_length` trong bộ nhớ.
+
+    Thiếu chúng thì cảnh không nối được chiều cao vào thể tích (`_provenance`
+    nối theo tên `*_length`), nên thẻ công thức mất và dòng "Dựa trên" thiếu
+    chiều cao (review w10). Nhãn xuất xứ và nguồn CHÉP từ FactGraph — compiler
+    không tự gán `GIVEN` cho thứ nó chọn.
+    """
+    ra = []
+    for dau, cuoi in cap:
+        f = graph.do_dai(dau, cuoi)
+        if f is not None:
+            ra.append(P.memory_declaration(
+                f"{dau}{cuoi}_length", P.KIEU_DAI_LUONG, provenance=f.status,
+                source_fact_id=f.source_fact_id, initial_value=P._so(Fraction(str(f.value)))))
+    return ra
+
+
 def bien_dich(graph: GeometryFactGraph) -> KetQuaBienDich:
     """FactGraph → chương trình ngữ nghĩa + quá trình dựng. TẤT ĐỊNH."""
     t0 = time.perf_counter()
@@ -1005,6 +1024,8 @@ def bien_dich(graph: GeometryFactGraph) -> KetQuaBienDich:
         b.chan_2: "đặt cạnh góc vuông thứ hai dọc trục thứ hai",
         b.dinh_chop: "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông",
     }
+    khai.extend(_khai_do_dai_de_cho(graph, (
+        (b.dinh_vuong, b.chan_1), (b.dinh_vuong, b.chan_2), (b.dinh_chop, b.dinh_vuong))))
     for t in (b.dinh_vuong, b.chan_1, b.chan_2, b.dinh_chop):
         khai.append(P.memory_declaration(t, "point3", ly_do[t]))
     khai.append(P.memory_declaration(ten_day, "polygon3"))
@@ -1101,6 +1122,13 @@ def _bien_dich_prism(
     them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
          "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
 
+    # Chiều cao là cạnh bên ĐỀ CHO — cùng thứ tự dò với eligibility.
+    tuong_ung = dict(b.correspondence)
+    day_cao = next(u for u in (b.dinh_vuong_day, b.chan_1, b.chan_2)
+                   if graph.do_dai(u, tuong_ung[u]) is not None)
+    khai.extend(_khai_do_dai_de_cho(graph, (
+        (b.dinh_vuong_day, b.chan_1), (b.dinh_vuong_day, b.chan_2),
+        (day_cao, tuong_ung[day_cao]))))
     # Khai báo bộ nhớ với provenance="LAYOUT_DERIVED"
     for pt in (b.dinh_vuong_day, b.chan_1, b.chan_2, b.dinh_vuong_top, b.chan_1_top, b.chan_2_top):
         khai.append(P.memory_declaration(pt, "point3", provenance="LAYOUT_DERIVED"))

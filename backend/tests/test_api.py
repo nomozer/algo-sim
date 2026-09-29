@@ -667,7 +667,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # be mat mo hinh KHONG doi; NOI DUNG CANH trong envelope `ok` doi (ten khoi
     # theo topology, vai tro dai luong, ket luan gop bi danh, loi ke co cau
     # truc) — cache giu nguyen envelope nen de cu phai miss (tien le 92/93/97).
-    assert main_module.CACHE_VERSION == "103"
+    # 103 -> 104 (W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW, 2026-09-29):
+    # be mat mo hinh KHONG doi; envelope `ok` doi o ba cho: references cua cong
+    # thuc chi con vat chu nhac toi, compiler chop/lang tru day tam giac vuong
+    # khai do dai de cho (co cong thuc the tich), grounding nhan do dai khop bat
+    # bien (rejected -> served). Cache tra thang envelope nen de cu phai miss.
+    assert main_module.CACHE_VERSION == "104"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

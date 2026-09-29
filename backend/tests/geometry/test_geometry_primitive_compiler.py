@@ -363,8 +363,12 @@ def test_O_memory_declarations_KHONG_co_khoa_at():
     đo được (`SYNTHESIS_MEMORY_DECLARATION_SCHEMA_PROMPT_ALIGNMENT`).
 
     `model_assumption` thì HỢP LỆ và cần thiết: toạ độ do bố cục chọn phải đi
-    qua kênh ấy chứ không qua `source_fact_id` (xem cổng grounding)."""
-    cho_phep = {"name", "type", "model_assumption", "source_fact_id"}
+    qua kênh ấy chứ không qua `source_fact_id` (xem cổng grounding).
+
+    Độ dài đề cho (w11) mang `provenance` + `initial_value` CHÉP từ FactGraph,
+    cùng khuôn chóp đáy chữ nhật và hình hộp."""
+    cho_phep = {"name", "type", "model_assumption", "source_fact_id",
+                "provenance", "initial_value"}
     for m in _bien_dich().program["memory_declarations"]:
         assert "at" not in m, m
         assert set(m) <= cho_phep, m
