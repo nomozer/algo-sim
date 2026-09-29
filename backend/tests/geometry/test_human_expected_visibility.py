@@ -256,6 +256,32 @@ def test_run_fails_closed_without_a_declaration_and_transfers_with_one(tmp_path)
     assert identity["status"] == "DECLARED_CAMERA_CHANGE" and identity["declaration"] == "W10_TEST"
 
 
+W11_FIXTURES = (ROOT / "docs/evaluation/geometry/runs/w11-pedagogical-polish"
+                / "inputs/fixtures")
+
+
+@pytest.mark.parametrize("scenario_id", FAMILIES)
+def test_w11_given_length_quantities_keep_the_reviewed_geometry(scenario_id):
+    # w11: the right-triangle-base pyramid/prism declare AB, AC, SA|AD as
+    # `quantity` objects (readouts, nothing drawn). The figure is the reviewed one.
+    fixture = W11_FIXTURES / f"{scenario_id}_positive.json"
+    scene = json.loads(fixture.read_text(encoding="utf-8"))["envelope"]["scene3d"]
+    assert M.geometry_signature(scene) == M.geometry_signature(_scene(scenario_id))
+
+
+def test_geometry_signature_ignores_a_new_readout_but_not_new_drawn_geometry():
+    base = _w10_scene("triangular_pyramid")
+    readout = copy.deepcopy(base)
+    readout["objects"].append({"id": "AB_length", "type": "quantity", "render": "readout"})
+    assert M.geometry_signature(readout) == M.geometry_signature(base)
+    for extra in ({"id": "M", "type": "point3", "xyz": ["1", "0", "0"]},
+                  {"id": "SM", "type": "segment3", "point_a": ["0", "0", "5"], "point_b": ["1", "0", "0"]},
+                  {"id": "X", "type": "unknown_kind"}):
+        drawn = copy.deepcopy(base)
+        drawn["objects"].append(extra)
+        assert M.geometry_signature(drawn) != M.geometry_signature(base), extra
+
+
 def test_declared_camera_change_rejects_a_moved_vertex_or_a_foreign_registered_scene():
     preimages = M.load_camera_preimages(PREIMAGES, REGISTRY)
     frozen = _registered("cube")

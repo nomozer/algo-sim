@@ -97,6 +97,9 @@ GEOMETRY_FIELDS = ("type", "xyz", "vertices", "vertex_ids", "faces", "polygon", 
                    "direction", "normal", "point_a", "point_b", "endpoints", "endpoint_ids",
                    "center", "radius_sq", "anchor", "apex_or_top", "rim_point", "curved_kind",
                    "edge_ownership", "surfaces")
+#: Object types that draw nothing (readout / non-visual quantities): adding one
+#: moves no edge. Only known types are skipped, so an unknown type still counts.
+NON_GEOMETRIC_TYPES = ("quantity",)
 
 
 def scene_sha256(scene: dict[str, Any]) -> str:
@@ -107,7 +110,7 @@ def scene_sha256(scene: dict[str, Any]) -> str:
 def geometry_signature(scene: dict[str, Any]) -> list[tuple[str, str]]:
     return sorted((obj["id"], json.dumps({k: obj[k] for k in GEOMETRY_FIELDS if k in obj},
                                          sort_keys=True, ensure_ascii=False))
-                  for obj in scene.get("objects", []))
+                  for obj in scene.get("objects", []) if obj.get("type") not in NON_GEOMETRIC_TYPES)
 
 
 def transfer_expectation(frozen: dict[str, Any], registered_scene: dict[str, Any],
