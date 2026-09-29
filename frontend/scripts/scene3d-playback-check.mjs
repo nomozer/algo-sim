@@ -88,7 +88,12 @@ async function orbitLap(session, scene, n) {
     const t0 = Date.now();
     const chuyen = [];
     const moc = (state, extra = {}) => chuyen.push({ t_ms: Date.now() - t0, state, ...extra });
-    await trustedClick(session, "[...document.querySelectorAll('button')].find(e=>e.textContent.includes('Xem lại toàn hình'))");
+    if (!await trustedClick(session,
+      "[...document.querySelectorAll('button')].find(e=>e.textContent.includes('Xem lại toàn hình'))")) {
+      moc("TIMEOUT", { reason: "RESET_BUTTON_NOT_CLICKABLE" });
+      ket.push({ lap: i, pass: false, transitions: chuyen });
+      continue;
+    }
     let truoc;
     try {
       // Dung sai của lib (damping trôi ULP mãi — "đứng yên" không thể là trùng byte).

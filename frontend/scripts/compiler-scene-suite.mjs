@@ -86,10 +86,19 @@ async function rectFor(session, expression) {
 export async function trustedClick(session, expression) {
   // Như người dùng: cuộn tới phần tử trước khi bấm. Không cuộn thì phần tử
   // nằm dưới khung nhìn (ô soi mobile, w10) nhận một cú bấm ở toạ độ ngoài màn hình.
-  await session.eval(`(()=>{const e=${expression};if(e)e.scrollIntoView({block:"nearest"});return true})()`);
+  // Cuộn vào GIỮA, không `nearest`: `nearest` đặt phần tử sát mép trên, DƯỚI
+  // thanh điều hướng dính — cú bấm rơi vào thanh nav và mở lớp phủ đăng nhập
+  // (w10, mobile). Và kiểm phần tử tại điểm bấm ĐÚNG là đích: bị che thì báo
+  // không bấm được, không bấm mù vào thứ đang che.
+  await session.eval(`(()=>{const e=${expression};if(e)e.scrollIntoView({block:"center"});return true})()`);
   const rect = await rectFor(session, expression);
   if (!rect || rect.w <= 0 || rect.h <= 0) return false;
-  await session.mouse(rect.x + rect.w / 2, rect.y + rect.h / 2);
+  const x = rect.x + rect.w / 2;
+  const y = rect.y + rect.h / 2;
+  const onTop = await session.eval(`(()=>{const e=${expression};const h=document.elementFromPoint(${x},${y});`
+    + `return !!(e&&h&&(e===h||e.contains(h)))})()`);
+  if (!onTop) return false;
+  await session.mouse(x, y);
   return true;
 }
 
@@ -160,10 +169,16 @@ function projectionComparison(before, after) {
 export async function trustedOrbit(session, {
   dx = 190, dy = 48, startX = 0.52, startY = 0.48,
 } = {}) {
-  const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
+  const canvas = `document.querySelector('.geo3d-canvas canvas')`;
+  await session.eval(`(()=>{const e=${canvas};if(e)e.scrollIntoView({block:"center"});return true})()`);
+  const rect = await rectFor(session, canvas);
   if (!rect) throw new Error("NO_CANVAS_FOR_ORBIT");
   const x = rect.x + rect.w * startX;
   const y = rect.y + rect.h * startY;
+  // Điểm bắt đầu kéo phải nằm TRÊN canvas, không trên lớp phủ nào (w10).
+  if (!await session.eval(`document.elementFromPoint(${x},${y})===${canvas}`)) {
+    throw new Error("ORBIT_START_NOT_ON_CANVAS");
+  }
   await session._send("Input.dispatchMouseEvent", {
     type: "mouseMoved", x, y, button: "left", buttons: 0,
   });
