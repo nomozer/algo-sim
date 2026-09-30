@@ -193,7 +193,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     assert cand_cmd.returncode == 0
     from app.main import CACHE_VERSION
     # 103 -> 104 (w11): envelope `ok` đổi (công thức thể tích, grounding độ dài).
-    assert str(CACHE_VERSION) == "104"
+    # 104 -> 105 (w12): GIVEN không có trong đề bị từ chối (served -> rejected).
+    assert str(CACHE_VERSION) == "105"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

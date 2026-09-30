@@ -672,7 +672,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # thuc chi con vat chu nhac toi, compiler chop/lang tru day tam giac vuong
     # khai do dai de cho (co cong thuc the tich), grounding nhan do dai khop bat
     # bien (rejected -> served). Cache tra thang envelope nen de cu phai miss.
-    assert main_module.CACHE_VERSION == "104"
+    # 104 -> 105 (W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE, 2026-09-30):
+    # be mat mo hinh KHONG doi; grounding tu choi GIVEN ma de khong chung minh
+    # duoc (do dai bia) — chieu served -> rejected (tien le 96). Cache tra thang
+    # envelope `ok` nen de tung phuc vu voi chieu cao bia phai miss.
+    assert main_module.CACHE_VERSION == "105"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

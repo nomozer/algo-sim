@@ -700,7 +700,16 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       biến độ dài của hợp đồng — chiều **rejected → served** (lời từ chối không
 #       được cache, nên không row nào hoá sai). Không bump thì cache trả lại cảnh
 #       thiếu công thức của review w10.
-CACHE_VERSION = "104"
+#   105 (2026-09-30, W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE):
+#       BỀ MẶT MÔ HÌNH KHÔNG ĐỔI (prompt, thẻ văn phạm, lược đồ, bảng năng lực,
+#       fingerprint provider giữ nguyên). Chính sách grounding đổi: một GIVEN mà
+#       câu đề không chứng minh được (độ dài bịa, giá trị chỉ có trong lời khai
+#       `analyze`) nay bị TỪ CHỐI — chiều **served → rejected** (tiền lệ 96).
+#       Cache trả thẳng `envelope_json` khi trúng, nên không bump thì một đề
+#       từng được phục vụ với chiều cao bịa vẫn tiếp tục được phục vụ. Chiều
+#       ngược lại (phân số/thập phân phẩy của đề nay đọc đúng: rejected → served)
+#       không cần bump — lời từ chối không được cache.
+CACHE_VERSION = "105"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

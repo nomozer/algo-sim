@@ -408,7 +408,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    nội dung cảnh trong envelope `ok` đổi (bề mặt học sinh).
     # 103 → 104 (W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW, 2026-09-29):
     #    envelope `ok` đổi (công thức thể tích, grounding độ dài theo bất biến).
-    assert CACHE_VERSION == "104"
+    # 104 → 105 (W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE, 2026-09-30):
+    #    GIVEN không có trong đề bị từ chối (served → rejected).
+    assert CACHE_VERSION == "105"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi
