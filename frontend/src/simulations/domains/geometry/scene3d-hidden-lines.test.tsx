@@ -13,6 +13,7 @@ import {
 } from "./scene3d-view";
 import type { SceneObject } from "./scene3d-model";
 import { DAU_DINH_PX, banKinhBamPx, coDauDinhPx, donViMoiPx } from "./pick-target";
+import { MAU_VAI_TRO } from "./scene3d-roles";
 
 /**
  * NÉT LIỀN / NÉT KHUẤT THEO CAMERA — hợp đồng CẤU TRÚC.
@@ -170,7 +171,8 @@ describe("hidden-line — cấu trúc cảnh", () => {
     const con = gom(buildObject3D(KHOI, "dich")!);
     const canh = con.filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId)
       .map((c) => (c as THREE.Line).material as THREE.LineBasicMaterial);
-    expect(new Set(canh.map((m) => m.color.getHex()))).toEqual(new Set([0xc2410c]));
+    // W12: đích là XANH "đang xét" (bảng vai trò dùng chung với bảng lời giải).
+    expect(new Set(canh.map((m) => m.color.getHex()))).toEqual(new Set([MAU_VAI_TRO.dich]));
     expect(canh.some((m) => m instanceof THREE.LineDashedMaterial)).toBe(true);
   });
 
@@ -343,14 +345,17 @@ describe("hidden-line — cấu trúc cảnh", () => {
     expect(mauCanh(buildObject3D(KHOI, "boi_canh")!)).toEqual(mauCanh(buildObject3D(KHOI, false)!));
   });
 
-  it("vật mới dựng ở bước (formation) mang màu cam, không vàng nhạt", () => {
+  // W12 (quyết định của người dùng): vật mới dựng dùng XANH "đang xét" — cam
+  // nay chỉ còn nghĩa dữ kiện số. Giữ vế w11: đủ đậm cho nét 1 px trên nền sáng.
+  it("vật mới dựng ở bước (formation) mang xanh 'đang xét', không vàng nhạt", () => {
     const [mau] = [...mauCanh(buildObject3D(KHOI, true)!)];
     const c = new THREE.Color(mau);
     const hsl = { h: 0, s: 0, l: 0 };
     c.getHSL(hsl, THREE.SRGBColorSpace);   // mặc định là không gian TUYẾN TÍNH
-    expect(hsl.h * 360).toBeGreaterThan(15);
-    expect(hsl.h * 360).toBeLessThan(35);   // cam: 15°–35°, không phải hổ phách/vàng
-    expect(hsl.l).toBeLessThan(0.5);        // đủ đậm cho nét 1 px trên nền sáng
+    expect(mau).toBe(MAU_VAI_TRO.moi_dung);
+    expect(hsl.h * 360).toBeGreaterThan(200);
+    expect(hsl.h * 360).toBeLessThan(235);  // xanh, không phải cam/hổ phách/vàng
+    expect(hsl.l).toBeLessThan(0.6);        // đủ đậm cho nét 1 px trên nền sáng
   });
 });
 

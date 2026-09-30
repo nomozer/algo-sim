@@ -6282,6 +6282,17 @@ Khoá ranh giới 5E: điều hướng bước thuần · giảm chuyển độn
 `matchMedia` ném lỗi) · nhãn trình đọc màn hình · và quan trọng nhất — playback
 **không đụng nội dung toán học**.
 
+### `frontend/src/simulations/domains/geometry/scene3d-roles.ts` · offline
+
+**Bảng MÀU VAI TRÒ** dùng chung (W12): `MAU_VAI_TRO` (`dich` xanh ·
+`moi_dung` = `dich` · `du_kien_so` cam đậm · `trung_gian` cam nhạt · `boi_canh`
+/ `nen_boi_canh` trung tính · `diem_de_cho` trung tính), `BIEN_CSS_VAI_TRO`
+(tên biến CSS mang cùng giá trị) và `hexCss`. Renderer (`scene3d-view.tsx`)
+đọc số hex; bảng lời giải đọc bản sao `--geo3d-vai-tro-*` trong `tokens.css`.
+Review W12: cam đậm từng mang hai nghĩa (dữ kiện số / vật đang chọn), xanh
+cũng hai (điểm đề cho / đích). Khoá: `scene3d-roles.test.ts` (nghĩa + đồng bộ
+CSS↔TS) và `scene3d-causal-colors.test.tsx` (màu THẬT trên vật liệu three.js).
+
 ### `frontend/src/simulations/domains/geometry/scene3d-solution.tsx` · offline
 
 **Bảng LỜI GIẢI** dưới thanh bước (W12): `Scene3DSolution` + `lopDongLoiGiai`.
@@ -8407,7 +8418,7 @@ Run `docs/evaluation/geometry/runs/w11-pedagogical-polish/`. Trả lời review 
 | Công thức thể tích + tham chiếu nhất quán | `backend/app/simulation/semantic_program/scene3d.py` (`_attach_formulas`) | `references` = đúng các vật chữ công thức nhắc tới, theo thứ tự chữ (thể tích: [đáy, chiều cao]); hai ứng viên chiều cao ⇒ không in công thức | scene → thẻ công thức, "Dựa trên" | `test_formula_provenance_closure.py` |
 | Vết provenance công thức | `backend/scripts/trace_formula_provenance.py` | canonical input → RequestContract → FactGraph → SemanticProgram → Scene3D → thẻ/"Dựa trên", 0 lượt gọi model; ghi `git_head` + mã sản phẩm sạch/bẩn | → `diagnostics/FORMULA_PROVENANCE_TRACE_*.json` | chạy script |
 | "Dựa trên" của bước đo | `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`numericalBasis`) + `scene3d-playback.tsx` | Nguồn SỐ trực tiếp theo thứ tự công thức, không kèm khối (ngữ cảnh); bước không có nguồn số giữ phụ thuộc trace. Ô "Chi tiết" giữ `directDependencies` (phụ thuộc máy) | scene → dòng dưới thanh bước | `npx vitest run src/simulations/domains/geometry/scene3d-playback.test.tsx` |
-| Causal bốn tầng | `interaction-state.ts` (`tangNhanManh`, `TangNhanManh` = `dich`/`du_kien_so`/`trung_gian`/`boi_canh`) + `scene3d-view.tsx` (`MAU_TANG`, `MAU_NEN_BOI_CANH`, `lopSoDo`, `__geo3d_causal_tiers`) + `global.css` (`.la-so-lieu`, `.la-trung-gian`) | Chuỗi số đi theo cạnh `numerical` backend gõ loại; ngữ cảnh cấu trúc giữ mực nét, chỉ tô nền nhạt; ngoài chuỗi làm dịu; dòng số đo mang lớp theo tầng | selection → renderer, số đo | `interaction-state.test.ts` + `scene3d-hidden-lines.test.tsx` |
+| Causal bốn tầng | `interaction-state.ts` (`tangNhanManh`, `TangNhanManh` = `dich`/`du_kien_so`/`trung_gian`/`boi_canh`) + `scene3d-roles.ts` (`MAU_VAI_TRO`, W12) + `scene3d-view.tsx` (`MAU_TANG`, `MAU_NEN_BOI_CANH`, `__geo3d_causal_tiers`) + `scene3d-solution.tsx` (`lopDongLoiGiai`) + `tokens.css` (`--geo3d-vai-tro-*`) | Chuỗi số đi theo cạnh `numerical` backend gõ loại. Mỗi màu MỘT nghĩa trên khung lẫn bảng (W12): đích xanh · dữ kiện số cam đậm · trung gian cam nhạt · ngữ cảnh cấu trúc trung tính (giữ mực nét, nền xám nhạt) · ngoài chuỗi làm dịu; vật vừa dựng khi phát cũng xanh "đang xét"; điểm đề cho trung tính | selection → renderer, bảng lời giải | `interaction-state.test.ts` + `scene3d-hidden-lines.test.tsx` + `scene3d-roles.test.ts` + `scene3d-causal-colors.test.tsx` |
 | Chấm đỉnh theo px | `frontend/src/simulations/domains/geometry/pick-target.ts` (`DAU_DINH_PX`, `KHUNG_HEP_PX`, `DICH_DIEM_HEP_PX`, `coDauDinhPx`, `banKinhBamPx`, `donViMoiPx`) + `scene3d-view.tsx` (`datCoDauDinh`, `__geo3d_vertex_markers`) | Token MỘT nguồn cho mọi họ: 6 / 7,5 (khung < 768 px) / 9 (đang chọn) px CSS đường kính; vùng bấm 12 / 16 px bán kính; áp mỗi khung theo độ sâu camera, không phụ thuộc DPR. Lưới giữ bán kính gốc 0,09 | render loop | `pick-target.test.ts` + `scene3d-hidden-lines.test.tsx` |
 | Đường phụ nhẹ | `scene3d-view.tsx` (`HE_SO_DUONG_PHU`, nhánh `render === "line"`) | Đường vô hạn không được nhấn: độ mờ ×0,45; rõ ở bước dựng nó (formation) hoặc khi được chọn | formation/selection → renderer | `scene3d-hidden-lines.test.tsx` |
 | Cam = vật mới dựng | `scene3d-view.tsx` (`MAU.highlight` = `0xea580c`) | Bản `0xfbbf24` vàng nhạt, nét 1 px gần biến mất trên nền sáng | formation → renderer | `scene3d-hidden-lines.test.tsx` |

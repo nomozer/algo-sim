@@ -58,6 +58,7 @@ import {
 import {
   type KhungNhin, chonHuongNhin, hopBaoCuaDiem, khungNhinSuPham, khungNhinVua,
 } from "./scene3d-camera";
+import { MAU_VAI_TRO } from "./scene3d-roles";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -99,9 +100,10 @@ export function tryCreateWebGLRenderer(): THREE.WebGLRenderer | null {
   }
 }
 
-/** Điểm gốc (tự do) khác điểm dựng ra — người học cần thấy cái nào là dữ kiện. */
+/** Màu theo KIỂU vật. Điểm đề cho trung tính (W12): xanh chỉ còn nghĩa "đang
+ *  xét" — vật được chọn, hoặc vật vừa dựng ở bước đang phát. */
 const MAU = {
-  free: 0x2563eb,
+  free: MAU_VAI_TRO.diem_de_cho,
   derived: 0xdc2626,
   line: 0x0f766e,
   surface: 0x7c3aed,
@@ -109,20 +111,21 @@ const MAU = {
   /** Mực cạnh khối — tách khỏi màu mặt tô, nếu không cạnh chìm vào mặt (w09). */
   canh: 0x1e293b,
   polygon: 0xf59e0b,
-  /** Cam = vật MỚI DỰNG / đang xét ở bước (formation). Bản cũ `0xfbbf24` là
-   *  hổ phách nhạt, nét 1 px gần như biến mất trên nền sáng (w11). */
-  highlight: 0xea580c,
+  /** Vật MỚI DỰNG ở bước đang phát (formation) — xanh "đang xét" (W12). Bản
+   *  w11 là cam `0xea580c`, trùng họ với cam của dữ kiện số. */
+  highlight: MAU_VAI_TRO.moi_dung,
 } as const;
 
-/** Chuỗi nhân quả quanh vật đang chọn (`tangNhanManh`, w11): đích đậm nhất,
- *  dữ kiện số cấp hai, trung gian số cấp ba. NGỮ CẢNH cấu trúc không có màu
- *  nét — giữ mực trung tính, chỉ tô nền nhạt. Ngoài chuỗi: làm dịu. */
+/** Chuỗi nhân quả quanh vật đang chọn (`tangNhanManh`): đích xanh, dữ kiện số
+ *  cam đậm, trung gian số cam nhạt — CÙNG bảng với bảng lời giải
+ *  (`scene3d-roles.ts`). NGỮ CẢNH cấu trúc không có màu nét — giữ mực trung
+ *  tính, chỉ tô nền xám nhạt. Ngoài chuỗi: làm dịu. */
 const MAU_TANG: Record<Exclude<TangNhanManh, "boi_canh">, number> = {
-  dich: 0xc2410c,        // cam đậm — ≥ 5:1 trên nền sáng
-  du_kien_so: 0x1d4ed8,  // xanh dữ kiện — cùng họ màu với điểm đề cho
-  trung_gian: 0xd97706,  // hổ phách — nhạt hơn đích một bậc, vẫn ≥ 3:1 cho nét
+  dich: MAU_VAI_TRO.dich,
+  du_kien_so: MAU_VAI_TRO.du_kien_so,
+  trung_gian: MAU_VAI_TRO.trung_gian,
 };
-const MAU_NEN_BOI_CANH = 0xfdba74;
+const MAU_NEN_BOI_CANH = MAU_VAI_TRO.nen_boi_canh;
 const HE_SO_LAM_DIU = 0.3;
 /** Đường VÔ HẠN (đường phụ) không được nhấn: lùi xuống, không biến mất (w11). */
 const HE_SO_DUONG_PHU = 0.45;

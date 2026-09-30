@@ -256,12 +256,16 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // nó **lấp mất phần lõm**. Sửa thể tích ở kernel mà để renderer lấp
       // phần lõm là chữa nửa bệnh — con số đúng, thứ học sinh NHÌN THẤY vẫn
       // sai. Test riêng của module khoá tính thuần ấy.
+      //
+      // `./scene3d-roles` THÊM ở W12: bảng MÀU VAI TRÒ dùng chung với bảng
+      // lời giải — chỉ hằng số màu, không three, không toán hình học. Tách ra
+      // để một màu mang MỘT nghĩa ở cả khung 3D lẫn CSS (test đồng bộ riêng).
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-edge-visibility",
-              "./polygon-triangulate"]).toContain(i);
+              "./polygon-triangulate", "./scene3d-roles"]).toContain(i);
     }
   });
 
