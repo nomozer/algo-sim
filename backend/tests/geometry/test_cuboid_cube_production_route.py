@@ -17,6 +17,7 @@ from __future__ import annotations
 import asyncio
 from copy import deepcopy
 import os
+import re
 import pytest
 
 from app.ai import pipeline as PL
@@ -298,15 +299,20 @@ def test_cross_family_positive_variants_through_production_boundary(
     monkeypatch, payload_fn, values, reverse, expected, provenance,
 ):
     """Bắt hardcode số mẫu, lệ thuộc thứ tự facts và provenance GIVEN giả."""
-    _, original = payload_fn()
+    goc_text, original = payload_fn()
     payload = deepcopy(original)
+    doi: dict[str, str] = {}
     for fact in payload["input_facts"]:
         if fact["id"] in values:
+            doi[fact["value"][0]] = values[fact["id"]]
             fact["value"] = [values[fact["id"]]]
     if reverse:
         payload["input_facts"].reverse()
         payload["geometric_relations"].reverse()
-    text = "Kiểm tra thể tích khối đa diện từ hợp đồng hình học có kiểu."
+    # W12: đề PHẢI ghi đúng các số mà dữ kiện khai — một GIVEN không có trong
+    # đề nay bị từ chối (`GIVEN_VALUE_NOT_IN_SOURCE`). Bản trước dựng hợp đồng
+    # với một câu không có số nào; thay số trong CHÍNH đề của họ, một lượt.
+    text = re.sub(r"\d+", lambda m: doi.get(m.group(0), m.group(0)), goc_text)
     contract = build_request_contract(payload, problem_text=text, domain="hinh_hoc")
 
     async def mock_analyze(*args, **kwargs):

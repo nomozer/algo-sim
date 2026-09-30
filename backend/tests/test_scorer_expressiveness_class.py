@@ -83,8 +83,12 @@ def _spec(bieu_thuc_r: dict | None, *, khai_r=True, ten_nguon="d",
 
 
 def _ct(gt=26, src_ok=True) -> RequestContract:
+    # Có mục số đo thì câu đề ghi đúng con số ấy: từ W12 grounding đọc P1, và
+    # một số chỉ có trong lời khai của mục là GIVEN bịa — lớp phán quyết sẽ
+    # thành MODEL_GROUNDING_FAILURE trước khi tới quy tắc năng lực đang đo.
     return RequestContract(
-        problem_text="Cho mặt cầu tâm O. Tính thể tích.",
+        problem_text=("Cho mặt cầu tâm O" + (f", số đo {gt}" if src_ok else "")
+                      + ". Tính thể tích."),
         input_facts=[
             {"fact_id": "tam", "label": "tâm O", "values": ["O"],
              "provenance": "confirmed"},

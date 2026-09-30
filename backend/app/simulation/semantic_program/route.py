@@ -68,6 +68,15 @@ class SemanticRouteOutcome(BaseModel):
     #: Nghĩa vụ hợp lệ nhưng KHÔNG có checker server-owned (mức yếu, §5.4).
     weak_kinds: list[str] = Field(default_factory=list)
     details: list[str] = Field(default_factory=list)
+    #: MÃ CHI TIẾT có cấu trúc của lời từ chối (W12) — vd `GIVEN_VALUE_NOT_IN_
+    #: SOURCE`. `error_code` giữ enum rộng; lời cho học sinh chọn theo mã này,
+    #: không bóc `details`. `None` ở mọi kết cục không từ chối có mã chi tiết.
+    reason_code: str | None = None
+    #: Ký hiệu HỌC SINH của thứ bị từ chối (`AD`) — không bao giờ là tên máy.
+    reason_subjects: list[str] = Field(default_factory=list)
+    #: BẰNG CHỨNG NGUỒN của từng GIVEN đã nhận (`GroundingResult.given_evidence`).
+    #: Quan trắc, không gác cửa, không vào envelope.
+    grounding_given_evidence: list[dict[str, Any]] = Field(default_factory=list)
     #: CHẨN ĐOÁN cổng phủ, dạng máy đọc được — song song với `details`.
     #:
     #: `details` là văn xuôi tiếng Việt cho người đọc; phân loại theo nó phải
@@ -222,6 +231,7 @@ def verify_and_compile(
         "grounding_unresolved_citations": list(ground.unresolved_citations),
         "justified_literals": list(ground.justified_literals),
         "unjustified_literals": list(ground.unjustified_literals),
+        "grounding_given_evidence": list(ground.given_evidence),
         "constraints_checked": quan_trac["checked"],
         "constraints_verified": quan_trac["verified"],
         "resolved_names": quan_trac["ten"],
@@ -266,6 +276,8 @@ def _sau_grounding(
             ErrorCode.INPUT_NOT_GROUNDED,
             "Chương trình dùng dữ liệu không truy được về đề bài.",
             details=chi_tiet,
+            reason_code=ground.error_code or "INPUT_NOT_GROUNDED",
+            reason_subjects=list(ground.refused_givens),
         )
 
     c1a = check_structural_coverage(contract, spec)

@@ -27,6 +27,7 @@ from .literal_extractor import (
     LiteralCandidate,
     extract_literals,
     gia_tri_kem_ky_tu,
+    gia_tri_khong_chung_minh_duoc,
 )
 from .request_contract import InputFact, RequestContract, norm_value
 from .scale_normalization import chuan_hoa_thang
@@ -475,31 +476,9 @@ def _gia_tri_khong_chung_minh_duoc(
     cands: tuple[LiteralCandidate, ...],
     problem_text: str,
 ) -> tuple[Any, ...]:
-    """Trong những giá trị `analyze` khai, cái nào đề KHÔNG hề có?
-
-    Hai luật, cố ý khác chặt-lỏng theo mức mà extractor thật sự phủ được:
-
-    - **số và boolean** — extractor phủ TRỌN hai lớp này, nên vắng mặt trong mọi
-      span đồng nghĩa với bịa. Xét chặt.
-    - **chuỗi** — chỉ đòi nó xuất hiện đâu đó trong đề dưới dạng chuỗi con. Đủ
-      để bắt giá trị dựng đứng ("mảng [5, 3, 9]" trong khi đề không có số nào),
-      mà không từ chối oan nhãn rút từ văn xuôi (tên đỉnh đồ thị, tên thành
-      phố), vốn là dữ liệu thật của đề nhưng không phải literal có cú pháp.
-    """
-    trong_span: set[Any] = set()
-    for c in cands:
-        for v in gia_tri_kem_ky_tu(c):
-            trong_span.add(v)
-
-    thieu: list[Any] = []
-    for v in values:
-        if isinstance(v, bool) or isinstance(v, (int, float)):
-            if v not in trong_span:
-                thieu.append(v)
-        elif isinstance(v, str):
-            if v not in trong_span and v not in problem_text:
-                thieu.append(v)
-    return tuple(thieu)
+    """Luật ở `literal_extractor.gia_tri_khong_chung_minh_duoc` (W12: một thẩm
+    quyền cho biên đóng băng, cổng grounding và bộ phát bất biến)."""
+    return gia_tri_khong_chung_minh_duoc(values, cands, problem_text)
 
 
 def _doc_quan_he(payload: dict[str, Any]) -> tuple[GeometricRelation, ...]:

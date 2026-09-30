@@ -256,6 +256,9 @@ def _spec_vo_huong(kind, r, h, z, do):
 
 
 def _hd(de, do):
+    # Câu đề `de` phải ghi số của khối: từ W12 grounding đọc P1, và bán kính/
+    # chiều cao chỉ có trong lời khai của mục là GIVEN bịa (bị từ chối trước
+    # khi tới phép cắt mà các ca này đo).
     return RequestContract(
         problem_text=de,
         input_facts=[
@@ -274,7 +277,8 @@ def _hd(de, do):
 ])
 def test_S_duong_san_pham_di_TRON_voi_cach_khai_height(kind, r, h, z, do, mong):
     spec = _spec_vo_huong(kind, r, h, z, do)
-    out = verify_and_compile(_hd(f"Khối {kind} bị cắt.", do), spec)
+    out = verify_and_compile(
+        _hd(f"Khối {kind} có bán kính đáy {r} và chiều cao {h} bị cắt.", do), spec)
     assert out.servable, getattr(out, "details", None)
     mem = {k: str(v) for k, v in (out.final_memory or {}).items()}
     assert {k: mem.get(k) for k in mong} == mong
@@ -292,7 +296,7 @@ def test_S_scene3d_mang_circle3_dung_producer_va_phu_thuoc():
 
     do = [("bk", "radius"), ("dt", "area")]
     spec = _spec_vo_huong("cylinder", 9, 20, 10, do)
-    hd = _hd("Hình trụ bị cắt.", do)
+    hd = _hd("Hình trụ có bán kính đáy 9 và chiều cao 20 bị cắt.", do)
     assert verify_and_compile(hd, spec).servable
     canh = pipeline._dung_scene3d(spec, hd) or {}
     o = {x.get("name") or x.get("id"): x for x in canh.get("objects", [])}
@@ -309,7 +313,7 @@ def test_S_diem_co_ten_van_giu_xuat_xu__grounding_khong_bi_noi():
     do = [("bk", "radius")]
     spec = _spec_vo_huong("cylinder", 9, 20, 10, do)
     hong = RequestContract(
-        problem_text="Hình trụ bị cắt.",
+        problem_text="Hình trụ có bán kính đáy 9 và chiều cao 20 bị cắt.",
         input_facts=[{"fact_id": FK, "label": "kích thước",
                       "values": [9, 20], "provenance": "confirmed"}],
         obligations=(Obligation(kind="radius", container="Vong",
@@ -335,7 +339,8 @@ def test_S_mat_phang_xien_qua_duong_san_pham_tu_choi_CO_CAU_TRUC():
     spec = SemanticProgramSpec.model_validate({**decls_stmts,
                                                "memory_declarations": d,
                                                "statements": s})
-    out = verify_and_compile(_hd("Hình trụ cắt xiên.", do), spec)
+    out = verify_and_compile(
+        _hd("Hình trụ có bán kính đáy 9 và chiều cao 20 bị cắt xiên.", do), spec)
     assert not out.executable
     assert any(CV.ERR_NGOAI_BAO_DONG in x for x in (out.details or [])), \
         out.details
@@ -403,6 +408,6 @@ def test_TIEM_5_tu_choi_moi_scalar_mode_thi_duong_san_pham_do(monkeypatch):
 
     monkeypatch.setattr(CV, "intersect_plane_curved", tu_choi)
     out = verify_and_compile(
-        _hd("Hình trụ bị cắt.", [("bk", "radius")]),
+        _hd("Hình trụ có bán kính đáy 9 và chiều cao 20 bị cắt.", [("bk", "radius")]),
         _spec_vo_huong("cylinder", 9, 20, 10, [("bk", "radius")]))
     assert not out.servable

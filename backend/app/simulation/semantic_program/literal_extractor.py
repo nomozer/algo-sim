@@ -127,13 +127,18 @@ _LUAT: tuple[tuple[str, re.Pattern[str], Any, int, int | None], ...] = (
     # không nuốt dấu ngoặc đơn thường gặp trong văn xuôi tiếng Việt.
     ("str", re.compile(r"[()\[\]{}]{2,}"), _parse_nguyen_van, 0, None),
     # Chuỗi trong nháy — kể cả nháy cong mà trình soạn thảo tiếng Việt hay chèn.
-    ("str", re.compile(r"[\"“]([^\"”]+)[\"”]|'([^']+)'"), _parse_chuoi_nhay, 0, None),
+    # Nháy đơn KHÔNG mở ngay sau chữ/số: đó là dấu phẩy của tên điểm (`A'`), và
+    # `AA' = 5 … ABCD.A'` từng đọc thành một chuỗi nuốt luôn số 5 (W12).
+    ("str", re.compile(r"[\"“]([^\"”]+)[\"”]|(?<![A-Za-z0-9])'([^']+)'"), _parse_chuoi_nhay, 0, None),
     # Gán vô hướng: span chỉ ôm ĐÚNG con số, còn tên đi vào `label_hint`. Nhờ
     # thế `text[start:end]` vẫn bằng thẳng giá trị, không cần luật riêng.
     ("num_assign", re.compile(r"\b([A-Za-z_]\w*)\s*=\s*(" + _SO + r")"),
      _parse_so, 2, 1),
     ("bool", re.compile(r"\b(?:true|false)\b", re.IGNORECASE), _parse_bool, 0, None),
-    ("num", re.compile(r"(?<![\w.])" + _SO + r"(?![\w.])"), _parse_so, 0, None),
+    # Sau số: không được là chữ, và không được là PHẦN THẬP PHÂN (`.5`). Dấu
+    # chấm câu thì được — `(?![\w.])` cũ bỏ mọi số cuối câu (*"cạnh bằng 4."*),
+    # và từ W12 cổng grounding đọc P1 nên số ấy bị kết tội "không có trong đề".
+    ("num", re.compile(r"(?<![\w.])" + _SO + r"(?!\w|\.\d)"), _parse_so, 0, None),
 )
 
 #: Kind thật của một literal số được quyết bởi GIÁ TRỊ, không bởi regex đã bắt
@@ -215,6 +220,57 @@ def verify_candidate(cand: LiteralCandidate, problem_text: str) -> bool:
         except (ValueError, IndexError):
             continue
     return False
+
+
+def _co_thap_phan_phay(v: Any, problem_text: str) -> bool:
+    """Đề viết số thập phân `v` bằng dấu PHẨY (`2,5`) — lối viết Việt (W12).
+
+    Extractor không đọc dấu phẩy thập phân: đọc thì `A(1,2,3)` vỡ thành số lẻ.
+    Nên chỉ nhận khi dấu phẩy KHÔNG nằm trong một dãy số (`1,2,3`).
+    """
+    if not isinstance(v, float):
+        return False
+    chu = repr(v)  # `nan`/`inf`/`1e-07` không có dạng phẩy ⇒ bị loại ngay dưới
+    if "." not in chu or "e" in chu:
+        return False
+    phay = re.escape(chu.replace(".", ","))
+    return re.search(rf"(?<![\d.,]){phay}(?!\d|,\d)", problem_text or "") is not None
+
+
+def gia_tri_khong_chung_minh_duoc(
+    values: tuple[Any, ...],
+    cands: tuple[LiteralCandidate, ...],
+    problem_text: str,
+) -> tuple[Any, ...]:
+    """Trong những giá trị `analyze` khai, cái nào đề KHÔNG hề có?
+
+    Hai luật, cố ý khác chặt-lỏng theo mức mà extractor thật sự phủ được:
+
+    - **số và boolean** — extractor phủ TRỌN hai lớp này, nên vắng mặt trong mọi
+      span đồng nghĩa với bịa. Xét chặt.
+    - **chuỗi** — chỉ đòi nó xuất hiện đâu đó trong đề dưới dạng chuỗi con. Đủ
+      để bắt giá trị dựng đứng ("mảng [5, 3, 9]" trong khi đề không có số nào),
+      mà không từ chối oan nhãn rút từ văn xuôi (tên đỉnh đồ thị, tên thành
+      phố), vốn là dữ liệu thật của đề nhưng không phải literal có cú pháp.
+
+    Chuyển về đây từ `analyze_contract` (W12): biên đóng băng, cổng grounding và
+    bộ phát bất biến gọi CÙNG một hàm, trên literal trích MỚI từ đề — một hợp
+    đồng đông cứng từ trước mang kết quả P1 của extractor cũ.
+    """
+    trong_span: set[Any] = set()
+    for c in cands:
+        for v in gia_tri_kem_ky_tu(c):
+            trong_span.add(v)
+
+    thieu: list[Any] = []
+    for v in values:
+        if isinstance(v, bool) or isinstance(v, (int, float)):
+            if v not in trong_span and not _co_thap_phan_phay(v, problem_text):
+                thieu.append(v)
+        elif isinstance(v, str):
+            if v not in trong_span and v not in problem_text:
+                thieu.append(v)
+    return tuple(thieu)
 
 
 def gia_tri_kem_ky_tu(cand: LiteralCandidate) -> tuple[Any, ...]:

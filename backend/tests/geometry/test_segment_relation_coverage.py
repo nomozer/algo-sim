@@ -183,7 +183,9 @@ def test_B8_quan_he_nam_o_HAI_InputFact_van_ghep_dung():
     facts = (_F("f_dai", "Độ dài đoạn AB", (12,)),
              _F("f_vi_tri", "Điểm M nằm trên đoạn AB", ()),
              _F("f_am", "Độ dài đoạn AM", (9,)))
-    b = _mot("Một mặt phẳng cắt AB tại điểm M.", facts)
+    # W12: số của dữ kiện phải có trong đề (P1) — đứng TRƠN, không nhãn đoạn,
+    # nên phép ghép vẫn đến từ hai `InputFact` chứ không từ câu đề.
+    b = _mot("Một mặt phẳng cắt AB tại điểm M. Các số đo lần lượt là 12 và 9.", facts)
     assert (b.points, b.expected) == (("A", "B", "M"), "3/4")
     assert b.source_fact_id
 
@@ -311,7 +313,7 @@ def test_D2_TIEM_dao_huong_A_B_thi_do(e4):
 def test_D3_TIEM_bo_ghep_hai_InputFact_thi_do(monkeypatch):
     """Chỉ đọc `problem_text` ⇒ ca dữ kiện tách dòng mất bất biến."""
     monkeypatch.setattr(SR, "_van_ban",
-                        lambda c, t: [SR._chuan(t or "")])
+                        lambda c, t, **_: [SR._chuan(t or "")])
 
     class _F:
         def __init__(self, i, l, v):

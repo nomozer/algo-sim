@@ -236,6 +236,17 @@ KHONG_DUOC_SUA = frozenset({
     "DERIVED_ENTITY_WITHOUT_PRODUCER",
 })
 
+#: Mã NGUỒN (W12, `grounding_gate.MA_LOI_NGUON`): đề không có dữ kiện ấy, hoặc
+#: bản ghi nguồn tự mâu thuẫn. Viết lại chương trình không thêm được chữ nào vào
+#: đề, nên không tốn một lượt sửa nào — nhưng cũng không giết chương trình ở tầng
+#: "viết" (`semantic_program_invalid` là SAI BỆNH): chương trình chuyển nguyên
+#: cho `route`, nơi CÙNG `check_grounding` từ chối ở tầng `grounding`, có mã.
+KHONG_SUA_NGUON = frozenset({
+    "GIVEN_VALUE_NOT_IN_SOURCE",
+    "SOURCE_SPAN_MISMATCH",
+    "SOURCE_EVIDENCE_CONFLICT",
+})
+
 
 def _prompt_sua(
     base: str,
@@ -467,6 +478,11 @@ async def stage_semantic_program(
                                   n=lan, ok=False, message=loi,
                                   gate="grounding", repairable=False)
                             return None, f"SEMANTIC_PROGRAM_INVALID: {loi}"
+                        if not g.ok and g.error_code in KHONG_SUA_NGUON:
+                            _emit(observer, "semantic_program_attempt",
+                                  n=lan, ok=False, message=f"[{g.error_code}]",
+                                  gate="grounding", repairable=False)
+                            return val.spec, None
                         if not g.ok and lan < MAX_SEMANTIC_PROGRAM_ATTEMPTS - 1:
                             loi = ("xuất xứ dữ liệu chưa đủ — "
                                    + "; ".join(g.unresolved[:4]))
@@ -571,7 +587,7 @@ def _that_bai_hinh_hoc(outcome, analysis: dict, plan: dict, observer) -> dict:
     ly_do = getattr(outcome, "reason", None) if outcome is not None else None
     _emit(observer, "envelope", status="unsupported", simulation_id=None,
           failure_category=category)
-    return {
+    env = {
         "status": "unsupported",
         # `reason` KỸ THUẬT giữ nguyên — nó nuôi harness và diagnostics. Học
         # sinh đọc `learner_reason`, gắn ở biên API (`learner_messages`).
@@ -582,6 +598,12 @@ def _that_bai_hinh_hoc(outcome, analysis: dict, plan: dict, observer) -> dict:
         "representation_plan": plan,
         "analysis": analysis,
     }
+    # Mã chi tiết CHỈ khi có (W12): envelope từ chối khác vẫn trùng từng khoá.
+    ma = getattr(outcome, "reason_code", None) if outcome is not None else None
+    if ma:
+        env["reason_code"] = ma
+        env["reason_subjects"] = list(getattr(outcome, "reason_subjects", None) or [])
+    return env
 
 
 def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> dict:

@@ -65,8 +65,13 @@ def hop_dong(dv="A", c1="B", c2="C", ap="S", l1="3", l2="4", cao="5", *,
                    f"{ap}{dv} ⊥ ({dv}{c1}{c2})")
     facts = tuple(InputFact(fact_id=i, label="quan hệ", values=(t,))
                   for i, t in zip(("f_day", "f_cao_vg"), loi_van))
+    # W12: độ dài GIVEN phải có trong câu đề — bản trước chỉ ghi chúng ở bất
+    # biến dựng tay, nên chương trình đúng bị từ chối `GIVEN_VALUE_NOT_IN_SOURCE`.
+    do_dai = [(f"{dv}{c1}", l1), (f"{dv}{c2}", l2), (f"{ap}{dv}", cao)] + [
+        ("".join(p), e) for p, e, _ in them_do_dai]
     de = (f"Cho hình chóp {ap}.{dv}{c1}{c2}. "
-          + ". ".join(loi_van) + ". Tính thể tích khối chóp.")
+          + ". ".join(loi_van) + ". "
+          + ", ".join(f"{s} = {e}" for s, e in do_dai) + ". Tính thể tích khối chóp.")
     return RequestContract(
         obligations=(Obligation(kind="volume", container="khoi_chop",
                                 params={"witness": witness}),),

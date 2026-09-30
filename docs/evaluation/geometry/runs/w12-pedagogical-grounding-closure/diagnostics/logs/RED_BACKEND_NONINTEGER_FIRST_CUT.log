@@ -1,0 +1,55 @@
+# W12 red observations against the FIRST CUT of the source-evidence gate
+# (working tree = base a4fd5fec + uncommitted W12 first-cut changes; 0 model calls)
+#
+# Why this log exists: the first full backend run after the first cut
+# (14 failed / 6409 passed) showed a REGRESSION the red tests had not covered:
+#   tests/geometry/test_primitive_compiler_ab_benchmark.py::
+#     test_compiler_dat_4_tren_4_truoc_khi_duoc_phep_goi_provider
+#     AssertionError: [('B03', [], 'COVERED')]  assert 3 == 4
+# B03 states fractional lengths ("DE = 3/2, DF = 8/3, TD = 5/2"); the first cut
+# looked the value up in the literal extractor, which reads integers and dot
+# decimals only, so a STATED fraction looked absent (GIVEN_VALUE_NOT_IN_SOURCE).
+# Probing the source length reader showed the opposite defect (pre-existing):
+#   do_dai_trong_de("AB = 2.5")      -> {AB: 2}      (should be 5/2)
+#   do_dai_trong_de("AB = 1,5 cm")   -> {AB: 1}      (should be 3/2)
+#   do_dai_trong_de("SA = 2√3")      -> {AS: 2}      (must not be read)
+#   do_dai_trong_de("AB = 3√2/2")    -> {AB: 3}      (must not be read)
+# and P1 could not see a Vietnamese decimal comma:
+#   gia_tri_khong_chung_minh_duoc((2.5,), extract_literals(t), t)
+#     t = "Cho mặt cầu bán kính R = 2,5 cm."  -> (2.5,)   (should be ())
+#
+# Tests added for these, run against the first cut (verbatim excerpt):
+#   python -m pytest -q -p no:cacheprovider tests/geometry/test_source_grounding_closure.py --tb=line
+E   AssertionError: ['AD_length: đề không có con số 3/2 — không nhận làm dữ kiện đề cho']
+E   AssertionError: ['AD_length: đề ghi AD = 2, không phải 5/2 — không nhận làm dữ kiện đề cho']
+E   AssertionError: ['AD_length: đề ghi AD = 2, không phải 5/2 — không nhận làm dữ kiện đề cho']
+E   TypeError: cannot unpack non-iterable NoneType object      (2√3 accepted with NO evidence span)
+E   TypeError: cannot unpack non-iterable NoneType object      (2 √3 accepted with NO evidence span)
+E   AssertionError: assert (not True)                          (an UNSTATED 2√3 height was accepted)
+E   AssertionError: assert {'AB': '2'} == {'AB': '5/2'}
+E   AssertionError: assert {'AB': '1'} == {'AB': '3/2'}
+E   AssertionError: assert {'AS': '2'} == {}
+E   AssertionError: assert {'AB': '3'} == {}
+E   AssertionError: assert {'AB': '2'} == {}
+FAILED test_a_stated_non_integer_height_is_evidenced_by_the_text[3/2-3/2]
+FAILED test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2.5]
+FAILED test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2,5]
+FAILED test_a_stated_non_integer_height_is_evidenced_by_the_text[2√3-2√3]
+FAILED test_a_stated_non_integer_height_is_evidenced_by_the_text[2√3-2 √3]
+FAILED test_an_unstated_non_integer_height_is_refused[2√3]
+FAILED test_the_source_length_reader_never_truncates_a_number[AB = 2.5-expected0]
+FAILED test_the_source_length_reader_never_truncates_a_number[AB = 1,5 cm-expected1]
+FAILED test_the_source_length_reader_never_truncates_a_number[SA = 2√3-expected4]
+FAILED test_the_source_length_reader_never_truncates_a_number[AB = 3√2/2-expected5]
+FAILED test_the_source_length_reader_never_truncates_a_number[đoạn AB có độ dài 2√3-expected6]
+11 failed, 14 passed in 1.53s
+#
+#   python -m pytest -q tests/semantic_program/test_literal_provenance.py::test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc
+E   assert (2.5,) == ()
+1 failed in 0.63s
+#
+# After the second cut (text-number scanner in grounding_gate, number-ending
+# guard + decimal comma in segment_relation, decimal-comma rule in P1):
+#   focused grounding / benchmark / fixture tests: 265 passed
+#   full backend: 12 failed / 6427 passed — all 12 are stale-candidate or
+#   dirty-tree checks that pass only after the refreeze in a clean tree.

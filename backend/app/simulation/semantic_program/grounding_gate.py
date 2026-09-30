@@ -21,6 +21,7 @@ Gate này là điều kiện CẦN, CHƯA ĐỦ.
 """
 from __future__ import annotations
 
+import re
 from fractions import Fraction
 from typing import Any
 
@@ -31,8 +32,10 @@ from .contract import SemanticProgramSpec
 # lệnh tạo ra một biến (`assign`, `pop`, `push`, `map_set`, biến chạy vòng lặp…)
 # và hai bản rời nhau chắc chắn sẽ lệch khi thêm primitive.
 from .coverage_gate import _producers
+from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
+from .segment_relation import do_dai_trong_de
 from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
@@ -108,6 +111,123 @@ ERR_RUA_NANG_LUC = "UNANCHORED_DERIVED_ASSUMPTION"
 #: có trong đề" sẽ là một lời buộc tội SAI, và một lượt repair đi sai hướng.
 ERR_THIEU_NGUOI_DUNG = "DERIVED_ENTITY_WITHOUT_PRODUCER"
 
+#: ─── BA MÃ NGUỒN (W12) ────────────────────────────────────────────────────
+#:
+#: `build_request_contract` đã đánh dấu giá trị `analyze` khai mà đề không có
+#: (`provenance="claimed"`, `unproven_values`) "để cổng phía sau có cái mà từ
+#: chối" — và không cổng nào đọc. Một độ dài bịa vì thế thành GIVEN và được
+#: phục vụ (`ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED`).
+#:
+#: Ba mã này nói *nguồn không chứng minh được*, không nói *chương trình viết
+#: sai*: viết lại chương trình không thêm được dữ kiện vào đề, nên `pipeline`
+#: không gửi chúng đi sửa.
+ERR_GIVEN_KHONG_CO_TRONG_DE = "GIVEN_VALUE_NOT_IN_SOURCE"
+ERR_SPAN_LECH_DE = "SOURCE_SPAN_MISMATCH"
+ERR_BANG_CHUNG_MAU_THUAN = "SOURCE_EVIDENCE_CONFLICT"
+MA_LOI_NGUON = frozenset({ERR_GIVEN_KHONG_CO_TRONG_DE, ERR_SPAN_LECH_DE,
+                          ERR_BANG_CHUNG_MAU_THUAN})
+
+#: Đơn vị độ dài — tập ĐÓNG. Engine không đổi đơn vị; nó chỉ phát hiện hai nguồn
+#: nói hai đơn vị khác nhau cho cùng một con số.
+_DON_VI = r"(mm|cm|dm|km|m)"
+_DON_VI_SAU = re.compile(rf"^\s*{_DON_VI}(?![A-Za-zÀ-ỹ])")
+_SO_KEM_DON_VI = re.compile(rf"^\s*(-?\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?)\s*(?:{_DON_VI})?\s*$")
+#: Một CON SỐ của câu đề: nguyên · thập phân (`.`/`,`) · `a/b` · căn (`2√3`,
+#: `√3`, `3√2/2`). Không bắt đầu/kết thúc giữa một số khác — `2.5` không bao giờ
+#: đọc thành `2`, `2√3` không thành `2` — nhưng đơn vị dính liền (`3cm`) vẫn là
+#: một số. Extractor literal chỉ đọc nguyên và thập phân chấm, nên phân số của
+#: đề (`DE = 3/2`, ca B03) từng bị kết tội "không có trong đề".
+_SO_DE = re.compile(
+    rf"(?<![\w.,/√])(?P<so>(?:\d+(?:[.,]\d+)?\s*)?√\s*\d+(?:\s*/\s*\d+)?"
+    rf"|\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?)"
+    rf"(?![.,]\d)(?={_DON_VI}(?![A-Za-zÀ-ỹ0-9])|[^\w/√]|$)")
+#: Nhãn ĐOẠN ngay trước con số: `XY =` hoặc `XY bằng`.
+_NHAN_TRUOC = re.compile(r"([A-Z]\d*['′]?)([A-Z]\d*['′]?)\s*(?:=|bằng)\s*$")
+
+
+def _phan_so(v: Any) -> Fraction | None:
+    if isinstance(v, bool):
+        return None
+    try:
+        return Fraction(str(v).replace(",", ".").replace(" ", ""))
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def _so_va_don_vi(v: Any) -> tuple[Fraction | None, str | None]:
+    """`'5 cm'` → `(5, 'cm')`; `5` → `(5, None)`; văn xuôi → `(None, None)`."""
+    if isinstance(v, bool):
+        return None, None
+    if isinstance(v, (int, float)):
+        return _phan_so(v), None
+    m = _SO_KEM_DON_VI.match(str(v))
+    return (_phan_so(m.group(1)), m.group(2)) if m else (None, None)
+
+
+def _cung_doan(ten_khai: str, doan) -> bool:
+    """`ten_khai` (`AA_prime_length`) là độ dài của đúng đoạn `doan` của đề?"""
+    if len(doan) != 2:
+        return False
+    a, z = (dinh_danh_thuc_the(str(p))[0] for p in sorted(doan))
+    return ten_khai in (f"{a}{z}_length", f"{z}{a}_length")
+
+
+def _ky_hieu_doan(ten_khai: str) -> str:
+    """`AA_prime_length` → `AA′` — ký hiệu học sinh, không phải tên máy."""
+    return ten_khai.removesuffix("_length").replace("_prime", "′")
+
+
+def _bang_chung_do_dai(de: str, ten_khai: str, v: Fraction | str,
+                       don_vi_muc: str | None) -> tuple[str | None, dict[str, Any] | None, str]:
+    """Bằng chứng NGUỒN cho `ten_khai = v` — đọc CHỈ từ câu đề.
+
+    `v` là số hữu tỉ, hoặc chuỗi của một giá trị căn (`"2√3"`) — căn so bằng
+    chữ viết sau khi bỏ khoảng trắng, không quy đổi.
+
+    → `(mã lỗi | None, bằng chứng | None, lý do)`. Ba câu hỏi, theo thứ tự:
+
+    ① đề có ghi độ dài của CHÍNH đoạn này không — ghi mà khác `v` là mâu thuẫn;
+    ② `v` có xuất hiện trong đề không — không thì không có trong nguồn;
+    ③ mọi lần `v` xuất hiện đều gắn nhãn một ĐOẠN KHÁC — mâu thuẫn.
+
+    Số đứng một mình (*"có cạnh bằng 4"*) là bằng chứng hợp lệ: đề nói về cạnh
+    của cả khối, và chương trình tự chọn một cạnh đại diện — các cạnh khác phải
+    được TÍNH từ nó, nên chúng không đi qua đây. Không so khớp mờ: chỉ con số
+    của đề, và nhãn đoạn ngay trước `=`/`bằng`.
+    """
+    huu_ti = isinstance(v, Fraction)
+    if huu_ti:
+        for doan, gt in do_dai_trong_de(de).items():
+            if _cung_doan(ten_khai, doan) and gt != v:
+                return (ERR_BANG_CHUNG_MAU_THUAN, None,
+                        f"đề ghi {''.join(sorted(doan))} = {gt}, không phải {v}")
+
+    def bang(chu: str) -> bool:
+        gon = re.sub(r"\s+", "", chu)
+        return _phan_so(gon) == v if huu_ti else gon == re.sub(r"\s+", "", str(v))
+
+    ung = [m for m in _SO_DE.finditer(de) if bang(m.group("so"))]
+    if not ung:
+        return ERR_GIVEN_KHONG_CO_TRONG_DE, None, f"đề không có con số {v}"
+
+    def nhan_doan(m) -> tuple[str, ...] | None:
+        n = _NHAN_TRUOC.search(de[:m.start()])
+        return (n.group(1), n.group(2)) if n else None
+
+    hop = [m for m in ung if nhan_doan(m) is None or _cung_doan(ten_khai, nhan_doan(m))]
+    if not hop:
+        return (ERR_BANG_CHUNG_MAU_THUAN, None,
+                f"con số {v} trong đề là độ dài của đoạn khác")
+    hop.sort(key=lambda m: nhan_doan(m) is None)  # nhãn đúng đoạn trước số trơn
+    c = hop[0]
+    d = _DON_VI_SAU.match(de[c.end():])
+    don_vi_de = d.group(1) if d else None
+    if don_vi_muc and don_vi_de and don_vi_muc != don_vi_de:
+        return (ERR_BANG_CHUNG_MAU_THUAN, None,
+                f"đề ghi đơn vị {don_vi_de}, dữ kiện khai {don_vi_muc}")
+    return None, {"span": [c.start("so"), c.end("so")], "span_text": c.group("so"),
+                  "unit": don_vi_de or don_vi_muc}, ""
+
 
 class GroundingResult(BaseModel):
     ok: bool
@@ -132,6 +252,13 @@ class GroundingResult(BaseModel):
     #: được literal hình học khỏi mọi lời từ chối khác.
     justified_literals: list[str] = Field(default_factory=list)
     unjustified_literals: list[str] = Field(default_factory=list)
+    #: BẰNG CHỨNG NGUỒN của mỗi literal GIVEN đã nhận (W12): loại nguồn · mục ·
+    #: giá trị · đơn vị · span trong đề · trạng thái P1. Kiểm lại được bằng máy:
+    #: `problem_text[span[0]:span[1]] == span_text`.
+    given_evidence: list[dict[str, Any]] = Field(default_factory=list)
+    #: Ký hiệu HỌC SINH của GIVEN bị từ chối vì nguồn (`AD`) — để lời từ chối
+    #: nói được *thiếu cái gì* mà không lộ tên máy.
+    refused_givens: list[str] = Field(default_factory=list)
 
 
 def _canon(value: Any) -> tuple[Any, ...]:
@@ -274,6 +401,93 @@ def check_grounding(
         vo_can.append(f"{decl.name}|{decl.type}|{ly_do}")
 
     vertex_universe = _extract_declared_vertex_universe(contract)
+
+    # ── BẰNG CHỨNG NGUỒN (W12) ─────────────────────────────────────────────
+    # Rỗng ⇔ hợp đồng dựng không qua biên đóng băng ("unchecked", cùng quy ước
+    # `InputFact.provenance`): giữ hành vi cũ. Tuyến sản phẩm luôn có đề.
+    de = contract.problem_text or ""
+    bang_chung: list[dict[str, Any]] = []
+    tu_choi_nguon: list[str] = []
+    # P1 tính LẠI từ đề, không tin cờ lưu trên mục: hợp đồng đông cứng từ trước
+    # (replay, fixture lịch sử) mang kết quả của extractor cũ.
+    ung_vien_de = extract_literals(de) if de else ()
+
+    def _chua_chung_minh(fact) -> tuple[Any, ...]:
+        return gia_tri_khong_chung_minh_duoc(fact.values, ung_vien_de, de) if de else ()
+
+    def _bac_nguon(decl, ma: str, ly_do: str) -> None:
+        nonlocal ma_loi
+        ma_loi = ma_loi or ma
+        _bac(decl, ly_do)
+        if decl.name.endswith("_length"):
+            tu_choi_nguon.append(_ky_hieu_doan(decl.name))
+
+    def _ghi_bang_chung(decl, fid: str, fact, gia_tri: Any, *, don_vi=None,
+                        span=None, span_text=None, loai: str | None = None) -> None:
+        bang_chung.append({
+            "name": decl.name, "type": decl.type,
+            "source_kind": loai or ("problem_text" if de else "unchecked"),
+            "source_fact_id": fid,
+            "provenance": ("source_invariant" if fact is None
+                           else "unchecked" if not de
+                           else "claimed" if _chua_chung_minh(fact) else "confirmed"),
+            "value": str(gia_tri), "unit": don_vi, "span": span, "span_text": span_text,
+        })
+
+    def _kiem_span(fact) -> tuple[str, str] | None:
+        """Span P1 của mục phải CẮT RA ĐÚNG chữ đã ghi, và nói đúng giá trị của mục."""
+        if not de or fact.provenance not in ("confirmed", "extracted") or fact.source_start is None:
+            return None
+        s, e = fact.source_start, fact.source_end
+        if not (e is not None and 0 <= s < e <= len(de) and de[s:e] == fact.source_text):
+            return ERR_SPAN_LECH_DE, (f"span nguồn [{s}:{e}] của mục '{fact.fact_id}' không "
+                                      "khớp câu chữ của đề")
+        so = _phan_so(fact.source_text)
+        if so is not None and not any(_so_va_don_vi(c)[0] == so for c in fact.values):
+            return ERR_BANG_CHUNG_MAU_THUAN, (f"span nguồn ghi '{fact.source_text}', mục "
+                                              f"'{fact.fact_id}' khai {list(fact.values)!r}")
+        return None
+
+    def _xet_do_dai(decl, fid: str, fact, ly_do: str) -> None:
+        """GIVEN `XY_length`: nhận khi và chỉ khi câu đề chứng minh được nó."""
+        goc = _canon(decl.initial_value)[0]
+        v = _phan_so(goc)
+        don_vi = next((u for c in (fact.values if fact is not None else ())
+                       for so, u in [_so_va_don_vi(c)] if so == v and u), None)
+        thang = bool(fact is not None and fact.scale_symbol) or any(
+            b.kind == "segment_length" and b.scale_symbol and _cung_doan(decl.name, frozenset(b.points))
+            for b in getattr(contract, "source_invariants", ()) or ())
+        if not de or thang:
+            # Không có đề để đối chiếu, hoặc con số do SERVER buộc thang (`AB = a`
+            # ⇒ 1): nguồn là phép buộc thang đã chứng minh, không phải một chữ số.
+            _ghi(decl, "B", ly_do)
+            _ghi_bang_chung(decl, fid, fact, v if v is not None else decl.initial_value,
+                            don_vi=don_vi, loai="scale_binding" if thang else None)
+            return
+        # Giá trị không hữu tỉ (căn) vẫn phải CÓ trong đề — bản đầu W12 cho nó
+        # qua không kiểm, tức một độ dài bịa dạng `2√3` lọt nguyên vẹn.
+        v = v if v is not None else str(goc).strip()
+        ma, bc, vi_sao = _bang_chung_do_dai(de, decl.name, v, don_vi)
+        if ma:
+            _bac_nguon(decl, ma, f"{vi_sao} — không nhận làm dữ kiện đề cho")
+            return
+        _ghi(decl, "B", ly_do)
+        _ghi_bang_chung(decl, fid, fact, v, don_vi=bc["unit"], span=bc["span"],
+                        span_text=bc["span_text"])
+
+    def _chi_tu_loi_khai(khai: tuple[Any, ...], fact) -> bool:
+        """Có nguyên tử nào CHỈ khớp một giá trị P1 không chứng minh được?"""
+        chua = _chua_chung_minh(fact)
+        if not chua:
+            return False
+        da = tuple(c for c in fact.values if c not in chua)
+
+        def khop(v, c) -> bool:
+            so = _so_va_don_vi(c)[0]
+            return v == c or bang_huu_ti(v, c) or (so is not None and _phan_so(v) == so)
+
+        return any(any(khop(v, u) for u in chua) and not any(khop(v, c) for c in da)
+                   for v in khai)
 
     # MỘT lớp được miễn `source_fact_id`, và nó kiểm được ở phía server chứ
     # không do chương trình tự khai.
@@ -463,8 +677,9 @@ def check_grounding(
         fact, cach = contract.fact_noi_long(fid)
         if fact is None and _do_dai_bat_bien(decl, {fid}, contract):
             # Mục chỉ sống trong bất biến độ dài (hợp đồng dựng không qua
-            # analyze): bất biến CHÍNH LÀ bản ghi của hợp đồng cho mục ấy.
-            _ghi(decl, "B", f"ghim về bất biến độ dài '{fid}'")
+            # analyze): bất biến CHÍNH LÀ bản ghi của hợp đồng cho mục ấy —
+            # nhưng con số vẫn phải có trong câu đề (W12).
+            _xet_do_dai(decl, fid, None, f"ghim về bất biến độ dài '{fid}'")
             continue
         if fact is None:
             # ── TRÍCH DẪN KHÔNG GIẢI ĐƯỢC (Wave 3, 2026-08-25) ─────────────
@@ -625,7 +840,7 @@ def check_grounding(
             if v not in cho and not any(bang_huu_ti(v, c) for c in cho)
         ]
         if thua and not la_toa_do and _do_dai_bat_bien(decl, {fid, fact.fact_id}, contract):
-            _ghi(decl, "B", f"ghim về '{fid}' ({fact.label}) — khớp bất biến độ dài")
+            _xet_do_dai(decl, fid, fact, f"ghim về '{fid}' ({fact.label}) — khớp bất biến độ dài")
         elif thua:
             # Với TOẠ ĐỘ, nói thêm đúng một điều: có hai kênh, và đây là kênh
             # sai. Không phải gợi ý cách giải — một toạ độ SUY RA từ ràng buộc
@@ -638,8 +853,20 @@ def check_grounding(
             _bac(decl,
                  f"giá trị {thua!r} không có trong mục '{fid}' ({fact.label}) "
                  f"— đề không cho những giá trị này{them}")
+        elif (loi_span := _kiem_span(fact)) is not None:
+            _bac_nguon(decl, *loi_span)
+        elif decl.type == "float" and decl.name.endswith("_length") and len(khai) == 1:
+            _xet_do_dai(decl, fid, fact, f"ghim về '{fid}' ({fact.label})")
+        elif _chi_tu_loi_khai(khai, fact):
+            _bac_nguon(decl, ERR_GIVEN_KHONG_CO_TRONG_DE,
+                       f"giá trị {list(khai)!r} chỉ có trong lời khai của mục '{fid}', "
+                       "đề không ghi — không nhận làm dữ kiện đề cho")
         else:
             _ghi(decl, "B", f"ghim về '{fid}' ({fact.label})")
+            _ghi_bang_chung(decl, fid, fact, "|".join(map(str, khai)),
+                            span=[fact.source_start, fact.source_end]
+                            if fact.source_start is not None else None,
+                            span_text=fact.source_text)
 
     if unresolved:
         return GroundingResult(
@@ -650,10 +877,13 @@ def check_grounding(
             unresolved_citations=trich_dan_hong,
             justified_literals=biet_minh,
             unjustified_literals=vo_can,
+            given_evidence=bang_chung,
+            refused_givens=tu_choi_nguon,
         )
     return GroundingResult(
         ok=True, assumptions=gia_thiet, unresolved_citations=trich_dan_hong,
         justified_literals=biet_minh, unjustified_literals=vo_can,
+        given_evidence=bang_chung,
     )
 
 

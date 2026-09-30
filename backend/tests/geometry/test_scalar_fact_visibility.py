@@ -91,18 +91,24 @@ def _chuong_trinh_doan(vo_huong: dict | None) -> dict:
 def _hop_dong(gt=None) -> RequestContract:
     """Hợp đồng hai điểm; `gt` khác `None` thì thêm mục độ dài mang ĐÚNG giá
     trị ấy — cổng xuất xứ đối chiếu `initial_value` với giá trị của mục, nên
-    hai bên phải khớp y như đường sản phẩm."""
+    hai bên phải khớp y như đường sản phẩm.
+
+    Câu đề cũng ghi đúng con số ấy: từ W12 cổng grounding đọc P1, và một giá
+    trị chỉ có trong lời khai của mục (đề không ghi) là GIVEN bịa — bị từ chối
+    ở grounding trước khi tới cổng bề mặt mà các ca này muốn đo."""
     facts = [
         {"fact_id": "diem_a", "label": "Điểm A", "values": ["A"],
          "provenance": "confirmed"},
         {"fact_id": "diem_b", "label": "Điểm B", "values": ["B"],
          "provenance": "confirmed"},
     ]
+    them = ""
     if gt is not None:
         facts.append({"fact_id": "ab_len", "label": "Độ dài AB",
                       "values": [gt], "provenance": "confirmed"})
+        them = f" Cho thêm số đo {gt}."
     return RequestContract(
-        problem_text="Cho A(0;0;0) và B(3;0;0), biết AB = 3. Tính khoảng cách AB.",
+        problem_text="Cho A(0;0;0) và B(3;0;0), biết AB = 3. Tính khoảng cách AB." + them,
         input_facts=facts,
         obligations=(Obligation(kind="distance", container="A",
                                 params={"witness": "d", "wrt": "B"}),))

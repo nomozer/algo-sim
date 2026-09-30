@@ -69,12 +69,18 @@ import re
 from fractions import Fraction
 from typing import Optional
 
+from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .scale_normalization import SourceInvariant
 
 #: Ký hiệu ĐIỂM: chữ hoa + chỉ số + phẩy tuỳ chọn. Cùng quy ước
 #: `_MAU_DOAN_THANG` của `scale_normalization` — không dựng quy ước thứ hai.
 _D = r"[A-Z]\d*['′]?"
-_SO = r"\d+(?:\s*/\s*\d+)?"
+#: Số hữu tỉ của đề: nguyên · thập phân (`.` hoặc `,` — lối viết Việt) · `a/b`.
+_SO = r"\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?"
+#: Con số KẾT THÚC ở đây. Thiếu vế `[.,]\d` / `√`, mẫu cắt `2.5` thành `2` và
+#: `2√3` thành `2` — một độ dài SAI của nguồn (W12, cổng bằng chứng đọc lại nó).
+_HET_SO = r"(?![0-9/]|[.,]\d|\s*√)"
+_SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
 
 #: `kind` của bất biến này. Một chuỗi, một chỗ khai, một checker.
 KIND = "segment_division"
@@ -115,17 +121,17 @@ _QH_BOI = re.compile(
     rf"(?P<s1>{_D}{_D})\s*=\s*(?P<k>{_SO})\s*\*?\s*(?P<s2>{_D}{_D})"
     rf"(?![A-Za-z0-9])")
 _QH_DO_DAI = re.compile(
-    rf"(?P<s1>{_D}{_D})\s*=\s*(?P<v>{_SO})(?![0-9/]|\s*[:*]|\s*{_D}{_D})")
+    rf"(?P<s1>{_D}{_D})\s*=\s*(?P<v>{_SO}){_SAU_DO_DAI}")
 
 # ── ③ ĐỘ DÀI cả đoạn ───────────────────────────────────────────────────────
 _DO_DAI_CO = re.compile(
     rf"(?:đoạn\s+(?:thẳng\s+)?)?(?P<A>{_D})(?P<B>{_D})\s+có\s+độ\s+dài\s+"
-    rf"(?P<v>{_SO})")
+    rf"(?P<v>{_SO}){_HET_SO}")
 
 
 def _phan(s: str) -> Optional[Fraction]:
     try:
-        return Fraction(str(s).replace(" ", ""))
+        return Fraction(str(s).replace(" ", "").replace(",", "."))
     except (ValueError, ZeroDivisionError):
         return None
 
@@ -148,17 +154,31 @@ def _phia(seg: str, M: str, A: str, B: str) -> Optional[str]:
     return "A" if con == A else ("B" if con == B else None)
 
 
-def _van_ban(contract, problem_text: str | None) -> list[str]:
+def _van_ban(contract, problem_text: str | None, *,
+             ca_loi_khai: bool = False) -> list[str]:
     """ĐỀ + mọi mảnh chữ của `InputFact`, mỗi mảnh một phần tử.
 
     Tách phần tử chứ không nối thành một chuỗi: nối lại thì hai câu rời nhau
     có thể dính vào nhau và đẻ ra một quan hệ **không ai viết**.
+
+    `ca_loi_khai=True` giữ cả giá trị P1 không chứng minh được — CHỈ để phát
+    hiện mâu thuẫn (`bat_bien_chia_doan`), không bao giờ để dựng quan hệ.
     """
-    ra = [_chuan(problem_text or getattr(contract, "problem_text", "") or "")]
+    de = problem_text or getattr(contract, "problem_text", "") or ""
+    ra = [_chuan(de)]
+    ung_vien = extract_literals(de) if de else ()
     for f in getattr(contract, "input_facts", ()) or ():
         nhan = _chuan(str(getattr(f, "label", "") or ""))
         ra.append(nhan)
-        for v in (getattr(f, "values", ()) or ()):
+        # W12: giá trị `analyze` khai mà đề KHÔNG có (P1) không được thành độ
+        # dài/quan hệ của NGUỒN — bất biến và FactGraph dựng từ đây. P1 tính lại
+        # từ đề (không đọc cờ lưu), cùng hàm với biên đóng băng và cổng grounding.
+        values = tuple(getattr(f, "values", ()) or ())
+        khong_chung_minh = (gia_tri_khong_chung_minh_duoc(values, ung_vien, de)
+                            if de and not ca_loi_khai else ())
+        for v in values:
+            if v in khong_chung_minh:
+                continue
             ra.append(_chuan(str(v)))
             # ─── GHÉP NHÃN VỚI GIÁ TRỊ — đó CHÍNH LÀ nghĩa của `InputFact` ──
             #
@@ -184,7 +204,7 @@ def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
                 gt.add(q)
         for seg in (A + B, B + A):
             for m in re.finditer(
-                    rf"(?<![A-Za-z0-9]){seg}\s*=\s*({_SO})(?![0-9/]|\s*[:*]|\s*{_D}{_D})",
+                    rf"(?<![A-Za-z0-9]){seg}\s*=\s*({_SO}){_SAU_DO_DAI}",
                     van):
                 if (q := _phan(m.group(1))):
                     gt.add(q)
@@ -204,11 +224,19 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
             if (q := _phan(m.group("v"))) is not None:
                 thay.setdefault(frozenset({m.group("A"), m.group("B")}), set()).add(q)
         for m in re.finditer(
-                rf"(?<![A-Za-z0-9])({_D})({_D})\s*=\s*({_SO})"
-                rf"(?![0-9/]|\s*[:*]|\s*{_D}{_D})", van):
+                rf"(?<![A-Za-z0-9])({_D})({_D})\s*=\s*({_SO}){_SAU_DO_DAI}", van):
             if (q := _phan(m.group(3))) is not None:
                 thay.setdefault(frozenset({m.group(1), m.group(2)}), set()).add(q)
     return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
+
+
+def do_dai_trong_de(problem_text: str | None) -> dict[frozenset, Fraction]:
+    """Mọi đoạn mà CHÍNH CÂU ĐỀ cho độ dài bằng số — không đọc `InputFact`.
+
+    `bat_bien_do_dai` đọc thêm nhãn + giá trị của `InputFact` để bắt lối viết
+    mà mẫu không bắt; bằng chứng NGUỒN của một GIVEN thì chỉ đọc từ đề (W12).
+    """
+    return _moi_doan_co_do_dai([_chuan(problem_text)]) if problem_text else {}
 
 
 def bat_bien_do_dai(contract, problem_text: str | None) -> tuple:
@@ -380,8 +408,20 @@ def bat_bien_chia_doan(contract, problem_text: str | None) -> tuple:
 
     Trùng `M` với hai bộ ba KHÁC nhau ⇒ bỏ cả hai: đề nói hai điều về cùng một
     điểm mà tầng này chỉ đọc rời rạc thì nó không đủ tư cách phân xử.
+
+    W12 — lời khai P1 không chứng minh được KHÔNG dựng được quan hệ, nhưng vẫn
+    PHỦ QUYẾT được: nó mâu thuẫn với đề về cùng một điểm thì không nguồn nào
+    thắng, và điểm ấy thành `KIND_CHUA_GIAI` — fail closed như trước W12.
     """
-    manh = _van_ban(contract, problem_text)
+    chua_giai = {b.points[2]: b for b in _chia_doan(
+        contract, _van_ban(contract, problem_text, ca_loi_khai=True))
+        if b.kind == KIND_CHUA_GIAI}
+    nguon = _chia_doan(contract, _van_ban(contract, problem_text))
+    return tuple([b for b in nguon if b.points[2] not in chua_giai]
+                 + list(chua_giai.values()))
+
+
+def _chia_doan(contract, manh: list[str]) -> tuple:
     if not manh:
         return ()
 

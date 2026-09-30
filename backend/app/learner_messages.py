@@ -102,11 +102,42 @@ _MSG_THEO_MA: dict[str, str] = {
     "requested_operation_uncovered": _MSG_REQUESTED_OPERATION_UNCOVERED,
 }
 
+#: NGUỒN KHÔNG CHỨNG MINH ĐƯỢC (W12) — không phải "diễn đạt lại đề": đề thiếu
+#: số liệu, hoặc số liệu mâu thuẫn với chính câu chữ của đề. Hứa rằng viết lại
+#: gọn hơn sẽ ăn thua là hứa sai; nói đúng thứ đang thiếu thì học sinh sửa được.
+_MSG_NGUON_THIEU = (
+    "Để dựng hình, chương trình cần {doan} nhưng đề bài không ghi số liệu này. "
+    "AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em "
+    "kiểm tra lại đề đã ghi đủ các độ dài cần thiết chưa rồi gửi lại nhé."
+)
+_MSG_NGUON_MAU_THUAN = (
+    "Số liệu dùng để dựng hình ({doan}) không khớp với chính câu chữ của đề — "
+    "khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì "
+    "dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại "
+    "nhé."
+)
+_MSG_THEO_MA_CHI_TIET: dict[str, str] = {
+    "GIVEN_VALUE_NOT_IN_SOURCE": _MSG_NGUON_THIEU,
+    "SOURCE_SPAN_MISMATCH": _MSG_NGUON_MAU_THUAN,
+    "SOURCE_EVIDENCE_CONFLICT": _MSG_NGUON_MAU_THUAN,
+}
+
+
+def _doan_hoc_sinh(envelope: dict) -> str:
+    """Ký hiệu đoạn học sinh đọc được (`độ dài AD`), hoặc câu chung — không bao
+    giờ in thứ gì mang `_` (tên máy)."""
+    ten = [s for s in (envelope.get("reason_subjects") or [])
+           if isinstance(s, str) and s and "_" not in s]
+    return f"độ dài {', '.join(ten)}" if ten else "một độ dài"
+
 
 def learner_reason(envelope: dict) -> str:
     """Thông điệp học sinh cho envelope ``status="unsupported"`` — chọn theo
-    ``error_code`` rồi tới ``failure_category`` (đều CÓ CẤU TRÚC), không bao
-    giờ đọc text ``reason``."""
+    ``reason_code``, ``error_code`` rồi tới ``failure_category`` (đều CÓ CẤU
+    TRÚC), không bao giờ đọc text ``reason``."""
+    chi_tiet = _MSG_THEO_MA_CHI_TIET.get(envelope.get("reason_code") or "")
+    if chi_tiet is not None:
+        return chi_tiet.format(doan=_doan_hoc_sinh(envelope))
     theo_ma = _MSG_THEO_MA.get(envelope.get("error_code") or "")
     if theo_ma is not None:
         return theo_ma
