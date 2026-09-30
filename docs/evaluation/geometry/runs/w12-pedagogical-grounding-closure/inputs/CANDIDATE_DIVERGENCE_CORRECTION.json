@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE",
+  "corrects": "docs/evaluation/geometry/runs/w11-pedagogical-polish/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "8ffd6d46b159ec6a7d805df892273ea011483c0f09bdf5928724bf5657a0889d",
+  "current_candidate_source_commit": "d17550c3cc322badccd6459ae351f58532c771b4",
+  "current_candidate_frozen_at": "d17550c3cc322badccd6459ae351f58532c771b4",
+  "current_candidate_note": "Frozen ONCE, after the last product change of the wave, in the clean detached worktree D:/tmp/w12-freeze. Product commits of the wave: 79eb1e59 (backend grounding), 98b505ef and 233f8720 (frontend/src, outside the measured paths), d17550c3 (CACHE_VERSION). No intermediate candidate was frozen in this wave.",
+  "previous_candidate_hash": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "w12 answers the w11 human review (NEEDS_CHANGES, reason 5: the LLM route could accept a length absent from the problem and label it GIVEN). backend/app changes: a GIVEN is accepted only with evidence read from the problem text (value, segment label, unit, span); a value only the analyze output claims is refused with a stable code and never sent to repair; unproven analyze values no longer create source invariants but still veto a division point they contradict; the segment length reader and P1 read stated fractions, decimal commas and radicals without truncating. CACHE_VERSION 104 -> 105 because cached `ok` envelopes could carry an invented given (served -> rejected); the provider-facing fingerprint b1714b566e25c912 is unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 8ffd6d46 is a new product identity and must not be used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 105
+}
