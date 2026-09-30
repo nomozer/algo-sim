@@ -1,0 +1,483 @@
+# W12 red run — frontend timeline / solution / colour tests against the BASE commit
+# worktree: D:/tmp/w12-base (detached) HEAD=a4fd5fece9d27d20cdb717beb1a89711a34990bc; node_modules = junction to the main tree's
+# test files copied from the W12 working tree; product code = base
+# command: npx vitest run <three files>
+
+
+ RUN  v4.1.10 D:/tmp/w12-base/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-roles.test.ts (0 test)
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx (6 tests | 6 failed) 40ms
+     × vật ĐANG CHỌN (đích causal) là xanh 24ms
+     × dữ kiện SỐ trong chuỗi là cam đậm — không còn xanh 3ms
+     × đại lượng trung gian là cam nhạt — sáng hơn dữ kiện số 6ms
+     × vật VỪA DỰNG khi phát là xanh 'đang xét' — không phải cam 3ms
+     × ngữ cảnh cấu trúc tô nền TRUNG TÍNH, nét giữ mực 2ms
+     × điểm đề cho không vai trò là trung tính — xanh chỉ còn nghĩa 'đang xét' 1ms
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx (41 tests | 41 failed) 255ms
+     × triangular_pyramid: phân hoạch liên tiếp, đủ, không chồng lấn 6ms
+     × triangular_prism: phân hoạch liên tiếp, đủ, không chồng lấn 2ms
+     × rectangular_pyramid: phân hoạch liên tiếp, đủ, không chồng lấn 2ms
+     × cuboid: phân hoạch liên tiếp, đủ, không chồng lấn 2ms
+     × cube: phân hoạch liên tiếp, đủ, không chồng lấn 5ms
+     × cross_section: phân hoạch liên tiếp, đủ, không chồng lấn 2ms
+     × triangular_pyramid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 2ms
+     × triangular_prism: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 1ms
+     × rectangular_pyramid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 1ms
+     × cuboid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 1ms
+     × cube: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 2ms
+     × cross_section: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh) 2ms
+     × kết luận nằm trong bước dựng cuối, không tạo bước riêng (chóp tam giác) 1ms
+     × triangular_pyramid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 1ms
+     × triangular_prism: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 1ms
+     × rectangular_pyramid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 3ms
+     × cuboid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 3ms
+     × cube: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 2ms
+     × cross_section: tới rồi lùi trả ĐÚNG snapshot của mỗi bước 1ms
+     × triangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 25ms
+     × triangular_prism: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 12ms
+     × rectangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 11ms
+     × cuboid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 19ms
+     × cube: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 9ms
+     × cross_section: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính 9ms
+     × triangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG 28ms
+     × triangular_prism: dòng Bước ở đáy xưởng nói số bước DỰNG 26ms
+     × rectangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG 13ms
+     × cuboid: dòng Bước ở đáy xưởng nói số bước DỰNG 31ms
+     × cube: dòng Bước ở đáy xưởng nói số bước DỰNG 9ms
+     × cross_section: dòng Bước ở đáy xưởng nói số bước DỰNG 5ms
+     × chóp tam giác ở bước cuối: dữ kiện, bước tính có nguồn số, kết quả có công thức 1ms
+     × triangular_pyramid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 2ms
+     × triangular_prism: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 1ms
+     × rectangular_pyramid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 1ms
+     × cuboid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 1ms
+     × cube: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 1ms
+     × cross_section: mọi công thức của cảnh đều còn trong lời giải ở bước cuối 1ms
+     × lời giải ĐỒNG BỘ với bước dựng: bước đầu chưa có kết quả 1ms
+     × bảng lời giải dưới thanh bước: Kết quả có công thức và nguồn, đáp số MỘT lần 2ms
+     × khung 3D không còn dải số đo nổi trên hình 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-roles.test.ts [ src/simulations/domains/geometry/scene3d-roles.test.ts ]
+Error: Cannot find module './scene3d-roles' imported from D:/tmp/w12-base/frontend/src/simulations/domains/geometry/scene3d-roles.test.ts
+ ❯ src/simulations/domains/geometry/scene3d-roles.test.ts:11:1
+      9| import { readFileSync } from "node:fs";
+     10| import * as THREE from "three";
+     11| import { BIEN_CSS_VAI_TRO, MAU_VAI_TRO, hexCss } from "./scene3d-roles…
+       | ^
+     12|
+     13| const hsl = (hex: number) => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/48]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 47 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > vật ĐANG CHỌN (đích causal) là xanh
+AssertionError: expected 17.472728679492146 to be greater than 200
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:54:17
+     52|   it("vật ĐANG CHỌN (đích causal) là xanh", () => {
+     53|     const c = mauCanh("dich");
+     54|     expect(c.h).toBeGreaterThan(200);
+       |                 ^
+     55|     expect(c.h).toBeLessThan(235);
+     56|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > dữ kiện SỐ trong chuỗi là cam đậm — không còn xanh
+AssertionError: expected 224.27791531613303 to be less than 35
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:60:17
+     58|   it("dữ kiện SỐ trong chuỗi là cam đậm — không còn xanh", () => {
+     59|     const c = mauCanh("du_kien_so");
+     60|     expect(c.h).toBeLessThan(35);
+       |                 ^
+     61|     expect(c.s).toBeGreaterThan(0.5);
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > đại lượng trung gian là cam nhạt — sáng hơn dữ kiện số
+AssertionError: expected 0.43725600564949035 to be greater than 0.4803957613271055
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:68:18
+     66|     expect(tg.h).toBeGreaterThan(15);
+     67|     expect(tg.h).toBeLessThan(45);
+     68|     expect(tg.l).toBeGreaterThan(mauCanh("du_kien_so").l);
+       |                  ^
+     69|   });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > vật VỪA DỰNG khi phát là xanh 'đang xét' — không phải cam
+AssertionError: expected 20.540765594206192 to be greater than 200
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:73:17
+     71|   it("vật VỪA DỰNG khi phát là xanh 'đang xét' — không phải cam", () =…
+     72|     const c = mauCanh(true);
+     73|     expect(c.h).toBeGreaterThan(200);
+       |                 ^
+     74|     expect(c.h).toBeLessThan(235);
+     75|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > ngữ cảnh cấu trúc tô nền TRUNG TÍNH, nét giữ mực
+AssertionError: expected 0.9716313471353354 to be less than 0.25
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:78:34
+     76|
+     77|   it("ngữ cảnh cấu trúc tô nền TRUNG TÍNH, nét giữ mực", () => {
+     78|     expect(mauNen("boi_canh").s).toBeLessThan(0.25);
+       |                                  ^
+     79|   });
+     80|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > điểm đề cho không vai trò là trung tính — xanh chỉ còn nghĩa 'đang xét'
+AssertionError: expected 0.8319341838506956 to be less than 0.25
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:84:28
+     82|     const m = gom(buildObject3D(DIEM, false)!).map((c) => (c as THREE.…
+     83|       .find((x) => x instanceof THREE.MeshStandardMaterial) as THREE.M…
+     84|     expect(hsl(m.color).s).toBeLessThan(0.25);
+       |                            ^
+     85|   });
+     86| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > triangular_pyramid: phân hoạch liên tiếp, đủ, không chồng lấn
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > triangular_prism: phân hoạch liên tiếp, đủ, không chồng lấn
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > rectangular_pyramid: phân hoạch liên tiếp, đủ, không chồng lấn
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cuboid: phân hoạch liên tiếp, đủ, không chồng lấn
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cube: phân hoạch liên tiếp, đủ, không chồng lấn
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cross_section: phân hoạch liên tiếp, đủ, không chồng lấn
+TypeError: geometryTimeline is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:55:15
+     53|   it.each(FAMILIES)("%s: phân hoạch liên tiếp, đủ, không chồng lấn", (…
+     54|     const s = canh(f);
+     55|     const t = geometryTimeline(s);
+       |               ^
+     56|     expect(t.length).toBe(geometryStepCount(s));
+     57|     expect(t.length).toBe(buocDungDocLap(s));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > triangular_pyramid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > triangular_prism: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > rectangular_pyramid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cuboid: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cube: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > cross_section: bước ĐO / KẾT LUẬN không mở bước dựng (0 khung tĩnh)
+TypeError: geometryTimeline is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:69:15
+     67|   it.each(FAMILIES)("%s: bước ĐO / KẾT LUẬN không mở bước dựng (0 khun…
+     68|     const s = canh(f);
+     69|     const t = geometryTimeline(s);
+       |               ^
+     70|     for (const g of t.slice(1)) {
+     71|       expect(s.events[g.start].semantic_kind).toBe("GEOMETRY_CONSTRUCT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · bước dựng CHỈ là bước hình học > kết luận nằm trong bước dựng cuối, không tạo bước riêng (chóp tam giác)
+TypeError: geometryTimeline is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:84:15
+     82|   it("kết luận nằm trong bước dựng cuối, không tạo bước riêng (chóp ta…
+     83|     const s = canh("triangular_pyramid");
+     84|     const t = geometryTimeline(s);
+       |               ^
+     85|     const ketLuan = s.events.findIndex((e) => e.semantic_kind === "FIN…
+     86|     expect(ketLuan).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_pyramid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_prism: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > rectangular_pyramid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cuboid: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cube: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cross_section: tới rồi lùi trả ĐÚNG snapshot của mỗi bước
+TypeError: geometryTimeline is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:95:15
+     93|   it.each(FAMILIES)("%s: tới rồi lùi trả ĐÚNG snapshot của mỗi bước", …
+     94|     const s = canh(f);
+     95|     const t = geometryTimeline(s);
+       |               ^
+     96|     let k = geometryAnchor(s, 0);
+     97|     expect(k).toBe(t[0].anchor);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_prism: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+AssertionError: expected 5 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 5
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:117:17
+    115|     const max = Number(/type="range"[^>]*max="(\d+)"/.exec(html)?.[1]
+    116|       ?? /max="(\d+)"[^>]*type="range"/.exec(html)?.[1]);
+    117|     expect(max).toBe(buocDungDocLap(s) - 1);
+       |                 ^
+    118|   });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > rectangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+AssertionError: expected 7 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 7
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:117:17
+    115|     const max = Number(/type="range"[^>]*max="(\d+)"/.exec(html)?.[1]
+    116|       ?? /max="(\d+)"[^>]*type="range"/.exec(html)?.[1]);
+    117|     expect(max).toBe(buocDungDocLap(s) - 1);
+       |                 ^
+    118|   });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cuboid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+AssertionError: expected 8 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 8
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:117:17
+    115|     const max = Number(/type="range"[^>]*max="(\d+)"/.exec(html)?.[1]
+    116|       ?? /max="(\d+)"[^>]*type="range"/.exec(html)?.[1]);
+    117|     expect(max).toBe(buocDungDocLap(s) - 1);
+       |                 ^
+    118|   });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cube: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+AssertionError: expected 10 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 10
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:117:17
+    115|     const max = Number(/type="range"[^>]*max="(\d+)"/.exec(html)?.[1]
+    116|       ?? /max="(\d+)"[^>]*type="range"/.exec(html)?.[1]);
+    117|     expect(max).toBe(buocDungDocLap(s) - 1);
+       |                 ^
+    118|   });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cross_section: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+AssertionError: expected 12 to be 9 // Object.is equality
+
+- Expected
++ Received
+
+- 9
++ 12
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:117:17
+    115|     const max = Number(/type="range"[^>]*max="(\d+)"/.exec(html)?.[1]
+    116|       ?? /max="(\d+)"[^>]*type="range"/.exec(html)?.[1]);
+    117|     expect(max).toBe(buocDungDocLap(s) - 1);
+       |                 ^
+    118|   });
+    119|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/3'
+
+Expected: "Bước 1/3"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AC</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">SA</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">5</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 1/6</p><p class="geo3d-narration geo3d-sr">Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="5" aria-label="Chọn bước dựng, hiện ở bước 1 trên 6" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/6</span><span class="geo3d-buoc-loi">Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > triangular_prism: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/3'
+
+Expected: "Bước 1/3"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="D" class="geo3d-label" data-uu-tien="1" title="Điểm D">D</span><span data-id="E" class="geo3d-label" data-uu-tien="1" title="Điểm E">E</span><span data-id="F" class="geo3d-label" data-uu-tien="1" title="Điểm F">F</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AC</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">AD</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">5</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 1/6</p><p class="geo3d-narration geo3d-sr">Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="5" aria-label="Chọn bước dựng, hiện ở bước 1 trên 6" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/6</span><span class="geo3d-buoc-loi">Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > rectangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/5'
+
+Expected: "Bước 1/5"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="D" class="geo3d-label" data-uu-tien="1" title="Điểm D">D</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AD</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">SA</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">6</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 1/8</p><p class="geo3d-narration geo3d-sr">Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="7" aria-label="Chọn bước dựng, hiện ở bước 1 trên 8" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/8</span><span class="geo3d-buoc-loi">Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cuboid: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/5'
+
+Expected: "Bước 1/5"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="D" class="geo3d-label" data-uu-tien="1" title="Điểm D">D</span><span data-id="A_prime" class="geo3d-label" data-uu-tien="1" title="Điểm A′">A′</span><span data-id="B_prime" class="geo3d-label" data-uu-tien="1" title="Điểm B′">B′</span><span data-id="C_prime" class="geo3d-label" data-uu-tien="1" title="Điểm C′">C′</span><span data-id="D_prime" class="geo3d-label" data-uu-tien="1" title="Điểm D′">D′</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AD</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">AA′</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">5</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 1/9</p><p class="geo3d-narration geo3d-sr">Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="8" aria-label="Chọn bước dựng, hiện ở bước 1 trên 9" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/9</span><span class="geo3d-buoc-loi">Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cube: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/5'
+
+Expected: "Bước 1/5"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="D" class="geo3d-label" data-uu-tien="1" title="Điểm D">D</span><span data-id="A_prime" class="geo3d-label" data-uu-tien="1" title="Điểm A′">A′</span><span data-id="B_prime" class="geo3d-label" data-uu-tien="1" title="Điểm B′">B′</span><span data-id="C_prime" class="geo3d-label" data-uu-tien="1" title="Điểm C′">C′</span><span data-id="D_prime" class="geo3d-label" data-uu-tien="1" title="Điểm D′">D′</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 1/11</p><p class="geo3d-narration geo3d-sr">Dữ kiện đề cho: AB = 4.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="10" aria-label="Chọn bước dựng, hiện ở bước 1 trên 11" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/11</span><span class="geo3d-buoc-loi">Dữ kiện đề cho: AB = 4.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · tua tiến/lùi và dừng ở bước hình học cuối > cross_section: dòng Bước ở đáy xưởng nói số bước DỰNG
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bước 1/10'
+
+Expected: "Bước 1/10"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><span class="geo3d-ten-bai">Hình dựng theo từng bước</span><div class="geo3d-thanh-nut"><button type="button" class="geo3d-chip" aria-expanded="false"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M15 4v16"></path></svg> Thành phần</button><button type="button" class="geo3d-chip" aria-pressed="false" title="Hiện cách máy dựng từng đối tượng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 7.5v.01"></path></svg> Chi tiết</button></div></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="D" class="geo3d-label" data-uu-tien="1" title="Điểm D">D</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div></div><p class="geo3d-progress geo3d-sr">Bước 1/13</p><p class="geo3d-narration geo3d-sr">Đặt các điểm đề cho vào không gian.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg> Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="12" aria-label="Chọn bước dựng, hiện ở bước 1 trên 13" value="0"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>— (dữ kiện đề cho)</dd><dt>Dựa trên</dt><dd>—</dd></dl></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem"><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div><p class="geo3d-buoc"><span class="geo3d-buoc-so">Bước 1/13</span><span class="geo3d-buoc-loi">Đặt các điểm đề cho vào không gian.</span></p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:123:18
+    121|     const s = canh(f);
+    122|     const html = renderToString(<Scene3DExplorer scene={s} />);
+    123|     expect(html).toContain(`Bước 1/${buocDungDocLap(s)}`);
+       |                  ^
+    124|   });
+    125| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > chóp tam giác ở bước cuối: dữ kiện, bước tính có nguồn số, kết quả có công thức
+TypeError: geometryAnchor is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:130:30
+    128|   it("chóp tam giác ở bước cuối: dữ kiện, bước tính có nguồn số, kết q…
+    129|     const s = canh("triangular_pyramid");
+    130|     const lg = solutionAt(s, geometryAnchor(s, s.events.length - 1));
+       |                              ^
+    131|     expect(lg.givens.map((x) => x.id).sort()).toEqual(["AB_length", "A…
+    132|     const dt = lg.steps.find((x) => x.id === "dien_tich_day_ABC")!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > triangular_pyramid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > triangular_prism: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > rectangular_pyramid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > cuboid: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > cube: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > cross_section: mọi công thức của cảnh đều còn trong lời giải ở bước cuối
+TypeError: solutionAt is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:143:16
+    141|   it.each(FAMILIES)("%s: mọi công thức của cảnh đều còn trong lời giải…
+    142|     const s = canh(f);
+    143|     const lg = solutionAt(s, s.events.length - 1);
+       |                ^
+    144|     const coCongThuc = [...lg.steps, ...lg.results].filter((x) => x.fo…
+    145|     const trongCanh = s.objects.filter((o) => o.formula?.references?.l…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > lời giải ĐỒNG BỘ với bước dựng: bước đầu chưa có kết quả
+TypeError: geometryAnchor is not a function
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:151:26
+    149|   it("lời giải ĐỒNG BỘ với bước dựng: bước đầu chưa có kết quả", () =>…
+    150|     const s = canh("triangular_pyramid");
+    151|     expect(solutionAt(s, geometryAnchor(s, 0)).results).toEqual([]);
+       |                          ^
+    152|   });
+    153|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > bảng lời giải dưới thanh bước: Kết quả có công thức và nguồn, đáp số MỘT lần
+AssertionError: expected '<div class="geo3d-player"><div class=…' to contain 'Kết quả'
+
+Expected: "Kết quả"
+Received: "<div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AC</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">SA</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">5</span></li><li data-index="3" tabindex="0"><span class="geo3d-readout-ten">S(ABC)</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">6</span></li><li data-index="4" tabindex="0"><span class="geo3d-readout-ten">V(S.ABC)</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">10</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 6/6</p><p class="geo3d-narration geo3d-sr">Kết luận: thể tích S.ABC bằng 10.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg> Bước trước</button><button type="button" class="geo3d-btn" aria-label="Xem lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại</button><button type="button" class="geo3d-btn" disabled="" aria-label="Bước sau">Bước sau <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label">Bước</span><input type="range" min="0" max="5" aria-label="Chọn bước dựng, hiện ở bước 6 trên 6" value="5"/></label></div><dl class="geo3d-focus"><dt>Đang dựng</dt><dd>Thể tích S.ABC</dd><dt>Dựa trên</dt><dd>S(ABC), SA</dd></dl></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:157:18
+    155|     const s = canh("triangular_pyramid");
+    156|     const html = renderToString(<Scene3DPlayer scene={s} initialStep={…
+    157|     expect(html).toContain("Kết quả");
+       |                  ^
+    158|     expect(html).toContain("Dữ kiện");
+    159|     expect(html).toContain("Các bước tính");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/48]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > W12 · lớp lời giải giữ công thức và nguồn > khung 3D không còn dải số đo nổi trên hình
+AssertionError: expected '<div class="geo3d"><div class="geo3d-…' not to contain 'geo3d-readout'
+
+Expected: "geo3d-readout"
+Received: "<div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div></div><ul class="geo3d-readout"><li data-index="0" tabindex="0"><span class="geo3d-readout-ten">AB</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">3</span></li><li data-index="1" tabindex="0"><span class="geo3d-readout-ten">AC</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">4</span></li><li data-index="2" tabindex="0"><span class="geo3d-readout-ten">SA</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">5</span></li><li data-index="3" tabindex="0"><span class="geo3d-readout-ten">S(ABC)</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">6</span></li><li data-index="4" tabindex="0"><span class="geo3d-readout-ten">V(S.ABC)</span><span class="geo3d-readout-dau">=</span><span class="geo3d-readout-gt">10</span></li></ul><p class="geo3d-progress geo3d-sr">Bước 6/6</p><p class="geo3d-narration geo3d-sr">Kết luận: thể tích S.ABC bằng 10.</p></div>"
+
+ ❯ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx:167:22
+    165|     const s = canh("triangular_pyramid");
+    166|     const html = renderToString(<Scene3DWorkspace scene={s} step={s.ev…
+    167|     expect(html).not.toContain("geo3d-readout");
+       |                      ^
+    168|   });
+    169| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/48]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  47 failed (47)
+   Start at  09:41:46
+   Duration  1.64s (transform 573ms, setup 215ms, import 988ms, tests 295ms, environment 0ms)
+
+exit=1
