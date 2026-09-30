@@ -1,0 +1,196 @@
+# W12 red run — extended source-grounding tests against the BASE commit
+# worktree: D:/tmp/w12-base (detached) HEAD=a4fd5fece9d27d20cdb717beb1a89711a34990bc
+# test files copied from the W12 working tree (not committed at base): tests/geometry/test_source_grounding_closure.py, tests/semantic_program/test_literal_provenance.py
+# python: D:/Documents/projects/algo-sim/backend/.venv (cwd = base backend, so 'app' resolves to the BASE code)
+# 0 model calls (offline; fake transport only)
+# command: python -m pytest -q -p no:cacheprovider tests/geometry/test_source_grounding_closure.py tests/semantic_program/test_literal_provenance.py --tb=short
+
+FFFFFFFFFFFFFFFFFFFFFFFFF.FFF..........                                  [100%]
+================================== FAILURES ===================================
+______ test_production_route_refuses_a_height_the_problem_does_not_state ______
+tests\geometry\test_source_grounding_closure.py:91: in test_production_route_refuses_a_height_the_problem_does_not_state
+    assert env["status"] == "unsupported", env
+E   AssertionError: {'status': 'ok', 'simulation_id': 'generic.semantic_program', 'domain': 'geometry', 'visual_mode': '2d', ...}
+E   assert 'ok' == 'unsupported'
+E     
+E     - unsupported
+E     + ok
+_____ test_compiler_route_never_turns_a_claimed_length_into_a_given_fact ______
+tests\geometry\test_source_grounding_closure.py:106: in test_compiler_route_never_turns_a_claimed_length_into_a_given_fact
+    assert not any(set(b.points) == {"A", "D"} for b in contract.source_invariants)
+E   assert not True
+E    +  where True = any(<generator object test_compiler_route_never_turns_a_claimed_length_into_a_given_fact.<locals>.<genexpr> at 0x0000018E88B6BD30>)
+____ test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence ____
+tests\geometry\test_source_grounding_closure.py:116: in test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence
+    ev = {e["name"]: e for e in ground.given_evidence}
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+______ test_source_span_that_does_not_match_the_problem_text_is_refused _______
+tests\geometry\test_source_grounding_closure.py:135: in test_source_span_that_does_not_match_the_problem_text_is_refused
+    assert not ground.ok and ground.error_code == G.ERR_SPAN_LECH_DE
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_ test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. C\u1ea1nh b\xean AD = 6. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.] _
+tests\geometry\test_source_grounding_closure.py:152: in test_evidence_that_names_another_value_or_segment_is_a_conflict
+    assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_ test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.] _
+tests\geometry\test_source_grounding_closure.py:152: in test_evidence_that_names_another_value_or_segment_is_a_conflict
+    assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_______ test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict ________
+tests\geometry\test_source_grounding_closure.py:161: in test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict
+    assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_______ test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded _______
+tests\geometry\test_source_grounding_closure.py:175: in test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded
+    given = {e["name"] for e in ground.given_evidence}
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+__________ test_layout_derived_coordinates_are_never_given_evidence ___________
+tests\geometry\test_source_grounding_closure.py:184: in test_layout_derived_coordinates_are_never_given_evidence
+    assert all(e["name"].endswith("_length") for e in ground.given_evidence)
+                                                      ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+____________ test_grounding_refusal_codes_are_a_closed_stable_set _____________
+tests\geometry\test_source_grounding_closure.py:191: in test_grounding_refusal_codes_are_a_closed_stable_set
+    assert G.MA_LOI_NGUON == frozenset({
+           ^^^^^^^^^^^^^^
+E   AttributeError: module 'app.simulation.semantic_program.grounding_gate' has no attribute 'MA_LOI_NGUON'
+_____ test_a_stated_non_integer_height_is_evidenced_by_the_text[3/2-3/2] ______
+tests\geometry\test_source_grounding_closure.py:224: in test_a_stated_non_integer_height_is_evidenced_by_the_text
+    ad = {e["name"]: e for e in ground.given_evidence}["AD_length"]
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+_____ test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2.5] ______
+tests\geometry\test_source_grounding_closure.py:224: in test_a_stated_non_integer_height_is_evidenced_by_the_text
+    ad = {e["name"]: e for e in ground.given_evidence}["AD_length"]
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+_____ test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2,5] ______
+tests\geometry\test_source_grounding_closure.py:224: in test_a_stated_non_integer_height_is_evidenced_by_the_text
+    ad = {e["name"]: e for e in ground.given_evidence}["AD_length"]
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+_ test_a_stated_non_integer_height_is_evidenced_by_the_text[2\u221a3-2\u221a3] _
+tests\geometry\test_source_grounding_closure.py:224: in test_a_stated_non_integer_height_is_evidenced_by_the_text
+    ad = {e["name"]: e for e in ground.given_evidence}["AD_length"]
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+_ test_a_stated_non_integer_height_is_evidenced_by_the_text[2\u221a3-2 \u221a3] _
+tests\geometry\test_source_grounding_closure.py:224: in test_a_stated_non_integer_height_is_evidenced_by_the_text
+    ad = {e["name"]: e for e in ground.given_evidence}["AD_length"]
+                                ^^^^^^^^^^^^^^^^^^^^^
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+_____________ test_an_unstated_non_integer_height_is_refused[3/2] _____________
+tests\geometry\test_source_grounding_closure.py:234: in test_an_unstated_non_integer_height_is_refused
+    assert not ground.ok and ground.error_code == G.ERR_GIVEN_KHONG_CO_TRONG_DE
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_____________ test_an_unstated_non_integer_height_is_refused[2.5] _____________
+tests\geometry\test_source_grounding_closure.py:234: in test_an_unstated_non_integer_height_is_refused
+    assert not ground.ok and ground.error_code == G.ERR_GIVEN_KHONG_CO_TRONG_DE
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+__________ test_an_unstated_non_integer_height_is_refused[2\u221a3] ___________
+tests\geometry\test_source_grounding_closure.py:234: in test_an_unstated_non_integer_height_is_refused
+    assert not ground.ok and ground.error_code == G.ERR_GIVEN_KHONG_CO_TRONG_DE
+E   AssertionError: assert (not True)
+E    +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+_ test_the_source_length_reader_never_truncates_a_number[AB = 2.5-expected0] __
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[AB = 1,5 cm-expected1] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[DE = 3/2, DF = 8/3-expected2] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[AB = 3, AC = 4-expected3] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[SA = 2\u221a3-expected4] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[AB = 3\u221a2/2-expected5] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_ test_the_source_length_reader_never_truncates_a_number[\u0111o\u1ea1n AB c\xf3 \u0111\u1ed9 d\xe0i 2\u221a3-expected6] _
+tests\geometry\test_source_grounding_closure.py:247: in test_the_source_length_reader_never_truncates_a_number
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+E   ImportError: cannot import name 'do_dai_trong_de' from 'app.simulation.semantic_program.segment_relation' (D:\tmp\w12-base\backend\app\simulation\semantic_program\segment_relation.py)
+_______________ test_so_cuoi_cau_truoc_dau_cham_van_la_literal ________________
+tests\semantic_program\test_literal_provenance.py:47: in test_so_cuoi_cau_truoc_dau_cham_van_la_literal
+    assert [(x.normalized_value, x.source_text) for x in so] == [((4,), "4")]
+E   AssertionError: assert [] == [((4,), '4')]
+E     
+E     Right contains one more item: ((4,), '4')
+E     Use -v to get more diff
+___________ test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi ___________
+tests\semantic_program\test_literal_provenance.py:57: in test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi
+    assert [(c.kind, c.source_text) for c in extract_literals(de)] == [
+E   assert [('str', "'B'... ('int', '4')] == [('int', '3')... ('int', '5')]
+E     
+E     At index 0 diff: ('str', "'B'") != ('int', '3')
+E     Left contains one more item: ('int', '4')
+E     Use -v to get more diff
+__________ test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc ___________
+tests\semantic_program\test_literal_provenance.py:68: in test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc
+    from app.simulation.semantic_program.literal_extractor import (
+E   ImportError: cannot import name 'gia_tri_khong_chung_minh_duoc' from 'app.simulation.semantic_program.literal_extractor' (D:\tmp\w12-base\backend\app\simulation\semantic_program\literal_extractor.py)
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_source_grounding_closure.py::test_production_route_refuses_a_height_the_problem_does_not_state
+FAILED tests/geometry/test_source_grounding_closure.py::test_compiler_route_never_turns_a_claimed_length_into_a_given_fact
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence
+FAILED tests/geometry/test_source_grounding_closure.py::test_source_span_that_does_not_match_the_problem_text_is_refused
+FAILED tests/geometry/test_source_grounding_closure.py::test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. C\u1ea1nh b\xean AD = 6. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.]
+FAILED tests/geometry/test_source_grounding_closure.py::test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.]
+FAILED tests/geometry/test_source_grounding_closure.py::test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict
+FAILED tests/geometry/test_source_grounding_closure.py::test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded
+FAILED tests/geometry/test_source_grounding_closure.py::test_layout_derived_coordinates_are_never_given_evidence
+FAILED tests/geometry/test_source_grounding_closure.py::test_grounding_refusal_codes_are_a_closed_stable_set
+FAILED tests/geometry/test_source_grounding_closure.py::test_a_stated_non_integer_height_is_evidenced_by_the_text[3/2-3/2]
+FAILED tests/geometry/test_source_grounding_closure.py::test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2.5]
+FAILED tests/geometry/test_source_grounding_closure.py::test_a_stated_non_integer_height_is_evidenced_by_the_text[2.5-2,5]
+FAILED tests/geometry/test_source_grounding_closure.py::test_a_stated_non_integer_height_is_evidenced_by_the_text[2\u221a3-2\u221a3]
+FAILED tests/geometry/test_source_grounding_closure.py::test_a_stated_non_integer_height_is_evidenced_by_the_text[2\u221a3-2 \u221a3]
+FAILED tests/geometry/test_source_grounding_closure.py::test_an_unstated_non_integer_height_is_refused[3/2]
+FAILED tests/geometry/test_source_grounding_closure.py::test_an_unstated_non_integer_height_is_refused[2.5]
+FAILED tests/geometry/test_source_grounding_closure.py::test_an_unstated_non_integer_height_is_refused[2\u221a3]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[AB = 2.5-expected0]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[AB = 1,5 cm-expected1]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[DE = 3/2, DF = 8/3-expected2]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[AB = 3, AC = 4-expected3]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[SA = 2\u221a3-expected4]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[AB = 3\u221a2/2-expected5]
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_source_length_reader_never_truncates_a_number[\u0111o\u1ea1n AB c\xf3 \u0111\u1ed9 d\xe0i 2\u221a3-expected6]
+FAILED tests/semantic_program/test_literal_provenance.py::test_so_cuoi_cau_truoc_dau_cham_van_la_literal
+FAILED tests/semantic_program/test_literal_provenance.py::test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi
+FAILED tests/semantic_program/test_literal_provenance.py::test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc
+28 failed, 11 passed in 1.71s
+exit=1

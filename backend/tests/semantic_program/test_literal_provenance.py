@@ -38,6 +38,44 @@ def test_moi_literal_trich_duoc_deu_tu_chung_minh_duoc():
             assert verify_candidate(c, de), f"{c.source_text!r} không tự chứng minh được"
 
 
+def test_so_cuoi_cau_truoc_dau_cham_van_la_literal():
+    """W12: `(?![\\w.])` bỏ mọi số đứng trước dấu chấm câu — *"có cạnh bằng 4."*
+    ra `4` "không có trong đề" (P1 `claimed`), và từ W12 cổng grounding ĐỌC P1.
+    Số thập phân vẫn đọc nguyên khối, không vỡ thành hai số."""
+    so = [x for x in extract_literals("Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4.")
+          if x.kind in ("int", "float")]
+    assert [(x.normalized_value, x.source_text) for x in so] == [((4,), "4")]
+    assert [x.normalized_value for x in extract_literals("SA = 1.5.")] == [(1.5,)]
+    assert [x.source_text for x in extract_literals("bán kính 2.5 và cạnh 3.")] == ["2.5", "3"]
+
+
+def test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi():
+    """W12: `AA' = 5 … ABCD.A'` từng đọc thành MỘT chuỗi trong nháy đơn nuốt
+    luôn số 5 ⇒ `AA' = 5` ra "không có trong đề". Dấu phẩy dính chữ hoa là ký
+    hiệu điểm; chuỗi trong nháy mở sau khoảng trắng/dấu câu vẫn đọc như cũ."""
+    de = "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích."
+    assert [(c.kind, c.source_text) for c in extract_literals(de)] == [
+        ("int", "3"), ("int", "4"), ("int", "5")]
+    assert [c.normalized_value for c in extract_literals("Đếm nguyên âm trong xâu 'hello'.")] == [
+        ("hello",)]
+
+
+def test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc():
+    """W12: đề Việt viết `2,5`; `analyze` khai `2.5`. Extractor không đọc dấu
+    phẩy thập phân (đọc thì `A(1,2,3)` vỡ), nên P1 kết tội `2.5` "không có
+    trong đề" — và từ W12 lời kết tội ấy là một lời TỪ CHỐI. Dấu phẩy nằm trong
+    một dãy số (`1,2,3`) thì không phải dấu thập phân."""
+    from app.simulation.semantic_program.literal_extractor import (
+        gia_tri_khong_chung_minh_duoc as p1,
+    )
+
+    de = "Cho mặt cầu bán kính R = 2,5 cm."
+    assert p1((2.5,), extract_literals(de), de) == ()
+    toa_do = "Cho A(1,2,3) và B(0;0;0)."
+    assert p1((1.2,), extract_literals(toa_do), toa_do) == (1.2,)
+    assert p1((3.5,), extract_literals(de), de) == (3.5,)
+
+
 def test_extractor_tat_dinh():
     """Cùng đề ⇒ cùng kết quả. Không phụ thuộc model, mạng hay thời điểm."""
     assert extract_literals(DE_STACK) == extract_literals(DE_STACK)

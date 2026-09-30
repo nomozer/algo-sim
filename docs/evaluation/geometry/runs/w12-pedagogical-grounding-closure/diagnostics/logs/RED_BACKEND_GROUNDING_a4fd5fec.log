@@ -1,0 +1,302 @@
+FFFFFFFFFF.FF..........                                                  [100%]
+================================== FAILURES ===================================
+______ test_production_route_refuses_a_height_the_problem_does_not_state ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000181ACBC2CF0>
+
+    def test_production_route_refuses_a_height_the_problem_does_not_state(monkeypatch):
+        monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)  # default LLM_ONLY
+        responses = [json.dumps(_prism_payload()), json.dumps(_program_with_height_5(), default=str)]
+        calls: list[str] = []
+    
+        async def fake_transport(*_args, **_kwargs):
+            calls.append("call")
+            return responses[len(calls) - 1]
+    
+        monkeypatch.setattr(PL, "call_gemini", fake_transport)
+        env = attach_learner_reason(asyncio.run(PL.run_pipeline(PRISM_WITHOUT_AD, "fake_key")))
+    
+>       assert env["status"] == "unsupported", env
+E       AssertionError: {'status': 'ok', 'simulation_id': 'generic.semantic_program', 'domain': 'geometry', 'visual_mode': '2d', ...}
+E       assert 'ok' == 'unsupported'
+E         
+E         - unsupported
+E         + ok
+
+tests\geometry\test_source_grounding_closure.py:91: AssertionError
+_____ test_compiler_route_never_turns_a_claimed_length_into_a_given_fact ______
+
+    def test_compiler_route_never_turns_a_claimed_length_into_a_given_fact():
+        contract = _contract(PRISM_WITHOUT_AD, _prism_payload())
+        assert contract.fact("fact_len_AD").provenance == "claimed"
+        # The length invariants come from the SOURCE, not from an unproven analyze value.
+>       assert not any(set(b.points) == {"A", "D"} for b in contract.source_invariants)
+E       assert not True
+E        +  where True = any(<generator object test_compiler_route_never_turns_a_claimed_length_into_a_given_fact.<locals>.<genexpr> at 0x00000181AD8CBE00>)
+
+tests\geometry\test_source_grounding_closure.py:106: AssertionError
+____ test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence ____
+
+    def test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence():
+        contract = _contract(PRISM_TEXT, _prism_payload())
+        ground = G.check_grounding(contract, _spec(_program_with_height_5()))
+        assert ground.ok, ground.unresolved
+>       ev = {e["name"]: e for e in ground.given_evidence}
+                                    ^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_source_grounding_closure.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[])
+item = 'given_evidence'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+    
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+    
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError
+______ test_source_span_that_does_not_match_the_problem_text_is_refused _______
+
+    def test_source_span_that_does_not_match_the_problem_text_is_refused():
+        contract = _contract(PRISM_TEXT, _prism_payload())
+        ad = contract.fact("fact_len_AD")
+        four = PRISM_TEXT.index("4")
+        moved = ad.model_copy(update={"source_start": four, "source_end": four + 1})
+        facts = tuple(moved if f.fact_id == ad.fact_id else f for f in contract.input_facts)
+        ground = G.check_grounding(contract.model_copy(update={"input_facts": facts}),
+                                   _spec(_program_with_height_5()))
+>       assert not ground.ok and ground.error_code == G.ERR_SPAN_LECH_DE
+E       AssertionError: assert (not True)
+E        +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+
+tests\geometry\test_source_grounding_closure.py:135: AssertionError
+_ test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. C\u1ea1nh b\xean AD = 6. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.] _
+
+text = 'Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, BC = 5. Cạnh bên AD = 6. Tính thể tích khối lăng trụ ABC.DEF.'
+
+    @pytest.mark.parametrize("text", [
+        # The text states a DIFFERENT length for the same segment.
+        "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+        "AB = 3, AC = 4, BC = 5. Cạnh bên AD = 6. Tính thể tích khối lăng trụ ABC.DEF.",
+        # The only 5 in the text belongs to ANOTHER segment.
+        "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+        "AB = 3, AC = 4, BC = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+    ])
+    def test_evidence_that_names_another_value_or_segment_is_a_conflict(text):
+        contract = _contract(text, _prism_payload())
+        assert contract.fact("fact_len_AD").provenance == "confirmed"  # 5 is SOMEWHERE in the text
+        ground = G.check_grounding(contract, _spec(_program_with_height_5()))
+>       assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E       AssertionError: assert (not True)
+E        +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+
+tests\geometry\test_source_grounding_closure.py:152: AssertionError
+_ test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.] _
+
+text = 'Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, BC = 5. Tính thể tích khối lăng trụ ABC.DEF.'
+
+    @pytest.mark.parametrize("text", [
+        # The text states a DIFFERENT length for the same segment.
+        "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+        "AB = 3, AC = 4, BC = 5. Cạnh bên AD = 6. Tính thể tích khối lăng trụ ABC.DEF.",
+        # The only 5 in the text belongs to ANOTHER segment.
+        "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+        "AB = 3, AC = 4, BC = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+    ])
+    def test_evidence_that_names_another_value_or_segment_is_a_conflict(text):
+        contract = _contract(text, _prism_payload())
+        assert contract.fact("fact_len_AD").provenance == "confirmed"  # 5 is SOMEWHERE in the text
+        ground = G.check_grounding(contract, _spec(_program_with_height_5()))
+>       assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E       AssertionError: assert (not True)
+E        +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+
+tests\geometry\test_source_grounding_closure.py:152: AssertionError
+_______ test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict ________
+
+    def test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict():
+        text = ("Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, "
+                "AB = 3 cm, AC = 4 cm. Cạnh bên AD = 5 cm. Tính thể tích khối lăng trụ ABC.DEF.")
+        contract = _contract(text, _prism_payload(ad_value="5 m"))
+        ground = G.check_grounding(contract, _spec(_program_with_height_5()))
+>       assert not ground.ok and ground.error_code == G.ERR_BANG_CHUNG_MAU_THUAN
+E       AssertionError: assert (not True)
+E        +  where True = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[]).ok
+
+tests\geometry\test_source_grounding_closure.py:161: AssertionError
+_______ test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded _______
+
+    def test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded():
+        from tests.geometry.test_cuboid_cube_production_route import _cube_p01_payload
+    
+        text, payload = _cube_p01_payload()
+        contract = _contract(text, payload)
+        spec = _spec({"spec_version": "1.0", **bien_dich(build_fact_graph(contract).graph).program})
+        outcome = verify_and_compile(contract, spec)
+        assert outcome.servable, outcome.details
+        ground = G.check_grounding(contract, spec)
+>       given = {e["name"] for e in ground.given_evidence}
+                                    ^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_source_grounding_closure.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[..._vertex', 'C_prime|point3|A|layout_derived_vertex', 'D_prime|point3|A|layout_derived_vertex'], unjustified_literals=[])
+item = 'given_evidence'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+    
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+    
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError
+__________ test_layout_derived_coordinates_are_never_given_evidence ___________
+
+    def test_layout_derived_coordinates_are_never_given_evidence():
+        contract = _contract(PRISM_TEXT, _prism_payload())
+        ground = G.check_grounding(contract, _spec(_program_with_height_5()))
+>       assert all(e["name"].endswith("_length") for e in ground.given_evidence)
+                                                          ^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_source_grounding_closure.py:184: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = GroundingResult(ok=True, error_code=None, unresolved=[], assumptions=[], unresolved_citations=[], justified_literals=[...yout_derived_vertex', 'E|point3|A|layout_derived_vertex', 'F|point3|A|layout_derived_vertex'], unjustified_literals=[])
+item = 'given_evidence'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+    
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+    
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'GroundingResult' object has no attribute 'given_evidence'
+
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError
+____________ test_grounding_refusal_codes_are_a_closed_stable_set _____________
+
+    def test_grounding_refusal_codes_are_a_closed_stable_set():
+>       assert G.MA_LOI_NGUON == frozenset({
+               ^^^^^^^^^^^^^^
+            "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE_SPAN_MISMATCH", "SOURCE_EVIDENCE_CONFLICT"})
+E       AttributeError: module 'app.simulation.semantic_program.grounding_gate' has no attribute 'MA_LOI_NGUON'
+
+tests\geometry\test_source_grounding_closure.py:191: AttributeError
+_______________ test_so_cuoi_cau_truoc_dau_cham_van_la_literal ________________
+
+    def test_so_cuoi_cau_truoc_dau_cham_van_la_literal():
+        """W12: `(?![\\w.])` bỏ mọi số đứng trước dấu chấm câu — *"có cạnh bằng 4."*
+        ra `4` "không có trong đề" (P1 `claimed`), và từ W12 cổng grounding ĐỌC P1.
+        Số thập phân vẫn đọc nguyên khối, không vỡ thành hai số."""
+        so = [x for x in extract_literals("Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4.")
+              if x.kind in ("int", "float")]
+>       assert [(x.normalized_value, x.source_text) for x in so] == [((4,), "4")]
+E       AssertionError: assert [] == [((4,), '4')]
+E         
+E         Right contains one more item: ((4,), '4')
+E         Use -v to get more diff
+
+tests\semantic_program\test_literal_provenance.py:47: AssertionError
+___________ test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi ___________
+
+    def test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi():
+        """W12: `AA' = 5 … ABCD.A'` từng đọc thành MỘT chuỗi trong nháy đơn nuốt
+        luôn số 5 ⇒ `AA' = 5` ra "không có trong đề". Dấu phẩy dính chữ hoa là ký
+        hiệu điểm; chuỗi trong nháy mở sau khoảng trắng/dấu câu vẫn đọc như cũ."""
+        de = "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích."
+>       assert [(c.kind, c.source_text) for c in extract_literals(de)] == [
+            ("int", "3"), ("int", "4"), ("int", "5")]
+E       assert [('str', "'B'... ('int', '4')] == [('int', '3')... ('int', '5')]
+E         
+E         At index 0 diff: ('str', "'B'") != ('int', '3')
+E         Left contains one more item: ('int', '4')
+E         Use -v to get more diff
+
+tests\semantic_program\test_literal_provenance.py:57: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_source_grounding_closure.py::test_production_route_refuses_a_height_the_problem_does_not_state
+FAILED tests/geometry/test_source_grounding_closure.py::test_compiler_route_never_turns_a_claimed_length_into_a_given_fact
+FAILED tests/geometry/test_source_grounding_closure.py::test_the_same_height_stated_in_the_text_is_accepted_with_its_evidence
+FAILED tests/geometry/test_source_grounding_closure.py::test_source_span_that_does_not_match_the_problem_text_is_refused
+FAILED tests/geometry/test_source_grounding_closure.py::test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. C\u1ea1nh b\xean AD = 6. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.]
+FAILED tests/geometry/test_source_grounding_closure.py::test_evidence_that_names_another_value_or_segment_is_a_conflict[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4, BC = 5. T\xednh th\u1ec3 t\xedch kh\u1ed1i l\u0103ng tr\u1ee5 ABC.DEF.]
+FAILED tests/geometry/test_source_grounding_closure.py::test_unit_in_the_evidence_contradicting_the_fact_is_a_conflict
+FAILED tests/geometry/test_source_grounding_closure.py::test_cube_equal_edges_are_derived_and_not_refused_as_ungrounded
+FAILED tests/geometry/test_source_grounding_closure.py::test_layout_derived_coordinates_are_never_given_evidence
+FAILED tests/geometry/test_source_grounding_closure.py::test_grounding_refusal_codes_are_a_closed_stable_set
+FAILED tests/semantic_program/test_literal_provenance.py::test_so_cuoi_cau_truoc_dau_cham_van_la_literal
+FAILED tests/semantic_program/test_literal_provenance.py::test_dau_phay_cua_ten_diem_khong_phai_dau_nhay_mo_chuoi
+12 failed, 11 passed in 3.26s
