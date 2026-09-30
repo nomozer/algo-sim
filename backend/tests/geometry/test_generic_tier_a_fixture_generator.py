@@ -37,11 +37,21 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     assert fixture["application_llm_calls"] == 0
 
     manifest = json.loads((tmp_path / "FIXTURE_MANIFEST.json").read_text(encoding="utf-8"))
-    assert len(manifest["fixtures"]) == 12
+    # W12: + one `_ungrounded` negative per family (a GIVEN the text does not state).
+    assert len(manifest["fixtures"]) == 18
     assert {
         name.removesuffix("_positive.json").removesuffix("_negative.json")
+        .removesuffix("_ungrounded.json")
         for name in manifest["fixtures"]
     } == {
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
         "cuboid", "cube", "cross_section",
     }
+    for name in [n for n in manifest["fixtures"] if n.endswith("_ungrounded.json")]:
+        negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))
+        envelope = negative["envelope"]
+        assert envelope["status"] == "unsupported", name
+        assert envelope["reason_code"] == "GIVEN_VALUE_NOT_IN_SOURCE", name
+        assert "scene3d" not in envelope and "final_memory" not in envelope, name
+        assert negative["removed_from_text"] not in negative["problem_text"], name
+        assert "_" not in envelope["learner_reason"], name

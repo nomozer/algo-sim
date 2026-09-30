@@ -211,6 +211,111 @@ def _cross_section_positive() -> tuple[str, dict]:
     return text, envelope
 
 
+# ── W12 · a GIVEN the problem text does not state ────────────────────────────
+# One stated measurement is removed from the text; the fake analyze TRANSPORT
+# still returns it, and the program is the one a model writes when it believes
+# the claim (compiled from the full text). Through the default LLM_ONLY route
+# the production boundary must refuse, with no Scene3D and no repair round.
+
+def _pyramid_payload() -> dict:
+    return {
+        "input_facts": [
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_len_AC", "kind": "float", "label": "AC", "value": ["4"]},
+            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": ["5"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "C"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["S", "A"], "plane": ["A", "B", "C"],
+             "source_fact_id": "fact_perp_lateral", "model_assumption": False},
+        ],
+        # No `solid_topology`: like `_pyramid_control_contract`, this family is
+        # routed by its relations (a 3-vertex base cycle routes to the
+        # quadrilateral-base family and is refused there).
+        "obligations": [{"kind": "volume", "container": "khoi_chop", "witness": "the_tich_khoi"}],
+    }
+
+
+def _rect_pyramid_payload() -> dict:
+    return {
+        "input_facts": [
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_len_AD", "kind": "float", "label": "AD", "value": ["4"]},
+            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": ["6"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["S", "A"], "plane": ["A", "B", "C"],
+             "source_fact_id": "fact_perp_lateral", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_chop", "witness": "v"}],
+        "solid_topology": {"solid_kind": "pyramid", "apex": "S", "base_cycle": ["A", "B", "C", "D"],
+                           "base_shape": "rectangle"},
+    }
+
+
+def _ungrounded_cases() -> dict[str, tuple[str, str, str | dict, str | dict]]:
+    """family -> (full text, removed sentence part, analyze payload, program)."""
+    from tests.geometry.test_source_grounding_closure import PRISM_TEXT, _prism_payload
+    from app.simulation.geometry_compiler.compiler import bien_dich
+    from app.simulation.geometry_compiler.contract_adapter import build_fact_graph
+
+    def compiled(text: str, payload: dict) -> dict:
+        contract = build_request_contract(payload, problem_text=text, domain="hinh_hoc")
+        return {"spec_version": "1.0", **bien_dich(build_fact_graph(contract).graph).program}
+
+    pyramid_text = _pyramid_control_contract()[0]
+    rect_text = _rect_pyramid_contract()[0]
+    cuboid_text, cuboid_payload = _cuboid_p01_payload()
+    cube_text, cube_payload = _cube_p01_payload()
+    raw = RNB.doc_raw_theo_thu_tu(P1)
+    return {
+        "triangular_pyramid": (pyramid_text, ", SA = 5", _pyramid_payload(),
+                               compiled(pyramid_text, _pyramid_payload())),
+        "triangular_prism": (PRISM_TEXT, " Cạnh bên AD = 5.", _prism_payload(),
+                             compiled(PRISM_TEXT, _prism_payload())),
+        "rectangular_pyramid": (rect_text, ", SA = 6", _rect_pyramid_payload(),
+                                compiled(rect_text, _rect_pyramid_payload())),
+        "cuboid": (cuboid_text, ", AA' = 5", cuboid_payload, compiled(cuboid_text, cuboid_payload)),
+        "cube": (cube_text, " có cạnh bằng 4", cube_payload, compiled(cube_text, cube_payload)),
+        "cross_section": (RNB.doc_de_bai()[P1], " và đỉnh S(0;0;6)",
+                          raw["semantic_analyze"][0], raw["semantic_program"][0]),
+    }
+
+
+def _ungrounded_fixture(full_text: str, cut: str, payload, program) -> tuple[str, dict]:
+    text = full_text.replace(cut, "")
+    assert text != full_text, cut
+    as_json = lambda x: x if isinstance(x, str) else json.dumps(x, ensure_ascii=False, default=str)
+    responses = [as_json(payload), as_json(program)]
+    calls: list[int] = []
+
+    async def fake_transport(*_args, **_kwargs):
+        calls.append(1)
+        if len(calls) > len(responses):
+            raise AssertionError("a source defect was sent to repair")
+        return responses[len(calls) - 1]
+
+    saved_gemini = PL.call_gemini
+    saved_mode = os.environ.pop("GEOMETRY_COMPILER_MODE", None)
+    try:
+        PL.call_gemini = fake_transport
+        envelope = attach_learner_reason(asyncio.run(PL.run_pipeline(text, "offline_evidence_key")))
+    finally:
+        PL.call_gemini = saved_gemini
+        if saved_mode is not None:
+            os.environ["GEOMETRY_COMPILER_MODE"] = saved_mode
+    assert envelope["status"] == "unsupported", envelope.get("status")
+    assert "scene3d" not in envelope and "final_memory" not in envelope, envelope
+    assert envelope["error_code"] == "input_not_grounded", envelope
+    assert envelope["stage_reached"] == "grounding", envelope
+    assert envelope["reason_code"] == "GIVEN_VALUE_NOT_IN_SOURCE", envelope
+    assert len(calls) == 2, calls
+    return text, envelope
+
+
 def _wrapper(case_id: str, text: str, envelope: dict, source: str, **extra) -> dict:
     return {
         "fixture_schema": "generic-tier-a-fixture/1",
@@ -275,6 +380,16 @@ def main() -> None:
                  "canonical_program_through_production_refusal", contract_gate=contract_gate),
         ensure_ascii=False, indent=2,
     ), encoding="utf-8")
+
+    for name, (full_text, cut, payload, program) in _ungrounded_cases().items():
+        text, envelope = _ungrounded_fixture(full_text, cut, payload, program)
+        (fixtures / f"{name}_ungrounded.json").write_text(json.dumps(
+            _wrapper(f"{name}_ungrounded_given", text, envelope,
+                     "fake_analyze_transport_through_production_refusal",
+                     source_reason_code="GIVEN_VALUE_NOT_IN_SOURCE",
+                     removed_from_text=cut.strip(" ,.")),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
 
     inventory = {}
     for path in sorted(fixtures.glob("*.json")):

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Contact sheets and hidden-edge crops from the authoritative PNGs (w10 → w11).
+"""Contact sheets and hidden-edge crops from the authoritative PNGs (w10 → w11 → w12).
+
+w12: the step bar walks GEOMETRY steps; each sheet adds the solution panel
+(element captures, used whole) and the grounding refusal of the family.
 
 w11 layout (review W10-H8: the formation appendix was too small to read):
 ``images/<family>/SHEET.png`` holds ONE family at NATIVE resolution — desktop
@@ -30,12 +33,19 @@ FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
                 "cuboid", "cube", "cross_section")
 SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
+# W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas.
+PANEL_STATES = (("desktop", "solution_neutral_final"), ("desktop", "solution_causal_selected"),
+                ("mobile", "solution_neutral_final"), ("mobile", "solution_expanded"))
 STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
                 "causal_selected": "causal — đã chọn đáp số",
-                "rotated_neutral": "đã xoay (qua cổng không suy biến)"}
-LEGEND = ("CAM = vật mới dựng / đang xét ở bước · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  "
-          "Causal (chọn một số đo): viền xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · "
-          "khối/điểm giữ mực = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.")
+                "rotated_neutral": "đã xoay (qua cổng không suy biến)",
+                "solution_neutral_final": "bảng lời giải, bước cuối",
+                "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
+                "refusal": "đề thiếu một dữ kiện — từ chối, không dựng hình"}
+LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · "
+          "NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số "
+          "· cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.")
 LABEL_PX = 28
 HEADER_CSS = 44   # hàng tiêu đề + chip ngay trên canvas: giữ, bỏ thanh điều hướng
 STATES = ("neutral_final", "rotated_neutral")
@@ -175,27 +185,39 @@ def _save_png(image: Image.Image, out: Path) -> None:
     image.save(out, optimize=True)
 
 
-def family_sheet(family: str, records: dict[str, dict[str, Any]], images_root: Path) -> dict[str, Any]:
-    """Sheet của MỘT họ, độ phân giải gốc: 4 trạng thái rồi mọi bước formation."""
+def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> dict[str, Any]:
+    """Sheet của MỘT họ, độ phân giải gốc: 4 trạng thái, bảng lời giải, lời từ
+    chối (W12), rồi mọi BƯỚC DỰNG của thanh bước."""
+    records = scenario.get("positive", {})
     cells: list[dict[str, Any]] = []
     for vp, state in SHEET_STATES:
         record = records.get(vp, {})
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
-                      "box_state": state})
+                      "box_state": state, "crop": True})
+    for vp, state in PANEL_STATES:
+        record = records.get(vp, {})
+        cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
+                      "path": _path(record.get("screenshots", {}).get(state)), "record": record,
+                      "box_state": state, "crop": False})
+    for vp, record in scenario.get("negative", {}).items():
+        cells.append({"state": f"{vp}/refusal", "label": f"{vp.capitalize()} · {STATE_TITLES['refusal']}",
+                      "path": _path(record.get("screenshot")), "record": record,
+                      "box_state": "refusal", "crop": False})
     steps = [s for s in records.get("desktop", {}).get("formation", {}).get("steps", []) if s.get("screenshot")]
     for s in steps:
-        cells.append({"state": f"desktop/formation/{s['index']}",
-                      "label": f"Formation · bước {s['index'] + 1}/{len(steps)} — {s.get('learner_text', '').strip()}",
+        cells.append({"state": f"desktop/geometry_step/{s['index']}",
+                      "label": f"Bước dựng {s['index'] + 1}/{len(steps)} — {s.get('learner_text', '').strip()}",
                       "path": _path(s.get("screenshot")), "record": records.get("desktop", {}),
-                      "box_state": "neutral_final"})
+                      "box_state": "neutral_final", "crop": True})
     font, font_name = _font(LABEL_PX)
     band = LABEL_PX * 2
     images = []
     for c in cells:
         if c["path"] and c["path"].exists():
             image = Image.open(c["path"]).convert("RGB")
-            c["crop_box_px"] = list(page_box(c["record"], c["box_state"], image.size))
+            c["crop_box_px"] = (list(page_box(c["record"], c["box_state"], image.size)) if c["crop"]
+                                else [0, 0, image.width, image.height])
             images.append(image.crop(tuple(c["crop_box_px"])))
         else:
             c["crop_box_px"] = None
@@ -261,7 +283,7 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
         scene = json.loads((fixture_root / "fixtures" / f"{family}_positive.json")
                            .read_text(encoding="utf-8"))["envelope"]["scene3d"]
         positive = scenario.get("positive", {})
-        meta = family_sheet(family, positive, images)
+        meta = family_sheet(family, scenario, images)
         meta["thumbnail"] = _path(positive.get("desktop", {}).get("screenshots", {}).get("neutral_final"))
         meta["sheet"] = meta["sheet"].relative_to(run_dir).as_posix()
         sheets[family] = meta

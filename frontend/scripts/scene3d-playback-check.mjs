@@ -23,8 +23,9 @@ import { fileURLToPath } from "node:url";
 import { sleep } from "./browser-runner.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
-  LOP_SO_DO_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
-  expectedCausalTiers, orbitPlanThuc, planOrbit, pollUntil, settleCamera, sha256File,
+  LOP_DONG_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
+  expectedCausalTiers, expectedGeometryTimeline, orbitPlanThuc, planOrbit, pollUntil,
+  settleCamera, sha256File,
 } from "./compiler-scene-replay-lib.mjs";
 import {
   capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, trustedZoomOut,
@@ -50,7 +51,8 @@ const pause=document.querySelector('[aria-label="Tạm dừng"]');
 return{t:Math.round(performance.now()-t0),step:m?Number(m[1])-1:null,total:m?Number(m[2]):null,
 playing:!!pause,selected:window.__geo3d_selected_id||null,
 highlighted:(window.__geo3d_highlighted_ids||[]).slice(),panel_open:!!document.querySelector('.geo3d-soi'),
-readout:[...document.querySelectorAll('.geo3d-readout li')].map(e=>e.textContent.replace(/\\s+/g,' ').trim()),
+rows:[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>({id:e.dataset.solutionId,
+sec:(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')?.textContent||'').trim()})),
 rendered:(window.__geo3d_rendered_object_ids||[]).slice().sort(),
 narration:(document.querySelector('.geo3d-buoc-loi')?.textContent||'').trim()}};
 window.__w10_snap=snap;let prev='';
@@ -142,7 +144,8 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
   const viewport = { id: viewportId, ...VIEWPORTS[viewportId] };
   const { session } = await openFixture({ port, viewport, fixture });
   const scene = fixture.envelope.scene3d;
-  const total = scene.formation?.steps?.length ?? scene.events.length;
+  // W12: thanh bước đi qua BƯỚC DỰNG (oracle độc lập đọc snapshot formation).
+  const total = expectedGeometryTimeline(scene).length;
   const film = [];
   try {
     await pollUntil(() => session.eval("!!document.querySelector('.geo3d-canvas canvas')"), Boolean);
@@ -174,14 +177,14 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
       const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
       states[ten] = { ...await capture(session, join(outDir, `${ten}.png`)), ...await observe(session),
         dimmed_labels: await session.eval("document.querySelectorAll('.geo3d-label.la-diu').length"),
-        dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-readout li.la-diu').length"),
+        dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-lg-dong.la-diu').length"),
         // nhãn điểm: dịu ⇔ nằm ngoài tập tô sáng; số đo: lớp của từng dòng (w11:
         // đích / dữ kiện số / trung gian số / ngoài chuỗi)
         label_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-label')]"
           + ".map(e=>({id:e.dataset.id,dimmed:e.classList.contains('la-diu')}))"),
-        readout_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-readout li')]"
-          + ".map(e=>({text:(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim(),"
-          + "classes:['la-chon','la-so-lieu','la-trung-gian','la-nguon','la-diu'].filter(c=>e.classList.contains(c))}))"),
+        // W12: dòng của BẢNG LỜI GIẢI theo id, cùng lớp vai trò của nó.
+        readout_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')]"
+          + ".map(e=>({id:e.dataset.solutionId,classes:[...e.classList].filter(c=>c.startsWith('la-'))}))"),
         causal_tiers: await jsonEval(session, "window.__geo3d_causal_tiers||null"),
         vertex_marker_px: await vertexMarkerCheck(session),
         view: snap ? chatLuongGocNhin(scene, snap, await overlayRects(session)) : null };
@@ -220,10 +223,12 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     await chup("rotated_neutral");
 
     // ── Causal: CHỈ sau cú bấm của người dùng; đóng ô soi ⇒ trung tính ───
-    const rows = await session.eval("document.querySelectorAll('.geo3d-readout li').length");
+    // W12: đích causal là dòng Kết quả của bảng lời giải (luôn hiện, kể cả khổ hẹp).
+    const KET_QUA = "[...document.querySelectorAll('.geo3d-lg-ket-qua .geo3d-lg-nut')].at(-1)";
+    const rows = await session.eval("document.querySelectorAll('.geo3d-lg-ket-qua .geo3d-lg-nut').length");
     const causal = { restored: null };
     if (rows > 0) {
-      await trustedClick(session, "[...document.querySelectorAll('.geo3d-readout li')].at(-1)");
+      await trustedClick(session, KET_QUA);
       await sleep(400);
       await chup("causal_selected");
       await trustedClick(session, "document.querySelector('[aria-label=\"Bỏ chọn\"]')");
@@ -236,7 +241,7 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // Lặp orbit ở trạng thái trung tính ("Xem lại toàn hình" cũng bỏ chọn).
     const orbitRepeat = lapOrbit > 0 ? await orbitLap(session, scene, lapOrbit) : null;
     if (rows > 0) {
-      await trustedClick(session, "[...document.querySelectorAll('.geo3d-readout li')].at(-1)");
+      await trustedClick(session, KET_QUA);
       await sleep(400);
     }
     const beforeReplay = await observe(session);
@@ -254,7 +259,7 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
       }
     }
     const verdict = assessPlayback({
-      samples, events: scene.events, objects: scene.objects, total, intervalMs: PLAYBACK_INTERVAL_MS,
+      samples, scene, total, intervalMs: PLAYBACK_INTERVAL_MS,
       replay: hasReplay ? replay : { step: beforeReplay.step, selected: beforeReplay.selected,
         highlighted: beforeReplay.highlighted },
       orbit: { before: orbitBefore, after: orbitAfter },
@@ -262,14 +267,13 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     verdict.checks.no_uncaught_exception = { pass: uncaught.length === 0, details: uncaught };
     const c = states.causal_selected;
-    // w11: tầng kỳ vọng tính ĐỘC LẬP từ cảnh; từng dòng số đo mang đúng lớp tầng.
+    // w11 → W12: tầng kỳ vọng tính ĐỘC LẬP từ cảnh; từng dòng của bảng lời giải
+    // (theo id) mang đúng lớp tầng — ngoài chuỗi ⇒ `la-diu`.
     const tangKyVong = c?.selected ? expectedCausalTiers(scene, c.selected) : null;
-    const theoKyHieu = new Map(scene.objects.filter((o) => o.render === "readout")
-      .map((o) => [o.notation || o.label, o.id]));
     const lopDung = (row) => {
-      const t = tangKyVong?.[theoKyHieu.get(row.text)];
-      const lop = t ? LOP_SO_DO_THEO_TANG[t] : "la-diu";
-      return lop ? row.classes.length === 1 && row.classes[0] === lop : row.classes.length === 0;
+      const t = tangKyVong?.[row.id];
+      const lop = t ? LOP_DONG_THEO_TANG[t] : "la-diu";
+      return row.classes.length === 1 && row.classes[0] === lop;
     };
     verdict.checks.causal_layers_dim_outside = { pass: !c || (c.selected !== null && c.panel_open
       && c.label_tiers.every((l) => l.dimmed === !c.highlighted.includes(l.id))

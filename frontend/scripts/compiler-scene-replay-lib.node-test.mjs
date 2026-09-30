@@ -22,7 +22,9 @@ import {
   expectedVisibleIds,
   aliasTreeRowCheck,
   isHiddenAlias,
-  measurementStepsKeepGeometry,
+  assessGeometrySteps,
+  expectedGeometryTimeline,
+  expectedSolutionRows,
   orbitCandidates,
   orbitPlanThuc,
   planOrbit,
@@ -95,8 +97,8 @@ test("CSS readiness is driven by computed sentinel styles, not stylesheet rules"
     controls: { display: "flex", fontFamily: "Inter" },
     controlButton: { color: "rgb(0, 0, 0)" },
     controlText: { color: "rgb(97, 93, 89)" },
-    readout: { position: "relative", fontFamily: "Inter" },
-    readoutText: { color: "rgb(97, 93, 89)" },
+    solution: { display: "grid", fontFamily: "Inter" },
+    solutionTitle: { color: "rgb(97, 93, 89)" },
   };
   assert.equal(assessCssReadiness(actual, baseline, 900, 900).pass, true);
   assert.equal(assessCssReadiness(actual, baseline, 901.5, 900).checks.no_document_overflow, false);
@@ -331,26 +333,48 @@ test("immutable window: only a settled, unchanged, zero-recompute window of 120 
     perf: { frame_count: 121, recompute_count: 2 } }).code, "IMMUTABLE_FRAME_RECOMPUTE");
 });
 
-const EVENTS = [
-  { step_index: 0, semantic_kind: "EXPLANATION" },
-  { step_index: 1, semantic_kind: "GEOMETRY_CONSTRUCTION" },
-  { step_index: 2, semantic_kind: "MEASUREMENT" },
-  { step_index: 3, semantic_kind: "FINAL_RESULT", object: "the_tich" },
-];
-/** Đáp số và BÍ DANH của nó (`v = V`): cùng một kết luận, phải là MỘT dòng. */
-const OBJECTS = [
-  { id: "the_tich", notation: "V", label: "Thể tích" },
-  { id: "v", alias_of: "the_tich", notation: "v", label: "v" },
+/* W12 — cảnh tổng hợp BA bước dựng: đáy (1), khối (2); bước đo diện tích và
+   kết luận thể tích nhập vào bước dựng khối (khung neo = sự kiện 4). */
+const PLAY_SCENE = {
+  objects: [
+    { id: "A", label: "A", type: "point3", render: "point_marker", origin: "free" },
+    { id: "SA", label: "SA", type: "quantity", render: "readout", origin: "free" },
+    { id: "day", label: "Đáy ABC", type: "polygon3", render: "polygon", origin: "derived" },
+    { id: "khoi", label: "Khối chóp", type: "solid", render: "mesh", origin: "derived" },
+    { id: "dt", label: "Diện tích ABC", type: "quantity", render: "readout", origin: "derived" },
+    { id: "the_tich", label: "Thể tích", notation: "V", type: "quantity", render: "readout",
+      origin: "derived" },
+    /** Bí danh đáp số (`v = V`): cùng một kết luận, phải là MỘT dòng. */
+    { id: "v", label: "v", alias_of: "the_tich", type: "quantity", render: "non_visual",
+      origin: "derived" },
+  ],
+  events: [
+    { step_index: 0, semantic_kind: "EXPLANATION", object: null },
+    { step_index: 1, semantic_kind: "GEOMETRY_CONSTRUCTION", object: "day" },
+    { step_index: 2, semantic_kind: "GEOMETRY_CONSTRUCTION", object: "khoi" },
+    { step_index: 3, semantic_kind: "MEASUREMENT", object: "dt" },
+    { step_index: 4, semantic_kind: "FINAL_RESULT", object: "the_tich" },
+  ],
+  formation: { steps: [["A", "SA"], ["A", "SA", "day"], ["A", "SA", "day", "khoi"],
+    ["A", "SA", "day", "khoi", "dt"], ["A", "SA", "day", "khoi", "dt", "the_tich", "v"]]
+    .map((visible_ids, k) => ({ step_index: k, visible_ids,
+      semantic_kind: ["EXPLANATION", "GEOMETRY_CONSTRUCTION", "GEOMETRY_CONSTRUCTION",
+        "MEASUREMENT", "FINAL_RESULT"][k] })) },
+};
+const ROWS = [
+  [{ id: "SA", sec: "Dữ kiện" }],
+  [{ id: "SA", sec: "Dữ kiện" }],
+  [{ id: "the_tich", sec: "Kết quả" }, { id: "SA", sec: "Dữ kiện" }, { id: "dt", sec: "Các bước tính" }],
 ];
 const frame = (t, step, extra = {}) => ({
   t, step, playing: true, selected: null, panel_open: false, highlighted: [],
-  rendered: step >= 1 ? ["A", "khoi"] : ["A"],
-  readout: step >= 2 ? ["V = 8"] : [], ...extra,
+  rendered: [["A"], ["A", "day"], ["A", "day", "khoi"]][step] ?? ["A"],
+  rows: ROWS[step] ?? [], ...extra,
 });
-const genuine = () => [frame(0, 0), frame(1400, 1), frame(2800, 2), frame(4200, 3),
-  frame(4300, 3, { playing: false }), frame(7300, 3, { playing: false })];
+const genuine = () => [frame(0, 0), frame(1400, 1), frame(2800, 2),
+  frame(2900, 2, { playing: false }), frame(5900, 2, { playing: false })];
 const judge = (samples, extra = {}) =>
-  assessPlayback({ samples, events: EVENTS, objects: OBJECTS, total: 4, intervalMs: 1400, ...extra });
+  assessPlayback({ samples, scene: PLAY_SCENE, total: 3, intervalMs: 1400, ...extra });
 
 /* w10 — orbit chọn trước bằng số đo, không bằng cú kéo pixel cố định: góc
    xoay phải vừa giữ hình đọc được (ngưỡng góc nhìn) vừa ĐỔI tập cạnh khuất. */
@@ -440,20 +464,50 @@ test("vertex marker diameter is measured through the camera, in CSS px", () => {
   assert.ok(Math.abs(m.diameter_px - 6) < 0.05, String(m.diameter_px));
 });
 
-test("measurement steps never make geometry appear; an injected one is caught", () => {
-  const run = resolve(import.meta.dirname, "..", "..", "docs", "evaluation", "geometry", "runs",
-    "w10-pedagogical-playback", "inputs", "fixtures");
-  for (const family of ["triangular_pyramid", "cuboid", "cube", "cross_section"]) {
-    const sc = JSON.parse(readFileSync(join(run, `${family}_positive.json`), "utf-8")).envelope.scene3d;
-    assert.ok(measurementStepsKeepGeometry(sc).pass, family);
+/* W12 — thanh bước đi qua BƯỚC DỰNG. Oracle đọc snapshot formation của sáu
+   cảnh w11 (bất biến): mỗi bước sau bước 0 mở ở sự kiện dựng, bước đo/kết luận
+   không bao giờ mở bước. */
+const W11_FIXTURES = resolve(import.meta.dirname, "..", "..", "docs", "evaluation", "geometry",
+  "runs", "w11-pedagogical-polish", "inputs", "fixtures");
+const w11Scene = (family) => JSON.parse(readFileSync(join(W11_FIXTURES, `${family}_positive.json`),
+  "utf-8")).envelope.scene3d;
+
+test("geometry timeline: steps open only at construction events that change the figure", () => {
+  const counts = { triangular_pyramid: 3, triangular_prism: 3, rectangular_pyramid: 5,
+    cuboid: 5, cube: 5, cross_section: 10 };
+  for (const [family, count] of Object.entries(counts)) {
+    const sc = w11Scene(family);
+    const t = expectedGeometryTimeline(sc);
+    assert.equal(t.length, count, family);
+    assert.equal(t.at(-1).end, sc.events.length - 1, family);
+    for (const g of t.slice(1)) assert.equal(g.kinds[0], "GEOMETRY_CONSTRUCTION", family);
   }
-  const sc = JSON.parse(readFileSync(join(run, "cube_positive.json"), "utf-8")).envelope.scene3d;
-  const bad = structuredClone(sc);
-  const k = bad.events.find((e) => e.semantic_kind === "MEASUREMENT").step_index;
-  bad.formation.steps[k].visible_ids.push("khoi_hop");
-  const r = measurementStepsKeepGeometry(bad);
-  assert.equal(r.pass, false);
-  assert.deepEqual(r.mismatches[0].unexpected, ["khoi_hop"]);
+  const pyramid = expectedSolutionRows(w11Scene("triangular_pyramid"), 5);
+  assert.deepEqual(pyramid, { givens: ["AB_length", "AC_length", "SA_length"],
+    steps: ["dien_tich_day_ABC"], results: ["the_tich_khoi_chop"] });
+});
+
+test("geometry steps: a genuine observation passes; each injected fault fails its own check", () => {
+  const sc = w11Scene("triangular_pyramid");
+  const t = expectedGeometryTimeline(sc);
+  const draw = (k) => sc.formation.steps[k].visible_ids.filter((id) =>
+    sc.objects.find((o) => o.id === id)?.render !== "readout").sort();
+  const genuineObs = () => ({ step_count: t.length, steps: t.map((g) => ({
+    index: g.index, rendered: draw(g.anchor),
+    focus_label: g.index === 0 ? "— (dữ kiện đề cho)"
+      : sc.objects.find((o) => o.id === sc.events[g.start].object).label,
+    solution: expectedSolutionRows(sc, g.anchor) })) });
+  assert.equal(assessGeometrySteps(sc, genuineObs()).pass, true);
+  const fault = (check, mutate) => {
+    const obs = genuineObs();
+    mutate(obs);
+    assert.equal(assessGeometrySteps(sc, obs).checks[check], false, check);
+  };
+  fault("step_count_matches", (o) => { o.step_count = sc.events.length; });
+  fault("no_static_frames", (o) => { o.steps[2].rendered = o.steps[1].rendered; });
+  fault("no_measurement_geometry_steps", (o) => { o.steps[2].focus_label = "Diện tích ABC"; });
+  fault("no_final_result_geometry_steps", (o) => { o.steps[2].focus_label = "Thể tích S.ABC"; });
+  fault("solution_in_sync", (o) => { o.steps[1].solution.results = ["the_tich_khoi_chop"]; });
 });
 
 /* Cảnh đông điểm (chóp có đỉnh trên A + thiết diện): hầu như không phương vị
@@ -473,15 +527,10 @@ test("orbit plan: no qualifying rotation ⇒ null, never a guess", () => {
   assert.equal(planOrbit(CUBE, [0, 0, 1], { offsets: [] }), null);
 });
 
-test("learner playback: equal-valued edges are NOT a duplicated answer (cube: AB = AD = 4)", () => {
-  const cube = genuine().map((f) => (f.step >= 2 ? { ...f, readout: ["AB = 4", "AD = 4", "V = 64"] } : f));
-  assert.equal(judge(cube).checks.final_result_shown_once.pass, true);
-});
-
-test("learner playback: one press plays every step once and stops at the final step", () => {
+test("learner playback: one press plays every GEOMETRY step once and stops at the last one", () => {
   const verdict = judge(genuine(), {
     replay: { step: 0, selected: null, highlighted: [] },
-    orbit: { before: { step: 3, readout: ["V = 8"] }, after: { step: 3, readout: ["V = 8"] } },
+    orbit: { before: { step: 2, rows: ROWS[2] }, after: { step: 2, rows: ROWS[2] } },
   });
   assert.equal(verdict.pass, true, JSON.stringify(verdict.checks));
 });
@@ -492,17 +541,24 @@ test("learner playback: every known state-machine fault is caught by its own che
     assert.equal(verdict.checks[name].pass, false, name);
   };
   const g = genuine();
+  const last = (mutate) => g.map((f) => (f.step === 2 ? { ...f, ...mutate(f) } : f));
   fault("no_causal_selection", g.map((f, i) => (i === 2 ? { ...f, selected: "khoi" } : f)));
   fault("detail_panel_stays_closed", g.map((f, i) => (i === 3 ? { ...f, panel_open: true } : f)));
   fault("reaches_final_step", [frame(0, 0), frame(1400, 1), frame(2800, 1), frame(7000, 1)]);
   fault("advances_one_step_at_a_time", [frame(0, 0), frame(1400, 2), ...g.slice(3)]);
   fault("stops_at_final_step", g.map((f) => ({ ...f, playing: true })));
   fault("stops_at_final_step", [...g, frame(8000, 0, { playing: true })]);
-  fault("construction_steps_change_geometry", g.map((f) => ({ ...f, rendered: ["A"] })));
-  fault("measurement_steps_show_a_value", g.map((f) => ({ ...f, readout: [] })));
-  fault("final_result_shown_once", g.map((f) => (f.step === 3 ? { ...f, readout: ["V = 8", "v = 8"] } : f)));
-  fault("final_result_shown_once", g.map((f) => (f.step === 3 ? { ...f, readout: ["AB = 8"] } : f)));
-  fault("replay_resets_step_selection_highlight", g, { replay: { step: 3, selected: null, highlighted: [] } });
+  // Thanh bước còn đếm sự kiện (5) thay vì bước dựng (3).
+  fault("step_count_is_geometry_steps", g, { total: 5 });
+  // Một "bước" chỉ tính số: chỉ số tăng mà hình đứng yên (slideshow).
+  fault("every_geometry_step_changes_the_figure", g.map((f) => ({ ...f, rendered: ["A"] })));
+  fault("solution_in_sync_with_geometry_step", g.map((f) => ({ ...f, rows: [] })));
+  fault("solution_in_sync_with_geometry_step",
+    g.map((f) => (f.step === 1 ? { ...f, rows: ROWS[2] } : f)));
+  fault("final_result_shown_once", last((f) => ({ rows: [...f.rows, { id: "v", sec: "Kết quả" }] })));
+  fault("final_result_shown_once", last((f) => ({
+    rows: f.rows.map((r) => (r.id === "the_tich" ? { ...r, sec: "Các bước tính" } : r)) })));
+  fault("replay_resets_step_selection_highlight", g, { replay: { step: 2, selected: null, highlighted: [] } });
   fault("orbit_preserves_timeline", g,
-    { orbit: { before: { step: 3, readout: ["V = 8"] }, after: { step: 2, readout: ["V = 8"] } } });
+    { orbit: { before: { step: 2, rows: ROWS[2] }, after: { step: 1, rows: ROWS[1] } } });
 });

@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW",
-  "product_commit_sha": "60292ecf0ad6f93460a33234aca2502ee94274f8",
-  "product_tree_sha": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
+  "task_id": "W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE",
+  "product_commit_sha": "8aaeae80254ed8ea95617107bd67da15329d4f45",
+  "product_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
@@ -35,7 +35,7 @@
       "evidence_dir": "triangular-pyramid",
       "family": "right_triangle_base_pyramid_volume",
       "positive_fixture": "fixtures/triangular_pyramid_positive.json",
-      "negative_fixture": "fixtures/triangular_pyramid_negative.json",
+      "negative_fixture": "fixtures/triangular_pyramid_ungrounded.json",
       "topology": { "vertices": 4, "edges": 6, "faces": 4, "euler": 2 },
       "expected_labels": ["A", "B", "C", "S"],
       "expected_answer": "10",
@@ -52,9 +52,9 @@
         "symbol": "_pyramid_control_contract"
       },
       "negative_expected": {
-        "reason_code": "NON_POSITIVE_LENGTH",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "semantic_analyze"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     },
     {
@@ -62,7 +62,7 @@
       "evidence_dir": "triangular-prism",
       "family": "right_triangle_base_right_prism_volume",
       "positive_fixture": "fixtures/triangular_prism_positive.json",
-      "negative_fixture": "fixtures/triangular_prism_negative.json",
+      "negative_fixture": "fixtures/triangular_prism_ungrounded.json",
       "topology": { "vertices": 6, "edges": 9, "faces": 5, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "E", "F"],
       "expected_answer": "30",
@@ -80,9 +80,9 @@
         "symbol": "_prism_p01_contract"
       },
       "negative_expected": {
-        "reason_code": "NON_POSITIVE_LENGTH",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "semantic_analyze"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     },
     {
@@ -90,7 +90,7 @@
       "evidence_dir": "rectangular-pyramid",
       "family": "rectangular_base_pyramid_volume",
       "positive_fixture": "fixtures/rectangular_pyramid_positive.json",
-      "negative_fixture": "fixtures/rectangular_pyramid_negative.json",
+      "negative_fixture": "fixtures/rectangular_pyramid_ungrounded.json",
       "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "S"],
       "expected_answer": "24",
@@ -107,9 +107,9 @@
         "symbol": "_rect_pyramid_contract"
       },
       "negative_expected": {
-        "reason_code": "NON_POSITIVE_LENGTH",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "semantic_analyze"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     },
     {
@@ -117,7 +117,7 @@
       "evidence_dir": "cuboid",
       "family": "rectangular_cuboid_volume",
       "positive_fixture": "fixtures/cuboid_positive.json",
-      "negative_fixture": "fixtures/cuboid_negative.json",
+      "negative_fixture": "fixtures/cuboid_ungrounded.json",
       "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
       "expected_answer": "60",
@@ -130,14 +130,14 @@
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
-        "sha256": "37429dee06051ab7d2255ece977f27b423996c09781e804ed2caeb263af43d10",
+        "sha256": "4f9fb1e61f6122f6953915981175a6fdd2a4732f9b1d51c16712a37c9f0fdfa9",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_cuboid_p01_payload"
       },
       "negative_expected": {
-        "reason_code": "NON_POSITIVE_LENGTH",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "semantic_analyze"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     },
     {
@@ -145,7 +145,7 @@
       "evidence_dir": "cube",
       "family": "cube_volume",
       "positive_fixture": "fixtures/cube_positive.json",
-      "negative_fixture": "fixtures/cube_negative.json",
+      "negative_fixture": "fixtures/cube_ungrounded.json",
       "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
       "expected_answer": "64",
@@ -158,14 +158,14 @@
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_cuboid_cube_production_route.py",
-        "sha256": "37429dee06051ab7d2255ece977f27b423996c09781e804ed2caeb263af43d10",
+        "sha256": "4f9fb1e61f6122f6953915981175a6fdd2a4732f9b1d51c16712a37c9f0fdfa9",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_cube_p01_payload"
       },
       "negative_expected": {
-        "reason_code": "NON_POSITIVE_LENGTH",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "semantic_analyze"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     },
     {
@@ -173,7 +173,7 @@
       "evidence_dir": "cross-section",
       "family": "cross_section_plane_polyhedron",
       "positive_fixture": "fixtures/cross_section_positive.json",
-      "negative_fixture": "fixtures/cross_section_negative.json",
+      "negative_fixture": "fixtures/cross_section_ungrounded.json",
       "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
       "section_vertices": 4,
       "expected_labels": ["A", "B", "C", "D", "S"],
@@ -190,9 +190,9 @@
         "symbol": "p1_chop_thiet_dien_khoang_cach"
       },
       "negative_expected": {
-        "kernel_error_code": "PLANE_DOES_NOT_CUT",
-        "product_error_code": "semantic_program_invalid",
-        "stage_reached": "execution"
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "grounding"
       }
     }
   ]

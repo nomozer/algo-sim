@@ -10,9 +10,10 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 // Token chấm đỉnh của CHÍNH sản phẩm (module không import gì ⇒ Node nạp thẳng).
 import { DAU_DINH_PX, KHUNG_HEP_PX } from "../src/simulations/domains/geometry/pick-target.ts";
 import {
-  LOP_SO_DO_THEO_TANG,
+  LOP_DONG_THEO_TANG,
   aliasTreeRowCheck,
   assessCssReadiness,
+  assessGeometrySteps,
   isHiddenAlias,
   assessFormationSnapshots,
   assessImmutableWindow,
@@ -24,8 +25,9 @@ import {
   evaluateEvidenceGates,
   eventDeclaredClosure,
   expectedCausalTiers,
+  expectedGeometryTimeline,
+  expectedSolutionRows,
   expectedVisibleIds,
-  measurementStepsKeepGeometry,
   orbitPlanThuc,
   pollUntil,
   settleCamera,
@@ -91,11 +93,11 @@ async function rectFor(session, expression) {
     + `return{x:r.left,y:r.top,w:r.width,h:r.height}})()`);
 }
 
-/** Lớp phủ trên sân khấu (thanh số đo, nút nổi, ô soi) — hộp px CSS TƯƠNG ĐỐI
- *  canvas, cho cổng ảnh xoay biết đỉnh nào bị che (w11). */
+/** Lớp phủ trên sân khấu (nút nổi, ô soi) — hộp px CSS TƯƠNG ĐỐI canvas, cho
+ *  cổng ảnh xoay biết đỉnh nào bị che (w11). W12: dải số đo trên khung đã gỡ. */
 export async function overlayRects(session) {
   return jsonEval(session, `(()=>{const c=document.querySelector('.geo3d-canvas canvas');if(!c)return[];`
-    + `const k=c.getBoundingClientRect();return['.geo3d-readout','.geo3d-noi','.geo3d-soi']`
+    + `const k=c.getBoundingClientRect();return['.geo3d-noi','.geo3d-soi']`
     + `.map(s=>document.querySelector(s)).filter(Boolean).map(e=>e.getBoundingClientRect())`
     + `.filter(r=>r.width>0&&r.height>0).map(r=>({x:r.left-k.left-4,y:r.top-k.top-4,w:r.width+8,h:r.height+8}))})()`);
 }
@@ -275,25 +277,33 @@ export async function capture(session, path) {
   };
 }
 
+/** Hộp cắt ảnh theo toạ độ TÀI LIỆU: `clip` của `Page.captureScreenshot` tính
+ *  từ gốc trang, còn `getBoundingClientRect` tính từ khung nhìn — trang đã cuộn
+ *  (W12: bảng lời giải dưới thanh bước) thì hai hệ lệch nhau đúng `scrollY`. */
+async function pageClip(session, expression) {
+  return jsonEval(session, `(()=>{const e=${expression};if(!e)return null;const r=e.getBoundingClientRect();`
+    + `return{x:r.left+window.scrollX,y:r.top+window.scrollY,width:r.width,height:r.height,scale:1}})()`);
+}
+
 async function canvasHash(session) {
-  const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
-  if (!rect) throw new Error("NO_CANVAS_CLIP");
+  const clip = await pageClip(session, `document.querySelector('.geo3d-canvas canvas')`);
+  if (!clip) throw new Error("NO_CANVAS_CLIP");
   const response = await session._send("Page.captureScreenshot", {
     format: "png",
     captureBeyondViewport: false,
-    clip: { x: rect.x, y: rect.y, width: rect.w, height: rect.h, scale: 1 },
+    clip,
   });
   const data = Buffer.from(response.result.data, "base64");
   return { sha256: sha256(data), bytes: data.length };
 }
 
 async function canvasFrame(session) {
-  const rect = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
-  if (!rect) throw new Error("NO_CANVAS_CLIP");
+  const clip = await pageClip(session, `document.querySelector('.geo3d-canvas canvas')`);
+  if (!clip) throw new Error("NO_CANVAS_CLIP");
   const response = await session._send("Page.captureScreenshot", {
     format: "png",
     captureBeyondViewport: false,
-    clip: { x: rect.x, y: rect.y, width: rect.w, height: rect.h, scale: 1 },
+    clip,
   });
   const encoded = response.result.data;
   const data = Buffer.from(encoded, "base64");
@@ -327,11 +337,11 @@ async function cssReadiness(session, viewport) {
     + `const scene=pick('.geo3d'),box=pick('.geo3d-canvas'),canvas=pick('.geo3d-canvas canvas'),`
     + `controls=pick('.geo3d-controls'),controlButton=pick('.geo3d-controls button'),`
     + `controlText=pick('.geo3d-scrub-label'),`
-    + `readout=pick('.geo3d-readout'),readoutText=pick('.geo3d-readout-ten');`
+    + `solution=pick('.geo3d-loi-giai'),solutionTitle=pick('.geo3d-lg-ten-muc');`
     + `const actual={scene:scene&&style(scene),box:box&&style(box),canvas:canvas&&style(canvas),`
     + `controls:controls&&style(controls),controlButton:controlButton&&style(controlButton),`
     + `controlText:controlText&&style(controlText),`
-    + `readout:readout&&style(readout),readoutText:readoutText&&style(readoutText)};`
+    + `solution:solution&&style(solution),solutionTitle:solutionTitle&&style(solutionTitle)};`
     + `const baseline={div:baselineTag('div'),button:baselineTag('button'),`
     + `ul:baselineTag('ul'),span:baselineTag('span')};`
     + `let sheets={count:document.styleSheets.length,readableRules:0,unreadable:0};`
@@ -342,6 +352,81 @@ async function cssReadiness(session, viewport) {
     measured.actual, measured.baseline, measured.scrollWidth, Number(viewport.width),
   );
   return { ...measured, ...assessed };
+}
+
+/** BẢNG LỜI GIẢI (W12): các dòng theo mục học sinh thấy, lớp vai trò, màu vạch
+ *  trái; chú giải; hộp của bảng so với canvas; mục thân đang gập hay mở. */
+export async function solutionState(session) {
+  return jsonEval(session, `(()=>{const muc=e=>(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')`
+    + `?.textContent||'').trim();const hop=e=>{if(!e)return null;const r=e.getBoundingClientRect();`
+    + `return{x:r.left,y:r.top,w:r.width,h:r.height}};`
+    + `const rows=[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>({`
+    + `id:e.dataset.solutionId,sec:muc(e),classes:[...e.classList].filter(c=>c.startsWith('la-')),`
+    + `text:(e.textContent||'').replace(/\\s+/g,' ').trim(),border:getComputedStyle(e).borderLeftColor}));`
+    + `const legend=[...document.querySelectorAll('.geo3d-chu-giai-muc')].map(e=>({`
+    + `text:(e.textContent||'').trim(),classes:[...e.classList].filter(c=>c.startsWith('la-')),`
+    + `swatch:getComputedStyle(e,'::before').backgroundColor}));`
+    + `const than=document.querySelector('.geo3d-lg-than');`
+    + `return{present:!!document.querySelector('.geo3d-loi-giai'),rows,legend,`
+    + `panel:hop(document.querySelector('.geo3d-loi-giai')),canvas:hop(document.querySelector('.geo3d-canvas canvas')),`
+    + `body_collapsed:!!than&&getComputedStyle(than).display==='none',`
+    + `result_text:(document.querySelector('.geo3d-lg-ket-qua')?.textContent||'').replace(/\\s+/g,' ').trim()}})()`);
+}
+
+const rowsBySection = (state) => ({
+  givens: state.rows.filter((row) => row.sec === "Dữ kiện").map((row) => row.id),
+  steps: state.rows.filter((row) => row.sec === "Các bước tính").map((row) => row.id),
+  results: state.rows.filter((row) => row.sec === "Kết quả").map((row) => row.id),
+});
+
+const overlaps = (a, b) => Boolean(a && b) && a.x < b.x + b.w && b.x < a.x + a.w
+  && a.y < b.y + b.h && b.y < a.y + a.h;
+
+/** Ảnh MỘT phần tử (cuộn vào khung trước) — bảng lời giải ở các trạng thái. */
+async function captureElement(session, selector, path) {
+  await session.eval(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});`
+    + `if(e)e.scrollIntoView({block:"center"});return true})()`);
+  await new Promise((done) => setTimeout(done, 200));
+  const clip = await pageClip(session, `document.querySelector(${JSON.stringify(selector)})`);
+  if (!clip || clip.width <= 0 || clip.height <= 0) throw new Error(`NO_ELEMENT_CLIP:${selector}`);
+  const response = await session._send("Page.captureScreenshot", {
+    format: "png", captureBeyondViewport: false, clip,
+  });
+  const absolute = resolve(path);
+  mkdirSync(dirname(absolute), { recursive: true });
+  writeFileSync(absolute, Buffer.from(response.result.data, "base64"));
+  return {
+    path: relative(REPO_ROOT, absolute).replaceAll("\\", "/"),
+    bytes: statSync(absolute).size,
+    sha256: sha256File(absolute),
+  };
+}
+
+/** Màu vai trò TÍNH TOÁN của bảng (vạch trái, ô chú giải) khớp token W12 —
+ *  đọc giá trị token từ `tokens.css`, không chép số. */
+function roleTokens() {
+  const css = readFileSync(join(FRONTEND, "src", "styles", "tokens.css"), "utf-8");
+  const hex = (name) => new RegExp(`${name}\\s*:\\s*#([0-9a-fA-F]{6})`).exec(css)?.[1];
+  const rgb = (h) => h ? `rgb(${parseInt(h.slice(0, 2), 16)}, ${parseInt(h.slice(2, 4), 16)}, ${parseInt(h.slice(4, 6), 16)})` : null;
+  return {
+    "la-chon": rgb(hex("--geo3d-vai-tro-dich")),
+    "la-so-lieu": rgb(hex("--geo3d-vai-tro-du-kien-so")),
+    "la-trung-gian": rgb(hex("--geo3d-vai-tro-trung-gian")),
+    "la-boi-canh": rgb(hex("--geo3d-vai-tro-boi-canh")),
+  };
+}
+
+export function assessRoleColors(state) {
+  const tokens = roleTokens();
+  const rows = state.rows.filter((row) => tokens[row.classes[0]])
+    .map((row) => ({ id: row.id, role: row.classes[0], border: row.border, want: tokens[row.classes[0]],
+      pass: row.border === tokens[row.classes[0]] }));
+  const legend = state.legend.filter((item) => tokens[item.classes[0]])
+    .map((item) => ({ text: item.text, role: item.classes[0], swatch: item.swatch,
+      want: tokens[item.classes[0]], pass: item.swatch === tokens[item.classes[0]] }));
+  const distinct = new Set(Object.values(tokens)).size === Object.keys(tokens).length;
+  return { tokens, rows, legend, distinct_tokens: distinct,
+    pass: distinct && rows.length > 0 && rows.every((r) => r.pass) && legend.every((l) => l.pass) };
 }
 
 export async function openFixture({ port, viewport, fixture }) {
@@ -422,31 +507,43 @@ async function observeTree(session, scene, expectedIds) {
   return { objects: checks, pass: checks.every((item) => item.pass) };
 }
 
+/** Vật THẬT SỰ được dựng lên khung (renderer tự báo). Giữ đuôi `#…` — nó là
+ *  tiến độ thiết diện (số đỉnh, khép, tô): mỗi cạnh thiết diện là một bước. */
+async function renderedIds(session) {
+  return jsonEval(session, "(window.__geo3d_rendered_object_ids||[]).map(String).sort()");
+}
+
+async function focusLabel(session) {
+  return session.eval(`(()=>{const d=[...document.querySelectorAll('.geo3d-focus dt')]`
+    + `.find(e=>(e.textContent||'').trim()==='Đang dựng');return (d?.nextElementSibling?.textContent||'').trim()})()`);
+}
+
+/** W12: thanh bước đi qua BƯỚC DỰNG. Mỗi bước: khung = snapshot neo của bước
+ *  (oracle độc lập), cây thành phần, nhãn điểm, vật dựng lên khung, dòng "Đang
+ *  dựng", bảng lời giải; rồi tua ngược so từng bước. */
 async function formationEvidence(session, scene, outDir, captureMode = "full") {
   await goToStart(session);
+  const timeline = expectedGeometryTimeline(scene);
+  const stepTotal = timeline.length;
   const steps = [];
   const observations = { forward: [], backward: [] };
-  const stepTotal = scene.formation?.steps?.length ?? scene.events.length;
+  const representative = Math.floor((stepTotal - 1) / 2);
   for (let index = 0; index < stepTotal; index += 1) {
+    const anchor = timeline[index].anchor;
     const step = await currentStep(session);
-    const expectedIds = expectedVisibleIds(scene, index);
+    const expectedIds = expectedVisibleIds(scene, anchor);
     const tree = await observeTree(session, scene, expectedIds);
     const labels = await projectedLabels(session);
     const expectedPointIds = expectedIds.filter((id) =>
-      scene.objects.some((object) => object.id === id && object.type === "point3"));
+      scene.objects.some((object) => object.id === id && object.type === "point3")).sort();
     const actualPointIds = Object.keys(labels).sort();
-    const expectedReadoutObjects = scene.objects.filter((object) =>
-      expectedIds.includes(object.id) && object.render === "readout");
-    const readoutTexts = await jsonEval(session, `(()=>[...document.querySelectorAll('.geo3d-readout li')].map(e=>`
-      + `(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim()))()`);
-    const expectedReadoutIds = expectedReadoutObjects.map((object) => object.id).sort();
-    const actualReadoutIds = expectedReadoutObjects.filter((object) =>
-      readoutTexts.includes(object.notation || object.label)).map((object) => object.id).sort();
-    const representative = Math.floor((stepTotal - 1) / 2);
+    const solution = rowsBySection(await solutionState(session));
+    const expectedSolution = expectedSolutionRows(scene, anchor);
     const shouldCapture = captureMode === "full" || index === representative;
     const image = shouldCapture
       ? await capture(session, join(outDir,
-          index === representative ? "formation_current_step.png" : `formation_step_${index}.png`))
+          index === representative && captureMode !== "full"
+            ? "formation_current_step.png" : `formation_step_${index}.png`))
       : null;
     const canvas = await canvasHash(session);
     const learnerText = await session.eval(
@@ -454,20 +551,21 @@ async function formationEvidence(session, scene, outDir, captureMode = "full") {
     );
     const observedVisibleIds = tree.objects
       .filter((item) => item.observed_present === true).map((item) => item.id).sort();
-    observations.forward.push({
-      index, direction: "forward", visible_ids: observedVisibleIds,
-    });
+    observations.forward.push({ index: anchor, direction: "forward", visible_ids: observedVisibleIds });
     steps.push({
       index,
+      anchor,
       indicator: step,
       expected_visible_ids: expectedIds,
       tree,
-      expected_point_ids: expectedPointIds.sort(),
+      expected_point_ids: expectedPointIds,
       observed_point_ids: actualPointIds,
-      point_visibility_pass: JSON.stringify(expectedPointIds.sort()) === JSON.stringify(actualPointIds),
-      expected_readout_ids: expectedReadoutIds,
-      observed_readout_ids: actualReadoutIds,
-      readout_visibility_pass: JSON.stringify(expectedReadoutIds) === JSON.stringify(actualReadoutIds),
+      point_visibility_pass: JSON.stringify(expectedPointIds) === JSON.stringify(actualPointIds),
+      rendered: await renderedIds(session),
+      focus_label: await focusLabel(session),
+      solution,
+      expected_solution: expectedSolution,
+      solution_pass: JSON.stringify(solution) === JSON.stringify(expectedSolution),
       screenshot: image,
       canvas,
       learner_text: learnerText,
@@ -476,26 +574,39 @@ async function formationEvidence(session, scene, outDir, captureMode = "full") {
       throw new Error(`FORMATION_STOPPED_AT:${index}`);
     }
   }
+  // Ở bước cuối, "Bước sau" phải vô hiệu — không có bước tính nào sau nó.
+  const endLocked = !await moveStep(session, 1);
+  const backwardRendered = [];
   for (let index = stepTotal - 1; index >= 0; index -= 1) {
-    const expectedIds = expectedVisibleIds(scene, index);
-    const tree = await observeTree(session, scene, expectedIds);
+    const anchor = timeline[index].anchor;
+    const tree = await observeTree(session, scene, expectedVisibleIds(scene, anchor));
     observations.backward.push({
-      index,
+      index: anchor,
       direction: "backward",
       visible_ids: tree.objects
         .filter((item) => item.observed_present === true).map((item) => item.id).sort(),
     });
+    backwardRendered[index] = await renderedIds(session);
     if (index > 0 && !await moveStep(session, -1)) {
       throw new Error(`FORMATION_BACKWARD_STOPPED_AT:${index}`);
     }
   }
-  const trace = assessFormationSnapshots(scene, observations);
+  const trace = assessFormationSnapshots(scene, observations, timeline.map((g) => g.anchor));
+  const geometry = assessGeometrySteps(scene, {
+    step_count: steps[0]?.indicator?.count ?? null,
+    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, focus_label: s.focus_label,
+      solution: s.solution })),
+  });
+  const forwardBackward = steps.map((s) => ({ index: s.index,
+    pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index]) }));
   const canvasHashes = new Set(steps.map((step) => step.canvas.sha256));
   const pass = steps.every((step) => step.indicator?.index === step.index
     && step.indicator?.count === stepTotal
-    && step.tree.pass && step.point_visibility_pass && step.readout_visibility_pass)
-    && canvasHashes.size >= 2 && trace.pass;
-  return { steps, observations, trace, distinct_canvas_frames: canvasHashes.size, pass };
+    && step.tree.pass && step.point_visibility_pass && step.solution_pass)
+    && canvasHashes.size >= 2 && trace.pass && geometry.pass && endLocked
+    && forwardBackward.every((x) => x.pass);
+  return { steps, observations, trace, geometry, forward_backward: forwardBackward,
+    end_locked: endLocked, distinct_canvas_frames: canvasHashes.size, pass };
 }
 
 async function runPositive({ port, viewport, fixture, scenario, outDir }) {
@@ -505,7 +616,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
-    await pollUntil(() => session.eval(`document.querySelector('.geo3d-readout')?.textContent||''`),
+    // W12: đáp số ở mục Kết quả của bảng lời giải (dải số trên khung đã gỡ).
+    await pollUntil(() => session.eval(`document.querySelector('.geo3d-lg-ket-qua')?.textContent||''`),
       (text) => String(text).includes(scenario.expected_answer));
 
     const topology = solidTopology(scene);
@@ -557,9 +669,35 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const visibleText = await session.eval(`document.body.innerText||''`);
     result.raw_token_leakage = detectRawTokenLeakage(scene, visibleText);
     result.formula_entity_coherence = validateFormulaReferences(scene);
-    // Bước đo/kết luận chỉ đổi số đo và lời kể — không làm hình hiện sai lúc.
-    const doGiuHinh = measurementStepsKeepGeometry(scene);
-    result.assertions.measurement_steps_keep_geometry = assertion(doGiuHinh.pass, doGiuHinh);
+    // W12 — bảng lời giải ở khung cuối: đúng ba mục của oracle, đáp số ĐÚNG MỘT
+    // dòng (ở Kết quả), bảng không đè lên canvas, chưa có chú giải (trung tính).
+    const solutionNeutral = await solutionState(session);
+    const lastAnchor = expectedGeometryTimeline(scene).at(-1).anchor;
+    const finalIds = new Set(scene.events
+      .filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
+      .map((event) => event.object));
+    const answerRows = solutionNeutral.rows.filter((row) => finalIds.has(row.id)
+      || finalIds.has(scene.objects.find((object) => object.id === row.id)?.alias_of));
+    result.solution_final = {
+      rows: solutionNeutral.rows,
+      expected: expectedSolutionRows(scene, lastAnchor),
+      observed: rowsBySection(solutionNeutral),
+      answer_rows: answerRows.map((row) => ({ id: row.id, sec: row.sec, text: row.text })),
+      body_collapsed: solutionNeutral.body_collapsed,
+      panel_box: solutionNeutral.panel,
+      canvas_box: solutionNeutral.canvas,
+      legend: solutionNeutral.legend,
+    };
+    result.solution_final.in_sync = JSON.stringify(result.solution_final.expected)
+      === JSON.stringify(result.solution_final.observed);
+    result.solution_final.answer_once = answerRows.length === finalIds.size
+      && answerRows.every((row) => row.sec === "Kết quả")
+      && solutionNeutral.result_text.includes(scenario.expected_answer);
+    result.solution_final.panel_over_canvas = overlaps(solutionNeutral.panel, solutionNeutral.canvas);
+    result.assertions.solution_final = assertion(result.solution_final.in_sync
+      && result.solution_final.answer_once && !result.solution_final.panel_over_canvas
+      && solutionNeutral.legend.length === 0
+      && result.solution_final.body_collapsed === (viewport.width < 768), result.solution_final);
 
     // Default phải được chụp trước causal/orbit/formation.
     result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
@@ -567,6 +705,19 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // (w10: crop mobile lệch vì hộp ghi ở y = -226).
     result.canvas_boxes = { neutral_final: await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`) };
     result.capture_order.push("neutral_final");
+    // Bảng lời giải ở trạng thái mặc định (khổ hẹp: gập; khổ rộng: mở đủ).
+    result.screenshots.solution_neutral_final = await captureElement(session, ".geo3d-loi-giai",
+      join(outDir, "solution_neutral_final.png"));
+    if (viewport.width < 768) {
+      await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
+      await pollUntil(() => solutionState(session), (state) => !state.body_collapsed, { timeoutMs: 5_000 });
+      result.screenshots.solution_expanded = await captureElement(session, ".geo3d-loi-giai",
+        join(outDir, "solution_expanded.png"));
+      await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
+      await pollUntil(() => solutionState(session), (state) => state.body_collapsed, { timeoutMs: 5_000 });
+    }
+    // Chụp phần tử có thể đã cuộn trang: đưa canvas về giữa khung trước khi đo tiếp.
+    await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
     // The window opens only after settling (the capture above may itself
     // have scheduled frames), so settle again right before resetting.
     const windowSettled = neutralSettled
@@ -597,6 +748,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     });
     result.occlusion_performance.immutable_window = windowVerdict;
     result.assertions.immutable_120_frames = assertion(windowVerdict.pass, result.occlusion_performance);
+    await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
+    await new Promise((done) => setTimeout(done, 200));
     const causalBeforeFrame = await canvasFrame(session);
     const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
@@ -611,11 +764,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       ? scenario.oracle_expected_closure.filter((id) => id !== declaredTarget.id)
       : scenario.oracle_expected_closure;
     const target = scene.objects.find((object) => object.id === causalId);
-    const targetText = target?.notation || target?.label;
-    if (!targetText) throw new Error(`MISSING_CAUSAL_TARGET:${scenario.causal_target_id}`);
-    const clicked = await trustedClick(session,
-      `[...document.querySelectorAll('.geo3d-readout li')].find(e=>(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim()===${JSON.stringify(targetText)})`);
-    if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${targetText}`);
+    if (!target) throw new Error(`MISSING_CAUSAL_TARGET:${scenario.causal_target_id}`);
+    // W12: dòng của đích nằm ở BẢNG LỜI GIẢI (kết quả luôn hiện, kể cả khổ hẹp).
+    const rowButton = `document.querySelector('.geo3d-lg-dong[data-solution-id=${JSON.stringify(causalId)}] .geo3d-lg-nut')`;
+    const clicked = await trustedClick(session, rowButton);
+    if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${causalId}`);
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
       (id) => id === causalId, { timeoutMs: 5_000 });
     // w11: chờ bảng TẦNG causal của sản phẩm, không chờ owner cạnh được tô —
@@ -625,31 +778,34 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
         + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[],`
         + `tiers:window.__geo3d_causal_tiers||null,`
-        + `readout_rows:[...document.querySelectorAll('.geo3d-readout li')].map(e=>({`
-        + `text:(e.querySelector('.geo3d-readout-ten')?.textContent||'').trim(),classes:[...e.classList]})),`
         + `dash_signature:window.__geo3d_edge_dash_signature||{}})`),
       (state) => state.selected_id === causalId && state.tiers?.[causalId] === "dich",
       { timeoutMs: 8_000 },
     );
+    const solutionCausal = await solutionState(session);
     const declared = eventDeclaredClosure(scene.events, causalId);
     const causal = compareClosures(expectedClosure, declared, causalState.highlighted_ids);
     causal.declared_target_id = scenario.causal_target_id;
     causal.selected_id = causalState.selected_id;
+    // Bấm có thể đã cuộn trang (khổ hẹp): canvas về cùng vị trí như ảnh "trước".
+    await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
+    await new Promise((done) => setTimeout(done, 200));
     const causalAfterFrame = await canvasFrame(session);
     const delta = causalBeforeFrame.sha256 === causalAfterFrame.sha256
       ? { changed_pixels: 0, changed_ratio: 0, bounds: null, pass: false }
       : await pixelDelta(session, causalBeforeFrame, causalAfterFrame);
-    // Tầng kỳ vọng tính ĐỘC LẬP từ cảnh; mỗi dòng số đo phải mang đúng lớp
-    // của tầng mình (ngoài chuỗi ⇒ `la-diu`).
+    // Tầng kỳ vọng tính ĐỘC LẬP từ cảnh; mỗi dòng của bảng lời giải mang đúng
+    // lớp tầng mình (ngoài chuỗi ⇒ `la-diu`), theo id — không theo chữ.
     const tierExpected = expectedCausalTiers(scene, causalId);
-    const readoutIds = new Map(scene.objects.filter((o) => o.render === "readout")
-      .map((o) => [o.notation || o.label, o.id]));
-    const readoutTiers = causalState.readout_rows.map((row) => {
-      const tier = tierExpected[readoutIds.get(row.text)];
-      const want = tier ? LOP_SO_DO_THEO_TANG[tier] : "la-diu";
-      return { ...row, tier: tier ?? null, expected_class: want ?? null,
-        pass: want ? row.classes.includes(want) : !row.classes.some((c) => c.startsWith("la-")) };
+    const readoutTiers = solutionCausal.rows.map((row) => {
+      const tier = tierExpected[row.id];
+      const want = tier ? LOP_DONG_THEO_TANG[tier] : "la-diu";
+      return { id: row.id, sec: row.sec, classes: row.classes, tier: tier ?? null, expected_class: want,
+        pass: row.classes.length === 1 && row.classes[0] === want };
     });
+    const legendClasses = solutionCausal.legend.map((item) => item.classes[0]).sort();
+    const roleColors = assessRoleColors(solutionCausal);
+    result.role_colors = roleColors;
     causal.visual = {
       selected_changed: causalBeforeState.selected_id !== causalState.selected_id,
       closure_changed: JSON.stringify(causalBeforeState.highlighted_ids)
@@ -660,6 +816,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       tiers_observed: causalState.tiers,
       readout_tiers: readoutTiers,
       readout_classes_match: readoutTiers.length > 0 && readoutTiers.every((r) => r.pass),
+      legend: solutionCausal.legend,
+      legend_shown: JSON.stringify(legendClasses)
+        === JSON.stringify(["la-boi-canh", "la-chon", "la-so-lieu", "la-trung-gian"]),
+      role_colors_match: roleColors.pass,
       canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
       pixel_delta: delta,
       dash_signature_preserved:
@@ -668,6 +828,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     causal.pass = causal.pass && causalState.selected_id === causalId
       && causal.visual.selected_changed && causal.visual.closure_changed
       && causal.visual.tiers_match && causal.visual.readout_classes_match
+      && causal.visual.legend_shown && causal.visual.role_colors_match
       && causal.visual.canvas_changed && delta.pass
       && causal.visual.dash_signature_preserved;
     result.causal_closure = causal;
@@ -675,6 +836,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.screenshots.causal_selected = await capture(session, join(outDir, "causal_selected.png"));
     result.canvas_boxes.causal_selected = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
     result.capture_order.push("causal_selected");
+    result.screenshots.solution_causal_selected = await captureElement(session, ".geo3d-loi-giai",
+      join(outDir, "solution_causal_selected.png"));
+    await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
 
     await clickText(session, "Xem lại toàn hình");
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
@@ -789,6 +953,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       result.assertions.formation = assertion(result.formation.pass, {
         steps: result.formation.steps.length,
         distinct_canvas_frames: result.formation.distinct_canvas_frames,
+        geometry: result.formation.geometry.checks,
+        end_locked: result.formation.end_locked,
       });
     }
 
@@ -815,10 +981,15 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         closure_changed: causal.visual.closure_changed,
         tiers_match: causal.visual.tiers_match,
         readout_classes_match: causal.visual.readout_classes_match,
+        legend_shown: causal.visual.legend_shown,
         canvas_changed: causal.visual.canvas_changed,
         bounded_pixel_delta: causal.visual.pixel_delta.pass,
         dash_signature_preserved: causal.visual.dash_signature_preserved,
       },
+      geometry: viewport.formation ? result.formation.geometry : undefined,
+      solution_final: result.solution_final,
+      role_colors: roleColors,
+      panel_over_canvas: result.solution_final.panel_over_canvas,
       capture_order: result.capture_order,
       formation_required: Boolean(viewport.formation),
       formation: viewport.formation
@@ -850,12 +1021,14 @@ async function runNegative({ port, viewport, fixture, scenario, outDir }) {
       + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
       + `viewportWidth:window.innerWidth}})()`);
     const expected = scenario.negative_expected;
+    // W12: âm của mọi họ là một GIVEN đề không ghi ⇒ mã nguồn có cấu trúc.
     const structuredPass = observed.unsupported?.error_code === expected.product_error_code
-      && observed.unsupported?.stage_reached === expected.stage_reached;
+      && observed.unsupported?.stage_reached === expected.stage_reached
+      && (!expected.reason_code || observed.unsupported?.reason_code === expected.reason_code);
     const learnerPass = Boolean(fixture.envelope.learner_reason)
       && observed.body.includes(fixture.envelope.learner_reason)
       && !observed.body.includes(fixture.envelope.reason);
-    const kernelPass = scenario.id !== "cross_section"
+    const kernelPass = !expected.kernel_error_code
       || (fixture.contract_gate?.kernel_error_code === expected.kernel_error_code
         && fixture.envelope.reason.includes(expected.kernel_error_code));
     const screenshot = await capture(session, join(outDir, "refusal.png"));
@@ -867,7 +1040,8 @@ async function runNegative({ port, viewport, fixture, scenario, outDir }) {
     const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
     const assertions = {
       structured_refusal: assertion(structuredPass, {
-        expected: { error_code: expected.product_error_code, stage_reached: expected.stage_reached },
+        expected: { error_code: expected.product_error_code, stage_reached: expected.stage_reached,
+          reason_code: expected.reason_code ?? null },
         actual: observed.unsupported,
       }),
       learner_message: assertion(learnerPass),

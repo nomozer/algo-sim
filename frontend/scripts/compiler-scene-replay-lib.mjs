@@ -425,8 +425,122 @@ export function expectedCausalTiers(scene, id) {
   return ra;
 }
 
-/** Lớp CSS mà một dòng số đo phải mang theo tầng của nó. */
-export const LOP_SO_DO_THEO_TANG = { dich: "la-chon", du_kien_so: "la-so-lieu", trung_gian: "la-trung-gian" };
+/** Lớp CSS mà một dòng của BẢNG LỜI GIẢI phải mang theo tầng của nó (W12;
+ *  ngoài chuỗi ⇒ `la-diu`). Dải số đo trên khung đã gỡ. */
+export const LOP_DONG_THEO_TANG = {
+  dich: "la-chon", du_kien_so: "la-so-lieu", trung_gian: "la-trung-gian", boi_canh: "la-boi-canh",
+};
+
+/* ─── W12 · DÒNG THỜI GIAN HÌNH HỌC — oracle đọc từ SNAPSHOT formation ─────
+ * Bước dựng = phân hoạch dãy sự kiện: bước mới mở ở sự kiện
+ * GEOMETRY_CONSTRUCTION làm đổi chữ ký HÌNH (vật vẽ được + tiến độ thiết diện);
+ * khung hiện là sự kiện CUỐI đoạn. Cảnh không gõ loại ⇒ mỗi sự kiện một bước.
+ * Không import sản phẩm: bộ đo nói điều sản phẩm PHẢI làm. */
+function chuKyHinh(scene, k) {
+  const ve = new Set((scene?.objects ?? [])
+    .filter((o) => o.render !== "readout" && o.render !== "non_visual").map((o) => o.id));
+  const s = scene?.formation?.steps?.[k];
+  const hien = (s?.visible_ids ?? expectedVisibleIds(scene, k)).filter((id) => ve.has(id)).sort();
+  const tienDo = (s?.geometry_progress ?? []).map((p) =>
+    [p.object_id, (p.visible_edge_ids ?? []).length, Boolean(p.closed), Boolean(p.fill_visible)]);
+  return JSON.stringify([hien, tienDo]);
+}
+
+const loaiSuKien = (scene, k) => scene?.formation?.steps?.[k]?.semantic_kind
+  ?? (scene?.events ?? []).find((e) => e.step_index === k)?.semantic_kind;
+
+export function expectedGeometryTimeline(scene) {
+  const n = scene?.formation?.steps?.length ?? (scene?.events ?? []).length;
+  const coLoai = n > 0 && Array.from({ length: n }, (_, k) => loaiSuKien(scene, k))
+    .every((l) => l && l !== "LEGACY_UNTYPED_EVENT");
+  const ra = [];
+  for (let k = 0; k < n; k += 1) {
+    if (k === 0 || !coLoai || (loaiSuKien(scene, k) === "GEOMETRY_CONSTRUCTION"
+        && chuKyHinh(scene, k) !== chuKyHinh(scene, k - 1))) {
+      ra.push({ index: ra.length, start: k, end: k, anchor: k, kinds: [] });
+    }
+    const g = ra.at(-1);
+    g.end = k;
+    g.anchor = k;
+    g.kinds.push(loaiSuKien(scene, k) ?? null);
+  }
+  return ra;
+}
+
+/** Lớp lời giải kỳ vọng ở khung `anchor`: kết quả (FINAL_RESULT tới đó, mỗi
+ *  vật một lần) · dữ kiện (đại lượng tự do đang hiện, trừ kết quả) · các bước
+ *  tính (MEASUREMENT tới đó, trừ hai nhóm trên). */
+export function expectedSolutionRows(scene, anchor) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const vat = (k) => (scene?.events ?? []).find((e) => e.step_index === k)?.object;
+  const results = [];
+  for (let k = 0; k <= anchor; k += 1) {
+    const id = vat(k);
+    if (loaiSuKien(scene, k) === "FINAL_RESULT" && id && byId.has(id) && !results.includes(id)) {
+      results.push(id);
+    }
+  }
+  const hien = new Set(expectedVisibleIds(scene, anchor));
+  const givens = (scene?.objects ?? []).filter((o) => o.type === "quantity"
+    && o.render === "readout" && o.origin === "free" && hien.has(o.id)
+    && !results.includes(o.id)).map((o) => o.id);
+  const steps = [];
+  for (let k = 1; k <= anchor; k += 1) {
+    const o = byId.get(vat(k));
+    if (loaiSuKien(scene, k) !== "MEASUREMENT" || !o || o.type !== "quantity"
+        || o.render !== "readout" || results.includes(o.id) || givens.includes(o.id)
+        || steps.includes(o.id)) continue;
+    steps.push(o.id);
+  }
+  return { givens, steps, results };
+}
+
+/** Phán quyết các bước dựng QUAN SÁT trong trình duyệt (W12).
+ *  `observed = { step_count, steps: [{ index, rendered, focus_label, solution }] }`
+ *  — `rendered`: vật vẽ lên khung; `focus_label`: dòng "Đang dựng"; `solution`:
+ *  `{ givens, steps, results }` đọc từ bảng lời giải. */
+export function assessGeometrySteps(scene, observed) {
+  const t = expectedGeometryTimeline(scene);
+  // Nhãn → MỌI vật mang nhãn ấy: đáp số và bí danh của nó trùng nhãn.
+  const byLabel = new Map();
+  for (const o of scene?.objects ?? []) byLabel.set(o.label, [...(byLabel.get(o.label) ?? []), o]);
+  const finalIds = new Set((scene?.events ?? [])
+    .filter((e) => e.semantic_kind === "FINAL_RESULT" && e.object).map((e) => e.object));
+  const steps = observed?.steps ?? [];
+  const staticFrames = steps.slice(1)
+    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered))
+    .map((s) => s.index);
+  const focusOf = (s) => byLabel.get(String(s.focus_label ?? "").trim()) ?? [];
+  const measurementSteps = steps.slice(1)
+    .filter((s) => focusOf(s).some((o) => o.type === "quantity")).map((s) => s.index);
+  const finalSteps = steps.slice(1)
+    .filter((s) => focusOf(s).some((o) => finalIds.has(o.id) || finalIds.has(o.alias_of)))
+    .map((s) => s.index);
+  const cung = (a, b) => JSON.stringify(a ?? []) === JSON.stringify(b ?? []);
+  const sync = steps.map((s) => {
+    const want = t[s.index] ? expectedSolutionRows(scene, t[s.index].anchor) : null;
+    return { index: s.index, want, got: s.solution,
+      pass: Boolean(want) && cung(want.givens, s.solution?.givens)
+        && cung(want.steps, s.solution?.steps) && cung(want.results, s.solution?.results) };
+  });
+  const checks = {
+    step_count_matches: observed?.step_count === t.length && steps.length === t.length,
+    no_static_frames: staticFrames.length === 0,
+    no_measurement_geometry_steps: measurementSteps.length === 0,
+    no_final_result_geometry_steps: finalSteps.length === 0,
+    solution_in_sync: sync.length > 0 && sync.every((s) => s.pass),
+  };
+  return {
+    expected_step_count: t.length,
+    observed_step_count: observed?.step_count ?? null,
+    static_frames: staticFrames,
+    measurement_geometry_steps: measurementSteps,
+    final_result_geometry_steps: finalSteps,
+    solution_sync: sync,
+    checks,
+    pass: Object.values(checks).every(Boolean),
+  };
+}
 
 /** Đường kính px CSS của từng chấm đỉnh, đo bằng ma trận camera — không đọc
  *  con số renderer tự báo. */
@@ -438,20 +552,6 @@ export function doCoDauDinh(snapshot, markers) {
     const b = chieuManHinh(snapshot, k.center.map((x, i) => x + phai[i] * k.radius_world));
     return { id: k.id, state: k.state, diameter_px: 2 * Math.hypot(b.x - a.x, b.y - a.y) };
   });
-}
-
-/** Bước ĐO không được làm hình học xuất hiện hay biến mất: tập vật HÌNH HỌC
- *  thấy được ở bước đo trùng bước liền trước (review W10: formation). */
-export function measurementStepsKeepGeometry(scene) {
-  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
-  const hinh = (k) => sortedUnique(expectedVisibleIds(scene, k).filter((x) => byId.get(x)?.type !== "quantity"));
-  const lech = [];
-  for (const e of scene?.events ?? []) {
-    if (!["MEASUREMENT", "FINAL_RESULT"].includes(e.semantic_kind) || !e.step_index) continue;
-    const diff = setDiff(hinh(e.step_index - 1), hinh(e.step_index));
-    if (diff.missing.length || diff.unexpected.length) lech.push({ step: e.step_index, ...diff });
-  }
-  return { pass: lech.length === 0, mismatches: lech };
 }
 
 /** Bí danh KHÔNG hiện ở đâu (bí danh đáp số, `render: "non_visual"`). Bí danh
@@ -482,10 +582,11 @@ export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth)
       && actual.controls.display !== baseline.div.display
       && actual.controls.fontFamily !== baseline.div.fontFamily
       && actual.controlText.color !== baseline.span.color,
-    readout_styled: Boolean(actual.readout && actual.readoutText)
-      && actual.readout.position !== baseline.ul.position
-      && actual.readout.fontFamily !== baseline.ul.fontFamily
-      && actual.readoutText.color !== baseline.span.color,
+    // W12: số đo ở BẢNG LỜI GIẢI dưới thanh bước (dải trên khung đã gỡ).
+    solution_styled: Boolean(actual.solution && actual.solutionTitle)
+      && actual.solution.display === "grid"
+      && actual.solution.fontFamily !== baseline.div.fontFamily
+      && actual.solutionTitle.color !== baseline.span.color,
     no_document_overflow: scrollWidth <= viewportWidth + 1,
   };
   return { checks, pass: Object.values(checks).every(Boolean) };
@@ -539,7 +640,9 @@ export function validateFormulaReferences(scene) {
   return { unresolved, pass: unresolved.length === 0 };
 }
 
-export function assessFormationSnapshots(scene, observations) {
+/** `anchors` (W12): khung của từng BƯỚC DỰNG — thanh bước chỉ đi qua chúng.
+ *  Vắng ⇒ mọi sự kiện, như trước W12. */
+export function assessFormationSnapshots(scene, observations, anchors = null) {
   const expectedSteps = scene?.formation?.steps ?? [];
   const forward = observations?.forward ?? [];
   const backward = observations?.backward ?? [];
@@ -556,7 +659,7 @@ export function assessFormationSnapshots(scene, observations) {
   }
   const forwardOrder = forward.map((item) => item.index);
   const backwardOrder = backward.map((item) => item.index);
-  const expectedForward = expectedSteps.map((_, index) => index);
+  const expectedForward = anchors ?? expectedSteps.map((_, index) => index);
   const expectedBackward = [...expectedForward].reverse();
   return {
     mismatch,
@@ -616,6 +719,23 @@ export function evaluateEvidenceGates(facts) {
   }
   if ((facts.uncaught_exceptions ?? []).length > 0) reasons.push("UNCAUGHT_EXCEPTION");
   if ((facts.failed_api_calls ?? []).length > 0) reasons.push("FAILED_API_CALL");
+  // W12 — chỉ phán khi bộ đo cung cấp dữ kiện (bằng chứng cũ không có chúng).
+  const g = facts.geometry;
+  if (g !== undefined) {
+    if (g?.checks?.step_count_matches !== true) reasons.push("GEOMETRY_STEP_COUNT_MISMATCH");
+    if (g?.checks?.no_static_frames !== true) reasons.push("STATIC_GEOMETRY_FRAME");
+    if (g?.checks?.no_measurement_geometry_steps !== true) reasons.push("MEASUREMENT_GEOMETRY_STEP");
+    if (g?.checks?.no_final_result_geometry_steps !== true) reasons.push("FINAL_RESULT_GEOMETRY_STEP");
+    if (g?.checks?.solution_in_sync !== true) reasons.push("SOLUTION_LAYER_OUT_OF_SYNC");
+  }
+  if (facts.solution_final !== undefined && facts.solution_final?.answer_once !== true) {
+    reasons.push("ANSWER_NOT_SHOWN_ONCE");
+  }
+  if (facts.causal?.legend_shown === false) reasons.push("ROLE_LEGEND_MISSING");
+  if (facts.role_colors !== undefined && facts.role_colors?.pass !== true) {
+    reasons.push("ROLE_COLOR_MISMATCH");
+  }
+  if (facts.panel_over_canvas === true) reasons.push("SOLUTION_PANEL_COVERS_CANVAS");
   return { reason_codes: sortedUnique(reasons), pass: reasons.length === 0 };
 }
 
@@ -771,12 +891,13 @@ export function assessImmutableWindow({ settled, end, perf, frames = 120 }) {
   return { pass: true, code: "IMMUTABLE_WINDOW_PASS", ...details };
 }
 
-/* ─── LEARNER PLAYBACK (w10) ────────────────────────────────────────────────
+/* ─── LEARNER PLAYBACK (w10 → W12) ──────────────────────────────────────────
  * Judges a timeline recorded while a learner only pressed Play once: no
- * causal selection, no detail panel, one step at a time to the final step,
- * then stop. `events[k].semantic_kind` comes from the scene the page loaded. */
+ * causal selection, no detail panel, one GEOMETRY step at a time to the final
+ * step, then stop. `scene` is the scene the page loaded; each sample carries
+ * `rows: [{ id, sec }]` read from the solution panel (`sec` = heading text). */
 export function assessPlayback({
-  samples, events, objects = [], total, intervalMs, replay = null, orbit = null,
+  samples, scene, total, intervalMs, replay = null, orbit = null,
 }) {
   const checks = {};
   const add = (name, pass, details = undefined) => {
@@ -802,42 +923,53 @@ export function assessPlayback({
     && samples.at(-1).t - samples[firstFinal].t >= 2 * intervalMs,
   { stopped_after_ms: stopped ? stopped.t - samples[firstFinal].t : null,
     observed_after_final_ms: firstFinal >= 0 ? samples.at(-1).t - samples[firstFinal].t : null });
-  const construction = [];
-  const measurement = [];
-  for (let k = 1; k <= last; k += 1) {
-    const kind = events.find((event) => event.step_index === k)?.semantic_kind;
-    const now = settledAt(k);
-    const before = settledAt(k - 1);
-    if (!now || !before) continue;
-    if (kind === "GEOMETRY_CONSTRUCTION") {
-      construction.push({ step: k,
-        changed: JSON.stringify(now.rendered) !== JSON.stringify(before.rendered) });
-    }
-    if (kind === "MEASUREMENT") {
-      measurement.push({ step: k, added: now.readout.filter((row) => !before.readout.includes(row)) });
-    }
+  // W12: `step` là BƯỚC DỰNG. Mỗi bước sau bước 0 phải đổi HÌNH — không còn
+  // bước chỉ tính số làm chỉ số tăng mà khung đứng yên.
+  const t = expectedGeometryTimeline(scene);
+  add("step_count_is_geometry_steps", total === t.length, { total, expected: t.length });
+  const doiHinh = [];
+  for (let g = 1; g <= last; g += 1) {
+    const now = settledAt(g);
+    const before = settledAt(g - 1);
+    doiHinh.push({ step: g, changed: Boolean(now && before)
+      && JSON.stringify(now.rendered) !== JSON.stringify(before.rendered) });
   }
-  add("construction_steps_change_geometry", construction.every((c) => c.changed), construction);
-  add("measurement_steps_show_a_value", measurement.every((m) => m.added.length > 0), measurement);
-  // Đáp số + mọi BÍ DANH của nó (`alias_of`) là MỘT kết luận ⇒ đúng MỘT dòng.
-  // Không so giá trị: AB = AD = 4 ở hình lập phương là hai đại lượng thật.
-  const finalRows = firstFinal >= 0 ? settledAt(last).readout : [];
-  const ten = (o) => (o?.notation || o?.label || "").replace(/\s+/g, "");
-  const answers = events.filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
+  add("every_geometry_step_changes_the_figure", doiHinh.every((c) => c.changed), doiHinh);
+  // Bảng lời giải ĐỒNG BỘ với bước dựng đang hiện: đúng dữ kiện / bước tính /
+  // kết quả của khung ấy — đọc theo tên mục học sinh thấy.
+  const theoMuc = (sample, muc) => (sample?.rows ?? []).filter((r) => r.sec === muc).map((r) => r.id);
+  const dongBo = [];
+  for (let g = 0; g <= last; g += 1) {
+    const sample = settledAt(g);
+    if (!sample || !t[g]) continue;
+    const want = expectedSolutionRows(scene, t[g].anchor);
+    const got = { givens: theoMuc(sample, "Dữ kiện"), steps: theoMuc(sample, "Các bước tính"),
+      results: theoMuc(sample, "Kết quả") };
+    dongBo.push({ step: g, want, got, pass: JSON.stringify(want) === JSON.stringify(got) });
+  }
+  add("solution_in_sync_with_geometry_step", dongBo.length === last + 1 && dongBo.every((d) => d.pass),
+    dongBo);
+  // Đáp số + mọi BÍ DANH của nó (`alias_of`) là MỘT kết luận ⇒ đúng MỘT dòng, ở
+  // mục Kết quả. Không so giá trị: AB = AD = 4 ở hình lập phương là hai đại lượng.
+  const finalRows = firstFinal >= 0 ? settledAt(last).rows ?? [] : [];
+  const objects = scene?.objects ?? [];
+  const answers = (scene?.events ?? [])
+    .filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
     .map((event) => event.object).filter((id, i, all) => all.indexOf(id) === i)
     .map((id) => {
-      const names = new Set((objects ?? []).filter((o) => o.id === id || o.alias_of === id).map(ten));
-      return { id, rows: finalRows.filter((row) => names.has(row.split("=")[0].replace(/\s+/g, ""))) };
+      const ids = new Set(objects.filter((o) => o.id === id || o.alias_of === id).map((o) => o.id));
+      const rows = finalRows.filter((row) => ids.has(row.id));
+      return { id, rows, in_results: rows.every((row) => row.sec === "Kết quả") };
     });
-  add("final_result_shown_once", answers.length > 0 && answers.every((a) => a.rows.length === 1),
-    { rows: finalRows, answers });
+  add("final_result_shown_once", answers.length > 0
+    && answers.every((a) => a.rows.length === 1 && a.in_results), { rows: finalRows, answers });
   if (replay) {
     add("replay_resets_step_selection_highlight",
       replay.step === 0 && replay.selected === null && replay.highlighted.length === 0, replay);
   }
   if (orbit) {
     add("orbit_preserves_timeline", orbit.before.step === orbit.after.step
-      && JSON.stringify(orbit.before.readout) === JSON.stringify(orbit.after.readout), orbit);
+      && JSON.stringify(orbit.before.rows) === JSON.stringify(orbit.after.rows), orbit);
   }
   return { pass: Object.values(checks).every((check) => check.pass), checks };
 }

@@ -74,6 +74,9 @@ def _anh(path: Path, size: tuple[int, int], color: str) -> Path:
 def _ban_ghi(tmp: Path, viewport: str, width_css: int, size: tuple[int, int], steps: int) -> dict:
     shots = {s: str(_anh(tmp / viewport / f"{s}.png", size, c)) for s, c in
              (("neutral_final", "white"), ("causal_selected", "orange"), ("rotated_neutral", "gray"))}
+    # W12: ảnh PHẦN TỬ của bảng lời giải — nhỏ hơn trang, dùng nguyên.
+    shots.update({s: str(_anh(tmp / viewport / f"{s}.png", (600, 300), "white")) for s in
+                  ("solution_neutral_final", "solution_causal_selected", "solution_expanded")})
     return {"viewport": {"id": viewport, "width": width_css}, "screenshots": shots,
             "canvas_boxes": {s: {"x": 10, "y": 100, "w": 900, "h": 400} for s in shots},
             "formation": {"steps": [
@@ -82,23 +85,34 @@ def _ban_ghi(tmp: Path, viewport: str, width_css: int, size: tuple[int, int], st
                 for k in range(steps)]}}
 
 
-def test_w11_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
+def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
     """Review W10-H8: phụ lục formation quá nhỏ để đọc. Sheet của MỘT họ giữ
-    trung tính, causal, xoay, mobile và MỌI bước formation ở độ phân giải gốc
-    (không thu nhỏ), có dải chú giải và nhãn chữ lớn cho từng ô."""
-    desktop = _ban_ghi(tmp_path, "desktop", 1400, (1400, 800), steps=5)
+    trung tính, causal, xoay, mobile, BẢNG LỜI GIẢI, lời TỪ CHỐI (W12) và MỌI
+    bước dựng ở độ phân giải gốc (không thu nhỏ), có dải chú giải và nhãn lớn."""
+    desktop = _ban_ghi(tmp_path, "desktop", 1400, (1400, 800), steps=3)
     mobile = _ban_ghi(tmp_path, "mobile", 390, (780, 1600), steps=1)
-    meta = B.family_sheet("triangular_pyramid", {"desktop": desktop, "mobile": mobile},
+    negative = {vp: {"screenshot": str(_anh(tmp_path / "neg" / f"{vp}.png", (780, 900), "white"))}
+                for vp in ("desktop", "mobile")}
+    meta = B.family_sheet("triangular_pyramid",
+                          {"positive": {"desktop": desktop, "mobile": mobile}, "negative": negative},
                           tmp_path / "images")
     from PIL import Image
     sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
-    assert [c["state"] for c in meta["cells"]][:4] == [
-        "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final"]
-    assert [c["state"] for c in meta["cells"]][4:] == [f"desktop/formation/{k}" for k in range(5)]
-    # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang.
+    assert [c["state"] for c in meta["cells"]] == [
+        "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final",
+        "desktop/solution_neutral_final", "desktop/solution_causal_selected",
+        "mobile/solution_neutral_final", "mobile/solution_expanded",
+        "desktop/refusal", "mobile/refusal",
+    ] + [f"desktop/geometry_step/{k}" for k in range(3)]
+    # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang;
+    # ảnh phần tử và lời từ chối dùng NGUYÊN khung.
     assert all(c["scale"] == 1.0 for c in meta["cells"])
+    panel = next(c for c in meta["cells"] if c["state"] == "desktop/solution_neutral_final")
+    assert panel["crop_box_px"] == [0, 0, 600, 300]
     assert sheet.width >= 2 * 1400 and meta["legend"] and meta["label_font_px"] >= 24
-    assert meta["cells"][4]["label"].endswith("Bước dựng số 0")
+    assert "XANH = đang xét" in meta["legend"] and "cam đậm = dữ kiện số" in meta["legend"]
+    assert meta["cells"][10]["label"].startswith("Bước dựng 1/3")
+    assert meta["cells"][10]["label"].endswith("Bước dựng số 0")
 
 
 def test_w11_overview_is_only_an_index_of_the_six_families(tmp_path):
