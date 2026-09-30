@@ -282,10 +282,14 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     // cùng một chỗ với `selected_id`. Hai bản `step` là chỗ cây phân rã và
     // khung nhìn sẽ chỉ về hai bước khác nhau. Nhập ấy chỉ là một `type` —
     // test dưới vẫn khoá "đúng hai `useState`" và "không đọc trường hình học".
+    //
+    // THÊM `./scene3d-solution` (W12), cũng nói ra: bảng lời giải nằm NGAY
+    // DƯỚI thanh bước và đồng bộ với bước dựng đang xem, nên trình phát là chỗ
+    // đặt nó. Bảng tự giữ trạng thái gập của nó — hai `useState` ở đây không đổi.
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
       "../../../components/icons", "./interaction-state", "./scene3d-model",
-      "./scene3d-view", "react",
+      "./scene3d-solution", "./scene3d-view", "react",
     ]);
   });
 

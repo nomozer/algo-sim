@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import {
   PLAYBACK_INTERVAL_MS,
-  clampStep,
-  focusAt,
-  isFirstStep,
-  isLastStep,
-  nextStep,
+  anchorOfGeometryStep,
+  geometryAnchor,
+  geometryFocusAt,
+  geometryStepCount,
+  geometryStepOf,
+  isFirstGeometryStep,
+  isLastGeometryStep,
+  nextGeometryStep,
   numericalBasis,
   prefersReducedMotion,
-  prevStep,
-  stepCount,
+  prevGeometryStep,
   type Scene3D,
 } from "./scene3d-model";
 import type { InteractionState } from "./interaction-state";
 import { Scene3DWorkspace } from "./scene3d-view";
+import { Scene3DSolution } from "./scene3d-solution";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
 /**
@@ -37,6 +40,13 @@ import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../com
  *
  * Hình chỉ có thể đến từ một chương trình đã qua thẩm định. Đó là toàn bộ khác
  * biệt giữa hệ này và một phần mềm vẽ hình.
+ *
+ * ─── THANH BƯỚC ĐI QUA BƯỚC DỰNG, KHÔNG QUA BƯỚC TÍNH (W12) ─────────────
+ *
+ * Review người: thanh bước đi qua cả sự kiện chỉ tính số hay ghi kết luận —
+ * chỉ số tăng mà hình đứng yên. Nay nó đi qua `geometryTimeline`: mỗi nấc là
+ * một bước DỰNG, hiện ở khung `anchor` của bước ấy; số đo và kết luận lên bảng
+ * lời giải ngay dưới (`scene3d-solution.tsx`). Tự phát dừng ở bước dựng cuối.
  */
 
 interface Props {
@@ -60,9 +70,11 @@ interface Props {
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0,
 }: Props) {
-  const [stepTrong, setStepTrong] = useState(() => clampStep(scene, initialStep));
+  const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
-  const step = beNgoai ? interaction!.current_step : stepTrong;
+  // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
+  // thái đầu hay đồng bộ lớp (một sự kiện bất kỳ ⇒ bước dựng chứa nó).
+  const step = geometryAnchor(scene, beNgoai ? interaction!.current_step : stepTrong);
   /* ── NHỊP PHÁT ĐỌC TRẠNG THÁI MỚI NHẤT, KHÔNG ĐỌC BẢN LÚC TẠO NHỊP ──────
    *
    * `setInterval` sống qua nhiều lần render. Bản trước gọi một `setStep` đóng
@@ -74,7 +86,7 @@ export function Scene3DPlayer({
   const moiNhat = useRef({ step, interaction, onInteraction });
   moiNhat.current = { step, interaction, onInteraction };
   const datTrangThai = (buoc: number, boChon = false) => {
-    const moi = clampStep(scene, buoc);
+    const moi = geometryAnchor(scene, buoc);
     const hienTai = moiNhat.current;
     if (beNgoai) {
       const ke = {
@@ -93,9 +105,10 @@ export function Scene3DPlayer({
     datTrangThai(typeof f === "function" ? f(moiNhat.current.step) : f);
   const [dangPhat, setDangPhat] = useState(false);
   const dongHo = useRef<ReturnType<typeof setInterval> | null>(null);
-  const tong = stepCount(scene);
-  const cuoi = isLastStep(scene, step);
-  const dau = isFirstStep(scene, step);
+  const tong = geometryStepCount(scene);
+  const buocHinh = geometryStepOf(scene, step);
+  const cuoi = isLastGeometryStep(scene, step);
+  const dau = isFirstGeometryStep(scene, step);
 
   // TỰ ĐỘNG PHÁT là hoạt cảnh do JS phát — CSS `prefers-reduced-motion` không
   // chạm tới được. Người đã tắt chuyển động vẫn xem được, chỉ là bằng nút.
@@ -105,14 +118,14 @@ export function Scene3DPlayer({
     if (!dangPhat) return undefined;
     dongHo.current = setInterval(() => {
       const s = moiNhat.current.step;
-      if (isLastStep(scene, s)) {
+      if (isLastGeometryStep(scene, s)) {
         setDangPhat(false);
         return;
       }
-      const ke = nextStep(scene, s);
+      const ke = nextGeometryStep(scene, s);
       datTrangThai(ke);
-      // Dừng NGAY khi bước cuối hiện ra — không chờ thêm một nhịp rỗng.
-      if (isLastStep(scene, ke)) setDangPhat(false);
+      // Dừng NGAY khi bước dựng cuối hiện ra — không chờ thêm một nhịp rỗng.
+      if (isLastGeometryStep(scene, ke)) setDangPhat(false);
     }, PLAYBACK_INTERVAL_MS);
     return () => {
       if (dongHo.current) clearInterval(dongHo.current);
@@ -129,7 +142,7 @@ export function Scene3DPlayer({
     setDangPhat(true);
   };
 
-  const tieuDiem = focusAt(scene, step);
+  const tieuDiem = geometryFocusAt(scene, step);
 
   /* ── ID LÀ ĐỊNH DANH MÁY, KHÔNG PHẢI TÊN ────────────────────────────────
    *
@@ -171,7 +184,7 @@ export function Scene3DPlayer({
         <button
           type="button"
           className="geo3d-btn"
-          onClick={() => setStep((s) => prevStep(scene, s))}
+          onClick={() => setStep((s) => prevGeometryStep(scene, s))}
           disabled={dau}
           aria-label="Bước trước"
         >
@@ -202,7 +215,7 @@ export function Scene3DPlayer({
         <button
           type="button"
           className="geo3d-btn"
-          onClick={() => setStep((s) => nextStep(scene, s))}
+          onClick={() => setStep((s) => nextGeometryStep(scene, s))}
           disabled={cuoi}
           aria-label="Bước sau"
         >
@@ -215,12 +228,12 @@ export function Scene3DPlayer({
             type="range"
             min={0}
             max={Math.max(0, tong - 1)}
-            value={step}
+            value={buocHinh}
             onChange={(e) => {
               setDangPhat(false);
-              setStep(clampStep(scene, Number(e.target.value)));
+              setStep(anchorOfGeometryStep(scene, Number(e.target.value)));
             }}
-            aria-label={`Chọn bước dựng, hiện ở bước ${step + 1} trên ${tong}`}
+            aria-label={`Chọn bước dựng, hiện ở bước ${buocHinh + 1} trên ${tong}`}
           />
         </label>
       </div>
@@ -239,6 +252,13 @@ export function Scene3DPlayer({
             .join(", ") || "—"}
         </dd>
       </dl>
+
+      <Scene3DSolution
+        scene={scene}
+        step={step}
+        selectedId={interaction?.selected_id ?? null}
+        onSelect={onSelect}
+      />
     </div>
   );
 }

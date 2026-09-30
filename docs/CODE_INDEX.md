@@ -6084,6 +6084,23 @@ Kiểu dữ liệu + phép chiếu **THUẦN** của cảnh 3D hình học: `Sce
 `vatToTrung`, và hai hằng trình bày `PLANE_DISPLAY_SIZE` /
 `LINE_DISPLAY_HALF_LENGTH`.
 
+**Dòng thời gian HÌNH HỌC (W12)** — `geometryTimeline(scene)` →
+`GeometryStep[]`: một PHÂN HOẠCH liên tiếp của dãy sự kiện (cùng khuôn `pacer`,
+bất biến #32); bước mới mở ở sự kiện `GEOMETRY_CONSTRUCTION` làm đổi chữ ký
+hình (vật vẽ được + tiến độ thiết diện), `MEASUREMENT`/`EXPLANATION` vào
+`solution`, `FINAL_RESULT` vào `results` của bước đang mở; khung hiện là
+`anchor` = sự kiện cuối đoạn (bất biến #31 giữ nguyên). Loại đọc từ
+`semantic_kind` có cấu trúc; cảnh không gõ loại ⇒ mỗi sự kiện một bước như cũ.
+Điều hướng: `geometryStepCount`, `geometryStepOf`, `anchorOfGeometryStep`,
+`geometryAnchor`, `nextGeometryStep`, `prevGeometryStep`, `isFirstGeometryStep`,
+`isLastGeometryStep`; trình bày: `geometryFocusAt`, `geometryNarrationAt`,
+`geometryHighlightedAt` (bước dựng cuối không tô). Lớp lời giải:
+`solutionAt(scene, step)` → `SolutionLayer {givens, steps, results}` gồm
+`SolutionItem` (công thức chỉ khi có tham chiếu nhất quán, `basis` =
+`numericalBasis`, đáp số ở `results` và không lặp ở `steps`). Test:
+`scene3d-geometry-timeline.test.tsx` (sáu cảnh w11, kỳ vọng số bước từ phép đếm
+độc lập).
+
 ⚠️ **`vatToTrung(objs)` trả về những vật KHÔNG được tô mảng nền, vì một vật
 khác đã tô đúng khối ấy rồi.** Một trace hoàn toàn hợp lệ có thể mang hai vật
 trùng khít: ca `p5` có cả `khối nón` (đỡ nghĩa vụ thể tích) lẫn `hình nón` (đỡ
@@ -6239,7 +6256,10 @@ chú thích giải thích *"vì sao không dùng `visual_mode === '3d'`"* khớp
 
 Trình **PHÁT LẠI** quá trình dựng (Phase 5E): `Scene3DPlayer`. Bọc
 `Scene3DWorkspace` và thêm điều khiển **thời gian** — lùi · phát/dừng · tiến ·
-thanh chọn bước — cùng bảng *"đang dựng / dựa trên"*.
+thanh chọn bước — cùng bảng *"đang dựng / dựa trên"*. Từ W12 thanh bước đi qua
+BƯỚC DỰNG (`geometryTimeline`), không qua sự kiện: khung hiện luôn là neo của
+bước dựng chứa `current_step`, tự phát dừng ở bước dựng cuối, và ngay dưới là
+bảng lời giải `Scene3DSolution`.
 
 Tách khỏi `scene3d-view.tsx` vì renderer là `display(scene, step)` và có test
 cấm `<button`/`<input` trong đó. Luật ấy không phải "cấm mọi giao diện" mà là
@@ -6261,6 +6281,18 @@ toàn: không có `window` ⇒ `false`.
 Khoá ranh giới 5E: điều hướng bước thuần · giảm chuyển động ở tầng JS (4 ca gồm
 `matchMedia` ném lỗi) · nhãn trình đọc màn hình · và quan trọng nhất — playback
 **không đụng nội dung toán học**.
+
+### `frontend/src/simulations/domains/geometry/scene3d-solution.tsx` · offline
+
+**Bảng LỜI GIẢI** dưới thanh bước (W12): `Scene3DSolution` + `lopDongLoiGiai`.
+Ba mục đọc từ `solutionAt` — Dữ kiện · Các bước tính (công thức, "Dựa trên") ·
+Kết quả — đồng bộ với bước dựng đang xem; đáp số hiện ĐÚNG MỘT lần, ở Kết quả.
+Mỗi dòng là một nút chọn vật (chuỗi nhân quả); lớp dòng theo tầng
+`tangNhanManh` (`la-chon` · `la-so-lieu` · `la-trung-gian` · `la-boi-canh` ·
+`la-diu`) và màu đọc token `--geo3d-vai-tro-*`, cùng nghĩa với khung 3D. Chú
+giải ngắn chỉ hiện khi có vai trò để giải nghĩa (đang chọn, hoặc đang có vật
+vừa dựng). Khổ hẹp: Dữ kiện + Các bước tính gập được (nút `geo3d-lg-gap`), Kết
+quả luôn hiện. Thay dải số đo từng nổi trên khung (`geo3d-readout`, đã gỡ).
 
 ### `frontend/src/simulations/domains/geometry/scene3d.test.tsx` · offline
 

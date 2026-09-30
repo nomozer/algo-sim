@@ -11,12 +11,12 @@ import {
   cauTrucGocNhin,
   diemHuuHan,
   duongKinhCanh,
-  hienSo,
-  highlightedAt,
+  geometryHighlightedAt,
+  geometryNarrationAt,
+  geometryStepCount,
+  geometryStepOf,
   khungMatPhang,
-  narrationAt,
   objectsAt,
-  stepCount,
   toNumber,
   toVec3,
   type Scene3D,
@@ -526,17 +526,6 @@ export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
     }
   });
   return diem;
-}
-
-/** Lớp CSS một dòng số đo. Có chọn: tầng causal (đích > dữ kiện số > trung
- *  gian số; ngoài chuỗi dịu). Không chọn: tô theo bước dựng (w11). */
-function lopSoDo(
-  id: string, tang: Map<string, TangNhanManh> | null, toTheoBuoc: Set<string>,
-): string | undefined {
-  if (!tang) return toTheoBuoc.has(id) ? "la-nguon" : undefined;
-  const t = tang.get(id);
-  return t === "dich" ? "la-chon" : t === "du_kien_so" ? "la-so-lieu"
-    : t === "trung_gian" ? "la-trung-gian" : t ? undefined : "la-diu";
 }
 
 /**
@@ -1179,7 +1168,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       new Set(
         tuongTac?.selected_id
           ? highlightSet(scene, tuongTac.selected_id, true)
-          : buoc >= stepCount(scene) - 1 ? [] : highlightedAt(scene, buoc),
+          : geometryHighlightedAt(scene, buoc),
       ),
     [scene, tuongTac.selected_id, buoc],
   );
@@ -1198,26 +1187,6 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   //: `id → vị trí THẾ GIỚI` của nhãn. Ghi trong vòng dựng cảnh, đọc trong
   //: vòng vẽ — hai nhịp khác nhau nên phải đi qua `ref`, không qua state.
   const viTriNhan = useRef(new Map<string, THREE.Vector3>());
-  const readoutRef = useRef<HTMLUListElement>(null);
-
-  const soDoRef = useRef<SceneObject[]>([]);
-
-  useEffect(() => {
-    const el = readoutRef.current;
-    if (!el) return;
-    const xuLyBam = (e: MouseEvent) => {
-      const li = (e.target as HTMLElement)?.closest("li[data-index]");
-      if (li) {
-        const idxStr = li.getAttribute("data-index");
-        if (idxStr !== null) {
-          const item = soDoRef.current[Number(idxStr)];
-          if (item) chonRef.current?.(item.id);
-        }
-      }
-    };
-    el.addEventListener("click", xuLyBam);
-    return () => el.removeEventListener("click", xuLyBam);
-  });
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -1604,8 +1573,6 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   }, [scene, fitToken, daBung]);
 
   const hien = objectsAt(scene, buoc);
-  const soDo = hien.filter((o) => o.render === "readout");
-  soDoRef.current = soDo;
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
@@ -1649,34 +1616,17 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
           </div>
         </div>
       )}
-      {/* Số đo là CÂU TRẢ LỜI của bài — nó ở lại trong khung, nổi trên hình,
-          chứ không tụt xuống một danh sách dưới chân trang. */}
-      {soDo.length > 0 && (
-        <ul ref={readoutRef} className="geo3d-readout">
-          {soDo.map((o, idx) => {
-            return (
-              <li
-                key={o.id}
-                data-index={idx}
-                tabIndex={0}
-                className={lopSoDo(o.id, tang, tapNoiBat)}
-              >
-                <span className="geo3d-readout-ten">{o.notation || o.label}</span>
-                <span className="geo3d-readout-dau">=</span>
-                <span className="geo3d-readout-gt">{hienSo(o.exact, o.value)}</span>
-                {/* {o.label} */}
-              </li>
-            );
-          })}
-        </ul>
-      )}
-      {/* Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker
+      {/* Số đo KHÔNG nằm trên khung nữa (W12): dải số nổi trên hình đã gỡ,
+          mọi con số — dữ kiện, bước tính, kết quả — ở bảng lời giải dưới thanh
+          bước (`scene3d-solution.tsx`). Khung là của hình.
+
+          Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker
           `<!-- -->` vào giữa, nên chữ hiện ra đúng mà mọi phép kiểm chuỗi lại
           trượt — một lệch câm giữa thứ người đọc thấy và thứ test đọc. */}
       <p className="geo3d-progress geo3d-sr">
-        {`Bước ${buoc + 1}/${stepCount(scene)}`}
+        {`Bước ${geometryStepOf(scene, buoc) + 1}/${geometryStepCount(scene)}`}
       </p>
-      <p className="geo3d-narration geo3d-sr">{narrationAt(scene, buoc)}</p>
+      <p className="geo3d-narration geo3d-sr">{geometryNarrationAt(scene, buoc)}</p>
     </div>
   );
 }

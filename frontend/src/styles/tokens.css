@@ -75,6 +75,15 @@
   --accent-green-deep: #0f6622;
   --accent-brown: #523410;
 
+  /* W12 — VAI TRÒ trong chuỗi nhân quả hình học: MỘT màu MỘT nghĩa, cả trên
+     khung 3D lẫn bảng lời giải. Bản gốc ở `scene3d-roles.ts` (`MAU_VAI_TRO`,
+     three.js đọc số hex); đây là bản sao cho CSS, khoá bằng
+     `scene3d-roles.test.ts`. Đổi một bên mà quên bên kia là test đỏ. */
+  --geo3d-vai-tro-dich: #2563eb;
+  --geo3d-vai-tro-du-kien-so: #c2410c;
+  --geo3d-vai-tro-trung-gian: #fb923c;
+  --geo3d-vai-tro-boi-canh: #6b7280;
+
   /* Typography */
   --font-family: "Inter", -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
     sans-serif;

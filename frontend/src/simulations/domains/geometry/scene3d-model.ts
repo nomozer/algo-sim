@@ -926,3 +926,214 @@ export function prefersReducedMotion(): boolean {
 
 /** Nhịp phát mặc định (ms/bước). Đủ chậm để đọc được lời kể của bước. */
 export const PLAYBACK_INTERVAL_MS = 1400;
+
+/* ══ DÒNG THỜI GIAN HÌNH HỌC (W12) — tách bước DỰNG khỏi bước TÍNH ════════
+ *
+ * Review người (W12, NEEDS_CHANGES): thanh bước đi qua cả những sự kiện chỉ
+ * tính một con số hay ghi kết luận — chỉ số tăng mà hình đứng yên, nên mô
+ * phỏng đọc như một slideshow lời giải.
+ *
+ * Bước dựng là một PHÂN HOẠCH của dãy sự kiện (cùng khuôn `pacer`, bất biến
+ * #32): mỗi bước là một đoạn LIÊN TIẾP, các đoạn phủ đủ, không chồng lấn,
+ * không sinh sự kiện mới. Khung hiển thị của một bước là `trace[anchor]` với
+ * `anchor` = sự kiện CUỐI của đoạn — bất biến #31 (`frame k ⇔ trace[k]`) giữ
+ * nguyên, chỉ không dừng ở những `k` không đổi hình.
+ *
+ * Một bước MỚI mở ở sự kiện `GEOMETRY_CONSTRUCTION` làm đổi HÌNH (tập vật vẽ
+ * được hoặc tiến độ thiết diện). Bước đo, lời giải thích, kết luận nhập vào
+ * bước đang mở và lên lớp LỜI GIẢI. Loại sự kiện đọc từ `semantic_kind` có
+ * cấu trúc; cảnh cũ không gõ loại thì mỗi sự kiện một bước như trước — không
+ * đoán từ lời kể, tiêu đề, hành động hay định danh máy. */
+
+export interface GeometryStep {
+  index: number;
+  /** Sự kiện đầu và cuối của đoạn (chỉ số `step_index`). */
+  start: number;
+  end: number;
+  /** Khung hiển thị của bước — luôn là sự kiện cuối của đoạn. */
+  anchor: number;
+  /** Sự kiện dựng hình (và `INIT` ở bước 0). */
+  construction: number[];
+  /** Bước đo và lời giải thích — lên lớp lời giải, không lên thanh bước. */
+  solution: number[];
+  /** Kết luận của đề (`FINAL_RESULT`). */
+  results: number[];
+}
+
+const _dongThoiGian = new WeakMap<Scene3D, GeometryStep[]>();
+
+function _loaiSuKien(scene: Scene3D, k: number): string | undefined {
+  return scene.formation?.steps[k]?.semantic_kind
+    ?? scene.events.find((e) => e.step_index === k)?.semantic_kind;
+}
+
+/** Chữ ký HÌNH ở sự kiện `k`: vật vẽ được đang hiện + tiến độ thiết diện. */
+function _chuKyHinh(scene: Scene3D, k: number): string {
+  const ve = new Set(scene.objects
+    .filter((o) => o.render !== "readout" && o.render !== "non_visual").map((o) => o.id));
+  const s = scene.formation?.steps[k];
+  const hien = (s ? s.visible_ids : objectsAt(scene, k).map((o) => o.id))
+    .filter((id) => ve.has(id)).sort();
+  const tienDo = (s?.geometry_progress ?? [])
+    .map((p) => [p.object_id, p.visible_edge_ids.length, p.closed, p.fill_visible]);
+  return JSON.stringify([hien, tienDo]);
+}
+
+export function geometryTimeline(scene: Scene3D): GeometryStep[] {
+  const daCo = _dongThoiGian.get(scene);
+  if (daCo) return daCo;
+  const n = stepCount(scene);
+  const coLoai = n > 0 && Array.from({ length: n }, (_, k) => _loaiSuKien(scene, k))
+    .every((l) => !!l && l !== "LEGACY_UNTYPED_EVENT");
+  const ra: GeometryStep[] = [];
+  for (let k = 0; k < n; k += 1) {
+    const loai = _loaiSuKien(scene, k);
+    const moBuoc = k === 0 || !coLoai
+      || (loai === "GEOMETRY_CONSTRUCTION" && _chuKyHinh(scene, k) !== _chuKyHinh(scene, k - 1));
+    if (moBuoc) {
+      ra.push({ index: ra.length, start: k, end: k, anchor: k,
+        construction: [], solution: [], results: [] });
+    }
+    const g = ra[ra.length - 1];
+    g.end = k;
+    g.anchor = k;
+    if (k === g.start || loai === "GEOMETRY_CONSTRUCTION") g.construction.push(k);
+    else if (loai === "FINAL_RESULT") g.results.push(k);
+    else g.solution.push(k);
+  }
+  _dongThoiGian.set(scene, ra);
+  return ra;
+}
+
+export function geometryStepCount(scene: Scene3D): number {
+  return geometryTimeline(scene).length;
+}
+
+/** Bước dựng chứa sự kiện `step`. */
+export function geometryStepOf(scene: Scene3D, step: number): number {
+  const k = clampStep(scene, step);
+  return Math.max(0, geometryTimeline(scene).findIndex((g) => k >= g.start && k <= g.end));
+}
+
+/** Khung hiển thị của bước dựng thứ `g` (kẹp vào miền hợp lệ). */
+export function anchorOfGeometryStep(scene: Scene3D, g: number): number {
+  const t = geometryTimeline(scene);
+  if (t.length === 0) return 0;
+  return t[Math.min(Math.max(Math.trunc(g), 0), t.length - 1)].anchor;
+}
+
+/** Sự kiện `step` bất kỳ → khung của bước dựng chứa nó. */
+export function geometryAnchor(scene: Scene3D, step: number): number {
+  return anchorOfGeometryStep(scene, geometryStepOf(scene, step));
+}
+
+export function nextGeometryStep(scene: Scene3D, step: number): number {
+  return anchorOfGeometryStep(scene, geometryStepOf(scene, step) + 1);
+}
+
+export function prevGeometryStep(scene: Scene3D, step: number): number {
+  return anchorOfGeometryStep(scene, geometryStepOf(scene, step) - 1);
+}
+
+export function isFirstGeometryStep(scene: Scene3D, step: number): boolean {
+  return geometryStepOf(scene, step) <= 0;
+}
+
+export function isLastGeometryStep(scene: Scene3D, step: number): boolean {
+  const n = geometryStepCount(scene);
+  return n === 0 || geometryStepOf(scene, step) >= n - 1;
+}
+
+/** "Đang dựng / Dựa trên" của bước dựng — sự kiện dựng đầu đoạn. */
+export function geometryFocusAt(
+  scene: Scene3D,
+  step: number,
+): { created: string | null; depends: string[] } {
+  const t = geometryTimeline(scene);
+  const dau = t[geometryStepOf(scene, step)]?.construction[0] ?? clampStep(scene, step);
+  return focusAt(scene, dau);
+}
+
+/**
+ * Vật TÔ SÁNG của bước dựng: mọi vật các sự kiện dựng của đoạn đưa lên khung.
+ * Bước dựng CUỐI không tô gì — hình đã đủ, khung cuối là khung trung tính.
+ */
+export function geometryHighlightedAt(scene: Scene3D, step: number): string[] {
+  if (isLastGeometryStep(scene, step)) return [];
+  const g = geometryTimeline(scene)[geometryStepOf(scene, step)];
+  return [...new Set((g?.construction ?? []).flatMap((k) => highlightedAt(scene, k)))];
+}
+
+/** Lời kể của bước dựng — lời của sự kiện dựng đầu đoạn. */
+export function geometryNarrationAt(scene: Scene3D, step: number): string {
+  const t = geometryTimeline(scene);
+  return narrationAt(scene, t[geometryStepOf(scene, step)]?.construction[0] ?? step);
+}
+
+/** Một dòng của lớp lời giải. `id` luôn là một vật THẬT của cảnh (bấm được). */
+export interface SolutionItem {
+  id: string;
+  /** Sự kiện sinh ra dòng này (0 với dữ kiện đề cho). */
+  event: number;
+  /** Lời kể của sự kiện — rỗng với dữ kiện đề cho. */
+  text: string;
+  /** Công thức có tham chiếu nhất quán; `null` khi không có công thức thật. */
+  formula: string | null;
+  /** Nguồn SỐ trực tiếp (`numericalBasis`). */
+  basis: string[];
+  /** Dòng mới xuất hiện ở bước dựng đang xem. */
+  isNew: boolean;
+}
+
+export interface SolutionLayer {
+  givens: SolutionItem[];
+  steps: SolutionItem[];
+  results: SolutionItem[];
+}
+
+/**
+ * LỚP LỜI GIẢI đồng bộ với bước dựng chứa `step` (W12): dữ kiện đề cho, các
+ * bước tính (công thức, nguồn số), kết quả. Mỗi đại lượng MỘT dòng: đáp số
+ * nằm ở `results` và không lặp ở `steps`.
+ */
+export function solutionAt(scene: Scene3D, step: number): SolutionLayer {
+  const t = geometryTimeline(scene);
+  if (t.length === 0) return { givens: [], steps: [], results: [] };
+  const g = t[geometryStepOf(scene, step)];
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const suKien = (k: number) => scene.events.find((e) => e.step_index === k);
+  const dong = (id: string, k: number, text: string): SolutionItem => {
+    const o = byId.get(id)!;
+    const f = coherentFormula(scene, o);
+    return {
+      id, event: k, text,
+      formula: f && f.references.length > 0 ? f.text : null,
+      basis: numericalBasis(scene, o),
+      isNew: k >= g.start && k <= g.end,
+    };
+  };
+  const ketQua = new Set<string>();
+  const results: SolutionItem[] = [];
+  for (let k = 0; k <= g.anchor; k += 1) {
+    const id = suKien(k)?.object;
+    if (_loaiSuKien(scene, k) !== "FINAL_RESULT" || !id || !byId.has(id) || ketQua.has(id)) continue;
+    ketQua.add(id);
+    results.push(dong(id, k, narrationAt(scene, k)));
+  }
+  const hien = new Set(objectsAt(scene, g.anchor).map((o) => o.id));
+  const givens = scene.objects
+    .filter((o) => o.type === "quantity" && o.render === "readout" && o.origin === "free"
+      && hien.has(o.id) && !ketQua.has(o.id))
+    .map((o) => dong(o.id, 0, ""));
+  const daCo = new Set([...ketQua, ...givens.map((x) => x.id)]);
+  const steps: SolutionItem[] = [];
+  for (let k = 1; k <= g.anchor; k += 1) {
+    const id = suKien(k)?.object;
+    const o = id ? byId.get(id) : undefined;
+    if (_loaiSuKien(scene, k) !== "MEASUREMENT" || !o || o.type !== "quantity"
+        || o.render !== "readout" || daCo.has(o.id)) continue;
+    daCo.add(o.id);
+    steps.push(dong(o.id, k, narrationAt(scene, k)));
+  }
+  return { givens, steps, results };
+}

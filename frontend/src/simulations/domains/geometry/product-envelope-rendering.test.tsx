@@ -623,10 +623,11 @@ describe("tên đại lượng do backend cấp, frontend không tự suy", () =
     /* Guard KIẾN TRÚC — quét mã nguồn. Không có nó, một bản vá "tiện tay" dựng
        nhãn ở frontend sẽ xanh hết và đẻ ra thẩm quyền đặt tên THỨ HAI, đúng
        thứ `display_names.py` tồn tại để là duy nhất. */
-    const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf-8");
-    const i = src.indexOf("geo3d-readout");
-    expect(i, "không tìm thấy khối ô đọc số").toBeGreaterThan(0);
-    const oDoc = src.slice(i, i + 700);
+    // W12: con số rời dải trên khung, về BẢNG LỜI GIẢI — guard đi theo nó.
+    const src = readFileSync(join(__dirname, "scene3d-solution.tsx"), "utf-8");
+    const i = src.indexOf("const dong = ");
+    expect(i, "không tìm thấy khối dòng số của bảng lời giải").toBeGreaterThan(0);
+    const oDoc = src.slice(i, i + 1400);
     /* ⚠️ Khẳng định TRONG khối ô đọc số, không phải trên cả tệp. Bản đầu hỏi
        `src.toContain("{o.label}")` — và `{o.label}` còn xuất hiện ở chỗ vẽ
        nhãn điểm, nên phép tiêm *"bỏ nhãn ô đọc số"* KHÔNG bị bắt. Đúng lớp

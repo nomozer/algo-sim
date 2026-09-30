@@ -372,6 +372,11 @@ describe("tích hợp · trạng thái không được rớt sang bài mới", (
   });
 
   it("dòng chữ bước được KẸP — không bao giờ in một bước không tồn tại", () => {
-    expect(src).toMatch(/Bước \$\{clampStep\(day, tt\.current_step\) \+ 1\}\/\$\{stepCount\(day\)\}/);
+    // W12: dòng chữ đếm bước DỰNG. Phép kẹp đi qua `geometryAnchor` (kẹp sự
+    // kiện vào miền rồi về neo của bước dựng chứa nó), nên `current_step = 10`
+    // trên một cảnh ngắn hơn vẫn in bước dựng CUỐI, không in "10/…".
+    expect(src).toMatch(/const buocHien = geometryAnchor\(day, tt\.current_step\);/);
+    expect(src).toMatch(
+      /Bước \$\{geometryStepOf\(day, buocHien\) \+ 1\}\/\$\{geometryStepCount\(day\)\}/);
   });
 });

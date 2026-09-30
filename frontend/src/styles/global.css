@@ -4872,7 +4872,7 @@ html {
  * toolbar, không nút tạo hình. Nên bố cục ở đây chỉ có ba việc — chừa chỗ cho
  * canvas, đặt lời kể ngay dưới nó, và bày đại lượng đo được thành chữ.
  *
- * ⚠️ Đại lượng (`geo3d-readout`) CỐ Ý nằm ngoài canvas: một con số không có vị
+ * ⚠️ Đại lượng (bảng lời giải `geo3d-loi-giai`, W12) CỐ Ý nằm ngoài canvas: một con số không có vị
  * trí hình học, nên thả nó lơ lửng trong không gian là đặt nó vào một chỗ không
  * mang nghĩa. Nó thuộc về chữ.
  */
@@ -5276,80 +5276,182 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-/* SỐ ĐO — câu trả lời của bài, nên nó ở LẠI TRONG KHUNG.
-   Bản trước đẩy nó xuống một danh sách dưới chân trang: học sinh xem hình
-   dựng xong rồi phải cuộn đi tìm đáp số. */
-.geo3d-readout {
-  position: absolute;
-  left: var(--sp-sm);
-  bottom: var(--sp-sm);
-  margin: 0;
-  padding: var(--sp-xs) var(--sp-sm);
-  list-style: none;
+/* LỜI GIẢI — bảng THỨ CẤP dưới thanh bước (W12, review NEEDS_CHANGES).
+   Dải số đo nổi trên khung đã gỡ: nó che hình và trộn dữ kiện, bước tính, đáp
+   số thành một dải. Bảng này tách ba mục; đáp số chỉ ở mục Kết quả. Màu một
+   dòng = vai trò của nó trong chuỗi quanh vật đang chọn, cùng token với khung
+   3D (`--geo3d-vai-tro-*`), và luôn đi kèm vạch trái — hai kênh, không một. */
+.geo3d-loi-giai {
+  display: grid;
+  gap: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
-  background: color-mix(in srgb, var(--canvas) 92%, transparent);
+  background: var(--canvas);
   color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  box-shadow: var(--shadow-soft);
 }
 
-.geo3d-readout li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sp-xs);
-  padding: 2px 6px;
-  border-radius: var(--rounded-sm);
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+.geo3d-lg-than {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--sp-sm) var(--sp-lg);
 }
 
-.geo3d-readout li:hover {
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
+.geo3d-lg-muc {
+  min-width: 0;
 }
 
-.geo3d-readout li.la-chon {
-  background: var(--accent-sky-tint);
-  outline: 2px solid var(--primary);
+.geo3d-lg-ten-muc {
+  margin: 0 0 var(--sp-xxs);
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
-.geo3d-readout li.la-nguon {
-  background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
-  border-left: 3px solid var(--accent-orange);
+.geo3d-lg-ds {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.geo3d-lg-dong {
+  display: grid;
+  gap: 2px;
+  padding: 3px 8px;
+  border-left: 3px solid transparent;
+  border-radius: var(--rounded-sm);
+}
+
+.geo3d-lg-nut {
+  display: grid;
+  gap: 1px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.geo3d-lg-nut:hover .geo3d-lg-so {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.geo3d-lg-nut:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--rounded-xs);
+}
+
+.geo3d-lg-tieu-de {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+}
+
+.geo3d-lg-so {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.geo3d-lg-ket-qua .geo3d-lg-so {
+  font-weight: 700;
+}
+
+.geo3d-lg-dua-tren {
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+}
+
+/* Nút gập chỉ có nghĩa ở khổ hẹp — màn rộng luôn hiện đủ. */
+.geo3d-lg-gap {
+  display: none;
+  justify-self: start;
+  padding: 4px var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* Vai trò trong chuỗi nhân quả — nền nhạt + vạch trái cùng màu. */
+.geo3d-lg-dong.la-chon {
+  background: color-mix(in srgb, var(--geo3d-vai-tro-dich) 12%, transparent);
+  border-left-color: var(--geo3d-vai-tro-dich);
+}
+
+.geo3d-lg-dong.la-so-lieu {
+  background: color-mix(in srgb, var(--geo3d-vai-tro-du-kien-so) 12%, transparent);
+  border-left-color: var(--geo3d-vai-tro-du-kien-so);
+}
+
+.geo3d-lg-dong.la-trung-gian {
+  background: color-mix(in srgb, var(--geo3d-vai-tro-trung-gian) 14%, transparent);
+  border-left-color: var(--geo3d-vai-tro-trung-gian);
+}
+
+.geo3d-lg-dong.la-boi-canh {
+  border-left-color: var(--geo3d-vai-tro-boi-canh);
 }
 
 /* Ngoài chuỗi nhân quả của vật đang chọn: lùi xuống, không biến mất (w10). */
-.geo3d-readout li.la-diu {
+.geo3d-lg-dong.la-diu {
   color: var(--ink-quiet);
 }
 
-/* Tầng causal của số đo (w11): đích (`la-chon`) > dữ kiện số > trung gian số.
-   Hai kênh — độ đậm vạch trái và độ đậm nền — chứ không chỉ một sắc màu. */
-.geo3d-readout li.la-so-lieu {
-  background: color-mix(in srgb, var(--accent-orange) 18%, transparent);
-  border-left: 3px solid var(--accent-orange);
-  font-weight: 600;
-}
-
-.geo3d-readout li.la-trung-gian {
-  background: color-mix(in srgb, var(--accent-orange) 7%, transparent);
-  border-left: 3px solid color-mix(in srgb, var(--accent-orange) 45%, transparent);
-}
-
-.geo3d-readout-ten {
+/* Chú giải — chỉ hiện khi có vai trò để giải nghĩa. */
+.geo3d-chu-giai {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xxs) var(--sp-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
   color: var(--ink-muted);
   font-size: 0.8125rem;
 }
 
-.geo3d-readout-dau {
-  color: var(--ink-muted);
-  font-size: 0.8125rem;
+.geo3d-chu-giai-muc {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.geo3d-readout-gt {
-  color: var(--ink);
-  font-weight: 700;
+.geo3d-chu-giai-muc::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--geo3d-vai-tro-boi-canh);
+}
+
+.geo3d-chu-giai-muc.la-chon::before {
+  background: var(--geo3d-vai-tro-dich);
+}
+
+.geo3d-chu-giai-muc.la-so-lieu::before {
+  background: var(--geo3d-vai-tro-du-kien-so);
+}
+
+.geo3d-chu-giai-muc.la-trung-gian::before {
+  background: var(--geo3d-vai-tro-trung-gian);
+}
+
+/* Khổ hẹp: Kết quả luôn hiện; Dữ kiện + Các bước tính gập lại, mở bằng nút. */
+@media (max-width: 48rem) {
+  .geo3d-lg-gap {
+    display: inline-flex;
+  }
+
+  .geo3d-lg-than:not(.la-mo) {
+    display: none;
+  }
 }
 
 .geo3d-fallback {
@@ -5854,10 +5956,10 @@ html {
     box-shadow: none;
     background: var(--canvas);
   }
-  /* Chừa chỗ thật cho readout + điều khiển bước. `68vh` chỉ tính riêng canvas,
-     nên cảnh có ba readout dài đẩy cả hai nút phát lại xuống dưới viewport
-     1440×900. 58vh vẫn giữ canvas là bề mặt chính nhưng đóng được toàn bộ vòng
-     tương tác trong một màn hình. */
+  /* Chừa chỗ thật cho điều khiển bước (và bảng lời giải ngay dưới, W12).
+     `68vh` chỉ tính riêng canvas, nên cảnh có ba readout dài từng đẩy cả hai
+     nút phát lại xuống dưới viewport 1440×900. 58vh vẫn giữ canvas là bề mặt
+     chính nhưng đóng được toàn bộ vòng tương tác trong một màn hình. */
   .geo3d-canvas { height: min(58vh, 620px); }
 }
 
@@ -5870,25 +5972,6 @@ html {
   max-width: 12ch;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* ── 4 · Ô ĐỌC KẾT QUẢ KHÔNG ĐÈ LÊN DÒNG THUYẾT MINH ────────────────────
-   Ảnh chụp thật cho thấy chip kết quả nổi lên trên hàng "Đang dựng / Dựa
-   trên". Cho nó nằm trong dòng chảy thay vì nổi, và tự xuống hàng khi hẹp. */
-.geo3d-readout {
-  position: relative;
-  flex-wrap: wrap;
-}
-
-@media (min-width: 1100px) {
-  /* `flex-wrap` không có tác dụng nếu container vẫn là block. Với 5–6 đại
-     lượng, danh sách dọc chiếm gần 200px và đẩy điều khiển bước khỏi màn hình.
-     Desktop đủ ngang để xếp các readout thành hàng; mobile vẫn giữ danh sách
-     dọc dễ đọc bên dưới canvas. */
-  .geo3d-readout {
-    display: flex;
-    gap: var(--sp-xs);
-  }
 }
 
 /* ── LƯỚI CHẶN NGOẠI LỆ ──────────────────────────────────────────────────

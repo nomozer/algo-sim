@@ -36,11 +36,12 @@ import {
 } from "../../../state/classroom-sync";
 import type { Scene3D } from "./scene3d-model";
 import {
-  clampStep,
   coherentFormula,
-  narrationAt,
+  geometryAnchor,
+  geometryNarrationAt,
+  geometryStepCount,
+  geometryStepOf,
   objectsAt,
-  stepCount,
 } from "./scene3d-model";
 import {
   type InteractionState,
@@ -199,9 +200,12 @@ export function Scene3DExplorer({
     setNgan(null);
   }, [scene]);
 
+  // Khung đang hiện = neo của bước DỰNG chứa `current_step` (W12) — cùng phép
+  // với trình phát, nên cây và khung nhìn không bao giờ chỉ về hai khung khác.
+  const buocHien = geometryAnchor(day, tt.current_step);
   const coMat = useMemo(
-    () => entitiesPresentAt(day, tt.current_step, objectsAt),
-    [day, tt.current_step],
+    () => entitiesPresentAt(day, buocHien, objectsAt),
+    [day, buocHien],
   );
   /* Tra một id sang CÁCH GỌI NGẮN — dùng ở "Thuộc", ở chi tiết thiết diện,
    * tức những chỗ vật này bị nhắc TRONG câu của vật khác. `label` ở đó cho ra
@@ -507,14 +511,12 @@ export function Scene3DExplorer({
       {/* ── ĐÁY: một dòng nói bước này đang làm gì ─────────────────────── */}
       <p className="geo3d-buoc">
         <span className="geo3d-buoc-so">
-          {/* KẸP trước khi in. `narrationAt` đã tự kẹp, và khung nhìn cũng
-              vậy — chỉ mỗi dòng chữ này đọc thẳng `current_step`, nên nó là
-              chỗ duy nhất có thể nói một bước không tồn tại. Giữ phép kẹp ở
-              đây kể cả sau khi đã sửa gốc: một dòng chữ nói sai về trạng thái
-              là thứ người dùng tin trước khi tin cái hình. */}
-          {`Bước ${clampStep(day, tt.current_step) + 1}/${stepCount(day)}`}
+          {/* Đếm BƯỚC DỰNG, không đếm sự kiện (W12): bước chỉ tính số nằm ở
+              bảng lời giải. `buocHien` đã kẹp — một dòng chữ nói sai về trạng
+              thái là thứ người dùng tin trước khi tin cái hình. */}
+          {`Bước ${geometryStepOf(day, buocHien) + 1}/${geometryStepCount(day)}`}
         </span>
-        <span className="geo3d-buoc-loi">{narrationAt(day, tt.current_step)}</span>
+        <span className="geo3d-buoc-loi">{geometryNarrationAt(day, buocHien)}</span>
       </p>
     </div>
   );
