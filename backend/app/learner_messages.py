@@ -15,6 +15,8 @@ Test lock: tests/test_learner_messages.py (BE) + learner-error.test.tsx (FE).
 
 from __future__ import annotations
 
+import re
+
 # Thông điệp ĐÓNG — chọn theo failure_category/error_code CÓ CẤU TRÚC,
 # tuyệt đối không string-match message kỹ thuật.
 _MSG_CAPABILITY_GAP = (
@@ -108,7 +110,7 @@ _MSG_THEO_MA: dict[str, str] = {
 _MSG_NGUON_THIEU = (
     "Để dựng hình, chương trình cần {doan} nhưng đề bài không ghi số liệu này. "
     "AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em "
-    "kiểm tra lại đề đã ghi đủ các độ dài cần thiết chưa rồi gửi lại nhé."
+    "kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
 )
 _MSG_NGUON_MAU_THUAN = (
     "Số liệu dùng để dựng hình ({doan}) không khớp với chính câu chữ của đề — "
@@ -123,12 +125,19 @@ _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
 }
 
 
+_KY_HIEU_DIEM = re.compile(r"[A-Z]\d*′?")
+
+
 def _doan_hoc_sinh(envelope: dict) -> str:
-    """Ký hiệu đoạn học sinh đọc được (`độ dài AD`), hoặc câu chung — không bao
-    giờ in thứ gì mang `_` (tên máy)."""
+    """Số liệu học sinh đọc được — `độ dài AD`, `toạ độ điểm S` — hoặc câu chung;
+    không bao giờ in thứ gì mang `_` (tên máy)."""
     ten = [s for s in (envelope.get("reason_subjects") or [])
            if isinstance(s, str) and s and "_" not in s]
-    return f"độ dài {', '.join(ten)}" if ten else "một độ dài"
+    diem = [s for s in ten if _KY_HIEU_DIEM.fullmatch(s)]
+    doan = [s for s in ten if s not in diem]
+    cum = ([f"độ dài {', '.join(doan)}"] if doan else []) \
+        + ([f"toạ độ điểm {', '.join(diem)}"] if diem else [])
+    return " và ".join(cum) if cum else "một số liệu"
 
 
 def learner_reason(envelope: dict) -> str:

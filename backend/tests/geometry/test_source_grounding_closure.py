@@ -248,3 +248,60 @@ def test_the_source_length_reader_never_truncates_a_number(text, expected):
 
     got = {"".join(sorted(k)): str(v) for k, v in do_dai_trong_de(text).items()}
     assert got == expected
+
+
+# ── A GIVEN point whose coordinates only an analyze claim states ────────────
+# Found while building the w12 negatives: the cross-section text WITHOUT the
+# apex "S(0;0;6)" was still served (V = 72). The apex is declared from the
+# analyze fact `S_coords = "S(0;0;6)"`; a coordinate string is not a rational,
+# so the gate read the fact as RELATIONAL (no numbers to compare) and accepted
+# the coordinates, and the claim no longer builds a coordinate invariant.
+
+def test_a_point_pinned_to_an_unstated_coordinate_claim_is_refused(monkeypatch):
+    from scripts import replay_negative_boundaries as RNB
+
+    case = "p1_chop_thiet_dien_khoang_cach"
+    raw = RNB.doc_raw_theo_thu_tu(case)
+    text = RNB.doc_de_bai()[case]
+    cut = text.replace(" và đỉnh S(0;0;6)", "")
+    assert cut != text
+    monkeypatch.delenv("GEOMETRY_COMPILER_MODE", raising=False)
+    responses = [raw["semantic_analyze"][0], raw["semantic_program"][0]]
+    calls: list[str] = []
+
+    async def fake_transport(*_args, **_kwargs):
+        calls.append("call")
+        return responses[len(calls) - 1]
+
+    monkeypatch.setattr(PL, "call_gemini", fake_transport)
+    env = attach_learner_reason(asyncio.run(PL.run_pipeline(cut, "fake_key")))
+    assert env["status"] == "unsupported", env.get("status")
+    assert "scene3d" not in env
+    assert env["reason_code"] == G.ERR_GIVEN_KHONG_CO_TRONG_DE
+    assert len(calls) == 2
+
+
+def test_a_paraphrased_relation_without_numbers_still_grounds_coordinates():
+    # The same case WITH the apex stated is served: the coordinate facts are
+    # in the text, and relation facts carry no numbers to prove.
+    from scripts import replay_negative_boundaries as RNB
+
+    case = "p1_chop_thiet_dien_khoang_cach"
+    raw = RNB.doc_raw_theo_thu_tu(case)
+    text = RNB.doc_de_bai()[case]
+    contract = _contract(text, json.loads(raw["semantic_analyze"][0]))
+    ground = G.check_grounding(contract, _spec(json.loads(raw["semantic_program"][0])))
+    assert ground.ok, ground.unresolved
+
+
+def test_the_refusal_names_a_point_as_a_point_not_as_a_length():
+    from app.learner_messages import learner_reason
+
+    point = {"status": "unsupported", "reason_code": G.ERR_GIVEN_KHONG_CO_TRONG_DE,
+             "reason_subjects": ["S"]}
+    segment = {**point, "reason_subjects": ["AA′"]}
+    unknown = {**point, "reason_subjects": []}
+    assert "toạ độ điểm S" in learner_reason(point)
+    assert "độ dài" not in learner_reason(point)
+    assert "độ dài AA′" in learner_reason(segment)
+    assert "một số liệu" in learner_reason(unknown)

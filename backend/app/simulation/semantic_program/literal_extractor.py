@@ -40,6 +40,7 @@ cố ý **chỉ** đóng P1 cho các lớp literal hiển nhiên. Dữ liệu m�
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict
@@ -268,7 +269,11 @@ def gia_tri_khong_chung_minh_duoc(
             if v not in trong_span and not _co_thap_phan_phay(v, problem_text):
                 thieu.append(v)
         elif isinstance(v, str):
-            if v not in trong_span and v not in problem_text:
+            # NFKC (W12): `A₁` của đề và `A1` của lời khai là CÙNG một chữ —
+            # chuẩn hoá tương thích, như gộp khoảng trắng; không đoán gì thêm.
+            if (v not in trong_span and v not in problem_text
+                    and unicodedata.normalize("NFKC", v)
+                    not in unicodedata.normalize("NFKC", problem_text)):
                 thieu.append(v)
     return tuple(thieu)
 

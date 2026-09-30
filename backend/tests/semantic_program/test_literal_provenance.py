@@ -76,6 +76,19 @@ def test_so_thap_phan_viet_bang_dau_phay_van_chung_minh_duoc():
     assert p1((3.5,), extract_literals(de), de) == (3.5,)
 
 
+def test_ten_diem_viet_chi_so_duoi_van_chung_minh_duoc():
+    """W12: đề viết `A₁`, `analyze` khai `A1` — cùng một tên (chuẩn hoá NFKC,
+    như dấu phẩy `′`). Không có bậc này, một mục ĐẶT TÊN điểm bị coi là số liệu
+    bịa và toạ độ ghim vào nó bị từ chối oan (ca `e8` của gold affordance)."""
+    from app.simulation.semantic_program.literal_extractor import (
+        gia_tri_khong_chung_minh_duoc as p1,
+    )
+
+    de = "Cho hình trụ có hai đáy là hai đường tròn tâm A₁ và tâm A₂."
+    assert p1(("A1", "A2"), extract_literals(de), de) == ()
+    assert p1(("A3",), extract_literals(de), de) == ("A3",)
+
+
 def test_extractor_tat_dinh():
     """Cùng đề ⇒ cùng kết quả. Không phụ thuộc model, mạng hay thời điểm."""
     assert extract_literals(DE_STACK) == extract_literals(DE_STACK)

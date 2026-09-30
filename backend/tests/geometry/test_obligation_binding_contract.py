@@ -232,8 +232,11 @@ def test_C2_TRU_di_dung_duong_thi_served_khong_can_net_nao():
     Chứng minh hai điều cùng lúc: từ vựng khối cong ĐỦ để giải bài ấy, và bản
     vá không hề ưu ái hình cầu — trụ đi qua cùng một cổng.
     """
+    # Câu đề ghi số của khối: từ W12 một mục mang con số đề không ghi không
+    # còn là "fact quan hệ", và toạ độ ghim vào nó bị từ chối ở grounding.
     ct = RequestContract(
-        problem_text="Hình trụ, mặt phẳng vuông góc trục tại trung điểm.",
+        problem_text="Hình trụ bán kính đáy 5, chiều cao 8, mặt phẳng vuông góc "
+                     "trục tại trung điểm.",
         input_facts=[{"fact_id": "f", "label": "Trụ", "values": ["5"],
                       "provenance": "confirmed"}],
         obligations=(Obligation(kind="radius", container="C",

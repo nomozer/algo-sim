@@ -421,6 +421,8 @@ def check_grounding(
         _bac(decl, ly_do)
         if decl.name.endswith("_length"):
             tu_choi_nguon.append(_ky_hieu_doan(decl.name))
+        elif decl.type == "point3":
+            tu_choi_nguon.append(decl.name.replace("_prime", "′"))
 
     def _ghi_bang_chung(decl, fid: str, fact, gia_tri: Any, *, don_vi=None,
                         span=None, span_text=None, loai: str | None = None) -> None:
@@ -817,6 +819,16 @@ def check_grounding(
             # toạ độ ghim vào đó đi qua mà không ai đối chiếu gì. Đúng thứ cửa
             # sau mà nhánh này được viết ra để KHÔNG mở.
             co_so = any(la_so_huu_ti(v) for v in cho)
+            # W12: một mục mang CON SỐ mà đề không ghi (`S(0;0;6)` chỉ có trong
+            # lời khai `analyze`) không phải fact quan hệ — nó là dữ kiện bịa,
+            # và toạ độ ghim vào nó không có căn cứ. Mệnh đề không chứa chữ số
+            # (kể cả bị diễn đạt lại) vẫn đi nhánh quan hệ như trước.
+            so_bia = [c for c in _chua_chung_minh(fact) if re.search(r"\d", str(c))]
+            if not co_so and so_bia:
+                _bac_nguon(decl, ERR_GIVEN_KHONG_CO_TRONG_DE,
+                           f"mục '{fid}' khai {so_bia!r} nhưng đề không ghi — "
+                           "toạ độ không nhận làm dữ kiện đề cho")
+                continue
             if not co_so:
                 ly_do = str(decl.model_assumption or "").strip()
                 if ly_do:

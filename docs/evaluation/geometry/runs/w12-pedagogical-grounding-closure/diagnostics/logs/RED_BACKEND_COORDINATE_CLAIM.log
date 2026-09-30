@@ -1,0 +1,37 @@
+# W12 red observations — a GIVEN POINT pinned to an unstated coordinate claim
+# (working tree = b9c60010 + uncommitted follow-up; 0 model calls)
+#
+# Found while generating the w12 negative fixtures (one stated given removed
+# from each family's text, the fake analyze transport still claiming it):
+# the cross-section text WITHOUT "và đỉnh S(0;0;6)" was still SERVED (V = 72)
+# on the default LLM_ONLY route. The apex is declared from the analyze fact
+# `S_coords = ["S(0;0;6)"]`; a coordinate string is not a rational, so the gate
+# read the fact as RELATIONAL ("no numbers to compare") and accepted the
+# coordinates; the claim no longer builds a coordinate invariant (P1 skip).
+#
+# probe (before the fix):
+#   status=ok error_code=None stage=None reason_code=None calls=2
+#
+# red tests (before the fix):
+#   test_a_point_pinned_to_an_unstated_coordinate_claim_is_refused
+E   AssertionError: ok
+#   test_the_refusal_names_a_point_as_a_point_not_as_a_length
+E   AssertionError: assert 'toạ độ điểm S' in 'Để dựng hình, chương trình cần độ dài S nhưng đề bài không ghi số liệu này. …'
+#
+# First cut of the rule (refuse when the cited fact carries digits P1 cannot
+# prove) — full backend 16 failed / 6425 passed; beyond the 12 stale-candidate
+# / dirty-tree checks, four new failures:
+#   test_obligation_binding_contract::test_C2_TRU_di_dung_duong_thi_served_khong_can_net_nao
+#     fixture text "Hình trụ, mặt phẳng vuông góc trục tại trung điểm." states no
+#     number while its fact claims 5 and the points use 8 — inconsistent fixture;
+#     the text now states "bán kính đáy 5, chiều cao 8".
+#   test_point_initialization_contract::test_H2_… and
+#   test_section_discoverability_probe (2) — a FALSE refusal: fact
+#     f_diem = ["A1", "A2"] names points the text writes "A₁", "A₂"; P1's
+#     substring rule missed the subscript digits. Fixed at the P1 authority
+#     (NFKC compatibility normalization of the string rule), red test:
+#   test_ten_diem_viet_chi_so_duoi_van_chung_minh_duoc
+E   AssertionError: assert ('A1', 'A2') == ()
+#
+# After the fix: grounding closure 30, learner messages 8, literal provenance
+# 15, obligation binding 14, H2 + section probe pass.
