@@ -22,6 +22,20 @@ const DIEM: SceneObject = {
   id: "A", label: "A", type: "point3", render: "point_marker",
   origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"],
 };
+/** Vật mang MÀU KIỂU riêng (hổ phách, xanh két, tím, đỏ) — không phải khối. */
+const CO_MAU_KIEU: SceneObject[] = [
+  { id: "T", label: "Thiết diện", type: "section", render: "polygon", origin: "derived",
+    producer: "section", depends: [], closed: true, surface_role: "SECTION_REGION",
+    polygon: [["0", "0", "1"], ["1", "0", "1"], ["1", "1", "1"], ["0", "1", "1"]] },
+  { id: "BD", label: "Đường thẳng BD", type: "line3", render: "line", origin: "derived",
+    producer: "line_through", depends: [], point: ["0", "0", "0"], direction: ["1", "1", "0"] },
+  { id: "SH", label: "SH", type: "segment3", render: "segment", origin: "derived",
+    producer: "segment", depends: [], point_a: ["0", "0", "0"], point_b: ["0", "0", "2"] },
+  { id: "alpha", label: "(α)", type: "plane", render: "surface", origin: "derived",
+    producer: "plane", depends: [], point: ["0", "0", "1"], normal: ["0", "0", "1"] },
+  { id: "M", label: "M", type: "point3", render: "point_marker", origin: "derived",
+    producer: "midpoint", depends: [], xyz: ["1", "0", "0"] },
+];
 
 const gom = (o: THREE.Object3D) => {
   const ra: THREE.Object3D[] = [];
@@ -76,6 +90,23 @@ describe("W12 · khung 3D: mỗi màu một nghĩa", () => {
 
   it("ngữ cảnh cấu trúc tô nền TRUNG TÍNH, nét giữ mực", () => {
     expect(mauNen("boi_canh").s).toBeLessThan(0.25);
+  });
+
+  it("ngữ cảnh cấu trúc: thiết diện, đường, đoạn, mặt phẳng, điểm dựng cũng TRUNG TÍNH", () => {
+    // Chú giải causal hứa "Hình liên quan" = xám. Bản đầu W12 chỉ đổi NỀN, nét
+    // giữ MÀU KIỂU: viền thiết diện ngữ cảnh còn hổ phách — đọc thành "đại
+    // lượng trung gian" (sheet cross-section, e115eede).
+    for (const o of CO_MAU_KIEU) {
+      const mau = gom(buildObject3D(o, "boi_canh")!)
+        .flatMap((c) => {
+          const m = (c as THREE.Mesh).material;
+          return Array.isArray(m) ? m : m ? [m] : [];
+        })
+        .filter((m) => (m as THREE.Material & { colorWrite?: boolean }).colorWrite !== false)
+        .map((m) => hsl((m as THREE.MeshBasicMaterial).color));
+      expect(mau.length, o.id).toBeGreaterThan(0);
+      for (const c of mau) expect(c.s, o.id).toBeLessThan(0.25);
+    }
   });
 
   it("điểm đề cho không vai trò là trung tính — xanh chỉ còn nghĩa 'đang xét'", () => {

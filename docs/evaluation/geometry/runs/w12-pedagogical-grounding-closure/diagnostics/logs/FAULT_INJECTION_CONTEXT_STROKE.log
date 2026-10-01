@@ -1,0 +1,18 @@
+W12 context-stroke fix — fault injection record (offline, 0 model calls)
+test: frontend/src/simulations/domains/geometry/scene3d-causal-colors.test.tsx
+      "ngữ cảnh cấu trúc: thiết diện, đường, đoạn, mặt phẳng, điểm dựng cũng TRUNG TÍNH"
+finding: sheet cross-section (e115eede), causal state "Diện tích thiết diện": section T is
+         tier boi_canh but its outline kept the polygon type colour #f59e0b (amber), which the
+         causal legend assigns to "Đại lượng trung gian". The browser harness compared logical
+         tiers, panel classes and legend swatches, not the canvas stroke colour of context objects.
+
+red (before fix, e115eede source): RED_FRONTEND_CONTEXT_STROKE_e115eede.log
+  AssertionError: T: expected 0.9212607351973634 to be less than 0.25      (exit=1)
+
+green (fix: `net` stroke helper in buildObject3D): 7 passed (7)
+
+injections (one branch reverted to `mau ?? MAU.<type>` at a time, then restored):
+  line   branch  -> AssertionError: BD: expected 0.7744248444232539 to be less than 0.25
+  plane  branch  -> AssertionError: alpha: expected 0.8325593275892748 to be less than 0.25
+  point  branch  -> AssertionError: M: expected 0.7222242812623781 to be less than 0.25
+after restore: 7 passed (7)

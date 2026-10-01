@@ -1,0 +1,27 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx (7 tests | 1 failed) 37ms
+     × ngữ cảnh cấu trúc: thiết diện, đường, đoạn, mặt phẳng, điểm dựng cũng TRUNG TÍNH 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-causal-colors.test.tsx > W12 · khung 3D: mỗi màu một nghĩa > ngữ cảnh cấu trúc: thiết diện, đường, đoạn, mặt phẳng, điểm dựng cũng TRUNG TÍNH
+AssertionError: T: expected 0.9212607351973634 to be less than 0.25
+ ❯ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx:108:46
+    106|         .map((m) => hsl((m as THREE.MeshBasicMaterial).color));
+    107|       expect(mau.length, o.id).toBeGreaterThan(0);
+    108|       for (const c of mau) expect(c.s, o.id).toBeLessThan(0.25);
+       |                                              ^
+    109|     }
+    110|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  15:01:37
+   Duration  550ms (transform 185ms, setup 44ms, import 281ms, tests 37ms, environment 0ms)
+
+exit=1

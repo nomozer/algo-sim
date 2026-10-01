@@ -594,12 +594,17 @@ export function buildObject3D(
   /** Cạnh chuẩn được tô qua vật khác (đoạn/đáy trùng cạnh) → màu tô. */
   highlightedEdgeIds: ReadonlySet<string> | ReadonlyMap<string, number> = new Set(),
 ): THREE.Object3D | null {
-  // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nét giữ mực, chỉ nền đổi sắc.
+  // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nền xám nhạt, nét xám trung tính.
+  // Cạnh khối vốn đã là mực trung tính nên giữ nguyên; còn MÀU KIỂU (hổ phách
+  // thiết diện, tím mặt phẳng, xanh két đường, đỏ điểm dựng) phải nhường, vì chú
+  // giải causal hứa "Hình liên quan" = xám (W12: viền thiết diện hổ phách đọc
+  // thành "đại lượng trung gian").
   const boiCanh = noiBat === "boi_canh";
   if (boiCanh) noiBat = false;
   const mau = noiBat === true ? MAU.highlight
     : noiBat ? MAU_TANG[noiBat as Exclude<TangNhanManh, "boi_canh">] : undefined;
   const nen = (macDinh: number) => mau ?? (boiCanh ? MAU_NEN_BOI_CANH : macDinh);
+  const net = (macDinh: number) => mau ?? (boiCanh ? MAU_VAI_TRO.boi_canh : macDinh);
 
   if (o.render === "point_marker" && o.xyz) {
     // HAI hình, một vật: chấm NHÌN THẤY giữ nguyên cỡ, cộng một hình cầu VÔ
@@ -612,7 +617,7 @@ export function buildObject3D(
     // `depthWrite: false`.
     const nhom = new THREE.Group();
     const m = new THREE.MeshStandardMaterial({
-      color: mau ?? (o.origin === "free" ? MAU.free : MAU.derived),
+      color: o.origin === "free" ? mau ?? MAU.free : net(MAU.derived),
     });
     const mesh = new THREE.Mesh(new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12), m);
     // Cỡ THẬT theo px màn hình đặt mỗi khung (`datCoDauDinh`, w11).
@@ -639,7 +644,7 @@ export function buildObject3D(
     const a = p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
     const b = p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
-    const duong = duongHaiLuot(g, mau ?? MAU.line,
+    const duong = duongHaiLuot(g, net(MAU.line),
       beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
       `line:${o.id}`, true);
     // Cùng lẽ với mặt phẳng: `line3` vô hạn, hai đầu mút là quyết định trình
@@ -667,7 +672,7 @@ export function buildObject3D(
         })), `segment:${o.id}:proxy`)
       : duongHaiLuot(
           g,
-          mau ?? MAU.line,
+          net(MAU.line),
           (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
           `segment:${o.id}`,
           true,
@@ -693,7 +698,7 @@ export function buildObject3D(
       const lineMarker = new THREE.Line(
         gMarker,
         new THREE.LineBasicMaterial({
-          color: mau ?? MAU.line,
+          color: net(MAU.line),
           linewidth: 1.5,
         }),
       );
@@ -721,7 +726,7 @@ export function buildObject3D(
     const canh = khung ? khung.canh : PLANE_DISPLAY_SIZE;
     const g = new THREE.PlaneGeometry(canh, canh);
     const m = new THREE.MeshStandardMaterial({
-      color: mau ?? MAU.surface,
+      color: net(MAU.surface),
       transparent: true,
       opacity: noiBat ? 0.38 : 0.2,
       side: THREE.DoubleSide,
@@ -744,7 +749,7 @@ export function buildObject3D(
     const day = beDayNet(diemNen, r);
     const trong = Math.max(0, r - day / 2), ngoai = r + day / 2;
     const chungVanh = {
-      color: mau ?? MAU.line, side: THREE.DoubleSide,
+      color: net(MAU.line), side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     // Cùng lối với elip: phần THẤY là vành đầy, phần KHUẤT là vành ngắt quãng
@@ -831,7 +836,7 @@ export function buildObject3D(
       return bg;
     };
     const chungVanh = {
-      color: mau ?? MAU.line, side: THREE.DoubleSide,
+      color: net(MAU.line), side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     const nhomVanh = new THREE.Group();
@@ -872,7 +877,7 @@ export function buildObject3D(
       ? new THREE.Vector3(...toVec3(o.apex_or_top))
       : null;
     const m = new THREE.MeshStandardMaterial({
-      color: mau ?? MAU.surface,
+      color: net(MAU.surface),
       transparent: true,
       opacity: noiBat ? 0.5 : 0.3,
       side: THREE.DoubleSide,
@@ -977,7 +982,7 @@ export function buildObject3D(
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
     g.computeVertexNormals();
     return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
-      color: mau ?? MAU.polygon,
+      color: nen(MAU.polygon),
       transparent: true,
       opacity: noiBat ? 0.55 : 0.14,
       side: THREE.DoubleSide,
@@ -993,7 +998,7 @@ export function buildObject3D(
       colorWrite: false, depthWrite: false, transparent: true, opacity: 0,
       linewidth: 6,
     } : {
-      color: mau ?? MAU.line, linewidth: 2,
+      color: net(MAU.line), linewidth: 2,
     })), `edge:${o.id}`);
   }
 
@@ -1004,7 +1009,7 @@ export function buildObject3D(
     const vong = o.closed === false ? pts : [...pts, pts[0]];
     const gLine = new THREE.BufferGeometry().setFromPoints(vong);
     const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
-      color: mau ?? MAU.polygon, linewidth: 2,
+      color: net(MAU.polygon), linewidth: 2,
     }));
     const ownsBoundary = !(
       o.surface_role === "BASE_REGION"
