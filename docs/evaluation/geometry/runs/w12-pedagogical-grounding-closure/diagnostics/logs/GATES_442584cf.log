@@ -1,0 +1,33 @@
+# W12 verification gates at 442584cfbbd0fa82674c42c43550429732d3e2c7 in 'D:/tmp/w12 space/algo-sim' (clean detached worktree), 0 model calls
+## git status (before)
+0
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 103 file, 548f5b3b9ff89158…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 105 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git diff after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since a4fd5fec: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+## CACHE_VERSION
+712:CACHE_VERSION = "105"
+## section regression (PLANE_DOES_NOT_CUT)
+50 passed in 4.07s
+## git diff --check a4fd5fec..HEAD
+exit=2 (0 = no whitespace errors)
+## node harness tests
+ℹ tests 38
+ℹ pass 36
+ℹ fail 0
+## git status (after)
+0
+## git diff --check a4fd5fec..HEAD excluding captured logs (*.log keep verbatim pytest output with trailing spaces)
+exit=0
+## node harness tests in the main tree (frontend/scripts identical to 442584cf; the worktree skips two interpreter tests that need a repo-local venv)
+tests 38 · pass 38 · fail 0 · skipped 0

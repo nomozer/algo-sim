@@ -51,6 +51,9 @@ HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (w10 → READY_FOR_HUMAN_VI
   │  review người: FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR (W10-H1…H9: chóp/lăng trụ tam giác không công thức, ảnh xoay gần suy biến, …)
   ▼ CORRECTED_BY · SUPERSEDED_FOR_HUMAN_VERDICT
 W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11 → READY_FOR_HUMAN_VISUAL_REVIEW)
+  │  review người: NEEDS_CHANGES (W11-H1…H5: timeline trộn bước tính, bước tĩnh, lớp lời giải, cam đậm hai nghĩa, GIVEN không có trong đề)
+  ▼ CORRECTED_BY · SUPERSEDED_FOR_HUMAN_VERDICT
+W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12 → READY_FOR_HUMAN_VISUAL_REVIEW)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -717,9 +720,30 @@ W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11 → READY_FOR_HUMA
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 8539acbc… -> df04a613…, refrozen once)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 103 -> 104; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (human review NEEDS_CHANGES, W11-H1…H5, recorded additively in the w12 run; this run's files stay byte-identical)
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE — its images are no longer the ones a reviewer should judge; its automation stays valid for the w11 candidate `df04a613…`, except that its LLM route served a GIVEN length absent from the text (W11-H5, closed in w12)
 - **CORRECTS:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (human review FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR)
 - **SUPERSEDES:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE for the human verdict only (w10, w09, the occlusion wave and the frozen registry remain byte-identical; the registry's expectations transfer under `DECLARED_CAMERA_CHANGE`)
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **THESIS_USE:** HISTORICAL_AUTOMATION — human visual review NEEDS_CHANGES afterwards (W11-H1…H5); do not cite as visual acceptance.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/FORMULA_PROVENANCE_TRACE_BEFORE.json` · `diagnostics/FORMULA_PROVENANCE_TRACE_AFTER.json` · `inputs/W10_HUMAN_VISUAL_REVIEW.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE
+- **DATE:** 2026-09-30 … 2026-10-01
+- **REPORT:** docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/
+- **START_BASE:** a4fd5fec
+- **CODE_COMMIT:** 79eb1e59 · 8aaeae80 (backend) · 98b505ef · 233f8720 · 4014f311 (frontend) · d17550c3 (cache)
+- **MEASUREMENT_COMMIT:** c243968b1ec263d2ab48040d569eec45efe9cfaa
+- **EVIDENCE_COMMIT_ROLE:** 442584cf
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash df04a613… -> 8ffd6d46… -> 548f5b3b…, frozen three times; the last freeze moved only the product commit 8aaeae80 -> 4014f311)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 104 -> 105; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (human review NEEDS_CHANGES)
+- **SUPERSEDES:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW for the human verdict only (w11, w10, w09, the occlusion wave and the frozen registry remain byte-identical); inside this run the attempts BROWSER-1 (e115eede) and BROWSER-2 (7b039621, committed in 399fc423) are superseded — `diagnostics/MEASUREMENT_ATTEMPTS.json`
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `results/BACKEND_COUNT_RECONCILIATION.json` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/hue-gate-known-answer-e115eede/KNOWN_ANSWER.json` · `diagnostics/WORKTREE_CLEANUP.json` · `inputs/W11_HUMAN_VISUAL_REVIEW.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

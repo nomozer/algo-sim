@@ -42,6 +42,18 @@
 - **acceptance:** root cause named; 5 consecutive authoritative runs without an orbit abort.
 - **verify:** `node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root <inputs> --ra <out>` (x5)
 
+### ISSUE-EVAL-CDP-SEND-NO-TIMEOUT
+- **description:** `BrowserSession._send` (`frontend/scripts/browser-runner.mjs`) returns a promise with no deadline, and pending requests are never rejected when the DevTools socket closes or errors. One DevTools request whose response never arrives stalls a browser run forever instead of failing it with a reason.
+- **evidence:** w12 attempt PLAYBACK-2a (`docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/PLAYBACK_attempt1_HANG_7b039621.log`, `diagnostics/MEASUREMENT_ATTEMPTS.json`): the learner runner wrote all nine captures of cuboid/desktop, then printed nothing for about 20 minutes in an orbit lap; a separate DevTools probe of the same page answered at once (render loop running, "Bước 5/5", nothing selected). The rerun at the same commit passed 12/12 under a `timeout` watchdog.
+- **impact:** A stalled run produces no verdict and has to be found and killed by hand; until then authoritative browser runs need an external watchdog.
+- **scope:** Browser evidence harness (`browser-runner.mjs`, used by the suite and the playback runner).
+- **status:** OPEN — found in w12; the harness was not changed in that wave (a deadline turns a hang into a failure, not into a pass).
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO
+- **acceptance:** every `_send` has a deadline and pending requests are rejected on socket close/error; a run fails with a named reason instead of hanging.
+- **verify:** a node test that drops one DevTools response and expects a rejection within the deadline.
+
 ### ISSUE-EVAL-OCCLUSION-TERMINAL-CAMERA-IDENTITY
 - **description:** Fixed-camera evidence đang băm snapshot trước khi OrbitControls damping đạt terminal state; 2 cases (`triangular_prism`, `cube`) lệch frozen identity.
 - **evidence:** `docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/results/VERIFICATION_SUMMARY.json` (`FROZEN_CAMERA_IDENTITY_MISMATCH`).
@@ -224,7 +236,7 @@
 
 ### ISSUE-OPS-ORPHANED-TEMP-DIRECTORIES
 - **description:** Các thư mục tạm được tạo trong quá trình chạy test worktree (ví dụ `D:/tmp/mvep-*`, `D:/tmp/algo-sim-*`) có thể tồn đọng nếu quy trình dọn dẹp gặp sự cố ngoài ý muốn.
-- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước. w10 để lại, NGOÀI git: `D:/tmp/w10-out` và `D:/tmp/w10-build.log` (bản dựng/thử nghiệm dev), `D:/tmp/w10-freeze4` (worktree đóng băng đã gỡ khỏi git; xoá thư mục bị từ chối vì một tiến trình đang giữ — chỉ còn bản sao file đã commit), `D:/Documents/projects/tmp-dist-exp` (bản dựng thử nghiệm depth test). Không chứa gì cần giữ; mọi bằng chứng đã nằm trong run w10. w11 để lại: hai worktree detached CÒN ĐĂNG KÝ — `D:/tmp/w11-d1` (đo) và `D:/tmp/w11 space/algo-sim` (T3) — gỡ bằng `git worktree remove <path>`; `D:/tmp/w11-before` (đã gỡ đăng ký, xoá bị từ chối quyền); `D:/tmp/w11-gen`, `D:/tmp/w11-attempt1`, `D:/tmp/w11-*.log`, `D:/tmp/w11-schema-*.txt`. Mọi thứ cần giữ đã nằm trong run w11.
+- **evidence:** Thư mục `D:/tmp/` chứa các artifacts bằng chứng máy từ các wave trước. w10 để lại, NGOÀI git: `D:/tmp/w10-out` và `D:/tmp/w10-build.log` (bản dựng/thử nghiệm dev), `D:/tmp/w10-freeze4` (worktree đóng băng đã gỡ khỏi git; xoá thư mục bị từ chối vì một tiến trình đang giữ — chỉ còn bản sao file đã commit), `D:/Documents/projects/tmp-dist-exp` (bản dựng thử nghiệm depth test). Không chứa gì cần giữ; mọi bằng chứng đã nằm trong run w10. w11 để lại: hai worktree detached CÒN ĐĂNG KÝ — `D:/tmp/w11-d1` (đo) và `D:/tmp/w11 space/algo-sim` (T3) — gỡ bằng `git worktree remove <path>`; `D:/tmp/w11-before` (đã gỡ đăng ký, xoá bị từ chối quyền); `D:/tmp/w11-gen`, `D:/tmp/w11-attempt1`, `D:/tmp/w11-*.log`, `D:/tmp/w11-schema-*.txt`. Mọi thứ cần giữ đã nằm trong run w11. **w12 (2026-10-01) dọn:** cả tám worktree tạm đã đăng ký (hai của w11, sáu của w12) đã gỡ bằng `git worktree remove <đường dẫn>`, không ép, sau khi so từng file chưa commit với blob đã commit (0 artifact duy nhất có rủi ro) — chi tiết `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/WORKTREE_CLEANUP.json`. Còn lại, KHÔNG đăng ký, đánh dấu `SAFE_TO_DELETE` (không tự xoá): thư mục rỗng `D:/tmp/w11-d1`, `D:/tmp/w11 space`, `D:/tmp/w12 space`; `D:/tmp/w11-before` (383 MB), `D:/tmp/w10-freeze4` (324 MB), `D:/tmp/w11-attempt1`, `D:/tmp/w11-gen`, `D:/tmp/w10-out` và các log `D:/tmp/w10-*.log`, `D:/tmp/w11-*`, `D:/tmp/w12-backend-*.log`.
 - **impact:** Chiếm dụng dung lượng đĩa và có nguy cơ gây nhầm lẫn nếu không được quản lý vòng đời rõ ràng.
 - **scope:** Scripts & Test harnesses
 - **status:** OPEN
@@ -257,11 +269,23 @@
 - **evidence:** `docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/INVENTED_HEIGHT_PROBE_48c676d5.log` (offline, 0 model calls): prism contract with the `AD` invariant removed and `AD = 5` removed from the text — compiler route `FALLBACK_TO_LLM` (`REQUIRED_LENGTH_MISSING AD`), the program is served `ok` because the analyze fact still carries `5`; the pyramid analogue is refused (`input_not_grounded`) because its SA fact carries no value. The fact-value channel dates from `2bdd2f73` (before w11); the w11 channel `_do_dai_bat_bien` requires a server-extracted invariant and does not widen this.
 - **impact:** A hallucinated length in the analyze output is not caught deterministically on the LLM route; the opt-in compiler route fails closed.
 - **scope:** `backend/app/simulation/semantic_program/grounding_gate.py` (fact-value channel) and analyze-contract provenance.
-- **status:** OPEN — found in w11, not changed (it is a grounding policy change, measured separately).
+- **status:** RESOLVED (w12, `79eb1e59` + `8aaeae80`; `CACHE_VERSION` 104 → 105 in `d17550c3`, served → rejected) — a GIVEN length (integer, decimal with `.` or `,`, fraction, radical) and every P1-only atom must be backed by the problem text itself (`gia_tri_khong_chung_minh_duoc`, recomputed from the text, shared by the frozen boundary, the gate and the invariant builders); a point pinned to a coordinate claim whose digits the text does not state is refused. Stable codes `GIVEN_VALUE_NOT_IN_SOURCE` / `SOURCE_SPAN_MISMATCH` / `SOURCE_EVIDENCE_CONFLICT`, never sent to repair; the envelope carries `reason_code` + `reason_subjects` and a point- or segment-aware Vietnamese message. The probe's prism case now returns `unsupported` (`input_not_grounded`, `GIVEN_VALUE_NOT_IN_SOURCE`, subject `AD`). Evidence: `backend/tests/geometry/test_source_grounding_closure.py`; red logs and the browser negatives (one ungrounded fixture per family, refused with no canvas and no answer) in `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`. Residual: `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after human visual review
 - **default_switch_blocker:** NO (an argument for compiler-first)
 - **acceptance:** a GIVEN `XY_length` whose literal has no server-extracted length invariant is refused or labelled; the probe returns `unsupported` for the prism case.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_source_grounding_closure.py -q`
+
+### ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION
+- **description:** After w12 a length the problem does not state can no longer reach the answer as a GIVEN, but it can still fix a dimension through coordinates: a program that places a vertex with `LAYOUT_DERIVED` provenance or a `model_assumption` (the LLM's documented channel for free choices of axes) can encode an unstated height, and the volume follows from those coordinates. Neither channel claims GIVEN, so the grounding gate has nothing to check.
+- **evidence:** `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/ASSUMPTION_CHANNEL_PROBE_79eb1e59.log` (offline, 0 model calls): prism text without "AD = 5" — the program with the `AD_length` GIVEN is refused (`GIVEN_VALUE_NOT_IN_SOURCE`); the same placement through `LAYOUT_DERIVED` vertices or through `model_assumption` is served with `V = 30`.
+- **impact:** A hallucinated dimension can still surface as a coordinate choice on the LLM route. It is never labelled as given by the problem, and the compiler route does not use this channel.
+- **scope:** `backend/app/simulation/semantic_program/` (which free coordinate choices may carry a metric the text does not state).
+- **status:** OPEN — found in w12; changing what a layout or an assumption may decide is a separate grounding-policy decision, measured separately.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after human visual review
+- **default_switch_blocker:** NO (an argument for compiler-first)
+- **acceptance:** a dimension that the answer depends on is either stated in the text, derived from stated facts, or shown to the learner as an assumption; the probe's layout and assumption variants are refused or labelled.
 - **verify:** rerun the script embedded in the probe log.
 
 ### ISSUE-OPS-OFFLINE-SAMPLES-STALE

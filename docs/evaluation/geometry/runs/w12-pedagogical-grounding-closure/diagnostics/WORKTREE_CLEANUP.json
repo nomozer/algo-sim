@@ -1,0 +1,87 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Only registered worktrees are removed, each with `git worktree remove <exact path>` and only when clean; nothing is forced. Every untracked or modified file is first compared with a committed blob (git hash-object vs git rev-parse <commit>:<path>); only verified duplicates and this wave's own superseded outputs are deleted, by exact path list (no wildcard). node_modules junctions are unlinked first (DirectoryInfo.Delete on the reparse point), so the main tree's node_modules is never followed. Unregistered directories are only marked SAFE_TO_DELETE.",
+  "final_state": "git worktree list = the main working tree only; git worktree prune found nothing",
+  "temp_worktrees_found": 8,
+  "temp_worktrees_removed": 8,
+  "unique_artifacts_at_risk": 0,
+  "worktrees": [
+    {
+      "path": "D:/tmp/w11 space/algo-sim",
+      "origin": "w11 T3 worktree (left registered by w11)",
+      "head": "5e3dbab4 (reachable from the branch)",
+      "state_before": "clean",
+      "action": "git worktree remove",
+      "result": "REMOVED (empty parent D:/tmp/w11 space left)"
+    },
+    {
+      "path": "D:/tmp/w11-d1",
+      "origin": "w11 measurement worktree (left registered by w11)",
+      "head": "ac19e03d (reachable)",
+      "state_before": "338 untracked files",
+      "verification": "all 338 blob-identical to committed w11 evidence (diagnostics/WORKTREE_W11_D1_UNTRACKED_COMPARE.tsv)",
+      "action": "deleted by exact list, then git worktree remove",
+      "result": "REGISTRATION REMOVED; the empty directory could not be deleted (held by a process at the time) — SAFE_TO_DELETE"
+    },
+    {
+      "path": "D:/tmp/w12-base",
+      "origin": "w12 red-test worktree at a4fd5fec (start of the wave)",
+      "state_before": "1 modified + 4 untracked test files; node_modules junction",
+      "verification": "all 5 blob-identical to the red-test commits 1fd55d99 / fb4ea271",
+      "action": "junction unlinked; modified file restored; 4 copies deleted by exact path; git worktree remove",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w12-freeze",
+      "origin": "w12 candidate freeze worktree (three freezes: d17550c3, 8aaeae80, 4014f311)",
+      "state_before": "EVALUATION_CANDIDATE.json modified (output of the third freeze)",
+      "verification": "identical modulo CRLF to the committed c243968b version",
+      "action": "file restored; git worktree remove",
+      "result": "REMOVED (the directory removal first failed because the shell's working directory was inside it; removed after leaving it)"
+    },
+    {
+      "path": "D:/tmp/w12-measure",
+      "origin": "w12 measurement worktree at e115eede (BROWSER-1, superseded)",
+      "state_before": "324 untracked outputs; node_modules junction; ignored dist/",
+      "verification": "23 logs and fixtures blob-identical to 399fc423; the 4 result JSONs copied into diagnostics/attempt-e115eede/ (committed); 297 images = superseded attempt-1 screenshots, not kept (w11 policy: superseded attempts keep JSON + logs); their key frames and sheet hashes are committed (diagnostics/attempt-e115eede/)",
+      "action": "outputs deleted by exact list; junction unlinked; git worktree remove",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w12-final",
+      "origin": "w12 authoritative measurement worktree (7b039621, then 6569ed41, then c243968b)",
+      "state_before": "74 regenerated tracked outputs + 5 untracked logs; node_modules junction",
+      "verification": "all 79 blob-identical to the evidence commit 442584cf; 327 earlier untracked outputs were blob-identical to c243968b before the switch",
+      "action": "tracked outputs restored, 5 logs deleted by exact path, junction unlinked, git worktree remove",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w12 space/algo-sim",
+      "origin": "w12 T3 worktree (path WITH a space), node_modules from npm ci --offline",
+      "state_before": "clean at 442584cf (T3 PASS; identity gates)",
+      "action": "git worktree remove",
+      "result": "REMOVED (empty parent D:/tmp/w12 space left)"
+    },
+    {
+      "path": "D:/tmp/w12-count",
+      "origin": "w12 base collect-only worktree at a4fd5fec (backend count reconciliation)",
+      "state_before": "clean",
+      "action": "git worktree remove",
+      "result": "REMOVED"
+    }
+  ],
+  "unregistered_safe_to_delete": [
+    {"path": "D:/tmp/w11-d1", "content": "empty directory"},
+    {"path": "D:/tmp/w11 space", "content": "empty directory"},
+    {"path": "D:/tmp/w12 space", "content": "empty directory"},
+    {"path": "D:/tmp/w11-before", "content": "5807 files, 383 MB — w11 pre-change checkout, deregistered by w11 (delete refused then)"},
+    {"path": "D:/tmp/w11-attempt1", "content": "112 files, 19 MB — w11 superseded attempt outputs (its JSON is in the w11 run)"},
+    {"path": "D:/tmp/w11-gen", "content": "13 files — w11 fixture generation scratch"},
+    {"path": "D:/tmp/w10-freeze4", "content": "5449 files, 324 MB — w10 freeze checkout, deregistered by w10"},
+    {"path": "D:/tmp/w10-out", "content": "66 files — w10 build/test scratch"},
+    {"path": "D:/tmp/w10-build.log, D:/tmp/w11-*.log, D:/tmp/w11-*.txt", "content": "w10/w11 gate logs and collect lists (their authoritative copies are in the w10/w11 runs)"},
+    {"path": "D:/tmp/w12-backend-1.log … w12-backend-3.log", "content": "early w12 backend test logs written before the session switched to its scratch directory; superseded by the T3 logs of this run"}
+  ],
+  "not_in_scope": "older D:/tmp/algo-sim-*, D:/tmp/algosim-* and loose scripts predate w10 (ISSUE-OPS-ORPHANED-TEMP-DIRECTORIES); not inspected",
+  "processes_killed": "only this wave's own stalled learner-playback run (node + headless Chrome on DevTools port 9238, PLAYBACK-2a); nothing else"
+}

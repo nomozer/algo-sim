@@ -1,0 +1,517 @@
+{
+  "schema_version": "verification-summary/1",
+  "task": "W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE",
+  "measurement_commit_sha": "c243968b1ec263d2ab48040d569eec45efe9cfaa",
+  "playback_measurement_commit_sha": "c243968b1ec263d2ab48040d569eec45efe9cfaa",
+  "occlusion_measurement_commit_sha": "c243968b1ec263d2ab48040d569eec45efe9cfaa",
+  "candidate_commit_sha": "4014f311e1df7082eecbf090d7e62c96217e0ec9",
+  "candidate_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "product_commit_sha": "4014f311e1df7082eecbf090d7e62c96217e0ec9",
+  "browser_suite": {
+    "pass": true,
+    "positive": "12/12",
+    "negative": "12/12",
+    "positive_assertions": {
+      "topology": "12/12",
+      "labels": "12/12",
+      "css_readiness": "12/12",
+      "neutral_has_no_emphasis": "12/12",
+      "vertex_marker_px": "12/12",
+      "solution_final": "12/12",
+      "immutable_120_frames": "12/12",
+      "causal_closure": "12/12",
+      "emphasis_reset_before_rotation": "12/12",
+      "orbit": "12/12",
+      "formation": "12/12",
+      "single_analyze_call": "12/12",
+      "no_uncaught_exception": "12/12",
+      "no_failed_api_call": "12/12",
+      "no_serious_console_error": "12/12",
+      "evidence_gates": "12/12",
+      "section_vertices": "2/2"
+    },
+    "negative_assertions": {
+      "structured_refusal": "12/12",
+      "learner_message": "12/12",
+      "canvas_absent": "12/12",
+      "answer_absent": "12/12",
+      "no_document_overflow": "12/12",
+      "no_raw_token_leakage": "12/12",
+      "contract_gate": "12/12",
+      "single_analyze_call": "12/12",
+      "no_uncaught_exception": "12/12",
+      "no_failed_api_call": "12/12",
+      "no_serious_console_error": "12/12"
+    },
+    "evidence_gate_reason_codes": [],
+    "geometry_timeline": {
+      "triangular_pyramid/desktop": {
+        "expected_steps": 3,
+        "observed_steps": 3,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "3/3",
+        "forward_backward": "3/3",
+        "end_locked": true
+      },
+      "triangular_pyramid/mobile": {
+        "expected_steps": 3,
+        "observed_steps": 3,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "3/3",
+        "forward_backward": "3/3",
+        "end_locked": true
+      },
+      "triangular_prism/desktop": {
+        "expected_steps": 3,
+        "observed_steps": 3,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "3/3",
+        "forward_backward": "3/3",
+        "end_locked": true
+      },
+      "triangular_prism/mobile": {
+        "expected_steps": 3,
+        "observed_steps": 3,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "3/3",
+        "forward_backward": "3/3",
+        "end_locked": true
+      },
+      "rectangular_pyramid/desktop": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "rectangular_pyramid/mobile": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "cuboid/desktop": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "cuboid/mobile": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "cube/desktop": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "cube/mobile": {
+        "expected_steps": 5,
+        "observed_steps": 5,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "5/5",
+        "forward_backward": "5/5",
+        "end_locked": true
+      },
+      "cross_section/desktop": {
+        "expected_steps": 10,
+        "observed_steps": 10,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "10/10",
+        "forward_backward": "10/10",
+        "end_locked": true
+      },
+      "cross_section/mobile": {
+        "expected_steps": 10,
+        "observed_steps": 10,
+        "static_frames": 0,
+        "measurement_geometry_steps": 0,
+        "final_result_geometry_steps": 0,
+        "solution_in_sync": "10/10",
+        "forward_backward": "10/10",
+        "end_locked": true
+      }
+    },
+    "solution_final": {
+      "answer_once": "12/12",
+      "in_sync": "12/12",
+      "panel_over_canvas": 0
+    },
+    "causal_tiers_match": "12/12",
+    "solution_row_classes_match": "12/12",
+    "role_colours_panel_and_legend": "12/12",
+    "canvas_role_hues": {
+      "triangular_pyramid/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 538421,
+        "masked_overlays": 6,
+        "tolerance": 108,
+        "pass": true
+      },
+      "triangular_pyramid/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 560998,
+        "masked_overlays": 6,
+        "tolerance": 112,
+        "pass": true
+      },
+      "triangular_prism/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 537451,
+        "masked_overlays": 8,
+        "tolerance": 107,
+        "pass": true
+      },
+      "triangular_prism/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 557214,
+        "masked_overlays": 8,
+        "tolerance": 111,
+        "pass": true
+      },
+      "rectangular_pyramid/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 537959,
+        "masked_overlays": 7,
+        "tolerance": 108,
+        "pass": true
+      },
+      "rectangular_pyramid/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 558845,
+        "masked_overlays": 7,
+        "tolerance": 112,
+        "pass": true
+      },
+      "cuboid/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 536134,
+        "masked_overlays": 10,
+        "tolerance": 107,
+        "pass": true
+      },
+      "cuboid/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 551749,
+        "masked_overlays": 10,
+        "tolerance": 110,
+        "pass": true
+      },
+      "cube/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 536203,
+        "masked_overlays": 10,
+        "tolerance": 107,
+        "pass": true
+      },
+      "cube/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 551788,
+        "masked_overlays": 10,
+        "tolerance": 110,
+        "pass": true
+      },
+      "cross_section/desktop": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 537958,
+        "masked_overlays": 7,
+        "tolerance": 108,
+        "pass": true
+      },
+      "cross_section/mobile": {
+        "cam": 0,
+        "xanh": 0,
+        "pixels": 558842,
+        "masked_overlays": 7,
+        "tolerance": 112,
+        "pass": true
+      }
+    },
+    "dash_signature_preserved": "12/12",
+    "raw_token_leakage": 0,
+    "uncaught_exceptions": 0,
+    "serious_console_events": 0,
+    "failed_api_calls": 0,
+    "negatives": {
+      "triangular_pyramid/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "SA"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "triangular_pyramid/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "SA"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "triangular_prism/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AD"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AD nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "triangular_prism/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AD"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AD nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "rectangular_pyramid/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "SA"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "rectangular_pyramid/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "SA"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cuboid/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AA′"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AA′ nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cuboid/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AA′"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AA′ nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cube/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AB"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AB nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cube/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "AB"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AB nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cross_section/desktop": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "S"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "cross_section/mobile": {
+        "pass": true,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "error_code": "input_not_grounded",
+        "stage_reached": "grounding",
+        "reason_subjects": [
+          "S"
+        ],
+        "canvas": false,
+        "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      }
+    },
+    "application_llm_calls": 0
+  },
+  "occlusion": {
+    "pass": true,
+    "visual_states_product_equals_oracle": "24/24",
+    "performance_records": "12/12",
+    "failures": 0,
+    "frozen_expectations": [
+      "triangular_pyramid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "triangular_prism/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "rectangular_pyramid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cuboid/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cube/desktop/neutral_final:DECLARED_CAMERA_CHANGE",
+      "cross_section/desktop/neutral_final:DECLARED_CAMERA_CHANGE"
+    ],
+    "declared_camera_change": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS"
+  },
+  "learner_playback": {
+    "pass": true,
+    "runs": "12/12",
+    "geometry_steps": {
+      "triangular_pyramid/desktop": 3,
+      "triangular_pyramid/mobile": 3,
+      "triangular_prism/desktop": 3,
+      "triangular_prism/mobile": 3,
+      "rectangular_pyramid/desktop": 5,
+      "rectangular_pyramid/mobile": 5,
+      "cuboid/desktop": 5,
+      "cuboid/mobile": 5,
+      "cube/desktop": 5,
+      "cube/mobile": 5,
+      "cross_section/desktop": 10,
+      "cross_section/mobile": 10
+    },
+    "per_check": {
+      "starts_at_step_zero": "12/12",
+      "no_causal_selection": "12/12",
+      "detail_panel_stays_closed": "12/12",
+      "advances_one_step_at_a_time": "12/12",
+      "reaches_final_step": "12/12",
+      "stops_at_final_step": "12/12",
+      "step_count_is_geometry_steps": "12/12",
+      "every_geometry_step_changes_the_figure": "12/12",
+      "solution_in_sync_with_geometry_step": "12/12",
+      "final_result_shown_once": "12/12",
+      "replay_resets_step_selection_highlight": "12/12",
+      "orbit_preserves_timeline": "12/12",
+      "no_uncaught_exception": "12/12",
+      "causal_layers_dim_outside": "12/12",
+      "close_panel_restores_neutral": "12/12",
+      "neutral_final_view_quality": "12/12",
+      "rotated_neutral_non_degenerate": "12/12",
+      "vertex_marker_px": "12/12",
+      "orbit_repeatable": "12/12"
+    },
+    "orbit_laps": "60/60",
+    "orbit_repeat_per_run": 5,
+    "playback_interval_ms": 1400
+  },
+  "hidden_edge_crops": {
+    "count": 64,
+    "all_endpoints_inside": true,
+    "oracle_disagreements": 0,
+    "duplicate_owner_edges": 0,
+    "family_sheets": {
+      "triangular_pyramid": "images/triangular-pyramid/SHEET.png",
+      "triangular_prism": "images/triangular-prism/SHEET.png",
+      "rectangular_pyramid": "images/rectangular-pyramid/SHEET.png",
+      "cuboid": "images/cuboid/SHEET.png",
+      "cube": "images/cube/SHEET.png",
+      "cross_section": "images/cross-section/SHEET.png"
+    }
+  },
+  "other_gates": {
+    "t3_full_gate": {
+      "commit": "442584cf",
+      "worktree": "D:/tmp/w12 space/algo-sim (path WITH a space)",
+      "result": "FULL_PRODUCT_GATE_PASS",
+      "pytest": "6443 passed / 0 failed (1 skipped, 1 deselected)",
+      "vitest": "1010/1010 (67 files)",
+      "typecheck_build": "PASS",
+      "demo_replay": "5/5",
+      "crash_surface": "PASS",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_442584cf.log"
+    },
+    "t3_before_refreeze": {
+      "commit": "399fc423",
+      "result": "FULL_PRODUCT_GATE_FAIL",
+      "pytest": "8 failed / 6435 passed — all candidate verify (product_commit_sha)",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_399fc423_FAIL_CANDIDATE.log"
+    },
+    "candidate_verify": "PASS — tree 548f5b3b9ff89158…, 103 files, product commit 4014f311",
+    "cache_identity_verify": "PASS — CACHE_VERSION 105, semantic environment b1714b566e25c912…",
+    "schema_export_twice": "byte-identical (both targets d852b47c08b7ac0e…), no git diff",
+    "default_mode": "LLM_ONLY — routing.py CHE_DO_MAC_DINH unchanged since a4fd5fec; geometry_compiler not referenced from app/ai or main.py",
+    "section_regression": "50 passed (test_section, test_section_capability, test_generic_tier_a_fixture_generator); the generator asserts PLANE_DOES_NOT_CUT",
+    "git_diff_check": "a4fd5fec..442584cf clean outside verbatim captured pytest logs",
+    "node_harness_tests": "38/38 (main tree, frontend/scripts identical to 442584cf); the T3 worktree skips 2 interpreter tests that need a repo-local venv",
+    "hue_gate_known_answer": "KNOWN_ANSWER_REPRODUCED — diagnostics/hue-gate-known-answer-e115eede/KNOWN_ANSWER.json",
+    "context_stroke_unit_test": "red on the section outline at e115eede; line, plane and point branch injections each red on their own fixture — diagnostics/logs/FAULT_INJECTION_CONTEXT_STROKE.log",
+    "gates_log": "diagnostics/logs/GATES_442584cf.log",
+    "live_gemini_requests": 0
+  }
+}

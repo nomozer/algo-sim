@@ -1411,6 +1411,29 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE (human review FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
+- **HUMAN_REVIEW_AFTERWARDS:** NEEDS_CHANGES, W11-H1…H5 — timeline mixes construction with calculation steps, static steps, the solution layer, dark orange with two meanings, a GIVEN length not in the problem (recorded additively in the w12 run, `inputs/W11_HUMAN_VISUAL_REVIEW.json`)
+
+### WAVE_ID = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE
+- **DATE:** 2026-09-30 … 2026-10-01
+- **START_BASE:** a4fd5fec
+- **CODE_COMMIT_OR_NONE:** 79eb1e59 (GIVEN needs evidence from the problem text; three stable codes, never sent to repair) · 98b505ef (geometry timeline separate from solution events; solution panel) · 233f8720 (one role-colour table, blue = being looked at) · d17550c3 (CACHE_VERSION 104 → 105) · 8aaeae80 (points pinned to unstated coordinate claims refused; P1 under NFKC) · 4014f311 (causal context strokes neutral)
+- **COMMITS:** 1fd55d99 / fb4ea271 red tests · 79eb1e59 · 98b505ef · 233f8720 · d17550c3 · b9c60010 freeze 1 · 8aaeae80 · 054bc08d freeze 2 · e115eede tooling (BROWSER-1, superseded) · 4014f311 · 7b039621 hue gate (BROWSER-2, superseded for provenance) · 6569ed41 sheet legend · 399fc423 evidence of BROWSER-2 · c243968b freeze 3 + scenarios (measurement) · 442584cf evidence · docs
+- **CANDIDATE:** df04a613… → 548f5b3b… (frozen THREE times in a clean worktree; intermediates 8ffd6d46 and 548f5b3b@8aaeae80 declared) · CACHE_VERSION 104 → 105 (fingerprint b1714b56… unchanged)
+- **EVIDENCE_COMMIT_ROLE:** 442584cf (measurement commit c243968b, detached clean worktree)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/
+- **PASS:** T3 from a path with a space FULL_PRODUCT_GATE_PASS at 442584cf (pytest 6443/0 fail, vitest 1010/0 fail, build, demo, crash surface; 6411 → 6443 reconciled) · browser 12/12 positive + 12/12 ungrounded negative (GIVEN_VALUE_NOT_IN_SOURCE, no canvas, no answer) · geometry steps = expected 12/12, 0 static frames, 0 result steps · solution panel in sync, answer once · causal canvas role hues clean 12/12 (gate validated on a known answer) · occlusion 24/24, frozen expectations DECLARED_CAMERA_CHANGE 6/6 · learner playback 12/12 × 19 checks, orbit laps 60/60 · 64 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners · candidate/cache/schema verify · 8/8 temporary worktrees removed
+- **CLOSED:** ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED
+- **OPENED:** ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION · ISSUE-EVAL-CDP-SEND-NO-TIMEOUT
+- **OPEN (non-blocking):** ISSUE-OPS-DIST-ACL-OWNERSHIP · ISSUE-OPS-OFFLINE-SAMPLES-STALE · ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH · 1 px lines · per-solid visibility
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (human review NEEDS_CHANGES)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
 
 
 

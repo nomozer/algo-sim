@@ -10,9 +10,8 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in.
-- `CACHE_VERSION = 104` (w11 bump: envelope `ok` đổi — độ dài đề cho được khai,
-  grounding nhận chúng, tham chiếu công thức); provider-facing fingerprint
-  `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 105` (w12 bump: envelope `ok` cũ có thể chở một GIVEN đề không
+  ghi — served → rejected); provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi test/repair gần nhất offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -20,13 +19,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11)
-MEASUREMENT_COMMIT = 39e5404686fdf25ddae310759c87c8c64dd8dc41
-EVIDENCE_COMMIT = 5e3dbab4 (trace post-processing ac19e03d)
+CURRENT_WAVE = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12)
+MEASUREMENT_COMMIT = c243968b1ec263d2ab48040d569eec45efe9cfaa
+EVIDENCE_COMMIT = 442584cf (also the T3 commit)
 ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce
-CANDIDATE = df04a613db9c5dd0… (was 8539acbc…), product commit 60292ecf
+CANDIDATE = 548f5b3b9ff89158… (was df04a613…), product commit 4014f311
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (w10 review = FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR; w11 pending)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (w11 review = NEEDS_CHANGES; w12 pending)
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -95,40 +94,61 @@ review người của w10 (`FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR`, W10-H1�
   nhìn ≤ 1e-6); nấc con lăn ×DPR; sheet theo họ `images/<họ>/SHEET.png`; chữ ký hình
   của oracle bỏ `quantity` (readout không vẽ).
 
+Wave w12 (`W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE`) trả lời review
+người của w11 (`NEEDS_CHANGES`, W11-H1…H5):
+- Grounding nguồn: GIVEN phải được CÂU ĐỀ chứng minh (độ dài: nguyên/thập phân
+  `.`/`,`/phân số/căn ngay sau nhãn đoạn; P1 tính lại từ đề, một hàm dùng chung);
+  lời khai toạ độ có chữ số đề không ghi ⇒ từ chối điểm; ba mã ổn định, không gửi
+  đi sửa; lời từ chối nói đúng "độ dài AD"/"toạ độ điểm S". Bất biến #36.
+- Dòng thời gian HÌNH HỌC (#35): bước mới chỉ ở sự kiện dựng làm đổi hình; khung
+  hiện = sự kiện cuối đoạn (#31/#32 giữ); Phát dừng ở bước dựng cuối. Bảng lời giải
+  dưới thanh bước (Kết quả · Dữ kiện · Các bước tính); dải số trên canvas đã gỡ.
+- Màu: một bảng vai trò (`scene3d-roles.ts`): xanh = đang xét (được chọn / vừa
+  dựng), cam đậm = dữ kiện số, cam nhạt = trung gian, xám = ngữ cảnh (cả NÉT của
+  thiết diện/đường/mặt phẳng trong chuỗi), mờ = ngoài chuỗi.
+- Bộ đo: bước dựng + lớp lời giải tính độc lập; cổng `CAUSAL_CANVAS_ROLE_HUE` đếm
+  sắc độ trên khung causal (lớp phủ HTML bị che), thử trên đáp án đã biết trước khi
+  tin. Candidate đóng băng ba lần: `product_commit_sha` = commit cuối chạm
+  backend/app HOẶC frontend/src — sửa frontend cũng phải đóng băng lại.
+
 ## 4. Còn mở — không được che
 
-- **Human visual acceptance: NOT_APPROVED** — việc kế tiếp; chưa merge.
-- Mới ở w11: `ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED` (tuyến LLM: độ dài chỉ
-  có trong fact analyze vẫn làm căn cứ cho GIVEN), `ISSUE-OPS-OFFLINE-SAMPLES-STALE`,
-  `ISSUE-OPS-DIST-ACL-OWNERSHIP` (`dist/` cây chính không build được — đo trong worktree).
-- Nét vẫn 1 px (WebGL bỏ qua `linewidth`); phân loại khuất theo từng khối (cảnh
-  nhiều khối cần `occluders`); script trình duyệt chạy tay còn `URL.pathname`
-  (`ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`).
+- **Human visual acceptance: NOT_APPROVED** — việc kế tiếp; chưa merge. Câu hỏi
+  cho người duyệt: thiết diện giữ màu KIỂU hổ phách ở khung trung tính.
+- Mới ở w12: `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION` (toạ độ bố cục/giả
+  thiết vẫn có thể cố định một kích thước đề không cho — không gắn GIVEN),
+  `ISSUE-EVAL-CDP-SEND-NO-TIMEOUT` (một phản hồi DevTools mất làm treo lượt đo —
+  chạy đo có watchdog). Đã đóng: `ISSUE-ARCH-LLM-ROUTE-LENGTH-NOT-TEXT-GROUNDED`.
+- Còn mở: `ISSUE-OPS-OFFLINE-SAMPLES-STALE`, `ISSUE-OPS-DIST-ACL-OWNERSHIP`
+  (`dist/` cây chính không build được — đo trong worktree),
+  `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`; nét vẫn 1 px; phân loại khuất theo khối.
 
-Tự động tại `39e54046` (detached): browser 12/12 + 12/12 âm, xoay hoạch định đạt
-ngay 12/12 · oracle 24/24 · kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 · playback
-12/12 × 18 kiểm, 60/60 lượt xoay · 64 crop, 0 bất đồng, 0 owner trùng · T3 tại
-`5e3dbab4` từ đường dẫn CÓ dấu cách: `FULL_PRODUCT_GATE_PASS` (pytest 6411/0,
-vitest 958/0, build, demo, bề mặt sập; 6368/6370/6411 đối soát trong run).
+Tự động tại `c243968b` (detached): browser 12/12 + 12/12 âm grounding · bước dựng
+12/12, 0 khung tĩnh · sắc độ causal sạch 12/12 · oracle 24/24 · kỳ vọng người
+`DECLARED_CAMERA_CHANGE` 6/6 · playback 12/12 × 19 kiểm, 60/60 lượt xoay · 64 crop,
+0 bất đồng, 0 owner trùng · T3 tại `442584cf` từ đường dẫn CÓ dấu cách:
+`FULL_PRODUCT_GATE_PASS` (pytest 6443/0, vitest 1010/0, build, demo, bề mặt sập;
+6411 → 6443 đối soát trong run). 8/8 worktree tạm đã gỡ.
 
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
 ```
 
-Người duyệt theo `HANDOFF.md` của run w11 (sheet từng họ, công thức chóp/lăng trụ
-tam giác, crop cạnh khuất, filmstrip playback). Không mở family, image/OCR,
-composite geometry trước khi có human visual acceptance; automation không phát
-`MERGE_READY`.
+Người duyệt theo `HANDOFF.md` của run w12 (sheet từng họ: bước dựng, bảng lời giải,
+màu vai trò, lời từ chối khi đề thiếu dữ kiện; crop cạnh khuất; filmstrip
+playback). Không mở family, image/OCR, composite geometry trước khi có human visual
+acceptance; automation không phát `MERGE_READY`.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/w11-pedagogical-polish/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
   `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
-- Hai wave trước (bất biến, review người FAIL ghi bổ sung ở run sau):
+- Ba wave trước (bất biến, review người ghi bổ sung ở run sau):
+  `docs/evaluation/geometry/runs/w11-pedagogical-polish/`,
   `docs/evaluation/geometry/runs/w10-pedagogical-playback/`,
   `docs/evaluation/geometry/runs/w09-verify-cleanup/`.
 - Wave bị đính chính (bất biến):

@@ -18,7 +18,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
 > giới hạn: **`docs/THESIS_READINESS.md`**.
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-09-30)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-01)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
 > dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29): ref cục bộ không đổi, là tổ tiên của HEAD |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD |
 > | `CACHE_VERSION` | **105** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,20 +53,39 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 5e3dbab4 (measurement commit 39e54046, trace post-processing ac19e03d)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 442584cf (measurement commit c243968b)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 104
-> CANDIDATE = df04a613… (was 8539acbc…), product commit 60292ecf
+> CACHE_VERSION = 105
+> CANDIDATE = 548f5b3b… (was df04a613…), product commit 4014f311
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11)
+> CURRENT_WAVE = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
 > ```
 
+> **Dòng thời gian hình học · lớp lời giải · màu vai trò · grounding nguồn — trạng thái authoritative hiện tại (w12, measurement `c243968b`, detached clean worktree):**
+>
+> | Gate | Kết quả |
+> |---|---|
+> | Review người của w11 | **NEEDS_CHANGES** (W11-H1…H5) — ghi bổ sung ở `inputs/W11_HUMAN_VISUAL_REVIEW.json` của run w12 |
+> | Grounding nguồn cho GIVEN | **ĐÓNG** — độ dài/nguyên tử P1 phải có trong đề; lời khai toạ độ có chữ số đề không ghi ⇒ từ chối; `GIVEN_VALUE_NOT_IN_SOURCE` không gửi đi sửa. Còn mở (không phải GIVEN): `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION` |
+> | T3 full gate từ đường dẫn CÓ dấu cách (`442584cf`) | **PASS** — pytest 6443/0 fail (1 skipped, 1 deselected) · vitest 1010/0 fail · build · demo · bề mặt sập; 6411 → 6443 đối soát ở `results/BACKEND_COUNT_RECONCILIATION.json` |
+> | Browser 6 family × desktop/mobile | **PASS** — 12/12 dương, 12/12 âm "đề thiếu một dữ kiện" (không canvas, không đáp số); bước dựng = kỳ vọng 12/12 (3·3·5·5·5·10), 0 khung tĩnh; bảng lời giải đồng bộ, đáp số đúng một lần; sắc độ vai trò trên khung causal sạch 12/12 |
+> | Product ↔ oracle | **PASS** — 24/24 trạng thái; kỳ vọng người `DECLARED_CAMERA_CHANGE` 6/6 |
+> | Playback người học | **PASS** — 12/12 × 19 kiểm; lặp orbit 60/60 |
+> | Crop cạnh khuất · sheet theo họ | **PASS** — 64 crop, 0 bất đồng oracle, 0 owner trùng |
+> | Candidate · `CACHE_VERSION` | `548f5b3b…` (đóng băng BA lần, lần cuối tại `4014f311`) · **105** (bump một lần ở `d17550c3`; fingerprint provider không đổi) |
+> | Worktree tạm | 8/8 đã gỡ, 0 artifact duy nhất có rủi ro |
+> | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
+> | Merge | **NOT_EXECUTED** |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/` (`REPORT.md`,
+> `HANDOFF.md`, `results/VERIFICATION_SUMMARY.json`). Bảng w11, w10 và w09 dưới đây giữ làm lịch sử.
 
-> **Công thức · provenance · polish thị giác — trạng thái authoritative hiện tại (w11, measurement `39e54046`, detached clean worktree):**
+
+> **Công thức · provenance · polish thị giác — w11 (measurement `39e54046`; review người sau đó = NEEDS_CHANGES):**
 >
 > | Gate | Kết quả |
 > |---|---|

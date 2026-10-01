@@ -1,0 +1,31 @@
+{
+  "schema_version": "backend-count-reconciliation/1",
+  "authoritative_count": {
+    "passed": 6443,
+    "failed": 0,
+    "skipped": 1,
+    "deselected": 1,
+    "commit": "442584cf",
+    "gate": "frontend/scripts/full-gate.mjs (T3) from the detached worktree `D:/tmp/w12 space/algo-sim` (path WITH a space); Python = main-tree backend/.venv 3.12 (active_venv)",
+    "log": "diagnostics/logs/T3_FULL_GATE_SPACED_442584cf.log",
+    "result": "FULL_PRODUCT_GATE_PASS"
+  },
+  "earlier_t3_in_this_wave": {
+    "commit": "399fc423",
+    "passed": 6435,
+    "failed": 8,
+    "note": "same 6443 tests; the 8 failures were candidate verify before the third refreeze (diagnostics/logs/T3_FULL_GATE_SPACED_399fc423_FAIL_CANDIDATE.log)"
+  },
+  "chain": [
+    {"commit": "5e3dbab4", "passed": 6411, "source": "w11 T3 (docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/T3_FULL_GATE_SPACED_5e3dbab4.log)"},
+    {"commit": "a4fd5fec", "passed_expected": 6411, "note": "w12 start; between 5e3dbab4 and a4fd5fec only backend/scripts/audit_docs_information_architecture.py changed (+2 lines, no test change); pytest --collect-only at a4fd5fec gives 6412 = 6411 + 1 skipped (1 deselected)"},
+    {"commit": "442584cf", "passed": 6443, "delta": 32, "note": "pytest --collect-only gives 6444 = 6443 + 1 skipped (1 deselected)"}
+  ],
+  "w12_delta_by_file": {
+    "method": "pytest --collect-only -q at a4fd5fec (temporary clean worktree D:/tmp/w12-count, removed afterwards) and at 442584cf (T3 worktree), ids counted per file",
+    "tests/geometry/test_source_grounding_closure.py": "+28 (new file: ungrounded GIVEN lengths on the production route, spans, conflicts, legitimate derived facts, layout coordinates, decimals with '.' and ',', fractions, radicals, coordinate claims, paraphrased relations, point-aware refusal text)",
+    "tests/semantic_program/test_literal_provenance.py": "+4 (P1 recomputed from the text: decimal comma, NFKC string rule)",
+    "net": 32,
+    "unchanged_counts_with_changed_content": "fixture-consistency fixes (scalar/curved/scorer/obligation-binding texts now state their values), cache locks 104 → 105, the w12 sheet test, the fixture generator test (12 → 18 fixtures within one test)"
+  }
+}

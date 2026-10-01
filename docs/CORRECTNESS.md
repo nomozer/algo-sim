@@ -105,6 +105,15 @@ bốn là `verification_gap` là báo cáo sai.
 2. **Dữ liệu phải truy được về đề** (P2, `grounding_gate`). Ghim **đúng mục
    nào**, không phải "trông giống dữ liệu đề". Giới hạn P1 (Contract → đề gốc)
    còn mở và đã khai ở `semantic-benchmark/P1_LIMITATION.md`.
+   **Từ W12 (2026-09-30) P1 có người đọc:** một GIVEN chỉ được nhận khi CÂU ĐỀ
+   chứng minh nó — mục `analyze` là lời khai, không phải nguồn. Độ dài cần con
+   số của đề (không nhãn đoạn/đơn vị nào mâu thuẫn); giá trị chỉ có trong lời
+   khai ⇒ `GIVEN_VALUE_NOT_IN_SOURCE`; span lệch ⇒ `SOURCE_SPAN_MISMATCH`; mâu
+   thuẫn ⇒ `SOURCE_EVIDENCE_CONFLICT` — ba mã không gửi đi sửa. Suy ra hợp lệ
+   (cạnh bằng nhau của hình lập phương) là DERIVED, toạ độ bố cục là
+   LAYOUT_DERIVED — cả hai không phải GIVEN. Giới hạn còn mở: kênh toạ độ giả
+   thiết có thể cố định một kích thước đề không cho
+   (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`); bất biến kiến trúc #36.
 3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
    bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu

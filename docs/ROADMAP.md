@@ -9,20 +9,20 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_PEDAGOGICAL_POLISH_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
 ```
 
 - **Mục tiêu:** Người duyệt lại bằng chứng của run
-  `docs/evaluation/geometry/runs/w11-pedagogical-polish/` theo `HANDOFF.md` của
-  run: sheet từng họ `images/<họ>/SHEET.png` (trung tính · causal · xoay · mobile ·
-  mọi bước formation, có chú giải), công thức thể tích chóp/lăng trụ đáy tam giác,
-  crop cạnh khuất, filmstrip playback. Review w10 là
-  `FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR` (W10-H1…H9); mọi cổng tự động của
-  w11 đã xanh.
+  `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/` theo
+  `HANDOFF.md` của run: sheet từng họ `images/<họ>/SHEET.png` (trung tính ·
+  causal · xoay · mobile · bảng lời giải · từ chối khi đề thiếu dữ kiện · mọi
+  BƯỚC DỰNG, có chú giải). Review w11 là `NEEDS_CHANGES` (W11-H1…H5: timeline
+  trộn bước tính, bước tĩnh, lớp lời giải, cam đậm hai nghĩa, GIVEN không có
+  trong đề); mọi cổng tự động của w12 đã xanh.
 - **Điều kiện dừng:** Automation không phát `MERGE_READY`; chưa push/merge cho
   tới khi người duyệt chấp nhận.
-- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 104`
+- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 105`
   khi provider fingerprint không đổi và 0 live Gemini request. Không mở rộng
   family, image/OCR hoặc composite geometry trước khi có human visual acceptance.
 

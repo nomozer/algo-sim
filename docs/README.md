@@ -35,7 +35,7 @@
 - **Thư mục dữ liệu máy:** `docs/evaluation/` chứa toàn bộ artifact JSON, telemetry máy, JUnit XML và contact sheet kiểm chứng qua từng thời kỳ.
 - **Quy tắc tra cứu:** Không tra cứu ngẫu nhiên hàng trăm file báo cáo; luôn tra cứu thông qua [`docs/EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) và [`docs/STATUS_LEDGER.md`](STATUS_LEDGER.md).
 - **Tên run mới:** Tuân thủ [`docs/evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md) (`wNN-short-slug`, ngày giờ nằm trong `RUN.json`); không đổi tên run lịch sử đã commit — ngoại lệ duy nhất là w09/w10 bỏ tiền tố ngày theo quyết định user (`e90363a4`, bảng đổi tên trong `RUN_NAMING.md`).
-- **Run hiện hành:** [`docs/evaluation/geometry/runs/w11-pedagogical-polish/`](evaluation/geometry/runs/w11-pedagogical-polish/) — bắt đầu từ `HANDOFF.md` của run.
+- **Run hiện hành:** [`docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`](evaluation/geometry/runs/w12-pedagogical-grounding-closure/) — bắt đầu từ `HANDOFF.md` của run. Run trước (review người NEEDS_CHANGES, bất biến): [`w11-pedagogical-polish/`](evaluation/geometry/runs/w11-pedagogical-polish/).
 
 ## 7. Thesis-Facing Evidence (Bằng Chứng Phục Vụ Khóa Luận)
 - [`docs/THESIS_READINESS.md`](THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài.
