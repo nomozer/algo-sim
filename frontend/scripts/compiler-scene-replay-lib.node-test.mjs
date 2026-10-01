@@ -4,8 +4,11 @@ import { join, resolve } from "node:path";
 import test from "node:test";
 
 import {
+  assessCausalCanvasHues,
   assessCssReadiness,
   assessFormationSnapshots,
+  DAI_SAC_VAI_TRO,
+  phanLoaiSac,
   assessImmutableWindow,
   assessPlayback,
   cameraMotion,
@@ -268,6 +271,8 @@ test("all required fault injections fail with their exact reason code", () => {
       "CAUSAL_ORACLE_NOT_INDEPENDENT"],
     ["blank-screenshot", (f) => { f.screenshot.blank = true; },
       "BLANK_OR_PREMATURE_SCREENSHOT"],
+    ["canvas-role-hue", (f) => { f.canvas_role_hues = { pass: false }; },
+      "CAUSAL_CANVAS_ROLE_HUE"],
   ];
   assert.equal(evaluateEvidenceGates(passingFacts()).pass, true);
   for (const [name, mutate, reason] of faults) {
@@ -455,6 +460,33 @@ test("causal tiers: numerical givens, numerical intermediates, structural contex
     q("V", "derived", [["S", "numerical"], ["K", "structural"]]), q("X", "free", []) ] };
   assert.deepEqual(expectedCausalTiers(scene, "V"),
     { V: "dich", S: "trung_gian", AB: "du_kien_so", K: "boi_canh", A: "boi_canh" });
+});
+
+test("role hues: the role oranges, amber and blue classify; neutrals and type colours do not", () => {
+  const loai = (h) => phanLoaiSac(...[0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)), DAI_SAC_VAI_TRO);
+  for (const h of ["c2410c", "fb923c", "f59e0b"]) assert.equal(loai(h), "cam", h);
+  assert.equal(loai("2563eb"), "xanh");
+  // xám ngữ cảnh, nền ngữ cảnh, mực cạnh, điểm đề cho, tím mặt phẳng, xanh két
+  // đường, đỏ điểm dựng, nền hổ phách mờ gần trắng
+  for (const h of ["6b7280", "d1d5db", "1e293b", "374151", "7c3aed", "0f766e", "dc2626", "f5f1e9"]) {
+    assert.equal(loai(h), null, h);
+  }
+});
+
+test("canvas role hues: an orange or blue pixel needs a DRAWN object carrying that role", () => {
+  const scene = { objects: [
+    { id: "T", render: "polygon" }, { id: "S_T", render: "readout" }, { id: "P", render: "point_marker" }] };
+  const tiers = { S_T: "dich", T: "boi_canh" };
+  const census = (cam, xanh) => ({ total: 600_000, cam, xanh });
+  // e115eede: viền thiết diện NGỮ CẢNH hổ phách, không vật vẽ nào mang tầng cam.
+  assert.equal(assessCausalCanvasHues(scene, tiers, census(2400, 0)).cam.pass, false);
+  assert.equal(assessCausalCanvasHues(scene, tiers, census(30, 12)).pass, true);
+  // đích là một con số (readout) ⇒ xanh trên khung cũng không có chủ
+  assert.equal(assessCausalCanvasHues(scene, tiers, census(0, 5000)).xanh.pass, false);
+  // có vật VẼ ĐƯỢC mang tầng ⇒ không phán
+  assert.equal(assessCausalCanvasHues(scene, { ...tiers, P: "dich" }, census(0, 5000)).pass, true);
+  // thiếu phép đếm ⇒ trượt, không mặc định đỗ
+  assert.equal(assessCausalCanvasHues(scene, tiers, undefined).pass, false);
 });
 
 test("vertex marker diameter is measured through the camera, in CSS px", () => {

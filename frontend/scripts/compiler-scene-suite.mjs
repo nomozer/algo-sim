@@ -10,8 +10,10 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 // Token chấm đỉnh của CHÍNH sản phẩm (module không import gì ⇒ Node nạp thẳng).
 import { DAU_DINH_PX, KHUNG_HEP_PX } from "../src/simulations/domains/geometry/pick-target.ts";
 import {
+  DAI_SAC_VAI_TRO,
   LOP_DONG_THEO_TANG,
   aliasTreeRowCheck,
+  assessCausalCanvasHues,
   assessCssReadiness,
   assessGeometrySteps,
   isHiddenAlias,
@@ -36,6 +38,7 @@ import {
   solidTopology,
   validateFormulaReferences,
   validateSuiteManifest,
+  phanLoaiSac,
 } from "./compiler-scene-replay-lib.mjs";
 
 const REPO_ROOT = resolve(import.meta.dirname, "..", "..");
@@ -326,6 +329,29 @@ async function pixelDelta(session, before, after) {
     + `const total=c.width*c.height,ratio=changed/total;return{changed_pixels:changed,total_pixels:total,`
     + `changed_ratio:ratio,bounds:changed?{x:minX,y:minY,width:maxX-minX+1,height:maxY-minY+1}:null,`
     + `pass:changed>0&&ratio<0.75}})()`);
+}
+
+/** W12: đếm điểm ảnh theo dải sắc vai trò trên ảnh khung — chính hàm thuần của
+ *  thư viện (`phanLoaiSac`) được tiêm vào trang, nên node test đo đúng mã chạy.
+ *  Lớp phủ HTML (nút nổi, ô soi, nhãn đỉnh) bị bỏ ra: chữ của chúng ở DPR 1 khử
+ *  răng cưa theo điểm ảnh con, viền chữ ra cam/xanh bão hoà — đo được ~700 điểm
+ *  ảnh cam trên ô soi của MỌI họ (e115eede). Cổng đo thứ WebGL vẽ, không đo chữ. */
+async function roleHueCensus(session, frame) {
+  return session.eval(`(async()=>{const phan=${phanLoaiSac.toString()};`
+    + `const dai=${JSON.stringify(DAI_SAC_VAI_TRO)};`
+    + `const i=await new Promise((ok,bad)=>{const x=new Image();x.onload=()=>ok(x);x.onerror=bad;`
+    + `x.src=${JSON.stringify(`data:image/png;base64,${frame.encoded}`)}});`
+    + `const k=document.querySelector('.geo3d-canvas canvas').getBoundingClientRect();`
+    + `const che=[...document.querySelectorAll('.geo3d-noi,.geo3d-soi,.geo3d-label')]`
+    + `.map(e=>e.getBoundingClientRect()).filter(r=>r.width>0&&r.height>0)`
+    + `.map(r=>[r.left-k.left-2,r.top-k.top-2,r.right-k.left+2,r.bottom-k.top+2]);`
+    + `const c=document.createElement('canvas');c.width=i.width;c.height=i.height;`
+    + `const x=c.getContext('2d');x.drawImage(i,0,0);const p=x.getImageData(0,0,c.width,c.height).data;`
+    + `const sx=i.width/k.width,sy=i.height/k.height;let total=0,cam=0,xanh=0;`
+    + `for(let y=0;y<i.height;y++)for(let q=0;q<i.width;q++){const cx=q/sx,cy=y/sy;`
+    + `if(che.some(([a,b,e,f])=>cx>=a&&cx<e&&cy>=b&&cy<f))continue;total++;const o=(y*i.width+q)*4;`
+    + `const v=phan(p[o],p[o+1],p[o+2],dai);if(v==='cam')cam++;else if(v==='xanh')xanh++}`
+    + `return{total,cam,xanh,masked_overlays:che.length}})()`);
 }
 
 async function cssReadiness(session, viewport) {
@@ -806,6 +832,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const legendClasses = solutionCausal.legend.map((item) => item.classes[0]).sort();
     const roleColors = assessRoleColors(solutionCausal);
     result.role_colors = roleColors;
+    const canvasRoleHues = assessCausalCanvasHues(scene, causalState.tiers,
+      await roleHueCensus(session, causalAfterFrame));
     causal.visual = {
       selected_changed: causalBeforeState.selected_id !== causalState.selected_id,
       closure_changed: JSON.stringify(causalBeforeState.highlighted_ids)
@@ -820,6 +848,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       legend_shown: JSON.stringify(legendClasses)
         === JSON.stringify(["la-boi-canh", "la-chon", "la-so-lieu", "la-trung-gian"]),
       role_colors_match: roleColors.pass,
+      canvas_role_hues: canvasRoleHues,
       canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
       pixel_delta: delta,
       dash_signature_preserved:
@@ -829,6 +858,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       && causal.visual.selected_changed && causal.visual.closure_changed
       && causal.visual.tiers_match && causal.visual.readout_classes_match
       && causal.visual.legend_shown && causal.visual.role_colors_match
+      && canvasRoleHues.pass
       && causal.visual.canvas_changed && delta.pass
       && causal.visual.dash_signature_preserved;
     result.causal_closure = causal;
@@ -989,6 +1019,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       geometry: viewport.formation ? result.formation.geometry : undefined,
       solution_final: result.solution_final,
       role_colors: roleColors,
+      canvas_role_hues: causal.visual.canvas_role_hues,
       panel_over_canvas: result.solution_final.panel_over_canvas,
       capture_order: result.capture_order,
       formation_required: Boolean(viewport.formation),

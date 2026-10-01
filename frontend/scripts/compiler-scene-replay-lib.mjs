@@ -431,6 +431,41 @@ export const LOP_DONG_THEO_TANG = {
   dich: "la-chon", du_kien_so: "la-so-lieu", trung_gian: "la-trung-gian", boi_canh: "la-boi-canh",
 };
 
+/* ─── W12 · MÀU VAI TRÒ TRÊN KHUNG ─────────────────────────────────────────
+ * Chú giải causal hứa: xanh = đích, cam (đậm, nhạt, hổ phách) = số trong chuỗi,
+ * xám = ngữ cảnh. Bảng lời giải và ô chú giải đã được đo theo token; khung 3D thì
+ * chưa — viền thiết diện NGỮ CẢNH giữ màu kiểu hổ phách mà mọi cổng vẫn xanh
+ * (e115eede). Nay: điểm ảnh rơi vào dải sắc của một vai trò thì phải có một vật
+ * VẼ ĐƯỢC mang vai trò ấy. Dải định nghĩa bằng sắc độ, không đọc bảng màu sản
+ * phẩm. Có vật mang vai trò thì không phán (vật ấy có thể bị che hoặc rất nhỏ). */
+export const DAI_SAC_VAI_TRO = { s: 0.45, l: [0.2, 0.85], cam: [10, 50], xanh: [205, 235] };
+
+/** Một điểm ảnh sRGB 0–255 → `"cam"` | `"xanh"` | `null`. HÀM THUẦN, không dùng
+ *  biến ngoài: bộ chạy tiêm chính mã nguồn của nó vào trang (`toString`). */
+export function phanLoaiSac(r, g, b, dai) {
+  const R = r / 255, G = g / 255, B = b / 255;
+  const max = Math.max(R, G, B), min = Math.min(R, G, B), d = max - min, l = (max + min) / 2;
+  if (d === 0) return null;
+  const s = d / (1 - Math.abs(2 * l - 1));
+  if (s < dai.s || l < dai.l[0] || l > dai.l[1]) return null;
+  const h = ((max === R ? ((G - B) / d) % 6 : max === G ? (B - R) / d + 2 : (R - G) / d + 4) * 60 + 360) % 360;
+  if (h >= dai.cam[0] && h <= dai.cam[1]) return "cam";
+  if (h >= dai.xanh[0] && h <= dai.xanh[1]) return "xanh";
+  return null;
+}
+
+/** `census` = {total, cam, xanh} đếm trên ảnh khung ở trạng thái causal. */
+export function assessCausalCanvasHues(scene, tiers, census) {
+  const ve = new Set((scene?.objects ?? [])
+    .filter((o) => o.render !== "readout" && o.render !== "non_visual").map((o) => o.id));
+  const coVatVe = (...ts) => Object.entries(tiers ?? {}).some(([id, t]) => ve.has(id) && ts.includes(t));
+  const tolerance = Math.max(40, Math.round((census?.total ?? 0) * 2e-4));
+  const dai = (pixels, allowed) => ({ pixels, allowed, pass: allowed || pixels <= tolerance });
+  const cam = dai(census?.cam ?? Infinity, coVatVe("du_kien_so", "trung_gian"));
+  const xanh = dai(census?.xanh ?? Infinity, coVatVe("dich"));
+  return { census, tolerance_pixels: tolerance, cam, xanh, pass: cam.pass && xanh.pass };
+}
+
 /* ─── W12 · DÒNG THỜI GIAN HÌNH HỌC — oracle đọc từ SNAPSHOT formation ─────
  * Bước dựng = phân hoạch dãy sự kiện: bước mới mở ở sự kiện
  * GEOMETRY_CONSTRUCTION làm đổi chữ ký HÌNH (vật vẽ được + tiến độ thiết diện);
@@ -734,6 +769,9 @@ export function evaluateEvidenceGates(facts) {
   if (facts.causal?.legend_shown === false) reasons.push("ROLE_LEGEND_MISSING");
   if (facts.role_colors !== undefined && facts.role_colors?.pass !== true) {
     reasons.push("ROLE_COLOR_MISMATCH");
+  }
+  if (facts.canvas_role_hues !== undefined && facts.canvas_role_hues?.pass !== true) {
+    reasons.push("CAUSAL_CANVAS_ROLE_HUE");
   }
   if (facts.panel_over_canvas === true) reasons.push("SOLUTION_PANEL_COVERS_CANVAS");
   return { reason_codes: sortedUnique(reasons), pass: reasons.length === 0 };
