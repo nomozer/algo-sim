@@ -1,0 +1,14 @@
+# BROWSER-2 / PLAYBACK-2b / BUILDER-2 outputs as committed in 399fc423 (git show 399fc423:<run>/<path>).
+# Superseded for provenance: measured while EVALUATION_CANDIDATE.json still named product commit 8aaeae80 (see inputs/CANDIDATE_DIVERGENCE_CORRECTION.json).
+7ef8ae0deb6f670daa735613bd910aba666475ad01ca4e57585101352005a6f5  results/BROWSER_EVIDENCE.json
+581a1d5f1436ef72200a4c4fa2fc11bb0be17fbaa56d36efd8107dd7599e7e85  results/OCCLUSION_MEASUREMENT.json
+3a5c7f4eefb2545ff63b0810e9143ad7763c47920750b9d9d2b1ffca92f427b3  results/PLAYBACK_EVIDENCE.json
+57308cf303e1d2a7937364d974e2b629eba5be7f55773bacb267eb69873f20e3  results/HIDDEN_EDGE_CROPS.json
+d3dd44a577634ba784d6a70a7abdfa41fab4fdf4d8826c1c77ff93f6e952be08  inputs/FIXTURE_MANIFEST.json
+5582efa27081f73d2dddddbe987c65ef78f15c14d3be8298f09e23df01db0f1c  images/overview/INDEX.png
+2a040c6032fe63e33a9b9bf99b90c33ea0e2afd0672a7317ac08cd22b1f80023  images/cross-section/SHEET.png
+87c00801639afffd76f4e6f5228b797146a341215699463cccb6ec0336401a9f  images/cube/SHEET.png
+e6f5f0d62a5e98ef68308fc6eb6e332508d55c64db7b6a26eafa67650aa94594  images/cuboid/SHEET.png
+5ae5d223a8ab8af09c7d0e55b51dedc02e6fcc67b8ddf882e254360c24eefd1f  images/rectangular-pyramid/SHEET.png
+9c31ec047e419deb10fa6ee4d40f993f3e94cb0808a1874fc0ca8d81b8b02c43  images/triangular-prism/SHEET.png
+802500e0c8d977cf6996dd9024e244000587532ca99d77ab5f14e12500e49b9c  images/triangular-pyramid/SHEET.png

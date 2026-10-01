@@ -1,13 +1,13 @@
 {
   "schema_version": "generic-tier-a-browser-evidence/1",
   "task_id": "W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE",
-  "measured_at": "2026-10-01T05:14:35.198Z",
-  "measurement_commit_sha": "c243968b1ec263d2ab48040d569eec45efe9cfaa",
-  "product_commit_sha": "4014f311e1df7082eecbf090d7e62c96217e0ec9",
+  "measured_at": "2026-09-30T07:39:12.594Z",
+  "measurement_commit_sha": "e115eedee2314412795886465ce8b13e5cefa757",
+  "product_commit_sha": "8aaeae80254ed8ea95617107bd67da15329d4f45",
   "product_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
   "suite_manifest": "frontend/scripts/generic-tier-a-scenarios.json",
-  "suite_manifest_sha256": "c20f5557be34d5eb1178360dad86d24a655834b74c9e2b6cac371e6ff18d3ff7",
-  "fixture_manifest_sha256": "19e580bed329994d70857658c7e3571fff16b6aa02111451d42f18cebf0fb105",
+  "suite_manifest_sha256": "b72c833d8aed6ade9b64256b122d9ce4ea2f1df33b08a69af86284d013723b0e",
+  "fixture_manifest_sha256": "d3dd44a577634ba784d6a70a7abdfa41fab4fdf4d8826c1c77ff93f6e952be08",
   "section_contract_gate": {
     "semantics": "requested_non_empty_section_must_fail_closed",
     "kernel_error_code": "PLANE_DOES_NOT_CUT",
@@ -292,7 +292,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 121,
+                "frame_count": 122,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 6,
@@ -306,9 +306,9 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 121,
+                  "frames": 122,
                   "recompute_count": 0,
-                  "motion_since_settle": 4.296563105299356e-14
+                  "motion_since_settle": 3.963496197911809e-14
                 }
               }
             },
@@ -495,26 +495,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 538421,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 6
-                    },
-                    "tolerance_pixels": 108,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 61819,
@@ -550,10 +530,10 @@
                   "S"
                 ],
                 "deltas": {
-                  "A": 80,
-                  "B": 125.67020331009255,
-                  "C": 105.11898020814318,
-                  "S": 103.61949623502326
+                  "A": 81.40024569987489,
+                  "B": 126.24579200908045,
+                  "C": 106.45186705737011,
+                  "S": 104.546640309481
                 },
                 "moved_ids": [
                   "A",
@@ -599,16 +579,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.758421586188027,
-                      "do_sau_ti_le": 0.7546905461756527,
-                      "mat_nghieng_min_do": 12.397741277353848,
-                      "ba_dinh_min": 0.16492763818223466,
+                      "dien_tich_ti_le": 0.758421586223452,
+                      "do_sau_ti_le": 0.7546905461211395,
+                      "mat_nghieng_min_do": 12.397741272453784,
+                      "ba_dinh_min": 0.16492763811169103,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "A",
                         "S"
                       ],
-                      "dinh_canh_min": 0.1649276381822348,
+                      "dinh_canh_min": 0.1649276381116911,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -625,24 +605,24 @@
                       "zoom_out_notches": 6
                     },
                     "started_ms": 0,
-                    "ended_ms": 6438,
+                    "ended_ms": 6322,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 1.1469083460724505e-9,
+                    "prediction_max_view_matrix_error": 1.3378613772374592e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.758421586188027,
-                        "do_sau_ti_le": 0.7546905461756527,
-                        "mat_nghieng_min_do": 12.397741277353848,
-                        "ba_dinh_min": 0.16492763818223466,
+                        "dien_tich_ti_le": 0.758421586223452,
+                        "do_sau_ti_le": 0.7546905461211395,
+                        "mat_nghieng_min_do": 12.397741272453784,
+                        "ba_dinh_min": 0.16492763811169103,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "A",
                           "S"
                         ],
-                        "dinh_canh_min": 0.1649276381822348,
+                        "dinh_canh_min": 0.1649276381116911,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -1012,16 +992,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 12,
-              "max_motion": 3.67713637496574e-15
+              "samples": 13,
+              "max_motion": 4.9028484999543185e-15
             },
             "immutable_window": {
-              "samples": 6,
-              "max_motion": 4.440892098500626e-15
+              "samples": 11,
+              "max_motion": 4.3298697960381105e-15
             },
             "rotated_neutral": {
-              "samples": 78,
-              "max_motion": 0.01139883463276714
+              "samples": 81,
+              "max_motion": 0.009352234118498282
             }
           },
           "edge_semantics_neutral_final": {
@@ -1103,25 +1083,25 @@
               "snapshot": {
                 "position": [
                   5.621850305817957,
-                  5.491838289633392,
-                  8.231122057822748
+                  5.4918382896333995,
+                  8.231122057822759
                 ],
                 "view_matrix_column_major": [
-                  -0.6427876096865321,
-                  -0.4924038765061053,
-                  0.5868240888334716,
+                  -0.6427876096865329,
+                  -0.4924038765061051,
+                  0.5868240888334709,
                   0,
-                  0.7660444431189837,
-                  -0.41317591116652824,
-                  0.49240387650610046,
+                  0.7660444431189831,
+                  -0.41317591116652874,
+                  0.4924038765061009,
                   0,
-                  -1.3877787807814452e-16,
-                  0.7660444431189807,
-                  0.642787609686536,
+                  -1.942890293094023e-16,
+                  0.7660444431189805,
+                  0.6427876096865365,
                   0,
-                  -0.5933364841894981,
-                  -1.2680891400088845,
-                  -11.294102918815916,
+                  -0.5933364841894956,
+                  -1.2680891400088858,
+                  -11.29410291881593,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -1146,31 +1126,31 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "806a08ea88637be2edbad4e6b6e317af08fb9602b1b06ae2e90dee2a8d4b1344"
+              "sha256": "950031a6566d646e5fe7c36c49ae0947ad7adaea4fd67100601a0e889ecaef40"
             },
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  8.10325936436955,
-                  -2.414255340070127,
-                  10.043062536414762
+                  8.10325936489155,
+                  -2.414255339159688,
+                  10.04306253641477
                 ],
                 "view_matrix_column_major": [
-                  0.497391705890301,
-                  -0.5576350121294706,
-                  0.6645635290616703,
+                  0.49739170577861036,
+                  -0.557635012170633,
+                  0.6645635291107255,
                   0,
-                  0.8675260750614566,
-                  0.3197172257071203,
-                  -0.3810241523507479,
+                  0.8675260751254938,
+                  0.3197172256353272,
+                  -0.3810241522651878,
                   0,
-                  2.2204460492503126e-16,
-                  0.7660444431190054,
-                  0.6427876096865065,
+                  2.4980018054066017e-16,
+                  0.7660444431190053,
+                  0.6427876096865067,
                   0,
-                  -1.9360645391481288,
-                  -2.402892094502913,
-                  -12.760576396310089,
+                  -1.936064539137937,
+                  -2.402892094342691,
+                  -12.760576396501042,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -1195,7 +1175,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "c5492670b8df0884e602e70abad1191db0cb18a1bef796649f81c0466a1d6dcc"
+              "sha256": "90d995a82e2a433ed203173e3c01f4a9555fbaad5b3ff1e3a1c050d227ae7379"
             }
           },
           "scene3d_envelope_sha256": "27a003e25848769b0c9a40fd6df69edc9c35c187f6b84ab6ccad554e0fbfcef6",
@@ -1317,7 +1297,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 121,
+            "frame_count": 122,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 6,
@@ -1331,9 +1311,9 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 121,
+              "frames": 122,
               "recompute_count": 0,
-              "motion_since_settle": 4.296563105299356e-14
+              "motion_since_settle": 3.963496197911809e-14
             }
           },
           "role_colors": {
@@ -1594,26 +1574,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 538421,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 6
-                },
-                "tolerance_pixels": 108,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 61819,
@@ -1710,10 +1670,10 @@
               "S"
             ],
             "deltas": {
-              "A": 80,
-              "B": 125.67020331009255,
-              "C": 105.11898020814318,
-              "S": 103.61949623502326
+              "A": 81.40024569987489,
+              "B": 126.24579200908045,
+              "C": 106.45186705737011,
+              "S": 104.546640309481
             },
             "moved_ids": [
               "A",
@@ -1759,16 +1719,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.758421586188027,
-                  "do_sau_ti_le": 0.7546905461756527,
-                  "mat_nghieng_min_do": 12.397741277353848,
-                  "ba_dinh_min": 0.16492763818223466,
+                  "dien_tich_ti_le": 0.758421586223452,
+                  "do_sau_ti_le": 0.7546905461211395,
+                  "mat_nghieng_min_do": 12.397741272453784,
+                  "ba_dinh_min": 0.16492763811169103,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "A",
                     "S"
                   ],
-                  "dinh_canh_min": 0.1649276381822348,
+                  "dinh_canh_min": 0.1649276381116911,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -1785,24 +1745,24 @@
                   "zoom_out_notches": 6
                 },
                 "started_ms": 0,
-                "ended_ms": 6438,
+                "ended_ms": 6322,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 1.1469083460724505e-9,
+                "prediction_max_view_matrix_error": 1.3378613772374592e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.758421586188027,
-                    "do_sau_ti_le": 0.7546905461756527,
-                    "mat_nghieng_min_do": 12.397741277353848,
-                    "ba_dinh_min": 0.16492763818223466,
+                    "dien_tich_ti_le": 0.758421586223452,
+                    "do_sau_ti_le": 0.7546905461211395,
+                    "mat_nghieng_min_do": 12.397741272453784,
+                    "ba_dinh_min": 0.16492763811169103,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "A",
                       "S"
                     ],
-                    "dinh_canh_min": 0.1649276381822348,
+                    "dinh_canh_min": 0.1649276381116911,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -2818,7 +2778,7 @@
                   {
                     "id": "B",
                     "state": "thuong",
-                    "diameter_px": 7.500000000000014
+                    "diameter_px": 7.5
                   },
                   {
                     "id": "C",
@@ -2929,7 +2889,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 121,
+                "frame_count": 122,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 6,
@@ -2943,9 +2903,9 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 121,
+                  "frames": 122,
                   "recompute_count": 0,
-                  "motion_since_settle": 2.275957200481571e-14
+                  "motion_since_settle": 6.328271240363392e-15
                 }
               }
             },
@@ -3132,26 +3092,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 560998,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 6
-                    },
-                    "tolerance_pixels": 112,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 121255,
@@ -3187,10 +3127,10 @@
                   "S"
                 ],
                 "deltas": {
-                  "A": 75.43208866258445,
-                  "B": 116.82465493208188,
-                  "C": 98.41239759298621,
-                  "S": 94.93682109698008
+                  "A": 68.00735254367721,
+                  "B": 103.1746092796091,
+                  "C": 89.05054744357274,
+                  "S": 87.09190547921202
                 },
                 "moved_ids": [
                   "A",
@@ -3236,16 +3176,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.7587422186188866,
-                      "do_sau_ti_le": 0.7541964794791117,
-                      "mat_nghieng_min_do": 12.653164971704948,
-                      "ba_dinh_min": 0.16846150004854113,
+                      "dien_tich_ti_le": 0.7587422186210351,
+                      "do_sau_ti_le": 0.7541964794757972,
+                      "mat_nghieng_min_do": 12.653164971406007,
+                      "ba_dinh_min": 0.16846150004423227,
                       "ba_dinh_gan_thang_hang": [
-                        "B",
                         "A",
+                        "B",
                         "S"
                       ],
-                      "dinh_canh_min": 0.16846150004854119,
+                      "dinh_canh_min": 0.16846150004423227,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -3262,24 +3202,24 @@
                       "zoom_out_notches": 6
                     },
                     "started_ms": 0,
-                    "ended_ms": 3243,
+                    "ended_ms": 3806,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 3.404860233757745e-7,
+                    "prediction_max_view_matrix_error": 3.404976247622926e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.7587422186188866,
-                        "do_sau_ti_le": 0.7541964794791117,
-                        "mat_nghieng_min_do": 12.653164971704948,
-                        "ba_dinh_min": 0.16846150004854113,
+                        "dien_tich_ti_le": 0.7587422186210351,
+                        "do_sau_ti_le": 0.7541964794757972,
+                        "mat_nghieng_min_do": 12.653164971406007,
+                        "ba_dinh_min": 0.16846150004423227,
                         "ba_dinh_gan_thang_hang": [
-                          "B",
                           "A",
+                          "B",
                           "S"
                         ],
-                        "dinh_canh_min": 0.16846150004854119,
+                        "dinh_canh_min": 0.16846150004423227,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -3456,8 +3396,8 @@
             },
             "rotated_neutral": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/rotated_neutral.png",
-              "bytes": 231861,
-              "sha256": "f15443fb2c0b1dbd6c4604490a8ff7d0afaca14c620a96de6de2adc84ff87c2f"
+              "bytes": 231841,
+              "sha256": "832fd1c5229d4058fdbebacdf65fece60e8f2880667062670831d478a06e4b2d"
             }
           },
           "capture_order": [
@@ -3655,15 +3595,15 @@
           "camera_settle": {
             "neutral_final": {
               "samples": 6,
-              "max_motion": 5.773159728050814e-15
+              "max_motion": 5.428153696377975e-15
             },
             "immutable_window": {
               "samples": 6,
-              "max_motion": 4.377543303530444e-15
+              "max_motion": 8.548717289613705e-15
             },
             "rotated_neutral": {
-              "samples": 42,
-              "max_motion": 0.010492805442410214
+              "samples": 45,
+              "max_motion": 0.01324419709445046
             }
           },
           "edge_semantics_neutral_final": {
@@ -3744,26 +3684,26 @@
             "neutral_final": {
               "snapshot": {
                 "position": [
-                  5.771729694536659,
-                  5.6176020294282925,
-                  8.39529496048472
+                  5.771729694536657,
+                  5.6176020294283,
+                  8.395294960484726
                 ],
                 "view_matrix_column_major": [
-                  -0.6427876096865291,
-                  -0.4924038765061067,
-                  0.586824088833474,
+                  -0.6427876096865299,
+                  -0.4924038765061064,
+                  0.5868240888334734,
                   0,
-                  0.7660444431189866,
-                  -0.41317591116652574,
-                  0.492403876506098,
+                  0.7660444431189859,
+                  -0.41317591116652663,
+                  0.4924038765060986,
                   0,
-                  5.5511151231257815e-17,
-                  0.766044443118981,
-                  0.6427876096865358,
+                  8.326672684688674e-17,
+                  0.7660444431189808,
+                  0.6427876096865359,
                   0,
-                  -0.5933364841895058,
-                  -1.268089140008887,
-                  -11.549510615211988,
+                  -0.5933364841895037,
+                  -1.2680891400088856,
+                  -11.549510615211997,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -3788,31 +3728,31 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "1ae3f95e85ea2c9026d119701e18d3609bae93ac6824bf657e374ae4b7884fbc"
+              "sha256": "cd5db7785c6d6afe8dd98285d6ccd3d6060c8c2e9febcdda1fcc6655b276c578"
             },
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  8.339040845984602,
-                  -2.5381212003076166,
-                  10.266399108013092
+                  8.339040846017276,
+                  -2.5381212002504197,
+                  10.266399108013108
                 ],
                 "view_matrix_column_major": [
-                  0.49637942521520845,
-                  -0.55800757299392,
-                  0.6650075298103434,
+                  0.49637942520841505,
+                  -0.5580075729964185,
+                  0.6650075298133175,
                   0,
-                  0.8681056768752407,
-                  0.31906654423164427,
-                  -0.3802487003647177,
+                  0.868105676879125,
+                  0.31906654422727854,
+                  -0.3802487003595129,
                   0,
                   -8.326672684688677e-17,
-                  0.7660444431190083,
-                  0.6427876096865034,
+                  0.7660444431190067,
+                  0.6427876096865054,
                   0,
-                  -1.9359708793915393,
-                  -2.401440483747115,
-                  -13.109756384488271,
+                  -1.935970879390902,
+                  -2.401440483737373,
+                  -13.109756384499873,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -3837,7 +3777,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "1ec234619c377258771da4505ee39c731c6e3b05ecd1319549f9332aabec70cd"
+              "sha256": "9046ada2c5f7dbdd5b3a59b4c663708245230444cec2987c3c548555d9626312"
             }
           },
           "scene3d_envelope_sha256": "27a003e25848769b0c9a40fd6df69edc9c35c187f6b84ab6ccad554e0fbfcef6",
@@ -3959,7 +3899,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 121,
+            "frame_count": 122,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 6,
@@ -3973,9 +3913,9 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 121,
+              "frames": 122,
               "recompute_count": 0,
-              "motion_since_settle": 2.275957200481571e-14
+              "motion_since_settle": 6.328271240363392e-15
             }
           },
           "role_colors": {
@@ -4236,26 +4176,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 560998,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 6
-                },
-                "tolerance_pixels": 112,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 121255,
@@ -4352,10 +4272,10 @@
               "S"
             ],
             "deltas": {
-              "A": 75.43208866258445,
-              "B": 116.82465493208188,
-              "C": 98.41239759298621,
-              "S": 94.93682109698008
+              "A": 68.00735254367721,
+              "B": 103.1746092796091,
+              "C": 89.05054744357274,
+              "S": 87.09190547921202
             },
             "moved_ids": [
               "A",
@@ -4401,16 +4321,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.7587422186188866,
-                  "do_sau_ti_le": 0.7541964794791117,
-                  "mat_nghieng_min_do": 12.653164971704948,
-                  "ba_dinh_min": 0.16846150004854113,
+                  "dien_tich_ti_le": 0.7587422186210351,
+                  "do_sau_ti_le": 0.7541964794757972,
+                  "mat_nghieng_min_do": 12.653164971406007,
+                  "ba_dinh_min": 0.16846150004423227,
                   "ba_dinh_gan_thang_hang": [
-                    "B",
                     "A",
+                    "B",
                     "S"
                   ],
-                  "dinh_canh_min": 0.16846150004854119,
+                  "dinh_canh_min": 0.16846150004423227,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -4427,24 +4347,24 @@
                   "zoom_out_notches": 6
                 },
                 "started_ms": 0,
-                "ended_ms": 3243,
+                "ended_ms": 3806,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 3.404860233757745e-7,
+                "prediction_max_view_matrix_error": 3.404976247622926e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.7587422186188866,
-                    "do_sau_ti_le": 0.7541964794791117,
-                    "mat_nghieng_min_do": 12.653164971704948,
-                    "ba_dinh_min": 0.16846150004854113,
+                    "dien_tich_ti_le": 0.7587422186210351,
+                    "do_sau_ti_le": 0.7541964794757972,
+                    "mat_nghieng_min_do": 12.653164971406007,
+                    "ba_dinh_min": 0.16846150004423227,
                     "ba_dinh_gan_thang_hang": [
-                      "B",
                       "A",
+                      "B",
                       "S"
                     ],
-                    "dinh_canh_min": 0.16846150004854119,
+                    "dinh_canh_min": 0.16846150004423227,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -4885,8 +4805,8 @@
                 "solution_pass": true,
                 "screenshot": {
                   "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/formation/formation_current_step.png",
-                  "bytes": 188931,
-                  "sha256": "79a71892d2e7ddb53ceffbd4c7bef5c679bd940f235f33b0367d8f9f260d6103"
+                  "bytes": 190798,
+                  "sha256": "e2bdb287572a4cadc129f04cd22b13df2aae905a04632ac321609afe415ef5ae"
                 },
                 "canvas": {
                   "sha256": "29b8eab6d08f509ed24c9d1bfb35f2272a33944bd2a70117a1bfaddc0b28ec61",
@@ -5079,8 +4999,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "c66451a88d6d98d2945000a7b4faccb61390ab8077dc634dfa27509ae102b73d",
-                  "bytes": 167407
+                  "sha256": "91b4deb97ab081be95373b3e81b4c3d4203b95534ddd2535c201cae9e083cea4",
+                  "bytes": 166827
                 },
                 "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
               }
@@ -5405,8 +5325,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/desktop/refusal.png",
-            "bytes": 59290,
-            "sha256": "3084b4cfd14c87858d694d4927e5f91f2938882ac0ef58724a0afda4bf9dbbd4"
+            "bytes": 59678,
+            "sha256": "9a0fbe188723db5cdaa51b1dd93d31713593d97d232e86428028cc04687458ad"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -5516,8 +5436,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/mobile/refusal.png",
-            "bytes": 141825,
-            "sha256": "5dd20974cd876e4c2f9b818f957cd21a1db2a653fc30143377953b85aab1a55b"
+            "bytes": 141072,
+            "sha256": "d78be3fabfced9a335927c6eda1aeb7d056e3126b20f436d4ab89dfa46c49d8c"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -5836,7 +5756,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 121,
+                "frame_count": 123,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 9,
@@ -5850,7 +5770,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 121,
+                  "frames": 123,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -6049,26 +5969,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 537451,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 8
-                    },
-                    "tolerance_pixels": 107,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 111664,
@@ -6106,12 +6006,12 @@
                   "F"
                 ],
                 "deltas": {
-                  "A": 75.47184905645283,
-                  "B": 96.51942809610922,
-                  "C": 84.17244204607586,
-                  "D": 88.29496021857646,
-                  "E": 81.27115109311545,
-                  "F": 89.19641248391103
+                  "A": 70.83078426785913,
+                  "B": 89.88882021697692,
+                  "C": 79.30952023559341,
+                  "D": 83.95236744726142,
+                  "E": 72.80109889280517,
+                  "F": 83.2165848854662
                 },
                 "moved_ids": [
                   "A",
@@ -6159,16 +6059,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.7028604643612993,
-                      "do_sau_ti_le": 0.9198525446329556,
-                      "mat_nghieng_min_do": 14.629653285753328,
-                      "ba_dinh_min": 0.15111170811201866,
+                      "dien_tich_ti_le": 0.7028604644500552,
+                      "do_sau_ti_le": 0.9198525445682121,
+                      "mat_nghieng_min_do": 14.629653272679136,
+                      "ba_dinh_min": 0.1511117079746595,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "A",
                         "D"
                       ],
-                      "dinh_canh_min": 0.26440823254236057,
+                      "dinh_canh_min": 0.2644082323043198,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -6184,25 +6084,25 @@
                       "planned_offset_deg": -60,
                       "zoom_out_notches": 3
                     },
-                    "started_ms": 0,
-                    "ended_ms": 8421,
+                    "started_ms": 1,
+                    "ended_ms": 9318,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 2.2198705096343474e-9,
+                    "prediction_max_view_matrix_error": 2.72559574909792e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.7028604643612993,
-                        "do_sau_ti_le": 0.9198525446329556,
-                        "mat_nghieng_min_do": 14.629653285753328,
-                        "ba_dinh_min": 0.15111170811201866,
+                        "dien_tich_ti_le": 0.7028604644500552,
+                        "do_sau_ti_le": 0.9198525445682121,
+                        "mat_nghieng_min_do": 14.629653272679136,
+                        "ba_dinh_min": 0.1511117079746595,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "A",
                           "D"
                         ],
-                        "dinh_canh_min": 0.26440823254236057,
+                        "dinh_canh_min": 0.2644082323043198,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -6624,16 +6524,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 16,
-              "max_motion": 0
-            },
-            "immutable_window": {
               "samples": 12,
               "max_motion": 0
             },
+            "immutable_window": {
+              "samples": 11,
+              "max_motion": 0
+            },
             "rotated_neutral": {
-              "samples": 102,
-              "max_motion": 0.01585879917916372
+              "samples": 99,
+              "max_motion": 0.02072573629928104
             }
           },
           "edge_semantics_neutral_final": {
@@ -6793,27 +6693,27 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  8.355891479234963,
-                  -2.2373456121666475,
-                  7.6440015114156195
+                  8.355891480301342,
+                  -2.2373456103002214,
+                  7.644001511415654
                 ],
                 "view_matrix_column_major": [
-                  0.49608586835960916,
-                  -0.4341367328428276,
-                  0.7519468787158091,
+                  0.49608586812942285,
+                  -0.4341367329085881,
+                  0.7519468788297045,
                   0,
-                  0.8682734656857207,
-                  0.24804293417978593,
-                  -0.4296229644578952,
+                  0.8682734658172372,
+                  0.24804293406469405,
+                  -0.42962296425854724,
                   0,
-                  -8.326672684688674e-17,
-                  0.8660254037844605,
-                  0.4999999999999623,
+                  8.326672684688674e-17,
+                  0.8660254037844589,
+                  0.49999999999996503,
                   0,
-                  -2.20261185178226,
-                  -2.437342298252365,
-                  -11.066402326822177,
-                  1
+                  -2.2026118517141855,
+                  -2.4373422979603947,
+                  -11.066402327327902,
+                  1.0000000000000002
                 ],
                 "projection_matrix_column_major": [
                   0.7549705698910737,
@@ -6837,7 +6737,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "f090e91217a70cea154dcf2c1150dab46ed4594e26b112c84cb6288e2eeac86f"
+              "sha256": "d988fec2a1dd4d630fd3766443ffd1edb8b3fcb6f880138201e15041d023fe32"
             }
           },
           "scene3d_envelope_sha256": "1366352dc4143f94586ccad514f7d96a3f6ac8dd764a794b57845ee5922a89f0",
@@ -6959,7 +6859,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 121,
+            "frame_count": 123,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 9,
@@ -6973,7 +6873,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 121,
+              "frames": 123,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -7246,26 +7146,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 537451,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 8
-                },
-                "tolerance_pixels": 107,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 111664,
@@ -7394,12 +7274,12 @@
               "F"
             ],
             "deltas": {
-              "A": 75.47184905645283,
-              "B": 96.51942809610922,
-              "C": 84.17244204607586,
-              "D": 88.29496021857646,
-              "E": 81.27115109311545,
-              "F": 89.19641248391103
+              "A": 70.83078426785913,
+              "B": 89.88882021697692,
+              "C": 79.30952023559341,
+              "D": 83.95236744726142,
+              "E": 72.80109889280517,
+              "F": 83.2165848854662
             },
             "moved_ids": [
               "A",
@@ -7447,16 +7327,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.7028604643612993,
-                  "do_sau_ti_le": 0.9198525446329556,
-                  "mat_nghieng_min_do": 14.629653285753328,
-                  "ba_dinh_min": 0.15111170811201866,
+                  "dien_tich_ti_le": 0.7028604644500552,
+                  "do_sau_ti_le": 0.9198525445682121,
+                  "mat_nghieng_min_do": 14.629653272679136,
+                  "ba_dinh_min": 0.1511117079746595,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "A",
                     "D"
                   ],
-                  "dinh_canh_min": 0.26440823254236057,
+                  "dinh_canh_min": 0.2644082323043198,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -7472,25 +7352,25 @@
                   "planned_offset_deg": -60,
                   "zoom_out_notches": 3
                 },
-                "started_ms": 0,
-                "ended_ms": 8421,
+                "started_ms": 1,
+                "ended_ms": 9318,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 2.2198705096343474e-9,
+                "prediction_max_view_matrix_error": 2.72559574909792e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.7028604643612993,
-                    "do_sau_ti_le": 0.9198525446329556,
-                    "mat_nghieng_min_do": 14.629653285753328,
-                    "ba_dinh_min": 0.15111170811201866,
+                    "dien_tich_ti_le": 0.7028604644500552,
+                    "do_sau_ti_le": 0.9198525445682121,
+                    "mat_nghieng_min_do": 14.629653272679136,
+                    "ba_dinh_min": 0.1511117079746595,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "A",
                       "D"
                     ],
-                    "dinh_canh_min": 0.26440823254236057,
+                    "dinh_canh_min": 0.2644082323043198,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -8791,7 +8671,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 123,
+                "frame_count": 122,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 9,
@@ -8805,7 +8685,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 123,
+                  "frames": 122,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -9004,26 +8884,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 557214,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 8
-                    },
-                    "tolerance_pixels": 111,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 157245,
@@ -9061,12 +8921,12 @@
                   "F"
                 ],
                 "deltas": {
-                  "A": 54.91812087098393,
-                  "B": 66.70832032063167,
-                  "C": 58.69412236331676,
-                  "D": 60.728905802755904,
-                  "E": 62.96824596572466,
-                  "F": 59.93329625508679
+                  "A": 51.62363799656122,
+                  "B": 61.220911460055866,
+                  "C": 54.48853090330111,
+                  "D": 57.28001396647874,
+                  "E": 56.0357029044876,
+                  "F": 55.00909015790026
                 },
                 "moved_ids": [
                   "A",
@@ -9114,16 +8974,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.699645350545481,
-                      "do_sau_ti_le": 0.9221528536882629,
-                      "mat_nghieng_min_do": 17.948735078233675,
-                      "ba_dinh_min": 0.19538837615851884,
+                      "dien_tich_ti_le": 0.699645350536706,
+                      "do_sau_ti_le": 0.9221528536944222,
+                      "mat_nghieng_min_do": 17.948735079503212,
+                      "ba_dinh_min": 0.19538837617244426,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "A",
                         "D"
                       ],
-                      "dinh_canh_min": 0.3158223821365658,
+                      "dinh_canh_min": 0.31582238215876157,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -9140,24 +9000,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 4195,
+                    "ended_ms": 3671,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 4.419836230340479e-7,
+                    "prediction_max_view_matrix_error": 4.419340200456645e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.699645350545481,
-                        "do_sau_ti_le": 0.9221528536882629,
-                        "mat_nghieng_min_do": 17.948735078233675,
-                        "ba_dinh_min": 0.19538837615851884,
+                        "dien_tich_ti_le": 0.699645350536706,
+                        "do_sau_ti_le": 0.9221528536944222,
+                        "mat_nghieng_min_do": 17.948735079503212,
+                        "ba_dinh_min": 0.19538837617244426,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "A",
                           "D"
                         ],
-                        "dinh_canh_min": 0.3158223821365658,
+                        "dinh_canh_min": 0.31582238215876157,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -9366,8 +9226,8 @@
             },
             "causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/causal_selected.png",
-              "bytes": 229812,
-              "sha256": "10a2ca5a6e4f495457bbbd77850a59a1f28dc9144753aedc0bf8ece7e310576f"
+              "bytes": 228066,
+              "sha256": "87cab19f960ea850d1d2b83f904ed2acccc8a6f4893ebe3a570383a182a48b8e"
             },
             "solution_causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_causal_selected.png",
@@ -9584,7 +9444,7 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 8,
+              "samples": 6,
               "max_motion": 0
             },
             "immutable_window": {
@@ -9592,8 +9452,8 @@
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 48,
-              "max_motion": 0.021427169443016647
+              "samples": 49,
+              "max_motion": 0.033331520405249115
             }
           },
           "edge_semantics_neutral_final": {
@@ -9753,26 +9613,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  10.792174913272298,
-                  -3.729891446486051,
-                  9.299891006557196
+                  10.7921749131294,
+                  -3.729891446730613,
+                  9.299891006557266
                 ],
                 "view_matrix_column_major": [
-                  0.5043327401412493,
-                  -0.4317547009649941,
-                  0.747821078478166,
+                  0.5043327401635107,
+                  -0.4317547009584985,
+                  0.7478210784669033,
                   0,
-                  0.8635094019300652,
-                  0.252166370070602,
-                  -0.4367649649225508,
+                  0.8635094019170635,
+                  0.2521663700817359,
+                  -0.43676496494182787,
                   0,
-                  2.498001805406601e-16,
-                  0.8660254037844644,
-                  0.49999999999995537,
+                  1.1102230246251563e-16,
+                  0.8660254037844607,
+                  0.49999999999996153,
                   0,
-                  -2.2220508138750343,
-                  -2.453816424845638,
-                  -14.349647292835883,
+                  -2.2220508138805273,
+                  -2.453816424874264,
+                  -14.34964729278628,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -9797,7 +9657,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "c5b60db3791ff10ef5103302100761c55b9fc3ebdc69577fbf63f4561557cde9"
+              "sha256": "4994f5b8d768d6282278b4217114f5dd57b0156a4bcfbfd5db40cf4b4554e2c5"
             }
           },
           "scene3d_envelope_sha256": "1366352dc4143f94586ccad514f7d96a3f6ac8dd764a794b57845ee5922a89f0",
@@ -9919,7 +9779,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 123,
+            "frame_count": 122,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 9,
@@ -9933,7 +9793,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 123,
+              "frames": 122,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -10206,26 +10066,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 557214,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 8
-                },
-                "tolerance_pixels": 111,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 157245,
@@ -10354,12 +10194,12 @@
               "F"
             ],
             "deltas": {
-              "A": 54.91812087098393,
-              "B": 66.70832032063167,
-              "C": 58.69412236331676,
-              "D": 60.728905802755904,
-              "E": 62.96824596572466,
-              "F": 59.93329625508679
+              "A": 51.62363799656122,
+              "B": 61.220911460055866,
+              "C": 54.48853090330111,
+              "D": 57.28001396647874,
+              "E": 56.0357029044876,
+              "F": 55.00909015790026
             },
             "moved_ids": [
               "A",
@@ -10407,16 +10247,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.699645350545481,
-                  "do_sau_ti_le": 0.9221528536882629,
-                  "mat_nghieng_min_do": 17.948735078233675,
-                  "ba_dinh_min": 0.19538837615851884,
+                  "dien_tich_ti_le": 0.699645350536706,
+                  "do_sau_ti_le": 0.9221528536944222,
+                  "mat_nghieng_min_do": 17.948735079503212,
+                  "ba_dinh_min": 0.19538837617244426,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "A",
                     "D"
                   ],
-                  "dinh_canh_min": 0.3158223821365658,
+                  "dinh_canh_min": 0.31582238215876157,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -10433,24 +10273,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 4195,
+                "ended_ms": 3671,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 4.419836230340479e-7,
+                "prediction_max_view_matrix_error": 4.419340200456645e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.699645350545481,
-                    "do_sau_ti_le": 0.9221528536882629,
-                    "mat_nghieng_min_do": 17.948735078233675,
-                    "ba_dinh_min": 0.19538837615851884,
+                    "dien_tich_ti_le": 0.699645350536706,
+                    "do_sau_ti_le": 0.9221528536944222,
+                    "mat_nghieng_min_do": 17.948735079503212,
+                    "ba_dinh_min": 0.19538837617244426,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "A",
                       "D"
                     ],
-                    "dinh_canh_min": 0.3158223821365658,
+                    "dinh_canh_min": 0.31582238215876157,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -10790,8 +10630,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "e9ab1ee0176119e3b90b7648faf62dc54a52fdb22f9db1694c89eed80fb3bcac",
-                  "bytes": 105110
+                  "sha256": "fed13cdd6155b3d3d5a1b5cfd649cb777675e5eeb2f5a6b4da56314d12292b27",
+                  "bytes": 104782
                 },
                 "learner_text": "Dữ kiện đề cho: AB = 3, AC = 4, AD = 5."
               },
@@ -11541,8 +11381,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/desktop/refusal.png",
-            "bytes": 58708,
-            "sha256": "ea49fb996168a610f713505af64bd275f7345b6402db766975d00cebbcb2f5af"
+            "bytes": 58587,
+            "sha256": "40398fb0f7d6d7438fe1610f7da101a9c1a1b8bbe5d38f76adecde4455e3d816"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -11652,8 +11492,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/mobile/refusal.png",
-            "bytes": 137757,
-            "sha256": "f50884d9bbef8f73d3cbb544023581120e49b55a4db37d79a7b93c380f45e0ae"
+            "bytes": 137164,
+            "sha256": "946bde066d2c826affee86c11e2a8ca1d13d06e0ff1d4c53b344736e05f2b0fc"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -11955,7 +11795,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 121,
+                "frame_count": 122,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 8,
@@ -11969,7 +11809,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 121,
+                  "frames": 122,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -12163,26 +12003,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 537959,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 7
-                    },
-                    "tolerance_pixels": 108,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 50097,
@@ -12272,16 +12092,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.7020342650394666,
-                      "do_sau_ti_le": 0.8771617662631298,
-                      "mat_nghieng_min_do": 12.88768614560716,
-                      "ba_dinh_min": 0.14183077489009893,
+                      "dien_tich_ti_le": 0.7020342649478787,
+                      "do_sau_ti_le": 0.8771617663010619,
+                      "mat_nghieng_min_do": 12.887686148897275,
+                      "ba_dinh_min": 0.1418307746739177,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "S",
                         "D"
                       ],
-                      "dinh_canh_min": 0.14183077489009893,
+                      "dinh_canh_min": 0.14183077467391766,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -12298,24 +12118,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 6466,
+                    "ended_ms": 6020,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 1.6651195977601674e-9,
+                    "prediction_max_view_matrix_error": 1.2234373514274921e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.7020342650394666,
-                        "do_sau_ti_le": 0.8771617662631298,
-                        "mat_nghieng_min_do": 12.88768614560716,
-                        "ba_dinh_min": 0.14183077489009893,
+                        "dien_tich_ti_le": 0.7020342649478787,
+                        "do_sau_ti_le": 0.8771617663010619,
+                        "mat_nghieng_min_do": 12.887686148897275,
+                        "ba_dinh_min": 0.1418307746739177,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "S",
                           "D"
                         ],
-                        "dinh_canh_min": 0.14183077489009893,
+                        "dinh_canh_min": 0.14183077467391766,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -12718,16 +12538,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 11,
+              "samples": 12,
               "max_motion": 0
             },
             "immutable_window": {
-              "samples": 10,
+              "samples": 9,
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 91,
-              "max_motion": 0.06135340876996853
+              "samples": 86,
+              "max_motion": 0.057955223152977964
             }
           },
           "edge_semantics_neutral_final": {
@@ -12877,26 +12697,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  5.114533560796049,
-                  -8.055329097174718,
-                  11.968311931433806
+                  5.11453355800332,
+                  -8.055329098186407,
+                  11.968311931433757
                 ],
                 "view_matrix_column_major": [
-                  0.9402061581112222,
-                  -0.21893725337703704,
-                  0.26091925826480244,
+                  0.9402061582063113,
+                  -0.21893725320831586,
+                  0.2609192580637293,
                   0,
-                  0.34060590166603927,
-                  0.6043528689848638,
-                  -0.720239702807356,
+                  0.34060590140355634,
+                  0.6043528690459847,
+                  -0.7202397028801993,
                   0,
-                  -2.775557561562892e-17,
-                  0.76604444311899,
-                  0.6427876096865253,
+                  -8.326672684688677e-17,
+                  0.7660444431189909,
+                  0.6427876096865243,
                   0,
-                  -2.0650233193670853,
-                  -3.180235667989416,
-                  -14.82933075640697,
+                  -2.0650233189974787,
+                  -3.180235668359984,
+                  -14.829330755965287,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -12921,7 +12741,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "ebbaaa543986501a30adc9f2d50b829b8e6c33c6e4530b628659e53a7d5de4f2"
+              "sha256": "6a3a2ebba5c3611b7a0ad702247fe653d0d36af0a88c23d9ebf2e9767f1493e5"
             }
           },
           "scene3d_envelope_sha256": "11535ece6f95d5c1677d20613b24811e84dd89bfbaba2861468b773c5e2c635b",
@@ -13043,7 +12863,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 121,
+            "frame_count": 122,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 8,
@@ -13057,7 +12877,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 121,
+              "frames": 122,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -13325,26 +13145,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 537959,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 7
-                },
-                "tolerance_pixels": 108,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 50097,
@@ -13515,16 +13315,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.7020342650394666,
-                  "do_sau_ti_le": 0.8771617662631298,
-                  "mat_nghieng_min_do": 12.88768614560716,
-                  "ba_dinh_min": 0.14183077489009893,
+                  "dien_tich_ti_le": 0.7020342649478787,
+                  "do_sau_ti_le": 0.8771617663010619,
+                  "mat_nghieng_min_do": 12.887686148897275,
+                  "ba_dinh_min": 0.1418307746739177,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "S",
                     "D"
                   ],
-                  "dinh_canh_min": 0.14183077489009893,
+                  "dinh_canh_min": 0.14183077467391766,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -13541,24 +13341,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 6466,
+                "ended_ms": 6020,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 1.6651195977601674e-9,
+                "prediction_max_view_matrix_error": 1.2234373514274921e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.7020342650394666,
-                    "do_sau_ti_le": 0.8771617662631298,
-                    "mat_nghieng_min_do": 12.88768614560716,
-                    "ba_dinh_min": 0.14183077489009893,
+                    "dien_tich_ti_le": 0.7020342649478787,
+                    "do_sau_ti_le": 0.8771617663010619,
+                    "mat_nghieng_min_do": 12.887686148897275,
+                    "ba_dinh_min": 0.1418307746739177,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "S",
                       "D"
                     ],
-                    "dinh_canh_min": 0.14183077489009893,
+                    "dinh_canh_min": 0.14183077467391766,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -14560,7 +14360,7 @@
                 "screenshot": {
                   "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_3.png",
                   "bytes": 155153,
-                  "sha256": "7fff3af687f60ee178df3f9f47810e4c0cdf0f9549faf8ef40d1e93186323b04"
+                  "sha256": "b1a0f3a1a02f8a12db19deffb773d7993b7ff3b38f72e36e6240ee33d746864f"
                 },
                 "canvas": {
                   "sha256": "b84525315dcd280c232f815b3e6e257e0b668bd18012acd8d88c36665494e3a5",
@@ -15459,7 +15259,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 120,
+                "frame_count": 122,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 8,
@@ -15473,7 +15273,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 120,
+                  "frames": 122,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -15667,26 +15467,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 558845,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 7
-                    },
-                    "tolerance_pixels": 112,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 89983,
@@ -15776,16 +15556,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.7030733471064211,
-                      "do_sau_ti_le": 0.8767284785846711,
-                      "mat_nghieng_min_do": 12.850113912219367,
-                      "ba_dinh_min": 0.14428525379683046,
+                      "dien_tich_ti_le": 0.703073347092028,
+                      "do_sau_ti_le": 0.8767284785907136,
+                      "mat_nghieng_min_do": 12.850113912743234,
+                      "ba_dinh_min": 0.14428525376280568,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "S",
                         "D"
                       ],
-                      "dinh_canh_min": 0.14428525379683046,
+                      "dinh_canh_min": 0.1442852537628057,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -15802,24 +15582,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 3223,
+                    "ended_ms": 3258,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 3.639407513134074e-7,
+                    "prediction_max_view_matrix_error": 3.638708498954202e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.7030733471064211,
-                        "do_sau_ti_le": 0.8767284785846711,
-                        "mat_nghieng_min_do": 12.850113912219367,
-                        "ba_dinh_min": 0.14428525379683046,
+                        "dien_tich_ti_le": 0.703073347092028,
+                        "do_sau_ti_le": 0.8767284785907136,
+                        "mat_nghieng_min_do": 12.850113912743234,
+                        "ba_dinh_min": 0.14428525376280568,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "S",
                           "D"
                         ],
-                        "dinh_canh_min": 0.14428525379683046,
+                        "dinh_canh_min": 0.1442852537628057,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -15999,8 +15779,8 @@
           "screenshots": {
             "neutral_final": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
-              "bytes": 252890,
-              "sha256": "6dd73ad22703909b485723f71231b83eceebb41c3aae70afe8d3408c49b91556"
+              "bytes": 251845,
+              "sha256": "449d9ff909ca8c5b4b89fd4d19c469a5489e90fb75f95b046a4188c94b611a1f"
             },
             "solution_neutral_final": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_neutral_final.png",
@@ -16227,7 +16007,7 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 6,
+              "samples": 9,
               "max_motion": 0
             },
             "immutable_window": {
@@ -16236,7 +16016,7 @@
             },
             "rotated_neutral": {
               "samples": 48,
-              "max_motion": 0.10757602433176094
+              "max_motion": 0.11884142112151264
             }
           },
           "edge_semantics_neutral_final": {
@@ -16386,26 +16166,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  5.146276113680069,
-                  -8.043772772473154,
-                  11.968311931433652
+                  5.146276113239559,
+                  -8.043772772634304,
+                  11.96831193143364
                 ],
                 "view_matrix_column_major": [
-                  0.9391199992327295,
-                  -0.22085496353767067,
-                  0.26320469623829384,
+                  0.9391199992478769,
+                  -0.22085496351105785,
+                  0.2632046962065779,
                   0,
-                  0.34358932905595074,
-                  0.6036546995156152,
-                  -0.7194076568341444,
+                  0.34358932901454853,
+                  0.6036546995253519,
+                  -0.7194076568457479,
                   0,
-                  -8.326672684688677e-17,
-                  0.7660444431189921,
-                  0.6427876096865227,
                   0,
-                  -2.069216329958064,
-                  -3.1760169892087147,
-                  -14.834358381999678,
+                  0.7660444431189919,
+                  0.6427876096865228,
+                  0,
+                  -2.069216329899987,
+                  -3.1760169892673495,
+                  -14.834358381929777,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -16430,7 +16210,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "e3f05eaa3a847bdd24ead48ac9a4f5f8906e1b7144c3936b36897f8c0d34b073"
+              "sha256": "871a444cb93bb405ff79f7029b4e2741cf6827433812c90e2a86e5e2597b8d66"
             }
           },
           "scene3d_envelope_sha256": "11535ece6f95d5c1677d20613b24811e84dd89bfbaba2861468b773c5e2c635b",
@@ -16552,7 +16332,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 120,
+            "frame_count": 122,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 8,
@@ -16566,7 +16346,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 120,
+              "frames": 122,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -16834,26 +16614,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 558845,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 7
-                },
-                "tolerance_pixels": 112,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 89983,
@@ -17024,16 +16784,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.7030733471064211,
-                  "do_sau_ti_le": 0.8767284785846711,
-                  "mat_nghieng_min_do": 12.850113912219367,
-                  "ba_dinh_min": 0.14428525379683046,
+                  "dien_tich_ti_le": 0.703073347092028,
+                  "do_sau_ti_le": 0.8767284785907136,
+                  "mat_nghieng_min_do": 12.850113912743234,
+                  "ba_dinh_min": 0.14428525376280568,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "S",
                     "D"
                   ],
-                  "dinh_canh_min": 0.14428525379683046,
+                  "dinh_canh_min": 0.1442852537628057,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -17050,24 +16810,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 3223,
+                "ended_ms": 3258,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 3.639407513134074e-7,
+                "prediction_max_view_matrix_error": 3.638708498954202e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.7030733471064211,
-                    "do_sau_ti_le": 0.8767284785846711,
-                    "mat_nghieng_min_do": 12.850113912219367,
-                    "ba_dinh_min": 0.14428525379683046,
+                    "dien_tich_ti_le": 0.703073347092028,
+                    "do_sau_ti_le": 0.8767284785907136,
+                    "mat_nghieng_min_do": 12.850113912743234,
+                    "ba_dinh_min": 0.14428525376280568,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "S",
                       "D"
                     ],
-                    "dinh_canh_min": 0.14428525379683046,
+                    "dinh_canh_min": 0.1442852537628057,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -18767,8 +18527,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/desktop/refusal.png",
-            "bytes": 59541,
-            "sha256": "a116a8f5a44f881dcaee6b84b6af58776994c500dcfdf522d9254e97cb7cd7e3"
+            "bytes": 59549,
+            "sha256": "4a18d5c90d20e6621d213ce975a4ac8f8ac253a3632f8633a79c89e1c107e688"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -18878,8 +18638,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/mobile/refusal.png",
-            "bytes": 143693,
-            "sha256": "5ffb09044d4ab76714764c0e748dba131b7c54edf0702b3f3660b3daf7969974"
+            "bytes": 144268,
+            "sha256": "2c909d8a4ac6744af49dabce1f7a19f1fd32aa45d8fc6494f1e2414c936e8bbd"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -19251,7 +19011,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 123,
+                "frame_count": 121,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 12,
@@ -19265,7 +19025,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 123,
+                  "frames": 121,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -19484,26 +19244,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 536134,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 10
-                    },
-                    "tolerance_pixels": 107,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 81244,
@@ -19602,16 +19342,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.9821513928048419,
-                      "do_sau_ti_le": 0.898603949694892,
-                      "mat_nghieng_min_do": 12.122232655756374,
-                      "ba_dinh_min": 0.1276273357265105,
+                      "dien_tich_ti_le": 0.9821513928873067,
+                      "do_sau_ti_le": 0.8986039498449561,
+                      "mat_nghieng_min_do": 12.122232681972083,
+                      "ba_dinh_min": 0.1276273360064491,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "A",
                         "A_prime"
                       ],
-                      "dinh_canh_min": 0.20052696120731286,
+                      "dinh_canh_min": 0.20052696164864212,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -19628,24 +19368,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 8118,
+                    "ended_ms": 8163,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 3.1484006512982887e-9,
+                    "prediction_max_view_matrix_error": 1.984156838830131e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.9821513928048419,
-                        "do_sau_ti_le": 0.898603949694892,
-                        "mat_nghieng_min_do": 12.122232655756374,
-                        "ba_dinh_min": 0.1276273357265105,
+                        "dien_tich_ti_le": 0.9821513928873067,
+                        "do_sau_ti_le": 0.8986039498449561,
+                        "mat_nghieng_min_do": 12.122232681972083,
+                        "ba_dinh_min": 0.1276273360064491,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "A",
                           "A_prime"
                         ],
-                        "dinh_canh_min": 0.20052696120731286,
+                        "dinh_canh_min": 0.20052696164864212,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -20119,16 +19859,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 13,
+              "samples": 11,
               "max_motion": 0
             },
             "immutable_window": {
-              "samples": 9,
+              "samples": 12,
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 111,
-              "max_motion": 0.03998792798366252
+              "samples": 103,
+              "max_motion": 0.049587251855208486
             }
           },
           "edge_semantics_neutral_final": {
@@ -20318,27 +20058,27 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  11.339192980754984,
-                  -2.4740199934567957,
-                  8.488763337944828
+                  11.33919297836961,
+                  -2.474019998532557,
+                  8.488763337944816
                 ],
                 "view_matrix_column_major": [
-                  0.4253435937513713,
-                  -0.4525159740977296,
-                  0.7837806583739172,
+                  0.42534359422225826,
+                  -0.4525159739870728,
+                  0.7837806581822635,
                   0,
-                  0.9050319481955695,
-                  0.21267179687565962,
-                  -0.36835835752567053,
+                  0.9050319479742641,
+                  0.21267179711110112,
+                  -0.3683583579334716,
                   0,
-                  5.5511151231257815e-17,
-                  0.8660254037844737,
-                  0.49999999999993905,
+                  1.1102230246251565e-16,
+                  0.8660254037844765,
+                  0.4999999999999346,
                   0,
-                  -2.583985958121655,
-                  -1.6941644626912618,
-                  -14.043147750132352,
-                  1
+                  -2.5839859584003184,
+                  -1.6941644633634951,
+                  -14.043147748968108,
+                  1.0000000000000002
                 ],
                 "projection_matrix_column_major": [
                   0.7549705698910737,
@@ -20362,7 +20102,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "37bf363379ee7762da01807c563deda59100da0d5cc72753f611b25e79bbcb65"
+              "sha256": "c96e4fd8ab3fccdd4045bb0e0fcd62378d996951f3832d0c09b27adc02e585dc"
             }
           },
           "scene3d_envelope_sha256": "9127b062b7b66b39723eabe57eae9a8ac9a0c933953ba60a809610145f31e4e5",
@@ -20493,7 +20233,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 123,
+            "frame_count": 121,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 12,
@@ -20507,7 +20247,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 123,
+              "frames": 121,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -20800,26 +20540,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 536134,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 10
-                },
-                "tolerance_pixels": 107,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 81244,
@@ -21039,16 +20759,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.9821513928048419,
-                  "do_sau_ti_le": 0.898603949694892,
-                  "mat_nghieng_min_do": 12.122232655756374,
-                  "ba_dinh_min": 0.1276273357265105,
+                  "dien_tich_ti_le": 0.9821513928873067,
+                  "do_sau_ti_le": 0.8986039498449561,
+                  "mat_nghieng_min_do": 12.122232681972083,
+                  "ba_dinh_min": 0.1276273360064491,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "A",
                     "A_prime"
                   ],
-                  "dinh_canh_min": 0.20052696120731286,
+                  "dinh_canh_min": 0.20052696164864212,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -21065,24 +20785,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 8118,
+                "ended_ms": 8163,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 3.1484006512982887e-9,
+                "prediction_max_view_matrix_error": 1.984156838830131e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.9821513928048419,
-                    "do_sau_ti_le": 0.898603949694892,
-                    "mat_nghieng_min_do": 12.122232655756374,
-                    "ba_dinh_min": 0.1276273357265105,
+                    "dien_tich_ti_le": 0.9821513928873067,
+                    "do_sau_ti_le": 0.8986039498449561,
+                    "mat_nghieng_min_do": 12.122232681972083,
+                    "ba_dinh_min": 0.1276273360064491,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "A",
                       "A_prime"
                     ],
-                    "dinh_canh_min": 0.20052696120731286,
+                    "dinh_canh_min": 0.20052696164864212,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -23419,7 +23139,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 122,
+                "frame_count": 121,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 12,
@@ -23433,7 +23153,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 122,
+                  "frames": 121,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -23652,26 +23372,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 551749,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 10
-                    },
-                    "tolerance_pixels": 110,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 181856,
@@ -23711,14 +23411,14 @@
                   "D_prime"
                 ],
                 "deltas": {
-                  "A": 53.75872022286245,
-                  "B": 43.18564576337837,
-                  "C": 60.82762530298219,
-                  "D": 43.278170016764804,
-                  "A_prime": 63.78871373526825,
-                  "B_prime": 25.079872407968907,
-                  "C_prime": 71.06335201775948,
-                  "D_prime": 42.04759208325728
+                  "A": 47.12748667179271,
+                  "B": 38.01315561749642,
+                  "C": 54.12947441089744,
+                  "D": 37.8021163428716,
+                  "A_prime": 56.568542494923804,
+                  "B_prime": 22.090722034374522,
+                  "C_prime": 65.5133574166368,
+                  "D_prime": 35.77708763999664
                 },
                 "moved_ids": [
                   "A",
@@ -23770,16 +23470,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.9805103145532107,
-                      "do_sau_ti_le": 0.8956609664206477,
-                      "mat_nghieng_min_do": 13.23707044628362,
-                      "ba_dinh_min": 0.14319675233902135,
+                      "dien_tich_ti_le": 0.9805103145360474,
+                      "do_sau_ti_le": 0.8956609663902997,
+                      "mat_nghieng_min_do": 13.237070441097007,
+                      "ba_dinh_min": 0.14319675228223658,
                       "ba_dinh_gan_thang_hang": [
                         "B",
                         "A",
                         "A_prime"
                       ],
-                      "dinh_canh_min": 0.2188081255454715,
+                      "dinh_canh_min": 0.21880812545852552,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -23796,24 +23496,24 @@
                       "zoom_out_notches": 6
                     },
                     "started_ms": 0,
-                    "ended_ms": 5194,
+                    "ended_ms": 6157,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 5.128372464469066e-7,
+                    "prediction_max_view_matrix_error": 5.130675226894255e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.9805103145532107,
-                        "do_sau_ti_le": 0.8956609664206477,
-                        "mat_nghieng_min_do": 13.23707044628362,
-                        "ba_dinh_min": 0.14319675233902135,
+                        "dien_tich_ti_le": 0.9805103145360474,
+                        "do_sau_ti_le": 0.8956609663902997,
+                        "mat_nghieng_min_do": 13.237070441097007,
+                        "ba_dinh_min": 0.14319675228223658,
                         "ba_dinh_gan_thang_hang": [
                           "B",
                           "A",
                           "A_prime"
                         ],
-                        "dinh_canh_min": 0.2188081255454715,
+                        "dinh_canh_min": 0.21880812545852552,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -24064,8 +23764,8 @@
             },
             "causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/causal_selected.png",
-              "bytes": 257648,
-              "sha256": "3323d3f5c0f79e5ae10c86a38a1a0bd42c3755b36f2ab05d72fb597171dda2ba"
+              "bytes": 256125,
+              "sha256": "71c2a951588e369bae045ee48c8ada7e3d1f5d7b49dc4aa303405fd0920fb937"
             },
             "solution_causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_causal_selected.png",
@@ -24292,16 +23992,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 10,
+              "samples": 11,
               "max_motion": 0
             },
             "immutable_window": {
-              "samples": 6,
+              "samples": 7,
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 57,
-              "max_motion": 0.01827668250721104
+              "samples": 64,
+              "max_motion": 0.049031475030087146
             }
           },
           "edge_semantics_neutral_final": {
@@ -24491,26 +24191,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  13.290411082634703,
-                  -3.2502026733312492,
-                  9.704043948204697
+                  13.29041108318802,
+                  -3.250202672122321,
+                  9.70404394820461
                 ],
                 "view_matrix_column_major": [
-                  0.41617427975054117,
-                  -0.45464243336769133,
-                  0.7874637938696752,
+                  0.41617427965665266,
+                  -0.45464243338917343,
+                  0.7874637939068925,
                   0,
-                  0.9092848667354569,
-                  0.20808713987525346,
-                  -0.3604174986656701,
+                  0.9092848667784292,
+                  0.20808713982830743,
+                  -0.36041749858436145,
                   0,
-                  1.665334536937734e-16,
-                  0.8660254037844621,
-                  0.499999999999959,
+                  5.5511151231257815e-17,
+                  0.8660254037844646,
+                  0.4999999999999547,
                   0,
-                  -2.575767155220878,
-                  -1.6852383652117608,
-                  -16.489169424999574,
+                  -2.575767155162928,
+                  -1.6852383650787905,
+                  -16.48916942522985,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -24535,7 +24235,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "4ae7ecd6711a21064f23adbd716fb5212915e5c9db6e622397f750e9ae4227bf"
+              "sha256": "2bf4b401b4b81a5d1ed70ffac5942b791e5f4ac8be76c78dcabf33f8f5b52f53"
             }
           },
           "scene3d_envelope_sha256": "9127b062b7b66b39723eabe57eae9a8ac9a0c933953ba60a809610145f31e4e5",
@@ -24666,7 +24366,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 122,
+            "frame_count": 121,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 12,
@@ -24680,7 +24380,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 122,
+              "frames": 121,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -24973,26 +24673,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 551749,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 10
-                },
-                "tolerance_pixels": 110,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 181856,
@@ -25153,14 +24833,14 @@
               "D_prime"
             ],
             "deltas": {
-              "A": 53.75872022286245,
-              "B": 43.18564576337837,
-              "C": 60.82762530298219,
-              "D": 43.278170016764804,
-              "A_prime": 63.78871373526825,
-              "B_prime": 25.079872407968907,
-              "C_prime": 71.06335201775948,
-              "D_prime": 42.04759208325728
+              "A": 47.12748667179271,
+              "B": 38.01315561749642,
+              "C": 54.12947441089744,
+              "D": 37.8021163428716,
+              "A_prime": 56.568542494923804,
+              "B_prime": 22.090722034374522,
+              "C_prime": 65.5133574166368,
+              "D_prime": 35.77708763999664
             },
             "moved_ids": [
               "A",
@@ -25212,16 +24892,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.9805103145532107,
-                  "do_sau_ti_le": 0.8956609664206477,
-                  "mat_nghieng_min_do": 13.23707044628362,
-                  "ba_dinh_min": 0.14319675233902135,
+                  "dien_tich_ti_le": 0.9805103145360474,
+                  "do_sau_ti_le": 0.8956609663902997,
+                  "mat_nghieng_min_do": 13.237070441097007,
+                  "ba_dinh_min": 0.14319675228223658,
                   "ba_dinh_gan_thang_hang": [
                     "B",
                     "A",
                     "A_prime"
                   ],
-                  "dinh_canh_min": 0.2188081255454715,
+                  "dinh_canh_min": 0.21880812545852552,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -25238,24 +24918,24 @@
                   "zoom_out_notches": 6
                 },
                 "started_ms": 0,
-                "ended_ms": 5194,
+                "ended_ms": 6157,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 5.128372464469066e-7,
+                "prediction_max_view_matrix_error": 5.130675226894255e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.9805103145532107,
-                    "do_sau_ti_le": 0.8956609664206477,
-                    "mat_nghieng_min_do": 13.23707044628362,
-                    "ba_dinh_min": 0.14319675233902135,
+                    "dien_tich_ti_le": 0.9805103145360474,
+                    "do_sau_ti_le": 0.8956609663902997,
+                    "mat_nghieng_min_do": 13.237070441097007,
+                    "ba_dinh_min": 0.14319675228223658,
                     "ba_dinh_gan_thang_hang": [
                       "B",
                       "A",
                       "A_prime"
                     ],
-                    "dinh_canh_min": 0.2188081255454715,
+                    "dinh_canh_min": 0.21880812545852552,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -25972,8 +25652,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "f5895d30356a253f67f82d9c130ef05f6213e9f0baa64a24dee75a563b42fc89",
-                  "bytes": 120547
+                  "sha256": "01b8b507c2272aff7237a35575d6de67840661011f354b8b107fb23f7c86756e",
+                  "bytes": 120239
                 },
                 "learner_text": "Dựng đáy dưới ABCD."
               },
@@ -26514,8 +26194,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "869da5cdaa4ad1d38bc6544916dcd5d77434985f4d609dad877a977b725ae576",
-                  "bytes": 174570
+                  "sha256": "b56294a3946b6ed771a114f18cd820272b22ce9099259f61e64f09b6b2ac7204",
+                  "bytes": 174705
                 },
                 "learner_text": "Dựng các cạnh bên AA′, BB′, CC′, DD′."
               },
@@ -27321,8 +27001,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/desktop/refusal.png",
-            "bytes": 58357,
-            "sha256": "a5a9a1cf070bfb85de263812517dbc4ad395f1b6c4527cefab6384e27019929e"
+            "bytes": 58889,
+            "sha256": "055f9613fc5f296d2f9df469332985df952003a0f0b24ffef9d33a1199661262"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -27432,8 +27112,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/mobile/refusal.png",
-            "bytes": 134751,
-            "sha256": "70d132a41d9244a128532339d33297586c64d5c8ecbb94b9180859f9b835a8e3"
+            "bytes": 134887,
+            "sha256": "49a67ab60fd419b27b3e6c781706100c6034b64321195efab53144dbc280ad59"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -27805,7 +27485,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 121,
+                "frame_count": 120,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 12,
@@ -27819,7 +27499,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 121,
+                  "frames": 120,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -28038,26 +27718,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 536203,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 10
-                    },
-                    "tolerance_pixels": 107,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 95612,
@@ -28097,14 +27757,14 @@
                   "D_prime"
                 ],
                 "deltas": {
-                  "A": 66.49060083951716,
-                  "B": 49.64876634922564,
-                  "C": 75.29276193632427,
-                  "D": 63.52952069707436,
-                  "A_prime": 75.16648189186455,
-                  "B_prime": 30.610455730027933,
-                  "C_prime": 80.80841540334768,
-                  "D_prime": 67.89698078707183
+                  "A": 63.34824385884742,
+                  "B": 47.853944456021594,
+                  "C": 72.56031973468694,
+                  "D": 60.415229867972855,
+                  "A_prime": 72.17340230306452,
+                  "B_prime": 28.425340807103794,
+                  "C_prime": 78.64477096412705,
+                  "D_prime": 64.93843238021688
                 },
                 "moved_ids": [
                   "A",
@@ -28156,16 +27816,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.9603638649571593,
-                      "do_sau_ti_le": 0.9603638649571595,
-                      "mat_nghieng_min_do": 13.90748565378046,
-                      "ba_dinh_min": 0.1792563348024983,
+                      "dien_tich_ti_le": 0.9603638649028179,
+                      "do_sau_ti_le": 0.9603638649028182,
+                      "mat_nghieng_min_do": 13.907485653755959,
+                      "ba_dinh_min": 0.17925633482476686,
                       "ba_dinh_gan_thang_hang": [
                         "C_prime",
                         "D_prime",
                         "A_prime"
                       ],
-                      "dinh_canh_min": 0.33507955134919104,
+                      "dinh_canh_min": 0.33507955131094264,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -28182,24 +27842,24 @@
                       "zoom_out_notches": 6
                     },
                     "started_ms": 0,
-                    "ended_ms": 8849,
+                    "ended_ms": 8125,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 1.965227980349482e-9,
+                    "prediction_max_view_matrix_error": 2.6737136948895568e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.9603638649571593,
-                        "do_sau_ti_le": 0.9603638649571595,
-                        "mat_nghieng_min_do": 13.90748565378046,
-                        "ba_dinh_min": 0.1792563348024983,
+                        "dien_tich_ti_le": 0.9603638649028179,
+                        "do_sau_ti_le": 0.9603638649028182,
+                        "mat_nghieng_min_do": 13.907485653755959,
+                        "ba_dinh_min": 0.17925633482476686,
                         "ba_dinh_gan_thang_hang": [
                           "C_prime",
                           "D_prime",
                           "A_prime"
                         ],
-                        "dinh_canh_min": 0.33507955134919104,
+                        "dinh_canh_min": 0.33507955131094264,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -28673,16 +28333,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 13,
+              "samples": 17,
               "max_motion": 0
             },
             "immutable_window": {
-              "samples": 11,
+              "samples": 8,
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 90,
-              "max_motion": 0.0297246078959843
+              "samples": 96,
+              "max_motion": 0.026823202085201947
             }
           },
           "edge_semantics_neutral_final": {
@@ -28872,26 +28532,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  12.340668606005966,
-                  -3.816190680705251,
-                  6.93771953735545
+                  12.340668607604192,
+                  -3.8161906779081063,
+                  6.937719537355453
                 ],
                 "view_matrix_column_major": [
-                  0.49608586869981075,
-                  -0.36694822270149946,
-                  0.7869230030521188,
+                  0.49608586845815617,
+                  -0.3669482227598479,
+                  0.7869230031772523,
                   0,
-                  0.8682734654913475,
-                  0.20965494750402341,
-                  -0.44960648584148677,
+                  0.8682734656294161,
+                  0.20965494740189475,
+                  -0.4496064856224738,
                   0,
-                  8.326672684688674e-17,
-                  0.9063077870366646,
-                  0.4226182617406684,
+                  2.7755575615628907e-17,
+                  0.9063077870366655,
+                  0.4226182617406661,
                   0,
-                  -2.8085341984352192,
-                  -0.9592395722309678,
-                  -14.358947051683575,
+                  -2.8085341981476897,
+                  -0.9592395719006296,
+                  -14.358947052392061,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -28916,7 +28576,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "a8c304c9664163531b9501102a2c3b2a08050448b007a8f4b1b947615b8ed1b7"
+              "sha256": "93971b0956ba75613e556c210ef171bf3c9ddcd19178a021eeaa80fad96c0437"
             }
           },
           "scene3d_envelope_sha256": "5bacd1fd1b36f6794f0ecb2de406c08a9892842eaf323009f092251753a42c5d",
@@ -29047,7 +28707,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 121,
+            "frame_count": 120,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 12,
@@ -29061,7 +28721,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 121,
+              "frames": 120,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -29354,26 +29014,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 536203,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 10
-                },
-                "tolerance_pixels": 107,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 95612,
@@ -29534,14 +29174,14 @@
               "D_prime"
             ],
             "deltas": {
-              "A": 66.49060083951716,
-              "B": 49.64876634922564,
-              "C": 75.29276193632427,
-              "D": 63.52952069707436,
-              "A_prime": 75.16648189186455,
-              "B_prime": 30.610455730027933,
-              "C_prime": 80.80841540334768,
-              "D_prime": 67.89698078707183
+              "A": 63.34824385884742,
+              "B": 47.853944456021594,
+              "C": 72.56031973468694,
+              "D": 60.415229867972855,
+              "A_prime": 72.17340230306452,
+              "B_prime": 28.425340807103794,
+              "C_prime": 78.64477096412705,
+              "D_prime": 64.93843238021688
             },
             "moved_ids": [
               "A",
@@ -29593,16 +29233,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.9603638649571593,
-                  "do_sau_ti_le": 0.9603638649571595,
-                  "mat_nghieng_min_do": 13.90748565378046,
-                  "ba_dinh_min": 0.1792563348024983,
+                  "dien_tich_ti_le": 0.9603638649028179,
+                  "do_sau_ti_le": 0.9603638649028182,
+                  "mat_nghieng_min_do": 13.907485653755959,
+                  "ba_dinh_min": 0.17925633482476686,
                   "ba_dinh_gan_thang_hang": [
                     "C_prime",
                     "D_prime",
                     "A_prime"
                   ],
-                  "dinh_canh_min": 0.33507955134919104,
+                  "dinh_canh_min": 0.33507955131094264,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -29619,24 +29259,24 @@
                   "zoom_out_notches": 6
                 },
                 "started_ms": 0,
-                "ended_ms": 8849,
+                "ended_ms": 8125,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 1.965227980349482e-9,
+                "prediction_max_view_matrix_error": 2.6737136948895568e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.9603638649571593,
-                    "do_sau_ti_le": 0.9603638649571595,
-                    "mat_nghieng_min_do": 13.90748565378046,
-                    "ba_dinh_min": 0.1792563348024983,
+                    "dien_tich_ti_le": 0.9603638649028179,
+                    "do_sau_ti_le": 0.9603638649028182,
+                    "mat_nghieng_min_do": 13.907485653755959,
+                    "ba_dinh_min": 0.17925633482476686,
                     "ba_dinh_gan_thang_hang": [
                       "C_prime",
                       "D_prime",
                       "A_prime"
                     ],
-                    "dinh_canh_min": 0.33507955134919104,
+                    "dinh_canh_min": 0.33507955131094264,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -30911,12 +30551,12 @@
                 "solution_pass": true,
                 "screenshot": {
                   "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_3.png",
-                  "bytes": 173246,
-                  "sha256": "5eaa2f939d741a603ec4f1e16cc50896cb91ea52d7890e90745ae95d0d5e6f83"
+                  "bytes": 173220,
+                  "sha256": "7d28cfc534068b0496c8770f4f04420cfb1bcb80b7de8a27e4b0af6a765cb8d9"
                 },
                 "canvas": {
-                  "sha256": "658974acfdeda74e3063b58b22491aa2c4430061cb8869988235bae8bf0724b8",
-                  "bytes": 135465
+                  "sha256": "3545dd9093249b82e345cc30aacdad44a6e6fbb19e38c5ffa1ff108ea91a9bd1",
+                  "bytes": 135574
                 },
                 "learner_text": "Dựng các cạnh bên AA′, BB′, CC′, DD′."
               },
@@ -31989,7 +31629,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 120,
+                "frame_count": 121,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 12,
@@ -32003,7 +31643,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 120,
+                  "frames": 121,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -32222,26 +31862,6 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 551788,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 10
-                    },
-                    "tolerance_pixels": 110,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
                     "changed_pixels": 157949,
@@ -32281,14 +31901,14 @@
                   "D_prime"
                 ],
                 "deltas": {
-                  "A": 50.21951811795887,
-                  "B": 36.89173349139343,
-                  "C": 55.90169943749474,
-                  "D": 46.1410879802373,
-                  "A_prime": 56.222771187482394,
-                  "B_prime": 27.80287754891569,
-                  "C_prime": 59.43904440685432,
-                  "D_prime": 49.244289008980516
+                  "A": 48.27007354458868,
+                  "B": 35.51056180912941,
+                  "C": 54.56189146281496,
+                  "D": 44.41846462902562,
+                  "A_prime": 54.230987451824994,
+                  "B_prime": 25.612496949731394,
+                  "C_prime": 58.463663928973865,
+                  "D_prime": 46.32493928760188
                 },
                 "moved_ids": [
                   "A",
@@ -32340,16 +31960,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.9621909382381665,
-                      "do_sau_ti_le": 0.9621909382381668,
-                      "mat_nghieng_min_do": 14.790357678839175,
-                      "ba_dinh_min": 0.19110069298282514,
+                      "dien_tich_ti_le": 0.9621909382814817,
+                      "do_sau_ti_le": 0.9621909382814823,
+                      "mat_nghieng_min_do": 14.790357678857452,
+                      "ba_dinh_min": 0.19110069296351684,
                       "ba_dinh_gan_thang_hang": [
                         "C_prime",
                         "D_prime",
                         "A_prime"
                       ],
-                      "dinh_canh_min": 0.3567603360021573,
+                      "dinh_canh_min": 0.3567603360358376,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -32366,24 +31986,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 4683,
+                    "ended_ms": 3674,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 5.848196060753708e-7,
+                    "prediction_max_view_matrix_error": 5.842348613782633e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.9621909382381665,
-                        "do_sau_ti_le": 0.9621909382381668,
-                        "mat_nghieng_min_do": 14.790357678839175,
-                        "ba_dinh_min": 0.19110069298282514,
+                        "dien_tich_ti_le": 0.9621909382814817,
+                        "do_sau_ti_le": 0.9621909382814823,
+                        "mat_nghieng_min_do": 14.790357678857452,
+                        "ba_dinh_min": 0.19110069296351684,
                         "ba_dinh_gan_thang_hang": [
                           "C_prime",
                           "D_prime",
                           "A_prime"
                         ],
-                        "dinh_canh_min": 0.3567603360021573,
+                        "dinh_canh_min": 0.3567603360358376,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -32862,7 +32482,7 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 9,
+              "samples": 7,
               "max_motion": 0
             },
             "immutable_window": {
@@ -32870,8 +32490,8 @@
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 58,
-              "max_motion": 0.05177423485287824
+              "samples": 54,
+              "max_motion": 0.06829748173552352
             }
           },
           "edge_semantics_neutral_final": {
@@ -33061,26 +32681,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  12.682004509396608,
-                  -4.157007740590082,
-                  7.255346835191187
+                  12.682004507994609,
+                  -4.157007742990437,
+                  7.255346835191174
                 ],
                 "view_matrix_column_major": [
-                  0.5043327399195544,
-                  -0.3649348424951437,
-                  0.782605295265934,
+                  0.5043327401180597,
+                  -0.36493484244614777,
+                  0.7826052951608589,
                   0,
-                  0.8635094020595462,
-                  0.2131402258837192,
-                  -0.4570806894466248,
+                  0.8635094019436093,
+                  0.21314022596761178,
+                  -0.45708068962653153,
                   0,
-                  -1.6653345369377343e-16,
-                  0.9063077870366567,
-                  0.42261826174068506,
+                  -1.6653345369377348e-16,
+                  0.906307787036656,
+                  0.42261826174068634,
                   0,
-                  -2.8063348134622865,
-                  -1.0614464473964436,
-                  -14.891333915558391,
+                  -2.80633481368188,
+                  -1.061446447669077,
+                  -14.891333914973647,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -33105,7 +32725,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "979bc441193af409638ccd86affd9e8c7b28703bb92e306f82eb6c832f1f49a4"
+              "sha256": "c0cba3f210bd1a136e146692ce5eea2131e03ca4bacd91fa89095de85d6dba2f"
             }
           },
           "scene3d_envelope_sha256": "5bacd1fd1b36f6794f0ecb2de406c08a9892842eaf323009f092251753a42c5d",
@@ -33236,7 +32856,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 120,
+            "frame_count": 121,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 12,
@@ -33250,7 +32870,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 120,
+              "frames": 121,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -33543,26 +33163,6 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 551788,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 10
-                },
-                "tolerance_pixels": 110,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
                 "changed_pixels": 157949,
@@ -33723,14 +33323,14 @@
               "D_prime"
             ],
             "deltas": {
-              "A": 50.21951811795887,
-              "B": 36.89173349139343,
-              "C": 55.90169943749474,
-              "D": 46.1410879802373,
-              "A_prime": 56.222771187482394,
-              "B_prime": 27.80287754891569,
-              "C_prime": 59.43904440685432,
-              "D_prime": 49.244289008980516
+              "A": 48.27007354458868,
+              "B": 35.51056180912941,
+              "C": 54.56189146281496,
+              "D": 44.41846462902562,
+              "A_prime": 54.230987451824994,
+              "B_prime": 25.612496949731394,
+              "C_prime": 58.463663928973865,
+              "D_prime": 46.32493928760188
             },
             "moved_ids": [
               "A",
@@ -33782,16 +33382,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.9621909382381665,
-                  "do_sau_ti_le": 0.9621909382381668,
-                  "mat_nghieng_min_do": 14.790357678839175,
-                  "ba_dinh_min": 0.19110069298282514,
+                  "dien_tich_ti_le": 0.9621909382814817,
+                  "do_sau_ti_le": 0.9621909382814823,
+                  "mat_nghieng_min_do": 14.790357678857452,
+                  "ba_dinh_min": 0.19110069296351684,
                   "ba_dinh_gan_thang_hang": [
                     "C_prime",
                     "D_prime",
                     "A_prime"
                   ],
-                  "dinh_canh_min": 0.3567603360021573,
+                  "dinh_canh_min": 0.3567603360358376,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -33808,24 +33408,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 4683,
+                "ended_ms": 3674,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 5.848196060753708e-7,
+                "prediction_max_view_matrix_error": 5.842348613782633e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.9621909382381665,
-                    "do_sau_ti_le": 0.9621909382381668,
-                    "mat_nghieng_min_do": 14.790357678839175,
-                    "ba_dinh_min": 0.19110069298282514,
+                    "dien_tich_ti_le": 0.9621909382814817,
+                    "do_sau_ti_le": 0.9621909382814823,
+                    "mat_nghieng_min_do": 14.790357678857452,
+                    "ba_dinh_min": 0.19110069296351684,
                     "ba_dinh_gan_thang_hang": [
                       "C_prime",
                       "D_prime",
                       "A_prime"
                     ],
-                    "dinh_canh_min": 0.3567603360021573,
+                    "dinh_canh_min": 0.3567603360358376,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -35907,8 +35507,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/desktop/refusal.png",
-            "bytes": 56144,
-            "sha256": "74d8664e2bada998afd047ba6d2a22dbd68c0683cbea50cd614184d781d7c7e6"
+            "bytes": 56411,
+            "sha256": "d0ad3b9c7703b10e41b2e28284a99423909ce85f04fd6b314e550c4df73ee700"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -36018,8 +35618,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/mobile/refusal.png",
-            "bytes": 130019,
-            "sha256": "c3a3af2241ef569c9d4bc9fdce25661263fa7132db0003f57d20d5827695b14c"
+            "bytes": 130474,
+            "sha256": "be5af9fa26b99f5afc4bf25be2a975fc00c83e13b1d5ea2a9e8201b5a5b199cc"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -36336,7 +35936,7 @@
             "immutable_120_frames": {
               "pass": true,
               "details": {
-                "frame_count": 120,
+                "frame_count": 121,
                 "recompute_count": 0,
                 "recomputation_times_ms": [],
                 "edge_count": 8,
@@ -36350,7 +35950,7 @@
                 "immutable_window": {
                   "pass": true,
                   "code": "IMMUTABLE_WINDOW_PASS",
-                  "frames": 120,
+                  "frames": 121,
                   "recompute_count": 0,
                   "motion_since_settle": 0
                 }
@@ -36509,31 +36109,11 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 537958,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 7
-                    },
-                    "tolerance_pixels": 108,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
-                    "changed_pixels": 77837,
+                    "changed_pixels": 67582,
                     "total_pixels": 611552,
-                    "changed_ratio": 0.1272778112082047,
+                    "changed_ratio": 0.11050900005232589,
                     "bounds": {
                       "x": 257,
                       "y": 0,
@@ -36565,11 +36145,11 @@
                   "S"
                 ],
                 "deltas": {
-                  "A": 96.77293009927931,
-                  "B": 79.30952023559341,
-                  "C": 99.04544411531506,
-                  "D": 96.20810776644555,
-                  "S": 108.04165863221465
+                  "A": 101.39033484509261,
+                  "B": 84.8645980371085,
+                  "C": 102.20078277586724,
+                  "D": 101.24228365658294,
+                  "S": 113.07077429645557
                 },
                 "moved_ids": [
                   "A",
@@ -36618,16 +36198,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.7065842371201665,
-                      "do_sau_ti_le": 0.7692139260379127,
-                      "mat_nghieng_min_do": 14.156885872284155,
-                      "ba_dinh_min": 0.16844803578014286,
+                      "dien_tich_ti_le": 0.7065842371194074,
+                      "do_sau_ti_le": 0.7692139260368731,
+                      "mat_nghieng_min_do": 14.156885879782296,
+                      "ba_dinh_min": 0.16844803587084062,
                       "ba_dinh_gan_thang_hang": [
                         "D",
                         "C",
                         "S"
                       ],
-                      "dinh_canh_min": 0.16844803578014275,
+                      "dinh_canh_min": 0.16844803587084065,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -36644,24 +36224,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 7836,
+                    "ended_ms": 7103,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 5.545345516111411e-9,
+                    "prediction_max_view_matrix_error": 4.290722444011408e-9,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.7065842371201665,
-                        "do_sau_ti_le": 0.7692139260379127,
-                        "mat_nghieng_min_do": 14.156885872284155,
-                        "ba_dinh_min": 0.16844803578014286,
+                        "dien_tich_ti_le": 0.7065842371194074,
+                        "do_sau_ti_le": 0.7692139260368731,
+                        "mat_nghieng_min_do": 14.156885879782296,
+                        "ba_dinh_min": 0.16844803587084062,
                         "ba_dinh_gan_thang_hang": [
                           "D",
                           "C",
                           "S"
                         ],
-                        "dinh_canh_min": 0.16844803578014275,
+                        "dinh_canh_min": 0.16844803587084065,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -36851,8 +36431,8 @@
             },
             "causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/causal_selected.png",
-              "bytes": 152102,
-              "sha256": "3ee20f12abe3f1dea5a3ff317bd4284077285ffd48111a530701de60689098b9"
+              "bytes": 152225,
+              "sha256": "3bac4a63d2b4f528db9abb17c7300b374d9cb5d1d6fc88002635bc10be8ce3d9"
             },
             "solution_causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_causal_selected.png",
@@ -37064,7 +36644,7 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 14,
+              "samples": 13,
               "max_motion": 0
             },
             "immutable_window": {
@@ -37072,8 +36652,8 @@
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 104,
-              "max_motion": 0.03524165769360333
+              "samples": 100,
+              "max_motion": 0.03963132929946136
             }
           },
           "edge_semantics_neutral_final": {
@@ -37223,26 +36803,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  13.724624685418602,
-                  -7.513991234929778,
-                  7.518198570143696
+                  13.724624682299359,
+                  -7.51399123802098,
+                  7.518198570143692
                 ],
                 "view_matrix_column_major": [
-                  0.710291292298516,
-                  -0.24075066831076342,
-                  0.6614570249024684,
+                  0.7102912925092686,
+                  -0.2407506682380283,
+                  0.6614570247026299,
                   0,
-                  0.7039078633492483,
-                  0.2429339295949015,
-                  -0.6674554859814062,
+                  0.7039078631365846,
+                  0.2429339296669828,
+                  -0.6674554861794492,
                   0,
-                  -3.3306690738754686e-16,
-                  0.9396926207859142,
-                  0.3420201433256524,
+                  -2.7755575615628914e-17,
+                  0.9396926207859144,
+                  0.3420201433256522,
                   0,
-                  -4.4593238887136915,
-                  -1.9351797349951745,
-                  -16.664879436201307,
+                  -4.459323888812652,
+                  -1.9351797354518194,
+                  -16.664879434946684,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -37267,7 +36847,7 @@
                 "viewport_height": 464,
                 "device_pixel_ratio": 1
               },
-              "sha256": "3fe0c966d6d858e756a73de72ba014f009def10e1cc32048e8fb01a6dfe9ca8c"
+              "sha256": "8b555e97b95eb40c55030e8a1ffde15cc01d50ebe950febe710032d00ad86b27"
             }
           },
           "scene3d_envelope_sha256": "ee38512a5d4bda203474f4d83c52af3b933f7b503f85061dca99abd9fb9c9c84",
@@ -37377,7 +36957,7 @@
             }
           },
           "occlusion_performance": {
-            "frame_count": 120,
+            "frame_count": 121,
             "recompute_count": 0,
             "recomputation_times_ms": [],
             "edge_count": 8,
@@ -37391,7 +36971,7 @@
             "immutable_window": {
               "pass": true,
               "code": "IMMUTABLE_WINDOW_PASS",
-              "frames": 120,
+              "frames": 121,
               "recompute_count": 0,
               "motion_since_settle": 0
             }
@@ -37596,31 +37176,11 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 537958,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 7
-                },
-                "tolerance_pixels": 108,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
-                "changed_pixels": 77837,
+                "changed_pixels": 67582,
                 "total_pixels": 611552,
-                "changed_ratio": 0.1272778112082047,
+                "changed_ratio": 0.11050900005232589,
                 "bounds": {
                   "x": 257,
                   "y": 0,
@@ -37733,11 +37293,11 @@
               "S"
             ],
             "deltas": {
-              "A": 96.77293009927931,
-              "B": 79.30952023559341,
-              "C": 99.04544411531506,
-              "D": 96.20810776644555,
-              "S": 108.04165863221465
+              "A": 101.39033484509261,
+              "B": 84.8645980371085,
+              "C": 102.20078277586724,
+              "D": 101.24228365658294,
+              "S": 113.07077429645557
             },
             "moved_ids": [
               "A",
@@ -37786,16 +37346,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.7065842371201665,
-                  "do_sau_ti_le": 0.7692139260379127,
-                  "mat_nghieng_min_do": 14.156885872284155,
-                  "ba_dinh_min": 0.16844803578014286,
+                  "dien_tich_ti_le": 0.7065842371194074,
+                  "do_sau_ti_le": 0.7692139260368731,
+                  "mat_nghieng_min_do": 14.156885879782296,
+                  "ba_dinh_min": 0.16844803587084062,
                   "ba_dinh_gan_thang_hang": [
                     "D",
                     "C",
                     "S"
                   ],
-                  "dinh_canh_min": 0.16844803578014275,
+                  "dinh_canh_min": 0.16844803587084065,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -37812,24 +37372,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 7836,
+                "ended_ms": 7103,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 5.545345516111411e-9,
+                "prediction_max_view_matrix_error": 4.290722444011408e-9,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.7065842371201665,
-                    "do_sau_ti_le": 0.7692139260379127,
-                    "mat_nghieng_min_do": 14.156885872284155,
-                    "ba_dinh_min": 0.16844803578014286,
+                    "dien_tich_ti_le": 0.7065842371194074,
+                    "do_sau_ti_le": 0.7692139260368731,
+                    "mat_nghieng_min_do": 14.156885879782296,
+                    "ba_dinh_min": 0.16844803587084062,
                     "ba_dinh_gan_thang_hang": [
                       "D",
                       "C",
                       "S"
                     ],
-                    "dinh_canh_min": 0.16844803578014275,
+                    "dinh_canh_min": 0.16844803587084065,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -40882,31 +40442,11 @@
                   ],
                   "legend_shown": true,
                   "role_colors_match": true,
-                  "canvas_role_hues": {
-                    "census": {
-                      "total": 558842,
-                      "cam": 0,
-                      "xanh": 0,
-                      "masked_overlays": 7
-                    },
-                    "tolerance_pixels": 112,
-                    "cam": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "xanh": {
-                      "pixels": 0,
-                      "allowed": false,
-                      "pass": true
-                    },
-                    "pass": true
-                  },
                   "canvas_changed": true,
                   "pixel_delta": {
-                    "changed_pixels": 118376,
+                    "changed_pixels": 118633,
                     "total_pixels": 568480,
-                    "changed_ratio": 0.2082324795947087,
+                    "changed_ratio": 0.2086845623416831,
                     "bounds": {
                       "x": 0,
                       "y": 171,
@@ -40938,11 +40478,11 @@
                   "S"
                 ],
                 "deltas": {
-                  "A": 70.83078426785913,
-                  "B": 54.671747731346585,
-                  "C": 74.79304780526061,
-                  "D": 67.23094525588645,
-                  "S": 78.10249675906655
+                  "A": 73.97972695272672,
+                  "B": 58.05170109479997,
+                  "C": 76.66159403508382,
+                  "D": 70.38465741907109,
+                  "S": 81.09870529176159
                 },
                 "moved_ids": [
                   "A",
@@ -40991,16 +40531,16 @@
                     "pass": true,
                     "failures": [],
                     "metrics": {
-                      "dien_tich_ti_le": 0.706589520822715,
-                      "do_sau_ti_le": 0.7692211584657764,
-                      "mat_nghieng_min_do": 13.766717478742613,
-                      "ba_dinh_min": 0.16789811375128963,
+                      "dien_tich_ti_le": 0.7065895208225248,
+                      "do_sau_ti_le": 0.769221158465514,
+                      "mat_nghieng_min_do": 13.766717471864325,
+                      "ba_dinh_min": 0.1678981136647937,
                       "ba_dinh_gan_thang_hang": [
                         "D",
                         "C",
                         "S"
                       ],
-                      "dinh_canh_min": 0.1678981137512896,
+                      "dinh_canh_min": 0.16789811366479374,
                       "measured_on": "perspective_screen"
                     },
                     "unreadable_vertices": []
@@ -41017,24 +40557,24 @@
                       "zoom_out_notches": 3
                     },
                     "started_ms": 0,
-                    "ended_ms": 5549,
+                    "ended_ms": 4550,
                     "pass": true,
                     "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                    "prediction_max_view_matrix_error": 9.57641979937307e-7,
+                    "prediction_max_view_matrix_error": 9.587728371229787e-7,
                     "gate": {
                       "pass": true,
                       "failures": [],
                       "metrics": {
-                        "dien_tich_ti_le": 0.706589520822715,
-                        "do_sau_ti_le": 0.7692211584657764,
-                        "mat_nghieng_min_do": 13.766717478742613,
-                        "ba_dinh_min": 0.16789811375128963,
+                        "dien_tich_ti_le": 0.7065895208225248,
+                        "do_sau_ti_le": 0.769221158465514,
+                        "mat_nghieng_min_do": 13.766717471864325,
+                        "ba_dinh_min": 0.1678981136647937,
                         "ba_dinh_gan_thang_hang": [
                           "D",
                           "C",
                           "S"
                         ],
-                        "dinh_canh_min": 0.1678981137512896,
+                        "dinh_canh_min": 0.16789811366479374,
                         "measured_on": "perspective_screen"
                       },
                       "unreadable_vertices": []
@@ -41229,8 +40769,8 @@
             },
             "causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/causal_selected.png",
-              "bytes": 251679,
-              "sha256": "d824e9944de2f50dd320cf6757b37d94af3811a0597676886deb1551d91fe226"
+              "bytes": 252289,
+              "sha256": "bd231b494cc640e183d31f44a0ddafb177c23fab8f6d89462305243a8f882526"
             },
             "solution_causal_selected": {
               "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_causal_selected.png",
@@ -41442,16 +40982,16 @@
           },
           "camera_settle": {
             "neutral_final": {
-              "samples": 10,
+              "samples": 11,
               "max_motion": 0
             },
             "immutable_window": {
-              "samples": 6,
+              "samples": 7,
               "max_motion": 0
             },
             "rotated_neutral": {
-              "samples": 60,
-              "max_motion": 0.050589404561574805
+              "samples": 57,
+              "max_motion": 0.05214794800635904
             }
           },
           "edge_semantics_neutral_final": {
@@ -41601,26 +41141,26 @@
             "rotated_neutral": {
               "snapshot": {
                 "position": [
-                  14.912287435441835,
-                  -8.607222214456412,
-                  8.186924780476332
+                  14.912287438564732,
+                  -8.607222211325816,
+                  8.186924780476446
                 ],
                 "view_matrix_column_major": [
-                  0.7062203218578696,
-                  -0.24214756998206874,
-                  0.6652949807016029,
+                  0.7062203216658887,
+                  -0.2421475700475685,
+                  0.6652949808815534,
                   0,
-                  0.7079921306024292,
-                  0.24154157570130919,
-                  -0.6636300250988965,
+                  0.7079921307939295,
+                  0.24154157563565054,
+                  -0.6636300249184924,
                   0,
-                  -2.2204460492503136e-16,
-                  0.9396926207859186,
-                  0.3420201433256411,
+                  -1.9428902930940244e-16,
+                  0.9396926207859171,
+                  0.342020143325645,
                   0,
-                  -4.437514838113244,
-                  -2.0032166216854965,
-                  -18.433174262605277,
+                  -4.437514838023973,
+                  -2.0032166212739444,
+                  -18.433174263736134,
                   1
                 ],
                 "projection_matrix_column_major": [
@@ -41645,7 +41185,7 @@
                 "viewport_height": 418,
                 "device_pixel_ratio": 1
               },
-              "sha256": "c9e9b21622db529be307cfa1688fe8687b5bcb61fb991864de3308f24ce172ac"
+              "sha256": "483770af15fd099926d0804d014b47fb226e96aeef9def853f7057e5575161a3"
             }
           },
           "scene3d_envelope_sha256": "ee38512a5d4bda203474f4d83c52af3b933f7b503f85061dca99abd9fb9c9c84",
@@ -41974,31 +41514,11 @@
               ],
               "legend_shown": true,
               "role_colors_match": true,
-              "canvas_role_hues": {
-                "census": {
-                  "total": 558842,
-                  "cam": 0,
-                  "xanh": 0,
-                  "masked_overlays": 7
-                },
-                "tolerance_pixels": 112,
-                "cam": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "xanh": {
-                  "pixels": 0,
-                  "allowed": false,
-                  "pass": true
-                },
-                "pass": true
-              },
               "canvas_changed": true,
               "pixel_delta": {
-                "changed_pixels": 118376,
+                "changed_pixels": 118633,
                 "total_pixels": 568480,
-                "changed_ratio": 0.2082324795947087,
+                "changed_ratio": 0.2086845623416831,
                 "bounds": {
                   "x": 0,
                   "y": 171,
@@ -42111,11 +41631,11 @@
               "S"
             ],
             "deltas": {
-              "A": 70.83078426785913,
-              "B": 54.671747731346585,
-              "C": 74.79304780526061,
-              "D": 67.23094525588645,
-              "S": 78.10249675906655
+              "A": 73.97972695272672,
+              "B": 58.05170109479997,
+              "C": 76.66159403508382,
+              "D": 70.38465741907109,
+              "S": 81.09870529176159
             },
             "moved_ids": [
               "A",
@@ -42164,16 +41684,16 @@
                 "pass": true,
                 "failures": [],
                 "metrics": {
-                  "dien_tich_ti_le": 0.706589520822715,
-                  "do_sau_ti_le": 0.7692211584657764,
-                  "mat_nghieng_min_do": 13.766717478742613,
-                  "ba_dinh_min": 0.16789811375128963,
+                  "dien_tich_ti_le": 0.7065895208225248,
+                  "do_sau_ti_le": 0.769221158465514,
+                  "mat_nghieng_min_do": 13.766717471864325,
+                  "ba_dinh_min": 0.1678981136647937,
                   "ba_dinh_gan_thang_hang": [
                     "D",
                     "C",
                     "S"
                   ],
-                  "dinh_canh_min": 0.1678981137512896,
+                  "dinh_canh_min": 0.16789811366479374,
                   "measured_on": "perspective_screen"
                 },
                 "unreadable_vertices": []
@@ -42190,24 +41710,24 @@
                   "zoom_out_notches": 3
                 },
                 "started_ms": 0,
-                "ended_ms": 5549,
+                "ended_ms": 4550,
                 "pass": true,
                 "state": "GESTURE_SENT→ZOOM_OUT→SETTLED→GATE_PASS",
-                "prediction_max_view_matrix_error": 9.57641979937307e-7,
+                "prediction_max_view_matrix_error": 9.587728371229787e-7,
                 "gate": {
                   "pass": true,
                   "failures": [],
                   "metrics": {
-                    "dien_tich_ti_le": 0.706589520822715,
-                    "do_sau_ti_le": 0.7692211584657764,
-                    "mat_nghieng_min_do": 13.766717478742613,
-                    "ba_dinh_min": 0.16789811375128963,
+                    "dien_tich_ti_le": 0.7065895208225248,
+                    "do_sau_ti_le": 0.769221158465514,
+                    "mat_nghieng_min_do": 13.766717471864325,
+                    "ba_dinh_min": 0.1678981136647937,
                     "ba_dinh_gan_thang_hang": [
                       "D",
                       "C",
                       "S"
                     ],
-                    "dinh_canh_min": 0.1678981137512896,
+                    "dinh_canh_min": 0.16789811366479374,
                     "measured_on": "perspective_screen"
                   },
                   "unreadable_vertices": []
@@ -42858,8 +42378,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "2401424cdebdbd0f47b798309d837037942d167ad2c39b7f8142c9138a197f6c",
-                  "bytes": 164176
+                  "sha256": "30872df4d414f58f8441e11e493054cad1d5ac3304a20d9a2e717aaa117aeaaf",
+                  "bytes": 164749
                 },
                 "learner_text": "Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt)."
               },
@@ -43042,8 +42562,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "ff3a8d7a0ee545c50450776600b1b96426a78f9f5a1451d29494d0d64599f88c",
-                  "bytes": 163059
+                  "sha256": "02cf3259c8475b763fa8e7fb986a8d451ef45e48194d52dd613f389b5fbb81be",
+                  "bytes": 164137
                 },
                 "learner_text": "Dựng mặt phẳng (α): z = 3."
               },
@@ -44213,8 +43733,8 @@
                 "solution_pass": true,
                 "screenshot": null,
                 "canvas": {
-                  "sha256": "f4b17f7efb40c35526f4befdcb6353679c1096ac1f4d20294f4a352da2367724",
-                  "bytes": 175838
+                  "sha256": "2694e1fd6caf6791cbef696e6878a52a09f8f311423b44b3ccee0d03258cfdd0",
+                  "bytes": 176429
                 },
                 "learner_text": "Dựng đường thẳng BD."
               }
@@ -44851,8 +44371,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/desktop/refusal.png",
-            "bytes": 58378,
-            "sha256": "3b87589930b60c00502352ec9c1a40ea075867a19819af69ee7b47fc6fa047ed"
+            "bytes": 58157,
+            "sha256": "5f9d3fa161a8660fd0ba94522527d0bb7446f7ff8479ff362f6b6e1aa5a38b4e"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],
@@ -44962,8 +44482,8 @@
           },
           "screenshot": {
             "path": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/mobile/refusal.png",
-            "bytes": 158637,
-            "sha256": "0bb4a955bb75dc1cbb6012ae1d4ee1748c0171fe4ae703e2bfe9c4d50e4adbd2"
+            "bytes": 158652,
+            "sha256": "a9e6129a9cabc83ebc8b21083b8e114a489d62d16ecfec32030c13f68a11e9d2"
           },
           "raw_token_leakage": {
             "leaked_tokens": [],

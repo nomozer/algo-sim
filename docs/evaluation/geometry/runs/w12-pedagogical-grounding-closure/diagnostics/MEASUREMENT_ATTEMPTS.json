@@ -41,7 +41,9 @@
       "commit": "7b039621 (worktree D:/tmp/w12-final; fixtures regenerated there, 19/19 files byte-identical to BROWSER-1's)",
       "gate": "suite · occlusion oracle",
       "result": "suite PASS (12/12 positive, 12/12 negative, canvas role hues 0 orange / 0 blue on all twelve causal frames) · occlusion PASS, 0 failures",
-      "classification": "AUTHORITATIVE",
+      "classification": "AUTHORITATIVE_SUPERSEDED_PROVENANCE",
+      "root_cause": "measured while EVALUATION_CANDIDATE.json still named product commit 8aaeae80. The candidate's product_commit_sha is the last commit touching backend/app or frontend/src; the renderer fix 4014f311 moved it without changing the measured-system hash, and no refreeze was made before measuring (found by T3-1)",
+      "repair": "third refreeze c243968b (product commit 4014f311, same tree hash 548f5b3b…), Tier-A scenarios pointed at it; the whole measurement repeated as BROWSER-3. These outputs were committed in 399fc423 and stay in history; hashes in diagnostics/attempt-7b039621/RESULTS_SHA256.txt",
       "log": "diagnostics/logs/FIXTURES_7b039621.log · BROWSER_SUITE_7b039621.log · OCCLUSION_7b039621.log"
     },
     {
@@ -61,7 +63,7 @@
       "commit": "7b039621",
       "gate": "scene3d-playback-check.mjs --theo-ho --lap-orbit 5 (timeout --signal=KILL 1500)",
       "result": "PASS — 12/12 runs × 19 checks, orbit laps 60/60",
-      "classification": "AUTHORITATIVE",
+      "classification": "AUTHORITATIVE_SUPERSEDED_PROVENANCE (with BROWSER-2)",
       "log": "diagnostics/logs/PLAYBACK_7b039621.log"
     },
     {
@@ -69,9 +71,47 @@
       "at": "2026-10-01",
       "commit": "7b039621, then 6569ed41 (post-processing: the sheet legend named built objects 'neutral' and was cut at the right edge)",
       "gate": "build_scene3d_visual_evidence.py on the BROWSER-2 / PLAYBACK-2b results",
-      "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners (both builds); images/<family>/SHEET.png and images/overview/ are the 6569ed41 build",
-      "classification": "AUTHORITATIVE_POST_PROCESSING",
+      "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners (both builds)",
+      "classification": "AUTHORITATIVE_SUPERSEDED_PROVENANCE (with BROWSER-2)",
       "log": "diagnostics/logs/EVIDENCE_BUILDER_7b039621.log · EVIDENCE_BUILDER_6569ed41.log · RED_SHEET_LEGEND_7b039621.log"
+    },
+    {
+      "id": "T3-1",
+      "at": "finished 2026-10-01T05:10Z",
+      "commit": "399fc423 (evidence of BROWSER-2), worktree `D:/tmp/w12 space/algo-sim` (path WITH a space, npm ci --offline)",
+      "gate": "frontend/scripts/full-gate.mjs",
+      "result": "FULL_PRODUCT_GATE_FAIL — pytest 8 failed / 6435 passed (1 skipped, 1 deselected); vitest 1010/1010, typecheck + build, demo 5/5, crash surface PASS",
+      "classification": "CANDIDATE_PROVENANCE",
+      "root_cause": "all eight failures are candidate verify: six repository prechecks (CANDIDATE_VERIFY false) and the two `freeze_evaluation_candidate.py --verify` invariants — 'CANDIDATE LỆCH … product_commit_sha'",
+      "repair": "c243968b refreeze (see BROWSER-2)",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_399fc423_FAIL_CANDIDATE.log · diagnostics/logs/FREEZE3_4014f311.log"
+    },
+    {
+      "id": "BROWSER-3",
+      "at": "2026-10-01T05:14Z (suite)",
+      "commit": "c243968b (worktree D:/tmp/w12-final; fixtures regenerated: only product_commit_sha changed, 8aaeae80 → 4014f311)",
+      "gate": "suite · occlusion oracle",
+      "result": "suite PASS (12/12 positive, 12/12 negative, canvas role hues 0 orange / 0 blue on all twelve causal frames; product_commit_sha 4014f311, tree 548f5b3b…) · occlusion PASS, 0 failures",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FIXTURES_c243968b.log · BROWSER_SUITE_c243968b.log · OCCLUSION_c243968b.log"
+    },
+    {
+      "id": "PLAYBACK-3",
+      "at": "2026-10-01T05:20Z",
+      "commit": "c243968b",
+      "gate": "scene3d-playback-check.mjs --theo-ho --lap-orbit 5 (timeout --signal=KILL 1500)",
+      "result": "PASS — 12/12 runs × 19 checks, orbit laps 60/60, no stall",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/PLAYBACK_c243968b.log"
+    },
+    {
+      "id": "BUILDER-3",
+      "at": "2026-10-01",
+      "commit": "c243968b (builder as of 6569ed41)",
+      "gate": "build_scene3d_visual_evidence.py on the BROWSER-3 / PLAYBACK-3 results",
+      "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; images/<family>/SHEET.png and images/overview/ are this build. Against BROWSER-2 the regenerated set is the same 320 files; 74 differ in bytes: 19 inputs (product commit only), the 4 results files, 51 images (screenshots, films, six sheets); images/overview/INDEX.png is byte-identical",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_c243968b.log"
     }
   ]
 }

@@ -5,7 +5,7 @@
     "triangular_pyramid": {
       "family": "triangular_pyramid",
       "sheet": "images/triangular-pyramid/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -19,7 +19,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -31,7 +31,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -43,7 +43,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -55,7 +55,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -67,7 +67,7 @@
             1320,
             251
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -79,7 +79,7 @@
             952,
             282
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -91,7 +91,7 @@
             684,
             324
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -103,7 +103,7 @@
             684,
             798
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -115,7 +115,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -127,7 +127,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -139,7 +139,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -151,7 +151,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -163,14 +163,14 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_2.png"
         }
       ]
     },
     "triangular_prism": {
       "family": "triangular_prism",
       "sheet": "images/triangular-prism/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -184,7 +184,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -196,7 +196,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -208,7 +208,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -220,7 +220,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -232,7 +232,7 @@
             1320,
             251
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -244,7 +244,7 @@
             952,
             282
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -256,7 +256,7 @@
             684,
             324
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -268,7 +268,7 @@
             684,
             798
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -280,7 +280,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -292,7 +292,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -304,7 +304,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -316,7 +316,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -328,14 +328,14 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_2.png"
         }
       ]
     },
     "rectangular_pyramid": {
       "family": "rectangular_pyramid",
       "sheet": "images/rectangular-pyramid/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -349,7 +349,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -361,7 +361,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -373,7 +373,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -385,7 +385,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -397,7 +397,7 @@
             1320,
             251
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -409,7 +409,7 @@
             952,
             282
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -421,7 +421,7 @@
             684,
             324
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -433,7 +433,7 @@
             684,
             798
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -445,7 +445,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -457,7 +457,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -469,7 +469,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -481,7 +481,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -493,7 +493,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_2.png"
         },
         {
           "state": "desktop/geometry_step/3",
@@ -505,7 +505,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_3.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_3.png"
         },
         {
           "state": "desktop/geometry_step/4",
@@ -517,14 +517,14 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_4.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_4.png"
         }
       ]
     },
     "cuboid": {
       "family": "cuboid",
       "sheet": "images/cuboid/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -538,7 +538,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -550,7 +550,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -562,7 +562,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -574,7 +574,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -586,7 +586,7 @@
             1320,
             281
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -598,7 +598,7 @@
             952,
             313
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -610,7 +610,7 @@
             684,
             324
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -622,7 +622,7 @@
             684,
             904
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -634,7 +634,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -646,7 +646,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -658,7 +658,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -670,7 +670,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -682,7 +682,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_2.png"
         },
         {
           "state": "desktop/geometry_step/3",
@@ -694,7 +694,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_3.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_3.png"
         },
         {
           "state": "desktop/geometry_step/4",
@@ -706,14 +706,14 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_4.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_4.png"
         }
       ]
     },
     "cube": {
       "family": "cube",
       "sheet": "images/cube/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -727,7 +727,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -739,7 +739,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -751,7 +751,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -763,7 +763,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -775,7 +775,7 @@
             1320,
             388
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -787,7 +787,7 @@
             952,
             420
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -799,7 +799,7 @@
             684,
             324
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -811,7 +811,7 @@
             684,
             990
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -823,7 +823,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -835,7 +835,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -847,7 +847,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -859,7 +859,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -871,7 +871,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_2.png"
         },
         {
           "state": "desktop/geometry_step/3",
@@ -883,7 +883,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_3.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_3.png"
         },
         {
           "state": "desktop/geometry_step/4",
@@ -895,14 +895,14 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_4.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_4.png"
         }
       ]
     },
     "cross_section": {
       "family": "cross_section",
       "sheet": "images/cross-section/SHEET.png",
-      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.",
       "label_font_px": 28,
       "font": "arial.ttf",
       "cells": [
@@ -916,7 +916,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png"
         },
         {
           "state": "desktop/causal_selected",
@@ -928,7 +928,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/causal_selected.png"
         },
         {
           "state": "desktop/rotated_neutral",
@@ -940,7 +940,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png"
         },
         {
           "state": "mobile/neutral_final",
@@ -952,7 +952,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png"
         },
         {
           "state": "desktop/solution_neutral_final",
@@ -964,7 +964,7 @@
             1320,
             196
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_neutral_final.png"
         },
         {
           "state": "desktop/solution_causal_selected",
@@ -976,7 +976,7 @@
             952,
             228
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_causal_selected.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_causal_selected.png"
         },
         {
           "state": "mobile/solution_neutral_final",
@@ -988,7 +988,7 @@
             684,
             450
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_neutral_final.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_neutral_final.png"
         },
         {
           "state": "mobile/solution_expanded",
@@ -1000,7 +1000,7 @@
             684,
             474
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_expanded.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_expanded.png"
         },
         {
           "state": "desktop/refusal",
@@ -1012,7 +1012,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/desktop/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/desktop/refusal.png"
         },
         {
           "state": "mobile/refusal",
@@ -1024,7 +1024,7 @@
             780,
             1688
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/mobile/refusal.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/mobile/refusal.png"
         },
         {
           "state": "desktop/geometry_step/0",
@@ -1036,7 +1036,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_0.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_0.png"
         },
         {
           "state": "desktop/geometry_step/1",
@@ -1048,7 +1048,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_1.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_1.png"
         },
         {
           "state": "desktop/geometry_step/2",
@@ -1060,7 +1060,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_2.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_2.png"
         },
         {
           "state": "desktop/geometry_step/3",
@@ -1072,7 +1072,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_3.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_3.png"
         },
         {
           "state": "desktop/geometry_step/4",
@@ -1084,7 +1084,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_4.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_4.png"
         },
         {
           "state": "desktop/geometry_step/5",
@@ -1096,7 +1096,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_5.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_5.png"
         },
         {
           "state": "desktop/geometry_step/6",
@@ -1108,7 +1108,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_6.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_6.png"
         },
         {
           "state": "desktop/geometry_step/7",
@@ -1120,7 +1120,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_7.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_7.png"
         },
         {
           "state": "desktop/geometry_step/8",
@@ -1132,7 +1132,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_8.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_8.png"
         },
         {
           "state": "desktop/geometry_step/9",
@@ -1144,7 +1144,7 @@
             1422,
             804
           ],
-          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_9.png"
+          "source": "D:/tmp/w12-measure/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_9.png"
         }
       ]
     }
@@ -1184,7 +1184,7 @@
         "sheet": "images/cross-section/SHEET.png"
       }
     ],
-    "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi."
+    "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi."
   },
   "playback_films": {
     "triangular_pyramid": [
@@ -1279,12 +1279,12 @@
       ],
       "endpoints_px": [
         [
-          632.8624576278332,
+          632.8624576278334,
           287.86161396082485
         ],
         [
-          527.4016589676378,
-          375.267290039889
+          527.401658967638,
+          375.2672900398888
         ]
       ],
       "endpoints_inside_image": true,
@@ -1314,11 +1314,11 @@
       ],
       "endpoints_px": [
         [
-          632.8624576278332,
+          632.8624576278334,
           287.86161396082485
         ],
         [
-          790.8363952646414,
+          790.8363952646413,
           387.84440565730347
         ]
       ],
@@ -1349,11 +1349,11 @@
       ],
       "endpoints_px": [
         [
-          622.4660804164799,
-          74.23999999999836
+          622.4660804164802,
+          74.23999999999873
         ],
         [
-          632.8624576278332,
+          632.8624576278334,
           287.86161396082485
         ]
       ],
@@ -1384,12 +1384,12 @@
       ],
       "endpoints_px": [
         [
-          583.5142498015999,
-          325.6870175201735
+          583.5142498031269,
+          325.6870175125246
         ],
         [
-          712.429578736963,
-          271.1489758901475
+          712.4295787468052,
+          271.1489758949837
         ]
       ],
       "endpoints_inside_image": true,
@@ -1419,12 +1419,12 @@
       ],
       "endpoints_px": [
         [
-          146.97438654018876,
-          258.2107449119939
+          146.97438654018885,
+          258.2107449119938
         ],
         [
-          54.541208223124464,
-          334.69663173098064
+          54.54120822312458,
+          334.69663173098036
         ]
       ],
       "endpoints_inside_image": true,
@@ -1454,11 +1454,11 @@
       ],
       "endpoints_px": [
         [
-          146.97438654018876,
-          258.2107449119939
+          146.97438654018885,
+          258.2107449119938
         ],
         [
-          285.6000000000019,
+          285.6000000000018,
           345.65128857491067
         ]
       ],
@@ -1489,12 +1489,12 @@
       ],
       "endpoints_px": [
         [
-          138.09642469724076,
-          71.23465488675163
+          138.0964246972409,
+          71.23465488675174
         ],
         [
-          146.97438654018876,
-          258.2107449119939
+          146.97438654018885,
+          258.2107449119938
         ]
       ],
       "endpoints_inside_image": true,
@@ -1524,12 +1524,12 @@
       ],
       "endpoints_px": [
         [
-          103.81220132224922,
-          291.101472169256
+          103.81220132232957,
+          291.10147216885025
         ],
         [
-          217.0680343842616,
-          243.46886000121643
+          217.06803438478673,
+          243.46886000147467
         ]
       ],
       "endpoints_inside_image": true,
@@ -1664,12 +1664,12 @@
       ],
       "endpoints_px": [
         [
-          559.9745206252264,
-          341.5785393552456
+          559.9745206328123,
+          341.57853933711147
         ],
         [
-          708.440951385639,
-          288.23897612111506
+          708.4409514098879,
+          288.2389761289512
         ]
       ],
       "endpoints_inside_image": true,
@@ -1804,12 +1804,12 @@
       ],
       "endpoints_px": [
         [
-          100.59568089553582,
-          285.64336796905485
+          100.59568089512436,
+          285.6433679702139
         ],
         [
-          204.303840760204,
-          249.2392526644108
+          204.3038407585443,
+          249.239252663899
         ]
       ],
       "endpoints_inside_image": true,
@@ -1944,12 +1944,12 @@
       ],
       "endpoints_px": [
         [
-          589.7182505848375,
-          338.6972409291411
+          589.7182505951743,
+          338.6972409447516
         ],
         [
-          639.2622455046507,
-          253.4296082870183
+          639.2622454853711,
+          253.42960829074224
         ]
       ],
       "endpoints_inside_image": true,
@@ -1979,12 +1979,12 @@
       ],
       "endpoints_px": [
         [
-          721.251755297816,
-          273.72523469013805
+          721.2517552845391,
+          273.72523467785055
         ],
         [
-          639.2622455046507,
-          253.4296082870183
+          639.2622454853711,
+          253.42960829074224
         ]
       ],
       "endpoints_inside_image": true,
@@ -2014,12 +2014,12 @@
       ],
       "endpoints_px": [
         [
-          565.3666314191635,
-          167.79358139304998
+          565.3666314321533,
+          167.79358140726774
         ],
         [
-          639.2622455046507,
-          253.4296082870183
+          639.2622454853711,
+          253.42960829074224
         ]
       ],
       "endpoints_inside_image": true,
@@ -2066,7 +2066,7 @@
       ],
       "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
       "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
-      "sha256": "284d75f7b42ec1d70733b26fbcb2fd230f8a48c3ba1ce28841113671e28f0b0c"
+      "sha256": "b28e21b8b45e0cf7a0c66f80ccb6abc6505014fff884f80f19620b2f59ef8753"
     },
     {
       "family": "rectangular_pyramid",
@@ -2101,7 +2101,7 @@
       ],
       "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
       "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AD__hidden.png",
-      "sha256": "249b9472fa76d6234cfb43c3d192344de76a7952352a9b764cd9f16213ed00b7"
+      "sha256": "a52ea1c4cc6ba6f9ac5d76f14fc6bc4715de54618a3ff86455db5306a778ffa9"
     },
     {
       "family": "rectangular_pyramid",
@@ -2136,7 +2136,7 @@
       ],
       "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
       "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
-      "sha256": "1f436f765d17520e0c5dd1ff67a7b7e94033ae4eb1f3f7f7dc41c46e4b9a4606"
+      "sha256": "d95902c1a63190010f05ebd947507cee343e059d35b8a77f50068b046f0331a8"
     },
     {
       "family": "rectangular_pyramid",
@@ -2154,12 +2154,12 @@
       ],
       "endpoints_px": [
         [
-          107.481166175189,
-          304.9594584183184
+          107.48116617664915,
+          304.9594584205421
         ],
         [
-          152.4165901268494,
-          228.2671839998899
+          152.416590124105,
+          228.26718400041366
         ]
       ],
       "endpoints_inside_image": true,
@@ -2189,12 +2189,12 @@
       ],
       "endpoints_px": [
         [
-          226.21604985601854,
-          246.7147432213719
+          226.21604985413597,
+          246.71474321961907
         ],
         [
-          152.4165901268494,
-          228.2671839998899
+          152.416590124105,
+          228.26718400041366
         ]
       ],
       "endpoints_inside_image": true,
@@ -2224,12 +2224,12 @@
       ],
       "endpoints_px": [
         [
-          85.51668652892506,
-          151.0131204752123
+          85.51668653075832,
+          151.01312047723712
         ],
         [
-          152.4165901268494,
-          228.2671839998899
+          152.416590124105,
+          228.26718400041366
         ]
       ],
       "endpoints_inside_image": true,
@@ -2364,12 +2364,12 @@
       ],
       "endpoints_px": [
         [
-          567.4536315188815,
-          292.02145781082015
+          567.4536315014192,
+          292.02145783961225
         ],
         [
-          692.2229817732259,
-          259.0453611680494
+          692.2229817349072,
+          259.04536115859315
         ]
       ],
       "endpoints_inside_image": true,
@@ -2399,12 +2399,12 @@
       ],
       "endpoints_px": [
         [
-          746.3789729883005,
-          315.17861735476237
+          746.3789729907866,
+          315.1786173254482
         ],
         [
-          692.2229817732259,
-          259.0453611680494
+          692.2229817349072,
+          259.04536115859315
         ]
       ],
       "endpoints_inside_image": true,
@@ -2434,12 +2434,12 @@
       ],
       "endpoints_px": [
         [
-          692.2229817732259,
-          259.0453611680494
+          692.2229817349072,
+          259.04536115859315
         ],
         [
-          698.6038780533621,
-          98.73170926367834
+          698.6038780074548,
+          98.73170925815678
         ]
       ],
       "endpoints_inside_image": true,
@@ -2574,12 +2574,12 @@
       ],
       "endpoints_px": [
         [
-          99.98653706243668,
-          254.80746888730147
+          99.9865370649896,
+          254.8074688830474
         ],
         [
-          196.53022119156466,
-          230.3189612614332
+          196.53022119745023,
+          230.31896126291622
         ]
       ],
       "endpoints_inside_image": true,
@@ -2609,12 +2609,12 @@
       ],
       "endpoints_px": [
         [
-          236.49985278456182,
-          272.82021760807964
+          236.49985278395232,
+          272.82021761236
         ],
         [
-          196.53022119156466,
-          230.3189612614332
+          196.53022119745023,
+          230.31896126291622
         ]
       ],
       "endpoints_inside_image": true,
@@ -2644,12 +2644,12 @@
       ],
       "endpoints_px": [
         [
-          196.53022119156466,
-          230.3189612614332
+          196.53022119745023,
+          230.31896126291622
         ],
         [
-          200.8284677856153,
-          108.00066713006625
+          200.8284677924808,
+          108.00066713103665
         ]
       ],
       "endpoints_inside_image": true,
@@ -2784,12 +2784,12 @@
       ],
       "endpoints_px": [
         [
-          561.6866195147916,
-          265.2368555529746
+          561.6866195295557,
+          265.2368555398887
         ],
         [
-          679.4634410017469,
-          235.71418238640294
+          679.4634410278186,
+          235.71418238884868
         ]
       ],
       "endpoints_inside_image": true,
@@ -2819,12 +2819,12 @@
       ],
       "endpoints_px": [
         [
-          760.3012647812525,
-          292.7452233504712
+          760.3012647816049,
+          292.7452233655059
         ],
         [
-          679.4634410017469,
-          235.71418238640294
+          679.4634410278186,
+          235.71418238884868
         ]
       ],
       "endpoints_inside_image": true,
@@ -2854,12 +2854,12 @@
       ],
       "endpoints_px": [
         [
-          679.4634410017469,
-          235.71418238640294
+          679.4634410278186,
+          235.71418238884868
         ],
         [
-          681.8546164149797,
-          111.47425513839907
+          681.8546164441257,
+          111.47425513969158
         ]
       ],
       "endpoints_inside_image": true,
@@ -2994,12 +2994,12 @@
       ],
       "endpoints_px": [
         [
-          85.53444891247533,
-          240.9475989461942
+          85.53444890254922,
+          240.94759895565448
         ],
         [
-          187.36289560068192,
-          214.5995711610522
+          187.3628955822236,
+          214.5995711593199
         ]
       ],
       "endpoints_inside_image": true,
@@ -3029,12 +3029,12 @@
       ],
       "endpoints_px": [
         [
-          257.898492642248,
-          264.0348056443539
+          257.8984926423074,
+          264.0348056335658
         ],
         [
-          187.36289560068192,
-          214.5995711610522
+          187.3628955822236,
+          214.5995711593199
         ]
       ],
       "endpoints_inside_image": true,
@@ -3064,12 +3064,12 @@
       ],
       "endpoints_px": [
         [
-          187.36289560068192,
-          214.5995711610522
+          187.3628955822236,
+          214.5995711593199
         ],
         [
-          189.3158630911221,
-          107.11737034860383
+          189.31586307057006,
+          107.11737034764134
         ]
       ],
       "endpoints_inside_image": true,
@@ -3204,12 +3204,12 @@
       ],
       "endpoints_px": [
         [
-          525.8680546651328,
-          289.7742835286261
+          525.8680546521555,
+          289.7742835466087
         ],
         [
-          653.322355915858,
-          243.49544378849455
+          653.3223558827444,
+          243.49544378911293
         ]
       ],
       "endpoints_inside_image": true,
@@ -3239,12 +3239,12 @@
       ],
       "endpoints_px": [
         [
-          778.9323092354869,
-          289.259537231144
+          778.9323092240634,
+          289.25953721497945
         ],
         [
-          653.322355915858,
-          243.49544378849455
+          653.3223558827444,
+          243.49544378911293
         ]
       ],
       "endpoints_inside_image": true,
@@ -3274,12 +3274,12 @@
       ],
       "endpoints_px": [
         [
-          507.1718693608735,
-          105.92350581581611
+          507.1718693444685,
+          105.92350582053892
         ],
         [
-          653.322355915858,
-          243.49544378849455
+          653.3223558827444,
+          243.49544378911293
         ]
       ],
       "endpoints_inside_image": true,
@@ -3414,12 +3414,12 @@
       ],
       "endpoints_px": [
         [
-          62.10199180961814,
-          257.7081376263366
+          62.101991818408194,
+          257.70813761334153
         ],
         [
-          166.20958043361898,
-          220.07694256792655
+          166.20958045838725,
+          220.0769425675507
         ]
       ],
       "endpoints_inside_image": true,
@@ -3449,12 +3449,12 @@
       ],
       "endpoints_px": [
         [
-          268.4744983889386,
-          257.8230052928529
+          268.4744983965525,
+          257.8230053047186
         ],
         [
-          166.20958043361898,
-          220.07694256792655
+          166.20958045838725,
+          220.0769425675507
         ]
       ],
       "endpoints_inside_image": true,
@@ -3484,12 +3484,12 @@
       ],
       "endpoints_px": [
         [
-          48.58517162031852,
-          109.54444357584822
+          48.58517163114269,
+          109.54444357145368
         ],
         [
-          166.20958043361898,
-          220.07694256792655
+          166.20958045838725,
+          220.0769425675507
         ]
       ],
       "endpoints_inside_image": true,

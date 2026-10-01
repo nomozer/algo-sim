@@ -1,0 +1,14 @@
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+Wrote D:\tmp\w12-final\docs\evaluation\geometry\runs\w12-pedagogical-grounding-closure\images\PLAYBACK_EVIDENCE.json: PASS 5e047003d0f7
+exit=0

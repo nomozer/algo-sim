@@ -12,7 +12,7 @@
             "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
             "measured_identity": {
               "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
-              "max_projected_delta_px": 113.16650776122817,
+              "max_projected_delta_px": 113.16650776122812,
               "canonical_sha256_equal": false
             },
             "transfer": {
@@ -88,8 +88,8 @@
             {
               "edge_id": "khoi_chop::edge:A-B",
               "screen_coordinate": [
-                580.1320582977355,
-                331.56445200035694
+                580.1320582977357,
+                331.5644520003568
               ],
               "camera_ray": {
                 "origin": [
@@ -98,15 +98,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.15359401653498517,
-                  -0.19390012921309024,
-                  -0.9689229164261713
+                  -0.15359401653498483,
+                  -0.1939001292130901,
+                  -0.9689229164261716
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 10.339464484649664,
-              "surface_camera_depth": 9.251691900445012,
-              "depth_delta": 1.087772584204652,
+              "edge_camera_depth": 10.339464484649678,
+              "surface_camera_depth": 9.251691900445028,
+              "depth_delta": 1.0877725842046502,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
@@ -122,22 +122,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.10334270198252328,
+                  0.10334270198252331,
                   -0.20698684512270724,
                   -0.9728703571869686
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 10.21522022713963,
-              "surface_camera_depth": 9.152089009905694,
-              "depth_delta": 1.063131217233936,
+              "edge_camera_depth": 10.215220227139643,
+              "surface_camera_depth": 9.152089009905705,
+              "depth_delta": 1.0631312172339378,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:S-A",
               "screen_coordinate": [
-                627.6642690221565,
-                181.0508069804116
+                627.6642690221568,
+                181.05080698041178
               ],
               "camera_ray": {
                 "origin": [
@@ -146,14 +146,14 @@
                   0.0
                 ],
                 "direction": [
-                  -0.06253285809120453,
-                  0.1016730281226897,
-                  -0.9928505612685667
+                  -0.06253285809120421,
+                  0.10167302812268937,
+                  -0.9928505612685669
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 9.4205587163386,
-              "surface_camera_depth": 8.50902002397036,
+              "edge_camera_depth": 9.420558716338615,
+              "surface_camera_depth": 8.509020023970374,
               "depth_delta": 0.9115386923682411,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
@@ -193,8 +193,8 @@
             {
               "edge_id": "khoi_chop::edge:A-C",
               "screen_coordinate": [
-                595.0302238997832,
-                320.8151478987422
+                595.0302238970213,
+                320.8151478943372
               ],
               "camera_ray": {
                 "origin": [
@@ -203,22 +203,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.12557295547264555,
-                  -0.17434453100027916,
-                  -0.9766449802073206
+                  -0.12557295547817074,
+                  -0.17434453099177633,
+                  -0.9766449802081282
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:1",
-              "edge_camera_depth": 12.88336772958339,
-              "surface_camera_depth": 11.366157758234557,
-              "depth_delta": 1.5172099713488336,
+              "edge_camera_depth": 12.883367729695491,
+              "surface_camera_depth": 11.3661577583877,
+              "depth_delta": 1.517209971307791,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-C",
               "screen_coordinate": [
-                659.4878883674646,
-                293.54612708372923
+                659.4878883688605,
+                293.54612708556675
               ],
               "camera_ray": {
                 "origin": [
@@ -227,15 +227,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.0009732110499785515,
-                  -0.12276859821958072,
-                  -0.992434846300477
+                  0.0009732110527626199,
+                  -0.1227685982231906,
+                  -0.9924348463000277
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 13.616775641687786,
-              "surface_camera_depth": 11.933196014072267,
-              "depth_delta": 1.6835796276155186,
+              "edge_camera_depth": 13.616775641635556,
+              "surface_camera_depth": 11.933196014104778,
+              "depth_delta": 1.6835796275307775,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -287,8 +287,8 @@
             {
               "edge_id": "khoi_chop::edge:A-B",
               "screen_coordinate": [
-                100.75779738165662,
-                296.4536883214873
+                100.75779738165672,
+                296.4536883214871
               ],
               "camera_ray": {
                 "origin": [
@@ -297,22 +297,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.14991577545075885,
-                  -0.18934532705450796,
+                  -0.14991577545075857,
+                  -0.1893453270545076,
                   -0.9703986847649883
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 10.596653269377056,
-              "surface_camera_depth": 9.508190355086075,
-              "depth_delta": 1.0884629142909805,
+              "edge_camera_depth": 10.596653269377066,
+              "surface_camera_depth": 9.508190355086084,
+              "depth_delta": 1.0884629142909823,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-C",
               "screen_coordinate": [
                 216.28719327009532,
-                301.9310167434523
+                301.93101674345223
               ],
               "camera_ray": {
                 "origin": [
@@ -321,21 +321,21 @@
                   0.0
                 ],
                 "direction": [
-                  0.10060919947765411,
-                  -0.20199356540470462,
-                  -0.974205516570072
+                  0.10060919947765412,
+                  -0.20199356540470456,
+                  -0.9742055165700721
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 10.472902238647661,
-              "surface_camera_depth": 9.408436798044574,
-              "depth_delta": 1.0644654406030867,
+              "edge_camera_depth": 10.472902238647668,
+              "surface_camera_depth": 9.40843679804458,
+              "depth_delta": 1.0644654406030885,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:S-A",
               "screen_coordinate": [
-                142.53540561871478,
+                142.5354056187149,
                 164.72269989937277
               ],
               "camera_ray": {
@@ -345,15 +345,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.06086737184389458,
-                  0.09812789703186105,
+                  -0.060867371843894305,
+                  0.09812789703186103,
                   -0.9933106658387
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 9.682814294795099,
-              "surface_camera_depth": 8.765868623269787,
-              "depth_delta": 0.9169456715253119,
+              "edge_camera_depth": 9.682814294795106,
+              "surface_camera_depth": 8.765868623269796,
+              "depth_delta": 0.9169456715253101,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -392,8 +392,8 @@
             {
               "edge_id": "khoi_chop::edge:A-C",
               "screen_coordinate": [
-                114.07718853900634,
-                286.78427152902094
+                114.07718853885869,
+                286.7842715287882
               ],
               "camera_ray": {
                 "origin": [
@@ -402,22 +402,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.12201535436260912,
-                  -0.169713846755913,
-                  -0.9779107645992438
+                  -0.12201535436293695,
+                  -0.16971384675541326,
+                  -0.9779107645992895
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:1",
-              "edge_camera_depth": 13.234455976519165,
-              "surface_camera_depth": 11.720136193454893,
-              "depth_delta": 1.5143197830642716,
+              "edge_camera_depth": 13.234455976525942,
+              "surface_camera_depth": 11.720136193464196,
+              "depth_delta": 1.5143197830617456,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-C",
               "screen_coordinate": [
-                170.70510507001254,
-                262.96796544500114
+                170.70510507008726,
+                262.9679654451004
               ],
               "camera_ray": {
                 "origin": [
@@ -426,15 +426,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.0015619022620484823,
-                  -0.11954627883359842,
-                  -0.9928274007491752
+                  0.0015619022622140276,
+                  -0.11954627883381518,
+                  -0.9928274007491489
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 13.967377459147642,
-              "surface_camera_depth": 12.291308669950823,
-              "depth_delta": 1.676068789196819,
+              "edge_camera_depth": 13.967377459144403,
+              "surface_camera_depth": 12.291308669952702,
+              "depth_delta": 1.6760687891917012,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -712,8 +712,8 @@
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                585.5969321523753,
-                332.37317062062056
+                585.5969321364397,
+                332.37317061645217
               ],
               "camera_ray": {
                 "origin": [
@@ -722,22 +722,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.14313336072225905,
-                  -0.1957240978960398,
-                  -0.970157161779025
+                  -0.14313336075292413,
+                  -0.19572409788735248,
+                  -0.9701571617762532
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:2",
-              "edge_camera_depth": 11.329212268084289,
-              "surface_camera_depth": 8.896721411088377,
-              "depth_delta": 2.432490856995912,
+              "edge_camera_depth": 11.329212268206131,
+              "surface_camera_depth": 8.896721411494388,
+              "depth_delta": 2.432490856711743,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                683.4277724719948,
-                297.225465737101
+                683.4277724774732,
+                297.22546574629683
               ],
               "camera_ray": {
                 "origin": [
@@ -746,22 +746,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04862436963955182,
-                  -0.1298336620561179,
-                  -0.9903428148243688
+                  0.04862436965031549,
+                  -0.12983366207404523,
+                  -0.9903428148214899
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:3",
-              "edge_camera_depth": 12.458935480947236,
-              "surface_camera_depth": 10.78959915130388,
-              "depth_delta": 1.6693363296433557,
+              "edge_camera_depth": 12.458935480622195,
+              "surface_camera_depth": 10.78959915117295,
+              "depth_delta": 1.6693363294492443,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                634.8169686189375,
-                314.6898786195412
+                634.8169685925628,
+                314.68987862971767
               ],
               "camera_ray": {
                 "origin": [
@@ -770,15 +770,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.047893842909828135,
-                  -0.16376507950687957,
-                  -0.9853360739085086
+                  -0.04789384296178457,
+                  -0.16376507952608357,
+                  -0.9853360739027915
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:3",
-              "edge_camera_depth": 11.870758753780382,
-              "surface_camera_depth": 8.278669957941174,
-              "depth_delta": 3.5920887958392083,
+              "edge_camera_depth": 11.870758753453844,
+              "surface_camera_depth": 8.278669958135293,
+              "depth_delta": 3.592088795318551,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -995,8 +995,8 @@
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                120.60343385271622,
-                278.62015449587693
+                120.60343385373591,
+                278.6201544961267
               ],
               "camera_ray": {
                 "origin": [
@@ -1005,22 +1005,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.10826438969234742,
-                  -0.15258922076302103,
-                  -0.9823417692592927
+                  -0.10826438969012975,
+                  -0.15258922076359274,
+                  -0.9823417692594484
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:2",
-              "edge_camera_depth": 14.656540736049257,
-              "surface_camera_depth": 12.333170782709226,
-              "depth_delta": 2.3233699533400305,
+              "edge_camera_depth": 14.656540736038087,
+              "surface_camera_depth": 12.333170782669466,
+              "depth_delta": 2.323369953368621,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                186.30789473638475,
-                255.55627241408297
+                186.30789473602738,
+                255.55627241347997
               ],
               "camera_ray": {
                 "origin": [
@@ -1029,22 +1029,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.036166754474866454,
-                  -0.1032499473956263,
-                  -0.9939976932737596
+                  0.03616675447407996,
+                  -0.10324994739430635,
+                  -0.9939976932739253
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:3",
-              "edge_camera_depth": 15.763675284995239,
-              "surface_camera_depth": 14.14423673663765,
-              "depth_delta": 1.6194385483575893,
+              "edge_camera_depth": 15.763675285026327,
+              "surface_camera_depth": 14.144236736650388,
+              "depth_delta": 1.619438548375939,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "solid_ABCDEF::edge:A-C",
               "screen_coordinate": [
-                154.46156776123107,
-                266.7351165932271
+                154.46156776292895,
+                266.73511659255024
               ],
               "camera_ray": {
                 "origin": [
@@ -1053,15 +1053,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.03436396459207595,
-                  -0.1276838919037702,
-                  -0.9912194215640757
+                  -0.03436396458833195,
+                  -0.12768389190231433,
+                  -0.991219421564393
                 ]
               },
               "candidate_surface_id": "solid_ABCDEF::face:3",
-              "edge_camera_depth": 15.206907223972035,
-              "surface_camera_depth": 11.644695890581685,
-              "depth_delta": 3.5622113333903496,
+              "edge_camera_depth": 15.206907224004524,
+              "surface_camera_depth": 11.644695890564014,
+              "depth_delta": 3.5622113334405103,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -1308,8 +1308,8 @@
             {
               "edge_id": "khoi_chop::edge:C-D",
               "screen_coordinate": [
-                680.2570004012333,
-                263.5774214885782
+                680.2570003849551,
+                263.5774214842964
               ],
               "camera_ray": {
                 "origin": [
@@ -1318,22 +1318,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.042600933908453584,
-                  -0.06328398270887983,
-                  -0.9970859030006541
+                  0.0426009338759129,
+                  -0.06328398270042104,
+                  -0.9970859030025813
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 17.310066161300995,
-              "surface_camera_depth": 14.656759039399947,
-              "depth_delta": 2.6533071219010473,
+              "edge_camera_depth": 17.310066161466008,
+              "surface_camera_depth": 14.65675903872446,
+              "depth_delta": 2.6533071227415483,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-D",
               "screen_coordinate": [
-                608.9942830022782,
-                305.5222486091198
+                608.9942830091034,
+                305.5222486063177
               ],
               "camera_ray": {
                 "origin": [
@@ -1342,22 +1342,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.09894117379375317,
-                  -0.14547091840866608,
-                  -0.9844027915572231
+                  -0.09894117378046054,
+                  -0.14547091840343357,
+                  -0.9844027915593324
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:1",
-              "edge_camera_depth": 15.831300494679992,
-              "surface_camera_depth": 13.499863715640933,
-              "depth_delta": 2.331436779039059,
+              "edge_camera_depth": 15.831300494770296,
+              "surface_camera_depth": 13.499863715113138,
+              "depth_delta": 2.3314367796571585,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-D",
               "screen_coordinate": [
-                633.7662804621847,
-                262.88843228805837
+                633.7662804542018,
+                262.888432279313
               ],
               "camera_ray": {
                 "origin": [
@@ -1366,22 +1366,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.05055623677902193,
-                  -0.061885561268430665,
-                  -0.996802008539928
+                  -0.05055623679502961,
+                  -0.061885561250926154,
+                  -0.9968020085402028
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 17.336666205595627,
-              "surface_camera_depth": 12.650527495926928,
-              "depth_delta": 4.686138709668699,
+              "edge_camera_depth": 17.33666620593374,
+              "surface_camera_depth": 12.650527494994478,
+              "depth_delta": 4.686138710939261,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:S-D",
               "screen_coordinate": [
-                602.314438461907,
-                210.61159484003414
+                602.3144384587622,
+                210.61159484900497
               ],
               "camera_ray": {
                 "origin": [
@@ -1390,15 +1390,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.11309945760421679,
-                  0.04267430641903018,
-                  -0.9926668203688923
+                  -0.11309945761049747,
+                  0.042674306401133816,
+                  -0.992666820368946
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 13.550097775373127,
-              "surface_camera_depth": 11.868272804355502,
-              "depth_delta": 1.6818249710176243,
+              "edge_camera_depth": 13.550097774992356,
+              "surface_camera_depth": 11.868272803542911,
+              "depth_delta": 1.6818249714494442,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -1587,8 +1587,8 @@
             {
               "edge_id": "khoi_chop::edge:C-D",
               "screen_coordinate": [
-                189.31631999143397,
-                237.4909636106309
+                189.31631998912047,
+                237.49096361001637
               ],
               "camera_ray": {
                 "origin": [
@@ -1597,22 +1597,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04297082011930286,
-                  -0.06338060628944558,
-                  -0.9970638933211134
+                  0.04297082011416954,
+                  -0.06338060628809801,
+                  -0.9970638933214204
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 17.308180927593547,
-              "surface_camera_depth": 14.664397120179643,
-              "depth_delta": 2.6437838074139037,
+              "edge_camera_depth": 17.308180927619816,
+              "surface_camera_depth": 14.664397120074165,
+              "depth_delta": 2.643783807545651,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-D",
               "screen_coordinate": [
-                124.88170030466421,
-                275.2615848671413
+                124.88170030563838,
+                275.2615848667574
               ],
               "camera_ray": {
                 "origin": [
@@ -1621,22 +1621,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.09909261663784694,
-                  -0.14552928349236033,
-                  -0.9843789315980229
+                  -0.09909261663574057,
+                  -0.14552928349156583,
+                  -0.9843789315983524
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:1",
-              "edge_camera_depth": 15.830291957686358,
-              "surface_camera_depth": 13.505855752730264,
-              "depth_delta": 2.3244362049560934,
+              "edge_camera_depth": 15.830291957700075,
+              "surface_camera_depth": 13.505855752647179,
+              "depth_delta": 2.324436205052896,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:A-D",
               "screen_coordinate": [
-                147.3494122804944,
-                236.91544765792713
+                147.3494122793663,
+                236.91544765669317
               ],
               "camera_ray": {
                 "origin": [
@@ -1645,22 +1645,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.050374792759939176,
-                  -0.062083814688747636,
-                  -0.9967988664761244
+                  -0.05037479276245032,
+                  -0.06208381468600616,
+                  -0.9967988664761683
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 17.332837106739536,
-              "surface_camera_depth": 12.661094720703055,
-              "depth_delta": 4.671742386036481,
+              "edge_camera_depth": 17.332837106792446,
+              "surface_camera_depth": 12.661094720556813,
+              "depth_delta": 4.671742386235634,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_chop::edge:S-D",
               "screen_coordinate": [
-                118.96663832788724,
-                189.6401522375511
+                118.96663832743167,
+                189.6401522388254
               ],
               "camera_ray": {
                 "origin": [
@@ -1669,15 +1669,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.11302739063542348,
-                  0.04287769811731568,
-                  -0.9926662641443537
+                  -0.11302739063643329,
+                  0.04287769811449371,
+                  -0.9926662641443605
                 ]
               },
               "candidate_surface_id": "khoi_chop::face:2",
-              "edge_camera_depth": 13.554428285039734,
-              "surface_camera_depth": 11.877493057001516,
-              "depth_delta": 1.676935228038218,
+              "edge_camera_depth": 13.554428284979569,
+              "surface_camera_depth": 11.87749305687375,
+              "depth_delta": 1.676935228105819,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -2024,8 +2024,8 @@
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                719.3009773807632,
-                287.1119892614059
+                719.3009773628469,
+                287.1119892420207
               ],
               "camera_ray": {
                 "origin": [
@@ -2034,22 +2034,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.11960024759190283,
-                  -0.1093084697338452,
-                  -0.9867864202655003
+                  0.11960024755737873,
+                  -0.10930846969632071,
+                  -0.9867864202738413
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 14.244528425239452,
-              "surface_camera_depth": 12.225725546524849,
-              "depth_delta": 2.0188028787146024,
+              "edge_camera_depth": 14.244528426046099,
+              "surface_camera_depth": 12.225725546675573,
+              "depth_delta": 2.0188028793705257,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                582.4410755730859,
-                288.06032951647484
+                582.4410755886414,
+                288.06032953128386
               ],
               "camera_ray": {
                 "origin": [
@@ -2058,22 +2058,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.1511547743144383,
-                  -0.11068319623723515,
-                  -0.9822939805743802
+                  -0.15115477428393856,
+                  -0.11068319626662929,
+                  -0.9822939805757614
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:2",
-              "edge_camera_depth": 14.205179781710289,
-              "surface_camera_depth": 12.060793475209328,
-              "depth_delta": 2.1443863065009605,
+              "edge_camera_depth": 14.20517978109761,
+              "surface_camera_depth": 12.060793474242448,
+              "depth_delta": 2.1443863068551625,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                682.6576637386152,
-                261.57344079085067
+                682.6576637433144,
+                261.5734407733798
               ],
               "camera_ray": {
                 "origin": [
@@ -2082,22 +2082,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04741347999305183,
-                  -0.05926957787357511,
-                  -0.9971153790076837
+                  0.04741348000254709,
+                  -0.05926957783865739,
+                  -0.9971153790093077
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 15.392765907237157,
-              "surface_camera_depth": 11.320315795480013,
-              "depth_delta": 4.072450111757144,
+              "edge_camera_depth": 15.392765908086089,
+              "surface_camera_depth": 11.32031579524764,
+              "depth_delta": 4.07245011283845,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                635.2604326656473,
-                274.10036081789076
+                635.2604327137926,
+                274.10036080556097
               ],
               "camera_ray": {
                 "origin": [
@@ -2106,22 +2106,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.04749169925067746,
-                  -0.08422300398941913,
-                  -0.9953145352607292
+                  -0.047491699154677144,
+                  -0.08422300396531335,
+                  -0.9953145352673498
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 14.807292214632799,
-              "surface_camera_depth": 10.889740346586127,
-              "depth_delta": 3.9175518680466723,
+              "edge_camera_depth": 14.807292215187234,
+              "surface_camera_depth": 10.889740346169756,
+              "depth_delta": 3.917551869017478,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                697.1076084094836,
-                136.3239910236157
+                697.107608365175,
+                136.3239910217136
               ],
               "camera_ray": {
                 "origin": [
@@ -2130,22 +2130,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.07500425083261468,
-                  0.18831166991162696,
-                  -0.9792410721227601
+                  0.07500425074584308,
+                  0.18831166991646972,
+                  -0.979241072128475
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 13.527668495864924,
-              "surface_camera_depth": 10.462310547926133,
-              "depth_delta": 3.065357947938791,
+              "edge_camera_depth": 13.52766849639843,
+              "surface_camera_depth": 10.462310548030139,
+              "depth_delta": 3.065357948368291,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                698.0183622651235,
-                113.44220919021672
+                698.0183622199766,
+                113.44220918272671
               ],
               "camera_ray": {
                 "origin": [
@@ -2154,22 +2154,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.076067697031419,
-                  0.23113266648031572,
-                  -0.9699440169174895
+                  0.07606769694365575,
+                  0.23113266649568517,
+                  -0.96994401692071
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 13.211910080462635,
-              "surface_camera_depth": 11.881470422661657,
-              "depth_delta": 1.3304396578009783,
+              "edge_camera_depth": 13.211910080908996,
+              "surface_camera_depth": 11.881470423189382,
+              "depth_delta": 1.330439657719614,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                692.6815467582963,
-                247.5243734941136
+                692.6815467174707,
+                247.52437353422124
               ],
               "camera_ray": {
                 "origin": [
@@ -2178,22 +2178,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.06751080931696923,
-                  -0.03111683160656395,
-                  -0.9972331890867535
+                  0.06751080923534296,
+                  -0.03111683168704918,
+                  -0.997233189089768
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 15.305327199878393,
-              "surface_camera_depth": 11.256010667602741,
-              "depth_delta": 4.049316532275652,
+              "edge_camera_depth": 15.30532720123781,
+              "surface_camera_depth": 11.256010667750664,
+              "depth_delta": 4.049316533487147,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                694.9612410427245,
-                190.24932937532705
+                694.961240998943,
+                190.24932942298997
               ],
               "camera_ray": {
                 "origin": [
@@ -2202,15 +2202,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.07184090885738398,
-                  0.08340663548063533,
-                  -0.9939226413420441
+                  0.07184090877094208,
+                  0.0834066353866041,
+                  -0.9939226413561828
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 14.335075174999377,
-              "surface_camera_depth": 10.542457340733119,
-              "depth_delta": 3.7926178342662578,
+              "edge_camera_depth": 14.33507517634943,
+              "surface_camera_depth": 10.542457340928157,
+              "depth_delta": 3.7926178354212734,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -2487,8 +2487,8 @@
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                216.51503698806323,
-                251.56958943475644
+                216.51503699070128,
+                251.56958943763811
               ],
               "camera_ray": {
                 "origin": [
@@ -2497,22 +2497,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.1027694269578723,
-                  -0.09405243111307192,
-                  -0.9902487490951308
+                  0.10276942696357762,
+                  -0.09405243111932603,
+                  -0.9902487490939447
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 16.66634504605822,
-              "surface_camera_depth": 14.677703966168187,
-              "depth_delta": 1.9886410798900318,
+              "edge_camera_depth": 16.666345045898808,
+              "surface_camera_depth": 14.677703966129442,
+              "depth_delta": 1.9886410797693657,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                112.16890742488745,
-                251.71738513699614
+                112.16890742260438,
+                251.71738513479934
               ],
               "camera_ray": {
                 "origin": [
@@ -2521,22 +2521,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.12740036345371275,
-                  -0.09410526673306496,
-                  -0.9873770030565632
+                  -0.1274003634587187,
+                  -0.09410526672820804,
+                  -0.9873770030563802
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:2",
-              "edge_camera_depth": 16.65817482647768,
-              "surface_camera_depth": 14.557870929522254,
-              "depth_delta": 2.1003038969554257,
+              "edge_camera_depth": 16.658174826599033,
+              "surface_camera_depth": 14.557870929714484,
+              "depth_delta": 2.100303896884549,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                187.6306067932765,
-                232.57636708788036
+                187.63060679269822,
+                232.57636709039616
               ],
               "camera_ray": {
                 "origin": [
@@ -2545,22 +2545,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.03925172003569092,
-                  -0.05248900229259647,
-                  -0.9978497918587586
+                  0.03925172003439393,
+                  -0.052489002298184755,
+                  -0.9978497918585154
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 17.787479151164323,
-              "surface_camera_depth": 13.772371031354806,
-              "depth_delta": 4.015108119809517,
+              "edge_camera_depth": 17.78747915100581,
+              "surface_camera_depth": 13.772371031399235,
+              "depth_delta": 4.015108119606577,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                151.54113509116328,
-                241.73053715050918
+                151.54113508408267,
+                241.73053715221369
               ],
               "camera_ray": {
                 "origin": [
@@ -2569,22 +2569,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.04104027550664426,
-                  -0.07277101104382071,
-                  -0.9965039266044059
+                  -0.04104027552234898,
+                  -0.07277101104754338,
+                  -0.996503926603487
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 17.22888710882848,
-              "surface_camera_depth": 13.339868100679107,
-              "depth_delta": 3.889019008149374,
+              "edge_camera_depth": 17.228887108727708,
+              "surface_camera_depth": 13.339868100762992,
+              "depth_delta": 3.8890190079647162,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                199.73716929154722,
-                139.05653311209267
+                199.7371692981875,
+                139.05653311252203
               ],
               "camera_ray": {
                 "origin": [
@@ -2593,22 +2593,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.0654138891329461,
-                  0.15385708517589058,
-                  -0.9859254639422198
+                  0.0654138891475,
+                  0.15385708517482144,
+                  -0.985925463941421
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 15.997122365284682,
-              "surface_camera_depth": 12.892958193383095,
-              "depth_delta": 3.104164171901587,
+              "edge_camera_depth": 15.997122365176677,
+              "surface_camera_depth": 12.892958193353715,
+              "depth_delta": 3.104164171822962,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                200.39298261520503,
-                120.39358177526593
+                200.39298262196147,
+                120.3935817765671
               ],
               "camera_ray": {
                 "origin": [
@@ -2617,22 +2617,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.06637670992063566,
-                  0.19351185745973293,
-                  -0.9788499851369442
+                  0.06637670993536286,
+                  0.19351185745680813,
+                  -0.9788499851365238
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 15.65193985654038,
-              "surface_camera_depth": 14.307017156593929,
-              "depth_delta": 1.3449226999464514,
+              "edge_camera_depth": 15.651939856450316,
+              "surface_camera_depth": 14.307017156484488,
+              "depth_delta": 1.344922699965828,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                196.90545255583294,
-                219.6407325052215
+                196.9054525620605,
+                219.64073249936158
               ],
               "camera_ray": {
                 "origin": [
@@ -2641,22 +2641,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.05990506541067401,
-                  -0.0236916207010459,
-                  -0.9979228879260663
+                  0.05990506542450853,
+                  -0.023691620687986376,
+                  -0.997922887925546
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 17.680770652970704,
-              "surface_camera_depth": 13.689749485219362,
-              "depth_delta": 3.9910211677513416,
+              "edge_camera_depth": 17.680770652707025,
+              "surface_camera_depth": 13.689749485181363,
+              "depth_delta": 3.9910211675256626,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                198.3987625292004,
-                177.14453677636476
+                198.39876253580184,
+                177.1445367693767
               ],
               "camera_ray": {
                 "origin": [
@@ -2665,15 +2665,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.06307624796687321,
-                  0.0707538962420487,
-                  -0.9954975003027335
+                  0.06307624798140797,
+                  0.07075389625742666,
+                  -0.9954975003007195
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 16.751051580678173,
-              "surface_camera_depth": 12.969892786598773,
-              "depth_delta": 3.781158794079399,
+              "edge_camera_depth": 16.751051580411726,
+              "surface_camera_depth": 12.969892786549892,
+              "depth_delta": 3.7811587938618345,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -3020,8 +3020,8 @@
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                727.5194573443564,
-                269.6176759302275
+                727.5194573424164,
+                269.6176759311815
               ],
               "camera_ray": {
                 "origin": [
@@ -3030,22 +3030,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.13605157014176214,
-                  -0.07469329258797708,
-                  -0.9878820184132961
+                  0.1360515701379622,
+                  -0.07469329258990001,
+                  -0.9878820184136741
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 14.125639025335207,
-              "surface_camera_depth": 12.07292979600089,
-              "depth_delta": 2.052709229334317,
+              "edge_camera_depth": 14.125639025285283,
+              "surface_camera_depth": 12.072929795601535,
+              "depth_delta": 2.0527092296837477,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                687.1005454546037,
-                241.1021554481934
+                687.1005454655233,
+                241.1021554428529
               ],
               "camera_ray": {
                 "origin": [
@@ -3054,22 +3054,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.05638132357584708,
-                  -0.018262690750658665,
-                  -0.9982422654237705
+                  0.056381323597697965,
+                  -0.018262690739924477,
+                  -0.9982422654227326
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 15.79629994580695,
-              "surface_camera_depth": 11.08850545781145,
-              "depth_delta": 4.7077944879955,
+              "edge_camera_depth": 15.796299946156925,
+              "surface_camera_depth": 11.08850545800851,
+              "depth_delta": 4.707794488148414,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                590.3618254130847,
-                258.04894946898145
+                590.3618254046479,
+                258.04894946618293
               ],
               "camera_ray": {
                 "origin": [
@@ -3078,22 +3078,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.13648121250745404,
-                  -0.05179613574323895,
-                  -0.9892876421721658
+                  -0.13648121252395684,
+                  -0.05179613573757058,
+                  -0.9892876421701857
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:2",
-              "edge_camera_depth": 14.758912884076729,
-              "surface_camera_depth": 11.968856819877237,
-              "depth_delta": 2.790056064199492,
+              "edge_camera_depth": 14.758912884236857,
+              "surface_camera_depth": 11.968856820348565,
+              "depth_delta": 2.790056063888292,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                649.2502361565624,
-                243.28761288569564
+                649.2502361537793,
+                243.2876128906629
               ],
               "camera_ray": {
                 "origin": [
@@ -3102,22 +3102,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.019587706453642693,
-                  -0.0226773131449926,
-                  -0.9995509297801738
+                  -0.019587706459227312,
+                  -0.022677313154964435,
+                  -0.9995509297798381
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 15.654401471025983,
-              "surface_camera_depth": 10.580316112828362,
-              "depth_delta": 5.074085358197621,
+              "edge_camera_depth": 15.654401470706441,
+              "surface_camera_depth": 10.58031611326953,
+              "depth_delta": 5.0740853574369105,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                681.1651571765382,
-                147.2969577098657
+                681.165157204863,
+                147.29695770809835
               ],
               "camera_ray": {
                 "origin": [
@@ -3126,22 +3126,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04387655272812914,
-                  0.1676720571695262,
-                  -0.9848659448702827
+                  0.04387655278406551,
+                  0.16767205717251393,
+                  -0.9848659448672821
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 14.91690071917887,
-              "surface_camera_depth": 10.948541782181273,
-              "depth_delta": 3.9683589369975962,
+              "edge_camera_depth": 14.916900718966971,
+              "surface_camera_depth": 10.94854178231274,
+              "depth_delta": 3.968358936654232,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                681.616877899088,
-                123.82659690093777
+                681.6168779279109,
+                123.82659690325444
               ],
               "camera_ray": {
                 "origin": [
@@ -3150,22 +3150,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04437713652725644,
-                  0.21224971454342995,
-                  -0.9762073183652505
+                  0.04437713658374203,
+                  0.2122497145385565,
+                  -0.9762073183637425
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 14.618969536938028,
-              "surface_camera_depth": 13.02375205518131,
-              "depth_delta": 1.595217481756718,
+              "edge_camera_depth": 14.618969536781616,
+              "surface_camera_depth": 13.023752054937793,
+              "depth_delta": 1.5952174818438234,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                680.2073079858134,
-                197.06457957132895
+                680.2073080129243,
+                197.06457956911404
               ],
               "camera_ray": {
                 "origin": [
@@ -3174,15 +3174,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.0424824754544812,
-                  0.06998262777368143,
-                  -0.9966432014964783
+                  0.042482475508678764,
+                  0.06998262777793507,
+                  -0.9966432014938693
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 15.590637399550767,
-              "surface_camera_depth": 10.53721998845098,
-              "depth_delta": 5.053417411099787,
+              "edge_camera_depth": 15.590637399321878,
+              "surface_camera_depth": 10.537219988950744,
+              "depth_delta": 5.053417410371134,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -3459,8 +3459,8 @@
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                229.81015761873837,
-                244.34895216934228
+                229.81015762049748,
+                244.3489521685197
               ],
               "camera_ray": {
                 "origin": [
@@ -3469,22 +3469,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.13186980296967674,
-                  -0.07793758691408753,
-                  -0.9881984049829
+                  0.13186980297350648,
+                  -0.077937586912245,
+                  -0.9881984049825343
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 14.684045584010489,
-              "surface_camera_depth": 12.646342339675735,
-              "depth_delta": 2.037703244334754,
+              "edge_camera_depth": 14.684045584059854,
+              "surface_camera_depth": 12.646342340010033,
+              "depth_delta": 2.037703244049821,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:C-D",
               "screen_coordinate": [
-                194.5423590979553,
-                219.6313349276914
+                194.54235909045556,
+                219.63133493139674
               ],
               "camera_ray": {
                 "origin": [
@@ -3493,22 +3493,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.05466013235763604,
-                  -0.02367784498493408,
-                  -0.9982242381286457
+                  0.05466013234097203,
+                  -0.02367784499320348,
+                  -0.9982242381293619
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 16.336608586571273,
-              "surface_camera_depth": 11.632881191666195,
-              "depth_delta": 4.703727394905078,
+              "edge_camera_depth": 16.336608586295583,
+              "surface_camera_depth": 11.63288119149225,
+              "depth_delta": 4.703727394803332,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                111.3859144980154,
-                234.25855324543778
+                111.38591450456678,
+                234.25855324723256
               ],
               "camera_ray": {
                 "origin": [
@@ -3517,22 +3517,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.12946993526606138,
-                  -0.05579244691091308,
-                  -0.9900124942291864
+                  -0.12946993525180422,
+                  -0.05579244691496963,
+                  -0.9900124942308223
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:2",
-              "edge_camera_depth": 15.316542778698746,
-              "surface_camera_depth": 12.51572626965566,
-              "depth_delta": 2.800816509043086,
+              "edge_camera_depth": 15.316542778581328,
+              "surface_camera_depth": 12.515726269266708,
+              "depth_delta": 2.80081650931462,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:A-D",
               "screen_coordinate": [
-                162.3001378421187,
-                221.08453935286678
+                162.30013784440396,
+                221.08453934906527
               ],
               "camera_ray": {
                 "origin": [
@@ -3541,22 +3541,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.01717067547403096,
-                  -0.026948495859609956,
-                  -0.9994893428519737
+                  -0.01717067546894022,
+                  -0.026948495851141067,
+                  -0.9994893428522894
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 16.229226894663487,
-              "surface_camera_depth": 11.110406164821104,
-              "depth_delta": 5.118820729842383,
+              "edge_camera_depth": 16.229226894942467,
+              "surface_camera_depth": 11.110406164446205,
+              "depth_delta": 5.118820730496262,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                188.7194883075917,
-                139.9390504619021
+                188.7194882876307,
+                139.93905046336113
               ],
               "camera_ray": {
                 "origin": [
@@ -3565,22 +3565,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04124347819619218,
-                  0.15215767224405052,
-                  -0.9874953257021283
+                  0.04124347815230844,
+                  0.1521576722411864,
+                  -0.9874953257044025
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 15.507990845070278,
-              "surface_camera_depth": 11.504198600965962,
-              "depth_delta": 4.003792244104316,
+              "edge_camera_depth": 15.507990845245462,
+              "surface_camera_depth": 11.504198600845909,
+              "depth_delta": 4.003792244399554,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                189.11032361706006,
-                118.42930213147437
+                189.11032359674041,
+                118.42930212976633
               ],
               "camera_ray": {
                 "origin": [
@@ -3589,22 +3589,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.04175653945152433,
-                  0.1978992608645837,
-                  -0.9793325655579338
+                  0.04175653940717205,
+                  0.1978992608685366,
+                  -0.979332565559026
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:1",
-              "edge_camera_depth": 15.190828743442912,
-              "surface_camera_depth": 13.593651229635048,
-              "depth_delta": 1.597177513807864,
+              "edge_camera_depth": 15.190828743568327,
+              "surface_camera_depth": 13.593651229830963,
+              "depth_delta": 1.597177513737364,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "khoi_hop::edge:D-D_prime",
               "screen_coordinate": [
-                187.94854403643365,
-                182.36821908525576
+                187.9485440172871,
+                182.36821908707543
               ],
               "camera_ray": {
                 "origin": [
@@ -3613,15 +3613,15 @@
                   0.0
                 ],
                 "direction": [
-                  0.039943253990444114,
-                  0.05926720223858672,
-                  -0.9974426977022115
+                  0.039943253947912406,
+                  0.059267202234652296,
+                  -0.9974426977041485
                 ]
               },
               "candidate_surface_id": "khoi_hop::face:3",
-              "edge_camera_depth": 16.174105972565265,
-              "surface_camera_depth": 11.07267079783994,
-              "depth_delta": 5.101435174725324,
+              "edge_camera_depth": 16.174105972754862,
+              "surface_camera_depth": 11.07267079740577,
+              "depth_delta": 5.101435175349092,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -3868,8 +3868,8 @@
             {
               "edge_id": "S.ABCD::edge:C-D",
               "screen_coordinate": [
-                716.1273325756724,
-                266.37749050981927
+                716.1273325534039,
+                266.37749050204616
               ],
               "camera_ray": {
                 "origin": [
@@ -3878,22 +3878,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.11380554777826075,
-                  -0.06848471584997497,
-                  -0.9911398190920584
+                  0.11380554773459388,
+                  -0.06848471583490827,
+                  -0.9911398190981136
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 18.47450123374684,
-              "surface_camera_depth": 15.710781388875656,
-              "depth_delta": 2.763719844871183,
+              "edge_camera_depth": 18.47450123441334,
+              "surface_camera_depth": 15.710781388869158,
+              "depth_delta": 2.7637198455441805,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:A-D",
               "screen_coordinate": [
-                560.7049102609855,
-                277.12497125473845
+                560.7049102628301,
+                277.1249712605946
               ],
               "camera_ray": {
                 "origin": [
@@ -3902,22 +3902,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.19305864958243535,
-                  -0.08862869992811265,
-                  -0.9771761925929524
+                  -0.19305864957875055,
+                  -0.08862869993958615,
+                  -0.9771761925926399
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:1",
-              "edge_camera_depth": 17.59675577356706,
-              "surface_camera_depth": 14.839459810908073,
-              "depth_delta": 2.757295962658988,
+              "edge_camera_depth": 17.596755773111518,
+              "surface_camera_depth": 14.839459810176548,
+              "depth_delta": 2.75729596293497,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:A-D",
               "screen_coordinate": [
-                624.432060886348,
-                253.9855513846727
+                624.4320608781246,
+                253.98555138184673
               ],
               "camera_ray": {
                 "origin": [
@@ -3926,22 +3926,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.06924536761242539,
-                  -0.04404073910186588,
-                  -0.9966270578122899
+                  -0.0692453676288367,
+                  -0.04404073909616571,
+                  -0.9966270578114014
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 19.601870239954014,
-              "surface_camera_depth": 14.065354682450222,
-              "depth_delta": 5.536515557503792,
+              "edge_camera_depth": 19.601870240226802,
+              "surface_camera_depth": 14.065354681832991,
+              "depth_delta": 5.536515558393811,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:S-D",
               "screen_coordinate": [
-                580.2471126383657,
-                174.70947480215534
+                580.2471126136065,
+                174.7094748048259
               ],
               "camera_ray": {
                 "origin": [
@@ -3950,15 +3950,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.1553411256524597,
-                  0.11300632867702788,
-                  -0.9813759240780091
+                  -0.1553411257002117,
+                  0.11300632867097005,
+                  -0.981375924071148
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 17.12130150092176,
-              "surface_camera_depth": 14.72132407123492,
-              "depth_delta": 2.3999774296868406,
+              "edge_camera_depth": 17.121301500037816,
+              "surface_camera_depth": 14.721324070152514,
+              "depth_delta": 2.3999774298853023,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
@@ -4147,8 +4147,8 @@
             {
               "edge_id": "S.ABCD::edge:C-D",
               "screen_coordinate": [
-                217.3420394112788,
-                238.94997393038972
+                217.3420394274699,
+                238.94997393613465
               ],
               "camera_ray": {
                 "origin": [
@@ -4157,22 +4157,22 @@
                   0.0
                 ],
                 "direction": [
-                  0.10481106339225141,
-                  -0.06630657773197868,
-                  -0.9922792342582095
+                  0.10481106342761493,
+                  -0.06630657774439237,
+                  -0.9922792342536446
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 20.223979449594093,
-              "surface_camera_depth": 17.46009155122612,
-              "depth_delta": 2.7638878983679724,
+              "edge_camera_depth": 20.223979448992438,
+              "surface_camera_depth": 17.46009155121865,
+              "depth_delta": 2.763887897773788,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:A-D",
               "screen_coordinate": [
-                90.83954565537606,
-                247.32053275944253
+                90.8395456536536,
+                247.320532755325
               ],
               "camera_ray": {
                 "origin": [
@@ -4181,22 +4181,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.17331274038264782,
-                  -0.08389841367696822,
-                  -0.9812867828537921
+                  -0.1733127403864367,
+                  -0.08389841366796197,
+                  -0.9812867828538928
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:1",
-              "edge_camera_depth": 19.38365311201947,
-              "surface_camera_depth": 16.618357785009938,
-              "depth_delta": 2.7652953270095324,
+              "edge_camera_depth": 19.383653112415747,
+              "surface_camera_depth": 16.618357785675165,
+              "depth_delta": 2.7652953267405813,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:A-D",
               "screen_coordinate": [
-                142.89333996737648,
-                228.5049352302375
+                142.89333997364315,
+                228.50493523242957
               ],
               "camera_ray": {
                 "origin": [
@@ -4205,22 +4205,22 @@
                   0.0
                 ],
                 "direction": [
-                  -0.060311497391413164,
-                  -0.04339788999612496,
-                  -0.9972357526815261
+                  -0.06031149737750797,
+                  -0.04339789000102956,
+                  -0.9972357526821537
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 21.380591358955286,
-              "surface_camera_depth": 15.827001610759083,
-              "depth_delta": 5.553589748196202,
+              "edge_camera_depth": 21.380591358698748,
+              "surface_camera_depth": 15.827001611320023,
+              "depth_delta": 5.553589747378725,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             },
             {
               "edge_id": "S.ABCD::edge:S-D",
               "screen_coordinate": [
-                107.39737602696874,
-                164.81069307188739
+                107.39737604476497,
+                164.81069306950218
               ],
               "camera_ray": {
                 "origin": [
@@ -4229,15 +4229,15 @@
                   0.0
                 ],
                 "direction": [
-                  -0.1376774043090325,
-                  0.0971823334226146,
-                  -0.9856979894537996
+                  -0.1376774042705662,
+                  0.09718233342833431,
+                  -0.9856979894586085
                 ]
               },
               "candidate_surface_id": "S.ABCD::face:2",
-              "edge_camera_depth": 18.928780868561077,
-              "surface_camera_depth": 16.486192412246186,
-              "depth_delta": 2.4425884563148905,
+              "edge_camera_depth": 18.928780869333316,
+              "surface_camera_depth": 16.486192413225133,
+              "depth_delta": 2.442588456108183,
               "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
             }
           ],
