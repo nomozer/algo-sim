@@ -1,0 +1,42 @@
+# W12 — ASSUMPTION CHANNEL PROBE at product commit 79eb1e59 (0 model calls)
+# text: PRISM_WITHOUT_AD (no sentence states AD); analyze payload still claims AD = 5
+# run: cd backend && PYTHONPATH=. PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe <script>
+# --- script ---
+"""W12 probe: can an UNSTATED height reach the answer WITHOUT a GIVEN length?
+Offline, 0 model calls. Prism text WITHOUT "AD = 5"; the compiled program for
+AD = 5 with the AD_length declaration removed, placing D at (0,0,5) through
+(a) LAYOUT_DERIVED vertices, (b) model_assumption vertices (the LLM's channel),
+and (c) the unchanged program WITH the AD_length GIVEN (the channel W12 closes).
+"""
+import copy, importlib.util
+spec = importlib.util.spec_from_file_location("t", "tests/geometry/test_source_grounding_closure.py")
+t = importlib.util.module_from_spec(spec); spec.loader.exec_module(t)
+from app.simulation.semantic_program.contract import SemanticProgramSpec
+from app.simulation.semantic_program.route import verify_and_compile
+
+base = t._program_with_height_5()
+
+def variant(channel):
+    raw = copy.deepcopy(base)
+    if channel == "given_length":
+        return raw
+    raw["memory_declarations"] = [d for d in raw["memory_declarations"] if d["name"] != "AD_length"]
+    if channel == "model_assumption":
+        for d in raw["memory_declarations"]:
+            if d.get("provenance") == "LAYOUT_DERIVED":
+                d.pop("provenance"); d["model_assumption"] = f"Đặt {d['name']} trong hệ trục tiện dựng"
+        raw["statements"] = [dict(s, model_assumption=f"Đặt {s['target_var']} trong hệ trục")
+                             if s["kind"] == "declare_point" else s for s in raw["statements"]]
+    return raw
+
+ct = t._contract(t.PRISM_WITHOUT_AD, t._prism_payload())
+for channel in ("given_length", "layout_derived", "model_assumption"):
+    out = verify_and_compile(ct, SemanticProgramSpec.model_validate(variant(channel)))
+    print(f"{channel:17} stage={out.stage_reached:10} servable={out.servable!s:5} "
+          f"error_code={out.error_code} reason_code={out.reason_code} "
+          f"V={(out.final_memory or {}).get('the_tich_lang_tru')}")
+# --- output ---
+given_length      stage=grounding  servable=False error_code=input_not_grounded reason_code=GIVEN_VALUE_NOT_IN_SOURCE V=None
+layout_derived    stage=served     servable=True  error_code=None reason_code=None V=30
+model_assumption  stage=served     servable=True  error_code=None reason_code=None V=30
+exit=0

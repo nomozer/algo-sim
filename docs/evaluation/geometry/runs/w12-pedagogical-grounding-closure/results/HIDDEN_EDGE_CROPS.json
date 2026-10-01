@@ -1,0 +1,3510 @@
+{
+  "schema_version": "scene3d-hidden-edge-crops/2",
+  "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+  "family_sheets": {
+    "triangular_pyramid": {
+      "family": "triangular_pyramid",
+      "sheet": "images/triangular-pyramid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/3 — Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/3 — Dựng tam giác đáy.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/3 — Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/formation/formation_step_2.png"
+        }
+      ]
+    },
+    "triangular_prism": {
+      "family": "triangular_prism",
+      "sheet": "images/triangular-prism/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/3 — Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/3 — Dựng tam giác đáy dưới.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/3 — Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/formation/formation_step_2.png"
+        }
+      ]
+    },
+    "rectangular_pyramid": {
+      "family": "rectangular_pyramid",
+      "sheet": "images/rectangular-pyramid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 — Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 — Dựng đáy ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 — Dựng chiều cao SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 — Dựng các cạnh bên SB, SC, SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 — Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/formation/formation_step_4.png"
+        }
+      ]
+    },
+    "cuboid": {
+      "family": "cuboid",
+      "sheet": "images/cuboid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            281
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            313
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            904
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 — Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 — Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/formation/formation_step_4.png"
+        }
+      ]
+    },
+    "cube": {
+      "family": "cube",
+      "sheet": "images/cube/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            388
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            420
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            990
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 — Dữ kiện đề cho: AB = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 — Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/formation/formation_step_4.png"
+        }
+      ]
+    },
+    "cross_section": {
+      "family": "cross_section",
+      "sheet": "images/cross-section/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            302,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            196
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            228
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            450
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            474
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/refusal",
+          "label": "Desktop · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/desktop/refusal.png"
+        },
+        {
+          "state": "mobile/refusal",
+          "label": "Mobile · đề thiếu một dữ kiện — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/negative/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/10 — Đặt các điểm đề cho vào không gian.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/10 — Dựng đáy hình vuông ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/10 — Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/10 — Dựng mặt phẳng (α): z = 3.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/10 — Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/geometry_step/5",
+          "label": "Bước dựng 6/10 — Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_5.png"
+        },
+        {
+          "state": "desktop/geometry_step/6",
+          "label": "Bước dựng 7/10 — Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_6.png"
+        },
+        {
+          "state": "desktop/geometry_step/7",
+          "label": "Bước dựng 8/10 — Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_7.png"
+        },
+        {
+          "state": "desktop/geometry_step/8",
+          "label": "Bước dựng 9/10 — Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_8.png"
+        },
+        {
+          "state": "desktop/geometry_step/9",
+          "label": "Bước dựng 10/10 — Dựng đường thẳng BD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w12-final/docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/formation/formation_step_9.png"
+        }
+      ]
+    }
+  },
+  "overview": {
+    "schema_version": "scene3d-evidence-overview/1",
+    "role": "INDEX_ONLY",
+    "families": [
+      {
+        "family": "triangular_pyramid",
+        "family_dir": "triangular-pyramid",
+        "sheet": "images/triangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "triangular_prism",
+        "family_dir": "triangular-prism",
+        "sheet": "images/triangular-prism/SHEET.png"
+      },
+      {
+        "family": "rectangular_pyramid",
+        "family_dir": "rectangular-pyramid",
+        "sheet": "images/rectangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "cuboid",
+        "family_dir": "cuboid",
+        "sheet": "images/cuboid/SHEET.png"
+      },
+      {
+        "family": "cube",
+        "family_dir": "cube",
+        "sheet": "images/cube/SHEET.png"
+      },
+      {
+        "family": "cross_section",
+        "family_dir": "cross-section",
+        "sheet": "images/cross-section/SHEET.png"
+      }
+    ],
+    "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi."
+  },
+  "playback_films": {
+    "triangular_pyramid": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/playback/mobile/step-02.png"
+    ],
+    "triangular_prism": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/playback/mobile/step-02.png"
+    ],
+    "rectangular_pyramid": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/playback/mobile/step-04.png"
+    ],
+    "cuboid": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/playback/mobile/step-04.png"
+    ],
+    "cube": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/playback/mobile/step-04.png"
+    ],
+    "cross_section": [
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-08.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/desktop/step-09.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-07.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-08.png",
+      "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/playback/mobile/step-09.png"
+    ]
+  },
+  "crops": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.8624576278334,
+          287.86161396082485
+        ],
+        [
+          527.401658967638,
+          375.2672900398888
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        375,
+        692,
+        508
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "b12b3b7d067a3f6820a34243bd4ffa70f965fea36d608167ad71b1268d5c3684"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.8624576278334,
+          287.86161396082485
+        ],
+        [
+          790.8363952646413,
+          387.84440565730347
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        645,
+        375,
+        848,
+        521
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "0154f7363d863b29f70dd394bff703bb553e60b71b26716a683c61b26235b795"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          622.4660804164802,
+          74.23999999999873
+        ],
+        [
+          632.8624576278334,
+          287.86161396082485
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        616,
+        164,
+        711,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "1d279fbef244beea00fce6779c6684d61bdfda843ad7ce3c0da1c367bff5f6ea"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          583.5142498049079,
+          325.68701750360316
+        ],
+        [
+          712.429578758285,
+          271.14897590062435
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        597,
+        359,
+        770,
+        459
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "fdcf81e06932ed7971b349e366947f881b59bcb474a46a8fe58fe847832a2686"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.97438654018887,
+          258.21074491199386
+        ],
+        [
+          54.54120822312461,
+          334.69663173098047
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        111,
+        858,
+        392,
+        1107
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "c09ae71807edc6ff2af11c5bf203f4757b722450843dcfbf91544fa0352c1e58"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.97438654018887,
+          258.21074491199386
+        ],
+        [
+          285.6000000000018,
+          345.65128857491067
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        295,
+        858,
+        669,
+        1129
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "95712999f916f0b461d9d5eff8208becc7bc83b12898bd2fde5b044278e23092"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          138.09642469724088,
+          71.23465488675188
+        ],
+        [
+          146.97438654018887,
+          258.21074491199386
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        239,
+        484,
+        431,
+        954
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "babf83f339ef51b17cbb478979b5d9e8734241c62171c072f173df5f9a537559"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          103.81220132110111,
+          291.10147217505113
+        ],
+        [
+          217.0680343767583,
+          243.46885999752365
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        209,
+        828,
+        532,
+        1021
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "281fbcd8fd028fd4f87df670b54701e63ea58900a630dd0dd294b090e3e02da9"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          527.2529904816587,
+          389.16346790301276
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        388,
+        679,
+        522
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "96a4c426f1c686c266dc8327462e03e481449a37dfc5f5de88f0ae417a81ef48"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          793.3942592629671,
+          365.02606246816174
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        632,
+        388,
+        850,
+        498
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "cba0a366730300a93af0017adfa3f4f0ef167fb5be629cb4bc110cbd23cfdfe9"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          608.6081704424985,
+          74.23999999999971
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        164,
+        697,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "451519692d26a2aac50f30413d77f22c2b70f3aa3563e14ede36cac9adbbec14"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          559.9745206204755,
+          341.57853936660234
+        ],
+        [
+          708.4409513704521,
+          288.23897611620674
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        573,
+        376,
+        767,
+        475
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/desktop/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "ad4342312f66ef0673a5ade3cced41c14c7d567e5cfdbb4284d487cd59ae8c8a"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          78.75027551309911,
+          316.31214304617816
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        159,
+        857,
+        380,
+        1071
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "9d4e06cda7d9ab7f4f171157a15f681844f4b875384660003c7923eaaf08d253"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          262.1920408147615,
+          301.00408514130726
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        283,
+        852,
+        622,
+        1045
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "728e31864a7ca8cc31f4e955241e0fe01eab7f93c8fbbfc2b4bb8cc9cf458835"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          134.65192774656188,
+          101.46636142408842
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        229,
+        544,
+        422,
+        954
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "279047a41c439eccb03357905ace4c7f00e69ecb03c6e7f73b39139f6b8c04d0"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          100.59568089431265,
+          285.6433679725013
+        ],
+        [
+          204.303840755271,
+          249.23925266289152
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        203,
+        828,
+        507,
+        1021
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/triangular-prism/mobile/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "2bf15e9c9cd1c55036ccff4e05f07c67de7493552f2c40d4aa65472bdeea4cce"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          569.7205180513049,
+          324.9924140943475
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        583,
+        348,
+        688,
+        458
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "ca2b588695bdc9c977d1f3a617317b7b4cc0ea909b746f419f1519173b032f3f"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          748.2183038798686,
+          308.3651705218009
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        642,
+        348,
+        806,
+        442
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "3c573a9997ce1f1d7e7f73ff50e059effdfbf840b2e221519fc20430ba21ee90"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.0905452543299,
+          74.23999999999987
+        ],
+        [
+          628.9586874977945,
+          259.8575510164736
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        613,
+        164,
+        707,
+        394
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "04f098d61cf0f207d493ef6b7d2766964ba66933a8e935761e258f6bd1d649ab"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          589.7182506112334,
+          338.69724096900416
+        ],
+        [
+          639.2622454554187,
+          253.4296082965277
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        341,
+        698,
+        472
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "1d51f78f0c639744316e1364bdeb5374668f019cc9cbf3948f928b0c601038c9"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          721.2517552639121,
+          273.725234658761
+        ],
+        [
+          639.2622454554187,
+          253.4296082965277
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        652,
+        327,
+        779,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "d5818462846c8483cd0e2be105fbef4fd793c63b3dc550929d6071d304cc859b"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          565.3666314523342,
+          167.7935814293568
+        ],
+        [
+          639.2622454554187,
+          253.4296082965277
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        579,
+        257,
+        698,
+        388
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "6583b8b99f17900d96ea72417f853f38acf044f320a1b6d384f20a0eebe39007"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          89.57150117552902,
+          292.773338559132
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        181,
+        810,
+        384,
+        1024
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "b28e21b8b45e0cf7a0c66f80ccb6abc6505014fff884f80f19620b2f59ef8753"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          250.37338582281257,
+          277.7944855131741
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        287,
+        805,
+        599,
+        998
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "a52ea1c4cc6ba6f9ac5d76f14fc6bc4715de54618a3ff86455db5306a778ffa9"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          134.04708602652988,
+          66.87999999999987
+        ],
+        [
+          142.93692106482345,
+          234.09581104501288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        230,
+        475,
+        423,
+        906
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "d95902c1a63190010f05ebd947507cee343e059d35b8a77f50068b046f0331a8"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          107.4811661737769,
+          304.959458416168
+        ],
+        [
+          152.41659012950333,
+          228.26718399938335
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        213,
+        798,
+        406,
+        1048
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "e522cf1e1ed13e0029d7a7f0aece328cd6808551ed2586f1f3a9a3901250700c"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          226.21604985783918,
+          246.7147432230669
+        ],
+        [
+          152.41659012950333,
+          228.26718399938335
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        306,
+        768,
+        550,
+        961
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "9c5f0fcd76558188336429cf3d5f8542b051ee8004835e0641d76355d36710a4"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.51668652715205,
+          151.01312047325413
+        ],
+        [
+          152.41659012950333,
+          228.26718399938335
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        644,
+        403,
+        895
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "07f69bbfe600f75e41b89235b031f92dbdcdd9556df50f41125dbefaf1a3b0a3"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          633.1565398045498,
+          74.36067412367743
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        164,
+        718,
+        390
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "646dc6c2d65bfbbc67c386d8bc5b5d8fc3f18b3a934cde4924ecfe0774bcd00c"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          554.5629684364096,
+          307.45767830345585
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        568,
+        344,
+        697,
+        441
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "66f9a9004b4c845f63b4ce13c0f6f4b98c67d17aec9ff1d98b660882ee138c4e"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          762.9157762471036,
+          314.72332747151455
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        650,
+        344,
+        820,
+        448
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "94456608c2ebe6019a426d9b3bb51e0de1af428cb5e1235a659d8c9503a4803a"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          567.4536314946859,
+          292.02145785071434
+        ],
+        [
+          692.2229817201319,
+          259.04536115494676
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        581,
+        339,
+        751,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "d1839f279f8d007fbc38202cc59eb77aec7a80f61966c450f4633f699e98b176"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          746.3789729917454,
+          315.1786173141449
+        ],
+        [
+          692.2229817201319,
+          259.04536115494676
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        704,
+        347,
+        804,
+        449
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "235512392eeb4bf571840de7e3e858daadcd029845a25999b007171439862a36"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          692.2229817201319,
+          259.04536115494676
+        ],
+        [
+          698.6038779897534,
+          98.73170925602716
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        683,
+        189,
+        778,
+        393
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "730636e2f1493af4d4ffc5e3d92db72c1f99c1eb000a2e5e8633c1c0f513d0a0"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          147.25696556163274,
+          70.29535889449568
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        252,
+        482,
+        444,
+        899
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "c63512457a407e1bfed90765ec3a633ec50ca308822769a40e9e4d439743de15"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          77.91839518077242,
+          275.74013629494004
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        157,
+        800,
+        400,
+        992
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "4fc3caab27dfbd4400c50519af9cf89ed0c6be334b1b1c3ad56ceae29bc2a644"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          261.6389190511468,
+          282.12119776826006
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        802,
+        621,
+        1002
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "4d166daaaeef1b16543dba89e2b9eeb4f161c4fbe4c3f3ebfa15a62274859361"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          99.98653706168675,
+          254.8074688885509
+        ],
+        [
+          196.53022118983614,
+          230.3189612609977
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        201,
+        779,
+        491,
+        971
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "a54f8ba95875de476333bb7b2c94290ed073764848375c36bae5341333fb669c"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          236.4998527847409,
+          272.82021760682267
+        ],
+        [
+          196.53022118983614,
+          230.3189612609977
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        387,
+        797,
+        579,
+        989
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "8ee5dce53574662fc67773222589efdbb577059eb26bf861bf1615e0b452be8e"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          196.53022118983614,
+          230.3189612609977
+        ],
+        [
+          200.82846778359897,
+          108.00066712978109
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        351,
+        558,
+        543,
+        899
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "0e75853906d247a90a2a0a3ac50c2bc7f5362cd0dc530736de5c18085acce310"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          635.391721906552,
+          75.11878133063801
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        625,
+        165,
+        720,
+        372
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "b9ad51ef100fd6be5f00fc16d45f7310dba957064852803d44b676ba44f05c59"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          527.8429120749828,
+          315.93848326209473
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        542,
+        326,
+        697,
+        450
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "948e89ce73f5f2accaa120f20b434f79be1def48732b1b18f971f9005a78a9f9"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          793.2864790035081,
+          277.46705218693876
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        651,
+        322,
+        850,
+        416
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "f6828f84ca6d641f37a28055261f5f6265242ae3a6d7abd7a802bd635d3adafb"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          561.6866195147917,
+          265.23685555297476
+        ],
+        [
+          679.4634410017466,
+          235.7141823864033
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        575,
+        314,
+        738,
+        409
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "e4ad0d18b91b4b5dc7dcf77310f67282efcbb6793e43284a506f0d9032b5c57d"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          760.301264781252,
+          292.74522335047095
+        ],
+        [
+          679.4634410017466,
+          235.7141823864033
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        691,
+        324,
+        818,
+        427
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "5c2ea9ef37c71bbd25dd1f764a903ba08be4aca1f33cc77e75fb84afc8236a40"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          679.4634410017466,
+          235.7141823864033
+        ],
+        [
+          681.8546164149794,
+          111.47425513839964
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        669,
+        201,
+        763,
+        370
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "66d31071c35d8aa109c1c1640d3d0ac9c5d1c639ff90d73dcddc34e46c2b9eb7"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          150.75113610198008,
+          92.74245882617167
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        257,
+        527,
+        450,
+        870
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "f87dac7e1a9af9ac7e4f19dfd3b3d2be66b0605dee7a64e9b70c39f74bf23761"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          71.21571079303438,
+          274.5253513282365
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        144,
+        774,
+        404,
+        987
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "af0260baa9be87a70a93ee4c4b5eb375c0b3f5054308100e8d0ba56138559060"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          270.48014422854783,
+          246.39192970857383
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        307,
+        756,
+        639,
+        949
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "9b5e25d4e5db05b5ff272b79f0737b9013bbfcd92742feddf7096d178d375040"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.53444890501297,
+          240.94759895330645
+        ],
+        [
+          187.36289558680525,
+          214.59957115975007
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        749,
+        473,
+        942
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "f477394e8a2123f811bec0f10065690cb8d3865d671730c7fb97ba43e0f62343"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          257.8984926422927,
+          264.03480563624385
+        ],
+        [
+          187.36289558680525,
+          214.59957115975007
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        376,
+        771,
+        614,
+        966
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "02feef7da37195baaf09717098cf9977f9befe568f084f3aae57d1ea4b517ee3"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          187.36289558680525,
+          214.59957115975007
+        ],
+        [
+          189.3158630756715,
+          107.11737034788034
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        330,
+        556,
+        523,
+        867
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "a907e8a014a26ac685dd65d3cc57950e9cfcaa85cc0f2ab0477cff7c5e49b8ec"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          517.1060875889154,
+          318.35055131815017
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        531,
+        335,
+        696,
+        452
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "3dfab930bff16f0b7301cbb3c638667a42db0607f6baeff524e1c28da431c036"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          800.1684484981176,
+          282.60636743582245
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        649,
+        328,
+        857,
+        423
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "e49c06beb99bc2b3ea1e23b631b6a3cc0c55598014817f4ef29f272e21c9d4ce"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          633.9801545519734,
+          75.63794206634071
+        ],
+        [
+          636.792035395796,
+          246.8358384145178
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        166,
+        718,
+        381
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "5ae9b35a03353a4c7bb12e55dca599ac8dce9381d3f90ee033163cfbd50aeb6c"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          525.8680546387649,
+          289.7742835651639
+        ],
+        [
+          653.3223558485765,
+          243.49544378975108
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        540,
+        330,
+        712,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "a4be27baf80bf3a681cb6ea957138448afad347d04df0c66e6c2e405cfcff86a"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          778.932309212276,
+          289.2595371983003
+        ],
+        [
+          653.3223558485765,
+          243.49544378975108
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        666,
+        330,
+        836,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "0c0ae28ea2ac892474241722cc431e7679d1532053d3c56c2bb15ec0600828e4"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          507.1718693275411,
+          105.9235058254122
+        ],
+        [
+          653.3223558485765,
+          243.49544378975108
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        521,
+        196,
+        712,
+        378
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "a8aa128763eaffdb6e9379ddd3eb8bd40bf00f3039c74a48452aeb5dc45961e2"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          54.399999999999935,
+          281.2714584906155
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        110,
+        788,
+        400,
+        1001
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "005b7a89a5bfa143f5a686dec8b62283990d9e79b12645f5f389722afb0f1311"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          285.38519196973164,
+          252.58769960613813
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        769,
+        669,
+        962
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "59f64b16e946d6b25e87a182e1fccd08e14a58d0a62416f59b2701a32eb46f42"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          148.83491339514043,
+          81.98073048716282
+        ],
+        [
+          151.03344026730878,
+          223.0893253416244
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        253,
+        505,
+        446,
+        884
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "a35992b152b3c92a46fe50874f8def517ddb1d5bb5507c8d8689b859cb149b02"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          62.101991822046195,
+          257.7081376079621
+        ],
+        [
+          166.20958046864092,
+          220.07694256739495
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        126,
+        771,
+        430,
+        964
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "f0a60a9a4f2e598c695d8d21ee5c2494fc52114c646760066e0d022c410d660a"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          268.4744983997053,
+          257.82300530963124
+        ],
+        [
+          166.20958046864092,
+          220.07694256739495
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        334,
+        771,
+        635,
+        964
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "cf47afaae0baf384beb4c8774579cc8f2500b16955f3d34af756eaaeceaece60"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          48.58517163562248,
+          109.5444435696336
+        ],
+        [
+          166.20958046864092,
+          220.07694256739495
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        99,
+        561,
+        430,
+        878
+      ],
+      "source": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "fde132ccf9e4167254b37a6213b2d4a16ce78944b8590be85eb5b6c310c7cd57"
+    }
+  ],
+  "all_endpoints_inside": true,
+  "oracle_disagreements": [],
+  "duplicate_owner_edges": []
+}

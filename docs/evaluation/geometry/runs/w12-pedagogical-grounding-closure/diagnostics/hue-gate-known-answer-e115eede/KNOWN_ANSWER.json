@@ -1,0 +1,34 @@
+{
+  "schema_version": "w12-hue-gate-known-answer/1",
+  "purpose": "Window with a known answer for the new CAUSAL_CANVAS_ROLE_HUE gate before trusting it: the e115eede product draws the cross-section context outline in amber (defect found by inspecting the attempt-1 sheets); every other family has no role-coloured geometry in the causal state.",
+  "harness_commit_sha": "7b039621668c9ed4102badc73d750f79e25891f6",
+  "harness_files_overlaid": {
+    "frontend/scripts/compiler-scene-suite.mjs": "git blob 9c933debf46ee47ccc767966a267a3c854ef47a3",
+    "frontend/scripts/compiler-scene-replay-lib.mjs": "git blob 2d705daf8c35167a269034bc70c87c19d28e30df"
+  },
+  "product_checkout_sha": "e115eedee2314412795886465ce8b13e5cefa757",
+  "product_dist": "frontend/dist built from e115eede by the attempt-1 suite run (same worktree, --bo-qua-build)",
+  "fixtures": "attempt-1 run inputs (FIXTURE_MANIFEST bound to candidate 8aaeae80 / 548f5b3b)",
+  "browser_evidence": "BROWSER_EVIDENCE.json in this folder (measurement_commit_sha records the checkout e115eede; screenshot paths point into a session scratch directory that is not kept)",
+  "browser_evidence_sha256": "96f6b4c3cc5fada9cc8d165389d0e0aeb1afa777f9b3b0e1647f8f11d631312f",
+  "log": "diagnostics/logs/HUE_GATE_KNOWN_ANSWER_e115eede.log",
+  "expected": "cross_section desktop and mobile fail with CAUSAL_CANVAS_ROLE_HUE only; the other ten positive runs pass; negatives unchanged",
+  "observed": [
+    {"family": "triangular_pyramid", "viewport": "desktop", "cam": 0, "xanh": 0, "tolerance": 108, "pass": true},
+    {"family": "triangular_pyramid", "viewport": "mobile", "cam": 0, "xanh": 0, "tolerance": 112, "pass": true},
+    {"family": "triangular_prism", "viewport": "desktop", "cam": 0, "xanh": 0, "tolerance": 107, "pass": true},
+    {"family": "triangular_prism", "viewport": "mobile", "cam": 0, "xanh": 0, "tolerance": 111, "pass": true},
+    {"family": "rectangular_pyramid", "viewport": "desktop", "cam": 0, "xanh": 0, "tolerance": 108, "pass": true},
+    {"family": "rectangular_pyramid", "viewport": "mobile", "cam": 0, "xanh": 0, "tolerance": 112, "pass": true},
+    {"family": "cuboid", "viewport": "desktop", "cam": 0, "xanh": 0, "tolerance": 107, "pass": true},
+    {"family": "cuboid", "viewport": "mobile", "cam": 0, "xanh": 0, "tolerance": 110, "pass": true},
+    {"family": "cube", "viewport": "desktop", "cam": 0, "xanh": 0, "tolerance": 107, "pass": true},
+    {"family": "cube", "viewport": "mobile", "cam": 0, "xanh": 0, "tolerance": 110, "pass": true},
+    {"family": "cross_section", "viewport": "desktop", "cam": 326, "xanh": 0, "tolerance": 108, "pass": false, "reason_codes": ["CAUSAL_CANVAS_ROLE_HUE"]},
+    {"family": "cross_section", "viewport": "mobile", "cam": 1191, "xanh": 0, "tolerance": 112, "pass": false, "reason_codes": ["CAUSAL_CANVAS_ROLE_HUE"]}
+  ],
+  "negatives": "all six families pass on desktop and mobile",
+  "verdict": "KNOWN_ANSWER_REPRODUCED",
+  "calibration_note": "A first offline census on attempt-1 screenshots, without masking HTML overlays, counted about 700 orange and 600 blue pixels on every desktop causal frame: subpixel-antialiased text fringes in the detail card (.geo3d-soi) at DPR 1. The gate masks .geo3d-noi, .geo3d-soi and .geo3d-label for that reason; mobile (DPR 2) showed no fringes.",
+  "live_requests": 0
+}

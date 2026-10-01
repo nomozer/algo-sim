@@ -1,0 +1,1972 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cross_section",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+  "source": "canonical_program_through_current_production_replay",
+  "product_commit_sha": "8aaeae80254ed8ea95617107bd67da15329d4f45",
+  "product_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng Đáy hình vuông ABCD.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Dựng Khối chóp S.ABCD từ 5 đỉnh và 5 mặt.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Dựng mặt phẳng Mặt phẳng (α): z = 3 từ phương trình z - 3 = 0.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 4,
+          "narration": "Trên mặt thứ 2 của khối, nối (0, 0, 3) với (3, 0, 3).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Trên mặt thứ 3 của khối, nối (3, 0, 3) với (3, 3, 3).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 6,
+          "narration": "Trên mặt thứ 4 của khối, nối (3, 3, 3) với (0, 3, 3).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 7,
+          "narration": "Trên mặt thứ 5 của khối, nối (0, 3, 3) với (0, 0, 3).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 8,
+          "narration": "Thiết diện Thiết diện (T) là đa giác 4 đỉnh, cắt khối S.ABCD bởi mặt phẳng alpha_plane.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 9,
+          "narration": "Ghi nhận giá trị vừa tính được: 72.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 10,
+          "narration": "Ghi nhận giá trị vừa tính được: 9.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 11,
+          "narration": "Dựng đường thẳng Đường thẳng BD qua hai điểm đã có.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 12,
+          "narration": "Ghi nhận giá trị vừa tính được: 3√6.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng Đáy hình vuông ABCD."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Dựng Khối chóp S.ABCD từ 5 đỉnh và 5 mặt."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Dựng mặt phẳng Mặt phẳng (α): z = 3 từ phương trình z - 3 = 0."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Trên mặt thứ 2 của khối, nối (0, 0, 3) với (3, 0, 3)."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Trên mặt thứ 3 của khối, nối (3, 0, 3) với (3, 3, 3)."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Trên mặt thứ 4 của khối, nối (3, 3, 3) với (0, 3, 3)."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Trên mặt thứ 5 của khối, nối (0, 3, 3) với (0, 0, 3)."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Thiết diện Thiết diện (T) là đa giác 4 đỉnh, cắt khối S.ABCD bởi mặt phẳng alpha_plane."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Ghi nhận giá trị vừa tính được: 72."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Ghi nhận giá trị vừa tính được: 9."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Dựng đường thẳng Đường thẳng BD qua hai điểm đã có."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Ghi nhận giá trị vừa tính được: 3√6."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "S.ABCD",
+          "label": "Khối chóp S.ABCD",
+          "notation": "S.ABCD",
+          "reference": "S.ABCD",
+          "role": "Đỉnh S, đáy ABCD",
+          "display_label": "Khối chóp S.ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "D",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "solid",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "s_abcd_pyramid",
+            "instruction": "construct_solid"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "6"
+            ],
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "6",
+              "0"
+            ],
+            [
+              "0",
+              "6",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "faces": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              3,
+              4
+            ],
+            [
+              0,
+              4,
+              1
+            ]
+          ],
+          "edge_ownership": [
+            {
+              "edge_id": "S.ABCD::edge:A-B",
+              "endpoint_ids": [
+                "A",
+                "B"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:0",
+                "S.ABCD::face:1"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:B-C",
+              "endpoint_ids": [
+                "B",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:0",
+                "S.ABCD::face:2"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:C-D",
+              "endpoint_ids": [
+                "C",
+                "D"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:0",
+                "S.ABCD::face:3"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "endpoint_ids": [
+                "A",
+                "D"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:0",
+                "S.ABCD::face:4"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-A",
+              "endpoint_ids": [
+                "S",
+                "A"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:1",
+                "S.ABCD::face:4"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-B",
+              "endpoint_ids": [
+                "S",
+                "B"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:1",
+                "S.ABCD::face:2"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-C",
+              "endpoint_ids": [
+                "S",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:2",
+                "S.ABCD::face:3"
+              ]
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-D",
+              "endpoint_ids": [
+                "S",
+                "D"
+              ],
+              "adjacent_surface_ids": [
+                "S.ABCD::face:3",
+                "S.ABCD::face:4"
+              ]
+            }
+          ],
+          "surfaces": [
+            {
+              "surface_id": "S.ABCD::face:0",
+              "vertex_indices": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "boundary_edge_ids": [
+                "S.ABCD::edge:A-B",
+                "S.ABCD::edge:B-C",
+                "S.ABCD::edge:C-D",
+                "S.ABCD::edge:A-D"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "S.ABCD::face:1",
+              "vertex_indices": [
+                0,
+                1,
+                2
+              ],
+              "boundary_edge_ids": [
+                "S.ABCD::edge:S-A",
+                "S.ABCD::edge:A-B",
+                "S.ABCD::edge:S-B"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "S.ABCD::face:2",
+              "vertex_indices": [
+                0,
+                2,
+                3
+              ],
+              "boundary_edge_ids": [
+                "S.ABCD::edge:S-B",
+                "S.ABCD::edge:B-C",
+                "S.ABCD::edge:S-C"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "S.ABCD::face:3",
+              "vertex_indices": [
+                0,
+                3,
+                4
+              ],
+              "boundary_edge_ids": [
+                "S.ABCD::edge:S-C",
+                "S.ABCD::edge:C-D",
+                "S.ABCD::edge:S-D"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "S.ABCD::face:4",
+              "vertex_indices": [
+                0,
+                4,
+                1
+              ],
+              "boundary_edge_ids": [
+                "S.ABCD::edge:S-D",
+                "S.ABCD::edge:A-D",
+                "S.ABCD::edge:S-A"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            }
+          ]
+        },
+        {
+          "id": "T",
+          "label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "notation": null,
+          "reference": "thiết diện",
+          "role": "Thiết diện",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "type": "section",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_section",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "S.ABCD",
+              "relation": "structural"
+            },
+            {
+              "source_id": "alpha_plane",
+              "relation": "topological"
+            }
+          ],
+          "parent": "S.ABCD",
+          "display_group": [
+            "construction",
+            "section",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "T_section_def",
+            "instruction": "construct_section"
+          },
+          "polygon": [
+            [
+              "0",
+              "0",
+              "3"
+            ],
+            [
+              "3",
+              "0",
+              "3"
+            ],
+            [
+              "3",
+              "3",
+              "3"
+            ],
+            [
+              "0",
+              "3",
+              "3"
+            ]
+          ],
+          "closed": true,
+          "steps": [
+            {
+              "face_index": 1,
+              "a": [
+                "0",
+                "0",
+                "3"
+              ],
+              "b": [
+                "3",
+                "0",
+                "3"
+              ]
+            },
+            {
+              "face_index": 2,
+              "a": [
+                "3",
+                "0",
+                "3"
+              ],
+              "b": [
+                "3",
+                "3",
+                "3"
+              ]
+            },
+            {
+              "face_index": 3,
+              "a": [
+                "3",
+                "3",
+                "3"
+              ],
+              "b": [
+                "0",
+                "3",
+                "3"
+              ]
+            },
+            {
+              "face_index": 4,
+              "a": [
+                "0",
+                "3",
+                "3"
+              ],
+              "b": [
+                "0",
+                "0",
+                "3"
+              ]
+            }
+          ],
+          "vertex_sources": [
+            {
+              "kind": "SOLID_EDGE_INTERSECTION",
+              "solid_vertex_index": null,
+              "solid_edge_vertex_indices": [
+                0,
+                1
+              ]
+            },
+            {
+              "kind": "SOLID_EDGE_INTERSECTION",
+              "solid_vertex_index": null,
+              "solid_edge_vertex_indices": [
+                0,
+                2
+              ]
+            },
+            {
+              "kind": "SOLID_EDGE_INTERSECTION",
+              "solid_vertex_index": null,
+              "solid_edge_vertex_indices": [
+                0,
+                3
+              ]
+            },
+            {
+              "kind": "SOLID_EDGE_INTERSECTION",
+              "solid_vertex_index": null,
+              "solid_edge_vertex_indices": [
+                0,
+                4
+              ]
+            }
+          ],
+          "occludes_edges": false,
+          "surface_role": "SECTION_REGION",
+          "endpoint_entities": [
+            {
+              "entity_id": "section:T:point:on:S.ABCD::edge:S-A",
+              "section_vertex_ordinal": 0,
+              "provenance_kind": "SOLID_EDGE_INTERSECTION",
+              "coordinate_hash": "c874f42ac6304770",
+              "anonymous_coordinate_fallback": false
+            },
+            {
+              "entity_id": "section:T:point:on:S.ABCD::edge:S-B",
+              "section_vertex_ordinal": 1,
+              "provenance_kind": "SOLID_EDGE_INTERSECTION",
+              "coordinate_hash": "cc34123cb2b17d89",
+              "anonymous_coordinate_fallback": false
+            },
+            {
+              "entity_id": "section:T:point:on:S.ABCD::edge:S-C",
+              "section_vertex_ordinal": 2,
+              "provenance_kind": "SOLID_EDGE_INTERSECTION",
+              "coordinate_hash": "e58d9d3cc0df4468",
+              "anonymous_coordinate_fallback": false
+            },
+            {
+              "entity_id": "section:T:point:on:S.ABCD::edge:S-D",
+              "section_vertex_ordinal": 3,
+              "provenance_kind": "SOLID_EDGE_INTERSECTION",
+              "coordinate_hash": "af1b892ab802b6f1",
+              "anonymous_coordinate_fallback": false
+            }
+          ],
+          "identity_diagnostics": [],
+          "boundary_edge_ids": [
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+          ],
+          "section_edge_coordinate_hashes": {
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B": "c874f42ac6304770:cc34123cb2b17d89",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C": "cc34123cb2b17d89:e58d9d3cc0df4468",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D": "af1b892ab802b6f1:e58d9d3cc0df4468",
+            "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D": "af1b892ab802b6f1:c874f42ac6304770"
+          }
+        },
+        {
+          "id": "the_volume_sabcd",
+          "label": "Thể tích S.ABCD",
+          "notation": "V(S.ABCD)",
+          "reference": "V(S.ABCD)",
+          "role": "Thể tích khối",
+          "display_label": "Thể tích S.ABCD",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "S.ABCD"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "S.ABCD",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "volume",
+            "instruction": "measure.volume"
+          },
+          "value": "72",
+          "exact": {
+            "kind": "rational",
+            "value": "72"
+          },
+          "occludes_edges": false
+        },
+        {
+          "id": "area_T",
+          "label": "Diện tích thiết diện",
+          "notation": null,
+          "reference": "Diện tích thiết diện",
+          "role": "Diện tích",
+          "display_label": "Diện tích thiết diện",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "T"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "T",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "area",
+            "instruction": "measure.area"
+          },
+          "value": "9",
+          "exact": {
+            "kind": "rational",
+            "value": "9"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích thiết diện = 9",
+            "references": []
+          }
+        },
+        {
+          "id": "BD",
+          "label": "Đường thẳng BD",
+          "notation": "BD",
+          "reference": "BD",
+          "role": "Đường thẳng qua B và D",
+          "display_label": "Đường thẳng BD",
+          "type": "line3",
+          "render": "line",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_line",
+          "depends": [
+            "B",
+            "D"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "D",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "distance",
+            "instruction": "construct_line"
+          },
+          "point": [
+            "6",
+            "0",
+            "0"
+          ],
+          "direction": [
+            "-6",
+            "6",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "dist_S_BD",
+          "label": "Khoảng cách giữa S và BD",
+          "notation": "d(S, BD)",
+          "reference": "d(S, BD)",
+          "role": "Khoảng cách",
+          "display_label": "Khoảng cách giữa S và BD",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.distance",
+          "depends": [
+            "BD",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "BD",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "distance",
+            "instruction": "measure.distance"
+          },
+          "value": "3√6",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "3",
+            "radicand": 6
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "d(S, BD) = 3√6",
+            "references": []
+          }
+        },
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "S.ABCD",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "A_coords",
+            "assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+          },
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm",
+          "display_label": "Điểm B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "S.ABCD",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "B_coords"
+          },
+          "xyz": [
+            "6",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "reference": "C",
+          "role": "Điểm",
+          "display_label": "Điểm C",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "S.ABCD",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "C_coords"
+          },
+          "xyz": [
+            "6",
+            "6",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "D",
+          "label": "Điểm D",
+          "notation": "D",
+          "reference": "D",
+          "role": "Điểm",
+          "display_label": "Điểm D",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "S.ABCD",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "D_coords"
+          },
+          "xyz": [
+            "0",
+            "6",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "S",
+          "label": "Điểm S",
+          "notation": "S",
+          "reference": "S",
+          "role": "Điểm",
+          "display_label": "Điểm S",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "S.ABCD",
+          "display_group": [
+            "given",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "S_coords"
+          },
+          "xyz": [
+            "0",
+            "0",
+            "6"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "ABCD_base",
+          "label": "Đáy hình vuông ABCD",
+          "notation": "ABCD",
+          "reference": "ABCD",
+          "role": "Đa giác A, B, C, D",
+          "display_label": "Đáy hình vuông ABCD",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "D",
+              "relation": "topological"
+            }
+          ],
+          "parent": "S.ABCD",
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "vertices": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "0",
+              "0"
+            ],
+            [
+              "6",
+              "6",
+              "0"
+            ],
+            [
+              "0",
+              "6",
+              "0"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "occludes_edges": false,
+          "surface_role": "BASE_REGION",
+          "boundary_edge_ids": [
+            "S.ABCD::edge:A-B",
+            "S.ABCD::edge:B-C",
+            "S.ABCD::edge:C-D",
+            "S.ABCD::edge:A-D"
+          ]
+        },
+        {
+          "id": "alpha_plane",
+          "label": "Mặt phẳng (α): z = 3",
+          "notation": "(α)",
+          "reference": "(α)",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng (α): z = 3",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "point": [
+            "0",
+            "0",
+            "3"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "display_label": "Bước dựng hình",
+          "semantic_kind": "EXPLANATION",
+          "details": {},
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "ABCD_base",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "explanation": "Dựng Đáy hình vuông ABCD.",
+          "display_label": "Đáy hình vuông ABCD",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Đáy hình vuông ABCD",
+            "dinh": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "learner_text": "Dựng đáy hình vuông ABCD."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "S.ABCD",
+          "depends": [
+            "S",
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "explanation": "Dựng Khối chóp S.ABCD từ 5 đỉnh và 5 mặt.",
+          "display_label": "Khối chóp S.ABCD",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Khối chóp S.ABCD",
+            "dinh": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "so_mat": 5
+          },
+          "learner_text": "Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "alpha_plane",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng Mặt phẳng (α): z = 3 từ phương trình z - 3 = 0.",
+          "display_label": "Mặt phẳng (α): z = 3",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng (α): z = 3",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "-3"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng (α): z = 3."
+        },
+        {
+          "step_index": 4,
+          "action": "EXTEND",
+          "object": "T",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "explanation": "Trên mặt thứ 2 của khối, nối (0, 0, 3) với (3, 0, 3).",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "canh": 0,
+            "mat": 1,
+            "a": [
+              "0",
+              "0",
+              "3"
+            ],
+            "b": [
+              "3",
+              "0",
+              "3"
+            ],
+            "khoi": "S.ABCD",
+            "mat_phang": "alpha_plane",
+            "thiet_dien": "T"
+          },
+          "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+        },
+        {
+          "step_index": 5,
+          "action": "EXTEND",
+          "object": "T",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "explanation": "Trên mặt thứ 3 của khối, nối (3, 0, 3) với (3, 3, 3).",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "canh": 1,
+            "mat": 2,
+            "a": [
+              "3",
+              "0",
+              "3"
+            ],
+            "b": [
+              "3",
+              "3",
+              "3"
+            ],
+            "khoi": "S.ABCD",
+            "mat_phang": "alpha_plane",
+            "thiet_dien": "T"
+          },
+          "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+        },
+        {
+          "step_index": 6,
+          "action": "EXTEND",
+          "object": "T",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "explanation": "Trên mặt thứ 4 của khối, nối (3, 3, 3) với (0, 3, 3).",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "canh": 2,
+            "mat": 3,
+            "a": [
+              "3",
+              "3",
+              "3"
+            ],
+            "b": [
+              "0",
+              "3",
+              "3"
+            ],
+            "khoi": "S.ABCD",
+            "mat_phang": "alpha_plane",
+            "thiet_dien": "T"
+          },
+          "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD."
+        },
+        {
+          "step_index": 7,
+          "action": "EXTEND",
+          "object": "T",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "explanation": "Trên mặt thứ 5 của khối, nối (0, 3, 3) với (0, 0, 3).",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "canh": 3,
+            "mat": 4,
+            "a": [
+              "0",
+              "3",
+              "3"
+            ],
+            "b": [
+              "0",
+              "0",
+              "3"
+            ],
+            "khoi": "S.ABCD",
+            "mat_phang": "alpha_plane",
+            "thiet_dien": "T"
+          },
+          "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA."
+        },
+        {
+          "step_index": 8,
+          "action": "STEP",
+          "object": "T",
+          "depends": [
+            "S.ABCD",
+            "alpha_plane"
+          ],
+          "explanation": "Thiết diện Thiết diện (T) là đa giác 4 đỉnh, cắt khối S.ABCD bởi mặt phẳng alpha_plane.",
+          "display_label": "Thiết diện của S.ABCD cắt bởi (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "khoi": "S.ABCD",
+            "mat_phang": "alpha_plane",
+            "so_dinh": 4,
+            "chu_trinh": [
+              [
+                "0",
+                "0",
+                "3"
+              ],
+              [
+                "3",
+                "0",
+                "3"
+              ],
+              [
+                "3",
+                "3",
+                "3"
+              ],
+              [
+                "0",
+                "3",
+                "3"
+              ]
+            ],
+            "mat_sinh_canh": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "learner_text": "Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD."
+        },
+        {
+          "step_index": 9,
+          "action": "MEASURE",
+          "object": "the_volume_sabcd",
+          "depends": [
+            "S.ABCD"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 72.",
+          "display_label": "Thể tích S.ABCD",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "72"
+          },
+          "learner_text": "Thể tích S.ABCD bằng 72."
+        },
+        {
+          "step_index": 10,
+          "action": "MEASURE",
+          "object": "area_T",
+          "depends": [
+            "T"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 9.",
+          "display_label": "Diện tích thiết diện",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "9"
+          },
+          "learner_text": "Diện tích thiết diện bằng 9."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "object": "BD",
+          "depends": [
+            "B",
+            "D"
+          ],
+          "explanation": "Dựng đường thẳng Đường thẳng BD qua hai điểm đã có.",
+          "display_label": "Đường thẳng BD",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Đường thẳng BD",
+            "qua": [
+              "B",
+              "D"
+            ]
+          },
+          "learner_text": "Dựng đường thẳng BD."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "object": "dist_S_BD",
+          "depends": [
+            "S",
+            "BD"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 3√6.",
+          "display_label": "Khoảng cách giữa S và BD",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "3",
+              "radicand": 6
+            }
+          },
+          "learner_text": "Tính khoảng cách giữa S và BD: d(S, BD) = 3√6."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "focus_ids": [],
+            "readout_ids": [],
+            "learner_text": "Đặt các điểm đề cho vào không gian.",
+            "semantic_kind": "EXPLANATION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "focus_ids": [
+              "ABCD_base"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng đáy hình vuông ABCD.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD"
+            ],
+            "focus_ids": [
+              "S.ABCD"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "alpha_plane"
+            ],
+            "readout_ids": [],
+            "learner_text": "Dựng mặt phẳng (α): z = 3.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": []
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "T"
+            ],
+            "readout_ids": [],
+            "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B"
+                ],
+                "closed": false,
+                "fill_visible": false
+              }
+            ]
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "T"
+            ],
+            "readout_ids": [],
+            "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C"
+                ],
+                "closed": false,
+                "fill_visible": false
+              }
+            ]
+          },
+          {
+            "step_index": 6,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "T"
+            ],
+            "readout_ids": [],
+            "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": false,
+                "fill_visible": false
+              }
+            ]
+          },
+          {
+            "step_index": 7,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "T"
+            ],
+            "readout_ids": [],
+            "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": false
+              }
+            ]
+          },
+          {
+            "step_index": 8,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane"
+            ],
+            "focus_ids": [
+              "T"
+            ],
+            "readout_ids": [],
+            "learner_text": "Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          },
+          {
+            "step_index": 9,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane",
+              "the_volume_sabcd"
+            ],
+            "focus_ids": [
+              "the_volume_sabcd"
+            ],
+            "readout_ids": [
+              "the_volume_sabcd"
+            ],
+            "learner_text": "Thể tích S.ABCD bằng 72.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          },
+          {
+            "step_index": 10,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane",
+              "area_T",
+              "the_volume_sabcd"
+            ],
+            "focus_ids": [
+              "area_T"
+            ],
+            "readout_ids": [
+              "area_T",
+              "the_volume_sabcd"
+            ],
+            "learner_text": "Diện tích thiết diện bằng 9.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          },
+          {
+            "step_index": 11,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "BD",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane",
+              "area_T",
+              "the_volume_sabcd"
+            ],
+            "focus_ids": [
+              "BD"
+            ],
+            "readout_ids": [
+              "area_T",
+              "the_volume_sabcd"
+            ],
+            "learner_text": "Dựng đường thẳng BD.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          },
+          {
+            "step_index": 12,
+            "visible_ids": [
+              "A",
+              "ABCD_base",
+              "B",
+              "BD",
+              "C",
+              "D",
+              "S",
+              "S.ABCD",
+              "T",
+              "alpha_plane",
+              "area_T",
+              "dist_S_BD",
+              "the_volume_sabcd"
+            ],
+            "focus_ids": [
+              "dist_S_BD"
+            ],
+            "readout_ids": [
+              "area_T",
+              "dist_S_BD",
+              "the_volume_sabcd"
+            ],
+            "learner_text": "Tính khoảng cách giữa S và BD: d(S, BD) = 3√6.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [
+              {
+                "object_id": "T",
+                "visible_edge_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "ordered_construction_ids": [
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-B",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-B:section:T:point:on:S.ABCD::edge:S-C",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-C:section:T:point:on:S.ABCD::edge:S-D",
+                  "section:T:edge:section:T:point:on:S.ABCD::edge:S-A:section:T:point:on:S.ABCD::edge:S-D"
+                ],
+                "closed": true,
+                "fill_visible": true
+              }
+            ]
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  },
+  "canonical_fixture_path": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p1_chop_thiet_dien_khoang_cach.json",
+  "canonical_fixture_sha256": "651d3e135b94111b4401576acfcabfba1789401be9b84bb1564e971c03a19783",
+  "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/thesis-final-20260908T160224Z/stage_a_first_attempt.json",
+  "source_sha256": "114c9a4914e31c231e3af749a56c3960fdab5bdde230f1fe3ded0e3e6804581b"
+}

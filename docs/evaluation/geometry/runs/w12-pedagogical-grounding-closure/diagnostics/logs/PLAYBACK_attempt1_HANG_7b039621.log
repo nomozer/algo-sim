@@ -1,0 +1,9 @@
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+exit=127
+
+[agent note] killed at ~11:50 local after ~20 min without output: cuboid/desktop had written all 9 captures by 11:29:47; a DevTools probe of the open page answered at once (frame_count 23769, "Bước 5/5", nothing selected) => harness wait on a CDP response that never came (BrowserSession._send has no timeout). Process tree: node 22444 + headless Chrome on port 9238.

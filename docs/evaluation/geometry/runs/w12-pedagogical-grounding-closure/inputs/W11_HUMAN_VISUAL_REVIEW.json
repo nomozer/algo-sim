@@ -1,0 +1,37 @@
+{
+  "schema_version": "human-visual-review-record/1",
+  "reviewed_run": "docs/evaluation/geometry/runs/w11-pedagogical-polish",
+  "reviewed_run_status_before_review": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "verdict": "NEEDS_CHANGES",
+  "verdict_key": "MAINTAINER_HUMAN_REVIEW_VERDICT",
+  "recorded_by": "agent, from the user's task statement W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE",
+  "recording_rule": "Additive record: the w11 run directory is immutable and is not edited. It is linked to this run as SUPERSEDED_FOR_HUMAN_VERDICT in docs/EVIDENCE_INDEX.md. Only the verdict and the five reasons stated in the task are recorded; no reviewer wording is invented.",
+  "findings": [
+    {"id": "W11-H1", "area": "TIMELINE", "finding": "the timeline mixes geometry construction steps with steps that only compute an area, a volume, a distance or report the result"},
+    {"id": "W11-H2", "area": "TIMELINE", "finding": "some steps raise the step index while the Scene3D does not change (a slideshow)"},
+    {"id": "W11-H3", "area": "SOLUTION_LAYER", "finding": "formulas and results are kept, but as a secondary pedagogical layer in sync with the construction"},
+    {"id": "W11-H4", "area": "CAUSAL_COLOR", "finding": "dark orange has two meanings: a numerical given in the causal chain and the object selected on the canvas"},
+    {"id": "W11-H5", "area": "SOURCE_GROUNDING", "finding": "the LLM route can accept a length that is not in the problem and mark it GIVEN — a provenance / fail-closed defect that blocks merge"}
+  ],
+  "agent_determinations": {
+    "W11-H1_H2": {
+      "classification": "PRODUCT_DEFECT_AT_PRESENTATION_LAYER",
+      "basis": "The step bar walked every trace event (INIT, GEOMETRY_CONSTRUCTION, MEASUREMENT, FINAL_RESULT); the backend events and formation snapshots were already typed and correct.",
+      "repair": "98b505ef — geometryTimeline partitions the events into geometry steps (a new step only at a GEOMETRY_CONSTRUCTION event that changes the drawn figure; frame = the step's last event, invariants #31/#32 kept); player, explorer and screen-reader text count geometry steps; autoplay stops at the last geometry step."
+    },
+    "W11-H3": {
+      "classification": "PRESENTATION_REQUIREMENT",
+      "repair": "98b505ef — solution panel under the step bar (user decision): Dữ kiện · Các bước tính (formula, 'Dựa trên') · Kết quả, in sync with the geometry step; the answer appears once, in Kết quả; the readout strip on the canvas is removed; narrow screens collapse givens + steps and keep the result visible."
+    },
+    "W11-H4": {
+      "classification": "PRODUCT_DEFECT_AT_PRESENTATION_LAYER",
+      "repair": "233f8720 — one role table (scene3d-roles.ts) shared by the renderer and the panel CSS: blue = being looked at (selected; newly built while playing — user decision), dark orange = numerical given, light orange = derived intermediate, neutral = structural context and given points, dimmed = outside the chain."
+    },
+    "W11-H5": {
+      "classification": "PRODUCT_DEFECT_AT_GROUNDING_GATE",
+      "repair": "79eb1e59 (GIVEN lengths and P1-only atoms need evidence from the problem text; three stable codes, never sent to repair) + 8aaeae80 (a point pinned to an unstated coordinate claim; NFKC in P1) + d17550c3 (CACHE_VERSION 104 -> 105, served -> rejected)",
+      "residual": "ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION — a model-assumption / layout coordinate can still fix a dimension the problem does not state; it is not marked GIVEN (diagnostics/logs/ASSUMPTION_CHANNEL_PROBE_79eb1e59.log)."
+    }
+  },
+  "live_requests": 0
+}

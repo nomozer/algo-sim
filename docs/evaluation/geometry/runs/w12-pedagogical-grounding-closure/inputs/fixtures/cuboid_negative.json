@@ -1,0 +1,20 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cuboid_non_positive",
+  "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 0, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+  "source": "deterministic_compiler_production_refusal",
+  "product_commit_sha": "8aaeae80254ed8ea95617107bd67da15329d4f45",
+  "product_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "NON_POSITIVE_LENGTH",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "semantic_analyze",
+    "representation_plan": {},
+    "analysis": {},
+    "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+  },
+  "source_reason_code": "NON_POSITIVE_LENGTH"
+}

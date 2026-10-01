@@ -1,0 +1,77 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every browser/oracle attempt of this wave is listed, diagnostic, superseded and failed ones included. Authoritative attempts ran in a detached clean worktree at the commit shown (no local venv: Python from the main-tree backend/.venv; node_modules through a junction to the main tree's frontend/node_modules; the build inside the suite). No attempt was overwritten in place: superseded outputs are kept as logs, hashes and the images that show why.",
+  "times": "UTC",
+  "screenshot_paths_in_other_attempts": "Paths inside diagnostics/hue-gate-known-answer-e115eede/BROWSER_EVIDENCE.json point into a session scratch folder that was not kept; images/ of this run hold the authoritative 7b039621 pixels only.",
+  "attempts": [
+    {
+      "id": "DRY-1",
+      "at": "2026-09-30T03:22Z (suite) · 07:31Z (playback)",
+      "commit": "054bc08d with the w12 harness still uncommitted (committed afterwards as e115eede)",
+      "gate": "compiler-scene-replay.mjs --suite · measure_scene3d_occlusion.py · scene3d-playback-check.mjs --theo-ho --lap-orbit 5",
+      "result": "suite PASS (12/12 positive, 12/12 negative, geometry-step checks all true) · occlusion PASS, 0 failures · playback 12/12 × 19 checks",
+      "classification": "DIAGNOSTIC",
+      "findings": "element crops of the solution panel used viewport instead of document coordinates (pageClip adds scrollX/scrollY); the cuboid/cube oracle hash in generic-tier-a-scenarios.json was stale (node test). Both fixed before e115eede",
+      "log": "diagnostics/logs/DRY_SUITE_054bc08d.log · diagnostics/logs/DRY_PLAYBACK_054bc08d.log (outputs not kept)"
+    },
+    {
+      "id": "BROWSER-1",
+      "at": "2026-09-30T07:39Z (suite) · 07:45Z (playback)",
+      "commit": "e115eede (worktree D:/tmp/w12-measure)",
+      "gate": "suite · occlusion oracle · learner playback · evidence builder",
+      "result": "every gate PASS: suite 12/12 + 12/12 negative · occlusion 0 failures · playback 12/12 × 19 · 64 crops, 0 oracle disagreements, 0 duplicate owners",
+      "classification": "AUTHORITATIVE_SUPERSEDED",
+      "root_cause": "inspecting the sheets before handoff: in the cross-section causal state ('Diện tích thiết diện') the section T is context-tier but its outline kept the polygon type colour #f59e0b (amber), which the causal legend gives to derived intermediates. No gate measured canvas stroke colours (tiers, panel classes and legend swatches only)",
+      "repair": "4014f311 (context strokes use MAU_VAI_TRO.boi_canh; unit test red → green with three branch injections) and 7b039621 (gate CAUSAL_CANVAS_ROLE_HUE on the causal canvas); the whole measurement repeated as BROWSER-2",
+      "log": "diagnostics/logs/BROWSER_SUITE_e115eede.log · OCCLUSION_e115eede.log · PLAYBACK_e115eede.log · EVIDENCE_BUILDER_e115eede.log; diagnostics/attempt-e115eede/ (cross-section causal desktop + mobile, cross-section SHEET, RESULTS_SHA256.txt)"
+    },
+    {
+      "id": "KNOWN-ANSWER-1",
+      "at": "2026-10-01T04:10Z",
+      "commit": "harness 7b039621 (two files overlaid, blob ids checked) on the e115eede checkout and its dist",
+      "gate": "suite with the new CAUSAL_CANVAS_ROLE_HUE gate",
+      "result": "cross_section desktop (326 orange px, tolerance 108) and mobile (1191, tolerance 112) fail with CAUSAL_CANVAS_ROLE_HUE only; the other ten positive runs read 0 orange / 0 blue and pass; negatives pass",
+      "classification": "GATE_VALIDATION_KNOWN_ANSWER_REPRODUCED",
+      "calibration": "an offline census without masking HTML overlays had counted ~700 orange and ~600 blue px on every desktop frame: subpixel-antialiased text of the detail card at DPR 1. The gate masks .geo3d-noi, .geo3d-soi, .geo3d-label",
+      "log": "diagnostics/logs/HUE_GATE_KNOWN_ANSWER_e115eede.log; diagnostics/hue-gate-known-answer-e115eede/ (BROWSER_EVIDENCE.json, KNOWN_ANSWER.json)"
+    },
+    {
+      "id": "BROWSER-2",
+      "at": "2026-10-01T04:20Z (suite)",
+      "commit": "7b039621 (worktree D:/tmp/w12-final; fixtures regenerated there, 19/19 files byte-identical to BROWSER-1's)",
+      "gate": "suite · occlusion oracle",
+      "result": "suite PASS (12/12 positive, 12/12 negative, canvas role hues 0 orange / 0 blue on all twelve causal frames) · occlusion PASS, 0 failures",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FIXTURES_7b039621.log · BROWSER_SUITE_7b039621.log · OCCLUSION_7b039621.log"
+    },
+    {
+      "id": "PLAYBACK-2a",
+      "at": "about 2026-10-01T04:26Z (started after the occlusion oracle; last capture 04:29:47Z) → killed about 04:50Z",
+      "commit": "7b039621",
+      "gate": "scene3d-playback-check.mjs --theo-ho --lap-orbit 5",
+      "result": "six runs PASS, then no output for about 20 minutes: cuboid/desktop had written all nine captures, then stalled in the orbit-lap phase",
+      "classification": "HARNESS_HANG",
+      "root_cause": "a DevTools probe of the same page answered at once (render loop running, 'Bước 5/5', nothing selected): the page was responsive and the runner was waiting for a DevTools response that never came. BrowserSession._send has no deadline and pending requests are never rejected (ISSUE-EVAL-CDP-SEND-NO-TIMEOUT). The process tree (node + headless Chrome on port 9238) was stopped; its partial films were deleted before the rerun",
+      "repair": "none to the harness in this wave (a deadline would turn the hang into a failure, not a pass); rerun at the same commit under a 25-minute watchdog",
+      "log": "diagnostics/logs/PLAYBACK_attempt1_HANG_7b039621.log"
+    },
+    {
+      "id": "PLAYBACK-2b",
+      "at": "2026-10-01T04:52Z",
+      "commit": "7b039621",
+      "gate": "scene3d-playback-check.mjs --theo-ho --lap-orbit 5 (timeout --signal=KILL 1500)",
+      "result": "PASS — 12/12 runs × 19 checks, orbit laps 60/60",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/PLAYBACK_7b039621.log"
+    },
+    {
+      "id": "BUILDER-2",
+      "at": "2026-10-01",
+      "commit": "7b039621, then 6569ed41 (post-processing: the sheet legend named built objects 'neutral' and was cut at the right edge)",
+      "gate": "build_scene3d_visual_evidence.py on the BROWSER-2 / PLAYBACK-2b results",
+      "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners (both builds); images/<family>/SHEET.png and images/overview/ are the 6569ed41 build",
+      "classification": "AUTHORITATIVE_POST_PROCESSING",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_7b039621.log · EVIDENCE_BUILDER_6569ed41.log · RED_SHEET_LEGEND_7b039621.log"
+    }
+  ]
+}

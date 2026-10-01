@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_pyramid_ungrounded_given",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "8aaeae80254ed8ea95617107bd67da15329d4f45",
+  "product_tree_sha": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "grounding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+    "reason_subjects": [
+      "SA"
+    ],
+    "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+  },
+  "source_reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+  "removed_from_text": "SA = 5"
+}
