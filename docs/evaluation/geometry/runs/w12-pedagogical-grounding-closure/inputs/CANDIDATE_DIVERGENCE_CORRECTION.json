@@ -6,9 +6,9 @@
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
-  "current_candidate_source_commit": "8aaeae80254ed8ea95617107bd67da15329d4f45",
-  "current_candidate_frozen_at": "8aaeae80254ed8ea95617107bd67da15329d4f45",
-  "current_candidate_note": "Frozen TWICE in this wave, each time after a product change, in the clean detached worktree D:/tmp/w12-freeze. Product commits: 79eb1e59 (backend grounding), 98b505ef and 233f8720 (frontend/src, outside the measured paths), d17550c3 (CACHE_VERSION), 8aaeae80 (coordinate claims). The first freeze (b9c60010 at d17550c3) is an intermediate candidate: generating the w12 negatives exposed a GIVEN point pinned to an unstated coordinate claim that was still served; no evidence was measured on it.",
+  "current_candidate_source_commit": "4014f311e1df7082eecbf090d7e62c96217e0ec9",
+  "current_candidate_frozen_at": "4014f311e1df7082eecbf090d7e62c96217e0ec9",
+  "current_candidate_note": "Frozen THREE times in this wave, each time after a product change, in the clean detached worktree D:/tmp/w12-freeze. Product commits: 79eb1e59 (backend grounding), 98b505ef and 233f8720 (frontend/src, outside the measured paths), d17550c3 (CACHE_VERSION), 8aaeae80 (coordinate claims), 4014f311 (frontend/src renderer: causal context strokes neutral). The measured-system hash is the same for the second and third freeze (548f5b3b…, 103 files): 4014f311 changes only frontend/src outside domains/semantic, but product_commit_sha is the last commit touching backend/app or frontend/src, so the identity moved and the w12 evidence was measured again on it.",
   "previous_candidate_hash": "df04a613db9c5dd0d97cf3a21e14e01f101ba08ba22373443b95cdd361514650",
   "intermediate_candidates_in_this_wave": [
     {
@@ -17,13 +17,21 @@
       "commit": "b9c60010",
       "superseded_because": "cross-section text without 'S(0;0;6)' still served: a coordinate-string fact read as relational",
       "evidence_measured_on_it": false
+    },
+    {
+      "hash": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+      "frozen_at": "8aaeae80254ed8ea95617107bd67da15329d4f45",
+      "commit": "054bc08d",
+      "superseded_because": "the renderer fix 4014f311 (found by inspecting the e115eede sheets) moved product_commit_sha; the measured-system hash did not change",
+      "evidence_measured_on_it": true,
+      "evidence_note": "BROWSER-1 (e115eede) and BROWSER-2 (7b039621) recorded product_commit_sha 8aaeae80; BROWSER-2's tree already contained 4014f311. Both are kept as superseded attempts (diagnostics/MEASUREMENT_ATTEMPTS.json); the authoritative evidence is measured on the 4014f311 identity."
     }
   ],
   "diverged": true,
   "reason": "w12 answers the w11 human review (NEEDS_CHANGES, reason 5: the LLM route could accept a length absent from the problem and label it GIVEN). backend/app changes: a GIVEN is accepted only with evidence read from the problem text (value, segment label, unit, span); a value only the analyze output claims is refused with a stable code and never sent to repair; unproven analyze values no longer create source invariants but still veto a division point they contradict; the segment length reader and P1 read stated fractions, decimal commas and radicals without truncating. CACHE_VERSION 104 -> 105 because cached `ok` envelopes could carry an invented given (served -> rejected); the provider-facing fingerprint b1714b566e25c912 is unchanged. Follow-up in the same wave (8aaeae80): a point GIVEN pinned to a fact carrying digits the text does not state is refused; P1's string rule compares under NFKC (A₁ = A1).",
   "hieu_luc_len_ket_qua_da_do": {
     "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
-    "candidate_hien_tai": "Candidate 8ffd6d46 is a new product identity and must not be used to rescore the historical run.",
+    "candidate_hien_tai": "Candidate 548f5b3b (product commit 4014f311) is a new product identity and must not be used to rescore the historical run.",
     "live_requests": 0
   },
   "cache_version_hien_tai": 105
