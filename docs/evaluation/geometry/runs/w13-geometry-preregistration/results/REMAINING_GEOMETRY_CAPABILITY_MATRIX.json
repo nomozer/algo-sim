@@ -1,0 +1,930 @@
+{
+  "schema_version": "remaining-geometry-capability/1",
+  "task": "W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
+  "derived_from": {
+    "path": "docs/architecture/geometry_capability_matrix_v2.json",
+    "sha256": "005616618e2ed782da6470b75d75e1f3e08f3473d872b76502cd0342fa8ef67d"
+  },
+  "rule": "Derived view: every cell of the v2 matrix whose status is not SUPPORTED or NOT_APPLICABLE. The v2 matrix is the authority; this file only filters it at W13 time.",
+  "groups": [
+    {
+      "id": "G01",
+      "group": "regular_tetrahedron",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "a tetrahedron is expressible as a pyramid with a 3-cycle base; 'regular' (all edges equal) has no field"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "same as L01; no regularity in the frozen contract"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "'tứ diện đều ABCD cạnh 5' grounds 5 only as a standalone value for one representative edge (probe row regular_edge); equality of the other edges is not grounded"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "note": "pyramid topology with a triangular base is representable; no regular constraint"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no equal-length / regular fact kind"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "Points must lie in Q^3. A rational placement exists only for special edges (cube-inscribed tetrahedra have edge^2 = 2q^2); for other rational edges no exact placement exists (number-theory claim to be checked by a deterministic feasibility test, not assumed)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "note": "construct_solid accepts any coordinates; centre/centroid constructible by composition (midpoint, divide_segment); no regular-solid construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "LLM route: points then one atomic construct_solid step; no pyramid-like plan (height, lateral edges, closure)"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "volume/distance/angle measurable; regularity is not a checkable obligation"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "canonical-edge classifier is generic for one solid; view thresholds calibrated on a cuboid only (NA-10)"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "no stable code for 'no exact placement'; approximate decimals are rationalised by hf() (NA-42) — impact NOT_MEASURED"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "no browser evidence"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G02",
+      "group": "regular_triangular_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "pyramid with a 3-cycle base is expressible; base_shape enum has no triangle kinds and no 'regular'"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "no regularity / apex-over-centroid in the contract"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "'chóp tam giác đều … cạnh đáy bằng 5' grounds 5 only as a standalone value (probe row regular_base)"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "note": "PyramidTopologySpec holds apex + base cycle; regular constraint absent"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no centre-of-polygon / regular fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "Points must lie in Q^3. An equilateral triangle in z = 0 needs √3, so the compiler-style axis-aligned layout has no exact placement; tilted rational placements exist only for special side lengths"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "note": "centroid by composition (divide_segment toward a midpoint); apex by declare/translate; no regular construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "no pyramid-like plan; W12-H1 shows the right-triangle pyramid family already lacks height/lateral/closure steps"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "measures available; regularity not checkable"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "one-solid classifier; cuboid-calibrated view thresholds"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "no stable code for an infeasible exact placement"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "no browser evidence"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G03",
+      "group": "regular_quadrilateral_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "pyramid + base_shape square expressible; 'apex above the centre' has no field (perpendicular_line_plane needs a named foot)"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "same; foot O must be introduced as a derived point"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "lengths ground; 'đều' does not"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "note": "PyramidTopologySpec covers it; compiler eligibility assumes the foot at a base vertex"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "note": "perpendicular_line_plane, apex_of, base_of exist; no centre-of-polygon fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "base side + height rational -> exact rational placement; base side + lateral edge gives h = sqrt(l^2 - a^2/2), usually irrational -> no axis-aligned exact placement"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "rectangular_base_pyramid_volume places the foot at a base vertex (SA ⊥ base); no regular family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "rectangular-pyramid plan (points, base, height, lateral edges, solid) exists for foot-at-vertex only; foot-at-centre needs a CONSTRUCT_CENTER step"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "measures available; regularity not checkable"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "one-solid classifier"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "no stable code for an irrational height"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "not in the six-family suite"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G04",
+      "group": "oblique_prism",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "lateral_structure 'oblique' exists in the analyze schema"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "PrismTopologySpec holds cycles and correspondence; lateral direction / inclination not represented"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "lengths/coordinates ground; an inclination angle ('cạnh bên tạo với đáy góc 60°') is not grounded as a constraint"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "note": "prism node exists; no lateral-direction / angle fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "exact when the top face is a rational translate; angle-defined obliquity usually gives irrational heights (Q^3)"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "compiler eligibility accepts right prisms only"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "LLM route shows translated vertices then an atomic solid; no prism-like plan (top face, lateral edges, closure)"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "volume, plane-plane distance exact; line-plane angle only by composition, not measured"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "one-solid classifier"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "compiler refuses (NOT_ELIGIBLE); LLM route has no code for an irrational inclination"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical demo n2 only (older candidate); not in the current suite"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G05",
+      "group": "general_polygonal_prism_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L03": {
+          "status": "PARTIAL",
+          "note": "lengths and coordinates ground; a regular n-gon base ('lục giác đều') does not"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "note": "pyramid/prism nodes; base polygons beyond triangle carried as cycles only"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "exact for rational placements; regular n-gons other than squares need irrational coordinates"
+        },
+        "L08": {
+          "status": "PARTIAL",
+          "note": "compiler covers right-triangle and rectangle/square bases only"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "per-family statement sequences (compiler); atomic solid step (LLM route)"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "measured on the current candidate for triangular/rectangular pyramids and prisms/boxes only"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G06",
+      "group": "concave_polyhedron",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "no convexity field; the compiler topology spec does not validate concave bases"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "same"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "note": "closed single shell with planar simple faces is checked; face-face self-intersection (global) is not"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no compiler family"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "atomic construct_solid step"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "classifier is ray/triangle (not convex-only) but no current evidence for a concave solid"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p2 UI rendering (2026-09-09, older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G07",
+      "group": "cylinder",
+      "taxonomy": "CURVED_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "facts and obligations (radius, height, volume, lateral_area); no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "facts + obligations + source invariants; no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "radius/height slots ground scalars; anchoring the axis needs named points (V3 construction-grounding bottleneck)"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "FactGraph has no curved nodes"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "note": "atomic: one statement -> one frame; base circle, axis, generator and surface are never separate steps (OUTSIDE_CURRENT_MODEL)"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "outside the CPU edge classifier and the oracle evidence; curved surfaces do not occlude polyhedral edges"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p4 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G08",
+      "group": "cone",
+      "taxonomy": "CURVED_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "facts and obligations; no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "same anchoring limits as the cylinder"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no curved nodes"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "note": "atomic formation"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "outside the CPU classifier"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p5 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G09",
+      "group": "truncated_cone_cylinder",
+      "taxonomy": "CURVED_SOLID",
+      "group_status": "OUT_OF_SCOPE_PENDING_DECISION",
+      "remaining": {
+        "L01": {
+          "status": "MISSING",
+          "note": "no frustum notion"
+        },
+        "L02": {
+          "status": "MISSING",
+          "note": "no frustum notion"
+        },
+        "L03": {
+          "status": "MISSING",
+          "note": "nothing to ground"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no node"
+        },
+        "L06": {
+          "status": "MISSING",
+          "note": "KHOI_CONG has ball/cylinder/cone only; the frustum volume is in the Radical domain, but no kind exists"
+        },
+        "L07": {
+          "status": "MISSING",
+          "note": "curved_kind enum has no frustum"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L10": {
+          "status": "MISSING",
+          "note": "no measure"
+        },
+        "L11": {
+          "status": "MISSING",
+          "note": "no render kind"
+        },
+        "L12": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L13": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L14": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "refused by absence: no code names it"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G10",
+      "group": "sphere",
+      "taxonomy": "CURVED_SOLID",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "facts and obligations; no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "radius slot grounds a scalar; centre anchoring needs a named point"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no curved nodes"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "note": "atomic: centre, radius and surface are never separate steps"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "outside the CPU classifier; a sphere does not occlude polyhedral edges"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p3 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G11",
+      "group": "curved_cross_section",
+      "taxonomy": "DERIVED_SECTION",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "obligations area/radius; plane equations arrive as facts"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "plane_equation and point_coordinate source invariants"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no curved nodes"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "circle (plane ⊥ axis), ellipse (oblique, fully between caps / apex and base); parabola and hyperbola refused; semi-axes stored squared in Q"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "one step produces the whole curve; no growth sub-steps"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "curves are not in the CPU classifier or the oracle evidence"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p3/p6/p7 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G12",
+      "group": "plane_sphere_intersection",
+      "taxonomy": "DERIVED_SECTION",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "obligations area/radius"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "plane source invariants"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no curved nodes"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "one step for the circle"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "not in the CPU classifier"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p3 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G13",
+      "group": "multiple_solids",
+      "taxonomy": "COMPOSITE_SCENE",
+      "remaining": {
+        "L01": {
+          "status": "MISSING",
+          "note": "one solid_topology"
+        },
+        "L02": {
+          "status": "MISSING",
+          "note": "one solid_topology field (SINGLE_SOLID_ONLY)"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "grounding is per object, so several objects ground independently"
+        },
+        "L04": {
+          "status": "MISSING",
+          "note": "no multi-solid topology / scene graph"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no inter-solid facts"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "each solid exact; no solid-solid predicates (containment, intersection)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "note": "a program may declare several solids; no solid-solid operation"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "compiler emits one solid"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "generic per object; no ordering policy across solids"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "per-solid measures; union/difference volumes are composite_subtractive (out of scope)"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "note": "objects render together (circumsphere fixture); nested transparency and order untested"
+        },
+        "L12": {
+          "status": "MISSING",
+          "note": "classifier ignores other solids' faces (one-solid limit, NA-48)"
+        },
+        "L13": {
+          "status": "PARTIAL",
+          "note": "explode groups exist; not measured with several solids"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "boolean composites refused by absence (no named code)"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G14",
+      "group": "inscribed_circumscribed",
+      "taxonomy": "COMPOSITE_SCENE",
+      "remaining": {
+        "L01": {
+          "status": "MISSING",
+          "note": "no inscribed/circumscribed relation kinds"
+        },
+        "L02": {
+          "status": "MISSING",
+          "note": "same"
+        },
+        "L03": {
+          "status": "MISSING",
+          "note": "'mặt cầu ngoại tiếp' is not grounded"
+        },
+        "L04": {
+          "status": "MISSING",
+          "note": "no composite topology"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no inscribed_in / circumscribed_about facts"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "circumcentre of rational vertices is rational (bisector planes); insphere centres usually need normalised normals (irrational)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "note": "circumcentre by composition (midpoint, plane_perpendicular_to_line, intersect_plane_plane, intersect_line_plane) then construct_curved_solid(ball); never measured"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "composition steps would be visible; not measured"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "sphere measures available; the inscribed/circumscribed relation itself is not checkable"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "note": "circumsphere fixture renders solid + curved_solid; nesting untested"
+        },
+        "L12": {
+          "status": "MISSING",
+          "note": "curved surfaces do not occlude; one-solid classifier"
+        },
+        "L13": {
+          "status": "PARTIAL",
+          "note": "not measured"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "no named code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G15",
+      "group": "tangency",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "remaining": {
+        "L01": {
+          "status": "MISSING",
+          "note": "no tangency relation"
+        },
+        "L02": {
+          "status": "MISSING",
+          "note": "no tangency relation"
+        },
+        "L03": {
+          "status": "MISSING",
+          "note": "nothing grounds it"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no tangent fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "note": "a tangent plane is detected as a degenerate section and refused; line-curved intersections give irrational points (unsupported)"
+        },
+        "L07": {
+          "status": "MISSING",
+          "note": "no tangency construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L10": {
+          "status": "MISSING",
+          "note": "no tangency checker"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "note": "a plane and a sphere can be drawn; no tangency marker"
+        },
+        "L12": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L13": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L14": {
+          "status": "MISSING",
+          "note": "blocked upstream"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "degenerate tangent section refused with a code; tangency as a requested relation has no code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G16",
+      "group": "distance_angle_constructions",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "remaining": {
+        "L03": {
+          "status": "PARTIAL",
+          "note": "lengths ground; angles in degrees give irrational coordinates and are not grounded as constraints"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "note": "perpendicular relations and requested_operation exist; compiler measures distance only as a height"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "compiler families compute volumes"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "constructed feet/segments are steps; measurements are solution-layer, not geometry steps (#35)"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "note": "segments and right-angle markers exist; no angle arc marker"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "segments on edges delegate to the edge owner; free auxiliary segments are not in the oracle evidence"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "note": "historical p1 distance 3√6 (older candidate); the current suite measures volumes and one section area"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G17",
+      "group": "dihedral_angle",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "remaining": {
+        "L01": {
+          "status": "PARTIAL",
+          "note": "scope clue 'góc nhị diện' maps to the angle obligation"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "note": "angle obligation; which angle is meant is not represented"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "note": "as for angles"
+        },
+        "L05": {
+          "status": "MISSING",
+          "note": "no dihedral fact"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "note": "no dihedral primitive; LLM synthesis 0/4 on the dihedral probe"
+        },
+        "L08": {
+          "status": "MISSING",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "note": "the perpendicular construction steps would show; not measured"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "note": "angle checker is generic; the dihedral identity is not checkable"
+        },
+        "L11": {
+          "status": "MISSING",
+          "note": "no dihedral marker"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "note": "auxiliary segments not in the oracle evidence"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "note": "no named code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "remaining_cells": 198,
+    "by_status": {
+      "PARTIAL": 111,
+      "MISSING": 87
+    }
+  }
+}

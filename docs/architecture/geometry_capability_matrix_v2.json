@@ -1,0 +1,1918 @@
+{
+  "schema_version": "geometry-capability-matrix/2",
+  "title": "Geometry capability matrix v2 — layered architecture audit",
+  "task": "W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
+  "as_of_head": "bf5a7907157be6c1e30801e485faa0d9fbdfd290",
+  "what_this_is": "The authority for WHICH ARCHITECTURE LAYER handles each target geometry group. It is a snapshot audit read from code at as_of_head.",
+  "what_this_is_not": [
+    "Not the product capability authority: backend/app/simulation/product_capability.py decides what the product may show as supported.",
+    "Not the closed family scope: docs/evaluation/geometry/missing-family-roadmap-refresh/CAPABILITY_MATRIX.json records the 12 families and their measured statuses.",
+    "Not a replacement of the v1 snapshot docs/architecture/architecture_capability_matrix.json (2026-09-25), which stays unchanged; v2 refines it by layer and corrects two v1 readings (see corrections_to_v1)."
+  ],
+  "routes": {
+    "LLM_ROUTE": "default (DEFAULT_MODE = LLM_ONLY): analyze -> Semantic Program IR -> deterministic gates",
+    "COMPILER_ROUTE": "RequestContract -> FactGraph -> compiler; present but not wired into the default route"
+  },
+  "layer_count_note": "The W13 brief says '16 layers' and names 17; all 17 named layers are kept.",
+  "layers": [
+    {
+      "id": "L01",
+      "name": "input_analyze_schema",
+      "authority": "backend/app/simulation/semantic_program/analyze_contract.py (input_facts, obligations, geometric_relations, solid_topology)"
+    },
+    {
+      "id": "L02",
+      "name": "request_contract",
+      "authority": "backend/app/simulation/semantic_program/request_contract.py (frozen facts, obligations, source_invariants, one solid_topology)"
+    },
+    {
+      "id": "L03",
+      "name": "source_grounding",
+      "authority": "grounding_gate.py + source invariant emitters (segment_relation.py, point_coordinate.py, plane_equation.py)"
+    },
+    {
+      "id": "L04",
+      "name": "topology",
+      "authority": "PrismTopologySpec / PyramidTopologySpec (compiler route); construct_solid face table checked by the kernel (LLM route)"
+    },
+    {
+      "id": "L05",
+      "name": "fact_graph",
+      "authority": "backend/app/simulation/geometry_compiler/fact_graph.py (LOAI_NUT, LOAI_FACT; compiler route only)"
+    },
+    {
+      "id": "L06",
+      "name": "exact_algebraic_kernel",
+      "authority": "backend/app/simulation/geometry/ (exact, predicates, kernel, measure, radical, section, curved); points in Q^3, measures in Radical"
+    },
+    {
+      "id": "L07",
+      "name": "primitive_ir",
+      "authority": "semantic_program/contract.py + ir_static_check._KIEU_DUNG/_CHU_KY/_TOAN_HANG_LENH + measure_contract.BANG_PHEP_DO"
+    },
+    {
+      "id": "L08",
+      "name": "compiler_rule",
+      "authority": "backend/app/simulation/geometry_compiler/compiler.py (SUPPORTED_FAMILIES; not wired into the default route)"
+    },
+    {
+      "id": "L09",
+      "name": "formation_semantics",
+      "authority": "trace events -> scene3d._build_formation steps (one construction statement = one step; sections grow by EXTEND)"
+    },
+    {
+      "id": "L10",
+      "name": "measurement_provenance",
+      "authority": "BANG_PHEP_DO measures + GEOMETRY_CHECKERS + provenance (GIVEN / DERIVED / LAYOUT_DERIVED / model_assumption, producer/depends)"
+    },
+    {
+      "id": "L11",
+      "name": "renderer",
+      "authority": "frontend/src/simulations/domains/geometry/scene3d-view.tsx + scene3d-model.ts render kinds"
+    },
+    {
+      "id": "L12",
+      "name": "occlusion",
+      "authority": "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts (+ OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT)"
+    },
+    {
+      "id": "L13",
+      "name": "interaction",
+      "authority": "Scene3DExplorer (select, scrub, isolate, explode); interaction = select and scrub, never drag (#31)"
+    },
+    {
+      "id": "L14",
+      "name": "causal_closure",
+      "authority": "producer/depends closure + causal role colouring (scene3d-roles.ts)"
+    },
+    {
+      "id": "L15",
+      "name": "fail_closed",
+      "authority": "stable refusal codes for inputs outside the closure (kernel, grounding, static check, scope gate)"
+    },
+    {
+      "id": "L16",
+      "name": "browser_evidence",
+      "authority": "authoritative browser artifacts on the CURRENT candidate (w12 suite); older artifacts are historical"
+    },
+    {
+      "id": "L17",
+      "name": "educational_evaluation",
+      "authority": "pedagogical evaluation with learners (MIGRATION_CHECKLIST GATE-20); human visual review is not this"
+    }
+  ],
+  "status_rules": [
+    "SUPPORTED: the layer handles the group generally (not one fixture) with code + test evidence; L16/L17 need a measured artifact on the CURRENT candidate.",
+    "PARTIAL: a sub-case only, one route only, or declared limits.",
+    "MISSING: no representation at this layer (or blocked upstream).",
+    "NOT_APPLICABLE: the layer has no role for this group.",
+    "OUT_OF_SCOPE_PENDING_DECISION: a user/thesis scope decision is needed before any work.",
+    "A renderer drawing a fixture never makes a group SUPPORTED: L11 SUPPORTED means the render path is generic, and L16 states separately whether it was ever measured.",
+    "Historical browser artifacts on an older candidate count as PARTIAL (evidence = HISTORICAL), never SUPPORTED."
+  ],
+  "evidence_levels": [
+    "CODE_PROVED",
+    "TEST_PROVED",
+    "MEASURED",
+    "LIVE_MEASURED",
+    "HISTORICAL",
+    "HYPOTHESIS",
+    "NOT_MEASURED"
+  ],
+  "taxonomy": {
+    "POLYHEDRAL_SOLID": "Closed polyhedral surface; planar polygonal faces; exact in Q^3; owns canonical edges and occluding SOLID_FACE surfaces.",
+    "CURVED_SOLID": "Solid bounded by quadric surfaces given by parameters (KHOI_CONG: anchor, axis, radius); never a Polyhedron; tessellation exists only in the renderer.",
+    "AUXILIARY_GEOMETRY": "Points, lines, segments, planes, vectors, feet and markers built to explain or measure (heights, perpendiculars, distance witnesses, angle markers, tangency witnesses); not part of a solid's boundary and never occluding.",
+    "DERIVED_SECTION": "Object produced by intersecting a cutting object with a solid: polygonal sections (polyhedra), circles and ellipses (curved); always derived, never given; a circle is never a polygon.",
+    "COMPOSITE_SCENE": "Scene with two or more solids or a solid-solid relation (inscribed, circumscribed, coexisting); boolean union/difference stays OUT_OF_SCOPE."
+  },
+  "groups": [
+    {
+      "id": "G01",
+      "group": "regular_tetrahedron",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "a tetrahedron is expressible as a pyramid with a 3-cycle base; 'regular' (all edges equal) has no field"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "same as L01; no regularity in the frozen contract"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "MEASURED",
+          "note": "'tứ diện đều ABCD cạnh 5' grounds 5 only as a standalone value for one representative edge (probe row regular_edge); equality of the other edges is not grounded"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "pyramid topology with a triangular base is representable; no regular constraint"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no equal-length / regular fact kind"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "HYPOTHESIS",
+          "note": "Points must lie in Q^3. A rational placement exists only for special edges (cube-inscribed tetrahedra have edge^2 = 2q^2); for other rational edges no exact placement exists (number-theory claim to be checked by a deterministic feasibility test, not assumed)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "construct_solid accepts any coordinates; centre/centroid constructible by composition (midpoint, divide_segment); no regular-solid construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "LLM route: points then one atomic construct_solid step; no pyramid-like plan (height, lateral edges, closure)"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "volume/distance/angle measurable; regularity is not a checkable obligation"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic polyhedron rendering (mesh, canonical edges, labels); never rendered for this group in evidence"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "canonical-edge classifier is generic for one solid; view thresholds calibrated on a cuboid only (NA-10)"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "HYPOTHESIS",
+          "note": "no stable code for 'no exact placement'; approximate decimals are rationalised by hf() (NA-42) — impact NOT_MEASURED"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no browser evidence"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G02",
+      "group": "regular_triangular_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "pyramid with a 3-cycle base is expressible; base_shape enum has no triangle kinds and no 'regular'"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no regularity / apex-over-centroid in the contract"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "MEASURED",
+          "note": "'chóp tam giác đều … cạnh đáy bằng 5' grounds 5 only as a standalone value (probe row regular_base)"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "PyramidTopologySpec holds apex + base cycle; regular constraint absent"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no centre-of-polygon / regular fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "HYPOTHESIS",
+          "note": "Points must lie in Q^3. An equilateral triangle in z = 0 needs √3, so the compiler-style axis-aligned layout has no exact placement; tilted rational placements exist only for special side lengths"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "centroid by composition (divide_segment toward a midpoint); apex by declare/translate; no regular construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no pyramid-like plan; W12-H1 shows the right-triangle pyramid family already lacks height/lateral/closure steps"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "measures available; regularity not checkable"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic polyhedron rendering; not exercised for this group"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "one-solid classifier; cuboid-calibrated view thresholds"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "HYPOTHESIS",
+          "note": "no stable code for an infeasible exact placement"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no browser evidence"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G03",
+      "group": "regular_quadrilateral_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "pyramid + base_shape square expressible; 'apex above the centre' has no field (perpendicular_line_plane needs a named foot)"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "same; foot O must be introduced as a derived point"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "lengths ground; 'đều' does not"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "PyramidTopologySpec covers it; compiler eligibility assumes the foot at a base vertex"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "perpendicular_line_plane, apex_of, base_of exist; no centre-of-polygon fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "base side + height rational -> exact rational placement; base side + lateral edge gives h = sqrt(l^2 - a^2/2), usually irrational -> no axis-aligned exact placement"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "expressible on the LLM route: centre = midpoint of a diagonal, apex by declare_point/translate, construct_solid"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "rectangular_base_pyramid_volume places the foot at a base vertex (SA ⊥ base); no regular family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "rectangular-pyramid plan (points, base, height, lateral edges, solid) exists for foot-at-vertex only; foot-at-centre needs a CONSTRUCT_CENTER step"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "measures available; regularity not checkable"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic polyhedron rendering"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "one-solid classifier"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no stable code for an irrational height"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "not in the six-family suite"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G04",
+      "group": "oblique_prism",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "lateral_structure 'oblique' exists in the analyze schema"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "PrismTopologySpec holds cycles and correspondence; lateral direction / inclination not represented"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "lengths/coordinates ground; an inclination angle ('cạnh bên tạo với đáy góc 60°') is not grounded as a constraint"
+        },
+        "L04": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic prism topology (closed, genus 0, cyclic D_n correspondence) does not assume a right prism"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "prism node exists; no lateral-direction / angle fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "exact when the top face is a rational translate; angle-defined obliquity usually gives irrational heights (Q^3)"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "translate(point, vector) builds the top face; demo n2 served an oblique prism defined by two vectors"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "compiler eligibility accepts right prisms only"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "LLM route shows translated vertices then an atomic solid; no prism-like plan (top face, lateral edges, closure)"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "volume, plane-plane distance exact; line-plane angle only by composition, not measured"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic polyhedron rendering"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "one-solid classifier"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "compiler refuses (NOT_ELIGIBLE); LLM route has no code for an irrational inclination"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical demo n2 only (older candidate); not in the current suite"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G05",
+      "group": "general_polygonal_prism_pyramid",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "base_cycle of any length >= 3"
+        },
+        "L02": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "topology specs accept n >= 3"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "lengths and coordinates ground; a regular n-gon base ('lục giác đều') does not"
+        },
+        "L04": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic topology contract: closed, connected, orientable, genus 0; Euler V - E + F = 2 necessary"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "pyramid/prism nodes; base polygons beyond triangle carried as cycles only"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "exact for rational placements; regular n-gons other than squares need irrational coordinates"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "construct_polygon / construct_solid for any n"
+        },
+        "L08": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "compiler covers right-triangle and rectangle/square bases only"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "per-family statement sequences (compiler); atomic solid step (LLM route)"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "volume (signed boundary), area, distance, angle shared with checkers"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "ear-clipping triangulation; generic"
+        },
+        "L12": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic ray/triangle classifier for a single solid"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "five polyhedron codes + compiler NOT_ELIGIBLE codes"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "MEASURED",
+          "note": "measured on the current candidate for triangular/rectangular pyramids and prisms/boxes only"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G06",
+      "group": "concave_polyhedron",
+      "taxonomy": "POLYHEDRAL_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no convexity field; the compiler topology spec does not validate concave bases"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "same"
+        },
+        "L03": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "explicit point coordinates checked by the point_coordinate source invariant (built for this case)"
+        },
+        "L04": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "closed single shell with planar simple faces is checked; face-face self-intersection (global) is not"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler family"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "signed boundary volume, BFS reorientation, five fail-closed codes; scope: closed single shell, planar simple faces"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "construct_solid"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler family"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "atomic construct_solid step"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "volume checker shares the kernel authority"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "ear clipping keeps the notch empty (measured on the renderer buffer)"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "classifier is ray/triangle (not convex-only) but no current evidence for a concave solid"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "POLYHEDRON_BOUNDARY_OPEN / NON_ORIENTABLE / DEGENERATE / FACE_NOT_PLANAR / FACE_NOT_SIMPLE"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p2 UI rendering (2026-09-09, older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Product status foundation_only (product_capability.py: nonconvex_polyhedron)."
+    },
+    {
+      "id": "G07",
+      "group": "cylinder",
+      "taxonomy": "CURVED_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "facts and obligations (radius, height, volume, lateral_area); no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "facts + obligations + source invariants; no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "radius/height slots ground scalars; anchoring the axis needs named points (V3 construction-grounding bottleneck)"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "described by KHOI_CONG parameters (anchor, axis, radius), not by face topology"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "FactGraph has no curved nodes"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "curved.py exact volume, area, lateral area, sections; anchors stay in Q^3, radius may be irrational"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "construct_curved_solid(cylinder): anchor + apex_or_top|height + rim_point|radius"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "atomic: one statement -> one frame; base circle, axis, generator and surface are never separate steps (OUTSIDE_CURRENT_MODEL)"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "volume, area, lateral_area, radius checkers"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "CylinderGeometry + camera-dependent outline; tessellation is render-only"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "outside the CPU edge classifier and the oracle evidence; curved surfaces do not occlude polyhedral edges"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "curved closure codes (CROSSES_CAP, OUTSIDE_V1_CLOSURE, PLANE_DOES_NOT_CUT …)"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p4 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Product status foundation_only (product_capability.py: cylinder)."
+    },
+    {
+      "id": "G08",
+      "group": "cone",
+      "taxonomy": "CURVED_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "facts and obligations; no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "same anchoring limits as the cylinder"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "KHOI_CONG parameters"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no curved nodes"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "exact; scalar mode with an irrational height is refused by _ti_le_doc_truc"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "construct_curved_solid(cone)"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "atomic formation"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "volume, area, lateral_area, radius"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "ConeGeometry + outline"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "outside the CPU classifier"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "curved closure codes"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p5 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Product status foundation_only (product_capability.py: cone)."
+    },
+    {
+      "id": "G09",
+      "group": "truncated_cone_cylinder",
+      "taxonomy": "CURVED_SOLID",
+      "cells": {
+        "L01": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no frustum notion"
+        },
+        "L02": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no frustum notion"
+        },
+        "L03": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "nothing to ground"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "would be KHOI_CONG parameters"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no node"
+        },
+        "L06": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "KHOI_CONG has ball/cylinder/cone only; the frustum volume is in the Radical domain, but no kind exists"
+        },
+        "L07": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "curved_kind enum has no frustum"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L10": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no measure"
+        },
+        "L11": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no render kind"
+        },
+        "L12": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L13": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L14": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "refused by absence: no code names it"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "group_status": "OUT_OF_SCOPE_PENDING_DECISION",
+      "notes": "Not in the closed 12-family scope (CAPABILITY_MATRIX.json). Modelling a frustum as a cone minus a cone is the composite shortcut the scope rejects; a frustum as its own KHOI_CONG kind would not be composite. Whether it enters scope is a user decision."
+    },
+    {
+      "id": "G10",
+      "group": "sphere",
+      "taxonomy": "CURVED_SOLID",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "facts and obligations; no curved topology spec"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no curved topology"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "radius slot grounds a scalar; centre anchoring needs a named point"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "KHOI_CONG parameters"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no curved nodes"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "exact volume, area; any plane section is a circle"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "construct_curved_solid(ball): anchor + radius|rim_point"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "atomic: centre, radius and surface are never separate steps"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "volume, area ≡ lateral_area, radius"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "SphereGeometry + outline"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "outside the CPU classifier; a sphere does not occlude polyhedral edges"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "tangent / non-cutting plane refused with codes"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p3 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Product status foundation_only (product_capability.py: ball)."
+    },
+    {
+      "id": "G11",
+      "group": "curved_cross_section",
+      "taxonomy": "DERIVED_SECTION",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "obligations area/radius; plane equations arrive as facts"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "plane_equation and point_coordinate source invariants"
+        },
+        "L03": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "plane equation read from the text and compared by exact ratio; limits: linear Cartesian, plane phrase within 48 chars"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "derived object"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no curved nodes"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "circle (plane ⊥ axis), ellipse (oblique, fully between caps / apex and base); parabola and hyperbola refused; semi-axes stored squared in Q"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "intersect_plane_curved -> circle3; intersect_plane_curved_ellipse -> ellipse3"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "one step produces the whole curve; no growth sub-steps"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "area, radius (checkers derive subject types from BANG_PHEP_DO)"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "circle and ellipse render kinds (BufferGeometry from two exact directions)"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "curves are not in the CPU classifier or the oracle evidence"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "PARABOLIC / HYPERBOLIC / CROSSES_CAP / OUTSIDE_V1_CLOSURE / PLANE_DOES_NOT_CUT"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p3/p6/p7 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Product status foundation_only (product_capability.py: curved_oblique_section). The production synthesis prompt still calls oblique sections inexpressible (NA-52)."
+    },
+    {
+      "id": "G12",
+      "group": "plane_sphere_intersection",
+      "taxonomy": "DERIVED_SECTION",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "obligations area/radius"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "plane source invariants"
+        },
+        "L03": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "plane by named points or by equation, both checked"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "derived object"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no curved nodes"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "every cutting plane gives a circle; tangency refused"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "intersect_plane_curved(ball, plane) -> circle3"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no compiler rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "one step for the circle"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "area, radius"
+        },
+        "L11": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "circle render kind"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "not in the CPU classifier"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "non-cutting and tangent planes refused with codes"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p3 UI rendering (older candidate)"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G13",
+      "group": "multiple_solids",
+      "taxonomy": "COMPOSITE_SCENE",
+      "cells": {
+        "L01": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "one solid_topology"
+        },
+        "L02": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "one solid_topology field (SINGLE_SOLID_ONLY)"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "grounding is per object, so several objects ground independently"
+        },
+        "L04": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no multi-solid topology / scene graph"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no inter-solid facts"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "each solid exact; no solid-solid predicates (containment, intersection)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "a program may declare several solids; no solid-solid operation"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "compiler emits one solid"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "generic per object; no ordering policy across solids"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "per-solid measures; union/difference volumes are composite_subtractive (out of scope)"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "objects render together (circumsphere fixture); nested transparency and order untested"
+        },
+        "L12": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "classifier ignores other solids' faces (one-solid limit, NA-48)"
+        },
+        "L13": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "explode groups exist; not measured with several solids"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "boolean composites refused by absence (no named code)"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      },
+      "notes": "Boolean union/difference stays OUT_OF_SCOPE for architecture reasons (CAPABILITY_MATRIX.json: composite_boolean). Coexisting solids without boolean results are the open question."
+    },
+    {
+      "id": "G14",
+      "group": "inscribed_circumscribed",
+      "taxonomy": "COMPOSITE_SCENE",
+      "cells": {
+        "L01": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no inscribed/circumscribed relation kinds"
+        },
+        "L02": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "same"
+        },
+        "L03": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "'mặt cầu ngoại tiếp' is not grounded"
+        },
+        "L04": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no composite topology"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no inscribed_in / circumscribed_about facts"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "circumcentre of rational vertices is rational (bisector planes); insphere centres usually need normalised normals (irrational)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "circumcentre by composition (midpoint, plane_perpendicular_to_line, intersect_plane_plane, intersect_line_plane) then construct_curved_solid(ball); never measured"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "composition steps would be visible; not measured"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "sphere measures available; the inscribed/circumscribed relation itself is not checkable"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "circumsphere fixture renders solid + curved_solid; nesting untested"
+        },
+        "L12": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "curved surfaces do not occlude; one-solid classifier"
+        },
+        "L13": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "not measured"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no named code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G15",
+      "group": "tangency",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "cells": {
+        "L01": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no tangency relation"
+        },
+        "L02": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no tangency relation"
+        },
+        "L03": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "nothing grounds it"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "relation, not topology"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no tangent fact"
+        },
+        "L06": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "a tangent plane is detected as a degenerate section and refused; line-curved intersections give irrational points (unsupported)"
+        },
+        "L07": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no tangency construction"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L10": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no tangency checker"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "a plane and a sphere can be drawn; no tangency marker"
+        },
+        "L12": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L13": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L14": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "blocked upstream"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "degenerate tangent section refused with a code; tangency as a requested relation has no code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G16",
+      "group": "distance_angle_constructions",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "cells": {
+        "L01": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "distance / angle obligations with scope clues"
+        },
+        "L02": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "obligations frozen with witnesses"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "lengths ground; angles in degrees give irrational coordinates and are not grounded as constraints"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "auxiliary objects"
+        },
+        "L05": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "perpendicular relations and requested_operation exist; compiler measures distance only as a height"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "five distance cases exact; angle_cos / angle_cos_sq exact (Radical)"
+        },
+        "L07": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "project_onto, plane_perpendicular_to_line, vector_from_points + measures distance/angle_cos/angle_cos_sq"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "compiler families compute volumes"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "constructed feet/segments are steps; measurements are solution-layer, not geometry steps (#35)"
+        },
+        "L10": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "distance and angle checkers"
+        },
+        "L11": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "segments and right-angle markers exist; no angle arc marker"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "segments on edges delegate to the edge owner; free auxiliary segments are not in the oracle evidence"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "degenerate configurations refused with codes (parallel, coincident, zero vector)"
+        },
+        "L16": {
+          "status": "PARTIAL",
+          "evidence": "HISTORICAL",
+          "note": "historical p1 distance 3√6 (older candidate); the current suite measures volumes and one section area"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    },
+    {
+      "id": "G17",
+      "group": "dihedral_angle",
+      "taxonomy": "AUXILIARY_GEOMETRY",
+      "cells": {
+        "L01": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "scope clue 'góc nhị diện' maps to the angle obligation"
+        },
+        "L02": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "angle obligation; which angle is meant is not represented"
+        },
+        "L03": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "as for angles"
+        },
+        "L04": {
+          "status": "NOT_APPLICABLE",
+          "evidence": "CODE_PROVED",
+          "note": "auxiliary"
+        },
+        "L05": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no dihedral fact"
+        },
+        "L06": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "by composition: angle_cos between vectors perpendicular to the edge in each plane (test_signed_angle)"
+        },
+        "L07": {
+          "status": "PARTIAL",
+          "evidence": "LIVE_MEASURED",
+          "note": "no dihedral primitive; LLM synthesis 0/4 on the dihedral probe"
+        },
+        "L08": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no rule"
+        },
+        "L09": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "the perpendicular construction steps would show; not measured"
+        },
+        "L10": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "angle checker is generic; the dihedral identity is not checkable"
+        },
+        "L11": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "no dihedral marker"
+        },
+        "L12": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "auxiliary segments not in the oracle evidence"
+        },
+        "L13": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: select / scrub / isolate / explode work on any scene object; not measured per group"
+        },
+        "L14": {
+          "status": "SUPPORTED",
+          "evidence": "CODE_PROVED",
+          "note": "generic: producer/depends closure is built for every constructed object"
+        },
+        "L15": {
+          "status": "PARTIAL",
+          "evidence": "CODE_PROVED",
+          "note": "no named code"
+        },
+        "L16": {
+          "status": "MISSING",
+          "evidence": "CODE_PROVED",
+          "note": "none"
+        },
+        "L17": {
+          "status": "MISSING",
+          "evidence": "NOT_MEASURED",
+          "note": "no educational evaluation exists for any group (GATE-20 not run; curriculum evidence NOT_ESTABLISHED)"
+        }
+      }
+    }
+  ],
+  "baseline_families_w12": [
+    {
+      "family": "right_triangle_base_pyramid_volume",
+      "suite_id": "triangular_pyramid",
+      "route": "compiler (browser suite fixture)",
+      "observed_formation": [
+        "givens/points",
+        "base polygon",
+        "whole solid"
+      ],
+      "missing_semantic_ops": [
+        "CONSTRUCT_HEIGHT (coincides with lateral edge at the right-angle vertex)",
+        "CONSTRUCT_LATERAL_BOUNDARY",
+        "CLOSE_SOLID as its own step"
+      ],
+      "root_cause": "compiler.py::bien_dich emits no construct_segment / construct_segments_group",
+      "human_verdict": "NEEDS_CHANGES (W12-H1)"
+    },
+    {
+      "family": "right_triangle_base_right_prism_volume",
+      "suite_id": "triangular_prism",
+      "route": "compiler (browser suite fixture)",
+      "observed_formation": [
+        "givens/points",
+        "base polygon",
+        "whole solid"
+      ],
+      "missing_semantic_ops": [
+        "CONSTRUCT_TRANSLATED_FACE (top face)",
+        "CONSTRUCT_LATERAL_BOUNDARY",
+        "CLOSE_SOLID as its own step"
+      ],
+      "root_cause": "compiler.py::_bien_dich_prism emits no top polygon and no lateral-edge group",
+      "human_verdict": "NEEDS_CHANGES (W12-H2)"
+    },
+    {
+      "family": "rectangular_base_pyramid_volume",
+      "suite_id": "rectangular_pyramid",
+      "route": "compiler",
+      "observed_formation": [
+        "givens/points",
+        "base",
+        "height",
+        "lateral edges",
+        "solid"
+      ],
+      "human_verdict": "PROVISIONAL_PASS"
+    },
+    {
+      "family": "rectangular_cuboid_volume",
+      "suite_id": "cuboid",
+      "route": "compiler",
+      "observed_formation": [
+        "givens/points",
+        "base",
+        "top face",
+        "lateral edges",
+        "solid"
+      ],
+      "human_verdict": "PROVISIONAL_PASS"
+    },
+    {
+      "family": "cube_volume",
+      "suite_id": "cube",
+      "route": "compiler",
+      "observed_formation": [
+        "givens/points",
+        "base",
+        "top face",
+        "lateral edges",
+        "solid"
+      ],
+      "human_verdict": "PROVISIONAL_PASS"
+    },
+    {
+      "family": "cross_section_plane_polyhedron",
+      "suite_id": "cross_section",
+      "route": "LLM-route gold program (thesis corpus p1)",
+      "observed_formation": [
+        "10 geometry steps incl. section growth (EXTEND)"
+      ],
+      "human_verdict": "PROVISIONAL_PASS"
+    }
+  ],
+  "corrections_to_v1": [
+    "v1 §3.C.2 calls the kernel Polyhedron 'convex'; since 2026-09-07 the volume is a signed boundary sum that is correct for closed non-convex shells (G06).",
+    "v1 §3.E marks Scene3D 'YES' for regular_tetrahedron / regular_pyramid / oblique_prism because the renderer can draw such a solid; v2 keeps renderer genericity (L11) apart from evidence (L16 MISSING) and from exact placement (L06 PARTIAL).",
+    "v1 §5 proposes construct_regular_pyramid; v2 prefers generic constructions (centre of a polygon, point along a normal) plus a placement-feasibility check, so no family primitive is needed."
+  ],
+  "summary": {
+    "cells": 289,
+    "by_status": {
+      "PARTIAL": 111,
+      "MISSING": 87,
+      "SUPPORTED": 82,
+      "NOT_APPLICABLE": 9
+    },
+    "by_layer": {
+      "L01": {
+        "PARTIAL": 11,
+        "SUPPORTED": 2,
+        "MISSING": 4
+      },
+      "L02": {
+        "PARTIAL": 11,
+        "SUPPORTED": 2,
+        "MISSING": 4
+      },
+      "L03": {
+        "PARTIAL": 11,
+        "SUPPORTED": 3,
+        "MISSING": 3
+      },
+      "L04": {
+        "PARTIAL": 4,
+        "SUPPORTED": 2,
+        "NOT_APPLICABLE": 9,
+        "MISSING": 2
+      },
+      "L05": {
+        "MISSING": 13,
+        "PARTIAL": 4
+      },
+      "L06": {
+        "PARTIAL": 9,
+        "SUPPORTED": 7,
+        "MISSING": 1
+      },
+      "L07": {
+        "PARTIAL": 5,
+        "SUPPORTED": 10,
+        "MISSING": 2
+      },
+      "L08": {
+        "MISSING": 16,
+        "PARTIAL": 1
+      },
+      "L09": {
+        "PARTIAL": 12,
+        "MISSING": 5
+      },
+      "L10": {
+        "PARTIAL": 7,
+        "SUPPORTED": 8,
+        "MISSING": 2
+      },
+      "L11": {
+        "SUPPORTED": 11,
+        "MISSING": 2,
+        "PARTIAL": 4
+      },
+      "L12": {
+        "PARTIAL": 12,
+        "SUPPORTED": 1,
+        "MISSING": 4
+      },
+      "L13": {
+        "SUPPORTED": 13,
+        "MISSING": 2,
+        "PARTIAL": 2
+      },
+      "L14": {
+        "SUPPORTED": 15,
+        "MISSING": 2
+      },
+      "L15": {
+        "PARTIAL": 9,
+        "SUPPORTED": 8
+      },
+      "L16": {
+        "MISSING": 8,
+        "PARTIAL": 9
+      },
+      "L17": {
+        "MISSING": 17
+      }
+    },
+    "by_taxonomy": {
+      "POLYHEDRAL_SOLID": {
+        "PARTIAL": 52,
+        "MISSING": 17,
+        "SUPPORTED": 33
+      },
+      "CURVED_SOLID": {
+        "PARTIAL": 16,
+        "NOT_APPLICABLE": 4,
+        "MISSING": 27,
+        "SUPPORTED": 21
+      },
+      "DERIVED_SECTION": {
+        "PARTIAL": 11,
+        "SUPPORTED": 15,
+        "NOT_APPLICABLE": 2,
+        "MISSING": 6
+      },
+      "COMPOSITE_SCENE": {
+        "MISSING": 17,
+        "PARTIAL": 15,
+        "SUPPORTED": 2
+      },
+      "AUXILIARY_GEOMETRY": {
+        "MISSING": 20,
+        "NOT_APPLICABLE": 3,
+        "PARTIAL": 17,
+        "SUPPORTED": 11
+      }
+    },
+    "capability_by_taxonomy": {
+      "POLYHEDRAL_CAPABILITY": "PARTIAL — general and concave polyhedra are exact and rendered on the LLM route; the compiler covers six right/box families with per-family formation; regular solids lack regularity semantics and often have no exact Q^3 placement; oblique prisms work on the LLM route only.",
+      "CURVED_SOLID_CAPABILITY": "PARTIAL — ball/cylinder/cone exact in the system (product foundation_only); formation is atomic; frustum missing (scope pending); curves are outside the occlusion classifier.",
+      "AUXILIARY_GEOMETRY_CAPABILITY": "PARTIAL — distances and angles exact by composition; dihedral by composition only, no marker; tangency missing.",
+      "SECTION_CAPABILITY": "PARTIAL — polygonal sections supported in the product; circle/ellipse sections exact in the system (foundation_only); parabola/hyperbola fail closed; curves not in occlusion evidence.",
+      "COMPOSITE_SCENE_CAPABILITY": "MISSING — SINGLE_SOLID_ONLY contract and compiler, one-solid occlusion; inscribed/circumscribed only by unmeasured composition; boolean composites out of scope."
+    }
+  }
+}

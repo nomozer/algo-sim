@@ -1,0 +1,1032 @@
+{
+  "schema_version": "absolute-assumption-inventory/1",
+  "task": "W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
+  "head": "bf5a7907157be6c1e30801e485faa0d9fbdfd290",
+  "method": "grep-driven scan over backend/app, frontend/src, backend/tests, frontend tests, backend/scripts, frontend/scripts (evidence harness), backend/app/ai/skills (prompts) and the living docs (AGENTS, README, RULES, ARCHITECTURE_MAP, AI_CONTEXT_BUNDLE, ROADMAP, OPEN_ISSUES, THESIS_ARCHITECTURE, THESIS_READINESS, CORRECTNESS, TEST_TIERS, DEMO_RUNBOOK, RUN_NAMING, docs/architecture, the first 130 lines of CURRENT_STATE), one target item at a time, then reading each hit in context. Historical artifacts under docs/evaluation are G by definition and are cited only as examples.",
+  "classes": {
+    "A_SAFETY_INVARIANT": "safety rule that must hold everywhere",
+    "B_MATHEMATICAL_INVARIANT": "true by mathematics",
+    "C_CONTRACT_INVARIANT": "deliberate contract of an interface",
+    "D_CONFIGURABLE_DEFAULT": "default that may change without changing the contract",
+    "E_CAPABILITY_REQUIREMENT": "capability the environment must provide",
+    "F_BASELINE_TEST_ENVIRONMENT": "the machine/browser a measurement ran on",
+    "G_HISTORICAL_MEASUREMENT": "a value observed in one run",
+    "H_FAMILY_SPECIFIC_RULE": "rule that names one family",
+    "I_TEMPORARY_IMPLEMENTATION_LIMIT": "declared limit of the current implementation",
+    "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR": "absolute without justification; repair needed"
+  },
+  "required_examples": {
+    "GPU Tesla T4": "NA-01 — no GPU model is recorded in the repository; a GPU is F (baseline), never a contract.",
+    "Chrome 154": "NA-02 — recorded environment of the W12 run (G); other browsers are NOT_MEASURED.",
+    "3·3·5·5·5·10": "NA-13 — historical measurement (G); acceptance = semantic coverage + observable delta, no fake steps.",
+    "cache/candidate": "NA-22…NA-25 — read from the repository (app.main, EVALUATION_CANDIDATE.json); task-prompt values are claims.",
+    "colour": "NA-30/NA-31 — the semantic role is the contract; hex values come from tokens."
+  },
+  "summary": {
+    "items": 67,
+    "by_class": {
+      "A_SAFETY_INVARIANT": 4,
+      "B_MATHEMATICAL_INVARIANT": 1,
+      "C_CONTRACT_INVARIANT": 9,
+      "D_CONFIGURABLE_DEFAULT": 13,
+      "E_CAPABILITY_REQUIREMENT": 3,
+      "F_BASELINE_TEST_ENVIRONMENT": 6,
+      "G_HISTORICAL_MEASUREMENT": 8,
+      "H_FAMILY_SPECIFIC_RULE": 4,
+      "I_TEMPORARY_IMPLEMENTATION_LIMIT": 9,
+      "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR": 10
+    },
+    "requiring_repair": [
+      "NA-05",
+      "NA-11",
+      "NA-23",
+      "NA-31",
+      "NA-37",
+      "NA-40",
+      "NA-42",
+      "NA-52",
+      "NA-53",
+      "NA-57"
+    ],
+    "high_severity": [
+      "NA-05",
+      "NA-18",
+      "NA-37",
+      "NA-54",
+      "NA-57"
+    ]
+  },
+  "items": [
+    {
+      "id": "NA-01",
+      "target_item": "GPU_NAME",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/browser-runner.mjs:53",
+        "frontend/scripts/browser-runner.mjs:114",
+        "docs/SCENE3D_CAMERA_AND_MOCKUP_FIDELITY.md:168",
+        "docs/SCENE3D_D2_FRONTEND_IMPLEMENTATION.md:155"
+      ],
+      "statement": "No GPU model string (e.g. 'Tesla T4') is recorded anywhere in the repository. Browser gates run headless Chrome with software WebGL (ANGLE/SwiftShader) or --disable-gpu; real-GPU frame times exist without a model name, and phone GPUs were never measured.",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "A GPU is the machine a measurement ran on. It can be recorded as the baseline of a performance number; it is never a product contract. No performance claim may name a GPU it was not measured on.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "note": "PERFORMANCE_BASELINE = BASELINE_NOT_ESTABLISHED for real GPUs (REAL_PHONE_GPU_NOT_ESTABLISHED)."
+    },
+    {
+      "id": "NA-02",
+      "target_item": "BROWSER_VERSION",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/RUN.json:54"
+      ],
+      "statement": "W12 records 'system Chrome 154.0.8037.59, --headless=new, ANGLE SwiftShader'.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "This is the recorded environment of one run. It does not mean other browsers or versions are unsupported, and it does not mean they are supported: they are NOT_MEASURED.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-03",
+      "target_item": "BROWSER_INSTALL_PATH",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/browser-runner.mjs:31",
+        "frontend/scripts/accept-product-scope.mjs:42",
+        "frontend/scripts/capture-release-demo.mjs:30"
+      ],
+      "statement": "Browser scripts locate Chrome at 'C:/Program Files/Google/Chrome/Application/chrome.exe' (BrowserSession also tries /usr/bin/google-chrome); there is no environment override.",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "The install path of the baseline machine. It is an environment fact, not a contract.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Add one override (CHROME_PATH) to BrowserSession and record the resolved executable and version in every run manifest; legacy one-shot scripts need no change."
+    },
+    {
+      "id": "NA-04",
+      "target_item": "OS",
+      "scope": "SCRIPT",
+      "sources": [
+        "backend/scripts/faultcheck_display_names.py:29",
+        "backend/scripts/faultcheck_response_contract.py:30",
+        "backend/scripts/lock_cache_identity.py:48",
+        "CLAUDE.md §5 (gitignored local pointer)"
+      ],
+      "statement": "Tooling assumes Windows: venv interpreter at .venv/Scripts/python.exe, Git Bash/PowerShell commands, no make. lock_cache_identity.py branches on sys.platform explicitly.",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "Baseline development environment. Product code has no OS branch.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-05",
+      "target_item": "PERSONAL_PATH",
+      "scope": "TEST",
+      "sources": [
+        "backend/tests/geometry/test_evidence_identity_reconciliation.py:97",
+        "backend/tests/geometry/test_evidence_identity_reconciliation.py:99"
+      ],
+      "statement": "test_raw_response_identity_reproduced asserts that D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json exists. The file lives outside git (verified on the baseline machine) and the test has no skip or marker, so it runs in the default pytest and in T3.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "The default suite passes only on the machine that holds that directory; on a clean checkout T3 fails for a reason unrelated to the product. AGENTS.md §4 forbids committing raw model output, so the file cannot simply be vendored.",
+      "severity": "HIGH",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Move the check behind an opt-in marker (same pattern as -m postgres) that reports NOT_PORTABLE_EXTERNAL_EVIDENCE when the file is absent, and record the hash check as a manual verification step. Never skip silently."
+    },
+    {
+      "id": "NA-06",
+      "target_item": "PERSONAL_PATH",
+      "scope": "SCRIPT",
+      "sources": [
+        "backend/scripts/reconcile_second_family_live_measurement.py:166",
+        "backend/scripts/run_live_gemini_semantic_smoke.py:29",
+        "backend/scripts/run_rectangular_pyramid_live_analyze.py:350",
+        "backend/scripts/run_preregistered_failure_reproduction.py:1017",
+        "frontend/scripts/scene3d-acceptance-report.mjs:16"
+      ],
+      "statement": "One-shot measurement scripts default to personal paths (C:/Users/<user>/.gemini/..., D:/tmp/...).",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "These record where a historical run read or wrote. They are not used by the test suite.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Parameterise only if a script is reused; record the path actually used in the run manifest."
+    },
+    {
+      "id": "NA-07",
+      "target_item": "FIXED_VIEWPORT",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/generic-tier-a-scenarios.json:7",
+        "frontend/scripts/compiler-scene-replay.mjs:265"
+      ],
+      "statement": "The six-family browser suite measures desktop 1440x900 (DPR 1) and mobile 390x844 (DPR 2).",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "Measurement viewports declared in a registry. Product code has no viewport constant (grep of backend/app and frontend/src finds none). Other sizes are NOT_MEASURED, not unsupported.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-08",
+      "target_item": "FIXED_VIEWPORT",
+      "scope": "SCRIPT",
+      "sources": [
+        "frontend/scripts/capture-release-demo.mjs:30",
+        "frontend/scripts/certify-product-ui-rendering.mjs:35",
+        "frontend/scripts/certify-scene3d-hidden-lines.mjs:43",
+        "frontend/scripts/diagnose-responsive.mjs:32"
+      ],
+      "statement": "Older certification scripts hard-code 1440x900 or 1440x1000; diagnose-responsive.mjs takes --viewports.",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "Baseline of historical certifications.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "New gates take viewports from a registry (the generic-tier-a pattern), never from a constant."
+    },
+    {
+      "id": "NA-09",
+      "target_item": "CAMERA_VECTOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-camera.ts:39",
+        "frontend/src/simulations/domains/geometry/scene3d-camera.ts:294",
+        "docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md:60"
+      ],
+      "statement": "HUONG = [8, 3, 6] is the default view direction; chonHuongNhin picks the actual direction per scene from an azimuth x elevation grid scored by projected area, depth and vertex/edge separation.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "A presentation default with a per-scene selection on top; it never feeds geometry state.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-10",
+      "target_item": "CAMERA_VECTOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-camera.ts:249",
+        "frontend/src/simulations/domains/geometry/scene3d-camera.ts:252"
+      ],
+      "statement": "GOC_NHIN_THAM_CHIEU / NGUONG_GOC_NHIN (view-quality thresholds) are calibrated on one reference cuboid.",
+      "classification": "H_FAMILY_SPECIFIC_RULE",
+      "rationale": "A threshold calibrated on a single family is a family-specific rule. Shapes that differ from a box (regular tetrahedron, cone apex, sphere) were not part of the calibration.",
+      "severity": "MEDIUM",
+      "evidence_level": "HYPOTHESIS",
+      "repair": "Recalibrate on one case per shape class (pyramid-like, prism-like, cone-like, sphere-like) and keep the calibration set in the gate's registry."
+    },
+    {
+      "id": "NA-11",
+      "target_item": "CAMERA_VECTOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:593"
+      ],
+      "statement": "buildObject3D defaults cameraPosition to new THREE.Vector3(8, 3, 6), a second copy of HUONG.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "Two copies of one presentation constant can drift apart.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Derive the default from HUONG."
+    },
+    {
+      "id": "NA-12",
+      "target_item": "CAMERA_VECTOR",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "docs/evaluation/geometry/runs/w09-verify-cleanup/inputs/REGISTERED_CAMERA_PREIMAGES.json"
+      ],
+      "statement": "Frozen camera identity for the registered human expectations; transferred to new cameras only under DECLARED_CAMERA_CHANGE.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "Identity of a historical measurement, kept byte-identical.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-13",
+      "target_item": "EXACT_STEP_COUNT",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "docs/CURRENT_STATE.md:75",
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/REPORT.md"
+      ],
+      "statement": "W12 records construction steps 3·3·5·5·5·10 for triangular pyramid, triangular prism, rectangular pyramid, cuboid, cube and cross-section.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "A count observed on one candidate. Acceptance comes from semantic coverage and an observable change per step, not from a number; adding steps to reach a number would be a fake step.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-14",
+      "target_item": "EXACT_STEP_COUNT",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/compiler-scene-replay-lib.mjs:562",
+        "frontend/scripts/compiler-scene-replay-lib.mjs:760",
+        "frontend/scripts/compiler-scene-replay-lib.mjs:967"
+      ],
+      "statement": "The browser gate derives the expected step count from the trace of the same envelope (step_count_matches = observed == trace length).",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "Frame k <=> trace[k] (#31) and the geometry-timeline partition (#35): the count is derived, not pinned.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-15",
+      "target_item": "EXACT_STEP_COUNT",
+      "scope": "TEST",
+      "sources": [
+        "backend/tests/geometry/test_cuboid_cube_compiler.py:527",
+        "backend/tests/geometry/test_cuboid_cube_compiler.py:793",
+        "backend/tests/geometry/test_prism_primitive_compiler.py:290",
+        "backend/tests/semantic_program/test_pacer_partition.py:40"
+      ],
+      "statement": "Compiler tests pin exact step counts per family ({cuboid: 9, cube: 11, square_prism: 10}, 11 construction steps for the prism, 8 view steps).",
+      "classification": "H_FAMILY_SPECIFIC_RULE",
+      "rationale": "Regression snapshots of hand-written per-family statement sequences. A generic formation plan will change these numbers by design.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Replace with ordered semantic-coverage assertions per shape class plus a derived count; migrate, do not delete."
+    },
+    {
+      "id": "NA-16",
+      "target_item": "EXACT_VERTEX_NAMES",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/contract.py:1210",
+        "backend/app/simulation/semantic_program/scene3d.py:663",
+        "frontend/src/simulations/domains/geometry/scene3d-subentities.ts:70"
+      ],
+      "statement": "No product branch reads a vertex label; labels appear only in docstring examples.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "AGENTS.md §3 (no hard-coded vertex labels) holds at HEAD; grep of backend/app and frontend/src finds no branch on a literal label.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-17",
+      "target_item": "EXACT_VERTEX_NAMES",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/generic-tier-a-scenarios.json"
+      ],
+      "statement": "Fixture expectations list labels (e.g. A, B, C, D, S) per scenario.",
+      "classification": "F_BASELINE_TEST_ENVIRONMENT",
+      "rationale": "Expected values of a fixed fixture, not a product rule.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-18",
+      "target_item": "FAMILY_NAME",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry_compiler/compiler.py:41",
+        "backend/app/simulation/geometry_compiler/compiler.py:917",
+        "backend/app/simulation/geometry_compiler/compiler.py:1046",
+        "backend/app/simulation/geometry_compiler/compiler.py:1153",
+        "backend/app/simulation/geometry_compiler/compiler.py:1315"
+      ],
+      "statement": "The compiler supports six named families and writes one hand-made statement sequence per family (bien_dich, _bien_dich_prism, _bien_dich_rectangular_pyramid, _bien_dich_cuboid).",
+      "classification": "H_FAMILY_SPECIFIC_RULE",
+      "rationale": "The family list is a deliberate slice of the compiler route (not the default route). The per-family sequences are the root cause of W12-H1/H2: the triangular pyramid and prism never received the height, lateral-edge and top-face steps the rectangular paths have.",
+      "severity": "HIGH",
+      "evidence_level": "CODE_PROVED",
+      "repair": "One formation plan per shape class, derived from topology roles and shared by every family (preregistered for W14)."
+    },
+    {
+      "id": "NA-19",
+      "target_item": "FAMILY_NAME",
+      "scope": "PROMPT_SCHEMA",
+      "sources": [
+        "backend/app/simulation/semantic_program/analyze_contract.py:302",
+        "backend/app/simulation/semantic_program/analyze_contract.py:318",
+        "backend/app/simulation/semantic_program/analyze_contract.py:328"
+      ],
+      "statement": "The analyze schema closes solid_topology to solid_kind {prism, pyramid}, base_shape {rectangle, square}, lateral_structure {right, oblique}, solid_subkind {cuboid, cube, right_square_prism}.",
+      "classification": "H_FAMILY_SPECIFIC_RULE",
+      "rationale": "Closed family enums at the model-facing contract. There is no way to say 'regular', 'equilateral triangle', 'apex above the base centre' or a curved solid here.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Topology roles instead of family names (base polygon kind, apex-foot relation, regularity, lateral direction); a model-facing change, so it needs its own measured wave."
+    },
+    {
+      "id": "NA-20",
+      "target_item": "FAMILY_NAME",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/product_capability.py:66"
+      ],
+      "statement": "Product capability is one coarse row per kind ('polyhedron' supported covers pyramids, prisms and boxes).",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "Single authority for what the product may show as supported. Its granularity is coarser than the W13 matrix; the matrix does not override it.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-21",
+      "target_item": "CASE_ID",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app",
+        "frontend/src"
+      ],
+      "statement": "No case identifier (p1…p7, n1…n4, c7a, e4, gm_10…) appears in product code.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "AGENTS.md §3 holds at HEAD (grep).",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-22",
+      "target_item": "CACHE_VERSION",
+      "scope": "TEST",
+      "sources": [
+        "backend/tests/test_api.py:679"
+      ],
+      "statement": "The designated cache-bump test asserts CACHE_VERSION == '105'.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "Deliberate ceremony (bump in one commit with its reason); the value is read from code at review time.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-23",
+      "target_item": "CACHE_VERSION",
+      "scope": "TEST",
+      "sources": [
+        "backend/tests/geometry/test_docs_information_architecture.py:197",
+        "backend/tests/geometry/test_missing_family_roadmap.py:119",
+        "backend/tests/geometry/test_nonconvex_polyhedron_discoverability.py:385",
+        "backend/tests/geometry/test_oblique_ellipse_e2e_rerun_preflight.py:413",
+        "backend/tests/geometry/test_oblique_ellipse_final_rerun.py:190",
+        "backend/tests/geometry/test_completion_runner_repair.py:223"
+      ],
+      "statement": "Five further tests pin '105' and one keeps a growing allow-list ('100'…'105').",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "Undocumented copies of a live value: every bump must find them, and a missed one fails for a reason unrelated to the test's subject.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Read app.main.CACHE_VERSION or the identity lock; keep only the ceremony test pinned."
+    },
+    {
+      "id": "NA-24",
+      "target_item": "CANDIDATE_HASH",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/generic-tier-a-scenarios.json:4",
+        "frontend/scripts/generic-tier-a-scenarios.json:5"
+      ],
+      "statement": "The browser suite pins product_commit_sha / product_tree_sha and refuses a mismatch.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "A measurement is bound to an exact candidate on purpose. The value must come from EVALUATION_CANDIDATE.json at measurement time, never from a prompt or a document.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-25",
+      "target_item": "CANDIDATE_HASH",
+      "scope": "RULES",
+      "sources": [
+        "docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/logs/PHASE0_REPOSITORY_GATE.log"
+      ],
+      "statement": "Task statements carry HEAD, cache, candidate, schema and default mode.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "Values in a task statement are claims about a moment. W13 re-read all of them from the repository (Phase 0) and they matched; the repository is the authority.",
+      "severity": "NONE",
+      "evidence_level": "MEASURED"
+    },
+    {
+      "id": "NA-26",
+      "target_item": "TEST_COUNT",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "docs/CURRENT_STATE.md:74",
+        "docs/AI_CONTEXT_BUNDLE.md"
+      ],
+      "statement": "Living state docs quote run-scoped test totals (e.g. pytest 6443 at 442584cf).",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "A test total belongs to one run and one commit and must cite it. W13 architecture documents carry no test totals.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-27",
+      "target_item": "COMMIT_COUNT",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/HANDOFF.md"
+      ],
+      "statement": "Hand-offs record how many commits a wave created.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "Historical record of a wave; no rule depends on a commit count.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-28",
+      "target_item": "REFREEZE_EXACTLY_ONCE",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "docs/EVIDENCE_INDEX.md:721",
+        "docs/EVIDENCE_INDEX.md:742"
+      ],
+      "statement": "W11 'refrozen once'; W12 'frozen three times'.",
+      "classification": "G_HISTORICAL_MEASUREMENT",
+      "rationale": "How often a wave refroze is history. The invariant is different: the candidate must match the last commit touching backend/app or frontend/src before anything is measured (freeze_evaluation_candidate.py --verify). No test or script assumes a single refreeze (grep).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-29",
+      "target_item": "REFREEZE_EXACTLY_ONCE",
+      "scope": "SCRIPT",
+      "sources": [
+        "backend/scripts/freeze_evaluation_candidate.py"
+      ],
+      "statement": "--verify compares product_commit_sha and the MEASURED_SYSTEM_PATHS tree hash.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "Measurement identity: refreeze after every product commit, as often as needed.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-30",
+      "target_item": "HEX_COLOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-roles.ts:22",
+        "frontend/src/simulations/domains/geometry/scene3d-roles.test.ts"
+      ],
+      "statement": "Causal role colours (target, newly built, numerical given, intermediate, context, given point) live in one role table shared by renderer and CSS, with a sync test.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "The ROLE is the contract (blue = being looked at, dark orange = numerical given, …); the hex value is a token value that may change without changing the contract.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-31",
+      "target_item": "HEX_COLOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:107",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:113",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1236"
+      ],
+      "statement": "The neutral type palette (derived point, line, surface, mesh, edge ink, polygon/section amber) and the lights are hex literals inside the view; the former token module scene3d-tokens.ts no longer exists.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "A second palette outside the token authority; a gate that reads tokens cannot see it drift.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Move the type palette into a token/role module with a sync test; keep the type roles as the contract."
+    },
+    {
+      "id": "NA-32",
+      "target_item": "HEX_COLOR",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/compiler-scene-replay-lib.mjs (DAI_SAC_VAI_TRO)",
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/hue-gate-known-answer-e115eede/KNOWN_ANSWER.json"
+      ],
+      "statement": "The W12 hue gate classifies pixels into orange/blue bands (s 0.45, l 0.2–0.85, hue 10–50 / 205–235).",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "A classifier threshold with a known-answer window, not a colour contract.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-33",
+      "target_item": "HEX_COLOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:113",
+        "docs/evaluation/geometry/runs/w13-geometry-preregistration/inputs/W12_HUMAN_VISUAL_REVIEW.json"
+      ],
+      "statement": "Neutral views draw a section in amber.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Presentation default; the user marked it a design question (W12-D1), not a defect.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-34",
+      "target_item": "HEX_COLOR",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/components/SamplePreview.tsx:79",
+        "frontend/src/components/VarsView.tsx:88"
+      ],
+      "statement": "Legacy sample previews and the variables view carry hex literals.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Presentation literals in legacy components outside the geometry renderer.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-35",
+      "target_item": "LAYOUT_DIMENSION",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry_compiler/compiler.py:938",
+        "backend/app/simulation/geometry_compiler/compiler.py:1008"
+      ],
+      "statement": "The compiler places the right-angle vertex at the origin, legs along two axes and the apex on the normal; every length comes from the FactGraph and the coordinates are declared LAYOUT_DERIVED via model_assumption.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Placement is a free choice of frame (presentation); the metric comes from GIVEN facts. Policy: layout must stay scale-free or separate from the metric proof.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-36",
+      "target_item": "LAYOUT_DIMENSION",
+      "scope": "PROMPT_SCHEMA",
+      "sources": [
+        "backend/app/ai/skills/geometry_program_generator.md:20",
+        "backend/app/ai/skills/geometry_program_generator.md:39"
+      ],
+      "statement": "The synthesis prompt tells the model to choose the frame (base in z = 0, perpendicular edge along z) and to use model_assumption only for HOW to place a named object.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "A layout convention for the model. The channel it opens is the open assumption issue below.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-37",
+      "target_item": "LAYOUT_DIMENSION",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "docs/OPEN_ISSUES.md:279",
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/ASSUMPTION_CHANNEL_PROBE_79eb1e59.log"
+      ],
+      "statement": "A LAYOUT_DERIVED or model_assumption coordinate can fix a dimension the problem does not state; the volume follows from it (probe: prism without 'AD = 5' served V = 30 through both channels).",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "The rule 'a layout choice is free' is applied to a choice that carries a metric the answer depends on (ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION).",
+      "severity": "HIGH",
+      "evidence_level": "MEASURED",
+      "repair": "Preregistered assumption/default policy (VISUAL_DEFAULT / MODEL_ASSUMPTION / DERIVED_VALUE / GIVEN_VALUE) with acceptance criteria; implementation is W14."
+    },
+    {
+      "id": "NA-38",
+      "target_item": "LAYOUT_DIMENSION",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-model.ts:645",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:726"
+      ],
+      "statement": "PLANE_DISPLAY_SIZE = 6 remains the fallback size of a plane patch when no bounded points frame it.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Presentation fallback; the per-scene frame (khungMatPhang) is used whenever bounded points exist.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-39",
+      "target_item": "TIMEOUT_SLEEP",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/ai/gemini.py:227",
+        "backend/app/ingestion/image_extraction.py:69",
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:240"
+      ],
+      "statement": "Provider backoff, a 60 s vision timeout and short UI notice timers.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Operational defaults; none decides a geometric result.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-40",
+      "target_item": "TIMEOUT_SLEEP",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/browser-runner.mjs:40",
+        "docs/OPEN_ISSUES.md (ISSUE-EVAL-CDP-SEND-NO-TIMEOUT)",
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/PLAYBACK_attempt1_HANG_7b039621.log"
+      ],
+      "statement": "BrowserSession bounds and counts relaunches (TRAN_MO_LAI = 2) but a lost DevTools response is awaited forever.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "An unbounded wait in a measurement tool: W12 had to kill a hung run by hand.",
+      "severity": "MEDIUM",
+      "evidence_level": "MEASURED",
+      "repair": "Per-call timeout with a named failure (PAGE_NOT_LOADED style), counted like relaunches."
+    },
+    {
+      "id": "NA-41",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry/predicates.py:16",
+        "backend/app/simulation/geometry/exact.py:87"
+      ],
+      "statement": "The kernel decides every predicate exactly over Fraction (plus Radical for measures); no epsilon.",
+      "classification": "B_MATHEMATICAL_INVARIANT",
+      "rationale": "Exact arithmetic is the thesis claim: a tolerance would hide the class of error the system exists to refuse.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-42",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry/exact.py:71",
+        "backend/app/simulation/geometry/exact.py:80"
+      ],
+      "statement": "hf(float) returns Fraction(x).limit_denominator(10**9); its docstring says floats are converted 'by their exact binary value'.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "The docstring contradicts the code, and the code is a silent entry point for approximate decimals: a JSON float coordinate becomes an exact-looking rational. Whether any gate stops approximate coordinates for shapes whose ideal coordinates are irrational is NOT_MEASURED.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED (behaviour) / HYPOTHESIS (impact)",
+      "repair": "Measure first (0-call probe: a regular tetrahedron written with decimal coordinates). Then either refuse non-source decimals in coordinates or state the 1e9 rationalisation as a contract."
+    },
+    {
+      "id": "NA-43",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/postconditions.py:555"
+      ],
+      "statement": "Postcondition comparison uses abs(got - expected) < 1e-9 only when one side is a float.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Legacy float path; exact values compare with ==.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-44",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-camera.ts:159",
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:141",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:391"
+      ],
+      "statement": "Renderer epsilons (1e-6…1e-12), a 10-significant-digit camera key and a 0.5 px product/oracle tolerance.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Presentation numerics after the exact boundary; they never feed geometry state.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-45",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/interpreter.py:56"
+      ],
+      "statement": "DEFAULT_MAX_STEPS = 300 bounds program execution.",
+      "classification": "A_SAFETY_INVARIANT",
+      "rationale": "Bounded execution is a safety invariant; the number itself is a configurable budget.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-46",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "TEST",
+      "sources": [
+        "backend/tests/semantic_program/test_grammar_card.py:197"
+      ],
+      "statement": "The grammar card has a byte budget raised with a written reason each time.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "A budget, not a semantic invariant (same status as the old max_objects = 20).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-47",
+      "target_item": "NUMERIC_TOLERANCE",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/ai/pipeline.py:26"
+      ],
+      "statement": "MAX_SEMANTIC_PROGRAM_ATTEMPTS = 3 (one initial synthesis plus repairs).",
+      "classification": "A_SAFETY_INVARIANT",
+      "rationale": "A bound on provider spend per request is a safety rule; the value is a budget.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-48",
+      "target_item": "ONE_SOLID",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:35",
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:163",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:325",
+        "docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md:54"
+      ],
+      "statement": "Hidden-line classification considers only the faces of the edge's own solid (occluders default [o]).",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Declared limit (ponytail note); scenes with several overlapping solids need occluders.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-49",
+      "target_item": "ONE_SOLID",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/request_contract.py:156",
+        "docs/architecture/ARCHITECTURE_CAPABILITY_MATRIX.md:212"
+      ],
+      "statement": "RequestContract carries one solid_topology; the compiler emits one solid.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "SINGLE_SOLID_ONLY on the contract/compiler route (v1 matrix). The LLM route may construct several solids in one program.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-50",
+      "target_item": "POLYHEDRON_ONLY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:38",
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:99"
+      ],
+      "statement": "canonicalEdgesOf and occludingTriangles accept only type 'solid' with faces; curved solids neither get classified edges nor occlude polyhedral edges.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Occlusion was built for polyhedra; curved solids draw a camera-dependent outline instead.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-51",
+      "target_item": "POLYHEDRON_ONLY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry_compiler/fact_graph.py:37"
+      ],
+      "statement": "FactGraph node kinds: point, segment, plane, triangle, pyramid, prism, measurement_request.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "The compiler route is polyhedron-only; curved solids exist only on the LLM route.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-52",
+      "target_item": "POLYHEDRON_ONLY",
+      "scope": "PROMPT_SCHEMA",
+      "sources": [
+        "backend/app/ai/skills/geometry_program_generator.md:85",
+        "backend/app/ai/skills/geometry_program_generator.md:86",
+        "backend/app/simulation/semantic_program/ir_static_check.py:150"
+      ],
+      "statement": "The production synthesis prompt (program_skill_for -> geometry_program_generator) still says an oblique plane through a cylinder or cone 'cannot be expressed', while the IR has intersect_plane_curved_ellipse (cylinder 2026-09-07, cone 2026-09-08).",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "A model-facing absolute contradicted by the IR and by the grammar card the same prompt is sent with. The final acceptance still served both ellipse cases, so the card wins today; the contradiction remains.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Correct the prompt in a wave that may change the model surface (prompt hash, CACHE_VERSION decision, measurement)."
+    },
+    {
+      "id": "NA-53",
+      "target_item": "POLYHEDRON_ONLY",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "docs/CURRENT_STATE.md:5054",
+        "docs/CURRENT_STATE.md:5069",
+        "docs/CURRENT_STATE.md:5100",
+        "README.md (§9–§10)",
+        "docs/THESIS_ARCHITECTURE.md (§A, §J)",
+        "docs/architecture/ARCHITECTURE_CAPABILITY_MATRIX.md:104"
+      ],
+      "statement": "Living docs still state 8 expressions · 6 statements · 5 measures, CURVED_GEOMETRY_SUPPORT = NONE, curved and non-convex solids as deliberate gaps, 'convex polyhedra only, no curved surfaces'.",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "Contradicted by code (11 · 9 · 7 per the sync-locked identity row; curved.py; nonconvex foundation; product_capability.py).",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED",
+      "repair": "W13 adds a correction banner to CURRENT_STATE §3/§4 pointing at the authorities. README, THESIS_ARCHITECTURE and the v1 matrix are listed for a documentation wave (v1 is an immutable snapshot)."
+    },
+    {
+      "id": "NA-54",
+      "target_item": "RATIONAL_ONLY_COORDINATES",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/geometry/exact.py:87",
+        "docs/STATUS_LEDGER.md (Toạ độ căn thức UNSUPPORTED)"
+      ],
+      "statement": "Every point lives in Q^3; irrational quantities exist only as measures (Radical a·√b·π^k).",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "A deliberate exactness design whose consequence is a capability limit: a figure that has no rational placement (an equilateral triangle in z = 0 needs √3; a regular pyramid given by base and lateral edge usually needs an irrational height) cannot be built exactly.",
+      "severity": "HIGH",
+      "evidence_level": "CODE_PROVED",
+      "repair": "Preregistered: deterministic placement-feasibility check with a fail-closed code first; then evaluate similarity layouts with a Radical scale factor and Q(√d) coordinates."
+    },
+    {
+      "id": "NA-55",
+      "target_item": "EDGE_ONLY_HIDDEN_LINES",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts:38",
+        "docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md:26"
+      ],
+      "statement": "Visible/hidden spans and the product/oracle evidence cover canonical polyhedral edges; segments and sections delegate to the edge owner; circles, ellipses and curved outlines are not in the CPU classifier or the oracle evidence.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Correct for polyhedra; curves are NOT_MEASURED in w09–w12 evidence.",
+      "severity": "MEDIUM",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-56",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/grounding_gate.py:146",
+        "backend/app/simulation/semantic_program/segment_relation.py:233"
+      ],
+      "statement": "A segment label counts only when it stands right before '=' or 'bằng' (or 'XY có độ dài v'); a number without such a label is accepted as a standalone value for any representative edge.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "A closed grammar without fuzzy matching is the intended contract (no guessing at the gate).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-57",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json"
+      ],
+      "statement": "Measured: 'AB dài 5 cm' binds no segment, so a program declaring AC = 5 passes the GIVEN check (standalone_wrong_segment).",
+      "classification": "J_UNSUPPORTED_ABSOLUTE_REQUIRES_REPAIR",
+      "rationale": "A labelled length the reader does not recognise falls into the standalone rule, so the value can be attached to the wrong segment without any gate noticing.",
+      "severity": "HIGH",
+      "evidence_level": "MEASURED",
+      "repair": "Safe normalisation: read 'XY dài v' as a labelled length (closed phrase, no fuzzy match); preregistered for W14 with this probe as its red baseline."
+    },
+    {
+      "id": "NA-58",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json"
+      ],
+      "statement": "Measured: in 'AB = AC = 5' only AC is bound; declaring AB = 5 is refused with SOURCE_EVIDENCE_CONFLICT.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Fails closed (false refusal), so it is a coverage limit, not a soundness defect.",
+      "severity": "LOW",
+      "evidence_level": "MEASURED",
+      "repair": "Read chained equalities as one value for every segment in the chain."
+    },
+    {
+      "id": "NA-59",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/plane_equation.py:51"
+      ],
+      "statement": "A plane equation is read only with a plane phrase within 48 characters before '='.",
+      "classification": "D_CONFIGURABLE_DEFAULT",
+      "rationale": "Documented window of a closed reader; unreadable equations stay unchecked (declared limit).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-60",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/domain_profile.py:98"
+      ],
+      "statement": "The scope gate routes by word clues per obligation, with a parity test derived from the checker registry.",
+      "classification": "C_CONTRACT_INVARIANT",
+      "rationale": "Closed table with a derived parity guard; phrasings outside it fail closed at scope (coverage limit, measured history in STATUS_LEDGER).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-61",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/source_entities.py:105",
+        "backend/app/simulation/semantic_program/source_entities.py:110"
+      ],
+      "statement": "Derived points are recognised by 'gọi/lấy … là' (≤ 40 chars) and 'X là trung điểm|hình chiếu|giao điểm|trọng tâm|chân đường|tâm|điểm đối xứng'.",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Phrasing coverage limit; other lead-ins rely on the segment-division invariant.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-62",
+      "target_item": "SOURCE_TEXT_ADJACENCY",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "backend/app/simulation/semantic_program/point_coordinate.py:93"
+      ],
+      "statement": "Coordinates: decimal comma, name after the triple, 'x_A = …', 2D and irrational coordinates are not read (declared by a green limit test).",
+      "classification": "I_TEMPORARY_IMPLEMENTATION_LIMIT",
+      "rationale": "Fail-open when unreadable, fail-closed when contradictory (contract); the unread forms are a coverage limit.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-63",
+      "target_item": "ENVIRONMENT",
+      "scope": "PRODUCT_CODE",
+      "sources": [
+        "docs/DEMO_RUNBOOK.md:159"
+      ],
+      "statement": "Scene3D needs WebGL; without it the canvas shows a message instead of a figure.",
+      "classification": "E_CAPABILITY_REQUIREMENT",
+      "rationale": "A capability requirement with a defined fallback.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-64",
+      "target_item": "ENVIRONMENT",
+      "scope": "EVIDENCE_HARNESS",
+      "sources": [
+        "frontend/scripts/browser-runner.mjs"
+      ],
+      "statement": "Browser gates need a Chromium that speaks the DevTools protocol.",
+      "classification": "E_CAPABILITY_REQUIREMENT",
+      "rationale": "Capability requirement of the harness; the install location is F.",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-65",
+      "target_item": "ENVIRONMENT",
+      "scope": "LIVING_DOC",
+      "sources": [
+        "README.md §11",
+        "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/RUN.json"
+      ],
+      "statement": "README states Python 3.12 and Node 20+; W12 ran Python 3.12.10 and Node v24.13.0.",
+      "classification": "E_CAPABILITY_REQUIREMENT",
+      "rationale": "Minimum versions are requirements; the observed versions are the baseline (F).",
+      "severity": "LOW",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-66",
+      "target_item": "ENVIRONMENT",
+      "scope": "TEST",
+      "sources": [
+        "backend/conftest.py",
+        "frontend/src/test-setup.ts"
+      ],
+      "statement": "pytest and vitest make zero real provider calls; the guard sits at the network edge.",
+      "classification": "A_SAFETY_INVARIANT",
+      "rationale": "Offline-first safety invariant; never patched.",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    },
+    {
+      "id": "NA-67",
+      "target_item": "ENVIRONMENT",
+      "scope": "RULES",
+      "sources": [
+        "AGENTS.md:37",
+        "backend/app/simulation/geometry_compiler/routing.py:30"
+      ],
+      "statement": "DEFAULT_MODE stays LLM_ONLY until all 20 migration gates pass.",
+      "classification": "A_SAFETY_INVARIANT",
+      "rationale": "Governance safety invariant (MIGRATION_CHECKLIST).",
+      "severity": "NONE",
+      "evidence_level": "CODE_PROVED"
+    }
+  ]
+}
