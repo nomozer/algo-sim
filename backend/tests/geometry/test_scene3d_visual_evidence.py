@@ -111,6 +111,12 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
     assert panel["crop_box_px"] == [0, 0, 600, 300]
     assert sheet.width >= 2 * 1400 and meta["legend"] and meta["label_font_px"] >= 24
     assert "XANH = đang xét" in meta["legend"] and "cam đậm = dữ kiện số" in meta["legend"]
+    # Vật đã dựng giữ MÀU KIỂU ở khung trung tính (mặt phẳng tím, thiết diện hổ
+    # phách...) — chú giải không được hứa "trung tính" (w12, sheet e115eede),
+    # và mỗi dòng phải nằm trọn trong bề ngang sheet (bản cũ bị cắt ở mép phải).
+    assert "TRUNG TÍNH = đã dựng" not in meta["legend"] and "thiết diện hổ phách" in meta["legend"]
+    phong, _ = B._font(B.LABEL_PX - 2)
+    assert all(16 + phong.getlength(dong) <= sheet.width for dong in meta["legend"].split("\n"))
     assert meta["cells"][10]["label"].startswith("Bước dựng 1/3")
     assert meta["cells"][10]["label"].endswith("Bước dựng số 0")
 

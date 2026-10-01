@@ -43,9 +43,12 @@ STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
                 "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
                 "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
                 "refusal": "đề thiếu một dữ kiện — từ chối, không dựng hình"}
-LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · TRUNG TÍNH = đã dựng · "
-          "NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số "
-          "· cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.")
+# Hai dòng: một dòng cũ bị cắt ở mép phải sheet. Vật đã dựng giữ MÀU KIỂU ở
+# khung trung tính — chú giải không được hứa "trung tính" cho chúng (w12).
+LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: "
+          "khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\n"
+          "Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số "
+          "· xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.")
 LABEL_PX = 28
 HEADER_CSS = 44   # hàng tiêu đề + chip ngay trên canvas: giữ, bỏ thanh điều hướng
 STATES = ("neutral_final", "rotated_neutral")

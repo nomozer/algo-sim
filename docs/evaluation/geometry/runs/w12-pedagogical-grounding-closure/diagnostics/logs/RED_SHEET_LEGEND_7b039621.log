@@ -1,0 +1,48 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____ test_w12_family_sheet_keeps_every_required_state_at_native_resolution ____
+
+tmp_path = WindowsPath('C:/Users/Bunny/AppData/Local/Temp/pytest-of-Bunny/pytest-97/test_w12_family_sheet_keeps_ev0')
+
+    def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
+        """Review W10-H8: phụ lục formation quá nhỏ để đọc. Sheet của MỘT họ giữ
+        trung tính, causal, xoay, mobile, BẢNG LỜI GIẢI, lời TỪ CHỐI (W12) và MỌI
+        bước dựng ở độ phân giải gốc (không thu nhỏ), có dải chú giải và nhãn lớn."""
+        desktop = _ban_ghi(tmp_path, "desktop", 1400, (1400, 800), steps=3)
+        mobile = _ban_ghi(tmp_path, "mobile", 390, (780, 1600), steps=1)
+        negative = {vp: {"screenshot": str(_anh(tmp_path / "neg" / f"{vp}.png", (780, 900), "white"))}
+                    for vp in ("desktop", "mobile")}
+        meta = B.family_sheet("triangular_pyramid",
+                              {"positive": {"desktop": desktop, "mobile": mobile}, "negative": negative},
+                              tmp_path / "images")
+        from PIL import Image
+        sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
+        assert [c["state"] for c in meta["cells"]] == [
+            "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final",
+            "desktop/solution_neutral_final", "desktop/solution_causal_selected",
+            "mobile/solution_neutral_final", "mobile/solution_expanded",
+            "desktop/refusal", "mobile/refusal",
+        ] + [f"desktop/geometry_step/{k}" for k in range(3)]
+        # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang;
+        # ảnh phần tử và lời từ chối dùng NGUYÊN khung.
+        assert all(c["scale"] == 1.0 for c in meta["cells"])
+        panel = next(c for c in meta["cells"] if c["state"] == "desktop/solution_neutral_final")
+        assert panel["crop_box_px"] == [0, 0, 600, 300]
+        assert sheet.width >= 2 * 1400 and meta["legend"] and meta["label_font_px"] >= 24
+        assert "XANH = đang xét" in meta["legend"] and "cam đậm = dữ kiện số" in meta["legend"]
+        # Vật đã dựng giữ MÀU KIỂU ở khung trung tính (mặt phẳng tím, thiết diện hổ
+        # phách...) — chú giải không được hứa "trung tính" (w12, sheet e115eede),
+        # và mỗi dòng phải nằm trọn trong bề ngang sheet (bản cũ bị cắt ở mép phải).
+>       assert "TRUNG TÍNH = đã dựng" not in meta["legend"] and "thiết diện hổ phách" in meta["legend"]
+E       AssertionError: assert ('TRUNG TÍNH = đã dựng' not in 'XANH = đang...ngoài chuỗi.'
+E         
+E         'TRUNG TÍNH = đã dựng' is contained here:
+E         ?           ^^
+E           c chọn) · TRUNG TÍNH = đã dựng · NÉT ĐỨT = cạnh khuất.  Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = ngữ cảnh cấu trúc · mờ = ngoài chuỗi.
+E         ?           ^^^^^^^^^^^^^^^^^^^^^^)
+
+tests\geometry\test_scene3d_visual_evidence.py:117: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w12_family_sheet_keeps_every_required_state_at_native_resolution
+1 failed in 2.09s
+exit=1
