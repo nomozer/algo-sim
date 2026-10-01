@@ -18,6 +18,8 @@
 - [`docs/ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — Bản đồ kiến trúc hệ thống, luồng xử lý từ input → Analyze LLM → FactGraph → Primitive Compiler / LLM Synthesis → Visual Obligation Gate → Scene3D Replay.
 - [`docs/CORRECTNESS.md`](CORRECTNESS.md) — Mô hình đúng đắn giữa hệ thống chuẩn (canonical) và người học (learner).
 - [`docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) — Amendment hiện hành cho edge identity, visual ownership, occlusion spans, typed formation và oracle độc lập.
+- [`docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md`](architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md) — Kiểm kê w13: giả định tuyệt đối (A–J) và năng lực theo tầng của 17 nhóm hình; dữ liệu ở [`geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json).
+- [`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md) — Mô hình dựng hình theo lớp hình, chính sách giả định/mặc định, grounding nguồn, chính sách môi trường; tiền đăng ký W14.
 - [`docs/COVERAGE.md`](COVERAGE.md) — Nguyên tắc sư phạm, phạm vi phủ chương trình và các tuyên bố bị cấm.
 
 ## 4. Planning & Issues (Kế Hoạch & Vấn Đề Đang Mở)

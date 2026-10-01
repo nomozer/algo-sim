@@ -79,6 +79,17 @@ GIVEN: toạ độ bố cục/giả thiết có thể cố định một kích t
 (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`). Nguồn:
 `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`.
 
+⚠️ **Giới hạn đo thêm 2026-10-01 (w13, offline, 0 lượt gọi):** "đóng cho GIVEN" chỉ
+đúng với các cách viết bộ đọc nhận ra. Một độ dài có nhãn mà bộ đọc không nhận
+(*"AB dài 5 cm"*) bị coi là số đứng một mình, nên chương trình khai `AC = 5` vẫn
+qua (`ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE`); *"AB = AC = 5"* thì từ chối
+oan `AB = 5`. Phạm vi tuyên bố: đúng các hàng của
+`docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json`.
+Năng lực theo tầng của 17 nhóm hình (chóp đều, lăng trụ xiên, khối cong, nhiều
+khối, tiếp xúc, góc nhị diện…) ở `docs/architecture/geometry_capability_matrix_v2.json`
+— đó là kiểm kê kiến trúc, **không** phải năng lực sản phẩm; khoá luận chỉ trích
+năng lực sản phẩm từ `product_capability.py` và bằng chứng đo.
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

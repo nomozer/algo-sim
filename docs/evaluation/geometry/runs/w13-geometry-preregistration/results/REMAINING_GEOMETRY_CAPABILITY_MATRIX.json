@@ -3,7 +3,8 @@
   "task": "W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
   "derived_from": {
     "path": "docs/architecture/geometry_capability_matrix_v2.json",
-    "sha256": "005616618e2ed782da6470b75d75e1f3e08f3473d872b76502cd0342fa8ef67d"
+    "sha256": "6bac0245139cacf0394c44ed6e84e2f9303a057c9ee50c9cbe47971b418f6574",
+    "sha256_basis": "LF-normalised content (= git blob content); corrected in the w13 documentation commit — 7202befe recorded the hash of the CRLF working-copy bytes (00561661…)"
   },
   "rule": "Derived view: every cell of the v2 matrix whose status is not SUPPORTED or NOT_APPLICABLE. The v2 matrix is the authority; this file only filters it at W13 time.",
   "groups": [

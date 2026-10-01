@@ -1,0 +1,82 @@
+{
+  "schema_version": "run-manifest/1",
+  "run_id": "w13-geometry-preregistration",
+  "sha256_basis": "LF-normalised content (= git blob content) for every file; `bytes` is the length of the hashed content",
+  "layout": {
+    "inputs/": "w12 human verdict (additive record)",
+    "results/": "absolute-assumption inventory; remaining-cells view of the v2 matrix",
+    "diagnostics/": "offline source-grounding probe and its result, repository gate, verification logs, worktree cleanup"
+  },
+  "outside_this_run": [
+    "docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md",
+    "docs/architecture/geometry_capability_matrix_v2.json",
+    "docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md"
+  ],
+  "files": {
+    "diagnostics/logs/CLEAN_WORKTREE_DOCS_TESTS_7202befe.log": {
+      "bytes": 871,
+      "sha256": "7835a135e865d98b9e8a310592e2ecb5929e18b716c45bc7036f9d54d630008b",
+      "producer": "pytest + docs audit in the clean detached worktree D:/tmp/w13-verify-c1 at 7202befe"
+    },
+    "diagnostics/logs/PHASE0_REPOSITORY_GATE.log": {
+      "bytes": 1480,
+      "sha256": "a043277cfc043854ffaf519c3c1b1f3783a24e55ac0708560fe4e7be4f77b5fe",
+      "producer": "repository gate commands (fetch, ancestry, identity verify)"
+    },
+    "diagnostics/logs/VERIFICATION_MAIN_TREE.log": {
+      "bytes": 2654,
+      "sha256": "067d1990060a5ec4c3d36503a266872f4f6691373126536d3e749436660b396e",
+      "producer": "identity, schema, diff and docs checks in the main tree"
+    },
+    "diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json": {
+      "bytes": 13762,
+      "sha256": "7f6897f65747007cbbcbdf6f0c2535a4d1a9ed46a788fef80517f70c6cde6382",
+      "producer": "diagnostics/source_grounding_probe.py at bf5a7907"
+    },
+    "diagnostics/source_grounding_probe.py": {
+      "bytes": 6488,
+      "sha256": "60e21639e84a9417a35ef04ad7d03e995e9191a57c5953da9bdeba3065cc0d5d",
+      "producer": "hand-written offline probe (0 model calls); refuses to overwrite a result"
+    },
+    "diagnostics/WORKTREE_CLEANUP.json": {
+      "bytes": 1035,
+      "sha256": "6bb31fbe70e24e52290dc59707d0858f47717fc9778888f800b84228c42119bb",
+      "producer": "hand-written record of the temporary worktree"
+    },
+    "HANDOFF.md": {
+      "bytes": 4955,
+      "sha256": "2d40879af67bf95d6b35a47dd810526e51a06e43351a9a04444e4e5af3866824",
+      "producer": "hand-written run document"
+    },
+    "inputs/W12_HUMAN_VISUAL_REVIEW.json": {
+      "bytes": 5330,
+      "sha256": "523fbffa29700f305caaf1586f6922b8ad47a9529fcb6564488927a57c66d370",
+      "producer": "hand-written additive record of the w12 human verdict (task statement); root causes read from code at bf5a7907"
+    },
+    "README.md": {
+      "bytes": 2291,
+      "sha256": "47687653e09087eb43a04fb88abc5d92c54ea20a6b28e507326204597ed1f5af",
+      "producer": "hand-written run document"
+    },
+    "REPORT.md": {
+      "bytes": 7894,
+      "sha256": "b3471dfdf7ec47033eebb3a60bd07f442d6cea0580e18669b00aa47d18990459",
+      "producer": "hand-written run document"
+    },
+    "results/ABSOLUTE_ASSUMPTION_INVENTORY.json": {
+      "bytes": 50880,
+      "sha256": "49629c32bdc28a3448ec73bb6d102f5b806c67f99c9b32257f090c4b19ebfefd",
+      "producer": "hand-authored audit data, serialised and counted by a session helper (not committed); sources are file:line at bf5a7907"
+    },
+    "results/REMAINING_GEOMETRY_CAPABILITY_MATRIX.json": {
+      "bytes": 30569,
+      "sha256": "dd323355b1fdeb2d2e17ea9b0aabaf6980f5bf2840b9d0f90bd664df6e256d5b",
+      "producer": "derived view of docs/architecture/geometry_capability_matrix_v2.json (non-supported cells); link hash corrected to LF basis in the documentation commit"
+    },
+    "RUN.json": {
+      "bytes": 2970,
+      "sha256": "e2d782324bf2b1b228b477c94485116c79f7c384acaf90a76e6dbeee41a02065",
+      "producer": "hand-written run document"
+    }
+  }
+}

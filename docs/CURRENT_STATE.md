@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **105** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,19 +53,34 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 442584cf (measurement commit c243968b)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 442584cf (measurement commit c243968b) — w13 đổi tài liệu, không đổi sản phẩm
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 105
 > CANDIDATE = 548f5b3b… (was df04a613…), product commit 4014f311
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+> CURRENT_WAVE = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, chỉ tài liệu)
+> FINAL_DECISION = ARCHITECTURE_PREREGISTRATION_READY
+> CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+> TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (bắt đầu sau khi người dùng trả lời D2, D3)
 > ```
 
-> **Dòng thời gian hình học · lớp lời giải · màu vai trò · grounding nguồn — trạng thái authoritative hiện tại (w12, measurement `c243968b`, detached clean worktree):**
+> **Kiểm kê năng lực + giả định tuyệt đối — w13 (chỉ tài liệu, đọc mã tại `bf5a7907`):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Review người của w12 | **NEEDS_CHANGES**, merge **NO** (W12-H1…H4) — ghi bổ sung ở `inputs/W12_HUMAN_VISUAL_REVIEW.json` của run w13; chóp/lăng trụ tam giác thiếu bước dựng riêng, bốn họ còn lại `PROVISIONAL_PASS` |
+> | Nguyên nhân gốc H1/H2 | mỗi họ compiler tự viết chuỗi câu lệnh (`ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`) — không vá riêng hai họ |
+> | Giả định tuyệt đối | 67 mục, 10 cần sửa (J), 5 mức HIGH — `results/ABSOLUTE_ASSUMPTION_INVENTORY.json` |
+> | Ma trận năng lực theo tầng | 17 nhóm × 17 tầng — [`docs/architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json); không ghi đè `product_capability.py` |
+> | Tiền đăng ký | [`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md) — dựng hình theo lớp hình, chính sách giả định, chuẩn hoá nguồn `XY dài v` |
+> | Sản phẩm · candidate · cache | không đổi: `548f5b3b…` verify PASS, `CACHE_VERSION` 105 verify PASS, schema hai bản trùng byte |
+> | Full suite | `NOT_RUN_NOT_REQUIRED_FOR_DOCS_ONLY_AUDIT` |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w13-geometry-preregistration/` (`REPORT.md`, `HANDOFF.md`).
+> Bảng w12 dưới đây giữ làm lịch sử.
+
+> **Dòng thời gian hình học · lớp lời giải · màu vai trò · grounding nguồn — w12 (measurement `c243968b`, detached clean worktree; review người sau đó = NEEDS_CHANGES, ghi ở run w13):**
 >
 > | Gate | Kết quả |
 > |---|---|
@@ -78,7 +93,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Crop cạnh khuất · sheet theo họ | **PASS** — 64 crop, 0 bất đồng oracle, 0 owner trùng |
 > | Candidate · `CACHE_VERSION` | `548f5b3b…` (đóng băng BA lần, lần cuối tại `4014f311`) · **105** (bump một lần ở `d17550c3`; fingerprint provider không đổi) |
 > | Worktree tạm | 8/8 đã gỡ, 0 artifact duy nhất có rủi ro |
-> | Human visual acceptance | **NOT_APPROVED** — việc kế tiếp |
+> | Human visual acceptance | **NEEDS_CHANGES** (W12-H1…H4, ghi ở run w13) — merge NO |
 > | Merge | **NOT_EXECUTED** |
 >
 > Nguồn: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/` (`REPORT.md`,
@@ -5047,6 +5062,15 @@ doc" như thể file tồn tại.
 
 ## 3. Năng lực đang hỗ trợ
 
+> ⚠️ **Đính chính W13 (2026-10-01): các danh sách dưới đây đã cũ** — chúng ghi
+> 8 biểu thức · 6 câu lệnh · 5 phép đo và `CURVED_GEOMETRY_SUPPORT = NONE`, trong
+> khi mã tại `bf5a7907` có **11 · 9 · 7** (hàng danh tính ở đầu file, khoá đồng bộ)
+> và nhân hình học đã có khối cong (`geometry/curved.py`). Đừng đọc danh sách ở
+> đây; tra thẩm quyền: `runtime_identity()` / `backend/scripts/audit_named_operand_ergonomics.py`
+> (IR), `backend/app/simulation/product_capability.py` (năng lực sản phẩm),
+> [`docs/architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json)
+> (năng lực theo tầng). Nội dung cũ giữ nguyên làm lịch sử (`ISSUE-DOCS-STALE-CAPABILITY-CLAIMS`).
+
 Miền **duy nhất**: hình học không gian (Toán 11–12). `simulation_id` duy nhất:
 `generic.semantic_program`. Danh sách dưới đây **dẫn từ thẩm quyền**, kiểm bằng
 `GET /api/diagnostics/runtime` hoặc `runtime_identity()` — đừng chép tay.
@@ -5091,6 +5115,12 @@ DSL v1, chỉnh sửa tăng dần/EditPolicy) **đã gỡ hết** ở
 `LEGACY_INFORMATICS_REMOVAL`. Tra ở git history.
 
 ## 4. Capability gap CỐ Ý (không phải bug — `docs/CORRECTNESS.md §5`)
+
+> ⚠️ **Đính chính W13 (2026-10-01):** hai hàng đầu bảng dưới đã cũ — mặt cong
+> (cầu, trụ, nón) và khối không lồi **có** nền tất định trong nhân hình học, trạng
+> thái sản phẩm `foundation_only` (`backend/app/simulation/product_capability.py`).
+> Các hàng còn lại vẫn đúng. Khoảng trống hiện tại, theo từng tầng:
+> [`docs/architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json).
 
 Không biểu diễn được bằng IR → **từ chối có cấu trúc**, tuyệt đối **không**
 render xấp xỉ:

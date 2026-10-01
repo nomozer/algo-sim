@@ -1435,6 +1435,29 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW (HUMAN_VISUAL_REVIEW = NOT_APPROVED, MERGE_READY = NO)
 
+### WAVE_ID = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION
+- **DATE:** 2026-10-01
+- **START_BASE:** bf5a7907
+- **CODE_COMMIT_OR_NONE:** NONE (documentation, evidence and the docs-audit allow-list only; backend/app and frontend/src untouched)
+- **COMMITS:** docs(architecture) audit + matrix v2 + inventory + grounding probe · docs(eval) preregistration + W12 review record + run docs + living docs
+- **CANDIDATE:** 548f5b3b… unchanged (verify PASS at start and end) · CACHE_VERSION 105 unchanged · schema mirrors byte-identical
+- **EVIDENCE_COMMIT_ROLE:** SELF (docs-only run)
+- **CLASSIFICATION:** ARCHITECTURE_PREREGISTRATION_READY
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w13-geometry-preregistration/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w13-geometry-preregistration/
+- **PASS:** W12 human review recorded additively (NEEDS_CHANGES, merge NO, W12-H1…H4; four families PROVISIONAL_PASS; amber section = design question) · root cause of H1/H2 read from code (per-family compiler sequences) · 67 absolute assumptions classified A–J with file:line sources (10 J, 5 HIGH) · 17 groups × 17 layers capability matrix v2 (does not override product_capability.py or CAPABILITY_MATRIX.json) · generic formation model, assumption/default policy, source-grounding table (offline probe, 25 rows, 0 calls), capability-based environment policy · W14 preregistered · docs audit + docs tests · candidate/cache/schema verify
+- **CLOSED:** ISSUE-ARCH-PRISM-COMPILER-GAP · ISSUE-ARCH-REQUEST-CONTRACT-PRISM-GAP (stale; resolved by code since 5a5534fe, verified in the audit)
+- **OPENED:** ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE · ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE · ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH · ISSUE-ARCH-PROMPT-OBLIQUE-SECTION-STALE · ISSUE-ARCH-EXACT-PLACEMENT-FEASIBILITY · ISSUE-DOCS-STALE-CAPABILITY-CLAIMS
+- **OPEN (blocking merge of the branch):** ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION (W12-H4) · W12-H1/H2 formation
+- **FULL_PRODUCT_SUITE:** NOT_RUN_NOT_REQUIRED_FOR_DOCS_ONLY_AUDIT
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (human review NEEDS_CHANGES)
+- **NEXT_ACTION_AT_TIME:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (after user decisions D2, D3)
+- **FINAL_DECISION:** ARCHITECTURE_PREREGISTRATION_READY
+
 
 
 

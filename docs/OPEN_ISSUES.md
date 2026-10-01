@@ -6,6 +6,78 @@
 
 ---
 
+### ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE
+- **description:** The compiler writes one hand-made statement sequence per family. The triangular pyramid (`bien_dich`) and triangular prism (`_bien_dich_prism`) emit no height segment, no lateral-edge group and (prism) no top face, so their timeline is only givens/points → base → whole solid; the rectangular pyramid and box paths have those steps. Root cause of the w12 human findings W12-H1/H2.
+- **evidence:** `backend/app/simulation/geometry_compiler/compiler.py` (`bien_dich` ~917, `_bien_dich_prism` ~1046, `_bien_dich_rectangular_pyramid` ~1153, `_bien_dich_cuboid` ~1315); `docs/evaluation/geometry/runs/w13-geometry-preregistration/inputs/W12_HUMAN_VISUAL_REVIEW.json`; inventory item NA-18.
+- **impact:** Formation quality depends on which family a problem lands in; patching the two families alone would repeat the defect for every new shape.
+- **scope:** `backend/app/simulation/geometry_compiler/`, trace events / `scene3d` formation.
+- **status:** OPEN — generic shape-class formation preregistered (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` §2, §6 Track A).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION`
+- **default_switch_blocker:** NO
+- **acceptance:** S1–S3 of the preregistration: every pyramid/prism family shows the required semantic roles as separate observable steps from one code path, with no branch on a family ID.
+- **verify:** the semantic-coverage tests and AST guard named in the preregistration.
+
+### ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE
+- **description:** A labelled length the source reader does not recognise (*"AB dài 5 cm"*) binds no segment, so the number falls under the standalone-value rule and a program may declare a different segment (`AC = 5`) as GIVEN without any gate objecting.
+- **evidence:** `docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json` row `standalone_wrong_segment` (offline, 0 model calls); inventory item NA-57.
+- **impact:** A GIVEN value can be attached to the wrong segment; the figure and the answer can be wrong while every gate is green.
+- **scope:** `backend/app/simulation/semantic_program/segment_relation.py`, `grounding_gate.py` (one length reader).
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION` (Track C)
+- **default_switch_blocker:** NO
+- **acceptance:** `XY dài v [unit]` is read as a labelled length; the probe row is refused and every other probe row keeps its result.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/source_grounding_probe.py <new-output.json>` and compare its rows with the w13 file (the probe refuses to overwrite an existing result).
+
+### ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH
+- **description:** `test_raw_response_identity_reproduced` asserts that `D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json` exists. The file lives outside git and the test has no marker or skip, so it runs in the default pytest and in T3.
+- **evidence:** `backend/tests/geometry/test_evidence_identity_reconciliation.py:97-107`; inventory item NA-05.
+- **impact:** T3 passes only on the machine that holds that directory; a clean checkout fails for a reason unrelated to the product. The raw model output cannot be committed (AGENTS.md §4).
+- **scope:** Backend test environment only.
+- **status:** OPEN
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** backlog item 1 of the W13 preregistration
+- **default_switch_blocker:** NO
+- **acceptance:** the check sits behind an opt-in marker and reports `NOT_PORTABLE_EXTERNAL_EVIDENCE` when the file is absent; the default suite never reads a path outside the repository.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_evidence_identity_reconciliation.py -q` on a checkout without `D:/tmp/live_retry_evidence`.
+
+### ISSUE-ARCH-PROMPT-OBLIQUE-SECTION-STALE
+- **description:** The production geometry synthesis prompt (`program_skill_for` → `geometry_program_generator.md`) still tells the model that an oblique plane through a cylinder or cone "cannot be expressed", while the IR has `intersect_plane_curved_ellipse` (cylinder 2026-09-07, cone 2026-09-08) and the grammar card sent with the prompt lists it.
+- **evidence:** `backend/app/ai/skills/geometry_program_generator.md:85-86`; `backend/app/simulation/semantic_program/ir_static_check.py` (`_CHU_KY`); inventory item NA-52.
+- **impact:** Contradictory model-facing guidance. The final acceptance still served both ellipse cases, so the card wins today; the contradiction can cost repairs on other problems.
+- **scope:** Model-facing surface (prompt hash ⇒ `CACHE_VERSION` decision and re-measurement).
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** a wave allowed to change the model surface (backlog item 2)
+- **default_switch_blocker:** NO
+- **acceptance:** the prompt states the oblique-section capability and its closure (ellipse only; parabola/hyperbola refused) consistently with the card; the surface change is measured.
+- **verify:** `grep -n "xiên" backend/app/ai/skills/geometry_program_generator.md` and the prompt fingerprint in `runtime_doctor.py`.
+
+### ISSUE-ARCH-EXACT-PLACEMENT-FEASIBILITY
+- **description:** Points live in Q³ only. A figure without a rational placement (an equilateral triangle in a coordinate plane needs √3; a regular pyramid given by base and lateral edge usually needs an irrational height) cannot be built exactly, and there is no stable refusal code for it. `geometry/exact.py::hf` turns a JSON float into `Fraction(x).limit_denominator(10**9)` while its docstring says floats keep their exact binary value, so approximate decimal coordinates enter the exact kernel looking exact.
+- **evidence:** `backend/app/simulation/geometry/exact.py:71-93`; inventory items NA-42, NA-54; matrix v2 groups G01–G04.
+- **impact:** Regular solids and angle-defined oblique solids are not exactly constructible; whether approximate coordinates are ever served is NOT_MEASURED.
+- **scope:** `backend/app/simulation/geometry/` (kernel boundary), grounding of coordinates.
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** backlog item 3 (measure first with a 0-call probe)
+- **default_switch_blocker:** NO
+- **acceptance:** a deterministic placement-feasibility check with a stable refusal code; the float policy is either a refusal or a stated contract; the docstring matches the code.
+- **verify:** the probe named in the W13 preregistration §7.
+
+### ISSUE-DOCS-STALE-CAPABILITY-CLAIMS
+- **description:** Living docs still state retired capability absolutes: "8 expressions · 6 statements · 5 measures" and `CURVED_GEOMETRY_SUPPORT = NONE` (CURRENT_STATE §3), curved and non-convex solids as deliberate gaps (CURRENT_STATE §4), "convex polyhedra only, no curved surfaces" (README §9–10), non-convex out of scope (THESIS_ARCHITECTURE §A/§J).
+- **evidence:** inventory item NA-53; sync-locked identity row of CURRENT_STATE (11 · 9 · 7); `backend/app/simulation/product_capability.py`.
+- **impact:** A reader of the "current" sections learns the opposite of the code.
+- **scope:** `docs/CURRENT_STATE.md`, `README.md`, `docs/THESIS_ARCHITECTURE.md`.
+- **status:** PARTIAL — W13 added correction banners to CURRENT_STATE §3/§4; README and THESIS_ARCHITECTURE are not edited yet.
+- **owner_class:** DOCS
+- **suggested_wave:** documentation wave (backlog item 8)
+- **default_switch_blocker:** NO
+- **acceptance:** no living doc states a capability list that differs from `runtime_identity()` / `product_capability.py`; lists link to the authority instead of copying it.
+- **verify:** `grep -n "CURVED_GEOMETRY_SUPPORT\|LỒI" README.md docs/CURRENT_STATE.md docs/THESIS_ARCHITECTURE.md`
+
 ### ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH
 - **description:** 11 frontend test files build repository paths from `new URL(..., import.meta.url).pathname`, which keeps `%20`; from a worktree path containing a space they fail with ENOENT (and `spawnSync git` with a bad cwd).
 - **evidence:** `docs/evaluation/geometry/runs/w09-verify-cleanup/diagnostics/logs/T3_FULL_GATE_SPACED_PATH_fe3eccee.log` (vitest 23 failed / 860).
@@ -120,6 +192,7 @@
 - **impact:** Hệ thống chưa thể biên dịch tất định các họ hình học không gian phổ biến khác trong chương trình THPT.
 - **scope:** `backend/app/simulation/compiler/`
 - **status:** OPEN
+- **w13_audit:** the description and paths are stale at `bf5a7907` — the package is `backend/app/simulation/geometry_compiler/` and `compiler.py:41-53` supports six families (right-triangle pyramid and prism, rectangular pyramid, cuboid, cube, right square prism). What remains narrow is listed by layer in `docs/architecture/geometry_capability_matrix_v2.json` (`L08 compiler_rule`) and in `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
@@ -180,6 +253,7 @@
 - **impact:** Người dùng phải gõ lại đề bài bằng văn bản thay vì chụp ảnh trực tiếp từ sách giáo khoa.
 - **scope:** `backend/app/ingestion/`
 - **status:** OPEN
+- **w13_audit:** the evidence line is stale — a photo route exists (`POST /api/image/extract`, `backend/app/ingestion/image_extraction.py`: multimodal transcription, deterministic assessment, learner review before analyze). A dedicated OCR pipeline is still absent; whether this issue is still wanted is a scope decision.
 - **owner_class:** INGESTION
 - **suggested_wave:** P4 (Image Acquisition)
 - **default_switch_blocker:** NO
@@ -249,7 +323,7 @@
 - **evidence:** `docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`, `docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/VERTICAL_SLICE_SCOPE_MAP.json`.
 - **impact:** Họ bài `right_triangle_base_right_prism_volume` chưa thể biên dịch tất định cho đến khi hoàn thành vertical slice qua đủ 12 tầng kỹ thuật.
 - **scope:** `backend/app/simulation/geometry_compiler/`
-- **status:** OPEN
+- **status:** RESOLVED — verified by the W13 audit at `bf5a7907`: `geometry_compiler/primitives.py` has `construct_prism`, `fact_graph.py::LOAI_NUT` has `prism`, `compiler.py` supports `right_triangle_base_right_prism_volume` (vertical slice `5a5534fe`, 2026-09-22, `docs/EVIDENCE_INDEX.md`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
@@ -259,7 +333,7 @@
 - **evidence:** `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`, `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`.
 - **impact:** Cần áp dụng hợp đồng đã thiết kế vào `request_contract.py` và `contract_adapter.py` trong vertical slice tiếp theo.
 - **scope:** `backend/app/simulation/semantic_program/request_contract.py`, `backend/app/simulation/geometry_compiler/contract_adapter.py`
-- **status:** OPEN
+- **status:** RESOLVED — verified by the W13 audit at `bf5a7907`: `request_contract.py` carries `solid_topology: PrismTopologySpec | PyramidTopologySpec | None` (base cycle, top cycle, correspondence). The remaining contract gaps (one solid only, no regularity, no curved topology) are tracked by layer in `docs/architecture/geometry_capability_matrix_v2.json`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
@@ -282,8 +356,9 @@
 - **impact:** A hallucinated dimension can still surface as a coordinate choice on the LLM route. It is never labelled as given by the problem, and the compiler route does not use this channel.
 - **scope:** `backend/app/simulation/semantic_program/` (which free coordinate choices may carry a metric the text does not state).
 - **status:** OPEN — found in w12; changing what a layout or an assumption may decide is a separate grounding-policy decision, measured separately.
+- **w13:** policy and acceptance criteria preregistered (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` §3: GIVEN_VALUE / DERIVED_VALUE / MODEL_ASSUMPTION / VISUAL_DEFAULT, rules P1–P6, AC1–AC7); w12 human review lists this issue as W12-H4.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** after human visual review
+- **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION` (Track B)
 - **default_switch_blocker:** NO (an argument for compiler-first)
 - **acceptance:** a dimension that the answer depends on is either stated in the text, derived from stated facts, or shown to the learner as an assumption; the probe's layout and assumption variants are refused or labelled.
 - **verify:** rerun the script embedded in the probe log.

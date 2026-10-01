@@ -9,22 +9,27 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
 ```
 
-- **Mục tiêu:** Người duyệt lại bằng chứng của run
-  `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/` theo
-  `HANDOFF.md` của run: sheet từng họ `images/<họ>/SHEET.png` (trung tính ·
-  causal · xoay · mobile · bảng lời giải · từ chối khi đề thiếu dữ kiện · mọi
-  BƯỚC DỰNG, có chú giải). Review w11 là `NEEDS_CHANGES` (W11-H1…H5: timeline
-  trộn bước tính, bước tĩnh, lớp lời giải, cam đậm hai nghĩa, GIVEN không có
-  trong đề); mọi cổng tự động của w12 đã xanh.
-- **Điều kiện dừng:** Automation không phát `MERGE_READY`; chưa push/merge cho
-  tới khi người duyệt chấp nhận.
-- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 105`
-  khi provider fingerprint không đổi và 0 live Gemini request. Không mở rộng
-  family, image/OCR hoặc composite geometry trước khi có human visual acceptance.
+- **Mục tiêu:** Thực hiện đúng bản tiền đăng ký
+  [`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md)
+  §6: (A) dựng hình theo lớp hình cho khối đa diện, một đường mã cho mọi họ —
+  đóng W12-H1/H2 mà không vá riêng chóp/lăng trụ tam giác; (B) chính sách giả
+  định/mặc định — đóng `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`
+  (W12-H4); (C) đọc `XY dài v` như độ dài có nhãn —
+  `ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE`. Review w12 là `NEEDS_CHANGES`
+  (ghi ở run `w13-geometry-preregistration`).
+- **Điều kiện bắt đầu:** người dùng trả lời D2 (chỉ từ chối + gắn nhãn, hay thêm
+  xác nhận trên giao diện) và D3 (dựng hình nón/cầu có vào W14 không) — §8 của
+  bản tiền đăng ký.
+- **Điều kiện dừng:** luật dừng §6.4 (đổi bề mặt mô hình, từ chối oan chương trình
+  gold, phá #31/#35, cần lượt gọi model). Automation tối đa
+  `READY_FOR_HUMAN_VISUAL_REVIEW`; không push/merge.
+- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;
+  `CACHE_VERSION` quyết định bằng bằng chứng. Không mở họ mới, khối cong, nhiều
+  khối hay image/OCR trong W14.
 
 
 
@@ -54,6 +59,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDE
 - Các phép đo nâng cao: khoảng cách giữa hai đường thẳng chéo nhau, góc giữa đường thẳng và mặt phẳng, góc nhị diện.
 - Thiết diện phức tạp cắt bởi mặt phẳng đi qua các điểm xác định.
 - Khối tròn xoay (hình nón, hình trụ, mặt cầu) khi nền tảng đa diện đã hoàn thiện và ổn định.
+- Trạng thái theo từng tầng của mười bảy nhóm hình (gồm chóp đều, lăng trụ xiên, nón cụt, nhiều khối, tiếp xúc, góc nhị diện) và thứ tự sửa đề xuất: [`docs/architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json), [`GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md) §7 (W13).
 
 ### P3 — Visualization & Readability (Trực Quan Hóa và Khả Năng Đọc Cảnh 3D)
 - Bộ giải bố cục không gian 3D tự động (spatial layout solver) đảm bảo tỉ lệ thẩm mỹ và hạn chế méo hình.

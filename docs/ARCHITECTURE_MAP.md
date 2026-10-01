@@ -54,6 +54,7 @@ Input text/image
 
 2. **Đường compiler thực nghiệm (Compiler Experimental Slice):**
    - Đã chứng minh trên vertical slice: họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
+     *(w13: danh sách này đã cũ — `geometry_compiler/compiler.py::SUPPORTED_FAMILIES` có sáu họ; mỗi họ còn tự viết chuỗi câu lệnh, xem `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.)*
    - Sau khi Analyze trích xuất `structured_relations`, `FactGraph` nhận diện cấu trúc và gọi `primitive_compiler` để sinh `SemanticProgramSpec` 100% tất định (0 lượt gọi LLM synthesis).
 
 3. **Kiến trúc đích (Target Architecture: Compiler-First + LLM Fallback):**
@@ -85,6 +86,13 @@ Input text/image
 
 Chi tiết quyết định và trạng thái gate hiện tại nằm ở
 [`docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md).
+
+Năng lực theo tầng (17 nhóm hình × 17 tầng) và các giả định tuyệt đối còn phải
+sửa: [`docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md`](architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md)
+(w13). Hướng thay chuỗi câu lệnh viết tay theo từng họ bằng dựng hình theo **lớp
+hình** (vai trò gắn ở producer, bước con là sự kiện trace thật — #31/#35 giữ) và
+chính sách giả định/mặc định: [`GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md)
+— **tiền đăng ký, chưa triển khai**.
 Việc triển khai hidden-line không đồng nghĩa verification sạch — trạng thái gate
 hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
 

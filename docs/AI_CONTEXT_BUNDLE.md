@@ -19,13 +19,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12)
-MEASUREMENT_COMMIT = c243968b1ec263d2ab48040d569eec45efe9cfaa
-EVIDENCE_COMMIT = 442584cf (also the T3 commit)
-ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce
-CANDIDATE = 548f5b3b9ff89158… (was df04a613…), product commit 4014f311
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (w11 review = NEEDS_CHANGES; w12 pending)
+CURRENT_WAVE = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, docs only)
+MEASUREMENT_COMMIT = c243968b1ec263d2ab48040d569eec45efe9cfaa (w12; w13 measured nothing in a browser)
+EVIDENCE_COMMIT = 442584cf (w12, also the T3 commit)
+ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w13, unchanged)
+CANDIDATE = 548f5b3b9ff89158… (was df04a613…), product commit 4014f311 — unchanged in w13
+FINAL_DECISION = ARCHITECTURE_PREREGISTRATION_READY
+HUMAN_VISUAL_REVIEW = NEEDS_CHANGES (w12, W12-H1…H4, recorded in run w13); MERGE_APPROVAL = NO
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -111,10 +111,24 @@ người của w11 (`NEEDS_CHANGES`, W11-H1…H5):
   tin. Candidate đóng băng ba lần: `product_commit_sha` = commit cuối chạm
   backend/app HOẶC frontend/src — sửa frontend cũng phải đóng băng lại.
 
+Wave w13 (`W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION`,
+chỉ tài liệu) ghi review w12 (`NEEDS_CHANGES`: chóp/lăng trụ tam giác thiếu bước
+đường cao, cạnh bên, đáy trên, khép khối; không vá riêng hai họ; kênh giả định còn
+mở) và kiểm kê: gốc H1/H2 là mỗi họ compiler tự viết chuỗi câu lệnh; 67 giả định
+tuyệt đối (10 cần sửa); ma trận 17 nhóm × 17 tầng
+(`docs/architecture/geometry_capability_matrix_v2.json`); tiền đăng ký W14
+(`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`).
+
 ## 4. Còn mở — không được che
 
-- **Human visual acceptance: NOT_APPROVED** — việc kế tiếp; chưa merge. Câu hỏi
-  cho người duyệt: thiết diện giữ màu KIỂU hổ phách ở khung trung tính.
+- **Human visual acceptance: NEEDS_CHANGES** (w12) — chưa merge. Thiết diện hổ
+  phách ở khung trung tính là câu hỏi thiết kế (W12-D1), không phải lỗi.
+- Mới ở w13: `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`,
+  `ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE` (*"AB dài 5 cm"* ⇒ khai `AC = 5` lọt),
+  `ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH` (một test đòi `D:/tmp/...`),
+  `ISSUE-ARCH-PROMPT-OBLIQUE-SECTION-STALE`, `ISSUE-ARCH-EXACT-PLACEMENT-FEASIBILITY`,
+  `ISSUE-DOCS-STALE-CAPABILITY-CLAIMS`. Hai issue prism cũ đã đánh dấu RESOLVED
+  theo mã.
 - Mới ở w12: `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION` (toạ độ bố cục/giả
   thiết vẫn có thể cố định một kích thước đề không cho — không gắn GIVEN),
   `ISSUE-EVAL-CDP-SEND-NO-TIMEOUT` (một phản hồi DevTools mất làm treo lượt đo —
@@ -133,18 +147,22 @@ Tự động tại `c243968b` (detached): browser 12/12 + 12/12 âm grounding ·
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REREVIEW_OF_GEOMETRY_TIMELINE_EVIDENCE
+CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
 ```
 
-Người duyệt theo `HANDOFF.md` của run w12 (sheet từng họ: bước dựng, bảng lời giải,
-màu vai trò, lời từ chối khi đề thiếu dữ kiện; crop cạnh khuất; filmstrip
-playback). Không mở family, image/OCR, composite geometry trước khi có human visual
-acceptance; automation không phát `MERGE_READY`.
+Làm đúng §6 của bản tiền đăng ký: (A) dựng hình theo lớp hình, một đường mã cho
+mọi họ đa diện; (B) chính sách giả định/mặc định; (C) đọc `XY dài v`. Bắt đầu sau
+khi người dùng trả lời D2, D3 (§8). 0 lượt gọi model; automation tối đa
+`READY_FOR_HUMAN_VISUAL_REVIEW`; không mở họ mới, khối cong, nhiều khối, image/OCR.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`
+- Wave hiện hành (chỉ tài liệu): `docs/evaluation/geometry/runs/w13-geometry-preregistration/`
+  (`REPORT.md`, `HANDOFF.md`, `inputs/W12_HUMAN_VISUAL_REVIEW.json`,
+  `results/ABSOLUTE_ASSUMPTION_INVENTORY.json`,
+  `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json`).
+- Tự động mới nhất của sản phẩm: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
   `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
 - Ba wave trước (bất biến, review người ghi bổ sung ở run sau):
@@ -159,7 +177,9 @@ acceptance; automation không phát `MERGE_READY`.
   `docs/evaluation/geometry/worktree-recovery/WORKTREE_RECOVERY_INVENTORY.json`.
 - Correction chain owner: `docs/EVIDENCE_INDEX.md`.
 - Architecture amendment:
-  `docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`.
+  `docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`; kiểm kê và tiền
+  đăng ký w13: `docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md`,
+  `docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`.
 
 Historical run artifacts are immutable. Run mới phải theo
 `docs/evaluation/RUN_NAMING.md` (`wNN-short-slug`; ngày giờ nằm trong `RUN.json`).

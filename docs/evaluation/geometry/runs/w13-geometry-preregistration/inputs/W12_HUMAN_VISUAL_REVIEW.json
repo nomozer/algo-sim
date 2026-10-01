@@ -1,0 +1,61 @@
+{
+  "schema_version": "human-visual-review-record/1",
+  "reviewed_run": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure",
+  "reviewed_head": "bf5a7907157be6c1e30801e485faa0d9fbdfd290",
+  "reviewed_candidate_tree": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "reviewed_run_status_before_review": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "W12_AUTOMATION_RESULT": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "W12_HUMAN_REVIEW": "NEEDS_CHANGES",
+  "W12_MERGE_APPROVAL": "NO",
+  "verdict": "NEEDS_CHANGES",
+  "verdict_key": "MAINTAINER_HUMAN_REVIEW_VERDICT",
+  "recorded_by": "agent, from the user's task statement W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
+  "recording_rule": "Additive record: the w12 run directory is immutable and is not edited. It is linked to this run in docs/EVIDENCE_INDEX.md (CORRECTED_BY on the w12 entry). Only the verdict, the four reasons and the per-family statuses stated in the task are recorded; no reviewer wording is invented. Root causes under agent_determinations are read from code at the reviewed head; W13 changes no product code.",
+  "findings": [
+    {"id": "W12-H1", "area": "FORMATION", "family": "triangular_pyramid",
+     "finding": "the timeline only shows givens/points -> base -> whole solid; the height, the lateral edges and the closure of the solid are not shown as separate steps"},
+    {"id": "W12-H2", "area": "FORMATION", "family": "triangular_prism",
+     "finding": "the timeline only shows givens/points -> base -> whole solid; the top face, the lateral edges and the closure of the solid are not shown as separate steps"},
+    {"id": "W12-H3", "area": "SCOPE_RULE",
+     "finding": "do not repair the two families with family-specific hardcode before the missing shapes are assessed (regular pyramid, oblique prism, cylinder, cone, sphere)"},
+    {"id": "W12-H4", "area": "SOURCE_GROUNDING",
+     "finding": "ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION remains open: a layout or model-assumption coordinate can still fix a dimension the problem does not state"}
+  ],
+  "family_verdicts": {
+    "triangular_pyramid": "NEEDS_CHANGES",
+    "triangular_prism": "NEEDS_CHANGES",
+    "rectangular_pyramid": "PROVISIONAL_PASS",
+    "cuboid": "PROVISIONAL_PASS",
+    "cube": "PROVISIONAL_PASS",
+    "cross_section": "PROVISIONAL_PASS"
+  },
+  "provisional_pass_meaning": "Not rejected in this review. It is not a visual acceptance: no family is accepted while the two formation findings and the assumption channel are open, and the merge approval is NO.",
+  "design_questions": [
+    {"id": "W12-D1", "area": "COLOR",
+     "question": "the neutral (non-causal) view draws a section polygon in amber (MAU.polygon 0xf59e0b, frontend/src/simulations/domains/geometry/scene3d-view.tsx:113)",
+     "status": "DESIGN_QUESTION_NOT_A_DEFECT",
+     "note": "Recorded as an open design decision for the user; it is not counted as a failed gate and nothing is changed for it in W13."}
+  ],
+  "agent_determinations": {
+    "W12-H1": {
+      "classification": "FAMILY_SPECIFIC_FORMATION_GRANULARITY",
+      "root_cause": "The compiler writes one hand-made statement sequence per family. backend/app/simulation/geometry_compiler/compiler.py::bien_dich (right_triangle_base_pyramid_volume) emits declare_point x4, construct_triangle and construct_pyramid, so the trace has no object for the height and no lateral-edge object; its step narration says 'Dựng đường cao ... rồi đặt đỉnh chóp' but nothing in the scene is that height. _bien_dich_rectangular_pyramid emits construct_segment (height) and construct_segments_group (lateral edges) before construct_pyramid, which is why the rectangular pyramid shows two more steps.",
+      "repair": "NOT_IN_W13 (audit only). Preregistered: one shared pyramid-like formation plan derived from topology roles, used by every pyramid family; see docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md."
+    },
+    "W12-H2": {
+      "classification": "FAMILY_SPECIFIC_FORMATION_GRANULARITY",
+      "root_cause": "backend/app/simulation/geometry_compiler/compiler.py::_bien_dich_prism (right_triangle_base_right_prism_volume) emits declare_point x6, construct_triangle (base) and construct_prism. _bien_dich_cuboid already emits base polygon, top polygon, construct_segments_group (lateral edges) and construct_prism; the triangular prism path never received that sequence.",
+      "repair": "NOT_IN_W13 (audit only). Preregistered: one shared prism-like formation plan (base, translated top face, lateral edges, closure) used by every prism family."
+    },
+    "W12-H3": {
+      "classification": "SCOPE_RULE_ACCEPTED",
+      "basis": "W13 assesses the missing shapes before any repair: docs/architecture/geometry_capability_matrix_v2.json and docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md."
+    },
+    "W12-H4": {
+      "classification": "OPEN_ARCHITECTURE_ISSUE",
+      "basis": "docs/OPEN_ISSUES.md#ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION; probe docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/ASSUMPTION_CHANNEL_PROBE_79eb1e59.log",
+      "repair": "NOT_IN_W13. Policy and acceptance criteria preregistered (VISUAL_DEFAULT / MODEL_ASSUMPTION / DERIVED_VALUE / GIVEN_VALUE)."
+    }
+  },
+  "live_requests": 0
+}

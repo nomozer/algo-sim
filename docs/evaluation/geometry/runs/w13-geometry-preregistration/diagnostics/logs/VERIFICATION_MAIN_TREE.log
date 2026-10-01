@@ -1,0 +1,59 @@
+# W13 verification in the main working tree (HEAD 7202befe + uncommitted W13 docs; user's favicon deletion present)
+# date 2026-10-01T10:22:38Z
+## git status --short
+ M backend/scripts/audit_docs_information_architecture.py
+ M docs/AI_CONTEXT_BUNDLE.md
+ M docs/ARCHITECTURE_MAP.md
+ M docs/CODE_INDEX.md
+ M docs/CURRENT_STATE.md
+ M docs/EVIDENCE_INDEX.md
+ M docs/OPEN_ISSUES.md
+ M docs/README.md
+ M docs/ROADMAP.md
+ M docs/STATUS_LEDGER.md
+ M docs/THESIS_READINESS.md
+ D frontend/public/favicon.svg
+?? docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md
+?? docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/logs/CLEAN_WORKTREE_DOCS_TESTS_7202befe.log
+?? docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/logs/VERIFICATION_MAIN_TREE.log
+?? docs/evaluation/geometry/runs/w13-geometry-preregistration/inputs/
+## git diff --check (exit)
+exit=0
+## product diff lines (backend/app frontend/src, vs HEAD)
+0
+## DEFAULT_MODE / CACHE_VERSION (source)
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+712:CACHE_VERSION = "105"
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 103 file, 548f5b3b9ff89158…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 105 · môi trường b1714b566e25c912…
+exit=0
+## schema export twice (sha256 of both mirrors after each run)
+export1 exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json
+export2 exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json
+## git status after export (schema files must not appear)
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Test reconciliation balanced: True
+## backend docs-touching tests (dirty tree: the holdout readiness test requires a clean tree)
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+1 failed, 506 passed in 8.63s
+## frontend docs-touching tests
+ Test Files  6 passed (6)
+      Tests  47 passed (47)

@@ -1,0 +1,56 @@
+{
+  "schema_version": "architecture-preregistration-run/1",
+  "run_id": "w13-geometry-preregistration",
+  "task": "W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION",
+  "task_class": "ARCHITECTURE_AUDIT_AND_PREREGISTRATION",
+  "date": "2026-10-01",
+  "times_utc": {
+    "repository_gate": "2026-10-01 (diagnostics/logs/PHASE0_REPOSITORY_GATE.log)",
+    "clean_worktree_docs_tests": "2026-10-01, at 7202befe (diagnostics/logs/CLEAN_WORKTREE_DOCS_TESTS_7202befe.log)",
+    "main_tree_verification": "2026-10-01T10:22:38Z (diagnostics/logs/VERIFICATION_MAIN_TREE.log)"
+  },
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "start_head": "bf5a7907157be6c1e30801e485faa0d9fbdfd290",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git fetch --prune origin: no new objects; equals ls-remote main; ancestor of HEAD; ahead 113 / behind 0 at start)",
+  "answers_human_review_of": "w12-pedagogical-grounding-closure (NEEDS_CHANGES, W12-H1…H4, recorded in inputs/W12_HUMAN_VISUAL_REVIEW.json)",
+  "commits": [
+    {"sha": "7202befe021a2c27cb4d3068e0465b8053ca16f5", "role": "docs(architecture): audit, capability matrix v2, inventory, remaining-cells view, source-grounding probe, Phase 0 log"},
+    {"sha": "SELF_EXCLUDED_RESOLVE_FROM_GIT", "role": "docs(eval): preregistration, W12 review record, run documents, living docs, docs-audit allow-list"}
+  ],
+  "product_code_changed": false,
+  "product_commit_sha": "4014f311e1df7082eecbf090d7e62c96217e0ec9 (unchanged)",
+  "candidate_hash": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f (unchanged; verify PASS at start and end)",
+  "candidate_refrozen": false,
+  "cache_version": "105",
+  "cache_bumped": false,
+  "cache_fingerprint": "b1714b566e25c912",
+  "schema_mirrors_sha256": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 (both mirrors, exported twice, byte-identical)",
+  "default_mode": "LLM_ONLY",
+  "live_gemini_requests": 0,
+  "application_llm_calls": 0,
+  "offline_probe": {
+    "path": "diagnostics/source_grounding_probe.py",
+    "result": "diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json",
+    "model_calls": 0,
+    "ran_at_head": "bf5a7907157be6c1e30801e485faa0d9fbdfd290",
+    "rows": 25
+  },
+  "environment": {
+    "os": "Windows 11 Pro 10.0.26100",
+    "python": "3.12.10 (main-tree backend/.venv)",
+    "node": "v24.13.0 (vitest for six docs-touching frontend test files)",
+    "browser": "NOT_USED — no browser evidence in this run"
+  },
+  "full_product_suite": "NOT_RUN_NOT_REQUIRED_FOR_DOCS_ONLY_AUDIT",
+  "status": "ARCHITECTURE_PREREGISTRATION_READY",
+  "next_action": "W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (after user decisions D2 and D3)",
+  "policy": {
+    "push_executed": false,
+    "merge_executed": false,
+    "history_rewritten": false,
+    "user_favicon_deletion_preserved": true,
+    "historical_run_artifacts_modified": false,
+    "product_code_modified": false,
+    "co_authored_by_trailer": false
+  }
+}

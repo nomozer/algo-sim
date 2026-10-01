@@ -1,0 +1,16 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "run_id": "w13-geometry-preregistration",
+  "worktrees": [
+    {
+      "path": "D:/tmp/w13-verify-c1",
+      "purpose": "clean detached checkout of 7202befe for the docs-touching tests that need a clean tree (diagnostics/logs/CLEAN_WORKTREE_DOCS_TESTS_7202befe.log)",
+      "git_registration": "REMOVED (git worktree remove reported 'Permission denied' for the directory; git worktree prune then dropped the registration)",
+      "directory_on_disk": "LEFT_ON_DISK — about 500 MB of checked-out files (docs/ is most of it); deleting it with rm -rf was not permitted in this session",
+      "unique_artifacts": "NONE — the only output (the test log) was written into this run's diagnostics/logs/",
+      "junctions_or_symlinks": "NONE (dir /AL /S found none; no node_modules)",
+      "action_for_user": "safe to delete by hand: D:/tmp/w13-verify-c1",
+      "probable_cause": "the tool shell's working directory was inside the worktree when removal ran (known Windows trap)"
+    }
+  ]
+}

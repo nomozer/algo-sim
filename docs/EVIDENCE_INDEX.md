@@ -54,6 +54,9 @@ W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (w11 → READY_FOR_HUMA
   │  review người: NEEDS_CHANGES (W11-H1…H5: timeline trộn bước tính, bước tĩnh, lớp lời giải, cam đậm hai nghĩa, GIVEN không có trong đề)
   ▼ CORRECTED_BY · SUPERSEDED_FOR_HUMAN_VERDICT
 W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12 → READY_FOR_HUMAN_VISUAL_REVIEW)
+  │  review người: NEEDS_CHANGES (W12-H1…H4: chóp/lăng trụ tam giác thiếu bước dựng riêng, không vá riêng hai họ, kênh giả định còn mở)
+  ▼ CORRECTED_BY
+W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, chỉ tài liệu → ARCHITECTURE_PREREGISTRATION_READY; không ảnh mới nên không SUPERSEDED_FOR_HUMAN_VERDICT)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -741,9 +744,29 @@ W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12 → READY_FOR_HUMAN_V
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash df04a613… -> 8ffd6d46… -> 548f5b3b…, frozen three times; the last freeze moved only the product commit 8aaeae80 -> 4014f311)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 104 -> 105; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (human review NEEDS_CHANGES, W12-H1…H4, recorded additively in the w13 run; this run's files stay byte-identical)
 - **CORRECTS:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (human review NEEDS_CHANGES)
 - **SUPERSEDES:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW for the human verdict only (w11, w10, w09, the occlusion wave and the frozen registry remain byte-identical); inside this run the attempts BROWSER-1 (e115eede) and BROWSER-2 (7b039621, committed in 399fc423) are superseded — `diagnostics/MEASUREMENT_ATTEMPTS.json`
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_PENDING_HUMAN_VISUAL_REVIEW
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_548f5b3b — human visual review NEEDS_CHANGES afterwards (W12-H1…H4); do not cite as visual acceptance. Its automation stays the latest product measurement (w13 changed no product code).
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `results/BACKEND_COUNT_RECONCILIATION.json` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/hue-gate-known-answer-e115eede/KNOWN_ANSWER.json` · `diagnostics/WORKTREE_CLEANUP.json` · `inputs/W11_HUMAN_VISUAL_REVIEW.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION
+- **DATE:** 2026-10-01
+- **REPORT:** docs/evaluation/geometry/runs/w13-geometry-preregistration/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w13-geometry-preregistration/
+- **START_BASE:** bf5a7907
+- **CODE_COMMIT:** NONE (no product code; the docs-audit allow-list in backend/scripts gained the W13/W14 action names)
+- **MEASUREMENT_COMMIT:** NONE (offline reader probe only, run at bf5a7907)
+- **EVIDENCE_COMMIT_ROLE:** SELF
+- **CLASSIFICATION:** ARCHITECTURE_PREREGISTRATION_READY
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (548f5b3b…, product commit 4014f311; verify PASS)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 105; verify PASS)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (human review NEEDS_CHANGES)
+- **SUPERSEDES:** NONE (w12 stays the latest product automation; w13 adds no images, so nothing is superseded for the human verdict)
+- **THESIS_USE:** ARCHITECTURE_AUDIT_AND_PREREGISTRATION — capability-by-layer matrix and the next-wave preregistration; not empirical results, not visual acceptance.
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `inputs/W12_HUMAN_VISUAL_REVIEW.json` · `results/ABSOLUTE_ASSUMPTION_INVENTORY.json` · `results/REMAINING_GEOMETRY_CAPABILITY_MATRIX.json` · `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json` · `docs/architecture/geometry_capability_matrix_v2.json` · `docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md` · `docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

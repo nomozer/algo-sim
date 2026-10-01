@@ -1,0 +1,19 @@
+# W13 clean detached worktree D:/tmp/w13-verify-c1 at 7202befe021a2c27cb4d3068e0465b8053ca16f5
+# interpreter: main-tree backend/.venv (no venv in the worktree); git status --short below must be empty
+# pytest (docs-touching tests + holdout readiness)
+........................................................................ [ 85%]
+........................................................................ [ 99%]
+...                                                                      [100%]
+507 passed in 19.97s
+# docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Test reconciliation balanced: True

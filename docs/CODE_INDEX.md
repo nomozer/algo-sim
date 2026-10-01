@@ -8445,3 +8445,9 @@ Run `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`. Trả l�
 | Fixture âm "đề thiếu dữ kiện" | `backend/scripts/generate_generic_tier_a_fixtures.py` (`_ungrounded_cases`, `_ungrounded_fixture`) | Mỗi họ: bỏ một câu chứa dữ kiện khỏi đề, transport giả vẫn trả lời khai cũ ⇒ envelope `unsupported` · `GIVEN_VALUE_NOT_IN_SOURCE` qua đúng tuyến sản phẩm, 0 lượt gọi model | generator → suite (âm) | `pytest tests/geometry/test_generic_tier_a_fixture_generator.py -q` |
 
 ⚠️ Hai mục cũ ở trên — `scene3d-tokens.ts` (2026-09-12) và `scene3d-wide-line.ts` (2026-09-11) — mô tả module **đã gỡ khỏi kho** (kiểm 2026-09-29: `ls` không thấy); token chấm đỉnh hiện hành ở `pick-target.ts`, nét vẫn 1 px WebGL.
+
+### Phép dò cách viết độ dài của đề (w13) · offline, 0 lượt gọi
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Phép dò cách viết nguồn | `docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/source_grounding_probe.py` | Chạy CHÍNH các bộ đọc của sản phẩm (`segment_relation.do_dai_trong_de`, `grounding_gate._bang_chung_do_dai`, `literal_extractor.extract_literals`) trên 25 cách viết độ dài; không sửa gì, ghi kết quả vào đường dẫn truyền vào (mặc định `SOURCE_GROUNDING_PHRASING_PROBE.json` cạnh nó) và **từ chối ghi đè** kết quả đã có. Nền đỏ của W14 Track C (`standalone_wrong_segment`: *"AB dài 5 cm"* ⇒ khai `AC = 5` lọt) | đề mẫu → bộ đọc sản phẩm → bảng §4 của `docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` | `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/source_grounding_probe.py <new-output.json>` |
