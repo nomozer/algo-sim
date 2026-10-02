@@ -1,0 +1,28 @@
+# W15 census at HEAD cf57332b5a04839054ecfd4eff7dbecdbf36b568 (product modules committed in cf57332b); tree:  D frontend/public/favicon.svg ?? docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15.py ; 2026-10-02T22:10:23Z
+# command: backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15.py
+{
+ "decision": "SHIP",
+ "final_decision_if_stop": null,
+ "rule": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §9 (a)–(f), registered before this census",
+ "census_sha256_lf": "3a8bb4aef0b215061e80a3ad12996fc761ff70d5a1598d32383d2a40a3299467",
+ "a_PROVEN_SAFE_on_DEPENDS_or_MUST_REFUSE": [],
+ "b_must_refuse_not_refused": [],
+ "c_DEPENDENT_on_INVARIANT": [],
+ "d_ac2_rows": 18,
+ "d_ac2_proven_safe": 18,
+ "d_ac2_not_proven": [],
+ "e_guard_rows_not_served_or_not_proven": [],
+ "f_metamorphic_tests_exit_code": 0,
+ "report_compiler_cross_check": {
+  "c1_rows": 32,
+  "agrees": 27,
+  "not_recognizable": 5,
+  "disagrees": []
+ },
+ "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof",
+ "f_metamorphic_tests_tail": [
+  "3 passed, 81 deselected in 0.71s"
+ ]
+}
+W15 expectation mismatches: {}
+exit=0

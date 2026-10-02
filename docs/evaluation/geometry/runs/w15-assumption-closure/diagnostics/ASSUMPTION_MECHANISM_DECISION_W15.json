@@ -1,0 +1,111 @@
+{
+ "decision": "SHIP",
+ "final_decision_if_stop": null,
+ "rule": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §9 (a)–(f), registered before this census",
+ "census_sha256_lf": "3a8bb4aef0b215061e80a3ad12996fc761ff70d5a1598d32383d2a40a3299467",
+ "a_PROVEN_SAFE_on_DEPENDS_or_MUST_REFUSE": [],
+ "b_must_refuse_not_refused": [],
+ "c_DEPENDENT_on_INVARIANT": [],
+ "d_ac2_rows": 18,
+ "d_ac2_proven_safe": 18,
+ "d_ac2_not_proven": [],
+ "e_guard_rows_not_served_or_not_proven": [],
+ "f_metamorphic_tests_exit_code": 0,
+ "report_w15_expectation_mismatches": {},
+ "report_compiler_cross_check": {
+  "c1_rows": 32,
+  "agrees": 27,
+  "not_recognizable": 5,
+  "disagrees": []
+ },
+ "verdicts_by_group": {
+  "AC1": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 3,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "AC2": {
+   "PROVEN_SAFE": 18,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "ADVERSARIAL": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 3,
+   "UNDETERMINED": 3,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "CERT_LIMIT": {
+   "PROVEN_SAFE": 3,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 2,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_LITERAL_ROLE": {
+   "PROVEN_SAFE": 3,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 5,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_METAMORPHIC": {
+   "PROVEN_SAFE": 3,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_MISSING_DIM": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 6,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_OUT_OF_VOCAB": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 4,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_PHRASING": {
+   "PROVEN_SAFE": 10,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_REACHING": {
+   "PROVEN_SAFE": 1,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 6,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_TEST10": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 5,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_TYPE_EQUAL": {
+   "PROVEN_SAFE": 2,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_UNNAMED": {
+   "PROVEN_SAFE": 1,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 0,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  },
+  "W15_WRONG_ENTITY": {
+   "PROVEN_SAFE": 0,
+   "DEPENDENT_ON_UNSTATED_ASSUMPTION": 2,
+   "UNDETERMINED": 0,
+   "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+  }
+ },
+ "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof",
+ "f_metamorphic_tests_tail": [
+  "3 passed, 81 deselected in 0.71s"
+ ]
+}
