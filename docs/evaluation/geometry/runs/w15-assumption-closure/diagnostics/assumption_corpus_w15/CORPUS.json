@@ -12555,6 +12555,7 @@
    "label": "MUST_REFUSE",
    "expect": "UNDETERMINED",
    "reason": "p1: scalar d0 overwritten, read, restored",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -14152,6 +14153,7 @@
    "label": "INVARIANT",
    "expect": "PROVEN_SAFE:C0",
    "reason": "positive control: p1 with d0 defined once",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {

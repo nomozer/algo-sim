@@ -23,7 +23,12 @@ HERE = Path(__file__).resolve()
 ROOT = HERE.parents[7]
 LABELS = HERE.with_name("LABELS.json")
 OUT = HERE.with_name("CORPUS.json")
+#: Gold rows come from the thesis-final run (`W.gold` → `replay_negative_boundaries`); a row whose
+#: text IS an acceptance-case text declares that source, exactly like the W14 corpus did — the
+#: held-out guard (`test_thesis_acceptance_matrix::test_A5`) accepts only a path that exists.
+NGUON_GOLD = "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json"
 sys.path.insert(0, str(ROOT / "backend"))
+sys.path.insert(0, str(ROOT / "backend" / "scripts"))
 
 from app.simulation.semantic_program.analyze_contract import (  # noqa: E402
     build_request_contract,
@@ -295,13 +300,19 @@ def main() -> None:
     for k, f in (("corpus_sha256_lf", "corpus"), ("labels_sha256_lf", "labels")):
         if _sha_lf(ROOT / ref[f]) != ref[k]:
             raise SystemExit(f"W14 {f} changed since the W15 labels were written")
+    import thesis_acceptance_corpus as TA
+
+    if not (ROOT / NGUON_GOLD).is_file():
+        raise SystemExit(f"declared gold source missing: {NGUON_GOLD}")
+    de_nghiem_thu = {ca["problem_text"] for ca in (*TA.CA_DUONG, *TA.CA_AM)}
     rows = []
     for cid, l in nhan["rows"].items():
         ct, raw = globals()[l["builder"]](l.get("arg"))
         prog, ok = _chuong_trinh(raw)
         rows.append({"id": cid, "group": l["group"], "label": l["label"], "expect": l["expect"],
-                     "reason": l["reason"], "contract": ct.model_dump(mode="json"), "program": prog,
-                     "program_schema_ok": ok})
+                     "reason": l["reason"],
+                     **({"source_artifact_path": NGUON_GOLD} if ct.problem_text in de_nghiem_thu else {}),
+                     "contract": ct.model_dump(mode="json"), "program": prog, "program_schema_ok": ok})
     OUT.write_text(json.dumps({"corpus": "W15_ASSUMPTION_CORPUS", "model_calls": 0,
                                "labels_sha256_lf": _sha_lf(LABELS), "w14_reference": ref, "rows": rows},
                               ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
