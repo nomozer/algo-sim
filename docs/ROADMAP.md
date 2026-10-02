@@ -9,27 +9,29 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
-TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+CANONICAL_NEXT_ACTION = COMPLETE_SHAPE_CLASS_FORMATION
+TARGET_NEXT_ACTION_AFTER_WAVE = COMPLETE_SHAPE_CLASS_FORMATION
 ```
 
-- **Mục tiêu:** Thực hiện đúng bản tiền đăng ký
-  [`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md)
-  §6: (A) dựng hình theo lớp hình cho khối đa diện, một đường mã cho mọi họ —
-  đóng W12-H1/H2 mà không vá riêng chóp/lăng trụ tam giác; (B) chính sách giả
-  định/mặc định — đóng `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`
-  (W12-H4); (C) đọc `XY dài v` như độ dài có nhãn —
-  `ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE`. Review w12 là `NEEDS_CHANGES`
-  (ghi ở run `w13-geometry-preregistration`).
-- **Điều kiện bắt đầu:** người dùng trả lời D2 (chỉ từ chối + gắn nhãn, hay thêm
-  xác nhận trên giao diện) và D3 (dựng hình nón/cầu có vào W14 không) — §8 của
-  bản tiền đăng ký.
-- **Điều kiện dừng:** luật dừng §6.4 (đổi bề mặt mô hình, từ chối oan chương trình
-  gold, phá #31/#35, cần lượt gọi model). Automation tối đa
-  `READY_FOR_HUMAN_VISUAL_REVIEW`; không push/merge.
+- **Vì sao:** W14 (run
+  [`w14-generic-formation-assumption`](evaluation/geometry/runs/w14-generic-formation-assumption/))
+  kết thúc `FORMATION_FOUNDATION_INCOMPLETE`: một bước bổ sung dựng hình theo lớp
+  hình đã chạy cho mọi chương trình (compiler lẫn LLM), sáu họ và gold p1, p2 phủ đủ
+  vai trò; chương trình duy nhất của tập bắt buộc chưa phủ là ca âm gold
+  `n2_khoi_ghep_bu_can_boolean` (bị từ chối trước và sau; hộp không có đáy định kiểu ⇒
+  `AMBIGUOUS_TOPOLOGY`). Track B dừng (`ASSUMPTION_POLICY_INCOMPLETE`), Track C đóng.
+- **Điều kiện bắt đầu:** người dùng quyết định W14-D1 — chương trình bị từ chối (không
+  hiện dựng hình) có thuộc tập bắt buộc không. **Không** ⇒ kết luận W14 thành
+  `ASSUMPTION_POLICY_INCOMPLETE`, việc kế tiếp là quyết định phạm vi chứng chỉ giả
+  định (W14-D2); **Có** ⇒ cần nguồn đáy CÓ KIỂU cho hộp như n2 (topology hợp đồng
+  của bài nhiều khối — hiện là backlog). Song song: duyệt lại bằng mắt bốn cảnh
+  S4 đổi (W14-D3, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
+- **Điều kiện dừng:** không chọn đáy bằng tên/nhãn/thứ tự đỉnh (luật tiền đăng ký
+  §2); không đổi bề mặt mô hình; automation tối đa `READY_FOR_HUMAN_VISUAL_REVIEW`;
+  không push/merge.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;
   `CACHE_VERSION` quyết định bằng bằng chứng. Không mở họ mới, khối cong, nhiều
-  khối hay image/OCR trong W14.
+  khối hay image/OCR khi chưa có quyết định của người dùng.
 
 
 

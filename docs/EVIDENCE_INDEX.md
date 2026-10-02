@@ -57,6 +57,8 @@ W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12 → READY_FOR_HUMAN_V
   │  review người: NEEDS_CHANGES (W12-H1…H4: chóp/lăng trụ tam giác thiếu bước dựng riêng, không vá riêng hai họ, kênh giả định còn mở)
   ▼ CORRECTED_BY
 W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, chỉ tài liệu → ARCHITECTURE_PREREGISTRATION_READY; không ảnh mới nên không SUPERSEDED_FOR_HUMAN_VERDICT)
+  ▼ thực hiện tiền đăng ký · trả lời review w12 · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w12)
+W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14 → FORMATION_FOUNDATION_INCOMPLETE; Track B ASSUMPTION_POLICY_INCOMPLETE; chưa có review người)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -747,7 +749,8 @@ W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, ch�
 - **CORRECTED_BY:** W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (human review NEEDS_CHANGES, W12-H1…H4, recorded additively in the w13 run; this run's files stay byte-identical)
 - **CORRECTS:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW (human review NEEDS_CHANGES)
 - **SUPERSEDES:** W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW for the human verdict only (w11, w10, w09, the occlusion wave and the frozen registry remain byte-identical); inside this run the attempts BROWSER-1 (e115eede) and BROWSER-2 (7b039621, committed in 399fc423) are superseded — `diagnostics/MEASUREMENT_ATTEMPTS.json`
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_548f5b3b — human visual review NEEDS_CHANGES afterwards (W12-H1…H4); do not cite as visual acceptance. Its automation stays the latest product measurement (w13 changed no product code).
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_548f5b3b — human visual review NEEDS_CHANGES afterwards (W12-H1…H4); do not cite as visual acceptance. It was the latest product measurement until w14 (candidate 40263983, measurement 380db58c); it stays valid for candidate 548f5b3b.
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION — its images are no longer the ones a reviewer should judge (w14 changes the formation of every polyhedral family); this run's files stay byte-identical.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/VERIFICATION_SUMMARY.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `results/BACKEND_COUNT_RECONCILIATION.json` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/hue-gate-known-answer-e115eede/KNOWN_ANSWER.json` · `diagnostics/WORKTREE_CLEANUP.json` · `inputs/W11_HUMAN_VISUAL_REVIEW.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
 
@@ -769,4 +772,24 @@ W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, ch�
 - **SUPERSEDES:** NONE (w12 stays the latest product automation; w13 adds no images, so nothing is superseded for the human verdict)
 - **THESIS_USE:** ARCHITECTURE_AUDIT_AND_PREREGISTRATION — capability-by-layer matrix and the next-wave preregistration; not empirical results, not visual acceptance.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `inputs/W12_HUMAN_VISUAL_REVIEW.json` · `results/ABSOLUTE_ASSUMPTION_INVENTORY.json` · `results/REMAINING_GEOMETRY_CAPABILITY_MATRIX.json` · `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json` · `docs/architecture/geometry_capability_matrix_v2.json` · `docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md` · `docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+- **DATE:** 2026-10-01 … 2026-10-02
+- **REPORT:** docs/evaluation/geometry/runs/w14-generic-formation-assumption/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w14-generic-formation-assumption/
+- **START_BASE:** ce9c672d
+- **CODE_COMMIT:** 44f2dd32 (formation) · d537cf74 (trust policy) · 2f2c97b2 (length vocabulary) · 69d3c985 (sample text, frontend/src) · 733435ac (cache) · a2af56e4 (cleanup; last product commit)
+- **MEASUREMENT_COMMIT:** 380db58c37da6088d8dba47647d15ba7ed77cf35
+- **EVIDENCE_COMMIT_ROLE:** 54af39a4
+- **CLASSIFICATION:** FORMATION_FOUNDATION_INCOMPLETE
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 548f5b3b… -> 40263983…, 105 files, frozen once at a2af56e4)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 105 -> 106; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (answers its human review W12-H1…H4, as preregistered in w13)
+- **SUPERSEDES:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE for the human verdict only (w12, w13, the occlusion wave and the frozen registry remain byte-identical); nothing superseded inside this run
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_40263983 — not visual acceptance (no human review yet). Formation by shape class for compiler and LLM programs (six families and served gold COMPLETED; the refused gold negative n2 AMBIGUOUS_TOPOLOGY); assumption gate NOT shipped — the census is a corpus result inside the certificate scope (C0 ∪ C1 over PHEP_DO_C1), never a soundness proof; the frozen hidden-line expectations do not transfer to the four scenes S4 changed.
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/FILMSTRIP.png` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/S4_INVENTORY_AT_380db58c.json` · `diagnostics/OCCLUSION_TRANSFER_DIAGNOSTIC.json` · `diagnostics/ASSUMPTION_CENSUS.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION.json` · `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE_W14.json` · `diagnostics/PROOF_CACHE_ROW_W14.json` · `diagnostics/TRUST_POLICY_CALLERS.json` · `diagnostics/WORKTREE_CLEANUP.json` · `inputs/W14_SCOPE_DECISIONS.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

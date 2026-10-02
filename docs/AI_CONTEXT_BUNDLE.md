@@ -19,13 +19,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, docs only)
-MEASUREMENT_COMMIT = c243968b1ec263d2ab48040d569eec45efe9cfaa (w12; w13 measured nothing in a browser)
-EVIDENCE_COMMIT = 442584cf (w12, also the T3 commit)
-ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w13, unchanged)
-CANDIDATE = 548f5b3b9ff89158… (was df04a613…), product commit 4014f311 — unchanged in w13
-FINAL_DECISION = ARCHITECTURE_PREREGISTRATION_READY
-HUMAN_VISUAL_REVIEW = NEEDS_CHANGES (w12, W12-H1…H4, recorded in run w13); MERGE_APPROVAL = NO
+CURRENT_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14)
+MEASUREMENT_COMMIT = 380db58c37da6088d8dba47647d15ba7ed77cf35 (the single candidate refreeze)
+EVIDENCE_COMMIT = 54af39a4 (browser, occlusion, playback, crops, T3, gates)
+ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w14, unchanged)
+CANDIDATE = 40263983f97811ad… (was 548f5b3b…), product commit a2af56e4
+FINAL_DECISION = FORMATION_FOUNDATION_INCOMPLETE (only the refused gold negative n2 stays AMBIGUOUS_TOPOLOGY; Track B ASSUMPTION_POLICY_INCOMPLETE)
+HUMAN_VISUAL_REVIEW = NOT_REVIEWED for w14 (w12 was NEEDS_CHANGES, W12-H1…H4); MERGE_APPROVAL = NO
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -119,10 +119,28 @@ tuyệt đối (10 cần sửa); ma trận 17 nhóm × 17 tầng
 (`docs/architecture/geometry_capability_matrix_v2.json`); tiền đăng ký W14
 (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`).
 
+Wave w14 (`W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION`) làm tiền đăng ký ấy:
+MỘT bước bổ sung dựng hình theo lớp hình (`semantic_program/formation.py`, lá
+`solid_faces.py`) chạy trong `verify_and_compile` và `_dung_scene3d` cho chương
+trình compiler LẪN LLM (S4); compiler thôi tự viết đường cao/cạnh bên/đáy trên; vai
+trò sinh ở `simulation_state`, `scene3d` chỉ chở. Hợp đồng thiếu đề ⇒
+`SOURCE_TEXT_MISSING` trừ khi nơi gọi khai `NguonDe.FIXTURE_TIN_CAY`. `dài`/`có độ
+dài` vào một từ vựng nối. Cổng giả định đo trên corpus gắn nhãn trước rồi DỪNG
+(AC2 0/18). `CACHE_VERSION` 106; candidate đóng băng một lần.
+
 ## 4. Còn mở — không được che
 
-- **Human visual acceptance: NEEDS_CHANGES** (w12) — chưa merge. Thiết diện hổ
-  phách ở khung trung tính là câu hỏi thiết kế (W12-D1), không phải lỗi.
+- **Human visual acceptance: chưa duyệt** cho w14 (w12 là NEEDS_CHANGES) — chưa
+  merge. Ba quyết định của người dùng ở `HANDOFF.md` run w14: **W14-D1** (chương
+  trình bị từ chối có thuộc tập dựng hình bắt buộc không — quyết định kết luận),
+  **W14-D2** (phạm vi chứng chỉ giả định), **W14-D3** (duyệt lại bốn cảnh S4 đổi).
+- Mới ở w14: `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4` (kỳ vọng khuất/hiện
+  của người không chuyển được sang bốn cảnh S4 đổi — oracle tái tạo đúng tập đã
+  duyệt 4/4, cổng vẫn đỏ theo thiết kế). Đã đóng ở w14:
+  `ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE`, `ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH`,
+  `ISSUE-ARCH-TEXTLESS-CONTRACT-UNCHECKED`. `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`
+  = PARTIAL (n2); `ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION` vẫn OPEN.
+- Thiết diện hổ phách ở khung trung tính là câu hỏi thiết kế (W12-D1), không phải lỗi.
 - Mới ở w13: `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`,
   `ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE` (*"AB dài 5 cm"* ⇒ khai `AC = 5` lọt),
   `ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH` (một test đòi `D:/tmp/...`),
@@ -137,34 +155,35 @@ tuyệt đối (10 cần sửa); ma trận 17 nhóm × 17 tầng
   (`dist/` cây chính không build được — đo trong worktree),
   `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`; nét vẫn 1 px; phân loại khuất theo khối.
 
-Tự động tại `c243968b` (detached): browser 12/12 + 12/12 âm grounding · bước dựng
-12/12, 0 khung tĩnh · sắc độ causal sạch 12/12 · oracle 24/24 · kỳ vọng người
-`DECLARED_CAMERA_CHANGE` 6/6 · playback 12/12 × 19 kiểm, 60/60 lượt xoay · 64 crop,
-0 bất đồng, 0 owner trùng · T3 tại `442584cf` từ đường dẫn CÓ dấu cách:
-`FULL_PRODUCT_GATE_PASS` (pytest 6443/0, vitest 1010/0, build, demo, bề mặt sập;
-6411 → 6443 đối soát trong run). 8/8 worktree tạm đã gỡ.
+Tự động tại `380db58c` (detached): browser 12/12 + 12/12 âm grounding · phủ vai trò
+dựng hình 12/12 · oracle 24/24 · kỳ vọng người: hộp, lập phương chuyển được, bốn cảnh
+S4 đổi `SCENE_GEOMETRY_CHANGED` · playback 12/12 × 19 kiểm · 64 crop, 0 bất đồng,
+0 owner trùng · T3 tại `380db58c` từ đường dẫn CÓ dấu cách:
+`FULL_PRODUCT_GATE_PASS` (pytest 6564/0, vitest 1010/1010, build, demo, bề mặt sập).
+Worktree tạm của w14 đã gỡ hết.
 
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
-TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+CANONICAL_NEXT_ACTION = COMPLETE_SHAPE_CLASS_FORMATION
+TARGET_NEXT_ACTION_AFTER_WAVE = COMPLETE_SHAPE_CLASS_FORMATION
 ```
 
-Làm đúng §6 của bản tiền đăng ký: (A) dựng hình theo lớp hình, một đường mã cho
-mọi họ đa diện; (B) chính sách giả định/mặc định; (C) đọc `XY dài v`. Bắt đầu sau
-khi người dùng trả lời D2, D3 (§8). 0 lượt gọi model; automation tối đa
+Bắt đầu bằng quyết định W14-D1 của người dùng. Nếu chương trình bị từ chối nằm ngoài
+tập bắt buộc, kết luận w14 thành `ASSUMPTION_POLICY_INCOMPLETE` và việc kế tiếp là
+quyết định phạm vi chứng chỉ giả định (W14-D2); nếu không, cần nguồn đáy CÓ KIỂU cho
+hộp như n2 (không đoán theo tên/thứ tự đỉnh). 0 lượt gọi model; automation tối đa
 `READY_FOR_HUMAN_VISUAL_REVIEW`; không mở họ mới, khối cong, nhiều khối, image/OCR.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành (chỉ tài liệu): `docs/evaluation/geometry/runs/w13-geometry-preregistration/`
-  (`REPORT.md`, `HANDOFF.md`, `inputs/W12_HUMAN_VISUAL_REVIEW.json`,
-  `results/ABSOLUTE_ASSUMPTION_INVENTORY.json`,
-  `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json`).
-- Tự động mới nhất của sản phẩm: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
-  `results/VERIFICATION_SUMMARY.json`, `diagnostics/MEASUREMENT_ATTEMPTS.json`).
+  `diagnostics/MEASUREMENT_ATTEMPTS.json`, `diagnostics/ASSUMPTION_MECHANISM_DECISION.json`,
+  `diagnostics/S4_INVENTORY_AT_380db58c.json`, `images/<họ>/FILMSTRIP.png`).
+- Tiền đăng ký (chỉ tài liệu): `docs/evaluation/geometry/runs/w13-geometry-preregistration/`.
+- Tự động trước đó: `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/`
+  (bất biến; review người NEEDS_CHANGES ghi ở run w13).
 - Ba wave trước (bất biến, review người ghi bổ sung ở run sau):
   `docs/evaluation/geometry/runs/w11-pedagogical-polish/`,
   `docs/evaluation/geometry/runs/w10-pedagogical-playback/`,

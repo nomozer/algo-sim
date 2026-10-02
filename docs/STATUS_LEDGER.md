@@ -1458,6 +1458,30 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **NEXT_ACTION_AT_TIME:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (after user decisions D2, D3)
 - **FINAL_DECISION:** ARCHITECTURE_PREREGISTRATION_READY
 
+### WAVE_ID = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
+- **DATE:** 2026-10-01 → 2026-10-02
+- **START_BASE:** ce9c672d
+- **CODE_COMMIT_OR_NONE:** 44f2dd32 (formation pass) · d537cf74 (trust policy) · 2f2c97b2 (length connector vocabulary) · 69d3c985 (sample text, frontend/src) · 733435ac (CACHE_VERSION 106) · a2af56e4 (ponytail cleanup; last product commit)
+- **COMMITS:** red tests 0daa6354 + characterization 1a8ea7b8 · product (above) · assumption corpus 9ddecb35 + census/decision 70453330 + source declaration 152de650 · harness 3709d7c8 · divergence declaration caf76ed8 · single refreeze 380db58c (measurement commit) · evidence 54af39a4 · docs SELF
+- **CANDIDATE:** 548f5b3b… → 40263983… (105 files), frozen once at a2af56e4 · CACHE_VERSION 105 → 106 (served → rejected + formation of served envelopes; fingerprint b1714b566e25c912 unchanged) · schema mirrors byte-identical
+- **EVIDENCE_COMMIT_ROLE:** 54af39a4 (browser, occlusion, playback, crops, T3, gates at 380db58c)
+- **CLASSIFICATION:** FORMATION_FOUNDATION_INCOMPLETE
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w14-generic-formation-assumption/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w14-generic-formation-assumption/
+- **PASS:** one shape-class completion pass for compiler and LLM programs (six families + served gold p1, p2 COMPLETED; browser role coverage 12/12; playback 12/12 × 19; triangular pyramid and prism filmstrips show height/top face/lateral edges as separate steps) · AST guard: no family branch · trust policy (SOURCE_TEXT_MISSING unless an explicit trusted fixture) · source-length vocabulary (probe diff as registered) · NA-05 portability · T3 FULL_PRODUCT_GATE_PASS from a spaced path (pytest 6564/0, vitest 1010/1010) · product = oracle 24/24
+- **CLOSED:** ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE · ISSUE-OPS-TEST-EXTERNAL-EVIDENCE-PATH · ISSUE-ARCH-TEXTLESS-CONTRACT-UNCHECKED (opened and closed in w14)
+- **OPENED:** ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4
+- **PARTIAL:** ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE (refused gold negative n2 stays AMBIGUOUS_TOPOLOGY; decision W14-D1)
+- **OPEN (blocking merge of the branch):** ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION (Track B STOP: ASSUMPTION_POLICY_INCOMPLETE, AC2 0/18) · human visual re-review of the w14 formation and of the four scenes S4 changed
+- **FULL_PRODUCT_SUITE:** FULL_PRODUCT_GATE_PASS (T3 at 380db58c, path with a space)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (answers its human review W12-H1…H4)
+- **NEXT_ACTION_AT_TIME:** COMPLETE_SHAPE_CLASS_FORMATION (starts with user decision W14-D1)
+- **FINAL_DECISION:** FORMATION_FOUNDATION_INCOMPLETE
+
 
 
 

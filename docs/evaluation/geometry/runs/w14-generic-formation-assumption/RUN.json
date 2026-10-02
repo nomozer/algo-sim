@@ -1,0 +1,98 @@
+{
+  "schema_version": "generic-formation-run/1",
+  "run_id": "w14-generic-formation-assumption",
+  "task": "W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION",
+  "task_class": "PRODUCT_REPAIR_UNDER_PREREGISTRATION",
+  "date": "2026-10-01 to 2026-10-02",
+  "times_utc": {
+    "repository_gate": "2026-10-01T15:59:48Z (diagnostics/logs/PHASE0_REPOSITORY_GATE.log)",
+    "freeze": "2026-10-02T11:32:59Z",
+    "browser_suite": "2026-10-02T11:49Z-11:54Z",
+    "occlusion": "2026-10-02T11:55Z",
+    "playback": "2026-10-02T11:56Z-12:01Z",
+    "evidence_builder": "2026-10-02T12:02Z",
+    "t3_and_gates": "2026-10-02, after the builder and before the evidence commit (16:00Z); the logs carry no timestamp"
+  },
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "start_head": "ce9c672d2328353e3e2b844025040e4ed84163d1",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git fetch --prune origin at Phase 0: unchanged; equals ls-remote; ancestor of HEAD; ahead 115 / behind 0)",
+  "answers_human_review_of": "w12-pedagogical-grounding-closure (NEEDS_CHANGES, W12-H1…H4, recorded in run w13-geometry-preregistration)",
+  "preregistration": "docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md",
+  "user_decisions": "inputs/W14_SCOPE_DECISIONS.json (Q1 keep S4 with one shared pass, Q3 fix the tru-truc-xien text, Q4 continue A + C if B stops; D2 refuse and explain, D3 no curved formation)",
+  "commits": [
+    {"sha": "0daa635433529a808492ae9ed668cd4612d305ef", "role": "test(w14): portability guard and RED reproductions"},
+    {"sha": "1a8ea7b85294d7740250dd81b7cae6bffe0d3f27", "role": "test(w14): characterization of the five configurations that must not change"},
+    {"sha": "44f2dd32eec9d0b47eff7e0d380664629a0a1c6b", "role": "feat(formation): one shape-class completion pass (product)"},
+    {"sha": "d537cf74f19a04de44f2f3b3f74eec377151247d", "role": "fix(grounding): trust policy for textless contracts (product)"},
+    {"sha": "2f2c97b2d8feeb7f4864b413c182a9fa294be621", "role": "fix(grounding): one length connector vocabulary (product)"},
+    {"sha": "9ddecb350ba2121b22e8f8ec563fd59d3a060987", "role": "docs(eval): hand-labelled assumption corpus, before any mechanism ran"},
+    {"sha": "704533308c84027ab71d239cc8160329c34110ba", "role": "docs(eval): assumption census and decision — STOP"},
+    {"sha": "69d3c9852012ee20ba42d5e86c184b6f21d0df58", "role": "fix(samples): tru-truc-xien states OA = √5 (frontend/src)"},
+    {"sha": "733435acd4af0a73fc9e10ec0a476c126b053a67", "role": "chore(cache): CACHE_VERSION 105 -> 106 (product)"},
+    {"sha": "3709d7c8e92df52b43bfbae9ce0f44a44b264682", "role": "test(harness): formation-role coverage, structured references, filmstrips"},
+    {"sha": "a2af56e4ec0d2165d6be4a3d7cbef36d7f05eb87", "role": "refactor: ponytail cleanup (last product commit)"},
+    {"sha": "caf76ed8100792edf0e99e84efaa23ac019a001d", "role": "chore(cache): CACHE_VERSION 106 in the living divergence declaration"},
+    {"sha": "152de650210be32c218aa52f7ea2d8c634cb6d37", "role": "docs(eval): thesis-run source of the census gold rows"},
+    {"sha": "380db58c37da6088d8dba47647d15ba7ed77cf35", "role": "chore(eval): the single candidate refreeze (measurement commit)"},
+    {"sha": "54af39a42ab8969a0f8858c7c563d8b7420c9734", "role": "test(evidence): browser, occlusion, playback, crops, T3, gates"},
+    {"sha": "SELF_EXCLUDED_RESOLVE_FROM_GIT", "role": "docs(state): run documents, living docs, docs-audit allow-list"}
+  ],
+  "product_code_changed": true,
+  "product_commit_sha": "a2af56e4ec0d2165d6be4a3d7cbef36d7f05eb87",
+  "candidate": {
+    "before": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+    "after": "40263983f97811ada21238a0ff3da634eaa36ef88deb6d07f4c0b3091fb9b5d3",
+    "files": 105,
+    "refrozen_count": 1,
+    "freeze_commit": "380db58c37da6088d8dba47647d15ba7ed77cf35"
+  },
+  "measurement_commit": "380db58c37da6088d8dba47647d15ba7ed77cf35",
+  "evidence_commit": "54af39a42ab8969a0f8858c7c563d8b7420c9734",
+  "cache": {
+    "before": "105",
+    "after": "106",
+    "bump_commit": "733435acd4af0a73fc9e10ec0a476c126b053a67",
+    "reason": "rows served under 105 that W14 changes: dai_cm_wrong_segment (served -> refused), s4_llm_gold_p1 (old formation timeline) — diagnostics/PROOF_CACHE_ROW_W14.json",
+    "fingerprint": "b1714b566e25c912",
+    "fingerprint_changed": false
+  },
+  "schema_mirrors_sha256": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 (both mirrors, exported twice, byte-identical)",
+  "default_mode": "LLM_ONLY",
+  "live_gemini_requests": 0,
+  "application_llm_calls": 0,
+  "tracks": {
+    "A_formation": "PARTIAL — one shape-class completion pass for compiler and LLM programs; six families and served gold p1, p2 COMPLETED with roles in order; refused gold negative n2 AMBIGUOUS_TOPOLOGY (enforced set as written)",
+    "trust_policy": "DONE — SOURCE_TEXT_MISSING unless a caller passes NguonDe.FIXTURE_TIN_CAY explicitly; 0 production references",
+    "B_assumption": "STOP — ASSUMPTION_POLICY_INCOMPLETE (AC2 0/18 PROVEN_SAFE); no gate shipped",
+    "C_source_grounding": "AS_REGISTERED — probe diff exactly the two preregistered rows",
+    "portability": "RESOLVED — external evidence behind an opt-in marker"
+  },
+  "verification": {
+    "t3": "FULL_PRODUCT_GATE_PASS from 'w14 space/algo-sim' at 380db58c: pytest 6564 passed / 0 failed (1 skipped, 2 deselected, 16 xfailed), vitest 1010/1010, typecheck + build, thesis demo, crash surface",
+    "browser": "PASS 6 families x 2 viewports, positive + ungrounded negative; role coverage 12/12",
+    "occlusion": "product = oracle 24/24; frozen expectations 2/6 transfer, 4/6 SCENE_GEOMETRY_CHANGED (gate red by design; diagnostic reproduces the reviewed sets 4/4)",
+    "playback": "12/12 runs x 19/19 checks, 5 orbit laps each",
+    "identity_gates": "candidate, cache, schema x2, default mode, diff --check: PASS"
+  },
+  "environment": {
+    "os": "Windows 11 Pro 10.0.26100",
+    "python": "3.12.10 (main-tree backend/.venv; no venv inside the worktrees)",
+    "node": "v24.13.0",
+    "browser": "headless Chrome through frontend/scripts/browser-runner.mjs (BrowserSession)"
+  },
+  "status": "FORMATION_FOUNDATION_INCOMPLETE",
+  "next_action": "COMPLETE_SHAPE_CLASS_FORMATION",
+  "open_user_decisions": [
+    "W14-D1: is a refused program part of the enforced formation set? (No => ASSUMPTION_POLICY_INCOMPLETE / USER_DECISION_ON_ASSUMPTION_CERTIFICATE_SCOPE)",
+    "W14-D2: assumption certificate scope",
+    "W14-D3: re-review of the four scenes whose hidden-line expectation could not be transferred"
+  ],
+  "policy": {
+    "push_executed": false,
+    "merge_executed": false,
+    "history_rewritten": false,
+    "user_favicon_deletion_preserved": true,
+    "historical_run_artifacts_modified": false,
+    "co_authored_by_trailer": false
+  }
+}

@@ -11,9 +11,9 @@
 - **evidence:** `backend/app/simulation/geometry_compiler/compiler.py` (`bien_dich` ~917, `_bien_dich_prism` ~1046, `_bien_dich_rectangular_pyramid` ~1153, `_bien_dich_cuboid` ~1315); `docs/evaluation/geometry/runs/w13-geometry-preregistration/inputs/W12_HUMAN_VISUAL_REVIEW.json`; inventory item NA-18.
 - **impact:** Formation quality depends on which family a problem lands in; patching the two families alone would repeat the defect for every new shape.
 - **scope:** `backend/app/simulation/geometry_compiler/`, trace events / `scene3d` formation.
-- **status:** OPEN — generic shape-class formation preregistered (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` §2, §6 Track A).
+- **status:** PARTIAL (w14, `44f2dd32`) — one shape-class completion pass (`semantic_program/formation.py::hoan_thien_dung_hinh`, face-table leaf `solid_faces.py`) runs in `route.verify_and_compile` and `pipeline._dung_scene3d` for compiler **and** LLM programs; the compiler no longer hand-writes height, lateral or top statements; roles are produced in `simulation_state` and only carried by `scene3d`; an AST guard forbids family branches. Measured at `380db58c`: role coverage 12/12 (six families × desktop/mobile) against an independent expectation, playback 12/12 × 19, filmstrips in `docs/evaluation/geometry/runs/w14-generic-formation-assumption/images/<family>/FILMSTRIP.png`; served gold p1, p2 `COMPLETED`, answers unchanged. **Not closed:** the refused thesis-gold negative `n2_khoi_ghep_bu_can_boolean` (an untyped box) stays `AMBIGUOUS_TOPOLOGY` — the enforced set as written includes it (user decision W14-D1 in the run's `HANDOFF.md`); the frozen hidden-line expectations no longer transfer to the four scenes S4 changed (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). No human has reviewed the new formation.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION`
+- **suggested_wave:** `COMPLETE_SHAPE_CLASS_FORMATION` (after W14-D1), then human re-review
 - **default_switch_blocker:** NO
 - **acceptance:** S1–S3 of the preregistration: every pyramid/prism family shows the required semantic roles as separate observable steps from one code path, with no branch on a family ID.
 - **verify:** the semantic-coverage tests and AST guard named in the preregistration.
@@ -23,7 +23,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json` row `standalone_wrong_segment` (offline, 0 model calls); inventory item NA-57.
 - **impact:** A GIVEN value can be attached to the wrong segment; the figure and the answer can be wrong while every gate is green.
 - **scope:** `backend/app/simulation/semantic_program/segment_relation.py`, `grounding_gate.py` (one length reader).
-- **status:** OPEN
+- **status:** RESOLVED (w14, `2f2c97b2`; `CACHE_VERSION` 105 → 106 in `733435ac`, served → rejected) — one closed connector vocabulary `segment_relation._NOI_DO_DAI` (`=`, `bằng`, `dài`, `có độ dài`) for the length reader and the GIVEN-evidence labeler (`nhan_doan_truoc`; `_NHAN_TRUOC` and `_DO_DAI_CO` deleted). The w13 probe rerun differs in exactly the two registered rows (`docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE_W14.json`); `"cạnh AB có độ dài 5"` with `AC = 5` is refused (`tests/geometry/test_source_length_reader.py`). No fuzzy matching: `"AB dài hơn 5"` stays unread.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION` (Track C)
 - **default_switch_blocker:** NO
@@ -35,7 +35,7 @@
 - **evidence:** `backend/tests/geometry/test_evidence_identity_reconciliation.py:97-107`; inventory item NA-05.
 - **impact:** T3 passes only on the machine that holds that directory; a clean checkout fails for a reason unrelated to the product. The raw model output cannot be committed (AGENTS.md §4).
 - **scope:** Backend test environment only.
-- **status:** OPEN
+- **status:** RESOLVED (w14, `0daa6354`) — the test carries the opt-in marker `external_evidence` (deselected by default in `backend/pytest.ini`) and reads `ALGOSIM_LIVE_RETRY_EVIDENCE_DIR`, failing with `NOT_PORTABLE_EXTERNAL_EVIDENCE` when it is unset; `tests/test_test_portability.py` (AST) forbids absolute paths outside opt-in tests.
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** backlog item 1 of the W13 preregistration
 - **default_switch_blocker:** NO
@@ -357,8 +357,9 @@
 - **scope:** `backend/app/simulation/semantic_program/` (which free coordinate choices may carry a metric the text does not state).
 - **status:** OPEN — found in w12; changing what a layout or an assumption may decide is a separate grounding-policy decision, measured separately.
 - **w13:** policy and acceptance criteria preregistered (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` §3: GIVEN_VALUE / DERIVED_VALUE / MODEL_ASSUMPTION / VISUAL_DEFAULT, rules P1–P6, AC1–AC7); w12 human review lists this issue as W12-H4.
+- **w14:** STILL OPEN — Track B stopped (`ASSUMPTION_POLICY_INCOMPLETE`). A three-valued gate (certificates C0/C1 ⇒ `PROVEN_SAFE`, validated counterexample ⇒ `UNSAFE`, else `UNDETERMINED`, both refused) was measured on a corpus hand-labelled before any mechanism ran: 0 `PROVEN_SAFE` on DEPENDS rows and every AC1/adversarial row refused, but **0/18** contract-bearing gold rows certified (C1 blocked: the compiler families' relations cite facts not confirmed as InputFacts; LLM gold/demo programs are not compiler-recognized), and the counterexample search raised 11 false counterexamples on invariant rows. No gate shipped; the probe's two variants are still served; 16 gate tests are strict xfail. Corpus result inside the certificate scope only, not a soundness proof. Evidence: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/ASSUMPTION_CENSUS.json`, `ASSUMPTION_MECHANISM_DECISION.json`, `ASSUMPTION_COUNTEREXAMPLES.md`. Next: user decision W14-D2 (certificate scope).
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** `W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION` (Track B)
+- **suggested_wave:** after user decision W14-D2 (`USER_DECISION_ON_ASSUMPTION_CERTIFICATE_SCOPE`); W14 Track B stopped
 - **default_switch_blocker:** NO (an argument for compiler-first)
 - **acceptance:** a dimension that the answer depends on is either stated in the text, derived from stated facts, or shown to the learner as an assumption; the probe's layout and assumption variants are refused or labelled.
 - **verify:** rerun the script embedded in the probe log.
@@ -386,5 +387,29 @@
 - **default_switch_blocker:** NO
 - **acceptance:** `cd frontend && npm run build` succeeds in the main tree.
 - **verify:** `icacls frontend\dist\assets`
+
+### ISSUE-ARCH-TEXTLESS-CONTRACT-UNCHECKED
+- **description:** Before w14, a `RequestContract` with an empty `problem_text` made `check_grounding` skip every source check, so a contract without its text was treated as trusted by default.
+- **evidence:** `docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/TRUST_POLICY_CALLERS.json` (20 test callers and 44 scripts classified one by one) and `diagnostics/logs/TRUST_POLICY_TRACE.json`.
+- **impact:** A production path that lost the text would have served answers no gate had checked against the problem.
+- **scope:** `backend/app/simulation/semantic_program/grounding_gate.py`, `route.py`, `backend/app/ai/pipeline.py` (`KHONG_SUA_NGUON`).
+- **status:** RESOLVED (w14, `d537cf74`) — `NguonDe.CAN_DE` is the default; an empty text is refused `SOURCE_TEXT_MISSING` at stage `grounding` and never sent to repair; only an explicit `NguonDe.FIXTURE_TIN_CAY` argument takes the unchecked path and records `source_check = UNCHECKED_TRUSTED_FIXTURE`. The policy is a Python argument only: not parsed from HTTP payloads, headers or model output; no reference from `app/ai`, `app/main.py` or `app/api` (AST test).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** —
+- **default_switch_blocker:** NO
+- **acceptance:** a textless production contract is refused; isolated unit fixtures declare the policy explicitly.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_gate.py -q -k "fixture_tin_cay or thieu_de or bypass or NguonDe"`
+
+### ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4
+- **description:** The frozen human hidden-line expectations (`docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json`) were reviewed on scenes that w14's formation pass changed: the triangular pyramid, triangular prism and cross-section gain drawn segments/faces, and the rectangular pyramid's lateral IDs are renamed (declared Q1 delta). `transfer_expectation` refuses, by design, to carry a reviewed expectation onto changed geometry.
+- **evidence:** `docs/evaluation/geometry/runs/w14-generic-formation-assumption/results/OCCLUSION_MEASUREMENT.json` (product = oracle 24/24; 4 × `SCENE_GEOMETRY_CHANGED`, cuboid and cube transfer) and `diagnostics/OCCLUSION_TRANSFER_DIAGNOSTIC.json` (the oracle reproduces the reviewed sets 4/4 at the registered and the new camera; known-answer fault caught).
+- **impact:** For those four scenes the hidden-line gate cannot be green without a person; no visibility regression is measured.
+- **scope:** Evaluation evidence (human registry); no product code.
+- **status:** OPEN — needs human re-review of the four scenes and a new registry layer (the reviewed registry stays byte-identical).
+- **owner_class:** EVALUATION
+- **suggested_wave:** human visual re-review (W14-D3)
+- **default_switch_blocker:** NO
+- **acceptance:** a reviewed registry layer for the current scenes; the occlusion measurement passes against it.
+- **verify:** `measure_scene3d_occlusion.py` with the new registry (command at the top of `diagnostics/logs/OCCLUSION_380db58c.log` in the w14 run).
 
 

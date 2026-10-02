@@ -90,6 +90,28 @@ khối, tiếp xúc, góc nhị diện…) ở `docs/architecture/geometry_capab
 — đó là kiểm kê kiến trúc, **không** phải năng lực sản phẩm; khoá luận chỉ trích
 năng lực sản phẩm từ `product_capability.py` và bằng chứng đo.
 
+✅/⚠️ **Cập nhật 2026-10-02 (w14, offline, 0 lượt gọi; chưa có duyệt người):**
+
+- **Dựng hình theo lớp hình — tuyên bố được phép:** sáu họ compiler và các chương
+  trình gold được phục vụ (p1, p2) dựng đáy, đường cao (chỉ khi có chân định kiểu),
+  đáy trên, cạnh bên thành bước riêng TRƯỚC khi khép khối, từ MỘT đường mã cho cả
+  tuyến compiler lẫn LLM (đo trong trình duyệt: 6 họ × desktop/mobile, phủ vai trò
+  12/12). **Không** được nói "mọi bài đa diện": ca âm gold n2 (hộp không có đáy định
+  kiểu) không phân loại được (`AMBIGUOUS_TOPOLOGY`), và chưa ai duyệt bằng mắt.
+- **Kênh giả định — KHÔNG có cổng:** khoá luận **không** được nói sản phẩm từ chối đáp
+  số phụ thuộc giả định. Được nói: một cơ chế ba trị đo trên corpus gắn nhãn TRƯỚC cho
+  0 `PROVEN_SAFE` trên hàng DEPENDS nhưng chứng nhận 0/18 hàng gold, nên không giao
+  (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION` vẫn mở). Kết quả corpus trong
+  phạm vi chứng chỉ, không phải chứng minh đúng đắn tổng quát.
+- **Nguồn độ dài:** *"AB dài 5 cm"* và *"cạnh AB có độ dài 5"* nay gắn đúng AB — khai
+  `AC = 5` bị từ chối (`SOURCE_EVIDENCE_CONFLICT`); dò lại khác đúng hai hàng đã đăng
+  ký. *"AB = AC = 5"* vẫn từ chối oan `AB = 5` (ngoài W14). Phạm vi tuyên bố: các hàng
+  của `docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE_W14.json`.
+- **Hợp đồng thiếu đề** nay bị từ chối (`SOURCE_TEXT_MISSING`), không còn mặc định là
+  "không kiểm".
+
+Nguồn: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/` (`REPORT.md`).
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

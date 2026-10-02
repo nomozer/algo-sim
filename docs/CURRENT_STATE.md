@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01) và w14 (2026-10-01): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **106** (W14, 2026-10-02: served → rejected + dựng hình theo lớp — `PROOF_CACHE_ROW_W14.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,17 +53,34 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 442584cf (measurement commit c243968b) — w13 đổi tài liệu, không đổi sản phẩm
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 54af39a4 (measurement commit 380db58c)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 105
-> CANDIDATE = 548f5b3b… (was df04a613…), product commit 4014f311
+> CACHE_VERSION = 106
+> CANDIDATE = 40263983… (was 548f5b3b…), product commit a2af56e4
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, chỉ tài liệu)
-> FINAL_DECISION = ARCHITECTURE_PREREGISTRATION_READY
-> CANONICAL_NEXT_ACTION = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION
-> TARGET_NEXT_ACTION_AFTER_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (bắt đầu sau khi người dùng trả lời D2, D3)
+> CURRENT_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14)
+> FINAL_DECISION = FORMATION_FOUNDATION_INCOMPLETE
+> CANONICAL_NEXT_ACTION = COMPLETE_SHAPE_CLASS_FORMATION
+> TARGET_NEXT_ACTION_AFTER_WAVE = COMPLETE_SHAPE_CLASS_FORMATION (bắt đầu bằng quyết định W14-D1 của người dùng; W14-D2 phạm vi chứng chỉ giả định, W14-D3 duyệt lại bốn cảnh — `HANDOFF.md` của run w14)
 > ```
+
+> **Dựng hình theo lớp hình + nền chính sách giả định — w14 (measurement `380db58c`, detached clean worktree; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`FORMATION_FOUNDATION_INCOMPLETE`** — dòng khớp đầu tiên của bảng kết cục. Chương trình duy nhất của tập bắt buộc chưa phủ: ca âm gold `n2_khoi_ghep_bu_can_boolean`, bị từ chối ở `structural_coverage` trước và sau w14; hộp của nó không có đáy định kiểu ⇒ `AMBIGUOUS_TOPOLOGY` theo thiết kế. Nếu người dùng loại chương trình bị từ chối khỏi tập bắt buộc (W14-D1) ⇒ kết luận thành `ASSUMPTION_POLICY_INCOMPLETE` |
+> | Dựng hình (Track A) | MỘT bước bổ sung theo lớp hình (`semantic_program/formation.py`, lá `solid_faces.py`) chạy trong `verify_and_compile` và `_dung_scene3d` cho chương trình compiler LẪN LLM; vai trò sinh ở `simulation_state`, `scene3d` chỉ chở. Browser 6 họ × desktop/mobile: phủ vai trò 12/12. Chóp tam giác: điểm · đáy · SA (đường cao + cạnh bên) · SB, SC · khép khối; lăng trụ tam giác: điểm · đáy · đáy trên · cạnh bên · khép khối |
+> | Chính sách nguồn | hợp đồng thiếu `problem_text` ⇒ `SOURCE_TEXT_MISSING` (không gửi đi sửa) trừ khi nơi gọi khai tường minh `NguonDe.FIXTURE_TIN_CAY`; 0 tham chiếu từ đường sản phẩm |
+> | Giả định (Track B) | **STOP — `ASSUMPTION_POLICY_INCOMPLETE`**: 0 `PROVEN_SAFE` trên hàng DEPENDS nhưng AC2 chỉ 0/18; không giao cổng nào; 16 test xfail strict |
+> | Nguồn độ dài (Track C) | **ĐÓNG** — `dài`/`có độ dài` vào cùng một từ vựng nối; dò lại khác đúng hai hàng đã đăng ký |
+> | T3 từ đường dẫn CÓ dấu cách (`380db58c`) | **PASS** — pytest 6564/0 fail (1 skipped, 2 deselected, 16 xfailed) · vitest 1010/1010 · build · demo · bề mặt sập |
+> | Product ↔ oracle | **PASS** 24/24; kỳ vọng người: hộp chữ nhật, lập phương chuyển được; **bốn cảnh S4 đổi dừng ở `SCENE_GEOMETRY_CHANGED`** (oracle tái tạo đúng tập đã duyệt 4/4 — cần người duyệt lại, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`) |
+> | Playback · crop | 12/12 × 19 kiểm, 5 vòng orbit mỗi lượt; 64 crop, 0 bất đồng oracle, 0 owner trùng |
+> | Candidate · `CACHE_VERSION` | `548f5b3b…` → **`40263983…`** (đóng băng MỘT lần tại `a2af56e4`) · 105 → **106** (`733435ac`; fingerprint provider không đổi) |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/` (`REPORT.md`, `HANDOFF.md`).
+> Bảng w13, w12 dưới đây giữ làm lịch sử.
 
 > **Kiểm kê năng lực + giả định tuyệt đối — w13 (chỉ tài liệu, đọc mã tại `bf5a7907`):**
 >

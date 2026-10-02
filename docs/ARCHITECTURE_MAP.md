@@ -54,7 +54,7 @@ Input text/image
 
 2. **Đường compiler thực nghiệm (Compiler Experimental Slice):**
    - Đã chứng minh trên vertical slice: họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
-     *(w13: danh sách này đã cũ — `geometry_compiler/compiler.py::SUPPORTED_FAMILIES` có sáu họ; mỗi họ còn tự viết chuỗi câu lệnh, xem `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.)*
+     *(w13: danh sách này đã cũ — `geometry_compiler/compiler.py::SUPPORTED_FAMILIES` có sáu họ; mỗi họ còn tự viết chuỗi câu lệnh, xem `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`. w14: compiler thôi tự viết đường cao/cạnh bên/đáy trên — bước bổ sung chung ở §2d sinh chúng.)*
    - Sau khi Analyze trích xuất `structured_relations`, `FactGraph` nhận diện cấu trúc và gọi `primitive_compiler` để sinh `SemanticProgramSpec` 100% tất định (0 lượt gọi LLM synthesis).
 
 3. **Kiến trúc đích (Target Architecture: Compiler-First + LLM Fallback):**
@@ -92,9 +92,40 @@ sửa: [`docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md`](archi
 (w13). Hướng thay chuỗi câu lệnh viết tay theo từng họ bằng dựng hình theo **lớp
 hình** (vai trò gắn ở producer, bước con là sự kiện trace thật — #31/#35 giữ) và
 chính sách giả định/mặc định: [`GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md)
-— **tiền đăng ký, chưa triển khai**.
+— tiền đăng ký w13; Track A (dựng hình) và C (nguồn độ dài) triển khai ở w14 (§2d),
+Track B (chính sách giả định) dừng ở bước đo.
 Việc triển khai hidden-line không đồng nghĩa verification sạch — trạng thái gate
 hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
+
+### 2d. Dựng hình theo lớp hình và chính sách nguồn (w14)
+
+- **Một bước bổ sung, mọi tuyến.** `semantic_program/formation.py::hoan_thien_dung_hinh`
+  chạy ngay đầu `route.verify_and_compile` và `pipeline._dung_scene3d`: cùng đầu vào
+  tất định ⇒ cùng spec, nên số khung envelope = số bước formation (#31). Nó chèn
+  đáy/đáy trên còn thiếu, đường cao và cạnh bên thành câu lệnh thật trước
+  `construct_solid` — mỗi bước là một sự kiện trace thật — cho chương trình compiler
+  LẪN LLM. Không đổi bản gốc, lũy đẳng; đầu ra phải qua lược đồ + `kiem_tinh`, hỏng
+  thì giữ bản gốc (`COMPLETION_REJECTED_INVALID_OUTPUT`). Bước này ở server nên bề
+  mặt mô hình không đổi.
+- **Thẩm quyền topology, theo thứ tự:** `contract.solid_topology` khớp khối → quan hệ
+  CÓ KIỂU (`perpendicular_line_plane` của hợp đồng, chân `project_onto` của chương
+  trình) → bảng mặt không mơ hồ (lá `solid_faces.py`, không import `app`). Nhiều cách
+  đọc không tương đương ⇒ `AMBIGUOUS_TOPOLOGY`, khối để nguyên; không bao giờ chọn
+  theo tên, nhãn, thứ tự đỉnh/mặt hay tên `*_length`. Bảng mặt hỏng ⇒ chặng
+  `formation`, `SOLID_TOPOLOGY_MALFORMED`.
+- **Vai trò ở producer.** `simulation_state.build_simulation_state` gọi
+  `formation.gan_vai_tro_dung` (topology thuần, không tính hình); `scene3d.py` (chỉ
+  import `__future__`/`typing`) chỉ chở `formation_roles`, `shape_class`,
+  `formation_requirements` và hợp vai trò theo bước. Frontend và harness không suy
+  vai trò từ chữ.
+- **Chính sách nguồn.** `check_grounding` / `verify_and_compile` nhận
+  `nguon: NguonDe = CAN_DE`; đề rỗng ⇒ `SOURCE_TEXT_MISSING`, không gửi đi sửa.
+  `NguonDe.FIXTURE_TIN_CAY` là đối số Python tường minh của test/script cô lập —
+  không đọc từ HTTP, mô hình hay cấu hình; không đường sản phẩm nào khai.
+- **Một từ vựng nối độ dài** (`segment_relation._NOI_DO_DAI`) dùng chung cho bộ đọc
+  độ dài và nhãn bằng chứng GIVEN.
+- **Chưa có:** cổng giả định (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`);
+  dựng hình khối cong; đường cao khi chân là điểm dẫn xuất chưa dựng.
 
 **Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
 
