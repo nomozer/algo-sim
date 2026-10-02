@@ -26,6 +26,9 @@ import {
   aliasTreeRowCheck,
   isHiddenAlias,
   assessGeometrySteps,
+  assessFormation,
+  assessStructuredReferences,
+  renderedSets,
   expectedGeometryTimeline,
   expectedSolutionRows,
   orbitCandidates,
@@ -593,4 +596,224 @@ test("learner playback: every known state-machine fault is caught by its own che
   fault("replay_resets_step_selection_highlight", g, { replay: { step: 2, selected: null, highlighted: [] } });
   fault("orbit_preserves_timeline", g,
     { orbit: { before: { step: 2, rows: ROWS[2] }, after: { step: 1, rows: ROWS[1] } } });
+});
+
+/* ─── W14: ĐỘ PHỦ VAI TRÒ DỰNG HÌNH (ba nguồn) ─────────────────────────────
+   Cảnh tổng hợp: kỳ vọng độc lập, khai báo sản phẩm và quan sát được dựng tay ở
+   đây — phép kiểm phải đúng khi ba nguồn khớp và trượt khi BẤT KỲ nguồn nào lệch. */
+const vat = (id, type, dinh, extra = {}) => ({ id, type, render: type === "polygon3" ? "polygon"
+  : type === "segment3" ? "segment" : type === "solid" ? "mesh" : type === "plane3" ? "surface"
+    : "polygon", ...(type === "segment3" ? { endpoint_ids: dinh } : { vertex_ids: dinh }), ...extra });
+const ROLE = { B: "CONSTRUCT_BASE", H: "CONSTRUCT_HEIGHT", T: "CONSTRUCT_TRANSLATED_FACE",
+  L: "CONSTRUCT_LATERAL_BOUNDARY", C: "CLOSE_SOLID", X: "CONSTRUCT_CUTTING_OBJECT",
+  I: "CONSTRUCT_INTERSECTION", Z: "CLOSE_SECTION" };
+const ky = (cls, role, kind, vertices) => ({ class: cls, role: ROLE[role], kind, vertices });
+
+function chopTamGiac() {
+  return {
+    scene: { objects: [
+      vat("day", "polygon3", ["A", "B", "C"]), vat("cao", "segment3", ["S", "A"]),
+      vat("sb", "segment3", ["S", "B"]), vat("sc", "segment3", ["S", "C"]),
+      vat("khoi", "solid", ["S", "A", "B", "C"], { shape_class: "PYRAMID_LIKE",
+        formation_requirements: [ROLE.B, ROLE.H, ROLE.L, ROLE.C] })] },
+    expected: [ky("PYRAMID_LIKE", "B", "polygon3", ["A", "B", "C"]),
+      ky("PYRAMID_LIKE", "H", "segment3", ["A", "S"]), ky("PYRAMID_LIKE", "L", "segment3", ["B", "S"]),
+      ky("PYRAMID_LIKE", "L", "segment3", ["C", "S"]), ky("PYRAMID_LIKE", "C", "solid", ["A", "B", "C", "S"])],
+    rendered: [[], ["day"], ["day", "cao"], ["day", "cao", "sb", "sc"], ["day", "cao", "sb", "sc", "khoi"]],
+  };
+}
+
+function langTru() {
+  return {
+    scene: { objects: [
+      vat("day", "polygon3", ["A", "B", "C"]), vat("tren", "polygon3", ["D", "E", "F"]),
+      vat("ad", "segment3", ["A", "D"]), vat("be", "segment3", ["B", "E"]), vat("cf", "segment3", ["C", "F"]),
+      vat("khoi", "solid", ["A", "B", "C", "D", "E", "F"], { shape_class: "PRISM_LIKE",
+        formation_requirements: [ROLE.B, ROLE.T, ROLE.L, ROLE.C] })] },
+    expected: [ky("PRISM_LIKE", "B", "polygon3", ["A", "B", "C"]),
+      ky("PRISM_LIKE", "T", "polygon3", ["D", "E", "F"]), ky("PRISM_LIKE", "L", "segment3", ["A", "D"]),
+      ky("PRISM_LIKE", "L", "segment3", ["B", "E"]), ky("PRISM_LIKE", "L", "segment3", ["C", "F"]),
+      ky("PRISM_LIKE", "C", "solid", ["A", "B", "C", "D", "E", "F"])],
+    rendered: [[], ["day"], ["day", "tren"], ["day", "tren", "ad", "be", "cf"],
+      ["day", "tren", "ad", "be", "cf", "khoi"]],
+  };
+}
+
+function thietDien() {
+  return {
+    scene: { objects: [vat("alpha", "plane3", []),
+      { id: "T", type: "section", render: "polygon", shape_class: "SECTION",
+        formation_requirements: [ROLE.X, ROLE.I, ROLE.Z] }] },
+    expected: [ky("SECTION", "X", "plane3", []), ky("SECTION", "I", "section", []),
+      ky("SECTION", "Z", "section", [])],
+    rendered: [[], ["alpha"], ["alpha", "T#2"], ["alpha", "T#4c"], ["alpha", "T#4cf"]],
+  };
+}
+
+const quanSat = (rendered, scene) => rendered.map((ids, index) =>
+  ({ index, renderedSets: renderedSets(scene, ids) }));
+const phan = (ca, lop, sua = (c) => c) => {
+  const c = sua(structuredClone(ca));
+  return assessFormation(c.expected, c.scene, quanSat(c.rendered, c.scene), [lop]);
+};
+
+test("formation roles: a genuine three-way agreement passes for every class", () => {
+  assert.equal(phan(chopTamGiac(), "PYRAMID_LIKE").pass, true);
+  assert.equal(phan(langTru(), "PRISM_LIKE").pass, true);
+  assert.equal(phan(thietDien(), "SECTION").pass, true);
+  // V7: đường cao trùng cạnh bên được phép hiện CÙNG bước với các cạnh bên khác.
+  assert.equal(phan(chopTamGiac(), "PYRAMID_LIKE", (c) => {
+    c.rendered[2] = ["day", "cao", "sb", "sc"];
+    return c;
+  }).pass, true);
+});
+
+test("formation roles: each injected fault fails with its reason", () => {
+  const fault = (ca, lop, reason, sua) => {
+    const v = phan(ca, lop, sua);
+    assert.equal(v.pass, false, reason);
+    assert.ok(v.reason_codes.includes(reason), `${reason}: ${v.reason_codes.join(",")}`);
+  };
+  const boKhoi = (c, ids) => {
+    c.rendered = c.rendered.map((r) => r.filter((id) => !ids.includes(id)));
+    return c;
+  };
+  fault(chopTamGiac(), "PYRAMID_LIKE", "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", (c) => boKhoi(c, ["sb", "sc"]));
+  fault(chopTamGiac(), "PYRAMID_LIKE", "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", (c) => {
+    c.rendered = c.rendered.map((r, i) => (i >= 1 ? [...new Set([...r, "khoi"])] : r));
+    return c;
+  });
+  // Sản phẩm bỏ CẢ yêu cầu đường cao LẪN bước đường cao: kỳ vọng độc lập vẫn bắt.
+  fault(chopTamGiac(), "PYRAMID_LIKE", "DECLARED_DISAGREES_WITH_EXPECTED", (c) => {
+    c.scene.objects.at(-1).formation_requirements = [ROLE.B, ROLE.L, ROLE.C];
+    return boKhoi(c, ["cao"]);
+  });
+  fault(chopTamGiac(), "PYRAMID_LIKE", "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", (c) => {
+    c.scene.objects.at(-1).formation_requirements = [ROLE.B, ROLE.L, ROLE.C];
+    return boKhoi(c, ["cao"]);
+  });
+  fault(chopTamGiac(), "PYRAMID_LIKE", "DECLARED_REQUIREMENTS_EMPTY", (c) => {
+    c.scene.objects.at(-1).formation_requirements = [];
+    return c;
+  });
+  fault(chopTamGiac(), "PYRAMID_LIKE", "DECLARED_REQUIREMENTS_EMPTY", (c) => {
+    delete c.scene.objects.at(-1).shape_class;
+    return c;
+  });
+  fault(chopTamGiac(), "PYRAMID_LIKE", "EXPECTED_REQUIREMENTS_EMPTY", (c) => {
+    c.expected = [];
+    return c;
+  });
+  fault(langTru(), "PRISM_LIKE", "DECLARED_DISAGREES_WITH_EXPECTED", (c) => {
+    c.scene.objects.at(-1).formation_requirements = [ROLE.B, ROLE.L, ROLE.T, ROLE.C];
+    return c;
+  });
+  // Đáy trên hiện CÙNG bước với cạnh bên: thứ tự nghiêm của lăng trụ bị phá.
+  fault(langTru(), "PRISM_LIKE", "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", (c) => {
+    boKhoi(c, ["tren"]);
+    c.rendered = c.rendered.map((r) => (r.includes("ad") ? [...r, "tren"] : r));
+    return c;
+  });
+  // Thiết diện khép viền mà chưa tô: chưa phải CLOSE_SECTION.
+  fault(thietDien(), "SECTION", "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", (c) => {
+    c.rendered[4] = ["alpha", "T#4c"];
+    return c;
+  });
+  const g = evaluateEvidenceGates({ ...passingFacts(),
+    formation_coverage: phan(chopTamGiac(), "PYRAMID_LIKE", (c) => boKhoi(c, ["sb", "sc"])) });
+  assert.ok(g.reason_codes.includes("FORMATION_ROLE_COVERAGE"), g.reason_codes.join(","));
+});
+
+/* ─── W14: MỌI THAM CHIẾU CÓ CẤU TRÚC ĐỀU ĐƯỢC VẼ / HIỆN ───────────────────
+   Quan sát "thật" mô phỏng đúng renderer: vật vẽ được của khung neo, thiết diện
+   mang `#<số đỉnh>[c][f]`; bảng lời giải = lớp lời giải kỳ vọng. */
+function quanSatRenderer(sc) {
+  const byId = new Map(sc.objects.map((o) => [o.id, o]));
+  return expectedGeometryTimeline(sc).map((g) => {
+    const st = sc.formation.steps[g.anchor];
+    const prog = new Map((st.geometry_progress ?? []).map((p) => [p.object_id, p]));
+    const rendered = st.visible_ids.flatMap((id) => {
+      const o = byId.get(id);
+      if (!o || o.render === "readout" || o.render === "non_visual") return [];
+      if (o.type !== "section" || !o.polygon) return [id];
+      const p = prog.get(id);
+      const closed = p ? p.closed : o.closed;
+      const len = closed ? o.polygon.length : p.visible_edge_ids.length + 1;
+      return [`${id}#${len}${closed ? "c" : ""}${(p ? p.fill_visible : o.fill_visible) ? "f" : ""}`];
+    }).sort();
+    return { index: g.index, rendered, solution: expectedSolutionRows(sc, g.anchor) };
+  });
+}
+
+test("structured references: a renderer-faithful observation passes on every family fixture", () => {
+  for (const family of ["triangular_pyramid", "triangular_prism", "rectangular_pyramid", "cuboid",
+    "cube", "cross_section"]) {
+    const sc = w11Scene(family);
+    const v = assessStructuredReferences(sc, { steps: quanSatRenderer(sc) });
+    assert.equal(v.pass, true, `${family}: ${JSON.stringify(v.fail.slice(0, 3))}`);
+  }
+});
+
+test("structured references: each of (a)-(d) fails on its own injected fault", () => {
+  const sai = (family, check, sua) => {
+    const sc = w11Scene(family);
+    const steps = quanSatRenderer(sc);
+    sua(steps, sc);
+    const v = assessStructuredReferences(sc, { steps });
+    assert.equal(v.pass, false, check);
+    assert.ok(v.fail.some((f) => f.check === check), `${check}: ${JSON.stringify(v.fail)}`);
+    return v;
+  };
+  const t = (sc) => expectedGeometryTimeline(sc);
+  // (a) vật trọng tâm của bước dựng đáy không được vẽ.
+  sai("triangular_pyramid", "a", (steps, sc) => {
+    const id = sc.formation.steps[t(sc)[1].start].focus_ids[0];
+    steps[1].rendered = steps[1].rendered.filter((x) => x !== id);
+  });
+  // (b) đại lượng đang hiện ở khung neo vắng khỏi bảng lời giải.
+  sai("triangular_pyramid", "b", (steps) => {
+    const last = steps.at(-1);
+    last.solution = { ...last.solution, givens: last.solution.givens.slice(1) };
+  });
+  // (c) thứ công thức thể tích nhắc tới không còn hiện ở đâu trong khung cuối.
+  sai("triangular_pyramid", "c", (steps, sc) => {
+    const last = steps.at(-1);
+    const ids = new Set([...last.solution.steps, ...last.solution.results]);
+    const ref = sc.objects.filter((o) => ids.has(o.id))
+      .flatMap((o) => o.formula?.references ?? [])[0].entity_id;
+    last.rendered = last.rendered.filter((x) => x !== ref);
+    last.solution = Object.fromEntries(Object.entries(last.solution)
+      .map(([k, v]) => [k, v.filter((x) => x !== ref)]));
+  });
+  // (d) renderer vẽ thiếu một cạnh thiết diện so với tiến độ.
+  sai("cross_section", "d", (steps) => {
+    const s = steps.find((x) => x.rendered.some((r) => /#\d+$/.test(r)));
+    s.rendered = s.rendered.map((r) => r.replace(/#(\d+)$/, (_m, n) => `#${Number(n) - 1}`));
+  });
+  const v = sai("triangular_pyramid", "b", (steps) => {
+    steps.at(-1).solution = { givens: [], steps: [], results: [] };
+  });
+  const g = evaluateEvidenceGates({ ...passingFacts(), structured_references: v });
+  assert.ok(g.reason_codes.includes("STRUCTURED_REFERENCE_NOT_RENDERED"), g.reason_codes.join(","));
+});
+
+test("manifest refuses a scenario whose role coverage would silently enforce nothing", () => {
+  const repoRoot = resolve(import.meta.dirname, "..", "..");
+  const goc = JSON.parse(readFileSync(resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8"));
+  for (const sua of [(s) => { delete s.formation_coverage; }, (s) => { s.formation_coverage.enforce = []; },
+    (s) => { s.formation_coverage.enforce = ["SPHERE_LIKE"]; }, (s) => { s.expected_formation = []; }]) {
+    const m = structuredClone(goc);
+    sua(m.scenarios[0]);
+    assert.throws(() => validateSuiteManifest(m, repoRoot), /formation_coverage:triangular_pyramid/);
+  }
+});
+
+test("role tokens are machine data: on screen they are a raw-token leak", () => {
+  const sc = { objects: [{ id: "khoi", type: "solid", render: "mesh", shape_class: "PYRAMID_LIKE",
+    formation_roles: ["CLOSE_SOLID"], formation_requirements: ["CONSTRUCT_BASE"] }],
+  formation: { steps: [{ formation_roles: ["DECLARE_ENTITIES"] }] } };
+  assert.equal(detectRawTokenLeakage(sc, "Dựng đáy ABC.").pass, true);
+  for (const token of ["PYRAMID_LIKE", "CLOSE_SOLID", "CONSTRUCT_BASE", "DECLARE_ENTITIES"]) {
+    assert.deepEqual(detectRawTokenLeakage(sc, `Bước: ${token}`).leaked_tokens, [token], token);
+  }
 });

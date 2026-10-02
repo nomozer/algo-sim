@@ -121,6 +121,49 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
     assert meta["cells"][10]["label"].endswith("Bước dựng số 0")
 
 
+_VAI_W14 = [["DECLARE_ENTITIES"], ["CONSTRUCT_BASE"], ["CONSTRUCT_HEIGHT", "CONSTRUCT_LATERAL_BOUNDARY"],
+            ["CONSTRUCT_LATERAL_BOUNDARY"], ["CLOSE_SOLID"]]
+
+
+def _ban_ghi_w14(tmp: Path) -> dict:
+    rec = _ban_ghi(tmp, "desktop", 1400, (1400, 800), steps=len(_VAI_W14))
+    for s, vai in zip(rec["formation"]["steps"], _VAI_W14):
+        s["formation_roles"] = vai
+        s["learner_text"] = ("Dựng chiều cao SA vuông góc với mặt phẳng đáy rồi nối đỉnh S với "
+                             "mọi đỉnh của đáy để thấy rõ các cạnh bên trước khi khép khối")
+    return rec
+
+
+def test_w14_filmstrip_names_roles_in_vietnamese_and_every_line_fits(tmp_path):
+    """W12-H1/H2 nhìn được bằng mắt: dải phim desktop trái → phải, chú thích là tên
+    vai trò TIẾNG VIỆT + lời kể, không token máy, mỗi dòng nằm trọn trong ô của nó."""
+    film = B.filmstrip("triangular_pyramid", {"positive": {"desktop": _ban_ghi_w14(tmp_path)}},
+                       tmp_path / "images")
+    from PIL import Image
+    strip = Image.open(film["filmstrip"])
+    assert strip.width == len(_VAI_W14) * B.FILM_CELL_W
+    assert [c.split(" — ")[0] for c in film["captions"]] == [
+        "Bước dựng 1/5 · các điểm dữ kiện", "Bước dựng 2/5 · đáy", "Bước dựng 3/5 · đường cao, cạnh bên",
+        "Bước dựng 4/5 · cạnh bên", "Bước dựng 5/5 · khép khối"]
+    phong, _ = B._font(film["font_px"])
+    for cau, dong in zip(film["captions"], film["caption_lines"]):
+        assert not any(t in cau for t in ("CONSTRUCT_", "CLOSE_", "DECLARE_")), cau
+        assert " ".join(dong) == cau
+        assert len(dong) > 1 and all(12 + phong.getlength(d) <= B.FILM_CELL_W - 12 for d in dong), dong
+
+
+def test_w14_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused(tmp_path):
+    rec = _ban_ghi_w14(tmp_path)
+    meta = B.family_sheet("triangular_pyramid", {"positive": {"desktop": rec}}, tmp_path / "images")
+    nhan = [c["label"] for c in meta["cells"] if c["state"].startswith("desktop/geometry_step/")]
+    assert nhan[2].startswith("Bước dựng 3/5 · đường cao, cạnh bên — ")
+    assert not any("CONSTRUCT_" in n or "CLOSE_" in n for n in nhan)
+    rec["formation"]["steps"][1]["formation_roles"] = ["CONSTRUCT_SPACESHIP"]
+    import pytest
+    with pytest.raises(KeyError, match="CONSTRUCT_SPACESHIP"):
+        B.filmstrip("triangular_pyramid", {"positive": {"desktop": rec}}, tmp_path / "images2")
+
+
 def test_w11_overview_is_only_an_index_of_the_six_families(tmp_path):
     meta = {f: {"sheet": f"images/{B.family_dir(f)}/SHEET.png", "thumbnail": None}
             for f in ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",

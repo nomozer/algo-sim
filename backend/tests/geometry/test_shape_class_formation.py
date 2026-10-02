@@ -690,3 +690,18 @@ def test_vai_tro_dong_bo_tu_vung():
            and isinstance(n.value, str)
            and re.fullmatch(r"(CONSTRUCT|CLOSE|DECLARE)_[A-Z_]+", n.value)}
     assert lit <= set(F.VAI_TRO), lit - set(F.VAI_TRO)
+
+
+def test_vai_tro_harness_dong_bo():
+    """Harness (bộ chấm độ phủ vai trò, bộ dựng ảnh bằng chứng) dùng ĐÚNG từ vựng của
+    `formation`; và mọi vai trò có tên người xem — vai trò mới không lên ảnh dạng token."""
+    F = _formation()
+    goc = Path(__file__).resolve().parents[3]
+    tep = [goc / "frontend" / "scripts" / "compiler-scene-replay-lib.mjs",
+           goc / "backend" / "scripts" / "build_scene3d_visual_evidence.py"]
+    token = {t for f in tep for t in re.findall(r"\b(?:CONSTRUCT|CLOSE|DECLARE)_[A-Z_]*[A-Z]\b",
+                                                 f.read_text(encoding="utf-8"))}
+    assert token and token <= set(F.VAI_TRO), token - set(F.VAI_TRO)
+    gan = next(n for n in ast.walk(ast.parse(tep[1].read_text(encoding="utf-8")))
+               if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", None) == "TEN_VAI_TRO")
+    assert {k.value for k in gan.value.keys} == set(F.VAI_TRO)

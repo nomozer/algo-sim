@@ -15,7 +15,9 @@ import {
   aliasTreeRowCheck,
   assessCausalCanvasHues,
   assessCssReadiness,
+  assessFormation,
   assessGeometrySteps,
+  assessStructuredReferences,
   isHiddenAlias,
   assessFormationSnapshots,
   assessImmutableWindow,
@@ -39,6 +41,8 @@ import {
   validateFormulaReferences,
   validateSuiteManifest,
   phanLoaiSac,
+  renderedSets,
+  sortedUnique,
 } from "./compiler-scene-replay-lib.mjs";
 
 const REPO_ROOT = resolve(import.meta.dirname, "..", "..");
@@ -546,8 +550,10 @@ async function focusLabel(session) {
 
 /** W12: thanh bước đi qua BƯỚC DỰNG. Mỗi bước: khung = snapshot neo của bước
  *  (oracle độc lập), cây thành phần, nhãn điểm, vật dựng lên khung, dòng "Đang
- *  dựng", bảng lời giải; rồi tua ngược so từng bước. */
-async function formationEvidence(session, scene, outDir, captureMode = "full") {
+ *  dựng", bảng lời giải; rồi tua ngược so từng bước. W14: cùng các bước ấy chấm
+ *  độ phủ vai trò (kỳ vọng registry · khai báo sản phẩm · vật renderer báo) và
+ *  mọi tham chiếu có cấu trúc. */
+async function formationEvidence(session, scene, outDir, captureMode, scenario) {
   await goToStart(session);
   const timeline = expectedGeometryTimeline(scene);
   const stepTotal = timeline.length;
@@ -556,6 +562,11 @@ async function formationEvidence(session, scene, outDir, captureMode = "full") {
   const representative = Math.floor((stepTotal - 1) / 2);
   for (let index = 0; index < stepTotal; index += 1) {
     const anchor = timeline[index].anchor;
+    // Vai trò dựng hình của CẢ nhóm sự kiện (bước neo có thể là một kết luận
+    // mang `[]`) — chỉ để chú thích ảnh; phép chấm vai trò dùng vật renderer báo.
+    const { start, end } = timeline[index];
+    const formationRoles = sortedUnique(Array.from({ length: end - start + 1 },
+      (_, d) => scene.formation?.steps?.[start + d]?.formation_roles ?? []).flat());
     const step = await currentStep(session);
     const expectedIds = expectedVisibleIds(scene, anchor);
     const tree = await observeTree(session, scene, expectedIds);
@@ -595,6 +606,7 @@ async function formationEvidence(session, scene, outDir, captureMode = "full") {
       screenshot: image,
       canvas,
       learner_text: learnerText,
+      formation_roles: formationRoles,
     });
     if (index < stepTotal - 1 && !await moveStep(session, 1)) {
       throw new Error(`FORMATION_STOPPED_AT:${index}`);
@@ -625,13 +637,19 @@ async function formationEvidence(session, scene, outDir, captureMode = "full") {
   });
   const forwardBackward = steps.map((s) => ({ index: s.index,
     pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index]) }));
+  const structuredReferences = assessStructuredReferences(scene, {
+    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution })) });
+  const roleCoverage = assessFormation(scenario.expected_formation, scene,
+    steps.map((s) => ({ index: s.index, renderedSets: renderedSets(scene, s.rendered) })),
+    scenario.formation_coverage.enforce, scenario.formation_coverage.measure);
   const canvasHashes = new Set(steps.map((step) => step.canvas.sha256));
   const pass = steps.every((step) => step.indicator?.index === step.index
     && step.indicator?.count === stepTotal
     && step.tree.pass && step.point_visibility_pass && step.solution_pass)
     && canvasHashes.size >= 2 && trace.pass && geometry.pass && endLocked
-    && forwardBackward.every((x) => x.pass);
+    && forwardBackward.every((x) => x.pass) && structuredReferences.pass && roleCoverage.pass;
   return { steps, observations, trace, geometry, forward_backward: forwardBackward,
+    structured_references: structuredReferences, role_coverage: roleCoverage,
     end_locked: endLocked, distinct_canvas_frames: canvasHashes.size, pass };
 }
 
@@ -978,12 +996,14 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       await clickText(session, "Xem lại toàn hình");
       result.formation = await formationEvidence(
         session, scene, join(outDir, "formation"),
-        viewport.formation === "representative" ? "representative" : "full",
+        viewport.formation === "representative" ? "representative" : "full", scenario,
       );
       result.assertions.formation = assertion(result.formation.pass, {
         steps: result.formation.steps.length,
         distinct_canvas_frames: result.formation.distinct_canvas_frames,
         geometry: result.formation.geometry.checks,
+        role_coverage: result.formation.role_coverage.reason_codes,
+        structured_references: result.formation.structured_references.fail,
         end_locked: result.formation.end_locked,
       });
     }
@@ -1017,6 +1037,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         dash_signature_preserved: causal.visual.dash_signature_preserved,
       },
       geometry: viewport.formation ? result.formation.geometry : undefined,
+      formation_coverage: viewport.formation ? result.formation.role_coverage : undefined,
+      structured_references: viewport.formation ? result.formation.structured_references : undefined,
       solution_final: result.solution_final,
       role_colors: roleColors,
       canvas_role_hues: causal.visual.canvas_role_hues,

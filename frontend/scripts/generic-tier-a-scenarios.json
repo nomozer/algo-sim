@@ -59,6 +59,7 @@
         { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["C", "S"] },
         { "class": "PYRAMID_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "S"] }
       ],
+      "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",
@@ -95,6 +96,7 @@
         { "class": "PRISM_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["C", "F"] },
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "D", "E", "F"] }
       ],
+      "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",
@@ -130,6 +132,7 @@
         { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["D", "S"] },
         { "class": "PYRAMID_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "D", "S"] }
       ],
+      "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",
@@ -167,6 +170,7 @@
         { "class": "PRISM_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["D", "D_prime"] },
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "A_prime", "B", "B_prime", "C", "C_prime", "D", "D_prime"] }
       ],
+      "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",
@@ -204,6 +208,7 @@
         { "class": "PRISM_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["D", "D_prime"] },
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "A_prime", "B", "B_prime", "C", "C_prime", "D", "D_prime"] }
       ],
+      "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",
@@ -242,6 +247,7 @@
         { "class": "SECTION", "role": "CONSTRUCT_INTERSECTION", "kind": "section", "vertices": [] },
         { "class": "SECTION", "role": "CLOSE_SECTION", "kind": "section", "vertices": [] }
       ],
+      "formation_coverage": { "enforce": ["SECTION", "PYRAMID_LIKE"], "measure": [] },
       "negative_expected": {
         "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
         "product_error_code": "input_not_grounded",

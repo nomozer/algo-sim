@@ -577,6 +577,138 @@ export function assessGeometrySteps(scene, observed) {
   };
 }
 
+/* ─── ĐỘ PHỦ VAI TRÒ DỰNG HÌNH (W14) ───────────────────────────────────────
+ * Ba nguồn, so từng đôi. KỲ VỌNG: `expected_formation` của registry, viết tay từ
+ * hợp đồng/tô-pô chuẩn, không mã sản phẩm nào sinh hay đọc. KHAI BÁO: danh sách
+ * `formation_requirements` sản phẩm gắn trên vật mang `shape_class`. QUAN SÁT: vật
+ * renderer TỰ BÁO đã dựng ở từng bước của thanh bước. Vật nhận diện bằng LOẠI + TẬP
+ * ĐỈNH, không bằng id sản phẩm; vai trò không bao giờ suy từ chữ, tên hay công thức. */
+const dinhCua = (o) => sortedUnique(o?.vertex_ids ?? o?.endpoint_ids ?? []);
+const cungTap = (a, b) => JSON.stringify(sortedUnique(a)) === JSON.stringify(sortedUnique(b));
+
+/** Hai vai trò liền nhau được phép xuất hiện CÙNG bước: đường cao trùng cạnh bên
+ *  (V7 — chân là đỉnh đáy) hiện một lần, mang cả hai vai. */
+export const CAP_VAI_KHONG_NGHIEM = new Set(["CONSTRUCT_HEIGHT>CONSTRUCT_LATERAL_BOUNDARY"]);
+
+/** Id renderer báo (`T#5cf`: thiết diện 5 đỉnh, khép, tô) → `{kind, vertices, closed, filled}`. */
+export function renderedSets(scene, renderedIds) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  return (renderedIds ?? []).flatMap((raw) => {
+    const s = String(raw);
+    const cut = s.indexOf("#");
+    const o = byId.get(cut < 0 ? s : s.slice(0, cut));
+    const tienDo = cut < 0 ? "" : s.slice(cut + 1);
+    return o ? [{ kind: o.type, vertices: dinhCua(o), closed: tienDo.includes("c"),
+      filled: tienDo.includes("f") }] : [];
+  });
+}
+
+function khopVat(e, r) {
+  if (r.kind !== e.kind || !cungTap(r.vertices, e.vertices)) return false;
+  // Khép thiết diện = viền khép VÀ mặt tô; một cạnh giao bất kỳ = đã dựng giao.
+  return e.role === "CLOSE_SECTION" ? r.closed && r.filled : true;
+}
+
+/** `expected` = registry; `observedSteps` = `[{index, renderedSets}]` theo thanh bước. */
+export function assessFormation(expected, scene, observedSteps, enforced, measured = []) {
+  const steps = [...(observedSteps ?? [])].sort((a, b) => a.index - b.index);
+  const lanDau = (e) => steps.find((s) => (s.renderedSets ?? []).some((r) => khopVat(e, r)))?.index ?? -1;
+  const classes = [];
+  for (const lop of sortedUnique([...(enforced ?? []), ...(measured ?? [])])) {
+    const fail = [];
+    const exp = (expected ?? []).filter((e) => e.class === lop);
+    const owner = (scene?.objects ?? []).find((o) => o.shape_class === lop);
+    const declared = owner?.formation_requirements ?? [];
+    const expRoles = [...new Set(exp.map((e) => e.role))];
+    if (exp.length === 0) fail.push({ reason: "EXPECTED_REQUIREMENTS_EMPTY" });
+    if (declared.length === 0) fail.push({ reason: "DECLARED_REQUIREMENTS_EMPTY" });
+    else if (exp.length > 0 && JSON.stringify(declared) !== JSON.stringify(expRoles)) {
+      fail.push({ reason: "DECLARED_DISAGREES_WITH_EXPECTED", declared, expected: expRoles });
+    }
+    const seen = exp.map((e) => ({ ...e, first_step: lanDau(e) }));
+    for (const e of seen.filter((x) => x.first_step < 0)) {
+      fail.push({ reason: "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER", item: e });
+    }
+    // Mọi vật của vai trò trước phải xuất hiện TRƯỚC mọi vật của vai trò sau.
+    for (let i = 1; i < expRoles.length; i += 1) {
+      const truoc = seen.filter((x) => x.role === expRoles[i - 1] && x.first_step >= 0);
+      const sau = seen.filter((x) => x.role === expRoles[i] && x.first_step >= 0);
+      if (!truoc.length || !sau.length) continue;
+      const cuoiTruoc = Math.max(...truoc.map((x) => x.first_step));
+      const dauSau = Math.min(...sau.map((x) => x.first_step));
+      const dung = CAP_VAI_KHONG_NGHIEM.has(`${expRoles[i - 1]}>${expRoles[i]}`)
+        ? cuoiTruoc <= dauSau : cuoiTruoc < dauSau;
+      if (!dung) {
+        fail.push({ reason: "EXPECTED_OBJECT_NOT_OBSERVED_IN_ORDER",
+          order: [expRoles[i - 1], cuoiTruoc, expRoles[i], dauSau] });
+      }
+    }
+    classes.push({ class: lop, enforced: (enforced ?? []).includes(lop), declared,
+      expected_roles: expRoles, observed: seen, fail, pass: fail.length === 0 });
+  }
+  const failing = classes.filter((c) => c.enforced && !c.pass);
+  return { classes, reason_codes: sortedUnique(failing.flatMap((c) => c.fail.map((f) => f.reason))),
+    pass: failing.length === 0 };
+}
+
+/** Mọi tham chiếu CÓ CẤU TRÚC của cảnh phải hiện ở đúng bước (W14, thay heuristic
+ *  nhãn "Đang dựng"). Bước quan sát k ↔ nhóm `expectedGeometryTimeline(scene)[k]`:
+ *  (a) vật trọng tâm vẽ được của mọi sự kiện trong nhóm ⊆ vật renderer báo;
+ *  (b) đại lượng trọng tâm và `readout_ids` của khung neo ⊆ bảng lời giải;
+ *  (c) mọi `formula.references[*].entity_id` của đại lượng đang hiện được vẽ hoặc hiện;
+ *  (d) tiến độ thiết diện của khung neo đúng số cạnh, khép, tô mà renderer báo. */
+export function assessStructuredReferences(scene, observed) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const t = expectedGeometryTimeline(scene);
+  const buoc = scene?.formation?.steps ?? [];
+  const ve = (o) => o && o.render !== "readout" && o.render !== "non_visual";
+  const fail = [];
+  for (const s of observed?.steps ?? []) {
+    const g = t[s.index];
+    if (!g) {
+      fail.push({ index: s.index, check: "timeline", kind: "STEP_OUTSIDE_TIMELINE" });
+      continue;
+    }
+    const drawn = new Map((s.rendered ?? []).map((raw) => {
+      const v = String(raw);
+      const cut = v.indexOf("#");
+      return cut < 0 ? [v, null] : [v.slice(0, cut), v.slice(cut + 1)];
+    }));
+    const panel = new Set([...(s.solution?.givens ?? []), ...(s.solution?.steps ?? []),
+      ...(s.solution?.results ?? [])]);
+    const hien = (id) => drawn.has(id) || panel.has(id);
+    for (let j = g.start; j <= g.end; j += 1) {
+      for (const id of buoc[j]?.focus_ids ?? []) {
+        const o = byId.get(id);
+        if (ve(o) && !drawn.has(id)) fail.push({ index: s.index, check: "a", id, kind: o.type });
+        if (o?.render === "readout" && !panel.has(id)) {
+          fail.push({ index: s.index, check: "b", id, kind: o.type });
+        }
+      }
+    }
+    for (const id of buoc[g.anchor]?.readout_ids ?? []) {
+      if (!panel.has(id)) fail.push({ index: s.index, check: "b", id, kind: byId.get(id)?.type });
+    }
+    for (const id of panel) {
+      for (const ref of byId.get(id)?.formula?.references ?? []) {
+        if (!hien(ref.entity_id)) {
+          fail.push({ index: s.index, check: "c", id: ref.entity_id, kind: byId.get(ref.entity_id)?.type });
+        }
+      }
+    }
+    for (const p of buoc[g.anchor]?.geometry_progress ?? []) {
+      const tienDo = drawn.get(p.object_id);
+      const m = /^(\d+)(c?)(f?)$/.exec(tienDo ?? "");
+      const canh = m ? (m[2] ? Number(m[1]) : Number(m[1]) - 1) : -1;
+      if (!m || canh !== (p.visible_edge_ids ?? []).length || Boolean(m[2]) !== Boolean(p.closed)
+          || Boolean(m[3]) !== Boolean(p.fill_visible)) {
+        fail.push({ index: s.index, check: "d", id: p.object_id, kind: "section", drawn: tienDo ?? null });
+      }
+    }
+  }
+  return { fail, pass: fail.length === 0 };
+}
+
 /** Đường kính px CSS của từng chấm đỉnh, đo bằng ma trận camera — không đọc
  *  con số renderer tự báo. */
 export function doCoDauDinh(snapshot, markers) {
@@ -647,9 +779,14 @@ const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export function detectRawTokenLeakage(scene, visibleText) {
   const candidates = new Set();
   for (const object of scene?.objects ?? []) {
-    for (const value of [object.id, object.type, object.render]) {
+    // W14: vai trò và lớp hình là DỮ LIỆU máy — không bao giờ được lên màn hình.
+    for (const value of [object.id, object.type, object.render, object.shape_class,
+      ...(object.formation_roles ?? []), ...(object.formation_requirements ?? [])]) {
       if (typeof value === "string" && value.includes("_")) candidates.add(value);
     }
+  }
+  for (const step of scene?.formation?.steps ?? []) {
+    for (const role of step.formation_roles ?? []) candidates.add(role);
   }
   const leakedTokens = [...candidates].filter((token) =>
     new RegExp(`(^|[^\\p{L}\\p{N}_])${escapeRegex(token)}($|[^\\p{L}\\p{N}_])`, "u")
@@ -766,6 +903,13 @@ export function evaluateEvidenceGates(facts) {
   if (facts.solution_final !== undefined && facts.solution_final?.answer_once !== true) {
     reasons.push("ANSWER_NOT_SHOWN_ONCE");
   }
+  // W14 — cùng luật "chỉ phán khi bộ đo cung cấp dữ kiện".
+  if (facts.formation_coverage !== undefined && facts.formation_coverage?.pass !== true) {
+    reasons.push("FORMATION_ROLE_COVERAGE", ...(facts.formation_coverage?.reason_codes ?? []));
+  }
+  if (facts.structured_references !== undefined && facts.structured_references?.pass !== true) {
+    reasons.push("STRUCTURED_REFERENCE_NOT_RENDERED");
+  }
   if (facts.causal?.legend_shown === false) reasons.push("ROLE_LEGEND_MISSING");
   if (facts.role_colors !== undefined && facts.role_colors?.pass !== true) {
     reasons.push("ROLE_COLOR_MISMATCH");
@@ -826,6 +970,14 @@ export function validateSuiteManifest(manifest, repoRoot) {
     }
     for (const key of ["vertices", "edges", "faces", "euler"]) {
       if (typeof scenario.topology?.[key] !== "number") errors.push(`topology:${scenario.id}:${key}`);
+    }
+    // W14: thiếu kỳ vọng hoặc danh sách cưỡng chế thì độ phủ vai trò KHÔNG được đo
+    // — không để một kịch bản lặng lẽ thành "không cưỡng chế gì".
+    const lopKyVong = new Set((scenario.expected_formation ?? []).map((e) => e.class));
+    const cuongChe = scenario.formation_coverage?.enforce;
+    if (!Array.isArray(cuongChe) || cuongChe.length === 0
+        || cuongChe.some((lop) => !lopKyVong.has(lop))) {
+      errors.push(`formation_coverage:${scenario.id}`);
     }
   }
   const requiredScenarios = [

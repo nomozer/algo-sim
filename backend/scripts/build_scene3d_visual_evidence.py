@@ -52,6 +52,38 @@ LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc
 LABEL_PX = 28
 HEADER_CSS = 44   # hàng tiêu đề + chip ngay trên canvas: giữ, bỏ thanh điều hướng
 STATES = ("neutral_final", "rotated_neutral")
+#: W14 — tên NGƯỜI XEM của từng vai trò dựng hình, theo thứ tự kế hoạch. Token máy
+#: (`CONSTRUCT_BASE`…) không bao giờ lên ảnh: vai trò lạ ⇒ `KeyError`, không in thô.
+TEN_VAI_TRO = {
+    "DECLARE_ENTITIES": "các điểm dữ kiện", "CONSTRUCT_BASE": "đáy", "CONSTRUCT_HEIGHT": "đường cao",
+    "CONSTRUCT_TRANSLATED_FACE": "đáy trên", "CONSTRUCT_LATERAL_BOUNDARY": "cạnh bên",
+    "CLOSE_SOLID": "khép khối", "CONSTRUCT_CUTTING_OBJECT": "mặt cắt",
+    "CONSTRUCT_INTERSECTION": "cạnh thiết diện", "CLOSE_SECTION": "khép thiết diện",
+    "CONSTRUCT_AUXILIARY_GEOMETRY": "dựng phụ",
+}
+FILM_CELL_W = 640
+
+
+def chu_thich_buoc(step: dict[str, Any], k: int, n: int) -> str:
+    """`Bước dựng 2/5 · đường cao, cạnh bên — <lời kể>` (bước thiếu vai trò: không có đoạn giữa)."""
+    vai = set(step.get("formation_roles") or ())
+    if vai - TEN_VAI_TRO.keys():
+        raise KeyError(f"vai trò chưa có tên người xem: {sorted(vai - TEN_VAI_TRO.keys())}")
+    ten = [v for r, v in TEN_VAI_TRO.items() if r in vai]
+    giua = f" · {', '.join(ten)}" if ten else ""
+    return f"Bước dựng {k + 1}/{n}{giua} — {str(step.get('learner_text', '')).strip()}"
+
+
+def _xuong_dong(text: str, font: Any, width: int) -> list[str]:
+    """Gói chữ theo bề ngang đo bằng CHÍNH phông vẽ — dòng nào cũng nằm trọn trong ô."""
+    dong: list[str] = []
+    for tu in text.split():
+        thu = f"{dong[-1]} {tu}" if dong else tu
+        if dong and font.getlength(thu) <= width:
+            dong[-1] = thu
+        else:
+            dong.append(tu)
+    return dong
 
 
 def crop_box(a: tuple[float, float], b: tuple[float, float], size: tuple[int, int],
@@ -210,7 +242,7 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
     steps = [s for s in records.get("desktop", {}).get("formation", {}).get("steps", []) if s.get("screenshot")]
     for s in steps:
         cells.append({"state": f"desktop/geometry_step/{s['index']}",
-                      "label": f"Bước dựng {s['index'] + 1}/{len(steps)} — {s.get('learner_text', '').strip()}",
+                      "label": chu_thich_buoc(s, s["index"], len(steps)),
                       "path": _path(s.get("screenshot")), "record": records.get("desktop", {}),
                       "box_state": "neutral_final", "crop": True})
     font, font_name = _font(LABEL_PX)
@@ -253,6 +285,45 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
     }
 
 
+def filmstrip(family: str, scenario: dict[str, Any], images_root: Path) -> dict[str, Any] | None:
+    """W14: mọi bước dựng desktop từ trái sang phải, mỗi ô = sân khấu canvas + chú
+    thích (tên vai trò + lời kể) gói dòng trong bề ngang ô. Đọc liền một mạch
+    được: đáy → đường cao/đáy trên → cạnh bên → khép khối."""
+    record = scenario.get("positive", {}).get("desktop", {})
+    steps = [s for s in record.get("formation", {}).get("steps", []) if s.get("screenshot")]
+    if not steps:
+        return None
+    font, font_name = _font(LABEL_PX - 4)
+    dong_cao = int((LABEL_PX - 4) * 1.35)
+    o: list[tuple[Image.Image | None, list[str], str]] = []
+    for k, s in enumerate(steps):
+        p = _path(s.get("screenshot"))
+        image = None
+        if p and p.exists():
+            image = Image.open(p).convert("RGB")
+            box = stage_box(record, "neutral_final", image.size)
+            image = image.crop(box) if box else image
+            image.thumbnail((FILM_CELL_W, 10_000))
+        cau = chu_thich_buoc(s, k, len(steps))
+        o.append((image, _xuong_dong(cau, font, FILM_CELL_W - 24), cau))
+    anh_cao = max((i.height for i, _, _ in o if i), default=360)
+    chu_cao = max(len(d) for _, d, _ in o) * dong_cao + 16
+    strip = Image.new("RGB", (len(o) * FILM_CELL_W, anh_cao + chu_cao), "white")
+    draw = ImageDraw.Draw(strip)
+    for k, (image, dong, _) in enumerate(o):
+        x = k * FILM_CELL_W
+        if image is not None:
+            strip.paste(image, (x, 0))
+        for d, chu in enumerate(dong):
+            draw.text((x + 12, anh_cao + 8 + d * dong_cao), chu, fill="black", font=font)
+        if k:
+            draw.line([(x, 0), (x, strip.height)], fill="#bbbbbb", width=2)
+    out = images_root / family_dir(family) / "FILMSTRIP.png"
+    _save_png(strip, out)
+    return {"filmstrip": out, "cell_width_px": FILM_CELL_W, "font": font_name, "font_px": LABEL_PX - 4,
+            "captions": [c for _, _, c in o], "caption_lines": [d for _, d, _ in o]}
+
+
 def overview_index(families: dict[str, dict[str, Any]], images_root: Path) -> dict[str, Any]:
     """Mục lục sáu họ — ảnh nhỏ + đường dẫn sheet. KHÔNG thay sheet của họ."""
     font, _ = _font(LABEL_PX)
@@ -289,6 +360,10 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
         meta = family_sheet(family, scenario, images)
         meta["thumbnail"] = _path(positive.get("desktop", {}).get("screenshots", {}).get("neutral_final"))
         meta["sheet"] = meta["sheet"].relative_to(run_dir).as_posix()
+        film = filmstrip(family, scenario, images)
+        if film is not None:
+            film["filmstrip"] = film["filmstrip"].relative_to(run_dir).as_posix()
+        meta["filmstrip"] = film
         sheets[family] = meta
         for viewport, record in positive.items():
             for state in STATES:
