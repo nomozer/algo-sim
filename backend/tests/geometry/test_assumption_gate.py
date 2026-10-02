@@ -25,6 +25,12 @@ from tests.geometry import w14_cases as W
 
 APP = Path(__file__).resolve().parents[2] / "app"
 MA_GIA_DINH = {"ASSUMPTION_DETERMINES_ANSWER", "ASSUMPTION_INVARIANCE_UNPROVEN"}
+#: W14 Task 5 Step 4 = STOP: không cơ chế nào qua luật đăng ký trước (AC2 0/18 có chứng chỉ;
+#: CE cho phản ví dụ SAI trên hàng bất biến). Test cổng được GIỮ, đánh dấu xfail NGHIÊM —
+#: ngày chúng xanh (XPASS) là ngày suite đỏ, buộc đọc lại quyết định. Không bỏ qua câm.
+_CHUA_CO_CONG = pytest.mark.xfail(strict=True, reason=(
+    "ASSUMPTION_POLICY_INCOMPLETE — see docs/evaluation/geometry/runs/"
+    "w14-generic-formation-assumption/diagnostics/ASSUMPTION_MECHANISM_DECISION.json"))
 
 
 def _gate():
@@ -56,16 +62,19 @@ def _kenh(channel: str):
     assert "AD" in out.reason_subjects, out.reason_subjects
 
 
+@_CHUA_CO_CONG
 def test_kenh_layout_derived_bi_tu_choi():
     _kenh("layout_derived")
 
 
+@_CHUA_CO_CONG
 def test_kenh_model_assumption_bi_tu_choi():
     _kenh("model_assumption")
 
 
 # ── Ca đối kháng: mỗi ca LỌT thiết kế M2E cũ (Task 5 Step 1) ────────────────
 
+@_CHUA_CO_CONG
 def test_kich_thuoc_thieu_bi_che_boi_XY_length_gia_dinh():
     """(1) `AD_length = 5` LAYOUT_DERIVED che chỗ thiếu AD.
 
@@ -80,26 +89,31 @@ def test_kich_thuoc_thieu_bi_che_boi_XY_length_gia_dinh():
     assert kq.status in ("UNSAFE", "UNDETERMINED"), kq
 
 
+@_CHUA_CO_CONG
 def test_moi_phep_nhieu_bi_loai_van_thieu_du_kien():
     """(2) Phép dò W12 dưới phép quay hữu tỉ 3-D: mọi phép nhiễu theo trục phá AB/AC."""
     _chay_tu_choi(W.ca_xoay_thieu_AD)
 
 
+@_CHUA_CO_CONG
 def test_bang_chung_cua_canh_khac_khong_che_chieu_cao():
     """(3) Số "4" của cạnh đáy không được làm bằng chứng cho chiều cao tự đặt bằng 4."""
     _chay_tu_choi(W.ca_canh_khac_che_chieu_cao)
 
 
+@_CHUA_CO_CONG
 def test_thieu_kich_thuoc_trong_khung_xien():
     """(4) Lăng trụ xiên: vectơ tịnh tiến (cạnh bên/chiều cao) do chương trình tự đặt."""
     _chay_tu_choi(W.ca_lang_tru_xien)
 
 
+@_CHUA_CO_CONG
 def test_phu_thuoc_ma_bon_phep_nhieu_khong_thay():
     """(5) Chân đường cao tự đặt; d(S, BC) phụ thuộc nó, phép co giãn toàn cục không tách được."""
     _chay_tu_choi(W.ca_chan_duong_cao_an)
 
 
+@_CHUA_CO_CONG
 def test_het_ngan_sach_khong_thanh_an_toan(monkeypatch):
     """(6) Hết ngân sách chạy lại ⇒ UNDETERMINED, không bao giờ PROVEN_SAFE.
 
@@ -128,6 +142,7 @@ def test_hop_dong_san_pham_thieu_de_bi_tu_choi():
     assert "SOURCE_TEXT_MISSING" in PL.KHONG_SUA_NGUON
 
 
+@_CHUA_CO_CONG
 def test_hai_dap_so_mot_phu_thuoc_gia_dinh():
     """Review Focus 4: một đáp số được chứng nhận, một phụ thuộc giả định ⇒ từ chối CẢ bài."""
     _chay_tu_choi(W.ca_hai_dap_so_mot_phu_thuoc)
@@ -135,6 +150,7 @@ def test_hai_dap_so_mot_phu_thuoc_gia_dinh():
 
 # ── Giới hạn chứng chỉ C0/C1 ────────────────────────────────────────────────
 
+@_CHUA_CO_CONG
 def test_dong_dang_nhung_nhan_them_vo_huong_gia_dinh():
     """(8) Cấu hình khớp tham chiếu, nhưng đáp số nhân |AM| với M tự đặt."""
     ct, raw = W.ca_nhan_vo_huong_gia_dinh()
@@ -143,6 +159,7 @@ def test_dong_dang_nhung_nhan_them_vo_huong_gia_dinh():
     assert _gate().danh_gia_doc_lap(ct, W.spec_cua(raw)).certificate != "C1"
 
 
+@_CHUA_CO_CONG
 def test_bo_mot_phu_thuoc_khoi_do_thi(monkeypatch):
     """(9) Bảng toán hạng thiếu một trường ⇒ bao đóng KHÔNG đầy đủ ⇒ không chứng chỉ."""
     G = _gate()
@@ -157,6 +174,7 @@ def test_bo_mot_phu_thuoc_khoi_do_thi(monkeypatch):
     assert G.kieu_ir_chua_phu(), "phép kiểm phủ của bảng phải đỏ khi thiếu một trường"
 
 
+@_CHUA_CO_CONG
 def test_bang_toan_hang_phu_moi_kieu_IR():
     assert _gate().kieu_ir_chua_phu() == []
 
@@ -183,6 +201,7 @@ def _p01_voi_quan_he(bien_the: str):
                                  "input_facts": tuple(facts)}), raw
 
 
+@_CHUA_CO_CONG
 @pytest.mark.parametrize("bien_the", ["khong_nguon", "gia_dinh", "claimed"])
 def test_quan_he_khong_duoc_nguon_xac_nhan(bien_the):
     """(10) Quan hệ có kiểu không được nguồn đề xác nhận ⇒ C1 không được cấp."""
@@ -192,6 +211,7 @@ def test_quan_he_khong_duoc_nguon_xac_nhan(bien_the):
     assert kq.status in ("UNSAFE", "UNDETERMINED"), (bien_the, kq)
 
 
+@_CHUA_CO_CONG
 def test_hai_dap_so_mot_ngoai_pham_vi_chung_chi():
     """(11) Thể tích (PHEP_DO_C1) + cos² góc (ngoài phạm vi) ⇒ từ chối CẢ bài."""
     _chay_tu_choi(W.ca_hai_dap_so_mot_ngoai_pham_vi)

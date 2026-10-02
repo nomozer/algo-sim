@@ -1,0 +1,182 @@
+{
+  "decision": "STOP",
+  "final_decision_if_stop": "ASSUMPTION_POLICY_INCOMPLETE",
+  "rule": "SHIP iff (a) 0 PROVEN_SAFE on DEPENDS rows of the measured corpus, (b) every AC1/adversarial DEPENDS row refused and every certificate-limit row refused, (c) every contract-bearing AC2 row PROVEN_SAFE (no user-approved defect exists); otherwise STOP Track B (ASSUMPTION_POLICY_INCOMPLETE; Tracks A and C continue per Q4)",
+  "census_sha256": "b0fe12fc61d3ca6d24c59f8c9c8f76c27a82e87f8690bf31d7ebb1eb11a56b7c",
+  "violations_PROVEN_SAFE_on_DEPENDS": [],
+  "ac1_adversarial_not_refused": [],
+  "certificate_limit_not_refused": [],
+  "ac2_rows": 18,
+  "ac2_proven_safe": 0,
+  "ac2_refused": [
+    "demo:n1_thoi_dinh_thu_tu",
+    "demo:n2_lang_tru_xien_hai_vecto",
+    "demo:t3_hop_tinh_tien_day_chuyen",
+    "demo:t4_mat_xich_trong_chuoi_sau",
+    "gold:p1_chop_thiet_dien_khoang_cach",
+    "gold:p2_chop_day_ngu_giac_lom",
+    "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+    "gold:p5_hinh_non_the_tich_va_xung_quanh",
+    "gold:p6_thiet_dien_elip_cua_hinh_tru",
+    "gold:p7_thiet_dien_elip_cua_hinh_non",
+    "ho:chop_chu_nhat",
+    "ho:chop_tam_giac",
+    "ho:hop_chu_nhat",
+    "ho:lang_tru_day_vuong",
+    "ho:lang_tru_tam_giac",
+    "ho:lap_phuong",
+    "rigid:prism_text_translate_swap",
+    "rot:chop_tam_giac_xoay"
+  ],
+  "ce_false_counterexamples_on_INVARIANT": [
+    {
+      "id": "adv10_quan_he_claimed",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    },
+    {
+      "id": "adv10_quan_he_gia_dinh",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    },
+    {
+      "id": "adv10_quan_he_khong_nguon",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    },
+    {
+      "id": "adv11_hai_dap_so_mot_ngoai_pham_vi",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    },
+    {
+      "id": "demo:n1_thoi_dinh_thu_tu",
+      "perturbation": [
+        "M[0]x2",
+        "dist_q_mp"
+      ]
+    },
+    {
+      "id": "demo:n2_lang_tru_xien_hai_vecto",
+      "perturbation": [
+        "A[0]+1",
+        "khoang_cach_A_B_prime_I"
+      ]
+    },
+    {
+      "id": "demo:t3_hop_tinh_tien_day_chuyen",
+      "perturbation": [
+        "A[0]+1",
+        "khoang_cach_a_b_prime_m"
+      ]
+    },
+    {
+      "id": "demo:t4_mat_xich_trong_chuoi_sau",
+      "perturbation": [
+        "A[0]+1",
+        "khoang_cach_hc"
+      ]
+    },
+    {
+      "id": "ho:chop_chu_nhat",
+      "perturbation": [
+        "C[0]x2",
+        "v"
+      ]
+    },
+    {
+      "id": "ho:lang_tru_tam_giac",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    },
+    {
+      "id": "rigid:prism_text_translate_swap",
+      "perturbation": [
+        "E[2]x2",
+        "the_tich_lang_tru"
+      ]
+    }
+  ],
+  "m2e_served_DEPENDS": [
+    "ac1_given_length",
+    "adv1_xy_length_gia_dinh",
+    "adv2_xoay_thieu_AD",
+    "adv3_canh_khac_che_chieu_cao",
+    "adv4_lang_tru_xien",
+    "adv5_chan_duong_cao_an",
+    "adv8_nhan_vo_huong_gia_dinh",
+    "rf4_hai_dap_so_mot_phu_thuoc"
+  ],
+  "c1_first_failing_condition": {
+    "ac1_given_length": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "ac1_layout_derived": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "ac1_model_assumption": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "adv10_quan_he_claimed": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'f_claimed', not a confirmed InputFact",
+    "adv10_quan_he_gia_dinh": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+    "adv10_quan_he_khong_nguon": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+    "adv11_hai_dap_so_mot_ngoai_pham_vi": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+    "adv1_xy_length_gia_dinh": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "adv2_xoay_thieu_AD": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "adv3_canh_khac_che_chieu_cao": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+    "adv4_lang_tru_xien": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING LINE_PLANE_RELATION_MISSING",
+    "adv5_chan_duong_cao_an": "recognized: eligibility UNSUPPORTED_EXTRA_OBLIGATION EXTRA_OBLIGATION",
+    "adv8_nhan_vo_huong_gia_dinh": "supported operation: the_tich_lang_tru: arith/None outside PHEP_DO_C1",
+    "demo:n1_thoi_dinh_thu_tu": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "demo:n2_lang_tru_xien_hai_vecto": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "demo:t3_hop_tinh_tien_day_chuyen": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "demo:t4_mat_xich_trong_chuoi_sau": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p1_chop_thiet_dien_khoang_cach": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p2_chop_day_ngu_giac_lom": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p4_hinh_tru_the_tich_va_xung_quanh": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p5_hinh_non_the_tich_va_xung_quanh": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p6_thiet_dien_elip_cua_hinh_tru": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "gold:p7_thiet_dien_elip_cua_hinh_non": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+    "ho:chop_chu_nhat": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+    "ho:chop_tam_giac": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+    "ho:hop_chu_nhat": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+    "ho:lang_tru_day_vuong": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+    "ho:lang_tru_tam_giac": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+    "ho:lap_phuong": "grounded: relation perpendicular_lines('A', 'B', 'A', 'D') cites 'fact_perp_base', not a confirmed InputFact",
+    "rf4_hai_dap_so_mot_phu_thuoc": "recognized: eligibility UNSUPPORTED_EXTRA_OBLIGATION EXTRA_OBLIGATION",
+    "rigid:prism_text_translate_swap": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+    "rot:chop_tam_giac_xoay": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact"
+  },
+  "verdicts_by_group": {
+    "AC1": {
+      "PROVEN_SAFE": 0,
+      "UNSAFE": 3,
+      "UNDETERMINED": 0,
+      "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+    },
+    "AC2": {
+      "PROVEN_SAFE": 0,
+      "UNSAFE": 7,
+      "UNDETERMINED": 11,
+      "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+    },
+    "ADVERSARIAL": {
+      "PROVEN_SAFE": 0,
+      "UNSAFE": 3,
+      "UNDETERMINED": 3,
+      "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+    },
+    "CERT_LIMIT": {
+      "PROVEN_SAFE": 0,
+      "UNSAFE": 5,
+      "UNDETERMINED": 0,
+      "NOT_APPLICABLE_NO_NUMERIC_ANSWER": 0
+    }
+  },
+  "certificate_scope": "C0: the answer's dependency closure holds no class-A/C literal; C1: compiler-recognized configuration (danh_gia_eligibility SUPPORTED), every numeric witness a measure in PHEP_DO_C1 = {volume of the bound solid, area of a polygon on bound points, distance between bound points} reached through var assignments only, inputs covered by the bound points, every basis length entity-bound in the text, every relation source-confirmed, exact congruence with the compiler's reference layout. Everything else is UNDETERMINED by design.",
+  "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof"
+}
