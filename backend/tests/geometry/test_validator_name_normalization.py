@@ -37,7 +37,7 @@ import pytest
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import RequestContract
-from app.simulation.semantic_program.route import verify_and_compile
+from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (artifact pilot không lưu đề)
 
 GOC = Path(__file__).resolve().parents[3]
 DO = GOC / "docs" / "evaluation" / "geometry" / "stability-6.7"
@@ -290,7 +290,7 @@ def test_GROUNDING_khong_bi_dung_toi():
     """Bản vá chỉ chạm cổng PHỦ. Grounding (P2) phải nguyên vẹn: một khai báo có
     `initial_value` mà thiếu cả `source_fact_id` lẫn `model_assumption` vẫn phải
     bị chặn."""
-    from app.simulation.semantic_program.grounding_gate import check_grounding
+    from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED (hợp đồng không đề)
 
     spec = SemanticProgramSpec.model_validate({
         "title": "thieu xuat xu",
@@ -305,7 +305,7 @@ def test_GROUNDING_khong_bi_dung_toi():
 def test_model_assumption_KHONG_duoc_mang_dap_an():
     """Khoá riêng điều Phase 6.7.1 nêu: `model_assumption` là kênh cho GIẢ THIẾT
     MÔ HÌNH HOÁ (chọn hệ trục), không phải cửa sau cho đáp số."""
-    from app.simulation.semantic_program.grounding_gate import check_grounding
+    from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED (hợp đồng không đề)
 
     spec = SemanticProgramSpec.model_validate({
         "title": "gia thiet mang dap an",

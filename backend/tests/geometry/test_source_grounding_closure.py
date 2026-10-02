@@ -188,8 +188,10 @@ def test_layout_derived_coordinates_are_never_given_evidence():
 # ── Task test 12: the refusal carries a stable, structured code ──────────────
 
 def test_grounding_refusal_codes_are_a_closed_stable_set():
+    # W14 5a thêm `SOURCE_TEXT_MISSING`: hợp đồng không mang đề (không gửi sửa).
     assert G.MA_LOI_NGUON == frozenset({
-        "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE_SPAN_MISMATCH", "SOURCE_EVIDENCE_CONFLICT"})
+        "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE_SPAN_MISMATCH", "SOURCE_EVIDENCE_CONFLICT",
+        "SOURCE_TEXT_MISSING"})
     # A source defect is never sent back to the model to "repair".
     assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON
     contract = _contract(PRISM_WITHOUT_AD, _prism_payload())

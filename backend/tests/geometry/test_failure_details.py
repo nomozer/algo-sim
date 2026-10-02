@@ -123,10 +123,13 @@ def test_C1a_details_noi_ro_CAI_GI_lech(rn, monkeypatch):
     from app.simulation.semantic_program.request_contract import RequestContract
     from test_geometry_wave2 import _chuong_trinh_geo_09
 
+    from test_geometry_wave2 import _hop_dong_geo_09
+
+    # Mang đề của ca như mọi hợp đồng sản phẩm (W14 5a) ⇒ lời từ chối đến từ C₁a.
     hd = RequestContract(obligations=(
         Obligation(kind="volume", container="chop",
                    params={"witness": "ten_analyze_dat"}),
-    ))
+    ), problem_text=_hop_dong_geo_09().problem_text)
 
     async def a(*x, **k):
         return hd, None
@@ -169,24 +172,35 @@ def test_BON_dang_hong_deu_co_du_hinh_dang(rn, monkeypatch):
             for d in ct["memory_declarations"]]
         return ct
 
-    # ③ COVERAGE — witness hợp đồng đòi không có trong chương trình
+    # ③ COVERAGE — witness hợp đồng đòi không có trong chương trình. Hợp đồng mang
+    # đề của ca như mọi hợp đồng sản phẩm (W14 5a), để lời từ chối đến từ cổng phủ.
     hd_lech = RequestContract(obligations=(
         Obligation(kind="volume", container="chop",
-                   params={"witness": "ten_khac_han"}),))
+                   params={"witness": "ten_khac_han"}),),
+        problem_text=_hop_dong_geo_09().problem_text)
 
-    # ④ EXECUTION — khối trỏ chỉ số đỉnh ngoài biên ⇒ kernel NÉM
-    def _e(ct):
+    # ④ FORMATION — khối trỏ chỉ số đỉnh ngoài biên. Từ W14 bước bổ sung dựng hình
+    # bắt nó TRƯỚC kernel, thành lời từ chối có cấu trúc (`SOLID_TOPOLOGY_MALFORMED`).
+    def _f(ct):
         for s in ct["statements"]:
             if s["kind"] == "construct_solid":
                 s["faces"] = [[0, 1, 2, 3], [0, 1, 9], [1, 2, 4], [2, 3, 4],
                               [3, 0, 4]]
         return ct
 
+    # ⑤ EXECUTION — B nhấc khỏi mặt đáy ⇒ đáy không phẳng ⇒ kernel NÉM
+    def _e(ct):
+        ct["memory_declarations"] = [
+            dict(d, initial_value=[1, 0, 1]) if d["name"] == "B" else d
+            for d in ct["memory_declarations"]]
+        return ct
+
     ca = [
         ("grounding", _hop_dong_geo_09(), _ir(_g), None),
         ("schema", _hop_dong_geo_09(), None,
          "1 validation error for SemanticProgramSpec"),
-        ("coverage", hd_lech, _ir(), None),
+        ("structural_coverage", hd_lech, _ir(), None),
+        ("formation", _hop_dong_geo_09(), _ir(_f), None),
         ("execution", _hop_dong_geo_09(), _ir(_e), None),
     ]
     for ten, hd, ct, loi_schema in ca:
@@ -210,7 +224,9 @@ def test_BON_dang_hong_deu_co_du_hinh_dang(rn, monkeypatch):
             # Tầng schema: chi tiết nằm trong chính chuỗi lỗi Pydantic, và
             # `generated_raw` giữ vật chứng — nên `details` rỗng ở đó là ĐÚNG.
             assert ra["failure_details"], f"{ten}: details rỗng"
-            assert ra["stage_reached"], f"{ten}: thiếu stage_reached"
+            # Đúng TẦNG định đo — không chỉ "có một tầng nào đó" (W14: hai ca từng
+            # xanh vì bị chặn sớm hơn ở tầng khác).
+            assert ra["stage_reached"] == ten, (ten, ra["stage_reached"])
 
 
 def test_schema_fail_giu_VAT_CHUNG_thay_cho_details(rn, monkeypatch):

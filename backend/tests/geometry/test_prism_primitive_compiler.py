@@ -485,8 +485,8 @@ def test_topo_10_euler_characteristic_manifold():
 def test_provenance_strict_invariants():
     """Kiểm tra bất biến xuất xứ: LAYOUT_DERIVED != GIVEN, LAYOUT_DERIVED != MODEL_ASSUMPTION."""
     from app.simulation.semantic_program.contract import MemoryDeclaration, SemanticProgramSpec
-    from app.simulation.semantic_program.grounding_gate import check_grounding
     from app.simulation.semantic_program.request_contract import RequestContract, PrismTopologySpec
+    from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED (hợp đồng không đề)
 
     decl = MemoryDeclaration(
         name="A",

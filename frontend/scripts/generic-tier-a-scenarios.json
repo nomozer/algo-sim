@@ -48,7 +48,7 @@
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_prism_production_route.py",
-        "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "sha256": "18170a7853fd454e1ce8a83c4d5e9339820a1aa922c0c3ccc49a8283500e1b8e",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_pyramid_control_contract"
       },
@@ -83,7 +83,7 @@
       "oracle_source": {
         "kind": "canonical_request_contract_and_fact_graph",
         "path": "backend/tests/geometry/test_prism_production_route.py",
-        "sha256": "93c0bd19ea6713d0402277c3c556d691f59a5ae2174f434e33aa7c63ed28b227",
+        "sha256": "18170a7853fd454e1ce8a83c4d5e9339820a1aa922c0c3ccc49a8283500e1b8e",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "_prism_p01_contract"
       },

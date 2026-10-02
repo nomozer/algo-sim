@@ -1,0 +1,577 @@
+{
+  "inventory": "W14_TRUST_POLICY_CALLERS",
+  "model_calls": 0,
+  "policy": "check_grounding / verify_and_compile take nguon: NguonDe = CAN_DE; an empty problem_text under CAN_DE is refused SOURCE_TEXT_MISSING (stage grounding, never sent to repair); only an explicit NguonDe.FIXTURE_TIN_CAY argument takes the unchecked path and records source_check = UNCHECKED_TRUSTED_FIXTURE",
+  "isolated_fixture_entry": "backend/tests/nguon_fixture.py (a module importing from it declares ISOLATED_UNIT_FIXTURE)",
+  "not_measured_by_isolated_callers": [
+    "source evidence (problem text)",
+    "assumption gate"
+  ],
+  "tests": [
+    {
+      "caller": "backend/tests/geometry/test_prism_production_route.py",
+      "scope": "_pyramid_control_contract",
+      "class": "PRODUCTION_BEHAVIOR",
+      "reason": "canonical contract of the triangular-pyramid family already returned its text but did not carry it; now problem_text=text (also the tier-A generator, formula-provenance and learner-surface fixtures)"
+    },
+    {
+      "caller": "backend/tests/geometry/test_geometry_wave2.py",
+      "scope": "_hop_dong_geo_09",
+      "class": "PRODUCTION_BEHAVIOR",
+      "reason": "canonical contract of dev case geo_09 now carries that case's real text (docs/evaluation/geometry/dev/cases.json); served with full source checks; used by geo_09 route tests, face_vertex_resolver, scene3d_integration and the Phase 5 harness tests"
+    },
+    {
+      "caller": "backend/tests/geometry/test_grounding_feedback_loop.py",
+      "scope": "_HOP_DONG",
+      "class": "PRODUCTION_BEHAVIOR",
+      "reason": "the repair loop is production code and always sees a contract with text; the contract now carries the text the tests pass to stage_semantic_program; the corrected program is grounded by 'AB = 1'"
+    },
+    {
+      "caller": "backend/tests/geometry/test_failure_details.py",
+      "scope": "test_C1a_details_noi_ro_CAI_GI_lech, test_BON_dang_hong_deu_co_du_hinh_dang",
+      "class": "PRODUCTION_BEHAVIOR",
+      "reason": "harness stubs now return contracts carrying the geo_09 text; the four-layer test asserts the INTENDED stage per case (two cases had stayed green while being stopped earlier) and gained the W14 formation layer"
+    },
+    {
+      "caller": "backend/tests/geometry/test_model_assumption_boundary.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "model-assumption boundary rules of grounding on synthetic contracts that never had a text"
+    },
+    {
+      "caller": "backend/tests/semantic_program/test_grounding_gate.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "P2 grounding citation/value rules on synthetic contracts"
+    },
+    {
+      "caller": "backend/tests/geometry/test_literal_justification.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "literal justification classes A/B/C on synthetic contracts"
+    },
+    {
+      "caller": "backend/tests/geometry/test_coordinate_grounding.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "coordinate grounding rules on synthetic contracts"
+    },
+    {
+      "caller": "backend/tests/geometry/test_fact_identity.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "fact identity / citation normalisation rules on synthetic contracts"
+    },
+    {
+      "caller": "backend/tests/geometry/test_geometry_wave2.py",
+      "scope": "grounding-rule tests on _HD_RONG + test_CHUONG_TRINH_KHAI_DAP_AN_bi_chan_o_dung_tang_dau",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "model-assumption channel rules and the answer-as-assumption refusal on synthetic contracts"
+    },
+    {
+      "caller": "backend/tests/semantic_program/test_ir_ergonomics.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "declare_point provenance must still be enforced by grounding (synthetic contract)"
+    },
+    {
+      "caller": "backend/tests/geometry/test_validator_name_normalization.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "historical phase7a pilot artifacts store no problem text (pre-W12, immutable) + synthetic grounding checks; the regression target is name normalisation; 62 rename-invariance nodes had stayed green comparing two missing-text refusals"
+    },
+    {
+      "caller": "backend/tests/geometry/test_evaluation_integrity_7a1.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "historical phase7a pilot artifacts store no problem text; the regression target is learner-surface name resolution"
+    },
+    {
+      "caller": "backend/tests/geometry/test_name_authority.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "name-authority map plumbing on a synthetic contract"
+    },
+    {
+      "caller": "backend/tests/semantic_program/test_predicate_verdict.py",
+      "scope": "module",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "predicate verdict and learner-surface gating on synthetic programs"
+    },
+    {
+      "caller": "backend/tests/semantic_program/test_learner_surface.py",
+      "scope": "test_route_van_serve_khi_be_mat_du, test_route_ha_servable_va_giu_executable",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "learner-surface gate on the synthetic p02 contract"
+    },
+    {
+      "caller": "backend/tests/geometry/test_prism_primitive_compiler.py",
+      "scope": "test_provenance_strict_invariants",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "LAYOUT_DERIVED provenance rule on a synthetic prism contract"
+    },
+    {
+      "caller": "backend/tests/semantic_program/test_capability_honesty.py",
+      "scope": "test_gm10_KHONG_bi_chan_khi_KHONG_co_de",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "control experiment 'without the text the honesty rule stops concluding': the unchecked path now exists only when declared"
+    },
+    {
+      "caller": "backend/tests/geometry/test_assumption_gate.py",
+      "scope": "test_hop_dong_san_pham_thieu_de_bi_tu_choi, trust-policy tests",
+      "class": "POLICY_UNDER_TEST",
+      "reason": "the default refusal SOURCE_TEXT_MISSING and the explicit trusted fixture are what these tests assert"
+    },
+    {
+      "caller": "backend/tests/geometry/test_source_grounding_closure.py",
+      "scope": "test_grounding_refusal_codes_are_a_closed_stable_set",
+      "class": "EXPECTATION_EXTENDED_BY_PLAN",
+      "reason": "the closed source-code set gains SOURCE_TEXT_MISSING exactly as Task 5a Step 2 specifies (and it is in KHONG_SUA_NGUON)"
+    }
+  ],
+  "scripts": [
+    {
+      "caller": "backend/scripts/acceptance_verdict.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/adjudicate_radius_slot_affordance.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 1,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/audit_demo_crash_surface.py",
+      "class": "T3",
+      "reason": "no direct route call; BIÊN ĐÚNG KỲ VỌNG 6/6, 0 escaped 500s under CAN_DE",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/audit_geometry_keepset.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/build_baseline_spot_envelopes.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/build_product_ui_fixtures.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/capture_stability_seed.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/certify_acceptance_runner.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 7,
+        "build_request_contract": 0,
+        "RequestContract_direct": 3
+      }
+    },
+    {
+      "caller": "backend/scripts/certify_thesis_final_acceptance.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 4,
+        "build_request_contract": 1,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/cross_domain_matrix.py",
+      "class": "ISOLATED_UNIT_FIXTURE",
+      "reason": "synthetic per-class payloads without text; `servable` would have silently turned False — now declares FIXTURE_TIN_CAY at its one route call",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 1,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/generate_generic_tier_a_fixtures.py",
+      "class": "W14_EVIDENCE_PRODUCER",
+      "reason": "canonical contracts carry text (triangular pyramid via the fixed factory); exercised by its tests",
+      "static_signal": {
+        "problem_text_mentions": 7,
+        "build_request_contract": 5,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/generate_rectangular_pyramid_envelopes.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/gold_affordance_ab.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 11,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/gold_section_discoverability.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 12,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/probe_point_init_repair.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 3,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/reconcile_second_family_source_scope.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 6,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/register_nonconvex_polyhedron.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/register_oblique_ellipse_after_axis_scale.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/register_oblique_ellipse_final_rerun.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_demo_cases.py",
+      "class": "T3",
+      "reason": "stored demo contracts carry their text; DEMO_REPLAY_PASS 5/5 and the n4 refusal unchanged under CAN_DE",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_first_binding.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_nested_operand_history.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 3,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_plane_from_equation.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 1,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_point_coordinate_invariant.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/replay_point_initialization.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/run_affordance_ab.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 5,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_clean_baseline.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 3,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_clean_baseline_v2.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_curved_acceptance.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_curved_ergonomics_v2.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_fresh_probe.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 2,
+        "build_request_contract": 0,
+        "RequestContract_direct": 2
+      }
+    },
+    {
+      "caller": "backend/scripts/run_generalization_matrix.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/run_geometry_dev_evaluation.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_multicase_benchmark.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_photo_problem_live.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 15,
+        "build_request_contract": 2,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_primitive_compiler_ab.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/run_ratio_affordance_ab.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 3,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_sealed_evaluation.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_section_discoverability_probe.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 6,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_structured_relation_revalidation.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 0,
+        "build_request_contract": 0,
+        "RequestContract_direct": 0
+      }
+    },
+    {
+      "caller": "backend/scripts/run_thesis_final_acceptance.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 8,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/thesis_final_acceptance_plan.py",
+      "class": "EXERCISED_BY_TESTS_NO_TEXTLESS_CALL_OBSERVED",
+      "reason": "referenced by the test suite; the traced full run saw no SOURCE_TEXT_MISSING from it",
+      "static_signal": {
+        "problem_text_mentions": 7,
+        "build_request_contract": 1,
+        "RequestContract_direct": 2
+      }
+    },
+    {
+      "caller": "backend/scripts/verify_baseline_expressibility.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    },
+    {
+      "caller": "backend/scripts/verify_v2_expressibility.py",
+      "class": "NOT_EXERCISED_IN_W14",
+      "reason": "historical measurement/live script, not run in W14; under CAN_DE a textless contract now fails closed (SOURCE_TEXT_MISSING) instead of skipping source checks silently",
+      "static_signal": {
+        "problem_text_mentions": 1,
+        "build_request_contract": 0,
+        "RequestContract_direct": 1
+      }
+    }
+  ],
+  "observed_source_text_missing_nodes_after_classification": {
+    "tests/geometry/test_assumption_gate.py::test_hop_dong_san_pham_thieu_de_bi_tu_choi": 1
+  }
+}

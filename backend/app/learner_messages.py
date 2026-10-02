@@ -118,10 +118,17 @@ _MSG_NGUON_MAU_THUAN = (
     "dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại "
     "nhé."
 )
+#: W14 5a — hợp đồng tới route mà không mang đề. Tuyến sản phẩm luôn gửi đề, nên lời
+#: này lẽ ra không tới học sinh; nếu tới, nó nói đúng điều đã xảy ra, không đổ cho đề.
+_MSG_THIEU_DE = (
+    "AlgoSim không nhận được nội dung đề bài đi kèm, nên không đối chiếu được dữ kiện "
+    "với đề và không dựng hình. Em gửi lại đề bài nhé."
+)
 _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
     "GIVEN_VALUE_NOT_IN_SOURCE": _MSG_NGUON_THIEU,
     "SOURCE_SPAN_MISMATCH": _MSG_NGUON_MAU_THUAN,
     "SOURCE_EVIDENCE_CONFLICT": _MSG_NGUON_MAU_THUAN,
+    "SOURCE_TEXT_MISSING": _MSG_THIEU_DE,
 }
 
 

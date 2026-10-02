@@ -39,10 +39,10 @@ from app.simulation.semantic_program.coverage_gate import _phu_thuoc, _producers
 from app.simulation.semantic_program.grounding_gate import (
     ERR_GIA_THIET_LA_DAP_AN,
     ERR_GIA_THIET_SAI_KIEU,
-    check_grounding,
 )
 from app.simulation.semantic_program.obligations import OBLIGATION_KINDS, Obligation
 from app.simulation.semantic_program.request_contract import InputFact, RequestContract
+from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED_UNIT_FIXTURE (hợp đồng không đề)
 
 _GOC = Path(__file__).resolve().parents[3]
 _DEV = _GOC / "docs" / "evaluation" / "geometry" / "dev" / "cases.json"
@@ -548,6 +548,10 @@ def _chuong_trinh_geo_09() -> dict:
 
 
 def _hop_dong_geo_09() -> RequestContract:
+    # W14 5a: hợp đồng của ca dev `geo_09` mang ĐỀ THẬT của ca ấy, như mọi hợp đồng
+    # sản phẩm — thiếu đề nay bị từ chối `SOURCE_TEXT_MISSING`.
+    de = next(c["problem_text"] for c in json.loads(_DEV.read_text(encoding="utf-8"))["cases"]
+              if c["case_id"] == "geo_09")
     return RequestContract(
         obligations=(
             Obligation(kind="volume", container="chop",
@@ -557,6 +561,7 @@ def _hop_dong_geo_09() -> RequestContract:
             InputFact(fact_id="canh_day", label="cạnh đáy", values=(1,)),
             InputFact(fact_id="sa", label="SA", values=(2,)),
         ),
+        problem_text=de,
     )
 
 
@@ -643,7 +648,7 @@ def test_CHUONG_TRINH_KHAI_DAP_AN_bi_chan_o_dung_tang_dau():
     hằng `2/3` khai thẳng — đúng thứ R0 cấm. Không có test này thì
     `test_geo_09_DI_TRON_DUONG` chỉ chứng minh cổng cho qua, chưa chứng minh nó
     còn chặn được gì."""
-    from app.simulation.semantic_program.route import verify_and_compile
+    from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (hợp đồng không đề)
 
     ct = _chuong_trinh_geo_09()
     ct["statements"] = ct["statements"][:1]  # bỏ phép đo

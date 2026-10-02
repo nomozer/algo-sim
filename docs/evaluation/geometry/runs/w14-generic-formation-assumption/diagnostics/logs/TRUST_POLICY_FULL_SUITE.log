@@ -1,0 +1,37 @@
+# W14 Task 5a — full backend suite with the w14_trace_thieu_de plugin (records every node where grounding refused SOURCE_TEXT_MISSING, green or red)
+# command: cd backend && PYTHONPATH=<scratchpad> PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -p w14_trace_thieu_de -rf --tb=line
+# result: 32 failed, 6544 passed, 1 skipped, 2 deselected, 2 warnings in 284.04s (0:04:44)
+# traced nodes: see TRUST_POLICY_TRACE.json (only the intended policy test)
+
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_kenh_layout_derived_bi_tu_choi
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_kenh_model_assumption_bi_tu_choi
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_kich_thuoc_thieu_bi_che_boi_XY_length_gia_dinh
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_moi_phep_nhieu_bi_loai_van_thieu_du_kien
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_bang_chung_cua_canh_khac_khong_che_chieu_cao
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_thieu_kich_thuoc_trong_khung_xien
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_phu_thuoc_ma_bon_phep_nhieu_khong_thay
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_het_ngan_sach_khong_thanh_an_toan
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_hai_dap_so_mot_phu_thuoc_gia_dinh
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_dong_dang_nhung_nhan_them_vo_huong_gia_dinh
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_bo_mot_phu_thuoc_khoi_do_thi
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_bang_toan_hang_phu_moi_kieu_IR
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[khong_nguon]
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[gia_dinh]
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[claimed]
+EXPECTED_RED_TRACK_B (Task 5) :: tests/geometry/test_assumption_gate.py::test_hai_dap_so_mot_ngoai_pham_vi_chung_chi
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+DIRTY_WORKING_TREE :: tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+DIRTY_WORKING_TREE :: tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+EXPECTED_RED_TRACK_C (Task 6) :: tests/geometry/test_source_length_reader.py::test_dai_cm_sai_doan_bi_tu_choi
+EXPECTED_RED_TRACK_C (Task 6) :: tests/geometry/test_source_length_reader.py::test_dai_cm_dung_doan_duoc_nhan
+EXPECTED_RED_TRACK_C (Task 6) :: tests/geometry/test_source_length_reader.py::test_co_do_dai_sai_doan_bi_tu_choi
+EXPECTED_RED_TRACK_C (Task 6) :: tests/geometry/test_source_length_reader.py::test_bang_chung_doan_gan_voi_cap_dau_mut
+STALE_CANDIDATE_IDENTITY :: tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+STALE_CANDIDATE_IDENTITY :: tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang

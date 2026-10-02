@@ -22,6 +22,7 @@ Gate này là điều kiện CẦN, CHƯA ĐỦ.
 from __future__ import annotations
 
 import re
+from enum import Enum
 from fractions import Fraction
 from typing import Any
 
@@ -124,8 +125,24 @@ ERR_THIEU_NGUOI_DUNG = "DERIVED_ENTITY_WITHOUT_PRODUCER"
 ERR_GIVEN_KHONG_CO_TRONG_DE = "GIVEN_VALUE_NOT_IN_SOURCE"
 ERR_SPAN_LECH_DE = "SOURCE_SPAN_MISMATCH"
 ERR_BANG_CHUNG_MAU_THUAN = "SOURCE_EVIDENCE_CONFLICT"
+#: Hợp đồng không mang đề (W14 5a). Trước đây đề rỗng NGẦM nghĩa là "chưa kiểm",
+#: nên một hợp đồng sản phẩm mất đề đi lọt mọi kiểm tra nguồn.
+ERR_THIEU_DE = "SOURCE_TEXT_MISSING"
 MA_LOI_NGUON = frozenset({ERR_GIVEN_KHONG_CO_TRONG_DE, ERR_SPAN_LECH_DE,
-                          ERR_BANG_CHUNG_MAU_THUAN})
+                          ERR_BANG_CHUNG_MAU_THUAN, ERR_THIEU_DE})
+
+
+class NguonDe(str, Enum):
+    """Chính sách NGUỒN ĐỀ của một lời gọi — một THAM SỐ PYTHON, không gì khác.
+
+    `CAN_DE` (mặc định): hợp đồng phải mang đề; đề rỗng ⇒ từ chối `SOURCE_TEXT_MISSING`.
+    `FIXTURE_TIN_CAY`: người gọi KHAI TƯỜNG MINH đây là fixture đáng tin không có đề,
+    được đi đường không kiểm nguồn cũ — và kết quả ghi `UNCHECKED_TRUSTED_FIXTURE`.
+    Không bao giờ đọc từ payload/header HTTP, đầu ra mô hình hay cấu hình người dùng;
+    tuyến sản phẩm không nhắc tới `FIXTURE_TIN_CAY` (khoá: `test_assumption_gate`).
+    """
+    CAN_DE = "CAN_DE"
+    FIXTURE_TIN_CAY = "FIXTURE_TIN_CAY"
 
 #: Đơn vị độ dài — tập ĐÓNG. Engine không đổi đơn vị; nó chỉ phát hiện hai nguồn
 #: nói hai đơn vị khác nhau cho cùng một con số.
@@ -378,9 +395,15 @@ def _extract_declared_vertex_universe(contract: RequestContract) -> set[str]:
 
 
 def check_grounding(
-    contract: RequestContract, spec: SemanticProgramSpec
+    contract: RequestContract, spec: SemanticProgramSpec, *, nguon: NguonDe = NguonDe.CAN_DE
 ) -> GroundingResult:
-    """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ."""
+    """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ.
+
+    Đề rỗng chỉ được đi đường không kiểm nguồn khi người gọi khai `FIXTURE_TIN_CAY`.
+    """
+    if not (contract.problem_text or "").strip() and nguon is not NguonDe.FIXTURE_TIN_CAY:
+        return GroundingResult(ok=False, error_code=ERR_THIEU_DE, unresolved=[
+            "hợp đồng không mang đề bài — không có nguồn để đối chiếu dữ kiện"])
     unresolved: list[str] = []
     gia_thiet: list[str] = []
     trich_dan_hong: list[str] = []

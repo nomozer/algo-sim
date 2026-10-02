@@ -22,7 +22,7 @@ from app.simulation.semantic_program.postconditions import (
     check_postconditions,
 )
 from app.simulation.semantic_program.request_contract import RequestContract
-from app.simulation.semantic_program.route import verify_and_compile
+from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (hợp đồng không đề)
 
 from .fixtures_coverage_18 import P01_STACK_BRACKET
 

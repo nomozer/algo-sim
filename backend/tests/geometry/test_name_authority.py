@@ -24,7 +24,7 @@ import pytest
 from app.simulation.semantic_program.coverage_gate import check_structural_coverage
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import RequestContract
-from app.simulation.semantic_program.route import verify_and_compile
+from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (hợp đồng không đề)
 from app.simulation.semantic_program.validator import validate_semantic_program
 
 

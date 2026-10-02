@@ -216,7 +216,7 @@ def _bo_value_box(spec, box_id: str):
 
 
 def test_route_van_serve_khi_be_mat_du():
-    from app.simulation.semantic_program.route import verify_and_compile
+    from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (hợp đồng không đề)
 
     contract, spec = _p02()
     kq = verify_and_compile(contract, spec)
@@ -236,7 +236,7 @@ def test_route_ha_servable_va_giu_executable():
     bài này. Xếp sang `capability_gap` là tự khai năng lực thấp hơn thực tế —
     đúng ranh giới nơi hai tỉ lệ của luận văn tách nhau.
     """
-    from app.simulation.semantic_program.route import verify_and_compile
+    from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (hợp đồng không đề)
 
     contract, spec = _p02()
     kq = verify_and_compile(contract, _bo_value_box(spec, "max_box"))

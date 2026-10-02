@@ -220,10 +220,14 @@ def _chay_mot_case(lop: str, spec, witness: str, mong_doi: dict) -> dict:
         from app.simulation.semantic_program.analyze_contract import (
             build_request_contract,
         )
+        from app.simulation.semantic_program.grounding_gate import NguonDe
         from app.simulation.semantic_program.route import verify_and_compile
 
         ghim, payload = HOP_DONG[lop]
-        out = verify_and_compile(build_request_contract(payload), _ghim(spec, ghim))
+        # W14 5a: payload tổng hợp KHÔNG đề — khai tường minh fixture tin cậy, để
+        # `servable` vẫn đo các cổng của lớp chứ không đo việc thiếu đề.
+        out = verify_and_compile(build_request_contract(payload), _ghim(spec, ghim),
+                                 nguon=NguonDe.FIXTURE_TIN_CAY)
         servable = bool(out.servable)
         if not servable:
             ghi_chu.append(f"servable=False: {out.error_code} · {out.reason}")

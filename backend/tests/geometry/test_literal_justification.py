@@ -16,10 +16,8 @@ là thứ báo cáo sẽ trích: đếm sai một lớp thì tỉ lệ đẹp l�
 """
 from __future__ import annotations
 
-from app.simulation.semantic_program.grounding_gate import (
-    check_grounding,
-    ti_le_literal_hinh_hoc,
-)
+from app.simulation.semantic_program.grounding_gate import ti_le_literal_hinh_hoc
+from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED_UNIT_FIXTURE (hợp đồng không đề)
 from app.simulation.semantic_program.obligations import Obligation
 from app.simulation.semantic_program.request_contract import (
     InputFact,

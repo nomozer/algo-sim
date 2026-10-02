@@ -24,10 +24,13 @@ from app.simulation.semantic_program.request_contract import (
     RequestContract,
 )
 
+#: W14 5a: vòng sửa là mã SẢN PHẨM, và hợp đồng sản phẩm luôn mang đề — ở đây
+#: đúng đề mà các test truyền cho `stage_semantic_program`.
 _HOP_DONG = RequestContract(
     input_facts=(
         InputFact(fact_id="ab_length", label="Độ dài AB", values=(1,)),
-    )
+    ),
+    problem_text="Cho hình chóp S.ABC có AB = 1.",
 )
 
 #: Vi phạm: `B` có toạ độ mà không ghim nguồn, cũng không khai giả thiết.

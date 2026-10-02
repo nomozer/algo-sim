@@ -38,7 +38,7 @@ from .coverage_gate import (
     check_structural_coverage,
 )
 from .formation import hoan_thien_dung_hinh
-from .grounding_gate import check_grounding
+from .grounding_gate import NguonDe, check_grounding
 from .interpreter import SemanticProgramInterpreter
 from .learner_surface import check_learner_surface
 from .transport import check_envelope_transport
@@ -160,6 +160,9 @@ class SemanticRouteOutcome(BaseModel):
     program_sha256_original: str | None = None
     program_sha256_completed: str | None = None
     formation_statuses: dict[str, str] = Field(default_factory=dict)
+    #: W14 5a — `UNCHECKED_TRUSTED_FIXTURE` khi người gọi khai `NguonDe.FIXTURE_TIN_CAY`
+    #: cho một hợp đồng không đề (nguồn KHÔNG được kiểm); `None` ở mọi trường hợp khác.
+    source_check: str | None = None
 
 
 def _hong(
@@ -214,6 +217,7 @@ def verify_and_compile(
     *,
     execution_budget: int = DEFAULT_EXECUTION_BUDGET,
     presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
+    nguon: NguonDe = NguonDe.CAN_DE,
 ) -> SemanticRouteOutcome:
     """Bọc mỏng quanh `_sau_grounding` để **gắn quan trắc grounding ở MỘT chỗ**.
 
@@ -240,7 +244,11 @@ def verify_and_compile(
             **quan_trac_dung,
         )
     spec = dung.spec
-    ground = check_grounding(contract, spec)
+    # W14 5a — đề rỗng không còn mặc nhiên là "chưa kiểm": chỉ `FIXTURE_TIN_CAY` khai
+    # tường minh mới đi đường không kiểm nguồn, và kết quả ghi lại điều đó.
+    ground = check_grounding(contract, spec, nguon=nguon)
+    if nguon is NguonDe.FIXTURE_TIN_CAY and not (contract.problem_text or "").strip():
+        quan_trac_dung["source_check"] = "UNCHECKED_TRUSTED_FIXTURE"
     # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
     # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
     # gắn tay ở nhánh nào chạy tới C₂.

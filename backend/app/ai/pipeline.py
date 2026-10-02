@@ -245,6 +245,8 @@ KHONG_SUA_NGUON = frozenset({
     "GIVEN_VALUE_NOT_IN_SOURCE",
     "SOURCE_SPAN_MISMATCH",
     "SOURCE_EVIDENCE_CONFLICT",
+    # W14 5a: hợp đồng không mang đề — viết lại chương trình không thêm được đề.
+    "SOURCE_TEXT_MISSING",
 })
 
 

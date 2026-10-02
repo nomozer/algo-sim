@@ -88,6 +88,9 @@ def _pyramid_control_contract():
         obligations=(
             Obligation(kind="volume", container="khoi_chop", params={"witness": "the_tich_khoi"}),
         ),
+        # W14 5a: hợp đồng sản phẩm luôn mang đề (`stage_semantic_analyze` gắn đề
+        # của request); thiếu đề nay bị từ chối `SOURCE_TEXT_MISSING`.
+        problem_text=text,
     )
     return text, contract
 

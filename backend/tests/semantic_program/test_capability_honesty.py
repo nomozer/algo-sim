@@ -42,6 +42,7 @@ from app.simulation.semantic_program.analyze_contract import build_request_contr
 from app.simulation.semantic_program.grounding_gate import (
     ERR_RUA_NANG_LUC,
     ERR_THIEU_NGUOI_DUNG,
+    NguonDe,
     check_grounding,
 )
 from app.simulation.semantic_program.source_entities import (
@@ -264,7 +265,10 @@ def test_gm10_KHONG_bi_chan_khi_KHONG_co_de():
     hd = build_request_contract(
         {"obligations": [], "input_facts": [{"id": f, "label": f} for f in fids]},
         problem_text="")
-    assert check_grounding(hd, v.spec).ok
+    # W14 5a: đề rỗng chỉ được đi đường KHÔNG kiểm nguồn khi người gọi khai tường minh
+    # fixture tin cậy (mặc định `CAN_DE` từ chối `SOURCE_TEXT_MISSING`). Đối chứng giữ
+    # nguyên ý: bỏ đề thì luật trung thực năng lực thôi kết luận.
+    assert check_grounding(hd, v.spec, nguon=NguonDe.FIXTURE_TIN_CAY).ok
 
 
 # ══ ④b HỆ QUẢ KHÔNG CÓ NGƯỜI DỰNG — §6 ═════════════════════════════════

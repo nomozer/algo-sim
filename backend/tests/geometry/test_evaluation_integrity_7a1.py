@@ -19,7 +19,7 @@ import pytest
 
 from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.semantic_program.request_contract import RequestContract
-from app.simulation.semantic_program.route import verify_and_compile
+from tests.nguon_fixture import verify_and_compile  # W14 5a: ISOLATED (artifact pilot không lưu đề)
 
 GOC = Path(__file__).resolve().parents[3]
 PILOT = GOC / "docs" / "evaluation" / "geometry" / "phase7a-pilot"

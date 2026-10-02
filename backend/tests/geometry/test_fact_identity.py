@@ -27,9 +27,9 @@ from app.simulation.semantic_program.contract import (
 from app.simulation.semantic_program.grounding_gate import (
     ERR_GIA_THIET_LA_DAP_AN,
     ERR_GIA_THIET_SAI_KIEU,
-    check_grounding,
 )
 from app.simulation.semantic_program.obligations import Obligation
+from tests.nguon_fixture import check_grounding  # W14 5a: ISOLATED_UNIT_FIXTURE (hợp đồng không đề)
 from app.simulation.semantic_program.request_contract import (
     InputFact,
     RequestContract,
