@@ -1,0 +1,9 @@
+# RED backend (W15 Task 2 tests); 2026-10-02T21:20:18Z
+# command: pytest tests/geometry/test_shape_constraint.py tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_class_formation.py -q --tb=line
+117 failed, 70 passed, 1 warning in 5.24s
+# failure reasons (one per failed test, grouped):
+     60 ModuleNotFoundError: No module named 'app.simulation.semantic_program.assumption_gate'
+     37 ModuleNotFoundError: No module named 'app.simulation.semantic_program.shape_constraint'
+     18 AttributeError: 'SemanticRouteOutcome' object has no attribute 'assumption_certificate'
+      2 AssertionError: twisted prism reading present (solid_faces)
+# passed = GUARDs + existing formation tests (green before and after)

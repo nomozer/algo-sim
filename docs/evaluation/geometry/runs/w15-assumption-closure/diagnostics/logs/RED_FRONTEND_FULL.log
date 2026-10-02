@@ -1,0 +1,16 @@
+# RED frontend full vitest; 2026-10-02T21:15:45Z
+     × các export W15 tồn tại 9ms
+     × khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau, lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che 9ms
+     × theo tiến độ từng bước của cảnh thật: chỉ tô từ bước khép-và-tô; tua ngược là mất 1ms
+     × móc kiểm thử tắt/bật ĐÚNG các vật tô thiết diện, không chạm gì khác 2ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối > các export W15 tồn tại
+AssertionError: expected 'undefined' to be 'number' // Object.is equality
+ FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối > khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau, lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che
+AssertionError: expected [] to deeply equal [ 'section_fill:td' ]
+ FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối > theo tiến độ từng bước của cảnh thật: chỉ tô từ bước khép-và-tô; tua ngược là mất
+TypeError: W15.vatThietDienTaiBuoc is not a function
+ FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối > móc kiểm thử tắt/bật ĐÚNG các vật tô thiết diện, không chạm gì khác
+TypeError: W15.datHienToThietDien is not a function
+ Test Files  1 failed | 66 passed (67)
+      Tests  4 failed | 1012 passed (1016)

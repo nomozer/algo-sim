@@ -11,8 +11,12 @@
  * thứ tư không trùng gì cả. Đó là hình dạng thật của bài toán, và là lý do
  * `cycleLabel` phải trả `null` chứ không ghép `"P2P1-đỉnh 3-P3"`.
  */
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import * as THREE from "three";
 import { describe, expect, it } from "vitest";
-import type { Scene3D, SceneObject } from "./scene3d-model";
+import type { GeometryProgress, Scene3D, SceneObject } from "./scene3d-model";
+import * as VIEW from "./scene3d-view";
 import { objectsAt } from "./scene3d-model";
 import {
   deriveSectionSubEntities,
@@ -322,5 +326,108 @@ describe("V — đường này hoàn toàn tất định", () => {
     void deriveSectionSubEntities(DU_TEN);
     const b = JSON.stringify(withSubEntities(CANH).objects.map((o) => o.id));
     expect(a).toBe(b);
+  });
+});
+
+// ══ W15 · TÔ THIẾT DIỆN KHÉP KÍN ĐỌC TÁCH KHỎI MẶT CẮT VÀ KHỐI ═══════════
+//
+// W14 đo được: phần tô dùng nhánh đa giác chung — hổ phách 0.16, không `renderOrder`,
+// không lệch chiều sâu — nằm ĐỒNG PHẲNG với miếng mặt cắt tím (0.2) và trước khối xám
+// (0.22), nên vùng thiết diện hoà mất. Cổng ảnh (`SECTION_FILL_DISTINGUISHABLE`) đo trên
+// trình duyệt; ở đây khoá DÂY NỐI: vật tô riêng, vẽ sau, lệch chiều sâu, không che gì,
+// đúng theo tiến độ từng bước, và móc kiểm thử chỉ chạm đúng các vật tô ấy.
+//
+// Các hàm W15 truy qua namespace + ép kiểu để bản RED vẫn qua `tsc -b`: thiếu export ⇒
+// test đỏ VÌ thiếu, không vì lỗi biên dịch.
+const W15 = VIEW as unknown as {
+  THU_TU_VE_THIET_DIEN?: number;
+  DO_DUC_TO_THIET_DIEN?: number;
+  vatThietDienTaiBuoc?: (o: SceneObject, progress?: GeometryProgress) => SceneObject | null;
+  datHienToThietDien?: (goc: THREE.Object3D, on: boolean) => string[];
+};
+
+const W14_CAT = JSON.parse(readFileSync(fileURLToPath(new URL(
+  "../../../../../docs/evaluation/geometry/runs/w14-generic-formation-assumption/inputs/fixtures/"
+  + "cross_section_positive.json", import.meta.url)), "utf8")).envelope.scene3d as Scene3D;
+
+function vatTo(goc: THREE.Object3D): THREE.Mesh[] {
+  const ra: THREE.Mesh[] = [];
+  goc.traverse((x) => { if (x.name.startsWith("section_fill:")) ra.push(x as THREE.Mesh); });
+  return ra;
+}
+
+function toTaiBuoc(scene: Scene3D, k: number): THREE.Mesh[] {
+  const o = scene.objects.find((x) => x.type === "section")!;
+  const p = scene.formation!.steps[k].geometry_progress?.find((g) => g.object_id === o.id);
+  const ve = W15.vatThietDienTaiBuoc!(o, p);
+  if (!ve) return [];
+  const obj = VIEW.buildObject3D(ve, false);
+  return obj ? vatTo(obj) : [];
+}
+
+describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối", () => {
+  it("các export W15 tồn tại", () => {
+    expect(typeof W15.THU_TU_VE_THIET_DIEN).toBe("number");
+    expect(typeof W15.DO_DUC_TO_THIET_DIEN).toBe("number");
+    expect(typeof W15.vatThietDienTaiBuoc).toBe("function");
+    expect(typeof W15.datHienToThietDien).toBe("function");
+  });
+
+  it("khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau, lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che", () => {
+    const obj = VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false)!;
+    const to = vatTo(obj);
+    expect(to.map((m) => m.name)).toEqual(["section_fill:td"]);
+    const m = to[0].material as THREE.MeshStandardMaterial;
+    expect(to[0].renderOrder).toBeGreaterThanOrEqual(W15.THU_TU_VE_THIET_DIEN!);
+    expect(m.polygonOffset).toBe(true);
+    expect(m.polygonOffsetUnits).toBeLessThan(0);
+    expect(m.opacity).toBe(W15.DO_DUC_TO_THIET_DIEN);
+    expect(W15.DO_DUC_TO_THIET_DIEN!).toBeGreaterThan(0.16);
+    expect(m.depthWrite).toBe(false);
+    let chieuSau = 0;
+    obj.traverse((x) => { if (x.userData.chieuSau) chieuSau += 1; });
+    expect(chieuSau).toBe(0);
+    expect(obj.getObjectByName("polygon_fill:td")).toBeUndefined();
+  });
+
+  it("chưa khép hoặc chưa tới bước tô ⇒ không có vật tô", () => {
+    for (const over of [{ closed: false }, { closed: true, fill_visible: false }]) {
+      const obj = VIEW.buildObject3D({ ...td(CANH), ...over }, false)!;
+      expect(vatTo(obj)).toEqual([]);
+    }
+  });
+
+  it("đa giác không phải thiết diện giữ nguyên tô chung (polygon_fill)", () => {
+    const da: SceneObject = { ...td(CANH), id: "day", type: "polygon3", closed: true, fill_visible: true };
+    const obj = VIEW.buildObject3D(da, false)!;
+    expect(vatTo(obj)).toEqual([]);
+    expect(obj.getObjectByName("polygon_fill:day")).toBeDefined();
+  });
+
+  it("theo tiến độ từng bước của cảnh thật: chỉ tô từ bước khép-và-tô; tua ngược là mất", () => {
+    const buoc = W14_CAT.formation!.steps;
+    const tienDo = (k: number) => buoc[k].geometry_progress?.find((g) => g.object_id === "T");
+    const coTo = buoc.map((_s, k) => toTaiBuoc(W14_CAT, k).length > 0);
+    const kTo = buoc.findIndex((_s, k) => tienDo(k)?.closed && tienDo(k)?.fill_visible);
+    expect(kTo).toBeGreaterThan(0);
+    expect(coTo.slice(0, kTo).some(Boolean)).toBe(false);
+    expect(coTo[kTo]).toBe(true);
+    // tua ngược: từ bước tô quay về bước khép-chưa-tô rồi bước còn hở — không còn vật tô
+    expect(toTaiBuoc(W14_CAT, kTo - 1)).toEqual([]);
+    expect(toTaiBuoc(W14_CAT, kTo - 2)).toEqual([]);
+  });
+
+  it("móc kiểm thử tắt/bật ĐÚNG các vật tô thiết diện, không chạm gì khác", () => {
+    const goc = new THREE.Group();
+    goc.add(VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false)!);
+    goc.add(VIEW.buildObject3D({ ...td(CANH), id: "day", type: "polygon3", closed: true, fill_visible: true }, false)!);
+    const truoc = new Map<string, boolean>();
+    goc.traverse((x) => truoc.set(x.uuid, x.visible));
+    expect(W15.datHienToThietDien!(goc, false)).toEqual(["section_fill:td"]);
+    goc.traverse((x) => {
+      expect(x.visible).toBe(x.name.startsWith("section_fill:") ? false : truoc.get(x.uuid));
+    });
+    expect(W15.datHienToThietDien!(goc, true)).toEqual(["section_fill:td"]);
+    goc.traverse((x) => expect(x.visible).toBe(truoc.get(x.uuid)));
   });
 });

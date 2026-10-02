@@ -1,0 +1,15 @@
+# Route outcomes TODAY (before the W15 gate) for the hazard fixtures of test_assumption_certificate.py; 2026-10-02T21:21:46Z; 0 model calls
+divide_segment ratio unstated (1/3)                  stage=served             servable=True  served_values=['√109/3']
+ratio stated SM=2MB, program 2/3                     stage=served             servable=True  served_values=['√61/3']
+ratio stated SM=2MB, program 1/3 (readable)          stage=source_invariant   servable=False served_values=['√109/3']
+ratio stated 'thuộc cạnh SB', program 1/3            stage=served             servable=True  served_values=['√109/3'] correct=√61/3
+reaching-def C0:diem_ghi_de_khoi_phuc                stage=served             servable=True  served_values=['2√114/19'] correct=√3
+reaching-def C0:bi_danh_diem_bi_ghi_de               stage=served             servable=True  served_values=['2√114/19'] correct=√3
+reaching-def C0:vo_huong_ghi_de_khoi_phuc            stage=postconditions     servable=False served_values=['72', '9', '6√2'] correct=3√6
+reaching-def C1:diem_ghi_de_khoi_phuc                stage=served             servable=True  served_values=['5'] correct=10
+reaching-def C1:bi_danh_diem_bi_ghi_de               stage=served             servable=True  served_values=['5'] correct=10
+reaching-def C1:vo_huong_ghi_de_khoi_phuc            stage=structural_coverage servable=False served_values=['None'] correct=30
+AC1 probe layout_derived (text lacks AD)             stage=served             servable=True  served_values=['30']
+AC1 probe model_assumption (text lacks AD)           stage=served             servable=True  served_values=['30']
+relation only in analyze, text silent                stage=served             servable=True  served_values=['30']
+cos² shown, outside C1 (adv11)                       stage=served             servable=True  served_values=['30']

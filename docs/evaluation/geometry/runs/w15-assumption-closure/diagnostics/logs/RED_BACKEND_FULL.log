@@ -1,0 +1,158 @@
+# RED backend full suite at 7b9e250b + uncommitted Task 2 tests; 2026-10-02T21:15:38Z
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+..................s..................................................... [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+........                                                                 [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[demo:n1_thoi_dinh_thu_tu]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[demo:n2_lang_tru_xien_hai_vecto]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p1_chop_thiet_dien_khoang_cach]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p2_chop_day_ngu_giac_lom]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p4_hinh_tru_the_tich_va_xung_quanh]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p5_hinh_non_the_tich_va_xung_quanh]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p6_thiet_dien_elip_cua_hinh_tru]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p7_thiet_dien_elip_cua_hinh_non]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[demo:t3_hop_tinh_tien_day_chuyen]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[demo:t4_mat_xich_trong_chuoi_sau]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:chop_chu_nhat]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:chop_tam_giac]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:hop_chu_nhat]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:lang_tru_day_vuong]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:lang_tru_tam_giac]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[ho:lap_phuong]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[rigid:prism_text_translate_swap]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_khuon_duoc_C1[rot:chop_tam_giac_xoay]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_claimed]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_gia_dinh]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_khong_nguon]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv11_hai_dap_so_mot_ngoai_pham_vi]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:n1_thoi_dinh_thu_tu]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:n2_lang_tru_xien_hai_vecto]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:t3_hop_tinh_tien_day_chuyen]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:t4_mat_xich_trong_chuoi_sau]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[ho:chop_chu_nhat]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[ho:lang_tru_tam_giac]
+FAILED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[rigid:prism_text_translate_swap]
+FAILED tests/geometry/test_assumption_certificate.py::test_AC1_phu_thuoc_voi_nhan_chung_hop_le[layout_derived]
+FAILED tests/geometry/test_assumption_certificate.py::test_AC1_phu_thuoc_voi_nhan_chung_hop_le[model_assumption]
+FAILED tests/geometry/test_assumption_certificate.py::test_AC1_phu_thuoc_voi_nhan_chung_hop_le[given_length]
+FAILED tests/geometry/test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[xac_nhan]
+FAILED tests/geometry/test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[khong_nguon]
+FAILED tests/geometry/test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[gia_dinh]
+FAILED tests/geometry/test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[claimed]
+FAILED tests/geometry/test_assumption_certificate.py::test_claimed_ma_de_noi_lang_tru_dung_C1_chi_qua_tien_de_server
+FAILED tests/geometry/test_assumption_certificate.py::test_lang_tru_xien_bac_quan_he_vuong_goc_cua_mo_hinh
+FAILED tests/geometry/test_assumption_certificate.py::test_ti_so_chia_doan_de_khong_cho_khong_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_ti_so_chia_doan_de_cho_dung_doan_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_ti_so_chia_doan_khac_ti_so_de_cho_khong_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_ti_so_voi_loi_viet_chua_doc_duoc_khong_duoc_chung_nhan[1/3]
+FAILED tests/geometry/test_assumption_certificate.py::test_ti_so_voi_loi_viet_chua_doc_duoc_khong_duoc_chung_nhan[2/3]
+FAILED tests/geometry/test_assumption_certificate.py::test_mat_phang_mo_hinh_tu_chon_vi_tri_khong_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_cong_thuc_khong_literal_tu_do_duoc_chung_nhan[S\xb7h (kh\xf4ng literal)-expr0]
+FAILED tests/geometry/test_assumption_certificate.py::test_cong_thuc_khong_literal_tu_do_duoc_chung_nhan[S\xb7AD_length (d\u1eef ki\u1ec7n \u0111\u1ec1, C\xd9NG th\u1ef1c th\u1ec3 AD)-expr1]
+FAILED tests/geometry/test_assumption_certificate.py::test_literal_trong_cong_thuc_khong_co_vai_tro_du_hop_le_thu_nguyen
+FAILED tests/geometry/test_assumption_certificate.py::test_chia_nguyen_cho_hang_so_khong_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:bi_danh_diem_bi_ghi_de]
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:diem_ghi_de_khoi_phuc]
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:vo_huong_ghi_de_khoi_phuc]
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:bi_danh_diem_bi_ghi_de]
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:diem_ghi_de_khoi_phuc]
+FAILED tests/geometry/test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:vo_huong_ghi_de_khoi_phuc]
+FAILED tests/geometry/test_assumption_certificate.py::test_doi_chung_C0_bien_trung_gian_dinh_nghia_mot_lan_duoc_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_cos2_ngoai_pham_vi_C1_tu_choi_ca_bai
+FAILED tests/geometry/test_assumption_certificate.py::test_doi_chieu_compiler_bat_dong_thi_khong_chung_nhan
+FAILED tests/geometry/test_assumption_certificate.py::test_chuyen_dong_cung_va_phep_quay_giu_phan_quyet_va_gia_tri
+FAILED tests/geometry/test_assumption_certificate.py::test_song_anh_ten_thuc_the_giu_phan_quyet
+FAILED tests/geometry/test_assumption_certificate.py::test_doi_kich_thuoc_de_khong_cho_bi_phat_hien
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[demo:n1_thoi_dinh_thu_tu]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[demo:n2_lang_tru_xien_hai_vecto]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[demo:t3_hop_tinh_tien_day_chuyen]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[demo:t4_mat_xich_trong_chuoi_sau]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p1_chop_thiet_dien_khoang_cach]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p2_chop_day_ngu_giac_lom]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p4_hinh_tru_the_tich_va_xung_quanh]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p5_hinh_non_the_tich_va_xung_quanh]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p6_thiet_dien_elip_cua_hinh_tru]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[gold:p7_thiet_dien_elip_cua_hinh_non]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:chop_chu_nhat]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:chop_tam_giac]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:hop_chu_nhat]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:lang_tru_day_vuong]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:lang_tru_tam_giac]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[ho:lap_phuong]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[rigid:prism_text_translate_swap]
+FAILED tests/geometry/test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[rot:chop_tam_giac_xoay]
+FAILED tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+FAILED tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+FAILED tests/geometry/test_shape_class_formation.py::test_bang_mat_xoan_khong_doc_thanh_lang_tru_lap_dinh
+FAILED tests/geometry/test_shape_class_formation.py::test_bang_mat_xoan_ten_khoi_roi_ve_ten_chung
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt.-ky_vong0]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho kh\u1ed1i ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A.-ky_vong1]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh l\u0103ng tr\u1ee5 ABC.A'B'C'.-ky_vong2]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DEF c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i B.-ky_vong3]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh l\u0103ng tr\u1ee5 xi\xean ABC.DEF.-ky_vong4]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh h\u1ed9p ch\u1eef nh\u1eadt ABCD.A'B'C'D'.-ky_vong5]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh l\u1eadp ph\u01b0\u01a1ng ABCD.A'B'C'D' c\xf3 c\u1ea1nh b\u1eb1ng 4.-ky_vong6]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh vu\xf4ng.-ky_vong7]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh b\xecnh h\xe0nh.-ky_vong8]
+FAILED tests/geometry/test_shape_constraint.py::test_moi_luat_gan_dung_thuc_the[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh thoi.-ky_vong9]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[SA vu\xf4ng g\xf3c v\u1edbi m\u1eb7t ph\u1eb3ng (ABC).-ky_vong0]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[SA vu\xf4ng g\xf3c v\u1edbi (ABC).-ky_vong1]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[SA \u22a5 (ABC).-ky_vong2]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[AB vu\xf4ng g\xf3c v\u1edbi AD.-ky_vong3]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[AB \u22a5 AD.-ky_vong4]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[g\xf3c BAD = 90\xb0.-ky_vong5]
+FAILED tests/geometry/test_shape_constraint.py::test_quan_he_vuong_goc_gan_dung_thuc_the[Tam gi\xe1c ABC vu\xf4ng t\u1ea1i C.-ky_vong6]
+FAILED tests/geometry/test_shape_constraint.py::test_span_tro_dung_cum_tu_trong_de
+FAILED tests/geometry/test_shape_constraint.py::test_sai_thuc_the_cung_tu_ngu_khong_phat[Cho h\xecnh ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i D.-right_triangle]
+FAILED tests/geometry/test_shape_constraint.py::test_sai_thuc_the_cung_tu_ngu_khong_phat[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y MNPQ l\xe0 h\xecnh ch\u1eef nh\u1eadt.-base_rectangle]
+FAILED tests/geometry/test_shape_constraint.py::test_sai_thuc_the_cung_tu_ngu_khong_phat[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DE.-right_prism]
+FAILED tests/geometry/test_shape_constraint.py::test_sai_thuc_the_cung_tu_ngu_khong_phat[Cho h\xecnh l\u0103ng tr\u1ee5 \u0111\u1ee9ng ABC.DE.-prism]
+FAILED tests/geometry/test_shape_constraint.py::test_sai_thuc_the_cung_tu_ngu_khong_phat[C\u1ea1nh SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y.-line_perp_plane]
+FAILED tests/geometry/test_shape_constraint.py::test_day_gan_vao_day_cua_khoi_da_neu[Cho h\xecnh ch\xf3p S.ABC. C\u1ea1nh b\xean SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y.-mat0]
+FAILED tests/geometry/test_shape_constraint.py::test_day_gan_vao_day_cua_khoi_da_neu[Cho h\xecnh ch\xf3p S.ABCD. C\u1ea1nh b\xean SA vu\xf4ng g\xf3c v\u1edbi m\u1eb7t ph\u1eb3ng \u0111\xe1y.-mat1]
+FAILED tests/geometry/test_shape_constraint.py::test_day_gan_vao_day_cua_khoi_da_neu[Cho h\xecnh l\u0103ng tr\u1ee5 ABC.DEF. C\u1ea1nh b\xean AD vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y.-mat2]
+FAILED tests/geometry/test_shape_constraint.py::test_day_khong_gan_khi_de_neu_hai_khoi
+FAILED tests/geometry/test_shape_constraint.py::test_day_khong_ten_gan_vao_khoi_da_neu
+FAILED tests/geometry/test_shape_constraint.py::test_khoi_khong_ten_duy_nhat_duoc_gan
+FAILED tests/geometry/test_shape_constraint.py::test_khoi_khong_ten_khong_duy_nhat_khong_gan
+FAILED tests/geometry/test_shape_constraint.py::test_khoi_khong_ten_khong_gan_khi_co_khoi_co_ten
+FAILED tests/geometry/test_shape_constraint.py::test_dien_dat_ngoai_tu_vung_khong_phat[Cho h\xecnh ch\xf3p S.ABC, SA l\xe0 \u0111\u01b0\u1eddng cao c\u1ee7a h\xecnh ch\xf3p.-line_perp_plane]
+FAILED tests/geometry/test_shape_constraint.py::test_dien_dat_ngoai_tu_vung_khong_phat[Cho h\xecnh ch\xf3p S.ABCD c\xf3 AB v\xe0 AD t\u1ea1o v\u1edbi nhau m\u1ed9t g\xf3c vu\xf4ng.-line_perp_line]
+FAILED tests/geometry/test_shape_constraint.py::test_dien_dat_ngoai_tu_vung_khong_phat[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD c\xf3 b\u1ed1n g\xf3c vu\xf4ng.-base_rectangle]
+FAILED tests/geometry/test_shape_constraint.py::test_dien_dat_ngoai_tu_vung_khong_phat[Cho h\xecnh l\u0103ng tr\u1ee5 c\xf3 c\u1ea1nh b\xean vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y.-line_perp_plane]
+FAILED tests/geometry/test_shape_constraint.py::test_dien_dat_ngoai_tu_vung_khong_phat[Cho h\xecnh l\u0103ng tr\u1ee5 ABC.DEF c\xf3 c\xe1c c\u1ea1nh b\xean vu\xf4ng g\xf3c v\u1edbi m\u1eb7t \u0111\xe1y.-right_prism]
+FAILED tests/geometry/test_shape_constraint.py::test_de_rong_khong_phat - Mod...
+119 failed, 6568 passed, 1 skipped, 2 deselected, 16 xfailed, 1 warning in 208.80s (0:03:28)
+# NOTE (written after the run): 117 of the 119 failures are the W15 Task 2 red tests
+# (60 assumption_gate absent, 37 shape_constraint absent, 18 route field
+# assumption_certificate absent, 2 solid_faces twisted reading). The other 2 —
+# test_holdout_readiness_7b::test_bao_cao_da_sinh_va_KHONG_TROI and
+# test_second_family_preregistration_evidence_repair::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+# — assert a working tree dirty ONLY by the user's favicon deletion; they fail here because
+# the Task 2 test files were still uncommitted (re-run after the commit: see RED_RECHECK_AFTER_COMMIT.log).

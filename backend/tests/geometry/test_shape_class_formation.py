@@ -666,6 +666,32 @@ def test_solid_faces_la_la():
             assert not any(a.name.startswith("app") for a in n.names)
 
 
+#: Lăng trụ ABC.DEF với MỘT chỉ số gõ nhầm ở mặt bên cuối (`[2,1,3,5]` thay cho `[2,0,3,5]`):
+#: hai đỉnh đáy (A, B) cùng ghép vào D — tương ứng nắp KHÔNG song ánh.
+BANG_MAT_XOAN = [[0, 1, 2], [3, 4, 5], [0, 1, 4, 3], [1, 2, 5, 4], [2, 1, 3, 5]]
+
+
+def test_bang_mat_xoan_khong_doc_thanh_lang_tru_lap_dinh():
+    """W15: tương ứng nắp không song ánh ⇒ KHÔNG cách đọc lăng trụ nào có đỉnh lặp.
+
+    Trước W15 trả `("prism", [0,1,2], [3,3,5])` — một nắp lặp đỉnh D mà `display_names`
+    đọc thành tên khối. Kernel còn chặn bảng này ở `POLYHEDRON_BOUNDARY_OPEN`, nhưng thẩm
+    quyền tô-pô không được tự đưa ra một cách đọc vô nghĩa.
+    """
+    from app.simulation.semantic_program.solid_faces import phan_loai_bang_mat
+
+    doc = phan_loai_bang_mat(6, BANG_MAT_XOAN)
+    assert all(len(set(a)) == len(a) and len(set(b)) == len(b) for _l, a, b in doc), doc
+
+
+def test_bang_mat_xoan_ten_khoi_roi_ve_ten_chung():
+    from app.simulation.geometry.exact import Vec3
+    from app.simulation.semantic_program.display_names import _phan_loai_khoi
+
+    dinh = [Vec3.of(*p) for p in [(0, 0, 0), (3, 0, 0), (0, 4, 0), (0, 0, 5), (3, 0, 5), (0, 4, 5)]]
+    assert _phan_loai_khoi(dinh, BANG_MAT_XOAN) is None
+
+
 def test_phan_loai_khoi_khong_doi_sau_khi_tach():
     """GUARD: `display_names._phan_loai_khoi` trả đúng như trước khi tách (đặc tả chụp trước)."""
     from app.simulation.semantic_program.display_names import _phan_loai_khoi

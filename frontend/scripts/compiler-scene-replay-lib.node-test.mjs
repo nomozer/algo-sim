@@ -39,6 +39,8 @@ import {
   validateFormulaReferences,
   validateSuiteManifest,
 } from "./compiler-scene-replay-lib.mjs";
+// W15: export CHƯA có thì phải đỏ ĐÚNG ca của nó, không làm hỏng việc nạp cả tệp.
+import * as LIB from "./compiler-scene-replay-lib.mjs";
 
 /** Camera tổng hợp (Z lên, fov 50°) theo đúng khuôn `__geo3d_camera_snapshot`. */
 function cameraSnapshot(eye, target, W, H) {
@@ -806,6 +808,70 @@ test("manifest refuses a scenario whose role coverage would silently enforce not
     sua(m.scenarios[0]);
     assert.throws(() => validateSuiteManifest(m, repoRoot), /formation_coverage:triangular_pyramid/);
   }
+});
+
+// ── W15 · SECTION_FILL_DISTINGUISHABLE — bộ chấm THUẦN trên cặp mẫu (bật/tắt tô) ──
+//
+// Cặp mẫu tổng hợp theo đúng mô hình phối màu (sRGB, "over") của cảnh: nền trắng, mặt sau
+// khối xám 0.22, miếng mặt cắt tím 0.2, mặt trước khối xám 0.22; ba mức sáng 1 · 0.75 · 0.55.
+// Renderer CŨ: tô hổ phách 0.16 nằm DƯỚI mặt cắt và mặt trước (đồng phẳng, không renderOrder).
+// Renderer MỚI: tô vẽ SAU CÙNG. Ngưỡng do ASSUMPTION_CERTIFICATE_AMENDMENT đăng ký (Task 3).
+const MAU_TO = [0xf5, 0x9e, 0x0b], MAU_MP = [0x7c, 0x3a, 0xed], MAU_KHOI = [0x64, 0x74, 0x8b];
+const tren = (duoi, mau, a) => duoi.map((d, i) => d * (1 - a) + mau[i] * a);
+const sang = (mau, k) => mau.map((x) => x * k);
+const nenCanh = (k) => tren(tren(tren([255, 255, 255], sang(MAU_KHOI, k), 0.22), MAU_MP, 0.2), sang(MAU_KHOI, k), 0.22);
+const cap = (on, off) => ({ on: on.map(Math.round), off: off.map(Math.round) });
+const MUC_SANG = [1, 0.75, 0.55];
+const toMoi = (a = 0.45) => MUC_SANG.map((k) => cap(tren(nenCanh(k), sang(MAU_TO, k), a), nenCanh(k)));
+const toCu = () => MUC_SANG.map((k) => cap(
+  tren(tren(tren(tren([255, 255, 255], sang(MAU_KHOI, k), 0.22), sang(MAU_TO, k), 0.16), MAU_MP, 0.2),
+    sang(MAU_KHOI, k), 0.22), nenCanh(k)));
+const khongTo = () => MUC_SANG.map((k) => cap(nenCanh(k), nenCanh(k)));
+const cham = (trangThai, mau) => {
+  assert.equal(typeof LIB.assessSectionFill, "function", "assessSectionFill chưa có (W15 Task 8)");
+  return LIB.assessSectionFill(trangThai, mau);
+};
+
+test("W15 section fill: deltaE76 is CIE76 on sRGB D65", () => {
+  assert.equal(typeof LIB.deltaE76, "function", "deltaE76 chưa có (W15 Task 8)");
+  assert.equal(LIB.deltaE76([10, 20, 30], [10, 20, 30]), 0);
+  assert.ok(Math.abs(LIB.deltaE76([255, 255, 255], [0, 0, 0]) - 100) < 1e-6);
+});
+
+test("W15 section fill: a genuine fill passes on the closed step", () => {
+  const kq = cham("closed", toMoi());
+  assert.equal(kq.pass, true, JSON.stringify(kq));
+});
+
+test("W15 section fill: a missing fill fails on the closed step", () => {
+  assert.equal(cham("closed", khongTo()).pass, false);
+});
+
+test("W15 section fill: a fill present before closing fails", () => {
+  assert.equal(cham("pre_close", toMoi()).pass, false);
+  assert.equal(cham("pre_close", khongTo()).pass, true);
+});
+
+test("W15 section fill: a fill not removed after stepping back fails", () => {
+  assert.equal(cham("rewound", toMoi()).pass, false);
+  assert.equal(cham("rewound", khongTo()).pass, true);
+});
+
+test("W15 section fill: the old 0.16 coplanar composite fails the registered threshold", () => {
+  const kq = cham("closed", toCu());
+  assert.equal(kq.pass, false, JSON.stringify(kq));
+});
+
+test("W15 section fill: no samples never passes", () => {
+  for (const s of ["closed", "pre_close", "rewound"]) assert.equal(cham(s, []).pass, false, s);
+});
+
+test("W15 section fill: thresholds in code equal the pre-registered ones", () => {
+  const doc = readFileSync(resolve(import.meta.dirname, "..", "..", "docs", "architecture",
+    "ASSUMPTION_CERTIFICATE_AMENDMENT.md"), "utf-8");
+  const m = doc.match(/SECTION_FILL_THRESHOLDS = (\{[^}]*\})/);
+  assert.ok(m, "ngưỡng chưa được đăng ký trong ASSUMPTION_CERTIFICATE_AMENDMENT.md");
+  assert.deepEqual(LIB.NGUONG_TO_THIET_DIEN, JSON.parse(m[1]));
 });
 
 test("role tokens are machine data: on screen they are a raw-token leak", () => {
