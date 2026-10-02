@@ -5825,6 +5825,7 @@
    "group": "NOT_SERVED_TODAY",
    "label": "INVARIANT",
    "reason": "negative thesis case (out of capability); listed only",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -6014,6 +6015,7 @@
    "group": "NOT_SERVED_TODAY",
    "label": "INVARIANT",
    "reason": "negative thesis case (composite solid); listed only",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -6559,6 +6561,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "every vertex given by Oxyz coordinates; plane z = 3 given",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -7017,6 +7020,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "every vertex given by Oxyz coordinates",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -7420,6 +7424,7 @@
    "group": "NOT_SERVED_TODAY",
    "label": "INVARIANT",
    "reason": "refused today at ir_static; listed only",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -7650,6 +7655,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "cylinder fixed by O, K and a rim point A, all given",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -7880,6 +7886,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "cone fixed by S, O and a rim point A, all given",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -8096,6 +8103,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "cylinder O, K, A and the cutting plane all given",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -8326,6 +8334,7 @@
    "group": "AC2",
    "label": "INVARIANT",
    "reason": "cone S, O, A and the cutting plane all given",
+   "source_artifact_path": "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json",
    "contract": {
     "obligations": [
      {
@@ -11932,7 +11941,7 @@
    "program": {
     "spec_version": "1.0",
     "title": "Hình trụ có trục xiên",
-    "description": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích và diện tích xung quanh của hình trụ.",
+    "description": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′ và OA = √5. Tính thể tích và diện tích xung quanh của hình trụ.",
     "memory_declarations": [
      {
       "name": "O",

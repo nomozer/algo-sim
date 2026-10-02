@@ -30,6 +30,10 @@ from tests.geometry import w14_cases as W  # noqa: E402
 
 LABELS = HERE.with_name("LABELS.json")
 OUT = HERE.with_name("CORPUS.json")
+#: Hàng `gold:` PHÁT LẠI chương trình đã lưu của lượt đo khoá luận — khai nguồn theo
+#: đúng luật của guard chống nhiễm bẩn corpus nghiệm thu (`test_A5_…`): đề của chúng
+#: đến từ artifact có thật dưới `thesis-final-acceptance/`, không phải bài phát triển mới.
+NGUON_GOLD = "docs/evaluation/geometry/thesis-final-acceptance/CORPUS.json"
 
 
 def _tinh_tien_doi_truc(p):
@@ -94,6 +98,7 @@ def main() -> None:
         ct, raw = ca[cid]
         prog, schema_ok = _chuong_trinh(raw)
         rows.append({"id": cid, **nhan[cid],
+                     **({"source_artifact_path": NGUON_GOLD} if cid.startswith("gold:") else {}),
                      "contract": None if ct is None else ct.model_dump(mode="json"),
                      "program": prog, "program_schema_ok": schema_ok})
     OUT.write_text(json.dumps({

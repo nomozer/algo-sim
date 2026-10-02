@@ -2,7 +2,7 @@
   "decision": "STOP",
   "final_decision_if_stop": "ASSUMPTION_POLICY_INCOMPLETE",
   "rule": "SHIP iff (a) 0 PROVEN_SAFE on DEPENDS rows of the measured corpus, (b) every AC1/adversarial DEPENDS row refused and every certificate-limit row refused, (c) every contract-bearing AC2 row PROVEN_SAFE (no user-approved defect exists); otherwise STOP Track B (ASSUMPTION_POLICY_INCOMPLETE; Tracks A and C continue per Q4)",
-  "census_sha256": "b0fe12fc61d3ca6d24c59f8c9c8f76c27a82e87f8690bf31d7ebb1eb11a56b7c",
+  "census_sha256": "32d0d9cf084fbdd253819aef31e83e88c4b7d67e7c5528cb55e77c866d6ae66d",
   "violations_PROVEN_SAFE_on_DEPENDS": [],
   "ac1_adversarial_not_refused": [],
   "certificate_limit_not_refused": [],

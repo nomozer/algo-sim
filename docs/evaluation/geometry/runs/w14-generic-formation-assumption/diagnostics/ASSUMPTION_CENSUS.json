@@ -2,7 +2,7 @@
  "census": "W14_ASSUMPTION_CENSUS",
  "model_calls": 0,
  "corpus_labels_sha256": "dc2f8890a571e6e1f61deb27f71ebcaf7670ed99db28e95ffa6560b0343df17f",
- "corpus_sha256": "edaa9c1c2b1be6c852e64720646fa5841d009b3f1efaecc5f10d70b2654b9189",
+ "corpus_sha256": "d8bd71e9a876fb44e7d0b04167ff84d931e576cb0ad318beb6ae93405bfb76a9",
  "re_execution_budget": 120,
  "certificate_scope": "C0: the answer's dependency closure holds no class-A/C literal; C1: compiler-recognized configuration (danh_gia_eligibility SUPPORTED), every numeric witness a measure in PHEP_DO_C1 = {volume of the bound solid, area of a polygon on bound points, distance between bound points} reached through var assignments only, inputs covered by the bound points, every basis length entity-bound in the text, every relation source-confirmed, exact congruence with the compiler's reference layout. Everything else is UNDETERMINED by design.",
  "rows": [
