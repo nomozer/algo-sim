@@ -1,0 +1,321 @@
+{
+  "schema_version": "w14-formation-parity/1",
+  "family": "cube",
+  "captured_before": "W14 Task 4 (shape-class completion pass)",
+  "solid_statement": {
+    "kind": "construct_solid",
+    "target_var": "khoi_hop",
+    "vertices": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+    ],
+    "faces": [
+      [
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        4,
+        5,
+        6,
+        7
+      ],
+      [
+        0,
+        1,
+        5,
+        4
+      ],
+      [
+        1,
+        2,
+        6,
+        5
+      ],
+      [
+        2,
+        3,
+        7,
+        6
+      ],
+      [
+        3,
+        0,
+        4,
+        7
+      ]
+    ],
+    "label": "Hình lập phương ABCD.A′B′C′D′"
+  },
+  "formation_objects": [
+    [
+      "point3",
+      [],
+      "Điểm A"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm A′"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm B"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm B′"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm C"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm C′"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm D"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm D′"
+    ],
+    [
+      "polygon3",
+      [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "đáy dưới ABCD"
+    ],
+    [
+      "polygon3",
+      [
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime"
+      ],
+      "đáy trên A′B′C′D′"
+    ],
+    [
+      "segment3",
+      [
+        "A",
+        "A_prime"
+      ],
+      "Cạnh bên AA′"
+    ],
+    [
+      "segment3",
+      [
+        "B",
+        "B_prime"
+      ],
+      "Cạnh bên BB′"
+    ],
+    [
+      "segment3",
+      [
+        "C",
+        "C_prime"
+      ],
+      "Cạnh bên CC′"
+    ],
+    [
+      "segment3",
+      [
+        "D",
+        "D_prime"
+      ],
+      "Cạnh bên DD′"
+    ],
+    [
+      "solid",
+      [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+      ],
+      "Hình lập phương ABCD.A′B′C′D′"
+    ]
+  ],
+  "steps": [
+    {
+      "semantic_kind": "EXPLANATION",
+      "focus": []
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "AD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "AA′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "polygon3",
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "đáy dưới ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "polygon3",
+          [
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ],
+          "đáy trên A′B′C′D′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "segment3",
+          [
+            "A",
+            "A_prime"
+          ],
+          "Cạnh bên AA′"
+        ],
+        [
+          "segment3",
+          [
+            "B",
+            "B_prime"
+          ],
+          "Cạnh bên BB′"
+        ],
+        [
+          "segment3",
+          [
+            "C",
+            "C_prime"
+          ],
+          "Cạnh bên CC′"
+        ],
+        [
+          "segment3",
+          [
+            "D",
+            "D_prime"
+          ],
+          "Cạnh bên DD′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "solid",
+          [
+            "A",
+            "A_prime",
+            "B",
+            "B_prime",
+            "C",
+            "C_prime",
+            "D",
+            "D_prime"
+          ],
+          "Hình lập phương ABCD.A′B′C′D′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Diện tích ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Khoảng cách giữa A và A′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Thể tích ABCD.A′B′C′D′"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "FINAL_RESULT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Thể tích ABCD.A′B′C′D′"
+        ]
+      ]
+    }
+  ],
+  "witnesses": {
+    "V": "64"
+  }
+}

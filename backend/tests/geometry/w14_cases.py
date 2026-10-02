@@ -65,6 +65,33 @@ def chop_chu_nhat():
     return _rect_pyramid_contract()
 
 
+CHOP_VUONG_TEXT = (
+    "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3. "
+    "Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD."
+)
+
+
+def chop_vuong():
+    """Biến thể đáy VUÔNG của họ chóp chữ nhật — có đề thật (dựng của test compiler chỉ
+    mang đề giả không có số, nên grounding từ chối nó)."""
+    payload = {
+        "input_facts": [
+            {"id": "fact_len_AB", "kind": "float", "label": "AB", "value": ["3"]},
+            {"id": "fact_len_SA", "kind": "float", "label": "SA", "value": ["6"]},
+        ],
+        "geometric_relations": [
+            {"kind": "perpendicular_lines", "line": ["A", "B"], "other_line": ["A", "D"],
+             "source_fact_id": "fact_perp_base", "model_assumption": False},
+            {"kind": "perpendicular_line_plane", "line": ["S", "A"], "plane": ["A", "B", "C"],
+             "source_fact_id": "fact_perp_lateral", "model_assumption": False},
+        ],
+        "obligations": [{"kind": "volume", "container": "khoi_chop", "witness": "v"}],
+        "solid_topology": {"solid_kind": "pyramid", "apex": "S",
+                           "base_cycle": ["A", "B", "C", "D"], "base_shape": "square"},
+    }
+    return CHOP_VUONG_TEXT, hop_dong(CHOP_VUONG_TEXT, payload)
+
+
 def _tu_payload(ten: str):
     from tests.geometry import test_cuboid_cube_production_route as M
 

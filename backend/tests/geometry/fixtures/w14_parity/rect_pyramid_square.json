@@ -1,0 +1,237 @@
+{
+  "schema_version": "w14-formation-parity/1",
+  "family": "rect_pyramid_square",
+  "captured_before": "W14 Task 4 (shape-class completion pass)",
+  "solid_statement": {
+    "kind": "construct_solid",
+    "target_var": "khoi_chop",
+    "vertices": [
+      "S",
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "faces": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        2,
+        3
+      ],
+      [
+        0,
+        3,
+        4
+      ],
+      [
+        0,
+        4,
+        1
+      ]
+    ],
+    "label": "S.ABCD"
+  },
+  "formation_objects": [
+    [
+      "point3",
+      [],
+      "Điểm A"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm B"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm C"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm D"
+    ],
+    [
+      "point3",
+      [],
+      "Điểm S"
+    ],
+    [
+      "polygon3",
+      [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "Đáy ABCD"
+    ],
+    [
+      "segment3",
+      [
+        "A",
+        "S"
+      ],
+      "Chiều cao SA"
+    ],
+    [
+      "segment3",
+      [
+        "B",
+        "S"
+      ],
+      "Cạnh bên SB"
+    ],
+    [
+      "segment3",
+      [
+        "C",
+        "S"
+      ],
+      "Cạnh bên SC"
+    ],
+    [
+      "segment3",
+      [
+        "D",
+        "S"
+      ],
+      "Cạnh bên SD"
+    ],
+    [
+      "solid",
+      [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "Hình chóp S.ABCD"
+    ]
+  ],
+  "steps": [
+    {
+      "semantic_kind": "EXPLANATION",
+      "focus": []
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "polygon3",
+          [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "Đáy ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "segment3",
+          [
+            "A",
+            "S"
+          ],
+          "Chiều cao SA"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "segment3",
+          [
+            "B",
+            "S"
+          ],
+          "Cạnh bên SB"
+        ],
+        [
+          "segment3",
+          [
+            "C",
+            "S"
+          ],
+          "Cạnh bên SC"
+        ],
+        [
+          "segment3",
+          [
+            "D",
+            "S"
+          ],
+          "Cạnh bên SD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "focus": [
+        [
+          "solid",
+          [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "Hình chóp S.ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Diện tích ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "MEASUREMENT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Thể tích S.ABCD"
+        ]
+      ]
+    },
+    {
+      "semantic_kind": "FINAL_RESULT",
+      "focus": [
+        [
+          "quantity",
+          [],
+          "Thể tích S.ABCD"
+        ]
+      ]
+    }
+  ],
+  "witnesses": {
+    "v": "18"
+  }
+}
