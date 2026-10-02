@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION",
+  "corrects": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "40263983f97811ada21238a0ff3da634eaa36ef88deb6d07f4c0b3091fb9b5d3",
+  "current_candidate_source_commit": "a2af56e4ec0d2165d6be4a3d7cbef36d7f05eb87",
+  "current_candidate_frozen_at": "a2af56e4ec0d2165d6be4a3d7cbef36d7f05eb87",
+  "current_candidate_note": "Frozen ONCE in this wave, after the last product change, in a clean detached worktree outside the repository (cay_lam_viec_sach = true, 105 files, CACHE_VERSION 106). Product commits: 44f2dd32 (formation pass; frontend/src stage label), d537cf74 (trust policy), 2f2c97b2 (length connector vocabulary), 69d3c985 (frontend/src sample text, outside the measured paths), 733435ac (CACHE_VERSION), a2af56e4 (cleanup). The old candidate was verified before any edit (exit 0 at ce9c672d). W13 changed no product path, so the previous candidate is the w12 one.",
+  "previous_candidate_hash": "548f5b3b9ff891587fccb61cc59981362543a8f60f7f9917b7c241098bbb096f",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "w14 answers the w12 human review (NEEDS_CHANGES: H1/H2 the triangular pyramid and prism showed only points, base, solid; H3 no family hardcode; H4 the assumption channel is open) under the w13 preregistration. backend/app changes: (A) one shape-class formation completion pass (semantic_program/formation.py; the combinatorial face-table classifier moved to the leaf solid_faces.py) runs in verify_and_compile and pipeline._dung_scene3d for compiler and LLM programs alike (S4): missing base/top faces, the height (only from a typed relation or a project_onto foot) and the lateral edges become real steps before the solid; roles are assigned at the producer (simulation_state) and only carried by scene3d; a malformed face table is refused at stage formation (SOLID_TOPOLOGY_MALFORMED); the compiler no longer hand-writes height, lateral or top statements. (Trust policy) a contract without problem_text is refused SOURCE_TEXT_MISSING and never sent to repair, unless the caller passes NguonDe.FIXTURE_TIN_CAY explicitly; no production path does. (C) one length-connector vocabulary (=, bằng, dài, có độ dài) shared by the length reader and the GIVEN-evidence labeler, so 'AB dài 5 cm' no longer lends 5 to another segment. Track B (assumption gate) did not ship: ASSUMPTION_POLICY_INCOMPLETE (diagnostics/ASSUMPTION_MECHANISM_DECISION.json). CACHE_VERSION 105 -> 106 because cached ok envelopes could replay a now-refused input (served -> rejected) and the old formation timeline; the provider-facing fingerprint b1714b566e25c912 is unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 40263983 (product commit a2af56e4) is a new product identity and must not be used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 106
+}
