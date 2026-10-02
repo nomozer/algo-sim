@@ -17,7 +17,8 @@ def phan_loai_bang_mat(so_dinh: int, mat: list[list[int]]) -> list[tuple[str, li
     `("pyramid", [đỉnh], đáy)` — một đỉnh nằm ngoài đúng một mặt, mọi mặt khác là
     tam giác; mỗi mặt thoả là một cách (tứ diện có bốn).
     `("prism", đáy, trên)` — hai mặt rời nhau cùng số đỉnh, mọi mặt khác là tứ giác,
-    `trên[k]` tương ứng `đáy[k]` qua mặt bên. Mỗi cặp nắp cho HAI hướng; hướng đứng
+    `trên[k]` tương ứng `đáy[k]` qua mặt bên, và tương ứng ấy là SONG ÁNH (không song
+    ánh ⇒ cặp nắp không cho cách đọc nào). Mỗi cặp nắp cho HAI hướng; hướng đứng
     trước là hướng có đáy chứa đỉnh khai đầu tiên (`ABC.DEF`, không `DEF.ABC`).
 
     Chóp đứng trước lăng trụ, nên phần tử đầu là đúng kết quả cũ của
@@ -49,10 +50,12 @@ def phan_loai_bang_mat(so_dinh: int, mat: list[list[int]]) -> list[tuple[str, li
             if len(doi) != len(f):
                 continue
             nguoc = {w: u for u, w in doi.items()}
-            xuoi = ("prism", list(f), [doi[v] for v in f])
-            if len(nguoc) != len(g):  # tương ứng không song ánh: chỉ một hướng đọc được
-                ra.append(xuoi)
+            if len(nguoc) != len(g):
+                # Tương ứng KHÔNG song ánh ⇒ nắp đọc ra lặp đỉnh (`[3, 3, 5]`): không phải
+                # lăng trụ theo hướng nào (W15). Trước đây giữ một hướng — một cách đọc vô
+                # nghĩa mà `display_names` đem gọi tên.
                 continue
+            xuoi = ("prism", list(f), [doi[v] for v in f])
             lui = ("prism", list(g), [nguoc[v] for v in g])
             ra += [xuoi, lui] if min(f) < min(g) else [lui, xuoi]
     return ra
