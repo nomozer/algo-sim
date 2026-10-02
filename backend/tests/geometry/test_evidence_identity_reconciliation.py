@@ -8,11 +8,13 @@ Kiểm tra:
 4. Kiểm tra revision git qua get_git_revision_bytes.
 5. Hash policy không khai báo -> ValueError (fail-closed).
 6. Danh tính SECOND_FAMILY_MANIFEST.json và SECOND_FAMILY_GROUND_TRUTH.json bất biến từ abb377b8 tới HEAD.
-7. Danh tính raw response D:/tmp/live_retry_evidence khớp chính xác 2322 bytes và hash đã đăng ký.
+7. Danh tính raw response ngoài kho khớp chính xác 2322 bytes và hash đã đăng ký
+   (opt-in `-m external_evidence`, thư mục lấy từ ALGOSIM_LIVE_RETRY_EVIDENCE_DIR).
 """
 from __future__ import annotations
 
 import json
+import os
 import pytest
 from pathlib import Path
 
@@ -94,9 +96,19 @@ def test_preregistration_files_no_drift():
     assert compute_hash(gt_bytes, "LF_NORMALIZED") == "faf42e894fb9f69c8b61aba06f84767ec9806d1231633d2975516ec5367e18ce"
 
 
+@pytest.mark.external_evidence
 def test_raw_response_identity_reproduced():
-    """Raw response ngoại vi tại D:/tmp/live_retry_evidence phải khớp chính xác 2322 bytes và hash live report."""
-    raw_p = Path("D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json")
+    """Raw response NGOÀI kho (raw model output không được commit — AGENTS §4) phải
+    khớp chính xác 2322 bytes và hash live report.
+
+    Opt-in (NA-05, W14): suite mặc định không chạy test này. Thư mục chứa raw
+    response lấy từ `ALGOSIM_LIVE_RETRY_EVIDENCE_DIR`, không ghi cứng đường dẫn máy.
+    """
+    goc = os.environ.get("ALGOSIM_LIVE_RETRY_EVIDENCE_DIR")
+    if not goc:
+        pytest.fail("NOT_PORTABLE_EXTERNAL_EVIDENCE: đặt ALGOSIM_LIVE_RETRY_EVIDENCE_DIR "
+                    "tới thư mục chứa PRISM_SCHEMA_LIVE_P01_raw_response.json")
+    raw_p = Path(goc) / "PRISM_SCHEMA_LIVE_P01_raw_response.json"
     assert raw_p.exists(), f"Không tìm thấy file tại {raw_p}"
 
     raw_bytes = raw_p.read_bytes()

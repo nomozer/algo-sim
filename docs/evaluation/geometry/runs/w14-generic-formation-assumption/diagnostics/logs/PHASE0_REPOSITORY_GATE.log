@@ -1,0 +1,52 @@
+# W14 Phase 0 repository gate — 2026-10-01T15:59:48Z
+## resolved environment
+REPO=D:/Documents/projects/algo-sim
+PY=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe
+Python 3.12.10
+v24.13.0
+/usr/bin/timeout
+timeout (GNU coreutils) 8.32
+## fetch
+fetch_exit=0
+## identity
+branch=fix/cuboid-visual-semantic-closure
+HEAD=ce9c672d2328353e3e2b844025040e4ed84163d1
+status:
+ D frontend/public/favicon.svg
+?? docs/evaluation/geometry/runs/w14-generic-formation-assumption/
+origin/main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+ls-remote main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce	refs/heads/main
+merge-base=a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+ORIGIN_MAIN_IS_ANCESTOR
+ahead/behind (HEAD...origin/main): 115	0
+W13_COMMITS_OK
+ce9c672d docs(eval): preregister generic geometry foundation and record W12 review
+7202befe docs(architecture): audit non-absolute assumptions and remaining capabilities
+bf5a7907 docs(state): record w12 timeline and grounding closure, awaiting re-review
+## constants
+712:CACHE_VERSION = "105"
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 103 file, 548f5b3b9ff89158…).
+cand_exit=0
+## cache verify
+Khoá khớp · CACHE_VERSION 105 · môi trường b1714b566e25c912…
+cache_exit=0
+## schema mirrors
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json
+## W13 leftover inventory (step 2)
+registered_worktrees_matching=0
+CHECKOUT_COMMIT_REACHABLE
+{
+  "schema_version": "leftover-inventory/1",
+  "path": "D:/tmp/w13-verify-c1",
+  "compared_with_commit": "7202befe021a2c27cb4d3068e0465b8053ca16f5",
+  "method": "git blob sha1 of each file vs `git ls-tree -r` at the commit; raw bytes, then CRLF->LF (repo core.autocrlf=true); no mtime, no HEAD-only reasoning",
+  "counts": {
+    "MATCH_RAW": 4007,
+    "MATCH_LF": 2571,
+    "DIFF": 0,
+    "UNTRACKED": 0
+  },
+  "files_in_tree_missing_on_disk": 625,

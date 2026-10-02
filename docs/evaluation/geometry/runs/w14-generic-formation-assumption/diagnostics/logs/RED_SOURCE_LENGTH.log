@@ -1,0 +1,47 @@
+FFF...F.......................                                           [100%]
+================================== FAILURES ===================================
+E   AssertionError: assert None == 'SOURCE_EVIDENCE_CONFLICT'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_length_reader.py:42: AssertionError: assert None == 'SOURCE_EVIDENCE_CONFLICT'
+E   AssertionError: assert {} == {frozenset({'...raction(5, 1)}
+
+      Right contains 1 more item:
+      {frozenset({'A', 'B'}): Fraction(5, 1)}
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_length_reader.py:47: AssertionError: assert {} == {frozenset({'...raction(5, 1)}
+E   AssertionError: assert None == 'SOURCE_EVIDENCE_CONFLICT'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_length_reader.py:54: AssertionError: assert None == 'SOURCE_EVIDENCE_CONFLICT'
+E   AttributeError: module 'app.simulation.semantic_program.grounding_gate' has no attribute 'bang_chung_doan'. Did you mean: '_bang_chung_do_dai'?
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_length_reader.py:73: AttributeError: module 'app.simulation.semantic_program.grounding_gate' has no attribute 'bang_chung_doan'. Did you mean: '_bang_chung_do_dai'?
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/geometry/test_source_length_reader.py::test_nhan_sai_doan_that_bai_dong
+PASSED tests/geometry/test_source_length_reader.py::test_so_khong_dung_ngay_sau_tu_noi_thi_khong_doc[dai_hon]
+PASSED tests/geometry/test_source_length_reader.py::test_so_khong_dung_ngay_sau_tu_noi_thi_khong_doc[dai_gap]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[eq_plain]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[eq_bang]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[do_dai_doan_bang]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[canh_co_do_dai]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[doan_co_do_dai]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[prime_ascii]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[prime_unicode]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[decimal_dot]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[decimal_comma]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[fraction]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[radical]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[radical_fraction]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[unit_space]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[unit_glued]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[chain_equal]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[chain_equal_first]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[radical_wrong_segment]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[regular_edge]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[regular_base]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[cube_edge_other_segment]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[box_derived]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[wrong_segment_same_number]
+PASSED tests/geometry/test_source_length_reader.py::test_cach_viet_cu_khong_doi[value_absent]
+FAILED tests/geometry/test_source_length_reader.py::test_dai_cm_sai_doan_bi_tu_choi
+FAILED tests/geometry/test_source_length_reader.py::test_dai_cm_dung_doan_duoc_nhan
+FAILED tests/geometry/test_source_length_reader.py::test_co_do_dai_sai_doan_bi_tu_choi
+FAILED tests/geometry/test_source_length_reader.py::test_bang_chung_doan_gan_voi_cap_dau_mut
+4 failed, 26 passed in 0.77s

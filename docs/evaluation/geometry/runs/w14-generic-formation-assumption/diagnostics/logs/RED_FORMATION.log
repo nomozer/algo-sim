@@ -1,0 +1,250 @@
+FFFFFFFFFFFF......FF..........FFFFFFFFFFFFFFFFFFFF...FFFFFFFF.F          [100%]
+================================== FAILURES ===================================
+E   AssertionError: W12-H1: chóp tam giác không có vật đường cao SA
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:63: AssertionError: W12-H1: chóp tam giác không có vật đường cao SA
+E   AssertionError: W12-H1: thiếu cạnh bên ['B', 'S']
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:73: AssertionError: W12-H1: thiếu cạnh bên ['B', 'S']
+E   AssertionError: W12-H2: lăng trụ tam giác không có mặt đáy trên DEF
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:81: AssertionError: W12-H2: lăng trụ tam giác không có mặt đáy trên DEF
+E   AssertionError: W12-H2: thiếu cạnh bên ['A', 'D']
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:91: AssertionError: W12-H2: thiếu cạnh bên ['A', 'D']
+E   AssertionError: ('chop_tam_giac', ['A', 'S'])
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:104: AssertionError: ('chop_tam_giac', ['A', 'S'])
+E   AssertionError: ('lang_tru_tam_giac', ['A', 'D'])
+    assert []
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:104: AssertionError: ('lang_tru_tam_giac', ['A', 'D'])
+E   AssertionError: chop_chu_nhat
+    assert None == 'PYRAMID_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE382EE800>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE382EE800> = {'id': 'khoi_chop', 'label': 'Hình chóp S.ABCD', 'notation': 'S.ABCD', 'reference': 'S.ABCD', ...}.get
+     +      where {'id': 'khoi_chop', 'label': 'Hình chóp S.ABCD', 'notation': 'S.ABCD', 'reference': 'S.ABCD', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AD_length', 'label'..._length', 'dien_tich_day_ABCD'], ...}, ...]}, 'free_objects': ['A', 'AB_length', 'AD_length', 'B', 'C', 'D', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: chop_chu_nhat
+E   AssertionError: chop_tam_giac
+    assert None == 'PYRAMID_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE382DCC80>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE382DCC80> = {'id': 'khoi_chop', 'label': 'Hình chóp S.ABC', 'notation': 'S.ABC', 'reference': 'S.ABC', ...}.get
+     +      where {'id': 'khoi_chop', 'label': 'Hình chóp S.ABC', 'notation': 'S.ABC', 'reference': 'S.ABC', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AC_length', 'label'...tich_day_ABC', 'the_tich_khoi_chop'], ...}]}, 'free_objects': ['A', 'AB_length', 'AC_length', 'B', 'C', 'S', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: chop_tam_giac
+E   AssertionError: hop_chu_nhat
+    assert None == 'PRISM_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE38304BC0>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE38304BC0> = {'id': 'khoi_hop', 'label': 'Hình hộp chữ nhật ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...}.get
+     +      where {'id': 'khoi_hop', 'label': 'Hình hộp chữ nhật ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AD_length', 'label'..._day_ABCD'], ...}, ...]}, 'free_objects': ['A', 'AA_prime_length', 'AB_length', 'AD_length', 'A_prime', 'B', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: hop_chu_nhat
+E   AssertionError: lang_tru_day_vuong
+    assert None == 'PRISM_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE382DF740>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE382DF740> = {'id': 'khoi_lang_tru', 'label': 'Lăng trụ đứng đáy vuông ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...}.get
+     +      where {'id': 'khoi_lang_tru', 'label': 'Lăng trụ đứng đáy vuông ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AD_length', 'label'... 'AD_length'], ...}, ...]}, 'free_objects': ['A', 'AA_prime_length', 'AB_length', 'A_prime', 'B', 'B_prime', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: lang_tru_day_vuong
+E   AssertionError: lang_tru_tam_giac
+    assert None == 'PRISM_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE382A2C80>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE382A2C80> = {'id': 'solid_ABCDEF', 'label': 'Lăng trụ đứng ABC.DEF', 'notation': 'ABC.DEF', 'reference': 'ABC.DEF', ...}.get
+     +      where {'id': 'solid_ABCDEF', 'label': 'Lăng trụ đứng ABC.DEF', 'notation': 'ABC.DEF', 'reference': 'ABC.DEF', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AC_length', 'label'...C', 'the_tich_solid_ABCDEF'], ...}]}, 'free_objects': ['A', 'AB_length', 'AC_length', 'AD_length', 'B', 'C', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: lang_tru_tam_giac
+E   AssertionError: lap_phuong
+    assert None == 'PRISM_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE382BF280>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE382BF280> = {'id': 'khoi_hop', 'label': 'Hình lập phương ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...}.get
+     +      where {'id': 'khoi_hop', 'label': 'Hình lập phương ABCD.A′B′C′D′', 'notation': 'ABCD.A′B′C′D′', 'reference': 'ABCD.A′B′C′D′', ...} = <function khoi at 0x000001BE367471A0>({'objects': [{'id': 'AB_length', 'label': 'AB', 'notation': 'AB', 'reference': 'AB', ...}, {'id': 'AD_length', 'label'..., 'AB_length', 'AD_length'], ...}, ...]}, 'free_objects': ['A', 'AB_length', 'A_prime', 'B', 'B_prime', 'C', ...], ...})
+     +        where <function khoi at 0x000001BE367471A0> = W.khoi
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:116: AssertionError: lap_phuong
+E   AssertionError: ('chop_chu_nhat', 1, 'Đặt chân đường cao của hình chóp làm gốc toạ độ.', ('A',))
+    assert False
+     +  where False = any(<generator object test_loi_ke_compiler_khop_vat.<locals>.<genexpr> at 0x000001BE382B8C80>)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:149: AssertionError: ('chop_chu_nhat', 1, 'Đặt chân đường cao của hình chóp làm gốc toạ độ.', ('A',))
+E   AssertionError: ('chop_tam_giac', 7, 'Dựng đường cao vuông góc với mặt phẳng đáy rồi đặt đỉnh chóp theo độ dài đề cho.', ('S',))
+    assert False
+     +  where False = any(<generator object test_loi_ke_compiler_khop_vat.<locals>.<genexpr> at 0x000001BE38237CA0>)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:149: AssertionError: ('chop_tam_giac', 7, 'Dựng đường cao vuông góc với mặt phẳng đáy rồi đặt đỉnh chóp theo độ dài đề cho.', ('S',))
+E   AssertionError: ('chop_tam_giac', ['A', 'S'], [])
+    assert 0 == 1
+     +  where 0 = len([])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:176: AssertionError: ('chop_tam_giac', ['A', 'S'], [])
+E   AssertionError: ('lang_tru_tam_giac', ['A', 'D'], [])
+    assert 0 == 1
+     +  where 0 = len([])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:176: AssertionError: ('lang_tru_tam_giac', ['A', 'D'], [])
+E   AssertionError: ('chop_chu_nhat', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE382EF880>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE382EF880> = {'step_index': 0, 'visible_ids': ['A', 'AB_length', 'AD_length', 'B', 'C', 'D', ...], 'focus_ids': [], 'readout_ids': ['AB_length', 'AD_length', 'SA_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('chop_chu_nhat', 0)
+E   AssertionError: ('chop_tam_giac', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE38266F80>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE38266F80> = {'step_index': 0, 'visible_ids': ['A', 'AB_length', 'AC_length', 'B', 'C', 'S', ...], 'focus_ids': [], 'readout_ids': ['AB_length', 'AC_length', 'SA_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('chop_tam_giac', 0)
+E   AssertionError: ('hop_chu_nhat', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE382BC880>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE382BC880> = {'step_index': 0, 'visible_ids': ['A', 'AA_prime_length', 'AB_length', 'AD_length', 'A_prime', 'B', ...], 'focus_ids': [], 'readout_ids': ['AA_prime_length', 'AB_length', 'AD_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('hop_chu_nhat', 0)
+E   AssertionError: ('lang_tru_day_vuong', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE3831D180>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE3831D180> = {'step_index': 0, 'visible_ids': ['A', 'AA_prime_length', 'AB_length', 'A_prime', 'B', 'B_prime', ...], 'focus_ids': [], 'readout_ids': ['AA_prime_length', 'AB_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('lang_tru_day_vuong', 0)
+E   AssertionError: ('lang_tru_tam_giac', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE382D0080>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE382D0080> = {'step_index': 0, 'visible_ids': ['A', 'AB_length', 'AC_length', 'AD_length', 'B', 'C', ...], 'focus_ids': [], 'readout_ids': ['AB_length', 'AC_length', 'AD_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('lang_tru_tam_giac', 0)
+E   AssertionError: ('lap_phuong', 0)
+    assert False
+     +  where False = isinstance(None, list)
+     +    where None = <built-in method get of dict object at 0x000001BE382B3F80>('formation_roles')
+     +      where <built-in method get of dict object at 0x000001BE382B3F80> = {'step_index': 0, 'visible_ids': ['A', 'AB_length', 'A_prime', 'B', 'B_prime', 'C', ...], 'focus_ids': [], 'readout_ids': ['AB_length'], ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:185: AssertionError: ('lap_phuong', 0)
+E   KeyError: 'formation_roles'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:229: KeyError: 'formation_roles'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   AssertionError: []
+    assert 0 == 1
+     +  where 0 = len([])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:290: AssertionError: []
+E   AssertionError: p1_chop_thiet_dien_khoang_cach
+    assert None == 'PYRAMID_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE3831D800>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE3831D800> = {'id': 'S.ABCD', 'label': 'Khối chóp S.ABCD', 'notation': 'S.ABCD', 'reference': 'S.ABCD', ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:316: AssertionError: p1_chop_thiet_dien_khoang_cach
+E   AssertionError: p2_chop_day_ngu_giac_lom
+    assert None == 'PYRAMID_LIKE'
+     +  where None = <built-in method get of dict object at 0x000001BE36096880>('shape_class')
+     +    where <built-in method get of dict object at 0x000001BE36096880> = {'id': 'pyramid_s_mnpqr', 'label': 'Khối chóp S.MNPQR', 'notation': 'S.MNPQR', 'reference': 'S.MNPQR', ...}.get
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:316: AssertionError: p2_chop_day_ngu_giac_lom
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   AssertionError: execution
+    assert 'execution' == 'formation'
+
+      - formation
+      + execution
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:496: AssertionError: execution
+E   AssertionError: execution
+    assert 'execution' == 'formation'
+
+      - formation
+      + execution
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:496: AssertionError: execution
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+E   AssertionError: WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/formation.py')
+    assert False
+     +  where False = exists()
+     +    where exists = WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/formation.py').exists
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:640: AssertionError: WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/formation.py')
+E   AssertionError: WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/solid_faces.py')
+    assert False
+     +  where False = exists()
+     +    where exists = WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/solid_faces.py').exists
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:661: AssertionError: WindowsPath('D:/Documents/projects/algo-sim/backend/app/simulation/semantic_program/solid_faces.py')
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError: No module named 'app.simulation.semantic_program.formation'
+============================== warnings summary ===============================
+tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_qua_api_khong_500
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[chop_chu_nhat]
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[chop_tam_giac]
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[hop_chu_nhat]
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[lang_tru_day_vuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[lang_tru_tam_giac]
+PASSED tests/geometry/test_shape_class_formation.py::test_moi_buoc_hinh_hoc_doi_hinh[lap_phuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[hop_chu_nhat]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[lang_tru_day_vuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[lang_tru_tam_giac]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[lap_phuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[chop_chu_nhat]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[chop_tam_giac]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[hop_chu_nhat]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[lang_tru_day_vuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[lang_tru_tam_giac]
+PASSED tests/geometry/test_shape_class_formation.py::test_loi_ke_canh_chi_nhac_vat_dang_hien[lap_phuong]
+PASSED tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_bi_luoc_do_chan[ten_la]
+PASSED tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_bi_luoc_do_chan[dinh_lap]
+PASSED tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_qua_api_khong_500
+PASSED tests/geometry/test_shape_class_formation.py::test_phan_loai_khoi_khong_doi_sau_khi_tach
+FAILED tests/geometry/test_shape_class_formation.py::test_chop_tam_giac_co_doan_duong_cao_SA
+FAILED tests/geometry/test_shape_class_formation.py::test_chop_tam_giac_co_buoc_canh_ben_truoc_khi_khep
+FAILED tests/geometry/test_shape_class_formation.py::test_lang_tru_tam_giac_co_mat_day_tren
+FAILED tests/geometry/test_shape_class_formation.py::test_lang_tru_tam_giac_co_buoc_canh_ben
+FAILED tests/geometry/test_shape_class_formation.py::test_khep_khoi_sau_day_va_bien_ben[chop_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_khep_khoi_sau_day_va_bien_ben[lang_tru_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[chop_chu_nhat]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[chop_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[hop_chu_nhat]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[lang_tru_day_vuong]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[lang_tru_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_thu_tu_vai_tro_theo_lop_hinh[lap_phuong]
+FAILED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[chop_chu_nhat]
+FAILED tests/geometry/test_shape_class_formation.py::test_loi_ke_compiler_khop_vat[chop_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_canh_ben_tro_ve_canh_chuan_sau_khi_khep[chop_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_canh_ben_tro_ve_canh_chuan_sau_khi_khep[lang_tru_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[chop_chu_nhat]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[chop_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[hop_chu_nhat]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[lang_tru_day_vuong]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[lang_tru_tam_giac]
+FAILED tests/geometry/test_shape_class_formation.py::test_buoc_hinh_hoc_co_formation_roles[lap_phuong]
+FAILED tests/geometry/test_shape_class_formation.py::test_vai_tro_bat_bien_khi_doi_ten_may
+FAILED tests/geometry/test_shape_class_formation.py::test_chan_duong_cao_khong_phai_dinh_day[project_onto]
+FAILED tests/geometry/test_shape_class_formation.py::test_chan_duong_cao_khong_phai_dinh_day[quan_he_hop_dong]
+FAILED tests/geometry/test_shape_class_formation.py::test_mot_vat_hai_vai_mot_chu_ve
+FAILED tests/geometry/test_shape_class_formation.py::test_s4_chuong_trinh_gold_llm_co_khoi[p1_chop_thiet_dien_khoang_cach]
+FAILED tests/geometry/test_shape_class_formation.py::test_s4_chuong_trinh_gold_llm_co_khoi[p2_chop_day_ngu_giac_lom]
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_khong_tao_trung_vat
+FAILED tests/geometry/test_shape_class_formation.py::test_vat_dung_muon_khong_tinh_truoc_khi_khep
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_bat_bien_thu_tu_dinh_va_mat
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_doi_ten_bien
+FAILED tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_tu_choi_co_cau_truc[chi_so_ngoai_mien]
+FAILED tests/geometry/test_shape_class_formation.py::test_bang_mat_hong_tu_choi_co_cau_truc[mat_duoi_3_dinh]
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_giu_nguyen_ban_goc_va_dap_so
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_bat_bien_lap
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_khong_dung_khoi_khong_phan_loai
+FAILED tests/geometry/test_shape_class_formation.py::test_hoan_thien_giu_31_va_ngan_sach
+FAILED tests/geometry/test_shape_class_formation.py::test_chan_cao_chua_dung_thi_khong_chen[dung_sau_khoi]
+FAILED tests/geometry/test_shape_class_formation.py::test_chan_cao_chua_dung_thi_khong_chen[khong_khai]
+FAILED tests/geometry/test_shape_class_formation.py::test_planner_khong_re_nhanh_theo_ho
+FAILED tests/geometry/test_shape_class_formation.py::test_solid_faces_la_la
+FAILED tests/geometry/test_shape_class_formation.py::test_vai_tro_dong_bo_tu_vung
+43 failed, 20 passed, 1 warning in 1.70s

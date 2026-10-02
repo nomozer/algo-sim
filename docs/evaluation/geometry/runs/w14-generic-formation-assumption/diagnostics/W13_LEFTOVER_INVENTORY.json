@@ -1,0 +1,19 @@
+{
+  "schema_version": "leftover-inventory/1",
+  "path": "D:/tmp/w13-verify-c1",
+  "compared_with_commit": "7202befe021a2c27cb4d3068e0465b8053ca16f5",
+  "method": "git blob sha1 of each file vs `git ls-tree -r` at the commit; raw bytes, then CRLF->LF (repo core.autocrlf=true); no mtime, no HEAD-only reasoning",
+  "counts": {
+    "MATCH_RAW": 4007,
+    "MATCH_LF": 2571,
+    "DIFF": 0,
+    "UNTRACKED": 0
+  },
+  "files_in_tree_missing_on_disk": 625,
+  "diff_paths": [],
+  "untracked_regenerable_paths_count": 0,
+  "untracked_regenerable_sample": [],
+  "untracked_other_paths": [],
+  "verdict": "NO_UNIQUE_CONTENT_BY_HASH",
+  "action": "LEFT_UNTOUCHED (W14 does not delete it; any deletion is the user's call)"
+}

@@ -1,0 +1,17 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_____________ test_bo_test_mac_dinh_khong_doc_duong_dan_ngoai_kho _____________
+
+    def test_bo_test_mac_dinh_khong_doc_duong_dan_ngoai_kho():
+        vi_pham = [v for p in sorted(TESTS.rglob("test_*.py")) for v in _vi_pham(p)]
+>       assert vi_pham == [], vi_pham
+E       AssertionError: ['geometry/test_evidence_identity_reconciliation.py:99: D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json']
+E       assert ['geometry/te...esponse.json'] == []
+E
+E         Left contains one more item: 'geometry/test_evidence_identity_reconciliation.py:99: D:/tmp/live_retry_evidence/PRISM_SCHEMA_LIVE_P01_raw_response.json'
+E         Use -v to get more diff
+
+tests\test_test_portability.py:45: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_test_portability.py::test_bo_test_mac_dinh_khong_doc_duong_dan_ngoai_kho
+1 failed in 2.47s

@@ -1,0 +1,62 @@
+{
+  "schema_version": "scope-decisions/1",
+  "run_id": "w14-generic-formation-assumption",
+  "recorded_at": "2026-10-01",
+  "rule": "Only decisions with a real user answer in the planning session are recorded as APPROVED; answers are verbatim. Any later decision without an answer is PENDING_USER_DECISION and blocks the step that needs it.",
+  "decisions": [
+    {
+      "id": "D2",
+      "source": "W14 task brief (user message)",
+      "verbatim": "D2 = REFUSE_AND_EXPLAIN_IN_W14",
+      "status": "APPROVED"
+    },
+    {
+      "id": "D3",
+      "source": "W14 task brief (user message)",
+      "verbatim": "D3 = EXCLUDE_CURVED_SOLID_FORMATION_FROM_W14",
+      "status": "APPROVED"
+    },
+    {
+      "id": "Q1",
+      "source": "AskUserQuestion, planning revision R2",
+      "question": "Q1 — Giữ S4 theo preregistration bằng MỘT bước bổ sung dựng hình chung cho cả compiler và tuyến LLM (production LLM_ONLY), chấp nhận các thay đổi nhìn thấy được đã liệt kê?",
+      "options_shown": ["Giữ S4, một bước chung (Khuyên dùng)", "Chỉ compiler"],
+      "verbatim_answer": "Giữ S4, một bước chung (Khuyên dùng)",
+      "status": "APPROVED"
+    },
+    {
+      "id": "Q3",
+      "source": "AskUserQuestion, planning revision R2",
+      "question": "Q3 — Mẫu offline `tru-truc-xien` không cho bán kính trong đề, nhưng đáp số V = 15π phụ thuộc bán kính √5 do chương trình tự chọn. Xử lý thế nào?",
+      "options_shown": ["Sửa đề: thêm OA = √5 (Khuyên dùng)", "Giữ nguyên, ghi lỗi đã biết", "Gỡ mẫu"],
+      "verbatim_answer": "Sửa đề: thêm OA = √5 (Khuyên dùng)",
+      "status": "APPROVED"
+    },
+    {
+      "id": "Q4",
+      "source": "AskUserQuestion, planning revision R2",
+      "question": "Q4 — Nếu census buộc dừng Track B (ASSUMPTION_POLICY_INCOMPLETE, vì chứng minh C0/C1 chưa phủ đủ gold AC2), Track A, C và chính sách tin cậy có tiếp tục tới bằng chứng không?",
+      "options_shown": ["Tiếp tục A + C (Khuyên dùng)", "Dừng cả wave"],
+      "verbatim_answer": "Tiếp tục A + C (Khuyên dùng)",
+      "status": "APPROVED"
+    },
+    {
+      "id": "R2_DIRECTION",
+      "source": "user message after the R2 delta",
+      "verbatim": "R2 được chấp thuận về hướng kiến trúc. Chỉ bổ sung các điều kiện sau vào kế hoạch hiện có; không mở rộng phạm vi, không viết lại toàn bộ plan.",
+      "status": "APPROVED (direction + the five added conditions, which are part of the approved plan)"
+    }
+  ],
+  "withdrawn": [
+    {
+      "id": "QA",
+      "was": "compiler-only formation scope (S4 deferred)",
+      "why_withdrawn": "answered before S4 feasibility was checked and recorded without an approval record; the user ruled that it does not count as approval; S4 was then shown feasible without touching the model surface and Q1 kept it"
+    },
+    {
+      "id": "QB",
+      "was": "pre-selection of the sensitivity mechanism (M2E)",
+      "why_withdrawn": "the user ruled that no mechanism may be chosen before measurement; M2E cannot prove safety (absence of a counterexample is not proof)"
+    }
+  ]
+}
