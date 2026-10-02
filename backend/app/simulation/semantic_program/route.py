@@ -37,6 +37,7 @@ from .coverage_gate import (
     check_realized_coverage,
     check_structural_coverage,
 )
+from .formation import hoan_thien_dung_hinh
 from .grounding_gate import check_grounding
 from .interpreter import SemanticProgramInterpreter
 from .learner_surface import check_learner_surface
@@ -153,6 +154,12 @@ class SemanticRouteOutcome(BaseModel):
     #:
     #: `None` khi bài không phải hình học, hoặc khi chương trình không chạy nổi.
     scene3d: dict[str, Any] | None = None
+    #: W14 — bước BỔ SUNG dựng hình theo lớp (`formation.hoan_thien_dung_hinh`) chạy
+    #: trước mọi cổng: băm chương trình gốc và chương trình đã bổ sung, trạng thái
+    #: từng khối. Quan trắc, không gác cửa, không vào envelope.
+    program_sha256_original: str | None = None
+    program_sha256_completed: str | None = None
+    formation_statuses: dict[str, str] = Field(default_factory=dict)
 
 
 def _hong(
@@ -213,7 +220,26 @@ def verify_and_compile(
     Thân hàm có 11 điểm thoát. Gắn tay vào từng chỗ thì lần thêm nhánh tiếp theo
     chắc chắn sót một cái, và sót ở đây là im lặng: trường quan trắc rỗng đọc
     y hệt "không có giả thiết nào", nên số liệu sai mà không ai thấy.
+
+    W14 — DỰNG HÌNH THEO LỚP chạy TRƯỚC mọi cổng, cho chương trình compiler lẫn LLM
+    (S4): mọi cổng phía sau, envelope và cảnh (`pipeline._dung_scene3d` gọi cùng hàm
+    trên cùng đầu vào) thấy CÙNG một chương trình đã bổ sung — frame k ⇔ trace[k].
+    Bảng mặt hỏng là một phán quyết có mã ở tầng `formation`, không phải ngoại lệ.
     """
+    dung = hoan_thien_dung_hinh(spec, contract)
+    quan_trac_dung = {"program_sha256_original": dung.sha_goc,
+                      "program_sha256_completed": dung.sha_hoan_thien,
+                      "formation_statuses": dict(dung.trang_thai_theo_khoi)}
+    if dung.hong:
+        return _hong(
+            "formation",
+            ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            "Bảng mặt của khối không hợp lệ: chỉ số đỉnh ngoài miền hoặc mặt dưới ba đỉnh.",
+            details=[f"[SOLID_TOPOLOGY_MALFORMED] {k}" for k in dung.hong],
+            reason_code="SOLID_TOPOLOGY_MALFORMED",
+            **quan_trac_dung,
+        )
+    spec = dung.spec
     ground = check_grounding(contract, spec)
     # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
     # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
@@ -236,6 +262,7 @@ def verify_and_compile(
         "constraints_verified": quan_trac["verified"],
         "resolved_names": quan_trac["ten"],
         "source_invariant_stats": quan_trac["nguon"],
+        **quan_trac_dung,
     })
 
 

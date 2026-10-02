@@ -187,11 +187,16 @@ def test_07b_nhac_khoi_MAT_PHANG_day__KERNEL_chan_TRUOC():
     Hai cổng độc lập cùng chặn một ca là chuyện tốt; ghim ca này vào
     `source_invariant` sẽ là ghim SAI tầng, và ô ấy sẽ đỏ vì một lý do chẳng
     liên quan tới thứ nó bảo vệ.
+
+    W14: bước bổ sung dựng hình theo lớp chèn ĐÁY (đa giác) ngay trước khối, nên
+    kernel bác sớm hơn một câu lệnh — ở đa giác đáy không phẳng
+    (`GEOMETRY_OPERAND_TYPE`), cùng một nguyên nhân, vẫn ở `execution`.
     """
     kq = _chay(_doi("B", [6, 0, 1]))
     assert not kq.servable
     assert kq.stage_reached == "execution"
-    assert any("POLYHEDRON_FACE_NOT_PLANAR" in d for d in kq.details)
+    assert any("POLYHEDRON_FACE_NOT_PLANAR" in d
+               or ("GEOMETRY_OPERAND_TYPE" in d and "đồng phẳng" in d) for d in kq.details)
 
 
 def test_08_source_fact_id_TON_TAI_khong_cuu_duoc():

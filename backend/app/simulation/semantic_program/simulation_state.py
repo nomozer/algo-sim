@@ -45,6 +45,7 @@ from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
 from .display_names import ky_hieu_dai_luong, ten_hien_thi
+from .formation import gan_vai_tro_dung
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
 from .source_entities import ky_hieu_toan
@@ -726,6 +727,9 @@ def build_simulation_state(
     sách ai đó phải nhớ cập nhật.
     """
     scene = build_scene(spec, exec_result.final_memory)
+    # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
+    # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.
+    gan_vai_tro_dung(scene["objects"], spec, contract)
     dependencies = dependency_graph(spec)
     return {
         "scene": scene,

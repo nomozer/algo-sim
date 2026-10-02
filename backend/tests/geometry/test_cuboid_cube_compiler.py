@@ -505,7 +505,13 @@ def test_negative_10_ungrounded_semantic_classification():
 # ─── PEDAGOGICAL TRACE & PROVENANCE ───────────────────────────────────────
 
 def test_pedagogical_trace_and_causal_chain():
-    """Kiểm tra trace sư phạm và chuỗi nhân quả causal chain."""
+    """Kiểm tra trace sư phạm và chuỗi nhân quả causal chain.
+
+    W14 moved formation to the shared pass: đáy trên và các cạnh bên không còn do
+    compiler viết tay mà do `semantic_program.formation` bổ sung cho MỌI chương
+    trình. Trace compiler chỉ còn đáy dưới (phép đo diện tích cần nó); độ phủ vai trò
+    PRISM_LIKE được kiểm trên cảnh ĐÃ bổ sung — đúng cảnh học sinh thấy.
+    """
     contract = _build_cuboid_prism_contract(
         base_shape="rectangle",
         solid_subkind="cuboid",
@@ -526,16 +532,20 @@ def test_pedagogical_trace_and_causal_chain():
     decl_steps = [s for s in steps if s.primitive_id == "declare_point"]
     assert len(decl_steps) == 8
 
-    # 2. Dựng đáy dưới
+    # 2. Dựng đáy dưới (đáy trên + cạnh bên: bước bổ sung, kiểm ở mục 3)
     poly_steps = [s for s in steps if s.primitive_id == "construct_polygon"]
-    assert len(poly_steps) == 2
+    assert len(poly_steps) == 1
     assert "đáy dưới" in poly_steps[0].mo_ta.lower()
-    assert "đáy trên" in poly_steps[1].mo_ta.lower()
 
-    # 3. Dựng các cạnh bên hữu hạn
-    seg_steps = [s for s in steps if s.primitive_id == "construct_segments_group"]
-    assert len(seg_steps) == 1
-    assert "cạnh bên" in seg_steps[0].mo_ta.lower()
+    # 3. Cảnh ĐÃ bổ sung: đáy → đáy trên → cạnh bên → khép khối, đúng thứ tự
+    from app.ai.pipeline import _dung_scene3d
+
+    scene = _dung_scene3d(validate_semantic_program(res.program).spec, contract)
+    buoc = scene["formation"]["steps"]
+    idx = [next(k for k, s in enumerate(buoc) if r in s["formation_roles"])
+           for r in ("CONSTRUCT_BASE", "CONSTRUCT_TRANSLATED_FACE",
+                     "CONSTRUCT_LATERAL_BOUNDARY", "CLOSE_SOLID")]
+    assert idx == sorted(idx) and len(set(idx)) == 4, idx
 
     # 4. Bao đóng khối
     prism_steps = [s for s in steps if s.primitive_id == "construct_prism"]
@@ -769,7 +779,13 @@ def test_phase3_build_fact_graph_fail_closed_contradiction():
 
 
 def test_trace_contract_coherence_and_provenance():
-    """Kiểm tra trace mạch lạc, gồm cả bước suy dẫn kích thước có thật."""
+    """Kiểm tra trace mạch lạc, gồm cả bước suy dẫn kích thước có thật.
+
+    W14 moved formation to the shared pass: chạy trên chương trình ĐÃ bổ sung
+    (`formation.hoan_thien_dung_hinh`) — đúng chương trình route và cảnh chạy; đáy
+    trên và nhóm cạnh bên nay là hai bước do bước bổ sung chèn, không do compiler.
+    """
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.simulation_state import build_simulation_state
     from app.simulation.semantic_program.scene3d import build_scene3d
 
@@ -783,9 +799,10 @@ def test_trace_contract_coherence_and_provenance():
         res = C.bien_dich(ka.graph)
         val = validate_semantic_program(res.program)
         assert val.ok
+        spec = hoan_thien_dung_hinh(val.spec, contract).spec
         interp = SemanticProgramInterpreter()
-        sim_res = interp.execute(val.spec)
-        state = build_simulation_state(val.spec, sim_res, contract)
+        sim_res = interp.execute(spec)
+        state = build_simulation_state(spec, sim_res, contract)
         scene = build_scene3d(state)
 
         # 1. Cuboid uses only explicit dimensions. Cube and square prism add

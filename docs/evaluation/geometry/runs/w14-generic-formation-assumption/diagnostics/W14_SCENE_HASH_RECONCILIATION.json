@@ -1,0 +1,98 @@
+{
+  "reconciliation": "W14_SCENE_HASH_RECONCILIATION",
+  "model_calls": 0,
+  "test": "backend/tests/semantic_program/test_memory_declaration_contract_alignment.py",
+  "cases": {
+    "p1_chop_thiet_dien_khoang_cach": {
+      "status_without_completion": "ok",
+      "status_w14": "ok",
+      "scene_hash_pinned": "65424e33e314fabbe8861a1dad06ec0975c258071577eb2efc7e97f780808aaa",
+      "scene_hash_without_completion_and_role_fields": "65424e33e314fabbe8861a1dad06ec0975c258071577eb2efc7e97f780808aaa",
+      "scene_hash_w14": "8a6457569f392a91676fee9d6a83fe4788f8cfe6e8c1a618a7496768e19b4280",
+      "objects_pinned": 13,
+      "objects_w14": 17,
+      "objects_added_by_completion": [
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "vertices": [
+            "A",
+            "S"
+          ],
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "vertices": [
+            "B",
+            "S"
+          ],
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "vertices": [
+            "C",
+            "S"
+          ],
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ]
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3",
+          "vertices": [
+            "D",
+            "S"
+          ],
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ]
+        }
+      ],
+      "formation_steps": [
+        13,
+        14
+      ],
+      "final_memory_hash_pinned": "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
+      "final_memory_hash_without_completion": "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
+      "final_memory_hash_w14": "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d285851445bda2e828b",
+      "final_memory_hash_w14_original_keys": "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
+      "final_memory_keys_added": [
+        "canh_ben",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "diff_is_only_declared_w14_change": true
+    },
+    "p6_thiet_dien_elip_cua_hinh_tru": {
+      "status_without_completion": "ok",
+      "status_w14": "ok",
+      "scene_hash_pinned": "a87ac745e7ade6c16e2d1fdeff98986605953a7f3f1622598b32ab3b390a2b0c",
+      "scene_hash_without_completion_and_role_fields": "a87ac745e7ade6c16e2d1fdeff98986605953a7f3f1622598b32ab3b390a2b0c",
+      "scene_hash_w14": "1b0c714e6fa2994f6ff54aa31100e2618c97e5d2fe794d2eed00c03550c620d2",
+      "objects_pinned": 7,
+      "objects_w14": 7,
+      "objects_added_by_completion": [],
+      "formation_steps": [
+        5,
+        5
+      ],
+      "final_memory_hash_pinned": "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b",
+      "final_memory_hash_without_completion": "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b",
+      "final_memory_hash_w14": "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b",
+      "final_memory_hash_w14_original_keys": "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b",
+      "final_memory_keys_added": [],
+      "diff_is_only_declared_w14_change": true
+    }
+  }
+}

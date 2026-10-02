@@ -83,6 +83,7 @@ export const NHAN_GIAI_DOAN: Record<string, string> = {
   scope: "xét đề có mô phỏng được không",
   semantic_analyze: "đọc đề và chốt dữ kiện",
   semantic_program: "viết chương trình dựng hình",
+  formation: "kiểm cấu trúc các mặt của khối",
   grounding: "truy dữ kiện về đề bài",
   ir_static: "thẩm định chương trình",
   structural_coverage: "đối chiếu với các phép dựng hệ có",

@@ -97,9 +97,12 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     "line3": ("point", "direction"),
     "segment3": ("point_a", "point_b", "endpoints", "endpoint_ids"),
     "plane3": ("point", "normal"),
-    "solid": ("vertices", "vertex_ids", "faces"),
+    # `shape_class` + `formation_requirements`: lớp hình và vai trò bắt buộc, do
+    # PRODUCER (`simulation_state` ← `formation`) gắn — tầng này chỉ chở (W14).
+    "solid": ("vertices", "vertex_ids", "faces", "shape_class", "formation_requirements"),
     "polygon3": ("vertices", "vertex_ids"),
-    "section": ("polygon", "closed", "steps", "vertex_sources"),
+    "section": ("polygon", "closed", "steps", "vertex_sources", "shape_class",
+                "formation_requirements"),
     # ⚠️ **KHÔNG `vertices`, KHÔNG `faces`** — và sự vắng mặt ấy LÀ cơ chế giữ
     # lưới ra khỏi ngữ nghĩa, không phải một lời dặn. Renderer chia lưới để vẽ,
     # nhưng không có ô nào để một đỉnh nội suy đi ngược lên checker hay phép đo.
@@ -445,6 +448,8 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
             "display_group": _nhom(o, muc_tieu),
             "visual_transform": dict(BIEN_DOI_DONG_NHAT),
             "source": xuat_xu.get(o["id"]) or {},
+            # Vai trò dựng hình của VẬT (W14) — gắn ở producer, chở nguyên.
+            "formation_roles": list(o.get("formation_roles") or []),
         }
         for f in _TRUONG[loai]:
             if f in o:
@@ -860,6 +865,15 @@ def _build_formation(
                 "closed": closed,
                 "fill_visible": closed and (object_id in completed or object_id not in completes),
             })
+        # Vai trò của BƯỚC = hợp vai trò các vật trọng tâm + ba vai theo sự kiện
+        # (khai báo · giao · khép thiết diện). Bước đo và kết luận không dựng gì.
+        vai = {r for object_id in focus for r in by_id[object_id].get("formation_roles") or ()}
+        if event.get("action") == "INIT":
+            vai.add("DECLARE_ENTITIES")
+        if section_id in section_edges:
+            vai.add("CONSTRUCT_INTERSECTION" if event.get("action") == "EXTEND" else "CLOSE_SECTION")
+        if event["semantic_kind"] in ("MEASUREMENT", "FINAL_RESULT"):
+            vai = set()
         steps.append({
             "step_index": event["step_index"],
             "visible_ids": sorted(visible),
@@ -871,6 +885,7 @@ def _build_formation(
             "learner_text": event["learner_text"],
             "semantic_kind": event["semantic_kind"],
             "geometry_progress": progress,
+            "formation_roles": sorted(vai),
         })
     if steps:
         # Vật topology không có event riêng vẫn phải hiện ở ảnh kết thúc; chỉ

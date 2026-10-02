@@ -62,7 +62,11 @@ LOI_CU_BYTE, MANH_CU_BYTE = 331, 1587
 #: repr: `Section` thêm trường provenance `vertex_sources` ở CUỐI, repr cũ là
 #: tiền tố chặt của repr mới — polygon/steps không đổi. Semantic diff:
 #: `docs/evaluation/geometry/runs/w09-verify-cleanup/results/BACKEND_FAILURE_RECONCILIATION.json`.
-FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b036374059452be5a60715b",
+#: W14 (dựng hình theo lớp, S4): P1 là chóp đa diện nên bước bổ sung dựng các cạnh bên
+#: SA–SD trước khi khép khối ⇒ bộ nhớ cuối THÊM `canh_ben` + 4 đoạn; mọi khoá cũ giống
+#: hệt (chỉ xét khoá cũ vẫn băm `6a51a1c7…`). P6 (khối cong) không đổi. Đối soát:
+#: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/W14_SCENE_HASH_RECONCILIATION.json`.
+FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d285851445bda2e828b",
                       CA_P6: "79cf15e958f71915d648df38cbd4bed1f5d3b6356a3cfe8776d852106112c69b"}
 # P1 intentionally includes the later canonical solid notation (S.ABCD).
 # Its earlier hash predated the display-name authority and is not a valid
@@ -75,9 +79,13 @@ FINAL_MEMORY_START = {CA_P1: "6a51a1c7adc85942d518e60d7b29245a4b0692267b03637405
 # (mặt thiết diện tô ở bước khép); 0 trường hình học/giá trị, final_memory
 # giống hệt, số vật giữ nguyên. Review:
 # `docs/evaluation/geometry/runs/w10-pedagogical-playback/results/GOLDEN_REVIEW.json`.
-SCENE_START = {CA_P1: "65424e33e314fabbe8861a1dad06ec0975c258071577eb2efc7e97f780808aaa",
-               CA_P6: "a87ac745e7ade6c16e2d1fdeff98986605953a7f3f1622598b32ab3b390a2b0c"}
-SO_VAT_START = {CA_P1: 13, CA_P6: 7}
+# W14: CHỈ thêm — `formation_roles` ở mọi vật và mọi bước, `shape_class` +
+# `formation_requirements` ở khối/thiết diện; P1 thêm 4 đoạn cạnh bên (13 → 17 vật) và
+# một bước dựng (13 → 14 bước). Tắt bước bổ sung + bỏ ba trường ấy thì cả hai cảnh băm
+# đúng hằng w10 (`65424e33…`, `a87ac745…`). Cùng bản đối soát W14 ở trên.
+SCENE_START = {CA_P1: "8a6457569f392a91676fee9d6a83fe4788f8cfe6e8c1a618a7496768e19b4280",
+               CA_P6: "1b0c714e6fa2994f6ff54aa31100e2618c97e5d2fe794d2eed00c03550c620d2"}
+SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 
 
 def _bam(o) -> str:

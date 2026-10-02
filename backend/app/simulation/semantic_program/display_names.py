@@ -67,6 +67,7 @@ from __future__ import annotations
 import re
 from typing import Any, Callable, Optional
 
+from .solid_faces import phan_loai_bang_mat
 from .source_entities import ky_hieu_toan
 
 __all__ = ["ten_hien_thi", "ky_hieu_dai_luong", "MO_TA_KIEU"]
@@ -293,47 +294,28 @@ def _phan_loai_khoi(dinh: list, mat: list) -> Optional[tuple[str, list[int], lis
     `(loai, a, b)`: chóp ⇒ `a = [đỉnh]`, `b = đáy`; lăng trụ ⇒ `a = đáy`,
     `b = đỉnh tương ứng của đáy kia`. Không nhận ra ⇒ `None` (giữ cách gọi
     chung). KHÔNG đọc tên bài, tên họ hay nhãn đỉnh — chỉ bảng mặt và toạ độ.
+
+    Phần TỔ HỢP là `solid_faces.phan_loai_bang_mat` (thẩm quyền tô-pô chung với
+    `formation`); ở đây lấy cách đọc ĐẦU TIÊN — đúng như trước khi tách — rồi tinh
+    chỉnh bằng hình học chính xác (đứng · hình hộp · lập phương).
     """
-    n, so_mat = len(dinh), len(mat)
-    for i, day in enumerate(mat):
-        con_lai = set(range(n)) - set(day)
-        if (len(con_lai) == 1 and len(day) == n - 1 and so_mat == n
-                and all(len(f) == 3 for j, f in enumerate(mat) if j != i)):
-            return "pyramid", [con_lai.pop()], list(day)
-    for i, f in enumerate(mat):
-        for j, g in enumerate(mat):
-            if (j <= i or len(f) != len(g) or set(f) & set(g)
-                    or 2 * len(f) != n or so_mat != len(f) + 2):
-                continue
-            ben = [h for k, h in enumerate(mat) if k not in (i, j)]
-            if not all(len(h) == 4 for h in ben):
-                continue
-            doi: dict[int, int] = {}
-            for h in ben:
-                for u, w in zip(h, h[1:] + h[:1]):
-                    if u in f and w in g:
-                        doi[u] = w
-                    elif w in f and u in g:
-                        doi[w] = u
-            if len(doi) != len(f):
-                continue
-            # Đáy là mặt chứa đỉnh khai ĐẦU TIÊN — `ABC.DEF`, không `DEF.ABC`.
-            if min(f) < min(g):
-                day, tren = list(f), [doi[v] for v in f]
-            else:
-                nguoc = {w: u for u, w in doi.items()}
-                day, tren = list(g), [nguoc[v] for v in g]
-            canh_ben = [dinh[tren[k]] - dinh[day[k]] for k in range(len(day))]
-            canh_day = [dinh[day[(k + 1) % len(day)]] - dinh[day[k]] for k in range(len(day))]
-            dung = all(c.dot(e) == 0 for c in canh_ben for e in canh_day)
-            chu_nhat = dung and len(day) == 4 and all(
-                canh_day[k].dot(canh_day[(k + 1) % 4]) == 0 for k in range(4))
-            if chu_nhat and canh_ben[0].norm_sq() == canh_day[0].norm_sq() == canh_day[1].norm_sq():
-                return "cube", list(day), tren
-            if chu_nhat:
-                return "cuboid", list(day), tren
-            return ("right_prism" if dung else "prism"), list(day), tren
-    return None
+    cach = phan_loai_bang_mat(len(dinh), mat)
+    if not cach:
+        return None
+    loai, a, b = cach[0]
+    if loai == "pyramid":
+        return loai, a, b
+    day, tren = a, b
+    canh_ben = [dinh[tren[k]] - dinh[day[k]] for k in range(len(day))]
+    canh_day = [dinh[day[(k + 1) % len(day)]] - dinh[day[k]] for k in range(len(day))]
+    dung = all(c.dot(e) == 0 for c in canh_ben for e in canh_day)
+    chu_nhat = dung and len(day) == 4 and all(
+        canh_day[k].dot(canh_day[(k + 1) % 4]) == 0 for k in range(4))
+    if chu_nhat and canh_ben[0].norm_sq() == canh_day[0].norm_sq() == canh_day[1].norm_sq():
+        return "cube", list(day), tren
+    if chu_nhat:
+        return "cuboid", list(day), tren
+    return ("right_prism" if dung else "prism"), list(day), tren
 
 
 #: Danh từ học sinh dùng cho từng loại khối đã nhận ra.

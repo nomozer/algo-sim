@@ -1,0 +1,59 @@
+# W14 Task 4 Step 6 — S4 blast radius (full backend suite after the shape-class completion pass)
+# command: cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -rf --tb=line
+# base: 1a8ea7b8 + uncommitted Task 4 product/test edits (working tree)
+# result: 37 failed, 6539 passed, 1 skipped, 2 deselected, 2 warnings in 282.17s (0:04:42)
+
+## Remaining failures, classified
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_kenh_layout_derived_bi_tu_choi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_kenh_model_assumption_bi_tu_choi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_kich_thuoc_thieu_bi_che_boi_XY_length_gia_dinh
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_moi_phep_nhieu_bi_loai_van_thieu_du_kien
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_bang_chung_cua_canh_khac_khong_che_chieu_cao
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_thieu_kich_thuoc_trong_khung_xien
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_phu_thuoc_ma_bon_phep_nhieu_khong_thay
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_het_ngan_sach_khong_thanh_an_toan
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_hop_dong_san_pham_thieu_de_bi_tu_choi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_hai_dap_so_mot_phu_thuoc_gia_dinh
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_dong_dang_nhung_nhan_them_vo_huong_gia_dinh
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_bo_mot_phu_thuoc_khoi_do_thi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_bang_toan_hang_phu_moi_kieu_IR
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[khong_nguon]
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[gia_dinh]
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[claimed]
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_hai_dap_so_mot_ngoai_pham_vi_chung_chi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_fixture_tin_cay_phai_khai_tuong_minh
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_tuyen_san_pham_khong_dung_fixture_tin_cay
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_khong_ma_nao_dung_NguonDe_tu_chuoi
+EXPECTED_RED_TRACK_B_OR_5A (Task 2 RED, not this task) :: tests/geometry/test_assumption_gate.py::test_yeu_cau_san_pham_khong_bat_duoc_bypass
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+DIRTY_WORKING_TREE (reads git status; green after commit) :: tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+DIRTY_WORKING_TREE (reads git status; green after commit) :: tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+EXPECTED_RED_TRACK_C (Task 2 RED, Task 6) :: tests/geometry/test_source_length_reader.py::test_dai_cm_sai_doan_bi_tu_choi
+EXPECTED_RED_TRACK_C (Task 2 RED, Task 6) :: tests/geometry/test_source_length_reader.py::test_dai_cm_dung_doan_duoc_nhan
+EXPECTED_RED_TRACK_C (Task 2 RED, Task 6) :: tests/geometry/test_source_length_reader.py::test_co_do_dai_sai_doan_bi_tu_choi
+EXPECTED_RED_TRACK_C (Task 2 RED, Task 6) :: tests/geometry/test_source_length_reader.py::test_bang_chung_doan_gan_voi_cap_dau_mut
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+STALE_CANDIDATE_IDENTITY (candidate --verify; refreeze in Task 10) :: tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+
+## Pins migrated in Task 4 (category a: pinned per-family hand-written sequence / LLM gold scene) — all green now
+a :: tests/geometry/test_rectangular_pyramid_compiler.py::test_bounded_geometry_and_no_unbounded_rays — compiler statement pin -> completed program; lateral items by endpoints (Q1 ID delta)
+a :: tests/geometry/test_rectangular_pyramid_compiler.py::test_frame_visibility_and_event_sequence — step-3 ids canh_ben_SB.. -> endpoints (Q1 ID delta)
+a :: tests/geometry/test_cuboid_cube_compiler.py::test_pedagogical_trace_and_causal_chain — 2 polygons + group in compiler trace -> base polygon only + PRISM_LIKE role order on the completed scene
+a :: tests/geometry/test_cuboid_cube_compiler.py::test_trace_contract_coherence_and_provenance — runs the completed program (9/11/10 steps unchanged)
+a :: tests/geometry/test_scene3d_integration.py::test_scene3d_sinh_tu_chuong_trinh_that — object-id set pin -> original set + exactly base ABCD and laterals SA..SD
+a :: tests/geometry/test_scene3d_integration.py::test_producer_KHOP_voi_cau_lenh_that_trong_chuong_trinh — producer map from the completed program incl. group items
+a :: tests/geometry/test_point_coordinate_invariant.py::test_07b_nhac_khoi_MAT_PHANG_day__KERNEL_chan_TRUOC — still refused at execution for the non-planar base, now one statement earlier at the inserted base polygon
+a :: tests/semantic_program/test_memory_declaration_contract_alignment.py::{test_H..., test_I...} — scene/final-memory hash constants; diff proven to be only the declared W14 change (diagnostics/W14_SCENE_HASH_RECONCILIATION.json)
+
+## Product requirement found by the suite (not a pin)
+fix :: tests/geometry/test_product_response_contract.py::test_nhan_giai_doan_phu_het_taxonomy_backend — new route stage 'formation' needs a learner label: NHAN_GIAI_DOAN.formation in frontend/src/components/SimulationWorkspace.tsx
+
+## Category b (#31/#35, occlusion, budget, answer changed): none observed; S4_INVENTORY.json verdict OK (answers unchanged, p1 section progress unchanged, max 14 frames <= 60)
+## Category c (unexplained): none

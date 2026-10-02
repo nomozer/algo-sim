@@ -60,10 +60,17 @@ def _spec() -> SemanticProgramSpec:
 
 # ══ TASK 1 — Scene3D sinh từ KẾT QUẢ THẬT, không dựng tay ════════════════
 def test_scene3d_sinh_tu_chuong_trinh_that():
+    """W14 (S4): chương trình chạy thật là chương trình ĐÃ bổ sung dựng hình theo lớp —
+    chóp S.ABCD được dựng thêm đáy ABCD và bốn cạnh bên trước khi khép khối. Ngoài
+    đúng các vật ấy, cảnh là các vật của chương trình gốc, không hơn."""
     sc = _dung_scene3d(_spec())
     assert sc is not None
-    assert {o["id"] for o in sc["objects"]} == {
-        "A", "B", "C", "D", "S", "M", "chop", "V"}
+    goc = {"A", "B", "C", "D", "S", "M", "chop", "V"}
+    assert goc <= {o["id"] for o in sc["objects"]}
+    them = {(o["type"], frozenset(o.get("vertex_ids") or o.get("endpoint_ids") or ()))
+            for o in sc["objects"] if o["id"] not in goc}
+    assert them == {("polygon3", frozenset("ABCD"))} | {
+        ("segment3", frozenset({"S", x})) for x in "ABCD"}
 
 
 def test_CUNG_chuong_trinh_cho_CUNG_scene3d():
@@ -119,12 +126,19 @@ def test_moi_doi_tuong_DAN_XUAT_truy_nguoc_ve_cau_lenh():
 
 
 def test_producer_KHOP_voi_cau_lenh_that_trong_chuong_trinh():
-    """Provenance phải khớp IR, không phải một nhãn đẹp gắn thêm."""
-    spec = _spec()
+    """Provenance phải khớp IR, không phải một nhãn đẹp gắn thêm.
+
+    W14: IR chạy thật là chương trình ĐÃ bổ sung dựng hình (`formation`) — gồm cả
+    các mục của câu lệnh nhóm cạnh bên."""
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
+
+    spec = hoan_thien_dung_hinh(_spec()).spec
     kind_theo_target = {
         s.target_var: s.kind for s in spec.statements
         if getattr(s, "target_var", None)
     }
+    kind_theo_target |= {it["name"]: s.kind for s in spec.statements
+                         for it in getattr(s, "items", None) or ()}
     for o in _dung_scene3d(spec)["objects"]:
         if o["origin"] != "derived":
             continue

@@ -541,7 +541,15 @@ def test_negative_07_extra_unsupported_obligation():
 # ─── 4. NON-VACUOUS PHASE 5 ASSERTIONS: BOUNDED SEGMENTS & FRAME VISIBILITY ─
 
 def test_bounded_geometry_and_no_unbounded_rays():
-    """Phase 5: Kiểm chứng SA, SB, SC, SD dùng construct_segment hữu hạn, không có tia/đường vô hạn."""
+    """Phase 5: Kiểm chứng SA, SB, SC, SD dùng construct_segment hữu hạn, không có tia/đường vô hạn.
+
+    W14 moved formation to the shared pass: đường cao và các cạnh bên do
+    `semantic_program.formation` bổ sung, không còn do compiler viết tay — nên kiểm
+    trên chương trình ĐÃ bổ sung (đúng chương trình route và cảnh chạy). Mục cạnh bên
+    nhận diện bằng ĐẦU MÚT: tên máy đổi `canh_ben_SB` → `canh_ben_S_B` (delta Q1).
+    """
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
+
     contract = _build_rect_pyramid_contract(
         apex="S", base_cycle=("A", "B", "C", "D"), base_shape="rectangle",
         len_ab="3", len_ad="4", len_sa="6"
@@ -550,10 +558,13 @@ def test_bounded_geometry_and_no_unbounded_rays():
     assert ka.status == "VALID" and ka.graph is not None
     bd = C.bien_dich(ka.graph)
     assert bd.status == "COMPILED" and bd.program is not None
+    val = validate_semantic_program(bd.program)
+    assert val.ok and val.spec is not None
+    program = hoan_thien_dung_hinh(val.spec, contract).spec.model_dump(mode="json", exclude_none=True)
 
-    # 1. Statements compiler sinh ra phải dùng construct_segment, không dùng construct_line cho cạnh chóp
-    segment_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_segment"]
-    line_stmts = [s for s in bd.program["statements"] if s.get("kind") == "construct_line"]
+    # 1. Chương trình chạy thật dùng construct_segment, không dùng construct_line cho cạnh chóp
+    segment_stmts = [s for s in program["statements"] if s.get("kind") == "construct_segment"]
+    line_stmts = [s for s in program["statements"] if s.get("kind") == "construct_line"]
     assert len(segment_stmts) == 2, f"Kỳ vọng 2 câu lệnh construct_segment (SA và nhóm cạnh bên), nhận {len(segment_stmts)}"
     assert len(line_stmts) == 0, f"Không được sinh construct_line cho chóp hữu hạn, nhận {len(line_stmts)}"
 
@@ -563,29 +574,20 @@ def test_bounded_geometry_and_no_unbounded_rays():
     assert sa_stmt.get("label") == "Chiều cao SA"
 
     # 3. Kiểm tra câu lệnh lateral edges SB, SC, SD
-    lateral_stmt = next(s for s in segment_stmts if s.get("target_var") == "canh_ben")
-    assert len(lateral_stmt.get("items", [])) == 3
-    items = {it["name"]: it for it in lateral_stmt["items"]}
-    assert "canh_ben_SB" in items and items["canh_ben_SB"]["endpoint_a"] == "S" and items["canh_ben_SB"]["endpoint_b"] == "B"
-    assert "canh_ben_SC" in items and items["canh_ben_SC"]["endpoint_a"] == "S" and items["canh_ben_SC"]["endpoint_b"] == "C"
-    assert "canh_ben_SD" in items and items["canh_ben_SD"]["endpoint_a"] == "S" and items["canh_ben_SD"]["endpoint_b"] == "D"
+    lateral_stmt = next(s for s in segment_stmts if s.get("items"))
+    assert [(it["endpoint_a"], it["endpoint_b"]) for it in lateral_stmt["items"]] == [
+        ("S", "B"), ("S", "C"), ("S", "D")]
 
     # 4. Scene3D objects: SA, SB, SC, SD đều là segment3, render='segment', có endpoint_ids chính xác
-    val = validate_semantic_program(bd.program)
-    assert val.ok and val.spec is not None
     from app.ai.pipeline import _dung_scene3d
     scene = _dung_scene3d(val.spec, contract)
     assert scene is not None
 
-    objs = {o["id"]: o for o in scene["objects"]}
-    for edge_id, (ep1, ep2) in [
-        ("chieu_cao_SA", ("S", "A")),
-        ("canh_ben_SB", ("S", "B")),
-        ("canh_ben_SC", ("S", "C")),
-        ("canh_ben_SD", ("S", "D")),
-    ]:
-        assert edge_id in objs, f"Thiếu object {edge_id} trong scene3d"
-        obj = objs[edge_id]
+    objs = {tuple(o.get("endpoint_ids") or ()): o for o in scene["objects"] if o.get("type") == "segment3"}
+    for ep1, ep2 in [("S", "A"), ("S", "B"), ("S", "C"), ("S", "D")]:
+        edge_id = f"{ep1}{ep2}"
+        assert (ep1, ep2) in objs, f"Thiếu object {edge_id} trong scene3d"
+        obj = objs[(ep1, ep2)]
         assert obj.get("type") == "segment3", f"{edge_id} phải có type='segment3', nhận {obj.get('type')}"
         assert obj.get("render") == "segment", f"{edge_id} phải có render='segment', nhận {obj.get('render')}"
         assert obj.get("endpoint_ids") == [ep1, ep2], f"{edge_id} endpoint_ids sai: {obj.get('endpoint_ids')}"
@@ -626,12 +628,14 @@ def test_frame_visibility_and_event_sequence():
     assert events[2]["object"] == "chieu_cao_SA"
     assert events[2]["step_index"] == 2
 
-    # Step 3: Dựng đồng thời SB, SC, SD
+    # Step 3: Dựng đồng thời SB, SC, SD — nhận diện bằng đầu mút: W14 chuyển dựng hình
+    # sang bước bổ sung chung, tên máy đổi `canh_ben_SB` → `canh_ben_S_B` (delta Q1).
     assert events[3]["step_index"] == 3
-    step3_objects = events[3].get("objects", [])
-    assert "canh_ben_SB" in step3_objects, f"Step 3 phải có canh_ben_SB: {step3_objects}"
-    assert "canh_ben_SC" in step3_objects, f"Step 3 phải có canh_ben_SC: {step3_objects}"
-    assert "canh_ben_SD" in step3_objects, f"Step 3 phải có canh_ben_SD: {step3_objects}"
+    dau_mut = {o["id"]: tuple(o.get("endpoint_ids") or ()) for o in scene["objects"]}
+    step3_objects = [dau_mut.get(i) for i in events[3].get("objects", [])]
+    assert ("S", "B") in step3_objects, f"Step 3 phải có SB: {step3_objects}"
+    assert ("S", "C") in step3_objects, f"Step 3 phải có SC: {step3_objects}"
+    assert ("S", "D") in step3_objects, f"Step 3 phải có SD: {step3_objects}"
 
     # Step 4: Khối chóp hoàn chỉnh
     assert events[4]["object"] == "khoi_chop"

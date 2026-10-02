@@ -992,10 +992,10 @@ def bien_dich(graph: GeometryFactGraph) -> KetQuaBienDich:
                               "Tam giác đáy"),
          "Hoàn thiện tam giác đáy từ ba đỉnh vừa dựng.",
          der=(f"derived_{ten_day}",), obj=(ten_day,))
-    # 5 + 6 · đường cao theo pháp tuyến, và đỉnh chóp
+    # 5 + 6 · đỉnh chóp theo pháp tuyến của đáy. Đường cao và các cạnh bên do bước
+    # bổ sung dựng hình theo lớp (`semantic_program.formation`) dựng — W14.
     them("declare_point", P.declare_point(b.dinh_chop, toa_do[b.dinh_chop]),
-         "Dựng đường cao vuông góc với mặt phẳng đáy rồi đặt đỉnh chóp theo "
-         "độ dài đề cho.",
+         "Đặt đỉnh chóp theo độ dài cạnh bên đề cho.",
          _src(b.dinh_vuong, b.dinh_chop), (f"layout_{b.dinh_chop}",), (b.dinh_chop,))
     # 7 · nối đỉnh với các đỉnh đáy
     them("construct_pyramid",
@@ -1166,8 +1166,6 @@ def _bien_dich_rectangular_pyramid(
     }
 
     ten_day = f"day_{''.join(b.base_cycle)}"
-    ten_cao = f"chieu_cao_{b.apex}{b.foot}"
-    ten_canh_ben = f"canh_ben_{b.apex}{b.opposite}"
     ten_khoi = b.container
     ten_dt = f"dien_tich_{ten_day}"
     ten_tt = f"the_tich_{ten_khoi}"
@@ -1190,9 +1188,9 @@ def _bien_dich_rectangular_pyramid(
         f = graph.do_dai(*pts) if len(pts) == 2 else None
         return (f.source_fact_id,) if f and f.source_fact_id else ()
 
-    # 1 · Chân đường cao tại gốc toạ độ
+    # 1 · Đỉnh đáy ở chân cạnh bên vuông góc, tại gốc toạ độ
     them("declare_point", P.declare_point(b.foot, toa_do[b.foot]),
-         "Đặt chân đường cao của hình chóp làm gốc toạ độ.",
+         f"Đặt đỉnh {b.foot} của đáy làm gốc toạ độ.",
          der=(f"layout_{b.foot}",), obj=(b.foot,))
     # 2 · Cạnh thứ nhất của đáy dọc trục X
     them("declare_point", P.declare_point(b.adj_1, toa_do[b.adj_1]),
@@ -1208,44 +1206,26 @@ def _bien_dich_rectangular_pyramid(
          (), (f"layout_{b.opposite}",), (b.opposite,))
     # 5 · Đỉnh chóp trên trục Z
     them("declare_point", P.declare_point(b.apex, toa_do[b.apex]),
-         "Dựng đường cao vuông góc với mặt phẳng đáy rồi đặt đỉnh chóp.",
+         "Đặt đỉnh chóp theo chiều cao đề cho.",
          _src(b.foot, b.apex), (f"layout_{b.apex}",), (b.apex,))
-    # 6 · Dựng mặt đáy
+    # 6 · Dựng mặt đáy (phép đo diện tích cần nó). Đường cao và các cạnh bên do
+    # bước bổ sung dựng hình theo lớp (`semantic_program.formation`) dựng — W14.
     them("construct_polygon",
          P.construct_polygon(ten_day, b.base_cycle, f"Đáy {''.join(b.base_cycle)}"),
          f"Dựng mặt phẳng đáy {''.join(b.base_cycle)} từ 4 đỉnh đã có.",
          der=(f"derived_{ten_day}",), obj=(ten_day,))
-    # 7 · Dựng đường cao (đoạn thẳng hữu hạn SA)
-    them("construct_segment",
-         P.construct_segment(ten_cao, b.apex, b.foot, f"Chiều cao {b.apex}{b.foot}"),
-         f"Dựng đường cao {b.apex}{b.foot} vuông góc với mặt đáy.",
-         _src(b.foot, b.apex), (f"derived_{ten_cao}",), (ten_cao,))
-    # 8 · Dựng đồng thời các cạnh bên SB, SC, SD
-    ten_sb = f"canh_ben_{b.apex}{b.adj_1}"
-    ten_sc = f"canh_ben_{b.apex}{b.opposite}"
-    ten_sd = f"canh_ben_{b.apex}{b.adj_2}"
-    items_canh_ben = [
-        {"name": ten_sb, "endpoint_a": b.apex, "endpoint_b": b.adj_1, "label": f"Cạnh bên {b.apex}{b.adj_1}"},
-        {"name": ten_sc, "endpoint_a": b.apex, "endpoint_b": b.opposite, "label": f"Cạnh bên {b.apex}{b.opposite}"},
-        {"name": ten_sd, "endpoint_a": b.apex, "endpoint_b": b.adj_2, "label": f"Cạnh bên {b.apex}{b.adj_2}"},
-    ]
-    ten_canh_ben = "canh_ben"
-    them("construct_segments_group",
-         P.construct_segments_group(ten_canh_ben, items_canh_ben, f"Các cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2}"),
-         f"Dựng các cạnh bên {b.apex}{b.adj_1}, {b.apex}{b.opposite}, {b.apex}{b.adj_2} từ đỉnh tới các đỉnh đáy.",
-         der=(f"derived_{ten_canh_ben}",), obj=(ten_sb, ten_sc, ten_sd))
-    # 9 · Khối chóp
+    # 7 · Khối chóp
     them("construct_pyramid",
          P.construct_pyramid(ten_khoi, b.apex, b.base_cycle, f"{b.apex}.{''.join(b.base_cycle)}"),
          "Hoàn thiện khối chóp từ đỉnh và các mặt bên.",
          der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
-    # 10 · Diện tích mặt đáy
+    # 8 · Diện tích mặt đáy
     them("measure_quantity", P.measure_quantity(ten_dt, "area", ten_day),
          "Tính diện tích mặt đáy.", der=(f"derived_{ten_dt}",))
-    # 11 · Thể tích khối chóp
+    # 9 · Thể tích khối chóp
     them("measure_quantity", P.measure_quantity(ten_tt, "volume", ten_khoi),
          "Tính thể tích khối chóp.", der=(f"derived_{ten_tt}",))
-    # 12 · Ghi kết quả vào biến witness
+    # 10 · Ghi kết quả vào biến witness
     them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
          "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
 
@@ -1283,14 +1263,9 @@ def _bien_dich_rectangular_pyramid(
 
     # Khai báo các đối tượng hình học dựng ra
     khai.append(P.memory_declaration(ten_day, "polygon3"))
-    khai.append(P.memory_declaration(ten_cao, "segment3"))
-    khai.append(P.memory_declaration(ten_sb, "segment3"))
-    khai.append(P.memory_declaration(ten_sc, "segment3"))
-    khai.append(P.memory_declaration(ten_sd, "segment3"))
     khai.append(P.memory_declaration(ten_khoi, "solid"))
 
-    seen_mem = {b.foot, b.adj_1, b.adj_2, b.opposite, b.apex, ten_day, ten_cao,
-                ten_sb, ten_sc, ten_sd, ten_canh_ben,
+    seen_mem = {b.foot, b.adj_1, b.adj_2, b.opposite, b.apex, ten_day,
                 ten_khoi, name_len1, name_len2, name_height}
     for t in (ten_dt, ten_tt, b.witness):
         if t not in seen_mem:
@@ -1332,8 +1307,6 @@ def _bien_dich_cuboid(
         toa_do[top_id] = (bx, by, b.len_height)
 
     ten_day_duoi = f"day_{''.join(b.base_cycle_ids)}"
-    ten_day_tren = f"day_{''.join(b.top_cycle_ids)}"
-    ten_canh_ben = "canh_ben"
     ten_khoi = b.container
     ten_dt = f"dien_tich_{ten_day_duoi}"
     ten_cao = f"chieu_cao_{b.origin_pt}{b.origin_top}"
@@ -1490,41 +1463,16 @@ def _bien_dich_cuboid(
              f"Dựng đỉnh {lbl_top} tương ứng với đỉnh {lbl_b} đáy dưới theo chiều cao.",
              _src(base_id, top_id), (f"layout_{top_id}",), (top_id,))
 
-    # 6 · Dựng mặt đáy dưới
+    # 6 · Dựng mặt đáy dưới (phép đo diện tích cần nó). Đáy trên và các cạnh bên do
+    # bước bổ sung dựng hình theo lớp (`semantic_program.formation`) dựng — W14.
     base_lbls = "".join(b.display_labels.get(u, u) for u in b.base_cycle_ids)
     them("construct_polygon",
          P.construct_polygon(ten_day_duoi, b.base_cycle_ids, nhan=f"đáy dưới {base_lbls}"),
          f"Dựng đáy dưới {base_lbls}.",
          der=(f"derived_{ten_day_duoi}",), obj=(ten_day_duoi,))
 
-    # 7 · Dựng mặt đáy trên
+    # 7 · Dựng khối lăng trụ / hình hộp (construct_prism)
     top_lbls = "".join(b.display_labels.get(u, u) for u in b.top_cycle_ids)
-    them("construct_polygon",
-         P.construct_polygon(ten_day_tren, b.top_cycle_ids, nhan=f"đáy trên {top_lbls}"),
-         f"Dựng đáy trên {top_lbls}.",
-         der=(f"derived_{ten_day_tren}",), obj=(ten_day_tren,))
-
-    # 8 · Dựng các cạnh bên hữu hạn bằng construct_segments_group
-    items_canh_ben = []
-    lat_seg_names = []
-    for u_id, v_id in b.correspondence_ids:
-        seg_name = f"canh_ben_{u_id}_{v_id}"
-        lat_seg_names.append(seg_name)
-        lu = b.display_labels.get(u_id, u_id)
-        lv = b.display_labels.get(v_id, v_id)
-        items_canh_ben.append({
-            "name": seg_name,
-            "endpoint_a": u_id,
-            "endpoint_b": v_id,
-            "label": f"Cạnh bên {lu}{lv}",
-        })
-    lateral_lbls = ", ".join(f"{b.display_labels.get(u, u)}{b.display_labels.get(v, v)}" for u, v in b.correspondence_ids)
-    them("construct_segments_group",
-         P.construct_segments_group(ten_canh_ben, items_canh_ben, nhan=f"các cạnh bên {lateral_lbls}"),
-         f"Dựng các cạnh bên {lateral_lbls}.",
-         der=(f"derived_{ten_canh_ben}",), obj=tuple(lat_seg_names))
-
-    # 9 · Dựng khối lăng trụ / hình hộp (construct_prism)
     if b.family_id == SUPPORTED_FAMILY_CUBE:
         solid_label = f"Hình lập phương {base_lbls}.{top_lbls}"
     elif b.family_id == SUPPORTED_FAMILY_SQUARE_PRISM:
@@ -1539,21 +1487,21 @@ def _bien_dich_cuboid(
          f"Dựng {solid_label} từ 8 đỉnh và 6 mặt.",
          der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
 
-    # 10 · Diện tích mặt đáy
+    # 8 · Diện tích mặt đáy
     them("measure_quantity", P.measure_quantity(ten_dt, "area", ten_day_duoi),
          f"Tính diện tích đáy S_{base_lbls}.", der=(f"derived_{ten_dt}",))
 
-    # 11 · Chiều cao
+    # 9 · Chiều cao
     h_lu = b.display_labels.get(b.origin_pt, b.origin_pt)
     h_lv = b.display_labels.get(b.origin_top, b.origin_top)
     them("measure_quantity", P.measure_quantity(ten_cao, "distance", b.origin_pt, wrt=b.origin_top),
          f"Xác định chiều cao {h_lu}{h_lv}.", der=(f"derived_{ten_cao}",))
 
-    # 12 · Thể tích khối
+    # 10 · Thể tích khối
     them("measure_quantity", P.measure_quantity(ten_tt, "volume", ten_khoi),
          "Tính thể tích V.", der=(f"derived_{ten_tt}",))
 
-    # 13 · Gán đáp số cuối vào witness
+    # 11 · Gán đáp số cuối vào witness
     them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
          "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
 
@@ -1561,14 +1509,10 @@ def _bien_dich_cuboid(
         khai.append(P.memory_declaration(pt_id, "point3", provenance="LAYOUT_DERIVED"))
 
     khai.append(P.memory_declaration(ten_day_duoi, "polygon3"))
-    khai.append(P.memory_declaration(ten_day_tren, "polygon3"))
-    for seg_name in lat_seg_names:
-        khai.append(P.memory_declaration(seg_name, "segment3"))
     khai.append(P.memory_declaration(ten_khoi, "solid"))
 
-    seen_mem = {*declared_dimensions, *b.base_cycle_ids, *b.top_cycle_ids, ten_day_duoi, ten_day_tren,
-                *lat_seg_names, ten_canh_ben, ten_khoi,
-                name_len1, name_len2, name_height}
+    seen_mem = {*declared_dimensions, *b.base_cycle_ids, *b.top_cycle_ids, ten_day_duoi,
+                ten_khoi, name_len1, name_len2, name_height}
     for t in (ten_dt, ten_cao, ten_tt, b.witness):
         if t not in seen_mem:
             khai.append(P.memory_declaration(t, P.KIEU_DAI_LUONG))

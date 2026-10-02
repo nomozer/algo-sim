@@ -537,11 +537,15 @@ def _dung_scene3d(spec, contract=None) -> dict | None:
         build_simulation_state,
     )
 
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
     from app.simulation.semantic_program.section_provenance import (
         normalize_section_provenance,
     )
 
     try:
+        # CÙNG bước bổ sung dựng hình mà `verify_and_compile` chạy, trên CÙNG đầu
+        # vào ⇒ cùng chương trình đã bổ sung: số khung envelope = số bước cảnh (#31).
+        spec = hoan_thien_dung_hinh(spec, contract).spec
         ket = SemanticProgramInterpreter().execute(spec)
         canh = build_scene3d(build_simulation_state(spec, ket, contract))
         # ─── CHUẨN HOÁ XUẤT XỨ THIẾT DIỆN ───────────────────────────────
