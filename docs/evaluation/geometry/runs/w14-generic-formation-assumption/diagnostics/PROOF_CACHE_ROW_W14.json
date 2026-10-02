@@ -1,0 +1,73 @@
+{
+  "proof": "W14_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "105",
+  "rows": {
+    "dai_cm_wrong_segment": {
+      "before_w14": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "frames": 6,
+        "scene_objects": 12,
+        "formation_steps": 6,
+        "envelope_sha256": "9d215f7f9312a0b97fda10d5efbbd72583e39cd25eb8775cbf0f16fb89a28e4c"
+      },
+      "w14": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+        "frames": 0,
+        "scene_objects": 0,
+        "formation_steps": 0,
+        "envelope_sha256": "15bec3e93f200e9285d2a8217cbadce652ca4dd93a434411f6f960bc66cc8716"
+      },
+      "cached_before_w14": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "replayed_envelope_differs_from_w14": true
+    },
+    "s4_llm_gold_p1": {
+      "before_w14": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "frames": 13,
+        "scene_objects": 13,
+        "formation_steps": 13,
+        "envelope_sha256": "ca79d116ede24ad1689f7552736ccf35c4db6c0a480a800a013a6b00abb9376d"
+      },
+      "w14": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "frames": 14,
+        "scene_objects": 17,
+        "formation_steps": 14,
+        "envelope_sha256": "39aba93ad1571dd91d268ab4996d9ff583409a13cca4189e32f2f59780f649c5"
+      },
+      "cached_before_w14": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "replayed_envelope_differs_from_w14": true
+    },
+    "textless_contract": {
+      "cached_before_w14": "NOT_REACHABLE",
+      "why": "/api/analyze always builds the contract from the request text, and the cache key is that text; a textless contract never reaches the cache"
+    },
+    "assumption_probe": {
+      "cached_before_w14": "NOT_APPLICABLE",
+      "why": "Track B did not ship (ASSUMPTION_POLICY_INCOMPLETE): no served -> rejected change"
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "dai_cm_wrong_segment",
+    "s4_llm_gold_p1"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W14 would be replayed under the current version although W14 changes them: ['dai_cm_wrong_segment', 's4_llm_gold_p1']"
+}

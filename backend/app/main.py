@@ -709,7 +709,19 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       từng được phục vụ với chiều cao bịa vẫn tiếp tục được phục vụ. Chiều
 #       ngược lại (phân số/thập phân phẩy của đề nay đọc đúng: rejected → served)
 #       không cần bump — lời từ chối không được cache.
-CACHE_VERSION = "105"
+#   106 (2026-10-02, W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION): BỀ MẶT MÔ
+#       HÌNH KHÔNG ĐỔI (prompt, thẻ văn phạm, hai lược đồ, bảng năng lực giữ
+#       nguyên; fingerprint provider `b1714b566e25c912…`). Hai thay đổi trên
+#       envelope `ok`, cả hai chứng minh bằng ROW THẬT sinh bởi mã TRƯỚC W14
+#       (`runs/w14-generic-formation-assumption/diagnostics/PROOF_CACHE_ROW_W14.json`):
+#       (1) **served → rejected** (tiền lệ 96/105): "AB dài 5 cm" nay gắn số 5
+#       cho AB, nên một GIVEN `AC = 5` lấy từ con số ấy bị từ chối
+#       `SOURCE_EVIDENCE_CONFLICT` — row v105 vẫn HIT và trả lại envelope sai;
+#       (2) **nội dung cảnh đổi** (tiền lệ 97/103): bước bổ sung dựng hình theo
+#       lớp (S4) thêm đáy/chiều cao/đáy trên/cạnh bên trước khi khép mọi khối đa
+#       diện của chương trình LLM — p1 cache v105 trả 13 bước thay vì 14. Cổng
+#       giả định (Track B) KHÔNG ship, nên không có chiều từ chối nào từ nó.
+CACHE_VERSION = "106"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

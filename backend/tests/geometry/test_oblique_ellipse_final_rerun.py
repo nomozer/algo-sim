@@ -187,7 +187,9 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    envelope `ok` đổi (công thức thể tích, grounding độ dài theo bất biến).
     # 104 → 105 (W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE, 2026-09-30):
     #    GIVEN không có trong đề bị từ chối (served → rejected).
-    assert CACHE_VERSION == "105"
+    # 105 → 106 (W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION, 2026-10-02):
+    #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
+    assert CACHE_VERSION == "106"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

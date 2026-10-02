@@ -410,7 +410,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    envelope `ok` đổi (công thức thể tích, grounding độ dài theo bất biến).
     # 104 → 105 (W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE, 2026-09-30):
     #    GIVEN không có trong đề bị từ chối (served → rejected).
-    assert CACHE_VERSION == "105"
+    # 105 → 106 (W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION, 2026-10-02):
+    #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
+    assert CACHE_VERSION == "106"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

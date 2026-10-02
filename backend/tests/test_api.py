@@ -676,7 +676,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # be mat mo hinh KHONG doi; grounding tu choi GIVEN ma de khong chung minh
     # duoc (do dai bia) — chieu served -> rejected (tien le 96). Cache tra thang
     # envelope `ok` nen de tung phuc vu voi chieu cao bia phai miss.
-    assert main_module.CACHE_VERSION == "105"
+    # 105 -> 106 (W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION, 2026-10-02):
+    # be mat mo hinh KHONG doi; "AB dai 5 cm" nay gan so 5 cho AB nen GIVEN AC = 5
+    # lay tu so ay bi tu choi (served -> rejected), va buoc bo sung dung hinh theo
+    # lop doi canh `ok` cua khoi da dien tuyen LLM (S4). Row v105 that van HIT:
+    # runs/w14-generic-formation-assumption/diagnostics/PROOF_CACHE_ROW_W14.json.
+    assert main_module.CACHE_VERSION == "106"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

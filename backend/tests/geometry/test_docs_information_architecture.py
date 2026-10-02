@@ -194,7 +194,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     from app.main import CACHE_VERSION
     # 103 -> 104 (w11): envelope `ok` đổi (công thức thể tích, grounding độ dài).
     # 104 -> 105 (w12): GIVEN không có trong đề bị từ chối (served -> rejected).
-    assert str(CACHE_VERSION) == "105"
+    # 105 -> 106 (w14): "AB dài 5 cm" (served -> rejected) + dựng hình theo lớp (S4).
+    assert str(CACHE_VERSION) == "106"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
