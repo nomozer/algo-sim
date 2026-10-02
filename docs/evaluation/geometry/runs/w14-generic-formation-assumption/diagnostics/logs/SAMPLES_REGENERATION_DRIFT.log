@@ -1,0 +1,40 @@
+# W14 Task 6b — full regeneration of frontend/src/data/geometry-samples.json vs the committed file
+# command: cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/build_geometry_samples.py
+# plan expectation: the diff touches only tru-truc-xien problemText/description
+# observed: the committed file is STALE against its own generator (no drift lock exists, see CLAUDE.md §5)
+added keys (count):
+  boundary_edge_ids                   2  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  dependency_edges                   92  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  details                            66  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  display_label                     158  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  display_role                       92  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  edge_ownership                      5  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  endpoint_entities                   2  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  formation                          11  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  formation_requirements              7  W14 (role metadata, commit 44f2dd32)
+  formation_roles                    92  W14 (role metadata, commit 44f2dd32)
+  formula                            12  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  identity_diagnostics                2  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  learner_text                       66  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  occludes_edges                     87  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  section_edge_coordinate_hashes      2  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  semantic_kind                      66  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  shape_class                         7  W14 (role metadata, commit 44f2dd32)
+  surface_role                       11  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  surfaces                            5  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+  vertex_sources                      2  pre-W14 (present in scene3d.py/simulation_state.py at ce9c672d)
+changed leaf values by field (count):
+  *                                  22
+  action                              1
+  description                         1
+  explanation                        21
+  label                              15
+  narration                          42
+  notation                            5
+  origin                              6
+  problemText                         1
+  reference                           9
+  role                               25
+verdict: full regeneration NOT committed (it would ship pre-W14 presentation drift unreviewed);
+only the two Q3 text fields of tru-truc-xien were spliced into the committed file, byte-identical
+to the generator's own output for those fields. Drift recorded for the backlog.

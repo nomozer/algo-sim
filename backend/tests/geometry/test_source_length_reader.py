@@ -77,6 +77,19 @@ def test_bang_chung_doan_gan_voi_cap_dau_mut():
     assert G.bang_chung_doan("Cho lăng trụ ABC.A′B′C′ có AA′ = 5.", ("A", "A_prime"), Fraction(5))
 
 
+def test_mau_tru_truc_xien_neu_du_ban_kinh():
+    """Q3 (W14): đáp số của bài mẫu offline `tru-truc-xien` dùng bán kính OA = √5 —
+    đề phải GHI bán kính ấy (bằng chứng gắn đúng đoạn OA); đáp số không đổi."""
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
+    from scripts import build_geometry_samples as B
+
+    prog = B.chuong_trinh_tru_truc_xien()
+    assert G.bang_chung_doan(prog["description"], ("O", "A"), "√5"), prog["description"]
+    mem = SemanticProgramInterpreter().execute(SemanticProgramSpec.model_validate(prog)).final_memory
+    assert (str(mem["V"]), str(mem["Sxq"])) == ("15π", "6π√5")
+
+
 @pytest.mark.parametrize("row", [r for r in _hang_w13() if r["id"] not in DOI_DANG_KY],
                          ids=lambda r: r["id"])
 def test_cach_viet_cu_khong_doi(row):

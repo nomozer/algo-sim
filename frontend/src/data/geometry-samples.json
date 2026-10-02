@@ -3836,14 +3836,14 @@
   {
    "id": "tru-truc-xien",
    "group": "Khối cong · cầu, trụ, nón",
-   "problemText": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích và diện tích xung quanh của hình trụ.",
+   "problemText": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′ và OA = √5. Tính thể tích và diện tích xung quanh của hình trụ.",
    "envelope": {
     "status": "ok",
     "simulation_id": "generic.semantic_program",
     "domain": "geometry",
     "visual_mode": "2d",
     "title": "Hình trụ có trục xiên",
-    "description": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích và diện tích xung quanh của hình trụ.",
+    "description": "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A trên đường tròn đáy sao cho OA vuông góc với OO′ và OA = √5. Tính thể tích và diện tích xung quanh của hình trụ.",
     "config": {
      "spec_version": "1.0",
      "title": "Hình trụ có trục xiên",

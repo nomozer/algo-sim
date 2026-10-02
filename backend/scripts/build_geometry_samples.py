@@ -341,8 +341,8 @@ def chuong_trinh_tru_truc_xien() -> dict[str, Any]:
         "title": "Hình trụ có trục xiên",
         "description": (
             "Cho hình trụ có hai tâm đáy là O và O′ với OO′ = 3, và một điểm A "
-            "trên đường tròn đáy sao cho OA vuông góc với OO′. Tính thể tích "
-            "và diện tích xung quanh của hình trụ."
+            "trên đường tròn đáy sao cho OA vuông góc với OO′ và OA = √5. Tính "
+            "thể tích và diện tích xung quanh của hình trụ."
         ),
         "memory_declarations": [
             _diem("O", [0, 0, 0]), _diem("O_prime", [1, 2, 2]), _diem("A", [2, -1, 0]),
