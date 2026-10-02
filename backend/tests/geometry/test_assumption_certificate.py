@@ -19,7 +19,6 @@ chứng nhận (ruling Task 2 trong sổ W15).
 from __future__ import annotations
 
 import copy
-import dataclasses
 import importlib
 from fractions import Fraction
 
@@ -474,23 +473,24 @@ def test_cos2_ngoai_pham_vi_C1_tu_choi_ca_bai():
     assert any("angle_cos_sq" in d for d in kq.details), kq.details
 
 
-# ── đối chiếu độc lập với compiler: bất đồng ⇒ UNDETERMINED + báo động ───────────
+# ── đối chiếu độc lập: hiện thực thứ hai bất đồng ⇒ UNDETERMINED + báo động ─────
 
-def test_doi_chieu_compiler_bat_dong_thi_khong_chung_nhan(monkeypatch):
-    from app.simulation.geometry_compiler import compiler as C
+def test_doi_chieu_hien_thuc_chinh_tac_bat_dong_thi_khong_chung_nhan(monkeypatch):
+    """Đường bất đồng của phép đối chiếu C1 (ruling Task 5): hiện thực thứ hai là hiện thực
+    CHÍNH TẮC của khuôn dựng từ kích thước đề cho — không phải `compiler.bien_dich`, vì
+    `test_structured_geometry_relations::test_Y` cấm tệp sản phẩm tham chiếu gói compiler.
+    Hai hiện thực cho hai giá trị khác nhau ⇒ một trong hai thẩm quyền sai ⇒ không chứng nhận."""
+    from app.simulation.geometry.exact import Vec3
 
+    G = _gate()
+    goc = G._hien_thuc_chinh_tac
+
+    def lech(khuon, do_dai):
+        return {e: (v + Vec3.of(0, 0, 1) if e == "S" else v) for e, v in goc(khuon, do_dai).items()}
+
+    monkeypatch.setattr(G, "_hien_thuc_chinh_tac", lech)
     _t, ct = W.chop_tam_giac()
-    raw = W.chuong_trinh(ct)
-    goc = C.bien_dich
-
-    def lech(graph):
-        bd = goc(graph)
-        prog = copy.deepcopy(bd.program)
-        _dat_diem(prog, "S", [0, 0, 6])
-        return dataclasses.replace(bd, program=prog)
-
-    monkeypatch.setattr(C, "bien_dich", lech)
-    kq = _kq(ct, raw)
+    kq = _kq(ct, W.chuong_trinh(ct))
     assert kq.status == CHUA_RO, kq
     assert any("CROSS_CHECK" in d for d in kq.details), kq.details
 

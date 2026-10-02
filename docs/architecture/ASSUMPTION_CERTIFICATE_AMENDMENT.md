@@ -203,6 +203,18 @@ trị đã phủ (không literal). **Ngoài C1:** góc và cos² (W14 test (11) 
 + detail `C1_CROSS_CHECK_DISAGREES` (báo động: hai thẩm quyền bất đồng). Lượt chạy tham
 chiếu tính vào `NGAN_SACH_CHAY_LAI`.
 
+> **Đính chính 2026-10-03 (W15 Task 5, trước census).** Câu trên không làm được trên đường
+> sản phẩm: bất biến có từ trước `test_structured_geometry_relations::test_Y` cấm mọi tệp
+> sản phẩm ngoài gói compiler tham chiếu gói ấy (`DEFAULT_MODE = LLM_ONLY`, compiler CÓ
+> nhưng CHƯA BẬT). Thực chất giữ nguyên, cơ chế đổi: cổng dựng một **hiện thực chính tắc**
+> của khuôn từ kích thước đề cho (không từ toạ độ ứng viên), đặt lại literal của các đỉnh
+> khuôn theo nó, **chạy lại chính chương trình** và đòi mọi giá trị bị phủ TRÙNG KHÍT; lệch
+> ⇒ `UNDETERMINED` + `C1_CROSS_CHECK_DISAGREES`. Áp cho MỌI hàng C1 (không chỉ hợp đồng
+> compiler nhận), lượt chạy lại tính vào `NGAN_SACH_CHAY_LAI`. So với compiler chuyển sang
+> census W15 (chẩn đoán): mỗi hàng C1 compiler nhận được ghi `AGREES`/`DISAGREES`. Cái giá:
+> hiện thực chính tắc dùng chung bảng khuôn với phép kiểm ràng buộc — độc lập yếu hơn
+> compiler; census bù bằng phép so ấy.
+
 ## 7. Phản ví dụ — DEPENDENT chỉ từ một kích thước thiếu có thật
 
 - Chỉ khi một khuôn §6.2 khớp trên ràng buộc ĐỌC ĐƯỢC và một kích thước BẮT BUỘC không

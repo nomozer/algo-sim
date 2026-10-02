@@ -113,7 +113,6 @@ def test_phu_thuoc_ma_bon_phep_nhieu_khong_thay():
     _chay_tu_choi(W.ca_chan_duong_cao_an)
 
 
-@_CHUA_CO_CONG
 def test_het_ngan_sach_khong_thanh_an_toan(monkeypatch):
     """(6) Hết ngân sách chạy lại ⇒ UNDETERMINED, không bao giờ PROVEN_SAFE.
 
@@ -159,7 +158,6 @@ def test_dong_dang_nhung_nhan_them_vo_huong_gia_dinh():
     assert _gate().danh_gia_doc_lap(ct, W.spec_cua(raw)).certificate != "C1"
 
 
-@_CHUA_CO_CONG
 def test_bo_mot_phu_thuoc_khoi_do_thi(monkeypatch):
     """(9) Bảng toán hạng thiếu một trường ⇒ bao đóng KHÔNG đầy đủ ⇒ không chứng chỉ."""
     G = _gate()
@@ -174,7 +172,6 @@ def test_bo_mot_phu_thuoc_khoi_do_thi(monkeypatch):
     assert G.kieu_ir_chua_phu(), "phép kiểm phủ của bảng phải đỏ khi thiếu một trường"
 
 
-@_CHUA_CO_CONG
 def test_bang_toan_hang_phu_moi_kieu_IR():
     assert _gate().kieu_ir_chua_phu() == []
 
