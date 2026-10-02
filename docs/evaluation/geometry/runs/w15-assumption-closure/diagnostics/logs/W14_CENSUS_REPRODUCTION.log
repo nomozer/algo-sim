@@ -1,0 +1,13 @@
+# W15 Task 1 — W14 census reproduced at 4f6a0ab6 on the unchanged W14 corpus (sha256 below); outputs written to new files
+d8bd71e9a876fb44e7d0b04167ff84d931e576cb0ad318beb6ae93405bfb76a9 *docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/assumption_corpus/CORPUS.json
+dc2f8890a571e6e1f61deb27f71ebcaf7670ed99db28e95ffa6560b0343df17f *docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/assumption_corpus/LABELS.json
+32d0d9cf084fbdd253819aef31e83e88c4b7d67e7c5528cb55e77c866d6ae66d *docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/ASSUMPTION_CENSUS.json
+..\docs\evaluation\geometry\runs\w15-assumption-closure\diagnostics\w14_census_reproduction\ASSUMPTION_CENSUS.json ..\docs\evaluation\geometry\runs\w15-assumption-closure\diagnostics\w14_census_reproduction\ASSUMPTION_MECHANISM_DECISION.json
+exit=0
+## comparison with the committed W14 census
+rows: 48 vs 48 | same ids: True | field differences: 0 []
+decision W14: "STOP" | reproduced: "STOP" | equal: True
+ac2_rows W14: 18 | reproduced: 18 | equal: True
+ac2_proven_safe W14: 0 | reproduced: 0 | equal: True
+ce_false_counterexamples_on_INVARIANT W14: [{"id": "adv10_quan_he_claimed", "perturbation": ["E[2]x2", "the_tich_lang_tru"]}, {"id": "adv10_quan_he_gia_dinh", "per | reproduced: [{"id": "adv10_quan_he_claimed", "perturbation": ["E[2]x2", "the_tich_lang_tru"]}, {"id": "adv10_quan_he_gia_dinh", "per | equal: True
+violations_PROVEN_SAFE_on_DEPENDS W14: [] | reproduced: [] | equal: True

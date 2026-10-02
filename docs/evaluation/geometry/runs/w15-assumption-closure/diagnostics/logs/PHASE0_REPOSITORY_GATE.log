@@ -1,0 +1,27 @@
+# W15 Phase 0 repository gate — 2026-10-02T17:15:13Z
+## fetch
+fetch_exit=0
+## identity
+branch=fix/cuboid-visual-semantic-closure
+HEAD=4f6a0ab60b964da83b978c8b617e776c318fc7b8
+origin/main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+ls-remote main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce	refs/heads/main
+ORIGIN_MAIN_IS_ANCESTOR
+ahead/behind (HEAD...origin/main): 131	0
+## status
+ D frontend/public/favicon.svg
+?? docs/evaluation/geometry/runs/w15-assumption-closure/
+## mode / cache
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+724:CACHE_VERSION = "106"
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 105 file, 40263983f97811ad…).
+cand=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 106 · môi trường b1714b566e25c912…
+cache=0
+## schema mirrors
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json
+## worktrees
+D:/Documents/projects/algo-sim  4f6a0ab6 [fix/cuboid-visual-semantic-closure]

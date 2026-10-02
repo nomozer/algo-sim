@@ -1,0 +1,49 @@
+{
+  "schema_version": "scope-decisions/1",
+  "wave": "W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE",
+  "rule": "Only the decisions below are recorded as decided. D1-D3 are quoted from the W15 brief; U1-U2 are the user's answers to AskUserQuestion during planning, with the options as shown; R1-R4 are the user's plan-review directives (rejection of the first plan submission). Nothing else is marked approved; any later decision without a user answer is PENDING_USER_DECISION.",
+  "from_brief": [
+    {
+      "id": "W15-D1",
+      "verbatim": "Chương trình vốn bị từ chối và không tạo cảnh cho người học không bắt buộc có playback dựng hình hoàn chỉnh. Đối với n2_khoi_ghep_bu_can_boolean: Giữ nguyên nhiệm vụ kiểm tra từ chối đúng. Không crash, không trả đáp số hoặc cảnh gây hiểu lầm. Không đoán đáy để ép AMBIGUOUS_TOPOLOGY thành COMPLETED. Không triển khai composite geometry chỉ để làm n2 xanh. Ghi quyết định này trong hồ sơ mới và tài liệu sống. Giữ nguyên báo cáo lịch sử W14 và kết luận tại thời điểm đó."
+    },
+    {
+      "id": "W15-D2",
+      "verbatim": "Ưu tiên chứng chỉ có căn cứ cho các phép đo/họ hiện hỗ trợ. Không chấp nhận phương án “từ chối tất cả” là hoàn thành. Không chuyển sang chỉ gắn nhãn giả định rồi vẫn tính đáp số khi đáp số phụ thuộc kích thước đề không cung cấp."
+    },
+    {
+      "id": "W15-D3",
+      "verbatim": "Bốn cảnh đổi ở W14 vẫn cần người duyệt. Không tự ghi APPROVED_BY_USER hoặc sửa registry kỳ vọng người. Automation tối đa là READY_FOR_HUMAN_VISUAL_REVIEW."
+    }
+  ],
+  "user_answers": [
+    {
+      "id": "U1",
+      "date": "2026-10-02",
+      "question": "Chứng chỉ giả định cần bằng chứng từ đề cho quan hệ vuông góc, loại khối (lăng trụ đứng, hộp chữ nhật, lập phương) và loại đáy (chữ nhật, vuông, tam giác vuông). Lấy bằng chứng này theo cách nào?",
+      "options_shown": [
+        "Bộ đọc ràng buộc từ đề (Khuyên dùng) — bộ đọc tất định cùng họ với point_coordinate và plane_equation; server đọc câu đề, phát ràng buộc do server sở hữu, gắn đúng tên đỉnh; chỉ dùng để xác nhận và để kiểm phản ví dụ, không đưa vào fact graph.",
+        "Chỉ xác nhận câu analyze trích — chỉ dùng quan hệ có kiểu của analyze kèm fact được trích nếu câu trích có nguyên văn trong đề và nhắc đúng tên đỉnh; 4 demo T3 không chứng nhận được."
+      ],
+      "answer": "Bộ đọc ràng buộc từ đề (Khuyên dùng)"
+    },
+    {
+      "id": "U2",
+      "date": "2026-10-02",
+      "question": "Bốn cảnh mà W14 làm đổi có kỳ vọng khuất/hiện của người không chuyển được (SCENE_GEOMETRY_CHANGED). Theo D3, chúng vẫn chờ người duyệt. Trong kết luận W15, tính chúng thế nào?",
+      "options_shown": [
+        "Chờ người duyệt, không tính lỗi (Khuyên dùng) — cổng tự động: sản phẩm khớp oracle ở mọi trạng thái và chẩn đoán tái tạo đúng tập đã duyệt; bốn cảnh ghi HUMAN_REVIEW_PENDING; registry giữ nguyên.",
+        "Tính là cổng chưa sạch — kết luận W15 tối đa VERIFICATION_NOT_CLEAN cho tới khi người duyệt bốn cảnh."
+      ],
+      "answer": "Chờ người duyệt, không tính lỗi (Khuyên dùng)"
+    }
+  ],
+  "plan_review_directives": [
+    {"id": "R1", "verbatim_heading": "Phân biệt hằng số toán học với tham số hình học", "key": "Không cho phép mọi dimensionless constant đi qua C0/C1. ... Mỗi literal cần có căn cứ về vai trò và nguồn. Thêm red tests cho tỉ lệ chia cạnh không được đề xác định ... Không chứng nhận chỉ vì dimensional analysis hợp lệ."},
+    {"id": "R2", "verbatim_heading": "Làm rõ claimed và bằng chứng độc lập", "key": "claimed có nghĩa chưa được xác nhận; không mặc định có nghĩa đề không cung cấp quan hệ. ... không nâng fact mô hình thành GIVEN. Tách: chưa được xác nhận; bị nguồn bác bỏ hoặc mâu thuẫn; model_assumption; đã được server xác nhận độc lập. Giữ yêu cầu thực chất của test (10) ... Không giữ veto claimed máy móc, cũng không xoá test để làm 18/18 xanh."},
+    {"id": "R3", "verbatim_heading": "Chứng chỉ phải kiểm giá trị thực sự đi vào phép đo", "key": "C0 không được chỉ kiểm final value ... Closure phải theo reaching definitions/phiên bản giá trị hoặc cơ chế tương đương; trường hợp chưa xử lý được là UNDETERMINED. Thêm red tests cho overwrite, alias và khôi phục sau phép đo. Áp dụng nguyên tắc này cho cả C0 và C1."},
+    {"id": "R4", "verbatim_heading": "Oracle section fill phải có baseline so sánh hợp lệ", "key": "So cùng vùng chiếu, cùng camera và trạng thái hình học, với section fill bật/tắt; hoặc dùng baseline compositing độc lập có giải thích rõ. Gate phải bắt missing fill, fill xuất hiện sớm và fill không mất khi tua ngược. Ngưỡng màu cần được đăng ký trước measurement."},
+    {"id": "R-general", "key": "Task 1 phải kiểm chứng từng nhận định về 18 gold rows; không coi kết luận đọc mã là bằng chứng toán học hoàn chỉnh."}
+  ],
+  "approved_plan": "C:/Users/Bunny/.claude/plans/curried-splashing-finch.md (approved 2026-10-03 after the R1-R4 amendments)"
+}

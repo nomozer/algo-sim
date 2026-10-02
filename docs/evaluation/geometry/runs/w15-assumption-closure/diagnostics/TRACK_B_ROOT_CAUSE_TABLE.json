@@ -1,0 +1,6865 @@
+{
+  "table": "W15_TRACK_B_ROOT_CAUSE_TABLE",
+  "model_calls": 0,
+  "w14_census_reproduced": "w14_census_reproduction/ASSUMPTION_CENSUS.json",
+  "rows": [
+    {
+      "id": "ac1_given_length",
+      "group": "AC1",
+      "label": "DEPENDS",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "grounding",
+        "servable": false,
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "D[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            102,
+            118
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "D[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": false
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD",
+          "translation CF = AD"
+        ],
+        "valid_witness": false
+      },
+      "valid_witness_example": {
+        "perturbation": "D+E+F axis z ×2 together",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": true
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        },
+        "broken_text_constraints": [],
+        "valid_witness": true
+      },
+      "root_causes": [
+        {
+          "rc": "RC5",
+          "why": "W14 witness D[2]x2 breaks: ['translation BE = AD', 'translation CF = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "ac1_layout_derived",
+      "group": "AC1",
+      "label": "DEPENDS",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "D[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            102,
+            118
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "D[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": false
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD",
+          "translation CF = AD"
+        ],
+        "valid_witness": false
+      },
+      "valid_witness_example": {
+        "perturbation": "D+E+F axis z ×2 together",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": true
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        },
+        "broken_text_constraints": [],
+        "valid_witness": true
+      },
+      "root_causes": [
+        {
+          "rc": "RC5",
+          "why": "W14 witness D[2]x2 breaks: ['translation BE = AD', 'translation CF = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "ac1_model_assumption",
+      "group": "AC1",
+      "label": "DEPENDS",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "D[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            102,
+            118
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "D[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": false
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD",
+          "translation CF = AD"
+        ],
+        "valid_witness": false
+      },
+      "valid_witness_example": {
+        "perturbation": "D+E+F axis z ×2 together",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 2,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": true
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        },
+        "broken_text_constraints": [],
+        "valid_witness": true
+      },
+      "root_causes": [
+        {
+          "rc": "RC5",
+          "why": "W14 witness D[2]x2 breaks: ['translation BE = AD', 'translation CF = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "adv10_quan_he_claimed",
+      "group": "CERT_LIMIT",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'f_claimed', not a confirmed InputFact",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "f_claimed",
+          "cited_fact_exists": true,
+          "cited_fact_provenance": "claimed",
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "adv10_quan_he_gia_dinh",
+      "group": "CERT_LIMIT",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": true,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "adv10_quan_he_khong_nguon",
+      "group": "CERT_LIMIT",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": null,
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', None]",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "adv11_hai_dap_so_mot_ngoai_pham_vi",
+      "group": "CERT_LIMIT",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF. Tính cos² của góc giữa AD và mặt phẳng (ABC).",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        },
+        {
+          "target": "g",
+          "value": "0"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "g",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "adv8_nhan_vo_huong_gia_dinh",
+      "group": "CERT_LIMIT",
+      "label": "DEPENDS",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF. Cho điểm M bất kỳ.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F', 'M']",
+        "c1": "supported operation: the_tich_lang_tru: arith/None outside PHEP_DO_C1",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "M",
+        "k",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false,
+        "M": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "M"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "k",
+          "value": "1"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "k",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "valid_witness_example": {
+        "perturbation": "M axis x ×2 together",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": true
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [
+          "giá trị không khớp: chương trình khai V = 60, khối cho V = 30"
+        ],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        },
+        "broken_text_constraints": [
+          "postcondition: giá trị không khớp: chương trình khai V = 60, khối cho V = 30"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC5",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "demo:n1_thoi_dinh_thu_tu",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian với hệ toạ độ Oxyz, cho ba đỉnh liên tiếp của một hình thoi MNPQ là M(1; 0; 2), N(4; 0; 2) và P(5; 2; 4). Tính khoảng cách từ đỉnh Q đến đường thẳng MP.",
+      "requested": [
+        {
+          "kind": "distance",
+          "witness": "dist_q_mp"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['M', 'N', 'P']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "M[0]x2",
+          "dist_q_mp"
+        ]
+      },
+      "stored_source_invariants": [],
+      "text_invariants_today": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "M"
+          ],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "N"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "P"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "2",
+            "4"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "M"
+          ],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "N"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "P"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "2",
+            "4"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [],
+      "typed_relations": [],
+      "text_shape_constraints": [
+        "rhombus MNPQ: M + P = N + Q",
+        "rhombus MNPQ: |MN| = |NP|"
+      ],
+      "witness_closure": [
+        "H",
+        "M",
+        "MP",
+        "N",
+        "P",
+        "Q",
+        "dist_q_mp",
+        "vec_np"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "M": true,
+        "N": true,
+        "P": true
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "vec_np",
+          "value": null
+        },
+        {
+          "target": "dist_q_mp",
+          "value": "Radical(he=Fraction(1, 1), can=3, mu=0)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "dist_q_mp": "Radical(he=Fraction(1, 1), can=3, mu=0)"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "M[0]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": false,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "rhombus MNPQ: M + P = N + Q",
+            "holds": true
+          },
+          {
+            "constraint": "rhombus MNPQ: |MN| = |NP|",
+            "holds": false
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "dist_q_mp": [
+            "Radical(he=Fraction(1, 1), can=3, mu=0)",
+            "Radical(he=Fraction(4, 17), can=34, mu=0)"
+          ]
+        },
+        "broken_text_constraints": [
+          "text invariant: M(1, 0, 2): đề cho M(1, 0, 2), hình dựng đặt nó ở (2, 0, 2) — lệch x (nguồn: m_coords)",
+          "rhombus MNPQ: |MN| = |NP|"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        },
+        {
+          "rc": "STALE_CONTRACT",
+          "why": "stored contract has 0 source invariants; today's builders emit 3",
+          "class": "corpus/product (stored contract predates the text-invariant builders)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness M[0]x2 breaks: ['text invariant: M(1, 0, 2): đề cho M(1, 0, 2), hình dựng đặt nó ở (2, 0, 2) — lệch x (nguồn: m_coords)', 'rhombus MNPQ: |MN| = |NP|']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "demo:n2_lang_tru_xien_hai_vecto",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz cho lăng trụ ABC.A'B'C' có A(0; 0; 0), B(4; 0; 0), C(0; 4; 0) và A'(1; 1; 3). Ba cạnh bên AA', BB', CC' đôi một song song và bằng nhau. Gọi I là trung điểm của B'C'. Tính khoảng cách từ A đến đường thẳng B'I.",
+      "requested": [
+        {
+          "kind": "distance",
+          "witness": "khoang_cach_A_B_prime_I"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'C']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "A[0]+1",
+          "khoang_cach_A_B_prime_I"
+        ]
+      },
+      "stored_source_invariants": [],
+      "text_invariants_today": [
+        {
+          "kind": "segment_division",
+          "points": [
+            "B'",
+            "C'",
+            "I"
+          ],
+          "expected": "1/2"
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A'"
+          ],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "1",
+            "3"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "B"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "C"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "4",
+            "0"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_division",
+          "points": [
+            "B'",
+            "C'",
+            "I"
+          ],
+          "expected": "1/2"
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A'"
+          ],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "1",
+            "3"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "B"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "C"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "4",
+            "0"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.A'B'C'",
+          "span": [
+            26,
+            45
+          ]
+        }
+      ],
+      "typed_relations": [],
+      "text_shape_constraints": [
+        "translation BB_prime = AA_prime",
+        "translation CC_prime = AA_prime"
+      ],
+      "witness_closure": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "B_prime_I",
+        "C",
+        "C_prime",
+        "I",
+        "khoang_cach_A_B_prime_I",
+        "vector_AA_prime"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "A_prime": true,
+        "B": true,
+        "C": true
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "vector_AA_prime",
+          "value": null
+        },
+        {
+          "target": "khoang_cach_A_B_prime_I",
+          "value": "Radical(he=Fraction(3, 1), can=3, mu=0)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "khoang_cach_A_B_prime_I": "Radical(he=Fraction(3, 1), can=3, mu=0)"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "A[0]+1",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": false,
+        "text_invariants_checked": 5,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BB_prime = AA_prime",
+            "holds": true
+          },
+          {
+            "constraint": "translation CC_prime = AA_prime",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "khoang_cach_A_B_prime_I": [
+            "Radical(he=Fraction(3, 1), can=3, mu=0)",
+            "Radical(he=Fraction(1, 1), can=17, mu=0)"
+          ]
+        },
+        "broken_text_constraints": [
+          "text invariant: A(0, 0, 0): đề cho A(0, 0, 0), hình dựng đặt nó ở (1, 0, 0) — lệch x (nguồn: coord_A)"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        },
+        {
+          "rc": "STALE_CONTRACT",
+          "why": "stored contract has 0 source invariants; today's builders emit 5",
+          "class": "corpus/product (stored contract predates the text-invariant builders)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness A[0]+1 breaks: ['text invariant: A(0, 0, 0): đề cho A(0, 0, 0), hình dựng đặt nó ở (1, 0, 0) — lệch x (nguồn: coord_A)']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "demo:t3_hop_tinh_tien_day_chuyen",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4 và AA' = 6. Gọi M là trung điểm của cạnh CC'. Tính khoảng cách từ đỉnh A đến đường thẳng B'M.",
+      "requested": [
+        {
+          "kind": "distance",
+          "witness": "khoang_cach_a_b_prime_m"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "A[0]+1",
+          "khoang_cach_a_b_prime_m"
+        ]
+      },
+      "stored_source_invariants": [],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "6"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "6"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "hình hộp chữ nhật ABCD.A'B'C'D'",
+          "span": [
+            4,
+            35
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "hình hộp chữ nhật",
+          "span": [
+            4,
+            21
+          ]
+        }
+      ],
+      "typed_relations": [],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "translation BB_prime = AA_prime",
+        "translation CC_prime = AA_prime",
+        "translation DD_prime = AA_prime",
+        "lateral AA_prime ⊥ base"
+      ],
+      "witness_closure": [
+        "A",
+        "A_prime",
+        "B",
+        "B'M",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "M",
+        "khoang_cach_a_b_prime_m",
+        "vec_AA_prime",
+        "vec_AD"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "A_prime": false,
+        "B": false,
+        "D": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "A_prime",
+        "B",
+        "D"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "vec_AD",
+          "value": null
+        },
+        {
+          "target": "vec_AA_prime",
+          "value": null
+        },
+        {
+          "target": "khoang_cach_a_b_prime_m",
+          "value": "Radical(he=Fraction(3, 5), can=89, mu=0)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "khoang_cach_a_b_prime_m": "Radical(he=Fraction(3, 5), can=89, mu=0)"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "A[0]+1",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": false,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "ABCD parallelogram",
+            "holds": true
+          },
+          {
+            "constraint": "AB ⊥ AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation BB_prime = AA_prime",
+            "holds": true
+          },
+          {
+            "constraint": "translation CC_prime = AA_prime",
+            "holds": true
+          },
+          {
+            "constraint": "translation DD_prime = AA_prime",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AA_prime ⊥ base",
+            "holds": false
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "khoang_cach_a_b_prime_m": [
+            "Radical(he=Fraction(3, 5), can=89, mu=0)",
+            "Radical(he=Fraction(8, 101), can=3737, mu=0)"
+          ]
+        },
+        "broken_text_constraints": [
+          "text invariant: AA' = 6: đề cho 6, hình dựng có AA'² = 37 (cần 36)",
+          "text invariant: AB = 3: đề cho 3, hình dựng có AB² = 4 (cần 9)",
+          "text invariant: AD = 4: đề cho 4, hình dựng có AD² = 17 (cần 16)",
+          "AB ⊥ AD",
+          "lateral AA_prime ⊥ base"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC3",
+          "why": "template configuration with unpinned DOFs, but the stored contract carries no typed relations/solid_topology for the compiler recognizer",
+          "class": "certificate"
+        },
+        {
+          "rc": "STALE_CONTRACT",
+          "why": "stored contract has 0 source invariants; today's builders emit 3",
+          "class": "corpus/product (stored contract predates the text-invariant builders)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness A[0]+1 breaks: [\"text invariant: AA' = 6: đề cho 6, hình dựng có AA'² = 37 (cần 36)\", 'text invariant: AB = 3: đề cho 3, hình dựng có AB² = 4 (cần 9)', 'text invariant: AD = 4: đề cho 4, hình dựng có AD² = 17 (cần 16)', 'AB ⊥ AD', 'lateral AA_prime ⊥ base']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "demo:t4_mat_xich_trong_chuoi_sau",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành với AB = 4, AD = 2 và AB vuông góc với AD. Cạnh SA vuông góc với mặt phẳng đáy và SA = 4. Gọi I là giao điểm của AC và BD, H là hình chiếu vuông góc của I lên mặt phẳng (SAB). Tính khoảng cách từ H đến đỉnh C.",
+      "requested": [
+        {
+          "kind": "distance",
+          "witness": "khoang_cach_hc"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "A[0]+1",
+          "khoang_cach_hc"
+        ]
+      },
+      "stored_source_invariants": [],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "2"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "2"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "hình chóp S.ABCD",
+          "span": [
+            4,
+            20
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABCD là hình bình hành",
+          "span": [
+            24,
+            50
+          ]
+        },
+        {
+          "rule": "line_perp_plane",
+          "match": "SA vuông góc với mặt phẳng đáy",
+          "span": [
+            99,
+            129
+          ]
+        },
+        {
+          "rule": "line_perp_line",
+          "match": "AB vuông góc với AD",
+          "span": [
+            73,
+            92
+          ]
+        }
+      ],
+      "typed_relations": [],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "SA ⊥ (ABCD)"
+      ],
+      "witness_closure": [
+        "A",
+        "AB_vector",
+        "AC_line",
+        "B",
+        "BD_line",
+        "C",
+        "D",
+        "H",
+        "I",
+        "S",
+        "SAB_plane",
+        "khoang_cach_hc"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "D": false,
+        "S": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "D",
+        "S"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "AB_vector",
+          "value": null
+        },
+        {
+          "target": "khoang_cach_hc",
+          "value": "Radical(he=Fraction(2, 1), can=2, mu=0)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "khoang_cach_hc": "Radical(he=Fraction(2, 1), can=2, mu=0)"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "A[0]+1",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": false,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "ABCD parallelogram",
+            "holds": true
+          },
+          {
+            "constraint": "AB ⊥ AD",
+            "holds": false
+          },
+          {
+            "constraint": "SA ⊥ (ABCD)",
+            "holds": false
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "khoang_cach_hc": [
+            "Radical(he=Fraction(2, 1), can=2, mu=0)",
+            "Radical(he=Fraction(1, 1), can=5, mu=0)"
+          ]
+        },
+        "broken_text_constraints": [
+          "text invariant: AB = 4: đề cho 4, hình dựng có AB² = 9 (cần 16)",
+          "text invariant: AD = 2: đề cho 2, hình dựng có AD² = 5 (cần 4)",
+          "text invariant: AS = 4: đề cho 4, hình dựng có AS² = 17 (cần 16)",
+          "AB ⊥ AD",
+          "SA ⊥ (ABCD)"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC3",
+          "why": "template configuration with unpinned DOFs, but the stored contract carries no typed relations/solid_topology for the compiler recognizer",
+          "class": "certificate"
+        },
+        {
+          "rc": "STALE_CONTRACT",
+          "why": "stored contract has 0 source invariants; today's builders emit 3",
+          "class": "corpus/product (stored contract predates the text-invariant builders)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness A[0]+1 breaks: ['text invariant: AB = 4: đề cho 4, hình dựng có AB² = 9 (cần 16)', 'text invariant: AD = 2: đề cho 2, hình dựng có AD² = 5 (cần 4)', 'text invariant: AS = 4: đề cho 4, hình dựng có AS² = 17 (cần 16)', 'AB ⊥ AD', 'SA ⊥ (ABCD)']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "gold:p1_chop_thiet_dien_khoang_cach",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_volume_sabcd"
+        },
+        {
+          "kind": "area",
+          "witness": "area_T"
+        },
+        {
+          "kind": "distance",
+          "witness": "dist_S_BD"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'S']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "1",
+            "-3"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "B"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "C"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "D"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "6"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "1",
+            "-3"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "B"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "C"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "D"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "6"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "1",
+            "-3"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "B"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "C"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "D"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "6"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.ABCD",
+          "span": [
+            27,
+            43
+          ]
+        },
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.ABCD",
+          "span": [
+            201,
+            217
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABCD là hình vuông",
+          "span": [
+            47,
+            69
+          ]
+        }
+      ],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "A",
+        "B",
+        "BD",
+        "C",
+        "D",
+        "S",
+        "S.ABCD",
+        "T",
+        "alpha_plane",
+        "area_T",
+        "dist_S_BD",
+        "the_volume_sabcd"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "B": true,
+        "C": true,
+        "D": true,
+        "S": true
+      },
+      "closure_plane_equations_pinned_by_text": {
+        "alpha_plane": true
+      },
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "the_volume_sabcd",
+          "value": "72"
+        },
+        {
+          "target": "area_T",
+          "value": "9"
+        },
+        {
+          "target": "dist_S_BD",
+          "value": "Radical(he=Fraction(3, 1), can=6, mu=0)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "the_volume_sabcd": "72",
+        "area_T": "9",
+        "dist_S_BD": "Radical(he=Fraction(3, 1), can=6, mu=0)"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "gold:p2_chop_day_ngu_giac_lom",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho khối chóp S.MNPQR có đáy MNPQR là một ngũ giác LÕM nằm trong mặt phẳng Oxy. Các đỉnh của đáy theo thứ tự quanh biên là M(0;0;0), N(8;0;0), P(8;6;0), Q(4;2;0), R(0;6;0); đỉnh của khối chóp là S(3;3;9). Tính thể tích khối chóp S.MNPQR.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "V_S_MNPQR"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['M', 'N', 'P', 'Q', 'R', 'S']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "M"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "N"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "P"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "Q"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "R"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "3",
+            "3",
+            "9"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "M"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "N"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "P"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "Q"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "R"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "3",
+            "3",
+            "9"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "M"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "N"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "P"
+          ],
+          "expected": "",
+          "coefficients": [
+            "8",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "Q"
+          ],
+          "expected": "",
+          "coefficients": [
+            "4",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "R"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "6",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "3",
+            "3",
+            "9"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.MNPQR",
+          "span": [
+            27,
+            44
+          ]
+        },
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.MNPQR",
+          "span": [
+            242,
+            259
+          ]
+        }
+      ],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "V_S_MNPQR",
+        "pyramid_s_mnpqr"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "M": true,
+        "N": true,
+        "P": true,
+        "Q": true,
+        "R": true,
+        "S": true
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "V_S_MNPQR",
+          "value": "96"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "V_S_MNPQR": "96"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;10); điểm A(6;0;0) nằm trên đường tròn đáy tâm O. Tính thể tích khối trụ và diện tích xung quanh của hình trụ đó.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "V"
+        },
+        {
+          "kind": "lateral_area",
+          "witness": "Sxq"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'K', 'O']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "10"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "10"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "10"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "A",
+        "K",
+        "O",
+        "Sxq",
+        "V",
+        "hình trụ",
+        "khối trụ"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "K": true,
+        "O": true
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "hình trụ",
+          "value": null
+        },
+        {
+          "target": "V",
+          "value": "Radical(he=Fraction(360, 1), can=1, mu=1)"
+        },
+        {
+          "target": "Sxq",
+          "value": "Radical(he=Fraction(120, 1), can=1, mu=1)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "V": "Radical(he=Fraction(360, 1), can=1, mu=1)",
+        "Sxq": "Radical(he=Fraction(120, 1), can=1, mu=1)"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "gold:p5_hinh_non_the_tich_va_xung_quanh",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(5;0;0) nằm trên đường tròn đáy. Tính thể tích khối nón và diện tích xung quanh của hình nón đó.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_khoi_non"
+        },
+        {
+          "kind": "lateral_area",
+          "witness": "dien_tich_xung_quanh_hinh_non"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'O', 'S']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "A",
+        "O",
+        "S",
+        "dien_tich_xung_quanh_hinh_non",
+        "hình nón",
+        "khối nón",
+        "the_tich_khoi_non"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "O": true,
+        "S": true
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "the_tich_khoi_non",
+          "value": "Radical(he=Fraction(100, 1), can=1, mu=1)"
+        },
+        {
+          "target": "hình nón",
+          "value": null
+        },
+        {
+          "target": "dien_tich_xung_quanh_hinh_non",
+          "value": "Radical(he=Fraction(65, 1), can=1, mu=1)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "the_tich_khoi_non": "Radical(he=Fraction(100, 1), can=1, mu=1)",
+        "dien_tich_xung_quanh_hinh_non": "Radical(he=Fraction(65, 1), can=1, mu=1)"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "gold:p6_thiet_dien_elip_cua_hinh_tru",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho hình trụ có hai đáy là hai hình tròn tâm O(0;0;0) và K(0;0;24); điểm A(5;0;0) nằm trên đường tròn đáy tâm O. Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ theo một đường elip (E). Tính diện tích hình elip (E).",
+      "requested": [
+        {
+          "kind": "area",
+          "witness": "dien_tich_elip_e"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'K', 'O']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "2",
+            "0",
+            "-1",
+            "12"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "24"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "2",
+            "0",
+            "-1",
+            "12"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "24"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "2",
+            "0",
+            "-1",
+            "12"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "5",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "K"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "24"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "A",
+        "E",
+        "K",
+        "O",
+        "dien_tich_elip_e",
+        "hinh_tru",
+        "mat_phang_alpha"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "K": true,
+        "O": true
+      },
+      "closure_plane_equations_pinned_by_text": {
+        "mat_phang_alpha": true
+      },
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "E",
+          "value": null
+        },
+        {
+          "target": "dien_tich_elip_e",
+          "value": "Radical(he=Fraction(25, 1), can=5, mu=1)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "dien_tich_elip_e": "Radical(he=Fraction(25, 1), can=5, mu=1)"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "gold:p7_thiet_dien_elip_cua_hinh_non",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Trong không gian Oxyz, cho hình nón có đỉnh S(0;0;12), tâm đáy O(0;0;0) và điểm A(6;0;0) nằm trên đường tròn đáy. Mặt phẳng (β): x + z − 9 = 0 cắt hình nón theo một đường elip (E). Tính diện tích hình elip (E).",
+      "requested": [
+        {
+          "kind": "area",
+          "witness": "dien_tich_E"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'O', 'S']",
+        "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "0",
+            "1",
+            "-9"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "0",
+            "1",
+            "-9"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "plane_equation",
+          "points": [],
+          "expected": "",
+          "coefficients": [
+            "1",
+            "0",
+            "1",
+            "-9"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "A"
+          ],
+          "expected": "",
+          "coefficients": [
+            "6",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "O"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "point_coordinate",
+          "points": [
+            "S"
+          ],
+          "expected": "",
+          "coefficients": [
+            "0",
+            "0",
+            "12"
+          ]
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [],
+      "typed_relations": [],
+      "text_shape_constraints": [],
+      "witness_closure": [
+        "A",
+        "E",
+        "O",
+        "S",
+        "cone",
+        "dien_tich_E",
+        "plane_beta"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": true,
+        "O": true,
+        "S": true
+      },
+      "closure_plane_equations_pinned_by_text": {
+        "plane_beta": true
+      },
+      "unpinned_dofs": [],
+      "shown_numeric_values": [
+        {
+          "target": "E",
+          "value": null
+        },
+        {
+          "target": "dien_tich_E",
+          "value": "Radical(he=Fraction(2, 1), can=6, mu=1)"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [],
+      "original_values": {
+        "dien_tich_E": "Radical(he=Fraction(2, 1), can=6, mu=1)"
+      },
+      "original_shape_constraints_hold": null,
+      "root_causes": [
+        {
+          "rc": "RC1",
+          "why": "every closure literal (points, plane equations) is pinned by a text-only invariant of the same entity, yet W14 C0 rejected it as class A/C",
+          "class": "certificate"
+        }
+      ]
+    },
+    {
+      "id": "ho:chop_chu_nhat",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "v"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'S']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "C[0]x2",
+          "v"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "6"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "6"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "6"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "hình chóp S.ABCD",
+          "span": [
+            4,
+            20
+          ]
+        },
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.ABCD",
+          "span": [
+            130,
+            146
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABCD là hình chữ nhật",
+          "span": [
+            24,
+            49
+          ]
+        },
+        {
+          "rule": "line_perp_plane",
+          "match": "SA vuông góc với mặt phẳng đáy",
+          "span": [
+            76,
+            106
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "D"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "SA ⊥ (ABCD)"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "khoi_chop",
+        "the_tich_khoi_chop",
+        "v"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "S": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABCD",
+          "value": "12"
+        },
+        {
+          "target": "the_tich_khoi_chop",
+          "value": "24"
+        },
+        {
+          "target": "v",
+          "value": "24"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_chop"
+      ],
+      "original_values": {
+        "v": "24"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "C[0]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "ABCD parallelogram",
+            "holds": false
+          },
+          {
+            "constraint": "AB ⊥ AD",
+            "holds": true
+          },
+          {
+            "constraint": "SA ⊥ (ABCD)",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "v": [
+            "24",
+            "36"
+          ]
+        },
+        "broken_text_constraints": [
+          "ABCD parallelogram"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness C[0]x2 breaks: ['ABCD parallelogram']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "ho:chop_tam_giac",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_khoi"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'S']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "NO_VALID_COUNTEREXAMPLE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "hình chóp S.ABC",
+          "span": [
+            4,
+            19
+          ]
+        },
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.ABC",
+          "span": [
+            125,
+            140
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            23,
+            54
+          ]
+        },
+        {
+          "rule": "line_perp_plane",
+          "match": "SA vuông góc với đáy",
+          "span": [
+            81,
+            101
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "right angle at A",
+        "SA ⊥ (ABC)"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "S",
+        "khoi_chop",
+        "the_tich_khoi",
+        "the_tich_khoi_chop"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "S": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_khoi_chop",
+          "value": "10"
+        },
+        {
+          "target": "the_tich_khoi",
+          "value": "10"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_khoi_chop"
+      ],
+      "original_values": {
+        "the_tich_khoi": "10"
+      },
+      "original_shape_constraints_hold": true,
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        }
+      ]
+    },
+    {
+      "id": "ho:hop_chu_nhat",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "V"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+        "c1": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "5"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "5"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "5"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "4"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "hình hộp chữ nhật ABCD.A'B'C'D'",
+          "span": [
+            4,
+            35
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "hình hộp chữ nhật",
+          "span": [
+            4,
+            21
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "D"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A'",
+            "A"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "D"
+          ],
+          "cites": "fact_perp_lat",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "translation BB_prime = AA_prime",
+        "translation CC_prime = AA_prime",
+        "translation DD_prime = AA_prime",
+        "lateral AA_prime ⊥ base"
+      ],
+      "witness_closure": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "V",
+        "khoi_hop",
+        "the_tich_khoi_hop"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "A_prime": false,
+        "B": false,
+        "B_prime": false,
+        "C": false,
+        "C_prime": false,
+        "D": false,
+        "D_prime": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABCD",
+          "value": "12"
+        },
+        {
+          "target": "chieu_cao_AA_prime",
+          "value": "5"
+        },
+        {
+          "target": "the_tich_khoi_hop",
+          "value": "60"
+        },
+        {
+          "target": "V",
+          "value": "60"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_hop"
+      ],
+      "original_values": {
+        "V": "60"
+      },
+      "original_shape_constraints_hold": true,
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lat']",
+          "class": "certificate (product provenance semantics)"
+        }
+      ]
+    },
+    {
+      "id": "ho:lang_tru_day_vuong",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng có đáy là hình vuông cạnh 3, chiều cao bằng 7. Tính thể tích khối lăng trụ đứng đó.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "V"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+        "c1": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "7"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "7"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        }
+      ],
+      "text_only_invariants": [],
+      "invariants_bound_only_through_inputfact_labels": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "7"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        }
+      ],
+      "vocabulary_dry_run": [
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            89,
+            102
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy là hình vuông",
+          "span": [
+            26,
+            43
+          ]
+        },
+        {
+          "rule": "unnamed_square_prism",
+          "match": "lăng trụ đứng có đáy là hình vuông cạnh 3",
+          "span": [
+            9,
+            50
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "D"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": "UNNAMED_BINDING"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A'",
+            "A"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "D"
+          ],
+          "cites": "fact_perp_lat",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": "UNNAMED_BINDING"
+        }
+      ],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "translation BB_prime = AA_prime",
+        "translation CC_prime = AA_prime",
+        "translation DD_prime = AA_prime",
+        "lateral AA_prime ⊥ base",
+        "square side 3",
+        "height 7"
+      ],
+      "witness_closure": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "V",
+        "khoi_lang_tru",
+        "the_tich_khoi_lang_tru"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "A_prime": false,
+        "B": false,
+        "B_prime": false,
+        "C": false,
+        "C_prime": false,
+        "D": false,
+        "D_prime": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "AD_length",
+          "value": "3"
+        },
+        {
+          "target": "dien_tich_day_ABCD",
+          "value": "9"
+        },
+        {
+          "target": "chieu_cao_AA_prime",
+          "value": "7"
+        },
+        {
+          "target": "the_tich_khoi_lang_tru",
+          "value": "63"
+        },
+        {
+          "target": "V",
+          "value": "63"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "AD_length",
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_lang_tru"
+      ],
+      "original_values": {
+        "V": "63"
+      },
+      "original_shape_constraints_hold": true,
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lat']",
+          "class": "certificate (product provenance semantics)"
+        }
+      ]
+    },
+    {
+      "id": "ho:lang_tru_tam_giac",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "40"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "ho:lap_phuong",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "V"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+        "c1": "grounded: relation perpendicular_lines('A', 'B', 'A', 'D') cites 'fact_perp_base', not a confirmed InputFact",
+        "ce": "INCONCLUSIVE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        }
+      ],
+      "text_only_invariants": [],
+      "invariants_bound_only_through_inputfact_labels": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        }
+      ],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "hình lập phương ABCD.A'B'C'D'",
+          "span": [
+            4,
+            33
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "hình lập phương",
+          "span": [
+            4,
+            19
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "hình lập phương",
+          "span": [
+            68,
+            83
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "D"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "ABCD parallelogram",
+        "AB ⊥ AD",
+        "translation BB_prime = AA_prime",
+        "translation CC_prime = AA_prime",
+        "translation DD_prime = AA_prime",
+        "lateral AA_prime ⊥ base",
+        "cube: |AB| = |AD| = |AA'|"
+      ],
+      "witness_closure": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "V",
+        "khoi_hop",
+        "the_tich_khoi_hop"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "A_prime": false,
+        "B": false,
+        "B_prime": false,
+        "C": false,
+        "C_prime": false,
+        "D": false,
+        "D_prime": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "AD_length",
+          "value": "4"
+        },
+        {
+          "target": "AA_prime_length",
+          "value": "4"
+        },
+        {
+          "target": "dien_tich_day_ABCD",
+          "value": "16"
+        },
+        {
+          "target": "chieu_cao_AA_prime",
+          "value": "4"
+        },
+        {
+          "target": "the_tich_khoi_hop",
+          "value": "64"
+        },
+        {
+          "target": "V",
+          "value": "64"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "AA_prime_length",
+        "AD_length",
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_hop"
+      ],
+      "original_values": {
+        "V": "64"
+      },
+      "original_shape_constraints_hold": true,
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 1/1 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base']",
+          "class": "certificate (product provenance semantics)"
+        }
+      ]
+    },
+    {
+      "id": "rigid:prism_text_translate_swap",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_lang_tru"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNSAFE",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "UNSAFE",
+        "ce_detail": [
+          "E[2]x2",
+          "the_tich_lang_tru"
+        ]
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "D"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ đứng ABC.DEF",
+          "span": [
+            9,
+            30
+          ]
+        },
+        {
+          "rule": "prism_notation",
+          "match": "lăng trụ ABC.DEF",
+          "span": [
+            119,
+            135
+          ]
+        },
+        {
+          "rule": "solid_type",
+          "match": "lăng trụ đứng",
+          "span": [
+            9,
+            22
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            34,
+            65
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "D"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "translation BE = AD",
+        "translation CF = AD",
+        "lateral AD ⊥ base",
+        "right angle at A"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "solid_ABCDEF",
+        "the_tich_lang_tru",
+        "the_tich_solid_ABCDEF"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "D": false,
+        "E": false,
+        "F": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_solid_ABCDEF",
+          "value": "30"
+        },
+        {
+          "target": "the_tich_lang_tru",
+          "value": "30"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "original_values": {
+        "the_tich_lang_tru": "30"
+      },
+      "original_shape_constraints_hold": true,
+      "w14_counterexample_recheck": {
+        "perturbation": "E[2]x2",
+        "executed": true,
+        "status": "completed",
+        "text_invariants_ok": true,
+        "text_invariants_checked": 3,
+        "text_invariants_not_checkable": [],
+        "shape_constraints": [
+          {
+            "constraint": "translation BE = AD",
+            "holds": false
+          },
+          {
+            "constraint": "translation CF = AD",
+            "holds": true
+          },
+          {
+            "constraint": "lateral AD ⊥ base",
+            "holds": true
+          },
+          {
+            "constraint": "right angle at A",
+            "holds": true
+          }
+        ],
+        "postcondition_violations": [],
+        "witness_changes": {
+          "the_tich_lang_tru": [
+            "30",
+            "42"
+          ]
+        },
+        "broken_text_constraints": [
+          "translation BE = AD"
+        ],
+        "valid_witness": false
+      },
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        },
+        {
+          "rc": "RC4",
+          "why": "W14 witness E[2]x2 breaks: ['translation BE = AD']",
+          "class": "validator"
+        }
+      ]
+    },
+    {
+      "id": "rot:chop_tam_giac_xoay",
+      "group": "AC2",
+      "label": "INVARIANT",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+      "requested": [
+        {
+          "kind": "volume",
+          "witness": "the_tich_khoi"
+        }
+      ],
+      "route_today": {
+        "stage": "served",
+        "servable": true,
+        "reason_code": null
+      },
+      "w14": {
+        "verdict": "UNDETERMINED",
+        "certificate": null,
+        "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'S']",
+        "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+        "ce": "NO_VALID_COUNTEREXAMPLE",
+        "ce_detail": []
+      },
+      "stored_source_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_invariants_today": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "text_only_invariants": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "C"
+          ],
+          "expected": "4"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "S"
+          ],
+          "expected": "5"
+        }
+      ],
+      "invariants_bound_only_through_inputfact_labels": [],
+      "vocabulary_dry_run": [
+        {
+          "rule": "pyramid_notation",
+          "match": "hình chóp S.ABC",
+          "span": [
+            4,
+            19
+          ]
+        },
+        {
+          "rule": "pyramid_notation",
+          "match": "khối chóp S.ABC",
+          "span": [
+            125,
+            140
+          ]
+        },
+        {
+          "rule": "base_type",
+          "match": "đáy ABC là tam giác vuông tại A",
+          "span": [
+            23,
+            54
+          ]
+        },
+        {
+          "rule": "line_perp_plane",
+          "match": "SA vuông góc với đáy",
+          "span": [
+            81,
+            101
+          ]
+        }
+      ],
+      "typed_relations": [
+        {
+          "kind": "perpendicular_lines",
+          "line": [
+            "A",
+            "B"
+          ],
+          "other_line": [
+            "A",
+            "C"
+          ],
+          "plane": [],
+          "cites": "fact_perp_base",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "other_line": [],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ],
+          "cites": "fact_perp_lateral",
+          "cited_fact_exists": false,
+          "cited_fact_provenance": null,
+          "model_assumption": false,
+          "text_states_it_dry_run": true
+        }
+      ],
+      "text_shape_constraints": [
+        "right angle at A",
+        "SA ⊥ (ABC)"
+      ],
+      "witness_closure": [
+        "A",
+        "B",
+        "C",
+        "S",
+        "khoi_chop",
+        "the_tich_khoi",
+        "the_tich_khoi_chop"
+      ],
+      "closure_point_literals_pinned_by_text": {
+        "A": false,
+        "B": false,
+        "C": false,
+        "S": false
+      },
+      "closure_plane_equations_pinned_by_text": {},
+      "unpinned_dofs": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "shown_numeric_values": [
+        {
+          "target": "dien_tich_day_ABC",
+          "value": "6"
+        },
+        {
+          "target": "the_tich_khoi_chop",
+          "value": "10"
+        },
+        {
+          "target": "the_tich_khoi",
+          "value": "10"
+        }
+      ],
+      "shown_numeric_not_an_obligation": [
+        "dien_tich_day_ABC",
+        "the_tich_khoi_chop"
+      ],
+      "original_values": {
+        "the_tich_khoi": "10"
+      },
+      "original_shape_constraints_hold": true,
+      "root_causes": [
+        {
+          "rc": "RC2",
+          "why": "W14 C1 judged relations by their annotation (cited InputFact provenance / source_fact_id / model_assumption); 2/2 relations are read from the text by the dry run; cited fact ids that do not exist: ['fact_perp_base', 'fact_perp_lateral']",
+          "class": "certificate (product provenance semantics)"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "rows": 26,
+    "w14_false_counterexamples": [
+      "adv10_quan_he_claimed",
+      "adv10_quan_he_gia_dinh",
+      "adv10_quan_he_khong_nguon",
+      "adv11_hai_dap_so_mot_ngoai_pham_vi",
+      "demo:n1_thoi_dinh_thu_tu",
+      "demo:n2_lang_tru_xien_hai_vecto",
+      "demo:t3_hop_tinh_tien_day_chuyen",
+      "demo:t4_mat_xich_trong_chuoi_sau",
+      "ho:chop_chu_nhat",
+      "ho:lang_tru_tam_giac",
+      "rigid:prism_text_translate_swap"
+    ],
+    "false_counterexamples_whose_witness_breaks_a_text_constraint": [
+      "adv10_quan_he_claimed",
+      "adv10_quan_he_gia_dinh",
+      "adv10_quan_he_khong_nguon",
+      "adv11_hai_dap_so_mot_ngoai_pham_vi",
+      "demo:n1_thoi_dinh_thu_tu",
+      "demo:n2_lang_tru_xien_hai_vecto",
+      "demo:t3_hop_tinh_tien_day_chuyen",
+      "demo:t4_mat_xich_trong_chuoi_sau",
+      "ho:chop_chu_nhat",
+      "ho:lang_tru_tam_giac",
+      "rigid:prism_text_translate_swap"
+    ],
+    "ac1_served_today": [
+      "ac1_layout_derived",
+      "ac1_model_assumption"
+    ],
+    "ac1_w14_witness_valid": {
+      "ac1_given_length": false,
+      "ac1_layout_derived": false,
+      "ac1_model_assumption": false
+    },
+    "ac1_valid_witness_example": {
+      "ac1_given_length": [
+        true,
+        {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        }
+      ],
+      "ac1_layout_derived": [
+        true,
+        {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        }
+      ],
+      "ac1_model_assumption": [
+        true,
+        {
+          "the_tich_lang_tru": [
+            "30",
+            "60"
+          ]
+        }
+      ]
+    },
+    "rows_by_root_cause": {
+      "RC1": [
+        "demo:n1_thoi_dinh_thu_tu",
+        "demo:n2_lang_tru_xien_hai_vecto",
+        "gold:p1_chop_thiet_dien_khoang_cach",
+        "gold:p2_chop_day_ngu_giac_lom",
+        "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+        "gold:p5_hinh_non_the_tich_va_xung_quanh",
+        "gold:p6_thiet_dien_elip_cua_hinh_tru",
+        "gold:p7_thiet_dien_elip_cua_hinh_non"
+      ],
+      "RC2": [
+        "adv10_quan_he_claimed",
+        "adv10_quan_he_gia_dinh",
+        "adv10_quan_he_khong_nguon",
+        "adv11_hai_dap_so_mot_ngoai_pham_vi",
+        "ho:chop_chu_nhat",
+        "ho:chop_tam_giac",
+        "ho:hop_chu_nhat",
+        "ho:lang_tru_day_vuong",
+        "ho:lang_tru_tam_giac",
+        "ho:lap_phuong",
+        "rigid:prism_text_translate_swap",
+        "rot:chop_tam_giac_xoay"
+      ],
+      "RC3": [
+        "demo:t3_hop_tinh_tien_day_chuyen",
+        "demo:t4_mat_xich_trong_chuoi_sau"
+      ],
+      "RC4": [
+        "adv10_quan_he_claimed",
+        "adv10_quan_he_gia_dinh",
+        "adv10_quan_he_khong_nguon",
+        "adv11_hai_dap_so_mot_ngoai_pham_vi",
+        "demo:n1_thoi_dinh_thu_tu",
+        "demo:n2_lang_tru_xien_hai_vecto",
+        "demo:t3_hop_tinh_tien_day_chuyen",
+        "demo:t4_mat_xich_trong_chuoi_sau",
+        "ho:chop_chu_nhat",
+        "ho:lang_tru_tam_giac",
+        "rigid:prism_text_translate_swap"
+      ],
+      "RC5": [
+        "ac1_given_length",
+        "ac1_layout_derived",
+        "ac1_model_assumption",
+        "adv8_nhan_vo_huong_gia_dinh"
+      ],
+      "STALE_CONTRACT": [
+        "demo:n1_thoi_dinh_thu_tu",
+        "demo:n2_lang_tru_xien_hai_vecto",
+        "demo:t3_hop_tinh_tien_day_chuyen",
+        "demo:t4_mat_xich_trong_chuoi_sau"
+      ]
+    },
+    "ac2_rows_without_root_cause": [],
+    "rows_showing_numeric_values_outside_obligations": {
+      "ac1_given_length": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "ac1_layout_derived": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "ac1_model_assumption": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "adv10_quan_he_claimed": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "adv10_quan_he_gia_dinh": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "adv10_quan_he_khong_nguon": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "adv11_hai_dap_so_mot_ngoai_pham_vi": [
+        "dien_tich_day_ABC",
+        "g",
+        "the_tich_solid_ABCDEF"
+      ],
+      "adv8_nhan_vo_huong_gia_dinh": [
+        "dien_tich_day_ABC",
+        "k",
+        "the_tich_solid_ABCDEF"
+      ],
+      "ho:chop_chu_nhat": [
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_chop"
+      ],
+      "ho:chop_tam_giac": [
+        "dien_tich_day_ABC",
+        "the_tich_khoi_chop"
+      ],
+      "ho:hop_chu_nhat": [
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_hop"
+      ],
+      "ho:lang_tru_day_vuong": [
+        "AD_length",
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_lang_tru"
+      ],
+      "ho:lang_tru_tam_giac": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "ho:lap_phuong": [
+        "AA_prime_length",
+        "AD_length",
+        "chieu_cao_AA_prime",
+        "dien_tich_day_ABCD",
+        "the_tich_khoi_hop"
+      ],
+      "rigid:prism_text_translate_swap": [
+        "dien_tich_day_ABC",
+        "the_tich_solid_ABCDEF"
+      ],
+      "rot:chop_tam_giac_xoay": [
+        "dien_tich_day_ABC",
+        "the_tich_khoi_chop"
+      ]
+    },
+    "rows_with_invariants_bound_only_through_inputfact_labels": {
+      "ho:lang_tru_day_vuong": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "expected": "7"
+        },
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "3"
+        }
+      ],
+      "ho:lap_phuong": [
+        {
+          "kind": "segment_length",
+          "points": [
+            "A",
+            "B"
+          ],
+          "expected": "4"
+        }
+      ]
+    },
+    "corpus_corrections": "none — GOLD_ROW_VERIFICATION.json: 18/18 rows determined, 18/18 oracle == served",
+    "findings_for_the_design": [
+      "F1 RC1: the 8 coordinate rows pin every closure literal (points; plane equations in p1/p6/p7) by a text-only invariant of the same entity — see closure_*_pinned_by_text.",
+      "F2 RC2: W14 C1 judged typed relations by their annotation; the dry run reads every typed relation of the template rows from the text (ho:lang_tru_day_vuong only through the unnamed single-solid rule); the six-family fixtures cite InputFact ids that do not exist — see typed_relations.",
+      "F3 RC3: the demo contracts t3/t4 carry no typed relations or solid_topology — see typed_relations.",
+      "F4 RC4: all 11 W14 counterexamples on INVARIANT rows break a text constraint — see w14_counterexample_recheck.broken_text_constraints.",
+      "F5 RC5: the AC1 witnesses move one top vertex (prism broken); moving D, E, F together keeps every text constraint and changes V 30 → 60 — a valid DEPENDENT witness exists.",
+      "F6 STALE_CONTRACT: the 4 demo contracts store 0 source invariants; the gate must re-read the text.",
+      "F7 the bat_bien_* builders read InputFact labels too (_van_ban): ho:lap_phuong AB = 4 and ho:lang_tru_day_vuong AA' = 7 / AB = 3 are entity-bound only through model labels. Certificate premises must come from the text alone (builders called with contract=None), and the shape reader must bind 'cạnh bằng N' of a named cube and the unnamed single solid itself.",
+      "F8 the section T of p1 is written by 4 section_edge sub-steps + 1 construct_section step of ONE statement (GOLD_ROW_VERIFICATION closure_names_written_more_than_once); a reaching-definition rule that counts trace writes per name must group a statement's sub-steps or p1 becomes UNDETERMINED.",
+      "F9 every template row shows intermediate numeric values (base area, solid volume, lengths) that are not obligations; adv11 shows g = cos² and adv8 shows k = |AM|. W14 fixture (11) asks for cos² but its obligation kind 'angle_cos_sq' is not in OBLIGATION_KINDS, so build_request_contract drops it: the substance of test (11) holds only if the certificate covers every numeric value the learner is shown, not only obligation witnesses.",
+      "F10 adv8: moving the arbitrary M breaks the volume postcondition (V·|AM| ≠ solid volume), so no valid witness exists ⇒ UNDETERMINED (refused), never PROVEN_SAFE (M's literal has no role).",
+      "F11 the W14 corpus reason for adv10_* ('C1 must not be granted') conflated the annotation with the source: their text states 'lăng trụ đứng'. Per R2 the W15 corpus restates the expectation in a new layer (text-silent variants refused; annotation never a premise)."
+    ]
+  }
+}

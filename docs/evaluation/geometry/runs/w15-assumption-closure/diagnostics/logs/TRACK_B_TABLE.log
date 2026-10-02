@@ -1,0 +1,241 @@
+{
+ "rows": 26,
+ "w14_false_counterexamples": [
+  "adv10_quan_he_claimed",
+  "adv10_quan_he_gia_dinh",
+  "adv10_quan_he_khong_nguon",
+  "adv11_hai_dap_so_mot_ngoai_pham_vi",
+  "demo:n1_thoi_dinh_thu_tu",
+  "demo:n2_lang_tru_xien_hai_vecto",
+  "demo:t3_hop_tinh_tien_day_chuyen",
+  "demo:t4_mat_xich_trong_chuoi_sau",
+  "ho:chop_chu_nhat",
+  "ho:lang_tru_tam_giac",
+  "rigid:prism_text_translate_swap"
+ ],
+ "false_counterexamples_whose_witness_breaks_a_text_constraint": [
+  "adv10_quan_he_claimed",
+  "adv10_quan_he_gia_dinh",
+  "adv10_quan_he_khong_nguon",
+  "adv11_hai_dap_so_mot_ngoai_pham_vi",
+  "demo:n1_thoi_dinh_thu_tu",
+  "demo:n2_lang_tru_xien_hai_vecto",
+  "demo:t3_hop_tinh_tien_day_chuyen",
+  "demo:t4_mat_xich_trong_chuoi_sau",
+  "ho:chop_chu_nhat",
+  "ho:lang_tru_tam_giac",
+  "rigid:prism_text_translate_swap"
+ ],
+ "ac1_served_today": [
+  "ac1_layout_derived",
+  "ac1_model_assumption"
+ ],
+ "ac1_w14_witness_valid": {
+  "ac1_given_length": false,
+  "ac1_layout_derived": false,
+  "ac1_model_assumption": false
+ },
+ "ac1_valid_witness_example": {
+  "ac1_given_length": [
+   true,
+   {
+    "the_tich_lang_tru": [
+     "30",
+     "60"
+    ]
+   }
+  ],
+  "ac1_layout_derived": [
+   true,
+   {
+    "the_tich_lang_tru": [
+     "30",
+     "60"
+    ]
+   }
+  ],
+  "ac1_model_assumption": [
+   true,
+   {
+    "the_tich_lang_tru": [
+     "30",
+     "60"
+    ]
+   }
+  ]
+ },
+ "rows_by_root_cause": {
+  "RC1": [
+   "demo:n1_thoi_dinh_thu_tu",
+   "demo:n2_lang_tru_xien_hai_vecto",
+   "gold:p1_chop_thiet_dien_khoang_cach",
+   "gold:p2_chop_day_ngu_giac_lom",
+   "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+   "gold:p5_hinh_non_the_tich_va_xung_quanh",
+   "gold:p6_thiet_dien_elip_cua_hinh_tru",
+   "gold:p7_thiet_dien_elip_cua_hinh_non"
+  ],
+  "RC2": [
+   "adv10_quan_he_claimed",
+   "adv10_quan_he_gia_dinh",
+   "adv10_quan_he_khong_nguon",
+   "adv11_hai_dap_so_mot_ngoai_pham_vi",
+   "ho:chop_chu_nhat",
+   "ho:chop_tam_giac",
+   "ho:hop_chu_nhat",
+   "ho:lang_tru_day_vuong",
+   "ho:lang_tru_tam_giac",
+   "ho:lap_phuong",
+   "rigid:prism_text_translate_swap",
+   "rot:chop_tam_giac_xoay"
+  ],
+  "RC3": [
+   "demo:t3_hop_tinh_tien_day_chuyen",
+   "demo:t4_mat_xich_trong_chuoi_sau"
+  ],
+  "RC4": [
+   "adv10_quan_he_claimed",
+   "adv10_quan_he_gia_dinh",
+   "adv10_quan_he_khong_nguon",
+   "adv11_hai_dap_so_mot_ngoai_pham_vi",
+   "demo:n1_thoi_dinh_thu_tu",
+   "demo:n2_lang_tru_xien_hai_vecto",
+   "demo:t3_hop_tinh_tien_day_chuyen",
+   "demo:t4_mat_xich_trong_chuoi_sau",
+   "ho:chop_chu_nhat",
+   "ho:lang_tru_tam_giac",
+   "rigid:prism_text_translate_swap"
+  ],
+  "RC5": [
+   "ac1_given_length",
+   "ac1_layout_derived",
+   "ac1_model_assumption",
+   "adv8_nhan_vo_huong_gia_dinh"
+  ],
+  "STALE_CONTRACT": [
+   "demo:n1_thoi_dinh_thu_tu",
+   "demo:n2_lang_tru_xien_hai_vecto",
+   "demo:t3_hop_tinh_tien_day_chuyen",
+   "demo:t4_mat_xich_trong_chuoi_sau"
+  ]
+ },
+ "ac2_rows_without_root_cause": [],
+ "rows_showing_numeric_values_outside_obligations": {
+  "ac1_given_length": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "ac1_layout_derived": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "ac1_model_assumption": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "adv10_quan_he_claimed": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "adv10_quan_he_gia_dinh": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "adv10_quan_he_khong_nguon": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "adv11_hai_dap_so_mot_ngoai_pham_vi": [
+   "dien_tich_day_ABC",
+   "g",
+   "the_tich_solid_ABCDEF"
+  ],
+  "adv8_nhan_vo_huong_gia_dinh": [
+   "dien_tich_day_ABC",
+   "k",
+   "the_tich_solid_ABCDEF"
+  ],
+  "ho:chop_chu_nhat": [
+   "dien_tich_day_ABCD",
+   "the_tich_khoi_chop"
+  ],
+  "ho:chop_tam_giac": [
+   "dien_tich_day_ABC",
+   "the_tich_khoi_chop"
+  ],
+  "ho:hop_chu_nhat": [
+   "chieu_cao_AA_prime",
+   "dien_tich_day_ABCD",
+   "the_tich_khoi_hop"
+  ],
+  "ho:lang_tru_day_vuong": [
+   "AD_length",
+   "chieu_cao_AA_prime",
+   "dien_tich_day_ABCD",
+   "the_tich_khoi_lang_tru"
+  ],
+  "ho:lang_tru_tam_giac": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "ho:lap_phuong": [
+   "AA_prime_length",
+   "AD_length",
+   "chieu_cao_AA_prime",
+   "dien_tich_day_ABCD",
+   "the_tich_khoi_hop"
+  ],
+  "rigid:prism_text_translate_swap": [
+   "dien_tich_day_ABC",
+   "the_tich_solid_ABCDEF"
+  ],
+  "rot:chop_tam_giac_xoay": [
+   "dien_tich_day_ABC",
+   "the_tich_khoi_chop"
+  ]
+ },
+ "rows_with_invariants_bound_only_through_inputfact_labels": {
+  "ho:lang_tru_day_vuong": [
+   {
+    "kind": "segment_length",
+    "points": [
+     "A",
+     "A'"
+    ],
+    "expected": "7"
+   },
+   {
+    "kind": "segment_length",
+    "points": [
+     "A",
+     "B"
+    ],
+    "expected": "3"
+   }
+  ],
+  "ho:lap_phuong": [
+   {
+    "kind": "segment_length",
+    "points": [
+     "A",
+     "B"
+    ],
+    "expected": "4"
+   }
+  ]
+ },
+ "corpus_corrections": "none — GOLD_ROW_VERIFICATION.json: 18/18 rows determined, 18/18 oracle == served",
+ "findings_for_the_design": [
+  "F1 RC1: the 8 coordinate rows pin every closure literal (points; plane equations in p1/p6/p7) by a text-only invariant of the same entity — see closure_*_pinned_by_text.",
+  "F2 RC2: W14 C1 judged typed relations by their annotation; the dry run reads every typed relation of the template rows from the text (ho:lang_tru_day_vuong only through the unnamed single-solid rule); the six-family fixtures cite InputFact ids that do not exist — see typed_relations.",
+  "F3 RC3: the demo contracts t3/t4 carry no typed relations or solid_topology — see typed_relations.",
+  "F4 RC4: all 11 W14 counterexamples on INVARIANT rows break a text constraint — see w14_counterexample_recheck.broken_text_constraints.",
+  "F5 RC5: the AC1 witnesses move one top vertex (prism broken); moving D, E, F together keeps every text constraint and changes V 30 → 60 — a valid DEPENDENT witness exists.",
+  "F6 STALE_CONTRACT: the 4 demo contracts store 0 source invariants; the gate must re-read the text.",
+  "F7 the bat_bien_* builders read InputFact labels too (_van_ban): ho:lap_phuong AB = 4 and ho:lang_tru_day_vuong AA' = 7 / AB = 3 are entity-bound only through model labels. Certificate premises must come from the text alone (builders called with contract=None), and the shape reader must bind 'cạnh bằng N' of a named cube and the unnamed single solid itself.",
+  "F8 the section T of p1 is written by 4 section_edge sub-steps + 1 construct_section step of ONE statement (GOLD_ROW_VERIFICATION closure_names_written_more_than_once); a reaching-definition rule that counts trace writes per name must group a statement's sub-steps or p1 becomes UNDETERMINED.",
+  "F9 every template row shows intermediate numeric values (base area, solid volume, lengths) that are not obligations; adv11 shows g = cos² and adv8 shows k = |AM|. W14 fixture (11) asks for cos² but its obligation kind 'angle_cos_sq' is not in OBLIGATION_KINDS, so build_request_contract drops it: the substance of test (11) holds only if the certificate covers every numeric value the learner is shown, not only obligation witnesses.",
+  "F10 adv8: moving the arbitrary M breaks the volume postcondition (V·|AM| ≠ solid volume), so no valid witness exists ⇒ UNDETERMINED (refused), never PROVEN_SAFE (M's literal has no role).",
+  "F11 the W14 corpus reason for adv10_* ('C1 must not be granted') conflated the annotation with the source: their text states 'lăng trụ đứng'. Per R2 the W15 corpus restates the expectation in a new layer (text-silent variants refused; annotation never a premise)."
+ ]
+}

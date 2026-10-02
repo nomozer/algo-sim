@@ -1,0 +1,910 @@
+{
+ "census": "W14_ASSUMPTION_CENSUS",
+ "model_calls": 0,
+ "corpus_labels_sha256": "dc2f8890a571e6e1f61deb27f71ebcaf7670ed99db28e95ffa6560b0343df17f",
+ "corpus_sha256": "d8bd71e9a876fb44e7d0b04167ff84d931e576cb0ad318beb6ae93405bfb76a9",
+ "re_execution_budget": 120,
+ "certificate_scope": "C0: the answer's dependency closure holds no class-A/C literal; C1: compiler-recognized configuration (danh_gia_eligibility SUPPORTED), every numeric witness a measure in PHEP_DO_C1 = {volume of the bound solid, area of a polygon on bound points, distance between bound points} reached through var assignments only, inputs covered by the bound points, every basis length entity-bound in the text, every relation source-confirmed, exact congruence with the compiler's reference layout. Everything else is UNDETERMINED by design.",
+ "rows": [
+  {
+   "id": "ac1_given_length",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "D[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "ac1_layout_derived",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "D[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "REFUSE",
+   "m2e_detail": "axis 2 x2 changed ['the_tich_lang_tru']",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "ac1_model_assumption",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "D[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "REFUSE",
+   "m2e_detail": "axis 2 x2 changed ['the_tich_lang_tru']",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv10_quan_he_claimed",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'f_claimed', not a confirmed InputFact",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv10_quan_he_gia_dinh",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv10_quan_he_khong_nguon",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING UNSUPPORTED_STRUCTURED_RELATION_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv11_hai_dap_so_mot_ngoai_pham_vi",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv1_xy_length_gia_dinh",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "MODEL_ASSUMPTION_TYPE_NOT_ALLOWED"
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "D[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv2_xoay_thieu_AD",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "adv3_canh_khac_che_chieu_cao",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+   "c1": "recognized: eligibility UNSUPPORTED_MISSING_FACT REQUIRED_FACT_MISSING",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AD = 4 excused the change",
+   "numeric_witnesses": [
+    "V"
+   ]
+  },
+  {
+   "id": "adv4_lang_tru_xien",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "recognized: eligibility UNSUPPORTED_STRUCTURED_RELATION_MISSING LINE_PLANE_RELATION_MISSING",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AB = 3 excused the change",
+   "numeric_witnesses": [
+    "V"
+   ]
+  },
+  {
+   "id": "adv5_chan_duong_cao_an",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['B', 'C', 'S']",
+   "c1": "recognized: eligibility UNSUPPORTED_EXTRA_OBLIGATION EXTRA_OBLIGATION",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "S[0]x2",
+    "d"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AB = 3 excused the change",
+   "numeric_witnesses": [
+    "d"
+   ]
+  },
+  {
+   "id": "adv7_thieu_de",
+   "group": "ADVERSARIAL",
+   "label": "POLICY_5A",
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_TEXT_MISSING"
+   },
+   "measured": false,
+   "why": "POLICY_5A"
+  },
+  {
+   "id": "adv8_nhan_vo_huong_gia_dinh",
+   "group": "CERT_LIMIT",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F', 'M']",
+   "c1": "supported operation: the_tich_lang_tru: arith/None outside PHEP_DO_C1",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "demo:n1_thoi_dinh_thu_tu",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['M', 'N', 'P']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "M[0]x2",
+    "dist_q_mp"
+   ],
+   "m2e": "REFUSE",
+   "m2e_detail": "axis 0 x2 changed ['dist_q_mp']",
+   "numeric_witnesses": [
+    "dist_q_mp"
+   ]
+  },
+  {
+   "id": "demo:n2_lang_tru_xien_hai_vecto",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'C']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "A[0]+1",
+    "khoang_cach_A_B_prime_I"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AB = 4 excused the change",
+   "numeric_witnesses": [
+    "khoang_cach_A_B_prime_I"
+   ]
+  },
+  {
+   "id": "demo:n4_giao_duong_mat_roi_do",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "INPUT_NOT_GROUNDED"
+   },
+   "measured": false,
+   "why": "NOT_SERVED_TODAY"
+  },
+  {
+   "id": "demo:t3_hop_tinh_tien_day_chuyen",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "A[0]+1",
+    "khoang_cach_a_b_prime_m"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 3)",
+   "numeric_witnesses": [
+    "khoang_cach_a_b_prime_m"
+   ]
+  },
+  {
+   "id": "demo:t4_mat_xich_trong_chuoi_sau",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "A[0]+1",
+    "khoang_cach_hc"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 3)",
+   "numeric_witnesses": [
+    "khoang_cach_hc"
+   ]
+  },
+  {
+   "id": "gold:n1_khoi_tron_xoay_tong_quat",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "UNANCHORED_DERIVED_ASSUMPTION"
+   },
+   "measured": false,
+   "why": "NOT_SERVED_TODAY"
+  },
+  {
+   "id": "gold:n2_khoi_ghep_bu_can_boolean",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null
+   },
+   "measured": false,
+   "why": "NOT_SERVED_TODAY"
+  },
+  {
+   "id": "gold:p1_chop_thiet_dien_khoang_cach",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'S']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AB = 6 excused the change",
+   "numeric_witnesses": [
+    "area_T",
+    "dist_S_BD",
+    "the_volume_sabcd"
+   ]
+  },
+  {
+   "id": "gold:p2_chop_day_ngu_giac_lom",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['M', 'N', 'P', 'Q', 'R', 'S']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair MN = 8 excused the change",
+   "numeric_witnesses": [
+    "V_S_MNPQR"
+   ]
+  },
+  {
+   "id": "gold:p3_mat_cau_va_thiet_dien_tron",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "ir_static",
+    "servable": false,
+    "reason_code": null
+   },
+   "measured": false,
+   "why": "NOT_SERVED_TODAY"
+  },
+  {
+   "id": "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'K', 'O']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AO = 6 excused the change",
+   "numeric_witnesses": [
+    "Sxq",
+    "V"
+   ]
+  },
+  {
+   "id": "gold:p5_hinh_non_the_tich_va_xung_quanh",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'O', 'S']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AO = 5 excused the change",
+   "numeric_witnesses": [
+    "dien_tich_xung_quanh_hinh_non",
+    "the_tich_khoi_non"
+   ]
+  },
+  {
+   "id": "gold:p6_thiet_dien_elip_cua_hinh_tru",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'K', 'O']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 2)",
+   "numeric_witnesses": [
+    "dien_tich_elip_e"
+   ]
+  },
+  {
+   "id": "gold:p7_thiet_dien_elip_cua_hinh_non",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'O', 'S']",
+   "c1": "recognized: fact graph UNSUPPORTED_INCOMPLETE",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair OS = 12 excused the change",
+   "numeric_witnesses": [
+    "dien_tich_E"
+   ]
+  },
+  {
+   "id": "ho:chop_chu_nhat",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'S']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "C[0]x2",
+    "v"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "v"
+   ]
+  },
+  {
+   "id": "ho:chop_tam_giac",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'S']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "NO_VALID_COUNTEREXAMPLE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_khoi"
+   ]
+  },
+  {
+   "id": "ho:hop_chu_nhat",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+   "c1": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "V"
+   ]
+  },
+  {
+   "id": "ho:lang_tru_day_vuong",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+   "c1": "grounded: relation perpendicular_line_plane('A', \"A'\", 'A', 'B', 'D') cites 'fact_perp_lat', not a confirmed InputFact",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AD = 3 excused the change",
+   "numeric_witnesses": [
+    "V"
+   ]
+  },
+  {
+   "id": "ho:lang_tru_tam_giac",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "ho:lap_phuong",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'A_prime', 'B', 'B_prime', 'C', 'C_prime', 'D', 'D_prime']",
+   "c1": "grounded: relation perpendicular_lines('A', 'B', 'A', 'D') cites 'fact_perp_base', not a confirmed InputFact",
+   "ce": "INCONCLUSIVE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC3: evidence for changed pair AD = 4 excused the change",
+   "numeric_witnesses": [
+    "V"
+   ]
+  },
+  {
+   "id": "mau:cau-cat-mat-phang",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:cau-the-tich",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:mat-cheo-sac",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:mp-vuong-goc-duong",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:non-duong-sinh",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:non-thiet-dien-truc",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:the-tich-chop",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:thiet-dien-chop",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:tru-thiet-dien-tron",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:tru-truc-xien",
+   "group": "NO_CONTRACT",
+   "label": "DEPENDS",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:vuong-goc-chop",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "rf4_hai_dap_so_mot_phu_thuoc",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F', 'M']",
+   "c1": "recognized: eligibility UNSUPPORTED_EXTRA_OBLIGATION EXTRA_OBLIGATION",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "d_AM",
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "rigid:prism_text_translate_swap",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNSAFE",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'D', 'E', 'F']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'D', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "UNSAFE",
+   "ce_detail": [
+    "E[2]x2",
+    "the_tich_lang_tru"
+   ],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_lang_tru"
+   ]
+  },
+  {
+   "id": "rot:chop_tam_giac_xoay",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null
+   },
+   "measured": true,
+   "verdict": "UNDETERMINED",
+   "certificate": null,
+   "c0": "class-A/C or unclassified literals in closure: ['A', 'B', 'C', 'S']",
+   "c1": "grounded: relation perpendicular_line_plane('A', 'S', 'A', 'B', 'C') cites 'fact_perp_lateral', not a confirmed InputFact",
+   "ce": "NO_VALID_COUNTEREXAMPLE",
+   "ce_detail": [],
+   "m2e": "OK",
+   "m2e_detail": "RC1: no valid counterexample (valid perturbations: 0)",
+   "numeric_witnesses": [
+    "the_tich_khoi"
+   ]
+  }
+ ]
+}
