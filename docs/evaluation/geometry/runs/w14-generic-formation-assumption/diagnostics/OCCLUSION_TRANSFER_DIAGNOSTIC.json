@@ -1,0 +1,252 @@
+{
+  "check": "W14_OCCLUSION_TRANSFER_DIAGNOSTIC",
+  "model_calls": 0,
+  "status": "DIAGNOSTIC_ONLY — the gate result stands; these records need human re-review",
+  "registry": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
+  "registry_edited": false,
+  "rows": [
+    {
+      "scenario_id": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "gate": "SCENE_GEOMETRY_CHANGED",
+      "drawn_objects_added": [
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "chieu_cao_SA"
+      ],
+      "drawn_objects_removed": [],
+      "drawn_objects_changed": [],
+      "registered_scene_is_the_reviewed_scene": true,
+      "expected": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_registered_camera": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_new_camera": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "verdict": "REVIEWED_SETS_REPRODUCED"
+    },
+    {
+      "scenario_id": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "gate": "SCENE_GEOMETRY_CHANGED",
+      "drawn_objects_added": [
+        "canh_ben_A_D",
+        "canh_ben_B_E",
+        "canh_ben_C_F",
+        "day_DEF"
+      ],
+      "drawn_objects_removed": [],
+      "drawn_objects_changed": [],
+      "registered_scene_is_the_reviewed_scene": true,
+      "expected": {
+        "visible_edge_ids": [
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::edge:E-F"
+        ],
+        "hidden_edge_ids": [
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::edge:A-D"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_registered_camera": {
+        "visible_edge_ids": [
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::edge:E-F"
+        ],
+        "hidden_edge_ids": [
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::edge:A-D"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_new_camera": {
+        "visible_edge_ids": [
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::edge:E-F"
+        ],
+        "hidden_edge_ids": [
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::edge:A-D"
+        ],
+        "mixed_edge_ids": []
+      },
+      "verdict": "REVIEWED_SETS_REPRODUCED"
+    },
+    {
+      "scenario_id": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "gate": "SCENE_GEOMETRY_CHANGED",
+      "drawn_objects_added": [
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "drawn_objects_removed": [
+        "canh_ben_SB",
+        "canh_ben_SC",
+        "canh_ben_SD"
+      ],
+      "drawn_objects_changed": [],
+      "registered_scene_is_the_reviewed_scene": true,
+      "expected": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_registered_camera": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_new_camera": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "verdict": "REVIEWED_SETS_REPRODUCED"
+    },
+    {
+      "scenario_id": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "gate": "SCENE_GEOMETRY_CHANGED",
+      "drawn_objects_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "drawn_objects_removed": [],
+      "drawn_objects_changed": [],
+      "registered_scene_is_the_reviewed_scene": true,
+      "expected": {
+        "visible_edge_ids": [
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_registered_camera": {
+        "visible_edge_ids": [
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "oracle_at_new_camera": {
+        "visible_edge_ids": [
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::edge:S-A"
+        ],
+        "mixed_edge_ids": []
+      },
+      "verdict": "REVIEWED_SETS_REPRODUCED"
+    }
+  ]
+}

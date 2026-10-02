@@ -1,0 +1,129 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every freeze, browser, oracle, playback, builder, T3 and gate run of this wave is listed, diagnostic ones included. Authoritative runs used a detached clean worktree at the commit shown: no node_modules junction (npm ci --offline inside the worktree), Python from the main-tree backend/.venv, dist built by the suite inside the worktree. Nothing was overwritten in place and no attempt was superseded.",
+  "times": "UTC",
+  "measurement_commit": "380db58c37da6088d8dba47647d15ba7ed77cf35",
+  "product_commit": "a2af56e4ec0d2165d6be4a3d7cbef36d7f05eb87",
+  "candidate": "40263983f97811ada21238a0ff3da634eaa36ef88deb6d07f4c0b3091fb9b5d3 (105 files, CACHE_VERSION 106)",
+  "application_llm_calls": 0,
+  "live_gemini_requests": 0,
+  "attempts": [
+    {
+      "id": "HARNESS-VALIDATION-1",
+      "at": "2026-10-02 (Task 8, before the harness commit 3709d7c8)",
+      "commit": "uncommitted Task 8 harness on 733435ac",
+      "gate": "assessFormation + assessStructuredReferences on scratch W14 fixtures (generator run into a scratch folder) with a renderer-faithful observation; no browser",
+      "result": "all six scenarios pass both assessors; roles ordered PYRAMID_LIKE / PRISM_LIKE / SECTION as expected",
+      "classification": "DIAGNOSTIC",
+      "log": "ledger note only (outputs in the session scratch folder, not kept)"
+    },
+    {
+      "id": "PRE-FREEZE-1",
+      "at": "2026-10-02 (Task 10 Step 1)",
+      "commit": "152de650, main tree",
+      "gate": "full backend · vitest · tsc -b + vite build · node harness",
+      "result": "backend 11 failed (all stale candidate identity, listed by node id) / 6553 passed / 16 xfailed; vitest 1010/1010; tsc -b exit 0; vite build into frontend/dist EPERM (ISSUE-OPS-DIST-ACL-OWNERSHIP), alternate outDir exit 0; node 44/44",
+      "classification": "PRE_FREEZE_CHECK",
+      "log": "diagnostics/logs/PRE_FREEZE_FULL.log"
+    },
+    {
+      "id": "FREEZE-1",
+      "at": "2026-10-02T11:32:59Z",
+      "commit": "a2af56e4 (worktree D:/tmp/w14-freeze)",
+      "gate": "backend/scripts/freeze_evaluation_candidate.py",
+      "result": "548f5b3b… -> 40263983… (105 files, CACHE_VERSION 106, clean tree); --verify exit 0 and cache lock --verify exit 0 in the main tree; committed as 380db58c",
+      "classification": "AUTHORITATIVE (the single freeze of the wave)",
+      "log": "diagnostics/logs/FREEZE_a2af56e4.log"
+    },
+    {
+      "id": "FIXTURES-1",
+      "at": "2026-10-02T11:48Z",
+      "commit": "380db58c (worktree D:/tmp/w14-final)",
+      "gate": "backend/scripts/generate_generic_tier_a_fixtures.py --out <run>/inputs",
+      "result": "18 fixtures (positive, structural negative, ungrounded negative per family), product commit a2af56e4, 0 model calls",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FIXTURES_380db58c.log · diagnostics/logs/NPM_CI_380db58c.log"
+    },
+    {
+      "id": "BROWSER-1",
+      "at": "2026-10-02T11:49Z–11:54Z",
+      "commit": "380db58c",
+      "gate": "frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root <run>/inputs --ra <run>/results --screenshots <run>/images (builds dist itself, dist freshness checked)",
+      "result": "PASS — 6/6 scenarios, 12/12 positive, 12/12 ungrounded negative; FORMATION_ROLE_COVERAGE pass 12/12 for the enforced classes (PYRAMID_LIKE, PRISM_LIKE; cross-section SECTION + PYRAMID_LIKE); STRUCTURED_REFERENCE_NOT_RENDERED none",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/BROWSER_SUITE_380db58c.log"
+    },
+    {
+      "id": "OCCLUSION-1",
+      "at": "2026-10-02T11:55Z",
+      "commit": "380db58c",
+      "gate": "backend/scripts/measure_scene3d_occlusion.py with the frozen human registry, camera preimages, --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS and --registered-fixture-root (full command at the top of the log)",
+      "result": "exit 1, pass=false — product = independent oracle 24/24 states; frozen human expectations: cuboid and cube transfer (DECLARED_CAMERA_CHANGE); triangular pyramid, triangular prism, rectangular pyramid and cross-section stop at SCENE_GEOMETRY_CHANGED, because S4 adds drawn objects (and Q1 renames the rectangular pyramid's lateral IDs) to the scenes a person reviewed",
+      "classification": "AUTHORITATIVE_RESULT_AS_MEASURED — the gate refuses to carry a reviewed expectation onto changed geometry by design; registry untouched",
+      "log": "diagnostics/logs/OCCLUSION_380db58c.log"
+    },
+    {
+      "id": "OCCLUSION-DIAG-1",
+      "at": "2026-10-02",
+      "commit": "380db58c results, main tree",
+      "gate": "diagnostics/occlusion_transfer_diagnostic.py — the rest of the transfer for the 4 refused records",
+      "result": "the independent oracle reproduces the reviewed visible/hidden sets 4/4, at the registered and at the new camera; the drawn-geometry difference is exactly the S4 insertions (and the Q1 rename). Known answer: one reviewed edge moved between sets => REVIEWED_SETS_DIFFER 4/4",
+      "classification": "DIAGNOSTIC (does not turn the gate result into a pass; the 4 scenes need human re-review)",
+      "log": "diagnostics/OCCLUSION_TRANSFER_DIAGNOSTIC.json"
+    },
+    {
+      "id": "SECTION-DIAG-1",
+      "at": "2026-10-02",
+      "commit": "380db58c fixtures vs w12 fixtures, main tree",
+      "gate": "diagnostics/section_substeps_compare.py",
+      "result": "SECTION_SUBSTEPS_UNCHANGED — 5/5 section steps equal in every field except step_index, formation_roles and the inserted laterals in visible_ids. Known answer: 5 injected faults => CHANGED 5/5",
+      "classification": "DIAGNOSTIC",
+      "log": "diagnostics/SECTION_SUBSTEPS_W12_W14.json"
+    },
+    {
+      "id": "PLAYBACK-1",
+      "at": "2026-10-02T11:55:59Z–12:01Z",
+      "commit": "380db58c",
+      "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 (timeout --signal=KILL 1500; dist from BROWSER-1, same worktree and commit)",
+      "result": "PASS — 12/12 runs × 19/19 checks, 5 orbit laps per run, no stall; PLAYBACK_EVIDENCE.json moved images/ -> results/ as in w12",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/PLAYBACK_380db58c.log"
+    },
+    {
+      "id": "BUILDER-1",
+      "at": "2026-10-02T12:02Z",
+      "commit": "380db58c",
+      "gate": "backend/scripts/build_scene3d_visual_evidence.py with the human registry and the playback evidence (full command at the top of the log)",
+      "result": "64 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; SHEET.png and role-captioned FILMSTRIP.png per family, images/overview/INDEX.png",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_380db58c.log"
+    },
+    {
+      "id": "T3-1",
+      "at": "2026-10-02",
+      "commit": "380db58c (worktree 'D:/tmp/w14 space/algo-sim', path WITH a space, npm ci --offline)",
+      "gate": "frontend/scripts/full-gate.mjs",
+      "result": "FULL_PRODUCT_GATE_PASS — pytest 6564 passed / 0 failed (1 skipped, 2 deselected, 16 xfailed = the recorded Track B strict xfails); vitest 1010/1010 (67 files); typecheck + build; thesis demo; demo crash surface",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_380db58c.log · diagnostics/logs/NPM_CI_SPACED_380db58c.log"
+    },
+    {
+      "id": "GATES-1",
+      "at": "2026-10-02",
+      "commit": "380db58c (same spaced worktree, after T3-1)",
+      "gate": "candidate verify · cache lock verify · schema export ×2 · DEFAULT_MODE · FIXTURE_TIN_CAY outside production · CACHE_VERSION · git diff --check · node harness",
+      "result": "all PASS — candidate 40263983 (105 files); CACHE_VERSION 106, environment b1714b566e25c912; both schema mirrors d852b47c… on both runs, 0 changed; LLM_ONLY, compiler not wired, 0 production references to FIXTURE_TIN_CAY; diff --check clean (verbatim logs excluded); node 42 pass + 2 skipped by design (no repo-local venv in a worktree) / 0 fail; tree clean before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/GATES_380db58c.log"
+    },
+    {
+      "id": "S4-INVENTORY-2",
+      "at": "2026-10-02",
+      "commit": "main tree at 380db58c (backend/app identical to the measured product)",
+      "gate": "diagnostics/s4_inventory.py",
+      "result": "verdict OK, every row identical to the Task 4 inventory: six families, p1, p2 and the five offline samples COMPLETED; n2 (refused at structural_coverage before and after) AMBIGUOUS_TOPOLOGY; v2_04 AMNP AMBIGUOUS_TOPOLOGY (never routed)",
+      "classification": "AUTHORITATIVE (formation statuses of the measured product)",
+      "log": "diagnostics/S4_INVENTORY_AT_380db58c.json"
+    }
+  ]
+}

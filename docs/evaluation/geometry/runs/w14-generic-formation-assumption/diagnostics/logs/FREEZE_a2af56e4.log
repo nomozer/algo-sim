@@ -1,0 +1,19 @@
+# W14 Task 10 Step 2 — the single candidate freeze (transcribed verbatim from the session's tool output; the run printed to the terminal, not to a file)
+# worktree: clean detached checkout of a2af56e4 (last commit touching backend/app or frontend/src) under D:/tmp, removed afterwards
+# command (cwd <worktree>/backend): PYTHONIOENCODING=utf-8 <main-tree>/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            a2af56e4  (cây sạch: True)
+  CACHE_VERSION     106
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       105 file · 40263983f97811ad
+  SEALED            DA_NIEM_PHONG
+# worktree status after the freeze: " M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json" (the only change; one ignored backend/algosim.db)
+# copied to the main tree: sha256 b4914078710674692c4fb8687c9885ca1580a42b040f4e564491994a639cad6b (worktree copy = main-tree copy)
+# worktree file restored, then `git worktree remove` (no --force): REMOVED
+# main tree, after the copy:
+#   freeze_evaluation_candidate.py --verify -> "Candidate khớp bản đã đóng băng (mã sản phẩm: 105 file, 40263983f97811ad…)." exit=0
+#   lock_cache_identity.py --verify        -> "Khoá khớp · CACHE_VERSION 106 · môi trường b1714b566e25c912…" exit=0
+# committed as 380db58c (chore(eval): refreeze candidate once after W14 product changes)

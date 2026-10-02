@@ -1,0 +1,482 @@
+{
+  "inventory": "W14_S4_INVENTORY",
+  "measurement_class": "OFFLINE_STORED_PROGRAM_INVENTORY",
+  "model_calls": 0,
+  "presentation_budget": 60,
+  "phase": "AFTER_COMPLETION_PASS",
+  "before_definition": "the SAME stored program through the route with the completion pass replaced by the identity, in-process; for compiler families that is the W14 compiler output without completion (pre-W14 parity is the job of test_formation_plan_parity and S4_INVENTORY_BEFORE.json)",
+  "direct_scene_producers": {
+    "backend/scripts/replay_demo_cases.py": "T3 demo replay: ok = cảnh có vật; không phải bằng chứng dựng hình",
+    "backend/scripts/build_geometry_samples.py": "bài mẫu offline tĩnh (không qua route); chỉ báo cáo",
+    "backend/scripts/build_geometry_demo_artifact.py": "artifact demo lịch sử; không phải bằng chứng W14",
+    "backend/scripts/probe_dihedral_synthesis.py": "probe lịch sử; không phải bằng chứng W14",
+    "backend/scripts/reanalyze_matrix_offline.py": "phân tích lại ma trận lịch sử; không phải bằng chứng W14",
+    "backend/scripts/run_generalization_matrix.py": "đo lịch sử; không phải bằng chứng W14",
+    "backend/scripts/run_rectangular_pyramid_live_analyze.py": "lượt live lịch sử; không phải bằng chứng W14"
+  },
+  "rows": [
+    {
+      "source": "compiler_family",
+      "id": "chop_tam_giac",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_chop",
+          "vertices": 4,
+          "faces": 4,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 6,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "khoi_chop": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 8,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "compiler_family",
+      "id": "lang_tru_tam_giac",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "solid_ABCDEF",
+          "vertices": 6,
+          "faces": 5,
+          "face_table_class_before": "right_prism"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 6,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "solid_ABCDEF": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 8,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "compiler_family",
+      "id": "chop_chu_nhat",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 6,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "khoi_chop": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 8,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "compiler_family",
+      "id": "hop_chu_nhat",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_hop",
+          "vertices": 8,
+          "faces": 6,
+          "face_table_class_before": "cuboid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 7,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "khoi_hop": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 9,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "compiler_family",
+      "id": "lap_phuong",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_hop",
+          "vertices": 8,
+          "faces": 6,
+          "face_table_class_before": "cube"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 9,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "khoi_hop": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 11,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "compiler_family",
+      "id": "lang_tru_day_vuong",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_lang_tru",
+          "vertices": 8,
+          "faces": 6,
+          "face_table_class_before": "cuboid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 8,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "khoi_lang_tru": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 10,
+      "inserted_steps": 2,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "thesis_gold",
+      "id": "n1_khoi_tron_xoay_tong_quat",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "thesis_gold",
+      "id": "n2_khoi_ghep_bu_can_boolean",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "khoi_hop",
+          "vertices": 8,
+          "faces": 6,
+          "face_table_class_before": "UNAVAILABLE_EXECUTION_ERROR:TypeError"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": false,
+      "stage_before": "structural_coverage",
+      "reason_before": null,
+      "frames_before": null,
+      "within_budget_upper_bound": null,
+      "completion_statuses": {
+        "khoi_hop": "AMBIGUOUS_TOPOLOGY"
+      },
+      "served_after": false,
+      "stage_after": "structural_coverage",
+      "frames_after": null,
+      "inserted_steps": null,
+      "within_budget": null
+    },
+    {
+      "source": "thesis_gold+tier_a_cross_section",
+      "id": "p1_chop_thiet_dien_khoang_cach",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "S.ABCD",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": true,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 13,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "S.ABCD": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 14,
+      "inserted_steps": 1,
+      "within_budget": true,
+      "answers_unchanged": true,
+      "section_progress_unchanged": true
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p2_chop_day_ngu_giac_lom",
+      "routed": true,
+      "solids": [
+        {
+          "target_var": "pyramid_s_mnpqr",
+          "vertices": 6,
+          "faces": 6,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "served_before": true,
+      "stage_before": "served",
+      "reason_before": null,
+      "frames_before": 4,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "pyramid_s_mnpqr": "COMPLETED"
+      },
+      "served_after": true,
+      "stage_after": "served",
+      "frames_after": 5,
+      "inserted_steps": 1,
+      "within_budget": true,
+      "answers_unchanged": true
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p3_mat_cau_va_thiet_dien_tron",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p4_hinh_tru_the_tich_va_xung_quanh",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p5_hinh_non_the_tich_va_xung_quanh",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p6_thiet_dien_elip_cua_hinh_tru",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "thesis_gold",
+      "id": "p7_thiet_dien_elip_cua_hinh_non",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:PASS",
+      "id": "n1_thoi_dinh_thu_tu",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:PASS",
+      "id": "n2_lang_tru_xien_hai_vecto",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:PASS",
+      "id": "t3_hop_tinh_tien_day_chuyen",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:PASS",
+      "id": "t4_mat_xich_trong_chuoi_sau",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:REFUSAL",
+      "id": "n4_giao_duong_mat_roi_do",
+      "routed": true,
+      "status": "NO_POLYHEDRAL_SOLID"
+    },
+    {
+      "source": "demo_replay:REDUCED_NO_CONTRACT",
+      "id": "v2_04_thiet_dien_goc_va_the_tich",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "pyramid_S_ABCD",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        },
+        {
+          "target_var": "AMNP",
+          "vertices": 4,
+          "faces": 4,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": true,
+      "upper_bound_inserted_steps": 6,
+      "frames_before": 12,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "pyramid_S_ABCD": "COMPLETED",
+        "AMNP": "AMBIGUOUS_TOPOLOGY"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    },
+    {
+      "source": "offline_sample",
+      "id": "thiet-dien-chop",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": true,
+      "upper_bound_inserted_steps": 3,
+      "frames_before": 11,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "chop": "COMPLETED"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    },
+    {
+      "source": "offline_sample",
+      "id": "mat-cheo-sac",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": true,
+      "upper_bound_inserted_steps": 3,
+      "frames_before": 7,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "chop": "COMPLETED"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    },
+    {
+      "source": "offline_sample",
+      "id": "vuong-goc-chop",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "frames_before": 5,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "chop": "COMPLETED"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    },
+    {
+      "source": "offline_sample",
+      "id": "mp-vuong-goc-duong",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "frames_before": 6,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "chop": "COMPLETED"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    },
+    {
+      "source": "offline_sample",
+      "id": "the-tich-chop",
+      "routed": false,
+      "solids": [
+        {
+          "target_var": "chop",
+          "vertices": 5,
+          "faces": 5,
+          "face_table_class_before": "pyramid"
+        }
+      ],
+      "has_section": false,
+      "upper_bound_inserted_steps": 3,
+      "frames_before": 5,
+      "within_budget_upper_bound": true,
+      "completion_statuses": {
+        "chop": "COMPLETED"
+      },
+      "after": "NOT_ROUTED (production never completes this program)"
+    }
+  ],
+  "upper_bound_budget_risk": [],
+  "stop_rows": [],
+  "verdict": "OK"
+}

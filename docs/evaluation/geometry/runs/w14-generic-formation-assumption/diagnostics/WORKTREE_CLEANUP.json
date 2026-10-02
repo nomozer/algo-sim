@@ -1,0 +1,51 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Only this wave's own worktrees are removed, from the main repository with `git worktree remove <exact path>`. A worktree that holds untracked outputs is removed only after every untracked file is shown byte-identical to its copy in the main tree's run folder (cmp over `git -c core.quotepath=off status --porcelain -z --untracked-files=all`); only then is --force used, and it covers nothing else. Directories left by earlier waves are not touched.",
+  "final_state": "git worktree list = the main working tree only; git worktree prune -v found nothing",
+  "temp_worktrees_created": 4,
+  "temp_worktrees_removed": 4,
+  "unique_artifacts_at_risk": 0,
+  "worktrees": [
+    {
+      "path": "D:/tmp/w14-cache-base",
+      "origin": "Task 7 cache proof: the pre-W14 product at ce9c672d produced the 'before' envelopes (a scratchpad path was first tried and failed with 'Filename too long'; nothing stayed registered)",
+      "action": "git worktree remove",
+      "result": "REMOVED (Task 7)"
+    },
+    {
+      "path": "D:/tmp/w14-freeze",
+      "origin": "Task 10 single candidate freeze at a2af56e4 (last commit touching backend/app or frontend/src)",
+      "state_before": "EVALUATION_CANDIDATE.json modified (the freeze output); ignored backend/algosim.db",
+      "verification": "sha256 of the worktree copy equals the main-tree copy (b4914078…), committed in 380db58c",
+      "action": "file restored with git checkout -- <file>, then git worktree remove (no --force)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w14-final",
+      "origin": "Task 11 measurement worktree at 380db58c (npm ci --offline, no node_modules junction; Python from the main-tree backend/.venv)",
+      "state_before": "341 untracked outputs, all under the run folder (inputs/FIXTURE_MANIFEST.json, inputs/fixtures/, results/, images/); ignored node_modules/ and dist/",
+      "verification": "341/341 byte-identical to the main-tree run folder; 0 outside the run folder",
+      "action": "git worktree remove --force (the force covers only those verified duplicates and ignored build output)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w14 space/algo-sim",
+      "origin": "Task 11 T3 full gate and identity gates at 380db58c, from a path WITH a space (npm ci --offline)",
+      "state_before": "clean (git status --porcelain: 0 before and after the gates)",
+      "action": "git worktree remove (no --force); the empty parent 'D:/tmp/w14 space' removed with rmdir",
+      "result": "REMOVED"
+    }
+  ],
+  "not_touched": [
+    {
+      "path": "D:/tmp/w13-verify-c1",
+      "origin": "w13 leftover, unregistered",
+      "status": "SAFE_TO_DELETE_MANUALLY — Task 0 inventory diagnostics/W13_LEFTOVER_INVENTORY.json: NO_UNIQUE_CONTENT_BY_HASH; left in place"
+    },
+    {
+      "path": "D:/tmp/w10-*, w11-*, 'w11 space', w12-*, 'w12 space' and loose logs",
+      "origin": "earlier waves",
+      "status": "not inventoried in w14; left in place"
+    }
+  ]
+}

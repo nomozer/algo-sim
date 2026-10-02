@@ -1,0 +1,29 @@
+# W14 verification gates at 380db58c37da6088d8dba47647d15ba7ed77cf35 in '<WT_ROOT>/w14 space/algo-sim' (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 105 file, 40263983f97811ad…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 106 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git diff after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since ce9c672d: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## CACHE_VERSION
+724:CACHE_VERSION = "106"
+## git diff --check ce9c672d..380db58c37da6088d8dba47647d15ba7ed77cf35 (captured *.log excluded: verbatim pytest/npm output may carry trailing spaces)
+exit=0
+## node harness tests
+ℹ tests 44
+ℹ pass 42
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0

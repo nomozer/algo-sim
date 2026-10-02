@@ -1,0 +1,89 @@
+{
+  "check": "W14_SECTION_SUBSTEPS_UNCHANGED",
+  "model_calls": 0,
+  "w12_fixture": "docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/inputs/fixtures/cross_section_positive.json",
+  "w14_fixture": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/inputs/fixtures/cross_section_positive.json",
+  "fields_changed_by_s4": [
+    "step_index",
+    "formation_roles",
+    "visible_ids"
+  ],
+  "s4_inserted_objects": [
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+  ],
+  "section_steps": {
+    "w12": 5,
+    "w14": 5
+  },
+  "pairs": [
+    {
+      "w12_step": 4,
+      "w14_step": 5,
+      "unequal_fields": [],
+      "visible_ids_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "visible_ids_removed": [],
+      "added_are_s4_objects": true
+    },
+    {
+      "w12_step": 5,
+      "w14_step": 6,
+      "unequal_fields": [],
+      "visible_ids_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "visible_ids_removed": [],
+      "added_are_s4_objects": true
+    },
+    {
+      "w12_step": 6,
+      "w14_step": 7,
+      "unequal_fields": [],
+      "visible_ids_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "visible_ids_removed": [],
+      "added_are_s4_objects": true
+    },
+    {
+      "w12_step": 7,
+      "w14_step": 8,
+      "unequal_fields": [],
+      "visible_ids_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "visible_ids_removed": [],
+      "added_are_s4_objects": true
+    },
+    {
+      "w12_step": 8,
+      "w14_step": 9,
+      "unequal_fields": [],
+      "visible_ids_added": [
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "visible_ids_removed": [],
+      "added_are_s4_objects": true
+    }
+  ],
+  "verdict": "SECTION_SUBSTEPS_UNCHANGED"
+}
