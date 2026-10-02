@@ -1,0 +1,9 @@
+# W14 Task 6 Step 4 — W13 phrasing probe re-run (W14 code) vs committed W13 JSON, row by row
+# registered expectation: exactly dai_cm and standalone_wrong_segment change; the other 23 rows identical
+rows 25 | identical 23 | changed ['dai_cm', 'standalone_wrong_segment']
+dai_cm :: do_dai_trong_de :: {} -> {'A-B': '5'}
+standalone_wrong_segment :: do_dai_trong_de :: {} -> {'A-B': '5'}
+standalone_wrong_segment :: given_evidence_error :: None -> 'SOURCE_EVIDENCE_CONFLICT'
+standalone_wrong_segment :: given_evidence :: {'span': [30, 31], 'span_text': '5', 'unit': 'cm'} -> None
+standalone_wrong_segment :: given_evidence_reason :: '' -> 'con số 5 trong đề là độ dài của đoạn khác'
+verdict: AS_REGISTERED

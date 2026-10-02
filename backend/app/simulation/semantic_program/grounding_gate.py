@@ -24,7 +24,7 @@ from __future__ import annotations
 import re
 from enum import Enum
 from fractions import Fraction
-from typing import Any
+from typing import Any, Callable
 
 from pydantic import BaseModel, Field
 
@@ -36,7 +36,7 @@ from .coverage_gate import _producers
 from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
-from .segment_relation import do_dai_trong_de
+from .segment_relation import do_dai_trong_de, nhan_doan_truoc
 from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
@@ -158,8 +158,6 @@ _SO_DE = re.compile(
     rf"(?<![\w.,/√])(?P<so>(?:\d+(?:[.,]\d+)?\s*)?√\s*\d+(?:\s*/\s*\d+)?"
     rf"|\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?)"
     rf"(?![.,]\d)(?={_DON_VI}(?![A-Za-zÀ-ỹ0-9])|[^\w/√]|$)")
-#: Nhãn ĐOẠN ngay trước con số: `XY =` hoặc `XY bằng`.
-_NHAN_TRUOC = re.compile(r"([A-Z]\d*['′]?)([A-Z]\d*['′]?)\s*(?:=|bằng)\s*$")
 
 
 def _phan_so(v: Any) -> Fraction | None:
@@ -210,12 +208,34 @@ def _bang_chung_do_dai(de: str, ten_khai: str, v: Fraction | str,
     Số đứng một mình (*"có cạnh bằng 4"*) là bằng chứng hợp lệ: đề nói về cạnh
     của cả khối, và chương trình tự chọn một cạnh đại diện — các cạnh khác phải
     được TÍNH từ nó, nên chúng không đi qua đây. Không so khớp mờ: chỉ con số
-    của đề, và nhãn đoạn ngay trước `=`/`bằng`.
+    của đề, và nhãn đoạn ngay trước một từ nối của `segment_relation._NOI_DO_DAI`.
     """
+    return _bang_chung(de, lambda doan: _cung_doan(ten_khai, doan), v, don_vi_muc)
+
+
+def bang_chung_doan(de: str, doan: tuple[str, str], v: Fraction | str) -> bool:
+    """Đề chứng minh được ĐỘ DÀI của CHÍNH đoạn `doan` bằng `v`?
+
+    `doan` là hai định danh thực thể (`("A", "A_prime")`) — bằng chứng gắn với
+    THỰC THỂ, không với tên bộ nhớ. Cùng ba luật ①②③ và cùng thân với bằng chứng
+    GIVEN (`_bang_chung_do_dai`), không bản sao thứ hai (W14).
+    """
+    dich = frozenset(doan)
+
+    def la_doan(d) -> bool:
+        return len(d) == 2 and frozenset(dinh_danh_thuc_the(str(p))[0] for p in d) == dich
+
+    return _bang_chung(de, la_doan, v, None)[0] is None
+
+
+def _bang_chung(de: str, la_doan: Callable[[Any], bool], v: Fraction | str,
+                don_vi_muc: str | None) -> tuple[str | None, dict[str, Any] | None, str]:
+    """Thân chung của `_bang_chung_do_dai` và `bang_chung_doan`; `la_doan(doan)`
+    trả lời *"đoạn này của đề có phải đoạn đang xét không"*."""
     huu_ti = isinstance(v, Fraction)
     if huu_ti:
         for doan, gt in do_dai_trong_de(de).items():
-            if _cung_doan(ten_khai, doan) and gt != v:
+            if la_doan(doan) and gt != v:
                 return (ERR_BANG_CHUNG_MAU_THUAN, None,
                         f"đề ghi {''.join(sorted(doan))} = {gt}, không phải {v}")
 
@@ -227,11 +247,10 @@ def _bang_chung_do_dai(de: str, ten_khai: str, v: Fraction | str,
     if not ung:
         return ERR_GIVEN_KHONG_CO_TRONG_DE, None, f"đề không có con số {v}"
 
-    def nhan_doan(m) -> tuple[str, ...] | None:
-        n = _NHAN_TRUOC.search(de[:m.start()])
-        return (n.group(1), n.group(2)) if n else None
+    def nhan_doan(m) -> tuple[str, str] | None:
+        return nhan_doan_truoc(de[:m.start()])
 
-    hop = [m for m in ung if nhan_doan(m) is None or _cung_doan(ten_khai, nhan_doan(m))]
+    hop = [m for m in ung if nhan_doan(m) is None or la_doan(nhan_doan(m))]
     if not hop:
         return (ERR_BANG_CHUNG_MAU_THUAN, None,
                 f"con số {v} trong đề là độ dài của đoạn khác")

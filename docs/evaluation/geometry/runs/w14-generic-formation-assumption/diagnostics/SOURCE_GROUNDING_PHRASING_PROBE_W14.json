@@ -1,0 +1,598 @@
+{
+  "probe": "W13_SOURCE_GROUNDING_PHRASING_PROBE",
+  "measurement_class": "OFFLINE_READER_PROBE",
+  "model_calls": 0,
+  "git_head": "d537cf74f19a04de44f2f3b3f74eec377151247d",
+  "probe_sha256": "60e21639e84a9417a35ef04ad7d03e995e9191a57c5953da9bdeba3065cc0d5d",
+  "probe_sha256_basis": "LF-normalised content (= git blob content), so a CRLF checkout hashes the same",
+  "readers": [
+    "segment_relation.do_dai_trong_de",
+    "grounding_gate._bang_chung_do_dai",
+    "literal_extractor.extract_literals"
+  ],
+  "rows": [
+    {
+      "id": "eq_plain",
+      "phrasing": "AB = 5",
+      "text": "Cho hình chóp S.ABC có AB = 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          29
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "eq_bang",
+      "phrasing": "AB bằng 5",
+      "text": "Cho hình chóp S.ABC có AB bằng 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          31,
+          32
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "dai_cm",
+      "phrasing": "AB dài 5 cm",
+      "text": "Cho hình chóp S.ABC có AB dài 5 cm.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          30,
+          31
+        ],
+        "span_text": "5",
+        "unit": "cm"
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "do_dai_doan_bang",
+      "phrasing": "độ dài đoạn AB bằng 5",
+      "text": "Cho hình chóp S.ABC có độ dài đoạn AB bằng 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          43,
+          44
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "canh_co_do_dai",
+      "phrasing": "cạnh AB có độ dài 5",
+      "text": "Cho hình chóp S.ABC có cạnh AB có độ dài 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          41,
+          42
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "doan_co_do_dai",
+      "phrasing": "đoạn AB có độ dài 5",
+      "text": "Cho hình chóp S.ABC có đoạn AB có độ dài 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          41,
+          42
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "prime_ascii",
+      "phrasing": "AA' = 5",
+      "text": "Cho lăng trụ ABC.A'B'C' có AA' = 5.",
+      "declared": {
+        "name": "AA_prime_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-A'": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          33,
+          34
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "prime_unicode",
+      "phrasing": "AA′ = 5",
+      "text": "Cho lăng trụ ABC.A′B′C′ có AA′ = 5.",
+      "declared": {
+        "name": "AA_prime_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-A′": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          33,
+          34
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "decimal_dot",
+      "phrasing": "AB = 2.5",
+      "text": "Cho hình chóp S.ABC có AB = 2.5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5/2"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5/2"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          31
+        ],
+        "span_text": "2.5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "float:2.5"
+      ]
+    },
+    {
+      "id": "decimal_comma",
+      "phrasing": "AB = 2,5",
+      "text": "Cho hình chóp S.ABC có AB = 2,5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5/2"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5/2"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          31
+        ],
+        "span_text": "2,5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:2",
+        "int:5"
+      ]
+    },
+    {
+      "id": "fraction",
+      "phrasing": "AB = 5/2",
+      "text": "Cho hình chóp S.ABC có AB = 5/2.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5/2"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5/2"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          31
+        ],
+        "span_text": "5/2",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5",
+        "int:2"
+      ]
+    },
+    {
+      "id": "radical",
+      "phrasing": "AB = 2√3",
+      "text": "Cho hình chóp S.ABC có AB = 2√3.",
+      "declared": {
+        "name": "AB_length",
+        "value": "2√3"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          31
+        ],
+        "span_text": "2√3",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:2",
+        "int:3"
+      ]
+    },
+    {
+      "id": "radical_fraction",
+      "phrasing": "AB = 3√2/2",
+      "text": "Cho hình chóp S.ABC có AB = 3√2/2.",
+      "declared": {
+        "name": "AB_length",
+        "value": "3√2/2"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          33
+        ],
+        "span_text": "3√2/2",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:3",
+        "int:2",
+        "int:2"
+      ]
+    },
+    {
+      "id": "unit_space",
+      "phrasing": "AB = 5 cm",
+      "text": "Cho hình chóp S.ABC có AB = 5 cm.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          29
+        ],
+        "span_text": "5",
+        "unit": "cm"
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "unit_glued",
+      "phrasing": "AB = 5cm",
+      "text": "Cho hình chóp S.ABC có AB = 5cm.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          28,
+          29
+        ],
+        "span_text": "5",
+        "unit": "cm"
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "chain_equal",
+      "phrasing": "AB = AC = 5",
+      "text": "Cho hình chóp S.ABC có AB = AC = 5.",
+      "declared": {
+        "name": "AC_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-C": "5"
+      },
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          33,
+          34
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "chain_equal_first",
+      "phrasing": "AB = AC = 5 → khai AB = 5",
+      "text": "Cho hình chóp S.ABC có AB = AC = 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-C": "5"
+      },
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "con số 5 trong đề là độ dài của đoạn khác",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "radical_wrong_segment",
+      "phrasing": "AB = 2√3 nhưng khai AC = 2√3",
+      "text": "Cho hình chóp S.ABC có AB = 2√3.",
+      "declared": {
+        "name": "AC_length",
+        "value": "2√3"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "con số 2√3 trong đề là độ dài của đoạn khác",
+      "literals": [
+        "int:2",
+        "int:3"
+      ]
+    },
+    {
+      "id": "regular_edge",
+      "phrasing": "tứ diện đều ABCD cạnh 5",
+      "text": "Cho tứ diện đều ABCD cạnh 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          26,
+          27
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "regular_base",
+      "phrasing": "chóp tam giác đều, cạnh đáy bằng 5",
+      "text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          50,
+          51
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "cube_edge_other_segment",
+      "phrasing": "lập phương cạnh 5 → CC′ (topology-derived)",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 5.",
+      "declared": {
+        "name": "CC_prime_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {},
+      "given_evidence_error": null,
+      "given_evidence": {
+        "span": [
+          47,
+          48
+        ],
+        "span_text": "5",
+        "unit": null
+      },
+      "given_evidence_reason": "",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "box_derived",
+      "phrasing": "hộp chữ nhật AB = 3 → CD (topology-derived)",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5.",
+      "declared": {
+        "name": "CD_length",
+        "value": "3"
+      },
+      "do_dai_trong_de": {
+        "A-B": "3",
+        "A-D": "4",
+        "A-A'": "5"
+      },
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "con số 3 trong đề là độ dài của đoạn khác",
+      "literals": [
+        "int:3",
+        "int:4",
+        "int:5"
+      ]
+    },
+    {
+      "id": "wrong_segment_same_number",
+      "phrasing": "AB = 5 nhưng khai AC = 5",
+      "text": "Cho hình chóp S.ABC có AB = 5, SA = 7.",
+      "declared": {
+        "name": "AC_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5",
+        "A-S": "7"
+      },
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "con số 5 trong đề là độ dài của đoạn khác",
+      "literals": [
+        "int:5",
+        "int:7"
+      ]
+    },
+    {
+      "id": "standalone_wrong_segment",
+      "phrasing": "AB dài 5 cm nhưng khai AC = 5",
+      "text": "Cho hình chóp S.ABC có AB dài 5 cm.",
+      "declared": {
+        "name": "AC_length",
+        "value": "5"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "con số 5 trong đề là độ dài của đoạn khác",
+      "literals": [
+        "int:5"
+      ]
+    },
+    {
+      "id": "value_absent",
+      "phrasing": "AB = 5 nhưng khai AB = 7",
+      "text": "Cho hình chóp S.ABC có AB = 5.",
+      "declared": {
+        "name": "AB_length",
+        "value": "7"
+      },
+      "do_dai_trong_de": {
+        "A-B": "5"
+      },
+      "given_evidence_error": "SOURCE_EVIDENCE_CONFLICT",
+      "given_evidence": null,
+      "given_evidence_reason": "đề ghi AB = 5, không phải 7",
+      "literals": [
+        "int:5"
+      ]
+    }
+  ]
+}

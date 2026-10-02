@@ -81,6 +81,21 @@ _SO = r"\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?"
 #: `2√3` thành `2` — một độ dài SAI của nguồn (W12, cổng bằng chứng đọc lại nó).
 _HET_SO = r"(?![0-9/]|[.,]\d|\s*√)"
 _SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
+#: Từ nối NHÃN ĐOẠN → ĐỘ DÀI — TẬP ĐÓNG, MỘT thẩm quyền cho bộ đọc độ dài
+#: (`do_dai_trong_de`, `_do_dai_doan`, quan hệ ②) và nhãn bằng chứng GIVEN
+#: (`nhan_doan_truoc` ← `grounding_gate`). Hai từ vựng lệch nhau là gốc của
+#: W13 NA-57: "AB dài 5 cm" (và "cạnh AB có độ dài 5") không gắn đoạn nào ở
+#: phía nhãn, nên số 5 thành bằng chứng cho mọi đoạn. `bằng` thừa trên câu đã
+#: `_chuan`, cần trên câu gốc. Không so khớp mờ: giá trị phải đứng NGAY sau
+#: (`AB dài hơn 5`, `AB dài gấp 2 lần CD` không đọc).
+_NOI_DO_DAI = r"(?:=|bằng|dài|có\s+độ\s+dài)"
+_NHAN_TRUOC_SO = re.compile(rf"({_D})({_D})\s*{_NOI_DO_DAI}\s*$")
+
+
+def nhan_doan_truoc(tien_to: str) -> tuple[str, str] | None:
+    """Đoạn mà câu đề gắn cho con số đứng NGAY sau `tien_to`, hoặc None."""
+    m = _NHAN_TRUOC_SO.search(tien_to)
+    return (m.group(1), m.group(2)) if m else None
 
 #: `kind` của bất biến này. Một chuỗi, một chỗ khai, một checker.
 KIND = "segment_division"
@@ -121,12 +136,7 @@ _QH_BOI = re.compile(
     rf"(?P<s1>{_D}{_D})\s*=\s*(?P<k>{_SO})\s*\*?\s*(?P<s2>{_D}{_D})"
     rf"(?![A-Za-z0-9])")
 _QH_DO_DAI = re.compile(
-    rf"(?P<s1>{_D}{_D})\s*=\s*(?P<v>{_SO}){_SAU_DO_DAI}")
-
-# ── ③ ĐỘ DÀI cả đoạn ───────────────────────────────────────────────────────
-_DO_DAI_CO = re.compile(
-    rf"(?:đoạn\s+(?:thẳng\s+)?)?(?P<A>{_D})(?P<B>{_D})\s+có\s+độ\s+dài\s+"
-    rf"(?P<v>{_SO}){_HET_SO}")
+    rf"(?P<s1>{_D}{_D})\s*{_NOI_DO_DAI}\s*(?P<v>{_SO}){_SAU_DO_DAI}")
 
 
 def _phan(s: str) -> Optional[Fraction]:
@@ -196,15 +206,13 @@ def _van_ban(contract, problem_text: str | None, *,
 
 
 def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
-    """|AB| — chấp nhận `AB = L` và *"đoạn AB có độ dài L"*, cả hai chiều viết."""
+    """|AB| — mọi từ nối của `_NOI_DO_DAI` (`AB = L`, `AB dài L`, *"đoạn AB có độ
+    dài L"*), cả hai chiều viết."""
     gt: set[Fraction] = set()
     for van in manh:
-        for m in _DO_DAI_CO.finditer(van):
-            if {m.group("A"), m.group("B")} == {A, B} and (q := _phan(m.group("v"))):
-                gt.add(q)
         for seg in (A + B, B + A):
             for m in re.finditer(
-                    rf"(?<![A-Za-z0-9]){seg}\s*=\s*({_SO}){_SAU_DO_DAI}",
+                    rf"(?<![A-Za-z0-9]){seg}\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}",
                     van):
                 if (q := _phan(m.group(1))):
                     gt.add(q)
@@ -220,11 +228,8 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
     """
     thay: dict[frozenset, set[Fraction]] = {}
     for van in manh:
-        for m in _DO_DAI_CO.finditer(van):
-            if (q := _phan(m.group("v"))) is not None:
-                thay.setdefault(frozenset({m.group("A"), m.group("B")}), set()).add(q)
         for m in re.finditer(
-                rf"(?<![A-Za-z0-9])({_D})({_D})\s*=\s*({_SO}){_SAU_DO_DAI}", van):
+                rf"(?<![A-Za-z0-9])({_D})({_D})\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}", van):
             if (q := _phan(m.group(3))) is not None:
                 thay.setdefault(frozenset({m.group(1), m.group(2)}), set()).add(q)
     return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
