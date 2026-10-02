@@ -588,7 +588,7 @@ const cungTap = (a, b) => JSON.stringify(sortedUnique(a)) === JSON.stringify(sor
 
 /** Hai vai trò liền nhau được phép xuất hiện CÙNG bước: đường cao trùng cạnh bên
  *  (V7 — chân là đỉnh đáy) hiện một lần, mang cả hai vai. */
-export const CAP_VAI_KHONG_NGHIEM = new Set(["CONSTRUCT_HEIGHT>CONSTRUCT_LATERAL_BOUNDARY"]);
+const CAP_VAI_KHONG_NGHIEM = new Set(["CONSTRUCT_HEIGHT>CONSTRUCT_LATERAL_BOUNDARY"]);
 
 /** Id renderer báo (`T#5cf`: thiết diện 5 đỉnh, khép, tô) → `{kind, vertices, closed, filled}`. */
 export function renderedSets(scene, renderedIds) {

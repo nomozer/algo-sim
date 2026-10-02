@@ -82,12 +82,6 @@ def _ky(ten: str) -> str:
     return dinh_danh_thuc_the(ten)[1]
 
 
-def _cau_lenh(spec: Any) -> list[dict[str, Any]]:
-    if isinstance(spec, SemanticProgramSpec):
-        return spec.model_dump(mode="json", exclude_none=True)["statements"]
-    return list(spec or [])
-
-
 def _dinh_nghia(x: Any) -> set[str]:
     """Mọi tên một câu lệnh (kể cả thân lồng, mục nhóm) gán giá trị."""
     ra: set[str] = set()
@@ -110,10 +104,8 @@ def _dinh_nghia(x: Any) -> set[str]:
 def _la(x: Any) -> set[str]:
     if isinstance(x, str):
         return {x}
-    if isinstance(x, dict):
-        return set().union(*(_la(v) for v in x.values())) if x else set()
-    if isinstance(x, list):
-        return set().union(*(_la(v) for v in x)) if x else set()
+    if isinstance(x, (dict, list)):
+        return set().union(*map(_la, x.values() if isinstance(x, dict) else x))
     return set()
 
 
@@ -161,10 +153,10 @@ def _chan_ung_vien(cau: list[dict[str, Any]], contract: Any, apex: str, day: tup
     return ra
 
 
-def chan_duong_cao(cau: Any, contract: Any, apex: str, day: tuple,
+def chan_duong_cao(cau: list[dict[str, Any]], contract: Any, apex: str, day: tuple,
                    da_co: set[str] | None = None) -> str | None:
     """Chân đường cao DÙNG ĐƯỢC: ứng viên đầu tiên đã có giá trị trước khối (`da_co`)."""
-    return next((f for f in _chan_ung_vien(_cau_lenh(cau), contract, apex, day)
+    return next((f for f in _chan_ung_vien(cau, contract, apex, day)
                  if da_co is None or f in da_co), None)
 
 
@@ -210,7 +202,7 @@ def _chuan_vong(c: tuple, thu_tu: list[str]) -> tuple:
 
 
 def lop_khoi(vertex_ids: list[str], faces: list[list[int]], contract: Any = None,
-             cau: Any = None) -> tuple[str, str | None, str | None, tuple, tuple]:
+             cau: list[dict[str, Any]] = ()) -> tuple[str, str | None, str | None, tuple, tuple]:
     """→ (nguồn | trạng thái, lớp, đỉnh chóp, chu trình đáy, chu trình đáy trên).
 
     Thứ tự thẩm quyền — KHÔNG BAO GIỜ chọn theo thứ tự đỉnh/mặt:
@@ -240,7 +232,6 @@ def lop_khoi(vertex_ids: list[str], faces: list[list[int]], contract: Any = None
         if dinh_topo == set(vertex_ids):
             khop = [k for k in (_khop_hop_dong(c, topo) for c in cach) if k is not None]
             return ("CONTRACT", *khop[0]) if khop else (LECH_HOP_DONG, None, None, (), ())
-    cau = _cau_lenh(cau)
     qh = [c for c in cach if (_chan_ung_vien(cau, contract, c[1], c[2]) if c[0] == LOP_CHOP
                               else _quan_he_day_lang_tru(contract, c[2], c[3]))]
     if len(qh) == 1:
@@ -407,14 +398,14 @@ def hoan_thien_dung_hinh(spec: SemanticProgramSpec, contract: Any = None) -> Ket
 
 # ── Vai trò của vật trong cảnh (producer: `simulation_state`) ───────────────
 
-def gan_vai_tro_dung(objects: list[dict[str, Any]], spec: Any, contract: Any = None) -> None:
+def gan_vai_tro_dung(objects: list[dict[str, Any]], spec: SemanticProgramSpec,
+                     contract: Any = None) -> None:
     """Gắn `formation_roles` cho mọi vật; `shape_class` + `formation_requirements`
     cho khối phân loại được và cho thiết diện. Cùng `lop_khoi`/`chan_duong_cao` với
     bước bổ sung — một thẩm quyền. Khối mơ hồ/không hỗ trợ/lệch hợp đồng không có
     lớp, để bộ kiểm độc lập (harness) đánh trượt nó thay vì đoán."""
-    cau = _cau_lenh(spec)
-    khai = (spec.model_dump(mode="json", exclude_none=True)["memory_declarations"]
-            if isinstance(spec, SemanticProgramSpec) else [])
+    d = spec.model_dump(mode="json", exclude_none=True)
+    cau, khai = d["statements"], d["memory_declarations"]
     khoi: list[tuple] = []
     for o in objects:
         if o.get("type") != "solid" or not o.get("vertex_ids") or o.get("faces") is None:

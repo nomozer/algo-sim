@@ -1,0 +1,21 @@
+# W14 Task 9 — full backend suite after the ponytail cleanup (working tree, before the cleanup commit)
+# command: cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -rf --tb=line
+# result: 15 failed, 6549 passed, 1 skipped, 2 deselected, 16 xfailed, 2 warnings in 225.45s (0:03:45)
+
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+DIRTY_WORKING_TREE (uncommitted cleanup) :: tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+DIRTY_WORKING_TREE (uncommitted cleanup) :: tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+FINDING (Task 5 artifact): assumption_corpus/CORPUS.json carried thesis-corpus texts without the derivation declaration — fixed in the follow-up corpus commit :: tests/geometry/test_thesis_acceptance_matrix.py::test_A5_de_bai_MOI__khong_trung_corpus_phat_trien
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+FINDING (Task 7 pin list): CANDIDATE_DIVERGENCE.json cache_version_hien_tai still 105 — fixed in the follow-up cache commit :: tests/geometry/test_thesis_runner_alignment.py::test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/semantic_program/test_evaluation_candidate.py::test_cache_version_khop_nguon
+STALE_CANDIDATE_IDENTITY (single refreeze in Task 10) :: tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+
+16 xfailed = the Track B gate tests (strict xfail, ASSUMPTION_POLICY_INCOMPLETE).
