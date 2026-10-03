@@ -313,21 +313,29 @@ def doc_mat_phang_de(problem_text: str | None) -> tuple[MatPhangDe, ...]:
         if he is None:
             continue
         m = _TEN_TRUOC.search(de[max(0, t - _CUA_SO):t])
-        ra.append(MatPhangDe(m.group(1) if m else None, he, (t, p)))
+        ra.append(MatPhangDe(_phay(m.group(1)) if m else None, he, (t, p)))
     return tuple(ra)
+
+
+def _phay(s: str) -> str:
+    """`′` và `’` → `'`: (P′) và (P’) là CÙNG một tên, và KHÁC (P)."""
+    return s.replace("′", "'").replace("’", "'")
 
 
 def ten_mat_phang_cua_bien(ten_bien: str) -> frozenset[str]:
     """Tên biến IR → các TÊN mặt phẳng nó có thể mang: mỗi mẩu (tách theo ký tự không phải
     chữ/số và chỗ thường→hoa) là chữ Hy Lạp, tên phiên âm trong bảng đóng, hoặc MỘT chữ in
-    hoa kèm chữ số. `alpha_plane` → {α}, `mp_P` → {P}, `mp_cat` → ∅, `plane_ABC` → ∅."""
+    hoa kèm chữ số; dấu phẩy viết liền (`P'`) hay bằng mẩu theo sau (`_prime`, `_phay`) là
+    một phần của tên — (P′) không bao giờ đọc thành (P). `alpha_plane` → {α}, `mp_P` → {P},
+    `mp_P_prime` → {P'}, `mp_cat` → ∅, `plane_ABC` → ∅."""
+    tu = [x for manh in re.split(r"[^\w']+|_", _phay(ten_bien or ""))
+          for x in re.findall(r"[A-Z][a-z]+|[a-z]+|[A-Z]+\d*'?|[α-ω]'?|\d+", manh)]
     ra: set[str] = set()
-    for manh in re.split(r"[\W_]+", ten_bien or ""):
-        for tu in re.findall(r"[A-Z][a-z]+|[a-z]+|[A-Z]+\d*|[α-ω]|\d+", manh):
-            if tu.lower() in _HY_LAP:
-                ra.add(_HY_LAP[tu.lower()])
-            elif re.fullmatch(r"[α-ω]|[A-Z]\d*", tu):
-                ra.add(tu)
+    for i, x in enumerate(tu):
+        ten = _HY_LAP.get(x.lower()) or (x if re.fullmatch(r"[α-ω]'?|[A-Z]\d*'?", x) else None)
+        if ten is not None:
+            phay = i + 1 < len(tu) and tu[i + 1].lower() in ("prime", "phay") and not ten.endswith("'")
+            ra.add(ten + "'" if phay else ten)
     return frozenset(ra)
 
 
