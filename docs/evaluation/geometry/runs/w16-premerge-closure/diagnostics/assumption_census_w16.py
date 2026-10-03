@@ -6,8 +6,9 @@ corpus (§14). 0 model calls.
 Reuses the W15 measurement code as is (`w15-assumption-closure/diagnostics/assumption_census_w15.py`
 and `_r2.py`, immutable) and compares every W14/W15/W15B row with W15 round 3. W16 rows are
 judged by their own labels and expectations; the declared limit A' (§14.1) is reported, not
-gated. Refuses to overwrite. Run from the repository root:
-  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_census_w16.py
+gated. Refuses to overwrite. Run from the repository root (optional argument: the round, default
+1; round 2 = after the primed-name fix 6b120036, adds the W16B addendum and compares with round 1):
+  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_census_w16.py [2]
 """
 from __future__ import annotations
 
@@ -20,15 +21,18 @@ from pathlib import Path
 HERE = Path(__file__).resolve()
 ROOT = HERE.parents[6]
 W15 = ROOT / "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics"
+ROUND = int(sys.argv[1]) if len(sys.argv) > 1 else 1
 sys.argv = sys.argv[:1]                       # R2 reads its round number from argv at import
 sys.path.insert(0, str(W15))
 import assumption_census_w15 as R1  # noqa: E402
 import assumption_census_w15_r2 as R2  # noqa: E402
 
 W16_CORPUS = HERE.parent / "assumption_corpus_w16" / "CORPUS.json"
+W16B_CORPUS = HERE.parent / "assumption_corpus_w16b" / "CORPUS.json"
 R3 = W15 / "ASSUMPTION_CENSUS_W15_R3.json"
-OUT_C = HERE.with_name("ASSUMPTION_CENSUS_W16.json")
-OUT_D = HERE.with_name("ASSUMPTION_MECHANISM_DECISION_W16.json")
+_HAU_TO = "" if ROUND == 1 else f"_R{ROUND}"
+OUT_C = HERE.with_name(f"ASSUMPTION_CENSUS_W16{_HAU_TO}.json")
+OUT_D = HERE.with_name(f"ASSUMPTION_MECHANISM_DECISION_W16{_HAU_TO}.json")
 GIOI_HAN = "W16_A_PRIME_LIMIT"
 
 
@@ -40,11 +44,14 @@ def main() -> None:
     rows += [R2.do_hang(r, "W15") for r in json.loads(R1.W15_CORPUS.read_text(encoding="utf-8"))["rows"]]
     rows += [R2.do_hang(r, "W15B") for r in json.loads(R2.W15B_CORPUS.read_text(encoding="utf-8"))["rows"]]
     rows += [R2.do_hang(r, "W16") for r in json.loads(W16_CORPUS.read_text(encoding="utf-8"))["rows"]]
+    them = (("W16B", W16B_CORPUS),) if ROUND >= 2 else ()
+    for ten, p in them:
+        rows += [R2.do_hang(r, "W16") | {"corpus_layer": ten} for r in json.loads(p.read_text(encoding="utf-8"))["rows"]]
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    census = {"census": "W16_ASSUMPTION_CENSUS", "model_calls": 0, "measured_at_commit": head,
+    census = {"census": f"W16_ASSUMPTION_CENSUS_ROUND_{ROUND}", "model_calls": 0, "measured_at_commit": head,
               "corpora": {k: {"path": str(p.relative_to(ROOT)).replace("\\", "/"), "sha256_lf": R1._sha_lf(p.read_bytes())}
                           for k, p in (("W14", R1.W14_CORPUS), ("W15", R1.W15_CORPUS), ("W15B", R2.W15B_CORPUS),
-                                       ("W16", W16_CORPUS))},
+                                       ("W16", W16_CORPUS), *them)},
               "re_execution_budget": R1.G.NGAN_SACH_CHAY_LAI, "rows": rows}
     raw = (json.dumps(census, ensure_ascii=False, indent=1, default=str) + "\n").encode("utf-8")
     OUT_C.write_bytes(raw)
@@ -82,6 +89,12 @@ def main() -> None:
                                      [r.get("status"), r.get("certificate"), r.get("subjects")]]
         for r in w15 if (r["corpus"], r["id"]) in truoc
         and truoc[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"), r.get("subjects"))}
+    if ROUND >= 2:
+        r1 = {(r["corpus"], r["id"]): (r.get("status"), r.get("certificate"))
+              for r in json.loads(HERE.with_name("ASSUMPTION_CENSUS_W16.json").read_text(encoding="utf-8"))["rows"]}
+        dec[f"report_round1_to_round{ROUND}_gate_changes"] = {
+            f"{r['corpus']}:{r['id']}": [list(r1[(r["corpus"], r["id"])]), [r.get("status"), r.get("certificate")]]
+            for r in rows if (r["corpus"], r["id"]) in r1 and r1[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"))}
     do = [r for r in rows if r.get("measured")]
     dec["report_route_served_depends_or_must_refuse_w14_w15"] = sorted(
         f"{r['corpus']}:{r['id']}" for r in do if r["corpus"] != "W16" and r["label"] in ("DEPENDS", "MUST_REFUSE")

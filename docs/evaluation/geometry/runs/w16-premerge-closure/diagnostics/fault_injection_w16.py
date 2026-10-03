@@ -25,6 +25,7 @@ from fault_injection_w15 import _tiem  # noqa: E402
 
 GATE = "app.simulation.semantic_program.assumption_gate"
 READER = "app.simulation.semantic_program.shape_constraint"
+PLANE = "app.simulation.semantic_program.plane_equation"
 ROUTE = "app.simulation.semantic_program.route"
 BUILDER = "build_scene3d_visual_evidence"
 
@@ -51,6 +52,14 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
     "FA2": (GATE, "    if duy_nhat and len(mp_de) == 1:\n", "    if mp_de:\n",
             "unnamed program plane bound to the first text equation without uniqueness",
             "test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0 (A6b, A7, A8)"),
+    "FA3": (PLANE, "            phay = i + 1 < len(tu) and tu[i + 1].lower() in (\"prime\", \"phay\") "
+                   "and not ten.endswith(\"'\")\n", "            phay = False\n",
+            "a _prime/_phay token after a plane name is ignored (mp_P_prime reads as (P))",
+            "test_w16_ten_mat_phang_cua_bien (mp_P_prime, P_phay, alpha_prime) + A9/A9b"),
+    "FA4": (PLANE, "        ra.append(MatPhangDe(_phay(m.group(1)) if m else None, he, (t, p)))\n",
+            "        ra.append(MatPhangDe(m.group(1) if m else None, he, (t, p)))\n",
+            "text plane names keep ′/’ (P′ never equals the program's P')",
+            "test_w16_doc_mat_phang_de_mang_ten_he_so_va_span (P′, α’) + A9b"),
     "FB1": (GATE, "    de_gt = che_muc_tieu(de)\n", "    de_gt = de\n",
             "goal clauses read as premises (no masking)",
             "test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de (7 cases) + route test"),
@@ -77,4 +86,5 @@ def pytest_sessionstart(session):
         ten, cu, moi, *_ = INJECTIONS[fi]
         importlib.import_module(ROUTE)            # bind importers before the swap
         importlib.import_module(BUILDER)
+        importlib.import_module(GATE)
         _tiem(ten, cu, moi)
