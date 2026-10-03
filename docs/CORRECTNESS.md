@@ -131,6 +131,18 @@ bốn là `verification_gap` là báo cáo sai.
    xác định đáp số. Thẩm quyền:
    [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md);
    bất biến kiến trúc #37.
+
+   **W16 (2026-10-03) siết hai chỗ của chứng chỉ ấy (§14):**
+   - *"CÙNG thực thể" nay đúng cả với mặt phẳng cho bằng phương trình.* Một hệ số chỉ được
+     ghim khi biến gắn được với đúng mặt phẳng của đề: theo tên viết trong mệnh đề
+     phương trình, hoặc duy nhất theo đếm. Trùng bộ số không còn là căn cứ.
+   - *Quan hệ trong yêu cầu chứng minh hoặc câu hỏi không bao giờ là tiền đề.* Các cụm
+     `Chứng minh rằng …`, `CMR`, `Kiểm tra …`, `… hay không?` được che trước khi đọc
+     tiền đề.
+
+   Giới hạn khai thẳng, không phải bảo đảm: C0 không kiểm một phép dựng có dùng đúng
+   thực thể đề nói hay không (ví dụ (T) cắt bởi (α) trong khi đề nói (β)). Đó là lỗi
+   đọc đề của mô hình, ghi ở `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`.
 3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
    bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu

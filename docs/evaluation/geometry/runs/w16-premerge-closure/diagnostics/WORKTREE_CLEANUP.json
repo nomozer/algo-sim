@@ -1,0 +1,75 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Only this wave's own worktrees and temporary folders are removed, from the main repository, by exact path (git worktree remove <path>, or Remove-Item -LiteralPath for a folder or file that is not a worktree; never a wildcard). A worktree is removed with --force only after (a) every tracked change in it is byte-identical (LF-normalised) to the committed file it produced, and (b) every untracked file is either byte-identical to its copy in the main tree's run folder (cmp over git -c core.quotepath=off status --porcelain --untracked-files=all) or covered by a ledgered ruling as a reproducible, non-acceptance output. --force covers nothing else. Directories left by earlier waves are not touched.",
+  "final_state": "git worktree list = the main working tree only; git worktree prune -v found nothing; no w16* path remains under D:/tmp",
+  "temp_worktrees_created": 7,
+  "temp_worktrees_removed": 7,
+  "temp_folders_and_files_created": 5,
+  "temp_folders_and_files_removed": 5,
+  "unique_artifacts_at_risk": 0,
+  "worktrees": [
+    {
+      "path": "D:/tmp/w16-base",
+      "origin": "Task 6 cache proof: the pre-W16 product at 8a339d17 produced the 'before' envelopes (written to the session scratchpad, summarised in diagnostics/PROOF_CACHE_ROW_W16.json)",
+      "state_before": "0 tracked changes, 0 untracked files (ignored interpreter caches only)",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16-fe",
+      "origin": "Task 6 at cd3a0efa: frontend fault injections FI-FRONTEND-1/2 (sources byte-restored), pre-freeze vitest and build (npm ci --offline)",
+      "state_before": "0 tracked changes, 0 untracked files (ignored node_modules and dist only)",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16-freeze",
+      "origin": "Task 7 FREEZE-1 at 2ec02b3a",
+      "state_before": "1 tracked change: docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json, byte-identical (LF) to the file committed in 55cde06e; 0 untracked",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16-evidence",
+      "origin": "Task 8 attempt 1 at 55cde06e: IDENTITY-FIXTURES-1, DRY-1, BROWSER-1 (failed on a harness defect)",
+      "state_before": "0 tracked changes; 170 untracked outputs: 107 byte-identical to the final run folder, 1 (results/BROWSER_EVIDENCE.json) byte-identical to diagnostics/browser-attempt1-55cde06e/, 62 without a copy (24 fixtures + FIXTURE_MANIFEST.json of the intermediate candidate, which differ from the final ones only in product_commit_sha/product_tree_sha, and 37 screenshots of the failed attempt)",
+      "action": "git worktree remove --force under the ledgered ruling 'Task 8: Ruling: the attempt-1 worktree …' (reproducible at 55cde06e, not acceptance evidence; the failing evidence is kept apart)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16-freeze2",
+      "origin": "FREEZE-2 at 6b120036 (after the pre-evidence self-review fix)",
+      "state_before": "1 tracked change: docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json, byte-identical (LF) to the file committed in 7f3658b0; 0 untracked",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16-evidence2",
+      "origin": "Task 8 measurement worktree at 7f3658b0 (npm ci --offline; Python from the main-tree backend/.venv): IDENTITY-2, FIXTURES-2, BROWSER-2, OCCLUSION-2, PLAYBACK-2, BUILDER-2",
+      "state_before": "0 tracked changes; 371 untracked outputs, all byte-identical to the run folder committed in 705970dd",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w16 space/algo-sim",
+      "origin": "npm ci at 55cde06e (attempt 1, never measured), then T3-1 and GATES-1 at 7f3658b0 from a path WITH a space (npm ci --offline)",
+      "state_before": "0 tracked changes, 0 untracked files (ignored node_modules and dist only)",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    }
+  ],
+  "temp_folders": [
+    {"path": "D:/tmp/w16-logs", "origin": "captured logs of attempt 1 and of the measurement at 7f3658b0", "check": "15 files, each byte-identical to diagnostics/logs/<same name>", "result": "REMOVED (Remove-Item -LiteralPath -Recurse)"},
+    {"path": "D:/tmp/w16-dry", "origin": "DRY-1: a one-family manifest (manifest.json, reproducible with the scratchpad script w16_dry_manifest.py from frontend/scripts/generic-tier-a-scenarios.json) and its log", "check": "the log is byte-identical to diagnostics/logs/DRY_SUITE_cross_section_55cde06e.log", "result": "REMOVED (Remove-Item -LiteralPath -Recurse)"},
+    {"path": "D:/tmp/w16 space", "origin": "parent folder of the spaced worktree", "check": "empty after the worktree removal", "result": "REMOVED (Remove-Item -LiteralPath)"},
+    {"path": "D:/tmp/w16-fe-build.log", "origin": "PRE-FREEZE-FRONTEND build output", "check": "byte-identical to diagnostics/logs/PRE_FREEZE_FRONTEND_BUILD_cd3a0efa.log", "result": "REMOVED (Remove-Item -LiteralPath)"},
+    {"path": "D:/tmp/w16-fe-vitest.log", "origin": "PRE-FREEZE-FRONTEND vitest output", "check": "byte-identical to diagnostics/logs/PRE_FREEZE_FRONTEND_VITEST_cd3a0efa.log", "result": "REMOVED (Remove-Item -LiteralPath)"}
+  ],
+  "not_touched": [
+    {
+      "path": "D:/tmp/w13-verify-c1, D:/tmp/w10-*, w11-*, 'w11 space', w12-*, 'w12 space', the algo-sim-* folders and loose scripts",
+      "origin": "earlier waves and sessions",
+      "reason": "not created by W16; their role is not established in this wave"
+    }
+  ]
+}

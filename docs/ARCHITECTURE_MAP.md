@@ -152,14 +152,30 @@ Thẩm quyền đăng ký: [`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.
 
   Còn lại là `UNDETERMINED`. Tiền đề chỉ đến từ bộ đọc và các bộ phát bất biến gọi KHÔNG
   kèm hợp đồng — chú thích của mô hình không bao giờ là tiền đề.
+- **W16 (§14 của amendment).**
+  - *Tiền đề đọc từ đề đã che mệnh đề mục tiêu.* `shape_constraint.khoang_muc_tieu` /
+    `che_muc_tieu` che các mệnh đề `chứng minh`, `chứng tỏ`, `CMR`, `kiểm tra`, `hỏi` và
+    câu kết bằng `?`; việc khớp làm trên bản NFC theo từng cụm. Bản che giữ nguyên độ
+    dài, nên span của mọi bộ đọc vẫn trỏ đúng đề gốc. Ràng buộc đọc được trong mục tiêu
+    không là tiền đề nhưng VẪN chặn phản ví dụ.
+  - *Literal của `construct_plane_from_equation` gắn với đúng mặt phẳng đề*
+    (`assumption_gate.gan_mat_phang`). Gắn theo tên viết trong mệnh đề phương trình
+    (`plane_equation.doc_mat_phang_de`, `ten_mat_phang_cua_bien`), hoặc duy nhất theo đếm
+    (`so_lan_nhac_mat_phang`). Không gắn được thì không có vai trò, detail ghi
+    `PLANE_BINDING`.
+  - *Không đổi:* `SourceInvariant plane_equation` của sản phẩm và hậu điều kiện của nó.
 - **Thi hành.** Từ chối ở chặng `assumption` (`INPUT_NOT_GROUNDED`;
   `ASSUMPTION_DETERMINES_ANSWER` nêu đại lượng thiếu, hoặc `ASSUMPTION_INVARIANCE_UNPROVEN`);
   `pipeline.KHONG_SUA_NGUON` không gửi đi sửa; `learner_messages` có hai câu tiếng Việt.
   U3: chỉ TỪ CHỐI khi `neu_khoi_da_dien` đúng; ngoài vùng ghi `assumption_enforced = false`.
   U5: `CLOSURE_MULTIPLE_DEFINITIONS` bị từ chối ở MỌI vùng. Lỗi bên trong cổng ⇒ từ chối
   có mã trong vùng, không bao giờ HTTP 500.
-- **Phần tô thiết diện khép kín** là vật riêng `section_fill:<id>`, `renderOrder` sau mọi
-  nét, KHÔNG kiểm và KHÔNG ghi chiều sâu. Thiết diện nằm TRONG khối, mà lớp chiều sâu đục
+- **Phần tô thiết diện khép kín** là vật riêng `section_fill:<id>`. Thứ tự vẽ là
+  `THU_TU_TO_THIET_DIEN = 7` (W16): sau mặt khối và mặt cắt, TRƯỚC mọi nét trong suốt. Vì
+  vậy cạnh khối chuẩn vẽ đè lên phần tô; ở thứ tự 10 của W15, phần tô phủ hổ phách lên
+  cạnh. Nét liền thuộc hàng đợi đục vẫn đi trước cả hàng đợi trong suốt
+  (`ISSUE-ARCH-SECTION-FILL-OPAQUE-AUXILIARY-LINES`). Phần tô KHÔNG kiểm và KHÔNG ghi chiều
+  sâu. Thiết diện nằm TRONG khối, mà lớp chiều sâu đục
   của khối chạy trước toàn bộ hàng đợi trong suốt; kiểm chiều sâu thì phần tô bị loại ở
   mọi điểm ảnh. Viền thiết diện vẫn hai lượt thấy/khuất. Móc đo
   `__geo3d_set_section_fill_visible` chỉ dành cho harness.
@@ -305,7 +321,7 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 
 | 36 | **Một GIVEN phải được CÂU ĐỀ chứng minh — lời khai `analyze` không phải nguồn** (W12, 2026-09-30). Tuyến LLM từng nhận một độ dài chỉ có trong mục `analyze` (đề không ghi) rồi gắn GIVEN. Cổng grounding đọc bằng chứng từ câu đề: độ dài `XY_length` cần con số của đề (nguyên/thập phân `.`/`,`/phân số/căn), không bị nhãn đoạn khác hay đơn vị khác mâu thuẫn; nguyên tử chỉ khớp giá trị P1 không chứng minh được ⇒ `GIVEN_VALUE_NOT_IN_SOURCE`; span P1 không cắt đúng chữ ⇒ `SOURCE_SPAN_MISMATCH`; mâu thuẫn ⇒ `SOURCE_EVIDENCE_CONFLICT`; toạ độ ghim vào mục mang số đề không ghi ⇒ từ chối. Ba mã KHÔNG gửi đi sửa. Lời khai chưa chứng minh không DỰNG bất biến nguồn (vẫn phủ quyết phép chia nó mâu thuẫn). P1 tính lại từ đề, một hàm dùng chung cho biên đóng băng · cổng · bộ phát bất biến. Giới hạn đã khai: kênh toạ độ `model_assumption`/`LAYOUT_DERIVED` vẫn có thể cố định một kích thước đề không cho (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`; w15: đóng trong vùng đa diện — #37) | `semantic_program/grounding_gate.py` (`_bang_chung_do_dai`, `MA_LOI_NGUON`) + `literal_extractor.py::gia_tri_khong_chung_minh_duoc` + `segment_relation.py::_van_ban` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_source_grounding_closure.py` (tuyến sản phẩm với transport giả, 0 lượt gọi model) + fixture âm `_ungrounded` sáu họ |
 
-| 37 | **Trong vùng đa diện, một giá trị SỐ người học thấy phải có CHỨNG CHỈ — bố cục hay giả thiết của mô hình không được quyết định đáp số** (W15, 2026-10-03). Hai phép dò W12 từng được phục vụ với `V = 30` khi đề không cho AD: chương trình giữ AD bằng toạ độ `LAYOUT_DERIVED`/`model_assumption`, không kênh nào khai GIVEN nên grounding không có gì để kiểm. Nay route chỉ phục vụ giá trị có chứng chỉ (`PROVEN_SAFE`). **C0:** mọi literal trên lát cắt là dữ kiện đề CÙNG thực thể. **C1:** khuôn T1–T6 khớp ràng buộc server đọc từ đề. Lát cắt đi theo định nghĩa với tới DUY NHẤT trên trace, giá trị lấy tại lúc định nghĩa. Phản ví dụ hợp lệ ⇒ `ASSUMPTION_DETERMINES_ANSWER`, nêu đại lượng thiếu; còn lại ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`. Cả hai từ chối ở chặng `assumption` và KHÔNG gửi đi sửa. Tiền đề chỉ đến từ CÂU ĐỀ (bộ đọc + bộ phát bất biến gọi không kèm hợp đồng) — chú thích quan hệ của mô hình không bao giờ là tiền đề. Phạm vi thi hành theo U3: đề nêu khối đa diện theo từ vựng đóng; ngoài vùng chỉ ghi. Nhiều định nghĩa với tới bị từ chối ở MỌI vùng (U5) | `semantic_program/assumption_gate.py::kiem_gia_dinh` + `shape_constraint.py` (`doc_rang_buoc`, `phan_chua_doc`, `neu_khoi_da_dien`) + `route.py::_sau_grounding` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_assumption_gate.py` (tuyến route) · `test_assumption_certificate.py` (C0/C1/phản ví dụ, định nghĩa với tới gồm ca lệnh dựng tự đọc, vai trò literal, metamorphic) · `test_shape_constraint.py` · census vòng 3 + tiêm lỗi FI1–FI14 trong run `w15-assumption-closure` |
+| 37 | **Trong vùng đa diện, một giá trị SỐ người học thấy phải có CHỨNG CHỈ — bố cục hay giả thiết của mô hình không được quyết định đáp số** (W15, 2026-10-03). Hai phép dò W12 từng được phục vụ với `V = 30` khi đề không cho AD: chương trình giữ AD bằng toạ độ `LAYOUT_DERIVED`/`model_assumption`, không kênh nào khai GIVEN nên grounding không có gì để kiểm. Nay route chỉ phục vụ giá trị có chứng chỉ (`PROVEN_SAFE`). **C0:** mọi literal trên lát cắt là dữ kiện đề CÙNG thực thể. **C1:** khuôn T1–T6 khớp ràng buộc server đọc từ đề. Lát cắt đi theo định nghĩa với tới DUY NHẤT trên trace, giá trị lấy tại lúc định nghĩa. Phản ví dụ hợp lệ ⇒ `ASSUMPTION_DETERMINES_ANSWER`, nêu đại lượng thiếu; còn lại ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`. Cả hai từ chối ở chặng `assumption` và KHÔNG gửi đi sửa. Tiền đề chỉ đến từ CÂU ĐỀ (bộ đọc + bộ phát bất biến gọi không kèm hợp đồng) — chú thích quan hệ của mô hình không bao giờ là tiền đề. Phạm vi thi hành theo U3: đề nêu khối đa diện theo từ vựng đóng; ngoài vùng chỉ ghi. Nhiều định nghĩa với tới bị từ chối ở MỌI vùng (U5). W16 (amendment §14): "CÙNG thực thể" gồm cả mặt phẳng cho bằng phương trình — gắn theo tên hoặc duy nhất theo đếm, trùng bộ số không là căn cứ; mọi tiền đề đọc từ đề đã che mệnh đề mục tiêu (`Chứng minh …`, `CMR`, `Kiểm tra …`, câu hỏi) | `semantic_program/assumption_gate.py::kiem_gia_dinh` + `shape_constraint.py` (`doc_rang_buoc`, `phan_chua_doc`, `neu_khoi_da_dien`) + `route.py::_sau_grounding` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_assumption_gate.py` (tuyến route) · `test_assumption_certificate.py` (C0/C1/phản ví dụ, định nghĩa với tới gồm ca lệnh dựng tự đọc, vai trò literal, metamorphic) · `test_shape_constraint.py` · census vòng 3 + tiêm lỗi FI1–FI14 trong run `w15-assumption-closure` · `test_plane_from_equation.py -k w16` (tên mặt phẳng) + census vòng 2 + tiêm lỗi FG/FA/FB/FD trong run `w16-premerge-closure` |
 
 ## 6. Bốn trục khái niệm
 

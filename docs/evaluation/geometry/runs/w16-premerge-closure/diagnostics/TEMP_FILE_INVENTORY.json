@@ -1,0 +1,59 @@
+{
+ "schema_version": "temp-file-inventory/1",
+ "wave": "W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE",
+ "scope": "every file created or rewritten after the W16 Phase 0 gate (2026-10-03T09:35:15Z) in the session scratchpad, in the git-ignored plan workspace and the plan file, plus git-ignored repository files that W16 created outside the normal interpreter caches (none found)",
+ "classes": [
+  "USED",
+  "RESEARCH_EVIDENCE",
+  "SUPERSEDED_DIAGNOSTIC",
+  "REPRODUCIBLE_TEMP",
+  "UNKNOWN"
+ ],
+ "deletion_rule": "only verified duplicates, each by exact path (Remove-Item -LiteralPath); nothing by wildcard; drafts of unclear value are kept",
+ "not_inventoried_as_temp": [
+  "backend/**/__pycache__/*.pyc: the interpreter's normal caches in git-ignored folders; W16 runs set PYTHONDONTWRITEBYTECODE=1, left in place",
+  "node_modules/, frontend/dist/: build state, not created by this wave's diagnostics",
+  ".claude/settings.local.json, frontend/.impeccable/hook.cache.json: editor and tool state of the user's environment; not this wave's files, left alone",
+  "tracked files whose modification time changed without a content change (AGENTS.md, docs/ROADMAP.md, docs/schemas/semantic_program.schema.json, four JSON files of photo-problem-to-scene/second-family-live-measurement-reconciliation): git status shows them unmodified; not temp files",
+  "the harness's own background-task output files under the session temp folder (tasks/*.output): tool state, not written by this wave's scripts"
+ ],
+ "worktrees": "every D:/tmp worktree and temporary folder of the wave is listed in diagnostics/WORKTREE_CLEANUP.json (all removed)",
+ "counts": {
+  "USED": 9,
+  "RESEARCH_EVIDENCE": 9,
+  "SUPERSEDED_DIAGNOSTIC": 3,
+  "REPRODUCIBLE_TEMP": 7
+ },
+ "deleted_count": 1,
+ "unknown_count": 0,
+ "files": [
+  {"area": "plan", "path": "C:/Users/Bunny/.claude/plans/w16-premerge-closure.md", "class": "USED", "note": "the W16 plan (writing-plans), executed inline", "action": "kept"},
+  {"area": "plan workspace", "path": ".superpowers/sdd/w16-premerge-closure/PLAN_COPY.md", "class": "USED", "note": "copy of the plan in the ledger workspace", "action": "kept"},
+  {"area": "plan workspace", "path": ".superpowers/sdd/w16-premerge-closure/plan-path", "class": "USED", "note": "workspace identity", "action": "kept"},
+  {"area": "plan workspace", "path": ".superpowers/sdd/w16-premerge-closure/progress.md", "class": "USED", "note": "the ledger: task lines, rulings, the final self-review lines", "action": "kept"},
+  {"area": "plan workspace", "path": ".superpowers/sdd/.gitignore", "class": "USED", "note": "rewritten by the workspace script (keeps the plan workspaces out of git)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_brief.txt", "class": "USED", "note": "the W16 brief extracted from the session transcript to check the handoff fields", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_crop.py", "class": "USED", "note": "crop-and-zoom helper for the section-fill frames", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_cache_before.json", "class": "USED", "note": "'before' envelopes (worktree at 8a339d17), input of diagnostics/PROOF_CACHE_ROW_W16.json", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_cache_w16.json", "class": "USED", "note": "W16 envelopes (main tree at cd3a0efa), input of diagnostics/PROOF_CACHE_ROW_W16.json", "action": "kept"},
+  {"area": "scratchpad", "path": "w15_cs_zoom.png", "class": "RESEARCH_EVIDENCE", "note": "Phase 3: zoom of the W15 closed cross-section frame showing the amber fill drawn over the solid edges", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_cs_zoom.png", "class": "RESEARCH_EVIDENCE", "note": "zoom of the W16 closed frame (images/cross-section/desktop/neutral_final.png): S-A dashed and S-C solid drawn over the fill", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_xem_p1.py", "class": "RESEARCH_EVIDENCE", "note": "Phase 1: prints the analyze payload and program of gold p1 (plane rows)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_xem_p6.py", "class": "RESEARCH_EVIDENCE", "note": "Phase 1: the same for gold p6", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_rho.mjs", "class": "RESEARCH_EVIDENCE", "note": "Task 5: rho of the synthetic blend cases behind the §14.4 T5 correction note", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_fi_check.py", "class": "RESEARCH_EVIDENCE", "note": "Task 6: counts each fault-injection anchor in the sources (each must occur exactly once)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_fi_nfd.py", "class": "RESEARCH_EVIDENCE", "note": "Task 3: fault injection of the NFC cluster map; the NFD test turned RED as expected", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_dbg_sampler.mjs", "class": "RESEARCH_EVIDENCE", "note": "BROWSER-1 root cause: the sampler offline on the recorded snapshot gave 38 samples and two crossing edges", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_dbg_browser.mjs", "class": "RESEARCH_EVIDENCE", "note": "BROWSER-1 root cause: live page evaluation that surfaced the 'LỖI:' result of the page code", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_do_A.py", "class": "SUPERSEDED_DIAGNOSTIC", "note": "Phase 1 draft of the plane-binding probe, replaced by diagnostics/probe_w16_phase1.py", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_do_BC.py", "class": "SUPERSEDED_DIAGNOSTIC", "note": "Phase 1 draft of the goal-clause and guard probes, replaced by diagnostics/probe_w16_phase1.py", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_do_C34.py", "class": "SUPERSEDED_DIAGNOSTIC", "note": "Phase 1 draft of guards 3 and 4, replaced by diagnostics/probe_w16_phase1.py", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_dbg_browser2.mjs", "class": "REPRODUCIBLE_TEMP", "note": "second form of the live page evaluation (same finding)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_dry_manifest.py", "class": "REPRODUCIBLE_TEMP", "note": "builds the one-family manifest of DRY-1 (rejected by the suite)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_cache_proof.db", "class": "REPRODUCIBLE_TEMP", "note": "temporary sqlite cache of the cache proof (rebuilt by proof_cache_row_w16.py prove)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_attempt1_other.txt", "class": "REPRODUCIBLE_TEMP", "note": "list of the 62 attempt-1 outputs without a byte-identical copy (input of the cleanup ruling)", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_sheet_neg1.png", "class": "REPRODUCIBLE_TEMP", "note": "half-size crop of the first refusal row of images/cross-section/SHEET.png, viewed for the review", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_cs_final_half.png", "class": "REPRODUCIBLE_TEMP", "note": "half-size copy of images/cross-section/desktop/neutral_final.png", "action": "kept"},
+  {"area": "scratchpad", "path": "w16_full_backend_main.log", "class": "REPRODUCIBLE_TEMP", "note": "full console of PRE-FREEZE-BACKEND; byte-identical to diagnostics/logs/PRE_FREEZE_FULL_BACKEND_cd3a0efa_FULL_OUTPUT.log (cmp)", "action": "deleted (verified duplicate, Remove-Item -LiteralPath)"}
+ ]
+}

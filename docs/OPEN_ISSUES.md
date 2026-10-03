@@ -421,6 +421,7 @@
 - **impact:** Determined problems in those phrasings are refused inside the polyhedral scope instead of served; a learner must rephrase.
 - **scope:** `backend/app/simulation/semantic_program/shape_constraint.py`, `segment_relation.py` (division reader), `assumption_gate.py` (template table).
 - **status:** OPEN (w15) — coverage limit of the registered scope, not a soundness defect.
+- **w16:** the last sentence of the description no longer holds for the certificate. Since `93d4ec69`, `shape_constraint.khoang_muc_tieu` marks goal clauses: `chứng minh`, `chứng tỏ`, `CMR`, `kiểm tra`, `hỏi`, and any clause ending in `?`. Every certificate premise is read from the text with those clauses masked, so a `Chứng minh …` relation is never a premise; it still blocks the counterexample (ASSUMPTION_CERTIFICATE_AMENDMENT §14.2). This is measured on the seven W16 goal rows, all refused. The W16 probe also surfaced one more gap of this issue, one that existed before W16: in `Tính …, biết chiều cao bằng …`, the height comes after `Tính`, and the height reader only reads the data part. The request is refused as `UNDETERMINED` before and after W16 (over-refusal, fail-closed), never as `DEPENDENT` (row `B6b_tinh_biet_chieu_cao`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** user decision W15-H3, then one reader rule + one registered certificate rule per phrase
 - **default_switch_blocker:** NO
@@ -432,7 +433,12 @@
 - **evidence:** `backend/app/simulation/semantic_program/assumption_gate.py::_vai_tro` (branch `mat_phang`), `plane_equation.bat_bien_mat_phang`; final self-review of w15 (`docs/evaluation/geometry/runs/w15-assumption-closure/REPORT.md`, limitations).
 - **impact:** A misassigned but stated plane equation is not caught by the certificate; other gates may or may not catch it. The amendment says "same entity", which holds for points, lengths and ratios.
 - **scope:** `plane_equation.py` (entity binding of the invariant), `assumption_gate.py`.
-- **status:** OPEN (w15, inherited from the w12 invariant family).
+- **status:** RESOLVED (w16, `24161657` + `6b120036`; `CACHE_VERSION` 107 → 108 in `2ec02b3a`, served → rejected).
+  - **How it is fixed.** `plane_equation.doc_mat_phang_de` reads each text equation together with the name written in its clause and its span. `assumption_gate.gan_mat_phang` binds a program plane to its text plane in one of two ways: by name (`ten_mat_phang_cua_bien`, closed Greek table; a written prime or a following `_prime`/`_phay` token is part of the name), or as unique by counting (the text mentions planes once and the program builds one equation plane). The coefficients must then be proportional. Equal numbers never bind.
+  - **Measured.** Seven wrong-entity programs are refused: β given α's equation, α/β swapped (it showed 9 where the text gives 16), four unnamed planes without a unique basis, and (P′) given (P)'s equation through the variable `mp_P_prime` (found by the pre-evidence self-review, red in `2dc55f1b`, fixed in `6b120036`). Nine valid bindings, including (P′) with its own equation, and the gold rows p1, p6 and p7 stay C0. Fault injections FA1–FA4 turn the tests red.
+  - **Product invariant unchanged.** The product `SourceInvariant plane_equation` (a postcondition that a proportional plane exists) is not modified.
+  - **Evidence:** `docs/evaluation/geometry/runs/w16-premerge-closure/` (`diagnostics/PROBE_W16_PHASE1_6d01511.json`, `ASSUMPTION_CENSUS_W16_R2.json` with its decision `ASSUMPTION_MECHANISM_DECISION_W16_R2.json`, `logs/FAULT_INJECTION_W16_FINAL.log`).
+  - **Residual:** `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND` — a correctly bound plane used by the wrong construction.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with the next grounding change
 - **default_switch_blocker:** NO
@@ -444,11 +450,47 @@
 - **evidence:** w15 ponytail review mandatory check "dead branches in kiem_gia_dinh" (`docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/PONYTAIL_REVIEW.json`).
 - **impact:** Each guard refuses (never serves); a regression that deletes one would go unnoticed by the suite.
 - **scope:** `backend/tests/geometry/test_assumption_certificate.py` (tests only, no product change).
-- **status:** OPEN (w15).
+- **status:** RESOLVED (w16, `6d015112`) — each branch is reached from a VALID spec, with reason code `ASSUMPTION_INVARIANCE_UNPROVEN` and a valid counterpart that stays C1: a no-op `if` (`CLOSURE_UNSUPPORTED_KIND control flow`), S moved off the normal at A (`T1 TEMPLATE_CONSTRAINT_VIOLATED apex edge ⊥ base`), `(P): z = 2` on a C1 slice (`FRAME_DEPENDENT construct_plane_from_equation` as the only failure), a two-vertex face (`FORMATION_REJECTED`). Fault injections FG1–FG4 remove each branch and turn exactly its test red (`docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/logs/FAULT_INJECTION_W16_FINAL.log`).
 - **owner_class:** TEST HARNESS
 - **suggested_wave:** any (test-only; no refreeze)
 - **default_switch_blocker:** NO
 - **acceptance:** one test per guard, each with a fault injection that removes the guard and turns the test red.
 - **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py -q`
+
+### ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND
+- **description:** C0 binds every literal on a shown value's slice to its own text entity. It does not check that each construction uses the entity the text names. Example: the text says the section (T) is cut by (β), and the program cuts (T) with (α). Both planes' equations are bound correctly, yet the served area is that of the wrong section (9 instead of 16). This is the same class as a midpoint built on the wrong segment: a reading error of the model, not a literal without a source.
+- **evidence:** `backend/tests/geometry/test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi` (strict xfail). The declared-limit row `A2b_cat_bang_alpha_khi_de_noi_beta` (PROVEN_SAFE C0, served) is in `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`. Registered as limit A′ in ASSUMPTION_CERTIFICATE_AMENDMENT §14.1.
+- **impact:** A program that substitutes a determined entity for the one the text names can still be certified. If the text's entity is undetermined (an unnamed or unpinned plane), the served value hides a free parameter. With planes, the strict unnamed-binding rule refuses the common forms (A6b, A8); the named form (A2b) is served.
+- **scope:** a closed reader for construction relations in `shape_constraint.py`, for example `(X) cắt <khối> theo thiết diện (T)` and `M là trung điểm của XY`, plus a C0 rule that matches each slice construction against it.
+- **status:** OPEN (w16) — needs the vocabulary decision W15-H3 of the user. It is not part of the W16 brief (plane-equation entity binding).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with W15-H3
+- **default_switch_blocker:** NO
+- **acceptance:** the strict xfail turns green, and a census row per relation is labelled before the run.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py -q -k gioi_han_A_phay`
+
+### ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM
+- **description:** The goal-clause masking of W16 (§14.2) applies to the assumption certificate only. The product grounding gate (`grounding_gate.bang_chung_doan` and the source-length reader) still reads lengths and coordinates on the whole text. A value written only inside a proof request, as in `Chứng minh rằng SA = 5`, can therefore back a GIVEN.
+- **evidence:** `test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]`: the certificate refuses, while grounding alone would accept the length (W16 Phase 1 probe, `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/PROBE_W16_PHASE1_6d01511.json`).
+- **impact:** Inside the polyhedral scope (U3) the certificate refuses such a request. Outside it, the gate only records, so a request whose only data sits in a proof request can be served.
+- **scope:** `backend/app/simulation/semantic_program/grounding_gate.py`, `segment_relation.py` (read on `che_muc_tieu(text)`).
+- **status:** OPEN (w16) — outside the W16 enforcement scope ("Giữ phạm vi enforcement của W15").
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with W15-H2 (enforcement outside the polyhedral scope)
+- **default_switch_blocker:** NO
+- **acceptance:** a GIVEN backed only by a goal clause is refused at `grounding`; hypotheses before the request stay readable.
+- **verify:** a grounding test in `tests/geometry/test_source_grounding_closure.py`.
+
+### ISSUE-ARCH-SECTION-FILL-OPAQUE-AUXILIARY-LINES
+- **description:** The W16 fill order (`THU_TU_TO_THIET_DIEN = 7`) puts the section fill under every line in the transparent queue. That covers the canonical solid edges and every dashed hidden part. three.js draws the whole opaque queue first, however, so opaque lines still sit under the fill and are tinted where they cross the section region. Opaque lines here are the solid part of `duongHaiLuot` segments and lines, the section polygon outline, edge-type objects and the perpendicular marker.
+- **evidence:** `frontend/src/simulations/domains/geometry/scene3d-section.test.ts` (W16 ordering test, transparent queue only), ASSUMPTION_CERTIFICATE_AMENDMENT §14.4. No auxiliary opaque line crosses a section region in the six evidence scenes.
+- **impact:** An auxiliary segment drawn across a section (for example a height inside the cut) would read amber-tinted, still visible at 55 % of its colour.
+- **scope:** `scene3d-view.tsx` (`duongHaiLuot` visible pass, polygon outline): make them transparent-queue lines with opacity 1, as `canonicalEdgeMaterial` already is.
+- **status:** OPEN (w16) — renderer limit recorded, not in the brief's minimal layering fix.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next renderer change
+- **default_switch_blocker:** NO
+- **acceptance:** the W16 ordering test extended to opaque lines; `SECTION_FILL_UNDER_EDGES` on a scene with an auxiliary segment inside a section.
+- **verify:** `cd frontend && npx vitest run src/simulations/domains/geometry/scene3d-section.test.ts`
 
 

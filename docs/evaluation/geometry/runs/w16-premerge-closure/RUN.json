@@ -1,0 +1,118 @@
+{
+  "schema_version": "premerge-closure-run/1",
+  "run_id": "w16-premerge-closure",
+  "task": "W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE",
+  "task_class": "PRE_MERGE_CORRECTNESS_UNDER_REGISTERED_SCOPE",
+  "date": "2026-10-03",
+  "times_utc": {
+    "repository_gate": "2026-10-03T09:35:15Z (diagnostics/logs/PHASE0_REPOSITORY_GATE.log)",
+    "pre_freeze_checks": "2026-10-03T10:39Z-10:42:21Z (cd3a0efa)",
+    "freeze_1": "2026-10-03T11:28:55Z (2ec02b3a)",
+    "browser_attempt_1_failed": "2026-10-03T11:32:48Z-11:38:47Z (55cde06e)",
+    "freeze_2": "2026-10-03T11:52:40Z (6b120036)",
+    "browser_suite": "2026-10-03T11:55:09Z-12:00:40Z",
+    "occlusion": "2026-10-03T12:01:29Z",
+    "playback": "2026-10-03T12:01:48Z-12:06:55Z",
+    "evidence_builder": "2026-10-03T12:07:32Z",
+    "t3_and_gates": "2026-10-03T12:08Z-12:12:35Z"
+  },
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "start_head": "8a339d17e9780d4a9df0cb838f11cc26a355e80f",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git fetch --prune origin at Phase 0: equals ls-remote; ancestor of HEAD; ahead 162 / behind 0; the feature branch was never pushed)",
+  "continues": "w15-assumption-closure (READY_FOR_HUMAN_VISUAL_REVIEW, human review NOT_APPROVED)",
+  "registration": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §14 (committed in 6ed110f6 before any fix; one dated correction to §14.1 after the pre-evidence self-review and one to §14.4 before measuring)",
+  "commits": [
+    {"sha": "6ed110f61a5f4aac8add86cfb73ffa429b9b200b", "role": "docs(eval): register plane binding, goal clauses, fill layering and refusal panels (§14)"},
+    {"sha": "6d0151128b77b85b45422a832d0c0793a770625a", "role": "test(w16): RED reproductions (plane binding, goal clauses, guards, fill layering, refusal panels; a frontend/src test file)"},
+    {"sha": "dea0ad914e73f10b6ea3ea182370b8affbd20edd", "role": "docs(eval): phase-1 probe and adversarial corpus at the RED commit"},
+    {"sha": "24161657374246ddbfb834d6c6feda709cede278", "role": "fix(grounding): plane-equation literals bound to their own text plane (product)"},
+    {"sha": "93d4ec698876f4d39eb5464a02ef925e6119297c", "role": "fix(grounding): a relation to prove is never a premise (product)"},
+    {"sha": "29da8e5ae3da54e6badb97cff8ba2991eb40555d", "role": "fix(scene3d): section fill under the solid edges (product, frontend/src)"},
+    {"sha": "1d782bd82ea96895f480bcc6d7d06f2a6b641b9b", "role": "test(harness): fill-under-edges check, sampler per §11, readable refusal panels"},
+    {"sha": "00f0981d6f43cd61f862613459a5f66f89c60989", "role": "test(w16): goal-after-Tính counterexample test, census and fault-injection drivers"},
+    {"sha": "cd3a0efa9e97838c75acca2c5d6fa2e37087480f", "role": "docs(eval): census round 1 and fault injections at 00f0981d"},
+    {"sha": "e42bdd8fe9b8e1d8c77d521841a004ff468779bc", "role": "docs(eval): cache-row proof, frontend fault injections, pre-freeze backend run"},
+    {"sha": "2ec02b3a70a30d0dd81868e99d6cfe60e6d8f090", "role": "chore(cache): CACHE_VERSION 107 -> 108 (product)"},
+    {"sha": "55cde06e017f5bea863efa58d0e009fe8eced453", "role": "chore(eval): freeze 1 (at 2ec02b3a; intermediate candidate)"},
+    {"sha": "85e7339400db76d90332512318f6acbe6a3f2b57", "role": "test(harness): section-fill page code no longer redeclares doc (fix of browser attempt 1)"},
+    {"sha": "2dc55f1bd33a11001680c210d7dbbc1faff1684c", "role": "test(w16): RED primed-name alias (pre-evidence self-review)"},
+    {"sha": "681c34cf194f6ca035740cd8ea79a689562c07ad", "role": "docs(eval): W16B primed-name corpus at the RED commit"},
+    {"sha": "6b1200364f83b62fe6ea07d09009638b159e6b25", "role": "fix(grounding): a primed plane name never reads as the unprimed plane (product; last product commit)"},
+    {"sha": "7695b96770d0f8f18d3f192a8d61079f59e80701", "role": "test(w16): FA3/FA4 fault injections and census round 2 drivers"},
+    {"sha": "f3f9836ae0a64d935565ad684483f548c02558bc", "role": "docs(eval): final fault injections (13/13) and census round 2 at 7695b967"},
+    {"sha": "7f3658b00f48dae854e5ab2527ca0ff3f701f828", "role": "chore(eval): freeze 2 (measurement commit)"},
+    {"sha": "705970dd83f267a17da87e5f18906eee829ad955", "role": "test(evidence): browser, occlusion, playback, sheets, T3 and gates at 7f3658b0"},
+    {"sha": "SELF_EXCLUDED_RESOLVE_FROM_GIT", "role": "docs(state): run documents, living docs, docs-audit allow-list"}
+  ],
+  "product_code_changed": true,
+  "product_commit_sha": "6b1200364f83b62fe6ea07d09009638b159e6b25",
+  "candidate": {
+    "before": "b3b7eb79d3c64a2f076ae1dc815abb2273364e2c0374660682be66dbbb0ec60c",
+    "intermediate": "8d14469bacee7928bbc407f201ea0e3879cccc26102f404e2382375177396044 (freeze 1; no acceptance evidence measured on it)",
+    "after": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476",
+    "files": 107,
+    "refrozen_count": 2,
+    "freezes": [
+      {"at": "2ec02b3a", "commit": "55cde06e", "tree": "8d14469b", "why": "after the W16 product changes and the cache bump"},
+      {"at": "6b120036", "commit": "7f3658b0", "tree": "9bb0aaa7", "why": "primed-name alias found by the pre-evidence self-review (backend/app changed)"}
+    ]
+  },
+  "measurement_commit": "7f3658b00f48dae854e5ab2527ca0ff3f701f828",
+  "evidence_commit": "705970dd83f267a17da87e5f18906eee829ad955",
+  "failed_attempt": "browser attempt 1 at 55cde06e on 8d14469b: cross-section section fill 0 samples, a harness defect (page code redeclared doc); kept apart in diagnostics/browser-attempt1-55cde06e/",
+  "cache": {
+    "before": "107",
+    "after": "108",
+    "bump_commit": "2ec02b3a70a30d0dd81868e99d6cfe60e6d8f090",
+    "reason": "twelve requests served before W16 (A1, A2, A6, A6b, A8, B1, B1b, B2, B3b, B3c, B5, B7) are refused by W16 and would HIT as v107 rows (served -> rejected) — diagnostics/PROOF_CACHE_ROW_W16.json; not bumped again for 6b120036 (108 unreleased; the fix only refuses more)",
+    "fingerprint": "b1714b566e25c912",
+    "fingerprint_changed": false
+  },
+  "schema_mirrors_sha256": "d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 (both mirrors, exported twice at the measurement commit, byte-identical, 0 files changed)",
+  "model_surface_changed": false,
+  "default_mode": "LLM_ONLY",
+  "live_gemini_requests": 0,
+  "application_llm_calls": 0,
+  "results": {
+    "plane_binding": "probe at 6d015112: 5 wrong-entity programs served from C0 with the wrong plane's value (A1, A2, A6, A6b, A8; A2 showed 9 where the text gives 16), A7 C0 but refused by the postcondition. After W16 (24161657 + 6b120036): 7/7 wrong-entity programs refused (incl. A9, (P') carrying (P)'s equation through mp_P_prime), 9/9 valid bindings C0, gold p1/p6/p7 C0. Declared limit A' (A2b: T cut by a correctly pinned alpha where the text says beta) still C0 and served",
+    "premise_vs_goal": "probe at 6d015112: 7 programs served from C1 on a relation the text asks to prove (B1, B1b, B2, B3b, B3c, B5, B7). After 93d4ec69: 7/7 refused (UNDETERMINED, GOAL_CLAUSE); B0, B4b, B5b, B6 stay C1 and served; B3, B4 refused before and after (not exploitable); B6b over-refused before and after (vocabulary limit, fail-closed)",
+    "guards": "4/4 guards fire from valid specs with ASSUMPTION_INVARIANCE_UNPROVEN (or before the gate for the two-vertex face) and each has a valid counterpart; fault injections FG1-FG4 turn exactly their test red",
+    "census": "round 2 at 7695b967: SHIP; AC2 18/18 PROVEN_SAFE (8 C0, 10 C1), no status change against W15 round 3 or round 1 on W14 + W15 + W15B (111 rows); W16 + W16B 36 rows as labelled except the declared limit A2b",
+    "valid_cases_now_refused": "0: no INVARIANT row that was served before W16 is refused now. Refused INVARIANT rows: B6b (refused before W16 too, vocabulary limit), C_CLOSURE_UNSUPPORTED_KIND and C_TEMPLATE_CONSTRAINT_VIOLATED (guard triggers, refused by design before and after)",
+    "fault_injections": "backend 13/13 caught at 7695b967 (FG1-FG4, FA1-FA4, FB1-FB3, FD1-FD2); frontend 4/4 caught at cd3a0efa (FL1, FH1-FH3), sources byte-restored",
+    "section_fill": "SECTION_FILL_DISTINGUISHABLE PASS: closed mean/min dE 34.20/34.11 desktop (38 samples), 34.19/33.74 mobile (21) vs registered T_ON 20 / T_ON_MIN 12; pre-close and rewound 0 vs T_OFF 3. SECTION_FILL_UNDER_EDGES PASS: S-A rho 0.138 / S-C 0 desktop, 0.485 / 0.274 mobile (< 1), edge contrast 35.5-66.8 (>= 12). Fill renderOrder 7: after surfaces, before every transparent line",
+    "refusal_panels": "6 sheets x 6 refusal panels (three kinds x desktop/mobile), each the record's own refusal.png, a passing no-canvas refusal with a learner message, ink in the message box; a missing, wrong, blank or unreadable panel raises ThieuAnhBangChung",
+    "hidden_lines": "occlusion pass, verdict HUMAN_REVIEW_PENDING, 0 failures; the same four scenes as w15 pending a person (U2); 64 crops, 0 oracle disagreements, 0 duplicate owners"
+  },
+  "verification": {
+    "t3": "FULL_PRODUCT_GATE_PASS from 'w16 space/algo-sim' at 7f3658b0: pytest 6854 passed / 0 failed / 1 skipped / 2 deselected / 1 xfailed (strict xfail of limit A'); vitest 1018/1018 (67 files); typecheck + build; thesis demo 5/5 + reduced 1/1; crash surface 6/6",
+    "browser": "PASS 6 families x 2 viewports: 12/12 positives, 36/36 negatives (three kinds, own codes); 0 raw tokens, serious console errors, uncaught exceptions, failed API calls or overflow over 48 runs",
+    "occlusion": "pass, verdict HUMAN_REVIEW_PENDING",
+    "playback": "12/12 runs x 19/19 checks, 5 orbit laps each",
+    "builder": "exit 0; 64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; every sheet complete",
+    "identity_gates": "candidate 9bb0aaa7, cache 108 / b1714b56, schema x2, LLM_ONLY, compiler not wired, no production FIXTURE_TIN_CAY, 0 model-surface files changed since 8a339d17, diff --check: PASS; node harness 59 + 2 skipped by design (worktree), 0 fail"
+  },
+  "environment": {
+    "os": "Windows 11 Pro 10.0.26100",
+    "python": "3.12.10 (main-tree backend/.venv; no venv inside the worktrees)",
+    "node": "v24.13.0",
+    "browser": "headless Chrome through frontend/scripts/browser-runner.mjs (BrowserSession)"
+  },
+  "status": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "human_visual_review": "NOT_APPROVED",
+  "next_action": "HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE",
+  "open_user_decisions": [
+    "W16-H1 (carries W15-H1): approve the four W14-changed scenes, the section fill under the edges and the completed refusal panels (a person records it in a new registry layer)",
+    "W15-H2: enforcement outside the polyhedral vocabulary",
+    "W15-H3: widen the closed vocabulary; it is also what limit A' (construction relations) needs"
+  ],
+  "final_review": "self-review by the author before the evidence (the brief allows no subagents): one Important finding (primed-name alias) fixed RED -> GREEN (2dc55f1b -> 6b120036), one minor deferred; ponytail review after the evidence: 5 behaviour-neutral findings (net -9 lines), none applied",
+  "policy": {
+    "push_executed": false,
+    "merge_executed": false,
+    "history_rewritten": false,
+    "user_favicon_deletion_preserved": true,
+    "historical_run_artifacts_modified": false,
+    "co_authored_by_trailer": false
+  }
+}

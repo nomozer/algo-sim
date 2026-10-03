@@ -9,22 +9,26 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
 ```
 
-- **Vì sao:** W15 (run
-  [`w15-assumption-closure`](evaluation/geometry/runs/w15-assumption-closure/)) kết thúc
-  `READY_FOR_HUMAN_VISUAL_REVIEW`. Kênh giả định đã đóng trong vùng đa diện của từ vựng
-  đóng: bộ đọc ràng buộc từ đề và chứng chỉ C0/C1 đã nối vào route (chặng `assumption`).
-  AC2 18/18 `PROVEN_SAFE`, hai phép dò W12 bị từ chối. Phần tô thiết diện khép kín nay
-  hiện và phân biệt được. Quyết định W15-D1 (brief): `n2_khoi_ghep_bu_can_boolean` là
-  chương trình bị từ chối đúng, không bắt buộc có dựng hình. Việc còn lại thuộc về NGƯỜI.
-- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w15 và duyệt bằng mắt hai
-  thứ. Một là bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`: oracle tái hiện tập đã duyệt
-  ở cả hai camera, sản phẩm = oracle (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
-  Hai là phần tô thiết diện mới. Sau đó quyết định W15-H2 (mở rộng vùng chặn ngoài đa
-  diện) và W15-H3 (mở rộng từ vựng).
+- **Vì sao:** W16 (run
+  [`w16-premerge-closure`](evaluation/geometry/runs/w16-premerge-closure/)) kết thúc
+  `READY_FOR_HUMAN_VISUAL_REVIEW`. Hai lỗ chứng chỉ W15 để lại đã đóng: hệ số mặt phẳng
+  phải thuộc CÙNG mặt phẳng của đề, và quan hệ trong yêu cầu chứng minh không bao giờ là
+  tiền đề. Mười hai chương trình sai từng được phục vụ nay bị từ chối, AC2 vẫn 18/18. Bốn
+  nhánh đóng an toàn có test. Phần tô thiết diện nằm dưới cạnh khối. Sheet có đủ sáu ô từ
+  chối. Việc còn lại thuộc về NGƯỜI.
+- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w16 và duyệt bằng mắt (W16-H1)
+  ba thứ:
+  - bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`: oracle tái hiện tập đã duyệt, sản phẩm =
+    oracle (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`);
+  - phần tô thiết diện dưới cạnh;
+  - các ô từ chối.
+
+  Sau đó quyết định W15-H2 (mở rộng vùng chặn ngoài đa diện) và W15-H3 (mở rộng từ vựng —
+  cũng là đường đóng giới hạn A′, `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`).
 - **Điều kiện dừng:** automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ
   vọng người; không đổi bề mặt mô hình; không push/merge.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;

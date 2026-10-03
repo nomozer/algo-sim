@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01) và w15 (2026-10-02): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02) và w16 (2026-10-03): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **108** (W16, 2026-10-03: served → rejected — mặt phẳng cùng thực thể, yêu cầu chứng minh không là tiền đề — `PROOF_CACHE_ROW_W16.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,17 +53,34 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 23cc880a (measurement commit c57ebd1b)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 705970dd (measurement commit 7f3658b0)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 107
-> CANDIDATE = b3b7eb79… (was 40263983…; intermediate aaa5b5bd…), product commit 41a26f11
+> CACHE_VERSION = 108
+> CANDIDATE = 9bb0aaa7… (was b3b7eb79…; intermediate 8d14469b…), product commit 6b120036
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15)
+> CURRENT_WAVE = W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (w16)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE (người duyệt bằng mắt bốn cảnh W14 đổi và phần tô thiết diện; quyết định W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w15)
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE (người duyệt bằng mắt bốn cảnh W14 đổi, phần tô thiết diện nằm dưới cạnh và sáu ô từ chối mỗi sheet — W16-H1; W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w16)
 > ```
+
+> **Đóng lỗ chứng chỉ và bằng chứng ảnh trước merge — w16 (measurement `7f3658b0`, detached clean worktree; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng bắt buộc đạt; review người `NOT_APPROVED` |
+> | Mặt phẳng cùng thực thể (§14.1) | Literal phương trình mặt phẳng chỉ là dữ kiện đề khi gắn được với ĐÚNG mặt phẳng của đề: theo tên viết trong mệnh đề, hoặc duy nhất theo đếm. Trùng bộ số không là căn cứ. Phép dò ở `6d015112`: 5 chương trình gán nhầm thực thể được PHỤC VỤ (A2 hiện 9, đề cho 16). Sau `24161657` + `6b120036`: 7/7 bị từ chối (gồm bí danh (P′) ↔ (P) do tự rà soát tìm ra), 9/9 gắn đúng vẫn C0 |
+> | Yêu cầu chứng minh không là tiền đề (§14.2) | Mệnh đề mục tiêu (`chứng minh`, `CMR`, `kiểm tra`, `hỏi`, câu `…?`) bị che trước mọi bộ đọc tiền đề. Phép dò: 7 chương trình lấy mục tiêu làm tiền đề C1 được PHỤC VỤ. Sau `93d4ec69`: 7/7 bị từ chối; giả thiết đứng trước yêu cầu vẫn C1 (4/4) |
+> | Bốn nhánh đóng an toàn | Mỗi nhánh có test riêng từ một spec HỢP LỆ, có mã lý do và ca đối chứng C1; tiêm lỗi FG1–FG4 bắt được |
+> | Census vòng 2 (`7695b967`) | **SHIP** · AC2 **18/18** `PROVEN_SAFE` (8 C0, 10 C1) · 0 đổi trạng thái trên W14/W15/W15B (111 hàng) · 0 ca hợp lệ mới bị từ chối · tiêm lỗi backend 13/13, frontend 4/4 |
+> | Phần tô dưới cạnh (§14.4) | Lỗi được xác nhận: phần tô vẽ sau nét làm nâu cạnh S-A, S-C. Sửa: `THU_TU_TO_THIET_DIEN = 7` (sau mặt, trước nét trong suốt). **PASS** `SECTION_FILL_UNDER_EDGES` (ρ ≤ 0,485 < 1; tương phản cạnh ≥ 35,5) và `SECTION_FILL_DISTINGUISHABLE` 34,20/34,11 (desktop), 34,19/33,74 (mobile); ngưỡng W15 giữ nguyên |
+> | Ô từ chối của sheet (§14.5) | 6 sheet × 6 ô (ba loại × desktop/mobile) đọc từ ảnh `refusal.png` của chính họ, có chữ trong hộp lời. Thiếu, sai, trắng hoặc không đọc được ⇒ bộ dựng THẤT BẠI. Ô trắng của W15 do bộ dựng đọc lược đồ cũ `negative[viewport]` |
+> | T3 từ đường dẫn CÓ dấu cách (`7f3658b0`) | **PASS** — pytest 6854/0 fail (1 skipped, 2 deselected, 1 xfailed = giới hạn A′) · vitest 1018/1018 · build · demo 5/5 · bề mặt sập 6/6 |
+> | Ảnh · oracle · playback | Trình duyệt 12/12 dương, 36/36 âm · occlusion `HUMAN_REVIEW_PENDING` (bốn cảnh như w15) · playback 12/12 × 19 · 64 crop, 0 bất đồng |
+> | Candidate · `CACHE_VERSION` | `b3b7eb79…` → **`9bb0aaa7…`** (đóng băng HAI lần: `2ec02b3a` → `8d14469b` trung gian; `6b120036` sau bản sửa của tự rà soát) · 107 → **108** (`2ec02b3a`; fingerprint provider không đổi) |
+> | Giới hạn khai | A′: C0 không kiểm phép dựng có dùng đúng thực thể đề nói không (strict xfail) · mệnh đề mục tiêu vẫn được grounding đọc như dữ kiện ngoài vùng đa diện · nét ĐỤC phụ có thể bị phần tô nhuộm (không cảnh nào trong sáu) |
+> | Run | [`w16-premerge-closure`](evaluation/geometry/runs/w16-premerge-closure/) |
 
 > **Đóng kênh giả định bằng ràng buộc đọc từ đề — w15 (measurement `c57ebd1b`, detached clean worktree; chưa có review người):**
 >

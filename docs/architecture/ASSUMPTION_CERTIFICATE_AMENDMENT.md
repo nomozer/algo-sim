@@ -440,6 +440,16 @@ tên mặt phẳng khi nó là:
 
 Ví dụ: `alpha_plane`, `mat_phang_alpha`, `plane_beta`, `mp_P` cho lần lượt α, α, β, P.
 
+> **Đính chính 2026-10-03 (W16, đánh giá trước bằng chứng; red `2dc55f1b`, sửa `6b120036`).**
+> Luật trên bỏ mất dấu phẩy trên: biến `mp_P_prime` cho ra P, nên (P′) có thể mang phương
+> trình của (P) mà C0 vẫn chứng nhận (dạng bí danh của A2). Dấu phẩy trên là một phần của
+> tên, ở CẢ HAI phía:
+> - Phía đề: `′` và `’` chuẩn hoá thành `'`, nên `(P′): …` cho tên `P'`.
+> - Phía chương trình: một dấu phẩy trên viết liền sau mẩu, hoặc một token `prime`/`phay`
+>   đứng ngay sau nó, cho tên có dấu phẩy. Ví dụ `mp_P_prime` cho P′, không cho P.
+>
+> Luật gắn (i)–(iii) bên dưới không đổi. Tiêm lỗi FA3/FA4 bỏ từng phía thì test đỏ.
+
 **Khi nào là `SOURCE_DATUM`.** Chỉ khi gắn được với DUY NHẤT một phương trình:
 - (i) **Biến có tên.** Đúng một phương trình của đề mang một trong các tên ấy, và hệ số
   tỉ lệ với nó (`tuong_duong`).

@@ -61,6 +61,8 @@ W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, ch�
 W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14 → FORMATION_FOUNDATION_INCOMPLETE; Track B ASSUMPTION_POLICY_INCOMPLETE; chưa có review người)
   ▼ CORRECTED_BY (Track B: nguyên nhân gốc RC1–RC5 rồi đóng cổng; W15-D1 giải W14-D1) · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w14)
 W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
+  ▼ CORRECTED_BY (hai lỗ chứng chỉ: mặt phẳng cùng thực thể, yêu cầu chứng minh làm tiền đề; phần tô đè cạnh; ô từ chối trắng) · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w15)
+W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (w16 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -810,9 +812,30 @@ W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15 → READY_FOR_HUMAN_VISUAL_REV
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 40263983… -> b3b7eb79…, 107 files; frozen three times — d41176f2 and 909a3a2d gave the intermediate aaa5b5bd…, 41a26f11 gave b3b7eb79)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 106 -> 107 in 0579d559, real-row proof; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE — w16 reproduced two soundness gaps of this run's certificate at its RED commit: a plane-equation literal accepted for any proportional text equation, so five wrong-entity programs were served; a relation the text asks to prove read as a premise, so seven programs were served. W16 closed both. It also found that this run's fill was drawn over the solid edges, and that its sheets printed blank refusal cells (the builder read `negative[viewport]`). This run's files stay byte-identical.
 - **CORRECTS:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (Track B root causes RC1–RC5 and the shipped gate; W15-D1 settles W14-D1)
 - **SUPERSEDES:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION for the human verdict only; inside this run, the evidence of 751169dd (M2) is superseded by 23cc880a (M3) after the final-review fix, and the failed first browser attempt is kept apart in `diagnostics/browser-attempt1-c1638891/`
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_b3b7eb79 — not visual acceptance (human review NOT_APPROVED). The assumption certificate (C0 ∪ C1 over volume/area/distance, closed vocabulary) is a corpus result inside the registered scope, never a general soundness proof; enforcement covers polyhedral texts only (U3).
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE — w16 changes how the cross-section fill sits against the edges, completes the refusal panels and measures a new candidate; a reviewer judges the w16 images.
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_b3b7eb79 — not visual acceptance (human review NOT_APPROVED). It was the latest product measurement until w16 (candidate 9bb0aaa7, measurement 7f3658b0); it stays valid for candidate b3b7eb79, with the two certificate gaps w16 closed. The assumption certificate (C0 ∪ C1 over volume/area/distance, closed vocabulary) is a corpus result inside the registered scope, never a general soundness proof; enforcement covers polyhedral texts only (U3).
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/FILMSTRIP.png` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/ASSUMPTION_CENSUS_W15_R3.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION_W15_R3.json` · `diagnostics/TRACK_B_ROOT_CAUSE_TABLE.json` · `diagnostics/GOLD_ROW_VERIFICATION.json` · `diagnostics/PROOF_CACHE_ROW_W15.json` · `diagnostics/logs/FAULT_INJECTION_ASSUMPTION_GATE_FINAL.log` · `diagnostics/PONYTAIL_REVIEW.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/W15_SCOPE_DECISIONS.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE
+- **DATE:** 2026-10-03
+- **REPORT:** docs/evaluation/geometry/runs/w16-premerge-closure/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w16-premerge-closure/
+- **START_BASE:** 8a339d17
+- **CODE_COMMIT:** 24161657 (plane binding) · 93d4ec69 (goal clauses) · 29da8e5a (section fill under the edges, frontend/src) · 2ec02b3a (cache) · 6b120036 (primed plane names; last product commit)
+- **MEASUREMENT_COMMIT:** 7f3658b00f48dae854e5ab2527ca0ff3f701f828
+- **EVIDENCE_COMMIT_ROLE:** 705970dd (browser, occlusion, playback, sheets, T3, gates); the failed first browser attempt at 55cde06e is kept apart in `diagnostics/browser-attempt1-55cde06e/`
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash b3b7eb79… -> 9bb0aaa7…, 107 files; frozen twice — 2ec02b3a gave the intermediate 8d14469b…, 6b120036 gave 9bb0aaa7)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 107 -> 108 in 2ec02b3a, real-row proof; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (plane-equation entity binding, goal clauses as premises, fill drawn over the edges, blank refusal cells)
+- **SUPERSEDES:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE for the human verdict only; inside this run, census round 1 and the first backend fault-injection run (before the primed-name fix) are superseded by round 2 and the final run
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_9bb0aaa7 — not visual acceptance (human review NOT_APPROVED). The certificate scope of w15 is unchanged; inside it, "same entity" now holds for plane equations, and goal clauses are never premises. Declared limit A′: a construction that uses an entity other than the one the text names is not checked. The census is a corpus result inside the registered scope, never a general soundness proof.
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `images/<family>/FILMSTRIP.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/PROBE_W16_PHASE1_6d01511.json` · `diagnostics/ASSUMPTION_CENSUS_W16_R2.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json` · `diagnostics/PROOF_CACHE_ROW_W16.json` · `diagnostics/logs/FAULT_INJECTION_W16_FINAL.log` · `diagnostics/logs/FAULT_INJECTION_W16_FRONTEND.log` · `diagnostics/PONYTAIL_REVIEW.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

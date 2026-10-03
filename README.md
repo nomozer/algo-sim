@@ -246,5 +246,5 @@ sau đó đọc [trạng thái hiện tại](docs/CURRENT_STATE.md),
 [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md); báo cáo và chuỗi đính
 chính tại [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md). Nhánh phát triển
 hiện tại **chưa được người duyệt trực quan và chưa sẵn sàng merge**; bằng chứng
-mới nhất ở [run w15](docs/evaluation/geometry/runs/w15-assumption-closure/) — trạng
+mới nhất ở [run w16](docs/evaluation/geometry/runs/w16-premerge-closure/) — trạng
 thái chính xác luôn ở `docs/CURRENT_STATE.md`, không ở README này.

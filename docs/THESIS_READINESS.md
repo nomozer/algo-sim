@@ -136,6 +136,37 @@ Nguồn: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/` (`REP
 
 Nguồn: `docs/evaluation/geometry/runs/w15-assumption-closure/` (`REPORT.md`).
 
+✅/⚠️ **Cập nhật 2026-10-03 (w16, offline, 0 lượt gọi; chưa có duyệt người):**
+
+- **Đính chính tuyên bố w15 về "cùng thực thể".** Ở w15, hệ số mặt phẳng được nhận nếu tỉ
+  lệ với BẤT KỲ phương trình nào của đề. Phép dò w16 tại commit đỏ cho thấy năm chương
+  trình gán phương trình của (α) cho (β) được phục vụ; một ca hiện 9 trong khi đề cho 16.
+  Mệnh đề "mỗi literal là dữ kiện đề của cùng thực thể" của w15 vì thế **không** đúng với
+  mặt phẳng cho bằng phương trình trước `24161657`. Nay đúng trong phạm vi đo: 7/7 chương
+  trình gán nhầm bị từ chối, 9/9 gắn đúng vẫn C0.
+- **Đính chính: yêu cầu chứng minh từng là tiền đề.** Ở w15, `Chứng minh rằng SA ⊥ (ABC)`
+  được đọc như một giả thiết; bảy chương trình C1 dựa trên mục tiêu được phục vụ. Nay mệnh
+  đề mục tiêu bị che trước mọi bộ đọc tiền đề (7/7 bị từ chối, 4/4 giả thiết hợp lệ vẫn C1).
+- **Được nói:** trong vùng chứng chỉ của w15 (không đổi), hai lỗ trên đã đóng. AC2 vẫn
+  18/18; 0 ca hợp lệ mới bị từ chối; tiêm lỗi 13/13 (backend) và 4/4 (frontend). Phạm vi
+  tuyên bố: 147 hàng của census vòng 2 —
+  `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`.
+- **KHÔNG được nói** "chứng chỉ kiểm mọi lỗi đọc đề". Giới hạn A′: C0 không kiểm một phép
+  dựng có dùng đúng thực thể mà đề nói hay không — (T) cắt bởi (α) đã ghim đúng, trong khi
+  đề nói (β), vẫn được phục vụ (strict xfail,
+  `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`). Ngoài vùng đa diện,
+  grounding vẫn đọc độ dài viết trong `Chứng minh …` như dữ kiện
+  (`ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM`). Tự rà soát trước bằng chứng còn tìm ra
+  một lỗ ngoài corpus (bí danh (P′) ↔ (P), sửa ở `6b120036`): census là kết quả corpus,
+  không phải chứng minh tổng quát.
+- **Phần tô thiết diện.** Nay nằm DƯỚI các cạnh khối. Cổng ảnh mới: cạnh che một phần
+  phần tô (ρ ≤ 0,485 < 1) và vẫn tương phản (≥ 35,5 so với ngưỡng 12). Độ phân biệt giữ
+  ngưỡng w15 (nhỏ nhất ≥ 33,7). Chưa ai duyệt bằng mắt.
+- **Sheet nghiệm thu.** Đủ sáu ô từ chối mỗi họ. Ô trắng của sheet w15 là lỗi bước ghép;
+  ảnh nguồn đúng.
+
+Nguồn: `docs/evaluation/geometry/runs/w16-premerge-closure/` (`REPORT.md`).
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

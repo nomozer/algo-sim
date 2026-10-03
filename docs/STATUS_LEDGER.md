@@ -1511,3 +1511,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (Track B root causes and gate; W14-D1 settled by W15-D1)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE
+- **DATE:** 2026-10-03
+- **START_BASE:** 8a339d17
+- **CODE_COMMIT_OR_NONE:** 24161657 (plane-equation literals bound to their own text plane) · 93d4ec69 (goal clauses never premises) · 29da8e5a (section fill under the solid edges, frontend/src) · 2ec02b3a (CACHE_VERSION 108) · 6b120036 (primed plane names; last product commit)
+- **COMMITS:** registration 6ed110f6 · red tests 6d015112 · phase-1 probe and corpus dea0ad91 · harness 1d782bd8, 85e73394 · drivers 00f0981d · census round 1 + fault injections cd3a0efa · cache proof e42bdd8f · freeze 1 55cde06e · W16B red 2dc55f1b + corpus 681c34cf · FA3/FA4 + census round 2 7695b967, f3f9836a · freeze 2 7f3658b0 (measurement commit) · evidence 705970dd
+- **CANDIDATE:** b3b7eb79… → 9bb0aaa7… (107 files), frozen twice (2ec02b3a → intermediate 8d14469b…; 6b120036 → 9bb0aaa7 after the primed-name fix found by the pre-evidence self-review) · CACHE_VERSION 107 → 108 (served → rejected; fingerprint b1714b566e25c912 unchanged) · schema mirrors byte-identical · model surface unchanged
+- **EVIDENCE_COMMIT_ROLE:** 705970dd (browser, occlusion, playback, sheets, T3, gates at 7f3658b0)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w16-premerge-closure/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w16-premerge-closure/
+- **PASS:** plane binding: 7/7 wrong-entity programs refused (5 were served from C0 before W16), 9/9 valid bindings C0 · goal clauses: 7/7 goal-as-premise programs refused (all served before W16), 4/4 hypothesis rows C1 · four guards tested from valid specs, FG1–FG4 caught · census round 2 SHIP, AC2 18/18 PROVEN_SAFE, 0 status changes on W14/W15/W15B, 0 valid cases newly refused · fault injections backend 13/13, frontend 4/4 · SECTION_FILL_UNDER_EDGES (rho ≤ 0.485 < 1, edge contrast ≥ 35.5) and SECTION_FILL_DISTINGUISHABLE 34.20/34.11 desktop, 34.19/33.74 mobile (W15 thresholds unchanged) · 6 sheets × 6 refusal panels, a missing or blank panel fails the builder · browser 12/12 + 36/36, occlusion HUMAN_REVIEW_PENDING (four scenes as w15), playback 12/12 × 19/19
+- **CLOSED:** ISSUE-ARCH-ASSUMPTION-C0-PLANE-EQUATION-ENTITY · ISSUE-EVAL-ASSUMPTION-GATE-UNTESTED-GUARDS
+- **OPENED:** ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND (declared limit A′, strict xfail) · ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM · ISSUE-ARCH-SECTION-FILL-OPAQUE-AUXILIARY-LINES
+- **OPEN (blocking merge of the branch):** human visual review (W16-H1): the four W14-changed scenes (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`, HUMAN_REVIEW_PENDING), the section fill under the edges, the refusal panels
+- **FULL_PRODUCT_SUITE:** FULL_PRODUCT_GATE_PASS (T3 at 7f3658b0, path with a space; pytest 6854 passed / 0 failed / 1 xfailed = limit A′)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (two certificate soundness gaps, the fill drawn over the edges, the blank refusal cells of the w15 sheets)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

@@ -1,0 +1,32 @@
+{
+  "review": "W16_PONYTAIL_REVIEW",
+  "skill": "ponytail:ponytail-review (invoked after the evidence at 7f3658b0 — it was not run before the freeze; recorded here as it ran)",
+  "scope": "git diff 8a339d17..7f3658b0 -- backend/app frontend/src backend/scripts frontend/scripts, tests and JSON excluded (plane_equation.py, assumption_gate.py, shape_constraint.py, main.py, scene3d-view.tsx, compiler-scene-replay-lib.mjs, compiler-scene-suite.mjs, build_scene3d_visual_evidence.py)",
+  "classes": ["REQUIRED_KEEP", "SIMPLIFY_NOW", "SAFE_TO_DELETE", "DEFERRED_AFTER_MEASUREMENT"],
+  "findings": [
+    {"where": "frontend/scripts/compiler-scene-replay-lib.mjs:L588-590", "tag": "shrink",
+     "finding": "the median of the reference delta E re-implements the median inside _trungViMau (L571)",
+     "replacement": "one scalar _trungVi(xs) used by _trungViMau and by assessSectionFillUnderEdges", "net_lines": -3,
+     "class": "DEFERRED_AFTER_MEASUREMENT"},
+    {"where": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:L1087-1089", "tag": "delete",
+     "finding": "the in-place W16 comment repeats the doc of THU_TU_TO_THIET_DIEN (L175-182)",
+     "replacement": "nothing", "net_lines": -3, "class": "DEFERRED_AFTER_MEASUREMENT"},
+    {"where": "backend/app/simulation/semantic_program/plane_equation.py:L227-229", "tag": "yagni",
+     "finding": "_ung_vien is now a wrapper of _ung_vien_span with one caller (bat_bien_mat_phang, L379)",
+     "replacement": "iterate _ung_vien_span in bat_bien_mat_phang and delete the wrapper", "net_lines": -3,
+     "class": "DEFERRED_AFTER_MEASUREMENT"},
+    {"where": "frontend/scripts/compiler-scene-replay-lib.mjs:L509,L511", "tag": "shrink",
+     "finding": "(canh ?? []) and (cham ?? []) behind default parameters = []",
+     "replacement": "canh.map / cham.length", "net_lines": 0, "class": "DEFERRED_AFTER_MEASUREMENT"},
+    {"where": "backend/scripts/build_scene3d_visual_evidence.py:L283,L288", "tag": "shrink",
+     "finding": "_path(record.get('screenshot')) evaluated twice per refusal cell",
+     "replacement": "bind it once", "net_lines": 0, "class": "DEFERRED_AFTER_MEASUREMENT"}
+  ],
+  "kept_on_purpose": [
+    "shape_constraint._nfc_theo_cum: the product does not NFC-normalise problem_text; without the cluster map an NFD text would not match the goal keywords (fault injection in Task 3 turned the NFD test red)",
+    "assumption_gate.gan_mat_phang called both in _vai_tro and for the PLANE_BINDING detail: returning the reason through _vai_tro would couple the role table to one literal kind for a cheap second call",
+    "the builder's refusal-panel check (_loi_tu_choi): the brief requires readable refusals, not only existing files; the builder is net shorter than before (placeholder branches removed)"
+  ],
+  "net_lines_possible": -9,
+  "decision": "No finding applied. Every finding is behaviour-neutral, and the review ran after the final evidence. Applying any of them would change measured product bytes (plane_equation.py, scene3d-view.tsx) or the measurement harness after the measurement commit 7f3658b0, so the candidate would need a third freeze and a re-measurement for at most 9 lines. They are recorded for the next change of these files."
+}
