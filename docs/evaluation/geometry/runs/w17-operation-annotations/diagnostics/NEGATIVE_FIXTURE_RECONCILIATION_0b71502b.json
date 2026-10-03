@@ -1,0 +1,455 @@
+{
+  "probe": "W17_NEGATIVE_FIXTURE_RECONCILIATION",
+  "measured_at_commit": "0b71502b",
+  "model_calls": 0,
+  "categories": {
+    "missing_data": 12,
+    "contradictory_or_degenerate_data": 6,
+    "runner_injected_wrong_program": 1,
+    "construction_mismatch": 1
+  },
+  "mismatches": [],
+  "construction_or_unknown_rows_telling_learner_to_fix_text": [],
+  "rows": [
+    {
+      "fixture": "cross_section_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất dữ kiện, chương trình đặt bằng giả định; cổng không phân biệt được 'đề thiếu' với 'đề nói theo lối hệ chưa đọc' ⇒ UNKNOWN (§15.3, giữ lời W15)",
+      "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "reason_subjects": [],
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+      },
+      "expected_cause": "UNKNOWN",
+      "actual_cause": "UNKNOWN",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "cross_section_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề ghi (α): z = 9 — mặt phẳng của đề nằm ngoài khối (kernel PLANE_DOES_NOT_CUT)",
+      "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Mặt phẳng (α): z = 9 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "execution",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "PLANE_DOES_NOT_CUT",
+        "reason_subjects": [
+          "(α)"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Mặt phẳng (α) mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "cross_section_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "S"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "cube_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất một kích thước; chương trình giữ nó bằng bố cục",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính thể tích của hình lập phương đó.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài chưa cho độ dài AB, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "cube_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề GHI độ dài ≤ 0 (`_zero_ab`: AB = 0 / cạnh bằng 0), hợp đồng theo đề",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 0. Tính thể tích của hình lập phương đó.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "cube_system_cause.json",
+      "category": "runner_injected_wrong_program",
+      "basis": "đề hợp lệ (cạnh bằng 4, V = 64); chỉ hợp đồng mang AB = 0 (`_tiem_ab_bang_0`)",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Khâu dựng hình của AlgoSim đã dùng độ dài AB không dương, trong khi đề bài không cho số liệu như vậy. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+      },
+      "expected_cause": "CONSTRUCTION",
+      "actual_cause": "CONSTRUCTION",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "cube_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính thể tích của hình lập phương đó.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AB nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "cuboid_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất một kích thước; chương trình giữ nó bằng bố cục",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "reason_subjects": [
+          "AA′"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài chưa cho độ dài AA′, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "cuboid_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề GHI độ dài ≤ 0 (`_zero_ab`: AB = 0 / cạnh bằng 0), hợp đồng theo đề",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 0, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "cuboid_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "AA′"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AA′ nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "rectangular_pyramid_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất một kích thước; chương trình giữ nó bằng bố cục",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "reason_subjects": [
+          "SA"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài chưa cho độ dài SA, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "rectangular_pyramid_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề GHI độ dài ≤ 0 (`_zero_ab`: AB = 0 / cạnh bằng 0), hợp đồng theo đề",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 0, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "rectangular_pyramid_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "SA"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "triangular_prism_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất một kích thước; chương trình giữ nó bằng bố cục",
+      "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "reason_subjects": [
+          "AD"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài chưa cho độ dài AD, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "triangular_prism_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề GHI độ dài ≤ 0 (`_zero_ab`: AB = 0 / cạnh bằng 0), hợp đồng theo đề",
+      "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 0, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "triangular_prism_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "AD"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần độ dài AD nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "triangular_pyramid_assumption.json",
+      "category": "missing_data",
+      "basis": "đề mất một kích thước; chương trình giữ nó bằng bố cục",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "reason_subjects": [
+          "SA"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài chưa cho độ dài SA, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "triangular_pyramid_negative.json",
+      "category": "contradictory_or_degenerate_data",
+      "basis": "đề GHI độ dài ≤ 0 (`_zero_ab`: AB = 0 / cạnh bằng 0), hợp đồng theo đề",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 0, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "reason_subjects": [
+          "AB"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    },
+    {
+      "fixture": "triangular_pyramid_ungrounded.json",
+      "category": "missing_data",
+      "basis": "một GIVEN bị gỡ khỏi đề; analyze giả vẫn khai nó",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "reason_subjects": [
+          "SA"
+        ],
+        "refusal_cause": "SOURCE",
+        "learner_reason": "Để dựng hình, chương trình cần độ dài SA nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+      },
+      "expected_cause": "SOURCE",
+      "actual_cause": "SOURCE",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": true
+    },
+    {
+      "fixture": "A_prime_O1 (W17 corpus, frozen program)",
+      "category": "construction_mismatch",
+      "basis": "đề nói (β) cắt khối; chương trình cắt bằng (α)",
+      "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "reason_subjects": [
+          "(β)",
+          "(α)"
+        ],
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+      },
+      "expected_cause": "CONSTRUCTION",
+      "actual_cause": "CONSTRUCTION",
+      "verdict": "MATCH",
+      "tells_learner_to_fix_text": false
+    }
+  ],
+  "historical": [
+    {
+      "fixture": "docs/evaluation/geometry/runs/w16-premerge-closure/inputs/fixtures/cube_negative.json",
+      "category": "runner_injected_wrong_program",
+      "basis": "W16 `_zero_ab` chỉ thay chuỗi 'AB = 3' — đề lập phương ghi 'cạnh bằng 4' nên KHÔNG đổi (đề hợp lệ, V = 64) trong khi hợp đồng mang AB = 0; sản phẩm từ chối đúng hợp đồng, nhưng fixture được ghi là 'đề âm' và lời học sinh bảo diễn đạt lại đề",
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+      "envelope": {
+        "status": "unsupported",
+        "stage_reached": "semantic_analyze",
+        "error_code": "semantic_program_invalid",
+        "reason_code": null,
+        "reason_subjects": null,
+        "refusal_cause": null,
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+      },
+      "expected_cause": "CONSTRUCTION",
+      "actual_cause": null,
+      "verdict": "HISTORICAL_DEFECT (W16 artifact, immutable; corrected in W17 by `cube_negative` 'cạnh bằng 0' + `cube_system_cause`)",
+      "tells_learner_to_fix_text": true
+    }
+  ]
+}

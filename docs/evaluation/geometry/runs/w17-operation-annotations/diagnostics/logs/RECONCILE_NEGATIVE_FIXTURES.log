@@ -1,0 +1,23 @@
+Wrote 25 frozen fixtures to C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\2545b257-a2d8-4acd-a69b-bf10d44adec1\scratchpad\w17-reconcile\fixtures
+MATCH    missing_data                       UNKNOWN      UNKNOWN      cross_section_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       cross_section_negative.json
+MATCH    missing_data                       SOURCE       SOURCE       cross_section_ungrounded.json
+MATCH    missing_data                       SOURCE       SOURCE       cube_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       cube_negative.json
+MATCH    runner_injected_wrong_program      CONSTRUCTION CONSTRUCTION cube_system_cause.json
+MATCH    missing_data                       SOURCE       SOURCE       cube_ungrounded.json
+MATCH    missing_data                       SOURCE       SOURCE       cuboid_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       cuboid_negative.json
+MATCH    missing_data                       SOURCE       SOURCE       cuboid_ungrounded.json
+MATCH    missing_data                       SOURCE       SOURCE       rectangular_pyramid_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       rectangular_pyramid_negative.json
+MATCH    missing_data                       SOURCE       SOURCE       rectangular_pyramid_ungrounded.json
+MATCH    missing_data                       SOURCE       SOURCE       triangular_prism_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       triangular_prism_negative.json
+MATCH    missing_data                       SOURCE       SOURCE       triangular_prism_ungrounded.json
+MATCH    missing_data                       SOURCE       SOURCE       triangular_pyramid_assumption.json
+MATCH    contradictory_or_degenerate_data   SOURCE       SOURCE       triangular_pyramid_negative.json
+MATCH    missing_data                       SOURCE       SOURCE       triangular_pyramid_ungrounded.json
+MATCH    construction_mismatch              CONSTRUCTION CONSTRUCTION A_prime_O1 (W17 corpus, frozen program)
+categories: {'missing_data': 12, 'contradictory_or_degenerate_data': 6, 'runner_injected_wrong_program': 1, 'construction_mismatch': 1} | mismatches: [] | non-SOURCE rows telling to fix text: []
+wrote NEGATIVE_FIXTURE_RECONCILIATION_0b71502b.json
