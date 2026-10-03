@@ -19,6 +19,7 @@ import {
   objectsAt,
   toNumber,
   toVec3,
+  type GeometryProgress,
   type Scene3D,
   type SceneObject,
   type Vec3,
@@ -169,7 +170,16 @@ function v(o: THREE.Object3D, name: string): THREE.Object3D {
  */
 
 /** Vẽ sau mọi vật khác. Số lớn = vẽ sau, theo quy ước của three.js. */
-const THU_TU_VE_THIET_DIEN = 10;
+export const THU_TU_VE_THIET_DIEN = 10;
+
+/**
+ * Độ đục phần TÔ của thiết diện khép kín (W15). Nhánh đa giác chung tô 0.16 — đồng phẳng
+ * với miếng mặt cắt tím (0.20) và trước khối xám (0.22) thì vùng thiết diện hoà mất. Cổng
+ * ảnh `SECTION_FILL_DISTINGUISHABLE` đo bật/tắt phần tô ở CÙNG khung hình theo ngưỡng
+ * đăng ký trước (`ASSUMPTION_CERTIFICATE_AMENDMENT.md` §11); trượt ngưỡng thì chỉnh hằng
+ * này, không chỉnh ngưỡng.
+ */
+export const DO_DUC_TO_THIET_DIEN = 0.45;
 
 /* ══ NÉT LIỀN / NÉT KHUẤT THEO CAMERA ═══════════════════════════════════
  *
@@ -569,6 +579,35 @@ export function doanNhuongCanh(
   }
   return new Set(dung.filter((o) => o.type === "segment3" && o.boundary_edge_ids?.length
     && o.boundary_edge_ids.every((id) => chu.get(id) === bienDoi(o.id))).map((o) => o.id));
+}
+
+/**
+ * Thiết diện ở MỘT bước: chỉ các cạnh `geometry_progress` đã cho hiện, khép và tô theo
+ * cờ CỦA BƯỚC ẤY — tua ngược về bước chưa tô là mất phần tô. `null` ⇔ chưa cạnh nào hiện.
+ * Vật không phải thiết diện, hoặc không có tiến độ, giữ nguyên.
+ */
+export function vatThietDienTaiBuoc(o: SceneObject, progress?: GeometryProgress): SceneObject | null {
+  if (o.type !== "section" || !progress || !o.polygon) return o;
+  const count = progress.visible_edge_ids.length;
+  if (count === 0) return null;
+  return {
+    ...o,
+    polygon: progress.closed ? o.polygon : o.polygon.slice(0, count + 1),
+    closed: progress.closed,
+    fill_visible: progress.fill_visible,
+  };
+}
+
+/** Móc đo `__geo3d_set_section_fill_visible`: bật/tắt ĐÚNG các vật `section_fill:<id>`. */
+export function datHienToThietDien(goc: THREE.Object3D, on: boolean): string[] {
+  const ten: string[] = [];
+  goc.traverse((x) => {
+    if (x.name.startsWith("section_fill:")) {
+      x.visible = on;
+      ten.push(x.name);
+    }
+  });
+  return ten;
 }
 
 /**
@@ -1026,14 +1065,20 @@ export function buildObject3D(
         const gMesh = new THREE.BufferGeometry();
         gMesh.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
         gMesh.computeVertexNormals();
+        // Thiết diện: vật tô RIÊNG, vẽ sau mặt cắt và khối, lệch chiều sâu như nét thiết
+        // diện để không hoà vào miếng mặt cắt đồng phẳng; vẫn không ghi chiều sâu, không
+        // lớp chiều sâu — vùng tô không che nét nào.
+        const thietDien = o.type === "section";
         const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
           color: nen(MAU.polygon),
           transparent: true,
-          opacity: noiBat ? 0.35 : 0.16,
+          opacity: thietDien ? DO_DUC_TO_THIET_DIEN : noiBat ? 0.35 : 0.16,
           side: THREE.DoubleSide,
           depthWrite: false,
+          ...(thietDien ? LECH_THIET_DIEN : {}),
         }));
-        mesh.name = `polygon_fill:${o.id}`;
+        mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
+        if (thietDien) mesh.renderOrder = THU_TU_VE_THIET_DIEN;
         const nhom = new THREE.Group();
         if (ownsBoundary) nhom.add(line);
         nhom.add(mesh);
@@ -1419,6 +1464,14 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       requestAnimationFrame(vong);
     };
     veRef.current = () => renderer.render(scene3, cam);
+    // Móc ĐO của cổng ảnh `SECTION_FILL_DISTINGUISHABLE` — chỉ harness gọi, người học không
+    // thấy (mặc định bật). Tắt/bật phần tô rồi vẽ lại ĐÚNG khung hình này; trả tên các vật
+    // đã chạm — rỗng thì không có gì để đo, cổng phải tự đỏ.
+    (window as any).__geo3d_set_section_fill_visible = (on: boolean) => {
+      const ten = datHienToThietDien(goc, on);
+      renderer.render(scene3, cam);
+      return ten;
+    };
 
     // ── ĐẶT KHUNG NHÌN CHO VỪA HÌNH ────────────────────────────────────
     //
@@ -1470,6 +1523,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       rootRef.current = null;
       veRef.current = null;
       vuaKhungRef.current = null;
+      delete (window as any).__geo3d_set_section_fill_visible;
     };
   }, []);
 
@@ -1530,14 +1584,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       const progress = progressById.get(o.id);
       let renderObject = nhuong.has(o.id) ? { ...o, display_role: "hit_proxy" } as SceneObject : o;
       if (o.type === "section" && progress && o.polygon) {
-        const count = progress.visible_edge_ids.length;
-        if (count === 0) continue;
-        renderObject = {
-          ...o,
-          polygon: progress.closed ? o.polygon : o.polygon.slice(0, count + 1),
-          closed: progress.closed,
-          fill_visible: progress.fill_visible,
-        };
+        const theoBuoc = vatThietDienTaiBuoc(o, progress);
+        if (!theoBuoc) continue;
+        renderObject = theoBuoc;
       }
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights);

@@ -358,6 +358,8 @@ function vatTo(goc: THREE.Object3D): THREE.Mesh[] {
 
 function toTaiBuoc(scene: Scene3D, k: number): THREE.Mesh[] {
   const o = scene.objects.find((x) => x.type === "section")!;
+  // Như renderer: chỉ vật CÓ MẶT ở bước k (`objectsAt`) mới được dựng.
+  if (!objectsAt(scene, k).some((x) => x.id === o.id)) return [];
   const p = scene.formation!.steps[k].geometry_progress?.find((g) => g.object_id === o.id);
   const ve = W15.vatThietDienTaiBuoc!(o, p);
   if (!ve) return [];
