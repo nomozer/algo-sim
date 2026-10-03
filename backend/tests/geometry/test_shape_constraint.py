@@ -217,3 +217,58 @@ def test_cau_ngoai_tu_vung_de_lai_phan_chua_doc(cau):
 ])
 def test_thong_tin_bi_bo_trong_span_tinh_la_chua_doc(text):
     assert _chua_doc(text) != (), text
+
+
+# ── vùng khối ĐA DIỆN (quyết định U3): route chỉ từ chối theo cổng giả định trong vùng này ──
+
+def _da_dien(text: str) -> bool:
+    return importlib.import_module("app.simulation.semantic_program.shape_constraint").neu_khoi_da_dien(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A. Tính thể tích khối chóp S.ABC.",
+    "Cho hình lăng trụ ABC.A'B'C' có đáy là tam giác đều. Tính thể tích.",
+    "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích.",
+    "Cho hình lăng trụ đứng có đáy là hình vuông cạnh 3, chiều cao 7. Tính thể tích.",
+    "Trong không gian Oxyz, cho hình chóp S.ABCD với A(0;0;0), B(6;0;0). Tính thể tích.",
+])
+def test_vung_da_dien_theo_tu_vung_dong(text):
+    assert _da_dien(text), text
+
+
+@pytest.mark.parametrize("text", [
+    "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF.",
+    "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Tính bán kính.",
+    "Cho tứ diện ABCD có AB, AC, AD đôi một vuông góc. Tính thể tích.",
+    "Trong không gian Oxyz, cho ba điểm M(1;0;2), N(4;0;2), P(5;2;4). Tính diện tích tam giác MNP.",
+    "",
+])
+def test_ngoai_vung_da_dien(text):
+    assert not _da_dien(text), text
+
+
+# ── góc vuông của đáy: các lối viết thường gặp (quyết định U4 · G1) ──────────
+
+@pytest.mark.parametrize("text,ky_vong", [
+    ("Cho hình chóp S.ABC có đáy ABC vuông tại A, AB = 3.", ("A", "B", "C")),
+    ("Cho hình chóp H.UVW có đáy UVW vuông tại U, UV = 2.", ("U", "V", "W")),
+    ("Cho hình chóp F.GKL có đáy GKL là tam giác vuông đỉnh G.", ("G", "K", "L")),
+    ("Hình chóp D.EFG có đáy EFG là tam giác vuông ở đỉnh E.", ("E", "F", "G")),
+    ("Cho hình chóp S.ABC có tam giác ABC vuông ở B.", ("B", "A", "C")),
+    ("Cho hình chóp S.ABC có đáy ABC vuông cân tại C.", ("C", "A", "B")),
+])
+def test_goc_vuong_cua_day_moi_loi_viet_gan_dung_dinh(text, ky_vong):
+    assert ("right_triangle", ky_vong, None) in _bo(text), _bo(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Cho hình chóp S.ABC có đáy ABC vuông tại D.",           # D không thuộc tam giác
+    "Cho hình chóp S.ABCD có đáy ABCD vuông tại A.",         # đáy tứ giác: "vuông tại" vô nghĩa
+])
+def test_goc_vuong_sai_thuc_the_khong_phat(text):
+    assert "right_triangle" not in _kinds(text), _bo(text)
+
+
+def test_loi_viet_moi_duoc_doc_tron():
+    assert _chua_doc("Cho hình chóp S.ABC có đáy ABC vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc "
+                     "với đáy. Tính thể tích khối chóp S.ABC.") == ()

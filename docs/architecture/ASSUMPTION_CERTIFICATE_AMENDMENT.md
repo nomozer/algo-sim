@@ -101,6 +101,15 @@ Ngoài từ vựng (ví dụ, không phát gì): `SA là đường cao`, `AB và
 vuông`, `đáy có bốn góc vuông`, `các cạnh bên vuông góc với mặt đáy`, chia đoạn viết
 `thuộc cạnh SB` (bộ phát chia đoạn chưa đọc — §8).
 
+> **Đính chính 2026-10-03 (W15 Task 6, quyết định U4 · G1).** Nối cổng vào route làm đỏ sáu
+> test mà đề viết góc vuông của đáy theo lối thường gặp ngoài bảng trên — `đáy ABC vuông tại
+> A` (không có "là tam giác"), `tam giác vuông đỉnh G`, `tam giác vuông ở đỉnh E`. Dòng
+> `right_triangle` nay nhận thêm: `đáy XYZ vuông (cân)? <tại> X` và `tam giác … vuông (cân)?
+> <tại> X` với `<tại>` ∈ {`tại`, `ở đỉnh`, `ở`, `đỉnh`}; vẫn chỉ khi đỉnh vuông thuộc tam giác
+> có tên (đáy tứ giác `đáy ABCD vuông tại A` không phát). `cân` vẫn là thông tin span nuốt mà
+> không phát — luật đọc trọn §7 chặn DEPENDENT. Khoá: `test_shape_constraint.py`
+> (`test_goc_vuong_cua_day_moi_loi_viet_gan_dung_dinh`, `test_goc_vuong_sai_thuc_the_khong_phat`).
+
 ### 2.2 Bốn trạng thái bằng chứng của một quan hệ của mô hình
 
 Mỗi quan hệ có kiểu của hợp đồng được ghi một trạng thái trong `details`

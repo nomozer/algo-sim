@@ -59,12 +59,15 @@ _CANH_LAP_PHUONG = re.compile(
 _DANH_TU_KHOI = re.compile(
     rf"(?:[Hh]ình|[Kk]hối)\s+(?:lăng\s+trụ(?:\s+(?:đứng|xiên))?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương"
     rf"|chóp|trụ|nón|cầu){_HET_CHU}|[Mm]ặt\s+cầu{_HET_CHU}")
+#: Đỉnh góc vuông: `tại X` · `ở đỉnh X` · `ở X` · `đỉnh X` (U4 · G1: lối viết thường gặp).
+_TAI = r"(?:tại|ở\s+đỉnh|ở|đỉnh)"
 _DAY = re.compile(
     rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{3,}})\s+)?là\s+(?:một\s+)?(?P<loai>hình\s+chữ\s+nhật|hình\s+vuông"
-    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+vuông(?:\s+cân)?\s+tại\s+(?P<tai>{_E}))"
+    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
     rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}))?(?![\d/])")
+#: Tam giác CÓ TÊN vuông tại một đỉnh của nó — `tam giác ABC vuông tại A`, `đáy ABC vuông tại A`.
 _TAM_GIAC_VUONG = re.compile(
-    rf"[Tt]am\s+giác\s+(?P<t>(?:{_E}){{3}})\s+vuông(?:\s+cân)?\s+tại\s+(?P<tai>{_E})")
+    rf"(?:[Tt]am\s+giác|[Đđ]áy)\s+(?P<t>(?:{_E}){{3}})\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E})")
 _VUONG_GOC_MAT = re.compile(
     rf"{_TRUOC}(?P<p>{_E})(?P<q>{_E})\s*(?:vuông\s+góc\s+với|⊥)\s*(?:(?:mặt\s+phẳng|mp)\s*)?"
     rf"(?:\((?P<mp>(?:{_E}){{3,}})\)|(?P<day>mặt\s+đáy|đáy){_HET_CHU})")
@@ -203,6 +206,14 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         for m in _CHIEU_CAO.finditer(du_kien):
             phat("height", khoi[0], _phan(m.group("so")), m.start(), m.end())
     return tuple(ra)
+
+
+def neu_khoi_da_dien(problem_text: str | None) -> bool:
+    """Đề nêu một khối ĐA DIỆN theo từ vựng đóng: ký hiệu chóp/lăng trụ, hoặc lăng trụ đứng
+    không tên duy nhất. Quyết định U3 (W15): route chỉ TỪ CHỐI theo cổng giả định trong vùng
+    này — nơi lỗ W12/W14 đã đo và có chứng chỉ C0/C1; ngoài vùng cổng chỉ ghi trạng thái."""
+    return any(r.kind in ("pyramid", "prism") or (r.kind == "right_prism" and not r.entities)
+               for r in doc_rang_buoc(problem_text))
 
 
 #: Từ được phép còn lại khi phần dữ kiện đã đọc trọn — không từ nào mang số đo.
