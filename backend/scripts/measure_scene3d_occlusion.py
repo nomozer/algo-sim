@@ -113,6 +113,31 @@ def geometry_signature(scene: dict[str, Any]) -> list[tuple[str, str]]:
                   for obj in scene.get("objects", []) if obj.get("type") not in NON_GEOMETRIC_TYPES)
 
 
+def _reviewed_sets(frozen: dict[str, Any]) -> dict[str, list[str]]:
+    return {
+        "visible_edge_ids": sorted(frozen.get("expected_visible_ids", [])),
+        "hidden_edge_ids": sorted(frozen.get("expected_hidden_ids", [])),
+        "mixed_edge_ids": sorted(frozen.get("expected_mixed_ids", [])),
+    }
+
+
+def reviewed_sets_transfer(frozen: dict[str, Any], scene: dict[str, Any], camera_now: dict[str, Any],
+                           preimages: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """W15 U2 — the rest of the transfer for a scene whose drawn geometry changed: the
+    independent oracle on the NEW scene at the registered and at the new camera, against the
+    reviewed sets (W14 ran it as `occlusion_transfer_diagnostic.py`)."""
+    expected = _reviewed_sets(frozen)
+    registered = preimages.get(frozen.get("camera_snapshot_sha256"))
+    if registered is None:
+        return {"verdict": "REGISTERED_PREIMAGE_UNAVAILABLE"}
+    at_registered = _sets(cross_check(scene, _camera(registered))["analytic"])
+    at_new = _sets(cross_check(scene, _camera(camera_now))["analytic"])
+    return {"verdict": ("REVIEWED_SETS_REPRODUCED" if at_registered == expected and at_new == expected
+                        else "REVIEWED_SETS_DIFFER"),
+            "oracle_at_registered_camera": at_registered, "oracle_at_new_camera": at_new,
+            "expected": expected}
+
+
 def transfer_expectation(frozen: dict[str, Any], registered_scene: dict[str, Any],
                          scene: dict[str, Any], camera_now: dict[str, Any],
                          preimages: dict[str, dict[str, Any]]) -> dict[str, Any]:
@@ -121,11 +146,7 @@ def transfer_expectation(frozen: dict[str, Any], registered_scene: dict[str, Any
     the scene that was reviewed, (2) the geometry is unchanged, and (3) the
     independent oracle reproduces the reviewed sets at BOTH the registered and
     the new camera. The registry itself is never edited."""
-    expected = {
-        "visible_edge_ids": sorted(frozen.get("expected_visible_ids", [])),
-        "hidden_edge_ids": sorted(frozen.get("expected_hidden_ids", [])),
-        "mixed_edge_ids": sorted(frozen.get("expected_mixed_ids", [])),
-    }
+    expected = _reviewed_sets(frozen)
     if scene_sha256(registered_scene) != frozen.get("scene3d_envelope_sha256"):
         return {"status": "REGISTERED_SCENE_MISMATCH"}
     if geometry_signature(registered_scene) != geometry_signature(scene):
@@ -210,7 +231,7 @@ def _frozen_record(registry: dict[str, Any], scenario_id: str, viewport: str,
 
 def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
         preimages_path: Path | None = None, declared_camera_change: str | None = None,
-        registered_fixture_root: Path | None = None) -> dict[str, Any]:
+        registered_fixture_root: Path | None = None, pending_human_review: bool = False) -> dict[str, Any]:
     browser = json.loads(browser_path.read_text(encoding="utf-8"))
     registry = (json.loads(expectations_path.read_text(encoding="utf-8"))
                 if expectations_path else {"scenarios": []})
@@ -223,6 +244,7 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
         "physical_pixel_tolerance": 0.5,
         "scenarios": {},
         "failures": [],
+        "human_review_pending": [],
     }
     for scenario_id, browser_scenario in browser.get("scenarios", {}).items():
         fixture = json.loads((fixture_root / "fixtures" / f"{scenario_id}_positive.json")
@@ -264,6 +286,21 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
                             identity = {"status": "DECLARED_CAMERA_CHANGE",
                                         "declaration": declared_camera_change,
                                         "measured_identity": identity, "transfer": transfer}
+                        elif transfer["status"] == "SCENE_GEOMETRY_CHANGED" and pending_human_review:
+                            # W15 U2: a person reviewed the OLD geometry. Pending — not a
+                            # failure — only if the oracle reproduces the reviewed sets AND
+                            # product = oracle on this state; anything else stays a failure.
+                            ve_lai = reviewed_sets_transfer(frozen, scene, snapshot_record["snapshot"],
+                                                            preimages or {})
+                            if ve_lai["verdict"] != "REVIEWED_SETS_REPRODUCED":
+                                failures.append({"code": ve_lai["verdict"], "transfer": ve_lai,
+                                                 "declaration": declared_camera_change})
+                            elif not failures:
+                                identity = {"status": "HUMAN_REVIEW_PENDING",
+                                            "declaration": declared_camera_change,
+                                            "measured_identity": identity, "transfer": ve_lai}
+                                report["human_review_pending"].append(
+                                    {"scenario_id": scenario_id, "viewport": viewport, "state": state})
                         else:
                             failures.append({"code": transfer["status"], "transfer": transfer,
                                              "declaration": declared_camera_change})
@@ -277,11 +314,7 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
                             "actual_scene": positive.get("scene3d_envelope_sha256"),
                             "proposed_oracle_result": _sets(analytic or {}),
                         })
-                    elif _sets(analytic or {}) != {
-                        "visible_edge_ids": sorted(frozen.get("expected_visible_ids", [])),
-                        "hidden_edge_ids": sorted(frozen.get("expected_hidden_ids", [])),
-                        "mixed_edge_ids": sorted(frozen.get("expected_mixed_ids", [])),
-                    }:
+                    elif _sets(analytic or {}) != _reviewed_sets(frozen):
                         failures.append({
                             "code": "FROZEN_EXPECTED_VISIBILITY_MISMATCH",
                             "frozen": frozen,
@@ -318,6 +351,8 @@ def run(fixture_root: Path, browser_path: Path, expectations_path: Path | None,
             scenario_result[viewport] = viewport_result
         report["scenarios"][scenario_id] = scenario_result
     report["pass"] = not report["failures"]
+    report["verdict"] = ("FAIL" if report["failures"]
+                         else "HUMAN_REVIEW_PENDING" if report["human_review_pending"] else "PASS")
     return report
 
 
@@ -333,10 +368,14 @@ def main() -> int:
                              "--registered-fixture-root")
     parser.add_argument("--registered-fixture-root", type=Path,
                         help="fixture root the frozen registry was reviewed on")
+    parser.add_argument("--pending-human-review", action="store_true",
+                        help="W15 decision U2: a declared scene whose drawn geometry changed is "
+                             "HUMAN_REVIEW_PENDING (not a failure) when the oracle reproduces the "
+                             "reviewed sets and product = oracle")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     result = run(args.fixture_root, args.browser, args.expectations, args.camera_preimages,
-                 args.declared_camera_change, args.registered_fixture_root)
+                 args.declared_camera_change, args.registered_fixture_root, args.pending_human_review)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0 if result["pass"] else 1

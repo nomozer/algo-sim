@@ -454,6 +454,71 @@ export function phanLoaiSac(r, g, b, dai) {
   return null;
 }
 
+/* ─── W15 · SECTION_FILL_DISTINGUISHABLE ─────────────────────────────────────
+ * Phần TÔ của thiết diện khép kín phải đọc tách khỏi mặt cắt và khối. Cùng khung hình, cùng
+ * camera, cùng trạng thái hình học: ảnh tô-BẬT so với ảnh tô-TẮT
+ * (`__geo3d_set_section_fill_visible`) trên các điểm mẫu bên trong đa giác thiết diện chiếu
+ * lên màn hình, bỏ một lề quanh mọi cạnh chiếu. Ngưỡng đăng ký TRƯỚC mọi phép đo —
+ * `ASSUMPTION_CERTIFICATE_AMENDMENT.md` §11, test node khoá hai bản bằng nhau; sản phẩm trượt
+ * ngưỡng thì chỉnh hằng độ đục của renderer, không chỉnh ngưỡng. */
+export const NGUONG_TO_THIET_DIEN = { T_ON: 20, T_ON_MIN: 12, T_OFF: 3, margin_px: 3 };
+
+/** CIE76 trên sRGB (D65): 0–255 → tuyến tính → XYZ → Lab, khoảng cách Euclid. Ma trận 4 chữ
+ *  số, X và Z chia theo tổng hàng để trắng ↦ đúng (1, 1, 1). HÀM THUẦN. */
+export function deltaE76(a, b) {
+  const lab = (rgb) => {
+    const [r, g, bl] = rgb.map((c) => { const x = c / 255; return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; });
+    const X = (0.4124 * r + 0.3576 * g + 0.1805 * bl) / 0.9505;
+    const Y = 0.2126 * r + 0.7152 * g + 0.0722 * bl;
+    const Z = (0.0193 * r + 0.1192 * g + 0.9505 * bl) / 1.089;
+    const f = (t) => (t > 216 / 24389 ? Math.cbrt(t) : ((24389 / 27) * t + 16) / 116);
+    return [116 * f(Y) - 16, 500 * (f(X) - f(Y)), 200 * (f(Y) - f(Z))];
+  };
+  const [p, q] = [lab(a), lab(b)];
+  return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+}
+
+/** `trangThai` ∈ closed | pre_close | rewound; `cap` = [{on: [r,g,b], off: [r,g,b]}] cùng điểm
+ *  ảnh. Khép kín: ΔE trung bình ≥ T_ON VÀ mọi mẫu ≥ T_ON_MIN (bắt tô thiếu/nhạt). Trước khi
+ *  khép, sau khi tua ngược: ΔE lớn nhất ≤ T_OFF (bắt tô sớm, tô không mất). Không mẫu ⇒ đỏ. */
+export function assessSectionFill(trangThai, cap, nguong = NGUONG_TO_THIET_DIEN) {
+  const de = (cap ?? []).map((p) => deltaE76(p.on, p.off));
+  const dau = { state: trangThai, samples: de.length, thresholds: nguong };
+  if (!["closed", "pre_close", "rewound"].includes(trangThai)) return { ...dau, pass: false, reason: "UNKNOWN_STATE" };
+  if (de.length === 0) return { ...dau, pass: false, reason: "NO_SAMPLES" };
+  const mean = de.reduce((s, x) => s + x, 0) / de.length;
+  const [min, max] = [Math.min(...de), Math.max(...de)];
+  const pass = trangThai === "closed" ? mean >= nguong.T_ON && min >= nguong.T_ON_MIN : max <= nguong.T_OFF;
+  return { ...dau, mean_delta_e: mean, min_delta_e: min, max_delta_e: max, pass };
+}
+
+/** Điểm mẫu (px CSS của khung, lưới `buoc` px) BÊN TRONG đa giác thiết diện chiếu bằng camera
+ *  thật, cách mọi cạnh chiếu ít nhất `margin_px`. Có đỉnh sau camera ⇒ không mẫu (cổng đỏ). */
+export function diemMauThietDien(dinh, snapshot, margin = NGUONG_TO_THIET_DIEN.margin_px, buoc = 6) {
+  const p = (dinh ?? []).map((v) => chieuManHinh(snapshot, v.map(num)));
+  if (p.length < 3 || p.some((q) => q.behind || !Number.isFinite(q.x + q.y))) return [];
+  const trong = (x, y) => {
+    let c = false;
+    for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
+      if ((p[i].y > y) !== (p[j].y > y) && x < ((p[j].x - p[i].x) * (y - p[i].y)) / (p[j].y - p[i].y) + p[i].x) c = !c;
+    }
+    return c;
+  };
+  const cachCanh = (x, y) => Math.min(...p.map((a, i) => {
+    const b = p[(i + 1) % p.length], dx = b.x - a.x, dy = b.y - a.y;
+    const t = Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy || 1)));
+    return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
+  }));
+  const [xs, ys] = [p.map((q) => q.x), p.map((q) => q.y)];
+  const ra = [];
+  for (let y = Math.ceil(Math.min(...ys)); y <= Math.max(...ys); y += buoc) {
+    for (let x = Math.ceil(Math.min(...xs)); x <= Math.max(...xs); x += buoc) {
+      if (trong(x, y) && cachCanh(x, y) >= margin) ra.push([x, y]);
+    }
+  }
+  return ra;
+}
+
 /** `census` = {total, cam, xanh} đếm trên ảnh khung ở trạng thái causal. */
 export function assessCausalCanvasHues(scene, tiers, census) {
   const ve = new Set((scene?.objects ?? [])
@@ -918,6 +983,10 @@ export function evaluateEvidenceGates(facts) {
     reasons.push("CAUSAL_CANVAS_ROLE_HUE");
   }
   if (facts.panel_over_canvas === true) reasons.push("SOLUTION_PANEL_COVERS_CANVAS");
+  // W15 — chỉ phán khi bộ đo cung cấp dữ kiện (cảnh có thiết diện).
+  if (facts.section_fill !== undefined && facts.section_fill?.pass !== true) {
+    reasons.push("SECTION_FILL_DISTINGUISHABLE");
+  }
   return { reason_codes: sortedUnique(reasons), pass: reasons.length === 0 };
 }
 
@@ -937,6 +1006,9 @@ export function sha256GitBlob(repoRoot, path) {
   return createHash("sha256").update(content).digest("hex");
 }
 
+/** W15 — ba loại từ chối mỗi họ trong bộ trình duyệt (khoá thứ tự đã sắp). */
+export const KIEU_TU_CHOI = ["assumption", "topology_kernel", "ungrounded_source"];
+
 export function validateSuiteManifest(manifest, repoRoot) {
   const errors = [];
   if (manifest?.schema_version !== "generic-tier-a-suite/1") {
@@ -952,8 +1024,13 @@ export function validateSuiteManifest(manifest, repoRoot) {
   for (const scenario of manifest?.scenarios ?? []) {
     if (!scenario.id || names.has(scenario.id)) errors.push(`scenario_id:${scenario.id}`);
     names.add(scenario.id);
-    if (!scenario.positive_fixture || !scenario.negative_fixture) {
-      errors.push(`fixtures:${scenario.id}`);
+    if (!scenario.positive_fixture) errors.push(`fixtures:${scenario.id}`);
+    // W15: ba LOẠI từ chối mỗi họ, mỗi loại kỳ vọng mã riêng — một lời từ chối không đứng
+    // thay cho cả ba (nguồn không có trong đề · giả định · topo/kernel).
+    const am = scenario.negative_fixtures ?? [];
+    if (JSON.stringify(am.map((n) => n.kind).sort()) !== JSON.stringify(KIEU_TU_CHOI)
+        || am.some((n) => !n.fixture || !n.expected?.product_error_code || !n.expected?.stage_reached)) {
+      errors.push(`negatives:${scenario.id}`);
     }
     if (!scenario.causal_target_id
         || !scenario.oracle_expected_closure?.includes(scenario.causal_target_id)) {

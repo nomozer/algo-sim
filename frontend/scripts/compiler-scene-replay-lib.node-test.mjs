@@ -866,6 +866,34 @@ test("W15 section fill: no samples never passes", () => {
   for (const s of ["closed", "pre_close", "rewound"]) assert.equal(cham(s, []).pass, false, s);
 });
 
+test("W15 section fill: interior samples keep the registered margin from every projected edge", () => {
+  assert.equal(typeof LIB.diemMauThietDien, "function", "diemMauThietDien chưa có (W15 Task 8)");
+  const snap = cameraSnapshot([6, -8, 6], [0, 0, 0], 800, 600);
+  const vuong = [["-2", "-2", "0"], ["2", "-2", "0"], ["2", "2", "0"], ["-2", "2", "0"]];
+  const mau = LIB.diemMauThietDien(vuong, snap);
+  assert.ok(mau.length > 20, `chỉ ${mau.length} mẫu`);
+  const p = vuong.map((v) => LIB.chieuManHinh(snap, v.map(Number)));
+  const cachCanh = ([x, y]) => Math.min(...p.map((a, i) => {
+    const b = p[(i + 1) % p.length], dx = b.x - a.x, dy = b.y - a.y;
+    const t = Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy)));
+    return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
+  }));
+  assert.ok(mau.every((q) => cachCanh(q) >= LIB.NGUONG_TO_THIET_DIEN.margin_px));
+});
+
+test("W15 section fill: a polygon behind the camera gives no samples (the gate fails safe)", () => {
+  assert.equal(typeof LIB.diemMauThietDien, "function", "diemMauThietDien chưa có (W15 Task 8)");
+  const snap = cameraSnapshot([1, 0, 10], [0, 0, 0], 800, 600);
+  assert.deepEqual(LIB.diemMauThietDien([["0", "0", "20"], ["1", "0", "20"], ["0", "1", "20"]], snap), []);
+});
+
+test("W15 manifest requires three distinct negative kinds per scenario", () => {
+  const m = JSON.parse(readFileSync(resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8"));
+  const sai = structuredClone(m);
+  sai.scenarios[0].negative_fixtures = (sai.scenarios[0].negative_fixtures ?? []).slice(0, 1);
+  assert.throws(() => validateSuiteManifest(sai), /INVALID_SUITE_MANIFEST:.*negatives:triangular_pyramid/);
+});
+
 test("W15 section fill: thresholds in code equal the pre-registered ones", () => {
   const doc = readFileSync(resolve(import.meta.dirname, "..", "..", "docs", "architecture",
     "ASSUMPTION_CERTIFICATE_AMENDMENT.md"), "utf-8");

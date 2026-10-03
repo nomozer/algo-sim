@@ -36,7 +36,6 @@
       "evidence_dir": "triangular-pyramid",
       "family": "right_triangle_base_pyramid_volume",
       "positive_fixture": "fixtures/triangular_pyramid_positive.json",
-      "negative_fixture": "fixtures/triangular_pyramid_ungrounded.json",
       "topology": { "vertices": 4, "edges": 6, "faces": 4, "euler": 2 },
       "expected_labels": ["A", "B", "C", "S"],
       "expected_answer": "10",
@@ -60,18 +59,17 @@
         { "class": "PYRAMID_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "S"] }
       ],
       "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/triangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/triangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+      ]
     },
     {
       "id": "triangular_prism",
       "evidence_dir": "triangular-prism",
       "family": "right_triangle_base_right_prism_volume",
       "positive_fixture": "fixtures/triangular_prism_positive.json",
-      "negative_fixture": "fixtures/triangular_prism_ungrounded.json",
       "topology": { "vertices": 6, "edges": 9, "faces": 5, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "E", "F"],
       "expected_answer": "30",
@@ -97,18 +95,17 @@
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "D", "E", "F"] }
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_prism_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/triangular_prism_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/triangular_prism_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+      ]
     },
     {
       "id": "rectangular_pyramid",
       "evidence_dir": "rectangular-pyramid",
       "family": "rectangular_base_pyramid_volume",
       "positive_fixture": "fixtures/rectangular_pyramid_positive.json",
-      "negative_fixture": "fixtures/rectangular_pyramid_ungrounded.json",
       "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "S"],
       "expected_answer": "24",
@@ -133,18 +130,17 @@
         { "class": "PYRAMID_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "D", "S"] }
       ],
       "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/rectangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/rectangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/rectangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+      ]
     },
     {
       "id": "cuboid",
       "evidence_dir": "cuboid",
       "family": "rectangular_cuboid_volume",
       "positive_fixture": "fixtures/cuboid_positive.json",
-      "negative_fixture": "fixtures/cuboid_ungrounded.json",
       "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
       "expected_answer": "60",
@@ -171,18 +167,17 @@
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "A_prime", "B", "B_prime", "C", "C_prime", "D", "D_prime"] }
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/cuboid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cuboid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cuboid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+      ]
     },
     {
       "id": "cube",
       "evidence_dir": "cube",
       "family": "cube_volume",
       "positive_fixture": "fixtures/cube_positive.json",
-      "negative_fixture": "fixtures/cube_ungrounded.json",
       "topology": { "vertices": 8, "edges": 12, "faces": 6, "euler": 2 },
       "expected_labels": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
       "expected_answer": "64",
@@ -209,18 +204,17 @@
         { "class": "PRISM_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "A_prime", "B", "B_prime", "C", "C_prime", "D", "D_prime"] }
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/cube_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cube_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cube_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+      ]
     },
     {
       "id": "cross_section",
       "evidence_dir": "cross-section",
       "family": "cross_section_plane_polyhedron",
       "positive_fixture": "fixtures/cross_section_positive.json",
-      "negative_fixture": "fixtures/cross_section_ungrounded.json",
       "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
       "section_vertices": 4,
       "expected_labels": ["A", "B", "C", "D", "S"],
@@ -248,11 +242,11 @@
         { "class": "SECTION", "role": "CLOSE_SECTION", "kind": "section", "vertices": [] }
       ],
       "formation_coverage": { "enforce": ["SECTION", "PYRAMID_LIKE"], "measure": [] },
-      "negative_expected": {
-        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
-        "product_error_code": "input_not_grounded",
-        "stage_reached": "grounding"
-      }
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/cross_section_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cross_section_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cross_section_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "kernel_error_code": "PLANE_DOES_NOT_CUT"} }
+      ]
     }
   ]
 }

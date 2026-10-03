@@ -293,3 +293,71 @@ def test_declared_camera_change_rejects_a_moved_vertex_or_a_foreign_registered_s
         == "SCENE_GEOMETRY_CHANGED"
     assert M.transfer_expectation(frozen, _scene("cuboid"), _w10_scene("cube"), reviewed, preimages)["status"] \
         == "REGISTERED_SCENE_MISMATCH"
+
+
+# ── W15 · quyết định U2: cảnh W14 làm đổi hình học chờ NGƯỜI duyệt, không tính lỗi ──
+W14_INPUTS = ROOT / "docs/evaluation/geometry/runs/w14-generic-formation-assumption/inputs"
+
+
+def _w14_scene(scenario_id: str) -> dict:
+    fixture = W14_INPUTS / "fixtures" / f"{scenario_id}_positive.json"
+    return json.loads(fixture.read_text(encoding="utf-8"))["envelope"]["scene3d"]
+
+
+def _bang_chung(scenario_id: str, scene: dict, snapshot: dict, sua=None) -> dict:
+    """Browser evidence whose product sets equal the independent oracle; `sua` tampers them."""
+    oracle = M.cross_check(scene, M._camera(snapshot))["analytic"]
+    tap = M._sets(oracle)
+    if sua:
+        sua(tap)
+    return {"scenarios": {scenario_id: {"positive": {"desktop": {
+        "camera_snapshots": {"neutral_final": {"snapshot": snapshot, "sha256": "w14-camera"}},
+        "edge_semantics_neutral_final": {**tap, "edge_spans": [
+            {"edge_id": k, **s} for k, spans in oracle["edge_spans"].items() for s in spans]},
+        "scene3d_envelope_sha256": M.scene_sha256(scene),
+    }}}}}
+
+
+def _do_w14(tmp_path, bang_chung: dict, **kw) -> dict:
+    path = tmp_path / "BROWSER_EVIDENCE.json"
+    path.write_text(json.dumps(bang_chung), encoding="utf-8")
+    return M.run(W14_INPUTS, path, REGISTRY, PREIMAGES, declared_camera_change="W14_S4",
+                 registered_fixture_root=PRIOR_RUN / "inputs", **kw)
+
+
+def test_u2_changed_geometry_is_pending_review_only_when_the_oracle_reproduces_it(tmp_path):
+    """Strict default: SCENE_GEOMETRY_CHANGED is a failure. With `pending_human_review` (U2) the
+    record is HUMAN_REVIEW_PENDING — not a failure — when the oracle on the NEW scene reproduces
+    the reviewed sets at the registered and the new camera AND product = oracle. The registry
+    is never edited."""
+    reviewed = M.load_camera_preimages(PREIMAGES, REGISTRY)[_registered("rectangular_pyramid")["camera_snapshot_sha256"]]
+    bang = _bang_chung("rectangular_pyramid", _w14_scene("rectangular_pyramid"), reviewed)
+    assert [f["code"] for f in _do_w14(tmp_path, bang)["failures"]] == ["SCENE_GEOMETRY_CHANGED"]
+    kq = _do_w14(tmp_path, bang, pending_human_review=True)
+    assert kq["pass"] and kq["verdict"] == "HUMAN_REVIEW_PENDING", kq["failures"]
+    assert kq["human_review_pending"] == [
+        {"scenario_id": "rectangular_pyramid", "viewport": "desktop", "state": "neutral_final"}]
+
+
+def test_u2_product_differing_from_the_oracle_is_never_pending(tmp_path):
+    reviewed = M.load_camera_preimages(PREIMAGES, REGISTRY)[_registered("rectangular_pyramid")["camera_snapshot_sha256"]]
+
+    def sua(tap):
+        e = tap["visible_edge_ids"].pop(0)
+        tap["hidden_edge_ids"] = sorted([*tap["hidden_edge_ids"], e])
+
+    kq = _do_w14(tmp_path, _bang_chung("rectangular_pyramid", _w14_scene("rectangular_pyramid"), reviewed, sua),
+                 pending_human_review=True)
+    assert not kq["pass"] and kq["human_review_pending"] == [], kq["failures"]
+
+
+def test_u2_reviewed_sets_not_reproduced_is_a_failure(tmp_path):
+    reviewed = M.load_camera_preimages(PREIMAGES, REGISTRY)[_registered("rectangular_pyramid")["camera_snapshot_sha256"]]
+    scene = _w14_scene("rectangular_pyramid")
+    solid = next(o for o in scene["objects"] if o["type"] == "solid")
+    target = [sum(float(M.Fraction(v[i])) for v in solid["vertices"]) / len(solid["vertices"]) for i in range(3)]
+    p = reviewed["position"]
+    behind = _look_from(reviewed, [2 * target[0] - p[0], 2 * target[1] - p[1], p[2]], target)
+    kq = _do_w14(tmp_path, _bang_chung("rectangular_pyramid", scene, behind), pending_human_review=True)
+    assert "REVIEWED_SETS_DIFFER" in [f["code"] for f in kq["failures"]], kq["failures"]
+    assert kq["human_review_pending"] == []

@@ -285,9 +285,9 @@ def _ungrounded_cases() -> dict[str, tuple[str, str, str | dict, str | dict]]:
     }
 
 
-def _ungrounded_fixture(full_text: str, cut: str, payload, program) -> tuple[str, dict]:
-    text = full_text.replace(cut, "")
-    assert text != full_text, cut
+def _fake_analyze_refusal(text: str, payload, program, stage: str, reason_code: str) -> dict:
+    """Analyze + synthesis answered by a fake transport (2 responses, 0 model calls); the
+    request must be refused at `stage` with `reason_code` and never sent to repair."""
     as_json = lambda x: x if isinstance(x, str) else json.dumps(x, ensure_ascii=False, default=str)
     responses = [as_json(payload), as_json(program)]
     calls: list[int] = []
@@ -310,10 +310,52 @@ def _ungrounded_fixture(full_text: str, cut: str, payload, program) -> tuple[str
     assert envelope["status"] == "unsupported", envelope.get("status")
     assert "scene3d" not in envelope and "final_memory" not in envelope, envelope
     assert envelope["error_code"] == "input_not_grounded", envelope
-    assert envelope["stage_reached"] == "grounding", envelope
-    assert envelope["reason_code"] == "GIVEN_VALUE_NOT_IN_SOURCE", envelope
+    assert envelope["stage_reached"] == stage, envelope
+    assert envelope["reason_code"] == reason_code, envelope
     assert len(calls) == 2, calls
-    return text, envelope
+    return envelope
+
+
+def _ungrounded_fixture(full_text: str, cut: str, payload, program) -> tuple[str, dict]:
+    text = full_text.replace(cut, "")
+    assert text != full_text, cut
+    return text, _fake_analyze_refusal(text, payload, program, "grounding", "GIVEN_VALUE_NOT_IN_SOURCE")
+
+
+#: W15 — the dimension each family's assumption negative removes: (analyze fact label, scalar).
+_BO_KICH_THUOC = {"triangular_pyramid": ("SA", "SA_length"), "triangular_prism": ("AD", "AD_length"),
+                  "rectangular_pyramid": ("SA", "SA_length"), "cuboid": ("AA'", "AA_prime_length"),
+                  "cube": ("AB", "AB_length")}
+
+
+def _assumption_cases() -> dict[str, tuple[str, str, dict, dict, str]]:
+    """family -> (text, removed part, payload, program, expected reason code).
+
+    W15: the text loses one dimension (the same cut as the ungrounded case) and the program
+    keeps it by LAYOUT — the analyze fact and every scalar that carries the dimension are
+    dropped, so nothing claims it as GIVEN and the request reaches the assumption gate. The
+    cross-section loses S's coordinates; S stays at its layout position as a model assumption,
+    and the text never says SA ⊥ (ABCD), so no template applies (INVARIANCE_UNPROVEN)."""
+    ra = {}
+    for name, (full_text, cut, payload, program) in _ungrounded_cases().items():
+        payload = json.loads(payload) if isinstance(payload, str) else copy.deepcopy(payload)
+        program = json.loads(program) if isinstance(program, str) else copy.deepcopy(program)
+        if name in _BO_KICH_THUOC:
+            nhan, ten = _BO_KICH_THUOC[name]
+            payload["input_facts"] = [f for f in payload["input_facts"] if f.get("label") != nhan]
+            bo = {ten} | {s["target_var"] for s in program["statements"] if ten in json.dumps(s.get("expr", {}))}
+            program["memory_declarations"] = [m for m in program["memory_declarations"] if m["name"] not in bo]
+            program["statements"] = [s for s in program["statements"] if s.get("target_var") not in bo]
+            ma = "ASSUMPTION_DETERMINES_ANSWER"
+        else:
+            payload["input_facts"] = [f for f in payload["input_facts"] if f.get("id") != "S_coords"]
+            for s in program["statements"]:
+                if s.get("target_var") == "S":
+                    s.pop("source_fact_id", None)
+                    s["model_assumption"] = "Đặt đỉnh S trên trục Oz để dựng hình."
+            ma = "ASSUMPTION_INVARIANCE_UNPROVEN"
+        ra[name] = (full_text.replace(cut, ""), cut, payload, program, ma)
+    return ra
 
 
 def _wrapper(case_id: str, text: str, envelope: dict, source: str, **extra) -> dict:
@@ -388,6 +430,15 @@ def main() -> None:
                      "fake_analyze_transport_through_production_refusal",
                      source_reason_code="GIVEN_VALUE_NOT_IN_SOURCE",
                      removed_from_text=cut.strip(" ,.")),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
+    for name, (text, cut, payload, program, ma) in _assumption_cases().items():
+        envelope = _fake_analyze_refusal(text, payload, program, "assumption", ma)
+        (fixtures / f"{name}_assumption.json").write_text(json.dumps(
+            _wrapper(f"{name}_assumption", text, envelope,
+                     "fake_analyze_transport_through_production_refusal",
+                     source_reason_code=ma, removed_from_text=cut.strip(" ,.")),
             ensure_ascii=False, indent=2,
         ), encoding="utf-8")
 

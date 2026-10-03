@@ -16,6 +16,8 @@ import {
   assessCausalCanvasHues,
   assessCssReadiness,
   assessFormation,
+  assessSectionFill,
+  diemMauThietDien,
   assessGeometrySteps,
   assessStructuredReferences,
   isHiddenAlias,
@@ -333,6 +335,64 @@ async function pixelDelta(session, before, after) {
     + `const total=c.width*c.height,ratio=changed/total;return{changed_pixels:changed,total_pixels:total,`
     + `changed_ratio:ratio,bounds:changed?{x:minX,y:minY,width:maxX-minX+1,height:maxY-minY+1}:null,`
     + `pass:changed>0&&ratio<0.75}})()`);
+}
+
+/** W15 · cặp ảnh tô-BẬT / tô-TẮT ở CÙNG khung hình, cùng camera (móc
+ *  `__geo3d_set_section_fill_visible`), lấy mẫu bên trong thiết diện chiếu bằng camera thật. */
+async function sectionFillPairs(session, section) {
+  const doiKhung = "new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))";
+  const snapshot = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
+  const diem = snapshot ? diemMauThietDien(section.polygon, snapshot) : [];
+  const bat = await canvasFrame(session);
+  const ten = await jsonEval(session, "window.__geo3d_set_section_fill_visible?.(false)??null");
+  await session.eval(doiKhung);
+  const tat = await canvasFrame(session);
+  await session.eval("window.__geo3d_set_section_fill_visible?.(true)");
+  await session.eval(doiKhung);
+  if (diem.length === 0) return { fill_mesh_names: ten, pairs: [] };
+  const pairs = await session.eval(`(async()=>{const load=src=>new Promise((ok,bad)=>{`
+    + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
+    + `const a=await load(${JSON.stringify(`data:image/png;base64,${bat.encoded}`)});`
+    + `const b=await load(${JSON.stringify(`data:image/png;base64,${tat.encoded}`)});`
+    + `const c=document.createElement('canvas');c.width=a.width;c.height=a.height;const x=c.getContext('2d');`
+    + `const doc=img=>{x.clearRect(0,0,c.width,c.height);x.drawImage(img,0,0);`
+    + `return x.getImageData(0,0,c.width,c.height).data};const pa=doc(a),pb=doc(b);`
+    + `const sx=a.width/${snapshot.viewport_width},sy=a.height/${snapshot.viewport_height};`
+    + `return ${JSON.stringify(diem)}.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
+    + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}})})()`);
+  return { fill_mesh_names: ten, pairs };
+}
+
+/** W15 SECTION_FILL_DISTINGUISHABLE (ngưỡng đăng ký trước, §11): bước khép-và-tô ĐẦU TIÊN phải
+ *  phân biệt được (và có vật tô thật); mọi bước TRƯỚC đó kể từ khi mặt cắt hiện, và bước vừa
+ *  lùi về sau bước khép, không được có tô. So bật/tắt cùng khung — không so bước với bước. */
+async function sectionFillEvidence(session, scene) {
+  const section = scene.objects.find((o) => o.type === "section" && (o.polygon?.length ?? 0) >= 3);
+  if (!section) return undefined;
+  const timeline = expectedGeometryTimeline(scene);
+  const tienDo = (k) => scene.formation?.steps?.[k]?.geometry_progress?.find((g) => g.object_id === section.id);
+  const matCat = (section.depends ?? []).find((id) =>
+    scene.objects.some((o) => o.id === id && o.type === "plane3"));
+  const kDong = timeline.findIndex((t) => tienDo(t.anchor)?.closed && tienDo(t.anchor)?.fill_visible);
+  const ra = { section_id: section.id, cutting_plane_id: matCat ?? null, closed_ui_step: kDong, pre_close: [] };
+  if (kDong < 1) return { ...ra, pass: false, reason: "NO_CLOSED_FILL_STEP" };
+  await goToStart(session);
+  for (let i = 0; i < kDong; i += 1) {
+    if (expectedVisibleIds(scene, timeline[i].anchor).includes(matCat ?? section.id)) {
+      const m = await sectionFillPairs(session, section);
+      ra.pre_close.push({ ui_step: i, fill_mesh_names: m.fill_mesh_names, ...assessSectionFill("pre_close", m.pairs) });
+    }
+    await moveStep(session, 1);
+  }
+  const dong = await sectionFillPairs(session, section);
+  ra.closed = { ui_step: kDong, fill_mesh_names: dong.fill_mesh_names, ...assessSectionFill("closed", dong.pairs) };
+  await moveStep(session, -1);
+  const lui = await sectionFillPairs(session, section);
+  ra.rewound = { ui_step: kDong - 1, fill_mesh_names: lui.fill_mesh_names, ...assessSectionFill("rewound", lui.pairs) };
+  await goToEnd(session);
+  ra.pass = ra.closed.pass && (ra.closed.fill_mesh_names ?? []).length > 0 && ra.rewound.pass
+    && ra.pre_close.length > 0 && ra.pre_close.every((x) => x.pass);
+  return ra;
 }
 
 /** W12: đếm điểm ảnh theo dải sắc vai trò trên ảnh khung — chính hàm thuần của
@@ -1008,6 +1068,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       });
     }
 
+    result.section_fill = await sectionFillEvidence(session, scene);
+    if (result.section_fill !== undefined) {
+      result.assertions.section_fill = assertion(result.section_fill.pass, result.section_fill);
+    }
+
     const apiCalls = analyzeCalls();
     result.assertions.single_analyze_call = assertion(apiCalls === 1, apiCalls);
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
@@ -1049,6 +1114,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         ? result.formation.trace
         : { pass: true, future_object_leakage: [] },
       raw_token_leakage: result.raw_token_leakage,
+      section_fill: result.section_fill,
       formula: result.formula_entity_coherence,
       causal_oracle_source: "independent_manifest",
       screenshot: { blank: false, premature: !css.pass },
@@ -1065,7 +1131,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   }
 }
 
-async function runNegative({ port, viewport, fixture, scenario, outDir }) {
+async function runNegative({ port, viewport, fixture, expected, outDir }) {
   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.refusal-facts')`), Boolean);
@@ -1073,7 +1139,6 @@ async function runNegative({ port, viewport, fixture, scenario, outDir }) {
       + `return{unsupported:s?.unsupported||null,canvas:!!document.querySelector('.geo3d-canvas canvas'),`
       + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
       + `viewportWidth:window.innerWidth}})()`);
-    const expected = scenario.negative_expected;
     // W12: âm của mọi họ là một GIVEN đề không ghi ⇒ mã nguồn có cấu trúc.
     const structuredPass = observed.unsupported?.error_code === expected.product_error_code
       && observed.unsupported?.stage_reached === expected.stage_reached
@@ -1184,7 +1249,6 @@ export async function runSuite({
   try {
     for (const scenario of suite.scenarios) {
       const positive = JSON.parse(readFileSync(join(root, scenario.positive_fixture), "utf-8"));
-      const negative = JSON.parse(readFileSync(join(root, scenario.negative_fixture), "utf-8"));
       // w11: manifest có thể đặt thư mục ảnh của họ (`images/<họ>/`), để ảnh
       // nguồn nằm ngay cạnh contact sheet của họ; manifest cũ vẫn dùng `id`.
       const scenarioOut = join(screenshots, scenario.evidence_dir ?? scenario.id);
@@ -1198,17 +1262,22 @@ export async function runSuite({
           outDir: join(scenarioOut, viewport.id),
         });
       }
-      for (const viewport of suite.viewports) {
-        record.negative[viewport.id] = await runNegative({
-          port: cong,
-          viewport,
-          fixture: negative,
-          scenario,
-          outDir: join(scenarioOut, "negative", viewport.id),
-        });
+      // W15: ba loại từ chối mỗi họ, mỗi loại một kỳ vọng mã riêng (`KIEU_TU_CHOI`).
+      for (const am of scenario.negative_fixtures) {
+        const negative = JSON.parse(readFileSync(join(root, am.fixture), "utf-8"));
+        record.negative[am.kind] = {};
+        for (const viewport of suite.viewports) {
+          record.negative[am.kind][viewport.id] = await runNegative({
+            port: cong,
+            viewport,
+            fixture: negative,
+            expected: am.expected,
+            outDir: join(scenarioOut, "negative", am.kind, viewport.id),
+          });
+        }
       }
       record.pass = Object.values(record.positive).every((item) => item.pass)
-        && Object.values(record.negative).every((item) => item.pass);
+        && Object.values(record.negative).every((kind) => Object.values(kind).every((item) => item.pass));
       report.scenarios[scenario.id] = record;
       console.log(`${scenario.id}: ${record.pass ? "PASS" : "FAIL"}`);
     }
