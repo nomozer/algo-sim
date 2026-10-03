@@ -230,10 +230,9 @@ class _ChiMuc:
         raise _Loi("CLOSURE_UNRESOLVED_DEFINITION", n)
 
     def _doc_truoc(self, n: str, s: dict) -> bool:
-        """Có câu lệnh nào TRƯỚC `s` đọc `n` không; không đọc được câu lệnh ⇒ coi như có."""
+        """Có câu lệnh nào TỚI VÀ GỒM `s` đọc `n` không — `X = trung điểm(X, N)` đọc chính
+        literal nó ghi đè (đánh giá cuối W15); không đọc được câu lệnh ⇒ coi như có."""
         for t in self.cau_lenh:
-            if t is s:
-                return False
             doc = _Doc("", _LatCat())
             try:
                 doc.nut(t)
@@ -241,6 +240,8 @@ class _ChiMuc:
                 return True
             if n in doc.ten:
                 return True
+            if t is s:
+                return False
         return True
 
     def ten_theo_khoa(self) -> dict[str, str]:

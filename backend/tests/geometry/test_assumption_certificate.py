@@ -588,6 +588,29 @@ def test_literal_khai_bao_duoc_doc_truoc_khi_ghi_de_van_la_nhieu_dinh_nghia():
     assert any("CLOSURE_MULTIPLE_DEFINITIONS" in d for d in kq.details), kq.details
 
 
+def _c0_tu_doc(x0: list[int]):
+    """n1: X khai toạ độ GIẢ ĐỊNH `x0` (đề không cho); lệnh dựng X ĐỌC CHÍNH literal ấy
+    (X = trung điểm của X và N) rồi Q = X + NP — lệnh dựng đọc literal nó ghi đè."""
+    ct, raw = _demo("n1_thoi_dinh_thu_tu")
+    raw["memory_declarations"].append({"name": "X", "type": "point3", "initial_value": x0,
+                                       "model_assumption": "Điểm phụ tự đặt."})
+    raw["statements"].insert(0, _trung_diem("X", "X", "N"))
+    next(s for s in raw["statements"] if s.get("target_var") == "Q")["expr"]["point"] = "X"
+    return ct, raw
+
+
+def test_lenh_dung_doc_chinh_literal_no_ghi_de_van_la_nhieu_dinh_nghia():
+    """U5 chỉ bỏ literal khai báo khi KHÔNG ai đọc nó — kể cả CHÍNH lệnh dựng ghi đè nó.
+    Ở đây đáp số đổi theo literal giả định của X (tiền đề kiểm ngay trong test), nên C0 mà
+    chứng nhận là chứng nhận một giá trị phụ thuộc giả định đề không cho."""
+    a, b = (SemanticProgramInterpreter().execute(W.spec_cua(_c0_tu_doc(x0)[1])).final_memory["dist_q_mp"]
+            for x0 in ([7, 7, 7], [0, 9, 1]))
+    assert a != b
+    kq = _kq(*_c0_tu_doc([7, 7, 7]))
+    assert kq.status != AN_TOAN, kq
+    assert any("CLOSURE_MULTIPLE_DEFINITIONS" in d for d in kq.details), kq.details
+
+
 # ── cos² nằm NGOÀI C1; mọi giá trị số học sinh thấy đều phải được chứng nhận ─────
 
 def test_cos2_ngoai_pham_vi_C1_tu_choi_ca_bai():
