@@ -213,3 +213,10 @@ def test_w17_so_lieu_he_doc_lech_de_la_loi_he(ma):
 def test_w17_nguyen_nhan_chua_ro_khong_bao_sua_de():
     msg = learner_reason(_tu_choi(error_code="semantic_program_invalid", refusal_cause="UNKNOWN"))
     assert _khong_bao_sua_de(msg) and _sach(msg), msg
+
+
+def test_w17_tu_choi_khong_phan_xu_mang_nguyen_nhan_UNKNOWN_khong_phai_SOURCE():
+    """Tiêm lỗi FM2 (W17): mặc định `SOURCE` thì giao diện bảo người học sửa dữ kiện của một đề
+    có thể hợp lệ. Nơi từ chối không phân xử ⇒ `UNKNOWN`; nguyên nhân đã có thì giữ nguyên."""
+    assert attach_learner_reason(_tu_choi(error_code="semantic_program_invalid"))["refusal_cause"] == "UNKNOWN"
+    assert attach_learner_reason(_tu_choi(refusal_cause="CONSTRUCTION"))["refusal_cause"] == "CONSTRUCTION"
