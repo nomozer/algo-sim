@@ -516,13 +516,18 @@ def build_scene_events(state: dict[str, Any]) -> list[dict[str, Any]]:
             main_obj = b["created"]
         else:
             main_obj = b.get("created") or (sub_objs[0] if sub_objs else None)
+        # W17: đích của câu lệnh NHÓM (`canh_ben`) không phải vật của cảnh — tên hành động là nhãn
+        # của CHÍNH câu lệnh ("Các cạnh bên AD, BE, CF", do bước bổ sung dựng hình đặt), không phải
+        # câu chung; nhãn mang `_` là tên máy và không bao giờ lên bề mặt học sinh.
+        nhan_lenh = details.get("label")
+        nhan_lenh = nhan_lenh if isinstance(nhan_lenh, str) and nhan_lenh.strip() and "_" not in nhan_lenh else None
         evt: dict[str, Any] = {
             "step_index": b["step_index"],
             "action": _HANH_DONG.get(b["action"], "STEP"),
             "object": main_obj,
             "depends": list(b.get("depends_on", [])),
             "explanation": b.get("explanation", ""),
-            "display_label": labels.get(main_obj) or "Bước dựng hình",
+            "display_label": labels.get(main_obj) or nhan_lenh or "Bước dựng hình",
             "semantic_kind": b.get("semantic_kind") or "LEGACY_UNTYPED_EVENT",
             "details": dict(details),
         }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
+  geometryActionLabelAt,
   geometryAnchor,
   geometryFocusAt,
   geometryStepCount,
@@ -241,7 +242,10 @@ export function Scene3DPlayer({
       <dl className="geo3d-focus">
         <dt>Đang dựng</dt>
         <dd>
+          {/* W17: tên HÀNH ĐỘNG tách khỏi XUẤT XỨ. Đích không phải vật của cảnh (câu lệnh nhóm
+              "Các cạnh bên AD, BE, CF") ⇒ nhãn backend phát cho bước; "dữ kiện đề cho" chỉ của INIT. */}
           {(tieuDiem.created && tenDayDu(tieuDiem.created))
+            || geometryActionLabelAt(scene, step)
             || "— (dữ kiện đề cho)"}
         </dd>
         <dt>Dựa trên</dt>

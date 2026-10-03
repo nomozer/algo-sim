@@ -1055,6 +1055,17 @@ export function geometryFocusAt(
 }
 
 /**
+ * W17 · TÊN HÀNH ĐỘNG của bước dựng chứa `step` — `display_label` backend phát cho sự kiện dựng
+ * đầu đoạn. Cần khi đích của bước không phải vật của cảnh (câu lệnh NHÓM "Các cạnh bên AD, BE,
+ * CF"). `null` ở bước INIT: tên hành động tách khỏi XUẤT XỨ — chỉ INIT là "dữ kiện đề cho".
+ */
+export function geometryActionLabelAt(scene: Scene3D, step: number): string | null {
+  const k = geometryTimeline(scene)[geometryStepOf(scene, step)]?.construction[0] ?? clampStep(scene, step);
+  const e = scene.events.find((x) => x.step_index === k);
+  return e && e.action !== "INIT" ? e.display_label ?? null : null;
+}
+
+/**
  * Vật TÔ SÁNG của bước dựng: mọi vật các sự kiện dựng của đoạn đưa lên khung.
  * Bước dựng CUỐI không tô gì — hình đã đủ, khung cuối là khung trung tính.
  */

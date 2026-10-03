@@ -195,19 +195,24 @@ describe("(5E) vỏ điều khiển", () => {
   /* W17 · nhãn nhóm cạnh: một câu lệnh NHÓM (`construct_segment` có `items`) có biến
    * đích KHÔNG phải vật của cảnh. Bản W16 rơi về "— (dữ kiện đề cho)" cho mọi tên rỗng,
    * nên bước "Dựng các cạnh bên AD, BE, CF" tự nhận là dữ kiện đề cho. Tên hành động lấy
-   * từ `display_label` do backend phát; câu "dữ kiện đề cho" chỉ thuộc bước INIT. */
+   * từ `display_label` do backend phát; câu "dữ kiện đề cho" chỉ thuộc bước INIT.
+   * Như payload thật (lăng trụ), sự kiện nhóm đưa các đoạn con lên khung (`objects`) — không có
+   * chúng, bước nhóm không đổi hình và dòng thời gian gộp nó vào INIT (Task 4 ruling). */
   const canhNhom = (): Scene3D => ({
     free_objects: ["A", "D"],
     objects: [
-      { id: "A", label: "Điểm A", notation: "A", type: "point3", render: "marker",
+      { id: "A", label: "Điểm A", notation: "A", type: "point3", render: "point_marker",
         origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
-      { id: "D", label: "Điểm D", notation: "D", type: "point3", render: "marker",
+      { id: "D", label: "Điểm D", notation: "D", type: "point3", render: "point_marker",
         origin: "free", producer: null, depends: [], xyz: ["0", "0", "5"] },
+      { id: "AD", label: "Cạnh AD", notation: "AD", type: "segment3", render: "segment",
+        origin: "derived", producer: "construct_segment", depends: ["A", "D"],
+        point_a: ["0", "0", "0"], point_b: ["0", "0", "5"] },
     ],
     events: [
       { step_index: 0, action: "INIT", object: null, depends: [],
         explanation: "Dữ kiện đề cho: AD = 5.", semantic_kind: "EXPLANATION" },
-      { step_index: 1, action: "CREATE", object: "canh_ben", depends: ["A", "D"],
+      { step_index: 1, action: "CREATE", object: "canh_ben", objects: ["AD"], depends: ["A", "D"],
         explanation: "Dựng các cạnh bên AD.", display_label: "Các cạnh bên AD",
         semantic_kind: "GEOMETRY_CONSTRUCTION" },
     ],

@@ -744,3 +744,22 @@ def test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom(ho, nhan):
     nhom = [e for e in sc["events"] if (e.get("details") or {}).get("objects")
             and e["object"] not in {o["id"] for o in sc["objects"]}]
     assert [e["display_label"] for e in nhom] == [nhan], [(e["object"], e["display_label"]) for e in nhom]
+
+
+def test_w17_loi_ke_canh_thiet_dien_khop_mat_va_canh_cua_payload():
+    """W17 Phase 3: mỗi bước nối cạnh thiết diện kể ĐÚNG mặt `mat` của khối trong payload ("mặt SAB"),
+    và hai cạnh nó nêu đều là cạnh của mặt ấy; bước khép nói đúng số cạnh."""
+    import re
+
+    _t, ct, raw = W.gold("p1_chop_thiet_dien_khoang_cach")
+    _sp, _out, sc = W.chay(ct, raw)
+    khoi = next(o for o in sc["objects"] if o["type"] == "solid")
+    noi = [e for e in sc["events"] if e["action"] == "EXTEND"]
+    assert len(noi) == 4
+    for e in noi:
+        mat = {khoi["vertex_ids"][i] for i in khoi["faces"][e["details"]["mat"]]}
+        m = re.fullmatch(r"Trên mặt (\w+), nối giao điểm thuộc cạnh (\w\w) với giao điểm thuộc cạnh (\w\w)\.",
+                         e["learner_text"])
+        assert m and set(m[1]) == mat and set(m[2]) <= mat and set(m[3]) <= mat, (e["learner_text"], mat)
+    khep = sc["events"][noi[-1]["step_index"] + 1]
+    assert khep["learner_text"].startswith("Thiết diện khép lại thành tứ giác"), khep["learner_text"]
