@@ -154,6 +154,14 @@ describe("W17 · đặt nhãn số đo (§15.5)", () => {
     expect(gan(r!, 200, 150)).toBeLessThanOrEqual(NEO_TOI_DA);
   });
 
+  it("tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px)", () => {
+    const n85 = { id: "a", ax: 200, ay: 150, w: 85, h: 20, priority: 1 };
+    const hai = [{ x: 110, y: 136, w: 52, h: 20.5 }, { x: 230, y: 140, w: 52, h: 20 }];
+    const r = placeAnnotationLabels([n85], hai, KHUNG).get("a");
+    expect(r).toEqual({ x: 157.5, y: 162, w: 85, h: 20 });
+    expect(gan(r!, 200, 150)).toBe(12);
+  });
+
   it("không còn chỗ trong 24 px ⇒ ẩn — nhãn không bao giờ trôi xa vật nó gọi tên", () => {
     expect(placeAnnotationLabels([n("a", 200, 150)], [{ x: 0, y: 0, w: 400, h: 300 }], KHUNG).size).toBe(0);
   });

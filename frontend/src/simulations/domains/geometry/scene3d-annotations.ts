@@ -127,8 +127,9 @@ export interface LabelToPlace { id: string; ax: number; ay: number; w: number; h
 
 /** §15.5: khoảng tối đa (px CSS) từ điểm neo chiếu tới điểm gần nhất của hộp nhãn. */
 export const NEO_TOI_DA = 24;
-/** Khe giữa điểm neo và cạnh hộp nhãn. */
-const KHE = 6;
+/** Khe giữa điểm neo và cạnh hộp nhãn — vòng gần trước, xa dần; góc ở khe k cách neo k√2, nên
+ *  vòng 18 chỉ còn bốn phía (`NEO_TOI_DA` loại góc). */
+const KHE = [6, 12, 18];
 
 const giao = (a: LabelRect, b: LabelRect) =>
   a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
@@ -136,11 +137,12 @@ const cachNeo = (r: LabelRect, ax: number, ay: number) =>
   Math.hypot(Math.max(r.x - ax, 0, ax - r.x - r.w), Math.max(r.y - ay, 0, ay - r.y - r.h));
 
 /**
- * Đặt hộp nhãn số đo (toạ độ px CSS trong khung `view`). Ưu tiên cao đặt trước; mỗi nhãn thử
- * trên · dưới · phải · trái điểm neo, rồi bốn góc (lượt trình duyệt T7: nhãn đáy kẹp giữa hai
- * nhãn cạnh hết cả bốn phía), kẹp vào khung, bỏ chỗ nào xa neo quá `NEO_TOI_DA` hoặc giao một
- * hộp đã có (`chan`: nhãn điểm, nút điều khiển, nhãn số đo đã đặt). Hết chỗ ⇒ không đặt.
- * Tất định: cùng đầu vào, cùng kết quả — không xê dịch dần, không ngẫu nhiên.
+ * Đặt hộp nhãn số đo (toạ độ px CSS trong khung `view`). Ưu tiên cao đặt trước; mỗi nhãn thử,
+ * theo từng vòng khe `KHE`, trên · dưới · phải · trái điểm neo rồi bốn góc (lượt trình duyệt T7:
+ * nhãn đáy kẹp giữa hai nhãn cạnh hết cả bốn phía, rồi chạm một nhãn nửa px ở vòng sát nhất), kẹp
+ * vào khung, bỏ chỗ nào xa neo quá `NEO_TOI_DA` hoặc giao một hộp đã có (`chan`: nhãn điểm, nút
+ * điều khiển, nhãn số đo đã đặt). Hết chỗ ⇒ không đặt. Tất định: cùng đầu vào, cùng kết quả —
+ * không xê dịch dần, không ngẫu nhiên.
  */
 export function placeAnnotationLabels(
   items: LabelToPlace[],
@@ -151,12 +153,14 @@ export function placeAnnotationLabels(
   const daChiem = [...chan];
   for (const n of [...items].sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id))) {
     if (n.ax < 0 || n.ay < 0 || n.ax > view.w || n.ay > view.h || n.w > view.w || n.h > view.h) continue;
-    const [tren, duoi, phai, trai] = [n.ay - KHE - n.h, n.ay + KHE, n.ax + KHE, n.ax - KHE - n.w];
-    const ung: LabelRect[] = [
-      { x: n.ax - n.w / 2, y: tren }, { x: n.ax - n.w / 2, y: duoi },
-      { x: phai, y: n.ay - n.h / 2 }, { x: trai, y: n.ay - n.h / 2 },
-      { x: phai, y: tren }, { x: trai, y: tren }, { x: phai, y: duoi }, { x: trai, y: duoi },
-    ].map((r) => ({ ...r, w: n.w, h: n.h })).map((r) => ({ ...r, x: Math.min(Math.max(r.x, 0), view.w - r.w), y: Math.min(Math.max(r.y, 0), view.h - r.h) }));
+    const ung: LabelRect[] = KHE.flatMap((k) => {
+      const [tren, duoi, phai, trai] = [n.ay - k - n.h, n.ay + k, n.ax + k, n.ax - k - n.w];
+      return [
+        { x: n.ax - n.w / 2, y: tren }, { x: n.ax - n.w / 2, y: duoi },
+        { x: phai, y: n.ay - n.h / 2 }, { x: trai, y: n.ay - n.h / 2 },
+        { x: phai, y: tren }, { x: trai, y: tren }, { x: phai, y: duoi }, { x: trai, y: duoi },
+      ];
+    }).map((r) => ({ ...r, w: n.w, h: n.h })).map((r) => ({ ...r, x: Math.min(Math.max(r.x, 0), view.w - r.w), y: Math.min(Math.max(r.y, 0), view.h - r.h) }));
     const r = ung.find((c) => cachNeo(c, n.ax, n.ay) <= NEO_TOI_DA && !daChiem.some((b) => giao(c, b)));
     if (!r) continue;
     giu.set(n.id, r);
