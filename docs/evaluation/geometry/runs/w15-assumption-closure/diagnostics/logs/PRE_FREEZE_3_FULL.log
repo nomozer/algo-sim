@@ -1,0 +1,18 @@
+# W15 final review — pre-freeze 3 verification in the main tree at bb0740f7 (clean tree except the user's favicon deletion; last product commit 41a26f11)
+
+## backend: cd backend && PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -rfE --tb=line
+result: 10 failed, 6747 passed, 1 skipped, 2 deselected, 2 warnings in 212.03s (0:03:32)
+allowed failures (stale candidate identity only — freeze 3 rewrites EVALUATION_CANDIDATE.json):
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+  STALE_CANDIDATE_IDENTITY :: tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+test_cache_version_khop_nguon passes here (the candidate on file already records CACHE_VERSION 107).
+
+## frontend, node: unchanged since 909a3a2d (vitest 1017/1017, tsc -b 0 recorded before freeze 2); T3 at the measurement commit reruns everything
