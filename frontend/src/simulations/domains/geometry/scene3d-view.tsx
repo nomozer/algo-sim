@@ -173,6 +173,16 @@ function v(o: THREE.Object3D, name: string): THREE.Object3D {
 export const THU_TU_VE_THIET_DIEN = 10;
 
 /**
+ * Thứ tự vẽ PHẦN TÔ thiết diện (W16, ASSUMPTION_CERTIFICATE_AMENDMENT §14.4): sau mặt khối
+ * và mặt cắt (0), TRƯỚC mọi nét (`THU_TU_DUONG`). Ở 10 (W15) phần tô — không kiểm chiều sâu —
+ * phủ hổ phách lên cạnh khối đi qua vùng thiết diện (ảnh cross-section W15: SA, SC nhuộm nâu).
+ * `renderOrder` chỉ xếp TRONG một hàng đợi: cạnh khối chuẩn ở hàng đợi trong suốt
+ * (`canonicalEdgeMaterial`) nên vẽ đè lên phần tô; nét liền ĐỤC (đoạn phụ, viền đa giác) vẫn
+ * chạy trước toàn bộ hàng đợi trong suốt.
+ */
+export const THU_TU_TO_THIET_DIEN = 7;
+
+/**
  * Độ đục phần TÔ của thiết diện khép kín (W15). Nhánh đa giác chung tô 0.16 — đồng phẳng
  * với miếng mặt cắt tím (0.20) và trước khối xám (0.22) thì vùng thiết diện hoà mất. Cổng
  * ảnh `SECTION_FILL_DISTINGUISHABLE` đo bật/tắt phần tô ở CÙNG khung hình theo ngưỡng
@@ -209,7 +219,7 @@ export const DO_DUC_TO_THIET_DIEN = 0.45;
  * không vào hộp bao, không vào `final_memory`. Nó là chi tiết TRÌNH BÀY.
  */
 
-/** Thứ tự vẽ: khối tô bóng → lớp chiều sâu → đường → thiết diện. */
+/** Thứ tự vẽ: khối tô bóng → lớp chiều sâu → phần tô thiết diện → đường → viền thiết diện. */
 const THU_TU_CHIEU_SAU = 5;
 const THU_TU_DUONG = 8;
 
@@ -1074,6 +1084,9 @@ export function buildObject3D(
         // trước toàn bộ hàng đợi trong suốt, nên một vật tô có kiểm chiều sâu bị loại ở MỌI
         // điểm ảnh — có mặt trong cảnh mà không bao giờ hiện (bật/tắt: ΔE = 0). Nét viền
         // thiết diện vẫn hai lượt thấy/khuất; chỉ vùng tô xuyên qua khối trong suốt.
+        //
+        // W16: thứ tự `THU_TU_TO_THIET_DIEN` — sau mặt, TRƯỚC nét: cạnh khối đi qua vùng
+        // tô vẫn đọc rõ (§14.4), thay vì bị phủ hổ phách như ở thứ tự 10 của W15.
         const thietDien = o.type === "section";
         const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
           color: nen(MAU.polygon),
@@ -1084,7 +1097,7 @@ export function buildObject3D(
           ...(thietDien ? { ...LECH_THIET_DIEN, depthTest: false } : {}),
         }));
         mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
-        if (thietDien) mesh.renderOrder = THU_TU_VE_THIET_DIEN;
+        if (thietDien) mesh.renderOrder = THU_TU_TO_THIET_DIEN;
         const nhom = new THREE.Group();
         if (ownsBoundary) nhom.add(line);
         nhom.add(mesh);

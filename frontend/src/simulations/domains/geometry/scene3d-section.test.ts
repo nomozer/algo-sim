@@ -375,12 +375,16 @@ describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt 
     expect(typeof W15.datHienToThietDien).toBe("function");
   });
 
-  it("khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau, lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che", () => {
+  it("khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau mặt (trước nét — W16), lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che", () => {
     const obj = VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false)!;
     const to = vatTo(obj);
     expect(to.map((m) => m.name)).toEqual(["section_fill:td"]);
     const m = to[0].material as THREE.MeshStandardMaterial;
-    expect(to[0].renderOrder).toBeGreaterThanOrEqual(W15.THU_TU_VE_THIET_DIEN!);
+    // W15 đòi `>= THU_TU_VE_THIET_DIEN` (vẽ sau MỌI vật, kể cả nét) — chính điều làm cạnh khối
+    // đi qua vùng tô bị nhuộm. W16 (§14.4): thứ tự riêng, sau mặt và TRƯỚC nét; quan hệ với
+    // mặt/nét thật của cảnh khoá ở describe W16 bên dưới.
+    expect(to[0].renderOrder).toBe(VIEW.THU_TU_TO_THIET_DIEN);
+    expect(VIEW.THU_TU_TO_THIET_DIEN).toBeLessThan(W15.THU_TU_VE_THIET_DIEN!);
     expect(m.polygonOffset).toBe(true);
     expect(m.polygonOffsetUnits).toBeLessThan(0);
     expect(m.opacity).toBe(W15.DO_DUC_TO_THIET_DIEN);
