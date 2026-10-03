@@ -894,6 +894,18 @@ test("W15 manifest requires three distinct negative kinds per scenario", () => {
   assert.throws(() => validateSuiteManifest(sai), /INVALID_SUITE_MANIFEST:.*negatives:triangular_pyramid/);
 });
 
+test("W17 manifest: extra refusal kinds come from a closed set and always declare their cause", () => {
+  const m = JSON.parse(readFileSync(resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8"));
+  const them = (n) => { const x = structuredClone(m); x.scenarios[0].negative_fixtures.push(n); return x; };
+  const am = { fixture: "fixtures/x.json", expected: { product_error_code: "e", stage_reached: "s" } };
+  assert.throws(() => validateSuiteManifest(them({ kind: "system_cause", ...am })), /negatives:triangular_pyramid/);
+  assert.throws(() => validateSuiteManifest(them({ kind: "made_up", ...am,
+    expected: { ...am.expected, refusal_cause: "UNKNOWN" } })), /negatives:triangular_pyramid/);
+  const sai = structuredClone(m);
+  sai.scenarios[0].served_fixtures = [{ kind: "x", fixture: "fixtures/x.json", expected: {} }];
+  assert.throws(() => validateSuiteManifest(sai), /served:triangular_pyramid/);
+});
+
 test("W15 section fill: thresholds in code equal the pre-registered ones", () => {
   const doc = readFileSync(resolve(import.meta.dirname, "..", "..", "docs", "architecture",
     "ASSUMPTION_CERTIFICATE_AMENDMENT.md"), "utf-8");
@@ -987,6 +999,76 @@ test("W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing
   assert.equal(LIB.assessSectionFillUnderEdges([khongVe]).pass, false);
   const rong = LIB.assessSectionFillUnderEdges([]);
   assert.deepEqual([rong.pass, rong.reason], [false, "NOT_APPLICABLE_NO_CROSSING_EDGE"]);
+});
+
+/* W17 · §15.5 — the on-figure quantity label checks. One camera that maps world (x, y) straight to
+ * pixels (orthographic, 100 px per unit, canvas 400×300, origin at the canvas centre). */
+const CAM_W17 = (() => {
+  const p = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+  const v = [0.5, 0, 0, 0, 0, 2 / 3, 0, 0, 0, 0, 1, 0, 0, 0, -1, 1];
+  return { projection_matrix_column_major: p, view_matrix_column_major: v, viewport_width: 400, viewport_height: 300 };
+})();
+const CANH_W17 = {
+  free_objects: ["A", "B", "AB"],
+  objects: [
+    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] },
+    { id: "AB", type: "quantity", origin: "free", value: "3",
+      annotation: { kind: "length", category: "measurement", subject_ids: ["A", "B"], anchor: "segment" } },
+    { id: "V", type: "quantity", origin: "derived", value: "9",
+      annotation: { kind: "length", category: "result", subject_ids: ["A", "B"], anchor: "segment" } },
+  ],
+  events: [{ step_index: 0, action: "INIT", object: null }, { step_index: 1, action: "MEASURE", object: "V",
+    semantic_kind: "MEASUREMENT" }, { step_index: 2, action: "MEASURE", object: "V", semantic_kind: "FINAL_RESULT" }],
+};
+
+test("W17 annotation oracle: a result label only from its concluding event", () => {
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 0), ["AB"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 1), ["AB"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 2), ["AB", "V"]);
+});
+
+test("W17 annotation boxes: inside, near the independently projected anchor, no overlaps", () => {
+  // AB's anchor (0.5, 0, 0) projects to (250, 150): view x = 0.5·0.5 = 0.25 ⇒ (1.25 / 2)·400.
+  const tot = { id: "AB", box: { x: 205, y: 126, w: 40, h: 18 } };
+  const ok = LIB.assessAnnotationBoxes({ scene: CANH_W17, step: 0, boxes: [tot], points: [], camera: CAM_W17,
+    mustShow: ["AB"] });
+  assert.equal(ok.pass, true, ok.reason_codes.join());
+  const cases = [
+    [{ id: "AB", box: { x: 205, y: 60, w: 40, h: 18 } }, [], "ANNOTATION_FAR_FROM_SUBJECT"],
+    [{ id: "AB", box: { x: 380, y: 126, w: 40, h: 18 } }, [], "ANNOTATION_OUTSIDE_CANVAS"],
+    [tot, [{ id: "A", x: 210, y: 130, w: 20, h: 16 }], "ANNOTATION_OVER_POINT_LABEL"],
+    [{ id: "V", box: { x: 205, y: 126, w: 40, h: 18 } }, [], "ANNOTATION_NOT_AVAILABLE"],
+  ];
+  for (const [b, points, code] of cases) {
+    const kq = LIB.assessAnnotationBoxes({ scene: CANH_W17, step: 0, boxes: [b], points, camera: CAM_W17 });
+    assert.ok(kq.reason_codes.some((c) => c.startsWith(code)), `${code}: ${kq.reason_codes.join()}`);
+  }
+  const chong = LIB.assessAnnotationBoxes({ scene: CANH_W17, step: 2, camera: CAM_W17, points: [],
+    boxes: [tot, { id: "V", box: { x: 215, y: 130, w: 40, h: 18 } }] });
+  assert.ok(chong.reason_codes.some((c) => c.startsWith("ANNOTATION_OVERLAP")), chong.reason_codes.join());
+  const thieu = LIB.assessAnnotationBoxes({ scene: CANH_W17, step: 0, boxes: [], points: [], camera: CAM_W17,
+    mustShow: ["AB"] });
+  assert.deepEqual(thieu.reason_codes, ["ANNOTATION_MISSING:AB"]);
+});
+
+test("W17 toggle isolation and causal restore record each state separately", () => {
+  const on = { annotation_dom_count: 2, annotation_ids: ["AB", "V"], dash_signature: { e: ["VISIBLE_SOLID"] },
+    rendered_object_ids: ["A"], camera: { m: 1 }, selected_id: null, step: 4 };
+  const off = { ...on, annotation_dom_count: 0, annotation_ids: [] };
+  assert.equal(LIB.assessToggleIsolation({ on, off, back: on }).pass, true);
+  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, camera: { m: 2 } }, back: on }).reason_codes,
+    ["TOGGLE_CHANGED_CAMERA"]);
+  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, dash_signature: {} }, back: on }).reason_codes,
+    ["TOGGLE_CHANGED_DASH_SIGNATURE"]);
+  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, annotation_dom_count: 1 }, back: on }).reason_codes,
+    ["TOGGLE_OFF_LEAVES_LABELS:1"]);
+  const n = { camera: { m: 1 }, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
+  const s = { ...n, selected_id: "V", scroll_y: 300 };
+  assert.equal(LIB.assessCausalRestore({ neutral: n, selected: s, restored: n }).pass, true);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: { ...n, scroll_y: 300 } })
+    .reason_codes, ["SCROLL_NOT_RESTORED"]);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: { ...n, camera: { m: 2 } } })
+    .reason_codes, ["RESTORE_MOVED_CAMERA"]);
 });
 
 test("role tokens are machine data: on screen they are a raw-token leak", () => {

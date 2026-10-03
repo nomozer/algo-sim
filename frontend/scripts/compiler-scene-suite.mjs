@@ -18,6 +18,10 @@ import {
   assessFormation,
   assessSectionFill,
   assessSectionFillUnderEdges,
+  assessAnnotationBoxes,
+  assessCausalRestore,
+  assessToggleIsolation,
+  expectedAnnotationIds,
   cauTrucKhoi,
   diemCanhQuaThietDien,
   diemMauThietDien,
@@ -618,6 +622,31 @@ async function renderedIds(session) {
   return jsonEval(session, "(window.__geo3d_rendered_object_ids||[]).map(String).sort()");
 }
 
+/** W17 · nhãn số đo: hộp đang hiện (sản phẩm báo mỗi khung), nhãn điểm đang hiện, camera, và tập
+ *  nhãn số đo CÓ trong DOM (khả dụng ở bước này, bất kể có chỗ đặt hay không). */
+async function annotationState(session) {
+  return jsonEval(session, `({boxes:window.__geo3d_annotation_boxes||[],`
+    + `points:window.__geo3d_point_label_boxes||[],camera:window.__geo3d_camera_snapshot||null,`
+    + `dom:[...document.querySelectorAll('.geo3d-so-do')].map((e)=>e.dataset.annId).sort()})`);
+}
+
+/** Bước NEO (chỉ số sự kiện) của bước dựng đang xem — qua dòng thời gian ĐỘC LẬP của bộ đo. */
+async function anchorNow(session, scene) {
+  const step = await currentStep(session);
+  return step ? expectedGeometryTimeline(scene)[step.index]?.anchor ?? null : null;
+}
+
+/** Nhãn số đo bắt buộc hiện: khổ rộng — mọi nhãn khả dụng; khổ hẹp — đáp số (ưu tiên). */
+function annotationsMustShow(scene, ids, viewport) {
+  return viewport.width < 768
+    ? ids.filter((id) => scene.objects.find((o) => o.id === id)?.annotation?.category === "result") : ids;
+}
+
+async function clickChip(session, ten) {
+  return trustedClick(session, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
+    + `.find((b)=>(b.textContent||'').includes(${JSON.stringify(ten)}))`);
+}
+
 async function focusLabel(session) {
   return session.eval(`(()=>{const d=[...document.querySelectorAll('.geo3d-focus dt')]`
     + `.find(e=>(e.textContent||'').trim()==='Đang dựng');return (d?.nextElementSibling?.textContent||'').trim()})()`);
@@ -664,6 +693,9 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     const observedVisibleIds = tree.objects
       .filter((item) => item.observed_present === true).map((item) => item.id).sort();
     observations.forward.push({ index: anchor, direction: "forward", visible_ids: observedVisibleIds });
+    // W17 §15.5: không lộ trước — nhãn số đo trong DOM đúng bằng oracle khả dụng của bước.
+    const annotationDom = (await annotationState(session)).dom;
+    const expectedAnnotations = expectedAnnotationIds(scene, anchor);
     steps.push({
       index,
       anchor,
@@ -682,6 +714,9 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       canvas,
       learner_text: learnerText,
       formation_roles: formationRoles,
+      annotation_dom: annotationDom,
+      expected_annotations: expectedAnnotations,
+      annotation_pass: JSON.stringify(annotationDom) === JSON.stringify(expectedAnnotations),
     });
     if (index < stepTotal - 1 && !await moveStep(session, 1)) {
       throw new Error(`FORMATION_STOPPED_AT:${index}`);
@@ -690,6 +725,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
   // Ở bước cuối, "Bước sau" phải vô hiệu — không có bước tính nào sau nó.
   const endLocked = !await moveStep(session, 1);
   const backwardRendered = [];
+  const backwardAnnotations = [];
   for (let index = stepTotal - 1; index >= 0; index -= 1) {
     const anchor = timeline[index].anchor;
     const tree = await observeTree(session, scene, expectedVisibleIds(scene, anchor));
@@ -700,6 +736,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
         .filter((item) => item.observed_present === true).map((item) => item.id).sort(),
     });
     backwardRendered[index] = await renderedIds(session);
+    backwardAnnotations[index] = (await annotationState(session)).dom;
     if (index > 0 && !await moveStep(session, -1)) {
       throw new Error(`FORMATION_BACKWARD_STOPPED_AT:${index}`);
     }
@@ -711,7 +748,8 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       solution: s.solution })),
   });
   const forwardBackward = steps.map((s) => ({ index: s.index,
-    pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index]) }));
+    pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index])
+      && JSON.stringify(s.annotation_dom) === JSON.stringify(backwardAnnotations[s.index]) }));
   const structuredReferences = assessStructuredReferences(scene, {
     steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution })) });
   const roleCoverage = assessFormation(scenario.expected_formation, scene,
@@ -720,7 +758,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
   const canvasHashes = new Set(steps.map((step) => step.canvas.sha256));
   const pass = steps.every((step) => step.indicator?.index === step.index
     && step.indicator?.count === stepTotal
-    && step.tree.pass && step.point_visibility_pass && step.solution_pass)
+    && step.tree.pass && step.point_visibility_pass && step.solution_pass && step.annotation_pass)
     && canvasHashes.size >= 2 && trace.pass && geometry.pass && endLocked
     && forwardBackward.every((x) => x.pass) && structuredReferences.pass && roleCoverage.pass;
   return { steps, observations, trace, geometry, forward_backward: forwardBackward,
@@ -817,6 +855,13 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       && result.solution_final.answer_once && !result.solution_final.panel_over_canvas
       && solutionNeutral.legend.length === 0
       && result.solution_final.body_collapsed === (viewport.width < 768), result.solution_final);
+    // W17 §15.5 — nhãn số đo ở khung cuối trung tính (camera đã lắng; hộp và camera cùng một khung).
+    const ann0 = await annotationState(session);
+    const neoCuoi = await anchorNow(session, scene);
+    result.annotations = { final: assessAnnotationBoxes({ scene, step: neoCuoi, boxes: ann0.boxes,
+      points: ann0.points, camera: ann0.camera,
+      mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCuoi), viewport) }) };
+    result.assertions.annotations_final = assertion(result.annotations.final.pass, result.annotations.final);
 
     // Default phải được chụp trước causal/orbit/formation.
     result.screenshots.neutral_final = await capture(session, join(outDir, "neutral_final.png"));
@@ -834,6 +879,34 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         join(outDir, "solution_expanded.png"));
       await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
       await pollUntil(() => solutionState(session), (state) => state.body_collapsed, { timeoutMs: 5_000 });
+    }
+    // W17 §15.5 — công tắc Số đo/Kết quả: tắt ⇒ 0 nhãn số đo trong DOM; nét đứt, vật dựng,
+    // camera, bước, lựa chọn y nguyên; bật lại ⇒ đúng tập nhãn cũ. Công tắc vắng ⇒ không đo.
+    const congTac = await jsonEval(session, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
+      + `.map((b)=>(b.textContent||'').trim()).filter((t)=>t.includes('Số đo')||t.includes('Kết quả'))`);
+    if (congTac.length) {
+      const chup = async () => {
+        const a = await annotationState(session);
+        return { ...await jsonEval(session, `({dash_signature:window.__geo3d_edge_dash_signature||{},`
+          + `rendered_object_ids:(window.__geo3d_rendered_object_ids||[]).map(String).sort(),`
+          + `camera:window.__geo3d_camera_snapshot||null,selected_id:window.__geo3d_selected_id||null})`),
+          step: await currentStep(session), annotation_ids: a.dom, annotation_dom_count: a.dom.length };
+      };
+      const on = await chup();
+      for (const ten of congTac) await clickChip(session, ten);
+      await pollUntil(() => annotationState(session), (s) => s.dom.length === 0, { timeoutMs: 5_000 });
+      await settleOrRecord(session, result, "annotations_off");
+      const off = await chup();
+      result.screenshots.annotations_off = await capture(session, join(outDir, "annotations_off.png"));
+      result.capture_order.push("annotations_off");
+      for (const ten of congTac) await clickChip(session, ten);
+      await pollUntil(() => annotationState(session), (s) => s.dom.length === on.annotation_dom_count,
+        { timeoutMs: 5_000 });
+      await settleOrRecord(session, result, "annotations_back");
+      const back = await chup();
+      result.annotation_toggle = { chips: congTac, on, off, back, ...assessToggleIsolation({ on, off, back }) };
+      result.assertions.annotation_toggle = assertion(result.annotation_toggle.pass,
+        result.annotation_toggle.reason_codes);
     }
     // Chụp phần tử có thể đã cuộn trang: đưa canvas về giữa khung trước khi đo tiếp.
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
@@ -873,6 +946,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
       + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`);
+    // W17 §15.5: ba thứ GHI RIÊNG — camera, lựa chọn, vị trí cuộn — ở trạng thái trung tính.
+    const CAMERA_CUON = "({camera:window.__geo3d_camera_snapshot||null,scroll_y:Math.round(window.scrollY),"
+      + "selected_id:window.__geo3d_selected_id||null})";
+    const causalNeutral = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalBeforeFrame.sha256 };
 
     // w10: bí danh đáp số (`alias_of`) là MỘT kết luận với nguồn — không có dòng
     // số đo riêng, người học bấm dòng đáp số là chọn NGUỒN. Bao đóng kỳ vọng
@@ -901,6 +978,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       (state) => state.selected_id === causalId && state.tiers?.[causalId] === "dich",
       { timeoutMs: 8_000 },
     );
+    const scrollAfterClick = await session.eval("Math.round(window.scrollY)");
     const solutionCausal = await solutionState(session);
     const declared = eventDeclaredClosure(scene.events, causalId);
     const causal = compareClosures(expectedClosure, declared, causalState.highlighted_ids);
@@ -961,6 +1039,23 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.capture_order.push("causal_selected");
     result.screenshots.solution_causal_selected = await captureElement(session, ".geo3d-loi-giai",
       join(outDir, "solution_causal_selected.png"));
+    // W17 §15.5 — KHÔI PHỤC: bỏ chọn bằng nút "Bỏ chọn" của ô soi (không phải "Xem lại toàn hình",
+    // vốn đặt lại camera), cuộn về ĐÚNG vị trí trung tính, rồi so camera · lựa chọn · cuộn · khung.
+    const causalSelected = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalAfterFrame.sha256,
+      scroll_y_after_click: scrollAfterClick };
+    await trustedClick(session, "document.querySelector('.geo3d-soi-dong')");
+    await pollUntil(() => session.eval("window.__geo3d_selected_id||null"), (id) => id === null,
+      { timeoutMs: 5_000 });
+    await session.eval(`(()=>{window.scrollTo(0,${causalNeutral.scroll_y});return true})()`);
+    await new Promise((done) => setTimeout(done, 300));
+    const restoredFrame = await canvasFrame(session);
+    const causalRestored = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: restoredFrame.sha256 };
+    result.causal_restore = { neutral: { ...causalNeutral, camera: undefined },
+      selected: { ...causalSelected, camera: undefined }, restored: { ...causalRestored, camera: undefined },
+      ...assessCausalRestore({ neutral: causalNeutral, selected: causalSelected, restored: causalRestored }) };
+    result.assertions.causal_restore = assertion(result.causal_restore.pass, result.causal_restore.reason_codes);
+    result.screenshots.causal_restored = await capture(session, join(outDir, "causal_restored.png"));
+    result.capture_order.push("causal_restored");
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
 
     await clickText(session, "Xem lại toàn hình");
@@ -1064,7 +1159,31 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       result.assertions.orbit = assertion(orbit.pass, orbit);
       result.screenshots.rotated_neutral = await capture(session, join(outDir, "rotated_neutral.png"));
       result.canvas_boxes.rotated_neutral = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
+      // W17 §15.5 — xoay quỹ đạo: nhãn số đo đặt lại, vẫn đủ luật ở góc nhìn mới.
+      const annXoay = await annotationState(session);
+      const neoXoay = await anchorNow(session, scene);
+      result.annotations.rotated = assessAnnotationBoxes({ scene, step: neoXoay, boxes: annXoay.boxes,
+        points: annXoay.points, camera: annXoay.camera,
+        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoXoay), viewport) });
+      result.assertions.annotations_rotated = assertion(result.annotations.rotated.pass, result.annotations.rotated);
       await clickText(session, "Xem lại toàn hình");
+    }
+    if (viewport.width >= 768) {
+      // W17 §15.5 — đổi cỡ (70 % bề rộng) + DPR 2: nhãn đặt lại trong khung mới. Camera KHÔNG tự
+      // đặt lại khi đổi cỡ, nên phần rìa hình có thể ra ngoài: chỉ đáp số bắt buộc hiện.
+      await session.setViewport({ width: Math.round(viewport.width * 0.7), height: viewport.height, dpr: 2 });
+      await settleOrRecord(session, result, "annotations_resized");
+      const annCo = await annotationState(session);
+      const neoCo = await anchorNow(session, scene);
+      result.annotations.resized = assessAnnotationBoxes({ scene, step: neoCo, boxes: annCo.boxes,
+        points: annCo.points, camera: annCo.camera,
+        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCo), { width: 0 }) });
+      result.annotations.resized.viewport = { width: annCo.camera?.viewport_width, height: annCo.camera?.viewport_height,
+        dpr: annCo.camera?.device_pixel_ratio };
+      result.assertions.annotations_resized = assertion(result.annotations.resized.pass, result.annotations.resized);
+      result.screenshots.annotations_resized = await capture(session, join(outDir, "annotations_resized.png"));
+      await session.setViewport(null);
+      await settleOrRecord(session, result, "annotations_size_restored");
     }
 
     if (viewport.formation) {
@@ -1169,6 +1288,10 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
     const kernelPass = !expected.kernel_error_code
       || (fixture.contract_gate?.kernel_error_code === expected.kernel_error_code
         && fixture.envelope.reason.includes(expected.kernel_error_code));
+    // W17 §15.3: nguyên nhân có cấu trúc; chỉ nguyên nhân SOURCE mới được bảo học sinh sửa đề — ở
+    // BẤT KỲ chữ nào trên trang (lời từ chối lẫn câu gợi ý), không riêng `learner_reason`.
+    const nguyenNhan = observed.unsupported?.refusal_cause ?? null;
+    const baoSuaDe = BAO_SUA_DE.filter((cum) => observed.body.includes(cum));
     const screenshot = await capture(session, join(outDir, "refusal.png"));
     const rawTokenLeakage = detectRawTokenLeakage(fixture.envelope.scene3d, observed.body);
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
@@ -1191,6 +1314,10 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
       }),
       no_raw_token_leakage: assertion(rawTokenLeakage.pass, rawTokenLeakage),
       contract_gate: assertion(kernelPass, fixture.contract_gate ?? null),
+      refusal_cause: assertion(!expected.refusal_cause || nguyenNhan === expected.refusal_cause,
+        { expected: expected.refusal_cause ?? null, actual: nguyenNhan }),
+      no_fix_text_advice_without_source_cause: assertion(nguyenNhan === "SOURCE" || baoSuaDe.length === 0,
+        { refusal_cause: nguyenNhan, phrases: baoSuaDe }),
       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
       no_uncaught_exception: assertion(uncaught.length === 0, uncaught),
       no_failed_api_call: assertion(failedApiCalls.length === 0, failedApiCalls),
@@ -1205,6 +1332,38 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
       console_events: seriousConsole,
       pass: Object.values(assertions).every((item) => item.pass),
     };
+  } finally {
+    await session.close();
+  }
+}
+
+/** W17 §15.3: cụm chữ bảo học sinh viết/sửa lại đề — chỉ hợp lệ khi nguyên nhân là SOURCE. */
+const BAO_SUA_DE = ["diễn đạt lại", "kiểm tra lại đề", "đối chiếu lại các số liệu trong đề", "sửa đề",
+  "nêu rõ hình"];
+
+/** W17: ca PHỤC VỤ thêm của một kịch bản (vd mặt phẳng ĐÚNG khi đề có hai mặt phẳng) — phục vụ,
+ *  đáp số ở mục Kết quả, nhãn số đo của đáp số có mặt, không lỗi; không chạy cả bộ kiểm dương. */
+async function runServed({ port, viewport, fixture, expected, outDir }) {
+  const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
+  try {
+    await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
+    await goToEnd(session);
+    const ketQua = await pollUntil(
+      () => session.eval(`document.querySelector('.geo3d-lg-ket-qua')?.textContent||''`),
+      (text) => String(text).includes(expected.answer), { timeoutMs: 8_000 });
+    const ann = await pollUntil(() => annotationState(session),
+      (s) => !expected.annotation_id || s.dom.includes(expected.annotation_id), { timeoutMs: 5_000 });
+    const screenshot = await capture(session, join(outDir, "served.png"));
+    const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
+    const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
+    const assertions = {
+      answer_shown: assertion(String(ketQua).includes(expected.answer), { answer: expected.answer }),
+      annotation_present: assertion(!expected.annotation_id || ann.dom.includes(expected.annotation_id), ann.dom),
+      single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
+      no_uncaught_exception: assertion(uncaught.length === 0, uncaught),
+      no_failed_api_call: assertion(failedApiCalls.length === 0, failedApiCalls),
+    };
+    return { viewport, assertions, screenshot, pass: Object.values(assertions).every((item) => item.pass) };
   } finally {
     await session.close();
   }
@@ -1297,8 +1456,21 @@ export async function runSuite({
           });
         }
       }
+      // W17: ca phục vụ thêm (mặt phẳng ĐÚNG đi cùng ca lệch phép dựng).
+      record.served = {};
+      for (const ca of scenario.served_fixtures ?? []) {
+        const served = JSON.parse(readFileSync(join(root, ca.fixture), "utf-8"));
+        record.served[ca.kind] = {};
+        for (const viewport of suite.viewports) {
+          record.served[ca.kind][viewport.id] = await runServed({
+            port: cong, viewport, fixture: served, expected: ca.expected,
+            outDir: join(scenarioOut, "served", ca.kind, viewport.id),
+          });
+        }
+      }
       record.pass = Object.values(record.positive).every((item) => item.pass)
-        && Object.values(record.negative).every((kind) => Object.values(kind).every((item) => item.pass));
+        && Object.values(record.negative).every((kind) => Object.values(kind).every((item) => item.pass))
+        && Object.values(record.served).every((kind) => Object.values(kind).every((item) => item.pass));
       report.scenarios[scenario.id] = record;
       console.log(`${scenario.id}: ${record.pass ? "PASS" : "FAIL"}`);
     }

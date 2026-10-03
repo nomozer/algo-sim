@@ -5,7 +5,7 @@ import { relative, resolve } from "node:path";
 
 // Bộ đo góc nhìn của CHÍNH sản phẩm (Node ≥ 22.18 bóc kiểu TS; hai module này
 // không import gì) — không một định nghĩa thứ hai trong bộ đo.
-import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
+import { cauTrucGocNhin, toNumber } from "../src/simulations/domains/geometry/scene3d-model.ts";
 import {
   GOC_NHIN_THAM_CHIEU, HUONG, NGUONG_GOC_NHIN, danhGiaGocNhin, datNguong, doLuoiGocNhin,
 } from "../src/simulations/domains/geometry/scene3d-camera.ts";
@@ -1085,6 +1085,9 @@ export function sha256GitBlob(repoRoot, path) {
 
 /** W15 — ba loại từ chối mỗi họ trong bộ trình duyệt (khoá thứ tự đã sắp). */
 export const KIEU_TU_CHOI = ["assumption", "topology_kernel", "ungrounded_source"];
+/** W17 §15.3: loại từ chối THÊM, tuỳ kịch bản — lỗi khâu dựng trên một đề hợp lệ (lệch phép
+ *  dựng; hợp đồng bị tiêm). Luôn khai `expected.refusal_cause`: lời học sinh phụ thuộc nó. */
+export const KIEU_TU_CHOI_W17 = ["construction_mismatch", "system_cause"];
 
 export function validateSuiteManifest(manifest, repoRoot) {
   const errors = [];
@@ -1105,9 +1108,16 @@ export function validateSuiteManifest(manifest, repoRoot) {
     // W15: ba LOẠI từ chối mỗi họ, mỗi loại kỳ vọng mã riêng — một lời từ chối không đứng
     // thay cho cả ba (nguồn không có trong đề · giả định · topo/kernel).
     const am = scenario.negative_fixtures ?? [];
-    if (JSON.stringify(am.map((n) => n.kind).sort()) !== JSON.stringify(KIEU_TU_CHOI)
+    const kieu = am.map((n) => n.kind);
+    if (KIEU_TU_CHOI.some((k) => !kieu.includes(k)) || new Set(kieu).size !== kieu.length
+        || kieu.some((k) => !KIEU_TU_CHOI.includes(k) && !KIEU_TU_CHOI_W17.includes(k))
+        || am.some((n) => KIEU_TU_CHOI_W17.includes(n.kind) && !n.expected?.refusal_cause)
         || am.some((n) => !n.fixture || !n.expected?.product_error_code || !n.expected?.stage_reached)) {
       errors.push(`negatives:${scenario.id}`);
+    }
+    // W17: ca PHỤC VỤ thêm (vd mặt phẳng đúng) — chỉ kiểm phục vụ + đáp số + nhãn số đo.
+    if ((scenario.served_fixtures ?? []).some((s) => !s.kind || !s.fixture || !s.expected?.answer)) {
+      errors.push(`served:${scenario.id}`);
     }
     if (!scenario.causal_target_id
         || !scenario.oracle_expected_closure?.includes(scenario.causal_target_id)) {
@@ -1316,4 +1326,115 @@ export function assessPlayback({
       && JSON.stringify(orbit.before.rows) === JSON.stringify(orbit.after.rows), orbit);
   }
   return { pass: Object.values(checks).every((check) => check.pass), checks };
+}
+
+/* ══ W17 · §15.4/§15.5 — NHÃN SỐ ĐO TRÊN HÌNH ════════════════════════════════
+ *
+ * Oracle ĐỘC LẬP với sản phẩm: không nhập `scene3d-annotations.ts`. Luật khả dụng đã đăng ký
+ * (§15.4) chép lại từ payload — đáp số chỉ từ sự kiện KẾT LUẬN của nó, số đo từ sự kiện tính,
+ * dữ kiện khi đã có mặt; chủ thể phải có mặt (`expectedVisibleIds`). Điểm neo chiếu bằng ma trận
+ * camera THẬT (`chieuManHinh`) từ toạ độ payload — không tin điểm neo sản phẩm tự báo. */
+
+/** Id đại lượng PHẢI có nhãn số đo ở `step` (công tắc bật cả hai). */
+export function expectedAnnotationIds(scene, step) {
+  const sk = (scene?.events ?? []).filter((e) => (e.step_index ?? 0) <= step && e.object);
+  const ketLuan = new Set(sk.filter((e) => e.semantic_kind === "FINAL_RESULT").map((e) => e.object));
+  const daTinh = new Set(sk.filter((e) => e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT")
+    .map((e) => e.object));
+  const coMat = new Set(expectedVisibleIds(scene, step));
+  return sortedUnique((scene?.objects ?? [])
+    .filter((o) => o.type === "quantity" && o.annotation && o.value != null)
+    .filter((o) => (o.annotation.category === "result" ? ketLuan.has(o.id)
+      : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id))))
+    .filter((o) => o.annotation.subject_ids.every((s) => coMat.has(s)))
+    .map((o) => o.id));
+}
+
+/** Điểm neo THẾ GIỚI của một nhãn, đọc thẳng payload: đoạn → trung điểm · miền/khối → trung
+ *  bình đỉnh · cặp → điểm của cặp. `null` khi payload không đủ. */
+export function annotationWorldAnchor(scene, annotation) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const xyz = (o) => (o?.xyz ? o.xyz.map(toNumber) : null);
+  const tb = (ps) => (ps.length && ps.every(Boolean)
+    ? [0, 1, 2].map((i) => ps.reduce((s, p) => s + p[i], 0) / ps.length) : null);
+  const chu = annotation.subject_ids.map((id) => byId.get(id));
+  if (!chu.length || chu.some((o) => !o)) return null;
+  if (annotation.anchor === "segment") return tb(chu.map(xyz));
+  if (annotation.anchor === "region" || annotation.anchor === "solid") {
+    const o = chu[0];
+    return tb(o.vertex_ids?.length ? o.vertex_ids.map((id) => xyz(byId.get(id)))
+      : (o.polygon ?? o.vertices ?? []).map((p) => p.map(toNumber)));
+  }
+  return xyz(chu.find((o) => o.xyz));
+}
+
+const GIAO_E = 0.5;
+const hopGiao = (a, b) => a.x < b.x + b.w - GIAO_E && b.x < a.x + a.w - GIAO_E
+  && a.y < b.y + b.h - GIAO_E && b.y < a.y + a.h - GIAO_E;
+
+/**
+ * §15.5 trên MỘT khung: `boxes` = nhãn số đo đang hiện (`__geo3d_annotation_boxes`), `points` =
+ * nhãn điểm đang hiện, `camera` = `__geo3d_camera_snapshot`. Luật: chỉ nhãn khả dụng; nhãn bắt
+ * buộc có mặt; mọi hộp trong khung canvas; điểm gần nhất của hộp cách điểm neo chiếu ĐỘC LẬP
+ * ≤ 24 px; không hộp nào giao nhãn điểm hay giao nhau.
+ */
+export function assessAnnotationBoxes({ scene, step, boxes, points, camera, mustShow }) {
+  const r = [];
+  const mongDoi = expectedAnnotationIds(scene, step);
+  const hien = sortedUnique(boxes.map((b) => b.id));
+  const lo = hien.filter((id) => !mongDoi.includes(id));
+  if (lo.length) r.push(`ANNOTATION_NOT_AVAILABLE:${lo.join(",")}`);
+  const thieu = (mustShow ?? []).filter((id) => !hien.includes(id));
+  if (thieu.length) r.push(`ANNOTATION_MISSING:${thieu.join(",")}`);
+  const W = camera?.viewport_width ?? 0;
+  const H = camera?.viewport_height ?? 0;
+  const neo = {};
+  for (const b of boxes) {
+    const { x, y, w, h } = b.box;
+    if (x < -GIAO_E || y < -GIAO_E || x + w > W + GIAO_E || y + h > H + GIAO_E) {
+      r.push(`ANNOTATION_OUTSIDE_CANVAS:${b.id}`);
+    }
+    const ann = (scene?.objects ?? []).find((o) => o.id === b.id)?.annotation;
+    const p = ann ? annotationWorldAnchor(scene, ann) : null;
+    const s = p && camera ? chieuManHinh(camera, p) : null;
+    if (!s || s.behind) { r.push(`ANNOTATION_ANCHOR_UNKNOWN:${b.id}`); continue; }
+    const d = Math.hypot(Math.max(x - s.x, 0, s.x - x - w), Math.max(y - s.y, 0, s.y - y - h));
+    neo[b.id] = { x: s.x, y: s.y, distance_px: Number(d.toFixed(2)) };
+    if (d > 24 + GIAO_E) r.push(`ANNOTATION_FAR_FROM_SUBJECT:${b.id}:${d.toFixed(1)}`);
+    for (const q of points) if (hopGiao(b.box, q)) r.push(`ANNOTATION_OVER_POINT_LABEL:${b.id}:${q.id}`);
+  }
+  for (let i = 0; i < boxes.length; i += 1) {
+    for (let j = i + 1; j < boxes.length; j += 1) {
+      if (hopGiao(boxes[i].box, boxes[j].box)) r.push(`ANNOTATION_OVERLAP:${boxes[i].id}:${boxes[j].id}`);
+    }
+  }
+  return { pass: r.length === 0, reason_codes: r, expected: mongDoi, shown: hien, anchors: neo };
+}
+
+/** §15.5 công tắc: tắt cả hai ⇒ 0 nhãn số đo trong DOM, và hình/camera/lựa chọn/nét đứt KHÔNG
+ *  đổi giữa bật và tắt; bật lại ⇒ đúng tập nhãn cũ. */
+export function assessToggleIsolation({ on, off, back }) {
+  const r = [];
+  if (off.annotation_dom_count !== 0) r.push(`TOGGLE_OFF_LEAVES_LABELS:${off.annotation_dom_count}`);
+  for (const k of ["dash_signature", "rendered_object_ids", "camera", "selected_id", "step"]) {
+    if (JSON.stringify(on[k]) !== JSON.stringify(off[k])) r.push(`TOGGLE_CHANGED_${k.toUpperCase()}`);
+  }
+  if (JSON.stringify(on.annotation_ids) !== JSON.stringify(back.annotation_ids)) r.push("TOGGLE_BACK_DIFFERENT_LABELS");
+  return { pass: r.length === 0, reason_codes: r };
+}
+
+/** §15.5 nhân quả: trung tính → chọn → khôi phục (bỏ chọn, KHÔNG đặt lại camera) ở CÙNG camera và
+ *  CÙNG vị trí cuộn. Ghi riêng ba thứ; khung canvas khôi phục phải trùng khung trung tính. */
+export function assessCausalRestore({ neutral, selected, restored }) {
+  const r = [];
+  if (selected.selected_id === null) r.push("CAUSAL_NOT_SELECTED");
+  if (restored.selected_id !== null) r.push("SELECTION_NOT_RESET");
+  if (JSON.stringify(neutral.camera) !== JSON.stringify(selected.camera)) r.push("SELECTION_MOVED_CAMERA");
+  if (JSON.stringify(neutral.camera) !== JSON.stringify(restored.camera)) r.push("RESTORE_MOVED_CAMERA");
+  if (neutral.scroll_y !== restored.scroll_y) r.push("SCROLL_NOT_RESTORED");
+  if (neutral.canvas_sha256 !== restored.canvas_sha256) r.push("CANVAS_NOT_RESTORED");
+  return { pass: r.length === 0, reason_codes: r,
+    camera_reset: JSON.stringify(neutral.camera) !== JSON.stringify(restored.camera),
+    selection_reset: restored.selected_id === null,
+    scroll: { neutral: neutral.scroll_y, selected: selected.scroll_y, restored: restored.scroll_y } };
 }

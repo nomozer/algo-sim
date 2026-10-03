@@ -347,6 +347,17 @@ export class BrowserSession {
     return "ok";
   }
 
+  /**
+   * W17 · đổi cỡ khung nhìn + tỉ lệ điểm ảnh qua CDP (nhãn số đo phải đặt lại khi đổi cỡ/DPR);
+   * `null` ⇒ bỏ ghi đè, trả về cửa sổ gốc (`--window-size`).
+   */
+  async setViewport(size) {
+    if (size === null) return this._send("Emulation.clearDeviceMetricsOverride");
+    return this._send("Emulation.setDeviceMetricsOverride", {
+      width: size.width, height: size.height, deviceScaleFactor: size.dpr ?? 1, mobile: false,
+    });
+  }
+
   /** Ảnh PNG của trang, ghi ra đĩa. Bằng chứng, không phải trang trí. */
   async screenshot(path) {
     const r = await this._send("Page.captureScreenshot", { format: "png" });

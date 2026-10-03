@@ -40,13 +40,19 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     # W12: + one `_ungrounded` negative per family (a GIVEN the text does not state).
     # W15: + one `_assumption` negative per family (the text loses a dimension the program
     # keeps by layout) — three refusal kinds per family in the browser suite.
-    # W17: + `cube_system_cause` (valid text, injected contract — refusal cause CONSTRUCTION).
-    assert len(manifest["fixtures"]) == 25
+    # W17: + `cube_system_cause` (valid text, injected contract — refusal cause CONSTRUCTION), and the
+    # §15.1 pair on one two-plane text: `cross_section_wrong_plane` (refused) / `_correct_plane` (served).
+    assert len(manifest["fixtures"]) == 27
     system = json.loads((tmp_path / "fixtures" / "cube_system_cause.json").read_text(encoding="utf-8"))
     assert "cạnh bằng 4" in system["problem_text"] and system["envelope"]["refusal_cause"] == "CONSTRUCTION"
+    sai = json.loads((tmp_path / "fixtures" / "cross_section_wrong_plane.json").read_text(encoding="utf-8"))
+    dung = json.loads((tmp_path / "fixtures" / "cross_section_correct_plane.json").read_text(encoding="utf-8"))
+    assert sai["problem_text"] == dung["problem_text"] and "(β) cắt khối chóp" in sai["problem_text"]
+    assert (sai["envelope"]["reason_code"], dung["envelope"]["status"]) == ("CONSTRUCTION_NOT_TEXT_BOUND", "ok")
     assert {
         name.removesuffix("_positive.json").removesuffix("_negative.json")
         .removesuffix("_ungrounded.json").removesuffix("_assumption.json").removesuffix("_system_cause.json")
+        .removesuffix("_wrong_plane.json").removesuffix("_correct_plane.json")
         for name in manifest["fixtures"]
     } == {
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",

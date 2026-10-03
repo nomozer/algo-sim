@@ -1,6 +1,6 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE",
+  "task_id": "W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS",
   "product_commit_sha": "6b1200364f83b62fe6ea07d09009638b159e6b25",
   "product_tree_sha": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
@@ -60,9 +60,9 @@
       ],
       "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/triangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/triangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/triangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/triangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "refusal_cause": "SOURCE"} }
       ]
     },
     {
@@ -96,9 +96,9 @@
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_prism_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/triangular_prism_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/triangular_prism_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/triangular_prism_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/triangular_prism_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/triangular_prism_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "refusal_cause": "SOURCE"} }
       ]
     },
     {
@@ -131,9 +131,9 @@
       ],
       "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/rectangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/rectangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/rectangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/rectangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/rectangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/rectangular_pyramid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "refusal_cause": "SOURCE"} }
       ]
     },
     {
@@ -168,9 +168,9 @@
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/cuboid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/cuboid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/cuboid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/cuboid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cuboid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cuboid_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "refusal_cause": "SOURCE"} }
       ]
     },
     {
@@ -205,9 +205,10 @@
       ],
       "formation_coverage": { "enforce": ["PRISM_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/cube_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/cube_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/cube_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/cube_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cube_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cube_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "refusal_cause": "SOURCE"} },
+        { "kind": "system_cause", "fixture": "fixtures/cube_system_cause.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "semantic_analyze", "reason_code": "NON_POSITIVE_LENGTH", "refusal_cause": "CONSTRUCTION"} }
       ]
     },
     {
@@ -243,9 +244,13 @@
       ],
       "formation_coverage": { "enforce": ["SECTION", "PYRAMID_LIKE"], "measure": [] },
       "negative_fixtures": [
-        { "kind": "ungrounded_source", "fixture": "fixtures/cross_section_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/cross_section_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"} },
-        { "kind": "topology_kernel", "fixture": "fixtures/cross_section_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "kernel_error_code": "PLANE_DOES_NOT_CUT"} }
+        { "kind": "ungrounded_source", "fixture": "fixtures/cross_section_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/cross_section_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN", "refusal_cause": "UNKNOWN"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/cross_section_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "kernel_error_code": "PLANE_DOES_NOT_CUT", "refusal_cause": "SOURCE"} },
+        { "kind": "construction_mismatch", "fixture": "fixtures/cross_section_wrong_plane.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} }
+      ],
+      "served_fixtures": [
+        { "kind": "correct_plane", "fixture": "fixtures/cross_section_correct_plane.json", "expected": {"answer": "16", "annotation_id": "area_T"} }
       ]
     }
   ]

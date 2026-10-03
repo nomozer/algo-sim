@@ -431,6 +431,34 @@ def main() -> None:
         ensure_ascii=False, indent=2,
     ), encoding="utf-8")
 
+    # W17 §15.1: one two-plane text ("(β) cắt khối chóp theo thiết diện (T)") — the program that
+    # cuts with (α) is refused (cause CONSTRUCTION, the text is valid); the one that cuts with (β)
+    # is served with the text's area 16. Frozen programs from the W17 corpus, 0 model calls.
+    from tests.geometry import test_assumption_certificate as AC
+
+    for name, build, served in (
+        ("cross_section_wrong_plane", AC.PHEP_DUNG_SAI["O1_cat_bang_alpha_khi_de_noi_beta"], False),
+        ("cross_section_correct_plane", AC.PHEP_DUNG_DUNG["O1b_doi_chung_cat_bang_beta"], True),
+    ):
+        contract, program = build()
+        validation = validate_semantic_program(program)
+        assert validation.ok and validation.spec is not None, validation.error
+        envelope = attach_learner_reason(asyncio.run(
+            _run_frozen_program(contract.problem_text, contract, validation.spec)))
+        if served:
+            areas = [o.get("value") for o in envelope["scene3d"]["objects"] if o["id"] == "area_T"]
+            assert envelope["status"] == "ok" and areas == ["16"], (envelope["status"], areas)
+        else:
+            assert (envelope["status"], envelope["stage_reached"], envelope["reason_code"],
+                    envelope["refusal_cause"]) == ("unsupported", "assumption", "CONSTRUCTION_NOT_TEXT_BOUND",
+                                                   "CONSTRUCTION"), envelope
+        (fixtures / f"{name}.json").write_text(json.dumps(
+            _wrapper(name, contract.problem_text, envelope, "w17_corpus_frozen_program_through_production_route",
+                     **({} if served else {"source_reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                                           "refusal_cause": "CONSTRUCTION"})),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"
     canonical = json.loads(canonical_path.read_text(encoding="utf-8"))
