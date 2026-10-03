@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE",
-  "product_commit_sha": "2ec02b3a70a30d0dd81868e99d6cfe60e6d8f090",
-  "product_tree_sha": "8d14469bacee7928bbc407f201ea0e3879cccc26102f404e2382375177396044",
+  "product_commit_sha": "6b1200364f83b62fe6ea07d09009638b159e6b25",
+  "product_tree_sha": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
