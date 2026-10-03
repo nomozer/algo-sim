@@ -871,6 +871,17 @@ def test_w16_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc():
     assert kq.status == CHUA_RO, kq
 
 
+def test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du():
+    """Ruling T3: đề có mệnh đề mục tiêu thì không thử phản ví dụ. Ở đây `SA = 5` chỉ nằm trong
+    yêu cầu chứng minh ĐỨNG SAU `Tính` — ngoài phần dữ kiện `phan_chua_doc` soi — nên không có
+    luật này cổng sẽ nói "đề không cho SA" với một đề có viết SA = 5."""
+    text = (NEN_T1 + DAY_T1 + ". Cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC. "
+            "Chứng minh rằng SA = 5.")
+    kq = _kq(*_t1_cau(text))
+    assert kq.status == CHUA_RO, kq
+    assert "CE_GOAL_CLAUSE_PRESENT" in kq.details, kq.details
+
+
 def test_w16_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de():
     _sp, out, _sc = W.chay(*_t1_cau(MUC_TIEU_THANH_TIEN_DE["B1_chung_minh_SA_vuong_day"]))
     assert (out.servable, out.stage_reached) == (False, "assumption"), (out.stage_reached, out.details[:3])
