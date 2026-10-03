@@ -1,0 +1,705 @@
+{
+  "proof": "W16_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "107",
+  "rows": {
+    "A1_beta_chua_xac_dinh_mang_he_so_alpha": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "a5b9e2b771143852e508a553736b5ca186f6ec58bc173a8973c382631318293e"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "A2_hai_mat_phang_doi_cheo_he_so": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "MUST_REFUSE",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "47c74d89d9c1efdbfacabfab00738e6f92c68a69449165a7509ad944b016afb9"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "273a66f3d0252fd227359acf8dd8d88087b584f222121d90deee0564b670ab45"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "A7_bien_khong_ten_hai_mat_phang_co_ten": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "MUST_REFUSE",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "c954f648aad10cc8a4f3e1a110dbaac5a8c26e528ed096ca0c6357b451c73607"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "c954f648aad10cc8a4f3e1a110dbaac5a8c26e528ed096ca0c6357b451c73607"
+      },
+      "cached_before_w16": false
+    },
+    "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "A2_doi_chung_hai_mat_phang_dung_ten": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "b04abccd9c3c316582e8468c5a582e953ead2519b062775ed5d9fc7f5a077903"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "b04abccd9c3c316582e8468c5a582e953ead2519b062775ed5d9fc7f5a077903"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A3_ti_le_khac_0": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "2ece91c6327d8e9abb018422ca22154919235460504dff7c7d648791e539ecb2"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "2ece91c6327d8e9abb018422ca22154919235460504dff7c7d648791e539ecb2"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A3b_ti_le_am": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "4c52a1c4421513fee9b680fa9976784b45c48afee92c5238c5b3a2574e6a251d"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "4c52a1c4421513fee9b680fa9976784b45c48afee92c5238c5b3a2574e6a251d"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A4_doi_ten_nhat_quan_P": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "729f71da1bf2a9e639337c6447842b8bc8fbab64987691841e6b870c1fba5b4a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "729f71da1bf2a9e639337c6447842b8bc8fbab64987691841e6b870c1fba5b4a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A4b_doi_ten_nhat_quan_gamma": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "8f2f351d83c9e3c94329e4498ba606e1e95ac0adeb2970d35e001bcc9eb8075e"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "8f2f351d83c9e3c94329e4498ba606e1e95ac0adeb2970d35e001bcc9eb8075e"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A5_khong_ten_duy_nhat": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A5b_bien_khong_ten_de_chi_mot_mat_phang": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "RF1_mat_phang_qua_ba_diem_ben_canh": {
+      "group": "W16_A_PLANE_BINDING",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6d37b11b024abed059b45c299924a47b88dee4a714333a57d7d3aba04803f512"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6d37b11b024abed059b45c299924a47b88dee4a714333a57d7d3aba04803f512"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "A2b_cat_bang_alpha_khi_de_noi_beta": {
+      "group": "W16_A_PRIME_LIMIT",
+      "label": "MUST_REFUSE",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "dcf75a36cdde5db9f8c9ed78b51736a815c78ff2de743a14057c3b063d2791f4"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "dcf75a36cdde5db9f8c9ed78b51736a815c78ff2de743a14057c3b063d2791f4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "B1_chung_minh_SA_vuong_day": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B1b_CMR_ky_hieu": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B2_chung_minh_goc_vuong_day": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B3b_kiem_tra_ky_hieu": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B3c_cau_hoi_hay_khong": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B5_cau_ghep_gia_thiet_va_yeu_cau": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B7_chung_minh_do_dai": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w16": true
+    },
+    "B0_gia_thiet": {
+      "group": "W16_B_GOAL",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "B4b_phu_dinh_trong_yeu_cau": {
+      "group": "W16_B_GOAL",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "B5b_gia_thiet_truoc_yeu_cau_cung_cau": {
+      "group": "W16_B_GOAL",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "B6_tinh_biet_gia_thiet": {
+      "group": "W16_B_GOAL",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    },
+    "B3_hoi_co_khong": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": false
+    },
+    "B4_phu_dinh_gia_thiet": {
+      "group": "W16_B_GOAL",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": false
+    },
+    "B6b_tinh_biet_chieu_cao": {
+      "group": "W16_B_GOAL",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": false
+    },
+    "C_CLOSURE_UNSUPPORTED_KIND": {
+      "group": "W16_C_GUARD",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": false
+    },
+    "C_TEMPLATE_CONSTRAINT_VIOLATED": {
+      "group": "W16_C_GUARD",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "c954f648aad10cc8a4f3e1a110dbaac5a8c26e528ed096ca0c6357b451c73607"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "c954f648aad10cc8a4f3e1a110dbaac5a8c26e528ed096ca0c6357b451c73607"
+      },
+      "cached_before_w16": false
+    },
+    "C_FRAME_DEPENDENT": {
+      "group": "W16_C_GUARD",
+      "label": "DEPENDS",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "cached_before_w16": false
+    },
+    "C_FORMATION_REJECTED": {
+      "group": "W16_C_GUARD",
+      "label": "MUST_REFUSE",
+      "before_w16": {
+        "status": "unsupported",
+        "stage_reached": "formation",
+        "reason_code": "SOLID_TOPOLOGY_MALFORMED",
+        "envelope_sha256": "8817e7c2f8ebb1525606ea32fb1617ec3db501ddcb210e1754b4e7e4ef13f519"
+      },
+      "w16": {
+        "status": "unsupported",
+        "stage_reached": "formation",
+        "reason_code": "SOLID_TOPOLOGY_MALFORMED",
+        "envelope_sha256": "8817e7c2f8ebb1525606ea32fb1617ec3db501ddcb210e1754b4e7e4ef13f519"
+      },
+      "cached_before_w16": false
+    },
+    "C_T1_doi_chung": {
+      "group": "W16_C_GUARD",
+      "label": "INVARIANT",
+      "before_w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w16": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w16": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w16_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w16": false
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "A1_beta_chua_xac_dinh_mang_he_so_alpha",
+    "A2_hai_mat_phang_doi_cheo_he_so",
+    "A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten",
+    "A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang",
+    "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten",
+    "B1_chung_minh_SA_vuong_day",
+    "B1b_CMR_ky_hieu",
+    "B2_chung_minh_goc_vuong_day",
+    "B3b_kiem_tra_ky_hieu",
+    "B3c_cau_hoi_hay_khong",
+    "B5_cau_ghep_gia_thiet_va_yeu_cau",
+    "B7_chung_minh_do_dai"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W16 would be replayed under the current version although W16 refuses them: ['A1_beta_chua_xac_dinh_mang_he_so_alpha', 'A2_hai_mat_phang_doi_cheo_he_so', 'A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten', 'A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang', 'A8_bien_khong_ten_mat_phang_thu_hai_khong_ten', 'B1_chung_minh_SA_vuong_day', 'B1b_CMR_ky_hieu', 'B2_chung_minh_goc_vuong_day', 'B3b_kiem_tra_ky_hieu', 'B3c_cau_hoi_hay_khong', 'B5_cau_ghep_gia_thiet_va_yeu_cau', 'B7_chung_minh_do_dai']"
+}

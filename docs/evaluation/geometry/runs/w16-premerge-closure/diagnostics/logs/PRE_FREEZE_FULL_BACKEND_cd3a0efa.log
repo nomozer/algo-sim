@@ -1,0 +1,16 @@
+# W16 pre-freeze full backend suite in the MAIN tree at cd3a0efa (untracked: W16 diagnostics only), 2026-10-03T11:25:50Z finish
+# cd backend && pytest -q -p no:cacheprovider -rf --tb=no
+# allowed failures: stale candidate (backend/app changed since freeze b3b7eb79) and dirty-tree checks (untracked W16 diagnostics)
+FAILED tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+FAILED tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+FAILED tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+FAILED tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+FAILED tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+FAILED tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+11 failed, 6834 passed, 1 skipped, 2 deselected, 1 xfailed, 2 warnings in 225.97s (0:03:45)
+exit=1

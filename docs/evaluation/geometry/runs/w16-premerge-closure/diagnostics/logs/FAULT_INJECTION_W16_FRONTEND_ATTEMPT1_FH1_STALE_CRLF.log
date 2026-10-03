@@ -1,0 +1,35 @@
+W16 — frontend fault injections on the detached worktree at cd3a0efa (0 model calls)
+method: one exact source substitution per run in the scratch worktree, test, then the original bytes restored and verified
+
+baseline src/simulations/domains/geometry/scene3d-section.test.ts: exit 0 · Tests  40 passed (40)
+baseline scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 53 · ℹ fail 0
+
+FL1 [src/simulations/domains/geometry/scene3d-view.tsx] section fill back to renderOrder 10 (drawn over the edges, the W15 state)
+  predicted: W16 scene-wide ordering test + the W15 fill test
+  observed : exit 1 · Tests  2 failed | 38 passed (40) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau mặt (trước nét — W16), lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che 8ms
+    × trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy 7ms
+    FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối > khép kín + fill_visible ⇒ một vật tô section_fill:<id>: vẽ sau mặt (trước nét — W16), lệch chiều sâu, đục đủ, không ghi chiều sâu, không phải vật che
+    FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W16 — phần tô thiết diện nằm DƯỚI các cạnh khối, TRÊN các mặt > trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy
+  restored byte-identical: true
+
+FH1 STALE: substitution found 0x in scripts/compiler-scene-replay-lib.mjs
+
+FH2 [scripts/compiler-scene-replay-lib.mjs] under-edges check ignores rho (fill over the edge passes)
+  predicted: W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails
+  observed : exit 1 · ℹ pass 52 · ℹ fail 1 -> CAUGHT
+    ✖ W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails (0.8916ms)
+    ✖ failing tests:
+    ✖ W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails (0.8916ms)
+  restored byte-identical: true
+
+FH3 [scripts/compiler-scene-replay-lib.mjs] no crossing edge counted as a pass
+  predicted: W16 … no crossing edge is not a pass
+  observed : exit 1 · ℹ pass 52 · ℹ fail 1 -> CAUGHT
+    ✖ W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass (1.0832ms)
+    ✖ failing tests:
+    ✖ W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass (1.0832ms)
+  restored byte-identical: true
+
+after all injections src/simulations/domains/geometry/scene3d-section.test.ts: exit 0 · Tests  40 passed (40)
+after all injections scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 53 · ℹ fail 0
