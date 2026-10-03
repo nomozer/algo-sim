@@ -414,7 +414,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
     # 106 → 107 (W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE, 2026-10-03):
     #    cổng giả định nối vào route — phép dò W12 (served → rejected).
-    assert CACHE_VERSION == "107"
+    # 107 → 108 (W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE, 2026-10-03):
+    #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
+    assert CACHE_VERSION == "108"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

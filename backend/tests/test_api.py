@@ -686,7 +686,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # thieu AD, chuong trinh giu AD bang bo cuc) tung duoc phuc vu nay bi tu choi
     # (served -> rejected). Row v106 that van HIT:
     # runs/w15-assumption-closure/diagnostics/PROOF_CACHE_ROW_W15.json.
-    assert main_module.CACHE_VERSION == "107"
+    # 107 -> 108 (W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE, 2026-10-03):
+    # be mat mo hinh KHONG doi; chung chi gia dinh doi he so mat phang thuoc CUNG mat
+    # phang cua de va khong lay yeu cau chung minh lam tien de — 12 yeu cau tung duoc
+    # phuc vu nay bi tu choi (served -> rejected). Row v107 van HIT:
+    # runs/w16-premerge-closure/diagnostics/PROOF_CACHE_ROW_W16.json.
+    assert main_module.CACHE_VERSION == "108"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

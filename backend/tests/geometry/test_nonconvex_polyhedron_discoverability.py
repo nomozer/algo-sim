@@ -386,7 +386,9 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
     # 106 → 107 (W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE, 2026-10-03):
     #    cổng giả định nối vào route — phép dò W12 (served → rejected).
-    assert CACHE_VERSION == "107"
+    # 107 → 108 (W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE, 2026-10-03):
+    #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
+    assert CACHE_VERSION == "108"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):

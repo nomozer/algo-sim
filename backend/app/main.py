@@ -730,7 +730,16 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       106 và trả lại envelope ấy
 #       (`runs/w15-assumption-closure/diagnostics/PROOF_CACHE_ROW_W15.json`). Bài
 #       đề xác định không đổi envelope (đối chứng trùng byte).
-CACHE_VERSION = "107"
+#   108 (2026-10-03, W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE): BỀ MẶT MÔ
+#       HÌNH KHÔNG ĐỔI (fingerprint provider `b1714b566e25c912…`). Chứng chỉ giả định
+#       siết hai chỗ: hệ số mặt phẳng phải thuộc CÙNG mặt phẳng của đề (§14.1) và quan
+#       hệ trong yêu cầu chứng minh không là tiền đề (§14.2) — chiều **served →
+#       rejected** (tiền lệ 96/105/106/107). Mười hai yêu cầu TRƯỚC W16 được phục vụ
+#       (β mang phương trình của α, đổi chéo α/β, "Chứng minh …" làm tiền đề) nay bị từ
+#       chối; lưu thành row v107 chúng vẫn HIT và trả lại envelope ấy
+#       (`runs/w16-premerge-closure/diagnostics/PROOF_CACHE_ROW_W16.json`). Corpus
+#       W14/W15/W15B không hàng nào đổi trạng thái.
+CACHE_VERSION = "108"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
