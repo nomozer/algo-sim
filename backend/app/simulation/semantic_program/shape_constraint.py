@@ -26,7 +26,8 @@ import re
 from dataclasses import dataclass
 from fractions import Fraction
 
-from .segment_relation import MAU_DO_DAI, _chuan, _phan
+from .segment_relation import _D as _E
+from .segment_relation import _SO, MAU_DO_DAI, _chuan, _phan
 from .source_entities import dinh_danh_thuc_the
 
 
@@ -40,9 +41,6 @@ class RangBuoc:
     span: tuple[int, int]
 
 
-#: Ký hiệu một điểm sau chuẩn hoá: chữ hoa, chỉ số, phẩy — cùng lưới `segment_relation._D`.
-_E = r"[A-Z]\d*'?"
-_SO = r"\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?"
 _TRUOC = r"(?<![A-Za-z0-9'])"
 _HET_CHU = r"(?![A-Za-zÀ-ỹ])"
 

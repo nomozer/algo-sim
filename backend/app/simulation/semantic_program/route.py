@@ -512,8 +512,8 @@ def _sau_grounding(
     # U5: giá trị đọc qua một tên có nhiều định nghĩa với tới (ghi đè, bí danh, khôi phục) là lỗi
     # toàn vẹn của chương trình, không phải câu hỏi về giả định — từ chối ở MỌI vùng.
     gd_chan = gd_chan or any(d.startswith(MA_NHIEU_DINH_NGHIA) for d in gd_chi_tiet)
-    da_chay["assumption_status"], da_chay["assumption_certificate"] = gd_status, gd_cc
-    da_chay["assumption_enforced"] = gd_chan
+    ghi_gd = {"assumption_status": gd_status, "assumption_certificate": gd_cc, "assumption_enforced": gd_chan}
+    da_chay.update(ghi_gd)
     if gd_chan and gd_status not in (_GD_AN_TOAN, _GD_KHONG_AP_DUNG):
         return _hong(
             "assumption",
@@ -595,9 +595,7 @@ def _sau_grounding(
             frame_count=len(envelope["config"]["frames"]),
             final_memory=dict(exec_res.final_memory),
             envelope=envelope,
-            assumption_status=gd_status,
-            assumption_certificate=gd_cc,
-            assumption_enforced=gd_chan,
+            **ghi_gd,
         )
 
     # Mức YẾU: chạy được, biên dịch được, nhưng chưa có checker độc lập cho
@@ -622,9 +620,7 @@ def _sau_grounding(
             frame_count=len(envelope["config"]["frames"]),
             final_memory=dict(exec_res.final_memory),
             envelope=envelope,
-            assumption_status=gd_status,
-            assumption_certificate=gd_cc,
-            assumption_enforced=gd_chan,
+            **ghi_gd,
         )
 
     return SemanticRouteOutcome(
@@ -636,7 +632,5 @@ def _sau_grounding(
         frame_count=len(envelope["config"]["frames"]),
         final_memory=dict(exec_res.final_memory),
         envelope=envelope,
-        assumption_status=gd_status,
-        assumption_certificate=gd_cc,
-        assumption_enforced=gd_chan,
+        **ghi_gd,
     )

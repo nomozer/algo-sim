@@ -27,6 +27,7 @@ from fractions import Fraction
 from typing import Any, Callable
 
 from ..geometry.exact import Vec3
+from ..geometry.radical import is_exact_number
 from .contract import SemanticProgramSpec
 from .domain_profile import geometry_symbol_key
 from .formation import _dinh_nghia, hoan_thien_dung_hinh
@@ -161,7 +162,6 @@ def _ket_qua(status: str, details: list[str], **kw: Any) -> KetQuaGiaDinh:
 class _Loi(Exception):
     def __init__(self, ma: str, ten: str = "") -> None:
         super().__init__(f"{ma} {ten}".strip())
-        self.ma, self.ten = ma, ten
 
 
 def _id(x: Any) -> str:
@@ -180,9 +180,7 @@ def _nhan(*ten: str) -> str:
 
 
 def _la_so(v: Any) -> bool:
-    if isinstance(v, bool):
-        return False
-    return isinstance(v, (int, float, Fraction)) or type(v).__name__ == "Radical"
+    return is_exact_number(v) or isinstance(v, float)
 
 
 def _F(x: Any) -> Fraction:
@@ -193,7 +191,6 @@ def _F(x: Any) -> Fraction:
 
 @dataclass
 class _DinhNghia:
-    ten: str
     loai: str          # "khai" | "cau_lenh"
     nut: dict
     gia_tri: Any       # giá trị TẠI LÚC định nghĩa
@@ -227,9 +224,9 @@ class _ChiMuc:
         if len(tinh) > 1 or len(dong) > 1 or (tinh and tinh[0][0] == "khai" and dong):
             raise _Loi(MA_NHIEU_DINH_NGHIA, n)
         if len(tinh) == 1 and tinh[0][0] == "khai":
-            return _DinhNghia(n, "khai", tinh[0][1], self.dau.get(n))
+            return _DinhNghia("khai", tinh[0][1], self.dau.get(n))
         if len(tinh) == 1 and len(dong) == 1:
-            return _DinhNghia(n, "cau_lenh", tinh[0][1], dong[0].memory_snapshot.get(n))
+            return _DinhNghia("cau_lenh", tinh[0][1], dong[0].memory_snapshot.get(n))
         raise _Loi("CLOSURE_UNRESOLVED_DEFINITION", n)
 
     def _doc_truoc(self, n: str, s: dict) -> bool:
@@ -257,7 +254,7 @@ class _ChiMuc:
 
 @dataclass
 class _LatCat:
-    dinh_nghia: dict[str, _DinhNghia] = field(default_factory=dict)
+    da_xet: set[str] = field(default_factory=set)
     literal: list[tuple] = field(default_factory=list)
     kieu: set[str] = field(default_factory=set)
     phep_do: list[tuple[str, str]] = field(default_factory=list)
@@ -324,10 +321,10 @@ def _lat_cat(goc: list[str], cm: _ChiMuc) -> _LatCat:
     ngan = list(goc)
     while ngan:
         n = ngan.pop()
-        if n in lc.dinh_nghia:
+        if n in lc.da_xet:
             continue
         d = cm.dinh_nghia(n)
-        lc.dinh_nghia[n] = d
+        lc.da_xet.add(n)
         if d.loai == "khai":
             kieu = d.nut.get("type")
             loai = "diem" if kieu == "point3" else ("vo_huong" if kieu in ("float", "int") else "khai_khac")
@@ -482,7 +479,7 @@ class _Khuon:
     kich_thuoc: list[_KichThuoc]
     tien_de: list[RangBuoc]
     #: Hiện thực CHÍNH TẮC của khuôn từ các kích thước bắt buộc (cùng thứ tự `kich_thuoc`).
-    chinh_tac: Callable[[list[Fraction]], dict[str, Vec3]] | None = None
+    chinh_tac: Callable[[list[Fraction]], dict[str, Vec3]]
 
 
 def _o(x=0, y=0, z=0) -> Vec3:
@@ -610,7 +607,7 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
     def nap(day_ct: dict[str, Vec3], h: Fraction) -> dict[str, Vec3]:
         return {**day_ct, **{tren[i]: day_ct[day[i]] + _o(0, 0, h) for i in range(k)}}
     if k == 3 and "right_prism" in kieu:
-        X = next((x for x in day if _goc_vuong_tai(rb, day, x)), None)
+        X, gv = next(((x, g) for x in day if (g := _goc_vuong_tai(rb, day, x))), (None, None))
         if X is None:
             return "TEMPLATE_NOT_MATCHED T3: no right angle on the base"
         Y, Z = [p for p in day if p != X]
@@ -619,8 +616,7 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
         return _Khuon("T3", day + tren, rbuoc,
                       [_KichThuoc(_nhan(X, Y), canh_cua(i, j), None, ("canh", X, Y)),
                        _KichThuoc(_nhan(X, Z), canh_cua(i, l), None, ("canh", X, Z)), ben_kt],
-                      tien_de + [_goc_vuong_tai(rb, day, X)],
-                      lambda L: nap({X: _o(), Y: _o(L[0]), Z: _o(0, L[1])}, L[2]))
+                      tien_de + [gv], lambda L: nap({X: _o(), Y: _o(L[0]), Z: _o(0, L[1])}, L[2]))
     if k == 3:
         return "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')"
     if k != 4:
@@ -692,10 +688,8 @@ def _nhan_khuon(rb: tuple[RangBuoc, ...], cm: _ChiMuc, prog: dict):
         if loai != "prism" or len(a) != 4:
             continue
         day, tren = tuple(_id(dinh[i]) for i in a), tuple(_id(dinh[i]) for i in b)
-        gan = tuple(RangBuoc(r.kind, day + tren if r.entities == () else r.entities, r.value, r.span)
-                    for r in rb_ao)
-        gan += tuple(RangBuoc("base_square", day, r.value, r.span) for r in rb_ao
-                     if r.kind == "base_square" and r.entities == ())
+        gan = tuple(RangBuoc(r.kind, (day if r.kind == "base_square" else day + tren) if r.entities == ()
+                             else r.entities, r.value, r.span) for r in rb_ao)
         k = _khuon_lang_tru(gan, day, tren, day + tren, {"right_prism"},
                             [r for r in gan if r.entities == day + tren])
         if isinstance(k, _Khuon):
@@ -748,7 +742,7 @@ def _hien_thuc_chinh_tac(khuon: _Khuon, do_dai: dict[frozenset, Fraction]) -> di
         if v is None:
             return None
         L.append(v)
-    return khuon.chinh_tac(L) if khuon.chinh_tac else None
+    return khuon.chinh_tac(L)
 
 
 def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_dai: dict, phu: list[str],
@@ -917,14 +911,14 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
         return _ket_qua(UNDETERMINED, details + [f"{khuon.loai} TEMPLATE_CONSTRAINT_VIOLATED {hong[0]}"])
     tien_de = list(dict.fromkeys(
         f"PREMISE {r.kind}({','.join(r.entities)})" + (f"={r.value}" if r.value is not None else "")
-        + f" @[{r.span[0]},{r.span[1]}]" for r in khuon.tien_de if r is not None))
+        + f" @[{r.span[0]},{r.span[1]}]" for r in khuon.tien_de))
     thieu = [kt for kt in khuon.kich_thuoc if not _da_cho(kt, do_dai)]
     ngan = [0]
     if thieu:
         # §7 (đính chính Task 6): phản ví dụ chỉ nói "đề không cho" khi server đã đọc trọn
         # phần dữ kiện VÀ kiểm được mọi ràng buộc đọc được trên nhân chứng (= tiền đề khuôn).
         chua_doc = phan_chua_doc(de)
-        da_kiem = {(r.kind, r.entities, r.value) for r in khuon.tien_de if r is not None}
+        da_kiem = {(r.kind, r.entities, r.value) for r in khuon.tien_de}
         ngoai = [r for r in rb if (r.kind, r.entities, r.value) not in da_kiem]
         if chua_doc or ngoai:
             return _ket_qua(UNDETERMINED, details + tien_de + [f"{khuon.loai} MISSING {kt.nhan}" for kt in thieu]
