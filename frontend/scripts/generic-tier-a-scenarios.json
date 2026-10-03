@@ -1,7 +1,7 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE",
-  "product_commit_sha": "d41176f226c0a0830b1ef8aeadd463fc08897dc9",
+  "product_commit_sha": "909a3a2d5d56c784d0b98ae6632c0b2b94490c60",
   "product_tree_sha": "aaa5b5bd452321e1ad5130608b27e02a60c55cb487f66dab78563e4dc2f2ca5e",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
