@@ -580,3 +580,124 @@ Mỗi loại có chú thích tiếng Việt riêng, lấy từ một bảng đó
 
 **Thất bại.** Bộ dựng THẤT BẠI khi thiếu bất kỳ ảnh nào (trạng thái, bảng lời giải, từ chối,
 bước dựng) hoặc khi một ô từ chối không đọc được. Không bao giờ thay bằng ô trắng.
+
+## 15. W17 — binding phép dựng, grounding không lấy mục tiêu, nguyên nhân từ chối, số đo trên hình (đăng ký 2026-10-03, TRƯỚC mọi bản sửa)
+
+**Nguồn:** brief W17 (`W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS`) và quyết định U-W17-1 của
+người dùng (nhãn "Kết quả" và "Số đo" BẬT mặc định). Tái hiện và bằng chứng ở
+[`runs/w17-operation-annotations`](../evaluation/geometry/runs/w17-operation-annotations/).
+**Trạng thái:** REGISTERED — chưa đo. Phạm vi thi hành của U3 giữ nguyên.
+
+### 15.1 Phép dựng phải dùng ĐÚNG thực thể mà đề nói (đóng giới hạn A′ của §14.1)
+
+**Quan hệ cắt đọc từ đề.** `shape_constraint.doc_quan_he_cat(đề)` đọc, trên bản đề đã che
+mệnh đề mục tiêu, mỗi câu nói *mặt phẳng nào cắt khối nào theo thiết diện nào*. Từ vựng ĐÓNG:
+- `(X) cắt <khối> theo thiết diện (T)`, có hoặc không có `Mặt phẳng` đứng trước;
+- `Mặt phẳng (X): <phương trình> cắt <khối> theo thiết diện (T)` — phương trình viết ngay
+  trong câu;
+- `Mặt phẳng <phương trình> cắt <khối> theo thiết diện (T)` — mặt phẳng không tên;
+- `thiết diện (T) của <khối> cắt bởi (mặt phẳng) (X)` và `cắt <khối> bởi (mặt phẳng) (X)
+  (được) thiết diện (T)` — cùng quan hệ, viết theo chiều bị động;
+- `<khối>` là `khối chóp`/`hình chóp`/`khối lăng trụ`/`hình lăng trụ`/`hình hộp`/`hình lập
+  phương`, có thể kèm ký hiệu (`S.ABCD`); thiết diện có thể không tên (`theo một thiết diện`).
+- Cách viết nằm ngoài các dạng trên không cho quan hệ nào. Khi đó một `construct_section`
+  trên lát cắt KHÔNG được chứng nhận (`UNDETERMINED`, lý do "chưa đọc được quan hệ cắt"),
+  nhưng lý do ấy là giới hạn từ vựng, không phải `CONSTRUCTION_NOT_TEXT_BOUND`: mã ấy chỉ
+  dùng khi quan hệ ĐỌC ĐƯỢC mà phép dựng lệch nó.
+
+Kết quả: `QuanHeCat(mat_phang, khoi, thiet_dien, span)`; `mat_phang` là tên (`α`, `P'`) hoặc
+khoá của phương trình không tên đọc tại câu đó; `khoi` là ký hiệu khối hoặc `None` (khi đề có
+đúng một khối thì đó là khối ấy); `thiet_dien` là tên hoặc `None`.
+
+**Danh tính của một mặt phẳng trong chương trình** (thứ tự ưu tiên):
+1. **Theo nguồn.** Câu lệnh mang `source_fact_id` trỏ tới một InputFact của hợp đồng; giá
+   trị nguyên văn của fact xuất hiện ĐÚNG một lần trong đề; trong đoạn đó có đúng một phương
+   trình mặt phẳng đọc trọn (`doc_mat_phang_de`). Danh tính là mặt phẳng ấy (tên, hoặc khoá
+   span nếu không tên). Hệ số của câu lệnh vẫn phải tỉ lệ với phương trình ấy.
+2. **Không có tham chiếu nguồn dùng được** ⇒ luật W16 (§14.1): theo tên, hoặc duy nhất theo
+   đếm.
+3. Tên biến nói một mặt phẳng và nguồn nói mặt phẳng KHÁC ⇒ không có danh tính (từ chối).
+
+Đổi tên biến máy không đổi danh tính theo nguồn. **Trùng phương trình không phải trùng thực
+thể:** (α): z = 3 và (β): z = 3 là hai mặt phẳng khác nhau trong đề; phép dựng đề nói dùng (β)
+mà chương trình dùng mặt phẳng có danh tính (α) thì không được chứng nhận, dù số đo bằng nhau.
+
+**Luật phép dựng.** Với MỌI `construct_section` trên lát cắt của một giá trị hiển thị:
+- thiết diện của chương trình phải gắn được với đúng một quan hệ cắt của đề: đề có một quan
+  hệ và chương trình có một thiết diện trên lát cắt; hoặc theo nguồn (`source_fact_id` của
+  khai báo thiết diện trỏ tới fact chứa tên thiết diện); hoặc theo tên thiết diện;
+- mặt phẳng cắt của câu lệnh phải có danh tính BẰNG mặt phẳng của quan hệ;
+- khối bị cắt phải có tập đỉnh bằng tập đỉnh của khối trong đề (ký hiệu khối, hoặc khối duy
+  nhất của đề khi quan hệ không ghi ký hiệu).
+
+Vi phạm một quan hệ đọc được ⇒ `UNDETERMINED`, detail `OPERATION_BINDING <thiết diện>: <lý
+do>`, `reason_code = CONSTRUCTION_NOT_TEXT_BOUND`, `reason_subjects` = ký hiệu mặt phẳng/khối
+liên quan. Từ chối ở chặng `assumption` trong vùng thi hành (U3), không gửi đi sửa. Không gắn
+được vì đề không có quan hệ đọc được ⇒ `UNDETERMINED` với `ASSUMPTION_INVARIANCE_UNPROVEN`
+(fail-closed, giới hạn từ vựng). Luật này là ĐIỀU KIỆN THÊM cho C0 và C1: nó chỉ chặn một kết
+luận `PROVEN_SAFE`, không thay chẩn đoán của các nhánh khác (detail của nó được nối thêm).
+
+### 15.2 Mục tiêu cần chứng minh không bao giờ thành GIVEN (grounding)
+
+`grounding_gate.check_grounding` đọc bằng chứng GIVEN (độ dài, toạ độ, giá trị số) trên
+`che_muc_tieu(đề)` — cùng bản che của §14.2, cùng độ dài, span không đổi. Một giá trị CHỈ xuất
+hiện trong mệnh đề mục tiêu ⇒ từ chối ở chặng `grounding`, `reason_code =
+GIVEN_ONLY_IN_GOAL_CLAUSE`, không gửi đi sửa. Dữ kiện trong câu `Tính …, biết …` vẫn là dữ
+kiện (`Tính` không phải từ khoá mục tiêu). Đây là sửa grounding, không mở rộng chứng chỉ: B6b
+vẫn là từ chối thừa đã ghi.
+
+### 15.3 Nguyên nhân từ chối — lời cho người học dựa trên lý do có cấu trúc
+
+Mỗi envelope `unsupported` mang `refusal_cause` ∈ {`SOURCE`, `CONSTRUCTION`, `UNKNOWN`},
+quyết định CHỈ từ mã có cấu trúc và bộ đọc đề của server:
+- `SOURCE` — chính dữ kiện của đề gây từ chối: thiếu (`GIVEN_VALUE_NOT_IN_SOURCE`,
+  `ASSUMPTION_DETERMINES_ANSWER`), mâu thuẫn (`SOURCE_*`), chỉ có trong mục tiêu
+  (`GIVEN_ONLY_IN_GOAL_CLAUSE`), suy biến (độ dài ≤ 0 mà ĐỀ ghi), mặt phẳng ĐỀ cho không cắt
+  khối (`PLANE_DOES_NOT_CUT` với mặt phẳng ghim bởi đề).
+- `CONSTRUCTION` — đề đủ và hợp lệ nhưng chương trình/hợp đồng hệ sinh ra sai:
+  `CONSTRUCTION_NOT_TEXT_BOUND`, độ dài ≤ 0 mà đề KHÔNG ghi, lỗi kernel trên giá trị đề không
+  ghim.
+- `UNKNOWN` — mọi trường hợp còn lại; lời chung, không đổ cho đề.
+
+Lời cho người học nêu (i) thực thể/dữ kiện gây lỗi bằng ký hiệu đọc được, (ii) lý do ngắn,
+(iii) hành động hợp với nguyên nhân. Với `CONSTRUCTION` và `UNKNOWN`, lời KHÔNG yêu cầu người
+học sửa đề.
+
+### 15.4 Số đo trên hình — hợp đồng gắn đối tượng
+
+Mỗi vật `quantity` có thể mang `annotation = {kind, category, subject_ids, anchor, unit}`:
+- `kind` ∈ {`length`, `area`, `volume`, `distance`, `angle`}; `category` ∈ {`measurement`,
+  `result`} — `result` khi đại lượng là đích của đề (đích, hoặc được một đích `alias_of`), còn
+  lại `measurement`; đích dùng CHUNG danh tính với đại lượng nó trỏ tới (một nhãn, không hai);
+- `subject_ids` là định danh vật/điểm CÓ trong cảnh; `anchor` ∈ {`segment`, `region`,
+  `solid`, `pair`}; `unit` chỉ khi payload có đơn vị.
+
+Luật gắn (backend sở hữu):
+- độ dài đề cho: đoạn mà bộ đọc đề của server đọc tại span bằng chứng GIVEN, và khoảng cách
+  chính xác giữa hai điểm trong bộ nhớ cuối bằng đúng giá trị — không thì không gắn;
+- đại lượng suy ra: toán hạng IR của phép đo (`measure … of/wrt`): diện tích → đa giác/thiết
+  diện (`region`), thể tích → khối (`solid`), khoảng cách → cặp (`pair`), độ dài đoạn → đoạn;
+- không gắn được ⇒ không có `annotation` và có diagnostic `ANNOTATION_UNBOUND <id>: <lý do>`;
+  đại lượng vẫn ở bảng chi tiết.
+
+Frontend chỉ chiếu, đặt nhãn, tránh chồng và bật/tắt; không tính giá trị, không suy gắn từ tên.
+Một nhãn hiện ở bước dựng `k` chỉ khi chủ thể đã có mặt và đại lượng đã khả dụng ở `k` (cùng
+luật với lớp lời giải). Bật/tắt "Số đo"/"Kết quả" không đổi hình, camera, timeline, chuỗi nhân
+quả hay chính sách nét liền/đứt.
+
+### 15.5 Kiểm trên trình duyệt (đăng ký trước mọi phép đo)
+
+- **Bật/tắt:** tắt "Số đo" và "Kết quả" ⇒ 0 nhãn số đo trong DOM; `__geo3d_edge_dash_signature`,
+  `__geo3d_rendered_object_ids` và ảnh chụp camera KHÔNG đổi giữa bật và tắt.
+- **Gắn đúng chủ thể:** mỗi nhãn hiện có điểm gần nhất của hộp nhãn cách điểm neo chiếu của
+  chủ thể ≤ 24 px CSS.
+- **Không lộ trước:** ở mỗi bước dựng (tiến rồi lùi), không có nhãn của đại lượng chưa khả
+  dụng; nhãn kết quả chỉ từ bước nó được tính.
+- **Trong khung, không đè:** mọi nhãn hiện nằm trong khung canvas; không hộp nhãn số đo nào
+  giao hộp nhãn điểm hiện; xoay quỹ đạo và đổi cỡ vẫn giữ hai luật này.
+- **Nhân quả:** trung tính → chọn → khôi phục đo ở CÙNG camera và CÙNG vị trí cuộn; ghi riêng
+  camera, lựa chọn và vị trí cuộn. Ảnh đã cuộn mất canvas không chứng minh camera đặt lại.
+- **Từ chối:** mặt phẳng sai (đề nói (β), chương trình dùng (α)) bị từ chối với nguyên nhân
+  `CONSTRUCTION`; mặt phẳng đúng được phục vụ.
+
+Các ngưỡng trên không bao giờ chỉnh theo ảnh sản phẩm: nếu trượt, sửa sản phẩm.
