@@ -1237,7 +1237,6 @@ interface Props {
 /** Vùng một lớp phủ khác đang che khung (`data-che-khung`: nút nổi, ô soi, ngăn kéo) — nhãn
  *  số đo không được nằm dưới nó. Toạ độ px trong khung `goc`. */
 function vungCheKhung(goc: DOMRect): LabelRect[] {
-  if (typeof document === "undefined") return [];
   return Array.from(document.querySelectorAll<HTMLElement>("[data-che-khung]")).flatMap((el) => {
     const r = el.getBoundingClientRect();
     return r.width > 0 && r.height > 0 ? [{ x: r.left - goc.left, y: r.top - goc.top, w: r.width, h: r.height }] : [];
@@ -1469,14 +1468,14 @@ export function Scene3DWorkspace({
       }
       const daDat = placeAnnotationLabels(canDat,
         [...hopDiem, ...vungCheKhung(renderer.domElement.getBoundingClientRect())], { w, h });
-      const hopSo: { id: string; category?: string; box: LabelRect; anchor: { x: number; y: number } }[] = [];
+      const hopSo: { id: string; box: LabelRect; anchor: { x: number; y: number } }[] = [];
       for (const c of canDat) {
         const el = theTheoId.get(c.id)!;
         const r = daDat.get(c.id);
         el.style.opacity = r ? "1" : "0";
         if (!r) continue;
         el.style.transform = `translate(${r.x}px,${r.y}px)`;
-        hopSo.push({ id: c.id, category: el.dataset.loai, box: r, anchor: { x: c.ax, y: c.ay } });
+        hopSo.push({ id: c.id, box: r, anchor: { x: c.ax, y: c.ay } });
       }
       if (typeof window !== "undefined") {
         // Móc ĐO của bộ kiểm trình duyệt (§15.5): hộp nhãn số đo đang hiện + hộp nhãn điểm đang hiện.
@@ -1785,9 +1784,8 @@ export function Scene3DWorkspace({
                 <span
                   key={a.id}
                   data-ann-id={a.id}
-                  data-loai={a.category}
                   data-uu-tien={a.priority}
-                  className={`geo3d-so-do ${a.category === "result" ? "la-ket-qua" : "la-so-do"}${
+                  className={`geo3d-so-do${a.category === "result" ? " la-ket-qua" : ""}${
                     a.related ? " la-lien-quan" : diu ? " la-diu" : ""}`}
                 >
                   {a.text}

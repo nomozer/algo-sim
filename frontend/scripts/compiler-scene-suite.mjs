@@ -657,9 +657,9 @@ async function anchorNow(session, scene) {
   return step ? expectedGeometryTimeline(scene)[step.index]?.anchor ?? null : null;
 }
 
-/** Nhãn số đo bắt buộc hiện: khổ rộng — mọi nhãn khả dụng; khổ hẹp — đáp số (ưu tiên). */
-function annotationsMustShow(scene, ids, viewport) {
-  return viewport.width < 768
+/** Nhãn số đo bắt buộc hiện: khổ rộng — mọi nhãn khả dụng; khổ hẹp và đổi cỡ — đáp số (ưu tiên). */
+function annotationsMustShow(scene, ids, chiKetQua) {
+  return chiKetQua
     ? ids.filter((id) => scene.objects.find((o) => o.id === id)?.annotation?.category === "result") : ids;
 }
 
@@ -881,7 +881,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const neoCuoi = await anchorNow(session, scene);
     result.annotations = { final: assessAnnotationBoxes({ scene, step: neoCuoi, boxes: ann0.boxes,
       points: ann0.points, camera: ann0.camera,
-      mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCuoi), viewport) }) };
+      mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCuoi), viewport.width < 768) }) };
     result.assertions.annotations_final = assertion(result.annotations.final.pass, result.annotations.final);
 
     // Default phải được chụp trước causal/orbit/formation.
@@ -1193,7 +1193,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       const neoXoay = await anchorNow(session, scene);
       result.annotations.rotated = assessAnnotationBoxes({ scene, step: neoXoay, boxes: annXoay.boxes,
         points: annXoay.points, camera: annXoay.camera,
-        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoXoay), viewport) });
+        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoXoay), viewport.width < 768) });
       result.assertions.annotations_rotated = assertion(result.annotations.rotated.pass, result.annotations.rotated);
       await clickText(session, "Xem lại toàn hình");
     }
@@ -1206,7 +1206,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       const neoCo = await anchorNow(session, scene);
       result.annotations.resized = assessAnnotationBoxes({ scene, step: neoCo, boxes: annCo.boxes,
         points: annCo.points, camera: annCo.camera,
-        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCo), { width: 0 }) });
+        mustShow: annotationsMustShow(scene, expectedAnnotationIds(scene, neoCo), true) });
       result.annotations.resized.viewport = { width: annCo.camera?.viewport_width, height: annCo.camera?.viewport_height,
         dpr: annCo.camera?.device_pixel_ratio };
       result.assertions.annotations_resized = assertion(result.annotations.resized.pass, result.annotations.resized);

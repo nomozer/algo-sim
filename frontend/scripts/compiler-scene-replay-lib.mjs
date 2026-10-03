@@ -528,7 +528,7 @@ function _vungThietDien(dinh, snapshot, canh = [], cham = [], hop = []) {
     p.every((a, i) => _cachDoan(x, y, a, p[(i + 1) % p.length]) >= margin)
     && doanKhoi.every((e) => _cachDoan(x, y, e.d[0], e.d[1]) >= margin)
     && dau.every((c) => Math.hypot(x - c.x, y - c.y) >= c.r + margin)
-    && (hop ?? []).every((r) => x < r.x - margin || x > r.x + r.w + margin
+    && hop.every((r) => x < r.x - margin || x > r.x + r.w + margin
       || y < r.y - margin || y > r.y + r.h + margin);
   return { p, doanKhoi, trong, xa };
 }

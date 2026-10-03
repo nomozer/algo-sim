@@ -331,16 +331,12 @@ def doc_quan_he_cat(problem_text: str | None) -> tuple[QuanHeCat, ...]:
     for k, mau in enumerate(_CAU_CAT, 1):
         for m in mau.finditer(de):
             kh, qua = m.group(f"kh{k}"), m.group(f"qua{k}")
-            ten = "".join(re.findall(_E, qua)) if qua else _phay_ten(m.group(f"ten{k}"))
+            ten = "".join(re.findall(_E, qua)) if qua else m.group(f"ten{k}")
             q = QuanHeCat(ten, _ten(kh.replace(".", "")) if kh else (),
                           m.group(f"td{k}"), (m.start(f"mp{k}"), m.end(f"mp{k}")), (m.start(), m.end()))
             if q not in ra:
                 ra.append(q)
     return tuple(sorted(ra, key=lambda q: q.span))
-
-
-def _phay_ten(ten: str | None) -> str | None:
-    return ten.replace("′", "'").replace("’", "'") if ten else None
 
 
 #: Từ được phép còn lại khi phần dữ kiện đã đọc trọn — không từ nào mang số đo.

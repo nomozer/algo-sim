@@ -1,0 +1,38 @@
+{
+  "review": "W17_PONYTAIL_REVIEW",
+  "skill": "ponytail:ponytail-review (invoked in Task 8, BEFORE the candidate freeze, on the whole W17 product + harness diff)",
+  "scope": "git diff dd6e86b0..37043376 -- backend/app frontend/src frontend/scripts backend/scripts, tests and node tests excluded (26 files, +1477/-82)",
+  "classes": ["REQUIRED_KEEP", "SIMPLIFY_NOW", "SAFE_TO_DELETE", "DEFERRED_AFTER_MEASUREMENT"],
+  "findings": [
+    {"where": "backend/app/simulation/semantic_program/shape_constraint.py:L334,L342-344", "tag": "delete",
+     "finding": "_phay_ten normalises primes in a plane name that was matched on text already prime-normalised (doc_quan_he_cat replaces ′/’ before finditer) — a no-op",
+     "replacement": "m.group(f\"ten{k}\")", "net_lines": -4, "class": "SAFE_TO_DELETE", "applied": true},
+    {"where": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:L1479,L1788", "tag": "delete",
+     "finding": "the data-loai attribute and the category field of __geo3d_annotation_boxes have no reader (the browser oracle reads the category from the payload)",
+     "replacement": "nothing", "net_lines": -1, "class": "SAFE_TO_DELETE", "applied": true},
+    {"where": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:L1790", "tag": "delete",
+     "finding": "class la-so-do: no CSS rule, no reader",
+     "replacement": "${a.category === \"result\" ? \" la-ket-qua\" : \"\"}", "net_lines": 0, "class": "SAFE_TO_DELETE", "applied": true},
+    {"where": "frontend/src/simulations/domains/geometry/scene3d-view.tsx:vungCheKhung", "tag": "delete",
+     "finding": "typeof document guard in a function called only from the per-frame render loop (never without a DOM)",
+     "replacement": "nothing", "net_lines": -1, "class": "SAFE_TO_DELETE", "applied": true},
+    {"where": "frontend/src/simulations/domains/geometry/scene3d-model.ts:QuantityAnnotation.kind", "tag": "yagni",
+     "finding": "member \"angle\": the backend registers no angle anchor (_DO) and never emits it",
+     "replacement": "drop the member", "net_lines": 0, "class": "SIMPLIFY_NOW", "applied": true},
+    {"where": "frontend/scripts/compiler-scene-replay-lib.mjs:_vungThietDien", "tag": "shrink",
+     "finding": "(hop ?? []) behind a parameter whose default is already []",
+     "replacement": "hop.every(…)", "net_lines": 0, "class": "SIMPLIFY_NOW", "applied": true},
+    {"where": "frontend/scripts/compiler-scene-suite.mjs:annotationsMustShow", "tag": "shrink",
+     "finding": "a fake viewport { width: 0 } passed to obtain results-only",
+     "replacement": "annotationsMustShow(scene, ids, chiKetQua) — callers pass the intent (viewport.width < 768, or true when resized)",
+     "net_lines": 0, "class": "SIMPLIFY_NOW", "applied": true}
+  ],
+  "kept_on_purpose": [
+    "compiler-scene-replay-lib.mjs:expectedAnnotationIds / annotationWorldAnchor repeat the rules of scene3d-annotations.ts — the browser oracle must stay independent of the product module (REQUIRED_KEEP)",
+    "assessCausalRestore.camera_reset / selection_reset duplicate two reason codes — the brief asks camera, selection and scroll to be recorded separately (REQUIRED_KEEP)",
+    "Scene3DExplorer.tsx: two near-identical chip buttons — a config array + map saves ~6 lines but hides two fixed affordances behind indirection (REQUIRED_KEEP)"
+  ],
+  "net_lines": -6,
+  "found_alongside_out_of_scope": "quantity_annotations.py module docstring and its CODE_INDEX row still said 'góc → cặp' after the Task 6 ruling removed angle anchors — corrected in the same commit (documentation only)",
+  "verification": "pytest tests/geometry/test_shape_constraint.py test_assumption_certificate.py test_scene3d_annotations.py test_refusal_cause.py → 277 passed; vitest src/simulations/domains/geometry → 572 passed; tsc -b clean; node harness 59/59"
+}

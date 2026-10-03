@@ -483,7 +483,7 @@ export interface SceneFormation {
 
 /** W17 §15.4 — gắn kết đại lượng ↔ chủ thể hình học (backend sở hữu nghĩa). */
 export interface QuantityAnnotation {
-  kind: "length" | "area" | "volume" | "distance" | "angle";
+  kind: "length" | "area" | "volume" | "distance";
   /** `result` = đích của đề (hoặc thứ một đích trỏ tới); còn lại `measurement`. */
   category: "measurement" | "result";
   /** Id vật/điểm CÓ trong cảnh. */
