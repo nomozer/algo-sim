@@ -164,3 +164,56 @@ def test_dien_dat_ngoai_tu_vung_khong_phat(text, kind_cam):
 
 def test_de_rong_khong_phat():
     assert _doc("") == ()
+
+
+# ── phần dữ kiện CHƯA ĐỌC TRỌN (§7, đính chính Task 6) ──────────────────────
+#
+# DEPENDENT nói "đề không cho kích thước này" — chỉ nói được khi bộ đọc đã đọc TRỌN phần
+# dữ kiện: một câu ngoài từ vựng (góc, `SA = AB`, độ dài có căn…) có thể chính là câu cho
+# kích thước ấy. `phan_chua_doc` trả các mảnh không bộ đọc nào đọc trọn; rỗng = đọc trọn.
+
+def _chua_doc(text: str) -> tuple[str, ...]:
+    return importlib.import_module("app.simulation.semantic_program.shape_constraint").phan_chua_doc(text)
+
+
+CHOP_KHONG_SA = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. "
+                 "Cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC.")
+
+
+@pytest.mark.parametrize("text", [
+    CHOP_KHONG_SA,
+    "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3. Cạnh bên SA vuông góc với mặt phẳng đáy. "
+    "Tính thể tích khối chóp S.ABCD.",
+    "Cho hình lăng trụ đứng có đáy là hình vuông cạnh 3. Tính thể tích khối lăng trụ đứng đó.",
+])
+def test_phan_chua_doc_rong_khi_moi_cau_duoc_doc(text):
+    """Mọi mảnh nằm trong span của bộ đọc hoặc là một độ dài số đọc được; còn lại chỉ từ
+    nối không mang số đo. Phần câu hỏi (từ `Tính`) không tính."""
+    assert _chua_doc(text) == ()
+
+
+@pytest.mark.parametrize("cau", [
+    "Góc giữa SB và mặt phẳng đáy bằng 45°",
+    "SA = AB",
+    "Tam giác SAB vuông cân tại A",
+    "SB = 3√2",
+    "Thể tích khối chóp bằng 6",
+    "Chiều cao gấp đôi cạnh đáy",
+])
+def test_cau_ngoai_tu_vung_de_lai_phan_chua_doc(cau):
+    text = CHOP_KHONG_SA.replace("vuông góc với đáy.", f"vuông góc với đáy. {cau}.")
+    assert _chua_doc(text) != (), text
+
+
+@pytest.mark.parametrize("text", [
+    # "cân": bộ đọc chỉ phát right_triangle, bỏ AB = AC
+    "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, AB = 3. Cạnh bên SA vuông góc với đáy. "
+    "Tính thể tích khối chóp S.ABC.",
+    # "đều": danh từ khối được đọc, tính đều bị bỏ
+    "Cho hình lăng trụ đứng tam giác đều ABC.DEF có AB = 3. Tính thể tích khối lăng trụ ABC.DEF.",
+    # cạnh của đáy KHÔNG vuông: span nuốt "cạnh 3" nhưng không phát giá trị
+    "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật cạnh 3. Cạnh bên SA vuông góc với đáy, SA = 4. "
+    "Tính thể tích khối chóp S.ABCD.",
+])
+def test_thong_tin_bi_bo_trong_span_tinh_la_chua_doc(text):
+    assert _chua_doc(text) != (), text

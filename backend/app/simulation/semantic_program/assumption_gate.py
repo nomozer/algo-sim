@@ -35,7 +35,7 @@ from .plane_equation import bat_bien_mat_phang
 from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
 from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
-from .shape_constraint import RangBuoc, doc_rang_buoc
+from .shape_constraint import RangBuoc, doc_rang_buoc, phan_chua_doc
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -880,6 +880,15 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     thieu = [kt for kt in khuon.kich_thuoc if not _da_cho(kt, do_dai)]
     ngan = [0]
     if thieu:
+        # §7 (đính chính Task 6): phản ví dụ chỉ nói "đề không cho" khi server đã đọc trọn
+        # phần dữ kiện VÀ kiểm được mọi ràng buộc đọc được trên nhân chứng (= tiền đề khuôn).
+        chua_doc = phan_chua_doc(de)
+        da_kiem = {(r.kind, r.entities, r.value) for r in khuon.tien_de if r is not None}
+        ngoai = [r for r in rb if (r.kind, r.entities, r.value) not in da_kiem]
+        if chua_doc or ngoai:
+            return _ket_qua(UNDETERMINED, details + tien_de + [f"{khuon.loai} MISSING {kt.nhan}" for kt in thieu]
+                            + ([f"CE_TEXT_NOT_FULLY_READ {' '.join(chua_doc[:8])}"] if chua_doc else [])
+                            + [f"CE_CONSTRAINT_NOT_CHECKED {r.kind}({','.join(r.entities)})" for r in ngoai])
         for kt in thieu:
             chung, ly_do = _phan_vi_du(contract, prog, exec_res, ten_da_hoa_giai, khuon, anh_xa, V, kt, do_dai,
                                        inv, de, phu, ngan, execution_budget)

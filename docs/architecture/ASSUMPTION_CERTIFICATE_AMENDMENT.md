@@ -235,6 +235,24 @@ chiếu tính vào `NGAN_SACH_CHAY_LAI`.
 - **Phán quyết:** nhiều định nghĩa ⇒ `UNDETERMINED`; C0 hoặc C1 ⇒ `PROVEN_SAFE`; phản ví
   dụ hợp lệ ⇒ `DEPENDENT`; còn lại ⇒ `UNDETERMINED`.
 
+> **Đính chính 2026-10-03 (W15 Task 6, sau census vòng 1, trước khi nối route).** Luật hợp
+> lệ ở trên chỉ kiểm cái server ĐỌC ĐƯỢC, nên nó chưa đủ để nói "đề không cho": một phép dò
+> tìm ra hai lỗ, cả hai đều cho `DEPENDENT` trên chương trình ĐÚNG mà corpus đăng ký không
+> có hàng nào thuộc lớp ấy (`diagnostics/logs/RED_UNREAD_TEXT.log`).
+> (i) Đề cho kích thước thiếu bằng một câu NGOÀI từ vựng — `góc giữa SB và mặt phẳng đáy
+> bằng 45°`, `SA = AB`, `tam giác SAB vuông cân tại A`, `SB = 3√2` — phép kéo phá câu ấy mà
+> không ai kiểm. (ii) Một `RangBuoc` đọc được nhưng KHÔNG là tiền đề của khuôn (`AC ⊥ BD`
+> trên đáy chữ nhật ⇒ hình vuông) không được kiểm trên nhân chứng, trái câu "mọi `RangBuoc`
+> đều thoả" ở trên. Luật bổ sung, áp TRƯỚC mọi phép kéo: phản ví dụ chỉ được thử khi
+> `shape_constraint.phan_chua_doc` rỗng — phần dữ kiện (trước `Tính`) sau khi xoá span của
+> bộ đọc và câu độ dài số (`segment_relation.MAU_DO_DAI`) chỉ còn từ nối `cho · có · và ·
+> cạnh · bên`, không span nào nuốt thông tin nó bỏ (`đều`, `cân`, cạnh của đáy không vuông)
+> — VÀ mọi `RangBuoc` của đề nằm trong tiền đề của khuôn. Không thoả ⇒ `UNDETERMINED`
+> (detail `CE_TEXT_NOT_FULLY_READ` / `CE_CONSTRAINT_NOT_CHECKED`): vẫn từ chối, lời "chưa
+> chứng minh", không bao giờ nêu một kích thước đề thực ra đã cho. `PROVEN_SAFE` không đổi:
+> tiền đề C0/C1 là tập con của đề, câu đề thêm chỉ thu hẹp cấu hình. Census chạy lại trên
+> cổng đã sửa (vòng 2) cùng lớp bổ sung `assumption_corpus_w15b`.
+
 ## 8. Phạm vi chứng nhận
 
 **Được chứng nhận:** sáu họ khi đề cho đủ kích thước (T1–T6); bài cho toạ độ (C0), kể cả

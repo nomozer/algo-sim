@@ -26,7 +26,7 @@ import re
 from dataclasses import dataclass
 from fractions import Fraction
 
-from .segment_relation import _phan
+from .segment_relation import MAU_DO_DAI, _chuan, _phan
 from .source_entities import dinh_danh_thuc_the
 
 
@@ -202,4 +202,30 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
     if khoi is not None:
         for m in _CHIEU_CAO.finditer(du_kien):
             phat("height", khoi[0], _phan(m.group("so")), m.start(), m.end())
+    return tuple(ra)
+
+
+#: Từ được phép còn lại khi phần dữ kiện đã đọc trọn — không từ nào mang số đo.
+_TU_NOI = frozenset({"cho", "có", "và", "cạnh", "bên"})
+#: Thông tin mà một span ĐÃ NUỐT nhưng không phát: tính đều của khối, tính cân của tam giác.
+_TU_BI_BO = re.compile(rf"(?<![A-Za-zÀ-ỹ])(?:đều|cân){_HET_CHU}", re.I)
+
+
+def phan_chua_doc(problem_text: str | None) -> tuple[str, ...]:
+    """Mảnh của phần dữ kiện (trước `Tính`) mà không bộ đọc nào đọc TRỌN; rỗng ⇔ đọc trọn.
+
+    `assumption_gate` (§7, đính chính Task 6) chỉ kết luận DEPENDENT — "đề không cho kích
+    thước này" — khi phần dữ kiện đọc trọn: một câu ngoài từ vựng (góc, `SA = AB`, độ dài
+    có căn…) có thể chính là câu cho kích thước ấy. Đã đọc = span của `doc_rang_buoc` + câu
+    độ dài số (`segment_relation.MAU_DO_DAI`); còn lại chỉ được là từ nối `_TU_NOI`.
+    """
+    de = (problem_text or "").replace("′", "'").replace("’", "'")
+    du_kien = de[:t.start()] if (t := _TINH.search(de)) else de
+    con = list(du_kien)
+    for r in doc_rang_buoc(problem_text):
+        con[r.span[0]:r.span[1]] = " " * len(con[r.span[0]:r.span[1]])
+    sot = MAU_DO_DAI.sub(" ", _chuan("".join(con)))
+    ra = [t for t in re.findall(r"[^\W\d_]+|\d+|[^\w\s]", sot) if t.lower() not in _TU_NOI and t not in ",.;:"]
+    ra += _TU_BI_BO.findall(du_kien)
+    ra += [m.group("canh") for m in _DAY.finditer(du_kien) if m.group("canh") and _gon(m.group("loai")) != "hình vuông"]
     return tuple(ra)

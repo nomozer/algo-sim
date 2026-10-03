@@ -1,0 +1,20 @@
+W15 Task 6 — RED before the fully-read rule (HEAD ae64946b, gate cf57332b, 0 model calls)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:176: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'phan_chua_doc'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:182: AssertionError: ('Góc giữa SB và mặt phẳng đáy bằng 45°', status=DEPENDENT_ON_UNSTATED_ASSUMPTION ...
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:182: AssertionError: ('SA = AB', status=DEPENDENT_ON_UNSTATED_ASSUMPTION ...
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:182: AssertionError: ('Tam giác SAB vuông cân tại A', status=DEPENDENT_ON_UNSTATED_ASSUMPTION ...
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:182: AssertionError: ('SB = 3√2', status=DEPENDENT_ON_UNSTATED_ASSUMPTION ...
+16 failed, 2 passed, 119 deselected in 0.78s
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:208: AssertionError: status=DEPENDENT_ON_UNSTATED_ASSUMPTION ...
+1 failed, 88 deselected in 1.15s

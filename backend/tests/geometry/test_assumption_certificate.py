@@ -159,6 +159,52 @@ def test_AC1_phu_thuoc_voi_nhan_chung_hop_le(kenh):
     assert m["the_tich_lang_tru"] != W.bo_nho_cuoi(W.spec_cua(raw))["the_tich_lang_tru"]
 
 
+# ── đề CHO kích thước qua một câu NGOÀI từ vựng: không bao giờ DEPENDENT (§7, đính chính) ──
+
+def _chop_SA_qua_cau(cau: str):
+    """Chóp T1 mà đề cho SA = 3 qua `cau` (bộ đọc không đọc); chương trình dựng ĐÚNG SA = 3."""
+    payload = W.chop_tam_giac_payload()
+    payload["input_facts"] = [f for f in payload["input_facts"] if f["label"] != "SA"]
+    ct = W.hop_dong(W.CHOP_TAM_GIAC_TEXT.replace("SA = 5", cau), payload)
+    raw = W.chuong_trinh(W.chop_tam_giac()[1])
+    raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] != "SA_length"]
+    _dat_diem(raw, "S", [0, 0, 3])
+    return ct, raw
+
+
+@pytest.mark.parametrize("cau", ["Góc giữa SB và mặt phẳng đáy bằng 45°", "SA = AB",
+                                 "Tam giác SAB vuông cân tại A", "SB = 3√2"])
+def test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc(cau):
+    """Phép kéo SA giữ mọi ràng buộc ĐỌC ĐƯỢC nhưng phá câu không đọc — nó không phải phản
+    ví dụ. Từ chối với lời "chưa chứng minh", không bao giờ "đề không cho SA"."""
+    kq = _kq(*_chop_SA_qua_cau(cau))
+    assert kq.status == CHUA_RO, (cau, kq)
+    assert any(d.startswith("CE_TEXT_NOT_FULLY_READ") for d in kq.details), kq.details
+
+
+def _chop_vuong_qua_duong_cheo():
+    """T2: đáy hình chữ nhật, AB = 3 và AC ⊥ BD — đường chéo vuông góc ⇒ hình vuông, AD = 3.
+    Bộ đọc ĐỌC được AC ⊥ BD nhưng nó không là tiền đề của khuôn; chương trình dựng đúng AD = 3."""
+    t, ct0 = W.chop_chu_nhat()
+    text = t.replace("AB = 3, AD = 4.", "AB = 3 và AC vuông góc với BD.")
+    ct = gan_bat_bien_nguon(ct0.model_copy(update={
+        "problem_text": text, "source_invariants": (),
+        "input_facts": tuple(f for f in ct0.input_facts if f.label != "AD")}), text)
+    raw = W.chuong_trinh(ct0)
+    raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] != "AD_length"]
+    _dat_diem(raw, "D", [0, 3, 0])
+    _dat_diem(raw, "C", [3, 3, 0])
+    return ct, raw
+
+
+def test_rang_buoc_doc_duoc_ngoai_khuon_khong_kiem_thi_khong_la_phu_thuoc():
+    """§7: phản ví dụ chỉ hợp lệ khi MỌI ràng buộc đọc được còn thoả trên nhân chứng; ràng
+    buộc ngoài tiền đề của khuôn không được kiểm ở đó ⇒ không có phản ví dụ."""
+    kq = _kq(*_chop_vuong_qua_duong_cheo())
+    assert kq.status == CHUA_RO, kq
+    assert any(d.startswith("CE_CONSTRAINT_NOT_CHECKED line_perp_line") for d in kq.details), kq.details
+
+
 # ── quan hệ chỉ có trong analyze, đề IM LẶNG: không dùng được (test (10) thực chất) ──
 
 TEXT_IM_LANG = T.PRISM_TEXT.replace("lăng trụ đứng", "lăng trụ")

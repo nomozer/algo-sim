@@ -90,6 +90,9 @@ _SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
 #: (`AB dài hơn 5`, `AB dài gấp 2 lần CD` không đọc).
 _NOI_DO_DAI = r"(?:=|bằng|dài|có\s+độ\s+dài)"
 _NHAN_TRUOC_SO = re.compile(rf"({_D})({_D})\s*{_NOI_DO_DAI}\s*$")
+#: Câu độ dài SỐ trên câu đã `_chuan` — mẫu của `_moi_doan_co_do_dai`; `shape_constraint.
+#: phan_chua_doc` xoá đúng những câu này khỏi phần dữ kiện (cùng một mẫu, không chép).
+MAU_DO_DAI = re.compile(rf"(?<![A-Za-z0-9])({_D})({_D})\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}")
 
 
 def nhan_doan_truoc(tien_to: str) -> tuple[str, str] | None:
@@ -228,8 +231,7 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
     """
     thay: dict[frozenset, set[Fraction]] = {}
     for van in manh:
-        for m in re.finditer(
-                rf"(?<![A-Za-z0-9])({_D})({_D})\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}", van):
+        for m in MAU_DO_DAI.finditer(van):
             if (q := _phan(m.group(3))) is not None:
                 thay.setdefault(frozenset({m.group(1), m.group(2)}), set()).add(q)
     return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
