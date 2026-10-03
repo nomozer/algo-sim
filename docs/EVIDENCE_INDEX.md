@@ -59,6 +59,8 @@ W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (w12 → READY_FOR_HUMAN_V
 W13_GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_ARCHITECTURE_PREREGISTRATION (w13, chỉ tài liệu → ARCHITECTURE_PREREGISTRATION_READY; không ảnh mới nên không SUPERSEDED_FOR_HUMAN_VERDICT)
   ▼ thực hiện tiền đăng ký · trả lời review w12 · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w12)
 W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14 → FORMATION_FOUNDATION_INCOMPLETE; Track B ASSUMPTION_POLICY_INCOMPLETE; chưa có review người)
+  ▼ CORRECTED_BY (Track B: nguyên nhân gốc RC1–RC5 rồi đóng cổng; W15-D1 giải W14-D1) · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w14)
+W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -787,9 +789,30 @@ W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14 → FORMATION_FOUNDATION_IN
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 548f5b3b… -> 40263983…, 105 files, frozen once at a2af56e4)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 105 -> 106; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE — w15 traced every Track B failure of this run to a root cause (RC1 coordinates classed as model realisation, RC2 `claimed` relations, RC3 stale demo contracts, RC4/RC5 invalid counterexample witnesses) and shipped the gate; decision W15-D1 settles W14-D1 (a refused program is not in the enforced formation set). This run's files stay byte-identical.
 - **CORRECTS:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE (answers its human review W12-H1…H4, as preregistered in w13)
 - **SUPERSEDES:** W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE for the human verdict only (w12, w13, the occlusion wave and the frozen registry remain byte-identical); nothing superseded inside this run
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_40263983 — not visual acceptance (no human review yet). Formation by shape class for compiler and LLM programs (six families and served gold COMPLETED; the refused gold negative n2 AMBIGUOUS_TOPOLOGY); assumption gate NOT shipped — the census is a corpus result inside the certificate scope (C0 ∪ C1 over PHEP_DO_C1), never a soundness proof; the frozen hidden-line expectations do not transfer to the four scenes S4 changed.
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE — w15 changes what the cross-section shows (the closed fill) and measures a new candidate; a reviewer judges the w15 images.
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_40263983 — not visual acceptance (no human review yet). It was the latest product measurement until w15 (candidate b3b7eb79, measurement c57ebd1b); it stays valid for candidate 40263983. Formation by shape class for compiler and LLM programs (six families and served gold COMPLETED; the refused gold negative n2 AMBIGUOUS_TOPOLOGY); assumption gate NOT shipped — the census is a corpus result inside the certificate scope (C0 ∪ C1 over PHEP_DO_C1), never a soundness proof; the frozen hidden-line expectations do not transfer to the four scenes S4 changed.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/FILMSTRIP.png` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/S4_INVENTORY_AT_380db58c.json` · `diagnostics/OCCLUSION_TRANSFER_DIAGNOSTIC.json` · `diagnostics/ASSUMPTION_CENSUS.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION.json` · `diagnostics/SOURCE_GROUNDING_PHRASING_PROBE_W14.json` · `diagnostics/PROOF_CACHE_ROW_W14.json` · `diagnostics/TRUST_POLICY_CALLERS.json` · `diagnostics/WORKTREE_CLEANUP.json` · `inputs/W14_SCOPE_DECISIONS.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE
+- **DATE:** 2026-10-02 … 2026-10-03
+- **REPORT:** docs/evaluation/geometry/runs/w15-assumption-closure/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w15-assumption-closure/
+- **START_BASE:** 4f6a0ab6
+- **CODE_COMMIT:** 5dd8e7f5 (solid_faces) · cf57332b (reader + certificate) · 6fa6e582 (fully-read counterexample) · 2305f072 (phrasings, scope) · a1b17fef (symbol-key binding) · 45d014b0 (route wiring, U3) · 33b11a79 (U5) · 8239a2a4 (section fill) · 0579d559 (cache) · d41176f2 (review simplifications) · 909a3a2d (section fill without depth test) · 41a26f11 (final-review soundness fix; last product commit)
+- **MEASUREMENT_COMMIT:** c57ebd1b4b34abe14947a97d8169dfead99ab622
+- **EVIDENCE_COMMIT_ROLE:** 23cc880a (supersedes 751169dd, measured at e5b88647 on the intermediate candidate aaa5b5bd)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 40263983… -> b3b7eb79…, 107 files; frozen three times — d41176f2 and 909a3a2d gave the intermediate aaa5b5bd…, 41a26f11 gave b3b7eb79)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 106 -> 107 in 0579d559, real-row proof; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (Track B root causes RC1–RC5 and the shipped gate; W15-D1 settles W14-D1)
+- **SUPERSEDES:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION for the human verdict only; inside this run, the evidence of 751169dd (M2) is superseded by 23cc880a (M3) after the final-review fix, and the failed first browser attempt is kept apart in `diagnostics/browser-attempt1-c1638891/`
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_b3b7eb79 — not visual acceptance (human review NOT_APPROVED). The assumption certificate (C0 ∪ C1 over volume/area/distance, closed vocabulary) is a corpus result inside the registered scope, never a general soundness proof; enforcement covers polyhedral texts only (U3).
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/FILMSTRIP.png` · `images/<family>/SHEET.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/ASSUMPTION_CENSUS_W15_R3.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION_W15_R3.json` · `diagnostics/TRACK_B_ROOT_CAUSE_TABLE.json` · `diagnostics/GOLD_ROW_VERIFICATION.json` · `diagnostics/PROOF_CACHE_ROW_W15.json` · `diagnostics/logs/FAULT_INJECTION_ASSUMPTION_GATE_FINAL.log` · `diagnostics/PONYTAIL_REVIEW.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/W15_SCOPE_DECISIONS.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

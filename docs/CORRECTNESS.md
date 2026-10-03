@@ -81,8 +81,9 @@ Gộp hai cái làm một là báo cáo sai năng lực của chính hệ theo h
 nói "không làm được" về một bài vừa chạy xong. Đó cũng là chỗ hai chỉ số
 đồng-primary của đề tài tách nhau (`STATUS_LEDGER §0-2026-08-20`).
 
-**`servable=false` KHÔNG phải một nhóm đồng nhất.** Bốn nguyên nhân, khác hẳn
-nhau về bản chất, và chỉ nguyên nhân đầu mới là "thiếu cách kiểm chứng":
+**`servable=false` KHÔNG phải một nhóm đồng nhất.** Bốn nguyên nhân gốc (thêm một
+cổng thứ năm từ W15), khác hẳn nhau về bản chất, và chỉ nguyên nhân đầu mới là
+"thiếu cách kiểm chứng":
 
 | cổng | ý nghĩa khi trượt |
 |---|---|
@@ -90,6 +91,7 @@ nhau về bản chất, và chỉ nguyên nhân đầu mới là "thiếu cách 
 | C₁b | có đường tạo witness nhưng **lượt chạy không đi qua** (nhánh chết) |
 | C₂ | chương trình **tự mâu thuẫn** với nghĩa vụ nó tự khai |
 | binding/compile | không dựng nổi bề mặt thị giác từ trace |
+| `assumption` (W15) | `DEPENDENT`: đã CHỨNG MINH đáp số đổi theo một kích thước đề **không cho** (thiếu ở đề hoặc chương trình tự đặt — không phải hệ thiếu công cụ); `UNDETERMINED`: hệ **chưa chứng minh** được đáp số chỉ phụ thuộc dữ kiện đề — gần nghĩa `verification_gap`, nhưng mã là `INPUT_NOT_GROUNDED` và lời từ chối nói đúng điều ấy |
 
 C₁b và C₂ chứng minh chương trình **hỏng**, không phải hệ thiếu công cụ. Gọi cả
 bốn là `verification_gap` là báo cáo sai.
@@ -114,6 +116,21 @@ bốn là `verification_gap` là báo cáo sai.
    LAYOUT_DERIVED — cả hai không phải GIVEN. Giới hạn còn mở: kênh toạ độ giả
    thiết có thể cố định một kích thước đề không cho
    (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`); bất biến kiến trúc #36.
+
+   **Từ W15 (2026-10-03), trong vùng đa diện, "served" còn có nghĩa: mọi giá trị số
+   học sinh thấy đều có chứng chỉ giả định.** Có hai loại chứng chỉ. C0: mọi literal
+   trên lát cắt của giá trị là dữ kiện đề của CÙNG thực thể, đọc tại định nghĩa với tới
+   duy nhất. C1: một khuôn T1–T6 khớp ràng buộc server đọc từ CÂU ĐỀ, áp cho thể tích,
+   diện tích, khoảng cách. Chú thích quan hệ của mô hình không bao giờ là tiền đề; toạ
+   độ bố cục chỉ được làm "biên khuôn", tức vị trí mà ràng buộc khuôn kiểm lại. Không có
+   chứng chỉ thì không phục vụ: phụ thuộc đã chứng minh ⇒ `ASSUMPTION_DETERMINES_ANSWER`;
+   chưa chứng minh ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`. Bảo đảm này **chỉ** trong vùng
+   thi hành (đề nêu khối đa diện theo từ vựng đóng, quyết định U3); ngoài vùng hệ ghi
+   trạng thái mà vẫn phục vụ như trước. Nó là kết quả trên corpus trong phạm vi đã
+   đăng ký, không phải chứng minh tổng quát: lối viết ngoài từ vựng bị từ chối dù đề
+   xác định đáp số. Thẩm quyền:
+   [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md);
+   bất biến kiến trúc #37.
 3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
    bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu

@@ -112,6 +112,30 @@ năng lực sản phẩm từ `product_capability.py` và bằng chứng đo.
 
 Nguồn: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/` (`REPORT.md`).
 
+✅/⚠️ **Cập nhật 2026-10-03 (w15, offline, 0 lượt gọi; chưa có duyệt người):**
+
+- **Kênh giả định — tuyên bố được phép.** Thay mục "KHÔNG có cổng" của w14, nhưng CHỈ
+  trong vùng sau: với đề nêu khối đa diện theo từ vựng đóng, sản phẩm chỉ phục vụ giá trị
+  số CÓ CHỨNG CHỈ. C0: mọi literal là dữ kiện đề của cùng thực thể. C1: khuôn T1–T6 cho
+  thể tích, diện tích, khoảng cách. Đáp số phụ thuộc một kích thước đề không cho bị từ
+  chối. Số đo: hai phép dò W12 bị từ chối, AC1 3/3 và đối kháng 7/7 bị từ chối, AC2 18/18
+  vẫn được phục vụ, 11 phản ví dụ sai của w14 còn 0. Phạm vi tuyên bố: 111 hàng corpus
+  (W14 48 + W15 49 + W15B 14) của census vòng 3 —
+  `docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W15_R3.json`.
+  Đây **không** phải chứng minh đúng đắn tổng quát: đánh giá cuối toàn nhánh còn tìm
+  ra một lỗ ngoài corpus (đã sửa ở `41a26f11`).
+- **KHÔNG được nói "mọi đáp số đều có chứng chỉ".** Ngoài vùng đa diện (đoạn thẳng,
+  hình phẳng, khối cong không theo từ vựng), cổng chỉ ghi, không từ chối (quyết định
+  U3). Lối viết ngoài từ vựng (góc, `SA = AB`, `vuông cân`, độ dài có căn, tỉ số viết
+  `thuộc cạnh`) bị từ chối dù đề xác định đáp số. Góc và cos² nằm ngoài C1.
+- **Phần tô thiết diện.** Vùng thiết diện khép kín nay phân biệt được với mặt phẳng cắt
+  và khối: ΔE nhỏ nhất ≥ 25 trên mọi mẫu, ngưỡng đăng ký trước là 12. Chưa ai duyệt
+  bằng mắt.
+- **Dựng hình.** Tuyên bố w14 giữ nguyên. Ca âm gold n2 là chương trình bị từ chối
+  đúng, ngoài tập dựng hình bắt buộc (quyết định W15-D1 của brief).
+
+Nguồn: `docs/evaluation/geometry/runs/w15-assumption-closure/` (`REPORT.md`).
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

@@ -11,9 +11,10 @@
 - **evidence:** `backend/app/simulation/geometry_compiler/compiler.py` (`bien_dich` ~917, `_bien_dich_prism` ~1046, `_bien_dich_rectangular_pyramid` ~1153, `_bien_dich_cuboid` ~1315); `docs/evaluation/geometry/runs/w13-geometry-preregistration/inputs/W12_HUMAN_VISUAL_REVIEW.json`; inventory item NA-18.
 - **impact:** Formation quality depends on which family a problem lands in; patching the two families alone would repeat the defect for every new shape.
 - **scope:** `backend/app/simulation/geometry_compiler/`, trace events / `scene3d` formation.
-- **status:** PARTIAL (w14, `44f2dd32`) — one shape-class completion pass (`semantic_program/formation.py::hoan_thien_dung_hinh`, face-table leaf `solid_faces.py`) runs in `route.verify_and_compile` and `pipeline._dung_scene3d` for compiler **and** LLM programs; the compiler no longer hand-writes height, lateral or top statements; roles are produced in `simulation_state` and only carried by `scene3d`; an AST guard forbids family branches. Measured at `380db58c`: role coverage 12/12 (six families × desktop/mobile) against an independent expectation, playback 12/12 × 19, filmstrips in `docs/evaluation/geometry/runs/w14-generic-formation-assumption/images/<family>/FILMSTRIP.png`; served gold p1, p2 `COMPLETED`, answers unchanged. **Not closed:** the refused thesis-gold negative `n2_khoi_ghep_bu_can_boolean` (an untyped box) stays `AMBIGUOUS_TOPOLOGY` — the enforced set as written includes it (user decision W14-D1 in the run's `HANDOFF.md`); the frozen hidden-line expectations no longer transfer to the four scenes S4 changed (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). No human has reviewed the new formation.
+- **status:** RESOLVED (w15, decision W15-D1 of the brief) — a program the product refuses and for which no learner scene exists is not required to show a complete formation. The gold negative `n2_khoi_ghep_bu_can_boolean` keeps its job of being refused correctly: at `structural_coverage` with `REQUESTED_OPERATION_UNCOVERED`, structured fields filled, and no answer or scene (`tests/geometry/test_product_response_contract.py::test_n2_bon_truong_cau_truc_NHAT_QUAN`, green in T3 at `c57ebd1b`). Its untyped box is not guessed into `COMPLETED`, and no composite geometry was built for it. The w14 formation pass is kept unchanged: six families × desktop/mobile role coverage 12/12 and playback 12/12 × 19 at `c57ebd1b` (`docs/evaluation/geometry/runs/w15-assumption-closure/`). The four scenes it changed still need a person (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
+- **w14:** PARTIAL (w14, `44f2dd32`) — one shape-class completion pass (`semantic_program/formation.py::hoan_thien_dung_hinh`, face-table leaf `solid_faces.py`) runs in `route.verify_and_compile` and `pipeline._dung_scene3d` for compiler **and** LLM programs; the compiler no longer hand-writes height, lateral or top statements; roles are produced in `simulation_state` and only carried by `scene3d`; an AST guard forbids family branches. Measured at `380db58c`: role coverage 12/12 (six families × desktop/mobile) against an independent expectation, playback 12/12 × 19, filmstrips in `docs/evaluation/geometry/runs/w14-generic-formation-assumption/images/<family>/FILMSTRIP.png`; served gold p1, p2 `COMPLETED`, answers unchanged. **Not closed:** the refused thesis-gold negative `n2_khoi_ghep_bu_can_boolean` (an untyped box) stays `AMBIGUOUS_TOPOLOGY` — the enforced set as written includes it (user decision W14-D1 in the run's `HANDOFF.md`); the frozen hidden-line expectations no longer transfer to the four scenes S4 changed (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). No human has reviewed the new formation.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** `COMPLETE_SHAPE_CLASS_FORMATION` (after W14-D1), then human re-review
+- **suggested_wave:** — (resolved; human re-review of the changed scenes is tracked in `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`)
 - **default_switch_blocker:** NO
 - **acceptance:** S1–S3 of the preregistration: every pyramid/prism family shows the required semantic roles as separate observable steps from one code path, with no branch on a family ID.
 - **verify:** the semantic-coverage tests and AST guard named in the preregistration.
@@ -355,14 +356,15 @@
 - **evidence:** `docs/evaluation/geometry/runs/w12-pedagogical-grounding-closure/diagnostics/logs/ASSUMPTION_CHANNEL_PROBE_79eb1e59.log` (offline, 0 model calls): prism text without "AD = 5" — the program with the `AD_length` GIVEN is refused (`GIVEN_VALUE_NOT_IN_SOURCE`); the same placement through `LAYOUT_DERIVED` vertices or through `model_assumption` is served with `V = 30`.
 - **impact:** A hallucinated dimension can still surface as a coordinate choice on the LLM route. It is never labelled as given by the problem, and the compiler route does not use this channel.
 - **scope:** `backend/app/simulation/semantic_program/` (which free coordinate choices may carry a metric the text does not state).
-- **status:** OPEN — found in w12; changing what a layout or an assumption may decide is a separate grounding-policy decision, measured separately.
+- **status:** PARTIAL (w15) — CLOSED inside the polyhedral scope, RECORDED but not refused outside it. A server-owned constraint reader (`semantic_program/shape_constraint.py`, closed vocabulary) and the assumption certificate (`semantic_program/assumption_gate.py`: C0 · C1 templates T1–T6 · counterexample from a fully read text) are wired into the route as stage `assumption`. In scope (U3: the text names a polyhedral solid in the vocabulary), only `PROVEN_SAFE` is served. `DEPENDENT` is refused `ASSUMPTION_DETERMINES_ANSWER` and names the missing quantity; `UNDETERMINED` is refused `ASSUMPTION_INVARIANCE_UNPROVEN`. Neither is sent to repair. Multiple reaching definitions are refused in every scope (U5). Remainder: on texts outside that scope (segments, planar figures, curved solids without the vocabulary) the gate records `assumption_enforced = false` and the pre-W15 behaviour stays (user decision U3, `docs/evaluation/geometry/runs/w15-assumption-closure/inputs/W15_SCOPE_DECISIONS.json`; enforcing there today refuses about 170 served, text-determined cases outside C0/C1).
+- **w15:** measured at `41a26f11`/`c57ebd1b`: AC2 **18/18** `PROVEN_SAFE` (8 C0, 10 C1) and served; the probe's `LAYOUT_DERIVED` and `model_assumption` variants refused at `assumption` (`ASSUMPTION_DETERMINES_ANSWER`, AD); AC1 3/3 and adversarial 7/7 refused; W14's 11 false counterexamples → 0; census round 3 SHIP (`diagnostics/ASSUMPTION_MECHANISM_DECISION_W15_R3.json`); `CACHE_VERSION` 106 → 107 (`0579d559`, real rows). Corpus result inside the registered scope (`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md`), not a general proof — the final self-review still found one hole (fixed in `41a26f11`).
 - **w13:** policy and acceptance criteria preregistered (`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md` §3: GIVEN_VALUE / DERIVED_VALUE / MODEL_ASSUMPTION / VISUAL_DEFAULT, rules P1–P6, AC1–AC7); w12 human review lists this issue as W12-H4.
 - **w14:** STILL OPEN — Track B stopped (`ASSUMPTION_POLICY_INCOMPLETE`). A three-valued gate (certificates C0/C1 ⇒ `PROVEN_SAFE`, validated counterexample ⇒ `UNSAFE`, else `UNDETERMINED`, both refused) was measured on a corpus hand-labelled before any mechanism ran: 0 `PROVEN_SAFE` on DEPENDS rows and every AC1/adversarial row refused, but **0/18** contract-bearing gold rows certified (C1 blocked: the compiler families' relations cite facts not confirmed as InputFacts; LLM gold/demo programs are not compiler-recognized), and the counterexample search raised 11 false counterexamples on invariant rows. No gate shipped; the probe's two variants are still served; 16 gate tests are strict xfail. Corpus result inside the certificate scope only, not a soundness proof. Evidence: `docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/ASSUMPTION_CENSUS.json`, `ASSUMPTION_MECHANISM_DECISION.json`, `ASSUMPTION_COUNTEREXAMPLES.md`. Next: user decision W14-D2 (certificate scope).
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** after user decision W14-D2 (`USER_DECISION_ON_ASSUMPTION_CERTIFICATE_SCOPE`); W14 Track B stopped
+- **suggested_wave:** after human review of w15 — user decision W15-H2 (enforcement outside the polyhedral vocabulary needs more certificate coverage first, `ISSUE-ARCH-SHAPE-CONSTRAINT-VOCABULARY-COVERAGE`)
 - **default_switch_blocker:** NO (an argument for compiler-first)
 - **acceptance:** a dimension that the answer depends on is either stated in the text, derived from stated facts, or shown to the learner as an assumption; the probe's layout and assumption variants are refused or labelled.
-- **verify:** rerun the script embedded in the probe log.
+- **verify:** rerun the script embedded in the probe log; `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_gate.py tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py -q`; census: `backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15_r2.py <next round>`.
 
 ### ISSUE-OPS-OFFLINE-SAMPLES-STALE
 - **description:** `frontend/src/data/geometry-samples.json` (offline demo problems) is no longer what `backend/scripts/build_geometry_samples.py` produces from the current product, and the drift test its header names (`frontend/src/data/geometry-samples.test.ts`) does not exist.
@@ -406,10 +408,47 @@
 - **impact:** For those four scenes the hidden-line gate cannot be green without a person; no visibility regression is measured.
 - **scope:** Evaluation evidence (human registry); no product code.
 - **status:** OPEN — needs human re-review of the four scenes and a new registry layer (the reviewed registry stays byte-identical).
+- **w15:** with the opt-in flag `--pending-human-review` (user decision U2), the four scenes count as `HUMAN_REVIEW_PENDING`, not as failures. That holds only while the independent oracle reproduces the reviewed sets at the registered and at the new camera and the product equals the oracle on every state; anything else is still a failure. Measured at `c57ebd1b`: verdict `HUMAN_REVIEW_PENDING`, product = oracle 24/24, cuboid and cube `DECLARED_CAMERA_CHANGE` (`docs/evaluation/geometry/runs/w15-assumption-closure/results/OCCLUSION_MEASUREMENT.json`). The cross-section's closed fill is now visible, so the reviewer also sees that change. Automation writes no `APPROVED_BY_USER`.
 - **owner_class:** EVALUATION
-- **suggested_wave:** human visual re-review (W14-D3)
+- **suggested_wave:** `HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE` (W15-H1)
 - **default_switch_blocker:** NO
 - **acceptance:** a reviewed registry layer for the current scenes; the occlusion measurement passes against it.
-- **verify:** `measure_scene3d_occlusion.py` with the new registry (command at the top of `diagnostics/logs/OCCLUSION_380db58c.log` in the w14 run).
+- **verify:** `measure_scene3d_occlusion.py` with the new registry (command at the top of `diagnostics/logs/OCCLUSION_c57ebd1b.log` in the w15 run).
+
+### ISSUE-ARCH-SHAPE-CONSTRAINT-VOCABULARY-COVERAGE
+- **description:** The assumption certificate's premises come only from what `shape_constraint.doc_rang_buoc` and the existing text-invariant builders read, in a closed vocabulary. A polyhedral problem whose text determines the answer in another phrasing gets no certificate and is refused `ASSUMPTION_INVARIANCE_UNPROVEN` (fail-closed). Examples: an angle (`góc giữa SC và đáy bằng 45°`), an equality of segments (`SA = AB`), `vuông cân`, a length with a radical (`SB = 3√2`), a division ratio written `M thuộc cạnh AB …`, or a regular solid without coordinates. The reader also reads perpendicularity phrases anywhere in the text, so a `Chứng minh …` claim acts as a premise, which is a true consequence in a consistent problem.
+- **evidence:** `docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_corpus_w15/LABELS.json` and the `W15_OUT_OF_VOCAB` / `W15B_UNREAD_TEXT` groups of `ASSUMPTION_CENSUS_W15_R3.json` (all `UNDETERMINED`, refused); `tests/geometry/test_assumption_certificate.py` (unread-text and ratio-phrasing tests).
+- **impact:** Determined problems in those phrasings are refused inside the polyhedral scope instead of served; a learner must rephrase.
+- **scope:** `backend/app/simulation/semantic_program/shape_constraint.py`, `segment_relation.py` (division reader), `assumption_gate.py` (template table).
+- **status:** OPEN (w15) — coverage limit of the registered scope, not a soundness defect.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** user decision W15-H3, then one reader rule + one registered certificate rule per phrase
+- **default_switch_blocker:** NO
+- **acceptance:** each added phrase has a reader test (right entity, wrong entity, paraphrase), a certificate rule registered before code, and census rows labelled before the run.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_shape_constraint.py tests/geometry/test_assumption_certificate.py -q`
+
+### ISSUE-ARCH-ASSUMPTION-C0-PLANE-EQUATION-ENTITY
+- **description:** C0 accepts a plane-equation literal as `SOURCE_DATUM` when it is proportional to *some* plane equation of the text. The `plane_equation` invariant family carries no entity (`points=()`), so in a text with two planes a program could assign one plane's equation to the other plane and still pass C0.
+- **evidence:** `backend/app/simulation/semantic_program/assumption_gate.py::_vai_tro` (branch `mat_phang`), `plane_equation.bat_bien_mat_phang`; final self-review of w15 (`docs/evaluation/geometry/runs/w15-assumption-closure/REPORT.md`, limitations).
+- **impact:** A misassigned but stated plane equation is not caught by the certificate; other gates may or may not catch it. The amendment says "same entity", which holds for points, lengths and ratios.
+- **scope:** `plane_equation.py` (entity binding of the invariant), `assumption_gate.py`.
+- **status:** OPEN (w15, inherited from the w12 invariant family).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with the next grounding change
+- **default_switch_blocker:** NO
+- **acceptance:** plane invariants carry the plane's name; C0 compares the literal's owner with it; a swapped-planes test is refused.
+- **verify:** the new swapped-planes test in `tests/geometry/test_assumption_certificate.py`.
+
+### ISSUE-EVAL-ASSUMPTION-GATE-UNTESTED-GUARDS
+- **description:** Four fail-closed branches of the assumption gate are reached by no test and no census row: `TEMPLATE_CONSTRAINT_VIOLATED` (template vertices that violate the template), `FRAME_DEPENDENT` (a frame-dependent construction on a C1 slice), `CLOSURE_UNSUPPORTED_KIND` (control flow), and `FORMATION_REJECTED` in `danh_gia_doc_lap`.
+- **evidence:** w15 ponytail review mandatory check "dead branches in kiem_gia_dinh" (`docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/PONYTAIL_REVIEW.json`).
+- **impact:** Each guard refuses (never serves); a regression that deletes one would go unnoticed by the suite.
+- **scope:** `backend/tests/geometry/test_assumption_certificate.py` (tests only, no product change).
+- **status:** OPEN (w15).
+- **owner_class:** TEST HARNESS
+- **suggested_wave:** any (test-only; no refreeze)
+- **default_switch_blocker:** NO
+- **acceptance:** one test per guard, each with a fault injection that removes the guard and turns the test red.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py -q`
 
 

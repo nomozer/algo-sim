@@ -9,26 +9,24 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = COMPLETE_SHAPE_CLASS_FORMATION
-TARGET_NEXT_ACTION_AFTER_WAVE = COMPLETE_SHAPE_CLASS_FORMATION
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
 ```
 
-- **Vì sao:** W14 (run
-  [`w14-generic-formation-assumption`](evaluation/geometry/runs/w14-generic-formation-assumption/))
-  kết thúc `FORMATION_FOUNDATION_INCOMPLETE`: một bước bổ sung dựng hình theo lớp
-  hình đã chạy cho mọi chương trình (compiler lẫn LLM), sáu họ và gold p1, p2 phủ đủ
-  vai trò; chương trình duy nhất của tập bắt buộc chưa phủ là ca âm gold
-  `n2_khoi_ghep_bu_can_boolean` (bị từ chối trước và sau; hộp không có đáy định kiểu ⇒
-  `AMBIGUOUS_TOPOLOGY`). Track B dừng (`ASSUMPTION_POLICY_INCOMPLETE`), Track C đóng.
-- **Điều kiện bắt đầu:** người dùng quyết định W14-D1 — chương trình bị từ chối (không
-  hiện dựng hình) có thuộc tập bắt buộc không. **Không** ⇒ kết luận W14 thành
-  `ASSUMPTION_POLICY_INCOMPLETE`, việc kế tiếp là quyết định phạm vi chứng chỉ giả
-  định (W14-D2); **Có** ⇒ cần nguồn đáy CÓ KIỂU cho hộp như n2 (topology hợp đồng
-  của bài nhiều khối — hiện là backlog). Song song: duyệt lại bằng mắt bốn cảnh
-  S4 đổi (W14-D3, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
-- **Điều kiện dừng:** không chọn đáy bằng tên/nhãn/thứ tự đỉnh (luật tiền đăng ký
-  §2); không đổi bề mặt mô hình; automation tối đa `READY_FOR_HUMAN_VISUAL_REVIEW`;
-  không push/merge.
+- **Vì sao:** W15 (run
+  [`w15-assumption-closure`](evaluation/geometry/runs/w15-assumption-closure/)) kết thúc
+  `READY_FOR_HUMAN_VISUAL_REVIEW`. Kênh giả định đã đóng trong vùng đa diện của từ vựng
+  đóng: bộ đọc ràng buộc từ đề và chứng chỉ C0/C1 đã nối vào route (chặng `assumption`).
+  AC2 18/18 `PROVEN_SAFE`, hai phép dò W12 bị từ chối. Phần tô thiết diện khép kín nay
+  hiện và phân biệt được. Quyết định W15-D1 (brief): `n2_khoi_ghep_bu_can_boolean` là
+  chương trình bị từ chối đúng, không bắt buộc có dựng hình. Việc còn lại thuộc về NGƯỜI.
+- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w15 và duyệt bằng mắt hai
+  thứ. Một là bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`: oracle tái hiện tập đã duyệt
+  ở cả hai camera, sản phẩm = oracle (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
+  Hai là phần tô thiết diện mới. Sau đó quyết định W15-H2 (mở rộng vùng chặn ngoài đa
+  diện) và W15-H3 (mở rộng từ vựng).
+- **Điều kiện dừng:** automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ
+  vọng người; không đổi bề mặt mô hình; không push/merge.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;
   `CACHE_VERSION` quyết định bằng bằng chứng. Không mở họ mới, khối cong, nhiều
   khối hay image/OCR khi chưa có quyết định của người dùng.

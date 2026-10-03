@@ -1487,3 +1487,27 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 
 
 
+
+### WAVE_ID = W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE
+- **DATE:** 2026-10-02 → 2026-10-03
+- **START_BASE:** 4f6a0ab6
+- **CODE_COMMIT_OR_NONE:** 5dd8e7f5 (solid_faces bijection) · cf57332b (constraint reader + assumption certificate) · 6fa6e582 (fully-read counterexample rule) · 2305f072 (right-angle phrasings, polyhedral scope) · a1b17fef (symbol-key binding) · 45d014b0 (route wiring, U3) · 33b11a79 (U5) · 8239a2a4 (section fill) · 0579d559 (CACHE_VERSION 107) · d41176f2 (review simplifications) · 909a3a2d (section fill without depth test) · 41a26f11 (final-review soundness fix; last product commit)
+- **COMMITS:** Track B investigation 7b9e250b · red tests ac6687ae · scope registration and corpus labels 5f750bd6 (+ gold-row source f6cbf355) · census rounds ae64946b, d68c4f79, bb0740f7 · W15B labels 14d5e786 · fault injections 51e4177e, fbabbc2e, 5a54bfc6, bb0740f7 · harness 092df243, e59712a1 · freezes c1638891, e5b88647, c57ebd1b (measurement commit) · evidence 751169dd (superseded), 23cc880a · docs SELF
+- **CANDIDATE:** 40263983… → b3b7eb79… (107 files), frozen three times (d41176f2 and 909a3a2d → intermediate aaa5b5bd…; 41a26f11 → b3b7eb79…) · CACHE_VERSION 106 → 107 (served → rejected; fingerprint b1714b566e25c912 unchanged) · schema mirrors byte-identical
+- **EVIDENCE_COMMIT_ROLE:** 23cc880a (browser, occlusion, playback, crops, T3, gates at c57ebd1b)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w15-assumption-closure/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w15-assumption-closure/
+- **PASS:** assumption certificate wired (stage `assumption`): AC2 18/18 PROVEN_SAFE (8 C0, 10 C1) and served, both W12 probes refused, AC1 3/3 and adversarial 7/7 refused, W14's 11 false counterexamples → 0, census round 3 SHIP (§9 a–f), fault injections FI2–FI14 caught (FI1 masked as registered), 0 strict xfail left · SECTION_FILL_DISTINGUISHABLE 33.9/25.3 desktop, 33.8/25.9 mobile (thresholds 20/12, 3) · occlusion HUMAN_REVIEW_PENDING (U2; product = oracle 24/24) · playback 12/12 × 19 · browser 12/12 positive + 36/36 negative (three kinds, own codes) · T3 FULL_PRODUCT_GATE_PASS from a spaced path (pytest 6757/0, vitest 1017/1017, demo 5/5, crash surface 6/6)
+- **CLOSED:** ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE (decision W15-D1: n2 is a correctly refused program, outside the enforced formation set)
+- **OPENED:** ISSUE-ARCH-SHAPE-CONSTRAINT-VOCABULARY-COVERAGE · ISSUE-ARCH-ASSUMPTION-C0-PLANE-EQUATION-ENTITY · ISSUE-EVAL-ASSUMPTION-GATE-UNTESTED-GUARDS
+- **PARTIAL:** ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION (closed inside the polyhedral vocabulary; recorded, not refused, outside it — U3)
+- **OPEN (blocking merge of the branch):** human visual review of the four W14-changed scenes (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`, HUMAN_REVIEW_PENDING) and of the section fill
+- **FULL_PRODUCT_SUITE:** FULL_PRODUCT_GATE_PASS (T3 at c57ebd1b, path with a space)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (Track B root causes and gate; W14-D1 settled by W15-D1)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

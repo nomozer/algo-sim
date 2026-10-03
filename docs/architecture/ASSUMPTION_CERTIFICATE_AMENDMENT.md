@@ -170,6 +170,16 @@ veto" của W14).
 > không phải câu hỏi giả định: route từ chối nó ở MỌI vùng (`assumption_enforced = True`,
 > `assumption_gate.MA_NHIEU_DINH_NGHIA`).
 
+> **Đính chính 2026-10-03 (đánh giá cuối toàn nhánh, `41a26f11`).** Ngoại lệ (i) phải xét cả
+> CHÍNH câu lệnh dựng: "không câu lệnh nào TỚI VÀ GỒM câu lệnh ấy đọc tên đó". Bản trước chỉ
+> xét các câu lệnh TRƯỚC; mà bộ đi lát cắt bỏ qua việc một câu lệnh đọc chính tên nó định
+> nghĩa. Vì thế với `X = trung điểm(X, N)`, literal khai báo của X (giả định của mô hình) vẫn
+> quyết định giá trị mà không bao giờ vào lát cắt. Trên đề toạ độ n1, C0 đã trả `PROVEN_SAFE`
+> cho một đáp số đổi theo literal ấy
+> (`test_lenh_dung_doc_chinh_literal_no_ghi_de_van_la_nhieu_dinh_nghia`, ĐỎ trước bản sửa).
+> Nay ca này là `CLOSURE_MULTIPLE_DEFINITIONS`. Quy tắc B3 (lệnh dựng không đọc tên đích)
+> không đổi. Census vòng 3: không hàng nào đổi trạng thái.
+
 ## 4. Vai trò và nguồn của mọi literal trên lát cắt (R1)
 
 | Vai trò | Literal | Điều kiện (chỉ bằng chứng §2) | Dùng ở |
@@ -361,9 +371,36 @@ SECTION_FILL_THRESHOLDS = {"T_ON": 20, "T_ON_MIN": 12, "T_OFF": 3, "margin_px": 
   không đổi ngưỡng. Khoá: test node đối chiếu `NGUONG_TO_THIET_DIEN` trong
   `compiler-scene-replay-lib.mjs` với dòng trên.
 
+> **Đính chính 2026-10-03 (W15 Task 10, đo ở trình duyệt).** Mô hình phối màu ở trên giả định
+> phần tô ĐƯỢC VẼ. Lượt trình duyệt có thẩm quyền đầu tiên (`c1638891`) đo ΔE = 0 ở mọi mẫu.
+> Phần tô vẫn kiểm chiều sâu, mà lớp chiều sâu đục của khối chạy trước toàn bộ hàng đợi trong
+> suốt; thiết diện nằm trong khối nên bị loại ở mọi điểm ảnh. Đó cũng là nguyên nhân thật của
+> "vùng thiết diện hoà mất" ở w14. Sản phẩm được sửa (`909a3a2d`: phần tô không kiểm chiều
+> sâu), KHÔNG sửa ngưỡng. Sau bản sửa đo được 33,9/25,3 (desktop) và 33,8/25,9 (mobile),
+> khớp mô hình (≥ 31,9).
+
 ## 12. Không được
 
 Nới cổng grounding; nâng chú thích của mô hình thành tiền đề hay GIVEN; dùng
 `FIXTURE_TIN_CAY` ngoài fixture đã kiểm kê; sửa đề hoặc đáp án để chứng chỉ xanh; đổi bề
 mặt mô hình (prompt, lược đồ, thẻ văn phạm, bảng năng lực); đổi
 `DEFAULT_MODE = LLM_ONLY`; gọi model để đo.
+
+## 13. Tác động lên ma trận năng lực (ghi 2026-10-03, sau w15)
+
+Ma trận theo tầng [`geometry_capability_matrix_v2.json`](geometry_capability_matrix_v2.json)
+là kiểm kê w13 (`as_of_head` `bf5a7907`) và không bị sửa. W15 đổi các tầng sau:
+
+| Tầng | Trước w15 | Sau w15 |
+|---|---|---|
+| L03 `source_grounding` | GIVEN phải có trong câu đề (w12); toạ độ bố cục và giả thiết không bị kiểm | thêm bộ đọc ràng buộc hình dạng `shape_constraint.py`, chỉ xác nhận, từ vựng đóng §2.1 |
+| L10 `measurement_provenance` | provenance chỉ là nhãn (GIVEN / DERIVED / LAYOUT_DERIVED / model_assumption) | mọi giá trị số người học thấy cần chứng chỉ C0/C1 trong vùng đa diện; nhãn không bao giờ là bằng chứng |
+| L11 `renderer` | phần tô thiết diện bị lớp chiều sâu của khối loại | phần tô thiết diện khép kín là vật riêng, không kiểm chiều sâu (§11) |
+| L15 `fail_closed` | từ chối ở kernel, grounding, kiểm tĩnh, cổng phạm vi | thêm chặng `assumption`: `ASSUMPTION_DETERMINES_ANSWER` / `ASSUMPTION_INVARIANCE_UNPROVEN` |
+| L16 `browser_evidence` | — | ba loại từ chối mỗi họ, `SECTION_FILL_DISTINGUISHABLE`, phán quyết U2 |
+
+- **Năng lực SẢN PHẨM theo họ không đổi:** không thêm họ nào, `product_capability.py`
+  giữ nguyên. Cái đổi là điều kiện để một đáp số trong vùng đa diện được phục vụ.
+- **Hệ quả cần khai khi trích năng lực.** Bài đa diện viết ngoài từ vựng đóng bị từ chối
+  dù đề xác định đáp số (`ISSUE-ARCH-SHAPE-CONSTRAINT-VOCABULARY-COVERAGE`). Ngoài vùng
+  đa diện, cổng chỉ ghi (U3).

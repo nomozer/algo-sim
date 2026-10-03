@@ -18,7 +18,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
 > giới hạn: **`docs/THESIS_READINESS.md`**.
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-02)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-03)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
 > dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01) và w14 (2026-10-01): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01) và w15 (2026-10-02): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **107** (W15, 2026-10-03: served → rejected — cổng giả định nối vào route — `PROOF_CACHE_ROW_W15.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,17 +53,34 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 54af39a4 (measurement commit 380db58c)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 23cc880a (measurement commit c57ebd1b)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 106
-> CANDIDATE = 40263983… (was 548f5b3b…), product commit a2af56e4
+> CACHE_VERSION = 107
+> CANDIDATE = b3b7eb79… (was 40263983…; intermediate aaa5b5bd…), product commit 41a26f11
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION (w14)
-> FINAL_DECISION = FORMATION_FOUNDATION_INCOMPLETE
-> CANONICAL_NEXT_ACTION = COMPLETE_SHAPE_CLASS_FORMATION
-> TARGET_NEXT_ACTION_AFTER_WAVE = COMPLETE_SHAPE_CLASS_FORMATION (bắt đầu bằng quyết định W14-D1 của người dùng; W14-D2 phạm vi chứng chỉ giả định, W14-D3 duyệt lại bốn cảnh — `HANDOFF.md` của run w14)
+> CURRENT_WAVE = W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15)
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE (người duyệt bằng mắt bốn cảnh W14 đổi và phần tô thiết diện; quyết định W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w15)
 > ```
+
+> **Đóng kênh giả định bằng ràng buộc đọc từ đề — w15 (measurement `c57ebd1b`, detached clean worktree; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng trong phạm vi đã duyệt đạt; review người `NOT_APPROVED` |
+> | Bộ đọc ràng buộc | `semantic_program/shape_constraint.py` — từ vựng ĐÓNG (vuông góc, ký hiệu khối, kiểu khối/đáy, góc vuông, một lăng trụ đứng không tên); chỉ XÁC NHẬN, không vào fact graph, không nâng fact mô hình thành GIVEN; `phan_chua_doc` báo phần dữ kiện chưa đọc |
+> | Chứng chỉ giả định | `semantic_program/assumption_gate.py` — C0 (mọi literal trên lát cắt là dữ kiện đề CÙNG thực thể, tại định nghĩa với tới duy nhất) · C1 (khuôn T1–T6 cho thể tích/diện tích/khoảng cách) · phản ví dụ chỉ khi đề đọc trọn. Route chặng `assumption`; U3: chỉ TỪ CHỐI khi đề nêu khối đa diện theo từ vựng; U5: nhiều định nghĩa ⇒ từ chối ở mọi vùng |
+> | Kết quả census vòng 3 | AC2 **18/18** `PROVEN_SAFE` (8 C0, 10 C1), phục vụ 18/18 · AC1 3/3 `DEPENDENT`, từ chối 3/3 (hai phép dò W12 ở `assumption`) · đối kháng 7/7 bị từ chối · 11 phản ví dụ sai của W14 → 0 · 0 `PROVEN_SAFE` trên DEPENDS/MUST_REFUSE |
+> | Phần tô thiết diện | **PASS** `SECTION_FILL_DISTINGUISHABLE`: ΔE trung bình/nhỏ nhất 33,9/25,3 (desktop), 33,8/25,9 (mobile) so với ngưỡng đăng ký 20/12; trước khi khép và sau khi tua lùi: 0. Nguyên nhân cũ: phần tô bị lớp chiều sâu đục của khối loại ở mọi điểm ảnh |
+> | T3 từ đường dẫn CÓ dấu cách (`c57ebd1b`) | **PASS** — pytest 6757/0 fail (1 skipped, 2 deselected, 0 xfailed) · vitest 1017/1017 · build · demo 5/5 · bề mặt sập 6/6 |
+> | Product ↔ oracle | **PASS** 24/24; kỳ vọng người: hộp chữ nhật, lập phương `DECLARED_CAMERA_CHANGE`; bốn cảnh W14 đổi **`HUMAN_REVIEW_PENDING`** (U2: oracle tái hiện tập đã duyệt ở hai camera, sản phẩm = oracle) |
+> | Playback · crop | 12/12 × 19 kiểm, 5 vòng orbit mỗi lượt; 64 crop, 0 bất đồng oracle, 0 owner trùng |
+> | Candidate · `CACHE_VERSION` | `40263983…` → **`b3b7eb79…`** (đóng băng BA lần: `d41176f2`, `909a3a2d` → `aaa5b5bd` trung gian; `41a26f11` sau bản sửa của đánh giá cuối) · 106 → **107** (`0579d559`; fingerprint provider không đổi) |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w15-assumption-closure/` (`REPORT.md`, `HANDOFF.md`).
+> Bảng w14, w13, w12 dưới đây giữ làm lịch sử.
 
 > **Dựng hình theo lớp hình + nền chính sách giả định — w14 (measurement `380db58c`, detached clean worktree; chưa có review người):**
 >

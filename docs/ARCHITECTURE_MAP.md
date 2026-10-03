@@ -40,6 +40,7 @@ Input text/image
            LLM Synthesis (stage_semantic_program)
            → Semantic Program ứng viên
   → Scene Builder & Interpreter (thực thi chương trình ngữ nghĩa, dẫn xuất tọa độ/bước)
+  → Assumption Certificate Gate (w15, chặng `assumption`: giá trị số người học thấy phải có chứng chỉ C0/C1 — §2e)
   → Visual Obligation Gate (kiểm định bao phủ nghĩa vụ trực quan C1/C2)
   → Frontend Step Replay & Scene3D Explorer (diễn hoạt từng bước, tua, tương tác camera)
 ```
@@ -124,8 +125,48 @@ hiện hành chỉ nằm ở `docs/CURRENT_STATE.md`.
   không đọc từ HTTP, mô hình hay cấu hình; không đường sản phẩm nào khai.
 - **Một từ vựng nối độ dài** (`segment_relation._NOI_DO_DAI`) dùng chung cho bộ đọc
   độ dài và nhãn bằng chứng GIVEN.
-- **Chưa có:** cổng giả định (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`);
-  dựng hình khối cong; đường cao khi chân là điểm dẫn xuất chưa dựng.
+- **Chưa có:** dựng hình khối cong; đường cao khi chân là điểm dẫn xuất chưa dựng.
+  (Cổng giả định: có từ w15 — §2e.)
+
+### 2e. Ràng buộc đọc từ đề và chứng chỉ giả định (w15)
+
+Thẩm quyền đăng ký: [`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md`](architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md)
+(viết TRƯỚC mã; mã khác văn bản ấy là lỗi của mã).
+
+- **Bộ đọc cùng họ với `point_coordinate` / `plane_equation` / `segment_relation`.**
+  `semantic_program/shape_constraint.py::doc_rang_buoc` đọc CÂU ĐỀ theo từ vựng ĐÓNG và trả
+  `RangBuoc` do server sở hữu, gắn đúng thực thể. Từ vựng gồm: vuông góc đường–mặt, đường–
+  đường, `góc … = 90°`; ký hiệu chóp/lăng trụ; kiểu khối/đáy; tam giác/đáy vuông tại một
+  đỉnh; một lăng trụ đứng không tên. Bộ đọc chỉ để XÁC NHẬN tiền đề và kiểm phản ví dụ:
+  không vào fact graph, không nâng fact của mô hình thành GIVEN. `phan_chua_doc` báo phần
+  dữ kiện không bộ đọc nào đọc trọn; `neu_khoi_da_dien` là vị từ phạm vi U3.
+- **Cổng, một hàm.** `assumption_gate.kiem_gia_dinh` chạy trong `route._sau_grounding`,
+  sau hậu điều kiện và trước khi biên dịch để phục vụ. Gốc là mọi giá trị SỐ người học
+  thấy: bước `MEASUREMENT` và witness của nghĩa vụ. Lát cắt đi theo định nghĩa với tới
+  DUY NHẤT trên trace; nhiều định nghĩa ⇒ `CLOSURE_MULTIPLE_DEFINITIONS`. Chứng chỉ có ba:
+  - **C0:** mọi literal là `SOURCE_DATUM` của CÙNG thực thể.
+  - **C1:** khuôn T1–T6 khớp ràng buộc ĐỌC ĐƯỢC, đỉnh khuôn thoả chính xác, đối chiếu
+    bằng chạy lại trên hiện thực chính tắc; chỉ cho thể tích, diện tích, khoảng cách.
+  - **Phản ví dụ:** chỉ khi đề đọc trọn và mọi ràng buộc là tiền đề khuôn ⇒
+    `DEPENDENT_ON_UNSTATED_ASSUMPTION`.
+
+  Còn lại là `UNDETERMINED`. Tiền đề chỉ đến từ bộ đọc và các bộ phát bất biến gọi KHÔNG
+  kèm hợp đồng — chú thích của mô hình không bao giờ là tiền đề.
+- **Thi hành.** Từ chối ở chặng `assumption` (`INPUT_NOT_GROUNDED`;
+  `ASSUMPTION_DETERMINES_ANSWER` nêu đại lượng thiếu, hoặc `ASSUMPTION_INVARIANCE_UNPROVEN`);
+  `pipeline.KHONG_SUA_NGUON` không gửi đi sửa; `learner_messages` có hai câu tiếng Việt.
+  U3: chỉ TỪ CHỐI khi `neu_khoi_da_dien` đúng; ngoài vùng ghi `assumption_enforced = false`.
+  U5: `CLOSURE_MULTIPLE_DEFINITIONS` bị từ chối ở MỌI vùng. Lỗi bên trong cổng ⇒ từ chối
+  có mã trong vùng, không bao giờ HTTP 500.
+- **Phần tô thiết diện khép kín** là vật riêng `section_fill:<id>`, `renderOrder` sau mọi
+  nét, KHÔNG kiểm và KHÔNG ghi chiều sâu. Thiết diện nằm TRONG khối, mà lớp chiều sâu đục
+  của khối chạy trước toàn bộ hàng đợi trong suốt; kiểm chiều sâu thì phần tô bị loại ở
+  mọi điểm ảnh. Viền thiết diện vẫn hai lượt thấy/khuất. Móc đo
+  `__geo3d_set_section_fill_visible` chỉ dành cho harness.
+- **Bằng chứng (U2).** `measure_scene3d_occlusion --pending-human-review`: cảnh mà người đã
+  duyệt trên hình CŨ được tính `HUMAN_REVIEW_PENDING`, không tính lỗi. Điều kiện: oracle
+  độc lập tái hiện tập đã duyệt ở camera đăng ký lẫn camera mới, và sản phẩm = oracle trên
+  mọi trạng thái; khác đi là lỗi. Registry người không bao giờ bị sửa.
 
 **Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
 
@@ -262,7 +303,9 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 
 | 35 | **Thanh bước của Scene3D đi qua BƯỚC DỰNG — một phân hoạch của trace, không phải một trục thứ hai** (W12, 2026-09-30). Review người W12: thanh bước đi qua cả sự kiện chỉ tính số/kết luận, chỉ số tăng mà hình đứng yên. `geometryTimeline` gộp sự kiện thành bước dựng theo đúng khuôn #32 (liên tiếp · đầy đủ · không chồng lấn · không sinh khung): bước mới CHỈ mở ở sự kiện `GEOMETRY_CONSTRUCTION` làm đổi chữ ký hình (vật vẽ được + tiến độ thiết diện); `MEASUREMENT`/`EXPLANATION`/`FINAL_RESULT` nhập vào bước đang mở và lên LỚP LỜI GIẢI (bảng dưới thanh bước). Khung hiện của một bước là `trace[anchor]` với `anchor` = sự kiện cuối đoạn ⇒ #31 giữ nguyên. Loại sự kiện đọc từ `semantic_kind` có cấu trúc — không đoán từ lời kể/tiêu đề/action/id; cảnh không gõ loại ⇒ mỗi sự kiện một bước. Backend không xoá sự kiện nào | `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`geometryTimeline`, `solutionAt`) + `scene3d-playback.tsx` + `scene3d-solution.tsx` | `scene3d-geometry-timeline.test.tsx` (sáu cảnh w11, số bước từ phép đếm ĐỘC LẬP; 0 khung tĩnh; tới/lùi trả đúng snapshot) + bộ đo trình duyệt (`assessGeometrySteps`) |
 
-| 36 | **Một GIVEN phải được CÂU ĐỀ chứng minh — lời khai `analyze` không phải nguồn** (W12, 2026-09-30). Tuyến LLM từng nhận một độ dài chỉ có trong mục `analyze` (đề không ghi) rồi gắn GIVEN. Cổng grounding đọc bằng chứng từ câu đề: độ dài `XY_length` cần con số của đề (nguyên/thập phân `.`/`,`/phân số/căn), không bị nhãn đoạn khác hay đơn vị khác mâu thuẫn; nguyên tử chỉ khớp giá trị P1 không chứng minh được ⇒ `GIVEN_VALUE_NOT_IN_SOURCE`; span P1 không cắt đúng chữ ⇒ `SOURCE_SPAN_MISMATCH`; mâu thuẫn ⇒ `SOURCE_EVIDENCE_CONFLICT`; toạ độ ghim vào mục mang số đề không ghi ⇒ từ chối. Ba mã KHÔNG gửi đi sửa. Lời khai chưa chứng minh không DỰNG bất biến nguồn (vẫn phủ quyết phép chia nó mâu thuẫn). P1 tính lại từ đề, một hàm dùng chung cho biên đóng băng · cổng · bộ phát bất biến. Giới hạn đã khai: kênh toạ độ `model_assumption`/`LAYOUT_DERIVED` vẫn có thể cố định một kích thước đề không cho (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`) | `semantic_program/grounding_gate.py` (`_bang_chung_do_dai`, `MA_LOI_NGUON`) + `literal_extractor.py::gia_tri_khong_chung_minh_duoc` + `segment_relation.py::_van_ban` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_source_grounding_closure.py` (tuyến sản phẩm với transport giả, 0 lượt gọi model) + fixture âm `_ungrounded` sáu họ |
+| 36 | **Một GIVEN phải được CÂU ĐỀ chứng minh — lời khai `analyze` không phải nguồn** (W12, 2026-09-30). Tuyến LLM từng nhận một độ dài chỉ có trong mục `analyze` (đề không ghi) rồi gắn GIVEN. Cổng grounding đọc bằng chứng từ câu đề: độ dài `XY_length` cần con số của đề (nguyên/thập phân `.`/`,`/phân số/căn), không bị nhãn đoạn khác hay đơn vị khác mâu thuẫn; nguyên tử chỉ khớp giá trị P1 không chứng minh được ⇒ `GIVEN_VALUE_NOT_IN_SOURCE`; span P1 không cắt đúng chữ ⇒ `SOURCE_SPAN_MISMATCH`; mâu thuẫn ⇒ `SOURCE_EVIDENCE_CONFLICT`; toạ độ ghim vào mục mang số đề không ghi ⇒ từ chối. Ba mã KHÔNG gửi đi sửa. Lời khai chưa chứng minh không DỰNG bất biến nguồn (vẫn phủ quyết phép chia nó mâu thuẫn). P1 tính lại từ đề, một hàm dùng chung cho biên đóng băng · cổng · bộ phát bất biến. Giới hạn đã khai: kênh toạ độ `model_assumption`/`LAYOUT_DERIVED` vẫn có thể cố định một kích thước đề không cho (`ISSUE-ARCH-ASSUMPTION-CHANNEL-UNSTATED-DIMENSION`; w15: đóng trong vùng đa diện — #37) | `semantic_program/grounding_gate.py` (`_bang_chung_do_dai`, `MA_LOI_NGUON`) + `literal_extractor.py::gia_tri_khong_chung_minh_duoc` + `segment_relation.py::_van_ban` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_source_grounding_closure.py` (tuyến sản phẩm với transport giả, 0 lượt gọi model) + fixture âm `_ungrounded` sáu họ |
+
+| 37 | **Trong vùng đa diện, một giá trị SỐ người học thấy phải có CHỨNG CHỈ — bố cục hay giả thiết của mô hình không được quyết định đáp số** (W15, 2026-10-03). Hai phép dò W12 từng được phục vụ với `V = 30` khi đề không cho AD: chương trình giữ AD bằng toạ độ `LAYOUT_DERIVED`/`model_assumption`, không kênh nào khai GIVEN nên grounding không có gì để kiểm. Nay route chỉ phục vụ giá trị có chứng chỉ (`PROVEN_SAFE`). **C0:** mọi literal trên lát cắt là dữ kiện đề CÙNG thực thể. **C1:** khuôn T1–T6 khớp ràng buộc server đọc từ đề. Lát cắt đi theo định nghĩa với tới DUY NHẤT trên trace, giá trị lấy tại lúc định nghĩa. Phản ví dụ hợp lệ ⇒ `ASSUMPTION_DETERMINES_ANSWER`, nêu đại lượng thiếu; còn lại ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`. Cả hai từ chối ở chặng `assumption` và KHÔNG gửi đi sửa. Tiền đề chỉ đến từ CÂU ĐỀ (bộ đọc + bộ phát bất biến gọi không kèm hợp đồng) — chú thích quan hệ của mô hình không bao giờ là tiền đề. Phạm vi thi hành theo U3: đề nêu khối đa diện theo từ vựng đóng; ngoài vùng chỉ ghi. Nhiều định nghĩa với tới bị từ chối ở MỌI vùng (U5) | `semantic_program/assumption_gate.py::kiem_gia_dinh` + `shape_constraint.py` (`doc_rang_buoc`, `phan_chua_doc`, `neu_khoi_da_dien`) + `route.py::_sau_grounding` + `ai/pipeline.py::KHONG_SUA_NGUON` | `test_assumption_gate.py` (tuyến route) · `test_assumption_certificate.py` (C0/C1/phản ví dụ, định nghĩa với tới gồm ca lệnh dựng tự đọc, vai trò literal, metamorphic) · `test_shape_constraint.py` · census vòng 3 + tiêm lỗi FI1–FI14 trong run `w15-assumption-closure` |
 
 ## 6. Bốn trục khái niệm
 
