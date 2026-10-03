@@ -1,0 +1,36 @@
+# W16 verification gates at 7f3658b00f48dae854e5ab2527ca0ff3f701f828 in '<WT_ROOT>/w16 space/algo-sim' (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+7f3658b00f48dae854e5ab2527ca0ff3f701f828
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 107 file, 9bb0aaa7bddecf94…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 108 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git diff after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since 8a339d17e9780d4a9df0cb838f11cc26a355e80f: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since 8a339d17e9780d4a9df0cb838f11cc26a355e80f
+model-surface files changed: 0
+## CACHE_VERSION
+742:CACHE_VERSION = "108"
+## git diff --check 8a339d17e9780d4a9df0cb838f11cc26a355e80f..7f3658b00f48dae854e5ab2527ca0ff3f701f828 (captured *.log excluded: verbatim pytest/npm output may carry trailing spaces)
+exit=0
+## node harness tests
+ℹ tests 61
+ℹ pass 59
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0
+exit=0

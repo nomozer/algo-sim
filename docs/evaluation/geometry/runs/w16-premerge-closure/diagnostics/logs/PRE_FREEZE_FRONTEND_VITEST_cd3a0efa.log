@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/tmp/w16-fe/frontend
+
+
+ Test Files  67 passed (67)
+      Tests  1018 passed (1018)
+   Start at  17:39:14
+   Duration  5.42s (transform 6.85s, setup 1.90s, import 14.06s, tests 9.70s, environment 12ms)
+

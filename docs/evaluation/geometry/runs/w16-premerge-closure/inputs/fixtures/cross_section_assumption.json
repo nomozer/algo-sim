@@ -1,0 +1,23 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cross_section_assumption",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0). Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T). Tính thể tích khối chóp S.ABCD, diện tích thiết diện (T) và khoảng cách từ điểm S đến đường thẳng BD.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "6b1200364f83b62fe6ea07d09009638b159e6b25",
+  "product_tree_sha": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "reason_subjects": [],
+    "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+  },
+  "source_reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+  "removed_from_text": "và đỉnh S(0;0;6)"
+}

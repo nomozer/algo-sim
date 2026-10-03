@@ -1,0 +1,268 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every reproduction, census, fault-injection, pre-freeze, cache-proof, freeze, browser, oracle, playback, builder, T3 and gate run of this wave is listed; failed, superseded and diagnostic ones are included. Authoritative runs used a detached clean worktree at the commit shown: no node_modules junction (npm ci --offline inside the worktree), Python from the main-tree backend/.venv, and dist built by the suite inside the worktree. A failed attempt is kept apart from acceptance images in its own diagnostics folder. A run whose console output was not captured to a file says so; nothing is reconstructed.",
+  "times": "UTC",
+  "measurement_commit": "7f3658b00f48dae854e5ab2527ca0ff3f701f828",
+  "product_commit": "6b1200364f83b62fe6ea07d09009638b159e6b25",
+  "candidate": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476 (107 files, CACHE_VERSION 108)",
+  "intermediate_candidate": "8d14469bacee7928bbc407f201ea0e3879cccc26102f404e2382375177396044 (freeze 1 at 2ec02b3a; no acceptance evidence was measured on it)",
+  "application_llm_calls": 0,
+  "live_gemini_requests": 0,
+  "attempts": [
+    {
+      "id": "PHASE0",
+      "at": "2026-10-03T09:35:15Z",
+      "commit": "8a339d17 (main tree)",
+      "gate": "git fetch --prune origin; branch, HEAD, origin/main, ancestry; working tree (only the user's favicon deletion); candidate --verify (b3b7eb79); cache lock --verify (107, b1714b566e25c912)",
+      "result": "PASS",
+      "classification": "AUTHORITATIVE (repository gate)",
+      "log": "diagnostics/logs/PHASE0_REPOSITORY_GATE.log"
+    },
+    {
+      "id": "RED",
+      "at": "2026-10-03 (Task 1, before any fix; committed as 6d015112)",
+      "commit": "working tree on top of 8a339d17 (tests only)",
+      "gate": "W16 backend tests (plane binding, goal clauses, guards, builder refusal panels) · scene3d-section.test.ts · node harness",
+      "result": "RED for the stated reasons: backend 66 failed / 34 passed / 1 xfailed; frontend 1 failed / 39 passed; harness 5 failed / 48 passed",
+      "classification": "RED_CHECK",
+      "log": "diagnostics/logs/RED_W16_BACKEND.log · diagnostics/logs/RED_W16_FRONTEND.log"
+    },
+    {
+      "id": "PROBE-1",
+      "at": "2026-10-03 (Task 1)",
+      "commit": "6d015112 (RED commit; no fix)",
+      "gate": "diagnostics/probe_w16_phase1.py on the 34-row W16 corpus: gate verdict and product route per row, 0 model calls",
+      "result": "plane binding: A1, A2, A6, A6b, A8 PROVEN_SAFE C0 and SERVED with the wrong plane's value (area 9; A2's text gives 16); A7 C0 but refused by the plane_equation postcondition; 8 valid bindings C0; A2b (declared limit A') served. Goal clauses: B1, B1b, B2, B3b, B3c, B5, B7 PROVEN_SAFE C1 and SERVED from a relation the text asks to prove; B3, B4 not exploitable (refused); B6b over-refused (fail-closed); B0, B4b, B5b, B6 C1. Guards: all four fire from valid specs, FRAME_DEPENDENT the only failure in its case",
+      "classification": "DIAGNOSTIC (reproduction before any fix, kept even where a risk was not exploitable)",
+      "log": "diagnostics/PROBE_W16_PHASE1_6d01511.json · diagnostics/logs/PROBE_W16_PHASE1.log"
+    },
+    {
+      "id": "CENSUS-1",
+      "at": "2026-10-03 (Task 6)",
+      "commit": "00f0981d + working tree (logs only)",
+      "gate": "diagnostics/assumption_census_w16.py: §9 SHIP rule on W14 + W15 + W15B, W16 labels, comparison with W15 round 3",
+      "result": "SHIP; AC2 18/18 PROVEN_SAFE; compiler cross-check 32 agree / 5 not recognisable / 0 disagree; 0 gate changes against W15 round 3; W16 rows as labelled; A2b PROVEN_SAFE C0 served (declared limit)",
+      "classification": "SUPERSEDED by CENSUS-2 (before the primed-name fix)",
+      "log": "diagnostics/ASSUMPTION_CENSUS_W16.json · diagnostics/ASSUMPTION_MECHANISM_DECISION_W16.json · diagnostics/logs/CENSUS_W16.log"
+    },
+    {
+      "id": "FI-BACKEND-1",
+      "at": "2026-10-03 (Task 6)",
+      "commit": "00f0981d + working tree",
+      "gate": "diagnostics/run_fault_injections_w16.py: FG1-FG4, FA1-FA2, FB1-FB3, FD1-FD2, one exact in-memory source substitution per run",
+      "result": "11/11 caught; baseline 371 passed, 1 xfailed",
+      "classification": "SUPERSEDED by FI-BACKEND-FINAL",
+      "log": "diagnostics/logs/FAULT_INJECTION_W16.log"
+    },
+    {
+      "id": "FI-FRONTEND-1",
+      "at": "2026-10-03 (Task 6)",
+      "commit": "cd3a0efa (worktree D:/tmp/w16-fe)",
+      "gate": "diagnostics/run_fault_injections_w16_frontend.mjs: FL1, FH1, FH2, FH3",
+      "result": "FH1 STALE: its pattern held a LF line break and did not match the worktree's CRLF checkout, so nothing was injected; the driver reported it instead of passing",
+      "classification": "FAILED_ATTEMPT_KEPT_APART (driver defect; pattern made one-line)",
+      "log": "diagnostics/logs/FAULT_INJECTION_W16_FRONTEND_ATTEMPT1_FH1_STALE_CRLF.log"
+    },
+    {
+      "id": "FI-FRONTEND-2",
+      "at": "2026-10-03 (Task 6)",
+      "commit": "cd3a0efa (worktree D:/tmp/w16-fe; renderer and harness unchanged since)",
+      "gate": "the same driver after the pattern fix",
+      "result": "4/4 caught; every source restored byte-identical; after all injections scene3d-section.test.ts 40/40, node harness 53/53",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FAULT_INJECTION_W16_FRONTEND.log"
+    },
+    {
+      "id": "PRE-FREEZE-FRONTEND",
+      "at": "2026-10-03T10:39:05Z (build) · 10:39:20Z (vitest)",
+      "commit": "cd3a0efa (worktree D:/tmp/w16-fe, npm ci --offline)",
+      "gate": "npm run build (tsc -b + vite build) · npx vitest run",
+      "result": "build exit 0; vitest 67 files, 1018/1018",
+      "classification": "PRE_FREEZE_CHECK",
+      "log": "diagnostics/logs/PRE_FREEZE_FRONTEND_BUILD_cd3a0efa.log · diagnostics/logs/PRE_FREEZE_FRONTEND_VITEST_cd3a0efa.log (copied verbatim from D:/tmp)"
+    },
+    {
+      "id": "PRE-FREEZE-BACKEND",
+      "at": "finished 2026-10-03T10:42:21Z",
+      "commit": "cd3a0efa, main tree (untracked: W16 diagnostics only)",
+      "gate": "cd backend && pytest -q -p no:cacheprovider -rf --tb=no",
+      "result": "6834 passed / 11 failed / 1 skipped / 2 deselected / 1 xfailed; the 11 failures are the expected ones and are listed by node id: 10 stale candidate identity (backend/app changed since b3b7eb79) and 1 dirty-tree check (favicon deletion + untracked diagnostics)",
+      "classification": "PRE_FREEZE_CHECK",
+      "correction": "The committed extract's header says '2026-10-03T11:25:50Z finish'. That is the time the extract was written. The run finished at 10:42:21Z (mtime of the full console capture, same summary line and the same 225.97 s duration). The committed extract is left unchanged; this entry corrects it.",
+      "log": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_cd3a0efa.log (extract) · diagnostics/logs/PRE_FREEZE_FULL_BACKEND_cd3a0efa_FULL_OUTPUT.log (full console capture)"
+    },
+    {
+      "id": "PRE-FREEZE-OTHER",
+      "at": "2026-10-03 (Task 6)",
+      "commit": "cd3a0efa, main tree",
+      "gate": "backend/scripts/replay_demo_cases.py · export_semantic_program_schema.py twice",
+      "result": "demo 5/5 + reduced chain 1/1; both schema mirrors d852b47c... on both exports, tree unchanged",
+      "classification": "PRE_FREEZE_CHECK",
+      "log": "console only (ledger Task 6 line); both checks re-run with logs at the measurement commit (T3-1, GATES-1)"
+    },
+    {
+      "id": "CACHE-PROOF-1",
+      "at": "2026-10-03T10:42Z (envelopes) - before 2ec02b3a",
+      "commit": "before: worktree D:/tmp/w16-base at 8a339d17; W16: main tree at cd3a0efa (product code of 93d4ec69)",
+      "gate": "diagnostics/proof_cache_row_w16.py (envelopes, then prove) with a temporary sqlite cache",
+      "result": "BUMP: twelve envelopes served before W16 (A1, A2, A6, A6b, A8, B1, B1b, B2, B3b, B3c, B5, B7) HIT as CACHE_VERSION 107 rows although W16 refuses them; the bump makes them miss. CACHE_VERSION 107 -> 108 in 2ec02b3a; provider fingerprint b1714b566e25c912 unchanged",
+      "classification": "AUTHORITATIVE (cache decision)",
+      "log": "diagnostics/PROOF_CACHE_ROW_W16.json"
+    },
+    {
+      "id": "FREEZE-1",
+      "at": "2026-10-03T11:28:55Z",
+      "commit": "2ec02b3a (worktree D:/tmp/w16-freeze, clean, detached)",
+      "gate": "backend/scripts/freeze_evaluation_candidate.py then --verify",
+      "result": "8d14469b... (107 files, CACHE_VERSION 108), committed in 55cde06e",
+      "classification": "INTERMEDIATE (superseded by FREEZE-2)",
+      "log": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json at 55cde06e"
+    },
+    {
+      "id": "IDENTITY-FIXTURES-1",
+      "at": "2026-10-03T11:31:51Z-11:33:08Z",
+      "commit": "55cde06e (worktree D:/tmp/w16-evidence; npm ci --offline; spaced worktree npm ci too)",
+      "gate": "candidate and cache verify; generate_generic_tier_a_fixtures.py; npm ci --offline",
+      "result": "verify 0/0 (8d14469b, 108); 24 fixtures",
+      "classification": "SUPERSEDED (attempt 1)",
+      "log": "diagnostics/logs/IDENTITY_BEFORE_MEASUREMENT_55cde06e.log · FIXTURES_55cde06e.log · NPM_CI_55cde06e.log · NPM_CI_SPACED_55cde06e.log"
+    },
+    {
+      "id": "DRY-1",
+      "at": "2026-10-03T11:32:32Z",
+      "commit": "55cde06e (worktree D:/tmp/w16-evidence)",
+      "gate": "compiler-scene-replay.mjs --suite with a one-family manifest (cross-section only), to look at the new section-fill check quickly",
+      "result": "rejected before any browser: INVALID_SUITE_MANIFEST:scenarios,cross_family_scenarios (the suite accepts only the full six-family manifest); no measurement",
+      "classification": "DIAGNOSTIC (no output)",
+      "log": "diagnostics/logs/DRY_SUITE_cross_section_55cde06e.log"
+    },
+    {
+      "id": "BROWSER-1",
+      "at": "2026-10-03T11:32:48Z-11:38:47Z",
+      "commit": "55cde06e (worktree D:/tmp/w16-evidence)",
+      "gate": "compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json (6 families x desktop/mobile)",
+      "result": "FAIL, cross_section only: SECTION_FILL_DISTINGUISHABLE had 0 samples and SECTION_FILL_UNDER_EDGES was NOT_APPLICABLE. Five families PASS",
+      "root_cause": "harness defect, not product: the W16 page code declared `const doc` after the shared PNG prelude of giaiMaHaiKhung, which already declares `doc`. The page threw a SyntaxError, session.eval returned a 'LỖI:' string, and the pairs were undefined. Offline, the same sampler gives 38 samples and two crossing edges (S-A, S-C) on the recorded snapshot",
+      "fix": "85e73394 (test-only): page code built by the exported maDocCapDiem and read through `docDiem`; a node test compiles the page code with vm.Script — RED 'Identifier 'doc' has already been declared', then GREEN 61/61",
+      "classification": "FAILED_ATTEMPT_KEPT_APART",
+      "log": "diagnostics/browser-attempt1-55cde06e/ (BROWSER_EVIDENCE.json + the two cross-section neutral frames) · diagnostics/logs/BROWSER_SUITE_55cde06e.log"
+    },
+    {
+      "id": "SELF-REVIEW",
+      "at": "2026-10-03 (pre-evidence self-review, after BROWSER-1)",
+      "commit": "85e73394",
+      "gate": "whole-branch self-review by the author against code-reviewer.md (the brief allows no subagents)",
+      "result": "one Important finding: ten_mat_phang_cua_bien('mp_P_prime') = {P}, so (P') could carry (P)'s equation and C0 certified it (an alias form of A2). RED 2dc55f1b; W16B corpus (A9, A9b) built at the RED commit, 681c34cf; fix 6b120036; one minor deferred (a named text equation written twice gives 'several text equations', an over-refusal)",
+      "classification": "REVIEW (finding fixed before any acceptance measurement)",
+      "log": "ledger lines 'Final ...' in the plan workspace; tests test_w16_* A9/A9b"
+    },
+    {
+      "id": "CENSUS-2",
+      "at": "2026-10-03 (after 6b120036)",
+      "commit": "7695b967 + working tree (W16 doc edits only)",
+      "gate": "diagnostics/assumption_census_w16.py 2: W14 + W15 + W15B + W16 + W16B",
+      "result": "SHIP; AC2 18/18 PROVEN_SAFE (8 C0, 10 C1); 0 PROVEN_SAFE on DEPENDS/MUST_REFUSE outside the declared limit; 0 DEPENDENT on INVARIANT; no DEPENDS/MUST_REFUSE row served except A2b (declared limit A'); 0 gate changes against W15 round 3 and against round 1; A9 refused, A9b C0; compiler cross-check 32 / 5 / 0",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/ASSUMPTION_CENSUS_W16_R2.json · diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json · diagnostics/logs/CENSUS_W16_R2.log"
+    },
+    {
+      "id": "FI-BACKEND-FINAL",
+      "at": "2026-10-03 (after 6b120036)",
+      "commit": "7695b967 + working tree",
+      "gate": "diagnostics/run_fault_injections_w16.py _FINAL: FI-BACKEND-1's eleven plus FA3 (the _prime/_phay token ignored) and FA4 (′/’ kept in text plane names)",
+      "result": "13/13 caught; baseline 380 passed, 1 xfailed",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FAULT_INJECTION_W16_FINAL.log"
+    },
+    {
+      "id": "POST-FIX-GEOMETRY",
+      "at": "2026-10-03 (after 6b120036, before FREEZE-2)",
+      "commit": "6b120036, main tree",
+      "gate": "pytest tests/geometry -q",
+      "result": "4537 passed; 11 failed = the same stale-candidate and dirty-tree checks as PRE-FREEZE-BACKEND",
+      "classification": "PRE_FREEZE_CHECK",
+      "log": "console only"
+    },
+    {
+      "id": "FREEZE-2",
+      "at": "2026-10-03T11:52:40Z",
+      "commit": "6b120036 (worktree D:/tmp/w16-freeze2, clean, detached)",
+      "gate": "freeze_evaluation_candidate.py then --verify; identity tests; cache lock verify; node harness",
+      "result": "9bb0aaa7... (107 files, CACHE_VERSION 108), committed in 7f3658b0 (measurement commit) with the divergence layers and the registry identity; identity tests 246 passed; lock verify 0; node 61/61",
+      "classification": "AUTHORITATIVE (final candidate)",
+      "log": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json at 7f3658b0 (dong_bang_luc 2026-10-03T11:52:40+00:00); identity checks console only"
+    },
+    {
+      "id": "IDENTITY-2",
+      "at": "2026-10-03T11:54:44Z",
+      "commit": "7f3658b0 (worktree D:/tmp/w16-evidence2, clean, detached)",
+      "gate": "freeze_evaluation_candidate.py --verify · lock_cache_identity.py --verify",
+      "result": "0 / 0 (9bb0aaa7, CACHE_VERSION 108, environment b1714b566e25c912)",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/IDENTITY_BEFORE_MEASUREMENT_7f3658b0.log"
+    },
+    {
+      "id": "FIXTURES-2",
+      "at": "2026-10-03T11:54:46Z",
+      "commit": "7f3658b0 (D:/tmp/w16-evidence2)",
+      "gate": "backend/scripts/generate_generic_tier_a_fixtures.py",
+      "result": "24 frozen fixtures, 0 model calls (product_commit_sha 6b120036, product_tree_sha 9bb0aaa7)",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FIXTURES_7f3658b0.log · diagnostics/logs/NPM_CI_7f3658b0.log"
+    },
+    {
+      "id": "BROWSER-2",
+      "at": "2026-10-03T11:55:09Z-12:00:40Z",
+      "commit": "7f3658b0 (D:/tmp/w16-evidence2; the suite built dist inside the worktree)",
+      "gate": "compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json",
+      "result": "PASS 6 families x desktop/mobile: 12/12 positives (16 assertions each, 18 for the cross-section); 36/36 negatives, each kind refused with its own code, learner message, no canvas, no answer; 0 raw tokens, serious console errors, uncaught exceptions, failed API calls or overflow over 48 runs. Cross-section: SECTION_FILL_DISTINGUISHABLE closed mean/min dE 34.20/34.11 desktop (38 samples), 34.19/33.74 mobile (21); pre-close and rewound 0; SECTION_FILL_UNDER_EDGES PASS on both crossing edges (desktop S-A rho 0.138 / S-C 0, mobile 0.485 / 0.274; edge contrast 35.5-66.8)",
+      "classification": "AUTHORITATIVE",
+      "log": "results/BROWSER_EVIDENCE.json · diagnostics/logs/BROWSER_SUITE_7f3658b0.log"
+    },
+    {
+      "id": "OCCLUSION-2",
+      "at": "2026-10-03T12:01:29Z",
+      "commit": "7f3658b0 (D:/tmp/w16-evidence2)",
+      "gate": "backend/scripts/measure_scene3d_occlusion.py with the canonical arguments, --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS and --pending-human-review",
+      "result": "pass; verdict HUMAN_REVIEW_PENDING; 0 failures; pending: triangular pyramid, triangular prism, rectangular pyramid and cross-section (desktop, neutral_final) — the same four scenes as w15",
+      "classification": "AUTHORITATIVE",
+      "log": "results/OCCLUSION_MEASUREMENT.json · diagnostics/logs/OCCLUSION_7f3658b0.log"
+    },
+    {
+      "id": "PLAYBACK-2",
+      "at": "2026-10-03T12:01:48Z-12:06:55Z",
+      "commit": "7f3658b0 (D:/tmp/w16-evidence2)",
+      "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build (dist from BROWSER-2 at the same commit)",
+      "result": "12/12 runs x 19/19 checks, 5 orbit laps each",
+      "classification": "AUTHORITATIVE",
+      "log": "results/PLAYBACK_EVIDENCE.json · diagnostics/logs/PLAYBACK_7f3658b0.log"
+    },
+    {
+      "id": "BUILDER-2",
+      "at": "2026-10-03T12:07:32Z",
+      "commit": "7f3658b0 (D:/tmp/w16-evidence2)",
+      "gate": "backend/scripts/build_scene3d_visual_evidence.py (PLAYBACK_EVIDENCE.json moved images/ -> results/ first)",
+      "result": "exit 0; 64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; six SHEET.png with all six refusal panels each (three kinds x desktop/mobile; the builder raises on a missing, unreadable or blank panel), six FILMSTRIP.png, overview index",
+      "classification": "AUTHORITATIVE",
+      "log": "results/HIDDEN_EDGE_CROPS.json · diagnostics/logs/EVIDENCE_BUILDER_7f3658b0.log"
+    },
+    {
+      "id": "T3-1",
+      "at": "2026-10-03T12:08Z-12:12:12Z",
+      "commit": "7f3658b0 (worktree 'D:/tmp/w16 space/algo-sim', a path WITH a space, npm ci --offline at 12:02:35Z)",
+      "gate": "frontend/scripts/full-gate.mjs (VIRTUAL_ENV = main-tree backend/.venv)",
+      "result": "exit 0, FULL_PRODUCT_GATE_PASS: pytest 6854 passed / 0 failed / 1 skipped / 2 deselected / 1 xfailed (the strict xfail of limit A'); vitest 67 files, 1018/1018; typecheck + build; thesis demo DEMO_REPLAY_PASS 5/5 + reduced chain 1/1; demo crash surface 6/6, 0 thrown as HTTP 500",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_7f3658b0.log · diagnostics/logs/NPM_CI_SPACED_7f3658b0.log"
+    },
+    {
+      "id": "GATES-1",
+      "at": "2026-10-03T12:12:35Z (after T3-1)",
+      "commit": "7f3658b0 (the same spaced worktree)",
+      "gate": "diagnostics/w16_gates.sh 7f3658b0 8a339d17: candidate verify · cache lock verify · schema export x2 · DEFAULT_MODE · compiler not wired · FIXTURE_TIN_CAY outside production · model surface unchanged since 8a339d17 · CACHE_VERSION · git diff --check · node harness",
+      "result": "all PASS: candidate 9bb0aaa7 (107 files); CACHE_VERSION 108, environment b1714b566e25c912; both schema mirrors d852b47c... on both runs, 0 files changed; LLM_ONLY, routing.py unchanged; geometry_compiler not referenced from app/ai or main.py; 0 production references to FIXTURE_TIN_CAY; 0 model-surface files changed (prompts, grammar card, contract, capability, both schemas); diff --check clean (captured logs excluded); node 59 pass + 2 skipped by design (no repo-local venv in a worktree) / 0 fail; tree clean before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/GATES_7f3658b0.log"
+    }
+  ]
+}

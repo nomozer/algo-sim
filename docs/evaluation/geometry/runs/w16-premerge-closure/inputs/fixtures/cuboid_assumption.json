@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cuboid_assumption",
+  "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "6b1200364f83b62fe6ea07d09009638b159e6b25",
+  "product_tree_sha": "9bb0aaa7bddecf945f3d0c89632d1c46f3d7be350b350ded96dc0c598b733476",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "reason_subjects": [
+      "AA′"
+    ],
+    "learner_reason": "Đề bài chưa cho độ dài AA′, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+  },
+  "source_reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+  "removed_from_text": "AA' = 5"
+}
