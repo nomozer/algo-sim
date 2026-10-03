@@ -459,6 +459,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
     _attach_topology(ra)
     _attach_formulas(ra)
     _danh_dau_bi_danh(ra)
+    _gan_so_do(ra, state.get("annotations") or {})
     events = build_scene_events(state)
     _ke_lai(events, ra)
     formation = _build_formation(ra, events, state.get("free_objects", []))
@@ -468,6 +469,9 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         "events": events,
         "formation": formation,
         "free_objects": list(state.get("free_objects", [])),
+        # W17 §15.4: đại lượng không gắn được chủ thể (`ANNOTATION_UNBOUND …`) — cho người phát
+        # triển; học sinh vẫn đọc giá trị ở bảng chi tiết.
+        "diagnostics": list(state.get("annotation_diagnostics") or []),
         "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; "
                 "hoá float là việc của renderer, ở bước cuối trước GPU. Mặt "
                 "phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích "
@@ -706,6 +710,18 @@ def _danh_dau_bi_danh(objects: list[dict[str, Any]]) -> None:
         o["alias_of"] = nguon[0]
         if "target" in (o.get("display_group") or []):
             o.update(render="non_visual", display_role="non_visual", role="Kết quả cuối")
+
+
+def _gan_so_do(objects: list[dict[str, Any]], gan: dict[str, dict[str, Any]]) -> None:
+    """W17 §15.4: chở gắn kết của tầng ngữ nghĩa lên vật `quantity` và quyết `category` — `result`
+    khi đại lượng là đích của đề hoặc được một đích `alias_of`, còn lại `measurement`. Bí danh
+    dùng CHUNG danh tính với nguồn: không có nhãn thứ hai."""
+    dich = {o["id"] for o in objects if "target" in (o.get("display_group") or [])}
+    ket_qua = dich | {o["alias_of"] for o in objects if o.get("alias_of") and o["id"] in dich}
+    for o in objects:
+        g = gan.get(o["id"])
+        if g is not None and o["type"] == "quantity" and not o.get("alias_of"):
+            o["annotation"] = {**g, "category": "result" if o["id"] in ket_qua else "measurement"}
 
 
 def _ten_diem_khoi(solid: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> list[str]:

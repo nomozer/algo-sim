@@ -55,6 +55,35 @@ def test_w17_hinh_hop_do_dai_co_phay_gan_dung_dinh():
     assert a["V"] is None and a["the_tich_khoi_hop"]["category"] == "result"
 
 
+def test_w17_mot_chu_the_mot_nhan_du_kien_truoc():
+    """Hình hộp: độ dài đề cho AA′ và chiều cao đo được AA′ là CÙNG một số trên CÙNG một đoạn —
+    một nhãn (của dữ kiện), không hai nhãn chồng tại một điểm neo."""
+    sc = _canh_ho("hop_chu_nhat")
+    a = _ann(sc)
+    assert a["AA_prime_length"]["subject_ids"] == ["A", "A_prime"]
+    assert a["chieu_cao_AA_prime"] is None
+    assert "ANNOTATION_UNBOUND chieu_cao_AA_prime: same subject as AA_prime_length" in sc["diagnostics"]
+
+
+def test_w17_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac():
+    """Đề nói AB = 3; chương trình đặt B cách A một khoảng 4 ⇒ nhãn "AB = 3" KHÔNG được gắn lên đoạn AB
+    (khoảng cách chính xác trong bộ nhớ cuối là điều kiện gắn, không phải tên biến)."""
+    from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
+    from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
+    from app.simulation.semantic_program.simulation_state import build_simulation_state
+    from tests.geometry.test_assumption_certificate import _dat_diem
+
+    _t, ct = W.HO["lang_tru_tam_giac"]()
+    raw = W.chuong_trinh(ct)
+    _dat_diem(raw, "B", [4, 0, 0])
+    _dat_diem(raw, "E", [4, 0, 5])     # E trên B: lăng trụ vẫn hợp lệ, chỉ |AB| = 4
+    spec = hoan_thien_dung_hinh(W.spec_cua(raw), ct).spec
+    st = build_simulation_state(spec, SemanticProgramInterpreter().execute(spec), ct)
+    assert "AB_length" not in st["annotations"], st["annotations"].get("AB_length")
+    assert "ANNOTATION_UNBOUND AB_length: the figure's AB is not 3" in st["annotation_diagnostics"]
+    assert st["annotations"]["AC_length"]["subject_ids"] == ["A", "C"]
+
+
 def test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap():
     a = _ann(_canh_gold("p1_chop_thiet_dien_khoang_cach"))
     assert a["area_T"] == _gan("area", "result", ["T"], "region")

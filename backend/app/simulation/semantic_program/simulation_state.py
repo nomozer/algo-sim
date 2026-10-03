@@ -48,6 +48,7 @@ from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
+from .quantity_annotations import gan_so_do
 from .source_entities import ky_hieu_toan
 from .transport import TransportTypeError, is_json_native
 
@@ -730,6 +731,9 @@ def build_simulation_state(
     # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.
     gan_vai_tro_dung(scene["objects"], spec, contract)
+    # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
+    # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
+    so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"])
     dependencies = dependency_graph(spec)
     return {
         "scene": scene,
@@ -750,6 +754,8 @@ def build_simulation_state(
         # *"cái dựng ra để chứng minh"* — thứ nhìn hình vẽ phẳng không thấy.
         "targets": sorted(_muc_tieu(contract)),
         "provenance": _xuat_xu_hien_thi(spec),
+        "annotations": so_do,
+        "annotation_diagnostics": chan_doan_so_do,
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }

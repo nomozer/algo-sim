@@ -724,6 +724,17 @@ Luật gắn (backend sở hữu):
 - không gắn được ⇒ không có `annotation` và có diagnostic `ANNOTATION_UNBOUND <id>: <lý do>`;
   đại lượng vẫn ở bảng chi tiết.
 
+> **Ghi chú thi hành 2026-10-03 (W17 Task 5 — trước census và mọi phép đo).** Thẩm quyền gắn:
+> `semantic_program/quantity_annotations.py` (gọi từ `build_simulation_state`; lớp chiếu không tự
+> tính hình), `scene3d._gan_so_do` quyết `category` và chở `diagnostics` ở gốc cảnh. Ba điểm phạm
+> vi:
+> - `distance` giữa hai ĐIỂM là độ dài đoạn (`kind = length`, `anchor = segment`); điểm–đường,
+>   điểm–mặt và góc là `pair`;
+> - vật CONG (đường tròn, elip, khối tròn xoay) chưa có điểm neo đăng ký ⇒ không gắn, có chẩn
+>   đoán; giá trị vẫn ở bảng chi tiết (lộ trình);
+> - MỘT chủ thể, MỘT nhãn: cùng `kind`, `anchor` và tập chủ thể (hình hộp: độ dài đề cho AA′ và
+>   chiều cao đo được AA′) ⇒ giữ nhãn của dữ kiện, cái còn lại có chẩn đoán `same subject as …`.
+
 Frontend chỉ chiếu, đặt nhãn, tránh chồng và bật/tắt; không tính giá trị, không suy gắn từ tên.
 Một nhãn hiện ở bước dựng `k` chỉ khi chủ thể đã có mặt và đại lượng đã khả dụng ở `k` (cùng
 luật với lớp lời giải). Bật/tắt "Số đo"/"Kết quả" không đổi hình, camera, timeline, chuỗi nhân
