@@ -247,10 +247,13 @@ def test_C_polygon_cung_toa_do_KHONG_duoc_tinh_la_thiet_dien__ke_ca_khi_hop_dong
 
 # ══ D · thiết diện sai tập đỉnh ════════════════════════════════════════════════
 def test_D_thiet_dien_sai_tap_dinh__topology_FAIL__dap_so_FAIL(AQ, de):
+    """W17 §15.1: cắt khối S.ABC trong khi đề nói khối chóp S.ABCD — route nay TỪ CHỐI ở chặng
+    `assumption` (trước W17 nó phục vụ); chẩn đoán chất lượng vẫn phải xếp lớp đúng như cũ."""
     hd = _hd(de)
     o, kq = _chan_doan(AQ, hd, "D")
     h = _hang(kq, _con_tro_kind(hd, "area"))
-    assert o.servable and _lop(h) == ("PASS", "PASS", "FAIL", "FAIL")
+    assert (o.servable, o.stage_reached, o.reason_code) == (False, "assumption", "CONSTRUCTION_NOT_TEXT_BOUND"), o
+    assert _lop(h) == ("PASS", "PASS", "FAIL", "FAIL")
     assert h["topology_status"] == "FAIL" and "SECTION_VERTEX_SET_MISMATCH" in h["reason_codes"]
     assert "SECTION_PLANE_MISMATCH" not in h["reason_codes"] and "ANSWER_MISMATCH" in h["reason_codes"]
 

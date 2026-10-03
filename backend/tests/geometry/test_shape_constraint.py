@@ -348,6 +348,10 @@ def _cat(de: str) -> list[tuple]:
     ("Tính diện tích thiết diện (T) của khối chóp cắt bởi mặt phẳng (P).", [("P", (), "T")]),
     ("Cắt khối lăng trụ ABC.A'B'C' bởi mặt phẳng (α) ta được thiết diện (T).",
      [("α", ("A", "B", "C", "A_prime", "B_prime", "C_prime"), "T")]),
+    # Đính chính §15.1 (Task 2): mặt phẳng gọi qua BA điểm — gold d7/e7 đã phục vụ trước W17.
+    ("Mặt phẳng đi qua ba điểm A, C và B′ cắt hình lập phương theo một thiết diện.", [("ACB'", (), None)]),
+    ("Mặt phẳng (P) qua M, N, P cắt khối chóp S.ABCD theo thiết diện (T).",
+     [("MNP", ("S", "A", "B", "C", "D"), "T")]),
 ])
 def test_w17_doc_quan_he_cat(de, ky_vong):
     assert _cat(de) == ky_vong

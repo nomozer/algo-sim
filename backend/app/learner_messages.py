@@ -150,6 +150,28 @@ _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
 }
 
 
+#: W17 §15.1 — đề đủ và đúng, phép dựng thiết diện của hệ dùng thực thể khác thực thể đề nêu.
+#: Nguyên nhân CONSTRUCTION: không bảo học sinh sửa đề.
+_DUOI_LECH_PHEP_DUNG = (
+    " AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đề "
+    "không cần sửa — đây là lỗi dựng hình của hệ; em có thể gửi lại để hệ dựng lại."
+)
+
+
+def _msg_lech_phep_dung(envelope: dict) -> str:
+    """`reason_subjects` = [thực thể đề nêu, thực thể chương trình dùng]: mặt phẳng `(β)` /
+    `z = 3`, hoặc khối `S.ABCD`."""
+    ten = [f"khối {s}" if "." in s and "=" not in s else f"mặt phẳng {s}"
+           for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and s and "_" not in s]
+    if len(ten) >= 2 and ten[0].split()[0] == ten[1].split()[0]:
+        cau = f"Đề bài nêu {ten[0]}, nhưng phép dựng thiết diện của AlgoSim lại dùng {ten[1]}."
+    elif ten:
+        cau = f"Phép dựng thiết diện của AlgoSim không dùng đúng {ten[0]} mà đề bài nêu."
+    else:
+        cau = "Phép dựng thiết diện của AlgoSim không khớp với câu cắt trong đề bài."
+    return cau + _DUOI_LECH_PHEP_DUNG
+
+
 _KY_HIEU_DIEM = re.compile(r"[A-Z]\d*′?")
 
 
@@ -169,6 +191,8 @@ def learner_reason(envelope: dict) -> str:
     """Thông điệp học sinh cho envelope ``status="unsupported"`` — chọn theo
     ``reason_code``, ``error_code`` rồi tới ``failure_category`` (đều CÓ CẤU
     TRÚC), không bao giờ đọc text ``reason``."""
+    if envelope.get("reason_code") == "CONSTRUCTION_NOT_TEXT_BOUND":
+        return _msg_lech_phep_dung(envelope)
     chi_tiet = _MSG_THEO_MA_CHI_TIET.get(envelope.get("reason_code") or "")
     if chi_tiet is not None:
         return chi_tiet.format(doan=_doan_hoc_sinh(envelope))

@@ -38,8 +38,9 @@ from .plane_equation import (MatPhangDe, bat_bien_mat_phang, doc_mat_phang_de, s
                              ten_mat_phang_cua_bien, tuong_duong)
 from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
-from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
-from .shape_constraint import RangBuoc, che_muc_tieu, doc_rang_buoc, khoang_muc_tieu, phan_chua_doc
+from .segment_relation import _D, bat_bien_chia_doan, bat_bien_do_dai
+from .shape_constraint import (QuanHeCat, RangBuoc, che_muc_tieu, doc_quan_he_cat, doc_rang_buoc, khoang_muc_tieu,
+                               phan_chua_doc)
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -49,6 +50,9 @@ UNDETERMINED = "UNDETERMINED"
 NOT_APPLICABLE = "NOT_APPLICABLE_NO_NUMERIC_ANSWER"
 MA_PHU_THUOC = "ASSUMPTION_DETERMINES_ANSWER"
 MA_CHUA_CHUNG_MINH = "ASSUMPTION_INVARIANCE_UNPROVEN"
+#: §15.1 (W17): câu cắt của đề ĐỌC ĐƯỢC mà phép dựng thiết diện trên lát cắt lệch nó (mặt phẳng,
+#: khối hoặc thiết diện) — đề đủ và đúng, lỗi ở chương trình.
+MA_LECH_PHEP_DUNG = "CONSTRUCTION_NOT_TEXT_BOUND"
 #: Detail khi một tên trên lát cắt có nhiều định nghĩa với tới (ghi đè, bí danh, khôi phục) —
 #: lỗi toàn vẹn của chương trình: route từ chối nó ở MỌI vùng (quyết định U5).
 MA_NHIEU_DINH_NGHIA = "CLOSURE_MULTIPLE_DEFINITIONS"
@@ -156,8 +160,8 @@ class KetQuaGiaDinh:
 
 
 def _ket_qua(status: str, details: list[str], **kw: Any) -> KetQuaGiaDinh:
-    ma = {DEPENDENT: MA_PHU_THUOC, UNDETERMINED: MA_CHUA_CHUNG_MINH}.get(status)
-    return KetQuaGiaDinh(status=status, reason_code=ma, details=tuple(details), **kw)
+    kw.setdefault("reason_code", {DEPENDENT: MA_PHU_THUOC, UNDETERMINED: MA_CHUA_CHUNG_MINH}.get(status))
+    return KetQuaGiaDinh(status=status, details=tuple(details), **kw)
 
 
 class _Loi(Exception):
@@ -368,8 +372,39 @@ def gan_mat_phang(bien: str, mp_de: tuple[MatPhangDe, ...], duy_nhat: bool) -> t
     return None, "unnamed program plane and the text plane is not unique"
 
 
+def _gia_tri_fact(contract: Any, fid: str | None) -> tuple[str, ...]:
+    f = next((f for f in getattr(contract, "input_facts", ()) or () if f.fact_id == fid), None) if fid else None
+    return tuple(str(v) for v in (f.values if f is not None else ()) if str(v).strip())
+
+
+def _nhan_mp(m: MatPhangDe, de: str) -> str:
+    return f"({m.ten})" if m.ten else de[m.span[0]:m.span[1]].strip()
+
+
+def danh_tinh_mat_phang(bien: str, fid: str | None, contract: Any, de: str, mp_de: tuple[MatPhangDe, ...],
+                        duy_nhat: bool) -> tuple[MatPhangDe | None, str]:
+    """§15.1 — mặt phẳng ĐỀ của biến mặt phẳng-từ-phương-trình `bien`. Theo NGUỒN trước: `fid` là
+    `source_fact_id` của KHAI BÁO biến (IR nâng ô ấy từ câu lệnh về khai báo); giá trị nguyên văn
+    của fact xuất hiện đúng một lần trong `de` và chứa đúng một phương trình đọc trọn ⇒ mặt phẳng
+    ấy (đổi tên biến máy không đổi danh tính). Không có nguồn dùng được ⇒ luật W16 `gan_mat_phang`.
+    Tên biến chỉ mặt phẳng KHÁC nguồn ⇒ không có danh tính."""
+    ung = set()
+    for v in _gia_tri_fact(contract, fid):
+        vi_tri = [m.start() for m in re.finditer(re.escape(v), de)]
+        if len(vi_tri) == 1:
+            trong = [m for m in mp_de if vi_tri[0] <= m.span[0] and m.span[1] <= vi_tri[0] + len(v)]
+            ung.update(trong[:1] if len(trong) == 1 else ())
+    if len(ung) != 1:
+        return gan_mat_phang(bien, mp_de, duy_nhat)
+    (nguon,) = ung
+    ten = ten_mat_phang_cua_bien(bien)
+    if ten and nguon.ten not in ten:
+        return None, f"name says {'/'.join(f'({t})' for t in sorted(ten))}, source says {_nhan_mp(nguon, de)}"
+    return nguon, f"bound by source to {_nhan_mp(nguon, de)}"
+
+
 def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None,
-             mp: tuple[tuple[MatPhangDe, ...], bool] = ((), False)) -> str | None:
+             mp: dict[str, tuple[MatPhangDe | None, str]] | None = None) -> str | None:
     loai = lit[0]
     if loai == "diem":
         try:
@@ -388,7 +423,7 @@ def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None,
         except (ValueError, ZeroDivisionError):
             return None
     if loai == "mat_phang":
-        m, _ly_do = gan_mat_phang(lit[1], *mp)
+        m, _ly_do = (mp or {}).get(lit[1], (None, ""))
         try:
             return "SOURCE_DATUM" if m is not None and tuong_duong([_F(c) for c in lit[2]], m.he_so) else None
         except (ValueError, TypeError, ZeroDivisionError):
@@ -885,6 +920,101 @@ def _gia_tri_bi_phu(contract: Any, exec_res, ten_da_hoa_giai) -> list[str]:
     return list(dict.fromkeys(ra))
 
 
+# ── §15.1 · phép dựng thiết diện dùng ĐÚNG thực thể đề nói (W17) ───────────────────────────
+
+def _gan_quan_he(s: dict, so_cat: int, qh: tuple[QuanHeCat, ...], contract: Any, khai: dict):
+    """Câu cắt của đề mà thiết diện `s` của chương trình gắn được: một câu cắt và một thiết diện
+    trên lát cắt; hoặc theo nguồn (fact của khai báo nhắc `(T)`); hoặc theo tên thiết diện."""
+    if len(qh) == 1 and so_cat == 1:
+        return qh[0], "the only cut of the text and of the slice"
+    T = s["target_var"]
+    nguon = [v.replace("′", "'").replace("’", "'")
+             for v in _gia_tri_fact(contract, (khai.get(T) or {}).get("source_fact_id"))]
+    ten = {_khoa(T)} | {_khoa(t) for t in ten_mat_phang_cua_bien(T)}
+    for cach, khop in (("by source", lambda q: any(f"({q.thiet_dien})" in v for v in nguon)),
+                       ("by name", lambda q: _khoa(q.thiet_dien) in ten)):
+        ung = [q for q in qh if q.thiet_dien and khop(q)]
+        if len(ung) == 1:
+            return ung[0], cach
+    return None, ""
+
+
+def _mp_cua_cau_cat(q: QuanHeCat, mp_de: tuple[MatPhangDe, ...], de: str) -> tuple[Any, str]:
+    """Danh tính + nhãn mặt phẳng của câu cắt: phương trình viết trong câu (không tên), mặt phẳng
+    gọi qua điểm (`(MNP)` ⇒ tập điểm), hoặc đúng một phương trình đề mang tên ấy; không ⇒ None."""
+    if q.mat_phang is None:
+        trong = [m for m in mp_de if q.khoa_mat_phang[0] <= m.span[0] and m.span[1] <= q.khoa_mat_phang[1]]
+        return (("pt", trong[0].span), _nhan_mp(trong[0], de)) if len(trong) == 1 else (None, "")
+    nhan = f"({q.mat_phang})"
+    if re.fullmatch(rf"(?:{_D}){{3,}}", q.mat_phang):
+        return ("diem", frozenset(_khoa(t) for t in re.findall(_D, q.mat_phang))), nhan
+    khop = [m for m in mp_de if m.ten == q.mat_phang]
+    return (("pt", khop[0].span) if len(khop) == 1 else None), nhan
+
+
+def _mp_cua_chuong_trinh(ten: str, cm: _ChiMuc, mp: dict, de: str) -> tuple[Any, str]:
+    nut = cm.dinh_nghia(ten).nut
+    if nut.get("kind") == "construct_plane_from_equation" and (m := mp.get(ten, (None, ""))[0]) is not None:
+        return ("pt", m.span), _nhan_mp(m, de)
+    if nut.get("kind") == "construct_plane" and isinstance(nut.get("through"), list):
+        return ("diem", frozenset(_khoa(p) for p in nut["through"])), f"({_nhan(*map(str, nut['through']))})"
+    return None, ""
+
+
+def _ky_hieu_khoi(dinh: frozenset | None, rb: tuple[RangBuoc, ...]) -> str | None:
+    for r in rb:
+        if r.kind in ("pyramid", "prism") and frozenset(_khoa(e) for e in r.entities) == dinh:
+            k = 1 if r.kind == "pyramid" else len(r.entities) // 2
+            return _nhan(*r.entities[:k]) + "." + _nhan(*r.entities[k:])
+    return None
+
+
+def _kiem_phep_dung(contract: Any, prog: dict, cm: _ChiMuc, lc: _LatCat, de: str,
+                    mp_de: tuple[MatPhangDe, ...], mp: dict, rb: tuple[RangBuoc, ...]):
+    """§15.1 — mọi `construct_section` trên lát cắt phải gắn với một câu cắt của đề, cắt bằng mặt
+    phẳng CÙNG danh tính (trùng phương trình không đủ) và cắt khối có CÙNG tập đỉnh.
+    → (details, mã lý do — None khi khớp hết, chủ thể)."""
+    cat = [nut for n in sorted(lc.da_xet) if (nut := cm.dinh_nghia(n).nut).get("kind") == "construct_section"]
+    if not cat:
+        return [], None, ()
+    qh = doc_quan_he_cat(de)
+    if not qh:
+        return ([f"OPERATION_BINDING {s['target_var']}: no cut relation read from the text" for s in cat],
+                MA_CHUA_CHUNG_MINH, ())
+    khai = {m["name"]: m for m in prog["memory_declarations"]}
+    khoi_duy_nhat = {frozenset(_khoa(e) for e in r.entities) for r in rb if r.kind in ("pyramid", "prism")}
+    ra: list[str] = []
+    chu_the: list[str] = []
+    sai = False
+    for s in cat:
+        T = s["target_var"]
+        q, cach = _gan_quan_he(s, len(cat), qh, contract, khai)
+        if q is None:
+            ra.append(f"OPERATION_BINDING {T}: no cut relation of the text names this section")
+            sai = True
+            continue
+        loi = []
+        mp_d, nhan_d = _mp_cua_cau_cat(q, mp_de, de)
+        mp_c, nhan_c = _mp_cua_chuong_trinh(s["plane"], cm, mp, de)
+        if mp_d is None or mp_d != mp_c:
+            loi.append(f"the text cuts with {nhan_d or 'a plane it does not pin'}, "
+                       f"the program cuts with {nhan_c or 'a plane not bound to the text'}")
+            chu_the += [x for x in (nhan_d, nhan_c) if x and x not in chu_the]
+        khoi_d = frozenset(_khoa(e) for e in q.khoi) if q.khoi else (
+            next(iter(khoi_duy_nhat)) if len(khoi_duy_nhat) == 1 else None)
+        nut_k = cm.dinh_nghia(s["solid"]).nut
+        khoi_c = frozenset(_khoa(v) for v in nut_k["vertices"]) if nut_k.get("kind") == "construct_solid" else None
+        if khoi_d is None or khoi_d != khoi_c:
+            nhan_k = [x for x in (_ky_hieu_khoi(khoi_d, rb), _ky_hieu_khoi(khoi_c, rb)) if x]
+            loi.append(f"the text cuts {nhan_k[0] if nhan_k else 'a solid it does not pin'}, "
+                       "the program cuts another solid")
+            chu_the += [x for x in nhan_k if x not in chu_the]
+        sai = sai or bool(loi)
+        ra += ([f"OPERATION_BINDING {T}: {x}" for x in loi] if loi
+               else [f"OPERATION_BINDING {T}: matches the text cut @[{q.span[0]},{q.span[1]}] ({cach})"])
+    return ra, (MA_LECH_PHEP_DUNG if sai else None), tuple(chu_the)
+
+
 def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa_giai=None, *,
                   execution_budget: int = DEFAULT_EXECUTION_BUDGET) -> KetQuaGiaDinh:
     """Chứng chỉ cho chương trình ĐÃ bổ sung dựng hình và ĐÃ chạy (đầu vào của route)."""
@@ -912,18 +1042,30 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:
         return _ket_qua(UNDETERMINED, details + ["RELATION_REFUTED_BY_SOURCE"])
-    # §14.1: mặt phẳng ĐỀ của từng literal phương trình — theo tên, hoặc duy nhất theo đếm.
-    mp = (doc_mat_phang_de(de_gt), so_lan_nhac_mat_phang(de) == 1 and sum(
-        1 for s in prog["statements"] if s.get("kind") == "construct_plane_from_equation") == 1)
+    # §15.1 (W17): mặt phẳng ĐỀ của từng câu lệnh phương trình — theo nguồn, rồi luật W16 §14.1
+    # (theo tên, hoặc duy nhất theo đếm).
+    mp_de = doc_mat_phang_de(de_gt)
+    pt = [s["target_var"] for s in prog["statements"] if s.get("kind") == "construct_plane_from_equation"]
+    duy_nhat = so_lan_nhac_mat_phang(de) == 1 and len(pt) == 1
+    khai = {m["name"]: m for m in prog["memory_declarations"]}
+    mp = {b: danh_tinh_mat_phang(b, (khai.get(b) or {}).get("source_fact_id"), contract, de_gt, mp_de, duy_nhat)
+          for b in pt}
+
+    def an_toan(chi_tiet: list[str], cc: str) -> KetQuaGiaDinh:
+        """§15.1: ĐIỀU KIỆN THÊM cho C0/C1 — phép dựng thiết diện trên lát cắt dùng đúng thực thể
+        của câu cắt đề nói; không thì không chứng nhận (detail nối thêm)."""
+        them, ma, chu_the = _kiem_phep_dung(contract, prog, cm, lc, de, mp_de, mp, rb)
+        if ma is None:
+            return _ket_qua(PROVEN_SAFE, chi_tiet + them, certificate=cc)
+        return _ket_qua(UNDETERMINED, chi_tiet + them, reason_code=ma, subjects=chu_the)
 
     # C0 — lát cắt ghim bởi nguồn
     khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de_gt, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
-        return _ket_qua(PROVEN_SAFE, details + [f"C0 {len(lc.literal)} literal(s) pinned by the text"],
-                        certificate="C0")
+        return an_toan(details + [f"C0 {len(lc.literal)} literal(s) pinned by the text"], "C0")
     for lit in khong_vai:
         if lit[0] == "mat_phang":
-            m, ly_do = gan_mat_phang(lit[1], *mp)
+            m, ly_do = mp.get(lit[1], (None, "no plane statement"))
             details.append(f"PLANE_BINDING {lit[1]}: " + (
                 ly_do if m is None else f"{ly_do} @[{m.span[0]},{m.span[1]}], coefficients not proportional"))
 
@@ -977,7 +1119,7 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     ok, ghi = _doi_chieu_chinh_tac(prog, khuon, anh_xa, do_dai, phu, exec_res, ngan, execution_budget)
     if not ok:
         return _ket_qua(UNDETERMINED, details + tien_de + [ghi])
-    return _ket_qua(PROVEN_SAFE, details + tien_de + [f"C1 {khuon.loai}", ghi], certificate="C1")
+    return an_toan(details + tien_de + [f"C1 {khuon.loai}", ghi], "C1")
 
 
 def danh_gia_doc_lap(contract: Any, spec: SemanticProgramSpec) -> KetQuaGiaDinh:

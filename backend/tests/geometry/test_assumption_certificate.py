@@ -802,10 +802,9 @@ def test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the(ca):
     assert (out.servable, out.stage_reached) == (False, "assumption"), (ca, out.stage_reached, out.details[:3])
 
 
-@pytest.mark.xfail(strict=True, reason="ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND: C0 gắn "
-                   "literal với thực thể của nó, không kiểm phép dựng dùng đúng thực thể đề nói (§14.1, A′)")
 def test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi():
-    """(T) do (β) cắt; chương trình cắt bằng (α) — cả hai literal đều ghim đúng mặt phẳng của nó."""
+    """(T) do (β) cắt; chương trình cắt bằng (α) — cả hai literal đều ghim đúng mặt phẳng của nó.
+    Giới hạn A′ của W16 (strict xfail) — đóng ở W17 §15.1 (kiểm phép dựng)."""
     kq = _kq(*_p1_mat_phang(HAI_MP, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -2))],
                             "alpha_plane"))
     assert kq.status != AN_TOAN, kq
@@ -991,7 +990,9 @@ def _p1_w17(cau: str, mat_phang: list, cat: str, *, cau_hoi: str = " Tính diệ
             nguon: dict | None = None, khoi_cat: str = "S.ABCD", do: str = "T", them: tuple = ()):
     """Như `_p1_mat_phang`, thêm ba núm:
     - `nguon` = {biến mặt phẳng: (fact id, giá trị nguyên văn)}: câu lệnh trích `source_fact_id`, hợp
-      đồng mang fact ấy (kiểu `str`, giá trị là mệnh đề của đề);
+      đồng mang fact ấy (kiểu `str`, giá trị là mệnh đề của đề). Biến được KHAI (`plane3`): IR chỉ
+      giữ `source_fact_id` trên khai báo — `SemanticProgramSpec._nang_xuat_xu_cau_lenh` nâng ô của
+      câu lệnh về đó, không có khai báo thì ô bị bỏ (Task 2 ruling);
     - `khoi_cat`: khối bị cắt — khác `S.ABCD` thì dựng thêm tứ diện S.ABC và cắt NÓ;
     - `do` + `them`: thiết diện được đo, và các câu lệnh dựng thêm trước phép đo."""
     from scripts import replay_negative_boundaries as RNB
@@ -1004,6 +1005,7 @@ def _p1_w17(cau: str, mat_phang: list, cat: str, *, cau_hoi: str = " Tính diệ
         pay["input_facts"].append({"id": fid, "kind": "str", "label": f"Mặt phẳng {bien}", "value": [gia_tri]})
     raw = json.loads(goc["semantic_program"][0])
     raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] in ("S.ABCD", "T", "area_T")]
+    raw["memory_declarations"] += [{"name": bien, "type": "plane3"} for bien in (nguon or {})]
     st = [s for s in raw["statements"] if s["kind"] in ("declare_point", "construct_polygon", "construct_solid")]
     if khoi_cat != "S.ABCD":
         st.append({"kind": "construct_solid", "target_var": khoi_cat, "vertices": ["S", "A", "B", "C"],
@@ -1080,6 +1082,36 @@ def test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep
                       [("alpha_plane", (0, 0, 1, -3))], "alpha_plane"))
     assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
     assert any(d.startswith("OPERATION_BINDING") for d in kq.details), kq.details
+
+
+def test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh():
+    """§15.1 (3): `alpha_plane` mà nguồn khai báo của nó là (β) — không chọn hộ bên nào, kể cả khi
+    hai mặt phẳng trùng phương trình (đáp số giống nhau)."""
+    kq = _kq(*_p1_w17(HAI_MP_TRUNG, [("alpha_plane", (0, 0, 1, -3))], "alpha_plane",
+                      nguon={"alpha_plane": ("fact_beta", "(β): z = 3")}))
+    assert kq.status != AN_TOAN, kq
+    assert "PLANE_BINDING alpha_plane: name says (α), source says (β)" in kq.details, kq.details
+
+
+DIEM_CAT = "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (MNP) cắt khối chóp theo thiết diện (T)."
+
+
+def _p1_qua_diem(qua: list[str]):
+    """p1 + trung điểm M, N, P, Q của SA, SB, SC, SD; (T) cắt bằng mặt phẳng dựng QUA `qua`."""
+    ct, raw = _p1_w17(DIEM_CAT, [], "mp_cat")
+    i = next(k for k, s in enumerate(raw["statements"]) if s["kind"] == "construct_section")
+    raw["statements"][i:i] = [
+        {"kind": "construct_point", "target_var": t, "expr": {"kind": "midpoint", "a": "S", "b": d}}
+        for t, d in zip("MNPQ", "ABCD")] + [{"kind": "construct_plane", "target_var": "mp_cat", "through": qua}]
+    return ct, raw
+
+
+def test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem():
+    """Ruling Task 2: `(MNP)` của đề và `construct_plane` qua M, N, P là một thực thể; mặt phẳng qua
+    M, N, Q trùng hình học (cùng z = 3) nhưng KHÁC thực thể đề nói."""
+    assert (lambda k: (k.status, k.certificate))(_kq(*_p1_qua_diem(["M", "N", "P"]))) == (AN_TOAN, "C0")
+    kq = _kq(*_p1_qua_diem(["M", "N", "Q"]))
+    assert (kq.status, kq.reason_code, kq.subjects) == (CHUA_RO, "CONSTRUCTION_NOT_TEXT_BOUND", ("(MNP)", "(MNQ)")), kq
 
 
 def test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung():

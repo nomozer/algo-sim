@@ -251,6 +251,8 @@ KHONG_SUA_NGUON = frozenset({
     # chương trình không thêm được dữ kiện vào đề.
     "ASSUMPTION_DETERMINES_ANSWER",
     "ASSUMPTION_INVARIANCE_UNPROVEN",
+    # W17 §15.1: phép dựng lệch câu cắt của đề — từ chối ở chặng `assumption`, không sửa.
+    "CONSTRUCTION_NOT_TEXT_BOUND",
 })
 
 

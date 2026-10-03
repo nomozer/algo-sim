@@ -34,7 +34,7 @@ from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode
 from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
-from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
+from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
     chan_doan_phu_cau_truc,
@@ -519,6 +519,7 @@ def _sau_grounding(
             "assumption",
             ErrorCode.INPUT_NOT_GROUNDED,
             ("Đáp số phụ thuộc một kích thước đề bài không cho." if gd_ma == MA_PHU_THUOC
+             else "Phép dựng thiết diện không dùng đúng thực thể đề nêu." if gd_ma == MA_LECH_PHEP_DUNG
              else "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho."),
             details=gd_chi_tiet,
             reason_code=gd_ma,

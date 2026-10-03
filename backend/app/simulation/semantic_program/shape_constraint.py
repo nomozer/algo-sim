@@ -273,6 +273,75 @@ def neu_khoi_da_dien(problem_text: str | None) -> bool:
                for r in doc_rang_buoc(problem_text))
 
 
+# ── W17 · §15.1 — QUAN HỆ CẮT: mặt phẳng nào cắt khối nào theo thiết diện nào ─────────────
+
+@dataclass(frozen=True)
+class QuanHeCat:
+    """Một câu cắt của đề (§15.1). `mat_phang`: tên trong ngoặc (`α`, `P'`, `MNP`) hoặc None
+    (mặt phẳng viết bằng phương trình ngay trong câu — `khoa_mat_phang` trỏ vào cụm ấy);
+    `khoi`: đỉnh của ký hiệu khối viết trong câu, `()` nếu câu không ghi; `thiet_dien`: tên
+    hoặc None."""
+
+    mat_phang: str | None
+    khoi: tuple[str, ...]
+    thiet_dien: str | None
+    khoa_mat_phang: tuple[int, int]
+    span: tuple[int, int]
+
+
+_KY_PT = r"[0-9xyz+\-−–*/ ]"
+_PT = rf"{_KY_PT}*={_KY_PT}*"
+_SONG_SONG = r"(?:\s*,?\s*song\s+song\s+với\s+(?:(?:mặt\s+phẳng|mp)\s*)?(?:\([^\s()]{1,6}\)|(?:mặt\s+)?đáy))?"
+
+
+def _mp(k: int) -> str:
+    """Mặt phẳng: `Mặt phẳng [(X)] (đi) qua (ba điểm) A, C và B'` (danh tính là BA điểm, tên bỏ
+    qua); `(X)` [`: <pt>` | `có phương trình (là) <pt>`], có hoặc không có `Mặt phẳng` đứng
+    trước; hoặc `Mặt phẳng <pt>` (không tên)."""
+    return (rf"(?P<mp{k}>(?:[Mm]ặt\s+phẳng|[Mm]p)(?:\s*\([^\s()]{{1,6}}\))?\s+(?:đi\s+)?qua\s+(?:(?:ba|các)\s+điểm\s+)?"
+            rf"(?P<qua{k}>{_E}\s*,\s*{_E}(?:\s*,\s*|\s+và\s+){_E})(?![A-Za-z0-9'])"
+            rf"|(?:(?:[Mm]ặt\s+phẳng|[Mm]p)\s*)?\((?P<ten{k}>[^\s()]{{1,6}})\)"
+            rf"(?:\s*(?::|có\s+phương\s+trình(?:\s+là)?)\s*{_PT})?|(?:[Mm]ặt\s+phẳng|[Mm]p)\s+{_PT})")
+
+
+def _khoi(k: int) -> str:
+    return (rf"(?:[Kk]hối|[Hh]ình)\s+(?:chóp(?:\s+(?:tam|tứ|ngũ|lục)\s+giác(?:\s+đều)?)?"
+            rf"|lăng\s+trụ(?:\s+(?:đứng|xiên))?(?:\s+(?:tam|tứ)\s+giác(?:\s+đều)?)?|hộp(?:\s+chữ\s+nhật)?"
+            rf"|lập\s+phương)(?:\s+(?P<kh{k}>(?:{_E})+\.(?:{_E})+))?(?![A-Za-z0-9'])")
+
+
+def _td(k: int) -> str:
+    return rf"(?:\s*\((?P<td{k}>[^\s()]{{1,4}})\))?"
+
+
+#: Ba dạng ĐÓNG: chủ động, `thiết diện (T) của <khối> cắt bởi (X)`, `cắt <khối> bởi (X) (ta) được thiết diện (T)`.
+_CAU_CAT = tuple(re.compile(m) for m in (
+    rf"{_mp(1)}{_SONG_SONG}\s*,?\s*cắt\s+{_khoi(1)}\s+theo\s+(?:một\s+)?thiết\s+diện{_td(1)}",
+    rf"[Tt]hiết\s+diện{_td(2)}\s+của\s+{_khoi(2)}\s+(?:khi\s+)?(?:bị\s+)?cắt\s+bởi\s+{_mp(2)}",
+    rf"[Cc]ắt\s+{_khoi(3)}\s+bởi\s+{_mp(3)}\s*,?\s*(?:(?:ta\s+)?(?:thu\s+)?được\s+)?(?:một\s+)?thiết\s+diện{_td(3)}",
+))
+
+
+def doc_quan_he_cat(problem_text: str | None) -> tuple[QuanHeCat, ...]:
+    """Mọi câu cắt đề nêu theo từ vựng đóng §15.1, đọc trên đề đã che mệnh đề mục tiêu (§14.2):
+    một quan hệ phải chứng minh không bao giờ là quan hệ của phép dựng. Ngoài từ vựng ⇒ không phát."""
+    de = che_muc_tieu(problem_text).replace("′", "'").replace("’", "'")
+    ra: list[QuanHeCat] = []
+    for k, mau in enumerate(_CAU_CAT, 1):
+        for m in mau.finditer(de):
+            kh, qua = m.group(f"kh{k}"), m.group(f"qua{k}")
+            ten = "".join(re.findall(_E, qua)) if qua else _phay_ten(m.group(f"ten{k}"))
+            q = QuanHeCat(ten, _ten(kh.replace(".", "")) if kh else (),
+                          m.group(f"td{k}"), (m.start(f"mp{k}"), m.end(f"mp{k}")), (m.start(), m.end()))
+            if q not in ra:
+                ra.append(q)
+    return tuple(sorted(ra, key=lambda q: q.span))
+
+
+def _phay_ten(ten: str | None) -> str | None:
+    return ten.replace("′", "'").replace("’", "'") if ten else None
+
+
 #: Từ được phép còn lại khi phần dữ kiện đã đọc trọn — không từ nào mang số đo.
 _TU_NOI = frozenset({"cho", "có", "và", "cạnh", "bên"})
 #: Thông tin mà một span ĐÃ NUỐT nhưng không phát: tính đều của khối, tính cân của tam giác.

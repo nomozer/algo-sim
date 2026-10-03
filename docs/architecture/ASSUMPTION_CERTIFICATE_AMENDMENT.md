@@ -632,7 +632,23 @@ mà chương trình dùng mặt phẳng có danh tính (α) thì không được
 
 Vi phạm một quan hệ đọc được ⇒ `UNDETERMINED`, detail `OPERATION_BINDING <thiết diện>: <lý
 do>`, `reason_code = CONSTRUCTION_NOT_TEXT_BOUND`, `reason_subjects` = ký hiệu mặt phẳng/khối
-liên quan. Từ chối ở chặng `assumption` trong vùng thi hành (U3), không gửi đi sửa. Không gắn
+liên quan.
+
+> **Đính chính 2026-10-03 (W17 Task 2 — sau bản sửa, TRƯỚC census và mọi phép đo).** Full suite
+> sau bản sửa cho thấy hai gold đã phục vụ trước W17 (d7 `gold_section_discoverability`, e7
+> `gold_affordance_ab`: *"Mặt phẳng đi qua ba điểm A, C và B′ cắt hình lập phương theo một thiết
+> diện"*) bị từ chối vì từ vựng trên thiếu dạng ấy — một hồi quy, không phải giới hạn chấp nhận
+> được. Ba điểm chốt:
+> - **Từ vựng thêm một dạng chủ thể:** `Mặt phẳng [(X)] (đi) qua (ba|các điểm) A, B (,|và) C`;
+>   danh tính là TẬP BA ĐIỂM (tên trong ngoặc, nếu có, bỏ qua).
+> - **Mặt phẳng gọi bằng điểm** (`(MNP)`, hoặc dạng "qua ba điểm") có danh tính là tập điểm;
+>   `construct_plane` của chương trình có danh tính là tập `through` (theo khoá ký hiệu). Hai mặt
+>   phẳng trùng hình học nhưng khác tập điểm vẫn là hai thực thể (§15.1 không đổi).
+> - **Tham chiếu nguồn có cấu trúc** của một biến mặt phẳng/thiết diện là `source_fact_id` của
+>   KHAI BÁO biến: IR không có ô ấy trên `construct_plane_from_equation`/`construct_section`,
+>   và `SemanticProgramSpec._nang_xuat_xu_cau_lenh` nâng ô mô hình ghi ở câu lệnh về khai báo
+>   cùng tên (không có khai báo thì ô bị bỏ). Thêm ô vào câu lệnh là đổi bề mặt mô hình — ngoài
+>   W17. Từ chối ở chặng `assumption` trong vùng thi hành (U3), không gửi đi sửa. Không gắn
 được vì đề không có quan hệ đọc được ⇒ `UNDETERMINED` với `ASSUMPTION_INVARIANCE_UNPROVEN`
 (fail-closed, giới hạn từ vựng). Luật này là ĐIỀU KIỆN THÊM cho C0 và C1: nó chỉ chặn một kết
 luận `PROVEN_SAFE`, không thay chẩn đoán của các nhánh khác (detail của nó được nối thêm).
