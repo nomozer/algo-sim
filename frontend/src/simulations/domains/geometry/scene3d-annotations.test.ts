@@ -95,6 +95,17 @@ describe("W17 · số đo trên hình (§15.4)", () => {
     expect(theoBuoc[5]).toContain("the_tich");
   });
 
+  it("dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7)", () => {
+    const s = canh();
+    s.free_objects = [...s.free_objects, "AD_length"];
+    (s.objects as unknown as object[]).push({ id: "AD_length", label: "AD", notation: "AD", type: "quantity",
+      render: "readout", origin: "free", producer: null, depends: [], value: "5", exact: { kind: "rational", value: "5" },
+      annotation: { kind: "length", category: "measurement", subject_ids: ["A", "D"], anchor: "segment" } });
+    (s.events[2] as unknown as { objects?: string[] }).objects = ["D"];
+    expect([0, 1, 2, 3].map((k) => annotationsAt(s, k, DEFAULT_ANNOTATION_TOGGLES, null)
+      .some((x) => x.id === "AD_length"))).toEqual([false, false, true, true]);
+  });
+
   it("chọn chủ thể thì nhãn liên quan được ưu tiên", () => {
     const thuong = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, null);
     const chon = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, "day_ABC");

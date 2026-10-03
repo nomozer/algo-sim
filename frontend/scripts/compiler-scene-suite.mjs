@@ -914,18 +914,24 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           step: await currentStep(session), annotation_ids: a.dom, annotation_dom_count: a.dom.length };
       };
       const on = await chup();
+      // Hết hạn chờ là MỘT KẾT LUẬN (công tắc không đưa nhãn về trạng thái hứa), không phải lỗi bộ
+      // chạy: ghi lại rồi để bộ đánh giá nói vì sao (tiêm lỗi FB1 W17: lượt cũ dừng cả suite ở đây).
+      const choHet = (dk) => pollUntil(() => annotationState(session), dk, { timeoutMs: 5_000 })
+        .then(() => null, (e) => String(e?.message ?? e).slice(0, 160));
       for (const ten of congTac) await clickChip(session, ten);
-      await pollUntil(() => annotationState(session), (s) => s.dom.length === 0, { timeoutMs: 5_000 });
+      const hetTat = await choHet((s) => s.dom.length === 0);
       await settleOrRecord(session, result, "annotations_off");
       const off = await chup();
       result.screenshots.annotations_off = await capture(session, join(outDir, "annotations_off.png"));
       result.capture_order.push("annotations_off");
       for (const ten of congTac) await clickChip(session, ten);
-      await pollUntil(() => annotationState(session), (s) => s.dom.length === on.annotation_dom_count,
-        { timeoutMs: 5_000 });
+      const hetBat = await choHet((s) => s.dom.length === on.annotation_dom_count);
       await settleOrRecord(session, result, "annotations_back");
       const back = await chup();
-      result.annotation_toggle = { chips: congTac, on, off, back, ...assessToggleIsolation({ on, off, back }) };
+      result.annotation_toggle = { chips: congTac, on, off, back, poll_timeouts: { off: hetTat, back: hetBat },
+        ...assessToggleIsolation({ on, off, back }) };
+      // Các phép đo sau giả định bước cuối: công tắc lỡ đổi bước thì đã bị ghi ở trên — quay về.
+      if (JSON.stringify(back.step) !== JSON.stringify(on.step)) await goToEnd(session);
       result.assertions.annotation_toggle = assertion(result.annotation_toggle.pass,
         result.annotation_toggle.reason_codes);
     }
