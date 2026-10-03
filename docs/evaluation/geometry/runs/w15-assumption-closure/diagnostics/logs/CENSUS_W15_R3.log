@@ -1,0 +1,41 @@
+# cwd: repository root @ 41a26f11 + working tree (this script's round parameter); backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15_r2.py 3
+{
+ "decision": "SHIP",
+ "final_decision_if_stop": null,
+ "rule": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §9 (a)–(f), registered before this census — round 3 at the commit above, the gate as wired",
+ "census_sha256_lf": "3183e1a9831e47d669d74747a0713c25c4754b1eeee09d6210814d7770da6bd6",
+ "a_PROVEN_SAFE_on_DEPENDS_or_MUST_REFUSE": [],
+ "b_must_refuse_not_refused": [],
+ "c_DEPENDENT_on_INVARIANT": [],
+ "d_ac2_rows": 18,
+ "d_ac2_proven_safe": 18,
+ "d_ac2_not_proven": [],
+ "e_guard_rows_not_served_or_not_proven": [],
+ "f_metamorphic_tests_exit_code": 0,
+ "report_w15_expectation_mismatches": {},
+ "report_compiler_cross_check": {
+  "c1_rows": 37,
+  "agrees": 32,
+  "not_recognizable": 5,
+  "disagrees": []
+ },
+ "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof",
+ "f_metamorphic_tests_tail": [
+  "3 passed, 100 deselected in 0.73s"
+ ],
+ "report_w15b_expectation_mismatches": {},
+ "report_w15b_route_mismatches": {},
+ "report_route_served_depends_or_must_refuse": [],
+ "report_enforcement": {
+  "enforced_rows": 70,
+  "not_enforced_rows": 7,
+  "enforced_and_refused_at_assumption": 34,
+  "not_enforced_but_not_proven_and_served": [
+   "sc:doan_r3",
+   "sc:non_e4"
+  ]
+ },
+ "report_round1_to_round3_gate_changes": {},
+ "report_round2_to_round3_gate_changes": {}
+}
+exit=0

@@ -5,9 +5,10 @@ Round 1 (`assumption_census_w15.py`, ae64946b) measured the gate before it was w
 before three corrections (6fa6e582 fully-read rule, 2305f072 right-angle phrasings, a1b17fef
 symbol-key binding) and the U3 enforcement scope (45d014b0). Round 2 re-runs the SAME row
 measurement and the SAME registered SHIP rule (§9) on W14 + W15 + the W15B addendum, and
-also records the route's `assumption_enforced`. Never overwrites round 1. Run from the
-repository root:
-  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15_r2.py
+also records the route's `assumption_enforced`. Never overwrites an earlier round. Run from
+the repository root (optional argument: the round number, default 2; round 3 = the gate after
+the final-review fix 41a26f11, also compared with round 2):
+  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_census_w15_r2.py [3]
 """
 from __future__ import annotations
 
@@ -28,8 +29,9 @@ from app.simulation.semantic_program.route import verify_and_compile  # noqa: E4
 ROOT = R1.ROOT
 W15B_CORPUS = HERE.parent / "assumption_corpus_w15b" / "CORPUS.json"
 ROUND1 = HERE.with_name("ASSUMPTION_CENSUS_W15.json")
-OUT_C = HERE.with_name("ASSUMPTION_CENSUS_W15_R2.json")
-OUT_D = HERE.with_name("ASSUMPTION_MECHANISM_DECISION_W15_R2.json")
+ROUND = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+OUT_C = HERE.with_name(f"ASSUMPTION_CENSUS_W15_R{ROUND}.json")
+OUT_D = HERE.with_name(f"ASSUMPTION_MECHANISM_DECISION_W15_R{ROUND}.json")
 
 
 def do_hang(row: dict, corpus: str) -> dict:
@@ -52,7 +54,7 @@ def main() -> None:
     rows += [do_hang(r, "W15") for r in json.loads(R1.W15_CORPUS.read_text(encoding="utf-8"))["rows"]]
     rows += [do_hang(r, "W15B") for r in json.loads(W15B_CORPUS.read_text(encoding="utf-8"))["rows"]]
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    census = {"census": "W15_ASSUMPTION_CENSUS_ROUND_2", "model_calls": 0, "measured_at_commit": head,
+    census = {"census": f"W15_ASSUMPTION_CENSUS_ROUND_{ROUND}", "model_calls": 0, "measured_at_commit": head,
               "corpora": {k: {"path": str(p.relative_to(ROOT)).replace("\\", "/"), "sha256_lf": R1._sha_lf(p.read_bytes())}
                           for k, p in (("W14", R1.W14_CORPUS), ("W15", R1.W15_CORPUS), ("W15B", W15B_CORPUS))},
               "re_execution_budget": R1.G.NGAN_SACH_CHAY_LAI, "rows": rows}
@@ -63,7 +65,7 @@ def main() -> None:
                         cwd=ROOT / "backend", capture_output=True, text=True,
                         env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     dec = R1.quyet_dinh(rows, R1._sha_lf(raw), mm.returncode)
-    dec["rule"] += " — round 2 at the commit above, the gate as wired"
+    dec["rule"] += f" — round {ROUND} at the commit above, the gate as wired"
     dec["f_metamorphic_tests_tail"] = mm.stdout.strip().splitlines()[-1:] if mm.stdout else []
     w15b = [r for r in rows if r["corpus"] == "W15B"]
     dec["report_w15b_expectation_mismatches"] = {
@@ -84,12 +86,14 @@ def main() -> None:
         "not_enforced_but_not_proven_and_served": sorted(
             r["id"] for r in do if r["route_today"].get("assumption_enforced") is False
             and r["status"] not in (R1.G.PROVEN_SAFE, R1.G.NOT_APPLICABLE) and r["route_today"]["servable"])}
-    truoc = {(r["corpus"], r["id"]): (r.get("status"), r.get("certificate"), r.get("subjects"))
-             for r in json.loads(ROUND1.read_text(encoding="utf-8"))["rows"]}
-    dec["report_round1_to_round2_gate_changes"] = {
-        f"{r['corpus']}:{r['id']}": [list(truoc[(r["corpus"], r["id"])]), [r.get("status"), r.get("certificate"), r.get("subjects")]]
-        for r in rows if (r["corpus"], r["id"]) in truoc
-        and truoc[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"), r.get("subjects"))}
+    for k in sorted({1, ROUND - 1}):
+        truoc = {(r["corpus"], r["id"]): (r.get("status"), r.get("certificate"), r.get("subjects"))
+                 for r in json.loads((ROUND1 if k == 1 else HERE.with_name(f"ASSUMPTION_CENSUS_W15_R{k}.json"))
+                                     .read_text(encoding="utf-8"))["rows"]}
+        dec[f"report_round{k}_to_round{ROUND}_gate_changes"] = {
+            f"{r['corpus']}:{r['id']}": [list(truoc[(r["corpus"], r["id"])]), [r.get("status"), r.get("certificate"), r.get("subjects")]]
+            for r in rows if (r["corpus"], r["id"]) in truoc
+            and truoc[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"), r.get("subjects"))}
     OUT_D.write_text(json.dumps(dec, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: dec[k] for k in dec if k not in ("verdicts_by_group",)}, ensure_ascii=False, indent=1))
 
