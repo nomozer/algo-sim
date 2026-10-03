@@ -481,7 +481,8 @@ export function deltaE76(a, b) {
 /** `trangThai` ∈ closed | pre_close | rewound; `cap` = [{on: [r,g,b], off: [r,g,b]}] cùng điểm
  *  ảnh. Khép kín: ΔE trung bình ≥ T_ON VÀ mọi mẫu ≥ T_ON_MIN (bắt tô thiếu/nhạt). Trước khi
  *  khép, sau khi tua ngược: ΔE lớn nhất ≤ T_OFF (bắt tô sớm, tô không mất). Không mẫu ⇒ đỏ. */
-export function assessSectionFill(trangThai, cap, nguong = NGUONG_TO_THIET_DIEN) {
+export function assessSectionFill(trangThai, cap) {
+  const nguong = NGUONG_TO_THIET_DIEN;
   const de = (cap ?? []).map((p) => deltaE76(p.on, p.off));
   const dau = { state: trangThai, samples: de.length, thresholds: nguong };
   if (!["closed", "pre_close", "rewound"].includes(trangThai)) return { ...dau, pass: false, reason: "UNKNOWN_STATE" };
@@ -492,9 +493,10 @@ export function assessSectionFill(trangThai, cap, nguong = NGUONG_TO_THIET_DIEN)
   return { ...dau, mean_delta_e: mean, min_delta_e: min, max_delta_e: max, pass };
 }
 
-/** Điểm mẫu (px CSS của khung, lưới `buoc` px) BÊN TRONG đa giác thiết diện chiếu bằng camera
+/** Điểm mẫu (px CSS của khung, lưới 6 px) BÊN TRONG đa giác thiết diện chiếu bằng camera
  *  thật, cách mọi cạnh chiếu ít nhất `margin_px`. Có đỉnh sau camera ⇒ không mẫu (cổng đỏ). */
-export function diemMauThietDien(dinh, snapshot, margin = NGUONG_TO_THIET_DIEN.margin_px, buoc = 6) {
+export function diemMauThietDien(dinh, snapshot) {
+  const [margin, buoc] = [NGUONG_TO_THIET_DIEN.margin_px, 6];
   const p = (dinh ?? []).map((v) => chieuManHinh(snapshot, v.map(num)));
   if (p.length < 3 || p.some((q) => q.behind || !Number.isFinite(q.x + q.y))) return [];
   const trong = (x, y) => {

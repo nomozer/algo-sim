@@ -146,24 +146,15 @@ def transfer_expectation(frozen: dict[str, Any], registered_scene: dict[str, Any
     the scene that was reviewed, (2) the geometry is unchanged, and (3) the
     independent oracle reproduces the reviewed sets at BOTH the registered and
     the new camera. The registry itself is never edited."""
-    expected = _reviewed_sets(frozen)
     if scene_sha256(registered_scene) != frozen.get("scene3d_envelope_sha256"):
         return {"status": "REGISTERED_SCENE_MISMATCH"}
     if geometry_signature(registered_scene) != geometry_signature(scene):
         return {"status": "SCENE_GEOMETRY_CHANGED"}
-    registered = preimages.get(frozen.get("camera_snapshot_sha256"))
-    if registered is None:
-        return {"status": "REGISTERED_PREIMAGE_UNAVAILABLE"}
-    at_registered = _sets(cross_check(scene, _camera(registered))["analytic"])
-    at_new = _sets(cross_check(scene, _camera(camera_now))["analytic"])
-    holds = at_registered == expected and at_new == expected
-    return {
-        "status": ("EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE" if holds
-                   else "FROZEN_EXPECTATION_NOT_TRANSFERABLE"),
-        "oracle_at_registered_camera": at_registered,
-        "oracle_at_new_camera": at_new,
-        "expected": expected,
-    }
+    ve_lai = reviewed_sets_transfer(frozen, scene, camera_now, preimages)
+    verdict = ve_lai.pop("verdict")
+    return {"status": {"REVIEWED_SETS_REPRODUCED": "EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE",
+                       "REVIEWED_SETS_DIFFER": "FROZEN_EXPECTATION_NOT_TRANSFERABLE"}.get(verdict, verdict),
+            **ve_lai}
 
 
 def _rows(column_major: list[float]) -> tuple[tuple[float, float, float, float], ...]:

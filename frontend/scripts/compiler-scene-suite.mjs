@@ -319,15 +319,19 @@ async function canvasFrame(session) {
   return { sha256: sha256(data), bytes: data.length, encoded };
 }
 
+/** Đoạn mã TRONG TRANG: giải hai khung PNG → ảnh `a`, `b` và mảng RGBA `pa`, `pb` trên một
+ *  canvas `c` cỡ `a` (nơi gọi tự kiểm cỡ nếu cần). */
+const giaiMaHaiKhung = (truoc, sau) => `const load=src=>new Promise((ok,bad)=>{`
+  + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
+  + `const a=await load(${JSON.stringify(`data:image/png;base64,${truoc.encoded}`)});`
+  + `const b=await load(${JSON.stringify(`data:image/png;base64,${sau.encoded}`)});`
+  + `const c=document.createElement('canvas');c.width=a.width;c.height=a.height;const x=c.getContext('2d');`
+  + `const doc=img=>{x.clearRect(0,0,c.width,c.height);x.drawImage(img,0,0);`
+  + `return x.getImageData(0,0,c.width,c.height).data};const pa=doc(a),pb=doc(b);`;
+
 async function pixelDelta(session, before, after) {
-  return session.eval(`(async()=>{const load=src=>new Promise((ok,bad)=>{`
-    + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
-    + `const a=await load(${JSON.stringify(`data:image/png;base64,${before.encoded}`)});`
-    + `const b=await load(${JSON.stringify(`data:image/png;base64,${after.encoded}`)});`
+  return session.eval(`(async()=>{${giaiMaHaiKhung(before, after)}`
     + `if(a.width!==b.width||a.height!==b.height)return{pass:false,reason:'SIZE_MISMATCH'};`
-    + `const c=document.createElement('canvas');c.width=a.width;c.height=a.height;const x=c.getContext('2d');`
-    + `x.drawImage(a,0,0);const pa=x.getImageData(0,0,c.width,c.height).data;`
-    + `x.clearRect(0,0,c.width,c.height);x.drawImage(b,0,0);const pb=x.getImageData(0,0,c.width,c.height).data;`
     + `let changed=0,minX=c.width,minY=c.height,maxX=-1,maxY=-1;for(let i=0;i<pa.length;i+=4){`
     + `const d=Math.abs(pa[i]-pb[i])+Math.abs(pa[i+1]-pb[i+1])+Math.abs(pa[i+2]-pb[i+2]);`
     + `if(d<24)continue;changed++;const p=i/4,xx=p%c.width,yy=Math.floor(p/c.width);`
@@ -350,13 +354,7 @@ async function sectionFillPairs(session, section) {
   await session.eval("window.__geo3d_set_section_fill_visible?.(true)");
   await session.eval(doiKhung);
   if (diem.length === 0) return { fill_mesh_names: ten, pairs: [] };
-  const pairs = await session.eval(`(async()=>{const load=src=>new Promise((ok,bad)=>{`
-    + `const i=new Image();i.onload=()=>ok(i);i.onerror=bad;i.src=src});`
-    + `const a=await load(${JSON.stringify(`data:image/png;base64,${bat.encoded}`)});`
-    + `const b=await load(${JSON.stringify(`data:image/png;base64,${tat.encoded}`)});`
-    + `const c=document.createElement('canvas');c.width=a.width;c.height=a.height;const x=c.getContext('2d');`
-    + `const doc=img=>{x.clearRect(0,0,c.width,c.height);x.drawImage(img,0,0);`
-    + `return x.getImageData(0,0,c.width,c.height).data};const pa=doc(a),pb=doc(b);`
+  const pairs = await session.eval(`(async()=>{${giaiMaHaiKhung(bat, tat)}`
     + `const sx=a.width/${snapshot.viewport_width},sy=a.height/${snapshot.viewport_height};`
     + `return ${JSON.stringify(diem)}.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
     + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}})})()`);
