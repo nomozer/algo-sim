@@ -938,6 +938,19 @@ test("W16 section fill sampler: margin around EVERY projected solid edge and ver
   assert.ok(LIB.diemMauThietDien(VUONG_TD, SNAP_TD).length > mau.length, "không vật cản thì nhiều mẫu hơn");
 });
 
+test("W17 section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill)", () => {
+  // Lượt trình duyệt T7: nhãn "Diện tích thiết diện = 9" (nền 90 % giấy) nằm trên đúng vùng mẫu —
+  // mẫu dưới nó đọc nền nhãn, ΔE bật/tắt tô ≈ 10 % (min 2.8 < T_ON_MIN) dù phần tô vẫn rõ.
+  const tat = LIB.diemMauThietDien(VUONG_TD, SNAP_TD);
+  const [cx, cy] = [tat.reduce((s, q) => s + q[0], 0) / tat.length, tat.reduce((s, q) => s + q[1], 0) / tat.length];
+  const hop = [{ x: cx - 40, y: cy - 9, w: 80, h: 18 }];
+  const mau = LIB.diemMauThietDien(VUONG_TD, SNAP_TD, { hop });
+  const m = LIB.NGUONG_TO_THIET_DIEN.margin_px;
+  assert.ok(mau.length > 10 && mau.length < tat.length, `${mau.length} / ${tat.length}`);
+  assert.ok(mau.every(([x, y]) => x < hop[0].x - m || x > hop[0].x + hop[0].w + m
+    || y < hop[0].y - m || y > hop[0].y + hop[0].h + m), "mẫu nằm dưới nhãn");
+});
+
 test("W16 under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside", () => {
   assert.equal(typeof LIB.diemCanhQuaThietDien, "function", "diemCanhQuaThietDien chưa có (W16)");
   const canh = [{ id: "qua", a: [-3, 0, 0], b: [3, 0, 0] }, { id: "ngoai", a: [5, 5, 0], b: [6, 6, 0] }];
@@ -1051,24 +1064,37 @@ test("W17 annotation boxes: inside, near the independently projected anchor, no 
   assert.deepEqual(thieu.reason_codes, ["ANNOTATION_MISSING:AB"]);
 });
 
+/* Same pose, the last ULPs rewritten (OrbitControls damping, see CAMERA_SETTLE_TOLERANCE) vs a pose a
+ * learner could see (view translated by 0.01). */
+const camLech = (d) => ({ ...CAM_W17, view_matrix_column_major: CAM_W17.view_matrix_column_major
+  .map((x, i) => (i === 12 ? x + d : x)) });
+const CAM_ULP = camLech(1e-14);
+const CAM_KHAC = camLech(0.01);
+
 test("W17 toggle isolation and causal restore record each state separately", () => {
   const on = { annotation_dom_count: 2, annotation_ids: ["AB", "V"], dash_signature: { e: ["VISIBLE_SOLID"] },
-    rendered_object_ids: ["A"], camera: { m: 1 }, selected_id: null, step: 4 };
+    rendered_object_ids: ["A"], camera: CAM_W17, selected_id: null, step: 4 };
   const off = { ...on, annotation_dom_count: 0, annotation_ids: [] };
   assert.equal(LIB.assessToggleIsolation({ on, off, back: on }).pass, true);
-  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, camera: { m: 2 } }, back: on }).reason_codes,
+  // Lượt trình duyệt T7: camera chỉ lệch ở ULP cuối (1e-14) giữa bật/tắt — không phải "đổi camera".
+  assert.equal(LIB.assessToggleIsolation({ on, off: { ...off, camera: CAM_ULP }, back: on }).pass, true);
+  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, camera: CAM_KHAC }, back: on }).reason_codes,
     ["TOGGLE_CHANGED_CAMERA"]);
   assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, dash_signature: {} }, back: on }).reason_codes,
     ["TOGGLE_CHANGED_DASH_SIGNATURE"]);
   assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, annotation_dom_count: 1 }, back: on }).reason_codes,
     ["TOGGLE_OFF_LEAVES_LABELS:1"]);
-  const n = { camera: { m: 1 }, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
+  const n = { camera: CAM_W17, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
   const s = { ...n, selected_id: "V", scroll_y: 300 };
   assert.equal(LIB.assessCausalRestore({ neutral: n, selected: s, restored: n }).pass, true);
+  assert.equal(LIB.assessCausalRestore({ neutral: n, selected: { ...s, camera: CAM_ULP },
+    restored: { ...n, camera: CAM_ULP } }).pass, true);
   assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: { ...n, scroll_y: 300 } })
     .reason_codes, ["SCROLL_NOT_RESTORED"]);
-  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: { ...n, camera: { m: 2 } } })
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: { ...n, camera: CAM_KHAC } })
     .reason_codes, ["RESTORE_MOVED_CAMERA"]);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: { ...s, camera: CAM_KHAC }, restored: n })
+    .reason_codes, ["SELECTION_MOVED_CAMERA"]);
 });
 
 test("role tokens are machine data: on screen they are a raw-token leak", () => {

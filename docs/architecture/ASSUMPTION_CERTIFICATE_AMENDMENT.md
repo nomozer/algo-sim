@@ -758,3 +758,20 @@ quả hay chính sách nét liền/đứt.
   `CONSTRUCTION`; mặt phẳng đúng được phục vụ.
 
 Các ngưỡng trên không bao giờ chỉnh theo ảnh sản phẩm: nếu trượt, sửa sản phẩm.
+
+**Đính chính cách đo — lượt trình duyệt đầu (Task 7, 2026-10-04; trước mọi phép đo nghiệm thu;
+không ngưỡng nào đổi).** Lượt đầu đỏ ở cả sáu họ. Hai nguyên nhân là lỗi sản phẩm và được sửa
+trong sản phẩm: nhãn đáy bị ẩn khi bốn phía đều kín (bộ đặt nhãn thêm bốn góc), và câu gợi ý của
+thẻ từ chối nhắc lại lời backend. Bốn nguyên nhân còn lại là cách đo đọc sai một trạng thái đúng,
+nên được sửa trong bộ đo:
+- "Camera không đổi" nghĩa là chuyển động ma trận ≤ `CAMERA_SETTLE_TOLERANCE` (1e-9, w09).
+  Damping của OrbitControls viết lại các ULP cuối ở mỗi khung. Lượt đầu báo đổi camera với độ
+  lệch 1e-14, trong khi khung canvas trùng từng byte.
+- Khung dùng để so sánh khi khôi phục nhân quả phải là khung NGHỈ ở cả hai đầu, tức hai lần chụp
+  liền nhau trùng byte. Ở lượt đầu, khung trung tính (cuboid, mobile) bị chụp giữa chừng. Lượt
+  chẩn đoán chạy cùng luồng cho khung trung tính trùng khung khôi phục.
+- Phép đo điểm ảnh của HÌNH (sắc vai trò W12, mẫu tô §11/§14.4) che mọi lớp phủ DOM trên canvas,
+  nay gồm cả nhãn số đo — giống nhãn điểm từ W12. Viền xanh "đang xét" của nhãn vật đang chọn là
+  chữ, không phải một vật được vẽ. Mẫu tô nằm dưới nền nhãn (90 % màu giấy) đọc ra màu nền nhãn:
+  ở lượt đầu, min ΔE = 2.8 < `T_ON_MIN` nằm dưới nhãn "Diện tích thiết diện = 9", trong khi mean
+  vẫn 30.9.

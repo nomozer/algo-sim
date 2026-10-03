@@ -12,6 +12,7 @@ import { DAU_DINH_PX, KHUNG_HEP_PX } from "../src/simulations/domains/geometry/p
 import {
   DAI_SAC_VAI_TRO,
   LOP_DONG_THEO_TANG,
+  LOP_PHU_KHUNG,
   aliasTreeRowCheck,
   assessCausalCanvasHues,
   assessCssReadiness,
@@ -326,6 +327,21 @@ async function canvasFrame(session) {
   return { sha256: sha256(data), bytes: data.length, encoded };
 }
 
+/** Khung canvas LÚC NGHỈ: chụp tới khi hai lần liền nhau trùng byte (≤ 10 lần, cách 100 ms; không
+ *  nghỉ ⇒ `stable: false`, ghi lại chứ không giấu). Lượt trình duyệt T7: khung "trung tính" của khôi
+ *  phục nhân quả (cuboid, mobile) bị chụp giữa chừng — lượt chẩn đoán cùng luồng cho trung tính =
+ *  khôi phục từng byte; khung so sánh phải là khung nghỉ ở CẢ hai đầu. */
+async function khungOnDinh(session) {
+  let truoc = await canvasFrame(session);
+  for (let i = 0; i < 10; i += 1) {
+    await new Promise((done) => setTimeout(done, 100));
+    const sau = await canvasFrame(session);
+    if (sau.sha256 === truoc.sha256) return { ...sau, stable: true };
+    truoc = sau;
+  }
+  return { ...truoc, stable: false };
+}
+
 /** Đoạn mã TRONG TRANG: giải hai khung PNG → ảnh `a`, `b` và mảng RGBA `pa`, `pb` trên một
  *  canvas `c` cỡ `a` (nơi gọi tự kiểm cỡ nếu cần). */
 const giaiMaHaiKhung = (truoc, sau) => `const load=src=>new Promise((ok,bad)=>{`
@@ -358,8 +374,13 @@ async function sectionFillPairs(session, section, scene, { duoiCanh = false } = 
   const cham = (await jsonEval(session, "window.__geo3d_vertex_markers||[]")) ?? [];
   const khoi = cauTrucKhoi(scene);
   const canh = khoi.canh.map(([i, j]) => ({ id: `${khoi.ten[i]}-${khoi.ten[j]}`, a: khoi.diem[i], b: khoi.diem[j] }));
-  const diem = snapshot ? diemMauThietDien(section.polygon, snapshot, { canh, cham }) : [];
-  const dai = duoiCanh && snapshot ? diemCanhQuaThietDien(section.polygon, snapshot, canh, cham) : [];
+  // W17: hộp lớp phủ DOM (nhãn điểm, nhãn số đo, nút) px CSS tương đối canvas — mẫu không nằm dưới chúng.
+  const hop = await jsonEval(session, `(()=>{const k=document.querySelector('.geo3d-canvas canvas')`
+    + `.getBoundingClientRect();return[...document.querySelectorAll(${JSON.stringify(LOP_PHU_KHUNG)})]`
+    + `.map(e=>e.getBoundingClientRect()).filter(r=>r.width>0&&r.height>0)`
+    + `.map(r=>({x:r.left-k.left,y:r.top-k.top,w:r.width,h:r.height}))})()`);
+  const diem = snapshot ? diemMauThietDien(section.polygon, snapshot, { canh, cham, hop }) : [];
+  const dai = duoiCanh && snapshot ? diemCanhQuaThietDien(section.polygon, snapshot, canh, cham, hop) : [];
   const bat = await canvasFrame(session);
   const ten = await jsonEval(session, "window.__geo3d_set_section_fill_visible?.(false)??null");
   await session.eval(doiKhung);
@@ -425,7 +446,7 @@ async function roleHueCensus(session, frame) {
     + `const i=await new Promise((ok,bad)=>{const x=new Image();x.onload=()=>ok(x);x.onerror=bad;`
     + `x.src=${JSON.stringify(`data:image/png;base64,${frame.encoded}`)}});`
     + `const k=document.querySelector('.geo3d-canvas canvas').getBoundingClientRect();`
-    + `const che=[...document.querySelectorAll('.geo3d-noi,.geo3d-soi,.geo3d-label')]`
+    + `const che=[...document.querySelectorAll(${JSON.stringify(LOP_PHU_KHUNG)})]`
     + `.map(e=>e.getBoundingClientRect()).filter(r=>r.width>0&&r.height>0)`
     + `.map(r=>[r.left-k.left-2,r.top-k.top-2,r.right-k.left+2,r.bottom-k.top+2]);`
     + `const c=document.createElement('canvas');c.width=i.width;c.height=i.height;`
@@ -942,14 +963,15 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.assertions.immutable_120_frames = assertion(windowVerdict.pass, result.occlusion_performance);
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
     await new Promise((done) => setTimeout(done, 200));
-    const causalBeforeFrame = await canvasFrame(session);
+    const causalBeforeFrame = await khungOnDinh(session);
     const causalBeforeState = await jsonEval(session, `({selected_id:window.__geo3d_selected_id||null,`
       + `highlighted_ids:window.__geo3d_highlighted_ids||[],`
       + `highlighted_render_owner_ids:window.__geo3d_highlighted_render_owner_ids||[]})`);
     // W17 §15.5: ba thứ GHI RIÊNG — camera, lựa chọn, vị trí cuộn — ở trạng thái trung tính.
     const CAMERA_CUON = "({camera:window.__geo3d_camera_snapshot||null,scroll_y:Math.round(window.scrollY),"
       + "selected_id:window.__geo3d_selected_id||null})";
-    const causalNeutral = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalBeforeFrame.sha256 };
+    const causalNeutral = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalBeforeFrame.sha256,
+      canvas_stable: causalBeforeFrame.stable };
 
     // w10: bí danh đáp số (`alias_of`) là MỘT kết luận với nguồn — không có dòng
     // số đo riêng, người học bấm dòng đáp số là chọn NGUỒN. Bao đóng kỳ vọng
@@ -1048,8 +1070,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       { timeoutMs: 5_000 });
     await session.eval(`(()=>{window.scrollTo(0,${causalNeutral.scroll_y});return true})()`);
     await new Promise((done) => setTimeout(done, 300));
-    const restoredFrame = await canvasFrame(session);
-    const causalRestored = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: restoredFrame.sha256 };
+    const restoredFrame = await khungOnDinh(session);
+    const causalRestored = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: restoredFrame.sha256,
+      canvas_stable: restoredFrame.stable };
     result.causal_restore = { neutral: { ...causalNeutral, camera: undefined },
       selected: { ...causalSelected, camera: undefined }, restored: { ...causalRestored, camera: undefined },
       ...assessCausalRestore({ neutral: causalNeutral, selected: causalSelected, restored: causalRestored }) };

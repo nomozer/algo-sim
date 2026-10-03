@@ -440,6 +440,11 @@ export const LOP_DONG_THEO_TANG = {
  * phẩm. Có vật mang vai trò thì không phán (vật ấy có thể bị che hoặc rất nhỏ). */
 export const DAI_SAC_VAI_TRO = { s: 0.45, l: [0.2, 0.85], cam: [10, 50], xanh: [205, 235] };
 
+/** Lớp phủ DOM nằm TRÊN canvas (nút nổi, ô soi, nhãn điểm, W17: nhãn số đo). Phép đo điểm ảnh của
+ *  HÌNH (sắc vai trò, phần tô thiết diện) che chúng: nhãn số đo của vật đang chọn viền xanh "đang
+ *  xét" như nhãn điểm đang chọn — là chữ, không phải vật vẽ của khung 3D (lượt trình duyệt T7). */
+export const LOP_PHU_KHUNG = ".geo3d-noi,.geo3d-soi,.geo3d-label,.geo3d-so-do";
+
 /** Một điểm ảnh sRGB 0–255 → `"cam"` | `"xanh"` | `null`. HÀM THUẦN, không dùng
  *  biến ngoài: bộ chạy tiêm chính mã nguồn của nó vào trang (`toString`). */
 export function phanLoaiSac(r, g, b, dai) {
@@ -500,9 +505,11 @@ const _cachDoan = (x, y, a, b) => {
 };
 
 /** Vùng thiết diện chiếu: `trong` (bên trong đa giác) và `xa` (cách mọi cạnh đa giác, mọi cạnh
- *  khối `canh` = [{id, a, b}] và mọi dấu điểm `cham` = [{center, radius_world}] ≥ `margin_px`,
- *  §11 / W16 §14.4). Có đỉnh sau camera ⇒ null (cổng đỏ, không mẫu). */
-function _vungThietDien(dinh, snapshot, canh = [], cham = []) {
+ *  khối `canh` = [{id, a, b}], mọi dấu điểm `cham` = [{center, radius_world}] và mọi hộp nhãn DOM
+ *  `hop` = [{x, y, w, h}] px CSS của khung ≥ `margin_px`, §11 / W16 §14.4 / W17: §11 đo phần TÔ
+ *  WebGL; nhãn nằm trên khung không phải phần tô — như `roleHueCensus` che nhãn từ W12). Có đỉnh
+ *  sau camera ⇒ null (cổng đỏ, không mẫu). */
+function _vungThietDien(dinh, snapshot, canh = [], cham = [], hop = []) {
   const margin = NGUONG_TO_THIET_DIEN.margin_px;
   const p = (dinh ?? []).map((v) => chieuManHinh(snapshot, v.map(num)));
   if (p.length < 3 || p.some((q) => q.behind || !Number.isFinite(q.x + q.y))) return null;
@@ -520,15 +527,17 @@ function _vungThietDien(dinh, snapshot, canh = [], cham = []) {
   const xa = (x, y) =>
     p.every((a, i) => _cachDoan(x, y, a, p[(i + 1) % p.length]) >= margin)
     && doanKhoi.every((e) => _cachDoan(x, y, e.d[0], e.d[1]) >= margin)
-    && dau.every((c) => Math.hypot(x - c.x, y - c.y) >= c.r + margin);
+    && dau.every((c) => Math.hypot(x - c.x, y - c.y) >= c.r + margin)
+    && (hop ?? []).every((r) => x < r.x - margin || x > r.x + r.w + margin
+      || y < r.y - margin || y > r.y + r.h + margin);
   return { p, doanKhoi, trong, xa };
 }
 
 /** Điểm mẫu (px CSS của khung, lưới 6 px) BÊN TRONG đa giác thiết diện chiếu bằng camera
  *  thật, cách mọi cạnh và dấu điểm đã chiếu ít nhất `margin_px` — ĐÚNG câu đăng ký §11 (W15
- *  chỉ chừa lề quanh cạnh của chính đa giác; W16 §14.4 sửa cho khớp). `vatCan` = {canh, cham}. */
+ *  chỉ chừa lề quanh cạnh của chính đa giác; W16 §14.4 sửa cho khớp). `vatCan` = {canh, cham, hop}. */
 export function diemMauThietDien(dinh, snapshot, vatCan = {}) {
-  const vung = _vungThietDien(dinh, snapshot, vatCan.canh, vatCan.cham);
+  const vung = _vungThietDien(dinh, snapshot, vatCan.canh, vatCan.cham, vatCan.hop);
   if (!vung) return [];
   const [xs, ys] = [vung.p.map((q) => q.x), vung.p.map((q) => q.y)];
   const ra = [];
@@ -543,9 +552,9 @@ export function diemMauThietDien(dinh, snapshot, vatCan = {}) {
 /** W16 · SECTION_FILL_UNDER_EDGES — với mỗi cạnh khối đi qua vùng thiết diện (≥ 3 điểm, bước
  *  1 px CSS, trong vùng và xa biên/dấu điểm): `core` = dải ±1 px CSS (bước ½ px — phủ cả điểm
  *  ảnh thiết bị ở DPR 2), `ref` = hai bên ±4 px CSS, vẫn trong vùng và xa mọi cạnh khác. */
-export function diemCanhQuaThietDien(dinh, snapshot, canh = [], cham = []) {
-  const vung = _vungThietDien(dinh, snapshot, [], cham);
-  const khac = _vungThietDien(dinh, snapshot, canh, cham);
+export function diemCanhQuaThietDien(dinh, snapshot, canh = [], cham = [], hop = []) {
+  const vung = _vungThietDien(dinh, snapshot, [], cham, hop);
+  const khac = _vungThietDien(dinh, snapshot, canh, cham, hop);
   if (!vung || !khac) return [];
   const ra = [];
   for (const e of khac.doanKhoi) {
@@ -1413,12 +1422,17 @@ export function assessAnnotationBoxes({ scene, step, boxes, points, camera, must
 
 /** §15.5 công tắc: tắt cả hai ⇒ 0 nhãn số đo trong DOM, và hình/camera/lựa chọn/nét đứt KHÔNG
  *  đổi giữa bật và tắt; bật lại ⇒ đúng tập nhãn cũ. */
+/** Camera "đã đổi" = chuyển động ma trận vượt dung sai lắng (w09) — damping viết lại ULP cuối mỗi
+ *  khung, nên so byte sẽ báo đổi cho một tư thế không ai thấy khác (lượt trình duyệt T7). */
+const cameraDoi = (a, b) => cameraMotion(a, b) > CAMERA_SETTLE_TOLERANCE;
+
 export function assessToggleIsolation({ on, off, back }) {
   const r = [];
   if (off.annotation_dom_count !== 0) r.push(`TOGGLE_OFF_LEAVES_LABELS:${off.annotation_dom_count}`);
-  for (const k of ["dash_signature", "rendered_object_ids", "camera", "selected_id", "step"]) {
+  for (const k of ["dash_signature", "rendered_object_ids", "selected_id", "step"]) {
     if (JSON.stringify(on[k]) !== JSON.stringify(off[k])) r.push(`TOGGLE_CHANGED_${k.toUpperCase()}`);
   }
+  if (cameraDoi(on.camera, off.camera)) r.push("TOGGLE_CHANGED_CAMERA");
   if (JSON.stringify(on.annotation_ids) !== JSON.stringify(back.annotation_ids)) r.push("TOGGLE_BACK_DIFFERENT_LABELS");
   return { pass: r.length === 0, reason_codes: r };
 }
@@ -1429,12 +1443,12 @@ export function assessCausalRestore({ neutral, selected, restored }) {
   const r = [];
   if (selected.selected_id === null) r.push("CAUSAL_NOT_SELECTED");
   if (restored.selected_id !== null) r.push("SELECTION_NOT_RESET");
-  if (JSON.stringify(neutral.camera) !== JSON.stringify(selected.camera)) r.push("SELECTION_MOVED_CAMERA");
-  if (JSON.stringify(neutral.camera) !== JSON.stringify(restored.camera)) r.push("RESTORE_MOVED_CAMERA");
+  if (cameraDoi(neutral.camera, selected.camera)) r.push("SELECTION_MOVED_CAMERA");
+  if (cameraDoi(neutral.camera, restored.camera)) r.push("RESTORE_MOVED_CAMERA");
   if (neutral.scroll_y !== restored.scroll_y) r.push("SCROLL_NOT_RESTORED");
   if (neutral.canvas_sha256 !== restored.canvas_sha256) r.push("CANVAS_NOT_RESTORED");
   return { pass: r.length === 0, reason_codes: r,
-    camera_reset: JSON.stringify(neutral.camera) !== JSON.stringify(restored.camera),
+    camera_reset: cameraDoi(neutral.camera, restored.camera),
     selection_reset: restored.selected_id === null,
     scroll: { neutral: neutral.scroll_y, selected: selected.scroll_y, restored: restored.scroll_y } };
 }
