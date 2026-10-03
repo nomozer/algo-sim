@@ -550,6 +550,44 @@ def test_doi_chung_C0_bien_trung_gian_dinh_nghia_mot_lan_duoc_chung_nhan():
     assert (kq.status, kq.certificate) == (AN_TOAN, "C0"), kq
 
 
+@pytest.mark.parametrize("ca", sorted(GHI_DE))
+def test_tuyen_tu_choi_ghi_de_bi_danh_khoi_phuc_o_moi_vung(ca):
+    """Quyết định U5: một giá trị người học thấy đọc qua tên có NHIỀU định nghĩa với tới là lỗi
+    toàn vẹn của chương trình — route từ chối ở MỌI vùng, kể cả đề không nêu khối đa diện
+    (hình thoi n1 của các ca C0 điểm; các ca vô hướng đã bị cổng sớm hơn chặn)."""
+    ct, raw, _ten = GHI_DE[ca]()
+    _sp, out, _sc = W.chay(ct, raw)
+    assert not out.servable, (ca, out.stage_reached)
+    if ca in ("C0:diem_ghi_de_khoi_phuc", "C0:bi_danh_diem_bi_ghi_de"):        # ngoài vùng đa diện
+        assert (out.stage_reached, out.assumption_enforced) == ("assumption", True), (ca, out.details[:3])
+
+
+def _b3(doc_truoc: bool = False):
+    """Quy tắc sản phẩm cũ (`test_derived_point_construction::test_B3`): P khai toạ độ (giả
+    định) NHƯNG vẫn có lệnh dựng P — giá trị đến từ phép dựng. `doc_truoc`: thêm một phép đo
+    ĐỌC literal khai báo của P trước khi lệnh dựng ghi đè nó."""
+    from tests.geometry import test_derived_point_construction as D
+
+    p = D._ct(D.MULTIPLE, E={"source_fact_id": None, "model_assumption": D.LY_DO},
+              P={"initial_value": [2, 0, 0], "source_fact_id": None, "model_assumption": D.LY_DO})
+    if doc_truoc:
+        i = next(k for k, s in enumerate(p["statements"]) if s.get("target_var") == "P")
+        p["memory_declarations"].append({"name": "d_som", "type": "float"})
+        p["statements"].insert(i, _do("d_som", "P", "E"))
+    return D._hd(D.MULTIPLE), p
+
+
+def test_literal_khai_bao_bi_lenh_dung_ghi_de_truoc_moi_lan_doc_khong_phai_dinh_nghia_voi_toi():
+    """U5: literal khai báo bị CHÍNH lệnh dựng ghi đè trước mọi lần đọc không với tới ai."""
+    kq = _kq(*_b3())
+    assert not any("CLOSURE_MULTIPLE_DEFINITIONS" in d for d in kq.details), kq.details
+
+
+def test_literal_khai_bao_duoc_doc_truoc_khi_ghi_de_van_la_nhieu_dinh_nghia():
+    kq = _kq(*_b3(doc_truoc=True))
+    assert any("CLOSURE_MULTIPLE_DEFINITIONS" in d for d in kq.details), kq.details
+
+
 # ── cos² nằm NGOÀI C1; mọi giá trị số học sinh thấy đều phải được chứng nhận ─────
 
 def test_cos2_ngoai_pham_vi_C1_tu_choi_ca_bai():

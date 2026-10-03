@@ -47,6 +47,9 @@ UNDETERMINED = "UNDETERMINED"
 NOT_APPLICABLE = "NOT_APPLICABLE_NO_NUMERIC_ANSWER"
 MA_PHU_THUOC = "ASSUMPTION_DETERMINES_ANSWER"
 MA_CHUA_CHUNG_MINH = "ASSUMPTION_INVARIANCE_UNPROVEN"
+#: Detail khi một tên trên lát cắt có nhiều định nghĩa với tới (ghi đè, bí danh, khôi phục) —
+#: lỗi toàn vẹn của chương trình: route từ chối nó ở MỌI vùng (quyết định U5).
+MA_NHIEU_DINH_NGHIA = "CLOSURE_MULTIPLE_DEFINITIONS"
 
 #: Số lượt chạy lại interpreter được phép (chương trình tham chiếu C1 + phản ví dụ). Hết
 #: ngân sách ⇒ không kết luận — không bao giờ là an toàn. Đọc lúc chạy (test vá được).
@@ -204,7 +207,8 @@ class _ChiMuc:
         for m in prog["memory_declarations"]:
             if m.get("initial_value") is not None:
                 self.tinh.setdefault(m["name"], []).append(("khai", m))
-        for s in prog["statements"]:
+        self.cau_lenh = prog["statements"]
+        for s in self.cau_lenh:
             for n in _dinh_nghia(s):
                 self.tinh.setdefault(n, []).append(("cau_lenh", s))
         self.dong: dict[str, list] = {}
@@ -216,13 +220,31 @@ class _ChiMuc:
 
     def dinh_nghia(self, n: str) -> _DinhNghia:
         tinh, dong = self.tinh.get(n, []), self.dong.get(n, [])
+        if [k for k, _ in tinh] == ["khai", "cau_lenh"] and len(dong) == 1 and not self._doc_truoc(n, tinh[1][1]):
+            # U5: literal khai báo bị CHÍNH lệnh dựng ghi đè trước mọi lần đọc thì không với tới
+            # ai — lệnh dựng là định nghĩa duy nhất (quy tắc sản phẩm cũ, derived_point B3).
+            tinh = tinh[1:]
         if len(tinh) > 1 or len(dong) > 1 or (tinh and tinh[0][0] == "khai" and dong):
-            raise _Loi("CLOSURE_MULTIPLE_DEFINITIONS", n)
+            raise _Loi(MA_NHIEU_DINH_NGHIA, n)
         if len(tinh) == 1 and tinh[0][0] == "khai":
             return _DinhNghia(n, "khai", tinh[0][1], self.dau.get(n))
         if len(tinh) == 1 and len(dong) == 1:
             return _DinhNghia(n, "cau_lenh", tinh[0][1], dong[0].memory_snapshot.get(n))
         raise _Loi("CLOSURE_UNRESOLVED_DEFINITION", n)
+
+    def _doc_truoc(self, n: str, s: dict) -> bool:
+        """Có câu lệnh nào TRƯỚC `s` đọc `n` không; không đọc được câu lệnh ⇒ coi như có."""
+        for t in self.cau_lenh:
+            if t is s:
+                return False
+            doc = _Doc("", _LatCat())
+            try:
+                doc.nut(t)
+            except _Loi:
+                return True
+            if n in doc.ten:
+                return True
+        return True
 
     def ten_theo_khoa(self) -> dict[str, str]:
         """Khoá ký hiệu → tên chương trình; khoá mà hai tên cùng mang (`A` và `A_`) bị bỏ —

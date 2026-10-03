@@ -74,6 +74,7 @@ bổ sung dựng hình + thực thi của route), `kiem_gia_dinh(...)` cho route
 > ghi `assumption_status`/`assumption_certificate` cùng `assumption_enforced = False` và
 > giữ hành vi + các cổng cũ; mối nguy "kích thước tự đặt" ngoài vùng là một vấn đề mở,
 > không phải một an toàn. Lỗi bên trong bộ đọc vùng ⇒ coi là TRONG vùng (đóng an toàn).
+> Ngoại lệ (U5, §3): nhiều định nghĩa với tới bị từ chối ở MỌI vùng.
 
 ## 2. Nguồn bằng chứng — CHỈ server, CHỈ từ câu đề
 
@@ -155,6 +156,19 @@ veto" của W14).
   giá trị khởi tạo), không bao giờ từ `final_memory`.
 - Không xử lý được (container, bước không `target`, không định danh được thể hiện câu
   lệnh) ⇒ `UNDETERMINED`.
+
+> **Đính chính 2026-10-03 (W15 Task 6, quyết định U5 của người dùng).** (i) Một ngoại lệ hẹp
+> cho "ghi lần hai": khi định nghĩa của một tên là ĐÚNG một khai báo có `initial_value` cộng
+> ĐÚNG một câu lệnh dựng nó (một lần ghi động) và không câu lệnh nào TRƯỚC câu lệnh ấy đọc
+> tên đó, literal khai báo không với tới ai — câu lệnh dựng là định nghĩa duy nhất. Đây là
+> quy tắc sản phẩm có từ trước (`test_derived_point_construction::test_B3`: *"giá trị đến từ
+> phép dựng ⇒ khai báo không gánh thông tin"*). Không đọc được một câu lệnh đứng trước ⇒ coi
+> như có đọc (đóng an toàn). Ghi đè rồi đọc rồi khôi phục, bí danh của tên bị ghi đè, literal
+> bị đọc trước khi bị ghi đè: vẫn `CLOSURE_MULTIPLE_DEFINITIONS`. (ii) Census vòng 2 thấy hai
+> hàng `MUST_REFUSE` (ghi đè + khôi phục, bí danh trên đề hình thoi phẳng n1) được PHỤC VỤ vì
+> nằm ngoài vùng đa diện của U3. Nhiều định nghĩa với tới là lỗi toàn vẹn của chương trình,
+> không phải câu hỏi giả định: route từ chối nó ở MỌI vùng (`assumption_enforced = True`,
+> `assumption_gate.MA_NHIEU_DINH_NGHIA`).
 
 ## 4. Vai trò và nguồn của mọi literal trên lát cắt (R1)
 

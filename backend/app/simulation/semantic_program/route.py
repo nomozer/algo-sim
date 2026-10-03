@@ -34,7 +34,7 @@ from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode
 from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
-from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_PHU_THUOC, kiem_gia_dinh
+from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
     chan_doan_phu_cau_truc,
@@ -509,6 +509,9 @@ def _sau_grounding(
         except Exception as e:  # noqa: BLE001
             gd_status, gd_cc, gd_ma = _GD_CHUA_RO, None, MA_CHUA_CHUNG_MINH
             gd_chi_tiet, gd_chu_the = [f"ASSUMPTION_GATE_ERROR {type(e).__name__}"], []
+    # U5: giá trị đọc qua một tên có nhiều định nghĩa với tới (ghi đè, bí danh, khôi phục) là lỗi
+    # toàn vẹn của chương trình, không phải câu hỏi về giả định — từ chối ở MỌI vùng.
+    gd_chan = gd_chan or any(d.startswith(MA_NHIEU_DINH_NGHIA) for d in gd_chi_tiet)
     da_chay["assumption_status"], da_chay["assumption_certificate"] = gd_status, gd_cc
     da_chay["assumption_enforced"] = gd_chan
     if gd_chan and gd_status not in (_GD_AN_TOAN, _GD_KHONG_AP_DUNG):

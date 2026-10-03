@@ -66,6 +66,18 @@
         "G3": "Test đổi tên đỉnh ở CẢ đề lẫn chương trình — giữ đúng ý test (đổi tên không đổi kết quả W = 20); không nới khẳng định nào.",
         "G4": "Trong mỗi phép tiêm, tạm bỏ qua cổng giả định để đo ĐÚNG checker point_coordinate (giữ nguyên khẳng định \"phục vụ lại\"), và thêm khẳng định: không tiêm gì thì cổng giả định một mình vẫn từ chối ca sai (hai lớp phòng thủ độc lập)."
       }
+    },
+    {
+      "id": "U5",
+      "date": "2026-10-03",
+      "context": "Census round 2 (uncommitted, at 14d5e786) met the SHIP rule, but two MUST_REFUSE rows (rd:C0_bi_danh, rd:C0_diem_ghi_de_khoi_phuc — the measured value is read through an overwritten-then-restored point / an alias; the answer is WRONG) were served because their text (demo n1, a planar rhombus) is outside the U3 polyhedral scope; they were also served before W15. An in-memory experiment refusing multiple definitions in every scope broke one served-before test: test_derived_point_construction::test_B3 (a declared literal overwritten by its own construction — an earlier product rule).",
+      "question": "Census vòng 2 đạt luật SHIP, nhưng 2 hàng MUST_REFUSE (giá trị bị đo đọc qua một điểm bị ghi đè rồi khôi phục / bí danh — đáp số SAI) vẫn được phục vụ vì đề là hình thoi phẳng, ngoài vùng đa diện U3 (trước W15 cũng được phục vụ). Chặn luôn mọi nơi — làm test B3 (khai toạ độ rồi dựng lại cùng điểm, quy tắc sản phẩm cũ) bị từ chối. Xử lý thế nào?",
+      "options_shown": [
+        "Tinh chỉnh rồi chặn mọi nơi (Khuyên dùng) — định nghĩa với tới chính xác hơn: literal khai báo bị chính lệnh dựng ghi đè TRƯỚC mọi lần đọc không phải định nghĩa với tới (B3 vẫn được phục vụ); ghi đè + đọc + khôi phục / bí danh vẫn là nhiều định nghĩa và bị từ chối ở MỌI vùng (không chỉ đa diện). Test + phép tiêm + census vòng 2 chạy lại trước khi commit.",
+        "Chặn mọi nơi, giữ luật thô — một dòng ở route: nhiều định nghĩa ⇒ từ chối ở mọi vùng. Test B3 đổi kỳ vọng thành bị từ chối (đi ngược quy tắc sản phẩm cũ).",
+        "Giữ U3, ghi OPEN_ISSUE — không đổi gì: trong vùng đa diện đã chặn; ngoài vùng hai ca ghi đè/bí danh vẫn được phục vụ như trước W15 — ghi là vấn đề mở kèm bằng chứng census."
+      ],
+      "answer": "Tinh chỉnh rồi chặn mọi nơi (Khuyên dùng)"
     }
   ],
   "plan_review_directives": [
