@@ -34,7 +34,8 @@ from .formation import _dinh_nghia, hoan_thien_dung_hinh
 from .grounding_gate import bang_chung_doan
 from .interpreter import SemanticProgramInterpreter
 from .pipeline_adapter import DEFAULT_EXECUTION_BUDGET
-from .plane_equation import bat_bien_mat_phang
+from .plane_equation import (MatPhangDe, bat_bien_mat_phang, doc_mat_phang_de, so_lan_nhac_mat_phang,
+                             ten_mat_phang_cua_bien, tuong_duong)
 from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
 from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
@@ -348,7 +349,27 @@ def bat_bien_tu_de(problem_text: str) -> tuple:
 _TEN_DO_DAI = re.compile(r"([A-Z]\d*(?:_prime)?)([A-Z]\d*(?:_prime)?)_length")
 
 
-def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None) -> str | None:
+def gan_mat_phang(bien: str, mp_de: tuple[MatPhangDe, ...], duy_nhat: bool) -> tuple[MatPhangDe | None, str]:
+    """Mặt phẳng ĐỀ mà biến mặt phẳng-từ-phương-trình `bien` gắn được, hoặc None + lý do (§14.1).
+
+    Biến mang tên (`ten_mat_phang_cua_bien`) ⇒ đúng một phương trình đề mang tên ấy. Biến không
+    tên ⇒ chỉ khi `duy_nhat` (đề nhắc mặt phẳng đúng một lần VÀ chương trình dựng đúng một mặt
+    phẳng từ phương trình) và đề có đúng một phương trình. Trùng bộ số không bao giờ là căn cứ.
+    """
+    ten = ten_mat_phang_cua_bien(bien)
+    if ten:
+        khop = [m for m in mp_de if m.ten in ten]
+        if len(khop) == 1:
+            return khop[0], f"bound by name to ({khop[0].ten})"
+        nhan = "/".join(f"({t})" for t in sorted(ten))
+        return None, f"no single text equation for {nhan}" if not khop else f"several text equations for {nhan}"
+    if duy_nhat and len(mp_de) == 1:
+        return mp_de[0], "bound as the only plane of the text and of the program"
+    return None, "unnamed program plane and the text plane is not unique"
+
+
+def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None,
+             mp: tuple[tuple[MatPhangDe, ...], bool] = ((), False)) -> str | None:
     loai = lit[0]
     if loai == "diem":
         try:
@@ -367,14 +388,11 @@ def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None) -> str | N
         except (ValueError, ZeroDivisionError):
             return None
     if loai == "mat_phang":
-        he = [_F(c) for c in lit[2]]
-        for i in inv:
-            if i.kind == "plane_equation" and i.coefficients:
-                g = [_F(c) for c in i.coefficients]
-                k = next((g[j] / he[j] for j in range(4) if he[j] != 0), None)
-                if k and all(g[j] == k * he[j] for j in range(4)):
-                    return "SOURCE_DATUM"
-        return None
+        m, _ly_do = gan_mat_phang(lit[1], *mp)
+        try:
+            return "SOURCE_DATUM" if m is not None and tuong_duong([_F(c) for c in lit[2]], m.he_so) else None
+        except (ValueError, TypeError, ZeroDivisionError):
+            return None
     if loai == "ti_so":
         _l, m_ten, a, b, t = lit
         for i in inv:
@@ -889,12 +907,20 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     details, bac = _trang_thai_quan_he(contract, rb)
     if bac:
         return _ket_qua(UNDETERMINED, details + ["RELATION_REFUTED_BY_SOURCE"])
+    # §14.1: mặt phẳng ĐỀ của từng literal phương trình — theo tên, hoặc duy nhất theo đếm.
+    mp = (doc_mat_phang_de(de), so_lan_nhac_mat_phang(de) == 1 and sum(
+        1 for s in prog["statements"] if s.get("kind") == "construct_plane_from_equation") == 1)
 
     # C0 — lát cắt ghim bởi nguồn
-    khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de, inv, None) != "SOURCE_DATUM"]
+    khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
         return _ket_qua(PROVEN_SAFE, details + [f"C0 {len(lc.literal)} literal(s) pinned by the text"],
                         certificate="C0")
+    for lit in khong_vai:
+        if lit[0] == "mat_phang":
+            m, ly_do = gan_mat_phang(lit[1], *mp)
+            details.append(f"PLANE_BINDING {lit[1]}: " + (
+                ly_do if m is None else f"{ly_do} @[{m.span[0]},{m.span[1]}], coefficients not proportional"))
 
     # C1 — cấu hình do đề xác định
     k = _nhan_khuon(rb, cm, prog)
@@ -934,7 +960,7 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
             details.append(f"{khuon.loai} MISSING {kt.nhan}: {ly_do}")
         return _ket_qua(UNDETERMINED, details + tien_de)
     loi = [f"NO_ROLE {lit[0]} {lit[1]}" for lit in lc.literal
-           if _vai_tro(lit, de, inv, set(khuon.dinh)) not in ("SOURCE_DATUM", "LAYOUT_FRONTIER")]
+           if _vai_tro(lit, de, inv, set(khuon.dinh), mp) not in ("SOURCE_DATUM", "LAYOUT_FRONTIER")]
     loi += [f"FRAME_DEPENDENT {x}" for x in sorted(lc.kieu - KHUNG_TU_DO)]
     loi += [f"UNCERTIFIED {chu}: measure {q} outside C1" for chu, q in lc.phep_do if q not in PHEP_DO_C1]
     loi += [f"UNCERTIFIED arithmetic '{op}' outside C1" for op in sorted(lc.phep_toan - _PHEP_TOAN_C1)]

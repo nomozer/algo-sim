@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from dataclasses import dataclass
 from fractions import Fraction
 from typing import Optional
 
@@ -224,7 +225,12 @@ def _no_ra(manh: str, i: int) -> tuple[int, int, bool]:
 
 
 def _ung_vien(manh: str) -> list[tuple[str, bool]]:
-    """Mọi chuỗi quanh một dấu `=` **có cụm mặt phẳng đứng trước**.
+    """`_ung_vien_span` không kèm vị trí — giữ cho `bat_bien_mat_phang`."""
+    return [(chuoi, co_bien) for _t, _p, chuoi, co_bien in _ung_vien_span(manh)]
+
+
+def _ung_vien_span(manh: str) -> list[tuple[int, int, str, bool]]:
+    """Mọi chuỗi quanh một dấu `=` **có cụm mặt phẳng đứng trước**, kèm `[t, p)` trong `manh`.
 
     Trả `(chuỗi, có biến ĐỘC LẬP không)`. Nở ra hai phía từ dấu `=` theo tập
     ký tự cho phép — cách này đọc được phương trình nằm giữa văn xuôi mà không
@@ -247,7 +253,7 @@ def _ung_vien(manh: str) -> list[tuple[str, bool]]:
     đọc nổi. Sau đó `bat_bien_mat_phang` mới phân xử: có biến độc lập thì
     CHẶN (đề nói về một mặt phẳng hệ không dựng nổi), không có thì IM LẶNG.
     """
-    ra: list[tuple[str, bool]] = []
+    ra: list[tuple[int, int, str, bool]] = []
     # Chuẩn hoá dấu trừ TRƯỚC khi nở: phép nở đi theo `_TRONG_PT`, và một dấu
     # trừ không-ASCII sẽ chặn nó giữa phương trình rồi trả về một mẩu đọc được
     # nhưng SAI. Ánh xạ 1:1 nên `manh[t:p]` vẫn cắt đúng chỗ.
@@ -261,8 +267,79 @@ def _ung_vien(manh: str) -> list[tuple[str, bool]]:
         chuoi = manh[t:p].strip()
         if chuoi.count("=") != 1:
             continue
-        ra.append((chuoi, bool(_BIEN_DOC_LAP.search(chuoi))))
+        ra.append((t, p, chuoi, bool(_BIEN_DOC_LAP.search(chuoi))))
     return ra
+
+
+# ── W16 · TÊN của mặt phẳng (ASSUMPTION_CERTIFICATE_AMENDMENT §14.1) ─────────
+#
+# `bat_bien_mat_phang` không mang tên: hậu điều kiện chỉ hỏi "có một mặt phẳng tỉ lệ
+# không". Chứng chỉ giả định hỏi câu khác — literal này là phương trình của MẶT PHẲNG
+# NÀO — vì trùng bộ số không là trùng thực thể (β mang hệ số của (α) vẫn là β).
+
+@dataclass(frozen=True)
+class MatPhangDe:
+    """Một phương trình mặt phẳng đề cho, đọc trọn: tên viết trong mệnh đề (hoặc None),
+    bộ hệ số, `[đầu, cuối)` của phương trình trong đề gốc."""
+    ten: Optional[str]
+    he_so: tuple[Fraction, Fraction, Fraction, Fraction]
+    span: tuple[int, int]
+
+
+#: Tên ngay trước phương trình: `(α): …`, `(P) : …`, `(P) có phương trình (là)? …`.
+_TEN_TRUOC = re.compile(r"\(\s*([^\s()]{1,4})\s*\)\s*(?:có\s+phương\s+trình(?:\s+là)?)?\s*:?\s*$")
+
+#: Bảng ĐÓNG: tên phiên âm (thường) → chữ Hy Lạp.
+_HY_LAP = dict(zip(
+    ("alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda",
+     "mu", "nu", "xi", "omicron", "pi", "rho", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"),
+    "αβγδεζηθικλμνξοπρστυφχψω"))
+
+#: Mặt phẳng tên Hy Lạp viết trong ngoặc — một lần NHẮC mặt phẳng dù không có cụm "mặt phẳng".
+_HY_LAP_NGOAC = re.compile(r"\(\s*[α-ω]\s*\)")
+
+
+def doc_mat_phang_de(problem_text: str | None) -> tuple[MatPhangDe, ...]:
+    """Mọi phương trình mặt phẳng ĐỌC TRỌN của đề, kèm tên viết trong mệnh đề và span.
+
+    Cùng ngưỡng với `bat_bien_mat_phang` (cụm mặt phẳng trong cửa sổ, có biến độc lập,
+    `doc_phuong_trinh` đọc trọn); phương trình chưa giải được không có bản ghi — biến nào
+    gắn vào nó cũng không có vai trò.
+    """
+    de = problem_text or ""
+    ra = []
+    for t, p, chuoi, co_bien in _ung_vien_span(de):
+        he = doc_phuong_trinh(chuoi) if co_bien else None
+        if he is None:
+            continue
+        m = _TEN_TRUOC.search(de[max(0, t - _CUA_SO):t])
+        ra.append(MatPhangDe(m.group(1) if m else None, he, (t, p)))
+    return tuple(ra)
+
+
+def ten_mat_phang_cua_bien(ten_bien: str) -> frozenset[str]:
+    """Tên biến IR → các TÊN mặt phẳng nó có thể mang: mỗi mẩu (tách theo ký tự không phải
+    chữ/số và chỗ thường→hoa) là chữ Hy Lạp, tên phiên âm trong bảng đóng, hoặc MỘT chữ in
+    hoa kèm chữ số. `alpha_plane` → {α}, `mp_P` → {P}, `mp_cat` → ∅, `plane_ABC` → ∅."""
+    ra: set[str] = set()
+    for manh in re.split(r"[\W_]+", ten_bien or ""):
+        for tu in re.findall(r"[A-Z][a-z]+|[a-z]+|[A-Z]+\d*|[α-ω]|\d+", manh):
+            if tu.lower() in _HY_LAP:
+                ra.add(_HY_LAP[tu.lower()])
+            elif re.fullmatch(r"[α-ω]|[A-Z]\d*", tu):
+                ra.add(tu)
+    return frozenset(ra)
+
+
+def so_lan_nhac_mat_phang(problem_text: str | None) -> int:
+    """Số lần đề NHẮC tới một mặt phẳng: mỗi cụm `mặt phẳng`/`mp`, cộng mỗi tên Hy Lạp
+    trong ngoặc không có cụm ấy ngay trước. Mặt phẳng gọi qua điểm (`(ABC)`) không tính."""
+    de = problem_text or ""
+    phang = _khong_dau(de)
+    cum = len(_CUM_MAT_PHANG.findall(phang))
+    rieng = [m for m in _HY_LAP_NGOAC.finditer(de)
+             if not _CUM_MAT_PHANG.search(phang[max(0, m.start() - 12):m.start()])]
+    return cum + len(rieng)
 
 
 def bat_bien_mat_phang(contract, problem_text: str | None) -> tuple:
