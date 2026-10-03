@@ -1,0 +1,38 @@
+# W16 Phase 1 probe at 6d0151128b77b85b45422a832d0c0793a770625a (0 model calls)
+# backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/probe_w16_phase1.py
+A_plane_binding                MUST_NOT_CERTIFY         A1_beta_chua_xac_dinh_mang_he_so_alpha               gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_NOT_CERTIFY         A2_hai_mat_phang_doi_cheo_he_so                      gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_NOT_CERTIFY         A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten        gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_NOT_CERTIFY         A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang         gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_NOT_CERTIFY         A7_bien_khong_ten_hai_mat_phang_co_ten               gate=PROVEN_SAFE/C0 route=REFUSED@source_invariant shown={'area_T': '9'}
+A_plane_binding                MUST_NOT_CERTIFY         A8_bien_khong_ten_mat_phang_thu_hai_khong_ten        gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A2_doi_chung_hai_mat_phang_dung_ten                  gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '16'}
+A_plane_binding                MUST_STAY_C0             A3_ti_le_khac_0                                      gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A3b_ti_le_am                                         gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A4_doi_ten_nhat_quan_P                               gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A4b_doi_ten_nhat_quan_gamma                          gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A5_khong_ten_duy_nhat                                gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             A5b_bien_khong_ten_de_chi_mot_mat_phang              gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_plane_binding                MUST_STAY_C0             RF1_mat_phang_qua_ba_diem_ben_canh                   gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+A_prime_construction_relation  LIMIT_RECORDED           A2b_cat_bang_alpha_khi_de_noi_beta                   gate=PROVEN_SAFE/C0 route=SERVED shown={'area_T': '9'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B1_chung_minh_SA_vuong_day                           gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B1b_CMR_ky_hieu                                      gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B2_chung_minh_goc_vuong_day                          gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B3b_kiem_tra_ky_hieu                                 gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B3c_cau_hoi_hay_khong                                gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B5_cau_ghep_gia_thiet_va_yeu_cau                     gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_NOT_CERTIFY         B7_chung_minh_do_dai                                 gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_STAY_C1             B0_gia_thiet                                         gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_STAY_C1             B4b_phu_dinh_trong_yeu_cau                           gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_STAY_C1             B5b_gia_thiet_truoc_yeu_cau_cung_cau                 gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              MUST_STAY_C1             B6_tinh_biet_gia_thiet                               gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              NOT_EXPLOITABLE          B3_hoi_co_khong                                      gate=UNDETERMINED/None route=REFUSED@assumption shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              NOT_EXPLOITABLE          B4_phu_dinh_gia_thiet                                gate=UNDETERMINED/None route=REFUSED@assumption shown={'the_tich_khoi': '10'}
+B_premise_vs_goal              OVER_REFUSAL_FAIL_CLOSED B6b_tinh_biet_chieu_cao                              gate=UNDETERMINED/None route=REFUSED@assumption shown={'the_tich_khoi': '10'}
+C_guards                       GUARD_FIRES              CLOSURE_UNSUPPORTED_KIND                             gate=UNDETERMINED/None route=REFUSED@assumption shown={'the_tich_khoi': '10'}
+C_guards                       GUARD_FIRES              TEMPLATE_CONSTRAINT_VIOLATED                         gate=UNDETERMINED/None route=REFUSED@source_invariant shown={'the_tich_khoi': '10'}
+C_guards                       GUARD_FIRES              FRAME_DEPENDENT                                      gate=UNDETERMINED/None route=REFUSED@assumption shown={'area_T': '54/25', 'the_tich_khoi': '10'}
+C_guards                       GUARD_FIRES              FORMATION_REJECTED                                   gate=UNDETERMINED/None route=REFUSED@formation shown={'error': 'GeometryError'}
+C_guards                       VALID_COUNTERPART        T1_doi_chung                                         gate=PROVEN_SAFE/C1 route=SERVED shown={'the_tich_khoi': '10'}
+PROBE_W16_PHASE1_6d01511.json 34
+exit=0

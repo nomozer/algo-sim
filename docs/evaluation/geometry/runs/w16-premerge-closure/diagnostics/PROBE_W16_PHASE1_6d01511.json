@@ -1,0 +1,818 @@
+{
+ "probe": "W16_PHASE1",
+ "measured_at_commit": "6d0151128b77b85b45422a832d0c0793a770625a",
+ "model_calls": 0,
+ "rows": [
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A1_beta_chua_xac_dinh_mang_he_so_alpha",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A2_hai_mat_phang_doi_cheo_he_so",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A7_bien_khong_ten_hai_mat_phang_co_ten",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "source_invariant",
+    "reason_code": null,
+    "assumption_enforced": null
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A2_doi_chung_hai_mat_phang_dung_ten",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "16"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A3_ti_le_khac_0",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A3b_ti_le_am",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A4_doi_ten_nhat_quan_P",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A4b_doi_ten_nhat_quan_gamma",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A5_khong_ten_duy_nhat",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "A5b_bien_khong_ten_de_chi_mot_mat_phang",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_plane_binding",
+   "group": "MUST_STAY_C0",
+   "id": "RF1_mat_phang_qua_ba_diem_ben_canh",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "A_prime_construction_relation",
+   "group": "LIMIT_RECORDED",
+   "id": "A2b_cat_bang_alpha_khi_de_noi_beta",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C0",
+    "reason_code": null,
+    "details": [
+     "C0 6 literal(s) pinned by the text"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "9"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B1_chung_minh_SA_vuong_day",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[96,116]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B1b_CMR_ky_hieu",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[85,95]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B2_chung_minh_goc_vuong_day",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[48,68]",
+     "PREMISE right_triangle(A,B,C) @[94,118]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B3b_kiem_tra_ky_hieu",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[89,99]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B3c_cau_hoi_hay_khong",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[80,90]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B5_cau_ghep_gia_thiet_va_yeu_cau",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[52,72]",
+     "PREMISE right_triangle(A,B,C) @[90,114]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_NOT_CERTIFY",
+   "id": "B7_chung_minh_do_dai",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_STAY_C1",
+   "id": "B0_gia_thiet",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_STAY_C1",
+   "id": "B4b_phu_dinh_trong_yeu_cau",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_STAY_C1",
+   "id": "B5b_gia_thiet_truoc_yeu_cau_cung_cau",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[85,105]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "MUST_STAY_C1",
+   "id": "B6_tinh_biet_gia_thiet",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[117,137]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "NOT_EXPLOITABLE",
+   "id": "B3_hoi_co_khong",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+     "NO_ROLE diem C",
+     "NO_ROLE diem B",
+     "NO_ROLE diem A",
+     "NO_ROLE diem S"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "assumption",
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "NOT_EXPLOITABLE",
+   "id": "B4_phu_dinh_gia_thiet",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+     "NO_ROLE diem C",
+     "NO_ROLE diem B",
+     "NO_ROLE diem A",
+     "NO_ROLE diem S"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "assumption",
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "B_premise_vs_goal",
+   "group": "OVER_REFUSAL_FAIL_CLOSED",
+   "id": "B6b_tinh_biet_chieu_cao",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "T1 MISSING SA: CE_INVALID breaks a text invariant",
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "assumption",
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "C_guards",
+   "group": "GUARD_FIRES",
+   "id": "CLOSURE_UNSUPPORTED_KIND",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "CLOSURE_UNSUPPORTED_KIND control flow"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "assumption",
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "C_guards",
+   "group": "GUARD_FIRES",
+   "id": "TEMPLATE_CONSTRAINT_VIOLATED",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "T1 TEMPLATE_CONSTRAINT_VIOLATED apex edge ⊥ base"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "source_invariant",
+    "reason_code": null,
+    "assumption_enforced": null
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "C_guards",
+   "group": "GUARD_FIRES",
+   "id": "FRAME_DEPENDENT",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "FRAME_DEPENDENT construct_plane_from_equation"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "assumption",
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "area_T": "54/25",
+    "the_tich_khoi": "10"
+   }
+  },
+  {
+   "risk": "C_guards",
+   "group": "GUARD_FIRES",
+   "id": "FORMATION_REJECTED",
+   "gate": {
+    "status": "UNDETERMINED",
+    "certificate": null,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "details": [
+     "FORMATION_REJECTED"
+    ]
+   },
+   "route": {
+    "servable": false,
+    "stage_reached": "formation",
+    "reason_code": "SOLID_TOPOLOGY_MALFORMED",
+    "assumption_enforced": null
+   },
+   "shown_value": {
+    "error": "GeometryError"
+   }
+  },
+  {
+   "risk": "C_guards",
+   "group": "VALID_COUNTERPART",
+   "id": "T1_doi_chung",
+   "gate": {
+    "status": "PROVEN_SAFE",
+    "certificate": "C1",
+    "reason_code": null,
+    "details": [
+     "PREMISE pyramid(S,A,B,C) @[4,19]",
+     "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+     "PREMISE right_triangle(A,B,C) @[23,54]",
+     "C1 T1",
+     "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+    ]
+   },
+   "route": {
+    "servable": true,
+    "stage_reached": "served",
+    "reason_code": null,
+    "assumption_enforced": true
+   },
+   "shown_value": {
+    "the_tich_khoi": "10"
+   }
+  }
+ ]
+}
