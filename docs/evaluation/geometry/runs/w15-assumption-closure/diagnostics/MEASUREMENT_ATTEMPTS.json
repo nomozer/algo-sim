@@ -1,0 +1,147 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every cache-proof, freeze, browser, oracle, playback, builder, T3 and gate run of this wave is listed; failed, superseded and diagnostic ones are included. Authoritative runs used a detached clean worktree at the commit shown: no node_modules junction (npm ci --offline inside the worktree), Python from the main-tree backend/.venv, and dist built by the suite inside the worktree. Nothing was overwritten in place. Failed attempts are kept apart from acceptance images, in their own diagnostics folder.",
+  "times": "UTC",
+  "measurement_commit": "e5b8864773947c01ec5367ce7d08c4d10a8ea390",
+  "product_commit": "909a3a2d5d56c784d0b98ae6632c0b2b94490c60",
+  "candidate": "aaa5b5bd452321e1ad5130608b27e02a60c55cb487f66dab78563e4dc2f2ca5e (107 files, CACHE_VERSION 107)",
+  "application_llm_calls": 0,
+  "live_gemini_requests": 0,
+  "attempts": [
+    {
+      "id": "CACHE-PROOF-1",
+      "at": "2026-10-03 (Task 9, before 0579d559 at 05:28Z)",
+      "commit": "pre-W15 envelopes: worktree D:/tmp/w15-pre at 4f6a0ab6; W15 envelopes: main tree",
+      "gate": "diagnostics/proof_cache_row_w15.py (envelopes, then prove)",
+      "result": "BUMP: the real pre-W15 ok envelopes of the two W12 probes still HIT under CACHE_VERSION 106 although W15 refuses both (served -> rejected); CACHE_VERSION 106 -> 107 in 0579d559; the provider fingerprint b1714b566e25c912 is unchanged",
+      "classification": "AUTHORITATIVE (cache decision)",
+      "log": "diagnostics/PROOF_CACHE_ROW_W15.json"
+    },
+    {
+      "id": "PRE-FREEZE-1",
+      "at": "2026-10-03 (Task 9)",
+      "commit": "5a54bfc6, main tree",
+      "gate": "full backend · vitest · tsc -b + vite build · node harness",
+      "result": "backend: 11 failed, all stale candidate identity and listed by node id (the same names as W14), 6745 passed, 0 xfailed; vitest 1016/1016; tsc -b exit 0; vite build into frontend/dist hit EPERM (the known main-tree dist issue), and a build into an alternate outDir exited 0; node 55/55",
+      "classification": "PRE_FREEZE_CHECK",
+      "log": "diagnostics/logs/PRE_FREEZE_FULL.log"
+    },
+    {
+      "id": "FREEZE-1",
+      "at": "2026-10-03T05:54:13Z",
+      "commit": "d41176f2 (worktree D:/tmp/w15-freeze)",
+      "gate": "backend/scripts/freeze_evaluation_candidate.py",
+      "result": "40263983… -> aaa5b5bd… (107 files, CACHE_VERSION 107, clean tree); --verify exit 0 and cache lock --verify exit 0 in the main tree; committed as c1638891",
+      "classification": "SUPERSEDED by FREEZE-2: the same measured-system hash, but product_commit_sha moved when BROWSER-1 found a renderer defect outside the measured paths",
+      "log": "commit c1638891 (EVALUATION_CANDIDATE.json at that commit)"
+    },
+    {
+      "id": "FIXTURES-1",
+      "at": "2026-10-03T06:11Z",
+      "commit": "c1638891 (worktree D:/tmp/w15-final)",
+      "gate": "identity verify (candidate + cache) · backend/scripts/generate_generic_tier_a_fixtures.py --out <run>/inputs",
+      "result": "identity verified; 24 fixtures (per family: positive, structural negative, ungrounded negative, assumption negative), product commit d41176f2, 0 model calls",
+      "classification": "SUPERSEDED (fixtures carry product_commit_sha d41176f2; regenerated at the measurement commit as FIXTURES-2)",
+      "log": "diagnostics/logs/IDENTITY_BEFORE_MEASUREMENT_c1638891.log · diagnostics/logs/FIXTURES_c1638891.log · diagnostics/logs/NPM_CI_c1638891.log"
+    },
+    {
+      "id": "BROWSER-1",
+      "at": "2026-10-03T06:11:50Z–06:17Z",
+      "commit": "c1638891",
+      "gate": "frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root <run>/inputs --ra <run>/results --screenshots <run>/images",
+      "result": "FAIL. 5/6 families PASS. cross_section fails only SECTION_FILL_DISTINGUISHABLE at the closed state: fill on vs off delta E = 0 on every interior sample (desktop 46, mobile 29), although the hook toggled section_fill:T; pre-close and rewound passed trivially at 0. All positives were served and every negative kind was refused with its own code",
+      "classification": "REAL_PRODUCT_DEFECT. The fill was depth-tested against the solid's opaque depth-only layer, which is drawn before every transparent object. A section lies inside its solid, so no fill pixel was ever drawn; this was also the cause of the W14 'region blends away' report. Fixed in 909a3a2d",
+      "log": "diagnostics/logs/BROWSER_SUITE_c1638891.log; outputs kept apart in diagnostics/browser-attempt1-c1638891/ (BROWSER_EVIDENCE.json byte-identical, plus the two cross_section neutral_final frames that show the outline without a fill)"
+    },
+    {
+      "id": "DRY-1",
+      "at": "2026-10-03, between BROWSER-1 and FREEZE-2",
+      "commit": "c1638891 plus the uncommitted fill patch (later committed as 909a3a2d), worktree D:/tmp/w15-final",
+      "gate": "the same suite command, outputs to D:/tmp/w15-diag (not kept)",
+      "result": "6/6 PASS; cross_section closed mean/min delta E 33.91/25.31 (desktop) and 33.80/25.88 (mobile); pre-close and rewound max 0; thresholds unchanged",
+      "classification": "DIAGNOSTIC (checked the fix against the registered thresholds before a second freeze; the patch was reverted in the worktree afterwards)",
+      "log": "diagnostics/logs/DRY_SUITE_fill_fix_on_c1638891.log"
+    },
+    {
+      "id": "PRE-FREEZE-2",
+      "at": "2026-10-03 (Task 10)",
+      "commit": "main tree, the fix as committed in 909a3a2d",
+      "gate": "vitest (geometry domain and full) · tsc -b; backend/app and backend/tests unchanged since PRE-FREEZE-1",
+      "result": "geometry 550/550; vitest 1017/1017 (the new RED -> GREEN test included); tsc -b exit 0",
+      "classification": "PRE_FREEZE_CHECK (the full rerun is T3-1 at the measurement commit)",
+      "log": "ledger, Task 10 rulings"
+    },
+    {
+      "id": "FREEZE-2",
+      "at": "2026-10-03T06:32:18Z",
+      "commit": "909a3a2d (worktree D:/tmp/w15-freeze2)",
+      "gate": "backend/scripts/freeze_evaluation_candidate.py",
+      "result": "measured system unchanged at aaa5b5bd… (107 files, CACHE_VERSION 107, clean tree); product_commit_sha d41176f2 -> 909a3a2d; --verify exit 0 and cache lock --verify exit 0 in the main tree; identity tests 209 passed; committed as e5b88647",
+      "classification": "AUTHORITATIVE (the candidate the evidence measures)",
+      "log": "commit e5b88647"
+    },
+    {
+      "id": "FIXTURES-2",
+      "at": "2026-10-03T06:34Z",
+      "commit": "e5b88647 (worktree D:/tmp/w15-evidence)",
+      "gate": "identity verify (candidate + cache) · generate_generic_tier_a_fixtures.py --out <run>/inputs",
+      "result": "identity verified (aaa5b5bd, 107 files; cache 107 / b1714b566e25c912); 24 fixtures, product commit 909a3a2d, 0 model calls",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/IDENTITY_BEFORE_MEASUREMENT_e5b88647.log · diagnostics/logs/FIXTURES_e5b88647.log · diagnostics/logs/NPM_CI_e5b88647.log"
+    },
+    {
+      "id": "BROWSER-2",
+      "at": "2026-10-03T06:34:55Z–06:40Z",
+      "commit": "e5b88647",
+      "gate": "the same suite command as BROWSER-1 (the suite builds dist itself; dist freshness is checked)",
+      "result": "PASS — 6/6 families, 12/12 positives served, 36/36 negatives refused (3 kinds × 6 families × 2 viewports, each with its own code: grounding GIVEN_VALUE_NOT_IN_SOURCE, assumption ASSUMPTION_DETERMINES_ANSWER (cross_section ASSUMPTION_INVARIANCE_UNPROVEN), topology/kernel at its own stage); SECTION_FILL_DISTINGUISHABLE closed mean/min delta E 33.91/25.31 (desktop, 46 samples) and 33.80/25.88 (mobile, 29), pre-close (5 steps) and rewound max 0",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/BROWSER_SUITE_e5b88647.log"
+    },
+    {
+      "id": "OCCLUSION-1",
+      "at": "2026-10-03T06:41Z",
+      "commit": "e5b88647",
+      "gate": "backend/scripts/measure_scene3d_occlusion.py with the frozen human registry, camera preimages, --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS, --registered-fixture-root and --pending-human-review (U2); full command at the top of the log",
+      "result": "exit 0, pass=true, verdict HUMAN_REVIEW_PENDING; product = independent oracle on 24/24 states; frozen human expectations: cuboid and cube DECLARED_CAMERA_CHANGE; triangular pyramid, triangular prism, rectangular pyramid and cross-section HUMAN_REVIEW_PENDING (the oracle reproduces the reviewed sets at the registered and the new camera, and product = oracle); no failures",
+      "classification": "AUTHORITATIVE (U2: the four W14-changed scenes await a person; the registry is untouched and nothing is APPROVED_BY_USER)",
+      "log": "diagnostics/logs/OCCLUSION_e5b88647.log"
+    },
+    {
+      "id": "PLAYBACK-1",
+      "at": "2026-10-03T06:41:42Z–06:46Z",
+      "commit": "e5b88647",
+      "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build (timeout --signal=KILL 1500; dist from BROWSER-2, same worktree and commit)",
+      "result": "PASS — 12/12 runs × 19/19 checks, 5 orbit laps per run; PLAYBACK_EVIDENCE.json moved images/ -> results/ as in w12/w14",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/PLAYBACK_e5b88647.log"
+    },
+    {
+      "id": "BUILDER-1",
+      "at": "2026-10-03T06:47Z",
+      "commit": "e5b88647",
+      "gate": "backend/scripts/build_scene3d_visual_evidence.py with the human registry and the playback evidence (full command at the top of the log)",
+      "result": "64 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; SHEET.png and FILMSTRIP.png per family (cross-section filmstrip captions name each 'cạnh thiết diện' step and the 'khép thiết diện' step), images/overview/INDEX.png",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_e5b88647.log"
+    },
+    {
+      "id": "T3-1",
+      "at": "2026-10-03T06:48Z–06:52:39Z",
+      "commit": "e5b88647 (worktree 'D:/tmp/w15 space/algo-sim', a path WITH a space, npm ci --offline)",
+      "gate": "frontend/scripts/full-gate.mjs",
+      "result": "FULL_PRODUCT_GATE_PASS — pytest 6756 passed / 0 failed (1 skipped, 2 deselected, 0 xfailed); vitest 1017/1017 (67 files); typecheck + build; thesis demo DEMO_REPLAY_PASS 5/5; demo crash surface 6/6 refusal boundaries as expected, 0 thrown as HTTP 500",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/T3_FULL_GATE_SPACED_e5b88647.log · diagnostics/logs/NPM_CI_SPACED_e5b88647.log"
+    },
+    {
+      "id": "GATES-1",
+      "at": "2026-10-03T06:52:57Z",
+      "commit": "e5b88647 (the same spaced worktree, after T3-1)",
+      "gate": "candidate verify · cache lock verify · schema export ×2 · DEFAULT_MODE · FIXTURE_TIN_CAY outside production · CACHE_VERSION · git diff --check 4f6a0ab6..M · node harness",
+      "result": "all PASS — candidate aaa5b5bd (107 files); CACHE_VERSION 107, environment b1714b566e25c912; both schema mirrors d852b47c… on both runs, 0 files changed; LLM_ONLY, routing.py unchanged since 4f6a0ab6, geometry_compiler not referenced from app/ai or main.py, 0 production references to FIXTURE_TIN_CAY; diff --check clean (verbatim logs excluded); node 53 pass + 2 skipped by design (no repo-local venv in a worktree) / 0 fail; tree clean before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/GATES_e5b88647.log"
+    }
+  ]
+}

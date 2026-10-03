@@ -1,0 +1,20 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_pyramid_non_positive",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 0, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+  "source": "deterministic_compiler_production_refusal",
+  "product_commit_sha": "909a3a2d5d56c784d0b98ae6632c0b2b94490c60",
+  "product_tree_sha": "aaa5b5bd452321e1ad5130608b27e02a60c55cb487f66dab78563e4dc2f2ca5e",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "NON_POSITIVE_LENGTH",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "semantic_analyze",
+    "representation_plan": {},
+    "analysis": {},
+    "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+  },
+  "source_reason_code": "NON_POSITIVE_LENGTH"
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Only this wave's own worktrees and temporary folders are removed, from the main repository, by exact path (git worktree remove <path>, or Remove-Item -LiteralPath for a folder that is not a worktree; never a wildcard). A worktree holding outputs is removed with --force only after (a) it has 0 tracked changes, and (b) every untracked file is either byte-identical to its copy in the main tree's run folder (cmp over git -c core.quotepath=off status --porcelain --untracked-files=all) or covered by a ledgered ruling as a reproducible, non-acceptance output. --force covers nothing else. Directories left by earlier waves are not touched.",
+  "final_state": "git worktree list = the main working tree only; git worktree prune -v found nothing; no w15* path remains under D:/tmp",
+  "temp_worktrees_created": 7,
+  "temp_worktrees_removed": 7,
+  "temp_folders_created": 3,
+  "temp_folders_removed": 3,
+  "unique_artifacts_at_risk": 0,
+  "worktrees": [
+    {
+      "path": "D:/tmp/w15-c1",
+      "origin": "Task 6: check of commit 6fa6e582 in isolation (pieces held out for later commits made the main tree unusable for that check)",
+      "state_before": "no modified or untracked files: git worktree remove without --force succeeded, which git refuses otherwise (ignored byproducts only)",
+      "action": "git worktree remove (no --force)",
+      "result": "REMOVED (Task 6)"
+    },
+    {
+      "path": "D:/tmp/w15-pre",
+      "origin": "Task 9 cache proof: the pre-W15 product at 4f6a0ab6 produced the 'before' envelopes (written to the session scratchpad, summarised in diagnostics/PROOF_CACHE_ROW_W15.json)",
+      "state_before": "no modified or untracked files: git worktree remove without --force succeeded, which git refuses otherwise (ignored byproducts only)",
+      "action": "git worktree remove (no --force)",
+      "result": "REMOVED (Task 9)"
+    },
+    {
+      "path": "D:/tmp/w15-freeze",
+      "origin": "Task 9 FREEZE-1 at d41176f2",
+      "state_before": "EVALUATION_CANDIDATE.json modified (the freeze output), nothing else",
+      "verification": "cmp: the worktree copy equals the main-tree copy committed in c1638891",
+      "action": "git worktree remove --force (covers only that verified duplicate)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w15-final",
+      "origin": "Task 10 FIXTURES-1 + BROWSER-1 at c1638891 (failed attempt), then DRY-1 with the uncommitted fill patch",
+      "state_before": "0 tracked changes (the DRY-1 patch was reverted with git checkout -- <file> first); 170 untracked outputs, all under the run folder: 25 inputs (24 fixtures + FIXTURE_MANIFEST.json), 1 results/BROWSER_EVIDENCE.json, 144 frames; ignored node_modules/ and dist/",
+      "verification": "BROWSER_EVIDENCE.json is byte-identical in diagnostics/browser-attempt1-c1638891/, and the two cross_section neutral_final frames are kept there. The other 167 outputs (fixtures carrying product_commit_sha d41176f2, and 142 frames of the failed attempt) are reproducible from c1638891 and are not acceptance evidence (ledger ruling, Task 10)",
+      "action": "git worktree remove --force",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w15-freeze2",
+      "origin": "Task 10 FREEZE-2 at 909a3a2d",
+      "state_before": "EVALUATION_CANDIDATE.json modified (the freeze output), nothing else",
+      "verification": "cmp: the worktree copy equals the main-tree copy committed in e5b88647",
+      "action": "git worktree remove --force (covers only that verified duplicate)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w15-evidence",
+      "origin": "Task 10 measurement worktree at e5b88647 (npm ci --offline, no node_modules junction; Python from the main-tree backend/.venv)",
+      "state_before": "0 tracked changes; 371 untracked outputs, all under the run folder (inputs/FIXTURE_MANIFEST.json, inputs/fixtures/, results/, images/); ignored node_modules/ and dist/",
+      "verification": "371/371 byte-identical to the main-tree run folder; 0 outside the run folder",
+      "action": "git worktree remove --force (covers only those verified duplicates and ignored build output)",
+      "result": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/w15 space/algo-sim",
+      "origin": "Task 10 T3 full gate and identity gates at e5b88647, from a path WITH a space (npm ci --offline)",
+      "state_before": "clean (git status --porcelain: 0 before and after the gates)",
+      "action": "git worktree remove (no --force); the empty parent 'D:/tmp/w15 space' removed with rmdir",
+      "result": "REMOVED"
+    }
+  ],
+  "temp_folders": [
+    {"path": "D:/tmp/w15-t7-dist", "origin": "Task 7: vite bundle check into a temporary outDir (main-tree dist EPERM)", "result": "REMOVED (Task 7)"},
+    {"path": "D:/tmp/w15-prefreeze-dist", "origin": "Task 9 PRE-FREEZE-1: vite bundle into a temporary outDir", "result": "REMOVED (Remove-Item -LiteralPath)"},
+    {"path": "D:/tmp/w15-diag", "origin": "Task 10 DRY-1 outputs (diagnostic; summary in diagnostics/logs/DRY_SUITE_fill_fix_on_c1638891.log)", "result": "REMOVED (Remove-Item -LiteralPath)"}
+  ],
+  "not_touched": [
+    {
+      "path": "D:/tmp/w13-verify-c1, D:/tmp/w10-*, w11-*, 'w11 space', w12-*, 'w12 space', the algo-sim-* folders and loose scripts",
+      "origin": "earlier waves and sessions",
+      "status": "not inventoried in w15; left in place"
+    }
+  ]
+}
