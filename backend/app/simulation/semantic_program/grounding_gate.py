@@ -37,6 +37,7 @@ from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
 from .segment_relation import do_dai_trong_de, nhan_doan_truoc
+from .shape_constraint import che_muc_tieu, khoang_muc_tieu
 from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
@@ -128,8 +129,11 @@ ERR_BANG_CHUNG_MAU_THUAN = "SOURCE_EVIDENCE_CONFLICT"
 #: Hợp đồng không mang đề (W14 5a). Trước đây đề rỗng NGẦM nghĩa là "chưa kiểm",
 #: nên một hợp đồng sản phẩm mất đề đi lọt mọi kiểm tra nguồn.
 ERR_THIEU_DE = "SOURCE_TEXT_MISSING"
+#: W17 §15.2: giá trị chỉ có trong mệnh đề MỤC TIÊU (`Chứng minh rằng SA = 5`) — đề nêu nó như
+#: điều phải chứng minh, không như dữ kiện.
+ERR_CHI_TRONG_MUC_TIEU = "GIVEN_ONLY_IN_GOAL_CLAUSE"
 MA_LOI_NGUON = frozenset({ERR_GIVEN_KHONG_CO_TRONG_DE, ERR_SPAN_LECH_DE,
-                          ERR_BANG_CHUNG_MAU_THUAN, ERR_THIEU_DE})
+                          ERR_BANG_CHUNG_MAU_THUAN, ERR_THIEU_DE, ERR_CHI_TRONG_MUC_TIEU})
 
 
 class NguonDe(str, Enum):
@@ -419,10 +423,25 @@ def check_grounding(
     """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ.
 
     Đề rỗng chỉ được đi đường không kiểm nguồn khi người gọi khai `FIXTURE_TIN_CAY`.
+
+    W17 §15.2: bằng chứng GIVEN đọc trên đề đã CHE mệnh đề mục tiêu (`che_muc_tieu`, cùng độ dài
+    nên span giữ nguyên) — một giá trị chỉ có trong yêu cầu chứng minh không bao giờ là dữ kiện.
+    Lần đọc thứ hai, trên đề gốc, chỉ PHÂN LOẠI lời từ chối: qua được ở đó ⇒ mọi giá trị thiếu
+    đều nằm trong mệnh đề mục tiêu (`GIVEN_ONLY_IN_GOAL_CLAUSE`). Nó không bao giờ cấp phép.
     """
     if not (contract.problem_text or "").strip() and nguon is not NguonDe.FIXTURE_TIN_CAY:
         return GroundingResult(ok=False, error_code=ERR_THIEU_DE, unresolved=[
             "hợp đồng không mang đề bài — không có nguồn để đối chiếu dữ kiện"])
+    goc = contract.problem_text or ""
+    kq = _kiem_grounding(contract, spec, che_muc_tieu(goc))
+    if (not kq.ok and kq.error_code in MA_LOI_NGUON and khoang_muc_tieu(goc)
+            and _kiem_grounding(contract, spec, goc).ok):
+        return kq.model_copy(update={"error_code": ERR_CHI_TRONG_MUC_TIEU})
+    return kq
+
+
+def _kiem_grounding(contract: RequestContract, spec: SemanticProgramSpec, de: str) -> GroundingResult:
+    """Thân của `check_grounding`; `de` là văn bản BẰNG CHỨNG (tên thực thể vẫn đọc trên đề gốc)."""
     unresolved: list[str] = []
     gia_thiet: list[str] = []
     trich_dan_hong: list[str] = []
@@ -447,7 +466,6 @@ def check_grounding(
     # ── BẰNG CHỨNG NGUỒN (W12) ─────────────────────────────────────────────
     # Rỗng ⇔ hợp đồng dựng không qua biên đóng băng ("unchecked", cùng quy ước
     # `InputFact.provenance`): giữ hành vi cũ. Tuyến sản phẩm luôn có đề.
-    de = contract.problem_text or ""
     bang_chung: list[dict[str, Any]] = []
     tu_choi_nguon: list[str] = []
     # P1 tính LẠI từ đề, không tin cờ lưu trên mục: hợp đồng đông cứng từ trước

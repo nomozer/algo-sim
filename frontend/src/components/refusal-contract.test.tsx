@@ -48,6 +48,7 @@ type Envelope = {
   failure_category?: string;
   error_code?: string;
   stage_reached?: string;
+  refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
 };
 
 function docFixture(id: string): Envelope {
@@ -176,6 +177,30 @@ describe("frontend KHÔNG suy phân loại từ chuỗi", () => {
       );
       expect(xau.test(than), `${t} bị xử lý như văn xuôi`).toBe(false);
     }
+  });
+});
+
+/* W17 §15.3 — câu gợi ý đọc `refusal_cause` (backend sở hữu). Đề hợp lệ (CONSTRUCTION) hay chưa rõ
+   (UNKNOWN) thì KHÔNG bảo học sinh viết lại đề; chỉ SOURCE mới mời sửa dữ kiện trong đề. */
+describe("W17 · gợi ý theo nguyên nhân từ chối", () => {
+  const BAO_SUA_DE = ["diễn đạt lại", "kiểm tra lại đề", "đối chiếu lại các số liệu trong đề", "sửa đề", "nêu rõ hình"];
+  const the = (refusal_cause?: Envelope["refusal_cause"]) => html({
+    reason: "NON_POSITIVE_LENGTH", learner_reason: "…", failure_category: "geometry_generation_failed",
+    error_code: "semantic_program_invalid", stage_reached: "semantic_analyze", refusal_cause,
+  });
+
+  it.each(["CONSTRUCTION", "UNKNOWN", undefined] as const)("%s — không bảo sửa đề", (nn) => {
+    const out = the(nn);
+    expect(BAO_SUA_DE.filter((c) => out.includes(c))).toEqual([]);
+    expect(out).toContain("gửi lại");
+  });
+
+  it("CONSTRUCTION — nói rõ đề hợp lệ", () => {
+    expect(the("CONSTRUCTION")).toContain("Đề của em hợp lệ");
+  });
+
+  it("SOURCE — mời sửa đúng dữ kiện trong đề", () => {
+    expect(the("SOURCE")).toContain("trong đề");
   });
 });
 

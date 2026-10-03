@@ -108,8 +108,8 @@ async def _run_frozen_program(text: str, contract, spec) -> dict:
             os.environ["GEOMETRY_COMPILER_MODE"] = saved_mode
 
 
-def _zero_ab(text: str, contract):
-    changed_text = text.replace("AB = 3", "AB = 0")
+def _ab_bang_0(contract, text: str):
+    """The contract an analyze stage produces when it reads AB = 0 (fact, invariant, text)."""
     facts = tuple(
         fact.model_copy(update={"values": ("0",)}) if fact.label == "AB" else fact
         for fact in contract.input_facts
@@ -119,11 +119,27 @@ def _zero_ab(text: str, contract):
         if set(invariant.points) == {"A", "B"} else invariant
         for invariant in contract.source_invariants
     )
-    return changed_text, contract.model_copy(update={
+    return contract.model_copy(update={
         "input_facts": facts,
         "source_invariants": invariants,
-        "problem_text": changed_text,
+        "problem_text": text,
     })
+
+
+def _zero_ab(text: str, contract):
+    """Negative "non-positive length" STATED BY THE TEXT (W17 §15.3 cause SOURCE): the text itself
+    writes AB = 0 — or, for the cube, which states its edge without a segment name, "cạnh bằng 0".
+    Before W17 the cube text was left saying "cạnh bằng 4" (a valid problem, V = 64) while the
+    contract carried AB = 0, and the refusal told the learner to fix a correct text."""
+    changed_text = text.replace("AB = 3", "AB = 0").replace("cạnh bằng 4", "cạnh bằng 0")
+    assert changed_text != text, text
+    return changed_text, _ab_bang_0(contract, changed_text)
+
+
+def _tiem_ab_bang_0(text: str, contract):
+    """System-cause negative (W17 §15.3 cause CONSTRUCTION): the text stays VALID and unchanged; only
+    the contract carries AB = 0 — a wrong analyze stage, never a wrong problem."""
+    return text, _ab_bang_0(contract, text)
 
 
 def _compiler_fixture(factory: Callable, *, negative: bool) -> tuple[str, dict]:
@@ -137,6 +153,7 @@ def _compiler_fixture(factory: Callable, *, negative: bool) -> tuple[str, dict]:
         assert envelope["reason"] == "NON_POSITIVE_LENGTH", envelope
         assert envelope["error_code"] == "semantic_program_invalid", envelope
         assert envelope["stage_reached"] == "semantic_analyze", envelope
+        assert envelope["refusal_cause"] == "SOURCE", envelope
     else:
         assert envelope["status"] == "ok" and envelope.get("scene3d"), envelope
     return text, envelope
@@ -400,6 +417,19 @@ def main() -> None:
                      source_reason_code="NON_POSITIVE_LENGTH"),
             ensure_ascii=False, indent=2,
         ), encoding="utf-8")
+
+    # W17 §15.3: a VALID text whose contract the system got wrong — the learner must not be told
+    # to fix the text.
+    system_text, system_contract = _tiem_ab_bang_0(*_cube_contract())
+    system = attach_learner_reason(asyncio.run(_run_compiler(system_text, system_contract)))
+    assert (system["status"], system["reason_code"], system["refusal_cause"]) == (
+        "unsupported", "NON_POSITIVE_LENGTH", "CONSTRUCTION"), system
+    (fixtures / "cube_system_cause.json").write_text(json.dumps(
+        _wrapper("cube_injected_non_positive", system_text, system,
+                 "deterministic_compiler_injected_contract_refusal",
+                 source_reason_code="NON_POSITIVE_LENGTH", refusal_cause="CONSTRUCTION"),
+        ensure_ascii=False, indent=2,
+    ), encoding="utf-8")
 
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"

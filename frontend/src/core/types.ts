@@ -75,6 +75,9 @@ export interface AnalysisUnsupported {
    * "pipeline_stage_incomplete" vs "multiple_operations_not_supported" đều là
    * `semantic_incomplete`). KHÔNG BAO GIỜ hiển thị mã này cho học sinh. */
   error_code?: string;
+  /** (W17 §15.3) Nguyên nhân từ chối do backend quyết từ mã có cấu trúc — chỉ để chọn gợi ý:
+   * `SOURCE` mời sửa dữ kiện trong đề; `CONSTRUCTION`/`UNKNOWN` không bao giờ bảo sửa đề. */
+  refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
 }
 
 export type AnalysisResult = AnalysisOk | AnalysisUnsupported;

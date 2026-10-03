@@ -212,8 +212,9 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
 #: Mở đầu một yêu cầu chứng minh / kiểm tra / câu hỏi — ranh giới chữ, không phân biệt hoa
 #: thường. `Tính` KHÔNG ở đây: mệnh đề hỏi giá trị có thể mang `biết <giả thiết>`.
 _MUC_TIEU = re.compile(r"(?<![^\W\d_])(?:chứng\s+minh|chứng\s+tỏ|cmr|kiểm\s+tra|hỏi)(?![^\W\d_])", re.I)
-#: Hết mệnh đề: `? ! ;`, xuống dòng, hoặc dấu chấm kết câu (không phải chấm của `S.ABC`).
-_HET_MENH_DE = re.compile(r"[?!;\n]|\.(?=\s|$)")
+#: Hết mệnh đề: `? ! ;`, xuống dòng, dấu chấm kết câu (không phải chấm của `S.ABC`), hoặc `, biết`
+#: — `Chứng minh X, biết Y`: Y là giả thiết (W17 §15.2, đính chính Task 3).
+_HET_MENH_DE = re.compile(r"[?!;\n]|\.(?=\s|$)|,\s*biết(?![^\W\d_])")
 #: Ranh giới đứng trước một câu hỏi `…?`.
 _TRUOC_CAU_HOI = re.compile(r"[?!;,:\n]|\.(?=\s)")
 

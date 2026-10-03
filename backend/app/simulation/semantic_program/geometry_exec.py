@@ -783,7 +783,12 @@ def exec_construct_section(node: Any, mem: dict[str, Any]) -> tuple[Section, lis
     """
     sol = _lay(mem, node.solid, Polyhedron, "khối")
     pl = _lay(mem, node.plane, Plane3, "mặt phẳng")
-    s = cross_section(sol, pl)
+    try:
+        s = cross_section(sol, pl)
+    except GeometryError as e:
+        # W17 §15.3: mặt phẳng nào hỏng — `refusal_cause` hỏi nó có phải mặt phẳng đề cho không.
+        e.mat_phang = node.plane
+        raise
     ke = [
         f"Trên mặt thứ {st.face_index + 1} của khối, nối "
         f"({st.a.x}, {st.a.y}, {st.a.z}) với ({st.b.x}, {st.b.y}, {st.b.z})."

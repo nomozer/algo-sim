@@ -146,6 +146,9 @@ export function UnsupportedNotice({
     /** (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) Giai đoạn pipeline đã dừng lại.
      *  Backend sở hữu giá trị; FE chỉ tra nhãn. */
     stage_reached?: string;
+    /** (W17 §15.3) Nguyên nhân từ chối — backend quyết từ mã có cấu trúc. Chỉ `SOURCE` mới mời
+     *  học sinh sửa đề; thiếu trường (envelope cũ) đi như `UNKNOWN`. */
+    refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
   };
 }) {
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
@@ -234,8 +237,14 @@ export function UnsupportedNotice({
        trong bao đóng hay không. Khẳng định một điều mình không biết, về phía
        có lợi cho mình, là đúng thứ ranh giới R0 dựng ra để cấm — chỉ khác là
        lần này lời sai nằm trên bề mặt học sinh chứ không trong một đáp số.
-       Nói có điều kiện thì vẫn hữu ích mà không hứa liều. */
-    ? "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), thử nêu rõ hình và dữ kiện rồi gửi lại."
+       Nói có điều kiện thì vẫn hữu ích mà không hứa liều.
+       (W17 §15.3) Câu đọc `refusal_cause`: chỉ SOURCE mời sửa dữ kiện trong đề; CONSTRUCTION nói
+       thẳng đề hợp lệ; UNKNOWN (và envelope cũ) giữ câu có điều kiện nhưng thôi mời viết lại đề. */
+    ? unsupported.refusal_cause === "SOURCE"
+      ? "Sửa đúng dữ kiện được nêu ở trên ngay trong đề rồi gửi lại."
+      : unsupported.refusal_cause === "CONSTRUCTION"
+      ? "Đề của em hợp lệ — lỗi nằm ở khâu dựng hình của hệ. Em có thể gửi lại để hệ dựng lại."
+      : "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại."
     : outOfScope
     ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
     : notSimulatable

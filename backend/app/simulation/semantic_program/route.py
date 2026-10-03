@@ -55,6 +55,7 @@ from .pipeline_adapter import (
 from .ir_static_check import kiem_tinh
 from .postconditions import check_postconditions, check_source_invariants
 from .request_contract import RequestContract
+from .refusal_cause import MA_KHONG_CAT, mat_phang_khong_cat, theo_ma
 from .shape_constraint import neu_khoi_da_dien
 
 
@@ -80,6 +81,8 @@ class SemanticRouteOutcome(BaseModel):
     reason_code: str | None = None
     #: Ký hiệu HỌC SINH của thứ bị từ chối (`AD`) — không bao giờ là tên máy.
     reason_subjects: list[str] = Field(default_factory=list)
+    #: W17 §15.3 — `SOURCE` · `CONSTRUCTION` · `UNKNOWN` (`refusal_cause`); `None` khi phục vụ.
+    refusal_cause: str | None = None
     #: BẰNG CHỨNG NGUỒN của từng GIVEN đã nhận (`GroundingResult.given_evidence`).
     #: Quan trắc, không gác cửa, không vào envelope.
     grounding_given_evidence: list[dict[str, Any]] = Field(default_factory=list)
@@ -188,6 +191,9 @@ def _hong(
     weak: list[str] | None = None,
     **extra: Any,
 ) -> SemanticRouteOutcome:
+    # §15.3: mọi lời từ chối mang nguyên nhân; mã trong bảng ⇒ nguyên nhân của bảng, còn lại UNKNOWN
+    # trừ khi nơi từ chối đã phân xử theo đề (`refusal_cause.do_dai_khong_duong`/`mat_phang_khong_cat`).
+    extra.setdefault("refusal_cause", theo_ma(extra.get("reason_code")))
     return SemanticRouteOutcome(
         stage_reached=stage,
         executable=executable,
@@ -202,7 +208,7 @@ def _hong(
 
 
 def hong_truoc_khi_dung_ir(
-    stage: str, code: ErrorCode, reason: str | None
+    stage: str, code: ErrorCode, reason: str | None, **extra: Any
 ) -> SemanticRouteOutcome:
     """Phán quyết cho thất bại xảy ra **trước** khi có IR để thẩm định.
 
@@ -221,7 +227,7 @@ def hong_truoc_khi_dung_ir(
     chỗ. Dựng bản thứ hai trong `pipeline` là cách bảo đảm hai bản sẽ trôi
     khỏi nhau — kho này đã dọn đúng lớp lỗi ấy ba lần.
     """
-    return _hong(stage, code, reason or "")
+    return _hong(stage, code, reason or "", **extra)
 
 
 def verify_and_compile(
@@ -394,6 +400,8 @@ def _sau_grounding(
             f"Interpreter không thực thi được chương trình: {e}",
             details=[f"[{ma or type(e).__name__}]", str(e)],
             weak=list(c1a.weak_kinds),
+            # §15.3: thiết diện rỗng — mặt phẳng ĐỀ cho không cắt khối, hay mặt phẳng hệ tự đặt?
+            **(mat_phang_khong_cat(contract, spec, getattr(e, "mat_phang", None)) if ma == MA_KHONG_CAT else {}),
         )
 
     # Chạm trần thực thi phải BÁO, cấm cắt câm (luật cứng #12). Trace cụt thì

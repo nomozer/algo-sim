@@ -70,12 +70,14 @@ _MSG_PIPELINE_FAILED = (
 )
 
 
+#: W17 §15.3: lời CHUNG cho nguyên nhân chưa rõ (`UNKNOWN`) — không có căn cứ nào nói đề sai, nên
+#: không bảo học sinh viết lại đề (bản trước khuyên "diễn đạt lại đề gọn hơn" cho mọi lỗi sinh).
 _MSG_GEOMETRY_GENERATION_FAILED = (
     "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương "
     "trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. "
     "Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn "
-    "một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình "
-    "gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+    "một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn "
+    "chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được."
 )
 
 
@@ -112,12 +114,36 @@ _MSG_NGUON_THIEU = (
     "AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em "
     "kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
 )
+#: W17 §15.3 (đính chính Task 1): đề là thẩm quyền — số liệu HỆ dùng lệch câu chữ của đề là lỗi
+#: đọc đề của hệ (`CONSTRUCTION`), không phải lỗi của đề.
+_DUOI_LOI_HE = " Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
 _MSG_NGUON_MAU_THUAN = (
-    "Số liệu dùng để dựng hình ({doan}) không khớp với chính câu chữ của đề — "
+    "Số liệu hệ dùng để dựng hình ({doan}) không khớp với chính câu chữ của đề — "
     "khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì "
-    "dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại "
-    "nhé."
+    "dựng một hình có thể sai." + _DUOI_LOI_HE
 )
+#: W17 §15.2: giá trị chỉ có trong yêu cầu chứng minh — đề nêu nó như điều phải chứng minh.
+_MSG_CHI_TRONG_MUC_TIEU = (
+    "Đề bài chỉ nêu {doan} trong yêu cầu chứng minh, chứ không cho nó như một dữ kiện. "
+    "AlgoSim không dùng điều cần chứng minh làm dữ kiện, nên không dựng hình cho đề này. "
+    "Nếu đó là dữ kiện, em ghi nó vào phần giả thiết của đề rồi gửi lại nhé."
+)
+#: W17 §15.3: cùng một mã, hai nguyên nhân — đề GHI giá trị gây lỗi (SOURCE), hay hệ tự đặt nó
+#: trên một đề hợp lệ (CONSTRUCTION). Chỉ nguyên nhân SOURCE mới mời học sinh xem lại đề.
+_MSG_THEO_NGUYEN_NHAN: dict[str, dict[str, str]] = {
+    "NON_POSITIVE_LENGTH": {
+        "SOURCE": ("Đề bài cho {doan} bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để "
+                   "dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."),
+        "CONSTRUCTION": ("Khâu dựng hình của AlgoSim đã dùng {doan} không dương, trong khi đề bài không "
+                         "cho số liệu như vậy." + _DUOI_LOI_HE),
+    },
+    "PLANE_DOES_NOT_CUT": {
+        "SOURCE": ("Mặt phẳng{mp} mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay "
+                   "tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."),
+        "CONSTRUCTION": ("Mặt phẳng mà khâu dựng hình của AlgoSim dùng để cắt không cắt khối, nên không có "
+                         "thiết diện — trong khi đề bài không cho mặt phẳng ấy." + _DUOI_LOI_HE),
+    },
+}
 #: W14 5a — hợp đồng tới route mà không mang đề. Tuyến sản phẩm luôn gửi đề, nên lời
 #: này lẽ ra không tới học sinh; nếu tới, nó nói đúng điều đã xảy ra, không đổ cho đề.
 _MSG_THIEU_DE = (
@@ -147,14 +173,14 @@ _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
     "SOURCE_TEXT_MISSING": _MSG_THIEU_DE,
     "ASSUMPTION_DETERMINES_ANSWER": _MSG_GIA_DINH_QUYET_DINH,
     "ASSUMPTION_INVARIANCE_UNPROVEN": _MSG_GIA_DINH_CHUA_CHUNG_MINH,
+    "GIVEN_ONLY_IN_GOAL_CLAUSE": _MSG_CHI_TRONG_MUC_TIEU,
 }
 
 
 #: W17 §15.1 — đề đủ và đúng, phép dựng thiết diện của hệ dùng thực thể khác thực thể đề nêu.
 #: Nguyên nhân CONSTRUCTION: không bảo học sinh sửa đề.
 _DUOI_LECH_PHEP_DUNG = (
-    " AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đề "
-    "không cần sửa — đây là lỗi dựng hình của hệ; em có thể gửi lại để hệ dựng lại."
+    " AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói." + _DUOI_LOI_HE
 )
 
 
@@ -191,9 +217,14 @@ def learner_reason(envelope: dict) -> str:
     """Thông điệp học sinh cho envelope ``status="unsupported"`` — chọn theo
     ``reason_code``, ``error_code`` rồi tới ``failure_category`` (đều CÓ CẤU
     TRÚC), không bao giờ đọc text ``reason``."""
-    if envelope.get("reason_code") == "CONSTRUCTION_NOT_TEXT_BOUND":
+    ma = envelope.get("reason_code") or ""
+    if ma == "CONSTRUCTION_NOT_TEXT_BOUND":
         return _msg_lech_phep_dung(envelope)
-    chi_tiet = _MSG_THEO_MA_CHI_TIET.get(envelope.get("reason_code") or "")
+    theo_nn = _MSG_THEO_NGUYEN_NHAN.get(ma, {}).get(envelope.get("refusal_cause") or "")
+    if theo_nn is not None:
+        mp = ", ".join(s for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and "_" not in s)
+        return theo_nn.format(doan=_doan_hoc_sinh(envelope), mp=f" {mp}" if mp else "")
+    chi_tiet = _MSG_THEO_MA_CHI_TIET.get(ma)
     if chi_tiet is not None:
         return chi_tiet.format(doan=_doan_hoc_sinh(envelope))
     theo_ma = _MSG_THEO_MA.get(envelope.get("error_code") or "")
@@ -230,7 +261,9 @@ def attach_learner_reason(envelope: dict) -> dict:
     envelope pipeline). Envelope ok đi qua NGUYÊN VẸN."""
     if not isinstance(envelope, dict) or envelope.get("status") != "unsupported":
         return envelope
-    return {**envelope, "learner_reason": learner_reason(envelope)}
+    # W17 §15.3: mọi envelope từ chối mang nguyên nhân; nơi từ chối không phân xử ⇒ UNKNOWN.
+    return {**envelope, "refusal_cause": envelope.get("refusal_cause") or "UNKNOWN",
+            "learner_reason": learner_reason(envelope)}
 
 
 def learner_error_message() -> str:

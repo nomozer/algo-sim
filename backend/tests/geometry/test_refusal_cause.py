@@ -38,8 +38,9 @@ def test_w17_do_dai_khong_duong_DE_GHI_la_nguyen_nhan_nguon():
 
 
 def test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung():
-    """Ảnh lập phương W16: đề "cạnh bằng 4" hợp lệ (V = 64), hợp đồng bị tiêm AB = 0 ⇒ khâu dựng sai."""
-    text, contract = GEN._zero_ab(*GEN._cube_contract())
+    """Ảnh lập phương W16: đề "cạnh bằng 4" hợp lệ (V = 64), hợp đồng bị tiêm AB = 0 ⇒ khâu dựng sai.
+    Bộ tiêm riêng `_tiem_ab_bang_0` (Task 3 ruling): `_zero_ab` nay luôn GHI số 0 vào chính đề."""
+    text, contract = GEN._tiem_ab_bang_0(*GEN._cube_contract())
     assert "cạnh bằng 4" in text and "0" not in text
     env = _compiler(text, contract)
     assert (env.get("refusal_cause"), env.get("reason_code"), env.get("reason_subjects")) == (

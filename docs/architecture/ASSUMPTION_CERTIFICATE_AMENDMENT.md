@@ -662,6 +662,22 @@ GIVEN_ONLY_IN_GOAL_CLAUSE`, không gửi đi sửa. Dữ kiện trong câu `Tín
 kiện (`Tính` không phải từ khoá mục tiêu). Đây là sửa grounding, không mở rộng chứng chỉ: B6b
 vẫn là từ chối thừa đã ghi.
 
+> **Đính chính 2026-10-03 (W17 Task 3 — sau bản sửa, TRƯỚC census và mọi phép đo).**
+> - **Cách đọc:** thân `check_grounding` chạy trên đề đã che; lời từ chối mã nguồn (`MA_LOI_NGUON`)
+>   chỉ đổi thành `GIVEN_ONLY_IN_GOAL_CLAUSE` khi CÙNG thân chạy trên đề gốc qua được — lần đọc
+>   ấy phân loại, không bao giờ cấp phép. Tên thực thể vẫn đọc trên đề gốc.
+> - **`Chứng minh X, biết Y`:** `khoang_muc_tieu` (§14.2) kết thúc mệnh đề mục tiêu ở `, biết`.
+>   Y là giả thiết — nếu không, bản sửa grounding sẽ từ chối dữ kiện hợp lệ đứng sau `biết` và
+>   bảo học sinh rằng nó "chỉ có trong yêu cầu chứng minh" (tái hiện: test G5 đỏ trước đính
+>   chính). Đổi này áp cho cả chứng chỉ (cùng bản che).
+> - **§15.3, thi hành:** nguyên nhân nằm trên MỌI envelope từ chối hình học (`_hong` của route
+>   gắn theo bảng; `NON_POSITIVE_LENGTH` của compiler và `PLANE_DOES_NOT_CUT` của kernel phân xử
+>   theo đề tại nơi từ chối; biên API mặc định `UNKNOWN`). Lời chung `geometry_generation_failed`
+>   (nay là lời `UNKNOWN`) và câu gợi ý của giao diện thôi mời học sinh viết lại đề; chỉ
+>   `SOURCE` mời sửa dữ kiện trong đề. Fixture âm "độ dài không dương" GHI số 0 vào chính đề
+>   (lập phương: "cạnh bằng 0"); ca đề hợp lệ + hợp đồng sai là fixture riêng
+>   `cube_system_cause` (`CONSTRUCTION`).
+
 ### 15.3 Nguyên nhân từ chối — lời cho người học dựa trên lý do có cấu trúc
 
 Mỗi envelope `unsupported` mang `refusal_cause` ∈ {`SOURCE`, `CONSTRUCTION`, `UNKNOWN`},

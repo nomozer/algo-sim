@@ -330,6 +330,13 @@ def test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
     assert len(che) == len(nfd) and "⊥" not in che
 
 
+def test_w17_menh_de_biet_sau_yeu_cau_chung_minh_la_gia_thiet():
+    """§15.2 (đính chính Task 3): `Chứng minh X, biết Y` — Y là dữ kiện, mục tiêu dừng ở `, biết`."""
+    de = "Cho hình chóp S.ABC. Chứng minh rằng SA ⊥ (ABC), biết SA = 5 và AB = 3. Tính thể tích khối chóp S.ABC."
+    [(a, b)] = _sc().khoang_muc_tieu(de)
+    assert de[a:b] == "Chứng minh rằng SA ⊥ (ABC)"
+
+
 # ── W17 · §15.1 · quan hệ cắt: MẶT PHẲNG nào cắt KHỐI nào theo THIẾT DIỆN nào ─────────────
 
 def _cat(de: str) -> list[tuple]:

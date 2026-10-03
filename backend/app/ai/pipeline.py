@@ -247,6 +247,8 @@ KHONG_SUA_NGUON = frozenset({
     "SOURCE_EVIDENCE_CONFLICT",
     # W14 5a: hợp đồng không mang đề — viết lại chương trình không thêm được đề.
     "SOURCE_TEXT_MISSING",
+    # W17 §15.2: giá trị chỉ có trong mệnh đề mục tiêu — viết lại không biến nó thành dữ kiện.
+    "GIVEN_ONLY_IN_GOAL_CLAUSE",
     # W15: đáp số phụ thuộc kích thước đề không cho / chưa chứng minh được — viết lại
     # chương trình không thêm được dữ kiện vào đề.
     "ASSUMPTION_DETERMINES_ANSWER",
@@ -615,6 +617,8 @@ def _that_bai_hinh_hoc(outcome, analysis: dict, plan: dict, observer) -> dict:
     if ma:
         env["reason_code"] = ma
         env["reason_subjects"] = list(getattr(outcome, "reason_subjects", None) or [])
+    # W17 §15.3: MỌI lời từ chối hình học mang nguyên nhân — lời cho học sinh chọn theo nó.
+    env["refusal_cause"] = getattr(outcome, "refusal_cause", None) or "UNKNOWN"
     return env
 
 
@@ -709,9 +713,16 @@ async def _semantic_route_attempt(
               executable=False, servable=False,
               error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value,
               reason=qd.reason_code or "compiler refused")
+        from app.simulation.semantic_program.refusal_cause import (
+            MA_DO_DAI_KHONG_DUONG,
+            do_dai_khong_duong,
+        )
+
         return hong_truoc_khi_dung_ir(
             "semantic_analyze", ErrorCode.SEMANTIC_PROGRAM_INVALID,
             qd.reason_code or "compiler refused",
+            # §15.3: độ dài ≤ 0 do ĐỀ ghi (suy biến thật) hay do hợp đồng của hệ?
+            **(do_dai_khong_duong(contract) if qd.reason_code == MA_DO_DAI_KHONG_DUONG else {}),
         )
     else:
         spec, serr = await stage_semantic_program(

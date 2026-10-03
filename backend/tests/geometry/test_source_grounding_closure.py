@@ -189,9 +189,10 @@ def test_layout_derived_coordinates_are_never_given_evidence():
 
 def test_grounding_refusal_codes_are_a_closed_stable_set():
     # W14 5a thêm `SOURCE_TEXT_MISSING`: hợp đồng không mang đề (không gửi sửa).
+    # W17 §15.2 thêm `GIVEN_ONLY_IN_GOAL_CLAUSE`: giá trị chỉ có trong mệnh đề mục tiêu.
     assert G.MA_LOI_NGUON == frozenset({
         "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE_SPAN_MISMATCH", "SOURCE_EVIDENCE_CONFLICT",
-        "SOURCE_TEXT_MISSING"})
+        "SOURCE_TEXT_MISSING", "GIVEN_ONLY_IN_GOAL_CLAUSE"})
     # A source defect is never sent back to the model to "repair".
     assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON
     contract = _contract(PRISM_WITHOUT_AD, _prism_payload())
@@ -375,6 +376,16 @@ def test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN(ca, dung, ch
 def test_w17_tinh_biet_van_la_du_kien():
     """`Tính …, biết SA = 5`: dữ kiện đứng sau `Tính` vẫn là dữ kiện (Tính không phải từ khoá mục tiêu)."""
     _sp, out, sc = _w14().chay(*_g_chop(G2_TEXT))
+    assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
+
+
+G5_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Chứng minh rằng tam giác "
+           "SAB vuông, biết cạnh bên SA vuông góc với đáy và SA = 5. Tính thể tích khối chóp S.ABC.")
+
+
+def test_w17_chung_minh_biet_du_kien_sau_biet_van_la_du_kien():
+    """`Chứng minh X, biết Y`: Y là dữ kiện — không bị đọc thành giá trị chỉ có trong mục tiêu."""
+    _sp, out, sc = _w14().chay(*_g_chop(G5_TEXT))
     assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
 
 
