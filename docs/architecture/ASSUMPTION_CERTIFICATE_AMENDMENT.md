@@ -195,6 +195,10 @@ Literal khác — tỉ số, góc, vị trí mặt phẳng, hệ số do mô hì
 nguyên và chỉ đi qua phép dựng không phụ thuộc khung — **không vai trò ⇒ không chứng
 chỉ**. Phân tích thứ nguyên là điều kiện cần, không bao giờ đủ.
 
+> **Đính chính W16 (§14.1).** Dòng hệ số `construct_plane_from_equation` nay đòi CÙNG mặt
+> phẳng: tỉ lệ với phương trình của ĐÚNG mặt phẳng đề mà biến gắn được (theo tên, hoặc duy
+> nhất theo đếm) — không còn "tỉ lệ với một `plane_equation` bất kỳ".
+
 > **Đính chính 2026-10-03 (W15 Task 6, quyết định U4 · G2).** "CÙNG điểm" / "đỉnh nằm trong
 > ký hiệu khối" so tên phía chương trình (hay hợp đồng) với thực thể của đề qua
 > `domain_profile.geometry_symbol_key` — thẩm quyền có sẵn gộp bốn lối viết một điểm bậc một
@@ -379,6 +383,10 @@ SECTION_FILL_THRESHOLDS = {"T_ON": 20, "T_ON_MIN": 12, "T_OFF": 3, "margin_px": 
 > sâu), KHÔNG sửa ngưỡng. Sau bản sửa đo được 33,9/25,3 (desktop) và 33,8/25,9 (mobile),
 > khớp mô hình (≥ 31,9).
 
+> **Đính chính W16 (§14.4).** Bộ lấy mẫu W15 chỉ chừa lề quanh cạnh của đa giác thiết diện,
+> hẹp hơn câu "quanh MỌI cạnh và dấu điểm" ở trên; W16 sửa bộ lấy mẫu cho khớp, ngưỡng giữ
+> nguyên. Phần tô chuyển xuống DƯỚI các nét, kèm phép đo `SECTION_FILL_UNDER_EDGES`.
+
 ## 12. Không được
 
 Nới cổng grounding; nâng chú thích của mô hình thành tiền đề hay GIVEN; dùng
@@ -404,3 +412,153 @@ là kiểm kê w13 (`as_of_head` `bf5a7907`) và không bị sửa. W15 đổi c
 - **Hệ quả cần khai khi trích năng lực.** Bài đa diện viết ngoài từ vựng đóng bị từ chối
   dù đề xác định đáp số (`ISSUE-ARCH-SHAPE-CONSTRAINT-VOCABULARY-COVERAGE`). Ngoài vùng
   đa diện, cổng chỉ ghi (U3).
+
+## 14. W16 — sửa đổi trước merge (đăng ký 2026-10-03, TRƯỚC mọi bản sửa)
+
+**Nguồn:** brief W16 (`W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE`). Tái hiện ở
+[`runs/w16-premerge-closure`](../evaluation/geometry/runs/w16-premerge-closure/)
+(`diagnostics/logs/PROBE_W16_PHASE1.log`, tại `8a339d17`, 0 lượt gọi model).
+**Trạng thái:** REGISTERED — chưa đo. Phạm vi thi hành của U3 giữ nguyên.
+
+### 14.1 Hệ số mặt phẳng phải thuộc CÙNG mặt phẳng của đề (sửa §4)
+
+Đây là bản sửa dòng "hệ số `construct_plane_from_equation`" của §4.
+
+**Bằng chứng từ đề.** `plane_equation.doc_mat_phang_de(đề)` trả mỗi phương trình đọc trọn
+với ba thứ:
+- `ten`: tên viết trong chính mệnh đề, như `(α): …` hay `(P) có phương trình …`; không có
+  tên thì `None`;
+- bộ hệ số;
+- `span` trong đề gốc.
+
+**Tên phía chương trình.** `ten_mat_phang_cua_bien(tên biến)` cắt tên biến theo ký tự
+không phải chữ hay số, và theo chỗ chữ thường chuyển sang chữ hoa. Mỗi mẩu được nhận là
+tên mặt phẳng khi nó là:
+- một chữ Hy Lạp;
+- một tên phiên âm trong bảng ĐÓNG 24 chữ (`alpha`→α … `omega`→ω);
+- hoặc MỘT chữ in hoa, có thể kèm chữ số.
+
+Ví dụ: `alpha_plane`, `mat_phang_alpha`, `plane_beta`, `mp_P` cho lần lượt α, α, β, P.
+
+**Khi nào là `SOURCE_DATUM`.** Chỉ khi gắn được với DUY NHẤT một phương trình:
+- (i) **Biến có tên.** Đúng một phương trình của đề mang một trong các tên ấy, và hệ số
+  tỉ lệ với nó (`tuong_duong`).
+- (ii) **Biến không có tên nào.** Cần cả hai điều kiện: đề nhắc mặt phẳng đúng MỘT lần
+  (`so_lan_nhac_mat_phang = 1`, tức một cụm `mặt phẳng`/`mp` và không có chữ Hy Lạp nào
+  trong ngoặc), và chương trình dựng đúng một mặt phẳng từ phương trình. Đếm cho ra cặp
+  duy nhất; sau đó mới kiểm hệ số.
+- (iii) **Mọi trường hợp khác** không có vai trò. Detail ghi
+  `PLANE_BINDING <biến>: <lý do>`.
+
+Trùng bộ số không có nghĩa là trùng thực thể. Một biến tên β mang hệ số của (α) không có
+vai trò, kể cả khi đề không cho phương trình nào của β.
+
+`SourceInvariant plane_equation` của sản phẩm không đổi. Đó là hậu điều kiện "có một mặt
+phẳng tỉ lệ với phương trình của đề"; nó không tuyên bố gì về thực thể. Đổi nó tức là đổi
+phản hồi nằm ngoài phạm vi chứng chỉ.
+
+**Giới hạn A′.** C0 gắn mỗi literal với thực thể của nó. Nó KHÔNG kiểm một phép dựng có
+dùng đúng thực thể mà đề nói hay không. Ví dụ: đề nói (T) do (β) cắt, nhưng chương trình
+cắt (T) bằng (α), và (α) đã được ghim đúng. Đây là lỗi quan hệ dựng, không phải literal tự
+đặt. Muốn kiểm nó cần bộ đọc mẫu "(X) cắt … theo thiết diện (T)", tức là mở rộng từ vựng,
+mà việc đó chờ quyết định W15-H3 của người dùng. Ghi ở
+`ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`.
+
+### 14.2 Quan hệ nằm trong yêu cầu chứng minh không bao giờ là tiền đề (sửa §2)
+
+**Span mục tiêu.** `shape_constraint.khoang_muc_tieu(đề)` đánh dấu hai loại span:
+- Từ một từ khoá tới hết mệnh đề. Từ khoá là `chứng minh`, `chứng tỏ`, `CMR`, `kiểm tra`,
+  `hỏi`; so theo ranh giới từ, không phân biệt hoa thường. Mệnh đề hết ở `.`, `?`, `!`,
+  `;` hoặc chỗ xuống dòng.
+- Một mệnh đề kết thúc bằng `?`, tính từ ranh giới đứng trước nó (`.`, `?`, `!`, `;`,
+  `,`, `:` hoặc xuống dòng).
+
+`Tính` KHÔNG là từ khoá, vì mệnh đề hỏi giá trị có thể mang theo `biết <giả thiết>`.
+
+**Che span.** `che_muc_tieu(đề)` thay các span mục tiêu bằng khoảng trắng và giữ nguyên độ
+dài, nên span của mọi bộ đọc vẫn đúng trên đề gốc.
+
+**Đọc tiền đề.** Mọi tiền đề của chứng chỉ đọc từ đề ĐÃ CHE: `doc_rang_buoc`, bốn bộ phát
+bất biến, `bang_chung_doan` và `doc_mat_phang_de`. Ràng buộc chỉ đọc được bên trong span
+mục tiêu thì:
+- không là tiền đề và không bao giờ là `SERVER_CONFIRMED`;
+- nhưng VẪN chặn phản ví dụ: nó vào `CE_CONSTRAINT_NOT_CHECKED`.
+
+`phan_chua_doc` vẫn chạy trên đề gốc. Detail ghi `GOAL_CLAUSE @[a,b]`.
+
+**Giữ nguyên.** Giả thiết đứng TRƯỚC yêu cầu trong cùng một câu vẫn là tiền đề
+(`Biết SA ⊥ (ABC), chứng minh …`). Câu phủ định trong giả thiết vẫn không phát gì, vì từ
+vựng không đổi.
+
+**Ngoài W16 (chỉ ghi, không sửa):**
+- Độ dài và toạ độ nằm trong yêu cầu chứng minh vẫn được cổng grounding của sản phẩm đọc.
+  Đó là một thẩm quyền khác, không phải chứng chỉ.
+- `biết chiều cao bằng …` đứng sau `Tính` không được đọc, nên kết quả là `UNDETERMINED`:
+  từ chối thừa nhưng vẫn đóng an toàn.
+
+### 14.3 Bốn nhánh đóng an toàn đã có test
+
+Mục này đóng `ISSUE-EVAL-ASSUMPTION-GATE-UNTESTED-GUARDS`. Mỗi nhánh có:
+- một ca kích hoạt từ chương trình HỢP LỆ;
+- mã lý do `ASSUMPTION_INVARIANCE_UNPROVEN` kèm detail của nhánh;
+- một ca hợp lệ để đối chứng;
+- một phép tiêm lỗi gỡ nhánh đi và làm test đỏ.
+
+Bốn nhánh và ca kích hoạt:
+- `CLOSURE_UNSUPPORTED_KIND`: có lệnh `if`;
+- `TEMPLATE_CONSTRAINT_VIOLATED`: S rời pháp tuyến tại A;
+- `FRAME_DEPENDENT`: mặt phẳng cho bằng phương trình nằm trên lát cắt C1;
+- `FORMATION_REJECTED`: một mặt chỉ có hai đỉnh.
+
+### 14.4 Phần tô thiết diện nằm DƯỚI các cạnh (sửa §11; ngưỡng của §11 KHÔNG đổi)
+
+**Renderer.** Phần tô vẽ ở thứ tự 7:
+- sau mặt khối và mặt cắt (0), sau lớp chiều sâu (5);
+- trước mọi nét (8) và trước viền thiết diện (10).
+
+`depthTest:false`, `depthWrite:false`, độ lệch và độ đục giữ nguyên. Phần tô vẫn không che
+vật nào.
+
+**Bộ lấy mẫu của `SECTION_FILL_DISTINGUISHABLE`.** Bản W15 chỉ chừa lề quanh cạnh của chính
+đa giác thiết diện. §11 đăng ký "bỏ một lề `margin_px` quanh MỌI cạnh và dấu điểm đã
+chiếu", nên bộ lấy mẫu được sửa cho khớp. Ngưỡng `{20, 12, 3, 3}` giữ nguyên.
+
+**Phép đo mới `SECTION_FILL_UNDER_EDGES`.** Đo ở bước khép-và-tô, trên cùng cặp ảnh tô bật
+và tô tắt.
+- **Cạnh được xét:** mỗi cạnh khối theo bảng mặt của cảnh có ít nhất 3 điểm (bước 1 px CSS)
+  nằm trong đa giác thiết diện chiếu. Mỗi điểm phải cách biên đa giác và mọi dấu điểm ít
+  nhất `margin_px`.
+- **Lõi:** điểm ảnh TỐI NHẤT trên ảnh tô tắt, trong dải ±1 px CSS quanh các điểm ấy.
+- **Tham chiếu:** trung vị ΔE76(bật, tắt) tại ±4 px CSS về hai phía các điểm ấy. Các điểm
+  tham chiếu phải vẫn nằm trong vùng và cách mọi cạnh khác cùng mọi dấu điểm ít nhất
+  `margin_px`.
+- **Đạt** khi có đủ hai điều kiện:
+  - ρ = ΔE76(bật, tắt) tại lõi / tham chiếu < 1;
+  - ΔE76(lõi lúc tắt, trung vị tham chiếu lúc tắt) ≥ `T_ON_MIN`, tức là cạnh thật sự được
+    vẽ.
+
+Vì sao ranh giới là 1: theo mô hình phối màu "over", nét 1 px có độ phủ MSAA c ≥ ½ và độ
+đục α ≥ 0,9.
+- Cạnh nằm TRÊN phần tô: ρ = 1 − cα ≤ 0,55.
+- Phần tô nằm TRÊN cạnh tối `#1e293b`: ρ ≈ 1,2–1,5.
+
+Vậy 1 là ranh giới cấu trúc ("cạnh che một phần tô"), không phải con số chỉnh theo ảnh.
+
+Không có cạnh nào cắt qua vùng thì kết quả là `NOT_APPLICABLE`, không tính là đạt. Họ
+cross-section phải có ít nhất một cạnh cắt qua ở cả hai viewport. Không bao giờ chỉnh theo
+ảnh sản phẩm: nếu trượt, sửa thứ tự vẽ của sản phẩm.
+
+### 14.5 Ô từ chối trên sheet bằng chứng
+
+**Duyệt.** Ô âm duyệt `{kind: {viewport}}` đúng như bộ chạy ghi: ba loại
+(`ungrounded_source`, `assumption`, `topology_kernel`) nhân hai viewport (desktop, mobile).
+Mỗi loại có chú thích tiếng Việt riêng, lấy từ một bảng đóng; gặp loại lạ thì báo lỗi.
+
+**Điều kiện cho mỗi ô:**
+- Nguồn ảnh là `images/<họ>/negative/<loại>/<viewport>/refusal.png`.
+- Bản ghi có `pass`, không có canvas, `learner_reason` khác rỗng.
+- Hộp chữ lời từ chối có mực (điểm ảnh độ sáng < 100) chiếm ít nhất 0,5 %. Hộp này là
+  `refusal_message_box`, do bộ chạy ghi lúc chụp.
+
+**Thất bại.** Bộ dựng THẤT BẠI khi thiếu bất kỳ ảnh nào (trạng thái, bảng lời giải, từ chối,
+bước dựng) hoặc khi một ô từ chối không đọc được. Không bao giờ thay bằng ô trắng.

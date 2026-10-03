@@ -1,0 +1,29 @@
+# W16 Phase 0 repository gate — 2026-10-03T09:35:15Z
+## fetch
+fetch_exit=0
+## identity
+branch=fix/cuboid-visual-semantic-closure
+HEAD=8a339d17e9780d4a9df0cb838f11cc26a355e80f (expected START_HEAD 8a339d17 -> 8a339d17e9780d4a9df0cb838f11cc26a355e80f)
+origin/main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+ls-remote main=a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+ORIGIN_MAIN_IS_ANCESTOR
+ahead/behind (HEAD...origin/main): 162	0
+remote feature branch:  (empty = never pushed)
+## working tree
+ D frontend/public/favicon.svg
+?? docs/evaluation/geometry/runs/w16-premerge-closure/
+stash entries: 0
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 107 file, b3b7eb79d3c64a2f…).
+cand=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 107 · môi trường b1714b566e25c912…
+cache=0
+## schema mirrors
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json
+## default mode / cache constant
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+733:CACHE_VERSION = "107"
+## verdict
+PHASE0_GATE = PASS (HEAD matches; only the user's favicon deletion is dirty; candidate and cache verify 0)
