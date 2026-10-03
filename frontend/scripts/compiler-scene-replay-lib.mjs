@@ -493,12 +493,23 @@ export function assessSectionFill(trangThai, cap) {
   return { ...dau, mean_delta_e: mean, min_delta_e: min, max_delta_e: max, pass };
 }
 
-/** Điểm mẫu (px CSS của khung, lưới 6 px) BÊN TRONG đa giác thiết diện chiếu bằng camera
- *  thật, cách mọi cạnh chiếu ít nhất `margin_px`. Có đỉnh sau camera ⇒ không mẫu (cổng đỏ). */
-export function diemMauThietDien(dinh, snapshot) {
-  const [margin, buoc] = [NGUONG_TO_THIET_DIEN.margin_px, 6];
+const _cachDoan = (x, y, a, b) => {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const t = Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy || 1)));
+  return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
+};
+
+/** Vùng thiết diện chiếu: `trong` (bên trong đa giác) và `xa` (cách mọi cạnh đa giác, mọi cạnh
+ *  khối `canh` = [{id, a, b}] và mọi dấu điểm `cham` = [{center, radius_world}] ≥ `margin_px`,
+ *  §11 / W16 §14.4). Có đỉnh sau camera ⇒ null (cổng đỏ, không mẫu). */
+function _vungThietDien(dinh, snapshot, canh = [], cham = []) {
+  const margin = NGUONG_TO_THIET_DIEN.margin_px;
   const p = (dinh ?? []).map((v) => chieuManHinh(snapshot, v.map(num)));
-  if (p.length < 3 || p.some((q) => q.behind || !Number.isFinite(q.x + q.y))) return [];
+  if (p.length < 3 || p.some((q) => q.behind || !Number.isFinite(q.x + q.y))) return null;
+  const doanKhoi = (canh ?? []).map((e) => ({ id: e.id, d: [e.a, e.b].map((v) => chieuManHinh(snapshot, v.map(num))) }))
+    .filter((e) => e.d.every((q) => !q.behind && Number.isFinite(q.x + q.y)));
+  const dau = (cham ?? []).length ? doCoDauDinh(snapshot, cham).map((d, i) =>
+    ({ ...chieuManHinh(snapshot, cham[i].center.map(num)), r: d.diameter_px / 2 })) : [];
   const trong = (x, y) => {
     let c = false;
     for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
@@ -506,19 +517,83 @@ export function diemMauThietDien(dinh, snapshot) {
     }
     return c;
   };
-  const cachCanh = (x, y) => Math.min(...p.map((a, i) => {
-    const b = p[(i + 1) % p.length], dx = b.x - a.x, dy = b.y - a.y;
-    const t = Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy || 1)));
-    return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
-  }));
-  const [xs, ys] = [p.map((q) => q.x), p.map((q) => q.y)];
+  const xa = (x, y) =>
+    p.every((a, i) => _cachDoan(x, y, a, p[(i + 1) % p.length]) >= margin)
+    && doanKhoi.every((e) => _cachDoan(x, y, e.d[0], e.d[1]) >= margin)
+    && dau.every((c) => Math.hypot(x - c.x, y - c.y) >= c.r + margin);
+  return { p, doanKhoi, trong, xa };
+}
+
+/** Điểm mẫu (px CSS của khung, lưới 6 px) BÊN TRONG đa giác thiết diện chiếu bằng camera
+ *  thật, cách mọi cạnh và dấu điểm đã chiếu ít nhất `margin_px` — ĐÚNG câu đăng ký §11 (W15
+ *  chỉ chừa lề quanh cạnh của chính đa giác; W16 §14.4 sửa cho khớp). `vatCan` = {canh, cham}. */
+export function diemMauThietDien(dinh, snapshot, vatCan = {}) {
+  const vung = _vungThietDien(dinh, snapshot, vatCan.canh, vatCan.cham);
+  if (!vung) return [];
+  const [xs, ys] = [vung.p.map((q) => q.x), vung.p.map((q) => q.y)];
   const ra = [];
-  for (let y = Math.ceil(Math.min(...ys)); y <= Math.max(...ys); y += buoc) {
-    for (let x = Math.ceil(Math.min(...xs)); x <= Math.max(...xs); x += buoc) {
-      if (trong(x, y) && cachCanh(x, y) >= margin) ra.push([x, y]);
+  for (let y = Math.ceil(Math.min(...ys)); y <= Math.max(...ys); y += 6) {
+    for (let x = Math.ceil(Math.min(...xs)); x <= Math.max(...xs); x += 6) {
+      if (vung.trong(x, y) && vung.xa(x, y)) ra.push([x, y]);
     }
   }
   return ra;
+}
+
+/** W16 · SECTION_FILL_UNDER_EDGES — với mỗi cạnh khối đi qua vùng thiết diện (≥ 3 điểm, bước
+ *  1 px CSS, trong vùng và xa biên/dấu điểm): `core` = dải ±1 px CSS (bước ½ px — phủ cả điểm
+ *  ảnh thiết bị ở DPR 2), `ref` = hai bên ±4 px CSS, vẫn trong vùng và xa mọi cạnh khác. */
+export function diemCanhQuaThietDien(dinh, snapshot, canh = [], cham = []) {
+  const vung = _vungThietDien(dinh, snapshot, [], cham);
+  const khac = _vungThietDien(dinh, snapshot, canh, cham);
+  if (!vung || !khac) return [];
+  const ra = [];
+  for (const e of khac.doanKhoi) {
+    const [a, b] = e.d;
+    const dai = Math.hypot(b.x - a.x, b.y - a.y);
+    if (dai < 1) continue;
+    const [ux, uy] = [(b.x - a.x) / dai, (b.y - a.y) / dai];
+    const tam = [];
+    for (let k = 0; k <= dai; k += 1) {
+      const [x, y] = [a.x + ux * k, a.y + uy * k];
+      if (vung.trong(x, y) && vung.xa(x, y)) tam.push([x, y]);
+    }
+    if (tam.length < 3) continue;
+    const core = tam.flatMap(([x, y]) => [-1, -0.5, 0, 0.5, 1].map((d) => [x - uy * d, y + ux * d]));
+    const ref = tam.flatMap(([x, y]) => [-4, 4].map((d) => [x - uy * d, y + ux * d]))
+      .filter(([x, y]) => khac.trong(x, y) && khac.xa(x, y));
+    if (ref.length >= 3) ra.push({ id: e.id, core, ref });
+  }
+  return ra;
+}
+
+/** Trung vị THEO KÊNH của các màu (điểm ảnh tham chiếu) — HÀM THUẦN. */
+const _trungViMau = (mau) => [0, 1, 2].map((k) => {
+  const s = mau.map((m) => m[k]).sort((x, y) => x - y);
+  const g = s.length >> 1;
+  return s.length % 2 ? s[g] : (s[g - 1] + s[g]) / 2;
+});
+
+/** W16 §14.4: mỗi cạnh = {id, core: [{on, off}], ref: [{on, off}]} cùng điểm ảnh, tô BẬT/TẮT.
+ *  Lõi = điểm ảnh tối nhất của dải lúc tắt. Đạt ⇔ ρ = ΔE(lõi bật, lõi tắt) / trung vị
+ *  ΔE(tham chiếu bật, tắt) < 1 (cạnh che một phần tô) VÀ ΔE(lõi tắt, trung vị màu tham chiếu
+ *  tắt) ≥ T_ON_MIN (cạnh thật sự được vẽ). Không cạnh nào ⇒ không áp dụng — KHÔNG phải đạt. */
+export function assessSectionFillUnderEdges(canh) {
+  const T = NGUONG_TO_THIET_DIEN;
+  if (!(canh ?? []).length) return { pass: false, reason: "NOT_APPLICABLE_NO_CROSSING_EDGE", edges: [] };
+  const sang = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  const edges = canh.map((e) => {
+    if (!e.core?.length || !e.ref?.length) return { id: e.id, pass: false, reason: "NO_SAMPLES" };
+    const loi = e.core.reduce((m, q) => (sang(q.off) < sang(m.off) ? q : m));
+    const de = e.ref.map((q) => deltaE76(q.on, q.off)).sort((x, y) => x - y);
+    const g = de.length >> 1;
+    const thamChieu = de.length % 2 ? de[g] : (de[g - 1] + de[g]) / 2;
+    const rho = thamChieu > 0 ? deltaE76(loi.on, loi.off) / thamChieu : Infinity;
+    const tuongPhan = deltaE76(loi.off, _trungViMau(e.ref.map((q) => q.off)));
+    return { id: e.id, samples: e.core.length, rho, reference_delta_e: thamChieu, edge_contrast_off: tuongPhan,
+      pass: rho < 1 && tuongPhan >= T.T_ON_MIN };
+  });
+  return { pass: edges.every((e) => e.pass), edges, rule: { rho_lt: 1, edge_contrast_min: T.T_ON_MIN } };
 }
 
 /** `census` = {total, cam, xanh} đếm trên ảnh khung ở trạng thái causal. */

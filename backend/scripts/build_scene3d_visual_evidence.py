@@ -41,8 +41,20 @@ STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
                 "rotated_neutral": "đã xoay (qua cổng không suy biến)",
                 "solution_neutral_final": "bảng lời giải, bước cuối",
                 "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
-                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
-                "refusal": "đề thiếu một dữ kiện — từ chối, không dựng hình"}
+                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính"}
+#: W16 §14.5 — tên NGƯỜI XEM của từng loại âm mà bộ chạy ghi (`negative[kind][viewport]`).
+#: Bảng ĐÓNG: loại lạ ⇒ `KeyError`, không in token máy lên ảnh.
+TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ chối, không dựng hình",
+               "assumption": "đáp số phụ thuộc kích thước đề không cho — từ chối",
+               "topology_kernel": "bảng mặt / hình học không dựng được — từ chối"}
+#: Ô từ chối ĐỌC ĐƯỢC ⇔ hộp đoạn lời (`refusal_message_box`) có ít nhất tỉ lệ này điểm ảnh
+#: mực (độ sáng < `DO_SANG_MUC`). Ảnh chụp trắng có 0; vài dòng chữ có cỡ vài phần trăm.
+MUC_TOI_THIEU, DO_SANG_MUC = 0.005, 100
+
+
+class ThieuAnhBangChung(ValueError):
+    """Một ô bắt buộc của sheet thiếu ảnh hoặc không đọc được — bộ dựng THẤT BẠI, không bao
+    giờ thay bằng ô trắng (W16 §14.5)."""
 # Hai dòng: một dòng cũ bị cắt ở mép phải sheet. Vật đã dựng giữ MÀU KIỂU ở
 # khung trung tính — chú giải không được hứa "trung tính" cho chúng (w12).
 LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: "
@@ -220,11 +232,37 @@ def _save_png(image: Image.Image, out: Path) -> None:
     image.save(out, optimize=True)
 
 
+def _loi_tu_choi(record: dict[str, Any], path: Path | None, fam: str, kind: str, vp: str) -> str | None:
+    """Lý do một ô từ chối KHÔNG dùng được, hoặc None: đúng tệp của loại × viewport, bản ghi là
+    một lời từ chối không canvas có lời cho người học, và hộp đoạn lời trong ảnh có chữ."""
+    if path is None or not path.exists():
+        return "image missing"
+    if not path.as_posix().endswith(f"{fam}/negative/{kind}/{vp}/refusal.png"):
+        return f"image {path.as_posix()} is not {fam}/negative/{kind}/{vp}/refusal.png"
+    obs = record.get("observed") or {}
+    if not (record.get("pass") and obs.get("canvas") is False and (obs.get("unsupported") or {}).get("learner_reason")):
+        return "record is not a passing no-canvas refusal with a learner message"
+    hop = record.get("refusal_message_box")
+    if not hop:
+        return "no refusal_message_box recorded"
+    image = Image.open(path).convert("L")
+    s = image_scale(record, image.width)
+    x0, y0, x1, y1 = (int(hop["x"] * s), int(hop["y"] * s), int((hop["x"] + hop["w"]) * s),
+                      int((hop["y"] + hop["h"]) * s))
+    if x0 < 0 or y0 < 0 or x1 > image.width or y1 > image.height or x1 <= x0 or y1 <= y0:
+        return "refusal message box outside the capture"
+    vung = image.crop((x0, y0, x1, y1))
+    muc = sum(vung.histogram()[:DO_SANG_MUC]) / (vung.width * vung.height)
+    return None if muc >= MUC_TOI_THIEU else f"refusal message unreadable (ink {muc:.4f} < {MUC_TOI_THIEU})"
+
+
 def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> dict[str, Any]:
     """Sheet của MỘT họ, độ phân giải gốc: 4 trạng thái, bảng lời giải, lời từ
-    chối (W12), rồi mọi BƯỚC DỰNG của thanh bước."""
+    chối (W12; W16: ba loại × hai viewport), rồi mọi BƯỚC DỰNG của thanh bước.
+    Thiếu ảnh hoặc ô từ chối không đọc được ⇒ `ThieuAnhBangChung` (W16 §14.5)."""
     records = scenario.get("positive", {})
     cells: list[dict[str, Any]] = []
+    loi: list[str] = []
     for vp, state in SHEET_STATES:
         record = records.get(vp, {})
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
@@ -235,30 +273,39 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
                       "box_state": state, "crop": False})
-    for vp, record in scenario.get("negative", {}).items():
-        cells.append({"state": f"{vp}/refusal", "label": f"{vp.capitalize()} · {STATE_TITLES['refusal']}",
-                      "path": _path(record.get("screenshot")), "record": record,
-                      "box_state": "refusal", "crop": False})
+    am = scenario.get("negative", {})
+    if la := sorted(set(am) - TEN_TU_CHOI.keys()):
+        raise KeyError(f"loại từ chối chưa có tên người xem: {la}")
+    for kind, ten in TEN_TU_CHOI.items():
+        for vp in ("desktop", "mobile"):
+            record, state = (am.get(kind) or {}).get(vp), f"negative/{kind}/{vp}"
+            ly_do = "no record" if record is None else _loi_tu_choi(
+                record, _path(record.get("screenshot")), family_dir(family), kind, vp)
+            if ly_do:
+                loi.append(f"{state}: {ly_do}")
+                continue
+            cells.append({"state": state, "label": f"{vp.capitalize()} · {ten}",
+                          "path": _path(record.get("screenshot")), "record": record,
+                          "box_state": "refusal", "crop": False})
     steps = [s for s in records.get("desktop", {}).get("formation", {}).get("steps", []) if s.get("screenshot")]
     for s in steps:
         cells.append({"state": f"desktop/geometry_step/{s['index']}",
                       "label": chu_thich_buoc(s, s["index"], len(steps)),
                       "path": _path(s.get("screenshot")), "record": records.get("desktop", {}),
                       "box_state": "neutral_final", "crop": True})
+    loi += [f"{c['state']}: image missing" for c in cells if not (c["path"] and c["path"].exists())]
+    if loi:
+        raise ThieuAnhBangChung(f"{family}: " + "; ".join(loi))
     font, font_name = _font(LABEL_PX)
     band = LABEL_PX * 2
     images = []
     for c in cells:
-        if c["path"] and c["path"].exists():
-            image = Image.open(c["path"]).convert("RGB")
-            c["crop_box_px"] = (list(page_box(c["record"], c["box_state"], image.size)) if c["crop"]
-                                else [0, 0, image.width, image.height])
-            images.append(image.crop(tuple(c["crop_box_px"])))
-        else:
-            c["crop_box_px"] = None
-            images.append(None)
-    col_w = max((i.width for i in images if i), default=640)
-    heights = [(i.height if i else 200) + band for i in images]
+        image = Image.open(c["path"]).convert("RGB")
+        c["crop_box_px"] = (list(page_box(c["record"], c["box_state"], image.size)) if c["crop"]
+                            else [0, 0, image.width, image.height])
+        images.append(image.crop(tuple(c["crop_box_px"])))
+    col_w = max(i.width for i in images)
+    heights = [i.height + band for i in images]
     rows = [max(heights[k:k + 2]) for k in range(0, len(cells), 2)]
     legend_font, _ = _font(LABEL_PX - 2)
     legend_h = LABEL_PX * 4
@@ -273,8 +320,7 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
                 continue
             x = (k % 2) * col_w
             draw.text((x + 12, y + 10), cells[k]["label"], fill="black", font=font)
-            if images[k] is not None:
-                sheet.paste(images[k], (x, y + band))
+            sheet.paste(images[k], (x, y + band))
         y += h
     out = images_root / family_dir(family) / "SHEET.png"
     _save_png(sheet, out)
@@ -295,25 +341,25 @@ def filmstrip(family: str, scenario: dict[str, Any], images_root: Path) -> dict[
         return None
     font, font_name = _font(LABEL_PX - 4)
     dong_cao = int((LABEL_PX - 4) * 1.35)
-    o: list[tuple[Image.Image | None, list[str], str]] = []
+    o: list[tuple[Image.Image, list[str], str]] = []
+    thieu = [f"desktop/geometry_step/{s.get('index', k)}" for k, s in enumerate(steps)
+             if not ((p := _path(s.get("screenshot"))) and p.exists())]
+    if thieu:
+        raise ThieuAnhBangChung(f"{family} filmstrip: image missing for " + ", ".join(thieu))
     for k, s in enumerate(steps):
-        p = _path(s.get("screenshot"))
-        image = None
-        if p and p.exists():
-            image = Image.open(p).convert("RGB")
-            box = stage_box(record, "neutral_final", image.size)
-            image = image.crop(box) if box else image
-            image.thumbnail((FILM_CELL_W, 10_000))
+        image = Image.open(_path(s.get("screenshot"))).convert("RGB")
+        box = stage_box(record, "neutral_final", image.size)
+        image = image.crop(box) if box else image
+        image.thumbnail((FILM_CELL_W, 10_000))
         cau = chu_thich_buoc(s, k, len(steps))
         o.append((image, _xuong_dong(cau, font, FILM_CELL_W - 24), cau))
-    anh_cao = max((i.height for i, _, _ in o if i), default=360)
+    anh_cao = max(i.height for i, _, _ in o)
     chu_cao = max(len(d) for _, d, _ in o) * dong_cao + 16
     strip = Image.new("RGB", (len(o) * FILM_CELL_W, anh_cao + chu_cao), "white")
     draw = ImageDraw.Draw(strip)
     for k, (image, dong, _) in enumerate(o):
         x = k * FILM_CELL_W
-        if image is not None:
-            strip.paste(image, (x, 0))
+        strip.paste(image, (x, 0))
         for d, chu in enumerate(dong):
             draw.text((x + 12, anh_cao + 8 + d * dong_cao), chu, fill="black", font=font)
         if k:

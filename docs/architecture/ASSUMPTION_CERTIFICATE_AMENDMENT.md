@@ -548,6 +548,14 @@ Không có cạnh nào cắt qua vùng thì kết quả là `NOT_APPLICABLE`, kh
 cross-section phải có ít nhất một cạnh cắt qua ở cả hai viewport. Không bao giờ chỉnh theo
 ảnh sản phẩm: nếu trượt, sửa thứ tự vẽ của sản phẩm.
 
+> **Đính chính W16 T5 (tính trên mô hình, TRƯỚC mọi phép đo trình duyệt).** Test node của
+> bộ chấm cho số chính xác thay cho ước lượng ở trên:
+> - cạnh nằm TRÊN phần tô: ρ = 0 (c = 1, α = 1) … 0,58 (c = ½, α = 0,9);
+> - phần tô nằm TRÊN cạnh: ρ = 1,09 (c = ½, α = 0,9) … 1,39 (c = 1, α = 1);
+> - độ tương phản của cạnh lúc tắt: 28,1 … 67,2 (≥ `T_ON_MIN`).
+>
+> Ranh giới ρ < 1 không đổi.
+
 ### 14.5 Ô từ chối trên sheet bằng chứng
 
 **Duyệt.** Ô âm duyệt `{kind: {viewport}}` đúng như bộ chạy ghi: ba loại

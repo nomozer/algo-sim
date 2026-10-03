@@ -17,6 +17,9 @@ import {
   assessCssReadiness,
   assessFormation,
   assessSectionFill,
+  assessSectionFillUnderEdges,
+  cauTrucKhoi,
+  diemCanhQuaThietDien,
   diemMauThietDien,
   assessGeometrySteps,
   assessStructuredReferences,
@@ -342,23 +345,31 @@ async function pixelDelta(session, before, after) {
 }
 
 /** W15 · cặp ảnh tô-BẬT / tô-TẮT ở CÙNG khung hình, cùng camera (móc
- *  `__geo3d_set_section_fill_visible`), lấy mẫu bên trong thiết diện chiếu bằng camera thật. */
-async function sectionFillPairs(session, section) {
+ *  `__geo3d_set_section_fill_visible`), lấy mẫu bên trong thiết diện chiếu bằng camera thật.
+ *  W16 §14.4: mẫu chừa lề quanh MỌI cạnh khối và dấu điểm (đúng §11); `duoiCanh` thêm dải lõi
+ *  và tham chiếu của từng cạnh khối đi qua vùng (SECTION_FILL_UNDER_EDGES). */
+async function sectionFillPairs(session, section, scene, { duoiCanh = false } = {}) {
   const doiKhung = "new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))";
   const snapshot = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
-  const diem = snapshot ? diemMauThietDien(section.polygon, snapshot) : [];
+  const cham = (await jsonEval(session, "window.__geo3d_vertex_markers||[]")) ?? [];
+  const khoi = cauTrucKhoi(scene);
+  const canh = khoi.canh.map(([i, j]) => ({ id: `${khoi.ten[i]}-${khoi.ten[j]}`, a: khoi.diem[i], b: khoi.diem[j] }));
+  const diem = snapshot ? diemMauThietDien(section.polygon, snapshot, { canh, cham }) : [];
+  const dai = duoiCanh && snapshot ? diemCanhQuaThietDien(section.polygon, snapshot, canh, cham) : [];
   const bat = await canvasFrame(session);
   const ten = await jsonEval(session, "window.__geo3d_set_section_fill_visible?.(false)??null");
   await session.eval(doiKhung);
   const tat = await canvasFrame(session);
   await session.eval("window.__geo3d_set_section_fill_visible?.(true)");
   await session.eval(doiKhung);
-  if (diem.length === 0) return { fill_mesh_names: ten, pairs: [] };
-  const pairs = await session.eval(`(async()=>{${giaiMaHaiKhung(bat, tat)}`
+  if (diem.length === 0 && dai.length === 0) return { fill_mesh_names: ten, pairs: [], under: [] };
+  const kq = await session.eval(`(async()=>{${giaiMaHaiKhung(bat, tat)}`
     + `const sx=a.width/${snapshot.viewport_width},sy=a.height/${snapshot.viewport_height};`
-    + `return ${JSON.stringify(diem)}.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
-    + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}})})()`);
-  return { fill_mesh_names: ten, pairs };
+    + `const doc=(pts)=>pts.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
+    + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}});`
+    + `return{pairs:doc(${JSON.stringify(diem)}),under:${JSON.stringify(dai)}`
+    + `.map(e=>({id:e.id,core:doc(e.core),ref:doc(e.ref)}))}})()`);
+  return { fill_mesh_names: ten, pairs: kq.pairs, under: kq.under };
 }
 
 /** W15 SECTION_FILL_DISTINGUISHABLE (ngưỡng đăng ký trước, §11): bước khép-và-tô ĐẦU TIÊN phải
@@ -377,19 +388,20 @@ async function sectionFillEvidence(session, scene) {
   await goToStart(session);
   for (let i = 0; i < kDong; i += 1) {
     if (expectedVisibleIds(scene, timeline[i].anchor).includes(matCat ?? section.id)) {
-      const m = await sectionFillPairs(session, section);
+      const m = await sectionFillPairs(session, section, scene);
       ra.pre_close.push({ ui_step: i, fill_mesh_names: m.fill_mesh_names, ...assessSectionFill("pre_close", m.pairs) });
     }
     await moveStep(session, 1);
   }
-  const dong = await sectionFillPairs(session, section);
-  ra.closed = { ui_step: kDong, fill_mesh_names: dong.fill_mesh_names, ...assessSectionFill("closed", dong.pairs) };
+  const dong = await sectionFillPairs(session, section, scene, { duoiCanh: true });
+  ra.closed = { ui_step: kDong, fill_mesh_names: dong.fill_mesh_names, ...assessSectionFill("closed", dong.pairs),
+    under_edges: assessSectionFillUnderEdges(dong.under) };
   await moveStep(session, -1);
-  const lui = await sectionFillPairs(session, section);
+  const lui = await sectionFillPairs(session, section, scene);
   ra.rewound = { ui_step: kDong - 1, fill_mesh_names: lui.fill_mesh_names, ...assessSectionFill("rewound", lui.pairs) };
   await goToEnd(session);
   ra.pass = ra.closed.pass && (ra.closed.fill_mesh_names ?? []).length > 0 && ra.rewound.pass
-    && ra.pre_close.length > 0 && ra.pre_close.every((x) => x.pass);
+    && ra.pre_close.length > 0 && ra.pre_close.every((x) => x.pass) && ra.closed.under_edges.pass;
   return ra;
 }
 
@@ -1133,10 +1145,15 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.refusal-facts')`), Boolean);
+    // W16 §14.5: hộp của ĐOẠN LỜI từ chối (px CSS, toạ độ khung nhìn = toạ độ ảnh chụp) —
+    // bộ dựng sheet kiểm có chữ trong đúng hộp ấy, không chỉ kiểm tệp tồn tại.
     const observed = await jsonEval(session, `(()=>{const s=window.__ALGO_SIM_STORE__?.getState?.();`
+      + `const p=document.querySelector('.refusal-facts')?.closest('section')?.querySelector('p');`
+      + `const r=p?p.getBoundingClientRect():null;`
       + `return{unsupported:s?.unsupported||null,canvas:!!document.querySelector('.geo3d-canvas canvas'),`
       + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
-      + `viewportWidth:window.innerWidth}})()`);
+      + `viewportWidth:window.innerWidth,`
+      + `refusalMessageBox:r?{x:r.left,y:r.top,w:r.width,h:r.height}:null}})()`);
     // W12: âm của mọi họ là một GIVEN đề không ghi ⇒ mã nguồn có cấu trúc.
     const structuredPass = observed.unsupported?.error_code === expected.product_error_code
       && observed.unsupported?.stage_reached === expected.stage_reached
@@ -1175,7 +1192,8 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
       no_serious_console_error: assertion(seriousConsole.length === 0, seriousConsole),
     };
     return {
-      viewport, assertions, observed: { ...observed, body: undefined }, screenshot,
+      viewport, assertions, observed: { ...observed, body: undefined, refusalMessageBox: undefined }, screenshot,
+      refusal_message_box: observed.refusalMessageBox,
       raw_token_leakage: rawTokenLeakage,
       uncaught_exceptions: uncaught,
       failed_api_calls: failedApiCalls,
