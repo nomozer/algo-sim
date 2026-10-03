@@ -663,6 +663,18 @@ Lời cho người học nêu (i) thực thể/dữ kiện gây lỗi bằng ký
 (iii) hành động hợp với nguyên nhân. Với `CONSTRUCTION` và `UNKNOWN`, lời KHÔNG yêu cầu người
 học sửa đề.
 
+> **Đính chính 2026-10-03 (W17 Task 1, TRƯỚC bản sửa).** `SOURCE_EVIDENCE_CONFLICT` và
+> `SOURCE_SPAN_MISMATCH` nói rằng số liệu HỆ dùng lệch với câu chữ của đề; đề là thẩm quyền,
+> nên nguyên nhân là khâu đọc đề của hệ: `CONSTRUCTION`, không phải `SOURCE`. Bảng chốt:
+> - `SOURCE`: `GIVEN_VALUE_NOT_IN_SOURCE`, `ASSUMPTION_DETERMINES_ANSWER`,
+>   `GIVEN_ONLY_IN_GOAL_CLAUSE`, `SOURCE_TEXT_MISSING`; `NON_POSITIVE_LENGTH` khi bộ đọc đề của
+>   server đọc đúng độ dài ≤ 0 ấy cho đúng đoạn ấy (hoặc cạnh hình lập phương); thiết diện rỗng
+>   (`PLANE_DOES_NOT_CUT`) khi mặt phẳng cắt tỉ lệ với một phương trình mặt phẳng của đề.
+> - `CONSTRUCTION`: `CONSTRUCTION_NOT_TEXT_BOUND`, `SOURCE_EVIDENCE_CONFLICT`,
+>   `SOURCE_SPAN_MISMATCH`; `NON_POSITIVE_LENGTH` và `PLANE_DOES_NOT_CUT` khi đề KHÔNG ghi giá
+>   trị ấy.
+> - `UNKNOWN`: mọi mã khác (kể cả `ASSUMPTION_INVARIANCE_UNPROVEN`, giữ lời W15 của nó).
+
 ### 15.4 Số đo trên hình — hợp đồng gắn đối tượng
 
 Mỗi vật `quantity` có thể mang `annotation = {kind, category, subject_ids, anchor, unit}`:

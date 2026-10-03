@@ -975,3 +975,116 @@ def test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED():
     kq = _kq(*_guard_bang_mat())
     assert (kq.status, kq.reason_code, kq.details) == (
         CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN", ("FORMATION_REJECTED",)), kq
+
+
+# ── W17 · §15.1 · phép dựng phải dùng ĐÚNG thực thể mà đề nói (đóng A′) ─────────────────────
+#
+# Mỗi hàng ở đây có nhãn trong `runs/w17-operation-annotations/diagnostics/assumption_corpus_w17/
+# LABELS.json` (commit TRƯỚC bản sửa). Nền: đề gold p1 + câu của hàng + câu hỏi diện tích (T).
+
+HAI_MP_TRUNG = "Cho hai mặt phẳng (α): z = 3 và (β): z = 3. Mặt phẳng (β) cắt khối chóp theo thiết diện (T)."
+HAI_MP_DUNG = [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -2))]
+HAI_MP_PHAY_DUNG = [("mp_P", (0, 0, 1, -3)), ("mp_P_prime", (0, 0, 1, -2))]
+
+
+def _p1_w17(cau: str, mat_phang: list, cat: str, *, cau_hoi: str = " Tính diện tích thiết diện (T).",
+            nguon: dict | None = None, khoi_cat: str = "S.ABCD", do: str = "T", them: tuple = ()):
+    """Như `_p1_mat_phang`, thêm ba núm:
+    - `nguon` = {biến mặt phẳng: (fact id, giá trị nguyên văn)}: câu lệnh trích `source_fact_id`, hợp
+      đồng mang fact ấy (kiểu `str`, giá trị là mệnh đề của đề);
+    - `khoi_cat`: khối bị cắt — khác `S.ABCD` thì dựng thêm tứ diện S.ABC và cắt NÓ;
+    - `do` + `them`: thiết diện được đo, và các câu lệnh dựng thêm trước phép đo."""
+    from scripts import replay_negative_boundaries as RNB
+
+    goc = RNB.doc_raw_theo_thu_tu("p1_chop_thiet_dien_khoang_cach")
+    pay = json.loads(goc["semantic_analyze"][0])
+    pay["input_facts"] = [f for f in pay["input_facts"] if f["id"] != "alpha_plane_def"]
+    pay["obligations"] = [o for o in pay["obligations"] if o["kind"] == "area"]
+    for bien, (fid, gia_tri) in (nguon or {}).items():
+        pay["input_facts"].append({"id": fid, "kind": "str", "label": f"Mặt phẳng {bien}", "value": [gia_tri]})
+    raw = json.loads(goc["semantic_program"][0])
+    raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] in ("S.ABCD", "T", "area_T")]
+    st = [s for s in raw["statements"] if s["kind"] in ("declare_point", "construct_polygon", "construct_solid")]
+    if khoi_cat != "S.ABCD":
+        st.append({"kind": "construct_solid", "target_var": khoi_cat, "vertices": ["S", "A", "B", "C"],
+                   "faces": [["A", "B", "C"], ["S", "A", "B"], ["S", "B", "C"], ["S", "C", "A"]]})
+    for t, (a, b, c, d) in mat_phang:
+        cau_lenh = {"kind": "construct_plane_from_equation", "target_var": t, "a": a, "b": b, "c": c, "d": d}
+        if t in (nguon or {}):
+            cau_lenh["source_fact_id"] = nguon[t][0]
+        st.append(cau_lenh)
+    st.append({"kind": "construct_section", "target_var": "T", "solid": khoi_cat, "plane": cat})
+    st += [dict(x) for x in them]
+    st.append({"kind": "assign", "target_var": "area_T", "expr": {"kind": "measure", "quantity": "area", "of": do}})
+    raw["statements"] = st
+    return W.hop_dong(NEN_P1 + cau + cau_hoi, pay), raw
+
+
+PHEP_DUNG_SAI = {
+    "O1_cat_bang_alpha_khi_de_noi_beta": lambda: _p1_w17(HAI_MP, HAI_MP_DUNG, "alpha_plane"),
+    "O2_cat_khoi_khac": lambda: _p1_w17(
+        "Mặt phẳng (α): z = 3 cắt khối chóp S.ABCD theo thiết diện (T).", [("alpha_plane", (0, 0, 1, -3))],
+        "alpha_plane", khoi_cat="S.ABC"),
+    "O3_do_thiet_dien_khac": lambda: _p1_w17(
+        HAI_MP, HAI_MP_DUNG, "beta_plane", do="T_alpha",
+        them=({"kind": "construct_section", "target_var": "T_alpha", "solid": "S.ABCD", "plane": "alpha_plane"},)),
+    "O5_dung_P_thay_P_phay": lambda: _p1_w17(HAI_MP_PHAY, HAI_MP_PHAY_DUNG, "mp_P"),
+    "O8_cung_phuong_trinh_khac_danh_tinh": lambda: _p1_w17(
+        HAI_MP_TRUNG, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -3))], "alpha_plane"),
+}
+PHEP_DUNG_DUNG = {
+    "O1b_doi_chung_cat_bang_beta": lambda: _p1_w17(HAI_MP, HAI_MP_DUNG, "beta_plane"),
+    "O4_P_phay_dung": lambda: _p1_w17(HAI_MP_PHAY, HAI_MP_PHAY_DUNG, "mp_P_prime"),
+    "O6_bi_danh_hop_le": lambda: _p1_w17(
+        HAI_MP, [("mat_phang_alpha", (0, 0, 1, -3)), ("mat_phang_beta", (0, 0, 1, -2))], "mat_phang_beta"),
+    "O7_doi_ten_may_giu_nguon": lambda: _p1_w17(
+        HAI_MP, [("p1", (0, 0, 1, -3)), ("p2", (0, 0, 1, -2))], "p2",
+        nguon={"p1": ("fact_alpha", "(α): z = 3"), "p2": ("fact_beta", "(β): z = 2")}),
+    "O8b_cung_phuong_trinh_dung_danh_tinh": lambda: _p1_w17(
+        HAI_MP_TRUNG, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -3))], "beta_plane"),
+    "O9_mat_phang_khong_ten_duy_nhat": lambda: _p1_w17(
+        "Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T).", [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+    "O10_thiet_dien_cat_boi": lambda: _p1_w17(
+        "Cho mặt phẳng (P): z = 2.", [("mp_P", (0, 0, 1, -2))], "mp_P",
+        cau_hoi=" Tính diện tích thiết diện (T) của khối chóp cắt bởi mặt phẳng (P)."),
+}
+
+
+def test_GUARD_w17_phep_dung_sai_doi_gia_tri_nguoi_hoc_thay():
+    """GUARD: mỗi phép dựng sai (trừ O8) đổi con số học sinh thấy — lỗi gắn phép dựng không vô hại."""
+    def dt(f):
+        return W.bo_nho_cuoi(W.spec_cua(f()[1]))["area_T"]
+    assert dt(PHEP_DUNG_DUNG["O1b_doi_chung_cat_bang_beta"]) == 16
+    assert [dt(PHEP_DUNG_SAI[k]) for k in ("O1_cat_bang_alpha_khi_de_noi_beta", "O2_cat_khoi_khac",
+                                           "O3_do_thiet_dien_khac", "O5_dung_P_thay_P_phay")] \
+        == [9, Fraction(9, 2), 9, 9]
+
+
+@pytest.mark.parametrize("ca", sorted(PHEP_DUNG_SAI))
+def test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan(ca):
+    """§15.1: quan hệ cắt đọc được mà phép dựng lệch nó ⇒ UNDETERMINED + CONSTRUCTION_NOT_TEXT_BOUND."""
+    kq = _kq(*PHEP_DUNG_SAI[ca]())
+    assert (kq.status, kq.reason_code) == (CHUA_RO, "CONSTRUCTION_NOT_TEXT_BOUND"), (ca, kq)
+    assert any(d.startswith("OPERATION_BINDING") for d in kq.details), (ca, kq.details)
+
+
+@pytest.mark.parametrize("ca", sorted(PHEP_DUNG_DUNG))
+def test_w17_phep_dung_dung_quan_he_van_duoc_C0(ca):
+    kq = _kq(*PHEP_DUNG_DUNG[ca]())
+    assert (kq.status, kq.certificate) == (AN_TOAN, "C0"), (ca, kq)
+
+
+def test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep_dung():
+    """Câu nằm ngoài từ vựng §15.1 ⇒ không chứng nhận, nhưng lý do là INVARIANCE_UNPROVEN."""
+    kq = _kq(*_p1_w17("Cho mặt phẳng (α): z = 3. Gọi (T) là giao của (α) với khối chóp.",
+                      [("alpha_plane", (0, 0, 1, -3))], "alpha_plane"))
+    assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
+    assert any(d.startswith("OPERATION_BINDING") for d in kq.details), kq.details
+
+
+def test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung():
+    _sp, sai, _ = W.chay(*PHEP_DUNG_SAI["O1_cat_bang_alpha_khi_de_noi_beta"]())
+    assert (sai.servable, sai.stage_reached, sai.reason_code) == (
+        False, "assumption", "CONSTRUCTION_NOT_TEXT_BOUND"), (sai.stage_reached, sai.reason_code, sai.details[:4])
+    _sp, dung, sc = W.chay(*PHEP_DUNG_DUNG["O1b_doi_chung_cat_bang_beta"]())
+    assert dung.servable and sc is not None, (dung.stage_reached, dung.details[:4])

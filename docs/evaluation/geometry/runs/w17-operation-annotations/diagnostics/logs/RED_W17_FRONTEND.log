@@ -1,0 +1,14 @@
+# W17 RED (tests written, no fix) — working tree on top of bce0b7bb9cf25003461a69fee84584acd6f662ce
+# cd frontend && npx vitest run scene3d-playback.test.tsx scene3d-annotations.test.ts Scene3DExplorer.test.tsx code-index-sync.test.ts
+     × W17 · bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho 8ms
+     × W17 · công tắc Số đo và Kết quả ở thanh trên, bật mặc định 4ms
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts [ src/simulations/domains/geometry/scene3d-annotations.test.ts ]
+Error: Cannot find module './scene3d-annotations' imported from D:/Documents/projects/algo-sim/frontend/src/simulations/domains/geometry/scene3d-annotations.test.ts
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vỏ điều khiển > W17 · bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho
+AssertionError: expected '<div class="geo3d-player"><div class=…' to contain 'Các cạnh bên AD'
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện > W17 · công tắc Số đo và Kết quả ở thanh trên, bật mặc định
+AssertionError: expected -1 to be greater than -1
+ Test Files  3 failed | 1 passed (4)
+      Tests  2 failed | 57 passed (59)
+exit=1

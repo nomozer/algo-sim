@@ -1,0 +1,6 @@
+# W17 Phase 1 — A′ reproduction through run_pipeline (frozen stages, 0 model calls) at bce0b7bb9cf25003461a69fee84584acd6f662ce + RED tests in the working tree; product code = W16 (dd6e86b0)
+# backend/.venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/reproduce_operation_binding.py
+O1_cat_bang_alpha_khi_de_noi_beta | certificate: PROVEN_SAFE C0 | response: ok None | shown area_T: 9
+O1b_doi_chung_cat_bang_beta | certificate: PROVEN_SAFE C0 | response: ok None | shown area_T: 16
+wrote OPERATION_BINDING_REPRODUCTION_bce0b7bb.json
+exit=0

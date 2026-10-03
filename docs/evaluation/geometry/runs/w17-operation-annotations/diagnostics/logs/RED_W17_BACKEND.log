@@ -1,0 +1,237 @@
+# W17 RED (tests written, no fix) — working tree on top of bce0b7bb9cf25003461a69fee84584acd6f662ce
+# cd backend && pytest -q -p no:cacheprovider <8 files> -k 'w17 or W17' -rA --tb=line
+.FFFFF....F..FFFFFFFFFFFFFFFFFF.FFFFFFFFFFFFFFFFFFFFFF......             [100%]
+================================== FAILURES ===================================
+E   AssertionError: ('O1_cat_bang_alpha_khi_de_noi_beta', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...T_TEXT_BOUND')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1067: AssertionError: ('O1_cat_bang_alpha_khi_de_noi_beta', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('O2_cat_khoi_khac', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 5 literal(s) pinned by the text',), witness=None))
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...T_TEXT_BOUND')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1067: AssertionError: ('O2_cat_khoi_khac', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 5 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('O3_do_thiet_dien_khac', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...T_TEXT_BOUND')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1067: AssertionError: ('O3_do_thiet_dien_khac', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('O5_dung_P_thay_P_phay', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...T_TEXT_BOUND')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1067: AssertionError: ('O5_dung_P_thay_P_phay', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('O8_cung_phuong_trinh_khac_danh_tinh', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...T_TEXT_BOUND')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1067: AssertionError: ('O8_cung_phuong_trinh_khac_danh_tinh', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('O7_doi_ten_may_giu_nguon', KetQuaGiaDinh(status='UNDETERMINED', certificate=None, reason_code='ASSUMPTION_INVARIANCE... 'TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE mat_phang p2'), witness=None))
+    assert ('UNDETERMINED', None) == ('PROVEN_SAFE', 'C0')
+      At index 0 diff: 'UNDETERMINED' != 'PROVEN_SAFE'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1074: AssertionError: ('O7_doi_ten_may_giu_nguon', KetQuaGiaDinh(status='UNDETERMINED', certificate=None, reason_code='ASSUMPTION_INVARIANCE... 'TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE mat_phang p2'), witness=None))
+E   AssertionError: KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None)
+    assert ('PROVEN_SAFE', None) == ('UNDETERMINE...NCE_UNPROVEN')
+      At index 0 diff: 'PROVEN_SAFE' != 'UNDETERMINED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1081: AssertionError: KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None)
+E   AssertionError: ('served', None, [])
+    assert (True, 'served', None) == (False, 'assu...T_TEXT_BOUND')
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:1087: AssertionError: ('served', None, [])
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:359: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:336: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'doc_quan_he_cat'
+E   AssertionError: ('G1_do_dai_chi_trong_yeu_cau_chung_minh', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', ['GOAL_CLAUSE @[103,125]', ...ION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED', 'RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED'])
+    assert (False, 'assu...NCE_UNPROVEN') == (False, 'grou..._GOAL_CLAUSE')
+      At index 1 diff: 'assumption' != 'grounding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_grounding_closure.py:370: AssertionError: ('G1_do_dai_chi_trong_yeu_cau_chung_minh', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', ['GOAL_CLAUSE @[103,125]', ...ION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED', 'RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED'])
+E   AssertionError: ('G3_toa_do_chi_trong_yeu_cau_chung_minh', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', ['GOAL_CLAUSE @[114,138]', 'TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE diem S'])
+    assert (False, 'assu...NCE_UNPROVEN') == (False, 'grou..._GOAL_CLAUSE')
+      At index 1 diff: 'assumption' != 'grounding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_grounding_closure.py:370: AssertionError: ('G3_toa_do_chi_trong_yeu_cau_chung_minh', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', ['GOAL_CLAUSE @[114,138]', 'TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE diem S'])
+E   AssertionError: ('G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau', 'served', None, [])
+    assert (True, 'served', None) == (False, 'grou..._GOAL_CLAUSE')
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_grounding_closure.py:370: AssertionError: ('G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau', 'served', None, [])
+E   AssertionError: assert 'GIVEN_ONLY_IN_GOAL_CLAUSE' in frozenset({'GIVEN_VALUE_NOT_IN_SOURCE', 'SOURCE_EVIDENCE_CONFLICT', 'SOURCE_SPAN_MISMATCH', 'SOURCE_TEXT_MISSING'})
+     +  where frozenset({'GIVEN_VALUE_NOT_IN_SOURCE', 'SOURCE_EVIDENCE_CONFLICT', 'SOURCE_SPAN_MISMATCH', 'SOURCE_TEXT_MISSING'}) = G.MA_LOI_NGUON
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_source_grounding_closure.py:382: AssertionError: assert 'GIVEN_ONLY_IN_GOAL_CLAUSE' in frozenset({'GIVEN_VALUE_NOT_IN_SOURCE', 'SOURCE_EVIDENCE_CONFLICT', 'SOURCE_SPAN_MISMATCH', 'SOURCE_TEXT_MISSING'})
+E   AssertionError: {'status': 'unsupported', 'reason': 'NON_POSITIVE_LENGTH', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+    assert ('unsupported...e, None, None) == ('unsupported...NGTH', ['AB'])
+      At index 1 diff: None != 'SOURCE'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:36: AssertionError: {'status': 'unsupported', 'reason': 'NON_POSITIVE_LENGTH', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+E   AssertionError: {'status': 'unsupported', 'reason': 'NON_POSITIVE_LENGTH', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+    assert (None, None, None) == ('CONSTRUCTIO...NGTH', ['AB'])
+      At index 0 diff: None != 'CONSTRUCTION'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:45: AssertionError: {'status': 'unsupported', 'reason': 'NON_POSITIVE_LENGTH', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+E   AssertionError: {'status': 'unsupported', 'reason': 'Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG...ng có điểm chung nào', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+    assert (None, None, None) == ('SOURCE', 'P...CUT', ['(α)'])
+      At index 0 diff: None != 'SOURCE'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:53: AssertionError: {'status': 'unsupported', 'reason': 'Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG...ng có điểm chung nào', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+E   AssertionError: {'status': 'unsupported', 'reason': 'Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG...ng có điểm chung nào', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+    assert ('unsupported', None, None) == ('unsupported...DOES_NOT_CUT')
+      At index 1 diff: None != 'CONSTRUCTION'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:67: AssertionError: {'status': 'unsupported', 'reason': 'Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG...ng có điểm chung nào', 'failure_category': 'geometry_generation_failed', 'error_code': 'semantic_program_invalid', ...}
+E   AssertionError: {'status': 'ok', 'simulation_id': 'generic.semantic_program', 'domain': 'geometry', 'visual_mode': '2d', ...}
+    assert ('ok', None, None) == ('unsupported...T_TEXT_BOUND')
+      At index 0 diff: 'ok' != 'unsupported'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:77: AssertionError: {'status': 'ok', 'simulation_id': 'generic.semantic_program', 'domain': 'geometry', 'visual_mode': '2d', ...}
+E   ImportError: cannot import name 'refusal_cause' from 'app.simulation.semantic_program' (D:\Documents\projects\algo-sim\backend\app\simulation\semantic_program\__init__.py)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_refusal_cause.py:83: ImportError: cannot import name 'refusal_cause' from 'app.simulation.semantic_program' (D:\Documents\projects\algo-sim\backend\app\simulation\semantic_program\__init__.py)
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert ('AB' in 'AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:178: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert ('AB' in 'AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:184: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert ('(α)' in 'AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:190: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert ('(β)' in 'AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:196: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert ('SA' in 'AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:202: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.
+    assert ('AB' in 'Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.' and False)
+     +  where False = _khong_bao_sua_de('Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:210: AssertionError: Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.
+E   AssertionError: Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.
+    assert ('AB' in 'Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.' and False)
+     +  where False = _khong_bao_sua_de('Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:210: AssertionError: Số liệu dùng để dựng hình (độ dài AB) không khớp với chính câu chữ của đề — khác giá trị, khác đoạn thẳng hoặc khác đơn vị. AlgoSim dừng lại thay vì dựng một hình có thể sai. Em đối chiếu lại các số liệu trong đề rồi gửi lại nhé.
+E   AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+    assert (False)
+     +  where False = _khong_bao_sua_de('AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra ch...i mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.')
+D:\Documents\projects\algo-sim\backend\tests\test_learner_messages.py:215: AssertionError: AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé.
+E   AssertionError: cube
+    assert "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó." != "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó."
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_generic_tier_a_fixture_generator.py:86: AssertionError: cube
+E   AssertionError: [('canh_ben', 'Bước dựng hình')]
+    assert ['Bước dựng hình'] == ['Các cạnh bên AD, BE, CF']
+      At index 0 diff: 'Bước dựng hình' != 'Các cạnh bên AD, BE, CF'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:746: AssertionError: [('canh_ben', 'Bước dựng hình')]
+E   AssertionError: [('canh_ben', 'Bước dựng hình')]
+    assert ['Bước dựng hình'] == ['Các cạnh bê...B′, CC′, DD′']
+      At index 0 diff: 'Bước dựng hình' != 'Các cạnh bên AA′, BB′, CC′, DD′'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_class_formation.py:746: AssertionError: [('canh_ben', 'Bước dựng hình')]
+E   AssertionError: assert None == {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'B'], 'anchor': 'segment', ...}
+     +  where {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'B'], 'anchor': 'segment', ...} = _gan('length', 'measurement', ['A', 'B'], 'segment')
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:43: AssertionError: assert None == {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'B'], 'anchor': 'segment', ...}
+E   AssertionError: assert None == {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'A_prime'], 'anchor': 'segment', ...}
+     +  where {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'A_prime'], 'anchor': 'segment', ...} = _gan('length', 'measurement', ['A', 'A_prime'], 'segment')
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:54: AssertionError: assert None == {'kind': 'length', 'category': 'measurement', 'subject_ids': ['A', 'A_prime'], 'anchor': 'segment', ...}
+E   AssertionError: assert None == {'kind': 'area', 'category': 'result', 'subject_ids': ['T'], 'anchor': 'region', ...}
+     +  where {'kind': 'area', 'category': 'result', 'subject_ids': ['T'], 'anchor': 'region', ...} = _gan('area', 'result', ['T'], 'region')
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:60: AssertionError: assert None == {'kind': 'area', 'category': 'result', 'subject_ids': ['T'], 'anchor': 'region', ...}
+E   AssertionError: None
+    assert False
+     +  where False = any(<generator object test_w17_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan.<locals>.<genexpr> at 0x0000021EE1B72F60>)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:70: AssertionError: None
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED tests/geometry/test_assumption_certificate.py::test_GUARD_w17_phep_dung_sai_doi_gia_tri_nguoi_hoc_thay
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O10_thiet_dien_cat_boi]
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O1b_doi_chung_cat_bang_beta]
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O4_P_phay_dung]
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O6_bi_danh_hop_le]
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O8b_cung_phuong_trinh_dung_danh_tinh]
+PASSED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O9_mat_phang_khong_ten_duy_nhat]
+PASSED tests/geometry/test_source_grounding_closure.py::test_w17_tinh_biet_van_la_du_kien
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[chop_chu_nhat]
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[chop_tam_giac]
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[hop_chu_nhat]
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[lang_tru_day_vuong]
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[lang_tru_tam_giac]
+PASSED tests/geometry/test_scene3d_annotations.py::test_w17_moi_annotation_tro_toi_vat_co_trong_canh[lap_phuong]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O1_cat_bang_alpha_khi_de_noi_beta]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O2_cat_khoi_khac]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O3_do_thiet_dien_khac]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O5_dung_P_thay_P_phay]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O8_cung_phuong_trinh_khac_danh_tinh]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O7_doi_ten_may_giu_nguon]
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep_dung
+FAILED tests/geometry/test_assumption_certificate.py::test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[M\u1eb7t ph\u1eb3ng (\u03b2) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-ky_vong0]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[Cho hai m\u1eb7t ph\u1eb3ng (\u03b1): z = 3 v\xe0 (\u03b2): z = 2. M\u1eb7t ph\u1eb3ng (\u03b2) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-ky_vong1]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[M\u1eb7t ph\u1eb3ng (\u03b1): z = 3 c\u1eaft kh\u1ed1i ch\xf3p S.ABCD theo thi\u1ebft di\u1ec7n (T).-ky_vong2]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[M\u1eb7t ph\u1eb3ng (P\u2032): z = 2 c\u1eaft h\xecnh ch\xf3p theo m\u1ed9t thi\u1ebft di\u1ec7n.-ky_vong3]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[M\u1eb7t ph\u1eb3ng (\u03b2) song song v\u1edbi (\u03b1) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-ky_vong4]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[M\u1eb7t ph\u1eb3ng (\u03b1): z = 3 song song v\u1edbi m\u1eb7t ph\u1eb3ng (ABCD) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-ky_vong5]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[T\xednh di\u1ec7n t\xedch thi\u1ebft di\u1ec7n (T) c\u1ee7a kh\u1ed1i ch\xf3p c\u1eaft b\u1edfi m\u1eb7t ph\u1eb3ng (P).-ky_vong6]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_doc_quan_he_cat[C\u1eaft kh\u1ed1i l\u0103ng tr\u1ee5 ABC.A'B'C' b\u1edfi m\u1eb7t ph\u1eb3ng (\u03b1) ta \u0111\u01b0\u1ee3c thi\u1ebft di\u1ec7n (T).-ky_vong7]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_mat_phang_khong_ten_mang_span_cua_phuong_trinh
+FAILED tests/geometry/test_shape_constraint.py::test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat[G\u1ecdi (T) l\xe0 giao c\u1ee7a (\u03b1) v\u1edbi kh\u1ed1i ch\xf3p.]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat[M\u1eb7t ph\u1eb3ng (\u03b1) \u0111i qua trung \u0111i\u1ec3m c\u1ee7a SA v\xe0 song song v\u1edbi \u0111\xe1y.]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat[Ch\u1ee9ng minh r\u1eb1ng m\u1eb7t ph\u1eb3ng (\u03b2) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).]
+FAILED tests/geometry/test_shape_constraint.py::test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat[]
+FAILED tests/geometry/test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G1_do_dai_chi_trong_yeu_cau_chung_minh-<lambda>-SA]
+FAILED tests/geometry/test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G3_toa_do_chi_trong_yeu_cau_chung_minh-_g_p1-S]
+FAILED tests/geometry/test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau-_g_p4-A]
+FAILED tests/geometry/test_source_grounding_closure.py::test_w17_ma_chi_trong_muc_tieu_la_ma_nguon_khong_gui_sua
+FAILED tests/geometry/test_refusal_cause.py::test_w17_do_dai_khong_duong_DE_GHI_la_nguyen_nhan_nguon
+FAILED tests/geometry/test_refusal_cause.py::test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung
+FAILED tests/geometry/test_refusal_cause.py::test_w17_mat_phang_de_cho_khong_cat_khoi_la_nguyen_nhan_nguon
+FAILED tests/geometry/test_refusal_cause.py::test_w17_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung
+FAILED tests/geometry/test_refusal_cause.py::test_w17_lech_phep_dung_la_nguyen_nhan_dung
+FAILED tests/geometry/test_refusal_cause.py::test_w17_bang_nguyen_nhan_theo_ma_da_dang_ky
+FAILED tests/test_learner_messages.py::test_w17_do_dai_khong_duong_do_de_ghi_noi_dung_doan_va_suy_bien
+FAILED tests/test_learner_messages.py::test_w17_do_dai_khong_duong_de_khong_ghi_la_loi_he_khong_bao_sua_de
+FAILED tests/test_learner_messages.py::test_w17_mat_phang_de_cho_khong_cat_khoi
+FAILED tests/test_learner_messages.py::test_w17_lech_phep_dung_noi_ten_mat_phang_va_khong_bao_sua_de
+FAILED tests/test_learner_messages.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh
+FAILED tests/test_learner_messages.py::test_w17_so_lieu_he_doc_lech_de_la_loi_he[SOURCE_EVIDENCE_CONFLICT]
+FAILED tests/test_learner_messages.py::test_w17_so_lieu_he_doc_lech_de_la_loi_he[SOURCE_SPAN_MISMATCH]
+FAILED tests/test_learner_messages.py::test_w17_nguyen_nhan_chua_ro_khong_bao_sua_de
+FAILED tests/geometry/test_generic_tier_a_fixture_generator.py::test_w17_de_am_do_dai_khong_duong_phai_ghi_so_ay_trong_chinh_de
+FAILED tests/geometry/test_shape_class_formation.py::test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom[lang_tru_tam_giac-C\xe1c c\u1ea1nh b\xean AD, BE, CF]
+FAILED tests/geometry/test_shape_class_formation.py::test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom[hop_chu_nhat-C\xe1c c\u1ea1nh b\xean AA\u2032, BB\u2032, CC\u2032, DD\u2032]
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_hinh_hop_do_dai_co_phay_gan_dung_dinh
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan
+46 failed, 14 passed, 329 deselected, 1 warning in 2.35s
+exit=1

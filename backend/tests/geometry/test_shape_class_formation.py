@@ -731,3 +731,16 @@ def test_vai_tro_harness_dong_bo():
     gan = next(n for n in ast.walk(ast.parse(tep[1].read_text(encoding="utf-8")))
                if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", None) == "TEN_VAI_TRO")
     assert {k.value for k in gan.value.keys} == set(F.VAI_TRO)
+
+
+@pytest.mark.parametrize("ho, nhan", [("lang_tru_tam_giac", "Các cạnh bên AD, BE, CF"),
+                                       ("hop_chu_nhat", "Các cạnh bên AA′, BB′, CC′, DD′")])
+def test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom(ho, nhan):
+    """W17 · nhãn nhóm cạnh: biến đích của câu lệnh nhóm (`canh_ben`) không phải vật của cảnh,
+    nên `display_label` từng rơi về "Bước dựng hình" và frontend in "— (dữ kiện đề cho)". Nhãn
+    hành động là nhãn của CHÍNH câu lệnh nhóm do bước bổ sung dựng hình đặt."""
+    _t, ct = W.HO[ho]()
+    _sp, _out, sc = W.chay(ct)
+    nhom = [e for e in sc["events"] if (e.get("details") or {}).get("objects")
+            and e["object"] not in {o["id"] for o in sc["objects"]}]
+    assert [e["display_label"] for e in nhom] == [nhan], [(e["object"], e["display_label"]) for e in nhom]

@@ -307,3 +307,77 @@ def test_the_refusal_names_a_point_as_a_point_not_as_a_length():
     assert "độ dài" not in learner_reason(point)
     assert "độ dài AA′" in learner_reason(segment)
     assert "một số liệu" in learner_reason(unknown)
+
+
+# ── W17 · §15.2 · mục tiêu cần chứng minh không bao giờ thành GIVEN ───────────────────────
+#
+# Nhãn ở `runs/w17-operation-annotations/diagnostics/assumption_corpus_w17/LABELS.json` (G1–G4).
+
+G1_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc "
+           "với đáy. Chứng minh rằng SA = 5. Tính thể tích khối chóp S.ABC.")
+G2_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc "
+           "với đáy. Tính thể tích khối chóp S.ABC, biết SA = 5.")
+G3_TEXT = ("Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), "
+           "C(6;6;0), D(0;6;0). Chứng minh rằng đỉnh S(0;0;6) cách đều A, B, C, D. Mặt phẳng (α): z = 3 "
+           "cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).")
+
+
+def _w14():
+    from tests.geometry import w14_cases as W
+
+    return W
+
+
+def _g_chop(text: str):
+    W = _w14()
+    ct = W.hop_dong(text, W.chop_tam_giac_payload())
+    return ct, W.chuong_trinh(ct)
+
+
+def _g_p1():
+    """Gold p1, chỉ hỏi diện tích (T); S chỉ nằm trong yêu cầu chứng minh."""
+    from scripts import replay_negative_boundaries as RNB
+
+    raw = RNB.doc_raw_theo_thu_tu("p1_chop_thiet_dien_khoang_cach")
+    pay = json.loads(raw["semantic_analyze"][0])
+    pay["obligations"] = [o for o in pay["obligations"] if o["kind"] == "area"]
+    prog = json.loads(raw["semantic_program"][0])
+    prog["memory_declarations"] = [m for m in prog["memory_declarations"] if m["name"] in ("S.ABCD", "T", "area_T")]
+    prog["statements"] = [s for s in prog["statements"] if s["kind"] != "assign" or s["target_var"] == "area_T"]
+    return _w14().hop_dong(G3_TEXT, pay), prog
+
+
+def _g_p4():
+    """Gold p4 (hình trụ — NGOÀI vùng đa diện, chứng chỉ chỉ ghi): A chỉ nằm trong yêu cầu chứng minh."""
+    from scripts import replay_negative_boundaries as RNB
+
+    case = "p4_hinh_tru_the_tich_va_xung_quanh"
+    raw = RNB.doc_raw_theo_thu_tu(case)
+    text = RNB.doc_de_bai()[case].replace(
+        "; điểm A(6;0;0) nằm trên đường tròn đáy tâm O.",
+        ". Chứng minh rằng điểm A(6;0;0) nằm trên đường tròn đáy tâm O.")
+    assert "Chứng minh rằng điểm A(6;0;0)" in text
+    return _w14().hop_dong(text, json.loads(raw["semantic_analyze"][0])), json.loads(raw["semantic_program"][0])
+
+
+@pytest.mark.parametrize("ca, dung, chu_the", [
+    ("G1_do_dai_chi_trong_yeu_cau_chung_minh", lambda: _g_chop(G1_TEXT), "SA"),
+    ("G3_toa_do_chi_trong_yeu_cau_chung_minh", _g_p1, "S"),
+    ("G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau", _g_p4, "A"),
+])
+def test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN(ca, dung, chu_the):
+    _sp, out, sc = _w14().chay(*dung())
+    assert (out.servable, out.stage_reached, out.reason_code) == (
+        False, "grounding", "GIVEN_ONLY_IN_GOAL_CLAUSE"), (ca, out.stage_reached, out.reason_code, out.details[:3])
+    assert out.reason_subjects == [chu_the] and sc is None, (ca, out.reason_subjects)
+
+
+def test_w17_tinh_biet_van_la_du_kien():
+    """`Tính …, biết SA = 5`: dữ kiện đứng sau `Tính` vẫn là dữ kiện (Tính không phải từ khoá mục tiêu)."""
+    _sp, out, sc = _w14().chay(*_g_chop(G2_TEXT))
+    assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
+
+
+def test_w17_ma_chi_trong_muc_tieu_la_ma_nguon_khong_gui_sua():
+    assert "GIVEN_ONLY_IN_GOAL_CLAUSE" in G.MA_LOI_NGUON
+    assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON

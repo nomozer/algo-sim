@@ -91,6 +91,19 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
     expect(h).toContain("Thành phần");
   });
 
+  /* W17 · §15.4 / U-W17-1: hai công tắc nằm trong THANH CHIP có sẵn (không thêm nút nổi
+   * che hình), là nút bật/tắt thật (`aria-pressed`), và BẬT mặc định. */
+  it("W17 · công tắc Số đo và Kết quả ở thanh trên, bật mặc định", () => {
+    const h = html();
+    const thanh = h.slice(h.indexOf("geo3d-thanh-nut"), h.indexOf("geo3d-san"));
+    for (const ten of ["Số đo", "Kết quả"]) {
+      const i = thanh.indexOf(ten);
+      expect(i).toBeGreaterThan(-1);
+      const nut = thanh.slice(thanh.lastIndexOf("<button", i), i);
+      expect(nut).toContain('aria-pressed="true"');
+    }
+  });
+
   it("cây có đủ hạng mục Điểm, Cạnh, Mặt", () => {
     const nhan = new Set<string>();
     const di = (ns: ReturnType<typeof semanticTree>) => {

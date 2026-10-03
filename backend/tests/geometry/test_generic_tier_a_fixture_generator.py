@@ -66,3 +66,24 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         assert "scene3d" not in envelope and "final_memory" not in envelope, name
         assert negative["removed_from_text"] not in negative["problem_text"], name
         assert "_" not in envelope["learner_reason"], name
+
+
+def test_w17_de_am_do_dai_khong_duong_phai_ghi_so_ay_trong_chinh_de():
+    """W17 · ảnh lập phương "cạnh 4" bị từ chối: `_zero_ab` chỉ thay chuỗi "AB = 3", mà đề lập
+    phương ghi "cạnh bằng 4" — đề không đổi (V = 64 hợp lệ) trong khi hợp đồng mang AB = 0. Fixture
+    âm "độ dài không dương" phải GHI số ≤ 0 trong chính đề, đọc được bằng bộ đọc của server."""
+    sys.path.insert(0, str(ROOT / "backend"))
+    from app.simulation.semantic_program.segment_relation import do_dai_trong_de
+    from app.simulation.semantic_program.shape_constraint import doc_rang_buoc
+    from scripts import generate_generic_tier_a_fixtures as GEN
+
+    for ten, factory in (("triangular_pyramid", GEN._pyramid_control_contract),
+                         ("triangular_prism", GEN._prism_p01_contract),
+                         ("rectangular_pyramid", GEN._rect_pyramid_contract),
+                         ("cuboid", GEN._cuboid_contract), ("cube", GEN._cube_contract)):
+        goc = factory()[0]
+        text, _contract = GEN._zero_ab(goc, factory()[1])
+        assert text != goc, ten
+        khong_duong = any(v <= 0 for v in do_dai_trong_de(text).values()) or any(
+            r.kind == "cube_edge" and r.value is not None and r.value <= 0 for r in doc_rang_buoc(text))
+        assert khong_duong, (ten, text)

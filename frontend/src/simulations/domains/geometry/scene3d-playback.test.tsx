@@ -192,6 +192,38 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).not.toContain("S_ABCD");
   });
 
+  /* W17 · nhãn nhóm cạnh: một câu lệnh NHÓM (`construct_segment` có `items`) có biến
+   * đích KHÔNG phải vật của cảnh. Bản W16 rơi về "— (dữ kiện đề cho)" cho mọi tên rỗng,
+   * nên bước "Dựng các cạnh bên AD, BE, CF" tự nhận là dữ kiện đề cho. Tên hành động lấy
+   * từ `display_label` do backend phát; câu "dữ kiện đề cho" chỉ thuộc bước INIT. */
+  const canhNhom = (): Scene3D => ({
+    free_objects: ["A", "D"],
+    objects: [
+      { id: "A", label: "Điểm A", notation: "A", type: "point3", render: "marker",
+        origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
+      { id: "D", label: "Điểm D", notation: "D", type: "point3", render: "marker",
+        origin: "free", producer: null, depends: [], xyz: ["0", "0", "5"] },
+    ],
+    events: [
+      { step_index: 0, action: "INIT", object: null, depends: [],
+        explanation: "Dữ kiện đề cho: AD = 5.", semantic_kind: "EXPLANATION" },
+      { step_index: 1, action: "CREATE", object: "canh_ben", depends: ["A", "D"],
+        explanation: "Dựng các cạnh bên AD.", display_label: "Các cạnh bên AD",
+        semantic_kind: "GEOMETRY_CONSTRUCTION" },
+    ],
+  });
+
+  it("W17 · bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho", () => {
+    const html = renderToString(<Scene3DPlayer scene={canhNhom()} initialStep={1} />);
+    expect(html).toContain("Các cạnh bên AD");
+    expect(html).not.toContain("dữ kiện đề cho");
+  });
+
+  it("W17 · bước INIT vẫn nói đúng là dữ kiện đề cho", () => {
+    const html = renderToString(<Scene3DPlayer scene={canhNhom()} initialStep={0} />);
+    expect(html).toContain("dữ kiện đề cho");
+  });
+
   /* w11 (review W10-H3): bước đo thể tích "Dựa trên" ĐÚNG các đại lượng số
    * trực tiếp — diện tích đáy và chiều cao, theo thứ tự chữ công thức — không
    * phải khối (ngữ cảnh cấu trúc). Bước không có nguồn số giữ phụ thuộc hình. */

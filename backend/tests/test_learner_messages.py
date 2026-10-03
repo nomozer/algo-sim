@@ -155,3 +155,61 @@ def test_api_422_than_thien_va_chi_tiet_tach_rieng(monkeypatch, co_key):
     assert _sach(body["error"]), f"lộ token kỹ thuật: {body['error']}"
     # developer: chi tiết kỹ thuật vẫn còn, ở field riêng
     assert "objects[2].value" in body["error_detail"]
+
+
+# ── W17 · §15.3 · lời từ chối theo NGUYÊN NHÂN có cấu trúc ───────────────────────────────
+#
+# Đề hợp lệ (nguyên nhân CONSTRUCTION) hay chưa rõ (UNKNOWN) ⇒ KHÔNG bảo người học sửa đề.
+
+_BAO_SUA_DE = ("diễn đạt lại", "kiểm tra lại đề", "đối chiếu lại các số liệu trong đề", "sửa đề")
+
+
+def _tu_choi(**kw) -> dict:
+    return {"status": "unsupported", "failure_category": "geometry_generation_failed", **kw}
+
+
+def _khong_bao_sua_de(msg: str) -> bool:
+    return not any(cum in msg for cum in _BAO_SUA_DE)
+
+
+def test_w17_do_dai_khong_duong_do_de_ghi_noi_dung_doan_va_suy_bien():
+    msg = learner_reason(_tu_choi(error_code="semantic_program_invalid", reason_code="NON_POSITIVE_LENGTH",
+                                  reason_subjects=["AB"], refusal_cause="SOURCE"))
+    assert "AB" in msg and "suy biến" in msg and _sach(msg), msg
+
+
+def test_w17_do_dai_khong_duong_de_khong_ghi_la_loi_he_khong_bao_sua_de():
+    msg = learner_reason(_tu_choi(error_code="semantic_program_invalid", reason_code="NON_POSITIVE_LENGTH",
+                                  reason_subjects=["AB"], refusal_cause="CONSTRUCTION"))
+    assert "AB" in msg and _khong_bao_sua_de(msg) and "đề không cần sửa" in msg and _sach(msg), msg
+
+
+def test_w17_mat_phang_de_cho_khong_cat_khoi():
+    msg = learner_reason(_tu_choi(error_code="semantic_program_invalid", reason_code="PLANE_DOES_NOT_CUT",
+                                  reason_subjects=["(α)"], refusal_cause="SOURCE"))
+    assert "(α)" in msg and "không cắt" in msg and "thiết diện" in msg and _sach(msg), msg
+
+
+def test_w17_lech_phep_dung_noi_ten_mat_phang_va_khong_bao_sua_de():
+    msg = learner_reason(_tu_choi(error_code="input_not_grounded", reason_code="CONSTRUCTION_NOT_TEXT_BOUND",
+                                  reason_subjects=["(β)", "(α)"], refusal_cause="CONSTRUCTION"))
+    assert "(β)" in msg and "(α)" in msg and _khong_bao_sua_de(msg) and _sach(msg), msg
+
+
+def test_w17_gia_tri_chi_trong_yeu_cau_chung_minh():
+    msg = learner_reason(_tu_choi(error_code="input_not_grounded", reason_code="GIVEN_ONLY_IN_GOAL_CLAUSE",
+                                  reason_subjects=["SA"], refusal_cause="SOURCE"))
+    assert "SA" in msg and "chứng minh" in msg and _sach(msg), msg
+
+
+@pytest.mark.parametrize("ma", ["SOURCE_EVIDENCE_CONFLICT", "SOURCE_SPAN_MISMATCH"])
+def test_w17_so_lieu_he_doc_lech_de_la_loi_he(ma):
+    """Đính chính §15.3: số liệu HỆ dùng lệch câu chữ của đề — đề là thẩm quyền, không bảo sửa đề."""
+    msg = learner_reason(_tu_choi(error_code="input_not_grounded", reason_code=ma,
+                                  reason_subjects=["AB"], refusal_cause="CONSTRUCTION"))
+    assert "AB" in msg and _khong_bao_sua_de(msg) and _sach(msg), msg
+
+
+def test_w17_nguyen_nhan_chua_ro_khong_bao_sua_de():
+    msg = learner_reason(_tu_choi(error_code="semantic_program_invalid", refusal_cause="UNKNOWN"))
+    assert _khong_bao_sua_de(msg) and _sach(msg), msg

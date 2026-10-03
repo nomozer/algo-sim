@@ -1,0 +1,857 @@
+{
+  "probe": "W17_OPERATION_BINDING_REPRODUCTION",
+  "measured_at_commit": "bce0b7bb",
+  "model_calls": 0,
+  "rows": [
+    {
+      "id": "O1_cat_bang_alpha_khi_de_noi_beta",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+      "request": {
+        "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+        "boundary": "app.ai.pipeline.run_pipeline",
+        "semantic_route": "serve",
+        "mode": "LLM_ONLY",
+        "llm_stages": "replaced by the frozen contract and program below (0 model calls)"
+      },
+      "contract": {
+        "obligations": [
+          {
+            "kind": "area",
+            "container": "T",
+            "params": {
+              "witness": "area_T"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "s_abcd_pyramid",
+            "label": "Khối chóp",
+            "values": [
+              "S.ABCD là khối chóp"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "S.ABCD là khối chóp"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "abcd_square",
+            "label": "Đáy là hình vuông",
+            "values": [
+              "ABCD là hình vuông"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "A_coords",
+            "label": "Tọa độ điểm A",
+            "values": [
+              "A(0;0;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "B_coords",
+            "label": "Tọa độ điểm B",
+            "values": [
+              "B(6;0;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "C_coords",
+            "label": "Tọa độ điểm C",
+            "values": [
+              "C(6;6;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "D_coords",
+            "label": "Tọa độ điểm D",
+            "values": [
+              "D(0;6;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "S_coords",
+            "label": "Tọa độ điểm S",
+            "values": [
+              "S(0;0;6)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "T_section_def",
+            "label": "Thiết diện T",
+            "values": [
+              "(T) là thiết diện"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "(T) là thiết diện"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "plane_equation",
+            "points": [],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "1",
+              "-3"
+            ],
+            "source_fact_id": "",
+            "scale_symbol": "",
+            "source_text": "z = 3"
+          },
+          {
+            "kind": "plane_equation",
+            "points": [],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "1",
+              "-2"
+            ],
+            "source_fact_id": "",
+            "scale_symbol": "",
+            "source_text": "z = 2"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "A"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "0"
+            ],
+            "source_fact_id": "A_coords",
+            "scale_symbol": "",
+            "source_text": "A(0, 0, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "B"
+            ],
+            "expected": "",
+            "coefficients": [
+              "6",
+              "0",
+              "0"
+            ],
+            "source_fact_id": "B_coords",
+            "scale_symbol": "",
+            "source_text": "B(6, 0, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "C"
+            ],
+            "expected": "",
+            "coefficients": [
+              "6",
+              "6",
+              "0"
+            ],
+            "source_fact_id": "C_coords",
+            "scale_symbol": "",
+            "source_text": "C(6, 6, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "D"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "6",
+              "0"
+            ],
+            "source_fact_id": "D_coords",
+            "scale_symbol": "",
+            "source_text": "D(0, 6, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "S"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "6"
+            ],
+            "source_fact_id": "s_abcd_pyramid",
+            "scale_symbol": "",
+            "source_text": "S(0, 0, 6)"
+          }
+        ],
+        "geometric_relations": [],
+        "solid_topology": null,
+        "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T)."
+      },
+      "program": {
+        "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+        "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+        "memory_declarations": [
+          {
+            "name": "S.ABCD",
+            "type": "solid",
+            "source_fact_id": "s_abcd_pyramid"
+          },
+          {
+            "name": "T",
+            "type": "section",
+            "source_fact_id": "T_section_def"
+          },
+          {
+            "name": "area_T",
+            "type": "float",
+            "initial_value": null,
+            "source_fact_id": "area"
+          }
+        ],
+        "statements": [
+          {
+            "kind": "declare_point",
+            "target_var": "A",
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "source_fact_id": "A_coords",
+            "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "B",
+            "at": [
+              6,
+              0,
+              0
+            ],
+            "source_fact_id": "B_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "C",
+            "at": [
+              6,
+              6,
+              0
+            ],
+            "source_fact_id": "C_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "D",
+            "at": [
+              0,
+              6,
+              0
+            ],
+            "source_fact_id": "D_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "S",
+            "at": [
+              0,
+              0,
+              6
+            ],
+            "source_fact_id": "S_coords"
+          },
+          {
+            "kind": "construct_polygon",
+            "target_var": "ABCD_base",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "label": "Đáy hình vuông ABCD"
+          },
+          {
+            "kind": "construct_solid",
+            "target_var": "S.ABCD",
+            "vertices": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "faces": [
+              [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              [
+                "S",
+                "A",
+                "B"
+              ],
+              [
+                "S",
+                "B",
+                "C"
+              ],
+              [
+                "S",
+                "C",
+                "D"
+              ],
+              [
+                "S",
+                "D",
+                "A"
+              ]
+            ],
+            "label": "Khối chóp S.ABCD"
+          },
+          {
+            "kind": "construct_plane_from_equation",
+            "target_var": "alpha_plane",
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": -3
+          },
+          {
+            "kind": "construct_plane_from_equation",
+            "target_var": "beta_plane",
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": -2
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "T",
+            "solid": "S.ABCD",
+            "plane": "alpha_plane"
+          },
+          {
+            "kind": "assign",
+            "target_var": "area_T",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "T"
+            }
+          }
+        ],
+        "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+      },
+      "certificate": {
+        "status": "PROVEN_SAFE",
+        "certificate": "C0",
+        "reason_code": null,
+        "subjects": [],
+        "details": [
+          "C0 6 literal(s) pinned by the text"
+        ]
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_area_T": "9"
+      }
+    },
+    {
+      "id": "O1b_doi_chung_cat_bang_beta",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+      "request": {
+        "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+        "boundary": "app.ai.pipeline.run_pipeline",
+        "semantic_route": "serve",
+        "mode": "LLM_ONLY",
+        "llm_stages": "replaced by the frozen contract and program below (0 model calls)"
+      },
+      "contract": {
+        "obligations": [
+          {
+            "kind": "area",
+            "container": "T",
+            "params": {
+              "witness": "area_T"
+            }
+          }
+        ],
+        "input_facts": [
+          {
+            "fact_id": "s_abcd_pyramid",
+            "label": "Khối chóp",
+            "values": [
+              "S.ABCD là khối chóp"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "S.ABCD là khối chóp"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "abcd_square",
+            "label": "Đáy là hình vuông",
+            "values": [
+              "ABCD là hình vuông"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "A_coords",
+            "label": "Tọa độ điểm A",
+            "values": [
+              "A(0;0;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "B_coords",
+            "label": "Tọa độ điểm B",
+            "values": [
+              "B(6;0;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "C_coords",
+            "label": "Tọa độ điểm C",
+            "values": [
+              "C(6;6;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "D_coords",
+            "label": "Tọa độ điểm D",
+            "values": [
+              "D(0;6;0)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "S_coords",
+            "label": "Tọa độ điểm S",
+            "values": [
+              "S(0;0;6)"
+            ],
+            "provenance": "confirmed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [],
+            "scale_symbol": null,
+            "original_values": []
+          },
+          {
+            "fact_id": "T_section_def",
+            "label": "Thiết diện T",
+            "values": [
+              "(T) là thiết diện"
+            ],
+            "provenance": "claimed",
+            "source_start": null,
+            "source_end": null,
+            "source_text": null,
+            "unproven_values": [
+              "(T) là thiết diện"
+            ],
+            "scale_symbol": null,
+            "original_values": []
+          }
+        ],
+        "scale_binding": null,
+        "source_invariants": [
+          {
+            "kind": "plane_equation",
+            "points": [],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "1",
+              "-3"
+            ],
+            "source_fact_id": "",
+            "scale_symbol": "",
+            "source_text": "z = 3"
+          },
+          {
+            "kind": "plane_equation",
+            "points": [],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "1",
+              "-2"
+            ],
+            "source_fact_id": "",
+            "scale_symbol": "",
+            "source_text": "z = 2"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "A"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "0"
+            ],
+            "source_fact_id": "A_coords",
+            "scale_symbol": "",
+            "source_text": "A(0, 0, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "B"
+            ],
+            "expected": "",
+            "coefficients": [
+              "6",
+              "0",
+              "0"
+            ],
+            "source_fact_id": "B_coords",
+            "scale_symbol": "",
+            "source_text": "B(6, 0, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "C"
+            ],
+            "expected": "",
+            "coefficients": [
+              "6",
+              "6",
+              "0"
+            ],
+            "source_fact_id": "C_coords",
+            "scale_symbol": "",
+            "source_text": "C(6, 6, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "D"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "6",
+              "0"
+            ],
+            "source_fact_id": "D_coords",
+            "scale_symbol": "",
+            "source_text": "D(0, 6, 0)"
+          },
+          {
+            "kind": "point_coordinate",
+            "points": [
+              "S"
+            ],
+            "expected": "",
+            "coefficients": [
+              "0",
+              "0",
+              "6"
+            ],
+            "source_fact_id": "s_abcd_pyramid",
+            "scale_symbol": "",
+            "source_text": "S(0, 0, 6)"
+          }
+        ],
+        "geometric_relations": [],
+        "solid_topology": null,
+        "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T)."
+      },
+      "program": {
+        "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+        "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+        "memory_declarations": [
+          {
+            "name": "S.ABCD",
+            "type": "solid",
+            "source_fact_id": "s_abcd_pyramid"
+          },
+          {
+            "name": "T",
+            "type": "section",
+            "source_fact_id": "T_section_def"
+          },
+          {
+            "name": "area_T",
+            "type": "float",
+            "initial_value": null,
+            "source_fact_id": "area"
+          }
+        ],
+        "statements": [
+          {
+            "kind": "declare_point",
+            "target_var": "A",
+            "at": [
+              0,
+              0,
+              0
+            ],
+            "source_fact_id": "A_coords",
+            "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "B",
+            "at": [
+              6,
+              0,
+              0
+            ],
+            "source_fact_id": "B_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "C",
+            "at": [
+              6,
+              6,
+              0
+            ],
+            "source_fact_id": "C_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "D",
+            "at": [
+              0,
+              6,
+              0
+            ],
+            "source_fact_id": "D_coords"
+          },
+          {
+            "kind": "declare_point",
+            "target_var": "S",
+            "at": [
+              0,
+              0,
+              6
+            ],
+            "source_fact_id": "S_coords"
+          },
+          {
+            "kind": "construct_polygon",
+            "target_var": "ABCD_base",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "label": "Đáy hình vuông ABCD"
+          },
+          {
+            "kind": "construct_solid",
+            "target_var": "S.ABCD",
+            "vertices": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "faces": [
+              [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              [
+                "S",
+                "A",
+                "B"
+              ],
+              [
+                "S",
+                "B",
+                "C"
+              ],
+              [
+                "S",
+                "C",
+                "D"
+              ],
+              [
+                "S",
+                "D",
+                "A"
+              ]
+            ],
+            "label": "Khối chóp S.ABCD"
+          },
+          {
+            "kind": "construct_plane_from_equation",
+            "target_var": "alpha_plane",
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": -3
+          },
+          {
+            "kind": "construct_plane_from_equation",
+            "target_var": "beta_plane",
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": -2
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "T",
+            "solid": "S.ABCD",
+            "plane": "beta_plane"
+          },
+          {
+            "kind": "assign",
+            "target_var": "area_T",
+            "expr": {
+              "kind": "measure",
+              "quantity": "area",
+              "of": "T"
+            }
+          }
+        ],
+        "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+      },
+      "certificate": {
+        "status": "PROVEN_SAFE",
+        "certificate": "C0",
+        "reason_code": null,
+        "subjects": [],
+        "details": [
+          "C0 6 literal(s) pinned by the text"
+        ]
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_area_T": "16"
+      }
+    }
+  ]
+}

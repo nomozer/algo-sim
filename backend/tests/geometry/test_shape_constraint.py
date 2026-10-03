@@ -328,3 +328,44 @@ def test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
     assert nfd[a:b] == unicodedata.normalize("NFD", "Chứng minh rằng SA ⊥ (ABC)")
     che = _sc().che_muc_tieu(nfd)
     assert len(che) == len(nfd) and "⊥" not in che
+
+
+# ── W17 · §15.1 · quan hệ cắt: MẶT PHẲNG nào cắt KHỐI nào theo THIẾT DIỆN nào ─────────────
+
+def _cat(de: str) -> list[tuple]:
+    return [(q.mat_phang, q.khoi, q.thiet_dien) for q in _sc().doc_quan_he_cat(de)]
+
+
+@pytest.mark.parametrize("de, ky_vong", [
+    ("Mặt phẳng (β) cắt khối chóp theo thiết diện (T).", [("β", (), "T")]),
+    ("Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T).",
+     [("β", (), "T")]),
+    ("Mặt phẳng (α): z = 3 cắt khối chóp S.ABCD theo thiết diện (T).", [("α", ("S", "A", "B", "C", "D"), "T")]),
+    ("Mặt phẳng (P′): z = 2 cắt hình chóp theo một thiết diện.", [("P'", (), None)]),
+    ("Mặt phẳng (β) song song với (α) cắt khối chóp theo thiết diện (T).", [("β", (), "T")]),
+    ("Mặt phẳng (α): z = 3 song song với mặt phẳng (ABCD) cắt khối chóp theo thiết diện (T).",
+     [("α", (), "T")]),
+    ("Tính diện tích thiết diện (T) của khối chóp cắt bởi mặt phẳng (P).", [("P", (), "T")]),
+    ("Cắt khối lăng trụ ABC.A'B'C' bởi mặt phẳng (α) ta được thiết diện (T).",
+     [("α", ("A", "B", "C", "A_prime", "B_prime", "C_prime"), "T")]),
+])
+def test_w17_doc_quan_he_cat(de, ky_vong):
+    assert _cat(de) == ky_vong
+
+
+def test_w17_mat_phang_khong_ten_mang_span_cua_phuong_trinh():
+    """Mặt phẳng không tên: danh tính là phương trình viết TRONG câu cắt — span trỏ vào đúng nó."""
+    de = "Cho mặt phẳng z = 5. Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T)."
+    [q] = _sc().doc_quan_he_cat(de)
+    assert q.mat_phang is None and de[q.khoa_mat_phang[0]:q.khoa_mat_phang[1]].startswith("Mặt phẳng z = 3")
+
+
+@pytest.mark.parametrize("de", [
+    "Gọi (T) là giao của (α) với khối chóp.",
+    "Mặt phẳng (α) đi qua trung điểm của SA và song song với đáy.",
+    "Chứng minh rằng mặt phẳng (β) cắt khối chóp theo thiết diện (T).",
+    "",
+])
+def test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat(de):
+    """Ngoài từ vựng ⇒ không có quan hệ; quan hệ nằm trong yêu cầu chứng minh không là tiền đề (§14.2)."""
+    assert _cat(de) == []
