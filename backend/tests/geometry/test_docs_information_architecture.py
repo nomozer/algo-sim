@@ -195,7 +195,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 103 -> 104 (w11): envelope `ok` đổi (công thức thể tích, grounding độ dài).
     # 104 -> 105 (w12): GIVEN không có trong đề bị từ chối (served -> rejected).
     # 105 -> 106 (w14): "AB dài 5 cm" (served -> rejected) + dựng hình theo lớp (S4).
-    assert str(CACHE_VERSION) == "106"
+    # 106 -> 107 (w15): cổng giả định nối vào route — phép dò W12 (served -> rejected).
+    assert str(CACHE_VERSION) == "107"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

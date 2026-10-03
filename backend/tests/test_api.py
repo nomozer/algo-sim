@@ -681,7 +681,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # lay tu so ay bi tu choi (served -> rejected), va buoc bo sung dung hinh theo
     # lop doi canh `ok` cua khoi da dien tuyen LLM (S4). Row v105 that van HIT:
     # runs/w14-generic-formation-assumption/diagnostics/PROOF_CACHE_ROW_W14.json.
-    assert main_module.CACHE_VERSION == "106"
+    # 106 -> 107 (W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE, 2026-10-03):
+    # be mat mo hinh KHONG doi; cong gia dinh noi vao route — hai phep do W12 (de
+    # thieu AD, chuong trinh giu AD bang bo cuc) tung duoc phuc vu nay bi tu choi
+    # (served -> rejected). Row v106 that van HIT:
+    # runs/w15-assumption-closure/diagnostics/PROOF_CACHE_ROW_W15.json.
+    assert main_module.CACHE_VERSION == "107"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

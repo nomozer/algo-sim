@@ -118,7 +118,9 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    GIVEN không có trong đề bị từ chối (served → rejected).
     # 105 → 106 (W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION, 2026-10-02):
     #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
-    assert CACHE_VERSION == "106"
+    # 106 → 107 (W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE, 2026-10-03):
+    #    cổng giả định nối vào route — phép dò W12 (served → rejected).
+    assert CACHE_VERSION == "107"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

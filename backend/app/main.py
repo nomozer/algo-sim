@@ -721,7 +721,16 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       lớp (S4) thêm đáy/chiều cao/đáy trên/cạnh bên trước khi khép mọi khối đa
 #       diện của chương trình LLM — p1 cache v105 trả 13 bước thay vì 14. Cổng
 #       giả định (Track B) KHÔNG ship, nên không có chiều từ chối nào từ nó.
-CACHE_VERSION = "106"
+#   107 (2026-10-03, W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE): BỀ MẶT MÔ HÌNH
+#       KHÔNG ĐỔI (prompt, thẻ văn phạm, hai lược đồ, bảng năng lực; fingerprint
+#       provider `b1714b566e25c912…`). Cổng giả định (W15) nối vào route: chiều
+#       **served → rejected** (tiền lệ 96/105/106) — hai phép dò W12 (đề thiếu AD,
+#       chương trình giữ AD bằng bố cục) TRƯỚC W15 được phục vụ, nay bị từ chối
+#       `ASSUMPTION_DETERMINES_ANSWER`. ROW THẬT sinh bởi mã tại 4f6a0ab6 vẫn HIT dưới
+#       106 và trả lại envelope ấy
+#       (`runs/w15-assumption-closure/diagnostics/PROOF_CACHE_ROW_W15.json`). Bài
+#       đề xác định không đổi envelope (đối chứng trùng byte).
+CACHE_VERSION = "107"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

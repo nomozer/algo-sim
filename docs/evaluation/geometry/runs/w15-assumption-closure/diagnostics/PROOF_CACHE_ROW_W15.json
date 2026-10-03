@@ -1,0 +1,70 @@
+{
+  "proof": "W15_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "106",
+  "rows": {
+    "probe_layout_derived": {
+      "before_w15": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "144e8be4bf6efa9827eebc80d05701af8fd05554306c27a39dda615a4fe82658"
+      },
+      "w15": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "envelope_sha256": "e8afbb5ebc2a1cf8c3d82d67f31a8a0f149152802b71acd44a6fece4b9f27487"
+      },
+      "cached_before_w15": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w15_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w15": true
+    },
+    "probe_model_assumption": {
+      "before_w15": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "065b7119b3e9e78b091b9ee4c0aae4bc438cc577c553c35c374dda33fe923a65"
+      },
+      "w15": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "envelope_sha256": "e8afbb5ebc2a1cf8c3d82d67f31a8a0f149152802b71acd44a6fece4b9f27487"
+      },
+      "cached_before_w15": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w15_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w15": true
+    },
+    "control_chop_tam_giac": {
+      "before_w15": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w15": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "cached_before_w15": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w15_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w15": false
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "probe_layout_derived",
+    "probe_model_assumption"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W15 would be replayed under the current version although W15 refuses or changes them: ['probe_layout_derived', 'probe_model_assumption']"
+}

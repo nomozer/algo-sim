@@ -189,7 +189,9 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    GIVEN không có trong đề bị từ chối (served → rejected).
     # 105 → 106 (W14_GENERIC_FORMATION_AND_ASSUMPTION_FOUNDATION, 2026-10-02):
     #    "AB dài 5 cm" (served → rejected) + dựng hình theo lớp đổi cảnh `ok` (S4).
-    assert CACHE_VERSION == "106"
+    # 106 → 107 (W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE, 2026-10-03):
+    #    cổng giả định nối vào route — phép dò W12 (served → rejected).
+    assert CACHE_VERSION == "107"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả
