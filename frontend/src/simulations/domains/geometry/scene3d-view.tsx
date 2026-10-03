@@ -1068,6 +1068,12 @@ export function buildObject3D(
         // Thiết diện: vật tô RIÊNG, vẽ sau mặt cắt và khối, lệch chiều sâu như nét thiết
         // diện để không hoà vào miếng mặt cắt đồng phẳng; vẫn không ghi chiều sâu, không
         // lớp chiều sâu — vùng tô không che nét nào.
+        //
+        // ⚠️ Và KHÔNG kiểm chiều sâu (W15, đo ở trình duyệt). Thiết diện nằm TRONG khối, nên
+        // mọi điểm trong của nó ở SAU mặt trước của khối; lớp chiều sâu đục của khối chạy
+        // trước toàn bộ hàng đợi trong suốt, nên một vật tô có kiểm chiều sâu bị loại ở MỌI
+        // điểm ảnh — có mặt trong cảnh mà không bao giờ hiện (bật/tắt: ΔE = 0). Nét viền
+        // thiết diện vẫn hai lượt thấy/khuất; chỉ vùng tô xuyên qua khối trong suốt.
         const thietDien = o.type === "section";
         const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
           color: nen(MAU.polygon),
@@ -1075,7 +1081,7 @@ export function buildObject3D(
           opacity: thietDien ? DO_DUC_TO_THIET_DIEN : noiBat ? 0.35 : 0.16,
           side: THREE.DoubleSide,
           depthWrite: false,
-          ...(thietDien ? LECH_THIET_DIEN : {}),
+          ...(thietDien ? { ...LECH_THIET_DIEN, depthTest: false } : {}),
         }));
         mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
         if (thietDien) mesh.renderOrder = THU_TU_VE_THIET_DIEN;

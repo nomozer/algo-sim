@@ -392,6 +392,24 @@ describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt 
     expect(obj.getObjectByName("polygon_fill:td")).toBeUndefined();
   });
 
+  it("tô KHÔNG qua phép kiểm chiều sâu: lớp chiều sâu ĐỤC của khối chạy trước, mà thiết diện nằm TRONG khối", () => {
+    // Đo ở trình duyệt (W15 Task 10, BROWSER-1 tại c1638891): bật/tắt phần tô ở bước khép
+    // cho ΔE = 0 tại MỌI mẫu, desktop lẫn mobile — vật tô có mặt nhưng không điểm ảnh nào
+    // được vẽ. Lớp chiều sâu của khối (đục, ghi chiều sâu) chạy trước toàn bộ hàng đợi trong
+    // suốt, và mọi điểm trong của thiết diện nằm SAU mặt trước của khối lồi, nên phép kiểm
+    // chiều sâu loại phần tô ở mọi điểm ảnh, dù đục bao nhiêu hay vẽ muộn tới đâu.
+    const khoi = VIEW.buildObject3D(W14_CAT.objects.find((o) => o.type === "solid")!, false)!;
+    const lop: THREE.Mesh[] = [];
+    khoi.traverse((x) => { if (x.userData.chieuSau) lop.push(x as THREE.Mesh); });
+    expect(lop.length).toBeGreaterThan(0);
+    for (const l of lop) {
+      expect((l.material as THREE.Material).transparent).toBe(false);
+      expect((l.material as THREE.Material).depthWrite).toBe(true);
+    }
+    const to = vatTo(VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false)!);
+    expect((to[0].material as THREE.Material).depthTest).toBe(false);
+  });
+
   it("chưa khép hoặc chưa tới bước tô ⇒ không có vật tô", () => {
     for (const over of [{ closed: false }, { closed: true, fill_visible: false }]) {
       const obj = VIEW.buildObject3D({ ...td(CANH), ...over }, false)!;
