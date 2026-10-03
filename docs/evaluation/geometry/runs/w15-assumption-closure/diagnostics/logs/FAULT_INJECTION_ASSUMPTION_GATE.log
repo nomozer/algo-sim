@@ -1,0 +1,100 @@
+W15 Task 6 — fault injections on the assumption gate (HEAD 45d014b0 + working tree, 0 model calls)
+method: one exact in-memory source substitution per run (fault_injection_w15.py); the files on disk are never edited, so 'revert' = the next run without W15_FI
+tests: tests/geometry/test_assumption_gate.py tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py tests/geometry/test_shape_class_formation.py
+
+baseline (no injection): 264 passed, 1 warning in 4.21s
+
+FI1 [assumption_gate] CE validity ignores the template's shape constraints and stated lengths
+  predicted: a false DEPENDENT returns (W15 expectation: MASKED — the stretch maps keep every template constraint by construction (amendment §7) and the same validity rule re-checks stated lengths through the text invariants)
+  observed : 264 passed, 1 warning in 3.91s -> NOT CAUGHT
+
+FI2 [assumption_gate] C0 back to class-B-only: a text coordinate never pins a point literal
+  predicted: the 8 coordinate rows lose C0
+  observed : 22 failed, 242 passed, 1 warning in 3.90s -> CAUGHT
+    FAILED test_assumption_gate.py::test_kich_thuoc_co_GIVEN_khong_bi_tu_choi_oan[gold:p1_chop_thiet_dien_khoang_cach]
+    FAILED test_assumption_gate.py::test_kich_thuoc_co_GIVEN_khong_bi_tu_choi_oan[gold:p2_chop_day_ngu_giac_lom]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[demo:n1_thoi_dinh_thu_tu]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[demo:n2_lang_tru_xien_hai_vecto]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p1_chop_thiet_dien_khoang_cach]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p2_chop_day_ngu_giac_lom]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p4_hinh_tru_the_tich_va_xung_quanh]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p5_hinh_non_the_tich_va_xung_quanh]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p6_thiet_dien_elip_cua_hinh_tru]
+    FAILED test_assumption_certificate.py::test_hang_toa_do_duoc_C0[gold:p7_thiet_dien_elip_cua_hinh_non]
+    FAILED test_assumption_certificate.py::test_doi_chung_C0_bien_trung_gian_dinh_nghia_mot_lan_duoc_chung_nhan
+    FAILED test_assumption_certificate.py::test_hang_duoc_chung_nhan_van_duoc_phuc_vu[demo:n1_thoi_dinh_thu_tu]
+    … and 10 more
+
+FI3 [assumption_gate] given-dimension / CE-validity evidence also reads the program's own XY_length literals
+  predicted: adversarial (1)/AC1 lose their counterexample
+  observed : 2 failed, 262 passed, 1 warning in 3.91s -> CAUGHT
+    FAILED test_assumption_gate.py::test_kich_thuoc_thieu_bi_che_boi_XY_length_gia_dinh
+    FAILED test_assumption_certificate.py::test_AC1_phu_thuoc_voi_nhan_chung_hop_le[given_length]
+
+FI4 [assumption_gate] an inconclusive counterexample search is treated as safe
+  predicted: adversarial (2)/(6) served
+  observed : 2 failed, 262 passed, 1 warning in 3.88s -> CAUGHT
+    FAILED test_assumption_gate.py::test_het_ngan_sach_khong_thanh_an_toan
+    FAILED test_assumption_certificate.py::test_do_dai_doc_duoc_ngoai_lop_kich_thuoc_lam_phep_keo_khong_hop_le
+
+FI5 [assumption_gate] server confirmation replaced by the model's relation annotation
+  predicted: test (10) text-silent variants get C1
+  observed : 7 failed, 257 passed, 1 warning in 3.90s -> CAUGHT
+    FAILED test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[khong_nguon]
+    FAILED test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[gia_dinh]
+    FAILED test_assumption_gate.py::test_quan_he_khong_duoc_nguon_xac_nhan[claimed]
+    FAILED test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[xac_nhan]
+    FAILED test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[khong_nguon]
+    FAILED test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[gia_dinh]
+    FAILED test_assumption_certificate.py::test_quan_he_chi_trong_phan_tich_khi_de_im_lang_khong_cap_C1[claimed]
+
+FI6 [assumption_gate] reaching definitions replaced by the final (last-written) value
+  predicted: overwrite/alias/restore cases get certified
+  observed : 6 failed, 258 passed, 1 warning in 3.89s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:bi_danh_diem_bi_ghi_de]
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:diem_ghi_de_khoi_phuc]
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C0:vo_huong_ghi_de_khoi_phuc]
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:bi_danh_diem_bi_ghi_de]
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:diem_ghi_de_khoi_phuc]
+    FAILED test_assumption_certificate.py::test_ghi_de_bi_danh_khoi_phuc_khong_duoc_chung_nhan[C1:vo_huong_ghi_de_khoi_phuc]
+
+FI7 [assumption_gate] role check replaced by dimensional analysis alone (a ratio is dimensionless)
+  predicted: the unstated division ratio gets certified
+  observed : 4 failed, 260 passed, 1 warning in 3.89s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_ti_so_chia_doan_de_khong_cho_khong_duoc_chung_nhan
+    FAILED test_assumption_certificate.py::test_ti_so_chia_doan_khac_ti_so_de_cho_khong_duoc_chung_nhan
+    FAILED test_assumption_certificate.py::test_ti_so_voi_loi_viet_chua_doc_duoc_khong_duoc_chung_nhan[1/3]
+    FAILED test_assumption_certificate.py::test_ti_so_voi_loi_viet_chua_doc_duoc_khong_duoc_chung_nhan[2/3]
+
+FI8 [assumption_gate] the fully-read rule is removed from the counterexample
+  predicted: the unread-text texts get DEPENDENT again
+  observed : 4 failed, 260 passed, 1 warning in 3.92s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc[G\xf3c gi\u1eefa SB v\xe0 m\u1eb7t ph\u1eb3ng \u0111\xe1y b\u1eb1ng 45\xb0]
+    FAILED test_assumption_certificate.py::test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc[SA = AB]
+    FAILED test_assumption_certificate.py::test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc[SB = 3\u221a2]
+    FAILED test_assumption_certificate.py::test_tuyen_tu_choi_voi_loi_chua_chung_minh_khi_de_cho_qua_cau_khong_doc
+
+FI9 [assumption_gate] read constraints outside the template's premises are not required
+  predicted: AC ⊥ BD on a rectangle base gets DEPENDENT again
+  observed : 1 failed, 263 passed, 1 warning in 3.91s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_rang_buoc_doc_duoc_ngoai_khuon_khong_kiem_thi_khong_la_phu_thuoc
+
+FI10 [assumption_gate] program names bound to text entities without the symbol key
+  predicted: A1/Aprime spellings lose C1
+  observed : 2 failed, 262 passed, 1 warning in 3.85s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_dinh_phay_viet_kieu_mo_hinh_van_duoc_C1[1]
+    FAILED test_assumption_certificate.py::test_dinh_phay_viet_kieu_mo_hinh_van_duoc_C1[prime]
+
+FI11 [route] the gate refuses everywhere (U3 scope removed)
+  predicted: the out-of-scope segment problem is refused
+  observed : 1 failed, 263 passed, 1 warning in 3.89s -> CAUGHT
+    FAILED test_assumption_gate.py::test_ngoai_vung_da_dien_chi_ghi_trang_thai_khong_tu_choi
+
+FI12 [shape_constraint] the right-angle phrasings added by U4 · G1 are removed
+  predicted: the G1 phrasing tests fail
+  observed : 3 failed, 261 passed, 1 warning in 3.92s -> CAUGHT
+    FAILED test_shape_constraint.py::test_goc_vuong_cua_day_moi_loi_viet_gan_dung_dinh[Cho h\xecnh ch\xf3p F.GKL c\xf3 \u0111\xe1y GKL l\xe0 tam gi\xe1c vu\xf4ng \u0111\u1ec9nh G.-ky_vong2]
+    FAILED test_shape_constraint.py::test_goc_vuong_cua_day_moi_loi_viet_gan_dung_dinh[H\xecnh ch\xf3p D.EFG c\xf3 \u0111\xe1y EFG l\xe0 tam gi\xe1c vu\xf4ng \u1edf \u0111\u1ec9nh E.-ky_vong3]
+    FAILED test_shape_constraint.py::test_goc_vuong_cua_day_moi_loi_viet_gan_dung_dinh[Cho h\xecnh ch\xf3p S.ABC c\xf3 tam gi\xe1c ABC vu\xf4ng \u1edf B.-ky_vong4]
+
+after all injections (no injection again): 264 passed, 1 warning in 4.20s
