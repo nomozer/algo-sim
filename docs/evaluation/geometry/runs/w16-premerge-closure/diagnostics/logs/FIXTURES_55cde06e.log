@@ -1,0 +1,3 @@
+# cwd: <worktree>/backend @ 55cde06e; python scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/w16-premerge-closure/inputs
+Wrote 24 frozen fixtures to D:\tmp\w16-evidence\docs\evaluation\geometry\runs\w16-premerge-closure\inputs\fixtures
+exit=0

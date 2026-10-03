@@ -363,14 +363,19 @@ async function sectionFillPairs(session, section, scene, { duoiCanh = false } = 
   await session.eval("window.__geo3d_set_section_fill_visible?.(true)");
   await session.eval(doiKhung);
   if (diem.length === 0 && dai.length === 0) return { fill_mesh_names: ten, pairs: [], under: [] };
-  const kq = await session.eval(`(async()=>{${giaiMaHaiKhung(bat, tat)}`
-    + `const sx=a.width/${snapshot.viewport_width},sy=a.height/${snapshot.viewport_height};`
-    + `const doc=(pts)=>pts.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
-    + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}});`
-    + `return{pairs:doc(${JSON.stringify(diem)}),under:${JSON.stringify(dai)}`
-    + `.map(e=>({id:e.id,core:doc(e.core),ref:doc(e.ref)}))}})()`);
+  const kq = await session.eval(maDocCapDiem(bat, tat, snapshot, diem, dai));
   return { fill_mesh_names: ten, pairs: kq.pairs, under: kq.under };
 }
+
+/** Mã TRONG TRANG (W16): giải hai khung rồi đọc cặp bật/tắt tại các điểm mẫu px CSS và tại dải
+ *  lõi/tham chiếu của từng cạnh. Tách ra để node test biên dịch được nó. */
+export const maDocCapDiem = (bat, tat, snapshot, diem, dai) => `(async()=>{${giaiMaHaiKhung(bat, tat)}`
+  + `const sx=a.width/${snapshot.viewport_width},sy=a.height/${snapshot.viewport_height};`
+  // `doc` đã là hàm giải ảnh của `giaiMaHaiKhung`: trùng tên ⇒ SyntaxError trong trang (lượt 55cde06e).
+  + `const docDiem=(pts)=>pts.map(([u,v])=>{const i=(Math.min(c.height-1,Math.round(v*sy))*c.width`
+  + `+Math.min(c.width-1,Math.round(u*sx)))*4;return{on:[pa[i],pa[i+1],pa[i+2]],off:[pb[i],pb[i+1],pb[i+2]]}});`
+  + `return{pairs:docDiem(${JSON.stringify(diem)}),under:${JSON.stringify(dai)}`
+  + `.map(e=>({id:e.id,core:docDiem(e.core),ref:docDiem(e.ref)}))}})()`;
 
 /** W15 SECTION_FILL_DISTINGUISHABLE (ngưỡng đăng ký trước, §11): bước khép-và-tô ĐẦU TIÊN phải
  *  phân biệt được (và có vật tô thật); mọi bước TRƯỚC đó kể từ khi mặt cắt hiện, và bước vừa

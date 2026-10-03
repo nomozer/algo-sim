@@ -969,6 +969,18 @@ test("W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails", () => {
   }
 });
 
+test("W16 section-fill page code compiles (no identifier clash with the shared PNG prelude)", async () => {
+  // Lượt trình duyệt 55cde06e: mã trong trang khai `const doc` trùng tên hàm giải ảnh của
+  // `giaiMaHaiKhung` ⇒ SyntaxError trong trang ⇒ 0 mẫu ở mọi trạng thái. Test node của thư viện
+  // không chạy mã ấy; ở đây BIÊN DỊCH đúng chuỗi mà bộ chạy gửi vào trang.
+  const { Script } = await import("node:vm");
+  const SUITE = await import("./compiler-scene-suite.mjs");
+  assert.equal(typeof SUITE.maDocCapDiem, "function", "maDocCapDiem chưa có (W16)");
+  const ma = SUITE.maDocCapDiem({ encoded: "AAAA" }, { encoded: "AAAA" },
+    { viewport_width: 800, viewport_height: 600 }, [[1, 2]], [{ id: "e", core: [[1, 2]], ref: [[3, 4]] }]);
+  assert.doesNotThrow(() => new Script(ma), "mã trong trang không biên dịch được");
+});
+
 test("W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass", () => {
   assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
   const khongVe = { id: "e", ref: thamChieu(), core: [{ on: NEN_BAT, off: NEN_TD }] };
