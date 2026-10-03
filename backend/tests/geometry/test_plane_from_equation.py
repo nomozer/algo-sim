@@ -610,3 +610,57 @@ def test_37_replay_minimal_delta_toi_SERVED_voi_dap_so_dung():
     assert kq.source_invariant_stats["passed"] == 3
     assert kq.source_invariant_stats["violated"] == 0
     assert kq.source_invariant_stats["not_checkable"] == 0
+
+
+# ══ W16 · §14.1 · TÊN của mặt phẳng đề cho bằng phương trình ═════════════════════
+#
+# `bat_bien_mat_phang` (hậu điều kiện "có một mặt phẳng tỉ lệ") không mang tên. Chứng chỉ
+# giả định cần biết phương trình ấy là của MẶT PHẲNG NÀO: trùng bộ số không là trùng thực thể.
+
+def _pe():
+    import importlib
+
+    return importlib.import_module("app.simulation.semantic_program.plane_equation")
+
+
+@pytest.mark.parametrize("de,ky_vong", [
+    ("Mặt phẳng (α): 2x − z + 12 = 0 cắt hình trụ.", [("α", (2, 0, -1, 12), "2x − z + 12 = 0")]),
+    ("Cho mặt phẳng (P) có phương trình x + y + z − 3 = 0.", [("P", (1, 1, 1, -3), "x + y + z − 3 = 0")]),
+    ("Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T).", [(None, (0, 0, 1, -3), "z = 3")]),
+    ("Cho hai mặt phẳng (α): z = 3 và (β): z = 2.", [("α", (0, 0, 1, -3), "z = 3"), ("β", (0, 0, 1, -2), "z = 2")]),
+    ("Mặt phẳng (α) : x − 2 = 0.", [("α", (1, 0, 0, -2), "x − 2 = 0")]),
+])
+def test_w16_doc_mat_phang_de_mang_ten_he_so_va_span(de, ky_vong):
+    ra = _pe().doc_mat_phang_de(de)
+    assert [(m.ten, tuple(int(x) for x in m.he_so), de[m.span[0]:m.span[1]]) for m in ra] == ky_vong
+
+
+@pytest.mark.parametrize("de", [
+    "Cho hình chóp S.ABC có AB = 3. Tính thể tích.",          # không cụm mặt phẳng
+    "Mặt phẳng (α): 2x + my − z + 10 = 0.",                    # tham số: chưa giải được ⇒ không bản ghi
+    "Diện tích mặt phẳng đáy = 12.",                           # không biến độc lập
+])
+def test_w16_khong_doc_tron_thi_khong_co_ban_ghi(de):
+    assert _pe().doc_mat_phang_de(de) == ()
+
+
+@pytest.mark.parametrize("bien,ten", [
+    ("alpha_plane", {"α"}), ("mat_phang_alpha", {"α"}), ("plane_beta", {"β"}), ("mp_P", {"P"}),
+    ("gammaPlane", {"γ"}), ("α", {"α"}), ("P", {"P"}), ("mp_P1", {"P1"}), ("mp_alpha_beta", {"α", "β"}),
+    ("mp_cat", set()), ("mp", set()), ("plane_ABC", set()), ("mpP", {"P"}), ("Alpha", {"α"}),
+])
+def test_w16_ten_mat_phang_cua_bien(bien, ten):
+    assert _pe().ten_mat_phang_cua_bien(bien) == frozenset(ten)
+
+
+@pytest.mark.parametrize("de,so", [
+    ("Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T).", 1),
+    ("Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T).", 1),
+    ("Cho mặt phẳng z = 3. Mặt phẳng (β) song song với mặt phẳng đó.", 3),
+    ("Cho (α): z = 3 và (β) song song với (α).", 3),
+    ("Mặt phẳng z = 3 song song với mặt phẳng đáy.", 2),
+    ("Cho mp (P): x = 1.", 1),
+    ("Cho hình chóp S.ABC có SA ⊥ (ABC).", 0),
+])
+def test_w16_so_lan_nhac_mat_phang(de, so):
+    assert _pe().so_lan_nhac_mat_phang(de) == so

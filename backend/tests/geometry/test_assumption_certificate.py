@@ -697,3 +697,263 @@ def test_hang_duoc_chung_nhan_van_duoc_phuc_vu(cid):
     _sp, out, _sc = W.chay(ct, raw)
     assert out.servable, (cid, out.stage_reached, out.reason_code, out.details[:3])
     assert out.assumption_certificate in ("C0", "C1"), (cid, out.assumption_certificate)
+
+
+# ══ W16 · tái hiện trước khi sửa (ASSUMPTION_CERTIFICATE_AMENDMENT §14) ══════════════════
+
+# ── §14.1 · hệ số mặt phẳng phải thuộc CÙNG mặt phẳng của đề ──────────────────────────
+
+NEN_P1 = ("Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), "
+          "B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). ")
+HAI_MP = "Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T)."
+MOT_MP_KHONG_TEN_VA_BETA = ("Cho mặt phẳng z = 3. Mặt phẳng (β) song song với mặt phẳng đó cắt khối chóp "
+                            "theo thiết diện (T).")
+
+
+def _p1_mat_phang(cau: str, mat_phang: list, cat: str):
+    """Gold p1 (toạ độ đề cho, khối đa diện): đề = nền + `cau` + hỏi diện tích (T); chương
+    trình dựng các mặt phẳng `mat_phang` = [(tên biến, (a, b, c, d))] rồi cắt (T) bằng `cat`."""
+    from scripts import replay_negative_boundaries as RNB
+
+    goc = RNB.doc_raw_theo_thu_tu("p1_chop_thiet_dien_khoang_cach")
+    pay = json.loads(goc["semantic_analyze"][0])
+    pay["input_facts"] = [f for f in pay["input_facts"] if f["id"] != "alpha_plane_def"]
+    pay["obligations"] = [o for o in pay["obligations"] if o["kind"] == "area"]
+    raw = json.loads(goc["semantic_program"][0])
+    raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] in ("S.ABCD", "T", "area_T")]
+    st = [s for s in raw["statements"] if s["kind"] in ("declare_point", "construct_polygon", "construct_solid")]
+    st += [{"kind": "construct_plane_from_equation", "target_var": t, "a": a, "b": b, "c": c, "d": d}
+           for t, (a, b, c, d) in mat_phang]
+    st += [{"kind": "construct_section", "target_var": "T", "solid": "S.ABCD", "plane": cat},
+           {"kind": "assign", "target_var": "area_T", "expr": {"kind": "measure", "quantity": "area", "of": "T"}}]
+    raw["statements"] = st
+    return W.hop_dong(NEN_P1 + cau + " Tính diện tích thiết diện (T).", pay), raw
+
+
+MP_SAI_THUC_THE = {
+    "A1_beta_chua_xac_dinh_mang_he_so_alpha": lambda: _p1_mat_phang(
+        "Cho mặt phẳng (α): z = 3. Mặt phẳng (β) song song với (α) cắt khối chóp theo thiết diện (T).",
+        [("beta_plane", (0, 0, 1, -3))], "beta_plane"),
+    "A2_hai_mat_phang_doi_cheo_he_so": lambda: _p1_mat_phang(
+        HAI_MP, [("alpha_plane", (0, 0, 1, -2)), ("beta_plane", (0, 0, 1, -3))], "beta_plane"),
+    "A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten": lambda: _p1_mat_phang(
+        MOT_MP_KHONG_TEN_VA_BETA, [("beta", (0, 0, 1, -3))], "beta"),
+    "A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang": lambda: _p1_mat_phang(
+        MOT_MP_KHONG_TEN_VA_BETA, [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+    "A7_bien_khong_ten_hai_mat_phang_co_ten": lambda: _p1_mat_phang(
+        HAI_MP, [("mp", (0, 0, 1, -3))], "mp"),
+    "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten": lambda: _p1_mat_phang(
+        "Cho mặt phẳng z = 3. Một mặt phẳng song song với mặt phẳng đó cắt khối chóp theo thiết diện (T).",
+        [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+}
+MP_DUNG_THUC_THE = {
+    "A2_doi_chung_hai_mat_phang_dung_ten": lambda: _p1_mat_phang(
+        HAI_MP, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -2))], "beta_plane"),
+    "A3_ti_le_khac_0": lambda: _p1_mat_phang(
+        "Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T).", [("alpha_plane", (0, 0, 2, -6))], "alpha_plane"),
+    "A3b_ti_le_am": lambda: _p1_mat_phang(
+        "Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T).", [("alpha_plane", (0, 0, -1, 3))], "alpha_plane"),
+    "A4_doi_ten_nhat_quan_P": lambda: _p1_mat_phang(
+        "Mặt phẳng (P): z = 3 cắt khối chóp theo thiết diện (T).", [("mp_P", (0, 0, 1, -3))], "mp_P"),
+    "A4b_doi_ten_nhat_quan_gamma": lambda: _p1_mat_phang(
+        "Mặt phẳng (γ): z = 3 cắt khối chóp theo thiết diện (T).", [("gammaPlane", (0, 0, 1, -3))], "gammaPlane"),
+    "A5_khong_ten_duy_nhat": lambda: _p1_mat_phang(
+        "Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T).", [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+    "A5b_bien_khong_ten_de_chi_mot_mat_phang": lambda: _p1_mat_phang(
+        "Mặt phẳng (α): z = 3 cắt khối chóp theo thiết diện (T).", [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+    "RF1_mat_phang_qua_ba_diem_ben_canh": lambda: _p1_mat_phang(
+        "Mặt phẳng (α): z = 3 song song với mặt phẳng (ABCD) cắt khối chóp theo thiết diện (T).",
+        [("alpha_plane", (0, 0, 1, -3))], "alpha_plane"),
+}
+
+
+def test_GUARD_w16_gia_tri_hien_thi_doi_theo_mat_phang_duoc_dung():
+    """GUARD: đổi chéo hệ số α/β làm ĐỔI diện tích người học thấy (9 thay vì 16) — lỗi gắn
+    thực thể ở đây không vô hại."""
+    sai = W.bo_nho_cuoi(W.spec_cua(MP_SAI_THUC_THE["A2_hai_mat_phang_doi_cheo_he_so"]()[1]))["area_T"]
+    dung = W.bo_nho_cuoi(W.spec_cua(MP_DUNG_THUC_THE["A2_doi_chung_hai_mat_phang_dung_ten"]()[1]))["area_T"]
+    assert (sai, dung) == (9, 16)
+
+
+@pytest.mark.parametrize("ca", sorted(MP_SAI_THUC_THE))
+def test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0(ca):
+    """Trùng bộ số KHÔNG là trùng thực thể (§14.1)."""
+    kq = _kq(*MP_SAI_THUC_THE[ca]())
+    assert kq.status != AN_TOAN, (ca, kq)
+    assert any(d.startswith("PLANE_BINDING") for d in kq.details), (ca, kq.details)
+
+
+@pytest.mark.parametrize("ca", sorted(MP_DUNG_THUC_THE))
+def test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0(ca):
+    kq = _kq(*MP_DUNG_THUC_THE[ca]())
+    assert (kq.status, kq.certificate) == (AN_TOAN, "C0"), (ca, kq)
+
+
+@pytest.mark.parametrize("ca", ["A1_beta_chua_xac_dinh_mang_he_so_alpha", "A2_hai_mat_phang_doi_cheo_he_so"])
+def test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the(ca):
+    _sp, out, _sc = W.chay(*MP_SAI_THUC_THE[ca]())
+    assert (out.servable, out.stage_reached) == (False, "assumption"), (ca, out.stage_reached, out.details[:3])
+
+
+@pytest.mark.xfail(strict=True, reason="ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND: C0 gắn "
+                   "literal với thực thể của nó, không kiểm phép dựng dùng đúng thực thể đề nói (§14.1, A′)")
+def test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi():
+    """(T) do (β) cắt; chương trình cắt bằng (α) — cả hai literal đều ghim đúng mặt phẳng của nó."""
+    kq = _kq(*_p1_mat_phang(HAI_MP, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -2))],
+                            "alpha_plane"))
+    assert kq.status != AN_TOAN, kq
+
+
+# ── §14.2 · quan hệ trong yêu cầu chứng minh không bao giờ là tiền đề ─────────────────
+
+NEN_T1 = "Cho hình chóp S.ABC có "
+DAY_T1 = "đáy ABC là tam giác vuông tại A, AB = 3, AC = 4"
+HOI_T1 = " Tính thể tích khối chóp S.ABC."
+
+
+def _t1_cau(text: str):
+    """Chóp T1 (đề `text`, hợp đồng T1), chương trình compiler đúng của bài ĐỦ dữ kiện."""
+    return W.hop_dong(text, W.chop_tam_giac_payload()), W.chuong_trinh(W.chop_tam_giac()[1])
+
+
+MUC_TIEU_THANH_TIEN_DE = {
+    "B1_chung_minh_SA_vuong_day": NEN_T1 + DAY_T1 + ", SA = 5. Chứng minh rằng SA vuông góc với đáy." + HOI_T1,
+    "B1b_CMR_ky_hieu": NEN_T1 + DAY_T1 + ", SA = 5. CMR: SA ⊥ (ABC)." + HOI_T1,
+    "B2_chung_minh_goc_vuong_day": NEN_T1 + "AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. "
+                                            "Chứng minh rằng tam giác ABC vuông tại A." + HOI_T1,
+    "B3b_kiem_tra_ky_hieu": NEN_T1 + DAY_T1 + ", SA = 5. Kiểm tra SA ⊥ (ABC)." + HOI_T1,
+    "B3c_cau_hoi_hay_khong": NEN_T1 + DAY_T1 + ", SA = 5. SA ⊥ (ABC) hay không?" + HOI_T1,
+    "B5_cau_ghep_gia_thiet_va_yeu_cau": NEN_T1 + "AB = 3, AC = 4, SA = 5. Biết SA vuông góc với đáy, "
+                                                 "chứng minh rằng tam giác ABC vuông tại A." + HOI_T1,
+    "B7_chung_minh_do_dai": NEN_T1 + DAY_T1 + ". Cạnh bên SA vuông góc với đáy. Chứng minh rằng SA = 5." + HOI_T1,
+}
+GIA_THIET_GIU_NGUYEN = {
+    "B0_gia_thiet": W.CHOP_TAM_GIAC_TEXT,
+    "B4b_phu_dinh_trong_yeu_cau": W.CHOP_TAM_GIAC_TEXT.replace(
+        "Tính thể tích", "Chứng minh rằng SB không vuông góc với BC. Tính thể tích"),
+    "B5b_gia_thiet_truoc_yeu_cau_cung_cau": NEN_T1 + DAY_T1 + ", SA = 5. Biết SA vuông góc với đáy, "
+                                                              "chứng minh rằng AC vuông góc với (SAB)." + HOI_T1,
+    "B6_tinh_biet_gia_thiet": NEN_T1 + DAY_T1 + ". Tính thể tích khối chóp S.ABC, biết cạnh bên SA vuông góc "
+                                                "với đáy và SA = 5.",
+}
+KHONG_KHAI_THAC_DUOC = {
+    "B3_hoi_co_khong": NEN_T1 + DAY_T1 + ", SA = 5. Hỏi SA có vuông góc với đáy không?" + HOI_T1,
+    "B4_phu_dinh_gia_thiet": NEN_T1 + DAY_T1 + ". Cạnh bên SA không vuông góc với đáy, SA = 5." + HOI_T1,
+}
+
+
+@pytest.mark.parametrize("ca", sorted(MUC_TIEU_THANH_TIEN_DE))
+def test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de(ca):
+    kq = _kq(*_t1_cau(MUC_TIEU_THANH_TIEN_DE[ca]))
+    assert kq.status != AN_TOAN, (ca, kq)
+    assert any(d.startswith("GOAL_CLAUSE") for d in kq.details), (ca, kq.details)
+
+
+@pytest.mark.parametrize("ca", sorted(GIA_THIET_GIU_NGUYEN))
+def test_w16_gia_thiet_hop_le_van_la_tien_de(ca):
+    """Giả thiết đứng trước yêu cầu (kể cả cùng câu), và `Tính …, biết <giả thiết>`, giữ nguyên."""
+    kq = _kq(*_t1_cau(GIA_THIET_GIU_NGUYEN[ca]))
+    assert (kq.status, kq.certificate) == (AN_TOAN, "C1"), (ca, kq)
+
+
+@pytest.mark.parametrize("ca", sorted(KHONG_KHAI_THAC_DUOC))
+def test_w16_cau_hoi_co_khong_va_phu_dinh_khong_doc_thanh_tien_de(ca):
+    """Không khai thác được hôm nay (bộ đọc không khớp khi có chữ chen giữa) — giữ như vậy."""
+    kq = _kq(*_t1_cau(KHONG_KHAI_THAC_DUOC[ca]))
+    assert kq.status != AN_TOAN, (ca, kq)
+
+
+def test_w16_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc():
+    """`Tính …, biết chiều cao bằng 5`: bộ đọc chiều cao chỉ đọc phần dữ kiện ⇒ từ chối thừa,
+    nhưng không bao giờ nói "đề không cho SA" (§14.2, ngoài W16)."""
+    kq = _kq(*_t1_cau(NEN_T1 + DAY_T1 + ", cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC, "
+                                       "biết chiều cao của khối chóp bằng 5."))
+    assert kq.status == CHUA_RO, kq
+
+
+def test_w16_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de():
+    _sp, out, _sc = W.chay(*_t1_cau(MUC_TIEU_THANH_TIEN_DE["B1_chung_minh_SA_vuong_day"]))
+    assert (out.servable, out.stage_reached) == (False, "assumption"), (out.stage_reached, out.details[:3])
+
+
+# ── §14.3 · bốn nhánh đóng an toàn: ca kích hoạt, mã lý do, đối chứng hợp lệ ──────────
+
+def _t1():
+    _t, ct = W.chop_tam_giac()
+    return ct, W.chuong_trinh(ct)
+
+
+def _guard_if():
+    ct, raw = _t1()
+    raw["statements"].append({"kind": "if", "condition": {"kind": "literal", "value": True},
+                              "then_body": [], "else_body": []})
+    return ct, raw
+
+
+def _guard_dinh_khuon():
+    """S dời khỏi pháp tuyến tại A (A ở gốc): SA không còn ⊥ đáy."""
+    ct, raw = _t1()
+    _dat_diem(raw, "S", [1, 0, 5])
+    return ct, raw
+
+
+def _guard_khung():
+    """Đề T1 đủ dữ kiện + `(P): z = 2` (phương trình theo khung toạ độ mà đề KHÔNG cho), mặt
+    phẳng cắt khối trên lát cắt C1."""
+    text = W.CHOP_TAM_GIAC_TEXT.replace(
+        "Tính thể tích khối chóp S.ABC.",
+        "Tính diện tích thiết diện (T) của khối chóp cắt bởi mặt phẳng (P): z = 2.")
+    pay = W.chop_tam_giac_payload()
+    pay["obligations"] = [{"kind": "area", "container": "T", "witness": "area_T"}]
+    _ct0, raw = _t1()
+    raw["memory_declarations"] += [{"name": "P", "type": "plane3"}, {"name": "T", "type": "section"},
+                                   {"name": "area_T", "type": "float"}]
+    raw["statements"] += [
+        {"kind": "construct_plane_from_equation", "target_var": "P", "a": 0, "b": 0, "c": 1, "d": -2},
+        {"kind": "construct_section", "target_var": "T", "solid": "khoi_chop", "plane": "P"},
+        {"kind": "assign", "target_var": "area_T", "expr": {"kind": "measure", "quantity": "area", "of": "T"}}]
+    return W.hop_dong(text, pay), raw
+
+
+def _guard_bang_mat():
+    """Một mặt chỉ có hai đỉnh — lược đồ IR nhận (không kiểm cỡ từng mặt), dựng hình bác."""
+    ct, raw = _t1()
+    next(s for s in raw["statements"] if s.get("kind") == "construct_solid")["faces"] = [
+        [1, 2], [0, 1, 2], [0, 2, 3], [0, 3, 1]]
+    return ct, raw
+
+
+BON_NHANH = {"CLOSURE_UNSUPPORTED_KIND": _guard_if, "TEMPLATE_CONSTRAINT_VIOLATED": _guard_dinh_khuon,
+             "FRAME_DEPENDENT": _guard_khung, "FORMATION_REJECTED": _guard_bang_mat}
+
+
+def test_w16_doi_chung_bon_nhanh_la_C1():
+    kq = _kq(*_t1())
+    assert (kq.status, kq.certificate) == (AN_TOAN, "C1"), kq
+
+
+def test_w16_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND():
+    kq = _kq(*_guard_if())
+    assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
+    assert kq.details == ("CLOSURE_UNSUPPORTED_KIND control flow",), kq.details
+
+
+def test_w16_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED():
+    kq = _kq(*_guard_dinh_khuon())
+    assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
+    assert kq.details[-1] == "T1 TEMPLATE_CONSTRAINT_VIOLATED apex edge ⊥ base", kq.details
+
+
+def test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT():
+    """Mặt phẳng từ phương trình trên lát cắt C1 là lý do trượt DUY NHẤT (hệ số tự nó có
+    nguồn: đề cho đúng (P): z = 2)."""
+    kq = _kq(*_guard_khung())
+    assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
+    loi = [d for d in kq.details if d.startswith(("NO_ROLE", "FRAME_DEPENDENT", "UNCERTIFIED"))]
+    assert loi == ["FRAME_DEPENDENT construct_plane_from_equation"], kq.details
+
+
+def test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED():
+    kq = _kq(*_guard_bang_mat())
+    assert (kq.status, kq.reason_code, kq.details) == (
+        CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN", ("FORMATION_REJECTED",)), kq

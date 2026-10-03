@@ -85,25 +85,54 @@ def _ban_ghi(tmp: Path, viewport: str, width_css: int, size: tuple[int, int], st
                 for k in range(steps)]}}
 
 
+#: W16: lời từ chối giả lập — vài dòng chữ đen trong hộp lời (`refusal_message_box`, px CSS).
+HOP_LOI = {"x": 50, "y": 400, "w": 300, "h": 200}
+
+
+def _tu_choi(images: Path, family_dir: str, kind: str, vp: str, *, trang: bool = False,
+             loai_tren_duong: str | None = None) -> dict:
+    """Bản ghi âm đúng khuôn bộ chạy W15: `negative[kind][viewport]`, ảnh ở
+    `<họ>/negative/<loại>/<viewport>/refusal.png`. `trang`: ảnh chụp trắng (không chữ)."""
+    from PIL import Image, ImageDraw
+    path = images / family_dir / "negative" / (loai_tren_duong or kind) / vp / "refusal.png"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.new("RGB", (780, 1200), "white")
+    if not trang:
+        font, _ = B._font(28)
+        draw = ImageDraw.Draw(image)
+        for k in range(5):
+            draw.text((110, 820 + 60 * k), "Đề bài chưa cho độ dài AB, hệ không đoán", fill="black", font=font)
+    image.save(path)
+    return {"viewport": {"id": vp, "width": 390}, "pass": True, "screenshot": str(path),
+            "refusal_message_box": dict(HOP_LOI),
+            "observed": {"canvas": False, "unsupported": {"learner_reason": "Đề bài chưa cho độ dài AB."}}}
+
+
+def _kich_ban_du(tmp: Path, family_dir: str = "triangular-pyramid", steps: int = 3) -> dict:
+    """Kịch bản ĐỦ mọi ô của sheet một họ, đúng khuôn dữ liệu bộ chạy hiện tại (W15)."""
+    images = tmp / "images"
+    return {"positive": {"desktop": _ban_ghi(tmp, "desktop", 1400, (1400, 800), steps=steps),
+                         "mobile": _ban_ghi(tmp, "mobile", 390, (780, 1600), steps=1)},
+            "negative": {kind: {vp: _tu_choi(images, family_dir, kind, vp) for vp in ("desktop", "mobile")}
+                         for kind in ("ungrounded_source", "assumption", "topology_kernel")}}
+
+
 def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
     """Review W10-H8: phụ lục formation quá nhỏ để đọc. Sheet của MỘT họ giữ
     trung tính, causal, xoay, mobile, BẢNG LỜI GIẢI, lời TỪ CHỐI (W12) và MỌI
-    bước dựng ở độ phân giải gốc (không thu nhỏ), có dải chú giải và nhãn lớn."""
-    desktop = _ban_ghi(tmp_path, "desktop", 1400, (1400, 800), steps=3)
-    mobile = _ban_ghi(tmp_path, "mobile", 390, (780, 1600), steps=1)
-    negative = {vp: {"screenshot": str(_anh(tmp_path / "neg" / f"{vp}.png", (780, 900), "white"))}
-                for vp in ("desktop", "mobile")}
-    meta = B.family_sheet("triangular_pyramid",
-                          {"positive": {"desktop": desktop, "mobile": mobile}, "negative": negative},
-                          tmp_path / "images")
+    bước dựng ở độ phân giải gốc (không thu nhỏ), có dải chú giải và nhãn lớn.
+
+    W16: fixture âm theo khuôn THẬT của bộ chạy (`negative[kind][viewport]`, W15) — khuôn cũ
+    `negative[viewport]` là lý do builder ra ba ô trắng mà test này vẫn xanh."""
+    meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     from PIL import Image
     sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
     assert [c["state"] for c in meta["cells"]] == [
         "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final",
         "desktop/solution_neutral_final", "desktop/solution_causal_selected",
         "mobile/solution_neutral_final", "mobile/solution_expanded",
-        "desktop/refusal", "mobile/refusal",
-    ] + [f"desktop/geometry_step/{k}" for k in range(3)]
+    ] + [f"negative/{k}/{vp}" for k in ("ungrounded_source", "assumption", "topology_kernel")
+         for vp in ("desktop", "mobile")] + [f"desktop/geometry_step/{k}" for k in range(3)]
     # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang;
     # ảnh phần tử và lời từ chối dùng NGUYÊN khung.
     assert all(c["scale"] == 1.0 for c in meta["cells"])
@@ -117,8 +146,81 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
     assert "TRUNG TÍNH = đã dựng" not in meta["legend"] and "thiết diện hổ phách" in meta["legend"]
     phong, _ = B._font(B.LABEL_PX - 2)
     assert all(16 + phong.getlength(dong) <= sheet.width for dong in meta["legend"].split("\n"))
-    assert meta["cells"][10]["label"].startswith("Bước dựng 1/3")
-    assert meta["cells"][10]["label"].endswith("Bước dựng số 0")
+    buoc = [c for c in meta["cells"] if c["state"].startswith("desktop/geometry_step/")]
+    assert buoc[0]["label"].startswith("Bước dựng 1/3")
+    assert buoc[0]["label"].endswith("Bước dựng số 0")
+
+
+# ── W16 · §14.5 — ô từ chối: đúng loại × viewport, đọc được; thiếu ảnh ⇒ THẤT BẠI ──────
+
+def test_w16_moi_loai_tu_choi_moi_viewport_mot_o_dung_nguon_dung_chu_thich(tmp_path):
+    meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
+    am = [c for c in meta["cells"] if c["state"].startswith("negative/")]
+    assert len(am) == 6
+    for c in am:
+        _n, kind, vp = c["state"].split("/")
+        assert c["source"].endswith(f"triangular-pyramid/negative/{kind}/{vp}/refusal.png"), c
+        assert c["crop_box_px"] is not None
+        assert c["label"].startswith(vp.capitalize()) and B.TEN_TU_CHOI[kind] in c["label"], c["label"]
+    nhan = {c["label"].split(" · ", 1)[1] for c in am}
+    assert len(nhan) == 3, nhan                                  # ba loại, ba chú thích khác nhau
+    assert not any(k in c["label"] for c in am for k in ("ungrounded_source", "topology_kernel", "_"))
+
+
+def test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang(tmp_path):
+    import pytest
+    kb = _kich_ban_du(tmp_path)
+    Path(kb["positive"]["mobile"]["screenshots"]["neutral_final"]).unlink()
+    Path(kb["negative"]["assumption"]["desktop"]["screenshot"]).unlink()
+    with pytest.raises(B.ThieuAnhBangChung) as e:
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
+    assert "mobile/neutral_final" in str(e.value) and "negative/assumption/desktop" in str(e.value)
+
+
+def test_w16_thieu_ca_mot_loai_tu_choi_thi_that_bai(tmp_path):
+    import pytest
+    kb = _kich_ban_du(tmp_path)
+    del kb["negative"]["topology_kernel"]
+    with pytest.raises(B.ThieuAnhBangChung, match="negative/topology_kernel"):
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
+
+
+def test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai(tmp_path):
+    import pytest
+    kb = _kich_ban_du(tmp_path)
+    kb["negative"]["ungrounded_source"]["mobile"] = _tu_choi(tmp_path / "images", "triangular-pyramid",
+                                                             "ungrounded_source", "mobile", trang=True)
+    with pytest.raises(B.ThieuAnhBangChung, match="negative/ungrounded_source/mobile"):
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
+
+
+def test_w16_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai(tmp_path):
+    import pytest
+    kb = _kich_ban_du(tmp_path)
+    kb["negative"]["assumption"]["mobile"] = _tu_choi(tmp_path / "images", "triangular-pyramid", "assumption",
+                                                      "mobile", loai_tren_duong="topology_kernel")
+    with pytest.raises(B.ThieuAnhBangChung, match="negative/assumption/mobile"):
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
+    kb = _kich_ban_du(tmp_path / "b")
+    kb["negative"]["assumption"]["desktop"]["observed"]["canvas"] = True
+    with pytest.raises(B.ThieuAnhBangChung, match="negative/assumption/desktop"):
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "b" / "images")
+
+
+def test_w16_loai_tu_choi_la_bi_bao_loi(tmp_path):
+    import pytest
+    kb = _kich_ban_du(tmp_path)
+    kb["negative"]["mystery_kind"] = kb["negative"]["assumption"]
+    with pytest.raises(KeyError, match="mystery_kind"):
+        B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
+
+
+def test_w16_dai_phim_thieu_anh_buoc_dung_thi_that_bai(tmp_path):
+    import pytest
+    rec = _ban_ghi_w14(tmp_path)
+    Path(rec["formation"]["steps"][2]["screenshot"]).unlink()
+    with pytest.raises(B.ThieuAnhBangChung, match="geometry_step/2"):
+        B.filmstrip("triangular_pyramid", {"positive": {"desktop": rec}}, tmp_path / "images")
 
 
 _VAI_W14 = [["DECLARE_ENTITIES"], ["CONSTRUCT_BASE"], ["CONSTRUCT_HEIGHT", "CONSTRUCT_LATERAL_BOUNDARY"],
@@ -154,7 +256,10 @@ def test_w14_filmstrip_names_roles_in_vietnamese_and_every_line_fits(tmp_path):
 
 def test_w14_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused(tmp_path):
     rec = _ban_ghi_w14(tmp_path)
-    meta = B.family_sheet("triangular_pyramid", {"positive": {"desktop": rec}}, tmp_path / "images")
+    # W16: sheet đòi ĐỦ mọi ô (thiếu ⇒ thất bại), nên kịch bản mang đủ mobile + ba loại âm.
+    kb = _kich_ban_du(tmp_path / "du")
+    kb["positive"]["desktop"] = rec
+    meta = B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
     nhan = [c["label"] for c in meta["cells"] if c["state"].startswith("desktop/geometry_step/")]
     assert nhan[2].startswith("Bước dựng 3/5 · đường cao, cạnh bên — ")
     assert not any("CONSTRUCT_" in n or "CLOSE_" in n for n in nhan)

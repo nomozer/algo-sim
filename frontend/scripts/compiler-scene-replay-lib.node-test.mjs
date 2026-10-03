@@ -902,6 +902,81 @@ test("W15 section fill: thresholds in code equal the pre-registered ones", () =>
   assert.deepEqual(LIB.NGUONG_TO_THIET_DIEN, JSON.parse(m[1]));
 });
 
+// ── W16 · §14.4 — tô thiết diện nằm DƯỚI cạnh khối; bộ lấy mẫu W15 khớp đăng ký §11 ──
+
+const VUONG_TD = [["-2", "-2", "0"], ["2", "-2", "0"], ["2", "2", "0"], ["-2", "2", "0"]];
+const SNAP_TD = cameraSnapshot([6, -8, 6], [0, 0, 0], 800, 600);
+const cachDoan = ([x, y], a, b) => {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const t = Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / (dx * dx + dy * dy || 1)));
+  return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
+};
+
+test("W16 section fill sampler: margin around EVERY projected solid edge and vertex marker (§11)", () => {
+  const canh = [{ id: "khoi::edge:P-Q", a: [-3, 0, 0], b: [3, 0, 0] }];
+  const cham = [{ id: "M", center: [1, 1, 0], radius_world: 0.15 }];
+  const mau = LIB.diemMauThietDien(VUONG_TD, SNAP_TD, { canh, cham });
+  assert.ok(mau.length > 10, `chỉ ${mau.length} mẫu`);
+  const [a, b] = [canh[0].a, canh[0].b].map((p) => LIB.chieuManHinh(SNAP_TD, p));
+  assert.ok(mau.every((q) => cachDoan(q, a, b) >= LIB.NGUONG_TO_THIET_DIEN.margin_px), "mẫu nằm trên cạnh khối");
+  const [d] = LIB.doCoDauDinh(SNAP_TD, cham);
+  const c = LIB.chieuManHinh(SNAP_TD, cham[0].center);
+  assert.ok(mau.every(([x, y]) => Math.hypot(x - c.x, y - c.y) >= d.diameter_px / 2 + LIB.NGUONG_TO_THIET_DIEN.margin_px),
+    "mẫu nằm trên dấu điểm");
+  assert.ok(LIB.diemMauThietDien(VUONG_TD, SNAP_TD).length > mau.length, "không vật cản thì nhiều mẫu hơn");
+});
+
+test("W16 under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside", () => {
+  assert.equal(typeof LIB.diemCanhQuaThietDien, "function", "diemCanhQuaThietDien chưa có (W16)");
+  const canh = [{ id: "qua", a: [-3, 0, 0], b: [3, 0, 0] }, { id: "ngoai", a: [5, 5, 0], b: [6, 6, 0] }];
+  const ra = LIB.diemCanhQuaThietDien(VUONG_TD, SNAP_TD, canh, []);
+  assert.deepEqual(ra.map((x) => x.id), ["qua"]);
+  const [a, b] = [canh[0].a, canh[0].b].map((p) => LIB.chieuManHinh(SNAP_TD, p));
+  assert.ok(ra[0].core.length >= 3 && ra[0].ref.length >= 3, JSON.stringify(ra[0]).slice(0, 200));
+  assert.ok(ra[0].core.every((q) => cachDoan(q, a, b) <= 1 + 1e-9));
+  assert.ok(ra[0].ref.every((q) => Math.abs(cachDoan(q, a, b) - 4) < 1e-6));
+  // nửa px: dải lõi phủ cả điểm ảnh thiết bị ở DPR 2 (ảnh mobile)
+  const lech = new Set(ra[0].core.map((q) => Math.round(cachDoan(q, a, b) * 2)));
+  assert.ok(lech.has(1) && lech.has(2), [...lech].join(","));
+});
+
+// Mô hình phối màu "over" (sRGB) của §14.4: nền B, tô hổ phách 0.45, nét #1e293b độ phủ c, độ đục α.
+const NEN_TD = [205, 206, 212], TO_TD = [0xf5, 0x9e, 0x0b], NET_TD = [0x1e, 0x29, 0x3b];
+const tron = (duoi, mau, a) => duoi.map((d, i) => Math.round(d * (1 - a) + mau[i] * a));
+const NEN_BAT = tron(NEN_TD, TO_TD, 0.45);
+const thamChieu = () => Array.from({ length: 6 }, () => ({ on: NEN_BAT, off: NEN_TD }));
+const canhTrenTo = (c, alpha) => ({ id: "e", ref: thamChieu(), core: [
+  { on: tron(NEN_BAT, NET_TD, c * alpha), off: tron(NEN_TD, NET_TD, c * alpha) },
+  { on: NEN_BAT, off: NEN_TD }] });
+const toTrenCanh = (c, alpha) => ({ id: "e", ref: thamChieu(), core: [
+  { on: tron(tron(NEN_TD, NET_TD, c * alpha), TO_TD, 0.45), off: tron(NEN_TD, NET_TD, c * alpha) },
+  { on: NEN_BAT, off: NEN_TD }] });
+
+test("W16 SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed", () => {
+  assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
+  for (const [c, alpha] of [[1, 1], [0.5, 1], [0.5, 0.9], [1, 0.9]]) {
+    const kq = LIB.assessSectionFillUnderEdges([canhTrenTo(c, alpha)]);
+    assert.equal(kq.pass, true, `${c}/${alpha} ${JSON.stringify(kq)}`);
+  }
+});
+
+test("W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails", () => {
+  assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
+  for (const [c, alpha] of [[1, 1], [0.5, 1], [1, 0.9]]) {
+    const kq = LIB.assessSectionFillUnderEdges([toTrenCanh(c, alpha)]);
+    assert.equal(kq.pass, false, `${c}/${alpha} ${JSON.stringify(kq)}`);
+    assert.ok(kq.edges[0].rho >= 1, JSON.stringify(kq.edges[0]));
+  }
+});
+
+test("W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass", () => {
+  assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
+  const khongVe = { id: "e", ref: thamChieu(), core: [{ on: NEN_BAT, off: NEN_TD }] };
+  assert.equal(LIB.assessSectionFillUnderEdges([khongVe]).pass, false);
+  const rong = LIB.assessSectionFillUnderEdges([]);
+  assert.deepEqual([rong.pass, rong.reason], [false, "NOT_APPLICABLE_NO_CROSSING_EDGE"]);
+});
+
 test("role tokens are machine data: on screen they are a raw-token leak", () => {
   const sc = { objects: [{ id: "khoi", type: "solid", render: "mesh", shape_class: "PYRAMID_LIKE",
     formation_roles: ["CLOSE_SOLID"], formation_requirements: ["CONSTRUCT_BASE"] }],

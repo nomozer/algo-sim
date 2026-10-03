@@ -1,0 +1,54 @@
+# W16 RED (tests written, no fix) — working tree on top of 8a339d17
+# cd frontend && npx vitest run src/simulations/domains/geometry/scene3d-section.test.ts
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+ ❯ src/simulations/domains/geometry/scene3d-section.test.ts (40 tests | 1 failed) 47ms
+     × trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy 10ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/simulations/domains/geometry/scene3d-section.test.ts > W16 — phần tô thiết diện nằm DƯỚI các cạnh khối, TRÊN các mặt > trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy
+AssertionError: expected 8 to be greater than 10
+ ❯ src/simulations/domains/geometry/scene3d-section.test.ts:486:56
+    484|     expect(mat.length).toBeGreaterThan(0);
+    485|     expect(Math.max(...mat.map((x) => x.renderOrder))).toBeLessThan(to…
+    486|     expect(Math.min(...net.map((x) => x.renderOrder))).toBeGreaterThan…
+       |                                                        ^
+    487|   });
+    488| });
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+ Test Files  1 failed (1)
+      Tests  1 failed | 39 passed (40)
+   Start at  17:17:44
+   Duration  517ms (transform 189ms, setup 38ms, import 246ms, tests 47ms, environment 0ms)
+exit=1
+
+# node --test scripts/compiler-scene-replay-lib.node-test.mjs
+✔ W15 section fill: deltaE76 is CIE76 on sRGB D65 (0.3045ms)
+✔ W15 section fill: a genuine fill passes on the closed step (0.321ms)
+✔ W15 section fill: a missing fill fails on the closed step (0.1317ms)
+✔ W15 section fill: a fill present before closing fails (0.4314ms)
+✔ W15 section fill: a fill not removed after stepping back fails (0.1319ms)
+✔ W15 section fill: the old 0.16 coplanar composite fails the registered threshold (0.1019ms)
+✔ W15 section fill: no samples never passes (0.0677ms)
+✔ W15 section fill: interior samples keep the registered margin from every projected edge (1.6789ms)
+✔ W15 section fill: a polygon behind the camera gives no samples (the gate fails safe) (0.1227ms)
+✔ W15 manifest requires three distinct negative kinds per scenario (0.6218ms)
+✔ W15 section fill: thresholds in code equal the pre-registered ones (0.4684ms)
+✖ W16 section fill sampler: margin around EVERY projected solid edge and vertex marker (§11) (1.1995ms)
+✖ W16 under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside (0.5532ms)
+✖ W16 SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed (0.222ms)
+✖ W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails (0.147ms)
+✖ W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass (0.1192ms)
+ℹ tests 53
+ℹ pass 48
+ℹ fail 5
+✖ failing tests:
+✖ W16 section fill sampler: margin around EVERY projected solid edge and vertex marker (§11) (1.1995ms)
+  AssertionError [ERR_ASSERTION]: mẫu nằm trên cạnh khối
+✖ W16 under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside (0.5532ms)
+  AssertionError [ERR_ASSERTION]: diemCanhQuaThietDien chưa có (W16)
+✖ W16 SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed (0.222ms)
+  AssertionError [ERR_ASSERTION]: assessSectionFillUnderEdges chưa có (W16)
+✖ W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails (0.147ms)
+  AssertionError [ERR_ASSERTION]: assessSectionFillUnderEdges chưa có (W16)
+✖ W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass (0.1192ms)
+  AssertionError [ERR_ASSERTION]: assessSectionFillUnderEdges chưa có (W16)
+exit=1

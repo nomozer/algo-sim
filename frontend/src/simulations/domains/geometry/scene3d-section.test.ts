@@ -451,3 +451,38 @@ describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt 
     goc.traverse((x) => expect(x.visible).toBe(truoc.get(x.uuid)));
   });
 });
+
+// ══ W16 · PHẦN TÔ NẰM DƯỚI CÁC CẠNH KHỐI (ASSUMPTION_CERTIFICATE_AMENDMENT §14.4) ═══════
+//
+// Ảnh W15 (cross-section, desktop, bước cuối) cho thấy cạnh SA (đứt) và SC đi qua vùng hổ
+// phách bị nhuộm nâu: phần tô (thứ tự 10, không kiểm chiều sâu) vẽ SAU cạnh khối chuẩn (8).
+// three.js vẽ hết hàng đợi ĐỤC trước hàng đợi TRONG SUỐT; `renderOrder` chỉ xếp TRONG mỗi
+// hàng đợi — nên phép so có nghĩa là so trong hàng đợi trong suốt, nơi cả phần tô lẫn cạnh
+// khối chuẩn (`canonicalEdgeMaterial`, `transparent: true`) cùng nằm.
+describe("W16 — phần tô thiết diện nằm DƯỚI các cạnh khối, TRÊN các mặt", () => {
+  it("trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy", () => {
+    const goc = new THREE.Group();
+    for (const o of W14_CAT.objects) {
+      const obj = VIEW.buildObject3D(o.type === "section" ? { ...o, closed: true, fill_visible: true } : o, false);
+      if (obj) goc.add(obj);
+    }
+    const [to] = vatTo(goc);
+    expect(to).toBeDefined();
+    const vl = (x: THREE.Object3D) => (x as THREE.Mesh).material as THREE.Material | undefined;
+    const net: THREE.Object3D[] = [];
+    const mat: THREE.Object3D[] = [];
+    let canhKhoi = 0;
+    goc.traverse((x) => {
+      const m = vl(x);
+      if (x === to || x.userData.chieuSau || !m || m.colorWrite === false || !m.transparent) return;
+      if ((x as THREE.Line).isLine) {
+        net.push(x);
+        if (x.userData.logicalEdgeId) canhKhoi += 1;
+      } else if ((x as THREE.Mesh).isMesh) mat.push(x);
+    });
+    expect(canhKhoi).toBeGreaterThan(0);
+    expect(mat.length).toBeGreaterThan(0);
+    expect(Math.max(...mat.map((x) => x.renderOrder))).toBeLessThan(to.renderOrder);
+    expect(Math.min(...net.map((x) => x.renderOrder))).toBeGreaterThan(to.renderOrder);
+  });
+});

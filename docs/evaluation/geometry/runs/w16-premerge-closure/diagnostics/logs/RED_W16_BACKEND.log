@@ -1,0 +1,235 @@
+# W16 RED (tests written, no fix) — working tree on top of 8a339d17
+# cd backend && pytest -q -p no:cacheprovider <4 files> -k 'w16 or W16 or w12 or w14' -rA --tb=line
+E   AssertionError: ('A1_beta_chua_xac_dinh_mang_he_so_alpha', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A1_beta_chua_xac_dinh_mang_he_so_alpha', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A2_hai_mat_phang_doi_cheo_he_so', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A2_hai_mat_phang_doi_cheo_he_so', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A7_bien_khong_ten_hai_mat_phang_co_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A7_bien_khong_ten_hai_mat_phang_co_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A8_bien_khong_ten_mat_phang_thu_hai_khong_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:782: AssertionError: ('A8_bien_khong_ten_mat_phang_thu_hai_khong_ten', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C0', reason_code=None, subjects=(), details=('C0 6 literal(s) pinned by the text',), witness=None))
+E   AssertionError: ('A1_beta_chua_xac_dinh_mang_he_so_alpha', 'served', [])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:795: AssertionError: ('A1_beta_chua_xac_dinh_mang_he_so_alpha', 'served', [])
+E   AssertionError: ('A2_hai_mat_phang_doi_cheo_he_so', 'served', [])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:795: AssertionError: ('A2_hai_mat_phang_doi_cheo_he_so', 'served', [])
+E   AssertionError: ('B1_chung_minh_SA_vuong_day', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), de...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B1_chung_minh_SA_vuong_day', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), de...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B1b_CMR_ky_hieu', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=('REL...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B1b_CMR_ky_hieu', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=('REL...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B2_chung_minh_goc_vuong_day', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), d...REMISE right_triangle(A,B,C) @[94,118]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B2_chung_minh_goc_vuong_day', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), d...REMISE right_triangle(A,B,C) @[94,118]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B3b_kiem_tra_ky_hieu', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B3b_kiem_tra_ky_hieu', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B3c_cau_hoi_hay_khong', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B3c_cau_hoi_hay_khong', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B5_cau_ghep_gia_thiet_va_yeu_cau', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=...REMISE right_triangle(A,B,C) @[90,114]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B5_cau_ghep_gia_thiet_va_yeu_cau', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=...REMISE right_triangle(A,B,C) @[90,114]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('B7_chung_minh_do_dai', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:848: AssertionError: ('B7_chung_minh_do_dai', KetQuaGiaDinh(status='PROVEN_SAFE', certificate='C1', reason_code=None, subjects=(), details=...PREMISE right_triangle(A,B,C) @[23,54]', 'C1 T1', 'C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)'), witness=None))
+E   AssertionError: ('served', [])
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_assumption_certificate.py:876: AssertionError: ('served', [])
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:634: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:634: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:634: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:634: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:634: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:644: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:644: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:644: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'doc_mat_phang_de'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:653: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'ten_mat_phang_cua_bien'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_plane_from_equation.py:666: AttributeError: module 'app.simulation.semantic_program.plane_equation' has no attribute 'so_lan_nhac_mat_phang'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:295: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:305: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:305: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:305: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:305: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'khoang_muc_tieu'
+E   AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'che_muc_tieu'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_shape_constraint.py:312: AttributeError: module 'app.simulation.semantic_program.shape_constraint' has no attribute 'che_muc_tieu'
+E   AssertionError: assert ['desktop/neu...elected', ...] == ['desktop/neu...elected', ...]
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:130: AssertionError: assert ['desktop/neu...elected', ...] == ['desktop/neu...elected', ...]
+E   AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:175: AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+E   AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:184: AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+E   AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:193: AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+E   AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:202: AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+E   Failed: DID NOT RAISE KeyError
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:214: Failed: DID NOT RAISE KeyError
+E   AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_visual_evidence.py:222: AttributeError: module 'build_scene3d_visual_evidence' has no attribute 'ThieuAnhBangChung'
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_claimed]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_gia_dinh]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv10_quan_he_khong_nguon]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[adv11_hai_dap_so_mot_ngoai_pham_vi]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:n1_thoi_dinh_thu_tu]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:n2_lang_tru_xien_hai_vecto]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:t3_hop_tinh_tien_day_chuyen]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[demo:t4_mat_xich_trong_chuoi_sau]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[ho:chop_chu_nhat]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[ho:lang_tru_tam_giac]
+PASSED tests/geometry/test_assumption_certificate.py::test_phan_vi_du_sai_cua_W14_khong_con[rigid:prism_text_translate_swap]
+PASSED tests/geometry/test_assumption_certificate.py::test_GUARD_w16_gia_tri_hien_thi_doi_theo_mat_phang_duoc_dung
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A2_doi_chung_hai_mat_phang_dung_ten]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A3_ti_le_khac_0]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A3b_ti_le_am]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A4_doi_ten_nhat_quan_P]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A4b_doi_ten_nhat_quan_gamma]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A5_khong_ten_duy_nhat]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A5b_bien_khong_ten_de_chi_mot_mat_phang]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[RF1_mat_phang_qua_ba_diem_ben_canh]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_gia_thiet_hop_le_van_la_tien_de[B0_gia_thiet]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_gia_thiet_hop_le_van_la_tien_de[B4b_phu_dinh_trong_yeu_cau]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_gia_thiet_hop_le_van_la_tien_de[B5b_gia_thiet_truoc_yeu_cau_cung_cau]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_gia_thiet_hop_le_van_la_tien_de[B6_tinh_biet_gia_thiet]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_cau_hoi_co_khong_va_phu_dinh_khong_doc_thanh_tien_de[B3_hoi_co_khong]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_cau_hoi_co_khong_va_phu_dinh_khong_doc_thanh_tien_de[B4_phu_dinh_gia_thiet]
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_doi_chung_bon_nhanh_la_C1
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT
+PASSED tests/geometry/test_assumption_certificate.py::test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED
+PASSED tests/geometry/test_scene3d_visual_evidence.py::test_w14_filmstrip_names_roles_in_vietnamese_and_every_line_fits
+PASSED tests/geometry/test_scene3d_visual_evidence.py::test_w14_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused
+XFAIL tests/geometry/test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi - ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND: C0 gắn literal với thực thể của nó, không kiểm phép dựng dùng đúng thực thể đề nói (§14.1, A′)
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A1_beta_chua_xac_dinh_mang_he_so_alpha]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A2_hai_mat_phang_doi_cheo_he_so]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A7_bien_khong_ten_hai_mat_phang_co_ten]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A8_bien_khong_ten_mat_phang_thu_hai_khong_ten]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the[A1_beta_chua_xac_dinh_mang_he_so_alpha]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the[A2_hai_mat_phang_doi_cheo_he_so]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B1_chung_minh_SA_vuong_day]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B1b_CMR_ky_hieu]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B2_chung_minh_goc_vuong_day]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B3b_kiem_tra_ky_hieu]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B3c_cau_hoi_hay_khong]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B5_cau_ghep_gia_thiet_va_yeu_cau]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]
+FAILED tests/geometry/test_assumption_certificate.py::test_w16_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[M\u1eb7t ph\u1eb3ng (\u03b1): 2x \u2212 z + 12 = 0 c\u1eaft h\xecnh tr\u1ee5.-ky_vong0]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[Cho m\u1eb7t ph\u1eb3ng (P) c\xf3 ph\u01b0\u01a1ng tr\xecnh x + y + z \u2212 3 = 0.-ky_vong1]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[M\u1eb7t ph\u1eb3ng z = 3 c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-ky_vong2]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[Cho hai m\u1eb7t ph\u1eb3ng (\u03b1): z = 3 v\xe0 (\u03b2): z = 2.-ky_vong3]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[M\u1eb7t ph\u1eb3ng (\u03b1) : x \u2212 2 = 0.-ky_vong4]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_khong_doc_tron_thi_khong_co_ban_ghi[Cho h\xecnh ch\xf3p S.ABC c\xf3 AB = 3. T\xednh th\u1ec3 t\xedch.]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_khong_doc_tron_thi_khong_co_ban_ghi[M\u1eb7t ph\u1eb3ng (\u03b1): 2x + my \u2212 z + 10 = 0.]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_khong_doc_tron_thi_khong_co_ban_ghi[Di\u1ec7n t\xedch m\u1eb7t ph\u1eb3ng \u0111\xe1y = 12.]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[alpha_plane-ten0]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mat_phang_alpha-ten1]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[plane_beta-ten2]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp_P-ten3]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[gammaPlane-ten4]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[\u03b1-ten5]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[P-ten6]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp_P1-ten7]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp_alpha_beta-ten8]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp_cat-ten9]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp-ten10]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[plane_ABC-ten11]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mpP-ten12]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[Alpha-ten13]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[M\u1eb7t ph\u1eb3ng z = 3 c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-1]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[M\u1eb7t ph\u1eb3ng (\u03b1): z = 3 c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).-1]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[Cho m\u1eb7t ph\u1eb3ng z = 3. M\u1eb7t ph\u1eb3ng (\u03b2) song song v\u1edbi m\u1eb7t ph\u1eb3ng \u0111\xf3.-3]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[Cho (\u03b1): z = 3 v\xe0 (\u03b2) song song v\u1edbi (\u03b1).-3]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[M\u1eb7t ph\u1eb3ng z = 3 song song v\u1edbi m\u1eb7t ph\u1eb3ng \u0111\xe1y.-2]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[Cho mp (P): x = 1.-1]
+FAILED tests/geometry/test_plane_from_equation.py::test_w16_so_lan_nhac_mat_phang[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA \u22a5 (ABC).-0]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 5. Ch\u1ee9ng minh r\u1eb1ng SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y. T\xednh th\u1ec3 t\xedch.-manh0]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Cho h\xecnh ch\xf3p S.ABC. CMR: SA \u22a5 (ABC). T\xednh th\u1ec3 t\xedch.-manh1]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Bi\u1ebft SA \u22a5 (ABC), ch\u1ee9ng minh r\u1eb1ng tam gi\xe1c ABC vu\xf4ng t\u1ea1i A.-manh2]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 5. SA \u22a5 (ABC) hay kh\xf4ng? T\xednh th\u1ec3 t\xedch.-manh3]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA \u22a5 (ABC), SA c\xf3 vu\xf4ng g\xf3c v\u1edbi BC kh\xf4ng?-manh4]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[H\xe3y ki\u1ec3m tra xem SA c\xf3 vu\xf4ng g\xf3c v\u1edbi BC kh\xf4ng.-manh5]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[H\u1ecfi SA c\xf3 vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y kh\xf4ng? T\xednh th\u1ec3 t\xedch.-manh6]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khoang_muc_tieu[Ch\u1ee9ng t\u1ecf r\u1eb1ng S.ABC l\xe0 h\xecnh ch\xf3p \u0111\u1ec1u; t\xednh th\u1ec3 t\xedch.-manh7]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khong_co_muc_tieu[Cho h\xecnh ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A. T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC.]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khong_co_muc_tieu[T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC, bi\u1ebft SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y v\xe0 SA = 5.]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khong_co_muc_tieu[L\u1ea5y \u0111i\u1ec3m M thu\u1ed9c SA sao cho M kh\xf4ng r\u1eddi kh\u1ecfi c\u1ea1nh SA.]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_khong_co_muc_tieu[]
+FAILED tests/geometry/test_shape_constraint.py::test_w16_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w12_family_sheet_keeps_every_required_state_at_native_resolution
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_moi_loai_tu_choi_moi_viewport_mot_o_dung_nguon_dung_chu_thich
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_thieu_ca_mot_loai_tu_choi_thi_that_bai
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_loai_tu_choi_la_bi_bao_loi
+FAILED tests/geometry/test_scene3d_visual_evidence.py::test_w16_dai_phim_thieu_anh_buoc_dung_thi_that_bai
+66 failed, 34 passed, 233 deselected, 1 xfailed in 4.68s
+exit=1

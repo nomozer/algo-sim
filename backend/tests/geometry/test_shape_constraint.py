@@ -272,3 +272,45 @@ def test_goc_vuong_sai_thuc_the_khong_phat(text):
 def test_loi_viet_moi_duoc_doc_tron():
     assert _chua_doc("Cho hình chóp S.ABC có đáy ABC vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc "
                      "với đáy. Tính thể tích khối chóp S.ABC.") == ()
+
+
+# ══ W16 · §14.2 · span MỤC TIÊU — quan hệ phải chứng minh không bao giờ là tiền đề ═══════
+
+def _sc():
+    return importlib.import_module("app.simulation.semantic_program.shape_constraint")
+
+
+@pytest.mark.parametrize("text,manh", [
+    ("Cho hình chóp S.ABC có SA = 5. Chứng minh rằng SA vuông góc với đáy. Tính thể tích.",
+     ["Chứng minh rằng SA vuông góc với đáy"]),
+    ("Cho hình chóp S.ABC. CMR: SA ⊥ (ABC). Tính thể tích.", ["CMR: SA ⊥ (ABC)"]),
+    ("Biết SA ⊥ (ABC), chứng minh rằng tam giác ABC vuông tại A.", ["chứng minh rằng tam giác ABC vuông tại A"]),
+    ("Cho hình chóp S.ABC có SA = 5. SA ⊥ (ABC) hay không? Tính thể tích.", ["SA ⊥ (ABC) hay không"]),
+    ("Cho hình chóp S.ABC có SA ⊥ (ABC), SA có vuông góc với BC không?", ["SA có vuông góc với BC không"]),
+    ("Hãy kiểm tra xem SA có vuông góc với BC không.", ["kiểm tra xem SA có vuông góc với BC không"]),
+    ("Hỏi SA có vuông góc với đáy không? Tính thể tích.", ["Hỏi SA có vuông góc với đáy không"]),
+    ("Chứng tỏ rằng S.ABC là hình chóp đều; tính thể tích.", ["Chứng tỏ rằng S.ABC là hình chóp đều"]),
+])
+def test_w16_khoang_muc_tieu(text, manh):
+    assert [text[a:b] for a, b in _sc().khoang_muc_tieu(text)] == manh
+
+
+@pytest.mark.parametrize("text", [
+    "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A. Tính thể tích khối chóp S.ABC.",
+    "Tính thể tích khối chóp S.ABC, biết SA vuông góc với đáy và SA = 5.",     # `Tính` không là mục tiêu
+    "Lấy điểm M thuộc SA sao cho M không rời khỏi cạnh SA.",                  # `hỏi` nằm TRONG `khỏi`
+    "",
+])
+def test_w16_khong_co_muc_tieu(text):
+    assert _sc().khoang_muc_tieu(text) == ()
+
+
+def test_w16_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc():
+    """Câu ghép: giả thiết đứng TRƯỚC yêu cầu vẫn đọc được; quan hệ phải chứng minh thì không."""
+    text = ("Cho hình chóp S.ABC có AB = 3, AC = 4, SA = 5. Biết SA vuông góc với đáy, chứng minh rằng tam "
+            "giác ABC vuông tại A. Tính thể tích khối chóp S.ABC.")
+    che = _sc().che_muc_tieu(text)
+    assert len(che) == len(text)
+    kinds = {r.kind for r in _doc(che)}
+    assert "line_perp_plane" in kinds and "right_triangle" not in kinds, kinds
+    assert "right_triangle" in _kinds(text)          # bộ đọc trên đề GỐC vẫn thấy nó (dùng để chặn CE)
