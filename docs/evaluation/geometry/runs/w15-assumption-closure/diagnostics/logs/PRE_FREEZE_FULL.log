@@ -1,0 +1,34 @@
+# W15 Task 9 — pre-freeze verification in the main tree at 5a54bfc6 (clean tree except the user's favicon deletion; last product commit d41176f2)
+
+## backend: cd backend && PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -rfE --tb=line
+result: 11 failed, 6745 passed, 1 skipped, 2 deselected, 2 warnings in 221.29s (0:03:41)
+allowed failures (stale candidate identity only — the single refreeze rewrites EVALUATION_CANDIDATE.json):
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+  STALE_CANDIDATE_IDENTITY :: tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+  STALE_CANDIDATE_IDENTITY :: tests/semantic_program/test_evaluation_candidate.py::test_cache_version_khop_nguon
+  STALE_CANDIDATE_IDENTITY :: tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+Same 11 names as the W14 pre-freeze list. The candidate on file is 40263983… (W14, CACHE_VERSION 106); the measured system is now aaa5b5bd452321e1… at CACHE_VERSION 107.
+0 xfailed: the 16 W14 strict xfails of the assumption gate were removed where their requirement holds (W15 Tasks 5–6). No -k / --deselect / skip used beyond the suite's own configuration.
+warnings: the starlette TestClient deprecation (pre-existing), and a cp1252 decode error in the subprocess reader thread of test_inv_20 while it reads the stale --verify message (pre-existing, stale state only).
+
+## frontend: npx vitest run
+ Test Files  67 passed (67)
+      Tests  1016 passed (1016)
+
+## frontend: npx tsc -b
+tsc -b: exit 0
+
+## frontend: vite build
+vite build into frontend/dist: not attempted — EPERM emptying frontend/dist/assets in the main tree (pre-existing, environmental; ledger note, W15 Task 2)
+npx vite build --outDir D:/tmp/w15-prefreeze-dist --emptyOutDir: exit 0 (built in 2.22s; chunk-size warning pre-existing); the temporary directory was removed
+(the evidence and T3 runs build from fresh detached worktrees, unaffected)
+
+## node: node --test frontend/scripts/*.node-test.mjs
+ℹ tests 55 ℹ pass 55 ℹ fail 0
