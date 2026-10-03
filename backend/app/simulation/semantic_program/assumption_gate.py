@@ -21,12 +21,14 @@ import copy
 import functools
 import re
 import typing
+from collections import Counter
 from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Callable
 
 from ..geometry.exact import Vec3
 from .contract import SemanticProgramSpec
+from .domain_profile import geometry_symbol_key
 from .formation import _dinh_nghia, hoan_thien_dung_hinh
 from .grounding_gate import bang_chung_doan
 from .interpreter import SemanticProgramInterpreter
@@ -163,6 +165,13 @@ def _id(x: Any) -> str:
     return dinh_danh_thuc_the(str(x))[0]
 
 
+def _khoa(x: Any) -> str:
+    """Khoá để so tên phía mô hình/chương trình với thực thể của đề (U4 · G2):
+    `domain_profile.geometry_symbol_key` — A′ ≡ A1 ≡ A_prime ≡ Aprime, bốn lối viết đo được ở
+    lượt sinh thật; tên không phải ký hiệu giữ định danh thường."""
+    return geometry_symbol_key(str(x)) or _id(x)
+
+
 def _nhan(*ten: str) -> str:
     return "".join(dinh_danh_thuc_the(t)[1] for t in ten)
 
@@ -215,8 +224,11 @@ class _ChiMuc:
             return _DinhNghia(n, "cau_lenh", tinh[0][1], dong[0].memory_snapshot.get(n))
         raise _Loi("CLOSURE_UNRESOLVED_DEFINITION", n)
 
-    def ten_theo_thuc_the(self) -> dict[str, str]:
-        return {_id(n): n for n in self.tinh}
+    def ten_theo_khoa(self) -> dict[str, str]:
+        """Khoá ký hiệu → tên chương trình; khoá mà hai tên cùng mang (`A` và `A_`) bị bỏ —
+        không đoán tên nào là điểm nào."""
+        dem = Counter(_khoa(n) for n in self.tinh)
+        return {_khoa(n): n for n in self.tinh if dem[_khoa(n)] == 1}
 
 
 # ── lát cắt ──────────────────────────────────────────────────────────────────
@@ -324,10 +336,10 @@ def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None) -> str | N
         except (ValueError, TypeError, ZeroDivisionError):
             return None
         for i in inv:
-            if i.kind == "point_coordinate" and [_id(p) for p in i.points] == [_id(lit[1])]:
+            if i.kind == "point_coordinate" and [_khoa(p) for p in i.points] == [_khoa(lit[1])]:
                 if [_F(c) for c in i.coefficients] == xyz:
                     return "SOURCE_DATUM"
-        return "LAYOUT_FRONTIER" if khuon is not None and _id(lit[1]) in khuon else None
+        return "LAYOUT_FRONTIER" if khuon is not None and _khoa(lit[1]) in {_khoa(v) for v in khuon} else None
     if loai == "vo_huong":
         m = _TEN_DO_DAI.fullmatch(lit[1])
         try:
@@ -348,10 +360,10 @@ def _vai_tro(lit: tuple, de: str, inv: tuple, khuon: set[str] | None) -> str | N
         for i in inv:
             if i.kind != "segment_division" or len(i.points) != 3 or not i.expected:
                 continue
-            A, B, M = (_id(p) for p in i.points)
-            if _id(m_ten) != M or {_id(a), _id(b)} != {A, B}:
+            A, B, M = (_khoa(p) for p in i.points)
+            if _khoa(m_ten) != M or {_khoa(a), _khoa(b)} != {A, B}:
                 continue
-            ky_vong = _F(i.expected) if (_id(a), _id(b)) == (A, B) else 1 - _F(i.expected)
+            ky_vong = _F(i.expected) if (_khoa(a), _khoa(b)) == (A, B) else 1 - _F(i.expected)
             try:
                 return "SOURCE_DATUM" if _F(t) == ky_vong else None
             except (ValueError, ZeroDivisionError):
@@ -393,7 +405,9 @@ def _vuong_goc_ngam(rb: tuple[RangBuoc, ...]) -> set[frozenset]:
 
 
 def _trang_thai_quan_he(contract: Any, rb: tuple[RangBuoc, ...]) -> tuple[list[str], bool]:
-    dong = lambda a, b: frozenset((_id(a), _id(b)))  # noqa: E731
+    # Tên của hợp đồng (phía mô hình) so với thực thể đề trong CÙNG không gian khoá ký hiệu.
+    rb = tuple(RangBuoc(x.kind, tuple(_khoa(e) for e in x.entities), x.value, x.span) for x in rb)
+    dong = lambda a, b: frozenset((_khoa(a), _khoa(b)))  # noqa: E731
     ra, bac = [], False
     ngam = _vuong_goc_ngam(rb)
     for r in getattr(contract, "geometric_relations", ()) or ():
@@ -408,7 +422,7 @@ def _trang_thai_quan_he(contract: Any, rb: tuple[RangBuoc, ...]) -> tuple[list[s
             trai = any(x.kind == "right_triangle" and len(chung) == 1 and set(L | K) == set(x.entities)
                        and next(iter(chung)) != x.entities[0] for x in rb)
         elif r.kind == "perpendicular_line_plane":
-            P = {_id(p) for p in (r.plane or ())}
+            P = {_khoa(p) for p in (r.plane or ())}
             xac = any((x.kind == "line_perp_plane" and dong(*x.entities[:2]) == L and P <= set(x.entities[2:]))
                       or (x.kind in ("right_prism", "cuboid", "cube") and x.entities
                           and _la_canh_ben(x.entities, L) and P <= set(x.entities[:len(x.entities) // 2]))
@@ -625,7 +639,10 @@ def _nhan_khuon(rb: tuple[RangBuoc, ...], cm: _ChiMuc, prog: dict):
     co_ten = {r.entities for r in rb if r.kind in ("pyramid", "prism") and r.entities}
     if len(co_ten) == 1:
         ent = next(iter(co_ten))
-        anh_xa = cm.ten_theo_thuc_the()
+        if len({_khoa(e) for e in ent}) != len(set(ent)):
+            return "TEMPLATE_NOT_MATCHED two solid vertices share one symbol key"
+        theo_khoa = cm.ten_theo_khoa()
+        anh_xa = {e: theo_khoa[_khoa(e)] for e in ent if _khoa(e) in theo_khoa}
         rb_kieu: list[RangBuoc] = []                       # ký hiệu + kiểu, mỗi kind một lần
         for r in rb:
             if r.entities == ent and r.kind not in {x.kind for x in rb_kieu}:
@@ -722,9 +739,11 @@ def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_d
     ngan[0] += 1
     d2 = copy.deepcopy(prog)
 
+    ve_de = {n: e for e, n in anh_xa.items()}
+
     def moi(ten: str) -> list[str] | None:
-        e = _id(ten)
-        if e not in ct or anh_xa.get(e) != ten:
+        e = ve_de.get(ten)
+        if e not in ct:
             return None
         return [str(ct[e].x), str(ct[e].y), str(ct[e].z)]
 

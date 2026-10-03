@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import copy
 import importlib
+import json
+import re
 from fractions import Fraction
 
 import pytest
@@ -203,6 +205,29 @@ def test_rang_buoc_doc_duoc_ngoai_khuon_khong_kiem_thi_khong_la_phu_thuoc():
     kq = _kq(*_chop_vuong_qua_duong_cheo())
     assert kq.status == CHUA_RO, kq
     assert any(d.startswith("CE_CONSTRAINT_NOT_CHECKED line_perp_line") for d in kq.details), kq.details
+
+
+# ── đỉnh phẩy viết theo lối của mô hình (quyết định U4 · G2) ────────────────
+
+def _hop_doi_ten_phay(hau_to: str):
+    """Hộp chữ nhật T4 (đề viết `ABCD.A'B'C'D'`), chương trình viết A′ thành `A<hau_to>`."""
+    _t, ct = W.hop_chu_nhat()
+    raw = json.dumps(W.chuong_trinh(ct))
+    return ct, json.loads(re.sub(r"([A-D])_prime", lambda m: m.group(1) + hau_to, raw))
+
+
+@pytest.mark.parametrize("hau_to", ["1", "prime"])
+def test_dinh_phay_viet_kieu_mo_hinh_van_duoc_C1(hau_to):
+    """`domain_profile` ghi bốn cách viết CÙNG một điểm bậc một đo được ở lượt sinh thật —
+    `A'` · `A1` · `A_prime` · `Aprime`; đỉnh đề gắn với tên chương trình qua khoá ký hiệu."""
+    kq = _kq(*_hop_doi_ten_phay(hau_to))
+    assert (kq.status, kq.certificate) == (AN_TOAN, "C1"), kq
+
+
+def test_hai_ten_cung_khoa_khong_gan():
+    """`A_` cùng khoá với `A` — không biết tên nào là A, tên nào là A′ ⇒ không gắn, không chứng nhận."""
+    kq = _kq(*_hop_doi_ten_phay("_"))
+    assert (kq.status, kq.certificate) == (CHUA_RO, None), kq
 
 
 # ── quan hệ chỉ có trong analyze, đề IM LẶNG: không dùng được (test (10) thực chất) ──

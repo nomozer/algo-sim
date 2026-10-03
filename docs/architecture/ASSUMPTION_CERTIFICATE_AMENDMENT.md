@@ -160,6 +160,16 @@ Literal khác — tỉ số, góc, vị trí mặt phẳng, hệ số do mô hì
 nguyên và chỉ đi qua phép dựng không phụ thuộc khung — **không vai trò ⇒ không chứng
 chỉ**. Phân tích thứ nguyên là điều kiện cần, không bao giờ đủ.
 
+> **Đính chính 2026-10-03 (W15 Task 6, quyết định U4 · G2).** "CÙNG điểm" / "đỉnh nằm trong
+> ký hiệu khối" so tên phía chương trình (hay hợp đồng) với thực thể của đề qua
+> `domain_profile.geometry_symbol_key` — thẩm quyền có sẵn gộp bốn lối viết một điểm bậc một
+> đo được ở lượt sinh thật: `A′` ≡ `A1` ≡ `A_prime` ≡ `Aprime`. Một phép dò cho thấy chương
+> trình hộp chữ nhật ĐÚNG viết đỉnh nắp là `A1`/`Aprime` bị từ chối (`T4 TEMPLATE_VERTEX_
+> MISSING`). Khoá mà hai tên chương trình cùng mang (vd `A` và `A_`) — hoặc hai đỉnh của
+> khối trong đề cùng mang — thì không gắn: không đoán tên nào là điểm nào (đóng an toàn).
+> Vô hướng `XY_length` vẫn theo `bang_chung_doan` như grounding (chỉ lối viết `_prime`):
+> hai thẩm quyền không được lệch nhau.
+
 ## 5. C0 — lát cắt ghim bởi nguồn
 
 Mọi literal trên lát cắt của mọi giá trị bị phủ là `SOURCE_DATUM`; mọi giá trị ghim
