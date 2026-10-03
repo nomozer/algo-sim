@@ -1,0 +1,4223 @@
+{
+ "corpus": "W15B_ASSUMPTION_ADDENDUM",
+ "model_calls": 0,
+ "labels_sha256_lf": "d8504010a8c8af334d4d01c1c855e06f12b412eb4709f30460707163e29c15cb",
+ "rows": [
+  {
+   "id": "ur:goc_45",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "T1 whose height is fixed by an angle the readers do not read (SA = AB = 3); the program builds SA = 3; never DEPENDENT",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, Góc giữa SB và mặt phẳng đáy bằng 45°. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "3"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "ur:SA_bang_AB",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "equality of two named segments without a number (SA = 3)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = AB. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "3"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "ur:vuong_can",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "isosceles right lateral face fixes SA = AB = 3; 'cân' is dropped by the reader",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, Tam giác SAB vuông cân tại A. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "3"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "ur:SB_can",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "radical slant length the length reader does not read (SA = 3)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SB = 3√2. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "3"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "ur:SB_5",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "READ rational slant length (SA = 4): the stretch of SA breaks |SB| = 5, so it is not a counterexample",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "B",
+       "S"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "",
+      "scale_symbol": "",
+      "source_text": "BS = 5"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SB = 5. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "4"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "ur:AC_vuong_BD",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "rectangle base with AB = 3 and AC ⊥ BD (square, AD = 3): a read constraint outside the template's premises",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "v"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 56,
+      "source_end": 57,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_SA",
+      "label": "SA",
+      "values": [
+       6
+      ],
+      "provenance": "confirmed",
+      "source_start": 113,
+      "source_end": 114,
+      "source_text": "6",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "S"
+      ],
+      "expected": "6",
+      "coefficients": [],
+      "source_fact_id": "fact_len_SA",
+      "scale_symbol": "",
+      "source_text": "AS = 6"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "rectangle"
+    },
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3 và AC vuông góc với BD. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là hình chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "SA_length",
+      "type": "float",
+      "initial_value": "6",
+      "source_fact_id": "fact_len_SA",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "3",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "3",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "6"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "v",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "v",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "vg:day_vuong_tai",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "reason": "T1 with 'đáy ABC vuông tại A' (no 'là tam giác')",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 49,
+      "source_end": 50,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 57,
+      "source_end": 58,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_SA",
+      "label": "SA",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 96,
+      "source_end": 97,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "S"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_len_SA",
+      "scale_symbol": "",
+      "source_text": "AS = 5"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "SA_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_len_SA",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "vg:vuong_dinh",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "reason": "T1 with 'tam giác vuông đỉnh A'",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 62,
+      "source_end": 63,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 70,
+      "source_end": 71,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_SA",
+      "label": "SA",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 109,
+      "source_end": 110,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "S"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_len_SA",
+      "scale_symbol": "",
+      "source_text": "AS = 5"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông đỉnh A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "SA_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_len_SA",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "vg:vuong_o_dinh",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "reason": "T1 with 'tam giác vuông ở đỉnh A'",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "the_tich_khoi"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_len_AB",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 64,
+      "source_end": 65,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_AC",
+      "label": "AC",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 72,
+      "source_end": 73,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_len_SA",
+      "label": "SA",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 111,
+      "source_end": 112,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AB",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "C"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_len_AC",
+      "scale_symbol": "",
+      "source_text": "AC = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "S"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_len_SA",
+      "scale_symbol": "",
+      "source_text": "AS = 5"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "C"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "S",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "source_fact_id": "fact_perp_lateral",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": null,
+    "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông ở đỉnh A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối chóp có đáy là tam giác vuông",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_len_AB",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AC_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_len_AC",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "SA_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_len_SA",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt đỉnh vuông của tam giác đáy tại gốc toạ độ"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ nhất dọc trục thứ nhất"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "model_assumption": "đặt cạnh góc vuông thứ hai dọc trục thứ hai"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "model_assumption": "đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông"
+     },
+     {
+      "name": "day_ABC",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABC",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_chop",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABC",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "label": "Tam giác đáy"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        1
+       ]
+      ],
+      "label": "Khối chóp"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABC",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_chop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_chop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "sk:phay_1",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "reason": "cuboid T4, program spells A′ as A1 (a spelling measured in real generations)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_hop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 44,
+      "source_end": 45,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_aa_prime",
+      "label": "AA'",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "A'"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "AA' = 5"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "A'",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "D"
+      ],
+      "source_fact_id": "fact_perp_lat",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": "rectangle",
+     "lateral_structure": "right",
+     "solid_subkind": "cuboid",
+     "source_grounding": "hình hộp chữ nhật"
+    },
+    "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_ab",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_ad",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AA1_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_aa_prime",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A1",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B1",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C1",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D1",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_hop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_AA1",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_hop",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "đáy dưới ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A1",
+       "B1",
+       "C1",
+       "D1"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_AA1",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "A1"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_hop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "sk:phay_prime",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "reason": "cuboid T4, program spells A′ as Aprime",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_hop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 44,
+      "source_end": 45,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_aa_prime",
+      "label": "AA'",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "A'"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "AA' = 5"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "A'",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "D"
+      ],
+      "source_fact_id": "fact_perp_lat",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": "rectangle",
+     "lateral_structure": "right",
+     "solid_subkind": "cuboid",
+     "source_grounding": "hình hộp chữ nhật"
+    },
+    "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_ab",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_ad",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AAprime_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_aa_prime",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "Aprime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "Bprime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "Cprime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "Dprime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_hop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_AAprime",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_hop",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "đáy dưới ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "Aprime",
+       "Bprime",
+       "Cprime",
+       "Dprime"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_AAprime",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "Aprime"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_hop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "sk:phay_gach",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "reason": "program spells A′ as A_, which shares the symbol key of A: nothing binds (fail closed)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_hop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 44,
+      "source_end": 45,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_aa_prime",
+      "label": "AA'",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "A'"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "AA' = 5"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "A'",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "D"
+      ],
+      "source_fact_id": "fact_perp_lat",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": "rectangle",
+     "lateral_structure": "right",
+     "solid_subkind": "cuboid",
+     "source_grounding": "hình hộp chữ nhật"
+    },
+    "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_ab",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_ad",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AA__length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_aa_prime",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A_",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B_",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C_",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D_",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_hop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_AA_",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_hop",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "đáy dưới ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_",
+       "B_",
+       "C_",
+       "D_"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_AA_",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "A_"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_hop"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "sc:doan_r3",
+   "group": "W15B_SCOPE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "expect_route": "SERVED_NOT_ENFORCED",
+   "reason": "segment problem with no solid (EF = 10, FP = 4·PE ⇒ PF = 8): outside the polyhedral scope, recorded and served",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "P",
+      "params": {
+       "witness": "do_dai_pf",
+       "wrt": "F"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "doan_thang",
+      "label": "Đoạn thẳng EF",
+      "values": [
+       "EF"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "do_dai_doan",
+      "label": "Độ dài đoạn EF",
+      "values": [
+       10
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "vi_tri_diem",
+      "label": "Vị trí điểm P trên đoạn EF",
+      "values": [
+       "P thuộc EF và FP = 4·PE"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "E",
+       "F",
+       "P"
+      ],
+      "expected": "1/5",
+      "coefficients": [],
+      "source_fact_id": "vi_tri_diem",
+      "scale_symbol": "",
+      "source_text": "Điểm P nằm trên đoạn EF — FP = 4*PE"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Cho đoạn thẳng EF có độ dài 10. Điểm P nằm trên đoạn EF sao cho FP = 4·PE. Tính độ dài PF."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính độ dài đoạn thẳng PF",
+    "description": "Bài toán này minh họa cách sử dụng phép chia đoạn thẳng theo tỉ lệ để xác định vị trí một điểm và sau đó tính độ dài đoạn thẳng liên quan.",
+    "memory_declarations": [
+     {
+      "name": "E",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "doan_thang"
+     },
+     {
+      "name": "F",
+      "type": "point3",
+      "initial_value": [
+       10,
+       0,
+       0
+      ],
+      "source_fact_id": "doan_thang"
+     },
+     {
+      "name": "do_dai_ef",
+      "type": "float",
+      "initial_value": 10,
+      "source_fact_id": "do_dai_doan"
+     },
+     {
+      "name": "P",
+      "type": "point3",
+      "source_fact_id": "vi_tri_diem"
+     },
+     {
+      "name": "do_dai_pf",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_point",
+      "target_var": "P",
+      "expr": {
+       "kind": "divide_segment",
+       "a": "E",
+       "b": "F",
+       "ratio": "1/5"
+      },
+      "label": "Điểm P chia đoạn EF theo tỉ lệ EP/PF = 1/4, tương đương với FP = 4·PE"
+     },
+     {
+      "kind": "assign",
+      "target_var": "do_dai_pf",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "P",
+       "wrt": "F"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài tập này giúp học sinh hiểu cách biểu diễn các điểm trên một đoạn thẳng theo tỉ lệ cho trước và tính toán khoảng cách giữa các điểm đó."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "sc:non_e4",
+   "group": "W15B_SCOPE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "expect_route": "SERVED_NOT_ENFORCED",
+   "reason": "cone given by lengths (r = 21, h = 28, PT = 20 ⇒ r(t) = 15): outside the polyhedral scope, recorded and served",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "radius",
+      "container": "(t)",
+      "params": {
+       "witness": "ban_kinh_t"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "dinh_non",
+      "label": "Đỉnh hình nón",
+      "values": [
+       "P"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "tam_day_non",
+      "label": "Tâm đáy hình nón",
+      "values": [
+       "Q"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "ban_kinh_day",
+      "label": "Bán kính đáy hình nón",
+      "values": [
+       21
+      ],
+      "provenance": "confirmed",
+      "source_start": 51,
+      "source_end": 53,
+      "source_text": "21",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "chieu_cao_non",
+      "label": "Chiều cao hình nón",
+      "values": [
+       28
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       28
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "w_tren_duong_tron_day",
+      "label": "Điểm W trên đường tròn đáy",
+      "values": [
+       "W là một điểm trên đường tròn đáy"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mat_phang_vuong_goc_pq",
+      "label": "Mặt phẳng vuông góc với PQ",
+      "values": [
+       "Một mặt phẳng vuông góc với PQ"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mat_phang_cat_pq_tai_t",
+      "label": "Mặt phẳng cắt PQ tại T",
+      "values": [
+       "cắt PQ tại điểm T"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "do_dai_pt",
+      "label": "Độ dài đoạn PT",
+      "values": [
+       20
+      ],
+      "provenance": "confirmed",
+      "source_start": 181,
+      "source_end": 183,
+      "source_text": "20",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "mat_phang_cat_non_theo_duong_tron_t",
+      "label": "Mặt phẳng cắt hình nón theo đường tròn (t)",
+      "values": [
+       "Mặt phẳng đó cắt hình nón theo đường tròn (t)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "P",
+       "Q",
+       "T"
+      ],
+      "expected": "5/7",
+      "coefficients": [],
+      "source_fact_id": "mat_phang_cat_pq_tai_t",
+      "scale_symbol": "",
+      "source_text": "cắt PQ tại điểm T — PT = 20"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Hình nón có đỉnh P và tâm đáy Q, bán kính đáy bằng 21, chiều cao PQ bằng 28. Gọi W là một điểm trên đường tròn đáy. Một mặt phẳng vuông góc với PQ cắt PQ tại điểm T sao cho PT bằng 20, tính từ đỉnh P. Mặt phẳng đó cắt hình nón theo đường tròn (t). Tính bán kính của đường tròn (t)."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính bán kính đường tròn thiết diện của hình nón",
+    "description": "Chương trình dựng hình nón và mặt phẳng cắt, sau đó tính bán kính đường tròn giao tuyến.",
+    "memory_declarations": [
+     {
+      "name": "P",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       28
+      ],
+      "source_fact_id": "dinh_non"
+     },
+     {
+      "name": "Q",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "tam_day_non"
+     },
+     {
+      "name": "W",
+      "type": "point3",
+      "initial_value": [
+       21,
+       0,
+       0
+      ],
+      "source_fact_id": "w_tren_duong_tron_day"
+     },
+     {
+      "name": "ban_kinh_day_val",
+      "type": "float",
+      "initial_value": 21.0,
+      "source_fact_id": "ban_kinh_day"
+     },
+     {
+      "name": "chieu_cao_non_val",
+      "type": "float",
+      "initial_value": 28.0,
+      "source_fact_id": "chieu_cao_non"
+     },
+     {
+      "name": "do_dai_pt_val",
+      "type": "float",
+      "initial_value": 20.0,
+      "source_fact_id": "do_dai_pt"
+     },
+     {
+      "name": "non",
+      "type": "curved_solid"
+     },
+     {
+      "name": "line_pq",
+      "type": "line3"
+     },
+     {
+      "name": "T",
+      "type": "point3"
+     },
+     {
+      "name": "mat_phang_cat",
+      "type": "plane3",
+      "source_fact_id": "mat_phang_vuong_goc_pq"
+     },
+     {
+      "name": "duong_tron_t",
+      "type": "circle3",
+      "source_fact_id": "mat_phang_cat_non_theo_duong_tron_t"
+     },
+     {
+      "name": "ban_kinh_t",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_curved_solid",
+      "target_var": "non",
+      "curved_kind": "cone",
+      "anchor": "Q",
+      "apex_or_top": "P",
+      "rim_point": "W"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "line_pq",
+      "through_a": "P",
+      "through_b": "Q"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "T",
+      "expr": {
+       "kind": "divide_segment",
+       "a": "P",
+       "b": "Q",
+       "ratio": "5/7"
+      },
+      "label": "Điểm T trên PQ sao cho PT = 20"
+     },
+     {
+      "kind": "assign",
+      "target_var": "mat_phang_cat",
+      "expr": {
+       "kind": "plane_perpendicular_to_line",
+       "point": "T",
+       "line": "line_pq"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "duong_tron_t",
+      "expr": {
+       "kind": "intersect_plane_curved",
+       "solid": "non",
+       "plane": "mat_phang_cat"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "ban_kinh_t",
+      "expr": {
+       "kind": "measure",
+       "quantity": "radius",
+       "of": "duong_tron_t"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình nón, mặt phẳng cắt vuông góc với trục, và tính bán kính đường tròn thiết diện bằng cách sử dụng định lý Thales trong không gian."
+   },
+   "program_schema_ok": true
+  }
+ ]
+}
