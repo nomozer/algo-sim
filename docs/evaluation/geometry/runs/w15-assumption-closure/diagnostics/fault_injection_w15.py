@@ -62,7 +62,7 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
             "        tinh, dong = self.tinh.get(n, []), self.dong.get(n, [])\n",
             "        tinh, dong = self.tinh.get(n, []), self.dong.get(n, [])\n"
             "        if tinh:\n"
-            "            return _DinhNghia(n, tinh[-1][0], tinh[-1][1],\n"
+            "            return _DinhNghia(tinh[-1][0], tinh[-1][1],\n"
             "                              dong[-1].memory_snapshot.get(n) if dong else self.dau.get(n))\n",
             "reaching definitions replaced by the final (last-written) value",
             "overwrite/alias/restore cases get certified"),

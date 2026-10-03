@@ -1,0 +1,201 @@
+# W15 Task 9 — full backend suite after the ponytail fixes, main tree at e59712a1 + working tree (fault_injection_w15.py FI6 adaptation and FAULT_INJECTION_ASSUMPTION_GATE_P9.log uncommitted; the user's favicon deletion)
+# command: cd backend && PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider --tb=line -x --maxfail=60   (-x is overridden by --maxfail=60; the run completed)
+# expected failures: 11 STALE_CANDIDATE_IDENTITY (fixed by the Task 9 refreeze) + 2 favicon-only-tree checks (red only while files are uncommitted)
+# (trailing whitespace stripped from the raw pytest output; nothing else changed)
+
+.................................................F...................... [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+...............................................................FFFF...F. [  4%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+................F......................F................................ [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+........................................................................ [ 22%]
+....................................................................F... [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 31%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+..............................................F......................... [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+...................................F.................................... [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+...........................................F.......F.................... [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+.......................................................................s [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+.............................................................            [100%]
+================================== FAILURES ===================================
+E   assert False is True
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_analyze_failure_cluster_diagnosis.py:55: assert False is True
+E   AssertionError: assert 'FAIL' == 'PASS'
+
+      - PASS
+      + FAIL
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError: assert 'FAIL' == 'PASS'
+E   AssertionError: assert 'FAIL' == 'PASS'
+
+      - PASS
+      + FAIL
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError: assert 'FAIL' == 'PASS'
+E   AssertionError: assert 'FAIL' == 'PASS'
+
+      - PASS
+      + FAIL
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError: assert 'FAIL' == 'PASS'
+E   AssertionError: assert 'FAIL' == 'PASS'
+
+      - PASS
+      + FAIL
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError: assert 'FAIL' == 'PASS'
+E   AssertionError: assert 'FAIL' == 'PASS'
+
+      - PASS
+      + FAIL
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_branch_independent_harness.py:83: AssertionError: assert 'FAIL' == 'PASS'
+E   AssertionError: assert 1 == 0
+     +  where 1 = CompletedProcess(args=['D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe', 'backend/scripts/freeze_evaluation_candidate.py', '--verify'], returncode=1, stderr='').returncode
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_docs_information_architecture.py:193: AssertionError: assert 1 == 0
+E   assert False is True
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_docs_test_telemetry.py:95: assert False is True
+E   AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\n\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
+     +  where True = bool(['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'])
+     +    where ['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'] = <function blockers at 0x000002594ECDC180>({'luc': '2026-10-03T05:45:41+00:00', 'git_sha': 'e59712a1e1dec24138e1ad476ba73e80c5fa544a', 'cay_sach': False, 'cache_version': '107', ...})
+     +      where <function blockers at 0x000002594ECDC180> = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>.blockers
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_holdout_readiness_7b.py:832: AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\n\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
+E   AssertionError: assert 'DIRTY_OTHER' == 'DIRTY_ONLY_USER_FAVICON'
+
+      - DIRTY_ONLY_USER_FAVICON
+      + DIRTY_OTHER
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_second_family_preregistration_evidence_repair.py:156: AssertionError: assert 'DIRTY_OTHER' == 'DIRTY_ONLY_USER_FAVICON'
+E   AssertionError: văn bản khai đã cũ — hệ hiện tại là aaa5b5bd452321e1…, khai 40263983f97811ad…
+    assert '40263983f978...0b3091fb9b5d3' == 'aaa5b5bd4523...63e4dc2f2ca5e'
+
+      - aaa5b5bd452321e1ad5130608b27e02a60c55cb487f66dab78563e4dc2f2ca5e
+      + 40263983f97811ada21238a0ff3da634eaa36ef88deb6d07f4c0b3091fb9b5d3
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_thesis_acceptance_matrix.py:321: AssertionError: văn bản khai đã cũ — hệ hiện tại là aaa5b5bd452321e1…, khai 40263983f97811ad…
+E   AssertionError: assert '106' == '107'
+
+      - 107
+      + 106
+D:\Documents\projects\algo-sim\backend\tests\semantic_program\test_evaluation_candidate.py:46: AssertionError: assert '106' == '107'
+E   AssertionError: MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem `git diff a2af56e4 HEAD -- backend/app frontend/src/simulations/domains/semantic frontend/src/simulations/domains/semantic/semantic_program.schema.json`. Đổi vì một case SEALED ⇒ VI PHẠM luật con dấu (§7.4).
+    assert '40263983f978...0b3091fb9b5d3' == 'aaa5b5bd4523...63e4dc2f2ca5e'
+
+      - aaa5b5bd452321e1ad5130608b27e02a60c55cb487f66dab78563e4dc2f2ca5e
+      + 40263983f97811ada21238a0ff3da634eaa36ef88deb6d07f4c0b3091fb9b5d3
+D:\Documents\projects\algo-sim\backend\tests\semantic_program\test_evaluation_candidate.py:151: AssertionError: MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem `git diff a2af56e4 HEAD -- backend/app frontend/src/simulations/domains/semantic frontend/src/simulations/domains/semantic/semantic_program.schema.json`. Đổi vì một case SEALED ⇒ VI PHẠM luật con dấu (§7.4).
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1922 (_readerthread)
+
+  Traceback (most recent call last):
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1599, in _readerthread
+      buffer.append(fh.read())
+                    ^^^^^^^^^
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 23, in decode
+      return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  UnicodeDecodeError: 'charmap' codec can't decode byte 0x90 in position 18: character maps to <undefined>
+
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+FAILED tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+FAILED tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+FAILED tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+FAILED tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+FAILED tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+FAILED tests/semantic_program/test_evaluation_candidate.py::test_cache_version_khop_nguon
+FAILED tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+13 failed, 6743 passed, 1 skipped, 2 deselected, 2 warnings in 225.23s (0:03:45)
+exit 1
