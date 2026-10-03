@@ -367,8 +367,25 @@ def test_16_diem_dan_xuat_DUNG_producer_van_PASS():
 
 
 # ══ §9 · TIÊM LỖI ═════════════════════════════════════════════════════
+#
+# W15 (U4 · G4): cổng giả định là một lớp chặn ĐỘC LẬP — nó đọc toạ độ đề bằng bộ phát nó
+# tự nhập, nên ca sai vẫn bị chặn khi checker toạ độ bị tiêm hỏng. Mỗi phép tiêm khẳng định
+# điều ấy trước, rồi tạm bỏ RIÊNG cổng giả định để đo đúng checker được tiêm.
+def _chi_cong_gia_dinh_chan(kq) -> None:
+    assert not kq.servable and kq.stage_reached == "assumption", (kq.stage_reached, kq.details[:2])
+
+
+def _bo_cong_gia_dinh(monkeypatch) -> None:
+    import app.simulation.semantic_program.route as RT
+    from app.simulation.semantic_program.assumption_gate import PROVEN_SAFE, KetQuaGiaDinh
+
+    monkeypatch.setattr(RT, "kiem_gia_dinh", lambda *a, **k: KetQuaGiaDinh(PROVEN_SAFE))
+
+
 def test_TIEM_1_bo_BO_PHAT__ca_B_99_duoc_phuc_vu_lai(monkeypatch):
     monkeypatch.setattr(PC, "bat_bien_toa_do", lambda c, t: ())
+    _chi_cong_gia_dinh_chan(_chay(_doi("B", [99, 7, 0])))
+    _bo_cong_gia_dinh(monkeypatch)
     kq = _chay(_doi("B", [99, 7, 0]))
     assert kq.servable and _v(kq) == "540"
 
@@ -393,6 +410,8 @@ def test_TIEM_2_bo_DISPATCH_checker__ca_sai_duoc_phuc_vu_lai(monkeypatch):
         return goc(loc, exec_result, ten_da_hoa_giai)
 
     monkeypatch.setattr(RT, "check_source_invariants", bo_dispatch)
+    _chi_cong_gia_dinh_chan(_chay(_doi("B", [99, 7, 0])))
+    _bo_cong_gia_dinh(monkeypatch)
     kq = _chay(_doi("B", [99, 7, 0]))
     assert kq.servable and _v(kq) == "540"
     # …và cổng tự khai là nó KHÔNG kiểm được, thay vì im lặng.
@@ -412,6 +431,8 @@ def test_TIEM_3_chi_kiem_TON_TAI_cua_fact__tai_hien_loi_goc(monkeypatch):
         return goc(loc, exec_result, ten_da_hoa_giai)
 
     monkeypatch.setattr(RT, "check_source_invariants", chi_ton_tai)
+    _chi_cong_gia_dinh_chan(_chay(_doi("B", [99, 7, 0], source_fact_id="dinh_B")))
+    _bo_cong_gia_dinh(monkeypatch)
     kq = _chay(_doi("B", [99, 7, 0], source_fact_id="dinh_B"))
     assert kq.servable and _v(kq) == "540"
 
@@ -458,6 +479,8 @@ def test_TIEM_6_model_assumption_THANG_du_kien__ca_sai_lot_qua(monkeypatch):
         if m.get("type") == "point3":
             m.pop("source_fact_id", None)
             m["model_assumption"] = "Chọn hệ trục Oxyz như trên."
+    _chi_cong_gia_dinh_chan(_chay(g))
+    _bo_cong_gia_dinh(monkeypatch)
     assert _chay(g).servable
     monkeypatch.setattr(PC, "bat_bien_toa_do", goc)
     assert not _chay(g).servable

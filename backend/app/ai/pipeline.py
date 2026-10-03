@@ -247,6 +247,10 @@ KHONG_SUA_NGUON = frozenset({
     "SOURCE_EVIDENCE_CONFLICT",
     # W14 5a: hợp đồng không mang đề — viết lại chương trình không thêm được đề.
     "SOURCE_TEXT_MISSING",
+    # W15: đáp số phụ thuộc kích thước đề không cho / chưa chứng minh được — viết lại
+    # chương trình không thêm được dữ kiện vào đề.
+    "ASSUMPTION_DETERMINES_ANSWER",
+    "ASSUMPTION_INVARIANCE_UNPROVEN",
 })
 
 

@@ -163,14 +163,14 @@ def test_AC1_phu_thuoc_voi_nhan_chung_hop_le(kenh):
 
 # ── đề CHO kích thước qua một câu NGOÀI từ vựng: không bao giờ DEPENDENT (§7, đính chính) ──
 
-def _chop_SA_qua_cau(cau: str):
-    """Chóp T1 mà đề cho SA = 3 qua `cau` (bộ đọc không đọc); chương trình dựng ĐÚNG SA = 3."""
+def _chop_SA_qua_cau(cau: str, sa: int = 3):
+    """Chóp T1 mà đề cho SA qua `cau` thay vì `SA = 5`; chương trình dựng ĐÚNG SA = `sa`."""
     payload = W.chop_tam_giac_payload()
     payload["input_facts"] = [f for f in payload["input_facts"] if f["label"] != "SA"]
     ct = W.hop_dong(W.CHOP_TAM_GIAC_TEXT.replace("SA = 5", cau), payload)
     raw = W.chuong_trinh(W.chop_tam_giac()[1])
     raw["memory_declarations"] = [m for m in raw["memory_declarations"] if m["name"] != "SA_length"]
-    _dat_diem(raw, "S", [0, 0, 3])
+    _dat_diem(raw, "S", [0, 0, sa])
     return ct, raw
 
 
@@ -182,6 +182,21 @@ def test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc(cau):
     kq = _kq(*_chop_SA_qua_cau(cau))
     assert kq.status == CHUA_RO, (cau, kq)
     assert any(d.startswith("CE_TEXT_NOT_FULLY_READ") for d in kq.details), kq.details
+
+
+def test_do_dai_doc_duoc_ngoai_lop_kich_thuoc_lam_phep_keo_khong_hop_le():
+    """Đề ĐỌC ĐƯỢC `SB = 5` (cùng AB = 3 ⇒ SA = 4): câu độ dài số nên phần dữ kiện đọc trọn và
+    nó không phải `RangBuoc` — chỉ luật hợp lệ của phép kéo (độ dài đề cho, bất biến đề) thấy
+    phép kéo SA phá |SB| = 5. Không bao giờ "đề không cho SA"."""
+    kq = _kq(*_chop_SA_qua_cau("SB = 5", sa=4))
+    assert kq.status == CHUA_RO, kq
+    assert any("MISSING SA: CE_INVALID" in d for d in kq.details), kq.details
+
+
+def test_tuyen_tu_choi_voi_loi_chua_chung_minh_khi_de_cho_qua_cau_khong_doc():
+    _sp, out, _sc = W.chay(*_chop_SA_qua_cau("Góc giữa SB và mặt phẳng đáy bằng 45°"))
+    assert (out.servable, out.stage_reached, out.reason_code) == (
+        False, "assumption", "ASSUMPTION_INVARIANCE_UNPROVEN"), out.details
 
 
 def _chop_vuong_qua_duong_cheo():

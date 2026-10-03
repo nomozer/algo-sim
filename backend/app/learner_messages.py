@@ -124,11 +124,29 @@ _MSG_THIEU_DE = (
     "AlgoSim không nhận được nội dung đề bài đi kèm, nên không đối chiếu được dữ kiện "
     "với đề và không dựng hình. Em gửi lại đề bài nhé."
 )
+#: W15 — đáp số phụ thuộc một kích thước đề không cho (chứng chỉ giả định tìm được một
+#: hình khác cũng khớp mọi điều đề nói mà đáp số đổi). Nói đúng số liệu đang thiếu.
+_MSG_GIA_DINH_QUYET_DINH = (
+    "Đề bài chưa cho {doan}, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi "
+    "điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một "
+    "giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu "
+    "số liệu đó không rồi gửi lại nhé."
+)
+#: W15 — chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.
+_MSG_GIA_DINH_CHUA_CHUNG_MINH = (
+    "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể "
+    "hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa "
+    "đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các "
+    "quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ "
+    "các số liệu rồi gửi lại nhé."
+)
 _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
     "GIVEN_VALUE_NOT_IN_SOURCE": _MSG_NGUON_THIEU,
     "SOURCE_SPAN_MISMATCH": _MSG_NGUON_MAU_THUAN,
     "SOURCE_EVIDENCE_CONFLICT": _MSG_NGUON_MAU_THUAN,
     "SOURCE_TEXT_MISSING": _MSG_THIEU_DE,
+    "ASSUMPTION_DETERMINES_ANSWER": _MSG_GIA_DINH_QUYET_DINH,
+    "ASSUMPTION_INVARIANCE_UNPROVEN": _MSG_GIA_DINH_CHUA_CHUNG_MINH,
 }
 
 

@@ -36,6 +36,36 @@
         "Tính là cổng chưa sạch — kết luận W15 tối đa VERIFICATION_NOT_CLEAN cho tới khi người duyệt bốn cảnh."
       ],
       "answer": "Chờ người duyệt, không tính lỗi (Khuyên dùng)"
+    },
+    {
+      "id": "U3",
+      "date": "2026-10-03",
+      "context": "Task 6: wiring the gate as registered (UNDETERMINED refused everywhere) failed 182 backend tests — 12 known (stale candidate, dirty tree), ~170 correct text-determined cases served before and refused at stage assumption (curved solids given by lengths, coordinate-free point/segment problems, coordinate problems with derived literals); the W15 census never measured those classes. An in-memory experiment enforcing only on polyhedral texts left 30 (12 known, 5 experiment artefacts, ~13 to analyse).",
+      "question": "Nối cổng giả định như đã đăng ký (UNDETERMINED ⇒ từ chối mọi nơi) làm ~170 ca đúng, đề xác định, trước đây được phục vụ nay bị từ chối (census W15 không đo vùng này). Đi tiếp theo hướng nào?",
+      "options_shown": [
+        "Chặn trong vùng đa diện (Khuyên dùng) — cổng tính chứng chỉ cho MỌI yêu cầu (ghi telemetry) nhưng chỉ TỪ CHỐI khi phần dữ kiện nêu một khối đa diện theo từ vựng đóng (S.ABC…, ABC.A'B'C', lăng trụ đứng không tên); ngoài vùng giữ hành vi + cổng cũ, mối nguy ghi OPEN_ISSUE; ~13 ca còn đỏ phân tích từng ca rồi trình; đính chính §1/§8 có ngày + census vòng 2.",
+        "Chặn mọi nơi như đăng ký — chấp nhận thu hẹp ~170 ca; đổi kỳ vọng các test đó cần duyệt; theo bảng kết luận: PRODUCT_REGRESSION_FOUND.",
+        "Mở rộng chứng chỉ trước — khuôn + bộ đọc cho khối cong, bài điểm/đoạn không toạ độ, literal toạ độ dẫn xuất… rồi mới chặn mọi nơi.",
+        "Không nối cổng trong W15 — cổng chỉ chẩn đoán; W15 kết thúc ASSUMPTION_POLICY_INCOMPLETE."
+      ],
+      "answer": "Chặn trong vùng đa diện (Khuyên dùng)"
+    },
+    {
+      "id": "U4",
+      "date": "2026-10-03",
+      "context": "Task 6 under U3: 25 backend failures — 12 known (stale candidate, dirty tree), 13 analysed in four groups; G2 also covers a latent gap found by probe (a correct cuboid program spelling A′ as A1 or Aprime is refused: T4 TEMPLATE_VERTEX_MISSING).",
+      "answers": {
+        "G1 — 6 test đỏ vì đề viết góc vuông của đáy là \"đáy ABC vuông tại A\", \"tam giác vuông đỉnh G\", \"tam giác vuông ở đỉnh E\" (từ vựng đóng chỉ đọc \"đáy … là tam giác vuông tại X\"). Xử lý thế nào?": "Mở rộng từ vựng (Khuyên dùng)",
+        "G2 — gắn tên đỉnh phẩy: chương trình thật hay viết A′ thành A1/Aprime (domain_profile ghi đo được), cổng hiện từ chối oan; 2 fixture gold tự viết A′ thành `A_` (trùng khoá với A). Xử lý thế nào?": "Khoá ký hiệu + sửa 2 fixture (Khuyên dùng)",
+        "G3 — test_22 (khối lõm) đổi tên đỉnh CHỈ trong chương trình (P…X) còn đề vẫn A…S; C0 chỉ ghim literal vào dữ kiện CÙNG thực thể (R1) nên bị từ chối. Xử lý thế nào?": "Đổi tên nhất quán cả đề (Khuyên dùng)",
+        "G4 — 4 test tiêm lỗi point_coordinate (TIEM_1/2/3/6) chứng minh checker ấy là chốt duy nhất (\"bỏ nó ⇒ ca sai được phục vụ lại\"); nay cổng giả định cũng chặn ca sai nên không thấy \"phục vụ lại\". Xử lý thế nào?": "Cô lập checker được tiêm (Khuyên dùng)"
+      },
+      "options_recommended_text": {
+        "G1": "Thêm đúng các lối viết: \"đáy XYZ vuông (cân) tại X\" và \"tam giác (XYZ) vuông (cân) tại/ở đỉnh/ở/đỉnh X\" — server đọc, gắn đúng thực thể; test bộ đọc + đính chính §2.1 có ngày. \"cân\" vẫn bị luật đọc-trọn tính là thông tin bỏ rơi (không DEPENDENT).",
+        "G2": "Cổng gắn đỉnh đề ↔ tên chương trình qua `geometry_symbol_key` (A′ ≡ A1 ≡ A_prime ≡ Aprime, thẩm quyền có sẵn), trùng khoá ⇒ không gắn (đóng an toàn); test cho A1/Aprime/`A_`. Sửa tên `X_` → `X1` trong 2 chương trình gold (d7, e7) — chỉ đầu vào chương trình, không đổi đề hay đáp số.",
+        "G3": "Test đổi tên đỉnh ở CẢ đề lẫn chương trình — giữ đúng ý test (đổi tên không đổi kết quả W = 20); không nới khẳng định nào.",
+        "G4": "Trong mỗi phép tiêm, tạm bỏ qua cổng giả định để đo ĐÚNG checker point_coordinate (giữ nguyên khẳng định \"phục vụ lại\"), và thêm khẳng định: không tiêm gì thì cổng giả định một mình vẫn từ chối ca sai (hai lớp phòng thủ độc lập)."
+      }
     }
   ],
   "plan_review_directives": [

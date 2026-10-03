@@ -248,7 +248,10 @@ def gold(case_id: str):
         ob = [(luong, ten_tron, bien)]
 
     elif case_id == "e7":
-        ten = ["M", "N", "P", "Q", "M_", "N_", "P_", "Q_"]
+        # M′ viết `M_prime` — lối viết chuẩn mà cả grounding (giá trị mục dữ kiện phải có
+        # trong đề) lẫn `geometry_symbol_key` đều nhận; `M_` cũ cùng khoá với `M` nên không
+        # gắn được với đỉnh của đề (W15 U4 · G2).
+        ten = ["M", "N", "P", "Q", "M_prime", "N_prime", "P_prime", "Q_prime"]
         xyz = [(0, 0, 0), (6, 0, 0), (6, 6, 0), (0, 6, 0),
                (0, 0, 6), (6, 0, 6), (6, 6, 6), (0, 6, 6)]
         d = [_diem(n, p, FD) for n, p in zip(ten, xyz)]
@@ -258,7 +261,7 @@ def gold(case_id: str):
               "faces": [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4],
                         [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]},
              {"kind": "construct_plane", "target_var": "mp_",
-              "through": ["M", "P", "N_"]},
+              "through": ["M", "P", "N_prime"]},
              {"kind": "construct_section", "target_var": "td",
               "solid": "LP", "plane": "mp_"},
              _do("dt_td", "area", "td")]

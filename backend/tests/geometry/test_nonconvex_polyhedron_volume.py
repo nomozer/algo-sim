@@ -448,8 +448,13 @@ def test_22_doi_TEN_dinh_khong_doi_ket_qua():
             {"kind": "assign", "target_var": "W",
              "expr": {"kind": "measure", "quantity": "volume", "of": "khoi"}},
         ])
+    # Đổi tên NHẤT QUÁN ở cả đề lẫn chương trình (W15 U4 · G3): chứng chỉ C0 chỉ ghim toạ độ
+    # vào dữ kiện của CÙNG thực thể, nên đổi tên riêng chương trình là một bài khác.
     ct = RequestContract(
-        problem_text=_ct_lom().problem_text,
+        problem_text=(
+            "Cho khối chóp X.PQRTU có đáy PQRTU là ngũ giác LÕM với "
+            "P(0;0;0), Q(4;0;0), R(4;4;0), T(2;1;0), U(0;4;0) và đỉnh "
+            "X(2;1/2;6). Tính thể tích khối chóp."),
         input_facts=[{"fact_id": f"d_{t}", "label": f"điểm {doi[t]}",
                       "values": [doi[t]], "provenance": "confirmed"}
                      for t in _TEN_DIEM],

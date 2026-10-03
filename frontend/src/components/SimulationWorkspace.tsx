@@ -92,6 +92,7 @@ export const NHAN_GIAI_DOAN: Record<string, string> = {
   verification: "kiểm chứng kết quả bằng phép độc lập",
   source_invariant: "kiểm lại ràng buộc của đề",
   postconditions: "kiểm lại kết quả bằng hình",
+  assumption: "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
   binding: "nối kết quả vào màn hình",
   compile: "dựng cảnh 3D",
   transport: "đóng gói kết quả",

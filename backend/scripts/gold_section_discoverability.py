@@ -348,7 +348,10 @@ def gold(case_id: str):
         ob = [("radius", "lam", "bk_lam"), ("area", "lam", "dt_lam")]
 
     elif case_id == "d7":
-        ten = ["A", "B", "C", "D", "A_", "B_", "C_", "D_"]
+        # A′ viết `A_prime` — lối viết chuẩn mà cả grounding (giá trị mục dữ kiện phải có
+        # trong đề) lẫn `geometry_symbol_key` đều nhận; `A_` cũ cùng khoá với `A` nên không
+        # gắn được với đỉnh của đề (W15 U4 · G2).
+        ten = ["A", "B", "C", "D", "A_prime", "B_prime", "C_prime", "D_prime"]
         xyz = [(0, 0, 0), (4, 0, 0), (4, 4, 0), (0, 4, 0),
                (0, 0, 4), (4, 0, 4), (4, 4, 4), (0, 4, 4)]
         d = [_diem(n, p, FD) for n, p in zip(ten, xyz)]
@@ -359,7 +362,7 @@ def gold(case_id: str):
               "faces": [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4],
                         [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]},
              {"kind": "construct_plane", "target_var": "mp_",
-              "through": ["A", "C", "B_"]},
+              "through": ["A", "C", "B_prime"]},
              {"kind": "construct_section", "target_var": "td",
               "solid": "LP", "plane": "mp_"},
              _do("dt_td", "area", "td")]

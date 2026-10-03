@@ -31,6 +31,10 @@ from pydantic import BaseModel, Field
 
 from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode
 
+from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
+from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
+from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
+from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_PHU_THUOC, kiem_gia_dinh
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
     chan_doan_phu_cau_truc,
@@ -51,6 +55,7 @@ from .pipeline_adapter import (
 from .ir_static_check import kiem_tinh
 from .postconditions import check_postconditions, check_source_invariants
 from .request_contract import RequestContract
+from .shape_constraint import neu_khoi_da_dien
 
 
 class SemanticRouteOutcome(BaseModel):
@@ -163,6 +168,14 @@ class SemanticRouteOutcome(BaseModel):
     #: W14 5a — `UNCHECKED_TRUSTED_FIXTURE` khi người gọi khai `NguonDe.FIXTURE_TIN_CAY`
     #: cho một hợp đồng không đề (nguồn KHÔNG được kiểm); `None` ở mọi trường hợp khác.
     source_check: str | None = None
+    #: W15 — chứng chỉ giả định (`assumption_gate.kiem_gia_dinh`): trạng thái và chứng chỉ
+    #: (`C0`/`C1`). Quan trắc, không vào envelope; kết cục từ chối ở tầng `assumption`
+    #: mang thêm `reason_code`/`reason_subjects` như mọi lời từ chối có mã chi tiết.
+    assumption_status: str | None = None
+    assumption_certificate: str | None = None
+    #: Quyết định U3: `True` ⇔ đề nêu khối đa diện theo từ vựng đóng
+    #: (`shape_constraint.neu_khoi_da_dien`) — chỉ khi ấy route TỪ CHỐI theo cổng.
+    assumption_enforced: bool | None = None
 
 
 def _hong(
@@ -247,7 +260,8 @@ def verify_and_compile(
     # W14 5a — đề rỗng không còn mặc nhiên là "chưa kiểm": chỉ `FIXTURE_TIN_CAY` khai
     # tường minh mới đi đường không kiểm nguồn, và kết quả ghi lại điều đó.
     ground = check_grounding(contract, spec, nguon=nguon)
-    if nguon is NguonDe.FIXTURE_TIN_CAY and not (contract.problem_text or "").strip():
+    khong_kiem_nguon = nguon is NguonDe.FIXTURE_TIN_CAY and not (contract.problem_text or "").strip()
+    if khong_kiem_nguon:
         quan_trac_dung["source_check"] = "UNCHECKED_TRUSTED_FIXTURE"
     # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
     # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
@@ -259,6 +273,7 @@ def verify_and_compile(
         execution_budget=execution_budget,
         presentation_budget=presentation_budget,
         quan_trac=quan_trac,
+        khong_kiem_nguon=khong_kiem_nguon,
     )
     return kq.model_copy(update={
         "grounding_assumptions": list(ground.assumptions),
@@ -282,6 +297,7 @@ def _sau_grounding(
     quan_trac: dict[str, Any] | None = None,
     execution_budget: int = DEFAULT_EXECUTION_BUDGET,
     presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
+    khong_kiem_nguon: bool = False,
 ) -> SemanticRouteOutcome:
     """Contract (đã đóng băng) + IR (LLM viết) → phán quyết tất định.
 
@@ -463,6 +479,50 @@ def _sau_grounding(
     if post.weak_kinds:
         da_chay["weak"] = sorted(set(da_chay["weak"]) | set(post.weak_kinds))
 
+    # ── W15 · CHỨNG CHỈ GIẢ ĐỊNH ────────────────────────────────────────────
+    #
+    # Sau hậu điều kiện (cần trace + trạng thái đã kiểm), trước khi có gì được biên dịch
+    # để phục vụ. Mọi giá trị SỐ người học thấy phải có chứng chỉ C0/C1; phụ thuộc một
+    # kích thước đề không cho, hoặc chưa chứng minh được, đều TỪ CHỐI — không bao giờ
+    # gắn nhãn "giả thiết" rồi vẫn tính (W15-D2). Thẩm quyền:
+    # `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md`. Lỗi bên trong cổng ⇒
+    # từ chối có mã (đóng an toàn), không bao giờ HTTP 500.
+    #
+    # Fixture tin cậy KHÔNG đề (W14 5a, `tests/nguon_fixture.py`): không có câu đề thì
+    # không có tiền đề; người gọi đã KHAI không đo bằng chứng nguồn lẫn cổng giả định —
+    # ghi lại, không kiểm. Tuyến sản phẩm không bao giờ khai lối này (khoá W14).
+    #
+    # Quyết định U3 (2026-10-03): cổng tính cho MỌI yêu cầu, nhưng chỉ TỪ CHỐI khi đề nêu
+    # một khối đa diện theo từ vựng đóng — vùng có lỗ W12/W14 đã đo và có chứng chỉ C0/C1.
+    # Ngoài vùng: ghi trạng thái (`assumption_enforced=False`), hành vi và cổng cũ giữ nguyên.
+    gd_chan = not khong_kiem_nguon
+    if khong_kiem_nguon:
+        gd_status, gd_cc, gd_ma, gd_chi_tiet, gd_chu_the = (
+            "UNCHECKED_TRUSTED_FIXTURE", None, None, [], [])
+    else:
+        try:
+            gd_chan = neu_khoi_da_dien(contract.problem_text)
+            gd = kiem_gia_dinh(contract, spec, exec_res, c1a.ten_da_hoa_giai,
+                               execution_budget=execution_budget)
+            gd_status, gd_cc, gd_ma = gd.status, gd.certificate, gd.reason_code
+            gd_chi_tiet, gd_chu_the = list(gd.details), list(gd.subjects)
+        except Exception as e:  # noqa: BLE001
+            gd_status, gd_cc, gd_ma = _GD_CHUA_RO, None, MA_CHUA_CHUNG_MINH
+            gd_chi_tiet, gd_chu_the = [f"ASSUMPTION_GATE_ERROR {type(e).__name__}"], []
+    da_chay["assumption_status"], da_chay["assumption_certificate"] = gd_status, gd_cc
+    da_chay["assumption_enforced"] = gd_chan
+    if gd_chan and gd_status not in (_GD_AN_TOAN, _GD_KHONG_AP_DUNG):
+        return _hong(
+            "assumption",
+            ErrorCode.INPUT_NOT_GROUNDED,
+            ("Đáp số phụ thuộc một kích thước đề bài không cho." if gd_ma == MA_PHU_THUOC
+             else "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho."),
+            details=gd_chi_tiet,
+            reason_code=gd_ma,
+            reason_subjects=gd_chu_the,
+            **da_chay,
+        )
+
     try:
         # Interpreter chạy lại bên trong `compile`. Tất định nên kết quả trùng
         # khít; đổi chữ ký public của adapter chỉ để tiết kiệm một lượt chạy
@@ -532,6 +592,9 @@ def _sau_grounding(
             frame_count=len(envelope["config"]["frames"]),
             final_memory=dict(exec_res.final_memory),
             envelope=envelope,
+            assumption_status=gd_status,
+            assumption_certificate=gd_cc,
+            assumption_enforced=gd_chan,
         )
 
     # Mức YẾU: chạy được, biên dịch được, nhưng chưa có checker độc lập cho
@@ -556,6 +619,9 @@ def _sau_grounding(
             frame_count=len(envelope["config"]["frames"]),
             final_memory=dict(exec_res.final_memory),
             envelope=envelope,
+            assumption_status=gd_status,
+            assumption_certificate=gd_cc,
+            assumption_enforced=gd_chan,
         )
 
     return SemanticRouteOutcome(
@@ -567,4 +633,7 @@ def _sau_grounding(
         frame_count=len(envelope["config"]["frames"]),
         final_memory=dict(exec_res.final_memory),
         envelope=envelope,
+        assumption_status=gd_status,
+        assumption_certificate=gd_cc,
+        assumption_enforced=gd_chan,
     )

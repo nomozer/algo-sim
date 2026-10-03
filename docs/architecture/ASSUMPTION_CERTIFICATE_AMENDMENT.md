@@ -64,6 +64,17 @@ KetQuaGiaDinh(status, certificate, reason_code, subjects, details, witness)` (c�
 bổ sung dựng hình + thực thi của route), `kiem_gia_dinh(...)` cho route,
 `NGAN_SACH_CHAY_LAI`, `TOAN_HANG` + `kieu_ir_chua_phu()`.
 
+> **Đính chính 2026-10-03 (W15 Task 6, quyết định U3 của người dùng).** Nối cổng như bảng
+> trên — `UNDETERMINED` bị từ chối MỌI NƠI — làm đỏ 182 test backend: 12 đã biết (candidate
+> cũ, cây bẩn) và ~170 ca ĐÚNG, đề xác định, trước đó được phục vụ (khối cong cho bằng độ
+> dài, bài điểm/đoạn không toạ độ, toạ độ có literal dẫn xuất) — lớp mà census vòng 1 không
+> đo. Cột "Route" nay chỉ áp khi đề nêu một khối ĐA DIỆN theo từ vựng đóng
+> (`shape_constraint.neu_khoi_da_dien`: ký hiệu chóp/lăng trụ, hoặc lăng trụ đứng không
+> tên) — vùng có lỗ W12/W14 đã đo và có chứng chỉ C0/C1. Ngoài vùng: cổng VẪN tính, route
+> ghi `assumption_status`/`assumption_certificate` cùng `assumption_enforced = False` và
+> giữ hành vi + các cổng cũ; mối nguy "kích thước tự đặt" ngoài vùng là một vấn đề mở,
+> không phải một an toàn. Lỗi bên trong bộ đọc vùng ⇒ coi là TRONG vùng (đóng an toàn).
+
 ## 2. Nguồn bằng chứng — CHỈ server, CHỈ từ câu đề
 
 1. **Bất biến văn bản** — bốn bộ phát sẵn có, gọi với `contract=None` (F7: bộ phát đọc
@@ -282,6 +293,11 @@ dưới C1; lối viết ngoài từ vựng (kể cả chia đoạn viết `thu�
 chưa đọc, một chương trình đúng tỉ số theo lối viết ấy cũng bị từ chối, là giới hạn độ
 phủ); tham số đề không nêu; literal số học; công thức có hệ số; câu trả lời không phải số
 (`NOT_APPLICABLE`, không thuộc phạm vi W15).
+
+> **Đính chính 2026-10-03 (U3).** "Từ chối" ở đoạn trên chỉ áp TRONG vùng khối đa diện (§1,
+> đính chính U3). Đề không nêu khối đa diện theo từ vựng đóng — khối cong cho bằng độ dài,
+> bài điểm/đoạn, toạ độ không kèm ký hiệu khối, `tứ diện ABCD` — được tính trạng thái và ghi
+> lại, không bị từ chối theo cổng này.
 
 ## 9. Luật SHIP (đăng ký trước; census chạy TRƯỚC khi nối route)
 
