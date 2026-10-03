@@ -629,6 +629,9 @@ def _pe():
     ("Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T).", [(None, (0, 0, 1, -3), "z = 3")]),
     ("Cho hai mặt phẳng (α): z = 3 và (β): z = 2.", [("α", (0, 0, 1, -3), "z = 3"), ("β", (0, 0, 1, -2), "z = 2")]),
     ("Mặt phẳng (α) : x − 2 = 0.", [("α", (1, 0, 0, -2), "x − 2 = 0")]),
+    # tên có dấu phẩy: ′ và ’ quy về ' — (P′) là mặt phẳng KHÁC (P)
+    ("Cho hai mặt phẳng (P): z = 3 và (P′): z = 2.", [("P", (0, 0, 1, -3), "z = 3"), ("P'", (0, 0, 1, -2), "z = 2")]),
+    ("Cho mặt phẳng (α’): x = 1.", [("α'", (1, 0, 0, -1), "x = 1")]),
 ])
 def test_w16_doc_mat_phang_de_mang_ten_he_so_va_span(de, ky_vong):
     ra = _pe().doc_mat_phang_de(de)
@@ -648,6 +651,8 @@ def test_w16_khong_doc_tron_thi_khong_co_ban_ghi(de):
     ("alpha_plane", {"α"}), ("mat_phang_alpha", {"α"}), ("plane_beta", {"β"}), ("mp_P", {"P"}),
     ("gammaPlane", {"γ"}), ("α", {"α"}), ("P", {"P"}), ("mp_P1", {"P1"}), ("mp_alpha_beta", {"α", "β"}),
     ("mp_cat", set()), ("mp", set()), ("plane_ABC", set()), ("mpP", {"P"}), ("Alpha", {"α"}),
+    # dấu phẩy: (P′) KHÁC (P) — đánh giá cuối W16 (`mp_P_prime` từng đọc thành {P})
+    ("mp_P_prime", {"P'"}), ("P_phay", {"P'"}), ("P'", {"P'"}), ("P′", {"P'"}), ("alpha_prime", {"α'"}),
 ])
 def test_w16_ten_mat_phang_cua_bien(bien, ten):
     assert _pe().ten_mat_phang_cua_bien(bien) == frozenset(ten)

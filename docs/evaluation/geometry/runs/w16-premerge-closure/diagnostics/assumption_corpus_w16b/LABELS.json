@@ -1,0 +1,9 @@
+{
+  "schema_version": "w15-assumption-corpus-labels/1",
+  "layer": "W16B — addendum written after the W16 pre-evidence self-review (2026-10-03), committed with its RED tests BEFORE the fix",
+  "rule": "Hand labels for the primed-name alias of the plane binding (§14.1): a program variable of the primed text plane (P′) read as (P). Each row mirrors a test of backend/tests/geometry/test_assumption_certificate.py. label = mathematics of the problem as written; expect = the gate outcome §14.1 requires. NOT a held-out evaluation.",
+  "rows": {
+    "A9_ten_phay_mang_he_so_cua_mat_phang_khong_phay": {"group": "W16B_A_PRIMED_NAME", "label": "MUST_REFUSE", "expect": "UNDETERMINED", "builder": "mp_sai", "reason": "(P): z = 3 and (P′): z = 2 given, (P′) cuts T; the program's mp_P_prime carries (P)'s equation and an extra z = 2 plane sits off the slice so the existence postcondition passes: shows 9, the text's answer is 16"},
+    "A9b_ten_phay_dung_he_so": {"group": "W16B_A_PRIMED_NAME", "label": "INVARIANT", "expect": "PROVEN_SAFE:C0", "builder": "mp_dung", "reason": "the same text; mp_P_prime carries (P′)'s own equation z = 2: area 16"}
+  }
+}

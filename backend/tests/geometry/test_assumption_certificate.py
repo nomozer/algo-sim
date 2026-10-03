@@ -708,6 +708,7 @@ NEN_P1 = ("Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là h�
 HAI_MP = "Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T)."
 MOT_MP_KHONG_TEN_VA_BETA = ("Cho mặt phẳng z = 3. Mặt phẳng (β) song song với mặt phẳng đó cắt khối chóp "
                             "theo thiết diện (T).")
+HAI_MP_PHAY = "Cho hai mặt phẳng (P): z = 3 và (P′): z = 2. Mặt phẳng (P′) cắt khối chóp theo thiết diện (T)."
 
 
 def _p1_mat_phang(cau: str, mat_phang: list, cat: str):
@@ -745,6 +746,10 @@ MP_SAI_THUC_THE = {
     "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten": lambda: _p1_mat_phang(
         "Cho mặt phẳng z = 3. Một mặt phẳng song song với mặt phẳng đó cắt khối chóp theo thiết diện (T).",
         [("mp_cat", (0, 0, 1, -3))], "mp_cat"),
+    # Đánh giá cuối W16: biến của (P′) mang phương trình của (P); mặt phẳng z = 2 dựng NGOÀI lát
+    # cắt để hậu điều kiện "có mặt phẳng tỉ lệ" vẫn qua. Diện tích hiện 9, đề cho 16.
+    "A9_ten_phay_mang_he_so_cua_mat_phang_khong_phay": lambda: _p1_mat_phang(
+        HAI_MP_PHAY, [("mp_P_prime", (0, 0, 1, -3)), ("mp_phu", (0, 0, 1, -2))], "mp_P_prime"),
 }
 MP_DUNG_THUC_THE = {
     "A2_doi_chung_hai_mat_phang_dung_ten": lambda: _p1_mat_phang(
@@ -764,6 +769,8 @@ MP_DUNG_THUC_THE = {
     "RF1_mat_phang_qua_ba_diem_ben_canh": lambda: _p1_mat_phang(
         "Mặt phẳng (α): z = 3 song song với mặt phẳng (ABCD) cắt khối chóp theo thiết diện (T).",
         [("alpha_plane", (0, 0, 1, -3))], "alpha_plane"),
+    "A9b_ten_phay_dung_he_so": lambda: _p1_mat_phang(
+        HAI_MP_PHAY, [("mp_P", (0, 0, 1, -3)), ("mp_P_prime", (0, 0, 1, -2))], "mp_P_prime"),
 }
 
 
