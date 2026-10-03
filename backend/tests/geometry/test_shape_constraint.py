@@ -314,3 +314,17 @@ def test_w16_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc():
     kinds = {r.kind for r in _doc(che)}
     assert "line_perp_plane" in kinds and "right_triangle" not in kinds, kinds
     assert "right_triangle" in _kinds(text)          # bộ đọc trên đề GỐC vẫn thấy nó (dùng để chặn CE)
+
+
+def test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
+    """Đề gõ ở dạng tổ hợp (NFD): từ khoá vẫn khớp, span cắt đúng đề GỐC — nếu không, `SA ⊥
+    (ABC)` (không có chữ Việt nào) vẫn đọc được trong khi `chứng minh` thì không, và lỗ mở lại."""
+    import unicodedata
+
+    goc = "Cho hình chóp S.ABC có SA = 5. Chứng minh rằng SA ⊥ (ABC). Tính thể tích."
+    nfd = unicodedata.normalize("NFD", goc)
+    assert len(nfd) > len(goc)
+    [(a, b)] = _sc().khoang_muc_tieu(nfd)
+    assert nfd[a:b] == unicodedata.normalize("NFD", "Chứng minh rằng SA ⊥ (ABC)")
+    che = _sc().che_muc_tieu(nfd)
+    assert len(che) == len(nfd) and "⊥" not in che

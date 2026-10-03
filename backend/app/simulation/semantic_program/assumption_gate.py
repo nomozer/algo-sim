@@ -39,7 +39,7 @@ from .plane_equation import (MatPhangDe, bat_bien_mat_phang, doc_mat_phang_de, s
 from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
 from .segment_relation import bat_bien_chia_doan, bat_bien_do_dai
-from .shape_constraint import RangBuoc, doc_rang_buoc, phan_chua_doc
+from .shape_constraint import RangBuoc, che_muc_tieu, doc_rang_buoc, khoang_muc_tieu, phan_chua_doc
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -900,19 +900,24 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
         lc = _lat_cat(phu, cm)
     except _Loi as e:
         return _ket_qua(UNDETERMINED, [str(e)])
-    rb = doc_rang_buoc(de)
-    inv = bat_bien_tu_de(de)
+    # §14.2: mọi TIỀN ĐỀ đọc từ đề đã che mệnh đề mục tiêu (cùng độ dài, span giữ nguyên);
+    # đề gốc chỉ còn dùng để CHẶN phản ví dụ (phần chưa đọc, ràng buộc chưa kiểm).
+    muc_tieu = khoang_muc_tieu(de)
+    de_gt = che_muc_tieu(de)
+    rb = doc_rang_buoc(de_gt)
+    inv = bat_bien_tu_de(de_gt)
     do_dai = {frozenset(_id(p) for p in i.points): _F(i.expected) for i in inv
               if i.kind == "segment_length" and len(i.points) == 2 and i.expected}
     details, bac = _trang_thai_quan_he(contract, rb)
+    details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:
         return _ket_qua(UNDETERMINED, details + ["RELATION_REFUTED_BY_SOURCE"])
     # §14.1: mặt phẳng ĐỀ của từng literal phương trình — theo tên, hoặc duy nhất theo đếm.
-    mp = (doc_mat_phang_de(de), so_lan_nhac_mat_phang(de) == 1 and sum(
+    mp = (doc_mat_phang_de(de_gt), so_lan_nhac_mat_phang(de) == 1 and sum(
         1 for s in prog["statements"] if s.get("kind") == "construct_plane_from_equation") == 1)
 
     # C0 — lát cắt ghim bởi nguồn
-    khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de, inv, None, mp) != "SOURCE_DATUM"]
+    khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de_gt, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
         return _ket_qua(PROVEN_SAFE, details + [f"C0 {len(lc.literal)} literal(s) pinned by the text"],
                         certificate="C0")
@@ -944,23 +949,26 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     if thieu:
         # §7 (đính chính Task 6): phản ví dụ chỉ nói "đề không cho" khi server đã đọc trọn
         # phần dữ kiện VÀ kiểm được mọi ràng buộc đọc được trên nhân chứng (= tiền đề khuôn).
+        # W16 §14.2: ràng buộc đọc được trong mệnh đề mục tiêu không là tiền đề nhưng VẪN chặn,
+        # và đề có mục tiêu thì không thử phản ví dụ.
         chua_doc = phan_chua_doc(de)
         da_kiem = {(r.kind, r.entities, r.value) for r in khuon.tien_de}
-        ngoai = [r for r in rb if (r.kind, r.entities, r.value) not in da_kiem]
-        if chua_doc or ngoai:
+        ngoai = [r for r in doc_rang_buoc(de) if (r.kind, r.entities, r.value) not in da_kiem]
+        if chua_doc or ngoai or muc_tieu:
             return _ket_qua(UNDETERMINED, details + tien_de + [f"{khuon.loai} MISSING {kt.nhan}" for kt in thieu]
                             + ([f"CE_TEXT_NOT_FULLY_READ {' '.join(chua_doc[:8])}"] if chua_doc else [])
-                            + [f"CE_CONSTRAINT_NOT_CHECKED {r.kind}({','.join(r.entities)})" for r in ngoai])
+                            + [f"CE_CONSTRAINT_NOT_CHECKED {r.kind}({','.join(r.entities)})" for r in ngoai]
+                            + (["CE_GOAL_CLAUSE_PRESENT"] if muc_tieu else []))
         for kt in thieu:
             chung, ly_do = _phan_vi_du(contract, prog, exec_res, ten_da_hoa_giai, khuon, anh_xa, V, kt, do_dai,
-                                       inv, de, phu, ngan, execution_budget)
+                                       inv, de_gt, phu, ngan, execution_budget)
             if chung is not None:
                 return _ket_qua(DEPENDENT, details + tien_de + [f"{khuon.loai} MISSING {kt.nhan}", ly_do],
                                 subjects=tuple(x.nhan for x in thieu), witness=chung)
             details.append(f"{khuon.loai} MISSING {kt.nhan}: {ly_do}")
         return _ket_qua(UNDETERMINED, details + tien_de)
     loi = [f"NO_ROLE {lit[0]} {lit[1]}" for lit in lc.literal
-           if _vai_tro(lit, de, inv, set(khuon.dinh), mp) not in ("SOURCE_DATUM", "LAYOUT_FRONTIER")]
+           if _vai_tro(lit, de_gt, inv, set(khuon.dinh), mp) not in ("SOURCE_DATUM", "LAYOUT_FRONTIER")]
     loi += [f"FRAME_DEPENDENT {x}" for x in sorted(lc.kieu - KHUNG_TU_DO)]
     loi += [f"UNCERTIFIED {chu}: measure {q} outside C1" for chu, q in lc.phep_do if q not in PHEP_DO_C1]
     loi += [f"UNCERTIFIED arithmetic '{op}' outside C1" for op in sorted(lc.phep_toan - _PHEP_TOAN_C1)]

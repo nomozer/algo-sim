@@ -23,6 +23,7 @@ các mẫu tự nhận cả `bằng` lẫn `=`.
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from fractions import Fraction
 
@@ -204,6 +205,64 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         for m in _CHIEU_CAO.finditer(du_kien):
             phat("height", khoi[0], _phan(m.group("so")), m.start(), m.end())
     return tuple(ra)
+
+
+# ── W16 · §14.2 — mệnh đề MỤC TIÊU: quan hệ phải chứng minh không bao giờ là tiền đề ─────
+
+#: Mở đầu một yêu cầu chứng minh / kiểm tra / câu hỏi — ranh giới chữ, không phân biệt hoa
+#: thường. `Tính` KHÔNG ở đây: mệnh đề hỏi giá trị có thể mang `biết <giả thiết>`.
+_MUC_TIEU = re.compile(r"(?<![^\W\d_])(?:chứng\s+minh|chứng\s+tỏ|cmr|kiểm\s+tra|hỏi)(?![^\W\d_])", re.I)
+#: Hết mệnh đề: `? ! ;`, xuống dòng, hoặc dấu chấm kết câu (không phải chấm của `S.ABC`).
+_HET_MENH_DE = re.compile(r"[?!;\n]|\.(?=\s|$)")
+#: Ranh giới đứng trước một câu hỏi `…?`.
+_TRUOC_CAU_HOI = re.compile(r"[?!;,:\n]|\.(?=\s)")
+
+
+def _nfc_theo_cum(de: str) -> tuple[str, list[int]]:
+    """Bản NFC của `de` + chỉ số GỐC của từng ký tự (thêm một phần tử cuối = `len(de)`): đề
+    gõ ở dạng tổ hợp (NFD) vẫn khớp từ khoá, và span trả về vẫn cắt đúng đề gốc."""
+    ra, vi, i = [], [], 0
+    while i < len(de):
+        j = i + 1
+        while j < len(de) and unicodedata.combining(de[j]):
+            j += 1
+        for x in unicodedata.normalize("NFC", de[i:j]):
+            ra.append(x)
+            vi.append(i)
+        i = j
+    return "".join(ra), vi + [len(de)]
+
+
+def khoang_muc_tieu(problem_text: str | None) -> tuple[tuple[int, int], ...]:
+    """Span `[đầu, cuối)` (trên đề gốc) của các mệnh đề MỤC TIÊU: từ một từ khoá tới hết mệnh
+    đề, và câu kết bằng `?` tính từ ranh giới đứng trước nó. Giả thiết đứng TRƯỚC yêu cầu
+    trong cùng câu không thuộc span."""
+    nfc, vi = _nfc_theo_cum(problem_text or "")
+    khoang = []
+    for m in _MUC_TIEU.finditer(nfc):
+        h = _HET_MENH_DE.search(nfc, m.end())
+        khoang.append([m.start(), h.start() if h else len(nfc)])
+    for q in re.finditer(r"\?", nfc):
+        dau = max((b.end() for b in _TRUOC_CAU_HOI.finditer(nfc, 0, q.start())), default=0)
+        while dau < q.start() and nfc[dau].isspace():
+            dau += 1
+        khoang.append([dau, q.start()])
+    gop: list[list[int]] = []
+    for a, b in sorted(khoang):
+        if gop and a <= gop[-1][1]:
+            gop[-1][1] = max(gop[-1][1], b)
+        elif b > a:
+            gop.append([a, b])
+    return tuple((vi[a], vi[b]) for a, b in gop)
+
+
+def che_muc_tieu(problem_text: str | None) -> str:
+    """Đề với mọi span mục tiêu thay bằng khoảng trắng — CÙNG độ dài, nên span của mọi bộ
+    đọc chạy trên nó vẫn trỏ đúng đề gốc. Chứng chỉ chỉ đọc tiền đề từ bản này (§14.2)."""
+    con = list(problem_text or "")
+    for a, b in khoang_muc_tieu(problem_text):
+        con[a:b] = " " * (b - a)
+    return "".join(con)
 
 
 def neu_khoi_da_dien(problem_text: str | None) -> bool:
