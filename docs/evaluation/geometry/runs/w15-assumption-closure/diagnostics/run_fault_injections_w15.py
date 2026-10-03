@@ -2,7 +2,8 @@
 """Run every W15 fault injection (`fault_injection_w15.INJECTIONS`) against the W15 gate tests.
 
 Baseline first (no injection: must be all green), then one pytest process per injection.
-Writes `logs/FAULT_INJECTION_ASSUMPTION_GATE.log`; refuses to overwrite it. 0 model calls.
+Writes `logs/FAULT_INJECTION_ASSUMPTION_GATE<suffix>.log` (`suffix` = first argument, empty
+by default); refuses to overwrite — a later product commit gets its own log. 0 model calls.
 """
 from __future__ import annotations
 
@@ -14,7 +15,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 BACKEND = HERE.parents[5] / "backend"
-OUT = HERE / "logs" / "FAULT_INJECTION_ASSUMPTION_GATE.log"
+OUT = HERE / "logs" / f"FAULT_INJECTION_ASSUMPTION_GATE{sys.argv[1] if len(sys.argv) > 1 else ''}.log"
 TESTS = ["tests/geometry/test_assumption_gate.py", "tests/geometry/test_assumption_certificate.py",
          "tests/geometry/test_shape_constraint.py", "tests/geometry/test_shape_class_formation.py"]
 

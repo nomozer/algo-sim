@@ -87,6 +87,17 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
     "FI12": (READER, "_TAI = r\"(?:tại|ở\\s+đỉnh|ở|đỉnh)\"", "_TAI = r\"(?:tại)\"",
              "the right-angle phrasings added by U4 · G1 are removed",
              "the G1 phrasing tests fail"),
+    "FI13": (GATE,
+             "        if [k for k, _ in tinh] == [\"khai\", \"cau_lenh\"] and len(dong) == 1 "
+             "and not self._doc_truoc(n, tinh[1][1]):\n",
+             "        if False:\n",
+             "U5 refinement removed: a declared literal overwritten by its own construction counts twice",
+             "the B3 idiom is flagged as multiple definitions"),
+    "FI14": (ROUTE,
+             "    gd_chan = gd_chan or any(d.startswith(MA_NHIEU_DINH_NGHIA) for d in gd_chi_tiet)\n",
+             "",
+             "multiple definitions refused only inside the polyhedral scope (U5 removed)",
+             "the overwrite/alias cases on the planar rhombus are served"),
 }
 
 
