@@ -1,0 +1,336 @@
+{
+  "proof": "W17_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "108",
+  "rows": {
+    "O1_cat_bang_alpha_khi_de_noi_beta": {
+      "group": "W17_O_OPERATION",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "dcf75a36cdde5db9f8c9ed78b51736a815c78ff2de743a14057c3b063d2791f4"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "c790dcda3cfb4955c70995fb5bafdfefc821fa0439a8b88588fcc4e236757961"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O1b_doi_chung_cat_bang_beta": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "b04abccd9c3c316582e8468c5a582e953ead2519b062775ed5d9fc7f5a077903"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7cdf3d657d438e2e560109e67822810c218c3194f9e397bbce02a3c47492f4be"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O2_cat_khoi_khac": {
+      "group": "W17_O_OPERATION",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d05bcfd331bb5afc1f0378af408a39c3e0ec7433b347b66c40c16b4380c5ccdf"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "bd91a6fbd8f29b00f6cf0955a4058d81c65c57cba8c7d38972a417241df3b7e3"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O3_do_thiet_dien_khac": {
+      "group": "W17_O_OPERATION",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "unsupported",
+        "stage_reached": "structural_coverage",
+        "reason_code": null,
+        "envelope_sha256": "357ba893786b86551e013911348709a98cfabd79525bec850194d4f2fe59ca10"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "structural_coverage",
+        "reason_code": null,
+        "envelope_sha256": "1ca2c77ce38e76217e3e0d0b80783f322bc8c7445557cb579e076180c4ec01b3"
+      },
+      "cached_before_w17": false
+    },
+    "O4_P_phay_dung": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "09f328c9a05dc664ca0b7f009c9989b94109f44454368f4e83501139589a4caa"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1c85648e81bb691703ed3b9a45f600e00abadcf36d9427aca9ab62587c63dde2"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O5_dung_P_thay_P_phay": {
+      "group": "W17_O_OPERATION",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "deacc1a569cd9d8b275d45d5af1b5d71d3c22fffecdc05ecd39755bd4a2d04ff"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "53a5d0fb5c56d2e804130f9da1885df12d61ff6b452d167e9719e31c024acad9"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O6_bi_danh_hop_le": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7107116a34d19643048a77981524d1902cf733cdac480bfd9c321b5149529499"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "3f0ac4de883c9614f88eb155e95874ac48c5d60009e31fa32e9f26d5b2887df7"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O7_doi_ten_may_giu_nguon": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6207ad2086fac5b8d712d1a2fd002fdba099bc37be851b582d4c374f9170f37c"
+      },
+      "cached_before_w17": false
+    },
+    "O8_cung_phuong_trinh_khac_danh_tinh": {
+      "group": "W17_O_OPERATION",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "44b0438c831f572a92ff9ef88fd33f04bf2290bae3e5eae679802971362cdc1a"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "c790dcda3cfb4955c70995fb5bafdfefc821fa0439a8b88588fcc4e236757961"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O8b_cung_phuong_trinh_dung_danh_tinh": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f902eb14d5db7e04397d4e65ca88f81b82065a5513a6fa75092b87b72e0360a5"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6ec362bc0053e79a7fe705b7c2cee2974fdd1e6e142b2279e3d1521658018ffd"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O9_mat_phang_khong_ten_duy_nhat": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "90d897e42e73d1b9ba49985ec267543e5c011448296b4a00afa9c27440a052cf"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "ecef6f02497f5343783195ad5aa7a558b2fb1a382dea210c0bf7a51782230264"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "O10_thiet_dien_cat_boi": {
+      "group": "W17_O_OPERATION",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f069a2782c16ebf60a2cecebde0f767b182c3d03cb0adcded7888099483b25f2"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "352db6ae8b0ce3ba4ca401acd781633da14f3494c1b021776d4664dbbbfb72ae"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "G1_do_dai_chi_trong_yeu_cau_chung_minh": {
+      "group": "W17_G_GROUNDING",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+        "envelope_sha256": "f19dbee0f4b3dbd8e0e6a66af1a96b19f1714001ea155da16b114d5a5ddabbbb"
+      },
+      "cached_before_w17": false
+    },
+    "G2_tinh_biet_du_kien": {
+      "group": "W17_G_GROUNDING",
+      "label": "INVARIANT",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "28b7878b02ee53c3b84c1c00ae1b1b5bc3babbb72ec85b0ded61042649a5567a"
+      },
+      "w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "b7c6d4ec37053d3cac8518fe8b7ebbaebce4a05cafd3b9e407ff81b2f76dc5cc"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w17": true
+    },
+    "G3_toa_do_chi_trong_yeu_cau_chung_minh": {
+      "group": "W17_G_GROUNDING",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "0db8df1cf8152f75a55e80edf595dffe67f19b72dfa38e82e709fde81edbd2e4"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+        "envelope_sha256": "3e3b8ff85477df87e44d13a0e2b47f5be1553d7a7745660e22887875d62a1439"
+      },
+      "cached_before_w17": false
+    },
+    "G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau": {
+      "group": "W17_G_GROUNDING",
+      "label": "MUST_REFUSE",
+      "before_w17": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "a10c1bb63b19592cb0a3cfa4ad5c6ef34886cee4e6e00378c63e7e0d678bea6f"
+      },
+      "w17": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+        "envelope_sha256": "1dba8b88a44046f178a9661fde5f0a7c199dbb7e4b18b607f117e5aabb8850b5"
+      },
+      "cached_before_w17": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w17_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w17": true
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "O1_cat_bang_alpha_khi_de_noi_beta",
+    "O2_cat_khoi_khac",
+    "O5_dung_P_thay_P_phay",
+    "O8_cung_phuong_trinh_khac_danh_tinh",
+    "G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W17 would be replayed under the current version although W17 refuses them: ['O1_cat_bang_alpha_khi_de_noi_beta', 'O2_cat_khoi_khac', 'O5_dung_P_thay_P_phay', 'O8_cung_phuong_trinh_khac_danh_tinh', 'G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau']"
+}
