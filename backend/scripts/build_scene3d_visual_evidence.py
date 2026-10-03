@@ -41,12 +41,21 @@ STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
                 "rotated_neutral": "đã xoay (qua cổng không suy biến)",
                 "solution_neutral_final": "bảng lời giải, bước cuối",
                 "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
-                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính"}
+                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
+                "annotations_off": "tắt Số đo và Kết quả — chỉ nhãn đổi",
+                "causal_restored": "bỏ chọn — cùng camera, cùng vị trí cuộn"}
 #: W16 §14.5 — tên NGƯỜI XEM của từng loại âm mà bộ chạy ghi (`negative[kind][viewport]`).
 #: Bảng ĐÓNG: loại lạ ⇒ `KeyError`, không in token máy lên ảnh.
 TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ chối, không dựng hình",
                "assumption": "đáp số phụ thuộc kích thước đề không cho — từ chối",
                "topology_kernel": "bảng mặt / hình học không dựng được — từ chối"}
+#: W17 §15.5 — loại từ chối THÊM, chỉ ở họ khai nó (bắt buộc đủ hai viewport khi có mặt).
+TEN_TU_CHOI_W17 = {"construction_mismatch": "đề cắt bằng (β), hệ cắt bằng (α) — từ chối, đề không cần sửa",
+                   "system_cause": "đề hợp lệ, số liệu của hệ sai — từ chối, lỗi của hệ"}
+#: W17 — ca PHỤC VỤ thêm (`served[kind][viewport]`). Bảng đóng như `TEN_TU_CHOI`.
+TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — được phục vụ"}
+#: W17 — ảnh của trang dương chỉ có khi bộ chạy đã ĐO điều tương ứng: (khoá bản ghi, trạng thái).
+W17_STATES = (("annotation_toggle", "annotations_off"), ("causal_restore", "causal_restored"))
 #: Ô từ chối ĐỌC ĐƯỢC ⇔ hộp đoạn lời (`refusal_message_box`) có ít nhất tỉ lệ này điểm ảnh
 #: mực (độ sáng < `DO_SANG_MUC`). Ảnh chụp trắng có 0; vài dòng chữ có cỡ vài phần trăm.
 MUC_TOI_THIEU, DO_SANG_MUC = 0.005, 100
@@ -268,15 +277,16 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
                       "box_state": state, "crop": True})
-    for vp, state in PANEL_STATES:
+    for vp, state in PANEL_STATES + tuple((vp, s) for vp in ("desktop", "mobile") for khoa, s in W17_STATES
+                                          if khoa in records.get(vp, {})):
         record = records.get(vp, {})
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
                       "box_state": state, "crop": False})
     am = scenario.get("negative", {})
-    if la := sorted(set(am) - TEN_TU_CHOI.keys()):
+    if la := sorted(set(am) - TEN_TU_CHOI.keys() - TEN_TU_CHOI_W17.keys()):
         raise KeyError(f"loại từ chối chưa có tên người xem: {la}")
-    for kind, ten in TEN_TU_CHOI.items():
+    for kind, ten in {**TEN_TU_CHOI, **{k: v for k, v in TEN_TU_CHOI_W17.items() if k in am}}.items():
         for vp in ("desktop", "mobile"):
             record, state = (am.get(kind) or {}).get(vp), f"negative/{kind}/{vp}"
             ly_do = "no record" if record is None else _loi_tu_choi(
@@ -287,6 +297,18 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
             cells.append({"state": state, "label": f"{vp.capitalize()} · {ten}",
                           "path": _path(record.get("screenshot")), "record": record,
                           "box_state": "refusal", "crop": False})
+    pv = scenario.get("served", {})
+    if la := sorted(set(pv) - TEN_PHUC_VU.keys()):
+        raise KeyError(f"ca phục vụ chưa có tên người xem: {la}")
+    for kind in pv:
+        for vp in ("desktop", "mobile"):
+            record, state = pv[kind].get(vp), f"served/{kind}/{vp}"
+            if not (record or {}).get("pass"):
+                loi.append(f"{state}: {'no record' if record is None else 'record is not a passing served case'}")
+                continue
+            cells.append({"state": state, "label": f"{vp.capitalize()} · {TEN_PHUC_VU[kind]}",
+                          "path": _path(record.get("screenshot")), "record": record,
+                          "box_state": "served", "crop": False})
     steps = [s for s in records.get("desktop", {}).get("formation", {}).get("steps", []) if s.get("screenshot")]
     for s in steps:
         cells.append({"state": f"desktop/geometry_step/{s['index']}",

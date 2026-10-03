@@ -215,6 +215,59 @@ def test_w16_loai_tu_choi_la_bi_bao_loi(tmp_path):
         B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
 
 
+# ── W17 · §15.5 — ô của các phép đo W17 trên sheet: loại từ chối THÊM (chỉ ở họ khai nó), ca
+# phục vụ thêm, ảnh tắt nhãn và ảnh khôi phục nhân quả khi bộ chạy đã ĐO chúng ───────────────
+
+def _them_w17(kb: dict, tmp: Path, family_dir: str = "cross-section") -> dict:
+    images = tmp / "images"
+    kb["negative"]["construction_mismatch"] = {vp: _tu_choi(images, family_dir, "construction_mismatch", vp)
+                                               for vp in ("desktop", "mobile")}
+    kb["served"] = {"correct_plane": {vp: {"pass": True, "screenshot": str(_anh(
+        images / family_dir / "served" / "correct_plane" / vp / "served.png", (780, 1200), "white"))}
+        for vp in ("desktop", "mobile")}}
+    for vp, rec in kb["positive"].items():
+        rec["annotation_toggle"] = {"pass": True}
+        rec["causal_restore"] = {"pass": True}
+        for s in ("annotations_off", "causal_restored"):
+            rec["screenshots"][s] = str(_anh(tmp / vp / f"{s}.png", (780, 1200), "white"))
+    return kb
+
+
+def test_w17_o_do_W17_co_mat_khi_bo_chay_da_do(tmp_path):
+    meta = B.family_sheet("cross_section", _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path),
+                          tmp_path / "images")
+    trang = [c["state"] for c in meta["cells"]]
+    for state in ("desktop/annotations_off", "desktop/causal_restored", "mobile/annotations_off",
+                  "mobile/causal_restored", "negative/construction_mismatch/desktop",
+                  "negative/construction_mismatch/mobile", "served/correct_plane/desktop",
+                  "served/correct_plane/mobile"):
+        assert state in trang, (state, trang)
+    nhan = {c["state"]: c["label"] for c in meta["cells"]}
+    assert B.TEN_TU_CHOI_W17["construction_mismatch"] in nhan["negative/construction_mismatch/mobile"]
+    assert B.TEN_PHUC_VU["correct_plane"] in nhan["served/correct_plane/desktop"]
+    assert not any("_" in nhan_xem for nhan_xem in nhan.values()), nhan
+
+
+def test_w17_ho_khong_khai_loai_W17_khong_can_o_ay(tmp_path):
+    meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
+    assert not any(c["state"].startswith(("served/", "negative/construction_mismatch", "negative/system_cause"))
+                   or c["state"].endswith(("annotations_off", "causal_restored")) for c in meta["cells"])
+
+
+def test_w17_da_do_ma_thieu_anh_thi_that_bai(tmp_path):
+    import pytest
+    kb = _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path)
+    Path(kb["positive"]["mobile"]["screenshots"]["causal_restored"]).unlink()
+    Path(kb["served"]["correct_plane"]["desktop"]["screenshot"]).unlink()
+    with pytest.raises(B.ThieuAnhBangChung) as e:
+        B.family_sheet("cross_section", kb, tmp_path / "images")
+    assert "mobile/causal_restored" in str(e.value) and "served/correct_plane/desktop" in str(e.value)
+    kb = _them_w17(_kich_ban_du(tmp_path / "b", "cross-section"), tmp_path / "b")
+    kb["served"]["mystery"] = kb["served"]["correct_plane"]
+    with pytest.raises(KeyError, match="mystery"):
+        B.family_sheet("cross_section", kb, tmp_path / "b" / "images")
+
+
 def test_w16_dai_phim_thieu_anh_buoc_dung_thi_that_bai(tmp_path):
     import pytest
     rec = _ban_ghi_w14(tmp_path)
