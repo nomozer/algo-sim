@@ -60,6 +60,15 @@ import {
   type KhungNhin, chonHuongNhin, hopBaoCuaDiem, khungNhinSuPham, khungNhinVua,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
+import {
+  type AnnotationToggles,
+  type LabelRect,
+  type LabelToPlace,
+  DEFAULT_ANNOTATION_TOGGLES,
+  annotationAnchor,
+  annotationsAt,
+  placeAnnotationLabels,
+} from "./scene3d-annotations";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -1221,9 +1230,23 @@ interface Props {
    * đồ kiến trúc cấm.
    */
   fitToken?: number;
+  /** W17: công tắc nhãn số đo / kết quả trên hình. Vắng ⇒ cả hai bật (U-W17-1). */
+  annotationToggles?: AnnotationToggles;
 }
 
-export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken = 0 }: Props) {
+/** Vùng một lớp phủ khác đang che khung (`data-che-khung`: nút nổi, ô soi, ngăn kéo) — nhãn
+ *  số đo không được nằm dưới nó. Toạ độ px trong khung `goc`. */
+function vungCheKhung(goc: DOMRect): LabelRect[] {
+  if (typeof document === "undefined") return [];
+  return Array.from(document.querySelectorAll<HTMLElement>("[data-che-khung]")).flatMap((el) => {
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 ? [{ x: r.left - goc.left, y: r.top - goc.top, w: r.width, h: r.height }] : [];
+  });
+}
+
+export function Scene3DWorkspace({
+  scene, step, interaction, onSelect, fitToken = 0, annotationToggles = DEFAULT_ANNOTATION_TOGGLES,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
   const veRef = useRef<(() => void) | null>(null);
@@ -1249,6 +1272,26 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
     () => (tuongTac.selected_id ? tangNhanManh(scene, tuongTac.selected_id) : null),
     [scene, tuongTac.selected_id],
   );
+  // W17 · §15.4: nhãn số đo của bước. Chủ thể phải đang hiện — ẩn/cô lập theo cùng luật nhãn
+  // điểm. Bật/tắt chỉ đổi danh sách này: hình, camera, bước, chuỗi nhân quả, nét đứt không đọc nó.
+  const coMatNhan = useMemo(() => new Set(objectsAt(scene, buoc).map((o) => o.id)), [scene, buoc]);
+  const nhanSoDo = useMemo(
+    () => annotationsAt(scene, buoc, annotationToggles, tuongTac.selected_id ?? null)
+      .filter((a) => a.subject_ids.every((id) => isVisible(tuongTac, id, coMatNhan))),
+    [scene, buoc, annotationToggles, tuongTac, coMatNhan],
+  );
+  useEffect(() => {
+    // Điểm neo THẾ GIỚI + độ dời trình bày của chủ thể (tách khối), đọc trong vòng vẽ qua ref.
+    const m = new Map<string, THREE.Vector3>();
+    for (const a of nhanSoDo) {
+      const p = annotationAnchor(scene, a);
+      if (!p) continue;
+      const doi = a.subject_ids.map((id) => visualTransformOf(tuongTac, scene, id).translate);
+      const tb = [0, 1, 2].map((i) => doi.reduce((s, t) => s + t[i], 0) / doi.length);
+      m.set(a.id, new THREE.Vector3(p[0] + tb[0], p[1] + tb[1], p[2] + tb[2]));
+    }
+    viTriSoDo.current = m;
+  }, [scene, nhanSoDo, tuongTac]);
   const chonRef = useRef(onSelect);
   chonRef.current = onSelect;
   // `id → type`, để luật chọn biết cái nào cụ thể hơn. `ref` vì vòng lặp
@@ -1259,6 +1302,9 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
   //: `id → vị trí THẾ GIỚI` của nhãn. Ghi trong vòng dựng cảnh, đọc trong
   //: vòng vẽ — hai nhịp khác nhau nên phải đi qua `ref`, không qua state.
   const viTriNhan = useRef(new Map<string, THREE.Vector3>());
+  //: W17 · nhãn SỐ ĐO: lớp DOM thứ hai, cùng vòng chiếu — đặt SAU nhãn điểm để tránh chúng.
+  const soDoRef = useRef<HTMLDivElement>(null);
+  const viTriSoDo = useRef(new Map<string, THREE.Vector3>());
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -1401,6 +1447,42 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
       }
       const giu = locNhanChongNhau(dat);
       for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
+
+      // ── W17 · NHÃN SỐ ĐO — đặt sau nhãn điểm, tránh chúng và các lớp phủ che khung ─────
+      // Luật hộp nhãn (§15.5) ở hàm thuần `placeAnnotationLabels`; đây chỉ đo cỡ chữ và chiếu.
+      const lopSo = soDoRef.current;
+      if (!lopSo) return;
+      const hopDiem = dat.filter((d) => giu.has(d.id)).map((d) => ({
+        id: d.id, x: d.x - d.el.offsetWidth / 2, y: d.y - 1.4 * d.el.offsetHeight,
+        w: d.el.offsetWidth, h: d.el.offsetHeight,
+      }));
+      const canDat: LabelToPlace[] = [];
+      const theTheoId = new Map<string, HTMLElement>();
+      for (const el of Array.from(lopSo.children) as HTMLElement[]) {
+        const id = el.dataset.annId;
+        const v = id ? viTriSoDo.current.get(id) : undefined;
+        const p3 = v?.clone().project(cam);
+        if (!id || !p3 || !(p3.z < 1)) { el.style.opacity = "0"; continue; }
+        canDat.push({ id, ax: ((p3.x + 1) / 2) * w, ay: ((1 - p3.y) / 2) * h,
+          w: el.offsetWidth, h: el.offsetHeight, priority: Number(el.dataset.uuTien ?? "1") });
+        theTheoId.set(id, el);
+      }
+      const daDat = placeAnnotationLabels(canDat,
+        [...hopDiem, ...vungCheKhung(renderer.domElement.getBoundingClientRect())], { w, h });
+      const hopSo: { id: string; category?: string; box: LabelRect; anchor: { x: number; y: number } }[] = [];
+      for (const c of canDat) {
+        const el = theTheoId.get(c.id)!;
+        const r = daDat.get(c.id);
+        el.style.opacity = r ? "1" : "0";
+        if (!r) continue;
+        el.style.transform = `translate(${r.x}px,${r.y}px)`;
+        hopSo.push({ id: c.id, category: el.dataset.loai, box: r, anchor: { x: c.ax, y: c.ay } });
+      }
+      if (typeof window !== "undefined") {
+        // Móc ĐO của bộ kiểm trình duyệt (§15.5): hộp nhãn số đo đang hiện + hộp nhãn điểm đang hiện.
+        (window as any).__geo3d_annotation_boxes = hopSo;
+        (window as any).__geo3d_point_label_boxes = hopDiem;
+      }
     };
 
     let song = true;
@@ -1690,11 +1772,33 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect, fitToken 
               </span>
             ))}
           </div>
+          {/* W17 · SỐ ĐO TRÊN HÌNH. W12 gỡ dải số nổi vì một con số không chủ thể đặt ở đâu cũng
+              vô nghĩa. Nhãn ở đây khác ở đúng chỗ ấy: mỗi nhãn đứng cạnh CHỦ THỂ backend gắn
+              (đoạn, miền, khối, điểm của cặp), bật/tắt được, chỉ từ bước đại lượng khả dụng.
+              Bảng lời giải vẫn là bản đầy đủ — có công thức, nguồn số, và mọi đại lượng không gắn
+              được chủ thể. Không bắt chuột, giấu khỏi trình đọc màn hình: chữ đã có ở bảng. */}
+          <div ref={soDoRef} className="geo3d-so-do-lop" aria-hidden="true">
+            {nhanSoDo.map((a) => {
+              const diu = !a.related && tang !== null && !tang.has(a.id)
+                && !a.subject_ids.some((id) => tang.has(id));
+              return (
+                <span
+                  key={a.id}
+                  data-ann-id={a.id}
+                  data-loai={a.category}
+                  data-uu-tien={a.priority}
+                  className={`geo3d-so-do ${a.category === "result" ? "la-ket-qua" : "la-so-do"}${
+                    a.related ? " la-lien-quan" : diu ? " la-diu" : ""}`}
+                >
+                  {a.text}
+                </span>
+              );
+            })}
+          </div>
         </div>
       )}
-      {/* Số đo KHÔNG nằm trên khung nữa (W12): dải số nổi trên hình đã gỡ,
-          mọi con số — dữ kiện, bước tính, kết quả — ở bảng lời giải dưới thanh
-          bước (`scene3d-solution.tsx`). Khung là của hình.
+      {/* Mọi con số — dữ kiện, bước tính, kết quả — có đủ ở bảng lời giải dưới thanh bước
+          (`scene3d-solution.tsx`); nhãn trên hình (W17) chỉ là lối tắt đọc cạnh chủ thể.
 
           Nội suy GỘP thành MỘT chuỗi: `{a}/{b}` làm SSR chèn marker
           `<!-- -->` vào giữa, nên chữ hiện ra đúng mà mọi phép kiểm chuỗi lại

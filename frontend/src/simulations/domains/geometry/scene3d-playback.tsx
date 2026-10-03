@@ -16,6 +16,7 @@ import {
   type Scene3D,
 } from "./scene3d-model";
 import type { InteractionState } from "./interaction-state";
+import type { AnnotationToggles } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { Scene3DSolution } from "./scene3d-solution";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
@@ -66,10 +67,12 @@ interface Props {
   onSelect?: (id: string | null) => void;
   /** Chuyển tiếp tới khung nhìn: tăng để yêu cầu đặt lại camera cho vừa hình. */
   fitToken?: number;
+  /** W17: công tắc nhãn số đo / kết quả trên hình — chuyển tiếp tới khung nhìn (mặc định bật). */
+  annotationToggles?: AnnotationToggles;
 }
 
 export function Scene3DPlayer({
-  scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0,
+  scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationToggles,
 }: Props) {
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
@@ -179,6 +182,7 @@ export function Scene3DPlayer({
         interaction={interaction}
         onSelect={onSelect}
         fitToken={fitToken}
+        annotationToggles={annotationToggles}
       />
 
       <div className="geo3d-controls" role="group" aria-label="Điều khiển bước dựng">

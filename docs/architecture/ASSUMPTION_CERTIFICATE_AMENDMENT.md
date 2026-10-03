@@ -728,8 +728,10 @@ Luật gắn (backend sở hữu):
 > `semantic_program/quantity_annotations.py` (gọi từ `build_simulation_state`; lớp chiếu không tự
 > tính hình), `scene3d._gan_so_do` quyết `category` và chở `diagnostics` ở gốc cảnh. Ba điểm phạm
 > vi:
-> - `distance` giữa hai ĐIỂM là độ dài đoạn (`kind = length`, `anchor = segment`); điểm–đường,
->   điểm–mặt và góc là `pair`;
+> - `distance` giữa hai ĐIỂM là độ dài đoạn (`kind = length`, `anchor = segment`); điểm–đường và
+>   điểm–mặt là `pair`, neo TẠI ĐIỂM của cặp. Phía trình bày chỉ được lấy trung bình toạ độ
+>   backend phát (chân đường vuông góc là suy luận hình học, cấm ở frontend — `scene3d.test.tsx`
+>   5D), nên góc giữa hai đường/mặt và khoảng cách giữa hai vật không phải điểm KHÔNG gắn (Task 6);
 > - vật CONG (đường tròn, elip, khối tròn xoay) chưa có điểm neo đăng ký ⇒ không gắn, có chẩn
 >   đoán; giá trị vẫn ở bảng chi tiết (lộ trình);
 > - MỘT chủ thể, MỘT nhãn: cùng `kind`, `anchor` và tập chủ thể (hình hộp: độ dài đề cho AA′ và

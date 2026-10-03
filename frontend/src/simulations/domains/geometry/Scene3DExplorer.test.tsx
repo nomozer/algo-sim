@@ -92,9 +92,22 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
   });
 
   /* W17 · §15.4 / U-W17-1: hai công tắc nằm trong THANH CHIP có sẵn (không thêm nút nổi
-   * che hình), là nút bật/tắt thật (`aria-pressed`), và BẬT mặc định. */
+   * che hình), là nút bật/tắt thật (`aria-pressed`), và BẬT mặc định. Cảnh của test mang nhãn
+   * của cả hai loại — DESIGN_BRIEF §3.2: không có gì để bật thì công tắc VẮNG MẶT (Task 6). */
+  const CANH_CO_SO_DO: Scene3D = {
+    ...CANH,
+    objects: [
+      ...CANH.objects.map((o) => (o.id === "V" ? { ...o, annotation: {
+        kind: "volume" as const, category: "result" as const, subject_ids: ["chop"], anchor: "solid" as const } } : o)),
+      { id: "AB_length", label: "AB", notation: "AB", type: "quantity", render: "readout", origin: "free",
+        producer: null, depends: [], value: "1", parent: null, display_group: ["given", "measurement"],
+        source: {}, annotation: { kind: "length", category: "measurement", subject_ids: ["A", "B"],
+          anchor: "segment" } },
+    ],
+  };
+
   it("W17 · công tắc Số đo và Kết quả ở thanh trên, bật mặc định", () => {
-    const h = html();
+    const h = renderToString(<Scene3DExplorer scene={CANH_CO_SO_DO} />);
     const thanh = h.slice(h.indexOf("geo3d-thanh-nut"), h.indexOf("geo3d-san"));
     for (const ten of ["Số đo", "Kết quả"]) {
       const i = thanh.indexOf(ten);
@@ -102,6 +115,12 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
       const nut = thanh.slice(thanh.lastIndexOf("<button", i), i);
       expect(nut).toContain('aria-pressed="true"');
     }
+  });
+
+  it("W17 · cảnh không có nhãn số đo nào ⇒ không có công tắc (không bịa affordance)", () => {
+    const thanh = html().slice(html().indexOf("geo3d-thanh-nut"), html().indexOf("geo3d-san"));
+    expect(thanh).not.toContain("Số đo");
+    expect(thanh).not.toContain("Kết quả");
   });
 
   it("cây có đủ hạng mục Điểm, Cạnh, Mặt", () => {

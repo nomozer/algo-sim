@@ -176,6 +176,22 @@ export const IconInfo = (p: IconProps) => (
   </Svg>
 );
 
+/** W17 · công tắc "Số đo" — thước kẻ chéo có vạch: số liệu đặt NGAY TRÊN hình. */
+export const IconRuler = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3.5 15.5l12-12 5 5-12 12z" />
+    <path d="M7.5 11.5l2 2M10.5 8.5l2 2M13.5 5.5l2 2" />
+  </Svg>
+);
+
+/** W17 · công tắc "Kết quả" — lá cờ cắm đích: đáp số của đề. */
+export const IconFlag = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 21V4" />
+    <path d="M5 4h12l-2.5 4.5L17 13H5" />
+  </Svg>
+);
+
 /**
  * Bật/tắt panel. Thay `◧`/`◨` (U+25E7/25E8) — hai ký tự này không có glyph trong
  * font hệ thống Windows nên hiện ra Ô VUÔNG RỖNG (tofu) ngay trên header.

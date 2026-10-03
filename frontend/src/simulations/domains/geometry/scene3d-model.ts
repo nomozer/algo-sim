@@ -210,6 +210,12 @@ export interface SceneObject {
   /** Bí danh của đáp số (backend `_danh_dau_bi_danh`): MỘT kết luận với nguồn này. */
   alias_of?: string;
   /**
+   * W17 §15.4 — CHỦ THỂ của một đại lượng, do backend gắn (`quantity_annotations`). Vắng ⇒
+   * đại lượng không có nhãn trên hình (vẫn ở bảng lời giải). Phía này không bao giờ suy chủ thể
+   * từ tên biến (`AB_length`) và không tự tính giá trị.
+   */
+  annotation?: QuantityAnnotation;
+  /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *
    * `curved_kind` là hình nào (`ball` · `cylinder` · `cone`); `anchor` là tâm
@@ -475,11 +481,25 @@ export interface SceneFormation {
   steps: FormationStep[];
 }
 
+/** W17 §15.4 — gắn kết đại lượng ↔ chủ thể hình học (backend sở hữu nghĩa). */
+export interface QuantityAnnotation {
+  kind: "length" | "area" | "volume" | "distance" | "angle";
+  /** `result` = đích của đề (hoặc thứ một đích trỏ tới); còn lại `measurement`. */
+  category: "measurement" | "result";
+  /** Id vật/điểm CÓ trong cảnh. */
+  subject_ids: string[];
+  anchor: "segment" | "region" | "solid" | "pair";
+  /** Chỉ khi payload có đơn vị. */
+  unit?: string | null;
+}
+
 export interface Scene3D {
   objects: SceneObject[];
   events: SceneEvent[];
   free_objects: string[];
   formation?: SceneFormation;
+  /** W17: chẩn đoán cho người phát triển (`ANNOTATION_UNBOUND …`) — không hiện cho học sinh. */
+  diagnostics?: string[];
 }
 
 /**

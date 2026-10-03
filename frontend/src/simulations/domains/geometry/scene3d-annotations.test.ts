@@ -7,7 +7,9 @@
  */
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
-import { annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_TOGGLES } from "./scene3d-annotations";
+import {
+  annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_TOGGLES, NEO_TOI_DA, placeAnnotationLabels,
+} from "./scene3d-annotations";
 
 const P = (id: string, xyz: [string, string, string]) => ({
   id, label: `Điểm ${id}`, notation: id, type: "point3", render: "marker",
@@ -101,6 +103,17 @@ describe("W17 · số đo trên hình (§15.4)", () => {
     expect(uu(chon, "AB_length")).toBe(uu(thuong, "AB_length"));
   });
 
+  it("cặp điểm–đường: neo ở ĐIỂM của cặp — không tự dựng chân đường vuông góc ở phía trình bày", () => {
+    // `scene3d.test.tsx` (5D): suy luận hình học (chân đường cao, giao tuyến, góc) CẤM ở frontend,
+    // kể cả để đặt nhãn. "d(S, BD)" đứng cạnh S; vật không phải điểm thì không có neo ở đây.
+    const s = canh();
+    s.objects.push({ id: "BD", label: "Đường thẳng BD", notation: "BD", type: "line3", render: "line",
+      origin: "derived", producer: "line_through", depends: ["B", "D"],
+      point: ["3", "0", "0"], direction: ["-3", "0", "5"] } as never);
+    expect(annotationAnchor(s, { anchor: "pair", subject_ids: ["BD", "C"] })).toEqual([0, 4, 0]);
+    expect(annotationAnchor(s, { anchor: "pair", subject_ids: ["BD", "day_ABC"] })).toBeNull();
+  });
+
   it("điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ", () => {
     const s = canh();
     const [ab, dt, v] = ["AB_length", "dien_tich", "the_tich"].map(
@@ -108,5 +121,43 @@ describe("W17 · số đo trên hình (§15.4)", () => {
     expect(ab).toEqual([1.5, 0, 0]);
     expect(dt).toEqual([1, 4 / 3, 0]);
     expect(v).toEqual([0.75, 1, 1.25]);
+  });
+});
+
+/* §15.5 — luật HỘP NHÃN mà bộ đo trình duyệt kiểm: trong khung, không đè nhãn điểm/nút điều khiển,
+ * điểm gần nhất của hộp cách điểm neo chiếu ≤ 24 px. Hàm thuần: vị trí px vào, hộp ra. */
+describe("W17 · đặt nhãn số đo (§15.5)", () => {
+  const KHUNG = { w: 400, h: 300 };
+  const n = (id: string, ax: number, ay: number, priority = 1) => ({ id, ax, ay, w: 60, h: 18, priority });
+  const gan = (r: { x: number; y: number; w: number; h: number }, ax: number, ay: number) =>
+    Math.hypot(Math.max(r.x - ax, 0, ax - r.x - r.w), Math.max(r.y - ay, 0, ay - r.y - r.h));
+
+  it("khung trống ⇒ nhãn nằm ngay TRÊN điểm neo", () => {
+    expect(placeAnnotationLabels([n("a", 200, 150)], [], KHUNG).get("a")).toEqual({ x: 170, y: 126, w: 60, h: 18 });
+  });
+
+  it("chỗ trên đã có nhãn điểm ⇒ xuống dưới, không đè", () => {
+    const r = placeAnnotationLabels([n("a", 200, 150)], [{ x: 160, y: 120, w: 80, h: 26 }], KHUNG).get("a")!;
+    expect(r.y).toBe(156);
+  });
+
+  it("điểm neo sát mép ⇒ hộp kẹp vào trong khung mà vẫn gần neo", () => {
+    const r = placeAnnotationLabels([n("a", 4, 150)], [], KHUNG).get("a")!;
+    expect(r.x).toBeGreaterThanOrEqual(0);
+    expect(gan(r, 4, 150)).toBeLessThanOrEqual(NEO_TOI_DA);
+  });
+
+  it("không còn chỗ trong 24 px ⇒ ẩn — nhãn không bao giờ trôi xa vật nó gọi tên", () => {
+    expect(placeAnnotationLabels([n("a", 200, 150)], [{ x: 0, y: 0, w: 400, h: 300 }], KHUNG).size).toBe(0);
+  });
+
+  it("điểm neo ngoài khung ⇒ không đặt", () => {
+    expect(placeAnnotationLabels([n("a", -10, 150), n("b", 200, 320)], [], KHUNG).size).toBe(0);
+  });
+
+  it("ưu tiên cao đặt trước; nhãn sau tránh nhãn trước", () => {
+    const m = placeAnnotationLabels([n("thap", 200, 150, 1), n("cao", 200, 150, 5)], [], KHUNG);
+    expect(m.get("cao")!.y).toBe(126);
+    expect(m.get("thap")!.y).toBe(156);
   });
 });

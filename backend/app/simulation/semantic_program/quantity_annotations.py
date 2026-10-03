@@ -22,13 +22,14 @@ from .shape_constraint import che_muc_tieu
 from .source_entities import dinh_danh_thuc_the
 
 #: `measure.quantity` → (kind, anchor, kiểu được phép của toán hạng `of` — None: mọi kiểu).
-#: Vật cong (đường tròn, elip, khối tròn xoay) chưa có điểm neo đăng ký ⇒ không gắn.
+#: Điểm neo phải đặt được ở phía trình bày CHỈ bằng trung bình toạ độ (frontend cấm suy luận hình
+#: học, kể cả chân đường vuông góc): khoảng cách cần một toán hạng là ĐIỂM (neo ở điểm ấy; hai
+#: điểm ⇒ đoạn); góc giữa hai đường/mặt và vật cong (đường tròn, elip, khối tròn xoay) chưa có
+#: điểm neo đăng ký ⇒ không gắn.
 _DO: dict[str, tuple[str, str, frozenset[str] | None]] = {
     "area": ("area", "region", frozenset({"polygon3", "section"})),
     "volume": ("volume", "solid", frozenset({"solid"})),
     "distance": ("distance", "pair", None),
-    "angle_cos_sq": ("angle", "pair", None),
-    "angle_cos": ("angle", "pair", None),
 }
 
 
@@ -74,8 +75,11 @@ def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, An
             return "a measured operand is not a scene object"
         if cho_phep is not None and loai[expr.of] not in cho_phep:
             return f"{expr.quantity} of a {loai[expr.of]} has no registered anchor"
-        if expr.quantity == "distance" and all(loai[x] == "point3" for x in chu_the):
-            kind, anchor = "length", "segment"
+        if expr.quantity == "distance":
+            if all(loai[x] == "point3" for x in chu_the):
+                kind, anchor = "length", "segment"
+            elif not any(loai[x] == "point3" for x in chu_the):
+                return "distance between two non-point objects has no registered anchor"
         return {"kind": kind, "subject_ids": chu_the, "anchor": anchor, "unit": None}
     if getattr(expr, "kind", None) == "var":
         return f"copy of {expr.name} — shares its identity"

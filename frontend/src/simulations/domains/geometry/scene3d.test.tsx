@@ -195,10 +195,13 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
   const model = readFileSync(join(__dirname, "scene3d-model.ts"), "utf8");
 
   it("không tích có hướng, không giao điểm, không tích vô hướng", () => {
+    // W17: lớp nhãn số đo cũng là phía trình bày — điểm neo chỉ là trung bình toạ độ backend phát.
+    const soDo = readFileSync(join(__dirname, "scene3d-annotations.ts"), "utf8");
     for (const cam of [".cross(", ".dot(", "Plane(", "distanceTo", "angleTo",
                        "projectOnPlane"]) {
       expect(view, `view dùng ${cam}`).not.toContain(cam);
       expect(model, `model dùng ${cam}`).not.toContain(cam);
+      expect(soDo, `scene3d-annotations dùng ${cam}`).not.toContain(cam);
     }
   });
 
@@ -260,12 +263,20 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // `./scene3d-roles` THÊM ở W12: bảng MÀU VAI TRÒ dùng chung với bảng
       // lời giải — chỉ hằng số màu, không three, không toán hình học. Tách ra
       // để một màu mang MỘT nghĩa ở cả khung 3D lẫn CSS (test đồng bộ riêng).
+      //
+      // `./scene3d-annotations` THÊM ở W17 (§15.4), nói ra: nhãn số đo trên
+      // hình. Module THUẦN, không three; nó chỉ quyết nhãn nào hiện ở bước nào
+      // (luật khả dụng của lớp lời giải), neo ở đâu (TRUNG BÌNH toạ độ backend
+      // phát — không chân đường vuông góc, không giao điểm) và đặt hộp chữ
+      // tránh nhau. Chủ thể do backend gắn; giá trị là chữ payload. Quét chuỗi
+      // cấm ở test "không tích có hướng…" phía trên nay soi cả module này.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-edge-visibility",
-              "./polygon-triangulate", "./scene3d-roles"]).toContain(i);
+              "./polygon-triangulate", "./scene3d-roles",
+              "./scene3d-annotations"]).toContain(i);
     }
   });
 

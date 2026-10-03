@@ -323,10 +323,13 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     // THÊM `./scene3d-solution` (W12), cũng nói ra: bảng lời giải nằm NGAY
     // DƯỚI thanh bước và đồng bộ với bước dựng đang xem, nên trình phát là chỗ
     // đặt nó. Bảng tự giữ trạng thái gập của nó — hai `useState` ở đây không đổi.
+    //
+    // THÊM `./scene3d-annotations` (W17), nói ra: CHỈ một `type` — công tắc Số
+    // đo/Kết quả do xưởng giữ, trình phát chuyển tiếp nguyên xuống khung nhìn.
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
-      "../../../components/icons", "./interaction-state", "./scene3d-model",
-      "./scene3d-solution", "./scene3d-view", "react",
+      "../../../components/icons", "./interaction-state", "./scene3d-annotations",
+      "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
     ]);
   });
 

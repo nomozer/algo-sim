@@ -69,11 +69,18 @@ import {
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
 import {
+  type AnnotationToggles,
+  DEFAULT_ANNOTATION_TOGGLES,
+  hasAnnotationCategory,
+} from "./scene3d-annotations";
+import {
   IconClose,
   IconExperiment,
+  IconFlag,
   IconInfo,
   IconPanel,
   IconReset,
+  IconRuler,
 } from "../../../components/icons";
 
 const NHOM_BUNG = "face";
@@ -175,6 +182,13 @@ export function Scene3DExplorer({
   const [baoDongBo, setBaoDongBo] = useState(false);
   const [ngan, setNgan] = useState<"thanh-phan" | "de" | null>(null);
   const [chiTiet, setChiTiet] = useState(false);
+  /* W17 · §15.4: nhãn số đo / kết quả trên hình — SỞ THÍCH người dùng như `chiTiet` (giữ qua
+     các bài), bật mặc định (U-W17-1). Công tắc chỉ có mặt khi cảnh có nhãn loại ấy. */
+  const [soDo, setSoDo] = useState<AnnotationToggles>(DEFAULT_ANNOTATION_TOGGLES);
+  const coSoDo = useMemo(() => ({
+    measurements: hasAnnotationCategory(day, "measurement"),
+    results: hasAnnotationCategory(day, "result"),
+  }), [day]);
   //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.
@@ -299,6 +313,28 @@ export function Scene3DExplorer({
           >
             <IconPanel side="right" /> Thành phần
           </button>
+          {coSoDo.measurements && (
+            <button
+              type="button"
+              className={`geo3d-chip${soDo.measurements ? " la-mo" : ""}`}
+              onClick={() => setSoDo((s) => ({ ...s, measurements: !s.measurements }))}
+              aria-pressed={soDo.measurements}
+              title="Hiện dữ kiện và số đo ngay cạnh đoạn, mặt, khối mà chúng đo"
+            >
+              <IconRuler /> Số đo
+            </button>
+          )}
+          {coSoDo.results && (
+            <button
+              type="button"
+              className={`geo3d-chip${soDo.results ? " la-mo" : ""}`}
+              onClick={() => setSoDo((s) => ({ ...s, results: !s.results }))}
+              aria-pressed={soDo.results}
+              title="Hiện đáp số trên hình từ bước nó được kết luận"
+            >
+              <IconFlag /> Kết quả
+            </button>
+          )}
           <button
             type="button"
             className={`geo3d-chip${chiTiet ? " la-mo" : ""}`}
@@ -319,10 +355,12 @@ export function Scene3DExplorer({
           onInteraction={setTt}
           onSelect={chon}
           fitToken={fitToken}
+          annotationToggles={soDo}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
-        <div className="geo3d-noi" role="group" aria-label="Thao tác xem">
+        {/* `data-che-khung`: lớp phủ nằm TRÊN khung — nhãn số đo (W17) tránh chỗ nó che. */}
+        <div className="geo3d-noi" role="group" aria-label="Thao tác xem" data-che-khung="">
           <button
             type="button"
             className="geo3d-noi-nut"
@@ -350,7 +388,7 @@ export function Scene3DExplorer({
 
         {/* Ô SOI — chỉ khi có vật đang chọn. */}
         {dangChon && (
-          <aside className="geo3d-soi" aria-label="Thông tin đối tượng">
+          <aside className="geo3d-soi" aria-label="Thông tin đối tượng" data-che-khung="">
             <div className="geo3d-soi-dau">
               <div>
                 {/* Thiết diện gọi bằng CHU TRÌNH khi mọi đỉnh có tên —
@@ -480,6 +518,7 @@ export function Scene3DExplorer({
           <aside
             className="geo3d-ngan"
             aria-label={ngan === "de" ? "Đề bài" : "Các thành phần của hình"}
+            data-che-khung=""
           >
             <div className="geo3d-ngan-dau">
               <h4 className="geo3d-ngan-tieu">
