@@ -1,0 +1,99 @@
+W16 — backend fault injections (HEAD 7695b967 + working tree, 0 model calls)
+method: one exact in-memory source substitution per run (fault_injection_w16.py, W15 _tiem); files on disk are never edited, so 'revert' = the next run without W16_FI
+tests: tests/geometry/test_assumption_gate.py tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py tests/geometry/test_plane_from_equation.py tests/geometry/test_scene3d_visual_evidence.py
+
+baseline (no injection): 380 passed, 1 xfailed, 1 warning in 10.62s
+
+FG1 [assumption_gate] guard CLOSURE_UNSUPPORTED_KIND removed
+  predicted: test_w16_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 9.84s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND
+
+FG2 [assumption_gate] guard TEMPLATE_CONSTRAINT_VIOLATED removed
+  predicted: test_w16_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 9.83s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED
+
+FG3 [assumption_gate] guard FRAME_DEPENDENT removed
+  predicted: test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 9.16s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT
+
+FG4 [assumption_gate] guard FORMATION_REJECTED removed
+  predicted: test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 9.47s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED
+
+FA1 [assumption_gate] plane literal bound to ANY proportional text equation (the W15 rule)
+  predicted: test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0 (A1, A2, A6, A6b, A7, A8)
+  observed : 9 failed, 371 passed, 1 xfailed, 1 warning in 8.69s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A1_beta_chua_xac_dinh_mang_he_so_alpha]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A2_hai_mat_phang_doi_cheo_he_so]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A7_bien_khong_ten_hai_mat_phang_co_ten]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A8_bien_khong_ten_mat_phang_thu_hai_khong_ten]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A9_ten_phay_mang_he_so_cua_mat_phang_khong_phay]
+    FAILED test_assumption_certificate.py::test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the[A1_beta_chua_xac_dinh_mang_he_so_alpha]
+    FAILED test_assumption_certificate.py::test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the[A2_hai_mat_phang_doi_cheo_he_so]
+
+FA2 [assumption_gate] unnamed program plane bound to the first text equation without uniqueness
+  predicted: test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0 (A6b, A7, A8)
+  observed : 3 failed, 377 passed, 1 xfailed, 1 warning in 8.30s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A7_bien_khong_ten_hai_mat_phang_co_ten]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A8_bien_khong_ten_mat_phang_thu_hai_khong_ten]
+
+FA3 [plane_equation] a _prime/_phay token after a plane name is ignored (mp_P_prime reads as (P))
+  predicted: test_w16_ten_mat_phang_cua_bien (mp_P_prime, P_phay, alpha_prime) + A9/A9b
+  observed : 5 failed, 375 passed, 1 xfailed, 1 warning in 8.09s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0[A9_ten_phay_mang_he_so_cua_mat_phang_khong_phay]
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A9b_ten_phay_dung_he_so]
+    FAILED test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[mp_P_prime-ten14]
+    FAILED test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[P_phay-ten15]
+    FAILED test_plane_from_equation.py::test_w16_ten_mat_phang_cua_bien[alpha_prime-ten18]
+
+FA4 [plane_equation] text plane names keep ′/’ (P′ never equals the program's P')
+  predicted: test_w16_doc_mat_phang_de_mang_ten_he_so_va_span (P′, α’) + A9b
+  observed : 3 failed, 377 passed, 1 xfailed, 1 warning in 8.14s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0[A9b_ten_phay_dung_he_so]
+    FAILED test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[Cho hai m\u1eb7t ph\u1eb3ng (P): z = 3 v\xe0 (P\u2032): z = 2.-ky_vong5]
+    FAILED test_plane_from_equation.py::test_w16_doc_mat_phang_de_mang_ten_he_so_va_span[Cho m\u1eb7t ph\u1eb3ng (\u03b1\u2019): x = 1.-ky_vong6]
+
+FB1 [assumption_gate] goal clauses read as premises (no masking)
+  predicted: test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de (7 cases) + route test
+  observed : 9 failed, 371 passed, 1 xfailed, 1 warning in 7.67s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B1_chung_minh_SA_vuong_day]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B1b_CMR_ky_hieu]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B2_chung_minh_goc_vuong_day]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B3b_kiem_tra_ky_hieu]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B3c_cau_hoi_hay_khong]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B5_cau_ghep_gia_thiet_va_yeu_cau]
+    FAILED test_assumption_certificate.py::test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]
+    FAILED test_assumption_certificate.py::test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du
+    FAILED test_assumption_certificate.py::test_w16_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de
+
+FB2 [assumption_gate] a text with a goal clause may still yield a counterexample
+  predicted: test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 7.75s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du
+
+FB3 [shape_constraint] goal keywords matched on the raw text (NFD input hides them)
+  predicted: test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 7.66s -> CAUGHT
+    FAILED test_shape_constraint.py::test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD
+
+FD1 [build_scene3d_visual_evidence] builder accepts a blank refusal capture
+  predicted: test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai
+  observed : 1 failed, 379 passed, 1 xfailed, 1 warning in 8.96s -> CAUGHT
+    FAILED test_scene3d_visual_evidence.py::test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai
+
+FD2 [build_scene3d_visual_evidence] builder no longer fails on a missing panel
+  predicted: test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang and the other W16 builder tests
+  observed : 4 failed, 376 passed, 1 xfailed, 1 warning in 10.64s -> CAUGHT
+    FAILED test_scene3d_visual_evidence.py::test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang
+    FAILED test_scene3d_visual_evidence.py::test_w16_thieu_ca_mot_loai_tu_choi_thi_that_bai
+    FAILED test_scene3d_visual_evidence.py::test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai
+    FAILED test_scene3d_visual_evidence.py::test_w16_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai
+
+after all injections (no injection again): 380 passed, 1 xfailed, 1 warning in 9.81s

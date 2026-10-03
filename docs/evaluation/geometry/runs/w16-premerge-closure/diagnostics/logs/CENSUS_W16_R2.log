@@ -1,0 +1,44 @@
+# W16 census round 2 at 7695b96770d0f8f18d3f192a8d61079f59e80701 (after the primed-name fix 6b120036; working tree: W16 doc edits only), 0 model calls
+# backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_census_w16.py 2
+{
+ "decision": "SHIP",
+ "final_decision_if_stop": null,
+ "rule": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §9 (a)–(f), registered before this census — W16 re-run on W14 + W15 + W15B after the W16 fixes (§9 unchanged)",
+ "census_sha256_lf": "957df92502ad881666d73af61770c6139cab65f9b49bafb73ff3dce4e18ee45d",
+ "a_PROVEN_SAFE_on_DEPENDS_or_MUST_REFUSE": [],
+ "b_must_refuse_not_refused": [],
+ "c_DEPENDENT_on_INVARIANT": [],
+ "d_ac2_rows": 18,
+ "d_ac2_proven_safe": 18,
+ "d_ac2_not_proven": [],
+ "e_guard_rows_not_served_or_not_proven": [],
+ "f_metamorphic_tests_exit_code": 0,
+ "report_w15_expectation_mismatches": {},
+ "report_compiler_cross_check": {
+  "c1_rows": 37,
+  "agrees": 32,
+  "not_recognizable": 5,
+  "disagrees": []
+ },
+ "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof",
+ "f_metamorphic_tests_tail": [
+  "3 passed, 141 deselected in 0.87s"
+ ],
+ "w16_a_proven_safe_on_depends_or_must_refuse": [],
+ "w16_c_dependent_on_invariant": [],
+ "w16_expectation_mismatches": {},
+ "w16_route_served_depends_or_must_refuse": [],
+ "w16_declared_limit_rows": {
+  "A2b_cat_bang_alpha_khi_de_noi_beta": {
+   "label": "MUST_REFUSE",
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "route_servable": true
+  }
+ },
+ "w16_pass": true,
+ "report_w15r3_to_w16_gate_changes": {},
+ "report_round1_to_round2_gate_changes": {},
+ "report_route_served_depends_or_must_refuse_w14_w15": []
+}
+exit=0
