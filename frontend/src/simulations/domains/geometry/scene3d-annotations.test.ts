@@ -147,6 +147,13 @@ describe("W17 · đặt nhãn số đo (§15.5)", () => {
     expect(gan(r, 4, 150)).toBeLessThanOrEqual(NEO_TOI_DA);
   });
 
+  it("bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn)", () => {
+    const hai = [{ x: 135, y: 135, w: 50, h: 18 }, { x: 215, y: 140, w: 50, h: 20 }];
+    const r = placeAnnotationLabels([n("a", 200, 150)], hai, KHUNG).get("a");
+    expect(r).toEqual({ x: 134, y: 156, w: 60, h: 18 });
+    expect(gan(r!, 200, 150)).toBeLessThanOrEqual(NEO_TOI_DA);
+  });
+
   it("không còn chỗ trong 24 px ⇒ ẩn — nhãn không bao giờ trôi xa vật nó gọi tên", () => {
     expect(placeAnnotationLabels([n("a", 200, 150)], [{ x: 0, y: 0, w: 400, h: 300 }], KHUNG).size).toBe(0);
   });

@@ -238,12 +238,13 @@ export function UnsupportedNotice({
        có lợi cho mình, là đúng thứ ranh giới R0 dựng ra để cấm — chỉ khác là
        lần này lời sai nằm trên bề mặt học sinh chứ không trong một đáp số.
        Nói có điều kiện thì vẫn hữu ích mà không hứa liều.
-       (W17 §15.3) Câu đọc `refusal_cause`: chỉ SOURCE mời sửa dữ kiện trong đề; CONSTRUCTION nói
-       thẳng đề hợp lệ; UNKNOWN (và envelope cũ) giữ câu có điều kiện nhưng thôi mời viết lại đề. */
-    ? unsupported.refusal_cause === "SOURCE"
-      ? "Sửa đúng dữ kiện được nêu ở trên ngay trong đề rồi gửi lại."
-      : unsupported.refusal_cause === "CONSTRUCTION"
-      ? "Đề của em hợp lệ — lỗi nằm ở khâu dựng hình của hệ. Em có thể gửi lại để hệ dựng lại."
+       (W17 §15.3) Câu đọc `refusal_cause`. Lời backend của SOURCE/CONSTRUCTION đã nói nguyên nhân
+       VÀ việc nên làm (sửa đúng số liệu ấy / đề không cần sửa, gửi lại) — câu gợi ý nhắc lại y ý ấy
+       ngay bên dưới (lượt trình duyệt T7), nên không có gợi ý: cùng luật "nói THỨ KHÁC
+       `learner_reason`" như nhánh ngoài bao đóng. UNKNOWN (và envelope cũ) giữ câu có điều kiện,
+       không mời viết lại đề. */
+    ? unsupported.refusal_cause === "SOURCE" || unsupported.refusal_cause === "CONSTRUCTION"
+      ? null
       : "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại."
     : outOfScope
     ? "AlgoSim mô phỏng hình học không gian — thử một bài về giao tuyến, thiết diện, quan hệ song song–vuông góc, khoảng cách hoặc thể tích."
@@ -267,7 +268,12 @@ export function UnsupportedNotice({
     ? NHAN_GIAI_DOAN[unsupported.stage_reached] ?? KHONG_XAC_DINH
     : KHONG_XAC_DINH;
   const khoaLoai = unsupported.error_code ?? unsupported.failure_category;
-  const nhanLoai = khoaLoai
+  /* (W17 §15.3) Cổng nguồn từ chối cả hai phía: dữ kiện đề không có (SOURCE) và phép dựng/số liệu
+     của HỆ lệch câu chữ của đề (CONSTRUCTION). Nhãn chung "dữ kiện không truy được về đề bài" nói
+     sai phía thứ hai — đọc nguyên nhân có cấu trúc, không dò chữ. */
+  const nhanLoai = unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
+    ? "hệ dựng lệch với đề bài"
+    : khoaLoai
     ? NHAN_LOAI_VAN_DE[khoaLoai] ?? KHONG_XAC_DINH
     : KHONG_XAC_DINH;
   /* Thứ tự fallback GIỮ NGUYÊN hợp đồng M17 W0: `learner_reason` trước,
@@ -290,7 +296,7 @@ export function UnsupportedNotice({
           <dd>{nhanLoai}</dd>
         </div>
       </dl>
-      <p className="notes">{hint}</p>
+      {hint && <p className="notes">{hint}</p>}
     </section>
   );
 }

@@ -189,18 +189,30 @@ describe("W17 · gợi ý theo nguyên nhân từ chối", () => {
     error_code: "semantic_program_invalid", stage_reached: "semantic_analyze", refusal_cause,
   });
 
-  it.each(["CONSTRUCTION", "UNKNOWN", undefined] as const)("%s — không bảo sửa đề", (nn) => {
+  it.each(["UNKNOWN", undefined] as const)("%s — không bảo sửa đề, gợi ý gửi lại có điều kiện", (nn) => {
     const out = the(nn);
     expect(BAO_SUA_DE.filter((c) => out.includes(c))).toEqual([]);
     expect(out).toContain("gửi lại");
   });
 
-  it("CONSTRUCTION — nói rõ đề hợp lệ", () => {
-    expect(the("CONSTRUCTION")).toContain("Đề của em hợp lệ");
+  /* Lượt trình duyệt T7: lời backend của SOURCE/CONSTRUCTION đã nói nguyên nhân VÀ việc nên làm
+     ("…đề không cần sửa — em có thể gửi lại…"); câu gợi ý cũ nhắc lại y ý ấy ngay bên dưới. Luật
+     của thẻ (nhánh ngoài bao đóng): gợi ý phải nói THỨ KHÁC `learner_reason` — không có gì khác để
+     nói thì không có gợi ý. */
+  it.each(["SOURCE", "CONSTRUCTION"] as const)("%s — không có câu gợi ý nhắc lại lời backend", (nn) => {
+    const out = the(nn);
+    expect(out).toContain("…");
+    expect(out).not.toContain('class="notes"');
   });
 
-  it("SOURCE — mời sửa đúng dữ kiện trong đề", () => {
-    expect(the("SOURCE")).toContain("trong đề");
+  it("CONSTRUCTION ở cổng nguồn — loại vấn đề nói hệ dựng lệch đề, không nói dữ kiện thiếu nguồn", () => {
+    const the2 = (refusal_cause: Envelope["refusal_cause"]) => html({
+      reason: "CONSTRUCTION_NOT_TEXT_BOUND", learner_reason: "…", failure_category: "geometry_generation_failed",
+      error_code: "input_not_grounded", stage_reached: "assumption", refusal_cause,
+    });
+    expect(the2("CONSTRUCTION")).toContain("hệ dựng lệch với đề bài");
+    expect(the2("CONSTRUCTION")).not.toContain(NHAN_LOAI_VAN_DE.input_not_grounded);
+    expect(the2("SOURCE")).toContain(NHAN_LOAI_VAN_DE.input_not_grounded);
   });
 });
 

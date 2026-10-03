@@ -137,9 +137,10 @@ const cachNeo = (r: LabelRect, ax: number, ay: number) =>
 
 /**
  * Đặt hộp nhãn số đo (toạ độ px CSS trong khung `view`). Ưu tiên cao đặt trước; mỗi nhãn thử
- * trên · dưới · phải · trái điểm neo, kẹp vào khung, bỏ chỗ nào xa neo quá `NEO_TOI_DA` hoặc
- * giao một hộp đã có (`chan`: nhãn điểm, nút điều khiển, nhãn số đo đã đặt). Hết chỗ ⇒ không
- * đặt. Tất định: cùng đầu vào, cùng kết quả — không xê dịch dần, không ngẫu nhiên.
+ * trên · dưới · phải · trái điểm neo, rồi bốn góc (lượt trình duyệt T7: nhãn đáy kẹp giữa hai
+ * nhãn cạnh hết cả bốn phía), kẹp vào khung, bỏ chỗ nào xa neo quá `NEO_TOI_DA` hoặc giao một
+ * hộp đã có (`chan`: nhãn điểm, nút điều khiển, nhãn số đo đã đặt). Hết chỗ ⇒ không đặt.
+ * Tất định: cùng đầu vào, cùng kết quả — không xê dịch dần, không ngẫu nhiên.
  */
 export function placeAnnotationLabels(
   items: LabelToPlace[],
@@ -150,12 +151,12 @@ export function placeAnnotationLabels(
   const daChiem = [...chan];
   for (const n of [...items].sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id))) {
     if (n.ax < 0 || n.ay < 0 || n.ax > view.w || n.ay > view.h || n.w > view.w || n.h > view.h) continue;
+    const [tren, duoi, phai, trai] = [n.ay - KHE - n.h, n.ay + KHE, n.ax + KHE, n.ax - KHE - n.w];
     const ung: LabelRect[] = [
-      { x: n.ax - n.w / 2, y: n.ay - KHE - n.h, w: n.w, h: n.h },
-      { x: n.ax - n.w / 2, y: n.ay + KHE, w: n.w, h: n.h },
-      { x: n.ax + KHE, y: n.ay - n.h / 2, w: n.w, h: n.h },
-      { x: n.ax - KHE - n.w, y: n.ay - n.h / 2, w: n.w, h: n.h },
-    ].map((r) => ({ ...r, x: Math.min(Math.max(r.x, 0), view.w - r.w), y: Math.min(Math.max(r.y, 0), view.h - r.h) }));
+      { x: n.ax - n.w / 2, y: tren }, { x: n.ax - n.w / 2, y: duoi },
+      { x: phai, y: n.ay - n.h / 2 }, { x: trai, y: n.ay - n.h / 2 },
+      { x: phai, y: tren }, { x: trai, y: tren }, { x: phai, y: duoi }, { x: trai, y: duoi },
+    ].map((r) => ({ ...r, w: n.w, h: n.h })).map((r) => ({ ...r, x: Math.min(Math.max(r.x, 0), view.w - r.w), y: Math.min(Math.max(r.y, 0), view.h - r.h) }));
     const r = ung.find((c) => cachNeo(c, n.ax, n.ay) <= NEO_TOI_DA && !daChiem.some((b) => giao(c, b)));
     if (!r) continue;
     giu.set(n.id, r);
