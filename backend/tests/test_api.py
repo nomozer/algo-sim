@@ -691,7 +691,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # phang cua de va khong lay yeu cau chung minh lam tien de — 12 yeu cau tung duoc
     # phuc vu nay bi tu choi (served -> rejected). Row v107 van HIT:
     # runs/w16-premerge-closure/diagnostics/PROOF_CACHE_ROW_W16.json.
-    assert main_module.CACHE_VERSION == "108"
+    # 108 -> 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
+    # be mat mo hinh KHONG doi; chung chi gia dinh doi phep dung thiet dien dung DUNG
+    # mat phang/khoi cua cau cat trong de, grounding khong lay gia tri chi co trong yeu
+    # cau chung minh — 5 yeu cau tung duoc phuc vu nay bi tu choi (served -> rejected).
+    # Row v108 van HIT: runs/w17-operation-annotations/diagnostics/PROOF_CACHE_ROW_W17.json.
+    assert main_module.CACHE_VERSION == "109"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

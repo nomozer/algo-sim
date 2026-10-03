@@ -416,7 +416,9 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    cổng giả định nối vào route — phép dò W12 (served → rejected).
     # 107 → 108 (W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE, 2026-10-03):
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
-    assert CACHE_VERSION == "108"
+    # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
+    #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
+    assert CACHE_VERSION == "109"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

@@ -1,6 +1,6 @@
 {
   "khai": "Cặp (CACHE_VERSION ↔ môi trường sinh ngữ nghĩa). Sinh bởi `scripts/lock_cache_identity.py`; đừng sửa tay. Khoá bởi `tests/test_cache_identity.py`.",
-  "cache_version": "108",
+  "cache_version": "109",
   "semantic_environment_hash": "b1714b566e25c91280094c1a431228eac01e8a25a9efaa11ba638dd3de87d5a5",
   "components": {
     "prompts": "a6957bb95ec257552a549ad6df96b455905c51a862bcd08d51108ad003c5e044",

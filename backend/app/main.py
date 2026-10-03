@@ -739,7 +739,18 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       chối; lưu thành row v107 chúng vẫn HIT và trả lại envelope ấy
 #       (`runs/w16-premerge-closure/diagnostics/PROOF_CACHE_ROW_W16.json`). Corpus
 #       W14/W15/W15B không hàng nào đổi trạng thái.
-CACHE_VERSION = "108"
+#   109 (2026-10-04, W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS): BỀ MẶT MÔ HÌNH
+#       KHÔNG ĐỔI (fingerprint provider `b1714b566e25c912…`). Chứng chỉ giả định thêm
+#       điều kiện phép dựng: thiết diện cắt bằng ĐÚNG mặt phẳng và ĐÚNG khối mà câu cắt
+#       của đề nêu (§15.1), và grounding không lấy giá trị chỉ có trong yêu cầu chứng
+#       minh làm dữ kiện (§15.2) — chiều **served → rejected** (tiền lệ 96/105–108).
+#       Năm yêu cầu TRƯỚC W17 được phục vụ (cắt bằng (α) khi đề nói (β), cắt khối khác,
+#       (P) thay (P′), cùng phương trình khác thực thể, toạ độ chỉ trong yêu cầu chứng
+#       minh) nay bị từ chối; lưu thành row v108 chúng vẫn HIT và trả lại envelope ấy
+#       (`runs/w17-operation-annotations/diagnostics/PROOF_CACHE_ROW_W17.json`). Envelope
+#       phục vụ cũng đổi nội dung (nhãn số đo `annotation`, `refusal_cause`). Census: chỉ
+#       A2b (giới hạn A′ đã khai của W16) đổi trạng thái.
+CACHE_VERSION = "109"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

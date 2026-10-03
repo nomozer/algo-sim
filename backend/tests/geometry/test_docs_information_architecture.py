@@ -197,7 +197,9 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 105 -> 106 (w14): "AB dài 5 cm" (served -> rejected) + dựng hình theo lớp (S4).
     # 106 -> 107 (w15): cổng giả định nối vào route — phép dò W12 (served -> rejected).
     # 107 -> 108 (w16): mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served -> rejected).
-    assert str(CACHE_VERSION) == "108"
+    # 108 -> 109 (w17): phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là
+    #   dữ kiện (served -> rejected).
+    assert str(CACHE_VERSION) == "109"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
