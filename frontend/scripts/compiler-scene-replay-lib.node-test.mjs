@@ -1035,9 +1035,60 @@ const CANH_W17 = {
 };
 
 test("W17 annotation oracle: a result label only from its concluding event", () => {
-  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 0), ["AB"]);
-  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 1), ["AB"]);
-  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 2), ["AB", "V"]);
+  const tatCa = { showAll: true };
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 0, tatCa), ["AB"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 1, tatCa), ["AB"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 2, tatCa), ["AB", "V"]);
+});
+
+/* W18 §16.5–16.7: default compact (given data), selection focus, same_as, witness anchor. */
+const CANH_W18 = {
+  free_objects: ["A", "B", "C", "AB"],
+  objects: [
+    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] },
+    { id: "C", type: "point3", xyz: ["0", "1", "0"] },
+    { id: "AB", type: "quantity", origin: "free", value: "3",
+      annotation: { kind: "length", category: "measurement", role: "given", subject_ids: ["A", "B"], anchor: "segment" } },
+    { id: "h", type: "quantity", origin: "derived", value: "3", depends: ["A", "B"],
+      annotation: { kind: "length", category: "measurement", role: "intermediate", subject_ids: ["A", "B"],
+        anchor: "segment", same_as: "AB" } },
+    { id: "d", type: "quantity", origin: "derived", value: "1", depends: ["C", "AB"],
+      dependency_edges: [{ source_id: "AB", relation: "numerical" }],
+      annotation: { kind: "distance", category: "measurement", role: "intermediate", subject_ids: ["C", "A"],
+        anchor: "witness", witness: { from: "C", foot: ["0", "0", "0"], on: "A",
+          marker: { u: ["1", "0", "0"], v: ["0", "1", "0"] } } } },
+    { id: "V", type: "quantity", origin: "derived", value: "9", depends: ["d"],
+      dependency_edges: [{ source_id: "d", relation: "numerical" }],
+      annotation: { kind: "length", category: "result", role: "result", subject_ids: ["A", "B"], anchor: "segment" } },
+  ],
+  events: [{ step_index: 0, action: "INIT", object: null },
+    { step_index: 1, action: "MEASURE", object: "h", semantic_kind: "MEASUREMENT" },
+    { step_index: 2, action: "MEASURE", object: "d", semantic_kind: "MEASUREMENT" },
+    { step_index: 3, action: "MEASURE", object: "V", semantic_kind: "MEASUREMENT" },
+    { step_index: 4, action: "MEASURE", object: "V", semantic_kind: "FINAL_RESULT" }],
+};
+
+test("W18 annotation oracle: compact default, selection focus, same_as, show-all", () => {
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4), ["AB"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { showAll: true }), ["AB", "V", "d"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "V" }), ["AB", "V", "d"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 3, { selectedId: "V" }), ["AB", "d"]);   // not before its conclusion
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "C" }), ["AB", "d"]);   // object ⇒ quantities about it
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "h" }), ["AB"]);        // same_as ⇒ its owner
+  assert.deepEqual(LIB.annotationWorldAnchor(CANH_W18, CANH_W18.objects.find((o) => o.id === "d").annotation),
+    [0, 0.5, 0]);
+});
+
+test("W18 one detail region and witness drawn exactly for shown distance labels", () => {
+  assert.equal(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector"] }).pass, true);
+  assert.deepEqual(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector", "solution:V"] })
+    .reason_codes, ["DETAIL_REGIONS_2"]);
+  assert.deepEqual(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: [] }).reason_codes, ["DETAIL_REGIONS_0"]);
+  assert.equal(LIB.assessWitness({ scene: CANH_W18, shownIds: ["AB", "d"], witnessIds: ["d"] }).pass, true);
+  assert.deepEqual(LIB.assessWitness({ scene: CANH_W18, shownIds: ["AB", "d"], witnessIds: [] }).reason_codes,
+    ["WITNESS_MISSING:d"]);
+  assert.deepEqual(LIB.assessWitness({ scene: CANH_W18, shownIds: ["AB"], witnessIds: ["d"] }).reason_codes,
+    ["WITNESS_NOT_SHOWN_LABEL:d"]);
 });
 
 test("W17 annotation boxes: inside, near the independently projected anchor, no overlaps", () => {
@@ -1071,19 +1122,20 @@ const camLech = (d) => ({ ...CAM_W17, view_matrix_column_major: CAM_W17.view_mat
 const CAM_ULP = camLech(1e-14);
 const CAM_KHAC = camLech(0.01);
 
-test("W17 toggle isolation and causal restore record each state separately", () => {
-  const on = { annotation_dom_count: 2, annotation_ids: ["AB", "V"], dash_signature: { e: ["VISIBLE_SOLID"] },
+test("W18 show-all isolation and W17 causal restore record each state separately", () => {
+  const on = { annotation_ids: ["AB", "V"], dash_signature: { e: ["VISIBLE_SOLID"] },
     rendered_object_ids: ["A"], camera: CAM_W17, selected_id: null, step: 4 };
-  const off = { ...on, annotation_dom_count: 0, annotation_ids: [] };
-  assert.equal(LIB.assessToggleIsolation({ on, off, back: on }).pass, true);
+  const off = { ...on, annotation_ids: ["AB"] };
+  const k = { expectedOn: ["AB", "V"], expectedOff: ["AB"] };
+  assert.equal(LIB.assessShowAllIsolation({ on, off, back: on, ...k }).pass, true);
   // Lượt trình duyệt T7: camera chỉ lệch ở ULP cuối (1e-14) giữa bật/tắt — không phải "đổi camera".
-  assert.equal(LIB.assessToggleIsolation({ on, off: { ...off, camera: CAM_ULP }, back: on }).pass, true);
-  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, camera: CAM_KHAC }, back: on }).reason_codes,
-    ["TOGGLE_CHANGED_CAMERA"]);
-  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, dash_signature: {} }, back: on }).reason_codes,
-    ["TOGGLE_CHANGED_DASH_SIGNATURE"]);
-  assert.deepEqual(LIB.assessToggleIsolation({ on, off: { ...off, annotation_dom_count: 1 }, back: on }).reason_codes,
-    ["TOGGLE_OFF_LEAVES_LABELS:1"]);
+  assert.equal(LIB.assessShowAllIsolation({ on, off: { ...off, camera: CAM_ULP }, back: on, ...k }).pass, true);
+  assert.deepEqual(LIB.assessShowAllIsolation({ on, off: { ...off, camera: CAM_KHAC }, back: on, ...k }).reason_codes,
+    ["SHOW_ALL_OFF_CHANGED_CAMERA"]);
+  assert.deepEqual(LIB.assessShowAllIsolation({ on, off: { ...off, dash_signature: {} }, back: on, ...k }).reason_codes,
+    ["SHOW_ALL_OFF_CHANGED_DASH_SIGNATURE"]);
+  assert.deepEqual(LIB.assessShowAllIsolation({ on, off: on, back: on, ...k }).reason_codes,
+    ["SHOW_ALL_OFF_LABELS_NOT_ORACLE"]);
   const n = { camera: CAM_W17, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
   const s = { ...n, selected_id: "V", scroll_y: 300 };
   assert.equal(LIB.assessCausalRestore({ neutral: n, selected: s, restored: n }).pass, true);

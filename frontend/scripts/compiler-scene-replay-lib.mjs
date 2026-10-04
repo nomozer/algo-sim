@@ -1097,6 +1097,10 @@ export const KIEU_TU_CHOI = ["assumption", "topology_kernel", "ungrounded_source
 /** W17 §15.3: loại từ chối THÊM, tuỳ kịch bản — lỗi khâu dựng trên một đề hợp lệ (lệch phép
  *  dựng; hợp đồng bị tiêm). Luôn khai `expected.refusal_cause`: lời học sinh phụ thuộc nó. */
 export const KIEU_TU_CHOI_W17 = ["construction_mismatch", "system_cause"];
+/** W18 §16.4: phép dựng ĐIỂM lệch quan hệ của đề (trung điểm, hình chiếu) — nguyên nhân CONSTRUCTION;
+ *  chưa đối chiếu được (cách nói ngoài từ vựng) — nguyên nhân UNKNOWN. */
+export const KIEU_TU_CHOI_W18 = ["point_construction_mismatch", "projection_mismatch", "construction_unverified"];
+const KIEU_THEM = [...KIEU_TU_CHOI_W17, ...KIEU_TU_CHOI_W18];
 
 export function validateSuiteManifest(manifest, repoRoot) {
   const errors = [];
@@ -1119,8 +1123,8 @@ export function validateSuiteManifest(manifest, repoRoot) {
     const am = scenario.negative_fixtures ?? [];
     const kieu = am.map((n) => n.kind);
     if (KIEU_TU_CHOI.some((k) => !kieu.includes(k)) || new Set(kieu).size !== kieu.length
-        || kieu.some((k) => !KIEU_TU_CHOI.includes(k) && !KIEU_TU_CHOI_W17.includes(k))
-        || am.some((n) => KIEU_TU_CHOI_W17.includes(n.kind) && !n.expected?.refusal_cause)
+        || kieu.some((k) => !KIEU_TU_CHOI.includes(k) && !KIEU_THEM.includes(k))
+        || am.some((n) => KIEU_THEM.includes(n.kind) && !n.expected?.refusal_cause)
         || am.some((n) => !n.fixture || !n.expected?.product_error_code || !n.expected?.stage_reached)) {
       errors.push(`negatives:${scenario.id}`);
     }
@@ -1344,28 +1348,49 @@ export function assessPlayback({
  * dữ kiện khi đã có mặt; chủ thể phải có mặt (`expectedVisibleIds`). Điểm neo chiếu bằng ma trận
  * camera THẬT (`chieuManHinh`) từ toạ độ payload — không tin điểm neo sản phẩm tự báo. */
 
-/** Id đại lượng PHẢI có nhãn số đo ở `step` (công tắc bật cả hai). */
-export function expectedAnnotationIds(scene, step) {
+/** W18 §16.5: vai trò của nhãn theo payload; envelope v109 thiếu `role` ⇒ `category` + `origin`. */
+const vaiNhan = (o) => o.annotation.role
+  ?? (o.annotation.category === "result" ? "result" : o.origin === "free" ? "given" : "intermediate");
+
+/**
+ * Id đại lượng PHẢI có nhãn số đo ở `step` dưới chế độ xem `{showAll, selectedId}` (W18 §16.5; mặc
+ * định gọn, không chọn gì). Khả dụng như W17 §15.4 (không lộ trước, chủ thể có mặt), `same_as` không
+ * có nhãn; rồi TIÊU ĐIỂM: dữ kiện đề cho luôn; chọn đại lượng ⇒ nó + chuỗi số (tầng ĐỘC LẬP
+ * `expectedCausalTiers`); chọn vật ⇒ đại lượng có chủ thể là vật ấy; "Hiện tất cả" ⇒ mọi nhãn khả dụng.
+ */
+export function expectedAnnotationIds(scene, step, { showAll = false, selectedId = null } = {}) {
   const sk = (scene?.events ?? []).filter((e) => (e.step_index ?? 0) <= step && e.object);
   const ketLuan = new Set(sk.filter((e) => e.semantic_kind === "FINAL_RESULT").map((e) => e.object));
   const daTinh = new Set(sk.filter((e) => e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT")
     .map((e) => e.object));
   const coMat = new Set(expectedVisibleIds(scene, step));
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const chon = selectedId ? byId.get(selectedId)?.annotation?.same_as ?? selectedId : null;
+  const tang = chon && byId.get(chon)?.type === "quantity" ? expectedCausalTiers(scene, chon) : null;
+  const tieuDiem = (o) => chon !== null && (tang
+    ? o.id === chon || ["du_kien_so", "trung_gian"].includes(tang[o.id])
+    : o.annotation.subject_ids.includes(chon));
   return sortedUnique((scene?.objects ?? [])
-    .filter((o) => o.type === "quantity" && o.annotation && o.value != null)
-    .filter((o) => (o.annotation.category === "result" ? ketLuan.has(o.id)
+    .filter((o) => o.type === "quantity" && o.annotation && !o.annotation.same_as && o.value != null)
+    .filter((o) => (vaiNhan(o) === "result" ? ketLuan.has(o.id)
       : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id))))
     .filter((o) => o.annotation.subject_ids.every((s) => coMat.has(s)))
+    .filter((o) => showAll || vaiNhan(o) === "given" || tieuDiem(o))
     .map((o) => o.id));
 }
 
 /** Điểm neo THẾ GIỚI của một nhãn, đọc thẳng payload: đoạn → trung điểm · miền/khối → trung
- *  bình đỉnh · cặp → điểm của cặp. `null` khi payload không đủ. */
+ *  bình đỉnh · cặp → điểm của cặp · nhân chứng → trung điểm điểm–CHÂN backend phát (W18 §16.7).
+ *  `null` khi payload không đủ. */
 export function annotationWorldAnchor(scene, annotation) {
   const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
   const xyz = (o) => (o?.xyz ? o.xyz.map(toNumber) : null);
   const tb = (ps) => (ps.length && ps.every(Boolean)
     ? [0, 1, 2].map((i) => ps.reduce((s, p) => s + p[i], 0) / ps.length) : null);
+  if (annotation.anchor === "witness") {
+    const w = annotation.witness;
+    return w ? tb([xyz(byId.get(w.from)), w.foot.map(toNumber)]) : null;
+  }
   const chu = annotation.subject_ids.map((id) => byId.get(id));
   if (!chu.length || chu.some((o) => !o)) return null;
   if (annotation.anchor === "segment") return tb(chu.map(xyz));
@@ -1387,9 +1412,9 @@ const hopGiao = (a, b) => a.x < b.x + b.w - GIAO_E && b.x < a.x + a.w - GIAO_E
  * buộc có mặt; mọi hộp trong khung canvas; điểm gần nhất của hộp cách điểm neo chiếu ĐỘC LẬP
  * ≤ 24 px; không hộp nào giao nhãn điểm hay giao nhau.
  */
-export function assessAnnotationBoxes({ scene, step, boxes, points, camera, mustShow }) {
+export function assessAnnotationBoxes({ scene, step, boxes, points, camera, mustShow, expected }) {
   const r = [];
-  const mongDoi = expectedAnnotationIds(scene, step);
+  const mongDoi = expected ?? expectedAnnotationIds(scene, step);
   const hien = sortedUnique(boxes.map((b) => b.id));
   const lo = hien.filter((id) => !mongDoi.includes(id));
   if (lo.length) r.push(`ANNOTATION_NOT_AVAILABLE:${lo.join(",")}`);
@@ -1420,21 +1445,60 @@ export function assessAnnotationBoxes({ scene, step, boxes, points, camera, must
   return { pass: r.length === 0, reason_codes: r, expected: mongDoi, shown: hien, anchors: neo };
 }
 
-/** §15.5 công tắc: tắt cả hai ⇒ 0 nhãn số đo trong DOM, và hình/camera/lựa chọn/nét đứt KHÔNG
- *  đổi giữa bật và tắt; bật lại ⇒ đúng tập nhãn cũ. */
 /** Camera "đã đổi" = chuyển động ma trận vượt dung sai lắng (w09) — damping viết lại ULP cuối mỗi
  *  khung, nên so byte sẽ báo đổi cho một tư thế không ai thấy khác (lượt trình duyệt T7). */
 const cameraDoi = (a, b) => cameraMotion(a, b) > CAMERA_SETTLE_TOLERANCE;
 
-export function assessToggleIsolation({ on, off, back }) {
+/** W18 §16.8 — "Hiện tất cả" bật → tắt → bật: tập nhãn DOM đúng oracle ở mỗi trạng thái (bật = mọi
+ *  nhãn khả dụng, tắt = mặc định gọn), bật lại ⇒ đúng tập cũ; nét đứt, vật dựng, lựa chọn, bước và
+ *  camera KHÔNG đổi giữa ba trạng thái. */
+export function assessShowAllIsolation({ on, off, back, expectedOn, expectedOff }) {
   const r = [];
-  if (off.annotation_dom_count !== 0) r.push(`TOGGLE_OFF_LEAVES_LABELS:${off.annotation_dom_count}`);
-  for (const k of ["dash_signature", "rendered_object_ids", "selected_id", "step"]) {
-    if (JSON.stringify(on[k]) !== JSON.stringify(off[k])) r.push(`TOGGLE_CHANGED_${k.toUpperCase()}`);
+  if (JSON.stringify(on.annotation_ids) !== JSON.stringify(expectedOn)) r.push("SHOW_ALL_ON_LABELS_NOT_ORACLE");
+  if (JSON.stringify(off.annotation_ids) !== JSON.stringify(expectedOff)) r.push("SHOW_ALL_OFF_LABELS_NOT_ORACLE");
+  if (JSON.stringify(on.annotation_ids) !== JSON.stringify(back.annotation_ids)) r.push("SHOW_ALL_BACK_DIFFERENT_LABELS");
+  for (const [ten, b] of [["OFF", off], ["BACK", back]]) {
+    for (const k of ["dash_signature", "rendered_object_ids", "selected_id", "step"]) {
+      if (JSON.stringify(on[k]) !== JSON.stringify(b[k])) r.push(`SHOW_ALL_${ten}_CHANGED_${k.toUpperCase()}`);
+    }
+    if (cameraDoi(on.camera, b.camera)) r.push(`SHOW_ALL_${ten}_CHANGED_CAMERA`);
   }
-  if (cameraDoi(on.camera, off.camera)) r.push("TOGGLE_CHANGED_CAMERA");
-  if (JSON.stringify(on.annotation_ids) !== JSON.stringify(back.annotation_ids)) r.push("TOGGLE_BACK_DIFFERENT_LABELS");
   return { pass: r.length === 0, reason_codes: r };
+}
+
+/** Chữ công thức người học được thấy của một vật — luật nhất quán đọc thẳng payload (mọi tham chiếu
+ *  trỏ tới vật có thật, nhãn khác rỗng và có mặt trong chữ); không nhất quán ⇒ `null`. */
+export function coherentFormulaText(scene, id) {
+  const ids = new Set((scene?.objects ?? []).map((o) => o.id));
+  const f = (scene?.objects ?? []).find((o) => o.id === id)?.formula;
+  if (!f?.text?.trim() || !Array.isArray(f.references) || f.references.length === 0) return null;
+  return f.references.every((r) => ids.has(r.entity_id) && r.display_label?.trim() && f.text.includes(r.display_label))
+    ? f.text : null;
+}
+
+/** W18 §16.6 — MỘT nơi giải thích: chữ công thức của đại lượng đang chọn xuất hiện ở ĐÚNG MỘT vùng
+ *  (ô soi `geo3d-soi-cong-thuc`, hoặc dòng lời giải đang hiện). `regions` = các vùng đang hiện chứa
+ *  chữ ấy, do bộ chạy đọc từ DOM. */
+export function assessDetailRegion({ formula_text, regions }) {
+  const r = [];
+  if (!formula_text) r.push("DETAIL_NO_FORMULA");
+  else if (regions.length !== 1) r.push(`DETAIL_REGIONS_${regions.length}`);
+  return { pass: r.length === 0, reason_codes: r, regions };
+}
+
+/** W18 §16.7 — nhân chứng vẽ ĐÚNG cho các nhãn khoảng cách đang hiện có `witness` trong payload:
+ *  thiếu ⇒ lỗi; thừa (vẽ cho nhãn không hiện) ⇒ lỗi. */
+export function assessWitness({ scene, shownIds, witnessIds }) {
+  const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  const mong = sortedUnique(shownIds.filter((id) => byId.get(id)?.annotation?.anchor === "witness"
+    && byId.get(id)?.annotation?.witness));
+  const ve = sortedUnique(witnessIds);
+  const r = [];
+  const thieu = mong.filter((id) => !ve.includes(id));
+  const thua = ve.filter((id) => !mong.includes(id));
+  if (thieu.length) r.push(`WITNESS_MISSING:${thieu.join(",")}`);
+  if (thua.length) r.push(`WITNESS_NOT_SHOWN_LABEL:${thua.join(",")}`);
+  return { pass: r.length === 0, reason_codes: r, expected: mong, drawn: ve };
 }
 
 /** Độ lệch tối đa của một kênh 8-bit giữa hai lần chụp CÙNG một khung lúc nghỉ (nhiễu chụp, đo ở

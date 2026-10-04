@@ -21,7 +21,10 @@ import {
   assessSectionFillUnderEdges,
   assessAnnotationBoxes,
   assessCausalRestore,
-  assessToggleIsolation,
+  assessDetailRegion,
+  assessShowAllIsolation,
+  assessWitness,
+  coherentFormulaText,
   expectedAnnotationIds,
   cauTrucKhoi,
   diemCanhQuaThietDien,
@@ -658,7 +661,30 @@ async function renderedIds(session) {
 async function annotationState(session) {
   return jsonEval(session, `({boxes:window.__geo3d_annotation_boxes||[],`
     + `points:window.__geo3d_point_label_boxes||[],camera:window.__geo3d_camera_snapshot||null,`
+    + `witness:(window.__geo3d_witness_ids||[]).map(String).sort(),selected:window.__geo3d_selected_id||null,`
     + `dom:[...document.querySelectorAll('.geo3d-so-do')].map((e)=>e.dataset.annId).sort()})`);
+}
+
+/** W18 §16.6 — mọi vùng ĐANG HIỆN mang chữ công thức `f`: ô soi, hoặc một dòng lời giải đang hiện. */
+async function formulaRegions(session, f) {
+  return jsonEval(session, `(()=>{const f=${JSON.stringify(f)};const hien=e=>!!e&&e.offsetParent!==null;`
+    + `const ra=[];const o=document.querySelector('.geo3d-soi-cong-thuc');`
+    + `if(hien(o)&&(o.textContent||'').includes(f))ra.push('inspector');`
+    + `for(const d of document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')){const s=d.querySelector('.geo3d-lg-so');`
+    + `if(hien(s)&&(s.textContent||'').includes(f))ra.push('solution:'+d.dataset.solutionId)}return ra})()`);
+}
+
+/** Bấm nút của một dòng lời giải (chọn/bỏ chọn đại lượng ấy) — sự kiện chuột thật. */
+async function clickSolutionRow(session, id) {
+  return trustedClick(session, `document.querySelector('[data-solution-id=${JSON.stringify(id)}] .geo3d-lg-nut')`);
+}
+
+/** Mở/thu gọn lời giải đầy đủ cho tới khi thân ở trạng thái `mo`. */
+async function setSolutionOpen(session, mo) {
+  const st = await solutionState(session);
+  if (st.body_collapsed === !mo) return;
+  await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
+  await pollUntil(() => solutionState(session), (s) => s.body_collapsed === !mo, { timeoutMs: 5_000 });
 }
 
 /** Bước NEO (chỉ số sự kiện) của bước dựng đang xem — qua dòng thời gian ĐỘC LẬP của bộ đo. */
@@ -667,10 +693,11 @@ async function anchorNow(session, scene) {
   return step ? expectedGeometryTimeline(scene)[step.index]?.anchor ?? null : null;
 }
 
-/** Nhãn số đo bắt buộc hiện: khổ rộng — mọi nhãn khả dụng; khổ hẹp và đổi cỡ — đáp số (ưu tiên). */
-function annotationsMustShow(scene, ids, chiKetQua) {
-  return chiKetQua
-    ? ids.filter((id) => scene.objects.find((o) => o.id === id)?.annotation?.category === "result") : ids;
+/** Nhãn số đo bắt buộc hiện ở chế độ mặc định (W18 §16.5): khổ rộng — mọi dữ kiện khả dụng; khổ hẹp
+ *  và đổi cỡ — không bắt buộc nhãn nào (hết chỗ thì nhãn ưu tiên thấp ẩn, giá trị vẫn ở ô soi/lời giải);
+ *  đại lượng ĐANG CHỌN thì bắt buộc ở mọi khổ (kiểm ở phần chọn từng đại lượng). */
+function annotationsMustShow(scene, ids, hep) {
+  return hep ? [] : ids;
 }
 
 async function clickChip(session, ten) {
@@ -885,7 +912,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.assertions.solution_final = assertion(result.solution_final.in_sync
       && result.solution_final.answer_once && !result.solution_final.panel_over_canvas
       && solutionNeutral.legend.length === 0
-      && result.solution_final.body_collapsed === (viewport.width < 768), result.solution_final);
+      // W18 §16.6: lời giải đầy đủ thu gọn mặc định ở MỌI khổ.
+      && result.solution_final.body_collapsed === true, result.solution_final);
     // W17 §15.5 — nhãn số đo ở khung cuối trung tính (camera đã lắng; hộp và camera cùng một khung).
     const ann0 = await annotationState(session);
     const neoCuoi = await anchorNow(session, scene);
@@ -900,50 +928,105 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // (w10: crop mobile lệch vì hộp ghi ở y = -226).
     result.canvas_boxes = { neutral_final: await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`) };
     result.capture_order.push("neutral_final");
-    // Bảng lời giải ở trạng thái mặc định (khổ hẹp: gập; khổ rộng: mở đủ).
+    // Bảng lời giải ở trạng thái mặc định (W18 §16.6: thu gọn ở mọi khổ), rồi mở đủ, rồi thu lại.
     result.screenshots.solution_neutral_final = await captureElement(session, ".geo3d-loi-giai",
       join(outDir, "solution_neutral_final.png"));
-    if (viewport.width < 768) {
-      await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
-      await pollUntil(() => solutionState(session), (state) => !state.body_collapsed, { timeoutMs: 5_000 });
-      result.screenshots.solution_expanded = await captureElement(session, ".geo3d-loi-giai",
-        join(outDir, "solution_expanded.png"));
-      await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
-      await pollUntil(() => solutionState(session), (state) => state.body_collapsed, { timeoutMs: 5_000 });
-    }
-    // W17 §15.5 — công tắc Số đo/Kết quả: tắt ⇒ 0 nhãn số đo trong DOM; nét đứt, vật dựng,
-    // camera, bước, lựa chọn y nguyên; bật lại ⇒ đúng tập nhãn cũ. Công tắc vắng ⇒ không đo.
+    await setSolutionOpen(session, true);
+    result.screenshots.solution_expanded = await captureElement(session, ".geo3d-loi-giai",
+      join(outDir, "solution_expanded.png"));
+    await setSolutionOpen(session, false);
+    const chup = async () => {
+      const a = await annotationState(session);
+      return { ...await jsonEval(session, `({dash_signature:window.__geo3d_edge_dash_signature||{},`
+        + `rendered_object_ids:(window.__geo3d_rendered_object_ids||[]).map(String).sort(),`
+        + `camera:window.__geo3d_camera_snapshot||null,selected_id:window.__geo3d_selected_id||null})`),
+        step: await currentStep(session), annotation_ids: a.dom, witness_ids: a.witness };
+    };
+    // Hết hạn chờ là MỘT KẾT LUẬN (công tắc không đưa nhãn về trạng thái hứa), không phải lỗi bộ
+    // chạy: ghi lại rồi để bộ đánh giá nói vì sao (tiêm lỗi FB1 W17: lượt cũ dừng cả suite ở đây).
+    const choHet = (dk) => pollUntil(() => annotationState(session), dk, { timeoutMs: 5_000 })
+      .then(() => null, (e) => String(e?.message ?? e).slice(0, 160));
+    // W18 §16.8 — "Hiện tất cả" bật → tắt → bật: tập nhãn đúng oracle ở mỗi trạng thái; nét đứt, vật
+    // dựng, camera, bước, lựa chọn y nguyên. Công tắc vắng (không có nhãn mặc định đang ẩn) ⇒ không đo.
     const congTac = await jsonEval(session, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
-      + `.map((b)=>(b.textContent||'').trim()).filter((t)=>t.includes('Số đo')||t.includes('Kết quả'))`);
+      + `.map((b)=>(b.textContent||'').trim()).filter((t)=>t.includes('Hiện tất cả'))`);
     if (congTac.length) {
-      const chup = async () => {
-        const a = await annotationState(session);
-        return { ...await jsonEval(session, `({dash_signature:window.__geo3d_edge_dash_signature||{},`
-          + `rendered_object_ids:(window.__geo3d_rendered_object_ids||[]).map(String).sort(),`
-          + `camera:window.__geo3d_camera_snapshot||null,selected_id:window.__geo3d_selected_id||null})`),
-          step: await currentStep(session), annotation_ids: a.dom, annotation_dom_count: a.dom.length };
-      };
+      const expectedOn = expectedAnnotationIds(scene, neoCuoi, { showAll: true });
+      const expectedOff = expectedAnnotationIds(scene, neoCuoi);
+      await clickChip(session, "Hiện tất cả");
+      const hetBat = await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOn));
+      await settleOrRecord(session, result, "show_all_on");
       const on = await chup();
-      // Hết hạn chờ là MỘT KẾT LUẬN (công tắc không đưa nhãn về trạng thái hứa), không phải lỗi bộ
-      // chạy: ghi lại rồi để bộ đánh giá nói vì sao (tiêm lỗi FB1 W17: lượt cũ dừng cả suite ở đây).
-      const choHet = (dk) => pollUntil(() => annotationState(session), dk, { timeoutMs: 5_000 })
-        .then(() => null, (e) => String(e?.message ?? e).slice(0, 160));
-      for (const ten of congTac) await clickChip(session, ten);
-      const hetTat = await choHet((s) => s.dom.length === 0);
-      await settleOrRecord(session, result, "annotations_off");
+      const annOn = await annotationState(session);
+      result.annotations.show_all = assessAnnotationBoxes({ scene, step: neoCuoi, boxes: annOn.boxes,
+        points: annOn.points, camera: annOn.camera, expected: expectedOn, mustShow: [] });
+      result.assertions.annotations_show_all = assertion(result.annotations.show_all.pass,
+        result.annotations.show_all);
+      result.witness_show_all = assessWitness({ scene, shownIds: annOn.boxes.map((b) => b.id), witnessIds: annOn.witness });
+      result.assertions.witness_show_all = assertion(result.witness_show_all.pass, result.witness_show_all);
+      result.screenshots.show_all = await capture(session, join(outDir, "show_all.png"));
+      result.capture_order.push("show_all");
+      await clickChip(session, "Hiện tất cả");
+      const hetTat = await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOff));
+      await settleOrRecord(session, result, "show_all_off");
       const off = await chup();
-      result.screenshots.annotations_off = await capture(session, join(outDir, "annotations_off.png"));
-      result.capture_order.push("annotations_off");
-      for (const ten of congTac) await clickChip(session, ten);
-      const hetBat = await choHet((s) => s.dom.length === on.annotation_dom_count);
-      await settleOrRecord(session, result, "annotations_back");
+      await clickChip(session, "Hiện tất cả");
+      const hetBatLai = await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOn));
+      await settleOrRecord(session, result, "show_all_back");
       const back = await chup();
-      result.annotation_toggle = { chips: congTac, on, off, back, poll_timeouts: { off: hetTat, back: hetBat },
-        ...assessToggleIsolation({ on, off, back }) };
-      // Các phép đo sau giả định bước cuối: công tắc lỡ đổi bước thì đã bị ghi ở trên — quay về.
+      result.show_all_toggle = { chips: congTac, on, off, back,
+        poll_timeouts: { on: hetBat, off: hetTat, back: hetBatLai },
+        ...assessShowAllIsolation({ on, off, back, expectedOn, expectedOff }) };
+      // Về mặc định gọn cho các phép đo sau; công tắc lỡ đổi bước thì đã bị ghi ở trên — quay về.
+      await clickChip(session, "Hiện tất cả");
+      await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOff));
       if (JSON.stringify(back.step) !== JSON.stringify(on.step)) await goToEnd(session);
-      result.assertions.annotation_toggle = assertion(result.annotation_toggle.pass,
-        result.annotation_toggle.reason_codes);
+      result.assertions.show_all_toggle = assertion(result.show_all_toggle.pass, result.show_all_toggle.reason_codes);
+    }
+    // W18 §16.5–16.7 — chọn TỪNG đại lượng qua bảng lời giải: nhãn hiện = nó + chuỗi số của nó (oracle
+    // độc lập), nhãn của nó bắt buộc có mặt và ≤ 24 px quanh đúng chủ thể; đúng MỘT vùng mang công
+    // thức (ô soi khi lời giải thu gọn — mục Kết quả; dòng lời giải khi mở — Dữ kiện/Các bước tính);
+    // nhân chứng vẽ đúng cho nhãn khoảng cách đang hiện. Ảnh đại diện theo loại đo.
+    {
+      await setSolutionOpen(session, true);
+      const hang = (await solutionState(session)).rows;
+      await setSolutionOpen(session, false);
+      result.selection_checks = [];
+      const daChup = new Set();
+      for (const row of hang) {
+        const q = scene.objects.find((o) => o.id === row.id);
+        if (!q) continue;
+        await setSolutionOpen(session, row.sec !== "Kết quả");
+        await clickSolutionRow(session, row.id);
+        const daChon = await choHet((s) => s.selected === row.id);
+        await settleOrRecord(session, result, `select_${row.id}`);
+        const ann = await annotationState(session);
+        const expected = expectedAnnotationIds(scene, neoCuoi, { selectedId: row.id });
+        const coNhan = Boolean(q.annotation && !q.annotation.same_as && expected.includes(q.id));
+        const hop = assessAnnotationBoxes({ scene, step: neoCuoi, boxes: ann.boxes, points: ann.points,
+          camera: ann.camera, expected, mustShow: coNhan ? [q.id] : [] });
+        const f = coherentFormulaText(scene, row.id);
+        const vung = f ? assessDetailRegion({ formula_text: f, regions: await formulaRegions(session, f) }) : null;
+        const nhanChung = assessWitness({ scene, shownIds: ann.boxes.map((b) => b.id), witnessIds: ann.witness });
+        const domDung = JSON.stringify(ann.dom) === JSON.stringify(expected);
+        const kq = { id: row.id, section: row.sec, selected: daChon === null, dom: ann.dom, expected,
+          dom_pass: domDung, boxes: hop, detail_region: vung, witness: nhanChung,
+          pass: daChon === null && domDung && hop.pass && (!vung || vung.pass) && nhanChung.pass };
+        result.selection_checks.push(kq);
+        const loai = q.annotation?.kind;
+        if (loai && !daChup.has(loai) && coNhan) {
+          daChup.add(loai);
+          result.screenshots[`selected_${loai}`] = await capture(session, join(outDir, `selected_${loai}.png`));
+          result.capture_order.push(`selected_${loai}`);
+        }
+        await clickSolutionRow(session, row.id);
+        await choHet((s) => s.selected === null);
+      }
+      await setSolutionOpen(session, false);
+      await settleOrRecord(session, result, "selection_done");
+      result.assertions.selection_per_quantity = assertion(
+        result.selection_checks.length > 0 && result.selection_checks.every((c) => c.pass),
+        result.selection_checks.filter((c) => !c.pass));
     }
     // Chụp phần tử có thể đã cuộn trang: đưa canvas về giữa khung trước khi đo tiếp.
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
@@ -1397,14 +1480,19 @@ async function runServed({ port, viewport, fixture, expected, outDir }) {
     const ketQua = await pollUntil(
       () => session.eval(`document.querySelector('.geo3d-lg-ket-qua')?.textContent||''`),
       (text) => String(text).includes(expected.answer), { timeoutMs: 8_000 });
+    // W18 §16.5: nhãn đáp số hiện khi người học CHỌN nó (mặc định gọn) — chọn qua dòng Kết quả.
+    if (expected.annotation_id) await clickSolutionRow(session, expected.annotation_id);
     const ann = await pollUntil(() => annotationState(session),
-      (s) => !expected.annotation_id || s.dom.includes(expected.annotation_id), { timeoutMs: 5_000 });
+      (s) => !expected.annotation_id || (s.dom.includes(expected.annotation_id)
+        && (!expected.witness || s.witness.includes(expected.annotation_id))), { timeoutMs: 5_000 })
+      .catch(() => annotationState(session));
     const screenshot = await capture(session, join(outDir, "served.png"));
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
     const assertions = {
       answer_shown: assertion(String(ketQua).includes(expected.answer), { answer: expected.answer }),
       annotation_present: assertion(!expected.annotation_id || ann.dom.includes(expected.annotation_id), ann.dom),
+      witness_drawn: assertion(!expected.witness || ann.witness.includes(expected.annotation_id), ann.witness),
       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
       no_uncaught_exception: assertion(uncaught.length === 0, uncaught),
       no_failed_api_call: assertion(failedApiCalls.length === 0, failedApiCalls),

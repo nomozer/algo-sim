@@ -34,16 +34,23 @@ FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
 SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
 # W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas.
-PANEL_STATES = (("desktop", "solution_neutral_final"), ("desktop", "solution_causal_selected"),
+PANEL_STATES = (("desktop", "solution_neutral_final"), ("desktop", "solution_expanded"),
+                ("desktop", "solution_causal_selected"),
                 ("mobile", "solution_neutral_final"), ("mobile", "solution_expanded"))
-STATE_TITLES = {"neutral_final": "trung tính, bước cuối",
+STATE_TITLES = {"neutral_final": "mặc định gọn, bước cuối",
                 "causal_selected": "causal — đã chọn đáp số",
                 "rotated_neutral": "đã xoay (qua cổng không suy biến)",
-                "solution_neutral_final": "bảng lời giải, bước cuối",
+                "solution_neutral_final": "bảng lời giải mặc định — thu gọn",
                 "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
                 "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
-                "annotations_off": "tắt Số đo và Kết quả — chỉ nhãn đổi",
-                "causal_restored": "bỏ chọn — cùng camera, cùng vị trí cuộn"}
+                "show_all": "Hiện tất cả — mọi số đo khả dụng (chỉ nhãn đổi)",
+                "causal_restored": "bỏ chọn — cùng camera, cùng vị trí cuộn",
+                "selected_length": "chọn một độ dài — nhãn, chuỗi số, ô soi",
+                "selected_area": "chọn một diện tích — nhãn, chuỗi số, ô soi",
+                "selected_volume": "chọn thể tích — nhãn, chuỗi số, ô soi",
+                "selected_distance": "chọn một khoảng cách — nhân chứng tới chân, ô soi"}
+#: W18 §16.5–16.7 — ảnh "chọn từng loại đo" (`selected_<kind>`): chỉ có khi bộ chạy đã chọn được.
+TRANG_THAI_CHON = ("selected_length", "selected_area", "selected_volume", "selected_distance")
 #: W16 §14.5 — tên NGƯỜI XEM của từng loại âm mà bộ chạy ghi (`negative[kind][viewport]`).
 #: Bảng ĐÓNG: loại lạ ⇒ `KeyError`, không in token máy lên ảnh.
 TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ chối, không dựng hình",
@@ -51,11 +58,20 @@ TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ
                "topology_kernel": "bảng mặt / hình học không dựng được — từ chối"}
 #: W17 §15.5 — loại từ chối THÊM, chỉ ở họ khai nó (bắt buộc đủ hai viewport khi có mặt).
 TEN_TU_CHOI_W17 = {"construction_mismatch": "đề cắt bằng (β), hệ cắt bằng (α) — từ chối, đề không cần sửa",
-                   "system_cause": "đề hợp lệ, số liệu của hệ sai — từ chối, lỗi của hệ"}
+                   "system_cause": "đề hợp lệ, số liệu của hệ sai — từ chối, lỗi của hệ",
+                   # W18 §16.4 — phép dựng ĐIỂM.
+                   "point_construction_mismatch": "đề: M là trung điểm của SA, hệ dựng trung điểm SB — từ chối, "
+                                                  "đề không cần sửa",
+                   "projection_mismatch": "đề chiếu S lên BD, hệ chiếu lên BC — từ chối, đề không cần sửa",
+                   "construction_unverified": "cách nói ngoài từ vựng — hệ chưa đối chiếu được, từ chối "
+                                              "(giới hạn của hệ)"}
 #: W17 — ca PHỤC VỤ thêm (`served[kind][viewport]`). Bảng đóng như `TEN_TU_CHOI`.
-TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — được phục vụ"}
-#: W17 — ảnh của trang dương chỉ có khi bộ chạy đã ĐO điều tương ứng: (khoá bản ghi, trạng thái).
-W17_STATES = (("annotation_toggle", "annotations_off"), ("causal_restore", "causal_restored"))
+TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — được phục vụ",
+               "point_construction_witness": "trung điểm đúng; khoảng cách tới (ABCD) có nhân chứng — phục vụ",
+               "projection_correct": "chiếu S đúng lên BD — được phục vụ"}
+#: Ảnh của trang dương chỉ có khi bộ chạy đã ĐO điều tương ứng: (khoá bản ghi, trạng thái). W18: công
+#: tắc "Hiện tất cả" thay hai công tắc W17.
+W17_STATES = (("show_all_toggle", "show_all"), ("causal_restore", "causal_restored"))
 #: Ô từ chối ĐỌC ĐƯỢC ⇔ hộp đoạn lời (`refusal_message_box`) có ít nhất tỉ lệ này điểm ảnh
 #: mực (độ sáng < `DO_SANG_MUC`). Ảnh chụp trắng có 0; vài dòng chữ có cỡ vài phần trăm.
 MUC_TOI_THIEU, DO_SANG_MUC = 0.005, 100
@@ -272,7 +288,8 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
     records = scenario.get("positive", {})
     cells: list[dict[str, Any]] = []
     loi: list[str] = []
-    for vp, state in SHEET_STATES:
+    for vp, state in SHEET_STATES + tuple((vp, s) for vp in ("desktop", "mobile") for s in TRANG_THAI_CHON
+                                          if s in records.get(vp, {}).get("screenshots", {})):
         record = records.get(vp, {})
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,

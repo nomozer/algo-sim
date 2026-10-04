@@ -459,6 +459,43 @@ def main() -> None:
             ensure_ascii=False, indent=2,
         ), encoding="utf-8")
 
+    # W18 §16.4 — phép dựng ĐIỂM gắn với quan hệ của đề bằng danh tính. Chương trình đóng băng của corpus
+    # W18 (cùng builder với `tests/geometry/test_construction_binding.py`) qua route sản phẩm, 0 lượt gọi:
+    # lệch ⇒ từ chối CONSTRUCTION; chưa đối chiếu ⇒ từ chối UNKNOWN (vùng đa diện); đúng ⇒ phục vụ — khoảng
+    # cách từ M tới (ABCD) mang nhân chứng (chân chính xác).
+    from tests.geometry import test_construction_binding as CB
+
+    lech = ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION")
+    w18 = (
+        ("w18_midpoint_mismatch", CB.CA["B2_mid_wrong_SB"], lech, None),
+        ("w18_projection_mismatch", CB.CA["B11_proj_line_wrong_BC"], lech, None),
+        ("w18_unverified", CB.CA["B16_out_of_vocab_ok"],
+         ("construction_binding", "CONSTRUCTION_BINDING_UNVERIFIED", "UNKNOWN"), None),
+        ("w18_midpoint_plane_distance", lambda: CB._p1(
+            "Gọi M là trung điểm của SA. Tính khoảng cách từ M đến mặt phẳng (ABCD).",
+            [CB._mid("M", "S", "A"), CB._mp("day", ["A", "B", "C"])], "M", "day"), None, "3"),
+        ("w18_projection_line", CB.CA["B10_proj_line_ok"], None, "3√6"),
+    )
+    for name, build, refusal, answer in w18:
+        contract, program = build()
+        validation = validate_semantic_program(program)
+        assert validation.ok and validation.spec is not None, validation.error
+        envelope = attach_learner_reason(asyncio.run(
+            _run_frozen_program(contract.problem_text, contract, validation.spec)))
+        if refusal is None:
+            d = next(o for o in envelope["scene3d"]["objects"] if o["id"] == "d_kq")
+            assert envelope["status"] == "ok" and d.get("value") == answer, (envelope["status"], d.get("value"))
+            if name == "w18_midpoint_plane_distance":
+                assert d["annotation"]["anchor"] == "witness" and d["annotation"]["witness"]["foot"] == ["0", "0", "0"]
+        else:
+            assert (envelope["status"], envelope["stage_reached"], envelope["reason_code"],
+                    envelope["refusal_cause"]) == ("unsupported", *refusal), envelope
+        (fixtures / f"{name}.json").write_text(json.dumps(
+            _wrapper(name, contract.problem_text, envelope, "w18_corpus_frozen_program_through_production_route",
+                     **({} if refusal is None else {"source_reason_code": refusal[1], "refusal_cause": refusal[2]})),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"
     canonical = json.loads(canonical_path.read_text(encoding="utf-8"))

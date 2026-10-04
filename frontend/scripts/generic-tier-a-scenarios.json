@@ -247,10 +247,15 @@
         { "kind": "ungrounded_source", "fixture": "fixtures/cross_section_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
         { "kind": "assumption", "fixture": "fixtures/cross_section_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN", "refusal_cause": "UNKNOWN"} },
         { "kind": "topology_kernel", "fixture": "fixtures/cross_section_negative.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "kernel_error_code": "PLANE_DOES_NOT_CUT", "refusal_cause": "SOURCE"} },
-        { "kind": "construction_mismatch", "fixture": "fixtures/cross_section_wrong_plane.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} }
+        { "kind": "construction_mismatch", "fixture": "fixtures/cross_section_wrong_plane.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} },
+        { "kind": "point_construction_mismatch", "fixture": "fixtures/w18_midpoint_mismatch.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "construction_binding", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} },
+        { "kind": "projection_mismatch", "fixture": "fixtures/w18_projection_mismatch.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "construction_binding", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} },
+        { "kind": "construction_unverified", "fixture": "fixtures/w18_unverified.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "construction_binding", "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED", "refusal_cause": "UNKNOWN"} }
       ],
       "served_fixtures": [
-        { "kind": "correct_plane", "fixture": "fixtures/cross_section_correct_plane.json", "expected": {"answer": "16", "annotation_id": "area_T"} }
+        { "kind": "correct_plane", "fixture": "fixtures/cross_section_correct_plane.json", "expected": {"answer": "16", "annotation_id": "area_T"} },
+        { "kind": "point_construction_witness", "fixture": "fixtures/w18_midpoint_plane_distance.json", "expected": {"answer": "3", "annotation_id": "d_kq", "witness": true} },
+        { "kind": "projection_correct", "fixture": "fixtures/w18_projection_line.json", "expected": {"answer": "3√6", "annotation_id": "d_kq"} }
       ]
     }
   ]

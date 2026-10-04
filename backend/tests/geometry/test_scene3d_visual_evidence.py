@@ -127,9 +127,10 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
     meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     from PIL import Image
     sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
+    # W18 §16.6: lời giải thu gọn ở MỌI khổ ⇒ desktop cũng có ảnh "mở dữ kiện và các bước tính".
     assert [c["state"] for c in meta["cells"]] == [
         "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final",
-        "desktop/solution_neutral_final", "desktop/solution_causal_selected",
+        "desktop/solution_neutral_final", "desktop/solution_expanded", "desktop/solution_causal_selected",
         "mobile/solution_neutral_final", "mobile/solution_expanded",
     ] + [f"negative/{k}/{vp}" for k in ("ungrounded_source", "assumption", "topology_kernel")
          for vp in ("desktop", "mobile")] + [f"desktop/geometry_step/{k}" for k in range(3)]
@@ -225,10 +226,11 @@ def _them_w17(kb: dict, tmp: Path, family_dir: str = "cross-section") -> dict:
     kb["served"] = {"correct_plane": {vp: {"pass": True, "screenshot": str(_anh(
         images / family_dir / "served" / "correct_plane" / vp / "served.png", (780, 1200), "white"))}
         for vp in ("desktop", "mobile")}}
+    # W18 §16.5: công tắc "Hiện tất cả" (ảnh `show_all`) thay hai công tắc W17 (ảnh `annotations_off`).
     for vp, rec in kb["positive"].items():
-        rec["annotation_toggle"] = {"pass": True}
+        rec["show_all_toggle"] = {"pass": True}
         rec["causal_restore"] = {"pass": True}
-        for s in ("annotations_off", "causal_restored"):
+        for s in ("show_all", "causal_restored"):
             rec["screenshots"][s] = str(_anh(tmp / vp / f"{s}.png", (780, 1200), "white"))
     return kb
 
@@ -237,7 +239,7 @@ def test_w17_o_do_W17_co_mat_khi_bo_chay_da_do(tmp_path):
     meta = B.family_sheet("cross_section", _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path),
                           tmp_path / "images")
     trang = [c["state"] for c in meta["cells"]]
-    for state in ("desktop/annotations_off", "desktop/causal_restored", "mobile/annotations_off",
+    for state in ("desktop/show_all", "desktop/causal_restored", "mobile/show_all",
                   "mobile/causal_restored", "negative/construction_mismatch/desktop",
                   "negative/construction_mismatch/mobile", "served/correct_plane/desktop",
                   "served/correct_plane/mobile"):
@@ -251,7 +253,30 @@ def test_w17_o_do_W17_co_mat_khi_bo_chay_da_do(tmp_path):
 def test_w17_ho_khong_khai_loai_W17_khong_can_o_ay(tmp_path):
     meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     assert not any(c["state"].startswith(("served/", "negative/construction_mismatch", "negative/system_cause"))
-                   or c["state"].endswith(("annotations_off", "causal_restored")) for c in meta["cells"])
+                   or c["state"].endswith(("show_all", "causal_restored")) for c in meta["cells"])
+
+
+def test_w18_o_chon_tung_loai_do_va_ca_phep_dung_diem(tmp_path):
+    """W18 §16.5–16.7: ảnh chọn từng loại đo có mặt khi bộ chạy đã chụp; ca từ chối/phục vụ của phép
+    dựng ĐIỂM có tên người xem (không token máy)."""
+    kb = _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path)
+    images = tmp_path / "images"
+    for vp, rec in kb["positive"].items():
+        for s in ("selected_area", "selected_distance"):
+            rec["screenshots"][s] = str(_anh(tmp_path / vp / f"{s}.png", (1400, 800), "white"))
+            rec["canvas_boxes"][s] = {"x": 10, "y": 100, "w": 900, "h": 400}
+    for kind in ("point_construction_mismatch", "projection_mismatch", "construction_unverified"):
+        kb["negative"][kind] = {vp: _tu_choi(images, "cross-section", kind, vp) for vp in ("desktop", "mobile")}
+    kb["served"]["point_construction_witness"] = {vp: {"pass": True, "screenshot": str(_anh(
+        images / "cross-section" / "served" / "w18" / vp / "served.png", (780, 1200), "white"))}
+        for vp in ("desktop", "mobile")}
+    meta = B.family_sheet("cross_section", kb, images)
+    nhan = {c["state"]: c["label"] for c in meta["cells"]}
+    for state in ("desktop/selected_area", "mobile/selected_distance", "negative/construction_unverified/mobile",
+                  "negative/point_construction_mismatch/desktop", "served/point_construction_witness/mobile"):
+        assert state in nhan, (state, sorted(nhan))
+    assert "nhân chứng" in nhan["desktop/selected_distance"]
+    assert not any("_" in nhan_xem for nhan_xem in nhan.values()), nhan
 
 
 def test_w17_da_do_ma_thieu_anh_thi_that_bai(tmp_path):
