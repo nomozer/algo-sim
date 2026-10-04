@@ -678,7 +678,16 @@ export function expectedSolutionRows(scene, anchor) {
         || steps.includes(o.id)) continue;
     steps.push(o.id);
   }
-  return { givens, steps, results };
+  // W18 §16.6: đại lượng `same_as` một dòng đang có là CÙNG phép đo — không dòng thứ hai.
+  const co = new Set([...givens, ...steps, ...results]);
+  const rieng = (ids) => ids.filter((id) => !co.has(byId.get(id)?.annotation?.same_as));
+  return { givens: rieng(givens), steps: rieng(steps), results: rieng(results) };
+}
+
+/** W18 §16.6: dòng lời giải mang một đại lượng — chính nó, hoặc dòng nó `same_as` khi dòng ấy có mặt. */
+export function solutionRowOf(scene, id, rows) {
+  const s = (scene?.objects ?? []).find((o) => o.id === id)?.annotation?.same_as;
+  return s && rows.has(s) ? s : id;
 }
 
 /** Phán quyết các bước dựng QUAN SÁT trong trình duyệt (W12).
@@ -825,8 +834,10 @@ export function assessStructuredReferences(scene, observed) {
       const cut = v.indexOf("#");
       return cut < 0 ? [v, null] : [v.slice(0, cut), v.slice(cut + 1)];
     }));
-    const panel = new Set([...(s.solution?.givens ?? []), ...(s.solution?.steps ?? []),
+    const dong = new Set([...(s.solution?.givens ?? []), ...(s.solution?.steps ?? []),
       ...(s.solution?.results ?? [])]);
+    // W18 §16.6: đại lượng gộp (`same_as`) hiện qua dòng của đại lượng nó trỏ tới.
+    const panel = { has: (id) => dong.has(solutionRowOf(scene, id, dong)) };
     const hien = (id) => drawn.has(id) || panel.has(id);
     for (let j = g.start; j <= g.end; j += 1) {
       for (const id of buoc[j]?.focus_ids ?? []) {
@@ -840,7 +851,7 @@ export function assessStructuredReferences(scene, observed) {
     for (const id of buoc[g.anchor]?.readout_ids ?? []) {
       if (!panel.has(id)) fail.push({ index: s.index, check: "b", id, kind: byId.get(id)?.type });
     }
-    for (const id of panel) {
+    for (const id of dong) {
       for (const ref of byId.get(id)?.formula?.references ?? []) {
         if (!hien(ref.entity_id)) {
           fail.push({ index: s.index, check: "c", id: ref.entity_id, kind: byId.get(ref.entity_id)?.type });

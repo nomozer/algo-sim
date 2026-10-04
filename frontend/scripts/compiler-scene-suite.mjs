@@ -1016,8 +1016,14 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         const loai = q.annotation?.kind;
         if (loai && !daChup.has(loai) && coNhan) {
           daChup.add(loai);
+          // Bấm dòng lời giải đã cuộn trang: đưa khung về giữa trước khi chụp hình (nhãn + nhân chứng),
+          // rồi chụp riêng ô soi (bảng chi tiết của đại lượng đang chọn).
+          await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
+          await settleOrRecord(session, result, `select_${row.id}_scrolled`);
+          result.canvas_boxes[`selected_${loai}`] = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
           result.screenshots[`selected_${loai}`] = await capture(session, join(outDir, `selected_${loai}.png`));
-          result.capture_order.push(`selected_${loai}`);
+          result.screenshots[`detail_${loai}`] = await captureElement(session, ".geo3d-soi", join(outDir, `detail_${loai}.png`));
+          result.capture_order.push(`selected_${loai}`, `detail_${loai}`);
         }
         await clickSolutionRow(session, row.id);
         await choHet((s) => s.selected === null);

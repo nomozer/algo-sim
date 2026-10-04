@@ -49,8 +49,14 @@ STATE_TITLES = {"neutral_final": "mặc định gọn, bước cuối",
                 "selected_area": "chọn một diện tích — nhãn, chuỗi số, ô soi",
                 "selected_volume": "chọn thể tích — nhãn, chuỗi số, ô soi",
                 "selected_distance": "chọn một khoảng cách — nhân chứng tới chân, ô soi"}
-#: W18 §16.5–16.7 — ảnh "chọn từng loại đo" (`selected_<kind>`): chỉ có khi bộ chạy đã chọn được.
+#: W18 §16.5–16.7 — ảnh "chọn từng loại đo" (`selected_<kind>`) và ô soi của đại lượng ấy (`detail_<kind>`,
+#: ảnh phần tử): chỉ có khi bộ chạy đã chọn được.
 TRANG_THAI_CHON = ("selected_length", "selected_area", "selected_volume", "selected_distance")
+TRANG_THAI_CHI_TIET = ("detail_length", "detail_area", "detail_volume", "detail_distance")
+STATE_TITLES.update({"detail_length": "ô soi một độ dài — công thức, dữ kiện, đầu vào",
+                     "detail_area": "ô soi một diện tích — công thức, dữ kiện, đầu vào",
+                     "detail_volume": "ô soi thể tích — công thức, dữ kiện, đầu vào",
+                     "detail_distance": "ô soi một khoảng cách — công thức, dữ kiện, đầu vào"})
 #: W16 §14.5 — tên NGƯỜI XEM của từng loại âm mà bộ chạy ghi (`negative[kind][viewport]`).
 #: Bảng ĐÓNG: loại lạ ⇒ `KeyError`, không in token máy lên ảnh.
 TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ chối, không dựng hình",
@@ -295,7 +301,9 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
                       "box_state": state, "crop": True})
     for vp, state in PANEL_STATES + tuple((vp, s) for vp in ("desktop", "mobile") for khoa, s in W17_STATES
-                                          if khoa in records.get(vp, {})):
+                                          if khoa in records.get(vp, {})) + tuple(
+            (vp, s) for vp in ("desktop", "mobile") for s in TRANG_THAI_CHI_TIET
+            if s in records.get(vp, {}).get("screenshots", {})):
         record = records.get(vp, {})
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,

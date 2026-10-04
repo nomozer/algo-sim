@@ -1047,17 +1047,17 @@ const CANH_W18 = {
   objects: [
     { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] },
     { id: "C", type: "point3", xyz: ["0", "1", "0"] },
-    { id: "AB", type: "quantity", origin: "free", value: "3",
+    { id: "AB", type: "quantity", render: "readout", origin: "free", value: "3",
       annotation: { kind: "length", category: "measurement", role: "given", subject_ids: ["A", "B"], anchor: "segment" } },
-    { id: "h", type: "quantity", origin: "derived", value: "3", depends: ["A", "B"],
+    { id: "h", type: "quantity", render: "readout", origin: "derived", value: "3", depends: ["A", "B"],
       annotation: { kind: "length", category: "measurement", role: "intermediate", subject_ids: ["A", "B"],
         anchor: "segment", same_as: "AB" } },
-    { id: "d", type: "quantity", origin: "derived", value: "1", depends: ["C", "AB"],
+    { id: "d", type: "quantity", render: "readout", origin: "derived", value: "1", depends: ["C", "AB"],
       dependency_edges: [{ source_id: "AB", relation: "numerical" }],
       annotation: { kind: "distance", category: "measurement", role: "intermediate", subject_ids: ["C", "A"],
         anchor: "witness", witness: { from: "C", foot: ["0", "0", "0"], on: "A",
           marker: { u: ["1", "0", "0"], v: ["0", "1", "0"] } } } },
-    { id: "V", type: "quantity", origin: "derived", value: "9", depends: ["d"],
+    { id: "V", type: "quantity", render: "readout", origin: "derived", value: "9", depends: ["d"],
       dependency_edges: [{ source_id: "d", relation: "numerical" }],
       annotation: { kind: "length", category: "result", role: "result", subject_ids: ["A", "B"], anchor: "segment" } },
   ],
@@ -1077,6 +1077,13 @@ test("W18 annotation oracle: compact default, selection focus, same_as, show-all
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "h" }), ["AB"]);        // same_as ⇒ its owner
   assert.deepEqual(LIB.annotationWorldAnchor(CANH_W18, CANH_W18.objects.find((o) => o.id === "d").annotation),
     [0, 0.5, 0]);
+});
+
+test("W18 solution oracle merges a same_as measurement into the row it points to", () => {
+  const rows = LIB.expectedSolutionRows(CANH_W18, 4);
+  assert.deepEqual([rows.givens, rows.steps, rows.results], [["AB"], ["d"], ["V"]]);   // h merged into AB
+  assert.equal(LIB.solutionRowOf(CANH_W18, "h", new Set(["AB", "d", "V"])), "AB");
+  assert.equal(LIB.solutionRowOf(CANH_W18, "h", new Set(["d"])), "h");                // owner absent ⇒ itself
 });
 
 test("W18 one detail region and witness drawn exactly for shown distance labels", () => {
