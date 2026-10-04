@@ -1,0 +1,281 @@
+{
+  "schema_version": "run-manifest/3",
+  "run_id": "w19-docs-organization",
+  "sha256_basis_values": {
+    "raw_bytes": "sha256 of the file bytes",
+    "git_blob_lf": "sha256 of the LF-normalised content = the committed git blob"
+  },
+  "measurement_status_values": {
+    "AUTHORITATIVE": "the evidence of this run on the final tree (or the base, where the file says so)",
+    "SUPERSEDED": "an intermediate run of the same check in this wave; valid for the commit it names",
+    "RECORD": "hand-written record, decision or script"
+  },
+  "files": {
+    "diagnostics/build_manifest.py": {
+      "bytes": 4893,
+      "sha256": "fe1a1e167ac6a1357f2ace7a1b05a5fdca41a5ab69a82872a3622381634009ac",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/build_report_catalog.py": {
+      "bytes": 5803,
+      "sha256": "82151699d7b1fb0f4ee2f3d2949ab04fd45af61f55767a2be01c36db9acf2735",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/check_doc_links.py": {
+      "bytes": 7472,
+      "sha256": "552564c935d58db9ebbbcdd7b963954871cb49bed7bbfd398b65477e6506594c",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/check_old_path_consumers.py": {
+      "bytes": 4932,
+      "sha256": "1b818db81d1d8540b69ab1de378c5b90a530898de598f97e6d254d52f632217e",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/inventory_docs.py": {
+      "bytes": 21242,
+      "sha256": "9ade1de912d9a6b5973037c4539c7959f93348498cf5132292260688037591d5",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/PONYTAIL_REVIEW_W19.md": {
+      "bytes": 1475,
+      "sha256": "16e559727eb737952019835ad16002baed3c56524d37a8773431216e272cf7fc",
+      "sha256_basis": "git_blob_lf",
+      "producer": "ponytail-review of the W19 diff (hand-written)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/rewrite_doc_paths.py": {
+      "bytes": 8300,
+      "sha256": "ad3bd2a8d38ed4d102e340f11c35baedc93306556d52e709dd5166e0c6d56f4c",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/TEMP_FILE_INVENTORY.json": {
+      "bytes": 8213,
+      "sha256": "7ef84731e09e5fd62d98deba0da6fe30b0b29b814035c6f0df9f9eb5b055523e",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written temp-file inventory",
+      "measurement_status": "RECORD"
+    },
+    "diagnostics/verify_frozen_identity.py": {
+      "bytes": 4993,
+      "sha256": "231b2fdfc8f82a8fa009dd3def304ad262b8d4f0ef65c920945ab513c3fc1ac4",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written W19 script (0 model calls)",
+      "measurement_status": "RECORD"
+    },
+    "HANDOFF.md": {
+      "bytes": 13796,
+      "sha256": "8217b30987d6859d5f6770ba89ab01552b643ef3dff209e38265fce6070cefa8",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written run document",
+      "measurement_status": "RECORD"
+    },
+    "inputs/W19_SCOPE_DECISIONS.json": {
+      "bytes": 6707,
+      "sha256": "4d0c990b3790b4a2864673795248a2e9051906384cd2cf1f9b9b3c9c535c4308",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written scope decisions (brief invariants, rulings R1-R12, skills)",
+      "measurement_status": "RECORD"
+    },
+    "inventory/AUTHORITY_RETARGET.json": {
+      "bytes": 3560,
+      "sha256": "668f318063b3fe4cb46e618d9f232af90ce77c8dbbfd18f978ad3bccc4cea9e5",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-checked replacement list (each matched exactly once before writing)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "inventory/INVENTORY.json": {
+      "bytes": 433905,
+      "sha256": "091efd4e9be2faeecdfe08cef83c40179e9078e821c211c9612f1416495d35a7",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/inventory_docs.py --base 6d0e6321 (read-only, tree equal to the base)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "inventory/MIGRATION_MAP.json": {
+      "bytes": 33278,
+      "sha256": "e287988f83d3d502c75b25864f73f0e00bd1ce05bc3991b29dd2c1e5db714109",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/rewrite_doc_paths.py --map (blobs from git hash-object after the moves)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "inventory/REWRITE_LOG.json": {
+      "bytes": 27988,
+      "sha256": "b3ce94063182a90ebd058160a135bf2308e2073eb123ac39d544edde5c921a4c",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/rewrite_doc_paths.py (pass 1: MOVE/ARCHIVE pairs), applied in a5c2e6f2",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "inventory/REWRITE_LOG_MERGE.json": {
+      "bytes": 15572,
+      "sha256": "d45503a1ca33aaf60b4d3a83380242885e55f7f22de37551882b5d801e0ed655",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/rewrite_doc_paths.py --only-merge (pass 2), applied in a44631a9",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "README.md": {
+      "bytes": 2400,
+      "sha256": "5fef296e18a507d2de10849384bfcea9fbfe5ffeeedcb4169df76cbf92d42b98",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written run document",
+      "measurement_status": "RECORD"
+    },
+    "REPORT.md": {
+      "bytes": 11048,
+      "sha256": "6f40c4723ab786659fc566dba975b73f79cde44566840a65e8763c6f26bd2231",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written run document",
+      "measurement_status": "RECORD"
+    },
+    "RUN.json": {
+      "bytes": 2793,
+      "sha256": "d45582fa525fd989f95296c80235770ee70b90401e20b91c6760dc6ee99863e7",
+      "sha256_basis": "git_blob_lf",
+      "producer": "hand-written run document",
+      "measurement_status": "RECORD"
+    },
+    "verification/DOCS_TREE_BEFORE_AFTER.txt": {
+      "bytes": 2165,
+      "sha256": "be8a9bdc65be20fbf9fed77d314531261dd5f930dac057eab74926820e271b12",
+      "sha256_basis": "git_blob_lf",
+      "producer": "git ls-tree 6d0e6321 / git ls-files, files per folder (shell, read-only)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/FROZEN_IDENTITY.json": {
+      "bytes": 2051,
+      "sha256": "c9f0dfa87f29372e7bddfd4e6d0af44a9725e15787e020674384b2e7ca787eb4",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/verify_frozen_identity.py --base 6d0e6321 (index of the final tree)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/LINKS_AFTER_TASK2.json": {
+      "bytes": 7461,
+      "sha256": "c31f9fab15093fb33fa89aa9ef6ae2bd6d1ab1c642651804e858982227bbcd52",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_doc_links.py after the moves (commit a5c2e6f2)",
+      "measurement_status": "SUPERSEDED"
+    },
+    "verification/LINKS_AFTER_TASK3.json": {
+      "bytes": 7461,
+      "sha256": "39fdd451ad21cbf860f20c56919345e482cad016fe08e3d9151b1ec95cca9f36",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_doc_links.py after the claim map and hubs (commit a44631a9)",
+      "measurement_status": "SUPERSEDED"
+    },
+    "verification/LINKS_BEFORE.json": {
+      "bytes": 8199,
+      "sha256": "3be9e86425bc074b756f001e37d5226234e9863b467a228f0054dfda5b5f8a77",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_doc_links.py at 6d0e6321 (before any move)",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/LINKS_FINAL.json": {
+      "bytes": 7173,
+      "sha256": "88431abe7c8002ef1404baaa5712ed4447cf49ee6b335cc741d84cc5985ea4d9",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_doc_links.py on the final tree",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/CACHE_IDENTITY_VERIFY.log": {
+      "bytes": 265,
+      "sha256": "e21136858b1c7fbcda69e0fb95f510cc595f620f53e3748964045799043637d3",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/CANDIDATE_VERIFY.log": {
+      "bytes": 316,
+      "sha256": "ec05475771886bdbc4fe9d9f15e22151605cd7bdf7a756c19cffd3e6b1bdf429",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/DETACHED_WORKTREE_STATUS_AFTER.log": {
+      "bytes": 509,
+      "sha256": "6435c797b10b0c16f215e21511cec2066e0ee919577d0c2a85b0b29cacf5750f",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/DOCS_AUDIT.log": {
+      "bytes": 570,
+      "sha256": "48a3ad931a0e4c01577f6c33b244f26f7e7e09e61874df8a6f15adcccf15596c",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/DOCS_TESTS.log": {
+      "bytes": 710,
+      "sha256": "a16ff0d2c7618cce8e908f070d78521939a2e6f4e53cab83e323f2ae37efbc42",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/FROZEN_WORKTREE_STATUS.log": {
+      "bytes": 238,
+      "sha256": "7856b142100cb251247182dab44f6aed28ab4a5b7eb6b92ad22c82aaa68e851a",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/GUARDS.log": {
+      "bytes": 673,
+      "sha256": "33a71dd0241f7523348bd8c18a032f5e50f8879f927d88c80d93aad3b3657c01",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/PYTEST_FULL_DETACHED_CLEAN.log": {
+      "bytes": 1162,
+      "sha256": "1fd4f3e5b59b4695450e88fa4a93e4190205113652a8c7ab91e076e5e312d461",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/PYTEST_FULL_MAIN_TREE_DIRTY.log": {
+      "bytes": 4117,
+      "sha256": "170bb514683b4611e81af3ccccb8d6e6a633baa74d88253163eaab621c33e274",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/logs/VITEST_FULL_MAIN_TREE.log": {
+      "bytes": 306,
+      "sha256": "10533bec00e510b3125cdfe651d2960caba5501194a408f0d0aeaed06a2fbf9b",
+      "sha256_basis": "git_blob_lf",
+      "producer": "command output, header line names the command and the tree it ran on",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/OLD_PATH_CONSUMERS_FINAL.json": {
+      "bytes": 7951,
+      "sha256": "b8bc2d6fcef41caa144b3e52f291e145387216230d92a9fbd0bd18cc22472bf0",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_old_path_consumers.py on the final tree",
+      "measurement_status": "AUTHORITATIVE"
+    },
+    "verification/OLD_PATH_CONSUMERS_TASK2.json": {
+      "bytes": 8162,
+      "sha256": "d547504eae1ecb91d2b891215ea70dfd3646a53d8352579ab8577320dec90c9a",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_old_path_consumers.py after the moves",
+      "measurement_status": "SUPERSEDED"
+    },
+    "verification/OLD_PATH_CONSUMERS_TASK3.json": {
+      "bytes": 8075,
+      "sha256": "9eb3dbf5047d40ef458883fdb317d364cd545b5eeec9df0a7602c9c0ab8c7802",
+      "sha256_basis": "git_blob_lf",
+      "producer": "diagnostics/check_old_path_consumers.py after the merge pass",
+      "measurement_status": "SUPERSEDED"
+    }
+  }
+}

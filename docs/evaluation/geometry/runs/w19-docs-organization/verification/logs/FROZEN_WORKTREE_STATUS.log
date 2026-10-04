@@ -1,0 +1,3 @@
+# W19 — working-tree status of docs/evaluation outside the W19 run folder at the documentation commit (expect no lines)
+# command: git status --porcelain=v1 --untracked-files=all -- docs/evaluation | grep -v w19-docs-organization
+# end

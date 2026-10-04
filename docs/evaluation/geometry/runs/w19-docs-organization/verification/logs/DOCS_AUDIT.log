@@ -1,0 +1,15 @@
+# W19 — docs audit on the final tree
+# command: cd backend && .venv/Scripts/python.exe scripts/audit_docs_information_architecture.py
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+# exit 0

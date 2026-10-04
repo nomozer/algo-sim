@@ -1,0 +1,48 @@
+{
+ "schema_version": "w19-scope-decisions/1",
+ "task": "W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION",
+ "date": "2026-10-04",
+ "brief_invariants": {
+  "PRODUCT_BEHAVIOR_CHANGED": "NO",
+  "DEFAULT_MODE": "LLM_ONLY",
+  "CACHE_VERSION": "110",
+  "CANDIDATE_REFROZEN": "NO",
+  "LIVE_GEMINI_REQUESTS": 0,
+  "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+  "PUSH_EXECUTED": "NO",
+  "MERGE_EXECUTED": "NO",
+  "HISTORY_REWRITTEN": "NO",
+  "USER_FAVICON_DELETION_PRESERVED": "YES"
+ },
+ "brief_quotes": {
+  "frozen_evidence": "Giữ nguyên nội dung và đường dẫn của evidence đã đóng băng trong task này. Đưa chúng vào điều hướng mới bằng index và liên kết.",
+  "not_only_an_index": "Không chỉ bổ sung thêm một index rồi để nguyên toàn bộ sự lộn xộn.",
+  "locked_paths": "Với đường dẫn bị test/script hoặc candidate khóa: tìm contract thực tế; ưu tiên cập nhật tham chiếu nếu nằm trong phạm vi an toàn; giữ đường dẫn có thẩm quyền khi việc di chuyển làm đổi contract ngoài task; ghi rõ ngoại lệ.",
+  "after_w19": "Mục tiêu sau W19 là chuyển sang một lát cắt hình học mới cùng các chỉnh sửa giao diện đã chốt."
+ },
+ "rulings": [
+  {"id": "R1", "decision": "Evidence keeps content and path: docs/evaluation/** and every wave report or wave deliverable used as evidence, wherever it sits (incl. research/RECTANGULAR_BASE_PYRAMID_COMPILER_VERTICAL_SLICE.md, the W13 snapshots and the v1 matrix in architecture/). Navigation by catalog + links.", "basis": "brief §5 frozen_evidence + AGENTS.md §4", "cost_if_wrong": "the docs root stays physically crowded (180 reports); relocation is mechanical from the catalog once the user amends AGENTS.md §4 (ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT)"},
+  {"id": "R2", "decision": "Canonical living docs and path-pinned current docs stay at the docs/ root; backend/app and frontend/src are not touched.", "basis": "SessionStart bootstrap in .claude/settings.json (not read, not edited), .claude/hooks/code-index-guard.mjs, the docs audit, product-code comments (candidate / sourceFingerprint), frontend tests", "cost_if_wrong": "a pinned doc keeps a root path"},
+  {"id": "R3", "decision": "No docs/project/ folder.", "basis": "the current project docs are the pinned root set; a second home would split them", "cost_if_wrong": "naming differs from the brief's suggested direction"},
+  {"id": "R4", "decision": "Archive area = the existing docs/legacy/.", "basis": "docs/legacy/RULES_v0.3.md is pinned by frontend/src/rules-hygiene.test.ts; one archive folder, not two", "cost_if_wrong": "the folder is named legacy/ instead of the suggested archive/"},
+  {"id": "R5", "decision": "Research writing moves to docs/research/thesis/ and docs/research/paper/; shared method, literature and claims stay at docs/research/.", "basis": "brief §4", "cost_if_wrong": "none (moves are reversible from the migration map)"},
+  {"id": "R6", "decision": "One claim-evidence map: docs/research/CLAIM_EVIDENCE_MAP.md; THESIS_READINESS.md, thesis/CLAIM_EVIDENCE_MATRIX.md, research/CLAIM_TO_EVIDENCE_MAP.md archived byte-identical in docs/legacy/research/.", "basis": "brief §5/§6 (one authority, required fields)", "cost_if_wrong": "future waves update the map, not THESIS_READINESS"},
+  {"id": "R7", "decision": "CURRENT_STATE.md keeps state + pointers; its development log (lines 88-5475 at 6d0e6321) moved verbatim to docs/legacy/CURRENT_STATE_HISTORY.md.", "basis": "brief §5 (CURRENT_STATE: state and pointers) and the file's own header (the log is evidence of its time)", "cost_if_wrong": "section citations 'CURRENT_STATE §3/§4/§5' now resolve in the history file"},
+  {"id": "R8", "decision": "Closed docs root: audit_docs_layout fails on any docs/*.md not canonical, not a listed project doc, and not in the historical-report catalog; new wave reports go in their run folder.", "basis": "root cause of the mixing: nothing stopped reports from landing at the root", "cost_if_wrong": "a future legitimate root doc needs one line in PROJECT_DOCS"},
+  {"id": "R9", "decision": "POST_THESIS_BACKLOG.md stays as ROADMAP's declared annex for out-of-scope ideas.", "basis": "RULES.md §3 cites it by path; ROADMAP owns future work", "cost_if_wrong": "two files for future work, ownership declared"},
+  {"id": "R10", "decision": "D:/tmp leftovers of earlier waves inventoried as UNKNOWN and kept.", "basis": "brief §7 (unknown must be kept); W18 rule (earlier waves' folders not touched)", "cost_if_wrong": "disk use until a verification pass (ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED)"},
+  {"id": "R11", "decision": "Local git-ignored CLAUDE.md: six stale doc pointers fixed, listed in HANDOFF, not committed.", "basis": "brief §1 scope includes necessary references; the file steers future sessions", "cost_if_wrong": "the user reverts six lines (listed)"},
+  {"id": "R12", "decision": "CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES; W18 human review (NOT_APPROVED) and ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET become merge blockers.", "basis": "brief after_w19; the W18 verdict and HUMAN_REVIEW=NOT_APPROVED are kept", "cost_if_wrong": "one token in three docs + the audit allowlist"}
+ ],
+ "skills": {
+  "discovered": "plugins under C:/Users/Bunny/.claude/plugins/cache (superpowers 6.4.1, karpathy-skills, ponytail 4.10.0, ecc, claude-code-setup, …) and the project skill .claude/skills/impeccable",
+  "writing-plans": "INSTRUCTIONS_READ (invoked earlier in this session for W18; re-shown after the context compaction) — APPLIED: plan C:/Users/Bunny/.claude/plans/w19-docs-organization.md",
+  "executing-plans": "INSTRUCTIONS_READ — APPLIED inline with ledger .superpowers/sdd/w19-docs-organization/progress.md; helper scripts task-start/task-done not used (ruling in the ledger)",
+  "karpathy-guidelines": "INSTRUCTIONS_READ — APPLIED manually (surgical changes, no speculative tooling, explicit assumptions)",
+  "systematic-debugging": "INSTRUCTIONS_READ — APPLIED to the guard/link failures (catalog regex counting an intro link; a hub link to a vanished folder; archive-header link resolution)",
+  "test-driven-development": "INSTRUCTIONS_READ — APPLIED to the docs guard (4 tests RED with AttributeError, then GREEN)",
+  "verification-before-completion": "INSTRUCTIONS_READ — APPLIED before the final claims (fresh runs listed in HANDOFF)",
+  "ponytail-review": "INSTRUCTIONS_READ — APPLIED to the W19 diff (diagnostics/PONYTAIL_REVIEW_W19.md)",
+  "not_used": ["subagent-driven-development (brief: one agent)", "impeccable (no UI change in W19)", "other installed skills (not relevant)"]
+ }
+}

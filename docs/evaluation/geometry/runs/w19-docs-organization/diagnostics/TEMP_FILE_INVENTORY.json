@@ -1,0 +1,165 @@
+{
+  "schema_version": "temp-file-inventory/1",
+  "wave": "W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION",
+  "scope": "every file or folder W19 created or touched outside the committed run folder: D:/tmp, the session scratchpad, the git-ignored plan workspace, the plan file, the local CLAUDE.md, and the two stray files found outside the repository",
+  "classes": [
+    "USED",
+    "RESEARCH_EVIDENCE",
+    "SUPERSEDED_DIAGNOSTIC",
+    "REPRODUCIBLE_TEMP",
+    "VERIFIED_DUPLICATE",
+    "UNKNOWN"
+  ],
+  "deletion_rule": "only paths verified safe and recoverable, each by exact path (Remove-Item -LiteralPath <path>, git worktree remove <path>); nothing by wildcard; unique evidence copied into the run folder BEFORE removal; unknown kept",
+  "earlier_waves": "the 212 D:/tmp entries left by earlier waves (210 class UNKNOWN_EARLIER_WAVE, 2 class SENSITIVE_NOT_READ) are listed in inventory/INVENTORY.json (temp) and KEPT — ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED; two settings backups among them were not opened",
+  "files": [
+    {
+      "area": "plan",
+      "path": "C:/Users/Bunny/.claude/plans/w19-docs-organization.md",
+      "class": "USED",
+      "decision": "KEEP",
+      "note": "the W19 plan (writing-plans), executed inline"
+    },
+    {
+      "area": "plan workspace",
+      "path": ".superpowers/sdd/w19-docs-organization/progress.md",
+      "class": "USED",
+      "decision": "KEEP",
+      "note": "the ledger: task completions and every Ruling (git-ignored)"
+    },
+    {
+      "area": "local instructions",
+      "path": "CLAUDE.md",
+      "class": "USED",
+      "decision": "KEEP (edited)",
+      "note": "git-ignored local file; six stale doc pointers fixed (R11), listed in HANDOFF.md; not committed"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-refgraph.json",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETE",
+      "note": "first reference graph of the survey; superseded by inventory/INVENTORY.json (referenced_by_*), which recomputes it"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-doc-history.json",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETE",
+      "note": "commit counts per doc used to tell one-shot reports from living docs; reproducible from git log"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-rewrite-dry.json, D:/tmp/w19-rewrite2-dry.json, D:/tmp/w19-noop.json",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETE",
+      "note": "dry runs of the path rewrite; the applied runs are inventory/REWRITE_LOG.json and REWRITE_LOG_MERGE.json"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-links-after-task2.json, D:/tmp/w19-old-path-task2.json",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETE",
+      "note": "first runs of the two checkers after the moves; the committed runs are in verification/"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-stage1.txt, D:/tmp/w19-stage2.txt, D:/tmp/w19-stage3.txt",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETE",
+      "note": "explicit staging lists of the three commits (the commits record the same paths); the final staging list was written to %TEMP%/w19-stage-final.txt and deleted in the same command with `rm -f` on its exact path — the only W19 deletion not done through PowerShell Remove-Item -LiteralPath"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-candidate-verify.log, D:/tmp/w19-cache-verify.log",
+      "class": "USED",
+      "decision": "DELETE after copy",
+      "note": "copied into verification/logs/"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-pytest-full.log, D:/tmp/w19-vitest-full.log",
+      "class": "USED",
+      "decision": "DELETE after copy",
+      "note": "main-tree full runs (pytest 7003 passed / 2 failed on the dirty tree, vitest 1058/1058); summaries and both failure tracebacks copied into verification/logs/"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-claude-md.diff",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETE",
+      "note": "diff of the local CLAUDE.md edit; the six replacements are listed in HANDOFF.md (the file itself is local and stays out of git)"
+    },
+    {
+      "area": "worktree",
+      "path": "D:/tmp/w19-verify",
+      "class": "USED",
+      "decision": "REMOVE after copy",
+      "note": "detached clean worktree of the final tree (temporary commit object, not on any branch) for the authoritative backend run; its log and post-run status copied into verification/logs/; removed from the main repository after the copy"
+    },
+    {
+      "area": "D:/tmp",
+      "path": "D:/tmp/w19-verify-ids.txt, D:/tmp/w19-verify-pytest.log, D:/tmp/w19-verify-status-after.txt",
+      "class": "USED",
+      "decision": "DELETE after copy",
+      "note": "tree/commit ids of the verification snapshot, the detached pytest output and the worktree status after it; copied into verification/logs/"
+    },
+    {
+      "area": "session scratchpad",
+      "path": "w19_refgraph.py, w19_doc_history.mjs",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETE",
+      "note": "survey scripts; their logic lives in diagnostics/inventory_docs.py"
+    },
+    {
+      "area": "session scratchpad",
+      "path": "w19_mv.sh",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETE",
+      "note": "the 62 git mv lines, generated from inventory/INVENTORY.json; the pairs are in inventory/MIGRATION_MAP.json"
+    },
+    {
+      "area": "session scratchpad",
+      "path": "w19_retarget.py",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETE",
+      "note": "the ten claim-authority replacements, recorded verbatim in inventory/AUTHORITY_RETARGET.json"
+    },
+    {
+      "area": "session scratchpad",
+      "path": "w19_roadmap0.md",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETE",
+      "note": "draft of ROADMAP §0, committed in docs/ROADMAP.md"
+    },
+    {
+      "area": "session scratchpad",
+      "path": "CLAUDE.md.before-w19",
+      "class": "USED",
+      "decision": "MOVED to .superpowers/sdd/w19-docs-organization/CLAUDE.md.before-w19, KEEP",
+      "note": "verbatim backup of the local CLAUDE.md before the six replacements listed in HANDOFF.md, kept in the git-ignored plan workspace so the user can revert exactly; the scratchpad copy deleted"
+    },
+    {
+      "area": "outside the repository",
+      "path": "D:/Documents/projects/docs/evaluation/geometry/holdout/COVERAGE_MATRIX.md",
+      "class": "VERIFIED_DUPLICATE",
+      "decision": "DELETED (2026-10-04, before commit 2)",
+      "note": "git blob f31a6c8c84ecfb7ca395d1e56e0d1c9b2d8154b7 = docs/evaluation/geometry/holdout/COVERAGE_MATRIX.md at f4b6e734 (an older committed version); restore with git show f4b6e734:<that path>; its emptied holdout/ folder removed too"
+    },
+    {
+      "area": "outside the repository",
+      "path": "D:/Documents/projects/docs/evaluation/geometry/HOLDOUT_ACQUISITION_LOG.md",
+      "class": "UNKNOWN",
+      "decision": "KEEP",
+      "note": "blob f53864b1d5be20381ffcf528eae5aa7bf7b56e5c matches no committed version of docs/evaluation/geometry/HOLDOUT_ACQUISITION_LOG.md (content differs throughout); unique, so kept with its parent folders"
+    }
+  ],
+  "not_inventoried_as_temp": [
+    "backend/**/__pycache__: interpreter caches in git-ignored folders (W19 runs set PYTHONDONTWRITEBYTECODE=1)",
+    "node_modules/, frontend/dist/: build state of the main tree",
+    ".claude/settings.local.json, .secrets, backend/.env: sensitive, existence recorded in inventory/INVENTORY.json, never read",
+    "the harness's background-task output files under the session temp folder: tool state",
+    "frontend/public/favicon.svg (deleted by the user before W17): preserved as an unstaged deletion, never touched"
+  ],
+  "final_state": "after cleanup (2026-10-04, before the documentation commit): no w19-* path under D:/tmp; the session scratchpad holds no W19 file; git worktree list = the main working tree only; kept: the plan, the ledger and the CLAUDE.md backup (plan workspace), the unique stray HOLDOUT_ACQUISITION_LOG.md outside the repository, and the 212 earlier-wave D:/tmp entries"
+}

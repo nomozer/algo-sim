@@ -1,0 +1,89 @@
+{
+ "schema_version": "w19-frozen-identity/1",
+ "base_commit": "6d0e6321b70f89bd04473da4a458f7d8753eff6d",
+ "compared_against": "git index (tree to commit)",
+ "F1_docs_evaluation_files": 8439,
+ "F2_frozen_docs_kept_in_place": 192,
+ "F1_F2_digest_base": "03447263502a1c18d70efdd91ef238c098eeeec437d4faefc915324cd98e7c24",
+ "F1_F2_digest_now": "03447263502a1c18d70efdd91ef238c098eeeec437d4faefc915324cd98e7c24",
+ "F1_F2_mismatches": [],
+ "F3_moved_identical": 55,
+ "F3_moved_with_recorded_link_changes": [
+  {
+   "new": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_CITATION_MATRIX.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_DEMO.md",
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_DRAFT.md",
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_REFERENCES.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/THESIS_REFERENCE_NEEDS.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/GEOMETRY_CURRICULUM_COVERAGE.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/RELATED_WORK_DRAFT.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  },
+  {
+   "new": "docs/research/thesis/figures/FIGURE_MANIFEST.md",
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
+  }
+ ],
+ "F3_problems": [],
+ "F4_frozen_historical_hashes": {
+  "checked": 18,
+  "verdict": "PASS"
+ },
+ "new_files_under_docs_evaluation": [
+  "docs/evaluation/HISTORICAL_REPORTS.md",
+  "docs/evaluation/README.md"
+ ],
+ "verdict": "PASS"
+}

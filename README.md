@@ -244,7 +244,12 @@ sau đó đọc [trạng thái hiện tại](docs/CURRENT_STATE.md),
 [chỉ mục mã nguồn](docs/CODE_INDEX.md). Quy tắc cứng nằm tại
 [`docs/RULES.md`](docs/RULES.md); kiến trúc tại
 [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md); báo cáo và chuỗi đính
-chính tại [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md). Nhánh phát triển
-hiện tại **chưa được người duyệt trực quan và chưa sẵn sàng merge**; bằng chứng
-mới nhất ở [run w18](docs/evaluation/geometry/runs/w18-binding-focus/) — trạng
-thái chính xác luôn ở `docs/CURRENT_STATE.md`, không ở README này.
+chính tại [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md). Tài liệu khoá
+luận và bài báo, cùng bảng tuyên bố ↔ bằng chứng, ở
+[`docs/research/`](docs/research/README.md); bằng chứng thực thi ở
+[`docs/evaluation/`](docs/evaluation/README.md); tài liệu hết hiệu lực ở
+[`docs/legacy/`](docs/legacy/README.md). Nhánh phát triển hiện tại **chưa được
+người duyệt trực quan và chưa sẵn sàng merge**; bằng chứng sản phẩm mới nhất ở
+[run w18](docs/evaluation/geometry/runs/w18-binding-focus/), tổ chức tài liệu ở
+[run w19](docs/evaluation/geometry/runs/w19-docs-organization/) — trạng thái
+chính xác luôn ở `docs/CURRENT_STATE.md`, không ở README này.

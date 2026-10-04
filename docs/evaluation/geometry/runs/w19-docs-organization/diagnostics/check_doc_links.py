@@ -126,7 +126,8 @@ def main() -> int:
                     hong.append({"class": cl, "file": p, "line": no, "kind": "MISSING_TARGET", "target": t})
                 elif neo and dich.is_file() and dich.suffix == ".md" and neo.lower() not in anchors(dich, cache):
                     hong.append({"class": cl, "file": p, "line": no, "kind": "MISSING_ANCHOR", "target": t})
-            if cl == "LIVING":
+            # bản ghi W19 cố ý nêu đường CŨ trong backtick (chúng mô tả cuộc di chuyển); link của chúng vẫn kiểm
+            if cl == "LIVING" and not p.startswith(RUN):
                 for m in TICK.finditer(line):
                     t = m.group(1).rstrip(".,;:)").split("#")[0].split("§")[0].strip()
                     if t and not (ROOT / t).exists():

@@ -1,0 +1,6 @@
+# W19 — documentation tests on the final tree (backend docs IA/telemetry/identity/curriculum + frontend tests that read docs)
+# command: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider tests/geometry/test_docs_information_architecture.py tests/geometry/test_docs_test_telemetry.py tests/test_current_state_identity.py tests/geometry/test_curriculum_coverage.py
+85 passed in 5.62s
+# command: cd frontend && npx vitest run src/code-index-sync.test.ts src/rules-hygiene.test.ts src/test-tiers.test.ts src/certification-sweep.test.ts src/simulations/visual-audit-completeness.test.ts src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx
+ Test Files  6 passed (6)
+      Tests  52 passed (52)

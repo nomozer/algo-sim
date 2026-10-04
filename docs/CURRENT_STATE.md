@@ -26,7 +26,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03) và w18 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **110** (W18, 2026-10-04: served → rejected — phép dựng điểm (trung điểm, hình chiếu) phải gắn với quan hệ của đề bằng danh tính — `PROOF_CACHE_ROW_W18.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -39,7 +39,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > |---|---|---|
 > | Agent rules | **`docs/RULES.md`** | Quy tắc cứng, scope guard; entry point tại `AGENTS.md` |
 > | Architecture map | **`docs/ARCHITECTURE_MAP.md`** | Kiến trúc, luồng xử lý, pipeline tất định |
-> | Current state | **`docs/CURRENT_STATE.md`** (file này) | Cơ sở mã, trạng thái kiến trúc, mốc đã chứng minh |
+> | Current state | **`docs/CURRENT_STATE.md`** (file này) | Trạng thái + con trỏ; nhật ký cũ ở `docs/legacy/CURRENT_STATE_HISTORY.md` |
 > | Status ledger | **`docs/STATUS_LEDGER.md`** | Lịch sử theo thời gian các wave |
 > | Code index | **`docs/CODE_INDEX.md`** | Vị trí code, tooling, test |
 > | Roadmap | **`docs/ROADMAP.md`** | Lộ trình ưu tiên khóa luận P0–P6 |
@@ -52,17 +52,28 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 4a9db1ff (measurement commit 0ca3accf)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 4a9db1ff (measurement commit 0ca3accf) — W19 không đổi sản phẩm
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 110
-> CANDIDATE = d3b4cab9… (was d63d6fd4…; one freeze), product commit 7a06ee47
+> CANDIDATE = d3b4cab9… (was d63d6fd4…; one freeze), product commit 7a06ee47 — W19 không đóng băng lại
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE (người duyệt bằng mắt hình mặc định gọn, công tắc "Hiện tất cả", chọn từng đại lượng với ô soi, lời giải thu gọn, nhân chứng khoảng cách và ô từ chối W18, kèm phần còn lại của W17-H1/W16-H1 — W18-H1; W18-H2 dòng giá trị của đáp số không công thức; W18-H3 manh mối "độ dài" của cổng phạm vi; W17-H2, W15-H2, W15-H3 — `HANDOFF.md` của run w18)
+> CURRENT_WAVE = W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION (w19, chỉ tài liệu; commit a5c2e6f2 · a44631a9 · commit tài liệu này)
+> FINAL_DECISION = DOCS_REORGANIZED_AND_VERIFIED (w19) · sản phẩm: READY_FOR_HUMAN_VISUAL_REVIEW (w18), HUMAN_VISUAL_REVIEW = NOT_APPROVED
+> CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (người dùng chọn họ từ `ROADMAP.md` §0.2; chỉnh sửa giao diện §0.1; chặn merge: review người W18 + `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`)
 > ```
+
+> **Tổ chức lại tài liệu và bằng chứng nghiên cứu — w19 (chỉ tài liệu; 0 thay đổi sản phẩm; 0 lượt gọi model):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`DOCS_REORGANIZED_AND_VERIFIED`** — trạng thái sản phẩm vẫn là của w18 (bảng dưới; người duyệt `NOT_APPROVED`) |
+> | Cấu trúc | gốc `docs/` = 11 tài liệu chuẩn tắc + 7 tài liệu dự án + báo cáo wave cũ (catalog đóng, 180); `research/` (bản đồ tuyên bố, khoá luận, bài báo); `evaluation/` (run); `legacy/` (hết hiệu lực) — [`README.md`](README.md) |
+> | Di chuyển | 65 file bằng `git mv` (33 sang `research/`, 32 sang `legacy/`); nhật ký phát triển của file này sang [`legacy/CURRENT_STATE_HISTORY.md`](legacy/CURRENT_STATE_HISTORY.md) nguyên văn; cũ → mới: `inventory/MIGRATION_MAP.json` của run |
+> | Một nơi có thẩm quyền | tuyên bố ↔ bằng chứng ↔ giới hạn: [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md) thay ba bảng cũ; báo cáo wave mới chỉ trong thư mục run (`audit_docs_layout`) |
+> | Bất biến | báo cáo wave cũ và `docs/evaluation/**` cũ trùng blob với `6d0e6321`; candidate và cache 110 verify; `LLM_ONLY`; 0 lượt gọi live; không push/merge |
+> | Run | [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/) |
 
 > **Phép dựng điểm gắn với quan hệ của đề + nhãn tập trung — w18 (measurement `0ca3accf`, detached clean worktree; chưa có review người):**
 >

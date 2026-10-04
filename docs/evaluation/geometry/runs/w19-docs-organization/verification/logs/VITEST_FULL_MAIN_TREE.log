@@ -1,0 +1,6 @@
+# W19 — full vitest in the MAIN tree (same tree as above); frontend sources unchanged by W19
+# command: cd frontend && npx vitest run
+ Test Files  68 passed (68)
+      Tests  1058 passed (1058)
+   Duration  4.49s (transform 6.71s, setup 1.93s, import 14.02s, tests 7.19s, environment 11ms)
+VITEST_EXIT=0

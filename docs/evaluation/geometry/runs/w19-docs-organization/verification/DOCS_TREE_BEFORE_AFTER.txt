@@ -1,0 +1,66 @@
+# docs/ tree BEFORE (6d0e6321) and AFTER (W19 index) — files per folder; docs/evaluation shown one level deep
+
+== BEFORE
+   208  docs/
+     9  docs/architecture/
+     2  docs/evaluation/
+   242  docs/evaluation/curriculum-ui-admission/
+    55  docs/evaluation/frontier-fix/
+  5892  docs/evaluation/geometry/
+     8  docs/evaluation/integration/
+    10  docs/evaluation/m16/
+  1564  docs/evaluation/m17/
+     8  docs/evaluation/m18/
+     3  docs/evaluation/m19/
+    51  docs/evaluation/m20/
+    28  docs/evaluation/mechanism-fix/
+     2  docs/evaluation/prompt-freeze/
+    54  docs/evaluation/semantic-benchmark/
+    10  docs/evaluation/semantic-l5a/
+    29  docs/evaluation/semantic-vnext/
+    74  docs/evaluation/simulation-mechanism-audit/
+     2  docs/evaluation/tier2-live-pilot/
+   229  docs/evaluation/ui-baseline/
+   176  docs/evaluation/viewmode-design-audit/
+     9  docs/geometry/
+     1  docs/legacy/
+    13  docs/research/
+     1  docs/schemas/
+     7  docs/superpowers/plans/
+    11  docs/superpowers/specs/
+     5  docs/thesis/
+    19  docs/thesis_figures/
+
+== AFTER
+   198  docs/
+     8  docs/architecture/
+     4  docs/evaluation/
+   242  docs/evaluation/curriculum-ui-admission/
+    55  docs/evaluation/frontier-fix/
+  5911  docs/evaluation/geometry/
+     8  docs/evaluation/integration/
+    10  docs/evaluation/m16/
+  1564  docs/evaluation/m17/
+     8  docs/evaluation/m18/
+     3  docs/evaluation/m19/
+    51  docs/evaluation/m20/
+    28  docs/evaluation/mechanism-fix/
+     2  docs/evaluation/prompt-freeze/
+    54  docs/evaluation/semantic-benchmark/
+    10  docs/evaluation/semantic-l5a/
+    29  docs/evaluation/semantic-vnext/
+    74  docs/evaluation/simulation-mechanism-audit/
+     2  docs/evaluation/tier2-live-pilot/
+   229  docs/evaluation/ui-baseline/
+   176  docs/evaluation/viewmode-design-audit/
+     4  docs/legacy/
+     2  docs/legacy/architecture/
+     8  docs/legacy/geometry/
+     3  docs/legacy/research/
+     7  docs/legacy/superpowers/plans/
+    11  docs/legacy/superpowers/specs/
+    14  docs/research/
+     1  docs/research/paper/
+    12  docs/research/thesis/
+    19  docs/research/thesis/figures/
+     1  docs/schemas/

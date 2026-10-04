@@ -291,7 +291,7 @@
 
 ### ISSUE-EVAL-P03-P05-TOKEN-UNKNOWN
 - **description:** Lượng token sử dụng của hai request P03 và P05 trong đợt live retry trước đây được ghi nhận là 0 do giới hạn của client HTTP, sau đó được đính chính thành UNKNOWN.
-- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/MACHINE_RAW_OUTPUT.json`.
+- **evidence:** `MACHINE_RAW_OUTPUT.json` of `docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/` — the file was never committed (raw model output stays out of git), so the pointer is `NOT_RECOVERABLE` in the repository; the committed run keeps only `*_REDACTED.json` files (W19 link check).
 - **impact:** Số liệu token của wave đó không được đưa vào bảng phân tích so sánh định lượng của luận văn.
 - **scope:** `docs/evaluation/`
 - **status:** OPEN
@@ -560,3 +560,51 @@
 - **default_switch_blocker:** NO
 - **acceptance:** B18 served and B19 refused at `construction_binding` through the product boundary; no served gold row changes.
 - **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/reproduce_construction_binding.py` (writes `CONSTRUCTION_BINDING_REPRODUCTION_<sha>.json`; refuses to overwrite)
+
+### ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET
+- **description:** A text relation of the W18 vocabulary (midpoint, projection; amendment §16.1) whose target point the program declares as a literal — coordinates, not a construction operation — is neither matched by `construction_binding` nor recorded `NOT_REALIZED`. The binding only sees construction operations. Safety then rests on backstops: the `segment_division` coordinate invariant for midpoints and the W15 assumption certificate for projections, the latter only inside the polyhedral scope (U3).
+- **evidence:** W18 final self-review, deferred minor (`docs/evaluation/geometry/runs/w18-binding-focus/HANDOFF.md` § Known leftovers; `REPORT.md` limitations). No probe through the production boundary exists yet, so whether the backstops block the wrong identity in every case is unmeasured.
+- **impact:** unknown until probed. A literal target with the right coordinates but the wrong identity, or a projection outside U3, may be served without the identity check W18 promises for constructed points.
+- **scope:** `backend/app/simulation/semantic_program/construction_binding.py` (record `NOT_REALIZED` or check the literal's value against the relation), probes and corpus rows.
+- **status:** OPEN (registered w19) — **blocks merge** of `fix/cuboid-visual-semantic-closure`; not treated as a minor (W19 brief).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** pre-merge correctness probe
+- **default_switch_blocker:** NO
+- **acceptance:** a probe through the production boundary (the route, not the census helper) with literal-declared targets for a midpoint and a projection, inside and outside U3, labelled before the run; evidence that each wrong identity is refused with a named code by a backstop, or a fix that makes the binding refuse or record it; no served gold row changes.
+- **verify:** the probe script of the closing wave (writes a new artifact, refuses to overwrite) + `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding.py -q`
+
+### ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
+- **description:** 180 historical wave reports stay physically at the `docs/` root, next to the 11 canonical and 7 project documents. W19 kept their paths because they are frozen evidence (`AGENTS.md` §4; W19 brief: frozen evidence keeps content and path) and 190 of 208 root documents are named by frozen artifacts.
+- **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md` (closed catalog); `docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json`.
+- **impact:** navigation only. The catalog groups them by theme and `audit_docs_layout` stops the list from growing; a reader browsing the folder still sees about 200 files.
+- **scope:** relocation (for example into a reports folder under docs/evaluation) needs the user to amend `AGENTS.md` §4; the move is mechanical from the catalog, frozen artifacts' old paths resolve through a migration map as in W19.
+- **status:** OPEN (w19) — user decision.
+- **owner_class:** DOCUMENTATION
+- **suggested_wave:** only after the user amends `AGENTS.md` §4
+- **default_switch_blocker:** NO
+- **acceptance:** every catalogued report moved byte-identical; migration map; 0 broken links in living documents; frozen artifacts unchanged.
+- **verify:** `cd backend && .venv/Scripts/python.exe scripts/audit_docs_information_architecture.py`
+
+### ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED
+- **description:** `D:/tmp` holds 212 entries left by waves before W19: 210 scripts, logs, output folders and stale worktree copies (one folder contains a `.git`), and two settings backups that were not opened. W19 inventoried them but deleted none, because "unknown" outputs must be kept until verified.
+- **evidence:** `docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json` (`temp`, class `UNKNOWN_EARLIER_WAVE`).
+- **impact:** disk use and confusion with live worktrees; possible unsaved diagnostics inside.
+- **scope:** a verification pass (each entry: duplicate of a committed file, reproducible output, or unique) or the user's decision to discard.
+- **status:** OPEN (w19)
+- **owner_class:** OPERATIONS
+- **suggested_wave:** housekeeping, any time
+- **default_switch_blocker:** NO
+- **acceptance:** every entry classified with evidence; deletion only by exact path of verified duplicates or reproducible outputs.
+- **verify:** re-run `inventory_docs.py` of the W19 run.
+
+### ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE
+- **description:** Running the full backend suite in the main working tree rewrites committed evidence. `backend/tests/geometry/test_second_family_live_measurement_reconciliation.py` calls `run_reconciliation()` of `backend/scripts/reconcile_second_family_live_measurement.py` (lines 65 and 165), which writes four files into the frozen run folder `docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/`. Three come back byte-identical; `SOURCE_EVIDENCE_INTEGRITY.json` changes its `note` when the scratch raw-response file is absent. A later test that reads `git status` (`test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean`) then sees a tree dirtier than the user's favicon deletion.
+- **evidence:** W19 main-tree run (`docs/evaluation/geometry/runs/w19-docs-organization/verification/logs/PYTEST_FULL_MAIN_TREE_DIRTY.log`); file mtime inside the run window; W19 restored the file to its committed blob `4d9fad55` before staging and did not commit the mutation.
+- **impact:** a full run outside a detached worktree mutates frozen evidence that can then be committed by accident, and one test becomes dependent on tree state and test order. Detached clean worktrees (the repository's rule for authoritative runs) are not affected in practice: the change is discarded with the worktree.
+- **scope:** `backend/scripts/reconcile_second_family_live_measurement.py` (write to a caller-given directory) and its test (use `tmp_path`, compare instead of writing); no product code, no candidate change.
+- **status:** OPEN (w19) — found by the W19 verification, not fixed (documentation wave).
+- **owner_class:** TEST
+- **suggested_wave:** the next wave that touches backend tests
+- **default_switch_blocker:** NO
+- **acceptance:** a full backend run in the main tree leaves `git status --porcelain -- docs/evaluation` empty, and `test_10_…` passes in the main tree with only the user's favicon deletion.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest -q && git status --porcelain -- ../docs/evaluation`

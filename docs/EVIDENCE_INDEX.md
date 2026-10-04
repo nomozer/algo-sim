@@ -885,3 +885,23 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_d3b4cab9 — not visual acceptance (human review NOT_APPROVED). Inside the registered vocabulary (§16), a point the text defines as a midpoint or projection is built on the entities the text names, checked by identity; a mismatch is refused in every scope and named to the learner; numbers on the figure carry backend roles and one explanation place. The census is a corpus result, never a general proof; centres, intersections and unread phrasings are not checked.
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `images/<family>/FILMSTRIP.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_bb9f7004.json` · `diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_84ce7b70.json` · `diagnostics/CONSTRUCTION_BINDING_CENSUS_W18.json` · `diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json` · `diagnostics/PROOF_CACHE_ROW_W18.json` · `diagnostics/logs/FAULT_INJECTION_W18_R3.log` · `diagnostics/logs/FAULT_INJECTION_W18_FRONTEND_R2.log` · `diagnostics/PONYTAIL_REVIEW_W18.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION
+- **DATE:** 2026-10-04
+- **REPORT:** docs/evaluation/geometry/runs/w19-docs-organization/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w19-docs-organization/
+- **START_BASE:** 6d0e6321
+- **CODE_COMMIT:** NONE for the product. Docs tooling only: `backend/scripts/audit_docs_information_architecture.py` (`audit_docs_layout`, `PROJECT_DOCS`, `NAVIGATION_DOCS`, allowed next actions) and `backend/tests/geometry/test_docs_information_architecture.py` (four tests), one doc path in `backend/tests/geometry/test_curriculum_coverage.py`
+- **MEASUREMENT_COMMIT:** NONE (no product measurement; verification of the final tree in a detached clean worktree, see `HANDOFF.md`)
+- **EVIDENCE_COMMIT_ROLE:** a5c2e6f2 (structure + migration, inventory, migration map) · a44631a9 (claim map, hubs, closed docs root, catalog) · the documentation commit (state, report, handoff, verification)
+- **CLASSIFICATION:** DOCS_REORGANIZED_AND_VERIFIED
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (d3b4cab96c69a09f…, `--verify` exit 0)
+- **CACHE_CHANGE:** NO (110, `lock_cache_identity.py --verify` exit 0)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (no report or artifact is corrected)
+- **SUPERSEDES:** as claim authority only — `THESIS_READINESS.md`, `thesis/CLAIM_EVIDENCE_MATRIX.md`, `research/CLAIM_TO_EVIDENCE_MAP.md` (archived byte-identical in `docs/legacy/research/`) by `docs/research/CLAIM_EVIDENCE_MAP.md`
+- **THESIS_USE:** NAVIGATION_AND_CLAIM_AUTHORITY — no new measurement; the claim map quotes existing evidence only and lists 0 rows at HUMAN_REVIEWED
+- **AUTHORITATIVE_FILES:** `README.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MANIFEST.json` · `inventory/INVENTORY.json` · `inventory/MIGRATION_MAP.json` · `verification/FROZEN_IDENTITY.json` · `verification/LINKS_FINAL.json` · `verification/OLD_PATH_CONSUMERS_FINAL.json` · `verification/logs/`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

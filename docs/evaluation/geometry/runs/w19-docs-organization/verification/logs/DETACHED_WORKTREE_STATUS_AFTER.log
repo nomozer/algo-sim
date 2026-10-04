@@ -1,0 +1,6 @@
+# W19 — git status of the detached worktree AFTER the full pytest run (before its removal)
+# the run itself rewrote one committed artifact again (ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE); the worktree was discarded, nothing committed from it
+ M docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/SOURCE_EVIDENCE_INTEGRITY.json
+ .../SOURCE_EVIDENCE_INTEGRITY.json                                      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+# end

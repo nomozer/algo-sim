@@ -1,0 +1,262 @@
+{
+ "schema_version": "w19-old-path-consumers/1",
+ "head": "a44631a998e85029a9a5f5d75821f5a7e8248fa8",
+ "old_paths_checked": 65,
+ "vanished_directories_checked": [
+  "docs/superpowers/plans/",
+  "docs/superpowers/specs/",
+  "docs/thesis_figures/",
+  "docs/geometry/",
+  "docs/thesis/"
+ ],
+ "hits_by_class": {
+  "FROZEN_EVIDENCE": 30,
+  "W19_RECORD": 383,
+  "ARCHIVED": 39
+ },
+ "must_be_zero": {},
+ "verdict": "PASS",
+ "hits_requiring_action": [],
+ "allowed_hits_sample": [
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/POST_WAVE_LIVING_DOC_IMPACT_AUDIT.md",
+   "line": 31,
+   "old_path": "docs/THESIS_READINESS.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE.md",
+   "line": 106,
+   "old_path": "docs/superpowers/specs/"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW.md",
+   "line": 63,
+   "old_path": "docs/superpowers/specs/"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/PRODUCT_UI_RESULT_RENDERING_AND_DEMO_ACCEPTANCE.md",
+   "line": 243,
+   "old_path": "docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md",
+   "line": 23,
+   "old_path": "docs/research/CLAIM_TO_EVIDENCE_MAP.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md",
+   "line": 24,
+   "old_path": "docs/research/PUBLICATION_READINESS_ASSESSMENT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md",
+   "line": 25,
+   "old_path": "docs/thesis/RELATED_WORK_DRAFT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md",
+   "line": 26,
+   "old_path": "docs/thesis/references_geometry_systems.bib"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION.md",
+   "line": 259,
+   "old_path": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 6,
+   "old_path": "docs/THESIS_DRAFT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 32,
+   "old_path": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 39,
+   "old_path": "docs/THESIS_DRAFT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 113,
+   "old_path": "docs/thesis/"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 262,
+   "old_path": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md",
+   "line": 264,
+   "old_path": "docs/THESIS_DRAFT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md",
+   "line": 69,
+   "old_path": "docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md",
+   "line": 70,
+   "old_path": "docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md",
+   "line": 186,
+   "old_path": "docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md",
+   "line": 187,
+   "old_path": "docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md",
+   "line": 193,
+   "old_path": "docs/thesis/"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/SPATIAL_DISTANCE_EXTENSION.md",
+   "line": 64,
+   "old_path": "docs/geometry/CAPABILITY_GAP_AUDIT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json",
+   "line": 27,
+   "old_path": "docs/THESIS_ARCHITECTURE.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json",
+   "line": 96,
+   "old_path": "docs/geometry/GEOMETRY_ROADMAP.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json",
+   "line": 127,
+   "old_path": "docs/geometry/MIGRATION_PLAN.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/photo-problem-to-scene/prism-merge-readiness-evidence-identity-reconciliation/SOURCE_PATH_AUDIT.json",
+   "line": 48,
+   "old_path": "docs/superpowers/specs/"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/research-gap-formalization/CLAIM_AUDIT.json",
+   "line": 25,
+   "old_path": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/research-gap-formalization/CLAIM_AUDIT.json",
+   "line": 51,
+   "old_path": "docs/thesis/RELATED_WORK_DRAFT.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/research-gap-formalization/SOURCE_METADATA.json",
+   "line": 8,
+   "old_path": "docs/THESIS_REFERENCES.md"
+  },
+  {
+   "class": "FROZEN_EVIDENCE",
+   "file": "docs/evaluation/geometry/runs/w13-geometry-preregistration/results/ABSOLUTE_ASSUMPTION_INVENTORY.json",
+   "line": 829,
+   "old_path": "docs/THESIS_ARCHITECTURE.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/HANDOFF.md",
+   "line": 72,
+   "old_path": "docs/geometry/"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/HANDOFF.md",
+   "line": 103,
+   "old_path": "docs/THESIS_READINESS.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/HANDOFF.md",
+   "line": 105,
+   "old_path": "docs/THESIS_ARCHITECTURE.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/HANDOFF.md",
+   "line": 111,
+   "old_path": "docs/thesis/"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/HANDOFF.md",
+   "line": 113,
+   "old_path": "docs/THESIS_REFERENCES.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 47,
+   "old_path": "docs/thesis/"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 48,
+   "old_path": "docs/research/PUBLICATION_READINESS_ASSESSMENT.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 50,
+   "old_path": "docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 56,
+   "old_path": "docs/geometry/"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 64,
+   "old_path": "docs/REPOSITORY_MAP.md"
+  },
+  {
+   "class": "W19_RECORD",
+   "file": "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+   "line": 67,
+   "old_path": "docs/THESIS_READINESS.md"
+  }
+ ]
+}

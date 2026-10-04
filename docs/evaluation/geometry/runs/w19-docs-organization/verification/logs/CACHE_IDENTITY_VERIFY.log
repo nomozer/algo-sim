@@ -1,0 +1,4 @@
+# W19 — cache identity lock, main tree, HEAD a44631a9 + uncommitted W19 docs
+# command: PYTHONUTF8=1 backend/.venv/Scripts/python.exe backend/scripts/lock_cache_identity.py --verify
+Khoá khớp · CACHE_VERSION 110 · môi trường b1714b566e25c912…
+# exit 0

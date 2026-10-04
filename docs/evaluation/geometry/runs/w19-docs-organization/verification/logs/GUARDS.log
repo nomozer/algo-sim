@@ -1,0 +1,7 @@
+# W19 — named guards on the final tree (main working tree; W19 documentation staged, not yet committed)
+# DEFAULT_MODE: test_structured_geometry_relations.py::test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler (asserts CHE_DO_MAC_DINH == LLM_ONLY)
+# CACHE_VERSION / candidate: test_api.py cache tests, test_evaluation_candidate.py::test_cache_version_khop_nguon, test_current_state_identity.py, test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+# command: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider <the node ids below>
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+8 passed, 1 warning in 3.38s

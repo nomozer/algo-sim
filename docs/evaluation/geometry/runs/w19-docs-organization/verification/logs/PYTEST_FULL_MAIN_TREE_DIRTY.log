@@ -1,0 +1,53 @@
+# W19 — full backend pytest in the MAIN tree (HEAD a44631a9 + uncommitted W19 Task 4 docs, so git status shows more than the user's favicon deletion)
+# command: cd backend && PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider
+# progress-dot lines removed; failures, warnings and the summary kept verbatim
+................................................F....................... [ 24%]
+.........................F.............................................. [ 52%]
+.......................s................................................ [ 83%]
+================================== FAILURES ===================================
+_____________________ test_bao_cao_da_sinh_va_KHONG_TROI ______________________
+
+RP = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>
+
+    def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
+        """Báo cáo mang băm và số đếm. Viết tay thì nó đúng đúng một lần."""
+        f = GEO / "PHASE7B_READINESS_REPORT.md"
+        assert f.exists(), "chưa sinh PHASE7B_READINESS_REPORT.md"
+        src = f.read_text(encoding="utf-8")
+        d = RP.thu_thap()
+        assert d["pool_hash"] in src, "báo cáo trôi khỏi pool — chạy lại script"
+        assert f"accepted`: {d['accepted']}/40" in src
+>       assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
+E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\n\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
+E        +  where True = bool(['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'])
+E        +    where ['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'] = <function blockers at 0x000001D4479C2A20>({'luc': '2026-10-04T14:09:44+00:00', 'git_sha': 'a44631a998e85029a9a5f5d75821f5a7e8248fa8', 'cay_sach': False, 'cache_version': '110', ...})
+E        +      where <function blockers at 0x000001D4479C2A20> = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>.blockers
+
+tests\geometry\test_holdout_readiness_7b.py:832: AssertionError
+__________ test_10_working_tree_co_favicon_deletion_khong_ghi_clean ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001D4496433B0>
+
+    def test_10_working_tree_co_favicon_deletion_khong_ghi_clean(monkeypatch):
+        """10. Working tree có favicon bị xóa phải ghi DIRTY_ONLY_USER_FAVICON, không được ghi CLEAN."""
+        status = AUDIT.run_git(["status", "--short"])[1]
+        if "D frontend/public/favicon.svg" in status:
+            commit_role = AUDIT.audit_commit_roles_and_worktree()
+>           assert commit_role["source_working_tree"] == "DIRTY_ONLY_USER_FAVICON"
+E           AssertionError: assert 'DIRTY_OTHER' == 'DIRTY_ONLY_USER_FAVICON'
+E
+E             - DIRTY_ONLY_USER_FAVICON
+E             + DIRTY_OTHER
+
+tests\geometry\test_second_family_preregistration_evidence_repair.py:156: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+FAILED tests/geometry/test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean
+2 failed, 7003 passed, 1 skipped, 2 deselected, 1 warning in 243.53s (0:04:03)
+PYTEST_EXIT=1

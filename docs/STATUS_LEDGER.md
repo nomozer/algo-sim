@@ -1580,3 +1580,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (constructions other than section cuts were not checked against the text: midpoints and projections now are)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION
+- **DATE:** 2026-10-04
+- **START_BASE:** 6d0e6321
+- **CODE_COMMIT_OR_NONE:** NONE (product). Docs tooling: `audit_docs_layout` + `NAVIGATION_DOCS` in `backend/scripts/audit_docs_information_architecture.py`; tests inv_23, inv_24, fi_17, fi_18; one doc path in `test_curriculum_coverage.py`
+- **COMMITS:** a5c2e6f2 (structure + migration) · a44631a9 (claim map, hubs, closed docs root) · documentation commit (state, report, handoff)
+- **CANDIDATE:** d3b4cab96c69a09f… unchanged (`--verify` exit 0) · CACHE_VERSION 110 unchanged (lock `--verify` exit 0) · model surface unchanged
+- **EVIDENCE_COMMIT_ROLE:** a5c2e6f2 · a44631a9 · documentation commit
+- **CLASSIFICATION:** DOCS_REORGANIZED_AND_VERIFIED
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w19-docs-organization/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w19-docs-organization/
+- **PASS:** 65 files moved by `git mv` (33 to `docs/research/`, 32 to `docs/legacy/`; 55 byte-identical, 10 with recorded link/pointer changes) and the CURRENT_STATE development log (5 388 lines) moved verbatim; one claim-evidence map (26 rows); docs root closed (198 = 11 canonical + 7 project + 180 catalogued); frozen evidence identical to 6d0e6321 (8 439 `docs/evaluation` files + 192 frozen docs, digest 03447263…); living-doc links: 0 broken introduced, 1 pre-existing (annotated); old-path consumers 0 in living docs, code, tests, tools
+- **CLOSED:** —
+- **OPENED:** ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET (blocks merge) · ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT · ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED · ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE
+- **OPEN (blocking merge of the branch):** W18 human visual review (NOT_APPROVED); ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET
+- **FULL_PRODUCT_SUITE:** T3 not run (docs-only wave; product code unchanged, candidate verify). Backend pytest full in a detached clean worktree of the final tree: 7005 passed / 0 failed (1 skipped, 2 deselected) on tree 6b926494 (temporary commit object 3de7bda0, not on any branch; verification records added afterwards); main tree with uncommitted W19 docs: 7003 passed / 2 failed (both read `git status` and require that only the user's favicon is dirty); vitest full 1058/1058
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+- **FINAL_DECISION:** DOCS_REORGANIZED_AND_VERIFIED

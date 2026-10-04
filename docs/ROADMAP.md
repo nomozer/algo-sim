@@ -9,46 +9,75 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
+CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-- **Vì sao:** W18 (run [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/)) kết
-  thúc `READY_FOR_HUMAN_VISUAL_REVIEW` trên candidate cuối `d3b4cab9`.
-  - Điểm đề gọi là trung điểm hay hình chiếu được dựng đúng trên thực thể đề nêu, xét theo
-    danh tính; lệch thì bị từ chối ở mọi vùng, nêu cả hai quan hệ.
-  - Hình mặc định gọn (tên điểm, dữ kiện); chọn một đại lượng thì hiện nó và chuỗi số; một
-    công tắc "Hiện tất cả".
-  - Ô soi là nơi giải thích duy nhất; lời giải thu gọn mặc định; khoảng cách điểm → đường/mặt
-    có nhân chứng (chân chính xác do kernel tính).
+- **Vì sao:** W19 (run [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/)) khép việc tổ
+  chức tài liệu. Theo brief W19, việc kế tiếp là **một lát cắt hình học mới cùng các chỉnh sửa giao diện đã chốt**
+  (§0.1), không phải thêm wave tài liệu nhỏ lẻ.
+- **Điều kiện bắt đầu:** người dùng chọn họ hình từ bảng ứng viên §0.2 (W19 không chọn theo tên). Wave mở bằng tiền
+  đăng ký: họ, các tầng phải đóng, corpus gắn nhãn trước, cổng trình duyệt desktop/mobile, hồi quy §0.3.
+- **Chặn merge nhánh `fix/cuboid-visual-semantic-closure`** (không chặn phát triển):
+  1. review người của W18 = `NOT_APPROVED` — duyệt bằng mắt theo `HANDOFF.md` của run w18 (W18-H1), gồm phần còn lại
+     của W17-H1/W16-H1 (bốn cảnh W14 đổi, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`);
+  2. `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET` — probe ở biên sản phẩm cho quan hệ có đích khai bằng literal.
+- **Quyết định còn chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị của đáp số không công thức — trùng mục 2 của
+  §0.1); W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`); W15-H2 (vùng chặn ngoài đa diện); W15-H3 (từ vựng —
+  `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); W18-H3 (manh mối "độ dài" của cổng phạm vi,
+  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`).
+- **Ràng buộc:** giữ `DEFAULT_MODE = LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION`
+  quyết bằng bằng chứng; automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ vọng người; không
+  push/merge.
 
-  Lượt tiêm lỗi frontend đầu tiên tìm ra ba điểm mù của bộ đo trình duyệt. Bộ đo đã được
-  sửa, rồi mọi phép đo được đo lại trên cùng candidate. Việc còn lại thuộc về NGƯỜI.
-- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w18 và duyệt bằng mắt (W18-H1):
-  - hình mặc định gọn, công tắc "Hiện tất cả", chọn từng loại đại lượng cùng ô soi;
-  - lời giải thu gọn/mở; nhân chứng khoảng cách; các ô từ chối W18;
-  - phần còn lại của W17-H1 và W16-H1: bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`
-    (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
+### 0.1 Chỉnh sửa giao diện đã chốt (đăng ký sau W18; W19 không sửa giao diện)
 
-  Sau đó quyết định:
-  - W18-H2: ô soi có nên bỏ dòng giá trị của đáp số không có công thức (lặp dòng Kết quả)?
-  - W17-H2: mặt phẳng "qua M và song song với (X)" —
-    `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`;
-  - W15-H2: mở rộng vùng chặn ngoài đa diện;
-  - W15-H3: mở rộng từ vựng — câu cắt và phép dựng điểm ngoài trung điểm/hình chiếu
-    (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); manh mối "độ dài" của cổng phạm vi
-    (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) là chính sách định tuyến, cần quyết định riêng.
-- **Lộ trình sau W18 (ngoài phạm vi W18, theo brief):** họ hình mới và khối tròn xoay (P2),
-  nhiều khối trong một đề (P2), OCR ảnh đề bài (P4) — mỗi việc mở bằng một quyết định của
-  người dùng và một wave riêng.
-- **Điều kiện dừng:** automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ
-  vọng người; không đổi bề mặt mô hình; không push/merge.
-- **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;
-  `CACHE_VERSION` quyết định bằng bằng chứng. Không mở họ mới, khối cong, nhiều
-  khối hay image/OCR khi chưa có quyết định của người dùng.
+1. Ẩn mặc định card **Kết quả** dưới mô phỏng.
+2. Truy cập mọi kết quả qua nút chọn đại lượng và **một** ô chi tiết.
+3. Nút **"Các bước dựng"** mở danh sách cạnh của hình trên desktop.
+4. Mobile: panel thu gọn được, giữ hình và điều khiển truy cập được.
+5. Chọn một bước thì đồng bộ trạng thái hình học, dòng thời gian và phát lại.
+6. Tách bước dựng khỏi bước tính.
+7. Chọn độ dài thì tô sáng đoạn; chọn diện tích thì tô sáng vùng.
+8. Giảm các dòng mô tả/phụ thuộc lặp lại.
+9. Phân biệt cuộn của bộ đo (runner) với cuộn của người học.
 
+Nguồn: brief W19 (2026-10-04), phản hồi của người dùng sau W18. Mỗi mục cần test đơn vị và cổng trình duyệt
+desktop + mobile khi làm; sửa `frontend/src` thì đóng băng lại candidate.
 
+### 0.2 Ứng viên họ hình kế tiếp — khoảng trống theo tầng
 
+Nguồn: [`architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json) —
+**snapshot W13 tại `bf5a7907`**; w14–w18 có thể đã đóng một phần ô L03 (grounding nguồn) và L09 (dựng hình theo lớp)
+cho sáu họ hiện có. Năng lực sản phẩm: `backend/app/simulation/product_capability.py`. Tầng: L01 analyze · L02
+contract · L03 grounding nguồn · L04 topology · L05 fact graph · L06 kernel chính xác · L07 IR · L08 luật compiler ·
+L09 dựng hình · L10 đo + xuất xứ · L11 renderer · L12 occlusion · L13 tương tác · L14 nhân quả · L15 fail-closed ·
+L16 bằng chứng trình duyệt · L17 đánh giá giáo dục.
+
+| nhóm | ô SUPPORTED / PARTIAL / MISSING | tầng MISSING | chặn chính (ô PARTIAL) |
+|---|---|---|---|
+| G03 chóp tứ giác đều | 4 / 10 / 3 | L08, L16, L17 | "đều" và chân đường cao ở tâm chưa có trường (L01–L05); cạnh đáy + cạnh bên cho chiều cao thường vô tỉ, toạ độ phải ở ℚ³ (L06); cần bước dựng tâm (L09) |
+| G04 lăng trụ xiên | 5 / 10 / 2 | L08, L17 | độ xiên cho bằng góc không được grounding (L03) và thường cho chiều cao vô tỉ (L06); tuyến LLM dựng khối nguyên tử (L09) |
+| G05 lăng trụ/chóp đáy đa giác tổng quát | 10 / 6 / 1 | L17 | đa giác đều ngoài hình vuông cần toạ độ vô tỉ (L06); compiler chỉ đáy tam giác vuông/chữ nhật (L08); "lục giác đều" chưa grounding (L03) |
+| G16 dựng khoảng cách/góc | 8 / 6 / 2 | L08, L17 | compiler chỉ tính thể tích (L08); góc theo độ không grounding (L03); chưa có cung đánh dấu góc (L11) |
+| G06 khối đa diện lõm | 8 / 6 / 3 | L05, L08, L17 | sản phẩm `foundation_only`; tự cắt mặt–mặt (toàn cục) không kiểm (L04) |
+| G17 góc nhị diện | 3 / 8 / 5 | L05, L08, L11, L16, L17 | chưa có primitive nhị diện; tổng hợp 0/4 trên probe (L07) |
+
+Hình cong (G07 trụ, G08 nón, G10 cầu): sản phẩm `foundation_only`; lượt live V3 `FAIL` (nút thắt grounding phép
+dựng) — hàng E3 của [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md). Nhiều khối (G13), nội/ngoại
+tiếp (G14), tiếp xúc (G15): phần lớn MISSING — để sau (§0.4).
+
+### 0.3 Hồi quy bắt buộc cho mọi lát cắt mới
+
+Sáu họ compiler hiện có (bộ trình duyệt desktop/mobile), corpus gold (AC2 18/18 trong vùng chứng chỉ), năm ca demo
+(`replay_demo_cases.py`), bề mặt sập (`audit_demo_crash_surface.py`), T3 `full-gate.mjs`. Không hàng đang phục vụ nào
+bị từ chối mới mà không có quyết định ghi trước.
+
+### 0.4 Để sau, không tuyên bố đã hỗ trợ
+
+OCR/đề từ ảnh (P4; bằng chứng hiện là FIXTURE), nhiều khối trong một đề (G13/G14), khối tròn xoay tổng quát và khối
+ghép/bù (ngoài phạm vi vì kiến trúc). Mỗi việc mở bằng quyết định của người dùng và một wave riêng. Ý tưởng ngoài
+khoá luận: [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md) — phụ lục của ROADMAP này.
 
 ---
 
@@ -59,6 +88,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_
 - Loại bỏ xung đột sở hữu và các liên kết hỏng.
 - Đối soát toàn diện bằng chứng kiểm thử máy và số lượng test.
 - Đóng gói tài liệu bàn giao phiên (`AI_CONTEXT_BUNDLE.md`) và cổng điều hướng (`README.md`).
+- W19 (2026-10-04): `docs/` chia bốn vùng (dự án ở gốc · `research/` · `evaluation/` · `legacy/`), một bản đồ tuyên bố ↔ bằng chứng (`research/CLAIM_EVIDENCE_MAP.md`), gốc `docs/` là danh sách đóng (`audit_docs_layout`). Còn lại: báo cáo wave cũ vẫn nằm ở gốc theo AGENTS.md §4 (`ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT`).
 
 ### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)
 - **Họ bài thứ hai:** Đã chọn và tiền đăng ký họ Lăng trụ đứng có đáy là tam giác vuông (`right_triangle_base_right_prism_volume`) tại `docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`.
@@ -99,3 +129,4 @@ TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_
 - Đo lường định lượng: token tiêu thụ, thời gian phản hồi (latency), tỷ lệ từ chối an toàn, độ chính xác tọa độ và tính hợp lệ sư phạm.
 - Khảo sát tính khả dụng (usability) và trải nghiệm người dùng trên học sinh/giáo viên.
 - Phân tích các mối đe dọa đến tính hợp lệ (threats to validity) và đóng góp nghiên cứu của đề tài.
+- Hợp nhất bản thảo khoá luận với bằng chứng w09–w18 (hàng chưa có mục ở `research/CLAIM_EVIDENCE_MAP.md` §4) và hai thân Chương 4 rời nhau.

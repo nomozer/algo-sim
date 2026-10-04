@@ -1,0 +1,65 @@
+{
+  "schema_version": "docs-organization-run/1",
+  "run_id": "w19-docs-organization",
+  "task": "W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION",
+  "task_class": "DOCUMENTATION_STRUCTURE_AND_RESEARCH_EVIDENCE_NAVIGATION",
+  "date": "2026-10-04",
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "base_commit": "6d0e6321b70f89bd04473da4a458f7d8753eff6d",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (fetch + ls-remote: unchanged)",
+  "commits": {
+    "structure_and_migration": "a5c2e6f2",
+    "research_evidence_navigation_and_cleanup": "a44631a9",
+    "living_docs_report_handoff": "the commit that contains this file (not recorded here)"
+  },
+  "product_state": {
+    "unchanged_from": "W18 (measurement 0ca3accf, evidence 4a9db1ff)",
+    "candidate": "d3b4cab96c69a09f… (freeze_evaluation_candidate.py --verify exit 0)",
+    "cache_version": "110 (lock_cache_identity.py --verify exit 0; fingerprint b1714b566e25c912…)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "110",
+    "CANDIDATE_REFROZEN": "NO",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "HISTORY_REWRITTEN": "NO",
+    "USER_FAVICON_DELETION_PRESERVED": "YES"
+  },
+  "counts": {
+    "inventory_docs_rows": 286,
+    "inventory_evaluation_groups": 275,
+    "inventory_evaluation_files": 8439,
+    "moved_git_mv": 65,
+    "moved_to_research": 33,
+    "moved_to_legacy": 32,
+    "moved_byte_identical": 55,
+    "moved_with_recorded_link_changes": 10,
+    "current_state_log_lines_moved_verbatim": 5388,
+    "docs_root_files_before": 208,
+    "docs_root_files_after": 198,
+    "historical_reports_catalogued": 180,
+    "claim_map_rows": 26,
+    "claim_map_rows_human_reviewed": 0
+  },
+  "registered_next": {
+    "canonical_next_action": "NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES",
+    "merge_blockers": [
+      "W18 human visual review (NOT_APPROVED)",
+      "ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET"
+    ],
+    "issues_opened": [
+      "ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET",
+      "ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT",
+      "ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED",
+      "ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE"
+    ]
+  },
+  "final_decision": "DOCS_REORGANIZED_AND_VERIFIED",
+  "incident": "the main-tree full pytest run rewrote docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/SOURCE_EVIDENCE_INTEGRITY.json through backend/scripts/reconcile_second_family_live_measurement.py; restored to its committed blob 4d9fad55 before staging; not committed; ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE"
+}

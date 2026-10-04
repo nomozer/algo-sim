@@ -1,0 +1,213 @@
+{
+ "schema_version": "w19-doc-links/1",
+ "head": "a44631a998e85029a9a5f5d75821f5a7e8248fa8",
+ "files_checked": {
+  "LIVING": 49,
+  "FROZEN": 416,
+  "ARCHIVED": 34
+ },
+ "frozen_or_archived_links_resolved_via_migration_map": 0,
+ "broken_total": 28,
+ "broken_by_class_kind": {
+  "ARCHIVED:MISSING_TARGET": 16,
+  "FROZEN:MISSING_TARGET": 12
+ },
+ "broken": [
+  {
+   "class": "FROZEN",
+   "file": "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md",
+   "line": 173,
+   "kind": "MISSING_TARGET",
+   "target": "path"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT.md",
+   "line": 119,
+   "kind": "MISSING_TARGET",
+   "target": "../backend/tests/semantic_program/test_card_result_type_affordance.py"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 132,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/network/traverse-module.tsx#L250-L302"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 133,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/logic/ui.tsx#L37"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 134,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/algorithm/program-module.tsx#L165"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 135,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/network/ui.tsx#L66"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 136,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/tree/tree-module.tsx#L404"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 137,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/components/ArrayView.tsx#L239"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 140,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/logic/dag-module.tsx#L273-L305"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 143,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/logic/dag.test.tsx#L305"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 172,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/network/traverse-module.tsx#L374-L392"
+  },
+  {
+   "class": "FROZEN",
+   "file": "docs/evaluation/m17/design-critique/IMPECCABLE_SIMULATION_FIRST_CRITIQUE.md",
+   "line": 175,
+   "kind": "MISSING_TARGET",
+   "target": "../../../../frontend/src/simulations/domains/tree/tree-module.tsx#L485-L495"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-16-m13-semantic-matrix.md",
+   "line": 107,
+   "kind": "MISSING_TARGET",
+   "target": "../../../backend/app/simulation/dsl/manifest.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 47,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/catalog.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 52,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/ai/pipeline.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 101,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/coverage.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 128,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/families/__init__.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 139,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/scan_engine.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 141,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/dsl/manifest.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 157,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/validation/simulation.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 227,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/mechanism_gate.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 261,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/error_codes.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 271,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/ai/pipeline.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 331,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/validation/simulation.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 340,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/validation/simulation.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 407,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/catalog.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 419,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/simulation/dsl/manifest.py"
+  },
+  {
+   "class": "ARCHIVED",
+   "file": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "line": 476,
+   "kind": "MISSING_TARGET",
+   "target": "../../backend/app/evaluation/live.py"
+  }
+ ]
+}

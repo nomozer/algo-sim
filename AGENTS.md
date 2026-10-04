@@ -41,6 +41,7 @@
 ## 4. Evidence & Documentation Safety
 
 - **Tính bất biến của lịch sử:** Báo cáo (`docs/*.md`) và artifact (`docs/evaluation/**`) từ các wave trước là bất biến. Không được sửa, di chuyển hoặc xóa.
+- **Báo cáo wave mới nằm trong thư mục run** (`docs/evaluation/geometry/runs/<run>/`), không ở gốc `docs/`. Gốc `docs/` là danh sách đóng: tài liệu chuẩn tắc, tài liệu dự án, và các báo cáo cũ trong [`docs/evaluation/HISTORICAL_REPORTS.md`](docs/evaluation/HISTORICAL_REPORTS.md) — bộ kiểm tài liệu đỏ với file chưa phân lớp. Cổng điều hướng: [`docs/README.md`](docs/README.md).
 - **Correction Layer:** Khi phát hiện báo cáo cũ có sai sót hoặc cần đính chính cách diễn giải, tạo một wave mới với lớp đính chính (correction layer) và đăng ký chuỗi `CORRECTED_BY` vào [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md).
 - **Tính trung thực của bằng chứng:**
   - Dữ liệu thiếu hoặc lỗi đo lường phải ghi rõ `UNKNOWN` hoặc `NOT_RECOVERABLE`, không được gán bằng `0`.

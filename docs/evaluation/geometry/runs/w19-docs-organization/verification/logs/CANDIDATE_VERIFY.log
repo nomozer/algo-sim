@@ -1,0 +1,4 @@
+# W19 — candidate identity, main tree, HEAD a44631a9 + uncommitted W19 docs (backend/app untouched)
+# command: PYTHONUTF8=1 backend/.venv/Scripts/python.exe backend/scripts/freeze_evaluation_candidate.py --verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, d3b4cab96c69a09f…).
+# exit 0
