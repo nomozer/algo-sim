@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE",
-  "product_commit_sha": "bedb10408023bf146bec88bd68d7aaf998dfbf6a",
-  "product_tree_sha": "2a15102b33b39a07c7fd5725f2150fc2a8f62a7217d64eacbf4999e70f07af76",
+  "product_commit_sha": "a4f771b327310e9122041c331d92951e8bbe7735",
+  "product_tree_sha": "27c31de6dcd7708ee29bc1b94d7af29147281f991cc97bee7a5434f904564d38",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
