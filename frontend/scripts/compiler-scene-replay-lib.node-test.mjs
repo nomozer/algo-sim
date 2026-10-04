@@ -1097,6 +1097,27 @@ test("W17 toggle isolation and causal restore record each state separately", () 
     .reason_codes, ["SELECTION_MOVED_CAMERA"]);
 });
 
+test("W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is", () => {
+  const n = { camera: CAM_W17, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
+  const s = { ...n, selected_id: "V", scroll_y: 300 };
+  const r = { ...n, canvas_sha256: "y" };
+  // Lượt đo cuối 83f101e4: cùng camera, hộp nhãn, độ mờ và vị trí cuộn, khung lúc nghỉ vẫn có lúc
+  // lệch trên toàn khung, mỗi kênh ≤ 1 (chuỗi chẩn đoán cube/mobile).
+  assert.equal(LIB.NHIEU_KHUNG_TOI_DA, 1);
+  assert.equal(LIB.assessCausalRestore({ neutral: n, selected: s, restored: r,
+    canvasDelta: { same_size: true, max_channel_delta: 1, changed_pixels: 47791 } }).pass, true);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: r,
+    canvasDelta: { same_size: true, max_channel_delta: 2, changed_pixels: 1 } }).reason_codes, ["CANVAS_NOT_RESTORED"]);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: r,
+    canvasDelta: { same_size: false, max_channel_delta: 0, changed_pixels: 0 } }).reason_codes, ["CANVAS_NOT_RESTORED"]);
+  // Không đo được độ lệch ⇒ không suy ra "bằng nhau".
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: r }).reason_codes,
+    ["CANVAS_NOT_RESTORED"]);
+  assert.deepEqual(LIB.assessCausalRestore({ neutral: n, selected: s, restored: r,
+    canvasDelta: { same_size: true, max_channel_delta: 1, changed_pixels: 3 } }).canvas,
+  { equal_bytes: false, same_size: true, max_channel_delta: 1, changed_pixels: 3 });
+});
+
 test("role tokens are machine data: on screen they are a raw-token leak", () => {
   const sc = { objects: [{ id: "khoi", type: "solid", render: "mesh", shape_class: "PYRAMID_LIKE",
     formation_roles: ["CLOSE_SOLID"], formation_requirements: ["CONSTRUCT_BASE"] }],

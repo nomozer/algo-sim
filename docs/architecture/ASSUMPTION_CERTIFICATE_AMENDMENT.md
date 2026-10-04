@@ -803,3 +803,23 @@ nên được sửa trong bộ đo:
   chữ, không phải một vật được vẽ. Mẫu tô nằm dưới nền nhãn (90 % màu giấy) đọc ra màu nền nhãn:
   ở lượt đầu, min ΔE = 2.8 < `T_ON_MIN` nằm dưới nhãn "Diện tích thiết diện = 9", trong khi mean
   vẫn 30.9.
+
+**Đính chính cách đo — lượt đo nghiệm thu đầu trên candidate cuối (measurement `83f101e4`,
+2026-10-04; ĐĂNG KÝ trước lượt đo lại; không ngưỡng nào khác đổi).** Lượt đo đỏ đúng một ô:
+cube/mobile `causal_restore` = `CANVAS_NOT_RESTORED`. Khung trung tính là `b9c334f7…`, khung khôi
+phục là `2090af68…` và chưa nghỉ. Mã sản phẩm và fixture trùng lượt đo `c5592c1a` (khác nhau chỉ ở
+trường danh tính); lượt ấy PASS ô này với `45e45c71…` ở cả hai đầu.
+
+Hai lượt chẩn đoán chạy cùng luồng, một lượt có thêm tải CPU. Cả hai cho `45e45c71…` ở cả hai đầu.
+Mỗi lượt chụp chuỗi 40 khung ở mỗi đầu. Khung lúc nghỉ giữ nguyên camera, hộp nhãn, độ mờ nhãn và
+vị trí cuộn, nhưng 4/160 lần chụp lệch trên TOÀN khung, mỗi kênh 8-bit lệch tối đa 1. So từng byte
+vì thế đọc nhiễu chụp thành "không khôi phục".
+
+Luật mới:
+- Khung khôi phục trùng khung trung tính khi cùng cỡ và mọi kênh lệch ≤ `NHIEU_KHUNG_TOI_DA` = 1.
+- Bất kỳ điểm ảnh nào lệch ≥ 2, khác cỡ, hoặc không đo được độ lệch ⇒ `CANVAS_NOT_RESTORED`.
+- Khi hai khung khác byte, bộ đo lưu cả hai ảnh để xem lại.
+
+Ngưỡng 1 là đặc trưng nhiễu đo được, đặt TRƯỚC lượt đo lại. Nếu lượt đo lại trượt, đọc hai ảnh đã
+lưu, không nới ngưỡng. Lượt đỏ không lưu khung, nên độ lệch thật của nó là `NOT_RECOVERABLE`. Bằng
+chứng: `docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/browser-final-attempt1-83f101e4/`.

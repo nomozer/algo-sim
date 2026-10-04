@@ -1,0 +1,9 @@
+# RED: the new node test against the harness library of 83f101e4 (scratch worktree D:/tmp/w17-diag-cube, lib at HEAD, test file from the working tree)
+# cmd: node --test scripts/compiler-scene-replay-lib.node-test.mjs
+✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.687ms)
+ℹ pass 59
+ℹ fail 1
+✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.687ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+    actual: undefined,
+    expected: 1,

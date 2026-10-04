@@ -352,6 +352,16 @@ const giaiMaHaiKhung = (truoc, sau) => `const load=src=>new Promise((ok,bad)=>{`
   + `const doc=img=>{x.clearRect(0,0,c.width,c.height);x.drawImage(img,0,0);`
   + `return x.getImageData(0,0,c.width,c.height).data};const pa=doc(a),pb=doc(b);`;
 
+/** §15.5 khôi phục nhân quả: kênh 8-bit lệch nhiều nhất và số điểm ảnh khác giữa hai khung (giải
+ *  PNG trong trang như `pixelDelta`, nhưng không có ngưỡng — ngưỡng ở `assessCausalRestore`). */
+async function kenhLech(session, truoc, sau) {
+  return session.eval(`(async()=>{${giaiMaHaiKhung(truoc, sau)}`
+    + `if(a.width!==b.width||a.height!==b.height)return{same_size:false,max_channel_delta:null,changed_pixels:null};`
+    + `let m=0,n=0;for(let i=0;i<pa.length;i+=4){const d=Math.max(Math.abs(pa[i]-pb[i]),Math.abs(pa[i+1]-pb[i+1]),`
+    + `Math.abs(pa[i+2]-pb[i+2]),Math.abs(pa[i+3]-pb[i+3]));if(d){n++;if(d>m)m=d}}`
+    + `return{same_size:true,max_channel_delta:m,changed_pixels:n}})()`);
+}
+
 async function pixelDelta(session, before, after) {
   return session.eval(`(async()=>{${giaiMaHaiKhung(before, after)}`
     + `if(a.width!==b.width||a.height!==b.height)return{pass:false,reason:'SIZE_MISMATCH'};`
@@ -1079,9 +1089,16 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const restoredFrame = await khungOnDinh(session);
     const causalRestored = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: restoredFrame.sha256,
       canvas_stable: restoredFrame.stable };
+    // Khác byte ⇒ đo độ lệch kênh (nhiễu chụp ≤ NHIEU_KHUNG_TOI_DA, §15.5) và LƯU cả hai khung để xem lại.
+    const savedFrames = restoredFrame.sha256 === causalBeforeFrame.sha256 ? []
+      : [["causal_restore_neutral_frame.png", causalBeforeFrame], ["causal_restore_restored_frame.png", restoredFrame]];
+    for (const [ten, khung] of savedFrames) writeFileSync(join(outDir, ten), Buffer.from(khung.encoded, "base64"));
+    const canvasDelta = savedFrames.length ? await kenhLech(session, causalBeforeFrame, restoredFrame) : undefined;
     result.causal_restore = { neutral: { ...causalNeutral, camera: undefined },
       selected: { ...causalSelected, camera: undefined }, restored: { ...causalRestored, camera: undefined },
-      ...assessCausalRestore({ neutral: causalNeutral, selected: causalSelected, restored: causalRestored }) };
+      saved_frames: savedFrames.map(([ten]) => ten),
+      ...assessCausalRestore({ neutral: causalNeutral, selected: causalSelected, restored: causalRestored,
+        canvasDelta }) };
     result.assertions.causal_restore = assertion(result.causal_restore.pass, result.causal_restore.reason_codes);
     result.screenshots.causal_restored = await capture(session, join(outDir, "causal_restored.png"));
     result.capture_order.push("causal_restored");

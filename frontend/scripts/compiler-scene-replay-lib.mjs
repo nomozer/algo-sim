@@ -1437,17 +1437,26 @@ export function assessToggleIsolation({ on, off, back }) {
   return { pass: r.length === 0, reason_codes: r };
 }
 
+/** Độ lệch tối đa của một kênh 8-bit giữa hai lần chụp CÙNG một khung lúc nghỉ (nhiễu chụp, đo ở
+ *  lượt đo cuối W17 `83f101e4`; đăng ký ở §15.5 TRƯỚC lượt đo lại — không nới theo ảnh). */
+export const NHIEU_KHUNG_TOI_DA = 1;
+
 /** §15.5 nhân quả: trung tính → chọn → khôi phục (bỏ chọn, KHÔNG đặt lại camera) ở CÙNG camera và
- *  CÙNG vị trí cuộn. Ghi riêng ba thứ; khung canvas khôi phục phải trùng khung trung tính. */
-export function assessCausalRestore({ neutral, selected, restored }) {
+ *  CÙNG vị trí cuộn. Ghi riêng ba thứ; khung canvas khôi phục phải trùng khung trung tính — từng byte,
+ *  hoặc cùng cỡ với mọi kênh lệch ≤ `NHIEU_KHUNG_TOI_DA` (`canvasDelta` do bộ chạy đo khi khác byte;
+ *  thiếu ⇒ không suy ra "bằng nhau"). */
+export function assessCausalRestore({ neutral, selected, restored, canvasDelta }) {
   const r = [];
   if (selected.selected_id === null) r.push("CAUSAL_NOT_SELECTED");
   if (restored.selected_id !== null) r.push("SELECTION_NOT_RESET");
   if (cameraDoi(neutral.camera, selected.camera)) r.push("SELECTION_MOVED_CAMERA");
   if (cameraDoi(neutral.camera, restored.camera)) r.push("RESTORE_MOVED_CAMERA");
   if (neutral.scroll_y !== restored.scroll_y) r.push("SCROLL_NOT_RESTORED");
-  if (neutral.canvas_sha256 !== restored.canvas_sha256) r.push("CANVAS_NOT_RESTORED");
-  return { pass: r.length === 0, reason_codes: r,
+  const canvas = { equal_bytes: neutral.canvas_sha256 === restored.canvas_sha256, ...canvasDelta };
+  if (!canvas.equal_bytes && !(canvas.same_size && canvas.max_channel_delta <= NHIEU_KHUNG_TOI_DA)) {
+    r.push("CANVAS_NOT_RESTORED");
+  }
+  return { pass: r.length === 0, reason_codes: r, canvas,
     camera_reset: cameraDoi(neutral.camera, restored.camera),
     selection_reset: restored.selected_id === null,
     scroll: { neutral: neutral.scroll_y, selected: selected.scroll_y, restored: restored.scroll_y } };
