@@ -1,0 +1,17 @@
+# cwd: <worktree> @ 8caa8307; timeout --signal=KILL 1500 node frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/w18-binding-focus/inputs --ra docs/evaluation/geometry/runs/w18-binding-focus/images --bo-qua-build (dist built by the suite run at the same commit)
+2026-10-04T09:24:47Z
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+Wrote D:\tmp\w18-m\docs\evaluation\geometry\runs\w18-binding-focus\images\PLAYBACK_EVIDENCE.json: PASS a03259150677
+exit=0
+2026-10-04T09:30:15Z

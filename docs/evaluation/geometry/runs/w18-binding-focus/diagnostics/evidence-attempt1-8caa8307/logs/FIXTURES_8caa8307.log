@@ -1,0 +1,3 @@
+# cwd: <worktree>/backend @ 8caa8307; python scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/w18-binding-focus/inputs
+Wrote 32 frozen fixtures to D:\tmp\w18-m\docs\evaluation\geometry\runs\w18-binding-focus\inputs\fixtures
+exit=0

@@ -1,0 +1,109 @@
+W18 — backend fault injections (HEAD 8caa8307 + working tree, 0 model calls)
+method: one exact in-memory source substitution per run (fault_injection_w18.py, W15 _tiem); files on disk are never edited, so 'revert' = the next run without W18_FI
+tests: tests/geometry/test_construction_binding.py tests/geometry/test_scene3d_annotations.py tests/test_learner_messages.py
+
+baseline (no injection): 93 passed, 1 warning in 3.36s
+
+FB1 [construction_binding] any midpoint accepted for the text's midpoint (SA→SB with the same value served)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[B2, B4, B5, B19] + binding statuses
+  observed : 12 failed, 81 passed, 1 warning in 2.07s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B19_prime_wrong]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B2_mid_wrong_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B4_mid_same_value_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B9_same_coord_diff_identity]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B19_prime_wrong]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B2_mid_wrong_SB]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B4_mid_same_value_SB]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B9_same_coord_diff_identity]
+    FAILED test_construction_binding.py::test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh
+    FAILED test_construction_binding.py::test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi
+
+FB2 [construction_binding] the text relation built under another name taken as an auxiliary point (renamed target)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[B7] + test_w18_trang_thai_doi_chieu_cua_phep_dung[B7]
+  observed : 2 failed, 91 passed, 1 warning in 2.03s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B7_rename_target_X]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B7_rename_target_X]
+
+FB3 [construction_binding] one shared endpoint accepted (M = midpoint(S, A) for the text's midpoint of SH, H ≡ A in coordinates)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[B9, B2]
+  observed : 12 failed, 81 passed, 1 warning in 2.08s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B19_prime_wrong]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B2_mid_wrong_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B4_mid_same_value_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B9_same_coord_diff_identity]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B19_prime_wrong]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B2_mid_wrong_SB]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B4_mid_same_value_SB]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B9_same_coord_diff_identity]
+    FAILED test_construction_binding.py::test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh
+    FAILED test_construction_binding.py::test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi
+
+FB4 [route] the construction_binding stage removed from the route (statuses still recorded)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[every MUST_REFUSE row and B16]
+  observed : 11 failed, 82 passed, 1 warning in 2.07s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B11_proj_line_wrong_BC]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B13_proj_plane_wrong_SBC]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B16_out_of_vocab_ok]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B19_prime_wrong]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B2_mid_wrong_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B4_mid_same_value_SB]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B7_rename_target_X]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B9_same_coord_diff_identity]
+    FAILED test_construction_binding.py::test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh
+    FAILED test_construction_binding.py::test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi
+
+FB5 [construction_binding] projection receiver not compared (foot on the wrong line or plane served)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[B11, B13]
+  observed : 5 failed, 88 passed, 1 warning in 2.04s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B11_proj_line_wrong_BC]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B13_proj_plane_wrong_SBC]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B11_proj_line_wrong_BC]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B13_proj_plane_wrong_SBC]
+    FAILED test_construction_binding.py::test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh
+
+FB6 [construction_binding] a 'lần lượt' list paired in reverse order
+  predicted: test_w18_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu + B5/B6
+  observed : 5 failed, 88 passed, 1 warning in 2.07s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B6_list_ok]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B5_list_swap_targets]
+    FAILED test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B6_list_ok]
+
+FB7 [learner_messages] an unverified binding told to the learner as a faulty text
+  predicted: test_w18_loi_chua_doi_chieu_khong_noi_de_sai
+  observed : 1 failed, 92 passed, 1 warning in 2.04s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_loi_chua_doi_chieu_khong_noi_de_sai
+
+FB8 [route] UNVERIFIED never enforced (the polyhedral scope ignored)
+  predicted: test_w18_tuyen_san_pham_theo_nhan[B16]
+  observed : 1 failed, 92 passed, 1 warning in 2.03s -> CAUGHT
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B16_out_of_vocab_ok]
+
+FA1 [quantity_annotations] the witness foot is not the exact projection (label on the wrong subject point)
+  predicted: test_w18_nhan_chung_khoang_cach_diem_duong_thang
+  observed : 1 failed, 92 passed, 1 warning in 2.03s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w18_nhan_chung_khoang_cach_diem_duong_thang
+
+FA2 [scene3d] the asked result merged into a given of the same subject (two roles, one label)
+  predicted: test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan
+  observed : 1 failed, 92 passed, 1 warning in 2.03s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan
+
+FA3 [scene3d] given data lose their role (the compact default would show no data)
+  predicted: test_w18_vai_tro_du_kien_trung_gian_ket_qua
+  observed : 2 failed, 91 passed, 1 warning in 2.05s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w18_vai_tro_du_kien_trung_gian_ket_qua
+    FAILED test_scene3d_annotations.py::test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan
+
+FA4 [quantity_annotations] merge by equal value instead of the same subject
+  predicted: test_w18_cung_gia_tri_khac_chu_the_khong_gop
+  observed : 1 failed, 92 passed, 1 warning in 2.04s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w18_cung_gia_tri_khac_chu_the_khong_gop
+
+after all injections (no injection again): 93 passed, 1 warning in 2.44s

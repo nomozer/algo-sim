@@ -1,0 +1,4 @@
+# cwd: <worktree>/backend @ 8caa8307; python scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/w18-binding-focus --browser ../docs/evaluation/geometry/runs/w18-binding-focus/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/w18-binding-focus/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/w18-binding-focus/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/w18-binding-focus/results/PLAYBACK_EVIDENCE.json (PLAYBACK_EVIDENCE.json moved images/ -> results/ first, as in w12-w17)
+2026-10-04T09:30:26Z
+64 crops · endpoints inside: True · oracle disagreements: 0 · duplicate owners: 0
+exit=0
