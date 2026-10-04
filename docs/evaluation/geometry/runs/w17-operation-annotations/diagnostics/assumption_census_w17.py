@@ -11,8 +11,10 @@ and `_r2.py`, immutable). Judges:
   (3) the W17 rows by their registered expectations (gate status + reason for O rows, route stage +
       reason or `served` for G rows);
   (4) every gate change since W16 round 2, row by row (reported; each one is explained in REPORT).
+Round 2 (argument `2`, after the final-review fix d3817d5f) adds the W17C addendum (labels committed
+with its red tests in 01b0c27c) and compares every row with round 1, reason codes included.
 Refuses to overwrite. Run from the repository root:
-  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_census_w17.py
+  backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_census_w17.py [2]
 """
 from __future__ import annotations
 
@@ -25,6 +27,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve()
 ROOT = HERE.parents[6]
 RUNS = ROOT / "docs/evaluation/geometry/runs"
+ROUND = int(sys.argv[1]) if len(sys.argv) > 1 else 1
 sys.argv = sys.argv[:1]                       # R2 reads its round number from argv at import
 sys.path.insert(0, str(RUNS / "w15-assumption-closure/diagnostics"))
 import assumption_census_w15 as R1  # noqa: E402
@@ -34,9 +37,13 @@ W16_DIR = RUNS / "w16-premerge-closure/diagnostics"
 CORPORA = {"W14": R1.W14_CORPUS, "W15": R1.W15_CORPUS, "W15B": R2.W15B_CORPUS,
            "W16": W16_DIR / "assumption_corpus_w16/CORPUS.json", "W16B": W16_DIR / "assumption_corpus_w16b/CORPUS.json",
            "W17": HERE.parent / "assumption_corpus_w17/CORPUS.json"}
+if ROUND >= 2:
+    CORPORA["W17C"] = HERE.parent / "assumption_corpus_w17c/CORPUS.json"
+_HAU_TO = "" if ROUND == 1 else f"_R{ROUND}"
 PREV = W16_DIR / "ASSUMPTION_CENSUS_W16_R2.json"
-OUT_C = HERE.with_name("ASSUMPTION_CENSUS_W17.json")
-OUT_D = HERE.with_name("ASSUMPTION_MECHANISM_DECISION_W17.json")
+OUT_C = HERE.with_name(f"ASSUMPTION_CENSUS_W17{_HAU_TO}.json")
+OUT_D = HERE.with_name(f"ASSUMPTION_MECHANISM_DECISION_W17{_HAU_TO}.json")
+VONG1 = HERE.with_name("ASSUMPTION_CENSUS_W17.json")
 A_PRIME = "A2b_cat_bang_alpha_khi_de_noi_beta"
 MA_LECH = "CONSTRUCTION_NOT_TEXT_BOUND"
 
@@ -63,7 +70,7 @@ def main() -> None:
         rows += [R2.do_hang(r, lop) | ({"corpus_layer": ten} if ten != lop else {})
                  for r in json.loads(p.read_text(encoding="utf-8"))["rows"]]
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    census = {"census": "W17_ASSUMPTION_CENSUS", "model_calls": 0, "measured_at_commit": head,
+    census = {"census": f"W17_ASSUMPTION_CENSUS_ROUND_{ROUND}", "model_calls": 0, "measured_at_commit": head,
               "corpora": {k: {"path": str(p.relative_to(ROOT)).replace("\\", "/"), "sha256_lf": R1._sha_lf(p.read_bytes())}
                           for k, p in CORPORA.items()},
               "re_execution_budget": R1.G.NGAN_SACH_CHAY_LAI, "rows": rows}
@@ -96,7 +103,7 @@ def main() -> None:
         "pass": a["status"] != "PROVEN_SAFE" and a["reason_code"] == MA_LECH and not a["route_today"]["servable"]
         and a["route_today"]["stage"] == "assumption"}
     # (3) W17 rows by their registered expectations.
-    w17 = [r for r in rows if r["corpus"] == "W17"]
+    w17 = [r for r in rows if r["corpus"] in ("W17", "W17C")]
     dec["w17_unmeasured"] = [r["id"] for r in w17 if not r.get("measured")]
     dec["w17_expectation_mismatches"] = {
         r["id"]: {"expect": r["expect"], "status": r["status"], "certificate": r["certificate"],
@@ -119,6 +126,14 @@ def main() -> None:
                                      [r.get("status"), r.get("certificate"), r.get("subjects")]]
         for r in rows if (r["corpus"], r["id"]) in truoc
         and truoc[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"), r.get("subjects"))}
+    if ROUND >= 2:
+        r1 = {(r["corpus"], r["id"]): (r.get("status"), r.get("certificate"), r.get("reason_code"), r["route_today"]["servable"])
+              for r in json.loads(VONG1.read_text(encoding="utf-8"))["rows"] if r.get("measured")}
+        dec["report_round1_to_round2_changes"] = {
+            f"{r['corpus']}:{r['id']}": [list(r1[(r["corpus"], r["id"])]),
+                                         [r.get("status"), r.get("certificate"), r.get("reason_code"), r["route_today"]["servable"]]]
+            for r in rows if (r["corpus"], r["id"]) in r1 and r.get("measured")
+            and r1[(r["corpus"], r["id"])] != (r.get("status"), r.get("certificate"), r.get("reason_code"), r["route_today"]["servable"])}
     do = [r for r in rows if r.get("measured")]
     dec["report_route_served_depends_or_must_refuse"] = sorted(
         f"{r['corpus']}:{r['id']}" for r in do if r["label"] in ("DEPENDS", "MUST_REFUSE")
