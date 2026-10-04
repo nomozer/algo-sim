@@ -13,6 +13,11 @@ Ba bước một chiều (thẩm quyền: `docs/architecture/ASSUMPTION_CERTIFIC
   nguồn và lưới hoà giải C₁a. Module này KHÔNG đọc toạ độ nào: toạ độ hay giá trị bằng nhau không
   bao giờ tạo bí danh.
 - `doi_chieu_phep_dung` — trạng thái từng phép dựng điểm (§16.3) và mã từ chối (§16.4).
+
+W20 (§16.5): đích của quan hệ mà chương trình ĐẶT BẰNG TOẠ ĐỘ — toạ độ của chính tên ấy, hay của điểm nó
+trỏ tới qua `assign X = var Y` (kể cả một đỉnh đề cho) — không được dựng. Trước bản sửa nó không có trạng
+thái nào, và ngoài vùng đa diện được phục vụ, có ca với đáp số sai
+(`docs/evaluation/geometry/runs/w20-cleanup-premerge/`). Module vẫn không đọc toạ độ nào: chỉ hỏi CÓ toạ độ.
 """
 from __future__ import annotations
 
@@ -22,6 +27,7 @@ from fractions import Fraction
 from typing import Any
 
 from .assumption_gate import _gia_tri_fact, _khoa
+from .grounding_gate import _is_seed
 from .ir_static_check import _CHU_KY, DIEM
 from .segment_relation import _D as _E
 from .shape_constraint import che_muc_tieu, doc_rang_buoc
@@ -29,9 +35,12 @@ from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, ky_hieu_toan, nh
 
 MATCHED, MISMATCHED, UNVERIFIED = "MATCHED", "MISMATCHED", "UNVERIFIED"
 AUXILIARY, OUT_OF_SCOPE, NOT_REALIZED = "AUXILIARY", "OUT_OF_SCOPE", "NOT_REALIZED"
+DEFINED_BY_COORDINATES = "DEFINED_BY_COORDINATES"
 #: Cùng mã với W17 §15.1 (nguyên nhân CONSTRUCTION); chặng `construction_binding` phân biệt lời.
 MA_LECH_PHEP_DUNG = "CONSTRUCTION_NOT_TEXT_BOUND"
 MA_CHUA_DOI_CHIEU = "CONSTRUCTION_BINDING_UNVERIFIED"
+#: W20 §16.5 — nguyên nhân CONSTRUCTION, từ chối ở MỌI vùng; lời nói giới hạn kiểm chứng (toạ độ có thể đúng).
+MA_TOA_DO_THAY_DUNG = "CONSTRUCTION_REPLACED_BY_COORDINATES"
 #: Ba phép dựng điểm trong phạm vi W18 (§16.3).
 PHEP_TRONG_PHAM_VI = frozenset({"midpoint", "divide_segment", "project_onto"})
 _SINH_DIEM = frozenset(k for k, (_, ra) in _CHU_KY.items() if ra == DIEM)
@@ -176,12 +185,16 @@ class _DanhTinh:
         for c, p in (hoa_giai or {}).items():
             self.nguoc.setdefault(p, set()).add(c)
 
-    def goc_cua(self, n: str) -> str:
-        da = set()
-        while n in self.goc and n not in da:
-            da.add(n)
+    def chuoi(self, n: str) -> list[str]:
+        """`n` rồi từng tên nó trỏ tới qua `assign X = var Y`, tới gốc."""
+        ra = [n]
+        while n in self.goc and self.goc[n] not in ra:
             n = self.goc[n]
-        return n
+            ra.append(n)
+        return ra
+
+    def goc_cua(self, n: str) -> str:
+        return self.chuoi(n)[-1]
 
     def nhom(self, n: str) -> set[str]:
         r = self.goc_cua(n)
@@ -193,13 +206,20 @@ class _DanhTinh:
         diem = {_khoa(t) for t in nhan_hinh_hoc(" ".join(gt))} & self.ky_hieu.keys()
         return diem if len(diem) == 1 else set()
 
+    def nguon(self, x: str) -> set[str]:
+        """Khoá ký hiệu đề mà RIÊNG tên `x` mang (không qua bí danh)."""
+        ten = {x} | chuan_hoa_ten(x) | self.nguoc.get(x, set())
+        ten |= {s["label"] for s in self.dinh.get(x, ()) if s.get("label")}
+        return {k for v in ten if (k := _khoa(v)) in self.ky_hieu} | self._fact(x)
+
     def diem(self, n: str) -> Any:
-        ung: set[str] = set()
-        for x in self.nhom(n):
-            nguon = {x} | chuan_hoa_ten(x) | self.nguoc.get(x, set())
-            nguon |= {s["label"] for s in self.dinh.get(x, ()) if s.get("label")}
-            ung |= {k for v in nguon if (k := _khoa(v)) in self.ky_hieu} | self._fact(x)
+        ung: set[str] = set().union(*(self.nguon(x) for x in self.nhom(n)))
         return next(iter(ung)) if len(ung) == 1 else (None if not ung else _MO_HO)
+
+    def toa_do(self, x: str) -> bool:
+        """`x` là điểm khai KÈM toạ độ (khai báo, hay `declare_point` đã nâng về khai báo)."""
+        m = self.khai.get(x) or {}
+        return m.get("type") == "point3" and not _is_seed(m.get("initial_value"))
 
     def nhan(self, n: str) -> tuple[str, frozenset] | None:
         """Đích nhận của chương trình: đường qua hai điểm / mặt phẳng qua các điểm của đề; mặt phẳng
@@ -292,13 +312,15 @@ def _so(R: QuanHeDung, p: tuple[str, Any] | None) -> tuple[str, str]:
     return (MATCHED, "same source and receiver") if _cung_nhan(R.toan_hang[1], nhan) else (MISMATCHED, "other receiver")
 
 
-_THU_TU = {MISMATCHED: 0, UNVERIFIED: 1}
+_THU_TU = {MISMATCHED: 0, DEFINED_BY_COORDINATES: 1, UNVERIFIED: 2}
 
 
 def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str] | None = None) -> KetQuaDoiChieu:
     """§16.3/§16.4 — trạng thái của mọi phép dựng điểm (mọi tầng lồng) và mã từ chối:
     `CONSTRUCTION_NOT_TEXT_BOUND` khi có MISMATCHED (chủ thể: cặp [quan hệ đề, quan hệ chương
-    trình]), không thì `CONSTRUCTION_BINDING_UNVERIFIED` khi có UNVERIFIED (chủ thể: đích)."""
+    trình]), không thì `CONSTRUCTION_REPLACED_BY_COORDINATES` khi có DEFINED_BY_COORDINATES (§16.5; chủ thể:
+    cặp [quan hệ đề, việc chương trình đã làm]), không thì `CONSTRUCTION_BINDING_UNVERIFIED` khi có
+    UNVERIFIED (chủ thể: đích)."""
     de = getattr(contract, "problem_text", "") or ""
     if not de.strip():
         return KetQuaDoiChieu()
@@ -351,11 +373,34 @@ def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str
         if T not in tt or _THU_TU.get(st, 9) < _THU_TU.get(tt[T], 9):
             tt[T] = st
         chi_tiet.append(f"CONSTRUCTION_BINDING {T}: {st} — {ly}" + (f" (text: {cau})" if cau else ""))
+    # §16.5 — tên mang ĐÚNG ký hiệu đích của một quan hệ, lần theo chuỗi bí danh: có toạ độ ở bất kỳ mắt
+    # nào (kể cả rồi mới dựng lại) ⇒ chương trình khẳng định toạ độ của một điểm đề bắt phải dựng.
+    toa_do: list[tuple[str, str]] = []
+    da_dat: set[str] = set()
+    for n in dict.fromkeys(ten_diem + [s["target_var"] for s in dung] + list(dt.goc)):
+        k = dt.nguon(n) & qh.keys()
+        chuoi = dt.chuoi(n)
+        if len(k) != 1 or not any(map(dt.toa_do, chuoi)):
+            continue
+        R = qh[k.pop()]
+        dich_hs = _hien(dt.ky_hieu[R.dich])
+        goc = dt.nguon(chuoi[-1]) - {R.dich}
+        lam = (f"lấy {dich_hs} trùng với điểm {_hien(dt.ky_hieu[next(iter(goc))])}" if len(chuoi) > 1 and len(goc) == 1
+               else f"đặt {dich_hs} bằng toạ độ cho sẵn")
+        if (R.nhan_hoc_sinh, lam) not in toa_do:
+            toa_do.append((R.nhan_hoc_sinh, lam))
+        da_dat.add(R.dich)
+        if n not in tt or _THU_TU[DEFINED_BY_COORDINATES] < _THU_TU.get(tt[n], 9):
+            tt[n] = DEFINED_BY_COORDINATES
+        chi_tiet.append(f"CONSTRUCTION_BINDING {n}: {DEFINED_BY_COORDINATES} — "
+                        + (f"alias chain {' → '.join(chuoi)} reaches coordinates" if len(chuoi) > 1
+                           else "declared with coordinates") + f" (text: {R.nhan_hoc_sinh})")
     for R in qh.values():
-        if R.dich not in co and R.dich not in da_thay:
+        if R.dich not in co and R.dich not in da_thay and R.dich not in da_dat:
             tt.setdefault(_hien(dt.ky_hieu.get(R.dich, R.dich)), NOT_REALIZED)
             chi_tiet.append(f"CONSTRUCTION_BINDING {R.nhan_hoc_sinh}: {NOT_REALIZED}")
     ma, chu_the = ((MA_LECH_PHEP_DUNG, [c for cap in lech for c in cap]) if lech
+                   else (MA_TOA_DO_THAY_DUNG, [c for cap in toa_do for c in cap]) if toa_do
                    else (MA_CHUA_DOI_CHIEU, chua) if chua else (None, []))
     return KetQuaDoiChieu(tt, ma, tuple(chu_the), tuple(chi_tiet),
                           {a: dt.goc_cua(a) for a in dt.goc})

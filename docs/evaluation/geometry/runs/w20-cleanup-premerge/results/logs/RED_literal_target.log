@@ -1,0 +1,652 @@
+............FFF.FFF.........FFFFFFFFFFFFFFFFFFFFFFFFFF.........F.FFFF    [100%]
+================================== FAILURES ===================================
+________ test_w20_tuyen_san_pham_theo_nhan[L12_proj_outside_bogus_fid] ________
+
+ca = 'L12_proj_outside_bogus_fid'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L12_proj_outside_bogus_fid', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...one, assumption_status='UNDETERMINED', assumption_certificate=None, assumption_enforced=False, construction_binding={}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+______ test_w20_tuyen_san_pham_theo_nhan[L13_proj_outside_relation_fact] ______
+
+ca = 'L13_proj_outside_relation_fact'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L13_proj_outside_relation_fact', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...one, assumption_status='UNDETERMINED', assumption_certificate=None, assumption_enforced=False, construction_binding={}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+______ test_w20_tuyen_san_pham_theo_nhan[L14_proj_outside_wrong_coords] _______
+
+ca = 'L14_proj_outside_wrong_coords'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L14_proj_outside_wrong_coords', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...one, assumption_status='UNDETERMINED', assumption_certificate=None, assumption_enforced=False, construction_binding={}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+___ test_w20_tuyen_san_pham_theo_nhan[L16_mid_U3_literal_then_constructed] ____
+
+ca = 'L16_mid_U3_literal_then_constructed'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L16_mid_U3_literal_then_constructed', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...ion_status='PROVEN_SAFE', assumption_certificate='C0', assumption_enforced=True, construction_binding={'M': 'MATCHED'}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+_____ test_w20_tuyen_san_pham_theo_nhan[L17_proj_outside_alias_to_vertex] _____
+
+ca = 'L17_proj_outside_alias_to_vertex'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L17_proj_outside_alias_to_vertex', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...atus='PROVEN_SAFE', assumption_certificate='C0', assumption_enforced=False, construction_binding={'H': 'NOT_REALIZED'}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+_ test_w20_tuyen_san_pham_theo_nhan[L18_proj_outside_alias_to_cited_literal] __
+
+ca = 'L18_proj_outside_alias_to_cited_literal'
+
+    @pytest.mark.parametrize("ca", sorted(CA))
+    def test_w20_tuyen_san_pham_theo_nhan(ca):
+        """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
+        miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
+        _sp, out, _sc = W.chay(*CA[ca]())
+        if NHAN[ca]["expect"] == "served":
+            assert out.servable, (ca, out.stage_reached, out.reason_code, out.details[:4])
+        else:
+>           assert not out.servable and out.refusal_cause != "SOURCE", (
+                ca, out.servable, out.stage_reached, out.reason_code, out.refusal_cause)
+E           AssertionError: ('L18_proj_outside_alias_to_cited_literal', True, 'served', None, None)
+E           assert (not True)
+E            +  where True = SemanticRouteOutcome(stage_reached='served', executable=True, servable=True, error_code=None, failure_category=None, r...one, assumption_status='UNDETERMINED', assumption_certificate=None, assumption_enforced=False, construction_binding={}).servable
+
+tests\geometry\test_construction_binding_literal.py:130: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L10_proj_U3_bogus_fid] _
+
+ca = 'L10_proj_U3_bogus_fid'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L10_proj_U3_bogus_fid', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', {}, ['TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE diem H'])
+E       assert (False, 'assu...N', 'UNKNOWN') == (False, 'cons...CONSTRUCTION')
+E
+E         At index 1 diff: 'assumption' != 'construction_binding'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L11_proj_U3_relation_fact] _
+
+ca = 'L11_proj_U3_relation_fact'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L11_proj_U3_relation_fact', 'assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', {}, ['TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base', 'NO_ROLE diem H'])
+E       assert (False, 'assu...N', 'UNKNOWN') == (False, 'cons...CONSTRUCTION')
+E
+E         At index 1 diff: 'assumption' != 'construction_binding'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L12_proj_outside_bogus_fid] _
+
+ca = 'L12_proj_outside_bogus_fid'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L12_proj_outside_bogus_fid', 'served', None, {}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L13_proj_outside_relation_fact] _
+
+ca = 'L13_proj_outside_relation_fact'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L13_proj_outside_relation_fact', 'served', None, {}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L14_proj_outside_wrong_coords] _
+
+ca = 'L14_proj_outside_wrong_coords'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L14_proj_outside_wrong_coords', 'served', None, {}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L16_mid_U3_literal_then_constructed] _
+
+ca = 'L16_mid_U3_literal_then_constructed'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L16_mid_U3_literal_then_constructed', 'served', None, {'M': 'MATCHED'}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L17_proj_outside_alias_to_vertex] _
+
+ca = 'L17_proj_outside_alias_to_vertex'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L17_proj_outside_alias_to_vertex', 'served', None, {'H': 'NOT_REALIZED'}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L18_proj_outside_alias_to_cited_literal] _
+
+ca = 'L18_proj_outside_alias_to_cited_literal'
+
+    @pytest.mark.parametrize("ca", QUA_GROUNDING)
+    def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+        _sp, out, _sc = W.chay(*CA[ca]())
+>       assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
+            False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
+                                                                         out.construction_binding, out.details[:4])
+E       AssertionError: ('L18_proj_outside_alias_to_cited_literal', 'served', None, {}, [])
+E       assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:137: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L10_proj_U3_bogus_fid] _
+
+ca = 'L10_proj_U3_bogus_fid'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L10_proj_U3_bogus_fid', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L11_proj_U3_relation_fact] _
+
+ca = 'L11_proj_U3_relation_fact'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L11_proj_U3_relation_fact', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L12_proj_outside_bogus_fid] _
+
+ca = 'L12_proj_outside_bogus_fid'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L12_proj_outside_bogus_fid', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L13_proj_outside_relation_fact] _
+
+ca = 'L13_proj_outside_relation_fact'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L13_proj_outside_relation_fact', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L14_proj_outside_wrong_coords] _
+
+ca = 'L14_proj_outside_wrong_coords'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L14_proj_outside_wrong_coords', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L15_mid_U3_literal_twin_of_constructed] _
+
+ca = 'L15_mid_U3_literal_twin_of_constructed'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L15_mid_U3_literal_twin_of_constructed', {'N': 'AUXILIARY'}, ('CONSTRUCTION_BINDING N: AUXILIARY — engine construction, not named by the text',))
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L16_mid_U3_literal_then_constructed] _
+
+ca = 'L16_mid_U3_literal_then_constructed'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L16_mid_U3_literal_then_constructed', {'M': 'MATCHED'}, ('CONSTRUCTION_BINDING M: MATCHED — same unordered endpoints (text: M là trung điểm của SA)',))
+E       assert ('MATCHED', None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: 'MATCHED' != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L17_proj_outside_alias_to_vertex] _
+
+ca = 'L17_proj_outside_alias_to_vertex'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L17_proj_outside_alias_to_vertex', {'H': 'NOT_REALIZED'}, ('CONSTRUCTION_BINDING H là hình chiếu của S lên BD: NOT_REALIZED',))
+E       assert ('NOT_REALIZED', None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: 'NOT_REALIZED' != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L18_proj_outside_alias_to_cited_literal] _
+
+ca = 'L18_proj_outside_alias_to_cited_literal'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L18_proj_outside_alias_to_cited_literal', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L1_mid_U3_assumption] _
+
+ca = 'L1_mid_U3_assumption'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L1_mid_U3_assumption', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L2_mid_U3_bogus_fid] _
+
+ca = 'L2_mid_U3_bogus_fid'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L2_mid_U3_bogus_fid', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L3_mid_U3_relation_fact] _
+
+ca = 'L3_mid_U3_relation_fact'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L3_mid_U3_relation_fact', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L4_mid_U3_wrong_coords] _
+
+ca = 'L4_mid_U3_wrong_coords'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L4_mid_U3_wrong_coords', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L5_mid_outside_assumption] _
+
+ca = 'L5_mid_outside_assumption'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L5_mid_outside_assumption', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L6_mid_outside_bogus_fid] _
+
+ca = 'L6_mid_outside_bogus_fid'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L6_mid_outside_bogus_fid', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L7_mid_outside_relation_fact] _
+
+ca = 'L7_mid_outside_relation_fact'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L7_mid_outside_relation_fact', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L8_mid_outside_wrong_coords] _
+
+ca = 'L8_mid_outside_wrong_coords'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L8_mid_outside_wrong_coords', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_ test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L9_proj_U3_assumption] _
+
+ca = 'L9_proj_U3_assumption'
+
+    @pytest.mark.parametrize("ca", sorted(DICH))
+    def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+        """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
+        dc = _doi_chieu(ca)
+>       assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
+E       AssertionError: ('L9_proj_U3_assumption', {}, ())
+E       assert (None, None) == ('DEFINED_BY_..._COORDINATES')
+E
+E         At index 0 diff: None != 'DEFINED_BY_COORDINATES'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:147: AssertionError
+_________ test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung __________
+
+    def test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung():
+        """H đặt đúng toạ độ (3; 3; 0), K = hình chiếu của S lên BD dựng thật, ngoài vùng đa diện: K trùng toạ
+        độ với H nhưng không phải H của đề."""
+        _sp, out, _sc = W.chay(*out_h([lit("H", H_OK, fid="H_def"), T._proj("K", "S", "BD")], facts=(H_DEF,)))
+>       assert (out.servable, out.reason_code) == (False, MA_TOA_DO), (out.stage_reached, out.construction_binding)
+E       AssertionError: ('served', {'K': 'AUXILIARY'})
+E       assert (True, None) == (False, 'CONS..._COORDINATES')
+E
+E         At index 0 diff: True != False
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:162: AssertionError
+_________ test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam _________
+
+    def test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
+        _sp, out, _sc = W.chay(*CA["L13_proj_outside_relation_fact"]())
+>       assert out.reason_subjects == ["H là hình chiếu của S lên BD", "đặt H bằng toạ độ cho sẵn"], out.reason_subjects
+E       AssertionError: []
+E       assert [] == ['H là hình c...ạ độ cho sẵn']
+E
+E         Right contains 2 more items, first extra item: 'H là hình chiếu của S lên BD'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:176: AssertionError
+________ test_w20_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua _________
+
+    def test_w20_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua():
+        from app.ai.pipeline import KHONG_SUA_NGUON
+        from app.simulation.semantic_program.refusal_cause import theo_ma
+
+>       assert theo_ma(MA_TOA_DO) == "CONSTRUCTION"
+E       AssertionError: assert 'UNKNOWN' == 'CONSTRUCTION'
+E
+E         - CONSTRUCTION
+E         + UNKNOWN
+
+tests\geometry\test_construction_binding_literal.py:185: AssertionError
+_ test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L14_proj_outside_wrong_coords] _
+
+ca = 'L14_proj_outside_wrong_coords'
+
+    @pytest.mark.parametrize("ca", ["L14_proj_outside_wrong_coords", "L17_proj_outside_alias_to_vertex"])
+    def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca):
+        """Hai hàng nguy hiểm nhất của probe trước bản sửa: L14 phục vụ đáp số SAI, L17 đo SA thay cho SH."""
+        env = _pipeline(ca)
+>       assert (env["status"], env.get("reason_code"), env.get("refusal_cause")) == (
+            "unsupported", MA_TOA_DO, "CONSTRUCTION"), {k: env.get(k) for k in ("status", "stage_reached", "reason_code")}
+E       AssertionError: {'status': 'ok', 'stage_reached': None, 'reason_code': None}
+E       assert ('ok', None, None) == ('unsupported...CONSTRUCTION')
+E
+E         At index 0 diff: 'ok' != 'unsupported'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:204: AssertionError
+_ test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L17_proj_outside_alias_to_vertex] _
+
+ca = 'L17_proj_outside_alias_to_vertex'
+
+    @pytest.mark.parametrize("ca", ["L14_proj_outside_wrong_coords", "L17_proj_outside_alias_to_vertex"])
+    def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca):
+        """Hai hàng nguy hiểm nhất của probe trước bản sửa: L14 phục vụ đáp số SAI, L17 đo SA thay cho SH."""
+        env = _pipeline(ca)
+>       assert (env["status"], env.get("reason_code"), env.get("refusal_cause")) == (
+            "unsupported", MA_TOA_DO, "CONSTRUCTION"), {k: env.get(k) for k in ("status", "stage_reached", "reason_code")}
+E       AssertionError: {'status': 'ok', 'stage_reached': None, 'reason_code': None}
+E       assert ('ok', None, None) == ('unsupported...CONSTRUCTION')
+E
+E         At index 0 diff: 'ok' != 'unsupported'
+E         Use -v to get more diff
+
+tests\geometry\test_construction_binding_literal.py:204: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L12_proj_outside_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L13_proj_outside_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L14_proj_outside_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L16_mid_U3_literal_then_constructed]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L17_proj_outside_alias_to_vertex]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L18_proj_outside_alias_to_cited_literal]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L10_proj_U3_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L11_proj_U3_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L12_proj_outside_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L13_proj_outside_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L14_proj_outside_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L16_mid_U3_literal_then_constructed]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L17_proj_outside_alias_to_vertex]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L18_proj_outside_alias_to_cited_literal]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L10_proj_U3_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L11_proj_U3_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L12_proj_outside_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L13_proj_outside_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L14_proj_outside_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L15_mid_U3_literal_twin_of_constructed]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L16_mid_U3_literal_then_constructed]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L17_proj_outside_alias_to_vertex]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L18_proj_outside_alias_to_cited_literal]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L1_mid_U3_assumption]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L2_mid_U3_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L3_mid_U3_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L4_mid_U3_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L5_mid_outside_assumption]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L6_mid_outside_bogus_fid]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L7_mid_outside_relation_fact]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L8_mid_outside_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L9_proj_U3_assumption]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L14_proj_outside_wrong_coords]
+FAILED tests/geometry/test_construction_binding_literal.py::test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L17_proj_outside_alias_to_vertex]
+37 failed, 32 passed in 1.91s

@@ -222,6 +222,23 @@ _MSG_CHUA_DOI_CHIEU = (
 )
 
 
+def _msg_toa_do_thay_dung(envelope: dict) -> str:
+    """W20 §16.5 — `reason_subjects` = các cặp [quan hệ đề nêu, việc chương trình đã làm] (`đặt H bằng toạ
+    độ cho sẵn`, `lấy H trùng với điểm A`). Toạ độ có thể đúng: nói giới hạn KIỂM CHỨNG, không nói hình
+    khác, không bảo sửa đề."""
+    s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]
+    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if a and b and "_" not in a + b]
+    if cap:
+        de = " và ".join(f"\"{a}\"" for a in dict.fromkeys(a for a, _ in cap))
+        cau = (f"Đề bài nêu {de}, nhưng chương trình của AlgoSim {' và '.join(dict.fromkeys(b for _, b in cap))}"
+               + (" thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó" if len(cap) == 1
+                  else " thay vì dựng các điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được chúng"))
+    else:
+        cau = ("Chương trình của AlgoSim đặt một điểm đề nêu bằng toạ độ thay vì dựng nó từ quan hệ đề nêu, "
+               "nên hệ chưa kiểm chứng được nó")
+    return cau + " đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng." + _DUOI_LOI_HE
+
+
 def _msg_chua_doi_chieu(envelope: dict) -> str:
     ten = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str) and x and "_" not in x]
     return _MSG_CHUA_DOI_CHIEU.format(diem=("điểm " + ", ".join(ten)) if ten else "một điểm trong hình")
@@ -253,6 +270,8 @@ def learner_reason(envelope: dict) -> str:
                 else _msg_lech_phep_dung(envelope))
     if ma == "CONSTRUCTION_BINDING_UNVERIFIED":
         return _msg_chua_doi_chieu(envelope)
+    if ma == "CONSTRUCTION_REPLACED_BY_COORDINATES":
+        return _msg_toa_do_thay_dung(envelope)
     theo_nn = _MSG_THEO_NGUYEN_NHAN.get(ma, {}).get(envelope.get("refusal_cause") or "")
     if theo_nn is not None:
         mp = ", ".join(s for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and "_" not in s)

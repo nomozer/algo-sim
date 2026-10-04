@@ -35,7 +35,7 @@ from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
 from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
-from .construction_binding import MA_CHUA_DOI_CHIEU, KetQuaDoiChieu, doi_chieu_phep_dung
+from .construction_binding import MA_CHUA_DOI_CHIEU, MA_TOA_DO_THAY_DUNG, KetQuaDoiChieu, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
     chan_doan_phu_cau_truc,
@@ -447,9 +447,10 @@ def _sau_grounding(
     #
     # Trước bất biến nguồn: trung điểm sai đoạn mà tên khớp phải nhận lời từ chối CÓ CẤU TRÚC
     # (nguyên nhân CONSTRUCTION, nêu cả hai quan hệ) chứ không phải mã chung của bất biến toạ độ —
-    # bất biến ấy giữ làm lưới thứ hai. LỆCH ⇒ từ chối ở MỌI vùng (lỗi toàn vẹn của chương trình,
-    # như U5); CHƯA ĐỐI CHIẾU ⇒ từ chối trong vùng U3, ngoài vùng chỉ ghi. Lỗi bên trong ⇒ coi như
-    # chưa đối chiếu. Fixture tin cậy không đề: không có câu nào để gắn — không kiểm (như cổng giả định).
+    # bất biến ấy giữ làm lưới thứ hai. LỆCH và ĐÍCH ĐẶT BẰNG TOẠ ĐỘ (W20 §16.5) ⇒ từ chối ở MỌI vùng
+    # (lỗi toàn vẹn của chương trình, như U5); CHƯA ĐỐI CHIẾU ⇒ từ chối trong vùng U3, ngoài vùng chỉ
+    # ghi. Lỗi bên trong ⇒ coi như chưa đối chiếu. Fixture tin cậy không đề: không có câu nào để gắn —
+    # không kiểm (như cổng giả định).
     if not khong_kiem_nguon:
         try:
             dc = doi_chieu_phep_dung(contract, spec, c1a.ten_da_hoa_giai)
@@ -457,13 +458,14 @@ def _sau_grounding(
             dc = KetQuaDoiChieu(reason_code=MA_CHUA_DOI_CHIEU,
                                 details=(f"CONSTRUCTION_BINDING_ERROR {type(e).__name__}",))
         da_chay["construction_binding"] = dict(dc.trang_thai)
-        if dc.reason_code == MA_LECH_PHEP_DUNG or (
+        if dc.reason_code in (MA_LECH_PHEP_DUNG, MA_TOA_DO_THAY_DUNG) or (
                 dc.reason_code == MA_CHUA_DOI_CHIEU and neu_khoi_da_dien(contract.problem_text)):
             return _hong(
                 "construction_binding",
                 ErrorCode.INPUT_NOT_GROUNDED,
-                ("Phép dựng điểm không dùng đúng thực thể đề nêu." if dc.reason_code == MA_LECH_PHEP_DUNG
-                 else "Chưa đối chiếu được phép dựng điểm với câu của đề."),
+                {MA_LECH_PHEP_DUNG: "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                 MA_TOA_DO_THAY_DUNG: "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng."}.get(
+                    dc.reason_code, "Chưa đối chiếu được phép dựng điểm với câu của đề."),
                 details=list(dc.details),
                 reason_code=dc.reason_code,
                 reason_subjects=list(dc.subjects),
