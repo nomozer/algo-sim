@@ -1,0 +1,142 @@
+W20 — §16.5 fault injections (HEAD ac241a8d + working tree, 0 model calls)
+method: one exact in-memory source substitution per run (fault_injection_w20.py, W15 _tiem); files on disk are never edited, so 'revert' = the next run without W20_FI
+tests: tests/geometry/test_construction_binding_literal.py tests/geometry/test_construction_binding.py tests/test_learner_messages.py tests/geometry/test_second_family_live_measurement_reconciliation.py
+
+baseline (no injection): 156 passed, 1 warning in 2.19s
+
+FL1 [construction_binding] §16.5 removed: a relation target defined by coordinates gets no status
+  predicted: CAUGHT — L10–L14 and L16–L18 served or refused by the assumption gate again
+  observed : 36 failed, 120 passed, 1 warning in 2.20s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L12_proj_outside_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L13_proj_outside_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L14_proj_outside_wrong_coords]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L18_proj_outside_alias_to_cited_literal]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L10_proj_U3_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L11_proj_U3_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L12_proj_outside_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L13_proj_outside_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L14_proj_outside_wrong_coords]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L18_proj_outside_alias_to_cited_literal]
+    … and 22 more
+  route outcome changed vs baseline (8 rows):
+    L10_proj_U3_bogus_fid: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', False]
+    L11_proj_U3_relation_fact: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', False]
+    L12_proj_outside_bogus_fid: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L13_proj_outside_relation_fact: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L14_proj_outside_wrong_coords: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L16_mid_U3_literal_then_constructed: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L17_proj_outside_alias_to_vertex: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L18_proj_outside_alias_to_cited_literal: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+
+FL2 [construction_binding] the alias chain is not followed (only the name's own coordinates count)
+  predicted: CAUGHT — L17 (H = var A) and L18 (H = var Q, Q by coordinates)
+  observed : 8 failed, 148 passed, 1 warning in 2.40s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L18_proj_outside_alias_to_cited_literal]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L18_proj_outside_alias_to_cited_literal]
+    FAILED test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L18_proj_outside_alias_to_cited_literal]
+    FAILED test_construction_binding_literal.py::test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam
+    FAILED test_construction_binding_literal.py::test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L17_proj_outside_alias_to_vertex-l\u1ea5y H tr\xf9ng v\u1edbi \u0111i\u1ec3m A]
+  route outcome changed vs baseline (2 rows):
+    L17_proj_outside_alias_to_vertex: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L18_proj_outside_alias_to_cited_literal: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+
+FL3 [construction_binding] a declaration WITHOUT coordinates counted as coordinates (over-refusal)
+  predicted: CAUGHT — declared-then-constructed and W18 B8 (alias of a constructed point) refused
+  observed : 4 failed, 152 passed, 1 warning in 2.06s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[C8_alias_to_constructed_U3]
+    FAILED test_construction_binding_literal.py::test_w20_doi_chung_khong_bi_ghi_toa_do[C8_alias_to_constructed_U3]
+    FAILED test_construction_binding_literal.py::test_w20_khai_bao_khong_toa_do_roi_dung_van_khop
+    FAILED test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B8_alias_ok]
+  route outcome changed vs baseline (1 rows):
+    C8_alias_to_constructed_U3: ['served', None, True] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+
+FL4 [construction_binding] a matching construction under ANOTHER name excuses the coordinates (equal coordinates as identity)
+  predicted: CAUGHT — L15 at the binding level and the projection twin (H by coordinates, K constructed)
+  observed : 2 failed, 154 passed, 1 warning in 2.07s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L15_mid_U3_literal_twin_of_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung
+  route outcome changed vs baseline (0 rows):
+
+FL5 [route] the route records the status but does not refuse
+  predicted: CAUGHT — every route-level §16.5 test
+  observed : 18 failed, 138 passed, 1 warning in 2.29s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L12_proj_outside_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L13_proj_outside_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L14_proj_outside_wrong_coords]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L18_proj_outside_alias_to_cited_literal]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L10_proj_U3_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L11_proj_U3_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L12_proj_outside_bogus_fid]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L13_proj_outside_relation_fact]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L14_proj_outside_wrong_coords]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L17_proj_outside_alias_to_vertex]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L18_proj_outside_alias_to_cited_literal]
+    … and 4 more
+  route outcome changed vs baseline (8 rows):
+    L10_proj_U3_bogus_fid: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', False]
+    L11_proj_U3_relation_fact: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['assumption', 'ASSUMPTION_INVARIANCE_UNPROVEN', False]
+    L12_proj_outside_bogus_fid: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L13_proj_outside_relation_fact: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L14_proj_outside_wrong_coords: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L16_mid_U3_literal_then_constructed: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L17_proj_outside_alias_to_vertex: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+    L18_proj_outside_alias_to_cited_literal: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+
+FL6 [learner_messages] the learner told the answer is on a different figure instead of 'not verifiable'
+  predicted: CAUGHT — the two pipeline-boundary message tests
+  observed : 2 failed, 154 passed, 1 warning in 2.04s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L14_proj_outside_wrong_coords-\u0111\u1eb7t H b\u1eb1ng to\u1ea1 \u0111\u1ed9 cho s\u1eb5n]
+    FAILED test_construction_binding_literal.py::test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung[L17_proj_outside_alias_to_vertex-l\u1ea5y H tr\xf9ng v\u1edbi \u0111i\u1ec3m A]
+  route outcome changed vs baseline (0 rows):
+
+FL7 [construction_binding] a construction of the SAME name excuses its earlier coordinates
+  predicted: CAUGHT — L16 (coordinates, then midpoint(S, A))
+  observed : 3 failed, 153 passed, 1 warning in 2.22s -> CAUGHT
+    FAILED test_construction_binding_literal.py::test_w20_tuyen_san_pham_theo_nhan[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung[L16_mid_U3_literal_then_constructed]
+    FAILED test_construction_binding_literal.py::test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do[L16_mid_U3_literal_then_constructed]
+  route outcome changed vs baseline (1 rows):
+    L16_mid_U3_literal_then_constructed: ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False] -> ['served', None, True]
+
+FL8 [grounding_gate] grounding guard ⑦ (division/midpoint targets) removed — defense in depth
+  predicted: NOT CAUGHT — L2–L4 and L6–L8 still refused, now by construction_binding (stages)
+  observed : 156 passed, 1 warning in 2.10s -> NOT CAUGHT
+  route outcome changed vs baseline (7 rows):
+    L15_mid_U3_literal_twin_of_constructed: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L2_mid_U3_bogus_fid: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L3_mid_U3_relation_fact: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L4_mid_U3_wrong_coords: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L6_mid_outside_bogus_fid: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L7_mid_outside_relation_fact: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+    L8_mid_outside_wrong_coords: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+
+FL9 [grounding_gate] grounding guard ⑥ (text-introduced point declared by coordinates) removed — defense in depth
+  predicted: NOT CAUGHT — L9 still refused, now by construction_binding (stages)
+  observed : 156 passed, 1 warning in 2.29s -> NOT CAUGHT
+  route outcome changed vs baseline (1 rows):
+    L9_proj_U3_assumption: ['grounding', 'DERIVED_ENTITY_WITHOUT_PRODUCER', False] -> ['construction_binding', 'CONSTRUCTION_REPLACED_BY_COORDINATES', False]
+
+FE1 [reconcile_second_family_live_measurement] the frozen reconciliation folder accepted as an output folder
+  predicted: CAUGHT — test_w20_reconciliation_refuses_the_frozen_folder
+  observed : 1 failed, 155 passed, 1 warning in 2.29s -> CAUGHT
+    FAILED test_second_family_live_measurement_reconciliation.py::test_w20_reconciliation_refuses_the_frozen_folder
+  route outcome changed vs baseline (0 rows):
+
+FE2 [reconcile_second_family_live_measurement] the pre-W20 behaviour: the four outputs written into the frozen folder whatever out_dir says
+  predicted: CAUGHT — test_w20_reconciliation_writes_only_to_its_explicit_output_folder and the refusal test
+  observed : 2 failed, 154 passed, 1 warning in 2.31s -> CAUGHT
+    FAILED test_second_family_live_measurement_reconciliation.py::test_w20_reconciliation_writes_only_to_its_explicit_output_folder
+    FAILED test_second_family_live_measurement_reconciliation.py::test_w20_reconciliation_refuses_the_frozen_folder
+  route outcome changed vs baseline (0 rows):
+
+after all injections (no injection again): 156 passed, 1 warning in 2.24s
