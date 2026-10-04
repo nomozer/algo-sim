@@ -1,0 +1,188 @@
+.FFFFF.F.F..F..F.....F.FF.F.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF               [100%]
+================================== FAILURES ===================================
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:156: ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:156: ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:156: ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:156: ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+E   ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:156: ModuleNotFoundError: No module named 'app.simulation.semantic_program.construction_binding'
+E   AssertionError: ('B11_proj_line_wrong_BC', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B11_proj_line_wrong_BC', 'served', None, [])
+E   AssertionError: ('B13_proj_plane_wrong_SBC', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B13_proj_plane_wrong_SBC', 'served', None, [])
+E   AssertionError: ('B16_out_of_vocab_ok', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...D', 'UNKNOWN')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B16_out_of_vocab_ok', 'served', None, [])
+E   AssertionError: ('B19_prime_wrong', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', "M là trung điểm của AA': M KHÔNG thẳng hàng với AA' — hình dựng đặt nó ngoài đường thẳng (nguồn: fact_aa_prime)"])
+    assert (False, 'sour...ne, 'UNKNOWN') == (False, 'cons...CONSTRUCTION')
+
+      At index 1 diff: 'source_invariant' != 'construction_binding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B19_prime_wrong', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', "M là trung điểm của AA': M KHÔNG thẳng hàng với AA' — hình dựng đặt nó ngoài đường thẳng (nguồn: fact_aa_prime)"])
+E   AssertionError: ('B2_mid_wrong_SB', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SA: M KHÔNG thẳng hàng với SA — hình dựng đặt nó ngoài đường thẳng (nguồn: s_abcd_pyramid)'])
+    assert (False, 'sour...ne, 'UNKNOWN') == (False, 'cons...CONSTRUCTION')
+
+      At index 1 diff: 'source_invariant' != 'construction_binding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B2_mid_wrong_SB', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SA: M KHÔNG thẳng hàng với SA — hình dựng đặt nó ngoài đường thẳng (nguồn: s_abcd_pyramid)'])
+E   AssertionError: ('B4_mid_same_value_SB', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SB: M KHÔNG thẳng hàng với SB — hình dựng đặt nó ngoài đường thẳng (nguồn: s_abcd_pyramid)'])
+    assert (False, 'sour...ne, 'UNKNOWN') == (False, 'cons...CONSTRUCTION')
+
+      At index 1 diff: 'source_invariant' != 'construction_binding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B4_mid_same_value_SB', 'source_invariant', None, ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SB: M KHÔNG thẳng hàng với SB — hình dựng đặt nó ngoài đường thẳng (nguồn: s_abcd_pyramid)'])
+E   AssertionError: ('B5_list_swap_targets', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B5_list_swap_targets', 'served', None, [])
+E   AssertionError: ('B7_rename_target_X', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B7_rename_target_X', 'served', None, [])
+E   AssertionError: ('B9_same_coord_diff_identity', 'served', None, [])
+    assert (True, 'served', None, None) == (False, 'cons...CONSTRUCTION')
+
+      At index 0 diff: True != False
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:203: AssertionError: ('B9_same_coord_diff_identity', 'served', None, [])
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AssertionError: []
+    assert [] == ['M là trung ... điểm của SB']
+
+      Right contains 2 more items, first extra item: 'M là trung điểm của SA'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:216: AssertionError: []
+E   AssertionError: ('source_invariant', ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SA: M KHÔNG thẳng hàng với SA — hình dựng đặt nó ngoài đường thẳng (nguồn: không nêu)'])
+    assert (False, 'sour...ariant', None) == (False, 'cons...T_TEXT_BOUND')
+
+      At index 1 diff: 'source_invariant' != 'construction_binding'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:241: AssertionError: ('source_invariant', ['[NORMALIZED_SOURCE_VIOLATED]', 'M là trung điểm của SA: M KHÔNG thẳng hàng với SA — hình dựng đặt nó ngoài đường thẳng (nguồn: không nêu)'])
+E   AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\pydantic\main.py:1042: AttributeError: 'SemanticRouteOutcome' object has no attribute 'construction_binding'
+E   AssertionError: {'id': 'K', 'label': 'Hình chiếu của S lên BD', 'notation': 'K', 'reference': 'K', ...}
+    assert (None, 'derived') == ('AUXILIARY', 'derived')
+
+      At index 0 diff: None != 'AUXILIARY'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:261: AssertionError: {'id': 'K', 'label': 'Hình chiếu của S lên BD', 'notation': 'K', 'reference': 'K', ...}
+E   AssertionError: assert 'CONSTRUCTION_BINDING_UNVERIFIED' in frozenset({'ASSUMPTION_DETERMINES_ANSWER', 'ASSUMPTION_INVARIANCE_UNPROVEN', 'CONSTRUCTION_NOT_TEXT_BOUND', 'GIVEN_ONLY_IN_GOAL_CLAUSE', 'GIVEN_VALUE_NOT_IN_SOURCE', 'SOURCE_EVIDENCE_CONFLICT', ...})
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:274: AssertionError: assert 'CONSTRUCTION_BINDING_UNVERIFIED' in frozenset({'ASSUMPTION_DETERMINES_ANSWER', 'ASSUMPTION_INVARIANCE_UNPROVEN', 'CONSTRUCTION_NOT_TEXT_BOUND', 'GIVEN_ONLY_IN_GOAL_CLAUSE', 'GIVEN_VALUE_NOT_IN_SOURCE', 'SOURCE_EVIDENCE_CONFLICT', ...})
+E   AssertionError: Đề bài nêu mặt phẳng M là trung điểm của SA, nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng M là trung điểm của SB. AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.
+    assert ('đề không cần sửa' in 'Đề bài nêu mặt phẳng M là trung điểm của SA, nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng M là trung điể... trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.' and 'thiết diện' not in 'Đề bài nêu ...hệ dựng lại.'
+
+      'thiết diện' is contained here:
+        phép dựng thiết diện của AlgoSim lại dùng mặt phẳng M là trung điểm của SB. AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.
+      ?           ++++++++++)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:288: AssertionError: Đề bài nêu mặt phẳng M là trung điểm của SA, nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng M là trung điểm của SB. AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.
+E   AssertionError: Bài này chưa có mô phỏng phù hợp trong danh mục hiện tại. Danh mục sẽ được mở rộng dần — bạn có thể thử một bài khác trong các chủ đề đang hỗ trợ.
+    assert ('chưa đối chiếu' in 'Bài này chưa có mô phỏng phù hợp trong danh mục hiện tại. Danh mục sẽ được mở rộng dần — bạn có thể thử một bài khác trong các chủ đề đang hỗ trợ.')
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_construction_binding.py:293: AssertionError: Bài này chưa có mô phỏng phù hợp trong danh mục hiện tại. Danh mục sẽ được mở rộng dần — bạn có thể thử một bài khác trong các chủ đề đang hỗ trợ.
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_construction_binding.py::test_w18_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu
+FAILED tests/geometry/test_construction_binding.py::test_w18_danh_sach_lech_so_luong_khong_cho_quan_he
+FAILED tests/geometry/test_construction_binding.py::test_w18_doc_hinh_chieu_hai_vai_tro_va_dich_nhan
+FAILED tests/geometry/test_construction_binding.py::test_w18_cach_noi_ngoai_tu_vung_va_menh_de_muc_tieu_khong_cho_quan_he
+FAILED tests/geometry/test_construction_binding.py::test_w18_hai_cau_noi_khac_nhau_ve_mot_dich_thi_bo_ca_hai
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B11_proj_line_wrong_BC]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B13_proj_plane_wrong_SBC]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B16_out_of_vocab_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B19_prime_wrong]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B2_mid_wrong_SB]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B4_mid_same_value_SB]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B5_list_swap_targets]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B7_rename_target_X]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tuyen_san_pham_theo_nhan[B9_same_coord_diff_identity]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B10_proj_line_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B11_proj_line_wrong_BC]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B12_proj_plane_ok_SBD]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B13_proj_plane_wrong_SBC]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B14_proj_plane_3_of_4]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B15_foot_wording_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B16_out_of_vocab_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B17_auxiliary_foot]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B18_prime_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B19_prime_wrong]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B1_mid_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B20_divide_half_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B22_out_of_scope_intersection]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B23_projection_base_wording]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B2_mid_wrong_SB]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B3_mid_swap_ends]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B4_mid_same_value_SB]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B5_list_swap_targets]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B6_list_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B7_rename_target_X]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B8_alias_ok]
+FAILED tests/geometry/test_construction_binding.py::test_w18_trang_thai_doi_chieu_cua_phep_dung[B9_same_coord_diff_identity]
+FAILED tests/geometry/test_construction_binding.py::test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh
+FAILED tests/geometry/test_construction_binding.py::test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi
+FAILED tests/geometry/test_construction_binding.py::test_w18_chua_doi_chieu_ngoai_vung_da_dien_chi_ghi_lai
+FAILED tests/geometry/test_construction_binding.py::test_w18_diem_phu_tro_mang_xuat_xu_phu_tro_diem_cua_de_mang_quan_he
+FAILED tests/geometry/test_construction_binding.py::test_w18_ma_chua_doi_chieu_co_nguyen_nhan_chua_ro_va_khong_gui_di_sua
+FAILED tests/geometry/test_construction_binding.py::test_w18_loi_lech_phep_dung_neu_hai_quan_he_va_khong_bao_sua_de
+FAILED tests/geometry/test_construction_binding.py::test_w18_loi_chua_doi_chieu_khong_noi_de_sai
+43 failed, 15 passed in 1.45s
+exit=1 at bb9f7004

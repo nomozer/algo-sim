@@ -1,0 +1,8533 @@
+{
+ "corpus": "W18_CONSTRUCTION_BINDING",
+ "model_calls": 0,
+ "labels_sha256_lf": "0d4c0ab799f7523923a57e09035fabdbe59544e72d5f5e09c0770365be30c6a5",
+ "rows": [
+  {
+   "id": "B1_mid_ok",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M": "MATCHED"
+   },
+   "reason": "M = midpoint(S, A) as the text says; MC = 9",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B2_mid_wrong_SB",
+   "group": "W18_MIDPOINT",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "M": "MISMATCHED"
+   },
+   "reason": "operand changed: M = midpoint(S, B); before W18 refused only by the coordinate invariant with a generic code (cause UNKNOWN)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "B"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B3_mid_swap_ends",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M": "MATCHED"
+   },
+   "reason": "M = midpoint(A, S): a midpoint is unordered",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "S"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B4_mid_same_value_SB",
+   "group": "W18_MIDPOINT",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "M": "MISMATCHED"
+   },
+   "reason": "the program builds the midpoint of SA; the distance to (ABCD) is 3 either way — equal values never make the construction right",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "day",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "B",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SB"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SB. Tính khoảng cách từ M đến mặt phẳng (ABCD)."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "day"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B5_list_swap_targets",
+   "group": "W18_MIDPOINT_LIST",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "M": "MISMATCHED",
+    "N": "MISMATCHED"
+   },
+   "reason": "M and N swapped; before W18 SERVED with MC = 3√6 where the text gives 9 (the 'lần lượt' list is read by no checker)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M, N lần lượt là trung điểm của SA, SB. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "B"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "N",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B6_list_ok",
+   "group": "W18_MIDPOINT_LIST",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M": "MATCHED",
+    "N": "MATCHED"
+   },
+   "reason": "the list pairs M↔SA, N↔SB in order",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "N",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M, N lần lượt là trung điểm của SA, SB. Tính độ dài đoạn MN."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "N",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "B"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "N"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B7_rename_target_X",
+   "group": "W18_TARGET",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "X": "MISMATCHED"
+   },
+   "reason": "the text's M is never built; the program builds midpoint(S, A) as X, a name the text does not have — before W18 served (value right, entity wrong)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "X"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "X",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "X",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B8_alias_ok",
+   "group": "W18_IDENTITY",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M_tam": "MATCHED"
+   },
+   "reason": "M_tam = midpoint(S, A), M = var M_tam, M declared point3 with the text fact as source: the alias resolves to the text's M",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "M_def",
+      "label": "Trung điểm M",
+      "values": [
+       "M là trung điểm của SA"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "M_def",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "M_tam",
+      "type": "point3"
+     },
+     {
+      "name": "M",
+      "type": "point3",
+      "source_fact_id": "M_def"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M_tam",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "M",
+      "expr": {
+       "kind": "var",
+       "name": "M_tam"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B9_same_coord_diff_identity",
+   "group": "W18_IDENTITY",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "M": "MISMATCHED"
+   },
+   "reason": "H coincides with A; the program builds M = midpoint(S, A) — same coordinates, different entity; before W18 served",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "H",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SH"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu của S lên mặt phẳng (ABCD). Gọi M là trung điểm của SH. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "day"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B10_proj_line_ok",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "H": "MATCHED"
+   },
+   "reason": "H = project_onto(S, BD); SH = 3√6",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "BD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B11_proj_line_wrong_BC",
+   "group": "W18_PROJECTION",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "H": "MISMATCHED"
+   },
+   "reason": "projected onto BC; before W18 SERVED 6√2 where the text gives 3√6",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BC",
+      "through_a": "B",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "BC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B12_proj_plane_ok_SBD",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "H": "MATCHED"
+   },
+   "reason": "H = project_onto(A, plane through S, B, D); AH = 2√3",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "A"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của A lên mặt phẳng (SBD). Tính độ dài đoạn AH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "SBD",
+      "through": [
+       "S",
+       "B",
+       "D"
+      ]
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "A",
+       "target": "SBD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B13_proj_plane_wrong_SBC",
+   "group": "W18_PROJECTION",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "H": "MISMATCHED"
+   },
+   "reason": "projected onto (SBC); before W18 SERVED 3√2 where the text gives 2√3",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "A"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của A lên mặt phẳng (SBD). Tính độ dài đoạn AH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "SBC",
+      "through": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "A",
+       "target": "SBC"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B14_proj_plane_3_of_4",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "H": "MATCHED"
+   },
+   "reason": "the program plane goes through A, B, C — three points of (ABCD) fix that plane",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu của S lên mặt phẳng (ABCD). Tính độ dài đoạn SH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B15_foot_wording_ok",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "H": "MATCHED"
+   },
+   "reason": "the 'chân đường vuông góc' phrasing of the same relation",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là chân đường vuông góc hạ từ S xuống BD. Tính độ dài đoạn SH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "BD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B16_out_of_vocab_ok",
+   "group": "W18_VOCABULARY",
+   "label": "INVARIANT",
+   "expect": "refused:construction_binding:CONSTRUCTION_BINDING_UNVERIFIED:UNKNOWN",
+   "binding": {
+    "M": "UNVERIFIED"
+   },
+   "reason": "the program is right, but 'điểm chính giữa' is outside the closed vocabulary: not verifiable, refused in the polyhedral scope (fail closed); an over-refusal by design, with a 'chưa đối chiếu được' message",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là điểm chính giữa của đoạn SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "S",
+       "b": "A"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B17_auxiliary_foot",
+   "group": "W18_AUXILIARY",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "K": "AUXILIARY"
+   },
+   "reason": "K = project_onto(S, BD) is the engine's own construction (the text names no K): auxiliary, served, never a datum",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "K",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Tính khoảng cách từ S đến đường thẳng BD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "K",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "BD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "K"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B18_prime_ok",
+   "group": "W18_IDENTITY_PRIME",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M": "MATCHED"
+   },
+   "reason": "M = midpoint(A, A_prime): A_prime ≡ A'",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 44,
+      "source_end": 45,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_aa_prime",
+      "label": "AA'",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "A'"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "AA' = 5"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     },
+     {
+      "kind": "segment_division",
+      "points": [
+       "A",
+       "A'",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của AA'"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "A'",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "D"
+      ],
+      "source_fact_id": "fact_perp_lat",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": "rectangle",
+     "lateral_structure": "right",
+     "solid_subkind": "cuboid",
+     "source_grounding": "hình hộp chữ nhật"
+    },
+    "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gọi M là trung điểm của AA'. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_ab",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_ad",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AA_prime_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_aa_prime",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A_prime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B_prime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C_prime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D_prime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_hop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_AA_prime",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_hop",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "đáy dưới ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_AA_prime",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "A_prime"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_hop"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "A_prime"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B19_prime_wrong",
+   "group": "W18_IDENTITY_PRIME",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "binding": {
+    "M": "MISMATCHED"
+   },
+   "reason": "M = midpoint(A, B_prime)",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "fact_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 44,
+      "source_end": 45,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "fact_aa_prime",
+      "label": "AA'",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 61,
+      "source_end": 62,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "A'"
+      ],
+      "expected": "5",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "AA' = 5"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "fact_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "fact_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     },
+     {
+      "kind": "segment_division",
+      "points": [
+       "A",
+       "A'",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "fact_aa_prime",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của AA'"
+     }
+    ],
+    "geometric_relations": [
+     {
+      "kind": "perpendicular_lines",
+      "line": [
+       "A",
+       "B"
+      ],
+      "other_line": [
+       "A",
+       "D"
+      ],
+      "plane": [],
+      "source_fact_id": "fact_perp_base",
+      "model_assumption": false
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "line": [
+       "A'",
+       "A"
+      ],
+      "other_line": [],
+      "plane": [
+       "A",
+       "B",
+       "D"
+      ],
+      "source_fact_id": "fact_perp_lat",
+      "model_assumption": false
+     }
+    ],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": "rectangle",
+     "lateral_structure": "right",
+     "solid_subkind": "cuboid",
+     "source_grounding": "hình hộp chữ nhật"
+    },
+    "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gọi M là trung điểm của AA'. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Thể tích khối hộp chữ nhật",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "initial_value": "3",
+      "source_fact_id": "fact_ab",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "initial_value": "4",
+      "source_fact_id": "fact_ad",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "AA_prime_length",
+      "type": "float",
+      "initial_value": "5",
+      "source_fact_id": "fact_aa_prime",
+      "provenance": "GIVEN"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "0"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A_prime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B_prime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "0",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C_prime",
+      "type": "point3",
+      "initial_value": [
+       "3",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D_prime",
+      "type": "point3",
+      "initial_value": [
+       "0",
+       "4",
+       "5"
+      ],
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "khoi_hop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_AA_prime",
+      "type": "float"
+     },
+     {
+      "name": "the_tich_khoi_hop",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "đáy dưới ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_hop",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "label": "Hình hộp chữ nhật ABCD.A′B′C′D′"
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_AA_prime",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "A",
+       "wrt": "A_prime"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "the_tich_khoi_hop",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_hop"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "var",
+       "name": "the_tich_khoi_hop"
+      }
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "B_prime"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B20_divide_half_ok",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "M": "MATCHED"
+   },
+   "reason": "M = divide_segment(S, A, 1/2) is the same relation",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "M"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "M",
+      "expr": {
+       "kind": "divide_segment",
+       "a": "S",
+       "b": "A",
+       "ratio": "1/2"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "M",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B21_not_realized",
+   "group": "W18_SCOPE",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {},
+   "reason": "the question does not use M and the program does not build it: NOT_REALIZED, recorded only",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "C",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_division",
+      "points": [
+       "S",
+       "A",
+       "M"
+      ],
+      "expected": "1/2",
+      "coefficients": [],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "M là trung điểm của SA"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn SC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "C"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B22_out_of_scope_intersection",
+   "group": "W18_SCOPE",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "O": "OUT_OF_SCOPE"
+   },
+   "reason": "an intersection is outside the W18 vocabulary: behaviour unchanged (served), declared limit",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "O",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi O là giao điểm của AC và BD. Tính độ dài đoạn SO."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "O"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  },
+  {
+   "id": "B23_projection_base_wording",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "binding": {
+    "H": "MATCHED"
+   },
+   "reason": "'mặt đáy' is the base of the only solid of the text, S.ABCD: its point set {A, B, C, D}",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "H",
+      "params": {
+       "witness": "d_kq",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "s_abcd_pyramid",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD là khối chóp"
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       "S.ABCD là khối chóp"
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "abcd_square",
+      "label": "Đáy là hình vuông",
+      "values": [
+       "ABCD là hình vuông"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "A_coords",
+      "label": "Tọa độ điểm A",
+      "values": [
+       "A(0;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "B_coords",
+      "label": "Tọa độ điểm B",
+      "values": [
+       "B(6;0;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "C_coords",
+      "label": "Tọa độ điểm C",
+      "values": [
+       "C(6;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "D_coords",
+      "label": "Tọa độ điểm D",
+      "values": [
+       "D(0;6;0)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "S_coords",
+      "label": "Tọa độ điểm S",
+      "values": [
+       "S(0;0;6)"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "A"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "A_coords",
+      "scale_symbol": "",
+      "source_text": "A(0, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "B"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "0",
+       "0"
+      ],
+      "source_fact_id": "B_coords",
+      "scale_symbol": "",
+      "source_text": "B(6, 0, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "C"
+      ],
+      "expected": "",
+      "coefficients": [
+       "6",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "C_coords",
+      "scale_symbol": "",
+      "source_text": "C(6, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "D"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "6",
+       "0"
+      ],
+      "source_fact_id": "D_coords",
+      "scale_symbol": "",
+      "source_text": "D(0, 6, 0)"
+     },
+     {
+      "kind": "point_coordinate",
+      "points": [
+       "S"
+      ],
+      "expected": "",
+      "coefficients": [
+       "0",
+       "0",
+       "6"
+      ],
+      "source_fact_id": "s_abcd_pyramid",
+      "scale_symbol": "",
+      "source_text": "S(0, 0, 6)"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": null,
+    "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu của S lên mặt đáy. Tính độ dài đoạn SH."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp, diện tích thiết diện và khoảng cách từ điểm đến đường thẳng",
+    "description": "Bài toán này minh họa cách dựng hình chóp, mặt phẳng cắt, thiết diện và tính toán các đại lượng hình học cơ bản trong không gian Oxyz.",
+    "memory_declarations": [
+     {
+      "name": "S.ABCD",
+      "type": "solid",
+      "source_fact_id": "s_abcd_pyramid"
+     },
+     {
+      "name": "d_kq",
+      "type": "float"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       0
+      ],
+      "source_fact_id": "A_coords",
+      "model_assumption": "Gốc tọa độ được đặt tại A theo đề bài."
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "initial_value": [
+       6,
+       0,
+       0
+      ],
+      "source_fact_id": "B_coords"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "initial_value": [
+       6,
+       6,
+       0
+      ],
+      "source_fact_id": "C_coords"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "initial_value": [
+       0,
+       6,
+       0
+      ],
+      "source_fact_id": "D_coords"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "initial_value": [
+       0,
+       0,
+       6
+      ],
+      "source_fact_id": "S_coords"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "target_var": "ABCD_base",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy hình vuông ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "S.ABCD",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        1,
+        2,
+        3,
+        4
+       ],
+       [
+        0,
+        1,
+        2
+       ],
+       [
+        0,
+        2,
+        3
+       ],
+       [
+        0,
+        3,
+        4
+       ],
+       [
+        0,
+        4,
+        1
+       ]
+      ],
+      "label": "Khối chóp S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "H",
+      "expr": {
+       "kind": "project_onto",
+       "point": "S",
+       "target": "day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_kq",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "H"
+      }
+     }
+    ],
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này giúp học sinh hình dung cách một mặt phẳng cắt một khối chóp tạo ra thiết diện, và cách tính các đại lượng hình học liên quan."
+   },
+   "program_schema_ok": true
+  }
+ ]
+}
