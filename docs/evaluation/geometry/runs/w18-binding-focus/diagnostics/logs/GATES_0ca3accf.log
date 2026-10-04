@@ -1,0 +1,38 @@
+# run: bash <main tree>/docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/w18_gates.sh 0ca3accf 0ec2bbbb (cwd = worktree root)
+2026-10-04T10:23:13Z
+# W18 verification gates at 0ca3accf7e921797e75aebcbc19e3a05b2557859 in '<WT_ROOT>/w18 space/algo-sim' (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+0ca3accf7e921797e75aebcbc19e3a05b2557859
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, d3b4cab96c69a09f…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 110 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git diff after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since 0ec2bbbb105d1aa899b6c292cb3821092fb59b40: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since 0ec2bbbb105d1aa899b6c292cb3821092fb59b40
+model-surface files changed: 0
+## CACHE_VERSION
+753:CACHE_VERSION = "110"
+## git diff --check 0ec2bbbb105d1aa899b6c292cb3821092fb59b40..0ca3accf7e921797e75aebcbc19e3a05b2557859 (captured *.log excluded: verbatim pytest/npm output may carry trailing spaces)
+exit=0
+## node harness tests
+ℹ tests 72
+ℹ pass 70
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0
+2026-10-04T10:23:18Z

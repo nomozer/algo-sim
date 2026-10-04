@@ -1,0 +1,19 @@
+# Diagnostic re-run of the frontend fault injection FW2 alone (scratch worktree D:/tmp/w18-fe at 8caa8307; FW2 substitution + one-family/one-viewport filter, restored byte-identical), full stdout/stderr kept — the root cause of 'no evidence': the suite threw CAUSAL_TARGET_NOT_CLICKABLE after the chip had rewound the construction
+# driver: node docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/diag_fw_single.mjs FW2 D:/tmp/w18-diag-fw2 (copied from the session scratchpad, byte-identical)
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+--- stderr ---
+[33m
+- Using dynamic import() to code-split the application
+(node:25396) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+file:///D:/tmp/w18-fe/frontend/scripts/compiler-scene-suite.mjs:1094
+    if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${causalId}`);
+                        ^
+Error: CAUSAL_TARGET_NOT_CLICKABLE:the_tich_khoi_chop
+    at runPositive (file:///D:/tmp/w18-fe/frontend/scripts/compiler-scene-suite.mjs:1094:25)
+    at async runSuite (file:///D:/tmp/w18-fe/frontend/scripts/compiler-scene-suite.mjs:1577:96)
+    at async file:///D:/tmp/w18-fe/frontend/scripts/compiler-scene-replay.mjs:42:18
+Node.js v24.13.0
+exit=1

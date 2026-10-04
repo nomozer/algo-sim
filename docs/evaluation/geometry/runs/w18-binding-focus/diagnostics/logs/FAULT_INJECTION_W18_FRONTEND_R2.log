@@ -1,0 +1,110 @@
+W18 — frontend fault injections on the detached worktree at 0ca3accf (0 model calls)
+method: one exact one-line substitution per run in the scratch worktree, test, then the original bytes restored and verified; browser injections add a one-family/one-viewport run filter to the scratch copy
+
+baseline src/simulations/domains/geometry/scene3d-annotations.test.ts: exit 0 · Tests  23 passed (23)
+baseline src/simulations/domains/geometry/Scene3DExplorer.test.tsx: exit 0 · Tests  36 passed (36)
+baseline scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 65 · ℹ fail 0
+
+FE1 [src/simulations/domains/geometry/scene3d-annotations.ts] a result label available from its MEASUREMENT step (result too early)
+  predicted: Hiện tất cả: … đáp số vẫn chỉ từ bước kết luận; chọn một đại lượng … chọn trước bước kết luận
+  observed : exit 1 · Tests  3 failed | 20 passed (23) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt 8ms
+    × Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận 1ms
+    × chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn 2ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn
+  restored byte-identical: true
+
+FE2 [src/simulations/domains/geometry/scene3d-annotations.ts] every label on by default
+  predicted: mặc định chỉ dữ kiện đề cho …
+  observed : exit 1 · Tests  6 failed | 17 passed (23) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian 6ms
+    × chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn 1ms
+    × chọn một vật: các đại lượng có chủ thể là vật ấy 1ms
+    × same_as: không có nhãn thứ hai; chọn nó là đưa nhãn của dữ kiện lên 1ms
+    × envelope v109 không có `role`: suy từ category và origin (dữ kiện vẫn hiện mặc định) 0ms
+    × nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện 1ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn
+  restored byte-identical: true
+
+FE3 [src/simulations/domains/geometry/scene3d-annotations.ts] a segment label anchored at one endpoint (label on the wrong subject)
+  predicted: điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối …
+  observed : exit 1 · Tests  1 failed | 22 passed (23) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ 6ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ
+  restored byte-identical: true
+
+FE4 [src/simulations/domains/geometry/Scene3DExplorer.tsx] the inspector keeps its formula while the open solution shows it (two detail copies)
+  predicted: mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)
+  observed : exit 1 · Tests  1 failed | 35 passed (36) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức) 7ms
+    FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)
+  restored byte-identical: true
+
+FE5 [src/simulations/domains/geometry/scene3d-annotations.ts] selecting a quantity does not bring its label and numeric chain
+  predicted: chọn một đại lượng: nó và chuỗi số của nó …; chọn một vật …
+  observed : exit 1 · Tests  3 failed | 20 passed (23) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn 7ms
+    × chọn một vật: các đại lượng có chủ thể là vật ấy 1ms
+    × nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện 1ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một vật: các đại lượng có chủ thể là vật ấy
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện
+  restored byte-identical: true
+
+FE6 [src/simulations/domains/geometry/scene3d-solution.tsx] a same_as measurement gets a second solution row
+  predicted: same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai
+  observed : exit 1 · Tests  1 failed | 35 passed (36) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai 6ms
+    FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai
+  restored byte-identical: true
+
+FE7 [src/simulations/domains/geometry/scene3d-solution.tsx] the full solution open by default
+  predicted: lời giải đầy đủ THU GỌN mặc định …
+  observed : exit 1 · Tests  1 failed | 35 passed (36) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị 8ms
+    FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị
+  restored byte-identical: true
+
+FE8 [src/simulations/domains/geometry/scene3d-view.tsx] the label layer hidden from assistive technology (labels not operable)
+  predicted: nhãn số đo bấm được: lớp nhãn không còn aria-hidden …
+  observed : exit 1 · Tests  1 failed | 35 passed (36) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × nhãn số đo bấm được: lớp nhãn không còn aria-hidden, mỗi nhãn là role=button có tabIndex, nghe bằng listener (không JSX onClick) 7ms
+    FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > nhãn số đo bấm được: lớp nhãn không còn aria-hidden, mỗi nhãn là role=button có tabIndex, nghe bằng listener (không JSX onClick)
+  restored byte-identical: true
+
+browser baseline cross_section/desktop: positive pass true · predicted codes present: FW1:false FW3:false
+
+browser baseline triangular_pyramid/desktop: positive pass true · predicted codes present: FW2:false FW4:false
+
+FW1 [src/simulations/domains/geometry/scene3d-view.tsx] a highlighted hidden edge drawn solid (cross_section/desktop)
+  predicted: DASH_DIFFERS_FROM_OCCLUSION
+  observed : suite exit 1 · DASH_DIFFERS_FROM_OCCLUSION in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w18-fi-fw1_r2
+  restored byte-identical: true
+
+FW2 [src/simulations/domains/geometry/Scene3DExplorer.tsx] the 'Hiện tất cả' chip also rewinds the construction to step 0 (triangular_pyramid/desktop)
+  predicted: SHOW_ALL_OFF_CHANGED_STEP
+  observed : suite exit 1 · SHOW_ALL_OFF_CHANGED_STEP in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w18-fi-fw2_r2
+  restored byte-identical: true
+
+FW3 [src/simulations/domains/geometry/scene3d-view.tsx] every witness drawn whether or not its distance label shows (cross_section/desktop)
+  predicted: WITNESS_NOT_SHOWN_LABEL
+  observed : suite exit 1 · WITNESS_NOT_SHOWN_LABEL in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w18-fi-fw3_r2
+  restored byte-identical: true
+
+FW4 [src/simulations/domains/geometry/Scene3DExplorer.tsx] two regions carry the selected quantity's formula (triangular_pyramid/desktop)
+  predicted: DETAIL_REGIONS_2
+  observed : suite exit 1 · DETAIL_REGIONS_2 in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w18-fi-fw4_r2
+  restored byte-identical: true
+
+browser filter removed byte-identical: true
+
+after all injections src/simulations/domains/geometry/scene3d-annotations.test.ts: exit 0 · Tests  23 passed (23)
+after all injections src/simulations/domains/geometry/Scene3DExplorer.test.tsx: exit 0 · Tests  36 passed (36)
+after all injections scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 65 · ℹ fail 0

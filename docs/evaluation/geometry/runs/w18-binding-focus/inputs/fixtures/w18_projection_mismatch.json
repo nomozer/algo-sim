@@ -1,0 +1,27 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "w18_projection_mismatch",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+  "source": "w18_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "7a06ee473a481a1377d270b9a2318756807da91a",
+  "product_tree_sha": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "construction_binding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "reason_subjects": [
+      "H là hình chiếu của S lên BD",
+      "H là hình chiếu của S lên BC"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+  },
+  "source_reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+  "refusal_cause": "CONSTRUCTION"
+}
