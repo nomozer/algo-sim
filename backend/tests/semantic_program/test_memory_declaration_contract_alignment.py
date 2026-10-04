@@ -88,7 +88,13 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # trường ở P1: `display_label` của bước nhóm cạnh bên "Bước dựng hình" → "Các cạnh bên SA, SB, SC, SD"
 # (W17 Task 4). Bỏ hai trường thêm và trả nhãn cũ thì cả hai cảnh băm đúng hằng W14 (`8a645756…`,
 # `1b0c714e…`); số vật và final_memory giữ nguyên.
-SCENE_START = {CA_P1: "84b1b7d4f747aed8b28c9b1add4e8d597a2b0a2e63e3d09784695337ba2cc5b7",
+# W18 (§16.5–16.7, đối soát bằng diff cảnh P1 tại 00654627 ↔ sau Task 3): CHỈ trường trình bày — THÊM
+# `annotation.role` (3 đại lượng) và `annotation.witness` của dist_S_BD (chân S trên BD = (3, 3, 0)); ĐỔI
+# `anchor` của dist_S_BD pair → witness, `notation`/`reference` của area_T None/"Diện tích thiết diện" →
+# "S(T)" (đề gọi thiết diện là (T)) cùng hai hệ quả chữ của ký hiệu ấy: `formula.text` "S(T) = 9" và
+# `learner_text` của bước diện tích "Tính diện tích thiết diện: S(T) = 9.". 0 trường hình học/giá trị,
+# số vật 17, final_memory giữ nguyên; P6 không đổi. Hằng W17 của P1: `84b1b7d4…`.
+SCENE_START = {CA_P1: "c1ba6d59261987c207c0f606f2f14419d8e4f1a737b49d18b0eb5f0ee77d6df0",
                CA_P6: "52ab72fbeac51dc30af9a49b6d0bbb6b00d246dda5472d8a490131ba0054ad28"}
 SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 
