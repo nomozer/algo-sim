@@ -254,7 +254,11 @@ KHONG_SUA_NGUON = frozenset({
     "ASSUMPTION_DETERMINES_ANSWER",
     "ASSUMPTION_INVARIANCE_UNPROVEN",
     # W17 §15.1: phép dựng lệch câu cắt của đề — từ chối ở chặng `assumption`, không sửa.
+    # W18 §16.4: cùng mã cho phép dựng điểm lệch quan hệ của đề (chặng `construction_binding`).
     "CONSTRUCTION_NOT_TEXT_BOUND",
+    # W18 §16.4: chưa đối chiếu được phép dựng điểm với câu của đề — viết lại chương trình không
+    # làm câu ấy đọc được.
+    "CONSTRUCTION_BINDING_UNVERIFIED",
 })
 
 

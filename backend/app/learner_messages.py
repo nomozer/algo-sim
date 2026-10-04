@@ -198,6 +198,35 @@ def _msg_lech_phep_dung(envelope: dict) -> str:
     return cau + _DUOI_LECH_PHEP_DUNG
 
 
+def _msg_lech_phep_dung_diem(envelope: dict) -> str:
+    """W18 §16.4 — `reason_subjects` = các cặp [quan hệ đề nêu, quan hệ chương trình dựng], viết theo
+    ký hiệu học sinh (`M là trung điểm của SA`). Nguyên nhân CONSTRUCTION: không bảo sửa đề."""
+    s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]
+    cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if a and b and "_" not in a + b]
+    if cap:
+        def noi(xs):
+            return " và ".join(f"\"{x}\"" for x in dict.fromkeys(xs))
+        cau = (f"Đề bài nêu {noi(a for a, _ in cap)}, nhưng phép dựng của AlgoSim lại dựng "
+               f"{noi(b for _, b in cap)}.")
+    else:
+        cau = "Phép dựng điểm của AlgoSim không khớp với câu của đề bài."
+    return cau + _DUOI_LECH_PHEP_DUNG
+
+
+#: W18 §16.4 — CHƯA ĐỐI CHIẾU được, không phải đề sai: nói đúng giới hạn của hệ.
+_MSG_CHUA_DOI_CHIEU = (
+    "AlgoSim chưa đối chiếu được cách dựng {diem} với câu của đề bài: hệ mới đọc được một số cách "
+    "viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là "
+    "giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm "
+    "chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+)
+
+
+def _msg_chua_doi_chieu(envelope: dict) -> str:
+    ten = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str) and x and "_" not in x]
+    return _MSG_CHUA_DOI_CHIEU.format(diem=("điểm " + ", ".join(ten)) if ten else "một điểm trong hình")
+
+
 _KY_HIEU_DIEM = re.compile(r"[A-Z]\d*′?")
 
 
@@ -219,7 +248,11 @@ def learner_reason(envelope: dict) -> str:
     TRÚC), không bao giờ đọc text ``reason``."""
     ma = envelope.get("reason_code") or ""
     if ma == "CONSTRUCTION_NOT_TEXT_BOUND":
-        return _msg_lech_phep_dung(envelope)
+        # W18: cùng mã, chặng phân biệt — phép dựng ĐIỂM (§16) hay phép dựng thiết diện (§15.1).
+        return (_msg_lech_phep_dung_diem(envelope) if envelope.get("stage_reached") == "construction_binding"
+                else _msg_lech_phep_dung(envelope))
+    if ma == "CONSTRUCTION_BINDING_UNVERIFIED":
+        return _msg_chua_doi_chieu(envelope)
     theo_nn = _MSG_THEO_NGUYEN_NHAN.get(ma, {}).get(envelope.get("refusal_cause") or "")
     if theo_nn is not None:
         mp = ", ".join(s for s in envelope.get("reason_subjects") or [] if isinstance(s, str) and "_" not in s)

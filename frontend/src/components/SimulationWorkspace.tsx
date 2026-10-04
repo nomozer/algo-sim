@@ -93,6 +93,7 @@ export const NHAN_GIAI_DOAN: Record<string, string> = {
   source_invariant: "kiểm lại ràng buộc của đề",
   postconditions: "kiểm lại kết quả bằng hình",
   assumption: "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+  construction_binding: "đối chiếu phép dựng điểm với câu của đề",
   binding: "nối kết quả vào màn hình",
   compile: "dựng cảnh 3D",
   transport: "đóng gói kết quả",
@@ -271,8 +272,12 @@ export function UnsupportedNotice({
   /* (W17 §15.3) Cổng nguồn từ chối cả hai phía: dữ kiện đề không có (SOURCE) và phép dựng/số liệu
      của HỆ lệch câu chữ của đề (CONSTRUCTION). Nhãn chung "dữ kiện không truy được về đề bài" nói
      sai phía thứ hai — đọc nguyên nhân có cấu trúc, không dò chữ. */
+  /* (W18 §16.4) Ở chặng đối chiếu phép dựng điểm, nguyên nhân khác CONSTRUCTION nghĩa là hệ CHƯA đối
+     chiếu được — giới hạn của hệ, không phải dữ kiện của đề thiếu nguồn. */
   const nhanLoai = unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
     ? "hệ dựng lệch với đề bài"
+    : unsupported.stage_reached === "construction_binding" && khoaLoai === "input_not_grounded"
+    ? "hệ chưa đối chiếu được phép dựng với đề"
     : khoaLoai
     ? NHAN_LOAI_VAN_DE[khoaLoai] ?? KHONG_XAC_DINH
     : KHONG_XAC_DINH;

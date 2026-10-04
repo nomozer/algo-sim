@@ -216,6 +216,31 @@ describe("W17 · gợi ý theo nguyên nhân từ chối", () => {
   });
 });
 
+/* W18 §16.4 — chặng `construction_binding` (phép dựng điểm ↔ quan hệ của đề). CHƯA ĐỐI CHIẾU được
+   (nguyên nhân UNKNOWN) là giới hạn của hệ: loại vấn đề không được nói "dữ kiện không truy được về đề
+   bài" — câu ấy quy lỗi cho đề. Phân nhánh bằng `stage_reached` (trường có cấu trúc), không dò chữ. */
+describe("W18 · đối chiếu phép dựng điểm với đề", () => {
+  const the = (refusal_cause: Envelope["refusal_cause"]) => html({
+    reason: "…", learner_reason: "…", failure_category: "geometry_generation_failed",
+    error_code: "input_not_grounded", stage_reached: "construction_binding", refusal_cause,
+  });
+
+  it("chặng có nhãn tiếng Việt", () => {
+    expect(NHAN_GIAI_DOAN.construction_binding).toBeTruthy();
+    expect(the("UNKNOWN")).toContain(NHAN_GIAI_DOAN.construction_binding);
+  });
+
+  it("chưa đối chiếu — loại vấn đề nói giới hạn của hệ, không quy cho dữ kiện của đề", () => {
+    const out = the("UNKNOWN");
+    expect(out).toContain("hệ chưa đối chiếu được phép dựng với đề");
+    expect(out).not.toContain(NHAN_LOAI_VAN_DE.input_not_grounded);
+  });
+
+  it("lệch — loại vấn đề vẫn nói hệ dựng lệch đề", () => {
+    expect(the("CONSTRUCTION")).toContain("hệ dựng lệch với đề bài");
+  });
+});
+
 describe("bảng nhãn phủ hết thứ fixture thật mang tới", () => {
   it("mọi stage/code trong 9 fixture đều có nhãn", () => {
     const thieu: string[] = [];

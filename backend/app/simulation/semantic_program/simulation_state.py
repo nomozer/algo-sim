@@ -43,6 +43,7 @@ from ..geometry import Line3, Plane3, Segment3, Vec3
 from ..geometry.curved import Circle3, CurvedSolid, Ellipse3
 from ..geometry.radical import Radical, display, to_json
 from ..geometry.section import Polyhedron, Section
+from .construction_binding import AUXILIARY, MATCHED, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
@@ -753,7 +754,7 @@ def build_simulation_state(
         # xuất từ đây, nên học sinh phân biệt được *"cái phải chứng minh"* với
         # *"cái dựng ra để chứng minh"* — thứ nhìn hình vẽ phẳng không thấy.
         "targets": sorted(_muc_tieu(contract)),
-        "provenance": _xuat_xu_hien_thi(spec),
+        "provenance": _xuat_xu_hien_thi(spec, contract),
         "annotations": so_do,
         "annotation_diagnostics": chan_doan_so_do,
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
@@ -783,12 +784,13 @@ def _muc_tieu(contract: Any) -> set[str]:
     return ra
 
 
-def _xuat_xu_hien_thi(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
+def _xuat_xu_hien_thi(spec: SemanticProgramSpec, contract: Any = None) -> dict[str, dict[str, Any]]:
     """`id → xuất xứ NGẮN` cho ô soi. Không chép prompt vào từng đối tượng.
 
     Ba mẩu, mỗi mẩu trả lời một câu học sinh thật sự hỏi:
     `fact_id` *"dữ kiện nào của đề"* · `assumption` *"chỗ này do ai chọn"* ·
-    `instruction` *"câu lệnh nào dựng ra"*.
+    `instruction` *"câu lệnh nào dựng ra"*. W18 §16.3 thêm `binding` cho điểm dựng: `TEXT_RELATION`
+    (dựng đúng quan hệ đề nêu) hay `AUXILIARY` (điểm phụ của hệ, không bao giờ là dữ kiện).
     """
     prov = _provenance(spec)
     ra: dict[str, dict[str, Any]] = {}
@@ -800,4 +802,13 @@ def _xuat_xu_hien_thi(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
             ra[d.name] = {k: v for k, v in m.items() if v}
     for ten, p in prov.items():
         ra.setdefault(ten, {})["instruction"] = p.get("producer")
+    if contract is not None:
+        try:
+            dc = doi_chieu_phep_dung(contract, spec)
+        except Exception:  # noqa: BLE001 — một nhãn xuất xứ hỏng không được làm mất cả cảnh
+            dc = None
+        for ten, tt in (dc.trang_thai.items() if dc else ()):
+            nguon = {MATCHED: "TEXT_RELATION", AUXILIARY: "AUXILIARY"}.get(tt)
+            for x in ({ten} | {a for a, g in dc.bi_danh.items() if g == ten}) if nguon else ():
+                ra.setdefault(x, {})["binding"] = nguon
     return ra

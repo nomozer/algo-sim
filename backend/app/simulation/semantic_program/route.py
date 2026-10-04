@@ -35,6 +35,7 @@ from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
 from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
+from .construction_binding import MA_CHUA_DOI_CHIEU, KetQuaDoiChieu, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
     chan_doan_phu_cau_truc,
@@ -179,6 +180,10 @@ class SemanticRouteOutcome(BaseModel):
     #: Quyết định U3: `True` ⇔ đề nêu khối đa diện theo từ vựng đóng
     #: (`shape_constraint.neu_khoi_da_dien`) — chỉ khi ấy route TỪ CHỐI theo cổng.
     assumption_enforced: bool | None = None
+    #: W18 §16.3 — trạng thái đối chiếu của từng phép dựng điểm (`construction_binding`): đích
+    #: chương trình → MATCHED/MISMATCHED/UNVERIFIED/AUXILIARY/OUT_OF_SCOPE, nhãn đích đề →
+    #: NOT_REALIZED. Quan trắc, không vào envelope; rỗng ⇔ chưa tới chặng hoặc không có phép dựng.
+    construction_binding: dict[str, str] = Field(default_factory=dict)
 
 
 def _hong(
@@ -438,6 +443,33 @@ def _sau_grounding(
             **da_chay,
         )
 
+    # ── W18 §16 · PHÉP DỰNG ĐIỂM GẮN VỚI QUAN HỆ CỦA ĐỀ BẰNG DANH TÍNH ─────────────────────
+    #
+    # Trước bất biến nguồn: trung điểm sai đoạn mà tên khớp phải nhận lời từ chối CÓ CẤU TRÚC
+    # (nguyên nhân CONSTRUCTION, nêu cả hai quan hệ) chứ không phải mã chung của bất biến toạ độ —
+    # bất biến ấy giữ làm lưới thứ hai. LỆCH ⇒ từ chối ở MỌI vùng (lỗi toàn vẹn của chương trình,
+    # như U5); CHƯA ĐỐI CHIẾU ⇒ từ chối trong vùng U3, ngoài vùng chỉ ghi. Lỗi bên trong ⇒ coi như
+    # chưa đối chiếu. Fixture tin cậy không đề: không có câu nào để gắn — không kiểm (như cổng giả định).
+    if not khong_kiem_nguon:
+        try:
+            dc = doi_chieu_phep_dung(contract, spec, c1a.ten_da_hoa_giai)
+        except Exception as e:  # noqa: BLE001
+            dc = KetQuaDoiChieu(reason_code=MA_CHUA_DOI_CHIEU,
+                                details=(f"CONSTRUCTION_BINDING_ERROR {type(e).__name__}",))
+        da_chay["construction_binding"] = dict(dc.trang_thai)
+        if dc.reason_code == MA_LECH_PHEP_DUNG or (
+                dc.reason_code == MA_CHUA_DOI_CHIEU and neu_khoi_da_dien(contract.problem_text)):
+            return _hong(
+                "construction_binding",
+                ErrorCode.INPUT_NOT_GROUNDED,
+                ("Phép dựng điểm không dùng đúng thực thể đề nêu." if dc.reason_code == MA_LECH_PHEP_DUNG
+                 else "Chưa đối chiếu được phép dựng điểm với câu của đề."),
+                details=list(dc.details),
+                reason_code=dc.reason_code,
+                reason_subjects=list(dc.subjects),
+                **da_chay,
+            )
+
     # ── P0 · NormalizedSourceInvariantGate ─────────────────────────────────
     #
     # Đặt TRƯỚC C₂ trong thân hàm nhưng SAU thực thi — cả hai điều kiện đều bắt
@@ -520,7 +552,8 @@ def _sau_grounding(
     # U5: giá trị đọc qua một tên có nhiều định nghĩa với tới (ghi đè, bí danh, khôi phục) là lỗi
     # toàn vẹn của chương trình, không phải câu hỏi về giả định — từ chối ở MỌI vùng.
     gd_chan = gd_chan or any(d.startswith(MA_NHIEU_DINH_NGHIA) for d in gd_chi_tiet)
-    ghi_gd = {"assumption_status": gd_status, "assumption_certificate": gd_cc, "assumption_enforced": gd_chan}
+    ghi_gd = {"assumption_status": gd_status, "assumption_certificate": gd_cc, "assumption_enforced": gd_chan,
+              "construction_binding": da_chay.get("construction_binding", {})}
     da_chay.update(ghi_gd)
     if gd_chan and gd_status not in (_GD_AN_TOAN, _GD_KHONG_AP_DUNG):
         return _hong(
