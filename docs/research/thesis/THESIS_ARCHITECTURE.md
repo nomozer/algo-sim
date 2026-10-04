@@ -338,7 +338,7 @@ nguyên, không hồi tố (`docs/THESIS_READINESS.md` §3).
 | cần gì | đọc file nào |
 |---|---|
 | tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/THESIS_READINESS.md` |
-| kịch bản trình bày demo | `docs/THESIS_DEMO.md` |
+| kịch bản trình bày demo | `docs/research/thesis/THESIS_DEMO.md` |
 | trạng thái vận hành cuối | `docs/CURRENT_STATE.md` §1a |
 | module nào ở đâu, ai sở hữu gì | `docs/CODE_INDEX.md` §0b–§0d |
 | bất biến đánh số + anti-pattern | `docs/ARCHITECTURE_MAP.md` §5, §8 |

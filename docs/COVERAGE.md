@@ -272,7 +272,7 @@ Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy 
 - `network.packet_routing` là minh hoạ **BFS trên mạng phân tầng**, KHÔNG phải
   shortest-path **có trọng số** tổng quát — cùng họ "đồ thị" không có nghĩa là
   "đã phủ Dijkstra một phần".
-- Sự cố M13 (kế hoạch `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,
+- Sự cố M13 (kế hoạch `docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,
   Task 7 — fixture pseudo-Dijkstra): một cảnh dựng bằng `generic.rule_scene`
   (đường đi khai sẵn + `weighted_sum` cộng trọng số trên id cạnh) **trông hợp lý
   nhưng dạy SAI cơ chế**. Dijkstra thật vận hành bằng khoảng cách tạm,

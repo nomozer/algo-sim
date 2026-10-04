@@ -41,5 +41,5 @@
 
 ## 7. Thesis-Facing Evidence (Bằng Chứng Phục Vụ Khóa Luận)
 - [`docs/THESIS_READINESS.md`](THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài.
-- [`docs/THESIS_ARCHITECTURE.md`](THESIS_ARCHITECTURE.md) — Kiến trúc tổng thể và các ranh giới lý thuyết phục vụ viết chương kiến trúc trong khóa luận.
+- [`docs/research/thesis/THESIS_ARCHITECTURE.md`](research/thesis/THESIS_ARCHITECTURE.md) — Kiến trúc tổng thể và các ranh giới lý thuyết phục vụ viết chương kiến trúc trong khóa luận.
 - [`docs/thesis/`](thesis/) — Bản thảo các chương khóa luận và ma trận trích dẫn nghiên cứu liên quan.

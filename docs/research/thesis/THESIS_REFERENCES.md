@@ -4,7 +4,7 @@
 > ① Mỗi mục phải **đã được mở và đọc**, không trích theo tiêu đề. Cột *đã xác
 > minh* ghi đúng cách xác minh.
 > ② Mỗi mục phải nêu **claim ID** mà nó chống đỡ — nguồn không gắn với claim
-> nào thì không thuộc danh mục này. Bảng claim: `docs/THESIS_CITATION_MATRIX.md`.
+> nào thì không thuộc danh mục này. Bảng claim: `docs/research/thesis/THESIS_CITATION_MATRIX.md`.
 > ③ **Không bịa DOI, không đoán số hiệu văn bản.** Trường nào chưa xác minh
 > được thì ghi `chưa xác minh`, không để trống và không phỏng đoán.
 > ④ Kiểu trích dẫn **tạm thời là tác giả–năm**; kho chưa có quy định kiểu trích

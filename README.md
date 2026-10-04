@@ -68,7 +68,7 @@ Renderer **chỉ đọc** trạng thái; không có đường ngược. Nhân h�
 import `app.ai` — ranh giới ấy là bất biến kiến trúc, kiểm bằng test.
 
 Chi tiết cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
-[`docs/THESIS_ARCHITECTURE.md`](docs/THESIS_ARCHITECTURE.md).
+[`docs/research/thesis/THESIS_ARCHITECTURE.md`](docs/research/thesis/THESIS_ARCHITECTURE.md).
 Chi tiết cho người sửa mã (bất biến đánh số, anti-pattern):
 [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md).
 
@@ -157,7 +157,7 @@ không phân biệt được hai cách dựng khác nhau (cùng cho số 4). Đ�
 artifact đánh giá, đã ghi thành đính chính.
 
 Kịch bản trình bày — thứ tự, thao tác, chỗ cần chỉ vào:
-[`docs/THESIS_DEMO.md`](docs/THESIS_DEMO.md).
+[`docs/research/thesis/THESIS_DEMO.md`](docs/research/thesis/THESIS_DEMO.md).
 
 ## 8. Kiểm thử và bằng chứng
 

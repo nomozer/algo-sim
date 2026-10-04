@@ -2,7 +2,7 @@
 
 > **Đây là sổ tay TRÌNH BÀY.** Bằng chứng và diễn giải số liệu thuộc
 > `docs/THESIS_READINESS.md` (§5 tập demo, §6 smoke trình duyệt) — ở đây không
-> chép lại số. Kiến trúc: `docs/THESIS_ARCHITECTURE.md`.
+> chép lại số. Kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md`.
 >
 > **Không có bài demo nào được dựng mới cho tài liệu này.** Cả sáu ca đều lấy
 > từ artifact live đã commit, có xuất xứ rõ, và chạy lại được với **0 lượt gọi

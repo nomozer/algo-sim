@@ -24,7 +24,7 @@ chính thức. Mọi phát biểu về độ phủ phải **nêu khung cùng v�
 > con số nào chép tay. Kiểm lại bằng một lệnh:
 >
 > ```bash
-> grep -cE '^\| [0-9]+b? \|.*\| ✅ \|$' docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md
+> grep -cE '^\| [0-9]+b? \|.*\| ✅ \|$' docs/research/GEOMETRY_CURRICULUM_COVERAGE.md
 > ```
 > (đổi `✅` thành `⚠️` / `❌` cho hai hàng còn lại).
 >
@@ -360,7 +360,7 @@ liên quan nhưng không có nghĩa vụ nào nhận một phát biểu định 
 | Văn bản sửa đổi | **Thông tư số 13/2022/TT-BGDĐT** ngày **03/8/2022** — sửa chương trình tổng thể và môn Lịch sử; **môn Toán KHÔNG đổi**, nên TT32 vẫn là thẩm quyền |
 | Cách xác minh | mở trang văn bản trên cổng tư liệu văn kiện (số hiệu · ngày · cơ quan · người ký); tải PDF chương trình môn Toán, rút toàn văn và **đọc trực tiếp** mục hình học không gian |
 
-Metadata trích dẫn đầy đủ: `docs/THESIS_REFERENCES.md` — mã `[BGD-TT32]`,
+Metadata trích dẫn đầy đủ: `docs/research/thesis/THESIS_REFERENCES.md` — mã `[BGD-TT32]`,
 `[BGD-TOAN]`, `[BGD-TT13]`.
 
 ⚠️ Bản PDF đã đọc là bản **đăng lại** trên cổng ngành giáo dục cấp tỉnh. Nội dung

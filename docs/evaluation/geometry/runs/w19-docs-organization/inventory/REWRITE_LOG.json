@@ -1,0 +1,351 @@
+{
+ "schema_version": "w19-rewrite-log/1",
+ "dry_run": false,
+ "files_scanned": 40,
+ "lines_changed": 54,
+ "files_changed": [
+  "README.md",
+  "docs/ARCHITECTURE_MAP.md",
+  "docs/CODE_INDEX.md",
+  "docs/COVERAGE.md",
+  "docs/OPEN_ISSUES.md",
+  "docs/README.md",
+  "docs/STATUS_LEDGER.md",
+  "docs/research/GEOMETRY_CURRICULUM_COVERAGE.md",
+  "docs/research/thesis/RELATED_WORK_DRAFT.md",
+  "docs/research/thesis/THESIS_ARCHITECTURE.md",
+  "docs/research/thesis/THESIS_CITATION_MATRIX.md",
+  "docs/research/thesis/THESIS_DEMO.md",
+  "docs/research/thesis/THESIS_DRAFT.md",
+  "docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md",
+  "docs/research/thesis/THESIS_REFERENCES.md",
+  "docs/research/thesis/THESIS_REFERENCE_NEEDS.md",
+  "docs/research/thesis/figures/FIGURE_MANIFEST.md"
+ ],
+ "changes": [
+  {
+   "file": "README.md",
+   "line": 71,
+   "before": "[`docs/THESIS_ARCHITECTURE.md`](docs/THESIS_ARCHITECTURE.md).",
+   "after": "[`docs/research/thesis/THESIS_ARCHITECTURE.md`](docs/research/thesis/THESIS_ARCHITECTURE.md)."
+  },
+  {
+   "file": "README.md",
+   "line": 160,
+   "before": "[`docs/THESIS_DEMO.md`](docs/THESIS_DEMO.md).",
+   "after": "[`docs/research/thesis/THESIS_DEMO.md`](docs/research/thesis/THESIS_DEMO.md)."
+  },
+  {
+   "file": "docs/ARCHITECTURE_MAP.md",
+   "line": 221,
+   "before": "**`docs/THESIS_ARCHITECTURE.md`**.",
+   "after": "**`docs/research/thesis/THESIS_ARCHITECTURE.md`**."
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 215,
+   "before": "`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/THESIS_ARCHITECTURE.md` §J.",
+   "after": "`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J."
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 601,
+   "before": "xem cảnh báo ở `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`",
+   "after": "xem cảnh báo ở `docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`"
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 4885,
+   "before": "Spec: `docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.",
+   "after": "Spec: `docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`."
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 5412,
+   "before": "Kết quả và cách đọc: `docs/geometry/CAPABILITY_GAP_AUDIT.md`.",
+   "after": "Kết quả và cách đọc: `docs/legacy/geometry/CAPABILITY_GAP_AUDIT.md`."
+  },
+  {
+   "file": "docs/COVERAGE.md",
+   "line": 275,
+   "before": "- Sự cố M13 (kế hoạch `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,",
+   "after": "- Sự cố M13 (kế hoạch `docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,"
+  },
+  {
+   "file": "docs/OPEN_ISSUES.md",
+   "line": 74,
+   "before": "- **scope:** `docs/CURRENT_STATE.md`, `README.md`, `docs/THESIS_ARCHITECTURE.md`.",
+   "after": "- **scope:** `docs/CURRENT_STATE.md`, `README.md`, `docs/research/thesis/THESIS_ARCHITECTURE.md`."
+  },
+  {
+   "file": "docs/OPEN_ISSUES.md",
+   "line": 80,
+   "before": "- **verify:** `grep -n \"CURVED_GEOMETRY_SUPPORT\\|LỒI\" README.md docs/CURRENT_STATE.md docs/THESIS_ARCHITECTURE.md`",
+   "after": "- **verify:** `grep -n \"CURVED_GEOMETRY_SUPPORT\\|LỒI\" README.md docs/CURRENT_STATE.md docs/research/thesis/THESIS_ARCHITECTURE.md`"
+  },
+  {
+   "file": "docs/README.md",
+   "line": 44,
+   "before": "- [`docs/THESIS_ARCHITECTURE.md`](THESIS_ARCHITECTURE.md) — Kiến trúc tổng thể và các ranh giới lý thuyết phục vụ viết chương kiến trúc trong khóa luận.",
+   "after": "- [`docs/research/thesis/THESIS_ARCHITECTURE.md`](research/thesis/THESIS_ARCHITECTURE.md) — Kiến trúc tổng thể và các ranh giới lý thuyết phục vụ viết chương kiến trúc trong khóa luận."
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 146,
+   "before": "| Mục tiêu khoá luận và bằng chứng có khớp nhau không | **PHẦN LỚN — 29 tuyên bố rà soát: `PROVED_ON_FROZEN_BENCHMARK 13` · `PARTIAL 8` · `NOT_MEASURED 2` · `OUT_OF_SCOPE 2` · **`CONTRADICTED 4`**; `OBJECTIVE_SOURCE` tìm thấy, không phải `NOT_LOCATED`** (2026-09-09) | Nguồn mục tiêu: `docs/THESIS_DRAFT.md §3·§4·§6·§1.6·§1.7` (bản thảo chính thức — ledger kỹ thuật KHÔNG được dùng làm nguồn đặt mục tiêu). Ma trận đầy đủ `docs/thesis/CLAIM_EVIDENCE_MATRIX.md`, 29 hàng, mỗi ô bằng chứng dẫn tới artifact có băm hoặc test chạy được. ⚠️ **Mọi số bàn giao ĐO LẠI**: 14 con số tra lại từ artifact, tất cả khớp (7+2 ca · 6/7 lần đầu · 7/7 sau sửa · 12/12 đại lượng · 2/2 fail-closed · 0 đáp số sai âm thầm · hidden-line 23/23 · UI 66/66 · visual fidelity 39/41 · display name 10/12 · `STABILITY NOT_MEASURED` · `PROMOTION NO`), cộng `doi_chieu_ket_qua_cuoi.py` PASS (0/31 lệch) và `scene3d_world_oracles.py` 7/7 tolerance 0. ⚠️ **BỐN TUYÊN BỐ TRÔI, đính chính mà GIỮ NGUYÊN bản gốc**: **D-2** bảng \"ngoài phạm vi\" của bản thảo khai mặt cong · khối không lồi · phương trình mặt phẳng là NGOÀI, trong khi lượt đo cuối **phục vụ đúng cả ba** (`p3` cầu, `p4` trụ, `p5` nón, `p2` đáy **LÕM**, `p6` phương trình `2x − z + 12 = 0`) — đã ghi đính chính bên trên bảng gốc; **D-4** bản thảo có **HAI THÂN CHƯƠNG 4 RỜI NHAU** (nó mô tả bốn lượt niêm phong `n = 4–6` và `rg` cho **0** kết quả khi tìm lượt đo cuối, còn `docs/thesis/CHAPTER_4` mô tả lượt cuối 9 ca) — hợp nhất thuộc wave tích hợp; **D-1** ma trận ĐĂNG KÝ TRƯỚC ghi \"11 đại lượng\" trong khi artifact nói 12 — **không sửa** văn bản đăng ký trước; **D-3** `product_capability.py` ghi lý do *\"MÔ HÌNH: chưa đo\"* cho khối cong dù mô hình ĐÃ đo 5/5 — **trạng thái `foundation_only` vẫn ĐÚNG** (`n = 1` không đủ để bật), chỉ chuỗi lý do cũ, và sửa nó chạm `backend/app` nên chuyển thành nợ. ⚠️ **Một khoảng trống TRUY XUẤT đã vá**: báo cáo UI ghi \"6/6 phép tiêm\" nhưng artifact trên đĩa ghi `FAULT_INJECTIONS = 0` — lượt chạy SẠCH cuối đã ghi đè artifact của lượt `--faultcheck`, nên con số ĐÚNG mà KHÔNG DẪN VỀ ĐÂU; chạy lại (0 lượt gọi) ⇒ artifact nay ghi 6/6 và 66/66. ⚠️ **Ranh giới giữ được**: hidden-line PASS **không** đổi visual fidelity tổng thể từ `PARTIAL` sang `PASS` · không câu nào tuyên bố ổn định (quét `rg`, ba lần xuất hiện đều không phải tuyên bố — `C7` dùng theo nghĩa *mã lỗi không đổi tên*) · phạm vi hình học tách **ba nhóm** (đã chứng minh 10 họ · `foundation_only` · ngoài phạm vi vì kiến trúc) thay vì \"đã hỗ trợ đầy đủ\" · candidate **lịch sử** và **hiện tại** ghi hai trường dù đang trùng. Cổng: `freeze --verify` exit 0 (`d72db7c3…`) · cache identity exit 0 @ v94 · artifact lịch sử **nguyên byte** · `git diff --check` sạch · `PRODUCT_CODE_CHANGED = NO` · `MODEL_FACING_CHANGED = NO` · `APPLICATION_LLM_CALLS = 0`. Báo cáo `docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md` | **`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`** — follow-up DUY NHẤT chạm một mục tiêu đã đăng ký: `§1.6` và `§3.9` cam kết nguyên văn *\"từ chối có cấu trúc — nêu **giai đoạn dừng, loại thất bại, mã lỗi**\"*, mà `n1` giao `stage_reached: null` và `error_code: null`, tức **2/4** trường đã hứa. `DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND` = **OPTIONAL_POLISH**: `§1.6` cam kết *\"các đại lượng được hỏi, tính bằng số học chính xác\"*, không cam kết chất lượng tên gọi, và `rg` toàn bản thảo không có cam kết nào về nhãn cho người học |",
+   "after": "| Mục tiêu khoá luận và bằng chứng có khớp nhau không | **PHẦN LỚN — 29 tuyên bố rà soát: `PROVED_ON_FROZEN_BENCHMARK 13` · `PARTIAL 8` · `NOT_MEASURED 2` · `OUT_OF_SCOPE 2` · **`CONTRADICTED 4`**; `OBJECTIVE_SOURCE` tìm thấy, không phải `NOT_LOCATED`** (2026-09-09) | Nguồn mục tiêu: `docs/research/thesis/THESIS_DRAFT.md §3·§4·§6·§1.6·§1.7` (bản thảo chính thức — ledger kỹ thuật KHÔNG được dùng làm nguồn đặt mục tiêu). Ma trận đầy đủ `docs/thesis/CLAIM_EVIDENCE_MATRIX.md`, 29 hàng, mỗi ô bằng chứng dẫn tới artifact có băm hoặc test chạy được. ⚠️ **Mọi số bàn giao ĐO LẠI**: 14 con số tra lại từ artifact, tất cả khớp (7+2 ca · 6/7 lần đầu · 7/7 sau sửa · 12/12 đại lượng · 2/2 fail-closed · 0 đáp số sai âm thầm · hidden-line 23/23 · UI 66/66 · visual fidelity 39/41 · display name 10/12 · `STABILITY NOT_MEASURED` · `PROMOTION NO`), cộng `doi_chieu_ket_qua_cuoi.py` PASS (0/31 lệch) và `scene3d_world_oracles.py` 7/7 tolerance 0. ⚠️ **BỐN TUYÊN BỐ TRÔI, đính chính mà GIỮ NGUYÊN bản gốc**: **D-2** bảng \"ngoài phạm vi\" của bản thảo khai mặt cong · khối không lồi · phương trình mặt phẳng là NGOÀI, trong khi lượt đo cuối **phục vụ đúng cả ba** (`p3` cầu, `p4` trụ, `p5` nón, `p2` đáy **LÕM**, `p6` phương trình `2x − z + 12 = 0`) — đã ghi đính chính bên trên bảng gốc; **D-4** bản thảo có **HAI THÂN CHƯƠNG 4 RỜI NHAU** (nó mô tả bốn lượt niêm phong `n = 4–6` và `rg` cho **0** kết quả khi tìm lượt đo cuối, còn `docs/research/thesis/CHAPTER_4` mô tả lượt cuối 9 ca) — hợp nhất thuộc wave tích hợp; **D-1** ma trận ĐĂNG KÝ TRƯỚC ghi \"11 đại lượng\" trong khi artifact nói 12 — **không sửa** văn bản đăng ký trước; **D-3** `product_capability.py` ghi lý do *\"MÔ HÌNH: chưa đo\"* cho khối cong dù mô hình ĐÃ đo 5/5 — **trạng thái `foundation_only` vẫn ĐÚNG** (`n = 1` không đủ để bật), chỉ chuỗi lý do cũ, và sửa nó chạm `backend/app` nên chuyển thành nợ. ⚠️ **Một khoảng trống TRUY XUẤT đã vá**: báo cáo UI ghi \"6/6 phép tiêm\" nhưng artifact trên đĩa ghi `FAULT_INJECTIONS = 0` — lượt chạy SẠCH cuối đã ghi đè artifact của lượt `--faultcheck`, nên con số ĐÚNG mà KHÔNG DẪN VỀ ĐÂU; chạy lại (0 lượt gọi) ⇒ artifact nay ghi 6/6 và 66/66. ⚠️ **Ranh giới giữ được**: hidden-line PASS **không** đổi visual fidelity tổng thể từ `PARTIAL` sang `PASS` · không câu nào tuyên bố ổn định (quét `rg`, ba lần xuất hiện đều không phải tuyên bố — `C7` dùng theo nghĩa *mã lỗi không đổi tên*) · phạm vi hình học tách **ba nhóm** (đã chứng minh 10 họ · `foundation_only` · ngoài phạm vi vì kiến trúc) thay vì \"đã hỗ trợ đầy đủ\" · candidate **lịch sử** và **hiện tại** ghi hai trường dù đang trùng. Cổng: `freeze --verify` exit 0 (`d72db7c3…`) · cache identity exit 0 @ v94 · artifact lịch sử **nguyên byte** · `git diff --check` sạch · `PRODUCT_CODE_CHANGED = NO` · `MODEL_FACING_CHANGED = NO` · `APPLICATION_LLM_CALLS = 0`. Báo cáo `docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md` | **`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`** — follow-up DUY NHẤT chạm một mục tiêu đã đăng ký: `§1.6` và `§3.9` cam kết nguyên văn *\"từ chối có cấu trúc — nêu **giai đoạn dừng, loại thất bại, mã lỗi**\"*, mà `n1` giao `stage_reached: null` và `error_code: null`, tức **2/4** trường đã hứa. `DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND` = **OPTIONAL_POLISH**: `§1.6` cam kết *\"các đại lượng được hỏi, tính bằng số học chính xác\"*, không cam kết chất lượng tên gọi, và `rg` toàn bản thảo không có cam kết nào về nhãn cho người học |"
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 150,
+   "before": "| Số của lượt đo cuối đã đủ tin để viết vào luận văn chưa | **RỒI — `DOCUMENTATION_INPUT_CONSISTENCY = PASS`, 0/31 trường lệch, 12/12 đáp số khớp TỪNG KÝ TỰ; hai chương đã viết** (2026-09-08) | `backend/scripts/doi_chieu_ket_qua_cuoi.py <thư_mục_lượt_chạy>` — exit 0, **0 lượt gọi model**. Bốn kiểm độc lập: `ARTIFACT_HASH_VERIFICATION` PASS (băm lại **26 file**, **19 file thô nguyên byte**) · `CORRECTION_LINKAGE` PASS (bản đính chính ghi băm đúng **3** artifact nó đính chính) · `DAP_SO_KHOP` **12/12** · `SO_TRUONG_LECH` **0/31**. ⚠️ **Đối chứng phải NGOÀI**: `BANG_CHUAN` (31 trường) chép từ **đặc tả wave**, không đọc lại artifact — *một file tự so với chính nó thì luôn đúng*; giá trị nằm ở chỗ hai nguồn độc lập trùng nhau. ⚠️ `RECONCILIATION.json` ghi **NGOÀI** thư mục lượt chạy có chủ đích: ghi vào trong sẽ thành \"file ngoài bảng\" của `ARTIFACT_HASHES.json` và phá chính tính bất biến từng byte mà nó đi kiểm. Tài liệu: `docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` (11 mục, **10 bảng**, 12 biểu thức đáp số nguyên văn) · `docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md` (4 mục). Chương phân loại rõ `MEASUREMENT_FAILURE_COUNT = 1` / `SYSTEM_FAILURE_COUNT = 0`, giữ nguyên kỳ vọng pre-register của `n1`, và tách \"dự báo token lệch +31 %\" khỏi \"trần cứng vẫn đúng vai trò\". Chương **không** tuyên bố: held-out · ước lượng tổng thể · độ ổn định · phủ chương trình · chất lượng sư phạm · đủ điều kiện bật tính năng. **0 byte** mã sản phẩm / bộ đo / artifact lượt đo đổi; `CACHE_VERSION 94 → 94`; candidate `d72db7c3…` không đóng băng lại. Báo cáo: `docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md` | **`THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW`** — ghép vào bản thảo toàn văn, thống nhất đánh số bảng với chương 1–3, soát để không chương nào tuyên bố rộng hơn danh sách \"không tuyên bố\" |",
+   "after": "| Số của lượt đo cuối đã đủ tin để viết vào luận văn chưa | **RỒI — `DOCUMENTATION_INPUT_CONSISTENCY = PASS`, 0/31 trường lệch, 12/12 đáp số khớp TỪNG KÝ TỰ; hai chương đã viết** (2026-09-08) | `backend/scripts/doi_chieu_ket_qua_cuoi.py <thư_mục_lượt_chạy>` — exit 0, **0 lượt gọi model**. Bốn kiểm độc lập: `ARTIFACT_HASH_VERIFICATION` PASS (băm lại **26 file**, **19 file thô nguyên byte**) · `CORRECTION_LINKAGE` PASS (bản đính chính ghi băm đúng **3** artifact nó đính chính) · `DAP_SO_KHOP` **12/12** · `SO_TRUONG_LECH` **0/31**. ⚠️ **Đối chứng phải NGOÀI**: `BANG_CHUAN` (31 trường) chép từ **đặc tả wave**, không đọc lại artifact — *một file tự so với chính nó thì luôn đúng*; giá trị nằm ở chỗ hai nguồn độc lập trùng nhau. ⚠️ `RECONCILIATION.json` ghi **NGOÀI** thư mục lượt chạy có chủ đích: ghi vào trong sẽ thành \"file ngoài bảng\" của `ARTIFACT_HASHES.json` và phá chính tính bất biến từng byte mà nó đi kiểm. Tài liệu: `docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` (11 mục, **10 bảng**, 12 biểu thức đáp số nguyên văn) · `docs/research/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md` (4 mục). Chương phân loại rõ `MEASUREMENT_FAILURE_COUNT = 1` / `SYSTEM_FAILURE_COUNT = 0`, giữ nguyên kỳ vọng pre-register của `n1`, và tách \"dự báo token lệch +31 %\" khỏi \"trần cứng vẫn đúng vai trò\". Chương **không** tuyên bố: held-out · ước lượng tổng thể · độ ổn định · phủ chương trình · chất lượng sư phạm · đủ điều kiện bật tính năng. **0 byte** mã sản phẩm / bộ đo / artifact lượt đo đổi; `CACHE_VERSION 94 → 94`; candidate `d72db7c3…` không đóng băng lại. Báo cáo: `docs/THESIS_RESULTS_ANALYSIS_AND_CHAPTER_DRAFTING.md` | **`THESIS_MANUSCRIPT_INTEGRATION_AND_FINAL_REVIEW`** — ghép vào bản thảo toàn văn, thống nhất đánh số bảng với chương 1–3, soát để không chương nào tuyên bố rộng hơn danh sách \"không tuyên bố\" |"
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 528,
+   "before": "`docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`",
+   "after": "`docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`"
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 529,
+   "before": "(APPROVED DESIGN, `0c53882`). Kế hoạch thực thi: `docs/superpowers/plans/2026-08-20-semantic-program-generative-route.md`.",
+   "after": "(APPROVED DESIGN, `0c53882`). Kế hoạch thực thi: `docs/legacy/superpowers/plans/2026-08-20-semantic-program-generative-route.md`."
+  },
+  {
+   "file": "docs/research/GEOMETRY_CURRICULUM_COVERAGE.md",
+   "line": 27,
+   "before": "> grep -cE '^\\| [0-9]+b? \\|.*\\| ✅ \\|$' docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md",
+   "after": "> grep -cE '^\\| [0-9]+b? \\|.*\\| ✅ \\|$' docs/research/GEOMETRY_CURRICULUM_COVERAGE.md"
+  },
+  {
+   "file": "docs/research/GEOMETRY_CURRICULUM_COVERAGE.md",
+   "line": 363,
+   "before": "Metadata trích dẫn đầy đủ: `docs/THESIS_REFERENCES.md` — mã `[BGD-TT32]`,",
+   "after": "Metadata trích dẫn đầy đủ: `docs/research/thesis/THESIS_REFERENCES.md` — mã `[BGD-TT32]`,"
+  },
+  {
+   "file": "docs/research/thesis/RELATED_WORK_DRAFT.md",
+   "line": 12,
+   "before": "> Khoá trích dẫn: `docs/thesis/references_geometry_systems.bib`.",
+   "after": "> Khoá trích dẫn: `docs/research/thesis/references_geometry_systems.bib`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "line": 341,
+   "before": "| kịch bản trình bày demo | `docs/THESIS_DEMO.md` |",
+   "after": "| kịch bản trình bày demo | `docs/research/thesis/THESIS_DEMO.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_CITATION_MATRIX.md",
+   "line": 8,
+   "before": "> Metadata đầy đủ của từng mã nguồn: `docs/THESIS_REFERENCES.md`.",
+   "after": "> Metadata đầy đủ của từng mã nguồn: `docs/research/thesis/THESIS_REFERENCES.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DEMO.md",
+   "line": 5,
+   "before": "> chép lại số. Kiến trúc: `docs/THESIS_ARCHITECTURE.md`.",
+   "after": "> chép lại số. Kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 12,
+   "before": "> `docs/THESIS_SUBMISSION_CHECKLIST.md`.",
+   "after": "> `docs/research/thesis/THESIS_SUBMISSION_CHECKLIST.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 20,
+   "before": "> `docs/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:",
+   "after": "> `docs/research/thesis/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 21,
+   "before": "> `docs/THESIS_CITATION_MATRIX.md`.",
+   "after": "> `docs/research/thesis/THESIS_CITATION_MATRIX.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 25,
+   "before": "> đặc tả chụp và chú thích dự kiến: `docs/THESIS_FIGURE_CAPTURE_PLAN.md`.",
+   "after": "> đặc tả chụp và chú thích dự kiến: `docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 86,
+   "before": "> Chi tiết: Chương 4 mới (`docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và",
+   "after": "> Chi tiết: Chương 4 mới (`docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 861,
+   "before": "![Kiến trúc tổng thể](thesis_figures/fig_3_1_architecture.svg)",
+   "after": "![Kiến trúc tổng thể](figures/fig_3_1_architecture.svg)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1064,
+   "before": "![Ba tầng biểu diễn](thesis_figures/fig_3_2_semantic_pipeline.svg)",
+   "after": "![Ba tầng biểu diễn](figures/fig_3_2_semantic_pipeline.svg)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1250,
+   "before": "![Vết thực thi tới cảnh 3D](thesis_figures/fig_3_3_trace_scene3d.svg)",
+   "after": "![Vết thực thi tới cảnh 3D](figures/fig_3_3_trace_scene3d.svg)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1280,
+   "before": "![Tách khối](thesis_figures/fig_4_5_section.png)",
+   "after": "![Tách khối](figures/fig_4_5_section.png)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1291,
+   "before": "![Xuất xứ và phụ thuộc](thesis_figures/fig_4_2_provenance.png)",
+   "after": "![Xuất xứ và phụ thuộc](figures/fig_4_2_provenance.png)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1318,
+   "before": "![Từ chối có địa chỉ](thesis_figures/fig_4_4_refusal.png)",
+   "after": "![Từ chối có địa chỉ](figures/fig_4_4_refusal.png)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1327,
+   "before": "![Trình tự một yêu cầu](thesis_figures/fig_3_4_request_sequence.svg)",
+   "after": "![Trình tự một yêu cầu](figures/fig_3_4_request_sequence.svg)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1764,
+   "before": "![Quỹ đạo bốn lượt](thesis_figures/fig_4_1_experiment_trajectory.svg)",
+   "after": "![Quỹ đạo bốn lượt](figures/fig_4_1_experiment_trajectory.svg)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1881,
+   "before": "![Tua bước](thesis_figures/fig_4_3_playback.png)",
+   "after": "![Tua bước](figures/fig_4_3_playback.png)"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1891,
+   "before": "*[Hình 4.2 — xem kế hoạch chụp ở `docs/THESIS_FIGURE_CAPTURE_PLAN.md`]*",
+   "after": "*[Hình 4.2 — xem kế hoạch chụp ở `docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`]*"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 1907,
+   "before": "| Hàng của **khung đo do đề tài dựng** | **21** | bảng phủ trong `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md` |",
+   "after": "| Hàng của **khung đo do đề tài dựng** | **21** | bảng phủ trong `docs/research/GEOMETRY_CURRICULUM_COVERAGE.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2157,
+   "before": "Danh mục luận điểm còn cần đối chiếu tài liệu: `docs/THESIS_REFERENCE_NEEDS.md`.",
+   "after": "Danh mục luận điểm còn cần đối chiếu tài liệu: `docs/research/thesis/THESIS_REFERENCE_NEEDS.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2158,
+   "before": "Bảng *trích dẫn nào chống đỡ câu nào*: `docs/THESIS_CITATION_MATRIX.md`.",
+   "after": "Bảng *trích dẫn nào chống đỡ câu nào*: `docs/research/thesis/THESIS_CITATION_MATRIX.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2346,
+   "before": "`docs/THESIS_FIGURE_CAPTURE_PLAN.md`.",
+   "after": "`docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2363,
+   "before": "hình, chú thích đầy đủ và các hạn chế đã khai: `docs/thesis_figures/FIGURE_MANIFEST.md`.",
+   "after": "hình, chú thích đầy đủ và các hạn chế đã khai: `docs/research/thesis/figures/FIGURE_MANIFEST.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2421,
+   "before": "| §4.10 phủ chương trình | `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md`, `CAPABILITY_GAP_AUDIT.md` |",
+   "after": "| §4.10 phủ chương trình | `docs/research/GEOMETRY_CURRICULUM_COVERAGE.md`, `CAPABILITY_GAP_AUDIT.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2423,
+   "before": "| kiến trúc hệ đóng băng | `docs/THESIS_ARCHITECTURE.md` |",
+   "after": "| kiến trúc hệ đóng băng | `docs/research/thesis/THESIS_ARCHITECTURE.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2424,
+   "before": "| kịch bản trình bày | `docs/THESIS_DEMO.md` |",
+   "after": "| kịch bản trình bày | `docs/research/thesis/THESIS_DEMO.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2475,
+   "before": "Xem `docs/THESIS_REFERENCE_NEEDS.md`.",
+   "after": "Xem `docs/research/thesis/THESIS_REFERENCE_NEEDS.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md",
+   "line": 35,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §B`; bản thảo §3.1 |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §B`; bản thảo §3.1 |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md",
+   "line": 62,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md",
+   "line": 75,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §I` (đã có bản mermaid) |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §I` (đã có bản mermaid) |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_REFERENCES.md",
+   "line": 7,
+   "before": "> nào thì không thuộc danh mục này. Bảng claim: `docs/THESIS_CITATION_MATRIX.md`.",
+   "after": "> nào thì không thuộc danh mục này. Bảng claim: `docs/research/thesis/THESIS_CITATION_MATRIX.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_REFERENCE_NEEDS.md",
+   "line": 3,
+   "before": "> **Mục đích.** `docs/THESIS_DRAFT.md` viết từ **bằng chứng trong kho mã**. Mọi",
+   "after": "> **Mục đích.** `docs/research/thesis/THESIS_DRAFT.md` viết từ **bằng chứng trong kho mã**. Mọi"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_REFERENCE_NEEDS.md",
+   "line": 440,
+   "before": "Metadata đầy đủ: `docs/THESIS_REFERENCES.md` mục `[BGD-TT32]` `[BGD-TOAN]`",
+   "after": "Metadata đầy đủ: `docs/research/thesis/THESIS_REFERENCES.md` mục `[BGD-TT32]` `[BGD-TOAN]`"
+  },
+  {
+   "file": "docs/research/thesis/figures/FIGURE_MANIFEST.md",
+   "line": 33,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §B`, `§C`; bản thảo §3.1, §3.2 |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §B`, `§C`; bản thảo §3.1, §3.2 |"
+  },
+  {
+   "file": "docs/research/thesis/figures/FIGURE_MANIFEST.md",
+   "line": 53,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |"
+  },
+  {
+   "file": "docs/research/thesis/figures/FIGURE_MANIFEST.md",
+   "line": 63,
+   "before": "| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §I` (đã có bản nháp dạng mermaid); bản thảo §3.6, §3.9 |",
+   "after": "| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §I` (đã có bản nháp dạng mermaid); bản thảo §3.6, §3.9 |"
+  }
+ ]
+}

@@ -5,7 +5,7 @@
 > đi theo chiều ngược lại: bắt đầu từ **câu trong bản thảo**, rồi mới hỏi nguồn
 > nào chống đỡ nó, và chống đỡ tới mức nào.
 >
-> Metadata đầy đủ của từng mã nguồn: `docs/THESIS_REFERENCES.md`.
+> Metadata đầy đủ của từng mã nguồn: `docs/research/thesis/THESIS_REFERENCES.md`.
 >
 > **Ba mức chống đỡ**
 > **DIRECT** — nguồn phát biểu đúng điều claim nói, trên đúng đối tượng ấy.

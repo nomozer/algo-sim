@@ -30,7 +30,7 @@ không đọc được SVG. Ảnh chụp ở **2× tỉ lệ thiết bị**, đ�
 |---|---|
 | Tệp | `fig_3_1_architecture.svg` · `.png` (1800 × 2160) |
 | Chứng minh | Ranh giới R0: đúng **hai** khối thuộc mô hình ngôn ngữ, và cả hai nằm **trước** khi tồn tại toạ độ nào. Đề ngoài miền bị từ chối với **0 lượt gọi** |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §B`, `§C`; bản thảo §3.1, §3.2 |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §B`, `§C`; bản thảo §3.1, §3.2 |
 | Cách dựng | SVG viết tay. Ba vùng phân biệt bằng màu và khung nét đứt; bốn tầng nhân hình học là khối con bên trong khối thực thi (gộp từ sơ đồ riêng — xem §4) |
 | Chú thích | *Hình 3.1. Kiến trúc tổng thể của hệ thống. Hai khối tô màu cam thuộc mô hình ngôn ngữ; toàn bộ phần còn lại là tất định. Ranh giới R0 nằm ngay sau bước tổng hợp chương trình: sau điểm này không còn lượt gọi mô hình nào, nên mọi toạ độ và mọi phán quyết đúng/sai đều do các tầng tất định sinh ra.* |
 
@@ -50,7 +50,7 @@ không đọc được SVG. Ảnh chụp ở **2× tỉ lệ thiết bị**, đ�
 |---|---|
 | Tệp | `fig_3_3_trace_scene3d.svg` · `.png` (2080 × 1240) |
 | Chứng minh | Song ánh **khung k ⇔ bước k**, và việc **gộp bước để trình bày nằm ở tầng sau** nên không phá song ánh ấy |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |
 | Cách dựng | SVG viết tay; ba hàng xếp thẳng cột, nối bằng đường nét đứt để thấy tương ứng một–một |
 | Chú thích | *Hình 3.3. Cảnh ba chiều được dẫn xuất từ vết thực thi. Khung hình thứ k suy ra hoàn toàn từ ảnh chụp bộ nhớ tại bước k, nên thao tác “tua tới bước k” có nghĩa xác định. Việc gộp bước cho mục đích trình bày nằm ở một tầng sau và không phá song ánh này.* |
 
@@ -60,7 +60,7 @@ không đọc được SVG. Ảnh chụp ở **2× tỉ lệ thiết bị**, đ�
 |---|---|
 | Tệp | `fig_3_4_request_sequence.svg` · `.png` (2000 × 1600) |
 | Chứng minh | Thứ tự bảy cổng, và **chi phí gọi mô hình của từng đường từ chối** — đặc biệt: đề ngoài miền tốn **0 lượt** |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §I` (đã có bản nháp dạng mermaid); bản thảo §3.6, §3.9 |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §I` (đã có bản nháp dạng mermaid); bản thảo §3.6, §3.9 |
 | Cách dựng | SVG viết tay, dạng sơ đồ tuần tự năm làn |
 | Chú thích | *Hình 3.4. Trình tự xử lý một yêu cầu. Đề không thuộc hình học không gian bị từ chối tại biên miền với không lượt gọi mô hình nào; các đường từ chối còn lại dừng sau bước tổng hợp và trước khi phát ra mô phỏng.* |
 

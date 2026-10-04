@@ -71,13 +71,13 @@
 - **description:** Living docs still state retired capability absolutes: "8 expressions · 6 statements · 5 measures" and `CURVED_GEOMETRY_SUPPORT = NONE` (CURRENT_STATE §3), curved and non-convex solids as deliberate gaps (CURRENT_STATE §4), "convex polyhedra only, no curved surfaces" (README §9–10), non-convex out of scope (THESIS_ARCHITECTURE §A/§J).
 - **evidence:** inventory item NA-53; sync-locked identity row of CURRENT_STATE (11 · 9 · 7); `backend/app/simulation/product_capability.py`.
 - **impact:** A reader of the "current" sections learns the opposite of the code.
-- **scope:** `docs/CURRENT_STATE.md`, `README.md`, `docs/THESIS_ARCHITECTURE.md`.
+- **scope:** `docs/CURRENT_STATE.md`, `README.md`, `docs/research/thesis/THESIS_ARCHITECTURE.md`.
 - **status:** PARTIAL — W13 added correction banners to CURRENT_STATE §3/§4; README and THESIS_ARCHITECTURE are not edited yet.
 - **owner_class:** DOCS
 - **suggested_wave:** documentation wave (backlog item 8)
 - **default_switch_blocker:** NO
 - **acceptance:** no living doc states a capability list that differs from `runtime_identity()` / `product_capability.py`; lists link to the authority instead of copying it.
-- **verify:** `grep -n "CURVED_GEOMETRY_SUPPORT\|LỒI" README.md docs/CURRENT_STATE.md docs/THESIS_ARCHITECTURE.md`
+- **verify:** `grep -n "CURVED_GEOMETRY_SUPPORT\|LỒI" README.md docs/CURRENT_STATE.md docs/research/thesis/THESIS_ARCHITECTURE.md`
 
 ### ISSUE-OPS-FRONTEND-TESTS-SPACE-PATH
 - **description:** 11 frontend test files build repository paths from `new URL(..., import.meta.url).pathname`, which keeps `%20`; from a worktree path containing a space they fail with ENOENT (and `spawnSync git` with a bad cwd).

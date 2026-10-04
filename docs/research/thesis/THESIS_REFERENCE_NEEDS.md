@@ -1,6 +1,6 @@
 # THESIS_REFERENCE_NEEDS — những luận điểm cần nguồn học thuật bên ngoài
 
-> **Mục đích.** `docs/THESIS_DRAFT.md` viết từ **bằng chứng trong kho mã**. Mọi
+> **Mục đích.** `docs/research/thesis/THESIS_DRAFT.md` viết từ **bằng chứng trong kho mã**. Mọi
 > luận điểm nào **không** kiểm chứng được bằng kho mã đều bị đánh dấu
 > `[CẦN TÀI LIỆU THAM KHẢO]` trong bản thảo và gom vào đây.
 >
@@ -437,7 +437,7 @@ mỗi số kèm cột dẫn xuất và một lệnh đếm (`GEOMETRY_CURRICULUM
 | Văn bản sửa đổi | **Thông tư số 13/2022/TT-BGDĐT** ngày **03/8/2022** — sửa chương trình tổng thể và môn Lịch sử; **môn Toán KHÔNG đổi** |
 | Cách xác minh | mở trang văn bản trên cổng tư liệu văn kiện (số hiệu · ngày · cơ quan · người ký); tải PDF chương trình môn Toán và **đọc trực tiếp** mục hình học không gian |
 
-Metadata đầy đủ: `docs/THESIS_REFERENCES.md` mục `[BGD-TT32]` `[BGD-TOAN]`
+Metadata đầy đủ: `docs/research/thesis/THESIS_REFERENCES.md` mục `[BGD-TT32]` `[BGD-TOAN]`
 `[BGD-TT13]`.
 
 ⛔ Năm liên kết tài liệu ôn thi trước đây đóng vai nguồn chương trình **đã bị hạ

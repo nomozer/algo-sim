@@ -9,7 +9,7 @@
 > một nợ đã ghi (§D-4: thân Chương 4 đang là **hai thân rời nhau**); hợp nhất
 > thuộc wave tích hợp bản thảo. Giữ bản gốc §1.8 làm bằng chứng lịch sử.
 >
-> Khoá trích dẫn: `docs/thesis/references_geometry_systems.bib`.
+> Khoá trích dẫn: `docs/research/thesis/references_geometry_systems.bib`.
 > Ma trận: `docs/research/LITERATURE_COMPARISON_MATRIX.md`.
 > Giao thức + **sai lệch giao thức**: `docs/research/RELATED_WORK_SEARCH_PROTOCOL.md`.
 

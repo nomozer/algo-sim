@@ -212,7 +212,7 @@ nào sau bước 4.
 ## 0f. Giới hạn đã biết (trung thực)
 
 Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằng chứng:
-`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/THESIS_ARCHITECTURE.md` §J.
+`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J.
 
 | giới hạn | trạng thái |
 |---|---|
@@ -598,7 +598,7 @@ tiến triển nữa) → ném `GenericEvaluationError` thay vì hoá 0 im lặn
 try/except từ trước → lỗi tự động thành reject, không cần sửa `run_gates`. Bug đã
 vá trong lúc viết plan (không phải trong code cuối): thứ tự cập nhật `pending`
 PHẢI đứng TRƯỚC check `break`, nếu không mọi spec có ≥ 1 rule sẽ bị raise oan —
-xem cảnh báo ở `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`
+xem cảnh báo ở `docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`
 Task 4. Tests: `test_generic_engine_m13.py` (mới) + `test_semantic.py` (M11
 canary chuỗi đảo thứ tự vẫn đúng giá trị — bằng chứng ngữ nghĩa KHÔNG đổi cho
 spec hợp lệ).
@@ -3989,7 +3989,7 @@ Ba runner Playwright chụp mô phỏng do đường `semantic_program` sinh, �
 
 ## Miền HÌNH HỌC KHÔNG GIAN (2026-08-24 → nay)
 
-> Đổi đề tài: `STATUS_LEDGER §0-2026-08-24`. Kế hoạch: `docs/geometry/`
+> Đổi đề tài: `STATUS_LEDGER §0-2026-08-24`. Kế hoạch (lưu trữ từ W19): `docs/legacy/geometry/`
 > (`GEOMETRY_ROADMAP` · `MIGRATION_PLAN` · `CURRENT_SYSTEM_MAPPING` ·
 > `GEOMETRY_ARCHITECTURE_GAP_REPORT`).
 
@@ -4882,7 +4882,7 @@ cái sau thì một ca lệch tên (hợp đồng gọi `(ABCD)`, chương trìn
 
 ## Đường sinh ngữ nghĩa `generic.semantic_program` (2026-08-20 → 21)
 
-Spec: `docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.
+Spec: `docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.
 Bất biến #31–#34 ở `ARCHITECTURE_MAP §5`.
 
 ### `backend/app/simulation/semantic_program/pacer.py` · Change impact: offline
@@ -5409,7 +5409,7 @@ Bộ ĐO năng lực hình học, chạy thật ở HEAD. Gọi thẳng **cầu 
 `distance_sq_skew_lines` mà cầu nối không nối, nên `hp_b01_032` vẫn chết hai
 lượt ở V3 — **lỗ ấy đã vá 2026-08-30**, và chính bộ đo này là thứ phát hiện ra
 nó, nên ví dụ giữ nguyên làm lý do tồn tại của script. `--md` cho bảng tài liệu, `--json` cho máy đọc.
-Kết quả và cách đọc: `docs/geometry/CAPABILITY_GAP_AUDIT.md`.
+Kết quả và cách đọc: `docs/legacy/geometry/CAPABILITY_GAP_AUDIT.md`.
 
 ### `backend/app/simulation/semantic_program/hoisting.py` · offline
 

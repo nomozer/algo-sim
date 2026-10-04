@@ -32,7 +32,7 @@ màn hình gần giống nhau chỉ để tăng số hình.
 | | |
 |---|---|
 | Chứng minh | Ranh giới R0: chỉ **hai** khối thuộc mô hình ngôn ngữ, và cả hai nằm **trước** khi tồn tại bất kỳ toạ độ nào |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §B`; bản thảo §3.1 |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §B`; bản thảo §3.1 |
 | Cách dựng | Sơ đồ khối dọc, tô **ba vùng**: vùng mô hình ngôn ngữ · vùng tất định · vùng từ chối. Ghi rõ vị trí *"từ đây không còn lượt gọi mô hình"* |
 | Gộp thêm | **Hình 3.5 cũ** (bốn tầng nhân hình học) đưa vào đây làm một khối con — nó là chi tiết của một khối, không cần một hình riêng |
 
@@ -59,7 +59,7 @@ hình học tính chúng khi thực thi.*
 | | |
 |---|---|
 | Chứng minh | Song ánh **khung hình thứ *k* ⇔ bước thứ *k*** |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §G`; bản thảo §3.7 |
 | Cách dựng | Ba hàng ngang xếp thẳng cột, mũi tên dọc nối bước *k* với khung *k*. Thể hiện **hai ngân sách tách bạch**: gộp bước để trình bày nằm ở tầng sau, không ở tầng dẫn xuất |
 
 **Chú thích dự kiến:** *Hình 3.3. Cảnh ba chiều được dẫn xuất từ vết thực thi.
@@ -72,7 +72,7 @@ một tầng sau và không phá song ánh này.*
 | | |
 |---|---|
 | Chứng minh | Thứ tự bảy cổng, và bốn đường từ chối cùng chi phí gọi mô hình của mỗi đường |
-| Nguồn nội dung | `docs/THESIS_ARCHITECTURE.md §I` (đã có bản mermaid) |
+| Nguồn nội dung | `docs/research/thesis/THESIS_ARCHITECTURE.md §I` (đã có bản mermaid) |
 | Cách dựng | Chuyển bản mermaid sẵn có sang hình vẽ. Ghi rõ trên mỗi nhánh từ chối: **số lượt gọi mô hình đã tiêu** |
 
 **Chú thích dự kiến:** *Hình 3.4. Trình tự xử lý một yêu cầu. Đề không thuộc hình

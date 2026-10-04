@@ -20,7 +20,7 @@ from app.simulation.geometry import measure as M
 from app.simulation.geometry import predicates as P
 from app.simulation.semantic_program.geometry_exec import ERR_SAI_LOAI, _do
 
-_DOC = (Path(__file__).resolve().parents[3] / "docs" / "geometry"
+_DOC = (Path(__file__).resolve().parents[3] / "docs" / "research"
         / "GEOMETRY_CURRICULUM_COVERAGE.md")
 
 V = Vec3.of

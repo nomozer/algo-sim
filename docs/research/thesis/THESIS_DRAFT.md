@@ -9,7 +9,7 @@
 >
 > Nội dung nghiên cứu đã đóng. Việc còn lại trước khi nộp — áp mẫu trình bày của
 > trường, dựng hình, chụp màn hình — liệt kê ở
-> `docs/THESIS_SUBMISSION_CHECKLIST.md`.
+> `docs/research/thesis/THESIS_SUBMISSION_CHECKLIST.md`.
 >
 > **Thẩm quyền số liệu.** Mọi con số trong bản thảo này trích từ
 > `docs/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên. Khi bản thảo
@@ -17,12 +17,12 @@
 >
 > **Trích dẫn.** Kiểu **tác giả–năm**, tạm thời — kho chưa có quy định kiểu trích
 > dẫn của trường, nên đây **không** phải tuyên bố APA/IEEE. Metadata đầy đủ:
-> `docs/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:
-> `docs/THESIS_CITATION_MATRIX.md`.
+> `docs/research/thesis/THESIS_REFERENCES.md`. Bảng *trích dẫn nào chống đỡ câu nào*:
+> `docs/research/thesis/THESIS_CITATION_MATRIX.md`.
 >
 > **Hình và bảng.** Chú thích hình được viết dạng nghiêng ngay dưới vị trí hình;
 > bốn hình cần ảnh chụp màn hình còn ở dạng chú thích chờ. Kế hoạch dựng hình,
-> đặc tả chụp và chú thích dự kiến: `docs/THESIS_FIGURE_CAPTURE_PLAN.md`.
+> đặc tả chụp và chú thích dự kiến: `docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`.
 > Danh mục đầy đủ ở phần cuối bản thảo.
 
 ---
@@ -83,7 +83,7 @@ lên người học **chưa được đánh giá**.
 > khớp oracle độc lập. Câu đúng cho bản nộp: *"phạm vi phủ **một phần** chương
 > trình, có chủ đích; mỗi họ hình được đo **một ca, một lượt**, nên không tuyên
 > bố gì về độ ổn định; tác động lên người học chưa được đánh giá."*
-> Chi tiết: Chương 4 mới (`docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và
+> Chi tiết: Chương 4 mới (`docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và
 > `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4.
 
 **Từ khoá:** hình học không gian; mô phỏng 3D trong giáo dục; mô hình ngôn ngữ
@@ -858,7 +858,7 @@ dựng*; các giai đoạn sau *dựng, kiểm và trình bày*.
   └─► cảnh 3D tua được theo bước   (Scene3DExplorer)
 ```
 
-![Kiến trúc tổng thể](thesis_figures/fig_3_1_architecture.svg)
+![Kiến trúc tổng thể](figures/fig_3_1_architecture.svg)
 
 *Hình 3.1. Kiến trúc tổng thể của hệ thống. Hai khối tô màu cam thuộc mô hình
 ngôn ngữ; toàn bộ phần còn lại là tất định. Ranh giới R0 nằm ngay sau bước tổng
@@ -1061,7 +1061,7 @@ hình dạng ấy.
 Trên giao diện, bài này hiển thị **6 bước** (số bước đọc từ màn hình khớp chính
 xác bộ chạy lại phía backend — xem §4.9).
 
-![Ba tầng biểu diễn](thesis_figures/fig_3_2_semantic_pipeline.svg)
+![Ba tầng biểu diễn](figures/fig_3_2_semantic_pipeline.svg)
 
 *Hình 3.2. Cùng một bài toán qua ba tầng biểu diễn. Toạ độ xuất hiện ở cột giữa
 chỉ cho các điểm mà đề cho, mỗi điểm kèm định danh dữ kiện nguồn; toạ độ của hai
@@ -1247,7 +1247,7 @@ chứ không chỉ hình dạng — đúng lớp khó khăn thứ hai ở §1.2.
 Đây cũng là **bằng chứng quan sát được** cho luận điểm R0: nếu mô hình chỉ đoán
 toạ độ rồi khai thẳng ra, cột phụ thuộc sẽ trống.
 
-![Vết thực thi tới cảnh 3D](thesis_figures/fig_3_3_trace_scene3d.svg)
+![Vết thực thi tới cảnh 3D](figures/fig_3_3_trace_scene3d.svg)
 
 *Hình 3.3. Cảnh ba chiều được dẫn xuất từ vết thực thi. Khung hình thứ k suy ra
 hoàn toàn từ ảnh chụp bộ nhớ tại bước k, nên thao tác “tua tới bước k” có nghĩa
@@ -1277,7 +1277,7 @@ SA"* — chứ không phải `point3 · construct_point.midpoint`. Định danh 
 không được lọt lên giao diện; ràng buộc này được khoá bằng kiểm thử vệ sinh giao
 diện.
 
-![Tách khối](thesis_figures/fig_4_5_section.png)
+![Tách khối](figures/fig_4_5_section.png)
 
 *Hình 4.5. Cùng cấu hình ở Hình 4.3b, sau thao tác tách khối. Các mặt của khối
 được tách rời để nhìn được cấu trúc bên trong; tương tác trong phạm vi đề tài là
@@ -1288,7 +1288,7 @@ sót: kéo liên tục phá song ánh khung ⇔ bước (§3.7.1). Đổi lại,
 cụ hình học động không có — **một chuỗi bước dựng có xuất xứ và đã được kiểm
 chứng**.
 
-![Xuất xứ và phụ thuộc](thesis_figures/fig_4_2_provenance.png)
+![Xuất xứ và phụ thuộc](figures/fig_4_2_provenance.png)
 
 *Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết. Ô soi hiển thị phép
 dựng đã tạo ra đối tượng đang chọn và danh sách đối tượng mà nó phụ thuộc; cấu
@@ -1315,7 +1315,7 @@ vì không có dữ kiện nào để trích). Cổng grounding chặn **trướ
 trả về danh sách các trích dẫn không truy được. Người học thấy một lời từ chối
 đọc được; **không có cảnh 3D nào được dựng kèm**.
 
-![Từ chối có địa chỉ](thesis_figures/fig_4_4_refusal.png)
+![Từ chối có địa chỉ](figures/fig_4_4_refusal.png)
 
 *Hình 4.4. Màn hình khi cổng truy nguồn dữ kiện từ chối một chương trình. Hệ
 thống nêu lý do bằng ngôn ngữ người học đọc được và không dựng cảnh ba chiều kèm
@@ -1324,7 +1324,7 @@ theo — thà không trình bày gì còn hơn trình bày một kết quả ch�
 Đây là hành vi đúng, và nó minh hoạ nguyên tắc §2.8: hệ thà không nói gì còn hơn
 nói một điều nó không chứng minh được.
 
-![Trình tự một yêu cầu](thesis_figures/fig_3_4_request_sequence.svg)
+![Trình tự một yêu cầu](figures/fig_3_4_request_sequence.svg)
 
 *Hình 3.4. Trình tự xử lý một yêu cầu. Đề không thuộc hình học không gian bị từ
 chối tại biên miền với không lượt gọi mô hình nào; các đường từ chối còn lại dừng
@@ -1761,7 +1761,7 @@ toàn không dùng tới** — và đó là trạng thái đúng của một lư
 | `TRANSLATION_PROBE` | 4, 1 | 4/4 trong ngân sách; khuôn cũ = 0 | MIXED | ràng buộc "mọi ô là TÊN" chưa đi tới được mô hình |
 | `NAME_ONLY_PROBE` | 4, 1 | 42/42 ô đúng bản thô | STRONG / MIXED | ô vô hướng chưa phủ; bước đọc đề bỏ sót dữ kiện |
 
-![Quỹ đạo bốn lượt](thesis_figures/fig_4_1_experiment_trajectory.svg)
+![Quỹ đạo bốn lượt](figures/fig_4_1_experiment_trajectory.svg)
 
 *Hình 4.1. Quan hệ giữa bốn lượt thực nghiệm. Mỗi lượt không chỉ cho một điểm số
 mà còn cho một khuôn hỏng lặp lại; khuôn hỏng ấy chỉ ra một khiếm khuyết ở giao
@@ -1878,7 +1878,7 @@ bằng mã Python trên máy chủ và một đọc cây tài liệu trong trìn
 một kết luận về cùng một vết thực thi. Đây là xác nhận thực nghiệm cho song ánh
 giữa khung hình và bước ở §3.7.1.
 
-![Tua bước](thesis_figures/fig_4_3_playback.png)
+![Tua bước](figures/fig_4_3_playback.png)
 
 *Hình 4.3. Cùng một bài tại bước 5 (a) và bước 12 (b), giữ nguyên góc nhìn. Các
 đối tượng xuất hiện đúng theo thứ tự chương trình dựng chúng; cảnh tại mỗi bước
@@ -1888,7 +1888,7 @@ giữa khung hình và bước ở §3.7.1.
 được đưa vào có chủ đích, và lượt kiểm hạ xuống 8/12 — một phép kiểm chưa từng
 báo lỗi là một phép kiểm chưa được chứng minh.
 
-*[Hình 4.2 — xem kế hoạch chụp ở `docs/THESIS_FIGURE_CAPTURE_PLAN.md`]*
+*[Hình 4.2 — xem kế hoạch chụp ở `docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`]*
 
 ## 4.10. Phủ chương trình
 
@@ -1904,7 +1904,7 @@ và môn Lịch sử; **phần môn Toán không đổi**, nên Thông tư 32 v�
 | | số | nguồn |
 |---|:-:|---|
 | Đầu mục nội dung *"Hình học không gian"* của **chương trình chính thức**, lớp 11–12 | **15** | đếm từ mục *Nội dung* trong bảng "Yêu cầu cần đạt": 11 ở lớp 11, 4 ở lớp 12 |
-| Hàng của **khung đo do đề tài dựng** | **21** | bảng phủ trong `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md` |
+| Hàng của **khung đo do đề tài dựng** | **21** | bảng phủ trong `docs/research/GEOMETRY_CURRICULUM_COVERAGE.md` |
 
 Khung 21 hàng là **taxonomy đo lường của đề tài**, ánh xạ vào nội dung chương
 trình chứ **không** phải 21 mục nguyên văn của văn bản. Chênh lệch có ba nguyên
@@ -2154,8 +2154,8 @@ loại rút từ nó sẽ là trích dẫn theo tiêu đề. Cách mô tả trun
 **một hệ có mô hình ngôn ngữ được tăng cường bằng công cụ tất định, trong đó công
 cụ giữ thẩm quyền về mọi kết quả.**
 
-Danh mục luận điểm còn cần đối chiếu tài liệu: `docs/THESIS_REFERENCE_NEEDS.md`.
-Bảng *trích dẫn nào chống đỡ câu nào*: `docs/THESIS_CITATION_MATRIX.md`.
+Danh mục luận điểm còn cần đối chiếu tài liệu: `docs/research/thesis/THESIS_REFERENCE_NEEDS.md`.
+Bảng *trích dẫn nào chống đỡ câu nào*: `docs/research/thesis/THESIS_CITATION_MATRIX.md`.
 
 ## 5.3. Giới hạn
 
@@ -2343,7 +2343,7 @@ hơn ở việc điều chỉnh prompt.
 # DANH MỤC HÌNH VÀ BẢNG
 
 Kế hoạch dựng hình, đặc tả chụp màn hình và chú thích dự kiến cho toàn bộ hình:
-`docs/THESIS_FIGURE_CAPTURE_PLAN.md`.
+`docs/research/thesis/THESIS_FIGURE_CAPTURE_PLAN.md`.
 
 ## Danh mục hình
 
@@ -2360,7 +2360,7 @@ Kế hoạch dựng hình, đặc tả chụp màn hình và chú thích dự ki
 | Hình 4.5 | Cùng cấu hình ở Hình 4.3b, sau thao tác tách khối | ảnh chụp | `fig_4_5_section.png` |
 
 **5 sơ đồ · 4 ảnh chụp · tổng 9 hình — đã dựng xong.** Tệp nguồn, xuất xứ từng
-hình, chú thích đầy đủ và các hạn chế đã khai: `docs/thesis_figures/FIGURE_MANIFEST.md`.
+hình, chú thích đầy đủ và các hạn chế đã khai: `docs/research/thesis/figures/FIGURE_MANIFEST.md`.
 Sơ đồ giữ ở dạng vector; ảnh chụp ở 2× tỉ lệ thiết bị, đủ nét khi in A4.
 
 ## Danh mục bảng
@@ -2418,10 +2418,10 @@ cd frontend && node scripts/spot-check-demo.mjs
 | §4.5 lượt `translate` | `docs/evaluation/geometry/translation-probe/` |
 | §4.6 `NAME_ONLY_CONTRACT_LIVE_PROBE` | `docs/evaluation/geometry/name-contract-probe/` |
 | §4.8 đính chính góc | `docs/evaluation/geometry/ANGLE_SEMANTICS_ERRATUM.md` |
-| §4.10 phủ chương trình | `docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md`, `CAPABILITY_GAP_AUDIT.md` |
+| §4.10 phủ chương trình | `docs/research/GEOMETRY_CURRICULUM_COVERAGE.md`, `CAPABILITY_GAP_AUDIT.md` |
 | bảng tuyên bố ↔ bằng chứng | `docs/THESIS_READINESS.md` |
-| kiến trúc hệ đóng băng | `docs/THESIS_ARCHITECTURE.md` |
-| kịch bản trình bày | `docs/THESIS_DEMO.md` |
+| kiến trúc hệ đóng băng | `docs/research/thesis/THESIS_ARCHITECTURE.md` |
+| kịch bản trình bày | `docs/research/thesis/THESIS_DEMO.md` |
 
 Artifact của **lượt thất bại** cũng được lưu (ví dụ `translation-probe/LUOT_1_VO.md`
 — lượt vỡ vì lỗi bộ đo). Chúng không bị sửa lại khi chạy lượt mới.
@@ -2472,7 +2472,7 @@ mô hình dữ liệu và lưu ở `docs/schemas/`.
 
 ## Phụ lục D. Danh mục cần tài liệu tham khảo
 
-Xem `docs/THESIS_REFERENCE_NEEDS.md`.
+Xem `docs/research/thesis/THESIS_REFERENCE_NEEDS.md`.
 
 ---
 

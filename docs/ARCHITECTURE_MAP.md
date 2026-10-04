@@ -218,7 +218,7 @@ Thẩm quyền đăng ký: [`docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.
 **Ranh giới R0 nằm ngay sau bước sinh chương trình ngữ nghĩa.** Không có lượt gọi model nào sau đó; `servable` quyết định có phát canonical.
 
 Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đường từ chối:
-**`docs/THESIS_ARCHITECTURE.md`**.
+**`docs/research/thesis/THESIS_ARCHITECTURE.md`**.
 
 > ⛔ **Luồng CŨ (miền Tin học) đã gỡ**, giữ lại đây một dòng để tra lịch sử:
 > `stage_analyze` → `representation` (plan + capability gate) → `stage_classify`
