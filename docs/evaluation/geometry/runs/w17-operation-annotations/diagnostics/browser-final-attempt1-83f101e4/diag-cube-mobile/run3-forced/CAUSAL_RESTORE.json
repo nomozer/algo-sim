@@ -1,0 +1,45 @@
+{
+ "measured_at": "2026-10-04T03:05:28.407Z",
+ "measurement_commit_sha": "83f101e4d82069f406a93afa4e57e3fb1fdcb58f",
+ "suite_pass": true,
+ "positive_pass": true,
+ "causal_restore": {
+  "neutral": {
+   "scroll_y": 19,
+   "selected_id": null,
+   "canvas_sha256": "45e45c715ff1f8740e99703270a265f566976e6f53d48c380cc697cb92b4c3e2",
+   "canvas_stable": true
+  },
+  "selected": {
+   "scroll_y": 516,
+   "selected_id": "the_tich_khoi_hop",
+   "canvas_sha256": "0d6e6eff86f153ab1dc3ccd28f2d7349c289c6be1224556bdbc873d0687072bd",
+   "scroll_y_after_click": 463
+  },
+  "restored": {
+   "scroll_y": 19,
+   "selected_id": null,
+   "canvas_sha256": "45e45c715ff1f8740e99703270a265f566976e6f53d48c380cc697cb92b4c3e2",
+   "canvas_stable": true
+  },
+  "saved_frames": [
+   "causal_restore_neutral_frame.png",
+   "causal_restore_restored_frame.png"
+  ],
+  "pass": true,
+  "reason_codes": [],
+  "canvas": {
+   "equal_bytes": true,
+   "same_size": true,
+   "max_channel_delta": 0,
+   "changed_pixels": 0
+  },
+  "camera_reset": false,
+  "selection_reset": true,
+  "scroll": {
+   "neutral": 19,
+   "selected": 516,
+   "restored": 19
+  }
+ }
+}
