@@ -1,0 +1,365 @@
+{
+ "schema_version": "measurement-attempts/1",
+ "rule": "Every reproduction, red check, census, fault-injection, cache-proof, pre-freeze, freeze, browser, occlusion, playback, builder, T3 and gate run of this wave is listed; failed, superseded and diagnostic ones are included. Authoritative runs used a detached clean worktree at the commit shown: no node_modules junction (npm ci --offline inside the worktree), Python from the main-tree backend/.venv, and dist built by the suite inside the worktree. A failed attempt is kept apart from acceptance images. A run whose console output was not captured to a file says so; nothing is reconstructed.",
+ "times": "UTC (commit times converted from local +07:00)",
+ "measurement_commit": "0ca3accf7e921797e75aebcbc19e3a05b2557859",
+ "product_commit": "7a06ee473a481a1377d270b9a2318756807da91a",
+ "candidate": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e (110 files, CACHE_VERSION 110; one freeze at 7a06ee47, committed in 8caa8307)",
+ "intermediate_candidate": null,
+ "application_llm_calls": 0,
+ "live_gemini_requests": 0,
+ "attempts": [
+  {
+   "id": "PHASE0",
+   "at": "2026-10-04T04:36:55Z",
+   "commit": "0ec2bbbb (main tree)",
+   "gate": "git fetch --prune origin; branch, HEAD, origin/main, ancestry; working tree (only the user's favicon deletion); candidate --verify (d63d6fd4); cache lock --verify (109, b1714b566e25c912)",
+   "result": "PASS",
+   "classification": "AUTHORITATIVE (repository gate)",
+   "log": "diagnostics/logs/PHASE0_REPOSITORY_GATE.log"
+  },
+  {
+   "id": "PROBE-PHASE1",
+   "at": "2026-10-04T04:54Z (file time of the scratchpad probe), before c479f377",
+   "commit": "0ec2bbbb (main tree, scratchpad probe)",
+   "gate": "scratchpad probe through the route with frozen programs, 0 model calls",
+   "result": "projections onto a wrong line/plane, a swapped 'lần lượt' list, a renamed target and a same-coordinate identity swap SERVED; a wrong midpoint with matching names refused only by the coordinate invariant (cause UNKNOWN)",
+   "classification": "SUPERSEDED_DIAGNOSTIC (by the committed reproduction)",
+   "log": "not captured to a file; summarized in the ledger and in amendment §16 (registered in c479f377)"
+  },
+  {
+   "id": "REPRODUCE-1",
+   "at": "2026-10-04T05:09:33Z",
+   "commit": "f3edd903",
+   "gate": "diagnostics/reproduce_construction_binding.py through run_pipeline (frozen stages, 0 model calls)",
+   "result": "two outside-scope rows never reached the route (domain gate); fixtures amended in bb9f7004",
+   "classification": "SUPERSEDED_DIAGNOSTIC",
+   "log": "diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_f3edd903.json"
+  },
+  {
+   "id": "REPRODUCE-BEFORE",
+   "at": "2026-10-04T05:12:32Z",
+   "commit": "bb9f7004",
+   "gate": "the same script, before any fix",
+   "result": "B5, B7, B9, B11, B13 served; B2, B4 refused at source_invariant (cause UNKNOWN); B18/B19 stop at the scope gate",
+   "classification": "AUTHORITATIVE (red baseline)",
+   "log": "diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_bb9f7004.json"
+  },
+  {
+   "id": "RED-BACKEND",
+   "at": "2026-10-04T05:12Z",
+   "commit": "bb9f7004",
+   "gate": "pytest tests/geometry/test_construction_binding.py",
+   "result": "RED for the stated reason: 43 failed / 15 passed (module absent)",
+   "classification": "RED_CHECK",
+   "log": "diagnostics/logs/RED_W18_BACKEND.log"
+  },
+  {
+   "id": "REPRODUCE-AFTER",
+   "at": "2026-10-04T07:15:33Z",
+   "commit": "84ce7b70",
+   "gate": "the same script after the binding",
+   "result": "the 7 reachable MUST_REFUSE rows refused at construction_binding (cause CONSTRUCTION, both relations named); B16 refused UNVERIFIED (UNKNOWN); every other INVARIANT row served; B18/B19 still at the scope gate",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_84ce7b70.json"
+  },
+  {
+   "id": "CENSUS",
+   "at": "2026-10-04T07:15:33Z",
+   "commit": "84ce7b70",
+   "gate": "diagnostics/construction_binding_census_w18.py: §9 SHIP rule on W14 + W15 + W15B, W16/W16B/W17/W17C rows, W18 corpus, route changes since w17 round 2",
+   "result": "SHIP; AC2 18/18; 0 served rows refused; the only route change W15 oov:chia_doan_canh (refused before, now earlier as UNVERIFIED); W18 23/23 as registered",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/CONSTRUCTION_BINDING_CENSUS_W18.json · diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json · diagnostics/logs/CENSUS_W18_84ce7b70.log"
+  },
+  {
+   "id": "RED-ANNOTATIONS",
+   "at": "2026-10-04T07:18:47Z",
+   "commit": "9844f83e",
+   "gate": "pytest tests/geometry/test_scene3d_annotations.py",
+   "result": "RED for the stated reason: 7 failed / 10 passed",
+   "classification": "RED_CHECK",
+   "log": "diagnostics/logs/RED_W18_ANNOTATIONS_BACKEND.log"
+  },
+  {
+   "id": "RED-FRONTEND",
+   "at": "2026-10-04T08:12:58Z",
+   "commit": "21981005",
+   "gate": "npx vitest run (W18 frontend tests)",
+   "result": "RED: 20 failed / 39 passed (API absent); a fixture gap (BD without a creation event) fixed with the GREEN commit",
+   "classification": "RED_CHECK",
+   "log": "diagnostics/logs/RED_W18_FRONTEND.log"
+  },
+  {
+   "id": "FI-BACKEND-1",
+   "at": "2026-10-04T08:35Z",
+   "commit": "256fdc8e + working tree",
+   "gate": "diagnostics/run_fault_injections_w18.py (12 in-memory substitutions)",
+   "result": "11/12 caught; FA4 (merge by equal value) NOT caught — its guard used the asked result, which never merges",
+   "classification": "SUPERSEDED (guard fixed in 83a0e0c1)",
+   "log": "diagnostics/logs/FAULT_INJECTION_W18.log"
+  },
+  {
+   "id": "BROWSER-PREFREEZE-1",
+   "at": "2026-10-04T08:31Z-08:44Z (approx.: after 91f750e6 was committed; log written 08:44Z)",
+   "commit": "91f750e6 (scratch D:/tmp/w18-pre; stale identity labels d3817d5f/d63d6fd4)",
+   "gate": "compiler-scene-replay.mjs, 6 families x 2 viewports + W18 cases",
+   "result": "FAIL cuboid (SOLUTION_LAYER_OUT_OF_SYNC x4, STRUCTURED_REFERENCE_NOT_RENDERED x4): the harness oracle ignored same_as; five families PASS",
+   "classification": "DIAGNOSTIC (measurement defect, harness fix 32f10f69)",
+   "log": "diagnostics/browser-prefreeze-round1-91f750e6/"
+  },
+  {
+   "id": "FI-BACKEND-2",
+   "at": "2026-10-04T08:50Z",
+   "commit": "83a0e0c1 + working tree",
+   "gate": "the same driver, suffix _R2",
+   "result": "12/12 caught",
+   "classification": "SUPERSEDED (run 3 at the measurement commit)",
+   "log": "diagnostics/logs/FAULT_INJECTION_W18_R2.log"
+  },
+  {
+   "id": "CACHE-PROOF",
+   "at": "2026-10-04T08:48Z",
+   "commit": "1e8c5658 (envelopes from c479f377 and the W18 tree)",
+   "gate": "diagnostics/proof_cache_row_w18.py (temporary sqlite)",
+   "result": "B5, B7, B9, B11, B13, B16 served before W18, refused by W18, HIT under 109, MISS after a simulated bump: BUMP",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/PROOF_CACHE_ROW_W18.json"
+  },
+  {
+   "id": "BROWSER-PREFREEZE-2",
+   "at": "2026-10-04T08:47Z-08:59Z (approx.: after 32f10f69; log written 08:59Z)",
+   "commit": "32f10f69 (scratch D:/tmp/w18-pre; stale identity labels)",
+   "gate": "the same suite after the harness fix",
+   "result": "PASS 6/6",
+   "classification": "DIAGNOSTIC (not acceptance: the product changed afterwards, 7a06ee47)",
+   "log": "diagnostics/browser-prefreeze-round2-32f10f69/"
+  },
+  {
+   "id": "PONYTAIL",
+   "at": "2026-10-04T08:59Z",
+   "commit": "7a06ee47",
+   "gate": "ponytail:ponytail-review on 0ec2bbbb..1e8c5658; focused re-run",
+   "result": "3 cuts applied, 1 finding kept (§16.2 rule); backend 96 passed, vitest geometry 583/583, tsc 0",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/PONYTAIL_REVIEW_W18.json"
+  },
+  {
+   "id": "PRE-FREEZE-FULL-BACKEND",
+   "at": "2026-10-04T09:00Z-09:05Z",
+   "commit": "7a06ee47 (main tree)",
+   "gate": "cd backend && pytest -q -p no:cacheprovider",
+   "result": "6985 passed, 16 failed: 12 stale candidate/divergence identity checks, 3 cache-lock checks (lock regenerated in 5cfb53a1), 1 missed fixture-count pin (72be45ce); the 16 and the identity files 278 passed after the fixes",
+   "classification": "AUTHORITATIVE (pre-freeze, failures classified)",
+   "log": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_7a06ee47.log"
+  },
+  {
+   "id": "FREEZE",
+   "at": "2026-10-04T09:00:17Z",
+   "commit": "7a06ee47 (clean detached worktree D:/tmp/w18-freeze), committed in 8caa8307",
+   "gate": "backend/scripts/freeze_evaluation_candidate.py, --verify there and in the main tree, lock_cache_identity.py --verify, identity test files, node harness",
+   "result": "d3b4cab9 (110 files, clean tree); --verify 0; lock 110 match; 278 passed; node 70/70",
+   "classification": "AUTHORITATIVE",
+   "log": "the refreeze commit message (8caa8307)"
+  },
+  {
+   "id": "FIXTURES-ATTEMPT1",
+   "at": "2026-10-04T09:11Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "candidate and cache verify; generate_generic_tier_a_fixtures.py",
+   "result": "verify 0 / match; 32 fixtures",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/FIXTURES_8caa8307.log · diagnostics/evidence-attempt1-8caa8307/logs/NPM_CI_8caa8307.log"
+  },
+  {
+   "id": "BROWSER-ATTEMPT1",
+   "at": "2026-10-04T09:11:36Z-09:23:44Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "frontend/scripts/compiler-scene-replay.mjs (the suite builds dist)",
+   "result": "PASS: 12/12 positives, 46/46 negatives, 6/6 served; selections 58/58; per-step labels 72/72",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/BROWSER_SUITE_8caa8307.log"
+  },
+  {
+   "id": "OCCLUSION-ATTEMPT1",
+   "at": "2026-10-04T09:24:19Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "backend/scripts/measure_scene3d_occlusion.py with the frozen human registry, camera preimages, --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS, --registered-fixture-root and --pending-human-review (U2); full command at the top of the log",
+   "result": "pass, HUMAN_REVIEW_PENDING (four W14-changed scenes), 0 failures",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/OCCLUSION_8caa8307.log"
+  },
+  {
+   "id": "PLAYBACK-ATTEMPT1",
+   "at": "2026-10-04T09:24:47Z-09:30:15Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build (dist from the browser run at the same commit)",
+   "result": "12/12",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/PLAYBACK_8caa8307.log"
+  },
+  {
+   "id": "BUILDER-ATTEMPT1",
+   "at": "2026-10-04T09:30:26Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "backend/scripts/build_scene3d_visual_evidence.py (PLAYBACK_EVIDENCE.json moved images/ -> results/ first)",
+   "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/EVIDENCE_BUILDER_8caa8307.log"
+  },
+  {
+   "id": "T3-ATTEMPT1",
+   "at": "2026-10-04T09:31:23Z-09:36:34Z",
+   "commit": "8caa8307 ('D:/tmp/w18 space/algo-sim')",
+   "gate": "frontend/scripts/full-gate.mjs (VIRTUAL_ENV = the main tree's backend/.venv)",
+   "result": "FULL_PRODUCT_GATE_PASS: pytest 7001 passed / 0 failed / 1 skipped / 2 deselected; vitest 1058/1058; build; demo 5/5 + 1/1; crash surface 6/6",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/T3_FULL_GATE_SPACED_8caa8307.log · diagnostics/evidence-attempt1-8caa8307/logs/NPM_CI_SPACED_8caa8307.log"
+  },
+  {
+   "id": "GATES-ATTEMPT1",
+   "at": "2026-10-04T09:38:21Z",
+   "commit": "8caa8307 ('D:/tmp/w18 space/algo-sim')",
+   "gate": "diagnostics/w18_gates.sh 8caa8307 0ec2bbbb",
+   "result": "all PASS; node harness 68 + 2 skipped by design, 0 fail",
+   "classification": "SUPERSEDED (acceptance attempt 1; every gate passed; superseded by the harness fix 1d8dfc6f)",
+   "log": "diagnostics/evidence-attempt1-8caa8307/logs/GATES_8caa8307.log"
+  },
+  {
+   "id": "FI-BACKEND-3",
+   "at": "2026-10-04T09:39Z",
+   "commit": "8caa8307 (D:/tmp/w18-m)",
+   "gate": "diagnostics/run_fault_injections_w18.py _R3",
+   "result": "12/12 caught; baseline 93 passed before and after",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/FAULT_INJECTION_W18_R3.log"
+  },
+  {
+   "id": "FI-FRONTEND-1",
+   "at": "2026-10-04T09:39:40Z-09:47:57Z",
+   "commit": "8caa8307 (scratch D:/tmp/w18-fe)",
+   "gate": "diagnostics/run_fault_injections_w18_frontend.mjs: 8 one-line unit injections + 4 browser injections (one-family/one-viewport filter on the scratch copy only)",
+   "result": "unit FE1-FE8 8/8 caught; browser 1/4: FW3 caught; FW1 (dash check ran only in the causal state, no edge highlighted), FW2 (isolation reference after the first toggle; the suite then threw CAUSAL_TARGET_NOT_CLICKABLE and wrote no evidence) and FW4 (no result with a referenced formula selected while the solution was open) NOT caught: three browser-harness blind spots; the product was right and its unit tests catch all three faults",
+   "classification": "SUPERSEDED (run 2 after the harness fix)",
+   "log": "diagnostics/logs/FAULT_INJECTION_W18_FRONTEND.log"
+  },
+  {
+   "id": "DIAG-FW2",
+   "at": "2026-10-04T09:50Z",
+   "commit": "8caa8307 (scratch D:/tmp/w18-fe)",
+   "gate": "diagnostics/diag_fw_single.mjs FW2: the FW2 injection alone, full stdout/stderr kept",
+   "result": "the suite threw CAUSAL_TARGET_NOT_CLICKABLE:the_tich_khoi_chop after the chip had rewound the construction; no evidence written",
+   "classification": "DIAGNOSTIC (root cause of FW2)",
+   "log": "diagnostics/logs/DIAG_FW2_8caa8307.log"
+  },
+  {
+   "id": "FW1-UNIT-CHECK",
+   "at": "2026-10-04T09:51Z",
+   "commit": "scratch D:/tmp/w18-fe at 8caa8307",
+   "gate": "the FW1 substitution + npx vitest run src/simulations/domains/geometry/",
+   "result": "1 failed (scene3d-hidden-lines.test.tsx: tầng đích tô cạnh bằng màu đích; nét đứt giữ nguyên), 582 passed; restored byte-identical",
+   "classification": "DIAGNOSTIC (the product rule is held by a unit test)",
+   "log": "not captured to a file; command and result recorded here and in the ledger"
+  },
+  {
+   "id": "HARNESS-FIX",
+   "at": "2026-10-04T09:55Z-09:59:15Z",
+   "commit": "1d8dfc6f (red against the harness of 8caa8307)",
+   "gate": "node --test scripts/compiler-scene-replay-lib.node-test.mjs (two new tests), then the whole node harness",
+   "result": "RED 2 failed for the stated reasons, then GREEN; node harness 72/72 in the main tree",
+   "classification": "AUTHORITATIVE (harness fix, red first)",
+   "log": "diagnostics/logs/RED_W18_HARNESS_FIX.log"
+  },
+  {
+   "id": "FIXTURES",
+   "at": "2026-10-04T10:00Z",
+   "commit": "0ca3accf (D:/tmp/w18-m2)",
+   "gate": "candidate and cache verify; generate_generic_tier_a_fixtures.py",
+   "result": "verify 0 / match; 32 fixtures, byte-identical to attempt 1's",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/FIXTURES_0ca3accf.log · diagnostics/logs/NPM_CI_0ca3accf.log"
+  },
+  {
+   "id": "BROWSER",
+   "at": "2026-10-04T10:00:21Z-10:10:20Z",
+   "commit": "0ca3accf (D:/tmp/w18-m2)",
+   "gate": "frontend/scripts/compiler-scene-replay.mjs (the suite builds dist)",
+   "result": "PASS: 12/12 positives, 46/46 negatives, 6/6 served; selections 58/58; one formula region 10/10 collapsed + 10/10 open; show-all isolation against the state before the first toggle 12/12; dash per formation step 72/72 (hidden edges highlighted only in cross_section); causal restore 12/12 (one pair within the registered 1-per-channel tolerance, both frames saved)",
+   "classification": "AUTHORITATIVE (attempt 2 on the final candidate)",
+   "log": "diagnostics/logs/BROWSER_SUITE_0ca3accf.log"
+  },
+  {
+   "id": "FW1-RETARGET",
+   "at": "2026-10-04T10:11Z",
+   "commit": "b5ab4656",
+   "gate": "amendment §16.8 dated correction and FI driver edit, before frontend run 2",
+   "result": "FW1 moved to cross_section/desktop, the only family whose formation highlights a hidden edge",
+   "classification": "RECORD",
+   "log": "the commit message of b5ab4656"
+  },
+  {
+   "id": "OCCLUSION",
+   "at": "2026-10-04T10:12:44Z",
+   "commit": "0ca3accf (D:/tmp/w18-m2)",
+   "gate": "backend/scripts/measure_scene3d_occlusion.py with the frozen human registry, camera preimages, --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS, --registered-fixture-root and --pending-human-review (U2); full command at the top of the log",
+   "result": "pass, HUMAN_REVIEW_PENDING (four W14-changed scenes), 0 failures",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/OCCLUSION_0ca3accf.log"
+  },
+  {
+   "id": "PLAYBACK",
+   "at": "2026-10-04T10:12:53Z-10:17:59Z",
+   "commit": "0ca3accf (D:/tmp/w18-m2)",
+   "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build (dist from the browser run at the same commit)",
+   "result": "12/12",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/PLAYBACK_0ca3accf.log"
+  },
+  {
+   "id": "BUILDER",
+   "at": "2026-10-04T10:18:09Z",
+   "commit": "0ca3accf (D:/tmp/w18-m2)",
+   "gate": "backend/scripts/build_scene3d_visual_evidence.py (PLAYBACK_EVIDENCE.json moved images/ -> results/ first)",
+   "result": "64 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/EVIDENCE_BUILDER_0ca3accf.log"
+  },
+  {
+   "id": "T3",
+   "at": "2026-10-04T10:18Z-10:22:56Z",
+   "commit": "0ca3accf (D:/tmp/w18 space/algo-sim, a path with a space)",
+   "gate": "frontend/scripts/full-gate.mjs (VIRTUAL_ENV = the main tree's backend/.venv)",
+   "result": "FULL_PRODUCT_GATE_PASS: pytest 7001 passed / 0 failed / 1 skipped / 2 deselected; vitest 1058/1058; build; demo 5/5 + 1/1; crash surface 6/6; git status 0 before and after",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/T3_FULL_GATE_SPACED_0ca3accf.log · diagnostics/logs/NPM_CI_SPACED_8caa8307.log"
+  },
+  {
+   "id": "GATES",
+   "at": "2026-10-04T10:23:13Z",
+   "commit": "0ca3accf (D:/tmp/w18 space/algo-sim, a path with a space)",
+   "gate": "diagnostics/w18_gates.sh 0ca3accf 0ec2bbbb",
+   "result": "all PASS; node harness 70 + 2 skipped by design, 0 fail",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/GATES_0ca3accf.log"
+  },
+  {
+   "id": "FI-FRONTEND-2",
+   "at": "2026-10-04T10:23Z-10:32:36Z",
+   "commit": "0ca3accf (scratch D:/tmp/w18-fe)",
+   "gate": "diagnostics/run_fault_injections_w18_frontend.mjs _R2: 8 one-line unit injections + 4 browser injections (one-family/one-viewport filter on the scratch copy only)",
+   "result": "12/12 caught (unit 8/8; browser FW1 DASH_DIFFERS_FROM_OCCLUSION, FW2 SHOW_ALL_OFF_CHANGED_STEP, FW3 WITNESS_NOT_SHOWN_LABEL, FW4 DETAIL_REGIONS_2); baselines carry none of the predicted codes; every source and the filter restored byte-identical",
+   "classification": "AUTHORITATIVE",
+   "log": "diagnostics/logs/FAULT_INJECTION_W18_FRONTEND_R2.log"
+  },
+  {
+   "id": "FINAL-REVIEW",
+   "at": "2026-10-04T09:25Z-09:45Z (during attempt 1)",
+   "commit": "0ec2bbbb..8caa8307 (product and harness); the harness fix 1d8dfc6f was written red-first in Task 7",
+   "gate": "final whole-branch self-review with code-reviewer.md of superpowers:requesting-code-review, by the author (the brief allows one agent), in four passes",
+   "result": "0 Critical, 0 Important; minors deferred (ledger and REPORT)",
+   "classification": "AUTHORITATIVE (self-review, weaker than a fresh reviewer)",
+   "log": "REPORT.md, Deferred minors"
+  }
+ ],
+ "acceptance_attempts": "attempt 1 at 8caa8307 (every gate passed; superseded by the harness fix 1d8dfc6f, kept in diagnostics/evidence-attempt1-8caa8307/); attempt 2 at 0ca3accf (authoritative)"
+}

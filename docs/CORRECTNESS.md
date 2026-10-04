@@ -158,6 +158,21 @@ bốn là `verification_gap` là báo cáo sai.
    thì chưa (`ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`). Câu cắt ngoài từ vựng
    đóng ("(Q) qua M và song song với (X)") bị từ chối dù chương trình đúng
    (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`).
+
+   **W18 (2026-10-04, §16) thêm một nghĩa cho "served":**
+   - *Điểm đề gọi tên là trung điểm hay hình chiếu được dựng đúng trên thực thể đề nêu*, ở
+     mọi vùng, xét theo danh tính, không theo toạ độ hay giá trị. Ví dụ đề nói "M là trung
+     điểm của SA" mà chương trình dựng trung điểm SB thì bị từ chối
+     `CONSTRUCTION_NOT_TEXT_BOUND`, dù giá trị tình cờ bằng nhau; lời từ chối nêu cả hai quan
+     hệ. Danh sách "lần lượt" ghép theo thứ tự. Đổi tên đích hay tráo hai đích cũng bị bắt.
+   - *Điểm phụ của hệ* mang xuất xứ `AUXILIARY`, không bao giờ là dữ kiện đề cho.
+
+   Giới hạn khai thẳng (đã đóng phần trung điểm/hình chiếu của
+   `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`):
+   - Cách nói ngoài từ vựng đóng là "chưa đối chiếu được" (UNVERIFIED): bị từ chối trong vùng
+     đa diện dù chương trình đúng, và lời từ chối không nói đề sai.
+   - Tâm, trọng tâm, giao điểm, điểm đối xứng chưa được đối chiếu theo danh tính
+     (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
 3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
    bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu

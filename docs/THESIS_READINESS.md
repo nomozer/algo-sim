@@ -199,6 +199,32 @@ Nguồn: `docs/evaluation/geometry/runs/w16-premerge-closure/` (`REPORT.md`).
 
 Nguồn: `docs/evaluation/geometry/runs/w17-operation-annotations/` (`REPORT.md`).
 
+✅/⚠️ **Cập nhật 2026-10-04 (w18, offline, 0 lượt gọi; chưa có duyệt người):**
+
+- **Đính chính giới hạn phép dựng của w17.** Ở w17 chỉ phép cắt được đối chiếu với đề. Phép tái
+  hiện trước sửa của w18 cho thấy năm loại chương trình sai vẫn được phục vụ: chiếu lên sai
+  đường (6√2 thay vì 3√6), chiếu lên sai mặt phẳng, danh sách "lần lượt" bị tráo (3√6 thay vì 9),
+  đích đổi tên, và một điểm trùng toạ độ nhưng khác danh tính. Nay mỗi phép dựng điểm mà đề gọi
+  tên bằng quan hệ trung điểm hay hình chiếu phải dùng đúng thực thể đề nêu, xét theo danh tính.
+- **Được nói:** trong từ vựng đã đăng ký (§16), một điểm đề gọi là trung điểm hay hình chiếu được
+  dựng trên đúng thực thể đề nêu, kể cả khi đáp số tình cờ bằng nhau. Lệch thì bị từ chối ở mọi
+  vùng và lời từ chối nêu cả hai quan hệ. AC2 vẫn 18/18; census trên W14–W18 không làm hàng phục
+  vụ nào bị từ chối; tiêm lỗi backend 12/12. Phạm vi tuyên bố là các corpus đã đo
+  (`docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json`),
+  không phải một chứng minh tổng quát.
+- **KHÔNG được nói** "mọi phép dựng đều được đối chiếu với đề".
+  - Tâm, trọng tâm, giao điểm, điểm đối xứng chưa được đối chiếu.
+  - Cách nói ngoài từ vựng bị từ chối dù chương trình đúng
+    (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
+  - Đích nhận được nhận theo tên điểm: cùng một đường hay mặt gọi qua điểm khác bị coi là lệch.
+- **Trình bày.** Hình mặc định gọn; chọn một đại lượng thì hiện chuỗi số của nó; ô soi là nơi
+  giải thích duy nhất; khoảng cách điểm → đường/mặt có nhân chứng chân chính xác. Lượt tiêm lỗi
+  frontend đầu tiên tìm ra ba điểm mù của bộ đo trình duyệt (sản phẩm đúng, test đơn vị bắt
+  được). Bộ đo đã sửa trước khi đo lại, nên số liệu trình duyệt của w18 đến từ bộ đo sau sửa.
+  Chưa ai duyệt bằng mắt.
+
+Nguồn: `docs/evaluation/geometry/runs/w18-binding-focus/` (`REPORT.md`).
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

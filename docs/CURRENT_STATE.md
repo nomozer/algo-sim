@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03) và w17 (2026-10-03): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03) và w18 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **110** (W18, 2026-10-04: served → rejected — phép dựng điểm (trung điểm, hình chiếu) phải gắn với quan hệ của đề bằng danh tính — `PROOF_CACHE_ROW_W18.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,17 +53,37 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 781c14e5 (measurement commit 99925723)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 4a9db1ff (measurement commit 0ca3accf)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 110
-> CANDIDATE = d63d6fd4… (was 9bb0aaa7…; intermediate d4a24eba…), product commit d3817d5f
+> CANDIDATE = d3b4cab9… (was d63d6fd4…; one freeze), product commit 7a06ee47
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (w17)
+> CURRENT_WAVE = W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE (người duyệt bằng mắt nhãn số đo trên hình, hai công tắc Số đo/Kết quả, ô từ chối W17 và tên bước nhóm cạnh, kèm phần còn lại của W16-H1 — W17-H1; W17-H2 mặt phẳng qua một điểm song song mặt phẳng khác; W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w17)
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE (người duyệt bằng mắt hình mặc định gọn, công tắc "Hiện tất cả", chọn từng đại lượng với ô soi, lời giải thu gọn, nhân chứng khoảng cách và ô từ chối W18, kèm phần còn lại của W17-H1/W16-H1 — W18-H1; W18-H2 dòng giá trị của đáp số không công thức; W18-H3 manh mối "độ dài" của cổng phạm vi; W17-H2, W15-H2, W15-H3 — `HANDOFF.md` của run w18)
 > ```
+
+> **Phép dựng điểm gắn với quan hệ của đề + nhãn tập trung — w18 (measurement `0ca3accf`, detached clean worktree; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng bắt buộc đạt trên candidate cuối; review người `NOT_APPROVED` |
+> | Phép dựng điểm cùng thực thể với đề (§16.1–16.4) | Trước sửa: chiếu lên sai đường (6√2 thay vì 3√6), sai mặt phẳng, tráo danh sách "lần lượt" (3√6 thay vì 9), đổi tên đích và một điểm trùng toạ độ khác danh tính đều được PHỤC VỤ. Nay chặng `construction_binding` đối chiếu theo danh tính: lệch ⇒ `CONSTRUCTION_NOT_TEXT_BOUND` ở mọi vùng, nêu cả hai quan hệ; chưa đối chiếu được ⇒ `CONSTRUCTION_BINDING_UNVERIFIED` trong vùng đa diện, không bao giờ nói đề sai |
+> | Census (`00654627`) | **SHIP** · AC2 **18/18** · không hàng phục vụ nào của W14–W17C bị từ chối · thay đổi tuyến duy nhất: W15 `oov:chia_doan_canh` (vốn bị từ chối) nay bị từ chối sớm hơn · corpus W18 23/23 đúng kỳ vọng |
+> | Nhãn tập trung + một nơi giải thích (§16.5–16.6) | Mặc định: tên điểm + dữ kiện; chọn đại lượng ⇒ nhãn + chuỗi số; một công tắc "Hiện tất cả" (thay "Số đo"/"Kết quả"); ô soi là nơi giải thích duy nhất; lời giải thu gọn mặc định; bản đo trùng gộp theo chủ thể (`same_as`), không theo giá trị |
+> | Nhân chứng khoảng cách (§16.7) | Điểm → đường/mặt: đoạn nét đứt tới chân CHÍNH XÁC do kernel tính + ký hiệu vuông góc, chỉ khi nhãn khoảng cách hiện; frontend không tính chân |
+> | Bộ đo | Lượt đo nghiệm thu đầu (`8caa8307`) đạt hết; tiêm lỗi frontend vòng 1 tìm ra ba điểm mù của bộ đo trình duyệt (nét đứt khi tô sáng, mốc của công tắc, hai bản công thức khi lời giải mở). Sửa bộ đo đỏ-trước (`1d8dfc6f`), giữ riêng lần thử 1, đo lại toàn bộ ở `0ca3accf` |
+> | Tiêm lỗi | backend **12/12** (vòng 3) · frontend vòng 2 tại `0ca3accf` **12/12** (8 đơn vị + 4 trình duyệt; vòng 1 tại `8caa8307`: đơn vị 8/8, trình duyệt 1/4 — ba điểm mù của bộ đo, đã sửa) |
+> | T3 từ đường dẫn CÓ dấu cách (`0ca3accf`) | **PASS** — pytest 7001/0 fail (1 skipped, 2 deselected) · vitest 1058/1058 · build · demo 5/5 · bề mặt sập 6/6 |
+> | Ảnh · oracle · playback | Trình duyệt 12/12 dương, 46/46 âm (8 loại, có 3 loại W18), 6/6 phục vụ; chọn từng đại lượng 58/58; một vùng công thức 10/10 (thu gọn) + 10/10 (mở); "Hiện tất cả" so với trạng thái trước lần bấm 12/12; nét đứt theo bước 72/72 · occlusion `HUMAN_REVIEW_PENDING` (bốn cảnh như w15–w17) · playback 12/12 · 64 crop, 0 bất đồng |
+> | Candidate · `CACHE_VERSION` | `d63d6fd4…` → **`d3b4cab9…`** (đóng băng MỘT lần tại `7a06ee47`) · 109 → **110** (`1e8c5658`; khoá danh tính `5cfb53a1`; fingerprint provider không đổi) |
+> | Giới hạn khai | Từ vựng đóng (trung điểm, hình chiếu): tâm, trọng tâm, giao điểm chưa đối chiếu; cách nói ngoài từ vựng bị từ chối dù đúng (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`) · cổng phạm vi chưa có manh mối "độ dài" (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) · tô sáng cạnh khuất chỉ xảy ra ở họ thiết diện nên ở năm họ kia luật nét đứt do test đơn vị giữ |
+> | Run | [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/) |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w18-binding-focus/` (`REPORT.md`, `HANDOFF.md`).
+> Bảng w17 trở xuống giữ làm lịch sử.
 
 > **Phép dựng gắn với câu cắt của đề + nhãn số đo trên hình — w17 (measurement `99925723`, detached clean worktree; chưa có review người):**
 >

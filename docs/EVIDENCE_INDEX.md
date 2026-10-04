@@ -65,6 +65,8 @@ W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (w15 → READY_FOR_HUMAN_VISUAL_REV
 W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (w16 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
   ▼ CORRECTED_BY (giới hạn A′ đóng cho phép cắt; grounding không đọc yêu cầu chứng minh như dữ kiện ở mọi vùng; ảnh "cạnh 4" là lỗi bộ sinh fixture) · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w16)
 W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (w17 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
+  ▼ CORRECTED_BY (phép dựng điểm — trung điểm, hình chiếu — gắn với quan hệ của đề theo danh tính; giới hạn phép dựng ngoài phép cắt đóng một phần) · SUPERSEDED_FOR_HUMAN_VERDICT (ảnh w17: hai công tắc thay bằng "Hiện tất cả")
+W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL_REVIEW; chưa có review người)
 ```
 
 **Các điểm đính chính quan trọng đã được xác lập:**
@@ -856,9 +858,30 @@ W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (w17 → READY_FOR_HUMAN_VISUAL_R
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 9bb0aaa7… -> d63d6fd4…, 109 files; frozen twice — add4afb0 gave the intermediate d4a24eba…, d3817d5f gave d63d6fd4)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 108 -> 109 in fadfd10e, real-row proof; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS — w18 checks point constructions (midpoints, projections) against the text relation by identity, closing part of this run's declared limit "constructions other than section cuts are not checked": before w18 a projection onto the wrong line or plane, a swapped "lần lượt" list, a renamed target and a same-coordinate identity swap were served. This run's files stay byte-identical.
 - **CORRECTS:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (declared limit A′, goal clauses read as data by grounding outside the polyhedral scope, the cube "cạnh 4" refusal image)
 - **SUPERSEDES:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE for the human verdict only; inside this run, the measurement at c5592c1a on the intermediate candidate is superseded by the one at 99925723, census round 1 by round 2, and the earlier fault-injection runs by run 3
-- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_d63d6fd4 — not visual acceptance (human review NOT_APPROVED). Inside the registered scope, a served section is cut by the plane and solid the text names, a value stated only in a goal clause is never a datum, and every refusal names its cause; the numbers on the figure are bound by the backend. The census is a corpus result inside the registered scope, never a general soundness proof; constructions other than section cuts are not checked against the text.
+- **SUPERSEDED_FOR_HUMAN_VERDICT:** W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS — w18 replaces the two chips with "Hiện tất cả" and a compact default, makes the inspector the one explanation place, draws distance witnesses, adds the W18 refusal panels, and measures a new candidate; a reviewer judges the w18 images.
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_d63d6fd4 — not visual acceptance (human review NOT_APPROVED). Inside the registered scope, a served section is cut by the plane and solid the text names, a value stated only in a goal clause is never a datum, and every refusal names its cause; the numbers on the figure are bound by the backend. The census is a corpus result inside the registered scope, never a general soundness proof; constructions other than section cuts are not checked against the text. It was the latest product measurement until w18 (candidate d3b4cab9).
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `images/<family>/FILMSTRIP.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/OPERATION_BINDING_REPRODUCTION_bce0b7bb.json` · `diagnostics/NEGATIVE_FIXTURE_RECONCILIATION_0b71502b.json` · `diagnostics/ASSUMPTION_CENSUS_W17_R2.json` · `diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json` · `diagnostics/PROOF_CACHE_ROW_W17.json` · `diagnostics/logs/FAULT_INJECTION_W17_R3.log` · `diagnostics/logs/FAULT_INJECTION_W17_FRONTEND_R3.log` · `diagnostics/PONYTAIL_REVIEW_W17.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS
+- **DATE:** 2026-10-04
+- **REPORT:** docs/evaluation/geometry/runs/w18-binding-focus/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w18-binding-focus/
+- **START_BASE:** 0ec2bbbb
+- **CODE_COMMIT:** 84ce7b70 (construction binding) · f2a040f9 (label roles, same_as, witness, S(T)) · b6868e19 (focused labels, one explanation place, witness layer; frontend/src) · 1e8c5658 (cache) · 7a06ee47 (ponytail; last product commit)
+- **MEASUREMENT_COMMIT:** 0ca3accf7e921797e75aebcbc19e3a05b2557859
+- **EVIDENCE_COMMIT_ROLE:** 4a9db1ff (browser, occlusion, playback, sheets, T3, gates, frontend fault injections run 2); kept apart: acceptance attempt 1 at 8caa8307 (`diagnostics/evidence-attempt1-8caa8307/`), superseded by the harness fix 1d8dfc6f
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash d63d6fd4… -> d3b4cab9…, 110 files; frozen once at 7a06ee47)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 109 -> 110 in 1e8c5658, real-row proof; lock 5cfb53a1; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (point constructions — midpoints, projections — not checked against the text)
+- **SUPERSEDES:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS for the human verdict only; inside this run, acceptance attempt 1 (8caa8307) is superseded by attempt 2 (0ca3accf), the backend fault-injection runs 1–2 by run 3, and the frontend run 1 by run 2
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_d3b4cab9 — not visual acceptance (human review NOT_APPROVED). Inside the registered vocabulary (§16), a point the text defines as a midpoint or projection is built on the entities the text names, checked by identity; a mismatch is refused in every scope and named to the learner; numbers on the figure carry backend roles and one explanation place. The census is a corpus result, never a general proof; centres, intersections and unread phrasings are not checked.
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/HIDDEN_EDGE_CROPS.json` · `images/<family>/SHEET.png` · `images/<family>/FILMSTRIP.png` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_bb9f7004.json` · `diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_84ce7b70.json` · `diagnostics/CONSTRUCTION_BINDING_CENSUS_W18.json` · `diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json` · `diagnostics/PROOF_CACHE_ROW_W18.json` · `diagnostics/logs/FAULT_INJECTION_W18_R3.log` · `diagnostics/logs/FAULT_INJECTION_W18_FRONTEND_R2.log` · `diagnostics/PONYTAIL_REVIEW_W18.json` · `diagnostics/WORKTREE_CLEANUP.json` · `diagnostics/TEMP_FILE_INVENTORY.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

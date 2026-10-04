@@ -1557,3 +1557,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (declared limit A′ closed for section cuts; goal clauses no longer read as data by grounding outside the polyhedral scope; the w16 cube "cạnh 4" refusal image traced to a fixture-generator defect)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS
+- **DATE:** 2026-10-04
+- **START_BASE:** 0ec2bbbb
+- **CODE_COMMIT_OR_NONE:** 84ce7b70 (construction binding, route stage, learner messages, refusal-card label) · f2a040f9 (label roles, same-subject merge, exact distance witness, S(T)) · b6868e19 (focused labels, one explanation place, witness layer; frontend/src) · 1e8c5658 (CACHE_VERSION 110) · 7a06ee47 (ponytail cuts; last product commit)
+- **COMMITS:** registration + corpus labels c479f377 · red reproductions f3edd903, bb9f7004 · Phase 1 reproduction d5b0a555 · census + reproduction after 00654627 · red annotations 9844f83e · P1 lock 3b0d6989 · red frontend 21981005 · harness 91f750e6 · fault-injection drivers 256fdc8e, 83a0e0c1 · oracle same_as 32f10f69 · fault injections run 2 1a20b74c · cache lock 5cfb53a1 · fixture pin 72be45ce · freeze 8caa8307 · harness blind spots 1d8dfc6f · attempt 1 kept apart 0ca3accf (measurement commit) · FW1 retarget b5ab4656 · evidence 4a9db1ff
+- **CANDIDATE:** d63d6fd4… → d3b4cab9… (110 files), frozen once (7a06ee47) · CACHE_VERSION 109 → 110 (served → rejected; lock 5cfb53a1; fingerprint b1714b566e25c912 unchanged) · schema mirrors byte-identical · model surface unchanged
+- **EVIDENCE_COMMIT_ROLE:** 4a9db1ff (browser, occlusion, playback, sheets, T3, gates, frontend fault injections run 2 at 0ca3accf)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w18-binding-focus/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w18-binding-focus/
+- **PASS:** construction binding: B5, B7, B9, B11, B13 served before W18 (3√6 for 9, 6√2 for 3√6, 3√2 for 2√3) and B2, B4 refused only by the coordinate invariant; after: the seven reachable MUST_REFUSE rows refused at construction_binding with cause CONSTRUCTION and both relations named · census SHIP, AC2 18/18, no served row of W14–W17C refused, W18 23/23 as registered · focused labels: compact default 12/12, per-step 72/72, selection 58/58, one formula region 10/10 collapsed + 10/10 open, show-all isolation 12/12, ≤ 24 px (max 16.97) · witness 2/2 + 2/2 · dash under highlight 72/72 steps · fault injections backend 12/12 (run 3), frontend 12/12 (run 2: 8 unit + 4 browser; run 1 found three browser-harness blind spots, fixed in 1d8dfc6f)
+- **CLOSED:** ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT (partially: midpoints and projections)
+- **OPENED:** ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY · ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE
+- **OPEN (blocking merge of the branch):** human visual review (W18-H1, carrying W17-H1 and W16-H1): compact default, "Hiện tất cả", selection with its chain, the inspector, the collapsed solution, distance witnesses, W18 refusal panels, the four W14-changed scenes (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`, HUMAN_REVIEW_PENDING)
+- **FULL_PRODUCT_SUITE:** FULL_PRODUCT_GATE_PASS (T3 at 0ca3accf, path with a space; pytest 7001 passed / 0 failed / 0 xfailed)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (constructions other than section cuts were not checked against the text: midpoints and projections now are)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

@@ -502,12 +502,15 @@
 - **evidence:** `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §15.1 (scope: section cuts); W17 final self-review (`docs/evaluation/geometry/runs/w17-operation-annotations/REPORT.md`, limitations).
 - **impact:** A program that builds a determined but wrong point can still serve a wrong value. No registered corpus row exercises it.
 - **scope:** a closed reader for midpoint / foot / intersection relations in `shape_constraint.py`, and a matching rule beside `_kiem_phep_dung`.
-- **status:** OPEN (w17).
+- **status:** PARTIALLY RESOLVED (w18) — midpoints and projections/feet of perpendiculars, in every route, at their own stage.
+  - **How it is fixed.** `construction_binding.doc_quan_he_dung` reads the midpoint ("lần lượt" lists in order) and projection relations the text states (closed vocabulary, ASSUMPTION_CERTIFICATE_AMENDMENT §16.1). `doi_chieu_phep_dung` matches each point construction by identity, never by coordinates or values. The route stage `construction_binding` (after execution, before `source_invariant`) refuses MISMATCHED everywhere (`CONSTRUCTION_NOT_TEXT_BOUND`, cause CONSTRUCTION) and UNVERIFIED in the polyhedral scope (`CONSTRUCTION_BINDING_UNVERIFIED`, cause UNKNOWN); `CACHE_VERSION` 109 → 110 (`1e8c5658`).
+  - **Measured.** The 23-row W18 corpus matches its registered expectations (route-level census): the 8 MUST_REFUSE rows are refused at the new stage with both relations named, and the correct out-of-vocabulary row is refused as UNVERIFIED; census SHIP with 18/18 gold and no served row of W14–W17C refused (`docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json`); fault injections FB1–FB8 caught.
+  - **Residual:** intersection points, centres, centroids and symmetric points are OUT_OF_SCOPE (unchecked, as before W18); phrasing outside the vocabulary is UNVERIFIED (over-refusal in U3) — `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with W15-H3 (vocabulary)
 - **default_switch_blocker:** NO
 - **acceptance:** red tests for a midpoint on the wrong segment and a foot on the wrong plane; census rows labelled before the run.
-- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py -q -k w17`
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding.py -q`
 
 ### ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL
 - **description:** A cutting plane defined by a point and a parallel or perpendicular plane ("(Q) qua M và song song với (ABCD) cắt hình chóp theo thiết diện (T)") cannot be pinned by the closed vocabulary. Since W17 such a request is refused with `ASSUMPTION_INVARIANCE_UNPROVEN` even when the program is right. W16 served it, because the certificate had no operation check. A plane named by four or more points binds only to a `construct_plane` through exactly that point set.
@@ -527,8 +530,33 @@
 - **impact:** Fewer labels on curved scenes and on cubes given by a bare edge; nothing is mislabelled.
 - **scope:** registered anchors for angles (vertex), curved solids (axis/centre) and named edges of a cube (edge reader), each decided by the backend; display names for equation planes.
 - **status:** OPEN (w17) — outside the W17 brief ("Giữ nguyên phạm vi hình và phép đo hiện có").
+  - **W18 update.** A point-to-line or point-to-plane distance now anchors at its exact witness (segment to the kernel foot plus a right-angle mark, drawn only while its label shows; §16.7). Distances between two non-point objects still have no witness and no on-figure label; their value stays in the details. The witness overlay draws on top and is not occlusion-classified (declared limit, §16.7 correction). Display names: the served W18 witness case calls the base plane "(ABC)" while the text says "(ABCD)".
 - **owner_class:** PRODUCT
 - **suggested_wave:** next presentation wave
 - **default_switch_blocker:** NO
 - **acceptance:** each new anchor kind has a backend binding test and a browser placement check (≤ 24 px, inside, no overlap).
 - **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_scene3d_annotations.py -q`
+
+### ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY
+- **description:** The W18 construction binding (§16) reads only the closed midpoint/projection vocabulary. Four declared limits follow. (1) A correct construction phrased outside the vocabulary ("Gọi M là điểm chính giữa của đoạn SA", row B16) is UNVERIFIED and refused in the polyhedral scope (U3). (2) Points whose text role is a centre, centroid, orthocentre, intersection or symmetric point are OUT_OF_SCOPE whatever operation builds them, so a wrong construction of them is not identity-checked (§16.3 correction (i)). (3) A receiver line or plane through a point that is not a text entity, an equation plane or a derived line cannot be pinned: UNVERIFIED (§16.3 correction (ii)). (4) A text vertex built by a construction operation without a W18 relation is layout, governed by the W15 certificate, not by the binding (§16.3 correction (iii)).
+- **evidence:** W18 corpus rows B16 (`out_of_vocab_ok`, refused UNVERIFIED) and the W15 row `oov:chia_doan_canh` (refused earlier, now at `construction_binding`) in `docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json`; `tests/geometry/test_construction_binding.py`.
+- **impact:** Over-refusal of correct programs on unread phrasings, with a truthful message ("AlgoSim chưa đối chiếu được … Đây là giới hạn của hệ, không phải lỗi của đề"). For limit (2), a wrong centre or intersection point is caught only by the coordinate invariants and the W15 certificate, as before W18.
+- **scope:** `construction_binding.py` vocabulary (divisions with a ratio, unnamed receivers, centres and intersections), each with labelled corpus rows before the change.
+- **status:** OPEN (w18) — the brief keeps the vocabulary narrow ("Giữ vocabulary mở rộng hẹp cho trung điểm và phép chiếu đã hỗ trợ"); widening belongs to the user's vocabulary decision W15-H3.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with W15-H3
+- **default_switch_blocker:** NO
+- **acceptance:** each new phrasing has a MATCHED and a MISMATCHED corpus row labelled before the run; no served gold row changes.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding.py -q`
+
+### ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE
+- **description:** The product scope gate (`co_duong_thuc_thi`) has no clue for "độ dài". A request whose only question is "Tính độ dài đoạn MC", with no other clue in the text (no named solid type, no other measure), is refused at the `scope` stage before any construction is checked.
+- **evidence:** W18 Phase 1 reproduction through the product boundary: rows B18/B19 (`docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_84ce7b70.json`) stop at `scope`; the same rows reach `construction_binding` in the route-level census. The gold p1 rows pass only through "hình vuông".
+- **impact:** An over-refusal of a plain length question on a text without a solid keyword; never a wrong answer.
+- **scope:** the scope-gate clue table (routing policy). A change here moves requests from refused to served, so it needs the corpus re-run and a `CACHE_VERSION` decision.
+- **status:** OPEN (w18) — found by the W18 reproduction, outside the W18 brief (routing policy change).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next routing wave
+- **default_switch_blocker:** NO
+- **acceptance:** B18 served and B19 refused at `construction_binding` through the product boundary; no served gold row changes.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/reproduce_construction_binding.py` (writes `CONSTRUCTION_BINDING_REPRODUCTION_<sha>.json`; refuses to overwrite)

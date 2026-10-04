@@ -9,35 +9,38 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_CONSTRUCTION_BINDING_AND_FOCUS_EVIDENCE
 ```
 
-- **Vì sao:** W17 (run
-  [`w17-operation-annotations`](evaluation/geometry/runs/w17-operation-annotations/)) kết
-  thúc `READY_FOR_HUMAN_VISUAL_REVIEW` trên candidate cuối `d63d6fd4`.
-  - Giới hạn A′ của W16 đã đóng: phép cắt phải dùng đúng mặt phẳng và đúng khối của câu
-    cắt trong đề, nếu không thì bị từ chối.
-  - Giá trị chỉ nêu trong yêu cầu chứng minh không còn là dữ kiện.
-  - Mỗi lời từ chối mang nguyên nhân có cấu trúc (đề / hệ dựng / chưa rõ).
-  - Số đo đã kiểm hiện cạnh vật nó đo, có hai công tắc "Số đo" và "Kết quả".
+- **Vì sao:** W18 (run [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/)) kết
+  thúc `READY_FOR_HUMAN_VISUAL_REVIEW` trên candidate cuối `d3b4cab9`.
+  - Điểm đề gọi là trung điểm hay hình chiếu được dựng đúng trên thực thể đề nêu, xét theo
+    danh tính; lệch thì bị từ chối ở mọi vùng, nêu cả hai quan hệ.
+  - Hình mặc định gọn (tên điểm, dữ kiện); chọn một đại lượng thì hiện nó và chuỗi số; một
+    công tắc "Hiện tất cả".
+  - Ô soi là nơi giải thích duy nhất; lời giải thu gọn mặc định; khoảng cách điểm → đường/mặt
+    có nhân chứng (chân chính xác do kernel tính).
 
-  Tự rà soát cuối tìm ra ba lỗi; các lỗi đã được sửa, sau đó candidate được đóng băng lại
-  và mọi phép đo được đo lại. Việc còn lại thuộc về NGƯỜI.
-- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w17 và duyệt bằng mắt (W17-H1):
-  - nhãn số đo trên hình và hai công tắc;
-  - ô từ chối W17 (hệ dựng lệch với đề, lỗi của hệ) và mặt phẳng đúng được phục vụ;
-  - tên bước nhóm cạnh;
-  - phần còn lại của W16-H1: bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`
-    (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`), phần tô thiết diện dưới cạnh và
-    các ô từ chối.
+  Lượt tiêm lỗi frontend đầu tiên tìm ra ba điểm mù của bộ đo trình duyệt. Bộ đo đã được
+  sửa, rồi mọi phép đo được đo lại trên cùng candidate. Việc còn lại thuộc về NGƯỜI.
+- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w18 và duyệt bằng mắt (W18-H1):
+  - hình mặc định gọn, công tắc "Hiện tất cả", chọn từng loại đại lượng cùng ô soi;
+  - lời giải thu gọn/mở; nhân chứng khoảng cách; các ô từ chối W18;
+  - phần còn lại của W17-H1 và W16-H1: bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`
+    (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
 
   Sau đó quyết định:
-  - W17-H2: mặt phẳng "qua M và song song với (X)" nay bị từ chối "chưa chứng minh được" —
+  - W18-H2: ô soi có nên bỏ dòng giá trị của đáp số không có công thức (lặp dòng Kết quả)?
+  - W17-H2: mặt phẳng "qua M và song song với (X)" —
     `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`;
   - W15-H2: mở rộng vùng chặn ngoài đa diện;
-  - W15-H3: mở rộng từ vựng, gồm phép dựng khác phép cắt —
-    `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`.
+  - W15-H3: mở rộng từ vựng — câu cắt và phép dựng điểm ngoài trung điểm/hình chiếu
+    (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); manh mối "độ dài" của cổng phạm vi
+    (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) là chính sách định tuyến, cần quyết định riêng.
+- **Lộ trình sau W18 (ngoài phạm vi W18, theo brief):** họ hình mới và khối tròn xoay (P2),
+  nhiều khối trong một đề (P2), OCR ảnh đề bài (P4) — mỗi việc mở bằng một quyết định của
+  người dùng và một wave riêng.
 - **Điều kiện dừng:** automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ
   vọng người; không đổi bề mặt mô hình; không push/merge.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;

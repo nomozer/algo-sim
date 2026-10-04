@@ -1,0 +1,19 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Only this wave's own worktrees and temporary folders are removed, from the main repository, by exact path: git worktree remove <path> for a clean worktree, git worktree remove --force <path> only after both checks pass, Remove-Item -LiteralPath for a folder or file that is not a worktree, never a wildcard. The checks: (a) every tracked change is byte-identical (LF-normalised) to the committed file it produced; (b) every untracked file is byte-identical to its committed copy in the main tree's run folder, or is a reproducible, superseded, non-acceptance output named here. Directories left by earlier waves are not touched.",
+  "final_state": "2026-10-04, after the evidence commit 4a9db1ff: git worktree list = the main working tree only; git worktree prune -v found nothing; no w18* path remains under D:/tmp; the session scratchpad files listed in TEMP_FILE_INVENTORY.json were removed before the documentation commit",
+  "temp_worktrees_created": 7,
+  "temp_worktrees_removed": 7,
+  "temp_folders_and_files_created_outside_worktrees": 51,
+  "temp_folders_and_files_removed": 51,
+  "unique_artifacts_at_risk": 0,
+  "worktrees": [
+    {"path": "D:/tmp/w18-before", "head": "c479f377 (W17 product code)", "use": "envelopes of the W17 candidate for the cache-row proof (PROOF_CACHE_ROW_W18.json)", "state_at_removal": "clean", "command": "git worktree remove D:/tmp/w18-before"},
+    {"path": "D:/tmp/w18-pre", "head": "91f750e6 -> 32f10f69", "use": "pre-freeze browser rounds 1 and 2 (diagnostics/browser-prefreeze-*)", "state_at_removal": "clean", "command": "git worktree remove D:/tmp/w18-pre"},
+    {"path": "D:/tmp/w18-freeze", "head": "7a06ee47", "use": "the one candidate freeze (d3b4cab9)", "state_at_removal": "1 tracked change: docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json, byte-identical (LF) to the file committed in 8caa8307", "command": "git worktree remove --force D:/tmp/w18-freeze"},
+    {"path": "D:/tmp/w18-m", "head": "8caa8307", "use": "acceptance attempt 1 (superseded)", "state_at_removal": "untracked outputs: results/*.json byte-identical (LF) to diagnostics/evidence-attempt1-8caa8307/results/; inputs/fixtures + FIXTURE_MANIFEST.json byte-identical to the committed attempt-2 inputs; diagnostics/logs/FAULT_INJECTION_W18_R3.log equal to the committed log after trailing-whitespace trimming; images/ (466 PNG) never committed — superseded, reproducible from 8caa8307, each sha256 recorded in the committed attempt-1 BROWSER_EVIDENCE.json", "command": "git worktree remove --force D:/tmp/w18-m"},
+    {"path": "D:/tmp/w18-m2", "head": "0ca3accf", "use": "acceptance attempt 2 (fixtures, browser, occlusion, playback, builder)", "state_at_removal": "untracked outputs images/, results/, inputs/fixtures, inputs/FIXTURE_MANIFEST.json byte-identical to the copies committed in 4a9db1ff (diff -rq, cmp)", "command": "git worktree remove --force D:/tmp/w18-m2"},
+    {"path": "D:/tmp/w18 space/algo-sim", "head": "8caa8307 -> 0ca3accf", "use": "T3 and identity gates from a path with a space (attempts 1 and 2)", "state_at_removal": "clean (git status 0 after T3 and the gates)", "command": "git worktree remove \"D:/tmp/w18 space/algo-sim\"; then Remove-Item -LiteralPath 'D:\\tmp\\w18 space' (empty)"},
+    {"path": "D:/tmp/w18-fe", "head": "83a0e0c1 -> 8caa8307 -> 0ca3accf", "use": "scratch worktree of the frontend fault injections (runs 1 and 2, the FW2 diagnostic, the FW1 unit check); every substitution restored byte-identical", "state_at_removal": "clean", "command": "git worktree remove D:/tmp/w18-fe"}
+  ]
+}
