@@ -1,0 +1,491 @@
+{
+  "proof": "W20_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "110",
+  "rows": {
+    "C1_mid_constructed_U3": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "49520ce16d7e971f2b140ebfb05ce304cf6820fe95a15ff4418264b09b132678"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "49520ce16d7e971f2b140ebfb05ce304cf6820fe95a15ff4418264b09b132678"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C2_proj_constructed_U3": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7fc5049d1977b4bd33a3aec7dacf8cab7500ee32117446ab622939adc541e45e"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7fc5049d1977b4bd33a3aec7dacf8cab7500ee32117446ab622939adc541e45e"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C3_mid_divide_half_U3": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d410b660e64b1cd2e66d28dcc23574febca270ba035c0a926ac10aa3bde3702d"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d410b660e64b1cd2e66d28dcc23574febca270ba035c0a926ac10aa3bde3702d"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C4_relation_not_realized_U3": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "2fa64315d883c7b99246ca5b6a3719d0270cee0f952919590fcdde28cf455448"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "2fa64315d883c7b99246ca5b6a3719d0270cee0f952919590fcdde28cf455448"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C5_mid_constructed_outside": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f215ee432132884170d6c0bbdab0b93a3d0a2638d9d321e4ec2d274085432b5a"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f215ee432132884170d6c0bbdab0b93a3d0a2638d9d321e4ec2d274085432b5a"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C6_proj_constructed_outside": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6f7390b9335633e6e341ee11f4f2927a0dc281a843b560f6b2b50f98a4405987"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "6f7390b9335633e6e341ee11f4f2927a0dc281a843b560f6b2b50f98a4405987"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C7_layout_only_outside": {
+      "label": "served",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "domain",
+        "reason_code": null,
+        "envelope_sha256": "114dc1c4b967b36b3b172f34c9a5a368c991dc03e86a4db0aedc198a898ad4f9"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "domain",
+        "reason_code": null,
+        "envelope_sha256": "114dc1c4b967b36b3b172f34c9a5a368c991dc03e86a4db0aedc198a898ad4f9"
+      },
+      "cached_before_w20": false
+    },
+    "L1_mid_U3_assumption": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L2_mid_U3_bogus_fid": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L3_mid_U3_relation_fact": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L4_mid_U3_wrong_coords": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L5_mid_outside_assumption": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L6_mid_outside_bogus_fid": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L7_mid_outside_relation_fact": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L8_mid_outside_wrong_coords": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L9_proj_U3_assumption": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L10_proj_U3_bogus_fid": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": false
+    },
+    "L11_proj_U3_relation_fact": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": false
+    },
+    "L12_proj_outside_bogus_fid": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "fa4780bae8624f7ee447f20d2ea40aece4eaac5cd6bce04c18da9dfa4dd5f819"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    },
+    "L13_proj_outside_relation_fact": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "e799a2232e18e1e9e072dbb595043ff8710f5b11a194271e5f40ca17bfc4799c"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    },
+    "L14_proj_outside_wrong_coords": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "8636e73d9683fc2cbf4bb4ac1f171e181c87c16b631b92351550b3b3435d95fa"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    },
+    "L15_mid_U3_literal_twin_of_constructed": {
+      "label": "refused",
+      "before_w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "envelope_sha256": "d645b330fac848d030136b1f4612dfa109ce7fa6edf3ddbdcc2f8da0be93b166"
+      },
+      "cached_before_w20": false
+    },
+    "L16_mid_U3_literal_then_constructed": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7c95f36e50903c822c59adbfd67defd9f2b21e25f090c95b55098d48a3557ffc"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "a50c148e220cef4664f0f83f994c933d40e06ca7ce3cbc0bdffe1b3ca2188246"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    },
+    "C8_alias_to_constructed_U3": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1565908f1117488d53c520ac8be075665b6f246f69e2aabd3506a3d63131bd60"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1565908f1117488d53c520ac8be075665b6f246f69e2aabd3506a3d63131bd60"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "C9_layout_only_outside_distance_clue": {
+      "label": "served",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f1f6e62bf28c58c75474363be81b301533fb1cd8b9d8afb6dd69b0e9bb997512"
+      },
+      "w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f1f6e62bf28c58c75474363be81b301533fb1cd8b9d8afb6dd69b0e9bb997512"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": false
+    },
+    "L17_proj_outside_alias_to_vertex": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "8277fb898766829cee97567caab9dd6e06e9ff89147051dff86c902b83a4b13d"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "8398b73098799dd60d270dbf87ae065b935e8f2e22e45b36c682b37ada3467ee"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    },
+    "L18_proj_outside_alias_to_cited_literal": {
+      "label": "refused",
+      "before_w20": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "31b97418d9b021b1bf65a69ce9b59f655f6cc47bdd062603aaf5629800cec18e"
+      },
+      "w20": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "envelope_sha256": "dc2f12b9542514a08be1239ade58a87f0fefbdffdbf728807e76535185642900"
+      },
+      "cached_before_w20": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w20_refuses_what_was_served": true
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "L12_proj_outside_bogus_fid",
+    "L13_proj_outside_relation_fact",
+    "L14_proj_outside_wrong_coords",
+    "L16_mid_U3_literal_then_constructed",
+    "L17_proj_outside_alias_to_vertex",
+    "L18_proj_outside_alias_to_cited_literal"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W20 would be replayed under the current version although W20 refuses them: ['L12_proj_outside_bogus_fid', 'L13_proj_outside_relation_fact', 'L14_proj_outside_wrong_coords', 'L16_mid_U3_literal_then_constructed', 'L17_proj_outside_alias_to_vertex', 'L18_proj_outside_alias_to_cited_literal']"
+}

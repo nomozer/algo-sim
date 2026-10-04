@@ -702,7 +702,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # bi tu choi (served -> rejected: tra dich "lan luot", doi ten dich, diem trung toa do,
     # chieu sai duong/mat, cach noi ngoai tu vung). Row v109 van HIT:
     # runs/w18-binding-focus/diagnostics/PROOF_CACHE_ROW_W18.json.
-    assert main_module.CACHE_VERSION == "110"
+    # 110 -> 111 (W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE, 2026-10-04):
+    # be mat mo hinh KHONG doi; chang construction_binding tu choi diem de dinh nghia bang
+    # quan he (trung diem, hinh chieu) ma chuong trinh dat bang toa do (cua chinh no hay cua
+    # diem no la bi danh) — 6 yeu cau tung duoc phuc vu nay bi tu choi (served -> rejected;
+    # mot ca phuc vu dap so sai). Row v110 van HIT:
+    # runs/w20-cleanup-premerge/diagnostics/PROOF_CACHE_ROW_W20.json.
+    assert main_module.CACHE_VERSION == "111"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

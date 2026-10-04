@@ -750,7 +750,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (`runs/w17-operation-annotations/diagnostics/PROOF_CACHE_ROW_W17.json`). Envelope
 #       phục vụ cũng đổi nội dung (nhãn số đo `annotation`, `refusal_cause`). Census: chỉ
 #       A2b (giới hạn A′ đã khai của W16) đổi trạng thái.
-CACHE_VERSION = "110"
+#   111 (2026-10-04, W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE): BỀ MẶT MÔ HÌNH
+#       KHÔNG ĐỔI. Chặng `construction_binding` (§16.5) từ chối điểm đề định nghĩa bằng quan
+#       hệ (trung điểm, hình chiếu) mà chương trình đặt bằng TOẠ ĐỘ — của chính nó hay của
+#       điểm nó là bí danh — chiều **served → rejected**. Sáu yêu cầu TRƯỚC W20 được phục vụ
+#       (hình chiếu đặt bằng toạ độ ngoài vùng đa diện, một ca với đáp số sai; toạ độ rồi mới
+#       dựng; bí danh của một đỉnh hay của điểm đặt bằng toạ độ) nay bị từ chối; lưu thành row
+#       v110 chúng vẫn HIT (`runs/w20-cleanup-premerge/diagnostics/PROOF_CACHE_ROW_W20.json`).
+#       Census W14–W18: 179 hàng so với W18, không hàng nào đổi trạng thái.
+CACHE_VERSION = "111"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

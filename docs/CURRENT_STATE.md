@@ -27,7 +27,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
 > | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi |
-> | `CACHE_VERSION` | **110** (W18, 2026-10-04: served → rejected — phép dựng điểm (trung điểm, hình chiếu) phải gắn với quan hệ của đề bằng danh tính — `PROOF_CACHE_ROW_W18.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **111** (W20, 2026-10-04: served → rejected — điểm đề định nghĩa bằng quan hệ mà chương trình đặt bằng toạ độ hay bí danh — `PROOF_CACHE_ROW_W20.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 4a9db1ff (measurement commit 0ca3accf) — W19 không đổi sản phẩm
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 110
+> CACHE_VERSION = 111
 > CANDIDATE = d3b4cab9… (was d63d6fd4…; one freeze), product commit 7a06ee47 — W19 không đóng băng lại
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
 > CURRENT_WAVE = W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION (w19, chỉ tài liệu; commit a5c2e6f2 · a44631a9 · commit tài liệu này)
