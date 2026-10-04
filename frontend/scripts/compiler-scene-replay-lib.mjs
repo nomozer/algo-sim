@@ -1463,18 +1463,35 @@ const cameraDoi = (a, b) => cameraMotion(a, b) > CAMERA_SETTLE_TOLERANCE;
 /** W18 §16.8 — "Hiện tất cả" bật → tắt → bật: tập nhãn DOM đúng oracle ở mỗi trạng thái (bật = mọi
  *  nhãn khả dụng, tắt = mặc định gọn), bật lại ⇒ đúng tập cũ; nét đứt, vật dựng, lựa chọn, bước và
  *  camera KHÔNG đổi giữa ba trạng thái. */
-export function assessShowAllIsolation({ on, off, back, expectedOn, expectedOff }) {
+export function assessShowAllIsolation({ before, on, off, back, expectedOn, expectedOff }) {
+  // Mốc = trạng thái TRƯỚC lần bấm đầu (tiêm lỗi FW2 lượt 1: một tác dụng phụ lặp ở MỌI lần bấm — tua về
+  // bước 0 — làm bật/tắt/bật giống nhau, nên mốc "sau lần bấm đầu" không thấy). Vắng ⇒ `on` (cách cũ).
+  const goc = before ?? on;
   const r = [];
   if (JSON.stringify(on.annotation_ids) !== JSON.stringify(expectedOn)) r.push("SHOW_ALL_ON_LABELS_NOT_ORACLE");
   if (JSON.stringify(off.annotation_ids) !== JSON.stringify(expectedOff)) r.push("SHOW_ALL_OFF_LABELS_NOT_ORACLE");
   if (JSON.stringify(on.annotation_ids) !== JSON.stringify(back.annotation_ids)) r.push("SHOW_ALL_BACK_DIFFERENT_LABELS");
-  for (const [ten, b] of [["OFF", off], ["BACK", back]]) {
+  for (const [ten, b] of [["ON", on], ["OFF", off], ["BACK", back]]) {
     for (const k of ["dash_signature", "rendered_object_ids", "selected_id", "step"]) {
-      if (JSON.stringify(on[k]) !== JSON.stringify(b[k])) r.push(`SHOW_ALL_${ten}_CHANGED_${k.toUpperCase()}`);
+      if (JSON.stringify(goc[k]) !== JSON.stringify(b[k])) r.push(`SHOW_ALL_${ten}_CHANGED_${k.toUpperCase()}`);
     }
-    if (cameraDoi(on.camera, b.camera)) r.push(`SHOW_ALL_${ten}_CHANGED_CAMERA`);
+    if (cameraDoi(goc.camera, b.camera)) r.push(`SHOW_ALL_${ten}_CHANGED_CAMERA`);
   }
   return { pass: r.length === 0, reason_codes: r };
+}
+
+/** W18 §16.8 (đính chính) — tô sáng không bao giờ đổi nét: mỗi đoạn sản phẩm PHÂN LOẠI khuất (`edge_spans`)
+ *  phải VẼ nét đứt, đoạn thấy vẽ nét liền (`dash_signature`, theo thứ tự đoạn của chủ sở hữu). Đọc ở mọi
+ *  bước dựng — nơi cạnh đang dựng được tô sáng; `highlighted_hidden_owner_ids` chứng minh kiểm không rỗng. */
+export function assessDashFollowsSpans({ spans, dash_signature, highlighted = [] }) {
+  const moi = {};
+  for (const s of spans ?? []) (moi[s.edge_id] ??= []).push(s.visibility === "HIDDEN" ? "HIDDEN_DASHED" : "VISIBLE_SOLID");
+  const lech = Object.keys(dash_signature ?? {})
+    .filter((id) => JSON.stringify(dash_signature[id]) !== JSON.stringify(moi[id] ?? [])).sort();
+  const sang = new Set(highlighted);
+  return { pass: lech.length === 0, reason_codes: lech.length ? ["DASH_DIFFERS_FROM_OCCLUSION"] : [],
+    mismatched_owner_ids: lech,
+    highlighted_hidden_owner_ids: Object.keys(moi).filter((id) => sang.has(id) && moi[id].includes("HIDDEN_DASHED")).sort() };
 }
 
 /** Chữ công thức người học được thấy của một vật — luật nhất quán đọc thẳng payload (mọi tham chiếu

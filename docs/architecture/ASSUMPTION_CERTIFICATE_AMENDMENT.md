@@ -901,6 +901,24 @@ cờ bằng nhau.
 
 Điểm MATCHED mang `source.binding = "TEXT_RELATION"`.
 
+> **Đính chính 2026-10-04 (W18 Task 2).** Phán quyết ghi vào sổ của wave lúc sửa, TRƯỚC census và mọi
+> phép đo; chép vào đây ở Task 8, sau lượt đo đầu, không đổi nội dung. Bảng trên
+> chưa nói, hoặc nói sai, ba điểm:
+> - **(i) Vai trò ngoài từ vựng W18.** Điểm đề giới thiệu với vai trò tâm, trọng tâm, trực tâm,
+>   giao điểm hay điểm đối xứng là OUT_OF_SCOPE dù dựng bằng phép NÀO, kể cả `midpoint`. Theo
+>   bảng gốc, "O là tâm của hình vuông ABCD" dựng (đúng) bằng `midpoint(A, C)` sẽ là UNVERIFIED và
+>   bị từ chối trong U3. Giá phải trả: phép dựng sai cho các điểm này vẫn không được đối chiếu,
+>   như trước W18 (giới hạn khai).
+> - **(ii) Đích nhận không ghim, đầu mút thì ghim.** Đích nhận đi qua một điểm KHÔNG có trong đề
+>   (điểm phụ của hệ), là mặt phẳng phương trình hay đường dẫn xuất ⇒ không ghim ⇒ UNVERIFIED.
+>   Ngược lại, đầu mút trung điểm hay điểm nguồn phép chiếu ra một thực thể không có trong đề là
+>   danh tính XÁC ĐỊNH (thực thể ngoài đề) ⇒ MISMATCHED. Lý do: một đường hay một mặt có thể được
+>   gọi qua bất kỳ điểm nào của nó, còn một đầu mút thì không.
+> - **(iii) Đỉnh không được giới thiệu.** Đỉnh đề nêu mà đề không giới thiệu như điểm dẫn xuất và
+>   không có quan hệ §16.1 là OUT_OF_SCOPE, kể cả khi dựng bằng `midpoint`, `divide_segment` hay
+>   `project_onto` (thường là bố cục). Toạ độ của nó do chứng chỉ W15 (C0/C1) quản, không phải
+>   binding.
+
 ### 16.4 Thi hành
 
 Chặng `construction_binding` chạy ngay sau thực thi, trước `source_invariant`. Bất biến toạ độ
@@ -933,6 +951,13 @@ Nhãn bấm được (chuột, Enter/Space): bấm là chọn đại lượng. B
 `annotation.role ∈ {given, intermediate, result}`; `category` giữ cho tương thích với envelope
 v109.
 
+> **Đính chính 2026-10-04 (W18 Task 4 và rà soát rút gọn trước đóng băng; ghi vào sổ lúc ấy, chép vào
+> đây ở Task 8).**
+> - Backend vẫn phát `category`, nhưng frontend không còn đọc trường này (`7a06ee47`); vai trò
+>   lấy từ `role`.
+> - "Hiện tất cả" và trạng thái mở lời giải là sở thích của người học, giữ qua các bài như
+>   `chiTiet`. Mọi trạng thái gắn với cảnh vẫn đặt lại khi đổi bài (khoá bằng test).
+
 ### 16.6 Một nơi giải thích
 
 - **Ô soi là bảng chi tiết của vật đang chọn.** Với một đại lượng, ô soi có công thức có tham
@@ -944,6 +969,17 @@ v109.
   với một độ dài đề cho đã gắn, được trình bày như dữ kiện ấy: một nhãn, một dòng. Ngoại lệ: nó
   là đáp số của đề. Giá trị bằng nhau không bao giờ là tiêu chí gộp.
 
+> **Đính chính 2026-10-04 (W18 Task 3–4; phán quyết ghi vào sổ trước mọi phép đo, chép vào đây ở Task 8).**
+> - **(i) Ký hiệu `S(T)`.** Ký hiệu ngắn cho diện tích thiết diện do server gắn, lấy tên từ bộ đọc
+>   câu cắt `doc_quan_he_cat`, không lấy từ nhãn mô hình. Khi có nhiều thiết diện và chương trình
+>   gọi thiết diện khác tên đề, server không gắn ký hiệu; nhãn dài giữ nguyên.
+> - **(ii) Lời giải thu gọn.** Dòng Kết quả chỉ mang `ký hiệu = giá trị`, không có "Dựa trên".
+>   Công thức, dữ kiện và đầu vào của đại lượng đang chọn nằm ở ô soi. Mở lời giải thì công thức
+>   chuyển về lời giải, ô soi bỏ khối công thức. Chỉ đại lượng mang công thức.
+> - **(iii) Bản đo trùng.** Bản đo trùng của một dữ kiện GIỮ annotation, kèm `same_as` (W17 xoá
+>   nó), để bảng lời giải gộp nó vào dòng dữ kiện. Đáp số của đề không bao giờ mang `same_as`.
+>   Khi hai vai trò cùng một chủ thể, mỗi vai trò giữ nhãn riêng.
+
 ### 16.7 Nhân chứng khoảng cách
 
 - **Backend** phát nhân chứng cho khoảng cách điểm → đường và điểm → mặt phẳng:
@@ -954,6 +990,14 @@ v109.
   hoặc "Hiện tất cả"). Lớp này không thêm bước dựng và không tính gì.
 - **Khoảng cách khác** (hai đường, đường–mặt, hai mặt) không có nhân chứng. Giá trị ở bảng chi
   tiết, chủ thể được làm nổi, và trên hình không có nhãn. Đây là giới hạn khai.
+
+> **Đính chính 2026-10-04 (W18 Task 3–4; phán quyết ghi vào sổ trước mọi phép đo, chép vào đây ở Task 8).**
+> - **Ký hiệu vuông góc.** `marker = {u, v}` là hai vectơ hướng CHÍNH XÁC: u dọc đích nhận, v từ
+>   chân tới điểm. Frontend chỉ chuẩn hoá và co về cỡ ký hiệu cố định (15% độ dài nhân chứng, tối
+>   đa 0,5 đơn vị cảnh). Đó là trình bày; frontend không tính chân hay phép chiếu.
+> - **Lớp nhân chứng.** Lớp này vẽ đè (không kiểm độ sâu), bằng màu "đang xét". Nó không chọn được
+>   và không nằm trong kiểm khuất/hiện. Vì vậy một nhân chứng đi xuyên khối không được vẽ như nửa
+>   khuất (giới hạn khai).
 
 ### 16.8 Kiểm trên trình duyệt và tiêm lỗi (đăng ký trước mọi phép đo)
 
@@ -978,3 +1022,25 @@ v109.
 - mặc định bật mọi nhãn;
 - hai bảng chi tiết trùng nội dung;
 - tô sáng đổi nét đứt thành nét liền.
+
+> **Đính chính 2026-10-04 (W18 Task 7 — sau lượt đo nghiệm thu đầu tại `8caa8307`, TRƯỚC khi đo lại).**
+> Lượt tiêm lỗi frontend đầu tiên bắt được 8/8 phép tiêm đơn vị và FW3. Ba phép tiêm trình duyệt KHÔNG
+> bị bắt; mỗi phép chỉ ra một điểm mù của bộ đo (sản phẩm đúng, và test đơn vị bắt được cả ba lỗi):
+> - **FW1 — tô sáng đổi nét.** Kiểm nét đứt của bộ đo chỉ chạy ở trạng thái nhân quả, và đại lượng đang
+>   chọn ở đó không tô sáng cạnh nào, nên kiểm này rỗng. Thêm: ở MỌI bước dựng (nơi cạnh đang dựng được tô
+>   sáng), mỗi đoạn sản phẩm phân loại khuất phải được vẽ nét đứt, mỗi đoạn thấy vẽ nét liền
+>   (`assessDashFollowsSpans`, mã `DASH_DIFFERS_FROM_OCCLUSION`). Bằng chứng ghi các cạnh khuất được tô
+>   sáng ở từng họ (`formation.dash_under_highlight`) để chứng minh kiểm không rỗng.
+> - **FW2 — công tắc có tác dụng phụ.** Mốc của kiểm cô lập "Hiện tất cả" là trạng thái SAU lần bấm đầu,
+>   nên một tác dụng phụ lặp ở mọi lần bấm (tua về bước 0) không lộ ra. Mốc mới là trạng thái TRƯỚC lần bấm
+>   đầu; mã `SHOW_ALL_{ON,OFF,BACK}_CHANGED_*`. Ngoài ra bộ chạy từng ném lỗi và chết mà không ghi bằng
+>   chứng. Nay một lượt dương ném lỗi được ghi là FAIL kèm nguyên nhân (`run_completed`, `run_error`),
+>   phần đã đo được giữ lại.
+> - **FW4 — hai bản công thức.** Vòng chọn chưa từng chọn một đáp số có công thức tham chiếu khi lời giải
+>   đang MỞ, trong khi đó là trạng thái duy nhất có thể có hai bản công thức. Thêm `detail_region_open`:
+>   đúng một vùng (dòng lời giải), ô soi bỏ khối công thức.
+>
+> **Đổi đích tiêm lỗi.** FW1 dự đoán `DASH_DIFFERS_FROM_OCCLUSION` (thay `dash_signature_preserved`, một
+> kiểm rỗng). FW4 chạy trên một họ có đáp số mang công thức tham chiếu (`triangular_pyramid`); họ
+> `cross_section` không có công thức nào như vậy. FW2 giữ nguyên dự đoán. Sản phẩm và candidate `d3b4cab9`
+> không đổi. Mọi lượt đo nghiệm thu chạy lại ở commit đo mới; lượt `8caa8307` được giữ riêng làm lần thử 1.

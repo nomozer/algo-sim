@@ -1,0 +1,17 @@
+# RED — harness fix pass after the frontend fault injections at 8caa8307 (working tree on 8caa8307, tests only)
+# node --test --test-name-pattern="W18 show-all isolation is measured|W18 every span" scripts/compiler-scene-replay-lib.node-test.mjs
+ℹ tests 2
+ℹ pass 0
+ℹ fail 2
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  + []
+  - [
+  -   'SHOW_ALL_ON_CHANGED_RENDERED_OBJECT_IDS',
+  -   'SHOW_ALL_ON_CHANGED_STEP',
+  -   'SHOW_ALL_OFF_CHANGED_RENDERED_OBJECT_IDS',
+  -   'SHOW_ALL_OFF_CHANGED_STEP',
+  -   'SHOW_ALL_BACK_CHANGED_RENDERED_OBJECT_IDS',
+  -   'SHOW_ALL_BACK_CHANGED_STEP'
+  - ]
+  TypeError: LIB.assessDashFollowsSpans is not a function

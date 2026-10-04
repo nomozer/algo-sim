@@ -21,6 +21,7 @@ import {
   assessSectionFillUnderEdges,
   assessAnnotationBoxes,
   assessCausalRestore,
+  assessDashFollowsSpans,
   assessDetailRegion,
   assessShowAllIsolation,
   assessWitness,
@@ -754,6 +755,10 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     // W17 §15.5: không lộ trước — nhãn số đo trong DOM đúng bằng oracle khả dụng của bước.
     const annotationDom = (await annotationState(session)).dom;
     const expectedAnnotations = expectedAnnotationIds(scene, anchor);
+    // W18 §16.8 (đính chính): bước dựng TÔ SÁNG cạnh đang dựng — nét vẽ phải theo phân loại khuất.
+    const dash = assessDashFollowsSpans(await jsonEval(session, "({spans:window.__geo3d_edge_spans||[],"
+      + "dash_signature:window.__geo3d_edge_dash_signature||{},"
+      + "highlighted:window.__geo3d_highlighted_render_owner_ids||[]})"));
     steps.push({
       index,
       anchor,
@@ -775,6 +780,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       annotation_dom: annotationDom,
       expected_annotations: expectedAnnotations,
       annotation_pass: JSON.stringify(annotationDom) === JSON.stringify(expectedAnnotations),
+      dash,
     });
     if (index < stepTotal - 1 && !await moveStep(session, 1)) {
       throw new Error(`FORMATION_STOPPED_AT:${index}`);
@@ -814,13 +820,17 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     steps.map((s) => ({ index: s.index, renderedSets: renderedSets(scene, s.rendered) })),
     scenario.formation_coverage.enforce, scenario.formation_coverage.measure);
   const canvasHashes = new Set(steps.map((step) => step.canvas.sha256));
+  // Kiểm không rỗng: những cạnh khuất ĐƯỢC TÔ SÁNG ở một bước nào đó (ghi lại; một họ có thể không có).
+  const dashUnderHighlight = { steps_checked: steps.length,
+    highlighted_hidden_owner_ids: sortedUnique(steps.flatMap((s) => s.dash.highlighted_hidden_owner_ids)),
+    pass: steps.every((s) => s.dash.pass) };
   const pass = steps.every((step) => step.indicator?.index === step.index
     && step.indicator?.count === stepTotal
-    && step.tree.pass && step.point_visibility_pass && step.solution_pass && step.annotation_pass)
+    && step.tree.pass && step.point_visibility_pass && step.solution_pass && step.annotation_pass && step.dash.pass)
     && canvasHashes.size >= 2 && trace.pass && geometry.pass && endLocked
     && forwardBackward.every((x) => x.pass) && structuredReferences.pass && roleCoverage.pass;
   return { steps, observations, trace, geometry, forward_backward: forwardBackward,
-    structured_references: structuredReferences, role_coverage: roleCoverage,
+    structured_references: structuredReferences, role_coverage: roleCoverage, dash_under_highlight: dashUnderHighlight,
     end_locked: endLocked, distinct_canvas_frames: canvasHashes.size, pass };
 }
 
@@ -953,6 +963,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     if (congTac.length) {
       const expectedOn = expectedAnnotationIds(scene, neoCuoi, { showAll: true });
       const expectedOff = expectedAnnotationIds(scene, neoCuoi);
+      // Mốc TRƯỚC lần bấm đầu (đính chính §16.8): tác dụng phụ lặp ở mọi lần bấm vẫn lộ ra.
+      await settleOrRecord(session, result, "show_all_before");
+      const before = await chup();
       await clickChip(session, "Hiện tất cả");
       const hetBat = await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOn));
       await settleOrRecord(session, result, "show_all_on");
@@ -974,13 +987,13 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       const hetBatLai = await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOn));
       await settleOrRecord(session, result, "show_all_back");
       const back = await chup();
-      result.show_all_toggle = { chips: congTac, on, off, back,
+      result.show_all_toggle = { chips: congTac, before, on, off, back,
         poll_timeouts: { on: hetBat, off: hetTat, back: hetBatLai },
-        ...assessShowAllIsolation({ on, off, back, expectedOn, expectedOff }) };
+        ...assessShowAllIsolation({ before, on, off, back, expectedOn, expectedOff }) };
       // Về mặc định gọn cho các phép đo sau; công tắc lỡ đổi bước thì đã bị ghi ở trên — quay về.
       await clickChip(session, "Hiện tất cả");
       await choHet((s) => JSON.stringify(s.dom) === JSON.stringify(expectedOff));
-      if (JSON.stringify(back.step) !== JSON.stringify(on.step)) await goToEnd(session);
+      if (JSON.stringify(await currentStep(session)) !== JSON.stringify(before.step)) await goToEnd(session);
       result.assertions.show_all_toggle = assertion(result.show_all_toggle.pass, result.show_all_toggle.reason_codes);
     }
     // W18 §16.5–16.7 — chọn TỪNG đại lượng qua bảng lời giải: nhãn hiện = nó + chuỗi số của nó (oracle
@@ -1024,6 +1037,14 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           result.screenshots[`selected_${loai}`] = await capture(session, join(outDir, `selected_${loai}.png`));
           result.screenshots[`detail_${loai}`] = await captureElement(session, ".geo3d-soi", join(outDir, `detail_${loai}.png`));
           result.capture_order.push(`selected_${loai}`, `detail_${loai}`);
+        }
+        // Đính chính §16.8: đáp số có công thức tham chiếu được chọn cả khi lời giải MỞ — công thức ở dòng
+        // lời giải, ô soi bỏ khối công thức (đúng một vùng). Trạng thái duy nhất có thể sinh hai bản (FW4).
+        if (f && row.sec === "Kết quả") {
+          await setSolutionOpen(session, true);
+          kq.detail_region_open = assessDetailRegion({ formula_text: f, regions: await formulaRegions(session, f) });
+          kq.pass = kq.pass && kq.detail_region_open.pass;
+          await setSolutionOpen(session, false);
         }
         await clickSolutionRow(session, row.id);
         await choHet((s) => s.selected === null);
@@ -1394,6 +1415,13 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       result.evidence_gates.pass, result.evidence_gates.reason_codes,
     );
     result.pass = Object.values(result.assertions).every((item) => item.pass);
+    return result;
+  } catch (error) {
+    // W18 (tiêm lỗi FW2 lượt 1 làm cả suite chết, không bằng chứng): một lượt ném lỗi là MỘT KẾT LUẬN —
+    // FAIL kèm nguyên nhân, giữ phần đã đo; các họ/khổ khác vẫn chạy và bằng chứng vẫn được ghi.
+    result.run_error = String(error?.stack ?? error).slice(0, 2000);
+    result.assertions.run_completed = assertion(false, String(error?.message ?? error).slice(0, 300));
+    result.pass = false;
     return result;
   } finally {
     await session.close();

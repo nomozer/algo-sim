@@ -1156,6 +1156,41 @@ test("W18 show-all isolation and W17 causal restore record each state separately
     .reason_codes, ["SELECTION_MOVED_CAMERA"]);
 });
 
+test("W18 show-all isolation is measured against the state BEFORE the first toggle", () => {
+  // Tiêm lỗi FW2 (lượt 1): công tắc tua về bước 0 ở MỌI lần bấm — bật/tắt/bật cùng bước 0 nên so với
+  // trạng thái sau lần bấm đầu thì không thấy gì. Mốc phải là trạng thái trước lần bấm đầu.
+  const before = { annotation_ids: ["AB"], dash_signature: { e: ["VISIBLE_SOLID"] },
+    rendered_object_ids: ["A", "B"], camera: CAM_W17, selected_id: null, step: 4 };
+  const on = { ...before, annotation_ids: ["AB", "V"] };
+  const off = { ...before };
+  const k = { expectedOn: ["AB", "V"], expectedOff: ["AB"] };
+  assert.equal(LIB.assessShowAllIsolation({ before, on, off, back: on, ...k }).pass, true);
+  const tua = (s) => ({ ...s, step: 0, rendered_object_ids: ["A"] });
+  assert.deepEqual(LIB.assessShowAllIsolation({ before, on: tua(on), off: tua(off), back: tua(on), ...k }).reason_codes, [
+    "SHOW_ALL_ON_CHANGED_RENDERED_OBJECT_IDS", "SHOW_ALL_ON_CHANGED_STEP",
+    "SHOW_ALL_OFF_CHANGED_RENDERED_OBJECT_IDS", "SHOW_ALL_OFF_CHANGED_STEP",
+    "SHOW_ALL_BACK_CHANGED_RENDERED_OBJECT_IDS", "SHOW_ALL_BACK_CHANGED_STEP"]);
+});
+
+test("W18 every span the product classifies HIDDEN is drawn dashed, highlighted or not", () => {
+  const spans = [{ edge_id: "S-A", t0: 0, t1: 1, visibility: "HIDDEN" },
+    { edge_id: "S-B", t0: 0, t1: 0.4, visibility: "VISIBLE" }, { edge_id: "S-B", t0: 0.4, t1: 1, visibility: "HIDDEN" },
+    { edge_id: "B-C", t0: 0, t1: 1, visibility: "VISIBLE" }];
+  const dung = { "S-A": ["HIDDEN_DASHED"], "S-B": ["VISIBLE_SOLID", "HIDDEN_DASHED"], "B-C": ["VISIBLE_SOLID"] };
+  const ok = LIB.assessDashFollowsSpans({ spans, dash_signature: dung, highlighted: ["S-A", "B-C"] });
+  assert.equal(ok.pass, true);
+  // Bằng chứng kiểm KHÔNG rỗng: cạnh khuất đang được tô sáng có mặt ở bước này.
+  assert.deepEqual(ok.highlighted_hidden_owner_ids, ["S-A"]);
+  // Tiêm lỗi FW1: cạnh khuất được tô sáng vẽ nét liền.
+  const sai = LIB.assessDashFollowsSpans({ spans, dash_signature: { ...dung, "S-A": ["VISIBLE_SOLID"] },
+    highlighted: ["S-A"] });
+  assert.deepEqual([sai.pass, sai.reason_codes, sai.mismatched_owner_ids],
+    [false, ["DASH_DIFFERS_FROM_OCCLUSION"], ["S-A"]]);
+  // Một đoạn của cạnh hỗn hợp vẽ sai cũng là lệch.
+  assert.deepEqual(LIB.assessDashFollowsSpans({ spans,
+    dash_signature: { ...dung, "S-B": ["VISIBLE_SOLID", "VISIBLE_SOLID"] } }).mismatched_owner_ids, ["S-B"]);
+});
+
 test("W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is", () => {
   const n = { camera: CAM_W17, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
   const s = { ...n, selected_id: "V", scroll_y: 300 };

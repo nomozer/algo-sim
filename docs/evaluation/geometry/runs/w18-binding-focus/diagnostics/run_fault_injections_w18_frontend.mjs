@@ -68,10 +68,13 @@ const INJECTIONS = [
 ];
 
 // [id, file, old, new, what it simulates, family, viewport, predicted reason code]
+// Run 2 (amendment §16.8 dated correction, registered before re-measuring): FW1 now predicts the per-step dash
+// check (run 1 predicted the causal `dash_signature_preserved`, which no edge highlight reaches); FW4 runs on a
+// family whose result carries a referenced formula (cross_section has none, so run 1 could not see it).
 const BROWSER = [
   ["FW1", VIEW, '    const isHidden = span.visibility === "HIDDEN";',
     '    const isHidden = span.visibility === "HIDDEN" && owner.userData.highlighted !== true;',
-    "a highlighted hidden edge drawn solid", "triangular_pyramid", "desktop", '"dash_signature_preserved":false'],
+    "a highlighted hidden edge drawn solid", "triangular_pyramid", "desktop", "DASH_DIFFERS_FROM_OCCLUSION"],
   ["FW2", EXP, "              onClick={() => setXem((s) => ({ showAll: !s.showAll }))}",
     "              onClick={() => { setXem((s) => ({ showAll: !s.showAll })); setTt((s) => ({ ...s, current_step: 0 })); }}",
     "the 'Hiện tất cả' chip also rewinds the construction to step 0", "triangular_pyramid", "desktop",
@@ -81,7 +84,7 @@ const BROWSER = [
     "every witness drawn whether or not its distance label shows", "cross_section", "desktop",
     "WITNESS_NOT_SHOWN_LABEL"],
   ["FW4", EXP, "            {formula && !moLoiGiai && (", "            {formula && (",
-    "two regions carry the selected quantity's formula", "cross_section", "desktop", "DETAIL_REGIONS_2"],
+    "two regions carry the selected quantity's formula", "triangular_pyramid", "desktop", "DETAIL_REGIONS_2"],
 ];
 // The run filter (scratch copy only): one family, one viewport for the positive run.
 const LOC = [
