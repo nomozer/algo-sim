@@ -140,9 +140,24 @@ bốn là `verification_gap` là báo cáo sai.
      `Chứng minh rằng …`, `CMR`, `Kiểm tra …`, `… hay không?` được che trước khi đọc
      tiền đề.
 
-   Giới hạn khai thẳng, không phải bảo đảm: C0 không kiểm một phép dựng có dùng đúng
-   thực thể đề nói hay không (ví dụ (T) cắt bởi (α) trong khi đề nói (β)). Đó là lỗi
-   đọc đề của mô hình, ghi ở `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`.
+   Giới hạn W16 khai (C0 không kiểm một phép dựng có dùng đúng thực thể đề nói hay không,
+   ví dụ (T) cắt bởi (α) trong khi đề nói (β)) nay đã đóng cho phép cắt — xem W17.
+
+   **W17 (2026-10-04, §15) thêm ba nghĩa cho "served":**
+   - *Thiết diện được phục vụ là thiết diện của đúng mặt phẳng và đúng khối đề nêu.* Mọi
+     `construct_section` trên lát cắt phải cùng danh tính mặt phẳng và cùng khối với câu
+     cắt của đề. Lệch chắc chắn ⇒ `CONSTRUCTION_NOT_TEXT_BOUND`; không ghim được ⇒
+     `ASSUMPTION_INVARIANCE_UNPROVEN`.
+   - *Giá trị chỉ có trong yêu cầu chứng minh không bao giờ là dữ kiện*, ở mọi vùng: grounding
+     đọc trên đề đã che mục tiêu (`GIVEN_ONLY_IN_GOAL_CLAUSE`). "Tính …, biết …" và
+     "… bao nhiêu, biết Y?" vẫn là dữ kiện.
+   - *Lời từ chối nói đúng nguyên nhân* (SOURCE / CONSTRUCTION / UNKNOWN). Chỉ SOURCE bảo
+     người học sửa đề; lỗi dựng của hệ không bao giờ đổ cho đề.
+
+   Giới hạn khai thẳng: chỉ phép cắt được đối chiếu với đề. Trung điểm, chân đường vuông góc
+   thì chưa (`ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`). Câu cắt ngoài từ vựng
+   đóng ("(Q) qua M và song song với (X)") bị từ chối dù chương trình đúng
+   (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`).
 3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
    bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu

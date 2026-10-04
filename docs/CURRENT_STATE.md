@@ -18,7 +18,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Kiến trúc hiện tại: **`docs/THESIS_ARCHITECTURE.md`**. Tuyên bố ↔ bằng chứng ↔
 > giới hạn: **`docs/THESIS_READINESS.md`**.
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-03)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-04)
 >
 > Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
 > dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
@@ -27,7 +27,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02) và w16 (2026-10-03): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03) và w17 (2026-10-03): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **109** (W17, 2026-10-04: served → rejected — phép dựng đúng thực thể của câu cắt, giá trị chỉ trong yêu cầu chứng minh không là dữ kiện — `PROOF_CACHE_ROW_W17.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -53,17 +53,38 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 705970dd (measurement commit 7f3658b0)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 781c14e5 (measurement commit 99925723)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 108
-> CANDIDATE = 9bb0aaa7… (was b3b7eb79…; intermediate 8d14469b…), product commit 6b120036
+> CACHE_VERSION = 109
+> CANDIDATE = d63d6fd4… (was 9bb0aaa7…; intermediate d4a24eba…), product commit d3817d5f
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (w16)
+> CURRENT_WAVE = W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (w17)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE (người duyệt bằng mắt bốn cảnh W14 đổi, phần tô thiết diện nằm dưới cạnh và sáu ô từ chối mỗi sheet — W16-H1; W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w16)
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE (người duyệt bằng mắt nhãn số đo trên hình, hai công tắc Số đo/Kết quả, ô từ chối W17 và tên bước nhóm cạnh, kèm phần còn lại của W16-H1 — W17-H1; W17-H2 mặt phẳng qua một điểm song song mặt phẳng khác; W15-H2 vùng chặn, W15-H3 từ vựng — `HANDOFF.md` của run w17)
 > ```
+
+> **Phép dựng gắn với câu cắt của đề + nhãn số đo trên hình — w17 (measurement `99925723`, detached clean worktree; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng bắt buộc đạt trên candidate cuối; review người `NOT_APPROVED` |
+> | Phép dựng cùng thực thể với câu cắt (§15.1) | A′ của W16 (đề cắt bằng (β), chương trình cắt bằng (α); được PHỤC VỤ, giới hạn khai bằng strict xfail) nay bị từ chối `CONSTRUCTION_NOT_TEXT_BOUND`. Mỗi `construct_section` trên lát cắt của giá trị hiển thị phải cùng mặt phẳng (theo nguồn, rồi theo tên/duy nhất; mặt phẳng gọi qua điểm = tập điểm) và cùng khối (tập đỉnh) với câu cắt của đề. Danh tính không ghim được ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`, không đổ lỗi cho phép dựng |
+> | Giá trị chỉ trong yêu cầu chứng minh (§15.2) | Grounding đọc dữ kiện trên văn bản đã che mệnh đề mục tiêu ở MỌI vùng; giá trị chỉ có trong mục tiêu ⇒ `GIVEN_ONLY_IN_GOAL_CLAUSE` (G1, G3, G4 — G4 là hình trụ, ngoài vùng đa diện). Giữ "Tính…, biết…" và "…, biết Y?" (G2, G5–G7 phục vụ) |
+> | Nguyên nhân từ chối (§15.3) | `refusal_cause` = SOURCE / CONSTRUCTION / UNKNOWN theo mã lý do có cấu trúc; lời người học theo nguyên nhân: lỗi dựng không bảo sửa đề, nguyên nhân chưa rõ không đổ cho đề, câu gợi ý không lặp lại lời backend |
+> | Nhãn số đo trên hình (§15.4) | Backend gắn đại lượng ↔ chủ thể; frontend chỉ chiếu, đặt chỗ (vòng 6/12/18 px, bốn phía + bốn góc), tránh chồng và bật/tắt. Hai công tắc "Số đo" / "Kết quả" mặc định BẬT (U-W17-1); nhãn đáp số chỉ hiện từ bước kết luận; bật/tắt không đổi bước, camera hay nét. Nhãn bước nhóm cạnh mang tên của chính câu lệnh nhóm |
+> | Census vòng 2 (`3cbe3a1f`) | **SHIP** · AC2 **18/18** `PROVEN_SAFE` (8 C0, 10 C1) · thay đổi duy nhất từ W16 vòng 2 là A2b · 0 hàng vòng 1 đổi (163 hàng) · addendum W17C đúng nhãn |
+> | Tự rà soát cuối | Ba lỗi Important trong `backend/app`, đỏ ở `01b0c27c`, sửa ở `d3817d5f`: tân ngữ của "song song/vuông góc với (X)" bị đọc thành mặt phẳng cắt (từ chối sai một chương trình đúng); danh tính không ghim được bị báo là lệch phép dựng; "…, biết Y?" bị che như mục tiêu. Hệ quả khai: "(Q) qua M và song song với (X)" nay bị từ chối `ASSUMPTION_INVARIANCE_UNPROVEN` (W16 phục vụ) — `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL` |
+> | Tiêm lỗi | backend **23/23** bắt được (vòng 3, sau bản sửa) · frontend **18/18** tại `99925723` (vòng 3; FH3–FH5 cho dung sai khôi phục) |
+> | T3 từ đường dẫn CÓ dấu cách (`99925723`) | **PASS** — pytest 6936/0 fail (1 skipped, 2 deselected, 0 xfailed — A′ đã đóng) · vitest 1044/1044 · build · demo 5/5 · bề mặt sập 6/6 |
+> | Ảnh · oracle · playback | Trình duyệt 12/12 dương, 40/40 âm, 2/2 phục vụ mặt phẳng đúng; nhãn ≤ 24 px quanh neo, đúng bước 72/72, bật/tắt chỉ đổi nhãn, khôi phục nhân quả trùng byte 12/12 · occlusion `HUMAN_REVIEW_PENDING` (bốn cảnh như w15/w16) · playback 12/12 · 64 crop, 0 bất đồng. Lượt đo đầu trên candidate cuối (`83f101e4`) đỏ một ô do bộ đo so từng byte nhiễu chụp; sửa bộ đo (`4e07548e`, dung sai 1/kênh đăng ký trước) rồi đo lại |
+> | Candidate · `CACHE_VERSION` | `9bb0aaa7…` → **`d63d6fd4…`** (đóng băng HAI lần: `add4afb0` → `d4a24eba` trung gian, bằng chứng đầy đủ tại `c5592c1a` giữ ở `diagnostics/evidence-intermediate-c5592c1a/`; `d3817d5f` sau bản sửa của tự rà soát) · 108 → **109** (`fadfd10e`; fingerprint provider không đổi) |
+> | Giới hạn khai | Từ vựng câu cắt ĐÓNG — cách nói ngoài từ vựng bị từ chối, không phục vụ sai · phép dựng khác `construct_section` (trung điểm, chân đường vuông góc) chưa được gắn với quan hệ của đề (`ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`) · đại lượng chưa có neo (góc, khối cong, cạnh lập phương cho bằng số trần) không có nhãn trên hình (`ISSUE-ARCH-ANNOTATION-UNANCHORED-QUANTITIES`) |
+> | Run | [`w17-operation-annotations`](evaluation/geometry/runs/w17-operation-annotations/) |
+>
+> Nguồn: `docs/evaluation/geometry/runs/w17-operation-annotations/` (`REPORT.md`, `HANDOFF.md`).
+> Bảng w16 trở xuống giữ làm lịch sử.
 
 > **Đóng lỗ chứng chỉ và bằng chứng ảnh trước merge — w16 (measurement `7f3658b0`, detached clean worktree; chưa có review người):**
 >

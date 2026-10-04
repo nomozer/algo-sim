@@ -167,6 +167,38 @@ Nguồn: `docs/evaluation/geometry/runs/w15-assumption-closure/` (`REPORT.md`).
 
 Nguồn: `docs/evaluation/geometry/runs/w16-premerge-closure/` (`REPORT.md`).
 
+✅/⚠️ **Cập nhật 2026-10-04 (w17, offline, 0 lượt gọi; chưa có duyệt người):**
+
+- **Đính chính giới hạn A′ của w16.** Ở w16, phép cắt dùng một mặt phẳng đã ghim đúng nhưng
+  KHÁC mặt phẳng đề nói vẫn được chứng nhận: đề (β), chương trình (α), hiện 9 trong khi đề
+  cho 16. Nay mỗi phép cắt trên lát cắt của giá trị hiển thị phải dùng đúng mặt phẳng và
+  đúng khối của câu cắt. Lệch thì bị từ chối với `CONSTRUCTION_NOT_TEXT_BOUND`; không chứng
+  minh được thì bị từ chối với `ASSUMPTION_INVARIANCE_UNPROVEN`.
+- **Đính chính: yêu cầu chứng minh ngoài vùng đa diện.** Ở w16, grounding vẫn đọc giá trị
+  trong `Chứng minh …` như dữ kiện ngoài vùng đa diện (hình trụ G4). Nay grounding đọc trên
+  văn bản đã che mục tiêu ở mọi vùng.
+- **Được nói:** trong vùng chứng chỉ đã đăng ký,
+  - thiết diện được phục vụ là thiết diện của đúng mặt phẳng và đúng khối đề nêu;
+  - không giá trị nào chỉ có trong yêu cầu chứng minh trở thành dữ kiện;
+  - mỗi lời từ chối nói nguyên nhân (đề / hệ dựng / chưa rõ), và chỉ bảo sửa đề khi lỗi ở
+    đề.
+
+  AC2 vẫn 18/18; tiêm lỗi 23/23 (backend) và 18/18 (frontend). Phạm vi tuyên bố: 167 hàng
+  của census vòng 2 —
+  `docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`.
+- **KHÔNG được nói** "mọi phép dựng đều được đối chiếu với đề".
+  - Chỉ phép cắt (`construct_section`) được đối chiếu; trung điểm và chân đường vuông góc
+    thì chưa (`ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`).
+  - Từ vựng câu cắt ĐÓNG: "(Q) qua M và song song với (X)" bị từ chối dù chương trình đúng
+    (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`).
+  - Tự rà soát cuối tìm ra ba lỗi nằm ngoài corpus ban đầu. Census vì thế là kết quả trên
+    corpus, không phải chứng minh tổng quát.
+- **Số đo trên hình.** Backend gắn nghĩa, frontend chỉ đặt chỗ. Nhãn cách neo ≤ 24 px, không
+  lộ trước bước (72/72), và bật/tắt không đổi gì khác. Đại lượng chưa có neo (góc, khối
+  cong, số trần) không có nhãn. Chưa ai duyệt bằng mắt.
+
+Nguồn: `docs/evaluation/geometry/runs/w17-operation-annotations/` (`REPORT.md`).
+
 ## 3. Đính chính đã ghi (không hồi tố điểm)
 
 | đính chính | nội dung |

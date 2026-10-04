@@ -462,7 +462,11 @@
 - **evidence:** `backend/tests/geometry/test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi` (strict xfail). The declared-limit row `A2b_cat_bang_alpha_khi_de_noi_beta` (PROVEN_SAFE C0, served) is in `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`. Registered as limit A′ in ASSUMPTION_CERTIFICATE_AMENDMENT §14.1.
 - **impact:** A program that substitutes a determined entity for the one the text names can still be certified. If the text's entity is undetermined (an unnamed or unpinned plane), the served value hides a free parameter. With planes, the strict unnamed-binding rule refuses the common forms (A6b, A8); the named form (A2b) is served.
 - **scope:** a closed reader for construction relations in `shape_constraint.py`, for example `(X) cắt <khối> theo thiết diện (T)` and `M là trung điểm của XY`, plus a C0 rule that matches each slice construction against it.
-- **status:** OPEN (w16) — needs the vocabulary decision W15-H3 of the user. It is not part of the W16 brief (plane-equation entity binding).
+- **status:** RESOLVED for section cuts (w17, `2678b363` + the final-review fix `d3817d5f`; `CACHE_VERSION` 108 → 109 in `fadfd10e`, served → rejected).
+  - **How it is fixed.** `shape_constraint.doc_quan_he_cat` reads the text's cut relations (closed vocabulary §15.1: three phrasings; a plane named, written as an equation or through three points; the object of "song song/vuông góc với (X)" is never the cutting plane). `assumption_gate._kiem_phep_dung` makes every `construct_section` on a shown value's slice an extra condition of PROVEN_SAFE: same plane identity (by source `source_fact_id` → verbatim fact located once in the text, then the W16 name/unique rule; point-named planes by point set; equal equations never the same entity) and same solid (vertex set).
+  - **Verdicts.** A definite mismatch (both identities known and different) refuses with `CONSTRUCTION_NOT_TEXT_BOUND` (cause CONSTRUCTION). An identity the server cannot pin refuses with `ASSUMPTION_INVARIANCE_UNPROVEN` (cause UNKNOWN).
+  - **Measured.** A2b (A′) is refused; the W16 strict xfail passes; O1–O10 match their labels; census rounds 1–2 SHIP with A2b the only gate change since W16 (`docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`); the browser wrong-plane fixture is refused and the correct-plane fixture served (area 16).
+  - **Residual:** `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT` (other constructions) and `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL` (planes the vocabulary cannot pin).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with W15-H3
 - **default_switch_blocker:** NO
@@ -474,7 +478,7 @@
 - **evidence:** `test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]`: the certificate refuses, while grounding alone would accept the length (W16 Phase 1 probe, `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/PROBE_W16_PHASE1_6d01511.json`).
 - **impact:** Inside the polyhedral scope (U3) the certificate refuses such a request. Outside it, the gate only records, so a request whose only data sits in a proof request can be served.
 - **scope:** `backend/app/simulation/semantic_program/grounding_gate.py`, `segment_relation.py` (read on `che_muc_tieu(text)`).
-- **status:** OPEN (w16) — outside the W16 enforcement scope ("Giữ phạm vi enforcement của W15").
+- **status:** RESOLVED (w17, `0b71502b` + the final-review fix `d3817d5f`). `check_grounding` reads GIVEN evidence on `che_muc_tieu(text)` in every route (the grounding stage is not limited to the polyhedral scope); a second pass on the unmasked text only classifies the refusal as `GIVEN_ONLY_IN_GOAL_CLAUSE`. `, biết` ends a goal clause, and in "…, biết Y?" the biết clause is a premise. Measured: G1, G3 and G4 (cylinder, outside the polyhedral scope) refused at `grounding`; G2, G5, G6, G7 served (`test_source_grounding_closure.py -k w17`, census W17/W17C rows).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with W15-H2 (enforcement outside the polyhedral scope)
 - **default_switch_blocker:** NO
@@ -493,4 +497,38 @@
 - **acceptance:** the W16 ordering test extended to opaque lines; `SECTION_FILL_UNDER_EDGES` on a scene with an auxiliary segment inside a section.
 - **verify:** `cd frontend && npx vitest run src/simulations/domains/geometry/scene3d-section.test.ts`
 
+### ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT
+- **description:** The W17 operation check covers `construct_section` only. Other constructions on a shown value's slice are not matched against the text relation that defines them. A midpoint of SB where the text says "M là trung điểm của SA", or a foot of a perpendicular to the wrong plane, is certified when every literal is pinned (C0) or the template holds (C1).
+- **evidence:** `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §15.1 (scope: section cuts); W17 final self-review (`docs/evaluation/geometry/runs/w17-operation-annotations/REPORT.md`, limitations).
+- **impact:** A program that builds a determined but wrong point can still serve a wrong value. No registered corpus row exercises it.
+- **scope:** a closed reader for midpoint / foot / intersection relations in `shape_constraint.py`, and a matching rule beside `_kiem_phep_dung`.
+- **status:** OPEN (w17).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with W15-H3 (vocabulary)
+- **default_switch_blocker:** NO
+- **acceptance:** red tests for a midpoint on the wrong segment and a foot on the wrong plane; census rows labelled before the run.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py -q -k w17`
 
+### ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL
+- **description:** A cutting plane defined by a point and a parallel or perpendicular plane ("(Q) qua M và song song với (ABCD) cắt hình chóp theo thiết diện (T)") cannot be pinned by the closed vocabulary. Since W17 such a request is refused with `ASSUMPTION_INVARIANCE_UNPROVEN` even when the program is right. W16 served it, because the certificate had no operation check. A plane named by four or more points binds only to a `construct_plane` through exactly that point set.
+- **evidence:** W17C rows Q1/Q2 (`docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`); `test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung`.
+- **impact:** An over-refusal on a common textbook phrasing, with a truthful learner message ("chưa chứng minh được … quan hệ theo cách hệ chưa đọc được"). It is never a wrong answer.
+- **scope:** `shape_constraint.doc_quan_he_cat` (read "qua <điểm> và song song/vuông góc với (X)"), and a pinning rule in `assumption_gate` that checks, on the executed memory, that the program's plane contains the point and is parallel or perpendicular to (X).
+- **status:** OPEN (w17) — needs the user's vocabulary decision W15-H3.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with W15-H3
+- **default_switch_blocker:** NO
+- **acceptance:** Q1 served with the right section; a program through another point or not parallel is refused CONSTRUCTION_NOT_TEXT_BOUND; census rows labelled before the run.
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py -q -k w17`
+
+### ISSUE-ARCH-ANNOTATION-UNANCHORED-QUANTITIES
+- **description:** On-figure labels (W17 §15.4) exist only for quantities with a registered anchor: areas of polygons and sections, volumes of polyhedra, distances with a point operand, and given lengths whose segment the text names. Curved objects, angles, distances between two non-point objects and bare-number data ("hình lập phương cạnh bằng 4") have no label; their values stay in the details panel with an `ANNOTATION_UNBOUND` diagnostic. The served correct-plane caption calls an equation plane "Mặt phẳng cho bằng phương trình", not by its name in the text.
+- **evidence:** `backend/app/simulation/semantic_program/quantity_annotations.py` (`_DO`, `_do_dai_de_cho`); `scene3d.diagnostics` of the gold p4–p7 scenes; the W17 browser evidence (`results/BROWSER_EVIDENCE.json`, cube: 3 labels).
+- **impact:** Fewer labels on curved scenes and on cubes given by a bare edge; nothing is mislabelled.
+- **scope:** registered anchors for angles (vertex), curved solids (axis/centre) and named edges of a cube (edge reader), each decided by the backend; display names for equation planes.
+- **status:** OPEN (w17) — outside the W17 brief ("Giữ nguyên phạm vi hình và phép đo hiện có").
+- **owner_class:** PRODUCT
+- **suggested_wave:** next presentation wave
+- **default_switch_blocker:** NO
+- **acceptance:** each new anchor kind has a backend binding test and a browser placement check (≤ 24 px, inside, no overlap).
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_scene3d_annotations.py -q`

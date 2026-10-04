@@ -10,10 +10,10 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in.
-- `CACHE_VERSION = 108` (w16 bump: mười hai yêu cầu được phục vụ trước W16 — mặt phẳng
-  mang phương trình của mặt phẳng khác, yêu cầu chứng minh làm tiền đề — nay bị từ chối mà
-  vẫn HIT dưới 107, served → rejected); provider-facing fingerprint `b1714b566e25c912…`
-  không đổi.
+- `CACHE_VERSION = 109` (w17 bump: năm yêu cầu được phục vụ trước W17 — phép cắt dùng mặt
+  phẳng hay khối khác câu cắt của đề, giá trị chỉ nêu trong yêu cầu chứng minh — nay bị từ
+  chối mà vẫn HIT dưới 108, served → rejected); provider-facing fingerprint
+  `b1714b566e25c912…` không đổi.
 - Mọi test/repair gần nhất offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -21,13 +21,13 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (w16)
-MEASUREMENT_COMMIT = 7f3658b00f48dae854e5ab2527ca0ff3f701f828 (second candidate freeze)
-EVIDENCE_COMMIT = 705970dd (browser, occlusion, playback, sheets, T3, gates)
-ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w16, unchanged)
-CANDIDATE = 9bb0aaa7bddecf94… (was b3b7eb79…; intermediate 8d14469b…), product commit 6b120036
+CURRENT_WAVE = W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (w17)
+MEASUREMENT_COMMIT = 99925723e6179e9f67852a2aa393db163dd07c4f (on the second candidate freeze; attempt 2)
+EVIDENCE_COMMIT = 781c14e5 (browser, occlusion, playback, sheets, T3, gates, frontend fault injections)
+ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w17, unchanged)
+CANDIDATE = d63d6fd4704ae033… (was 9bb0aaa7…; intermediate d4a24eba…), product commit d3817d5f
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
-HUMAN_VISUAL_REVIEW = NOT_APPROVED for w16 (four W14-changed scenes HUMAN_REVIEW_PENDING + section fill under the edges + refusal panels); MERGE_APPROVAL = NO
+HUMAN_VISUAL_REVIEW = NOT_APPROVED for w17 (on-figure labels and chips, W17 refusal panels, group-step names; plus W16-H1: four W14-changed scenes HUMAN_REVIEW_PENDING, section fill under the edges, refusal panels); MERGE_APPROVAL = NO
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -55,46 +55,16 @@ Sáu family đã đo: `triangular_pyramid`, `rectangular_pyramid`,
 `triangular_prism`, `cuboid`, `cube`, `cross_section` (mỗi family một fixture
 dương + một âm, `inputs/FIXTURE_MANIFEST.json`).
 
-Wave w09 (`VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`) đã khép năm nhóm đỏ:
-- 28 test runner khối cong/elip là **lỗi sản phẩm thật**: `scene3d.events[].details`
-  mang `Plane3`/`Ellipse3` thô ⇒ HTTP 500 khi ghi cache (P6); sửa ở
-  `simulation_state._json_an_toan` (dùng `_than_hinh_hoc`, kiểu lạ ném).
-- Mobile recompute mỗi frame: damping làm pose trôi ULP; khoá camera của
-  classifier nay 10 chữ số có nghĩa. Harness settle trước khi chụp/mở cửa sổ,
-  và xoá bộ đếm cùng lúc reset.
-- Camera đóng băng: preimage đã xác minh + tương đương phép chiếu ≤ 0,5 px.
-- Guard `boundary` legacy thu hẹp; golden P1/P6 cập nhật sau semantic diff.
-- `full-gate.mjs` tìm Python có kiểm chứng (kể cả worktree không venv).
-
-Các gate sau PASS: exact product↔oracle edge IDs/spans, perspective reference,
-formation semantics, section identity và worktree recovery.
-
-Wave w10 (`HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE`) trả lời review
-người của w09 (`FAIL_REQUIRES_PEDAGOGICAL_VISUAL_REPAIR`):
-- Playback: bấm Phát một lần đi hết, dừng ở bước cuối, "Xem lại" về bước 0 và
-  bỏ chọn; playback không bao giờ tự tạo causal.
-- Camera mặc định CHỌN theo số đo cảnh (Z-up, diện tích bao chiếu, độ sâu, khoảng
-  đỉnh/đỉnh–cạnh, độ nghiêng mặt), vừa khít theo hình chiếu; "Xem lại toàn hình"
-  huỷ đà xoay.
-- Nét: cạnh khuất từng KHÔNG có điểm ảnh (GPU kiểm chiều sâu lần hai) — nay phân
-  loại CPU là thẩm quyền cho cả hai lớp; mực cạnh riêng; một cạnh một nét.
-- Bề mặt học sinh: tên khối theo topology, đáp số + bí danh là một kết luận, lời
-  kể có cấu trúc, mặt thiết diện tô ở bước khép; causal phân tầng + làm dịu.
-- Bộ đo: kỳ vọng người chuyển sang camera mới chỉ qua khai báo + oracle ở cả hai
-  camera; crop chứa trọn cạnh; bấm/kéo không mù.
-
-Wave w11 (`W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW`) trả lời
-review người của w10 (`FAIL_REQUIRES_TARGETED_PEDAGOGICAL_REPAIR`, W10-H1…H9):
-- Công thức: compiler chóp/lăng trụ đáy tam giác vuông khai AB, AC, SA/AD là GIVEN
-  (xuất xứ chép từ FactGraph); grounding nhận `XY_length` khớp bất biến độ dài
-  của hợp đồng; `references` = đúng vật chữ công thức nhắc tới; "Dựa trên" = nguồn
-  số theo thứ tự công thức. Hai ứng viên chiều cao ⇒ không công thức.
-- Thị giác: chấm đỉnh theo px CSS (6 / 7,5 hẹp / 9 chọn, token `DAU_DINH_PX`);
-  causal bốn tầng theo cạnh `numerical`; đường vô hạn nhạt khi không nhấn; "Xem lại
-  toàn hình" bỏ đường vô hạn và chấm đỉnh khỏi khung.
-- Bộ đo: cổng ảnh xoay trên ẢNH PHỐI CẢNH, cử chỉ mô phỏng trước (sai số ma trận
-  nhìn ≤ 1e-6); nấc con lăn ×DPR; sheet theo họ `images/<họ>/SHEET.png`; chữ ký hình
-  của oracle bỏ `quantity` (readout không vẽ).
+Waves w09–w11 (chi tiết ở run của từng wave):
+- w09 (`VERIFICATION_CLEANUP_AFTER_OCCLUSION_REPAIR`): `scene3d.events[].details` mang
+  `Plane3`/`Ellipse3` thô gây HTTP 500 khi ghi cache — sửa ở `simulation_state._json_an_toan`;
+  khoá camera của classifier 10 chữ số có nghĩa; `full-gate.mjs` tìm Python có kiểm chứng.
+- w10 (`HUMAN_VISUAL_REVIEW_AND_PEDAGOGICAL_PLAYBACK_CLOSURE`): Phát một lần đi hết; camera
+  mặc định chọn theo số đo cảnh (Z-up); phân loại khuất/hiện bằng CPU là thẩm quyền cho cả
+  hai lớp nét; kỳ vọng người chuyển camera chỉ qua khai báo + oracle ở cả hai camera.
+- w11 (`W11_PEDAGOGICAL_FORMULA_VISUAL_POLISH_AND_HUMAN_REREVIEW`): công thức nhắc đúng vật,
+  "Dựa trên" theo thứ tự công thức; chấm đỉnh theo px CSS (`DAU_DINH_PX`); causal bốn tầng;
+  sheet theo họ `images/<họ>/SHEET.png`.
 
 Wave w12 (`W12_PEDAGOGICAL_TIMELINE_AND_SOURCE_GROUNDING_CLOSURE`) trả lời review
 người của w11 (`NEEDS_CHANGES`, W11-H1…H5):
@@ -159,12 +129,33 @@ năng lực (amendment §14, đăng ký trước bản sửa):
 - Candidate đóng băng HAI lần: lần 2 sau bí danh tên phẩy (P′) ↔ (P) do tự rà soát trước
   bằng chứng bắt. Giới hạn khai A′: C0 không kiểm phép dựng dùng đúng thực thể đề nói.
 
+Wave w17 (`W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS`, amendment §15, đăng ký trước bản sửa):
+- §15.1: mỗi `construct_section` trên lát cắt của giá trị hiển thị phải cùng mặt phẳng và cùng
+  khối với câu cắt của đề (`shape_constraint.doc_quan_he_cat`, từ vựng ĐÓNG;
+  `assumption_gate._kiem_phep_dung`). Lệch chắc chắn ⇒ `CONSTRUCTION_NOT_TEXT_BOUND`; danh
+  tính không ghim được ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`. A′ đóng (strict xfail W16 nay PASS).
+- §15.2: grounding đọc dữ kiện trên văn bản đã che mục tiêu ở MỌI vùng ⇒
+  `GIVEN_ONLY_IN_GOAL_CLAUSE`; "Tính …, biết …" và "… bao nhiêu, biết Y?" giữ là dữ kiện.
+- §15.3: `refusal_cause` SOURCE / CONSTRUCTION / UNKNOWN; chỉ SOURCE bảo sửa đề.
+- §15.4: backend gắn đại lượng ↔ chủ thể (`quantity_annotations.py`); frontend chiếu, đặt
+  chỗ, bật/tắt (`scene3d-annotations.ts`); công tắc "Số đo"/"Kết quả" mặc định BẬT.
+- Tự rà soát cuối sau lần đóng băng đầu tìm ba lỗi Important (tân ngữ của "với" bị đọc thành
+  mặt phẳng cắt; danh tính không ghim được bị báo là lệch; "…, biết Y?" bị che như mục tiêu),
+  sửa ở `d3817d5f`, đóng băng lại (`d63d6fd4`), đo lại toàn bộ. Lượt đo đầu trên candidate cuối
+  đỏ một ô vì bộ đo so từng byte nhiễu chụp (≤ 1/kênh); sửa bộ đo (`4e07548e`), đo lại PASS.
+
 ## 4. Còn mở — không được che
 
-- **Human visual acceptance: chưa duyệt** cho w16 — chưa merge. `HANDOFF.md` run w16:
-  **W16-H1** (duyệt bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`, phần tô thiết diện dưới
-  cạnh và sáu ô từ chối mỗi sheet), **W15-H2** (mở rộng vùng chặn ngoài đa diện), **W15-H3**
-  (mở rộng từ vựng — cũng là đường đóng giới hạn A′).
+- **Human visual acceptance: chưa duyệt** cho w17 — chưa merge. `HANDOFF.md` run w17:
+  **W17-H1** (nhãn số đo trên hình, hai công tắc, ô từ chối W17, tên bước nhóm cạnh, kèm
+  W16-H1: bốn cảnh W14 đổi đang `HUMAN_REVIEW_PENDING`, phần tô dưới cạnh, ô từ chối),
+  **W17-H2** (mặt phẳng "qua M và song song với (X)" nay bị từ chối "chưa chứng minh được"),
+  **W15-H2** (mở rộng vùng chặn ngoài đa diện), **W15-H3** (mở rộng từ vựng).
+- Ở w17: `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND` = RESOLVED cho phép cắt,
+  `ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM` = RESOLVED. Mới:
+  `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT` (trung điểm, chân đường vuông góc chưa
+  gắn với quan hệ của đề), `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL` (từ chối thừa),
+  `ISSUE-ARCH-ANNOTATION-UNANCHORED-QUANTITIES` (góc, khối cong, số trần không có nhãn trên hình).
 - Ở w16: `ISSUE-ARCH-ASSUMPTION-C0-PLANE-EQUATION-ENTITY` và
   `ISSUE-EVAL-ASSUMPTION-GATE-UNTESTED-GUARDS` = RESOLVED. Mới:
   `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND` (giới hạn A′, strict xfail),
@@ -198,35 +189,40 @@ năng lực (amendment §14, đăng ký trước bản sửa):
   (`dist/` cây chính không build được — đo trong worktree),
   `ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH`; nét vẫn 1 px; phân loại khuất theo khối.
 
-Tự động tại `7f3658b0` (detached):
-- browser 12/12 dương + 36/36 âm (ba loại, mỗi loại mã riêng); `SECTION_FILL_DISTINGUISHABLE`
-  34,20/34,11 (desktop), 34,19/33,74 (mobile); `SECTION_FILL_UNDER_EDGES` ρ ≤ 0,485 < 1;
-- occlusion `HUMAN_REVIEW_PENDING` (bốn cảnh W14 đổi, như w15), 0 lỗi;
-- playback 12/12 × 19 kiểm; 64 crop, 0 bất đồng, 0 owner trùng; 6 sheet × 6 ô từ chối;
-- T3 từ đường dẫn CÓ dấu cách: `FULL_PRODUCT_GATE_PASS` (pytest 6854/0, 1 xfailed = A′,
-  vitest 1018/1018, build, demo 5/5, bề mặt sập 6/6).
+Tự động tại `99925723` (detached, candidate `d63d6fd4`):
+- browser 12/12 dương + 40/40 âm + 2/2 mặt phẳng đúng được phục vụ; nhãn ≤ 24 px quanh neo,
+  đúng bước 72/72, bật/tắt chỉ đổi nhãn, khôi phục nhân quả trùng byte 12/12;
+  `SECTION_FILL_DISTINGUISHABLE` 34,21/34,11 (desktop), 34,19/33,74 (mobile);
+- occlusion `HUMAN_REVIEW_PENDING` (bốn cảnh W14 đổi, như w15/w16), 0 lỗi; playback 12/12;
+  64 crop, 0 bất đồng; census vòng 2 SHIP; tiêm lỗi backend 23/23, frontend 18/18;
+- T3 từ đường dẫn CÓ dấu cách: `FULL_PRODUCT_GATE_PASS` (pytest 6936/0, 0 xfailed,
+  vitest 1044/1044, build, demo 5/5, bề mặt sập 6/6).
 
-Worktree tạm của w16 đã gỡ hết.
+Mười worktree tạm của w17 đã gỡ hết.
 
 ## 5. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
 ```
 
-Việc của NGƯỜI. Mở `HANDOFF.md` của run w16, duyệt bốn cảnh W14 đổi, phần tô thiết diện
-dưới cạnh và các ô từ chối (W16-H1), rồi quyết định W15-H2 và W15-H3. Automation không ghi `APPROVED_BY_USER`,
+Việc của NGƯỜI. Mở `HANDOFF.md` của run w17, duyệt nhãn số đo, hai công tắc, ô từ chối W17,
+tên bước nhóm cạnh và phần còn lại của W16-H1 (W17-H1), rồi quyết định W17-H2, W15-H2 và
+W15-H3. Automation không ghi `APPROVED_BY_USER`,
 không sửa registry kỳ vọng người; 0 lượt gọi model; không push/merge; không mở họ mới,
 khối cong, nhiều khối, image/OCR.
 
 ## 6. Evidence có thẩm quyền
 
-- Wave hiện hành: `docs/evaluation/geometry/runs/w16-premerge-closure/`
+- Wave hiện hành: `docs/evaluation/geometry/runs/w17-operation-annotations/`
   (`REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`,
-  `diagnostics/MEASUREMENT_ATTEMPTS.json`, `diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`,
-  `diagnostics/PROBE_W16_PHASE1_6d01511.json`, `diagnostics/browser-attempt1-55cde06e/`,
-  `images/<họ>/SHEET.png`); phạm vi đăng ký: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §14.
+  `diagnostics/MEASUREMENT_ATTEMPTS.json`, `diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`,
+  `diagnostics/OPERATION_BINDING_REPRODUCTION_bce0b7bb.json`, `diagnostics/evidence-intermediate-c5592c1a/`,
+  `diagnostics/browser-final-attempt1-83f101e4/`, `images/<họ>/SHEET.png`); phạm vi đăng ký:
+  `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §15.
+- W16 (bất biến; `READY_FOR_HUMAN_VISUAL_REVIEW`, giới hạn A′ do w17 đóng):
+  `docs/evaluation/geometry/runs/w16-premerge-closure/`.
 - W15 (bất biến; `READY_FOR_HUMAN_VISUAL_REVIEW`, hai lỗ chứng chỉ do w16 đóng):
   `docs/evaluation/geometry/runs/w15-assumption-closure/`.
 - W14 (bất biến; `FORMATION_FOUNDATION_INCOMPLETE`, Track B STOP):

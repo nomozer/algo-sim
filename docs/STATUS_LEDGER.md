@@ -1534,3 +1534,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** W15_SOURCE_CONSTRAINT_AND_ASSUMPTION_CLOSURE (two certificate soundness gaps, the fill drawn over the edges, the blank refusal cells of the w15 sheets)
 - **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS
+- **DATE:** 2026-10-03 / 2026-10-04
+- **START_BASE:** dd6e86b0
+- **CODE_COMMIT_OR_NONE:** 2678b363 (operation binding) · 0b71502b (goal-only givens, refusal causes) · ce9a4c1f (group-step label) · 8e002028 (annotation binding) · fa5f8382 (labels and chips, frontend/src) · 2c7d4134, 240ecba5, dbb38b95 (label placement and refusal card, frontend/src) · fadfd10e (CACHE_VERSION 109) · add4afb0 (ponytail simplifications) · d3817d5f (final-review fix; last product commit)
+- **COMMITS:** registration bce0b7bb · red tests 288f3616 · reconciliation d7c26405 · harness 4d9eacfb, ca6c4107 · fault injections 239efc05, d4ca6ea9 · census round 1 + cache proof 37043376 · freeze 1 4706eb0b · intermediate measurement c5592c1a + evidence f07b0d24 · final-review red 01b0c27c · census round 2 3cbe3a1f · fault-injection table 6d52ab2f · freeze 2 921015b6 · intermediate evidence kept apart 83f101e4 · fix-pass logs a20b76f1 · failed attempt 1 kept apart c14edd07 · harness fix 4e07548e · frontend fault-injection table 99925723 (measurement commit) · evidence 781c14e5
+- **CANDIDATE:** 9bb0aaa7… → d63d6fd4… (109 files), frozen twice (add4afb0 → intermediate d4a24eba…; d3817d5f → d63d6fd4 after the final-review fix) · CACHE_VERSION 108 → 109 (served → rejected; fingerprint b1714b566e25c912 unchanged) · schema mirrors byte-identical · model surface unchanged
+- **EVIDENCE_COMMIT_ROLE:** 781c14e5 (browser, occlusion, playback, sheets, T3, gates, frontend fault injections at 99925723)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w17-operation-annotations/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w17-operation-annotations/
+- **PASS:** operation binding: A′ refused CONSTRUCTION_NOT_TEXT_BOUND (served with area 9 before W17; the text gives 16), O1–O10 as registered, the W16 strict xfail passes · goal-only givens: G1, G3, G4 refused at grounding; G2, G5–G7 served · refusal causes: 20/20 negative fixtures reconciled, only SOURCE asks to fix the text · on-figure labels: ≤ 24 px from the anchor (max 16.97 px), 72/72 steps equal the oracle, toggles change only labels 12/12, causal restore byte-identical 12/12 · census round 2 SHIP, AC2 18/18, A2b the only gate change since W16 round 2 · fault injections backend 23/23, frontend 18/18 · browser 12/12 + 40/40 + 2/2, occlusion HUMAN_REVIEW_PENDING (four scenes as w15/w16), playback 12/12
+- **CLOSED:** ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND (for section cuts) · ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM
+- **OPENED:** ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT · ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL · ISSUE-ARCH-ANNOTATION-UNANCHORED-QUANTITIES
+- **OPEN (blocking merge of the branch):** human visual review (W17-H1, carrying W16-H1): on-figure labels and chips, W17 refusal panels, group-step names, the four W14-changed scenes (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`, HUMAN_REVIEW_PENDING), the section fill under the edges, the refusal panels
+- **FULL_PRODUCT_SUITE:** FULL_PRODUCT_GATE_PASS (T3 at 99925723, path with a space; pytest 6936 passed / 0 failed / 0 xfailed)
+- **PUSH / MERGE:** NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W16_PREMERGE_SOUNDNESS_AND_VISUAL_EVIDENCE_CLOSURE (declared limit A′ closed for section cuts; goal clauses no longer read as data by grounding outside the polyhedral scope; the w16 cube "cạnh 4" refusal image traced to a fixture-generator defect)
+- **NEXT_ACTION_AT_TIME:** HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

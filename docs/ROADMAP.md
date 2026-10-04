@@ -9,26 +9,35 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_PREMERGE_CLOSURE_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
+TARGET_NEXT_ACTION_AFTER_WAVE = HUMAN_VISUAL_REVIEW_OF_OPERATION_ANNOTATION_EVIDENCE
 ```
 
-- **Vì sao:** W16 (run
-  [`w16-premerge-closure`](evaluation/geometry/runs/w16-premerge-closure/)) kết thúc
-  `READY_FOR_HUMAN_VISUAL_REVIEW`. Hai lỗ chứng chỉ W15 để lại đã đóng: hệ số mặt phẳng
-  phải thuộc CÙNG mặt phẳng của đề, và quan hệ trong yêu cầu chứng minh không bao giờ là
-  tiền đề. Mười hai chương trình sai từng được phục vụ nay bị từ chối, AC2 vẫn 18/18. Bốn
-  nhánh đóng an toàn có test. Phần tô thiết diện nằm dưới cạnh khối. Sheet có đủ sáu ô từ
-  chối. Việc còn lại thuộc về NGƯỜI.
-- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w16 và duyệt bằng mắt (W16-H1)
-  ba thứ:
-  - bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`: oracle tái hiện tập đã duyệt, sản phẩm =
-    oracle (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`);
-  - phần tô thiết diện dưới cạnh;
-  - các ô từ chối.
+- **Vì sao:** W17 (run
+  [`w17-operation-annotations`](evaluation/geometry/runs/w17-operation-annotations/)) kết
+  thúc `READY_FOR_HUMAN_VISUAL_REVIEW` trên candidate cuối `d63d6fd4`.
+  - Giới hạn A′ của W16 đã đóng: phép cắt phải dùng đúng mặt phẳng và đúng khối của câu
+    cắt trong đề, nếu không thì bị từ chối.
+  - Giá trị chỉ nêu trong yêu cầu chứng minh không còn là dữ kiện.
+  - Mỗi lời từ chối mang nguyên nhân có cấu trúc (đề / hệ dựng / chưa rõ).
+  - Số đo đã kiểm hiện cạnh vật nó đo, có hai công tắc "Số đo" và "Kết quả".
 
-  Sau đó quyết định W15-H2 (mở rộng vùng chặn ngoài đa diện) và W15-H3 (mở rộng từ vựng —
-  cũng là đường đóng giới hạn A′, `ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND`).
+  Tự rà soát cuối tìm ra ba lỗi; các lỗi đã được sửa, sau đó candidate được đóng băng lại
+  và mọi phép đo được đo lại. Việc còn lại thuộc về NGƯỜI.
+- **Điều kiện bắt đầu:** người dùng mở `HANDOFF.md` của run w17 và duyệt bằng mắt (W17-H1):
+  - nhãn số đo trên hình và hai công tắc;
+  - ô từ chối W17 (hệ dựng lệch với đề, lỗi của hệ) và mặt phẳng đúng được phục vụ;
+  - tên bước nhóm cạnh;
+  - phần còn lại của W16-H1: bốn cảnh W14 đổi, đang `HUMAN_REVIEW_PENDING`
+    (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`), phần tô thiết diện dưới cạnh và
+    các ô từ chối.
+
+  Sau đó quyết định:
+  - W17-H2: mặt phẳng "qua M và song song với (X)" nay bị từ chối "chưa chứng minh được" —
+    `ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`;
+  - W15-H2: mở rộng vùng chặn ngoài đa diện;
+  - W15-H3: mở rộng từ vựng, gồm phép dựng khác phép cắt —
+    `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`.
 - **Điều kiện dừng:** automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ
   vọng người; không đổi bề mặt mô hình; không push/merge.
 - **Ràng buộc phạm vi:** Giữ `DEFAULT_MODE = LLM_ONLY`; 0 live Gemini request;
