@@ -21,6 +21,8 @@ import { join } from "node:path";
 import type { Scene3D } from "./scene3d-model";
 import { objectsAt } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
+import { Scene3DSolution } from "./scene3d-solution";
+import { quantitySources } from "./scene3d-annotations";
 import {
   entitiesPresentAt,
   faceId,
@@ -106,21 +108,25 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
     ],
   };
 
-  it("W17 · công tắc Số đo và Kết quả ở thanh trên, bật mặc định", () => {
-    const h = renderToString(<Scene3DExplorer scene={CANH_CO_SO_DO} />);
-    const thanh = h.slice(h.indexOf("geo3d-thanh-nut"), h.indexOf("geo3d-san"));
-    for (const ten of ["Số đo", "Kết quả"]) {
-      const i = thanh.indexOf(ten);
-      expect(i).toBeGreaterThan(-1);
-      const nut = thanh.slice(thanh.lastIndexOf("<button", i), i);
-      expect(nut).toContain('aria-pressed="true"');
-    }
-  });
+  /* W18 · §16.5 (thay U-W17-1): MỘT công tắc «Hiện tất cả», TẮT mặc định — mặc định hình chỉ mang
+   * tên điểm và dữ kiện đề cho; đáp số và trung gian hiện khi chọn. Công tắc chỉ có mặt khi có nhãn
+   * mà mặc định đang ẩn (DESIGN_BRIEF §3.2). */
+  const thanhCua = (h: string) => h.slice(h.indexOf("geo3d-thanh-nut"), h.indexOf("geo3d-san"));
 
-  it("W17 · cảnh không có nhãn số đo nào ⇒ không có công tắc (không bịa affordance)", () => {
-    const thanh = html().slice(html().indexOf("geo3d-thanh-nut"), html().indexOf("geo3d-san"));
+  it("W18 · một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả", () => {
+    const thanh = thanhCua(renderToString(<Scene3DExplorer scene={CANH_CO_SO_DO} />));
+    const i = thanh.indexOf("Hiện tất cả");
+    expect(i).toBeGreaterThan(-1);
+    expect(thanh.slice(thanh.lastIndexOf("<button", i), i)).toContain('aria-pressed="false"');
     expect(thanh).not.toContain("Số đo");
     expect(thanh).not.toContain("Kết quả");
+  });
+
+  it("W18 · chỉ có dữ kiện (mặc định đã hiện hết) hoặc không có nhãn ⇒ không có công tắc", () => {
+    const chiDuKien: Scene3D = { ...CANH_CO_SO_DO,
+      objects: CANH_CO_SO_DO.objects.map((o) => (o.id === "V" ? { ...o, annotation: undefined } : o)) };
+    expect(thanhCua(renderToString(<Scene3DExplorer scene={chiDuKien} />))).not.toContain("Hiện tất cả");
+    expect(thanhCua(html())).not.toContain("Hiện tất cả");
   });
 
   it("cây có đủ hạng mục Điểm, Cạnh, Mặt", () => {
@@ -410,5 +416,88 @@ describe("tích hợp · trạng thái không được rớt sang bài mới", (
     expect(src).toMatch(/const buocHien = geometryAnchor\(day, tt\.current_step\);/);
     expect(src).toMatch(
       /Bước \$\{geometryStepOf\(day, buocHien\) \+ 1\}\/\$\{geometryStepCount\(day\)\}/);
+  });
+});
+
+/* ══ W18 · §16.6 — MỘT NƠI GIẢI THÍCH ══════════════════════════════════════════════════════
+ * Ô soi là bảng chi tiết của vật đang chọn (công thức, dữ kiện số, phụ thuộc). Lời giải đầy đủ thu
+ * gọn mặc định; khi nó mở thì ô soi bỏ khối công thức — không hai bản sao cùng lúc. Mục Kết quả
+ * (luôn hiện) chỉ mang `ký hiệu = giá trị` khi lời giải thu gọn. `same_as`: một dòng. */
+const P18 = (id: string, xyz: [string, string, string]) => ({
+  id, label: id, notation: id, type: "point3", render: "point_marker", origin: "free", producer: null,
+  depends: [], xyz, parent: null, display_group: ["given"], source: {} });
+const CANH_LG = {
+  objects: [
+    P18("A", ["0", "0", "0"]), P18("B", ["3", "0", "0"]), P18("C", ["0", "4", "0"]), P18("D", ["0", "0", "5"]),
+    { id: "khoi", label: "Khối ABCD", notation: "ABCD", type: "solid", render: "mesh", origin: "derived",
+      producer: "construct_solid", depends: ["A", "B", "C", "D"], vertex_ids: ["A", "B", "C", "D"],
+      vertices: [["0", "0", "0"], ["3", "0", "0"], ["0", "4", "0"], ["0", "0", "5"]],
+      faces: [[0, 1, 2], [0, 1, 3], [1, 2, 3], [0, 2, 3]], parent: null, display_group: ["solid"], source: {} },
+    { id: "AB_length", label: "AB", notation: "AB", type: "quantity", render: "readout", origin: "free",
+      producer: null, depends: [], value: "3", exact: { kind: "rational", value: "3" }, parent: null,
+      display_group: ["given"], source: {},
+      annotation: { kind: "length", category: "measurement", role: "given", subject_ids: ["A", "B"], anchor: "segment" } },
+    { id: "h", label: "Chiều cao", notation: "h", type: "quantity", render: "readout", origin: "derived",
+      producer: "measure.distance", depends: ["A", "B"], value: "3", exact: { kind: "rational", value: "3" },
+      parent: null, display_group: ["measurement"], source: {},
+      annotation: { kind: "length", category: "measurement", role: "intermediate", subject_ids: ["A", "B"],
+        anchor: "segment", same_as: "AB_length" } },
+    { id: "V", label: "Thể tích ABCD", notation: "V", type: "quantity", render: "readout", origin: "derived",
+      producer: "measure.volume", depends: ["khoi", "AB_length"], value: "10", exact: { kind: "rational", value: "10" },
+      parent: null, display_group: ["target"], source: {},
+      dependency_edges: [{ source_id: "AB_length", relation: "numerical" }],
+      formula: { text: "V = 10/3 · AB = 10", references: [{ entity_id: "AB_length", display_label: "AB" }] },
+      annotation: { kind: "volume", category: "result", role: "result", subject_ids: ["khoi"], anchor: "solid" } },
+  ],
+  events: [
+    { step_index: 0, action: "INIT", object: null, depends: [], explanation: "Dữ kiện.", semantic_kind: "EXPLANATION" },
+    { step_index: 1, action: "CREATE", object: "khoi", depends: ["A", "B", "C", "D"], explanation: "Dựng khối.",
+      semantic_kind: "GEOMETRY_CONSTRUCTION" },
+    { step_index: 2, action: "MEASURE", object: "h", depends: ["A", "B"], explanation: "Đo h.", semantic_kind: "MEASUREMENT" },
+    { step_index: 3, action: "MEASURE", object: "V", depends: ["khoi"], explanation: "Tính V.", semantic_kind: "MEASUREMENT" },
+    { step_index: 4, action: "MEASURE", object: "V", depends: ["khoi"], explanation: "Kết luận.", semantic_kind: "FINAL_RESULT" },
+  ],
+  free_objects: ["A", "B", "C", "D", "AB_length"],
+} as unknown as Scene3D;
+
+describe("W18 · một nơi giải thích (§16.6)", () => {
+  const lg = (open?: boolean) => renderToString(<Scene3DSolution scene={CANH_LG} step={4} open={open} />)
+    .replace(/<!--.*?-->/g, "");
+  const ketQua = (h: string) => h.slice(h.indexOf("geo3d-lg-ket-qua"), h.indexOf("geo3d-lg-gap"));
+
+  it("lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị", () => {
+    const h = lg();
+    expect(h).toContain('aria-expanded="false"');
+    expect(h).not.toContain("geo3d-lg-than la-mo");
+    expect(ketQua(h)).toContain("V = 10");
+    expect(ketQua(h)).not.toContain("10/3 · AB");
+  });
+
+  it("mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)", () => {
+    const h = lg(true);
+    expect(h).toContain('aria-expanded="true"');
+    expect(ketQua(h)).toContain("V = 10/3 · AB = 10");
+    const src = readFileSync(new URL("./Scene3DExplorer.tsx", import.meta.url), "utf8");
+    expect(src).toMatch(/\{formula && !moLoiGiai && \(/);
+  });
+
+  it("same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai", () => {
+    const h = lg(true);
+    expect(h).toContain('data-solution-id="AB_length"');
+    expect(h).not.toContain('data-solution-id="h"');
+  });
+
+  it("nguồn của một đại lượng (cho ô soi): dữ kiện số trong chuỗi và đầu vào trực tiếp — do backend phát", () => {
+    expect(quantitySources(CANH_LG, "V")).toEqual({ givens: ["AB_length"], inputs: ["AB_length"] });
+    expect(quantitySources(CANH_LG, "AB_length")).toEqual({ givens: [], inputs: [] });
+  });
+
+  it("nhãn số đo bấm được: lớp nhãn không còn aria-hidden, mỗi nhãn là role=button có tabIndex, nghe bằng listener (không JSX onClick)", () => {
+    const view = readFileSync(new URL("./scene3d-view.tsx", import.meta.url), "utf8");
+    const lop = view.slice(view.indexOf('className="geo3d-so-do-lop"'), view.indexOf("</div>", view.indexOf('className="geo3d-so-do-lop"')));
+    expect(lop).not.toContain('aria-hidden="true"');
+    expect(lop).toContain('role="button"');
+    expect(lop).toContain("tabIndex={0}");
+    expect(view).toMatch(/addEventListener\("keydown"/);
   });
 });

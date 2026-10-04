@@ -8,8 +8,11 @@
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
 import {
-  annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_TOGGLES, NEO_TOI_DA, placeAnnotationLabels,
+  annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_VIEW, NEO_TOI_DA, placeAnnotationLabels, witnessesShown,
 } from "./scene3d-annotations";
+
+/** W18: "Hiện tất cả" — cùng tập nhãn khả dụng mà W17 hiện khi cả hai công tắc bật. */
+const TAT_CA = { showAll: true };
 
 const P = (id: string, xyz: [string, string, string]) => ({
   id, label: `Điểm ${id}`, notation: id, type: "point3", render: "marker",
@@ -61,32 +64,21 @@ const ids = (xs: { id: string }[]) => xs.map((x) => x.id).sort();
 const CUOI = 5;
 
 describe("W17 · số đo trên hình (§15.4)", () => {
-  it("mặc định BẬT cả Số đo và Kết quả (U-W17-1)", () => {
-    expect(DEFAULT_ANNOTATION_TOGGLES).toEqual({ measurements: true, results: true });
-  });
-
   it("chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến", () => {
-    const a = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, null);
+    const a = annotationsAt(canh(), CUOI, TAT_CA, null);
     expect(ids(a)).toEqual(["AB_length", "dien_tich", "the_tich"]);
     expect(a.map((x) => x.id)).not.toContain("XY_length");
   });
 
   it("chữ nhãn = ký hiệu = giá trị của payload; đơn vị chỉ khi payload có", () => {
-    const a = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, null);
+    const a = annotationsAt(canh(), CUOI, TAT_CA, null);
     const chu = Object.fromEntries(a.map((x) => [x.id, x.text]));
     expect(chu).toEqual({ AB_length: "AB = 3", dien_tich: "S(ABC) = 6", the_tich: "V(ABCD) = 10" });
   });
 
-  it("tắt Số đo ⇒ mất dữ kiện và số đo trung gian; tắt Kết quả ⇒ mất đáp số", () => {
-    expect(ids(annotationsAt(canh(), CUOI, { measurements: false, results: true }, null))).toEqual(["the_tich"]);
-    expect(ids(annotationsAt(canh(), CUOI, { measurements: true, results: false }, null)))
-      .toEqual(["AB_length", "dien_tich"]);
-    expect(annotationsAt(canh(), CUOI, { measurements: false, results: false }, null)).toEqual([]);
-  });
-
   it("không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt", () => {
-    const theoBuoc = [0, 1, 2, 3, 4, 5].map((k) => ids(annotationsAt(canh(), k, DEFAULT_ANNOTATION_TOGGLES, null)));
-    const lui = [5, 4, 3, 2, 1, 0].map((k) => ids(annotationsAt(canh(), k, DEFAULT_ANNOTATION_TOGGLES, null)));
+    const theoBuoc = [0, 1, 2, 3, 4, 5].map((k) => ids(annotationsAt(canh(), k, TAT_CA, null)));
+    const lui = [5, 4, 3, 2, 1, 0].map((k) => ids(annotationsAt(canh(), k, TAT_CA, null)));
     expect(theoBuoc.slice().reverse()).toEqual(lui);
     for (const [k, a] of theoBuoc.entries()) {
       if (k < 3) expect(a).not.toContain("dien_tich");
@@ -102,13 +94,13 @@ describe("W17 · số đo trên hình (§15.4)", () => {
       render: "readout", origin: "free", producer: null, depends: [], value: "5", exact: { kind: "rational", value: "5" },
       annotation: { kind: "length", category: "measurement", subject_ids: ["A", "D"], anchor: "segment" } });
     (s.events[2] as unknown as { objects?: string[] }).objects = ["D"];
-    expect([0, 1, 2, 3].map((k) => annotationsAt(s, k, DEFAULT_ANNOTATION_TOGGLES, null)
+    expect([0, 1, 2, 3].map((k) => annotationsAt(s, k, TAT_CA, null)
       .some((x) => x.id === "AD_length"))).toEqual([false, false, true, true]);
   });
 
   it("chọn chủ thể thì nhãn liên quan được ưu tiên", () => {
-    const thuong = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, null);
-    const chon = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_TOGGLES, "day_ABC");
+    const thuong = annotationsAt(canh(), CUOI, TAT_CA, null);
+    const chon = annotationsAt(canh(), CUOI, TAT_CA, "day_ABC");
     const uu = (xs: { id: string; priority: number }[], id: string) => xs.find((x) => x.id === id)!.priority;
     expect(uu(chon, "dien_tich")).toBeGreaterThan(uu(thuong, "dien_tich"));
     expect(uu(chon, "AB_length")).toBe(uu(thuong, "AB_length"));
@@ -128,10 +120,104 @@ describe("W17 · số đo trên hình (§15.4)", () => {
   it("điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ", () => {
     const s = canh();
     const [ab, dt, v] = ["AB_length", "dien_tich", "the_tich"].map(
-      (id) => annotationAnchor(s, annotationsAt(s, CUOI, DEFAULT_ANNOTATION_TOGGLES, null).find((x) => x.id === id)!));
+      (id) => annotationAnchor(s, annotationsAt(s, CUOI, TAT_CA, null).find((x) => x.id === id)!));
     expect(ab).toEqual([1.5, 0, 0]);
     expect(dt).toEqual([1, 4 / 3, 0]);
     expect(v).toEqual([0.75, 1, 1.25]);
+  });
+});
+
+/* W18 · §16.5 — NHÃN TẬP TRUNG (thay U-W17-1). Mặc định: dữ kiện đề cho (`role = given`) khả dụng ở
+ * bước đang xem. Chọn một đại lượng: nó + chuỗi số của nó (`tangNhanManh`: dữ kiện số, trung gian).
+ * Chọn một vật: đại lượng có chủ thể là vật ấy. "Hiện tất cả": mọi nhãn khả dụng. Luật khả dụng và
+ * "không lộ trước" giữ nguyên ở mọi chế độ. §16.6: `same_as` không có nhãn thứ hai. §16.7: nhân chứng. */
+const canh18 = (): Scene3D => {
+  const s = canh();
+  const theoId = new Map(s.objects.map((o) => [o.id, o as unknown as Record<string, unknown>]));
+  const vai = { AB_length: "given", dien_tich: "intermediate", the_tich: "result" } as const;
+  for (const [id, r] of Object.entries(vai)) {
+    const o = theoId.get(id)!;
+    o.annotation = { ...(o.annotation as object), role: r };
+  }
+  theoId.get("dien_tich")!.dependency_edges = [{ source_id: "AB_length", relation: "numerical" }];
+  theoId.get("the_tich")!.dependency_edges = [{ source_id: "dien_tich", relation: "numerical" }];
+  theoId.get("dien_tich")!.depends = ["day_ABC", "AB_length"];
+  (s.objects as unknown as object[]).push(
+    // h đo lại đúng đoạn AB (cùng chủ thể với dữ kiện): backend gộp bằng `same_as`.
+    { id: "h", label: "Chiều cao", notation: "h", type: "quantity", render: "readout", origin: "derived",
+      producer: "measure.distance", depends: ["A", "B"], value: "3", exact: { kind: "rational", value: "3" },
+      annotation: { kind: "length", category: "measurement", role: "intermediate", subject_ids: ["A", "B"],
+        anchor: "segment", same_as: "AB_length" } },
+    { id: "BD", label: "Đường thẳng BD", notation: "BD", type: "line3", render: "line", origin: "derived",
+      producer: "construct_line", depends: ["B", "D"], point: ["3", "0", "0"], direction: ["-3", "0", "5"] },
+    // d(C, BD): nhân chứng do backend phát — chân CHÍNH XÁC, frontend chỉ vẽ.
+    { id: "d_C_BD", label: "Khoảng cách giữa C và BD", notation: "d(C, BD)", type: "quantity", render: "readout",
+      origin: "derived", producer: "measure.distance", depends: ["C", "BD"], value: "4",
+      exact: { kind: "rational", value: "4" },
+      annotation: { kind: "distance", category: "measurement", role: "intermediate", subject_ids: ["C", "BD"],
+        anchor: "witness", witness: { from: "C", foot: ["75/34", "0", "45/34"], on: "BD",
+          marker: { u: ["-3", "0", "5"], v: ["-75/34", "4", "-45/34"] } } } },
+  );
+  s.events.push(
+    { step_index: 6, action: "MEASURE", object: "h", depends: ["A", "B"], explanation: "h.",
+      semantic_kind: "MEASUREMENT" },
+    { step_index: 7, action: "MEASURE", object: "d_C_BD", depends: ["C", "BD"], explanation: "d.",
+      semantic_kind: "MEASUREMENT" },
+  );
+  return s;
+};
+const CUOI18 = 7;
+
+describe("W18 · nhãn tập trung (§16.5–16.7)", () => {
+  it("mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian", () => {
+    expect(DEFAULT_ANNOTATION_VIEW).toEqual({ showAll: false });
+    expect(ids(annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW, null))).toEqual(["AB_length"]);
+  });
+
+  it("Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận", () => {
+    expect(ids(annotationsAt(canh18(), CUOI18, TAT_CA, null))).toEqual(["AB_length", "d_C_BD", "dien_tich", "the_tich"]);
+    expect(ids(annotationsAt(canh18(), 4, TAT_CA, null))).not.toContain("the_tich");
+  });
+
+  it("chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn", () => {
+    const a = annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW, "the_tich");
+    expect(ids(a)).toEqual(["AB_length", "dien_tich", "the_tich"]);
+    expect(a.find((x) => x.id === "the_tich")!.related).toBe(true);
+    // chọn trước bước kết luận: đáp số vẫn chưa được lộ
+    expect(ids(annotationsAt(canh18(), 4, DEFAULT_ANNOTATION_VIEW, "the_tich"))).not.toContain("the_tich");
+  });
+
+  it("chọn một vật: các đại lượng có chủ thể là vật ấy", () => {
+    expect(ids(annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW, "day_ABC"))).toEqual(["AB_length", "dien_tich"]);
+  });
+
+  it("same_as: không có nhãn thứ hai; chọn nó là đưa nhãn của dữ kiện lên", () => {
+    expect(ids(annotationsAt(canh18(), CUOI18, TAT_CA, null))).not.toContain("h");
+    const a = annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW, "h");
+    expect(ids(a)).toEqual(["AB_length"]);
+    expect(a[0].related).toBe(true);
+  });
+
+  it("envelope v109 không có `role`: suy từ category và origin (dữ kiện vẫn hiện mặc định)", () => {
+    const a = annotationsAt(canh(), CUOI, DEFAULT_ANNOTATION_VIEW, null);
+    expect(ids(a)).toEqual(["AB_length"]);
+  });
+
+  it("nhân chứng: neo ở trung điểm đoạn từ điểm tới CHÂN backend phát", () => {
+    const s = canh18();
+    const d = annotationsAt(s, CUOI18, TAT_CA, null).find((x) => x.id === "d_C_BD")!;
+    const p = annotationAnchor(s, d)!;
+    [75 / 68, 2, 45 / 68].forEach((v, i) => expect(p[i]).toBeCloseTo(v, 12));
+  });
+
+  it("nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện", () => {
+    const s = canh18();
+    expect(witnessesShown(s, annotationsAt(s, CUOI18, DEFAULT_ANNOTATION_VIEW, null))).toEqual([]);
+    const w = witnessesShown(s, annotationsAt(s, CUOI18, DEFAULT_ANNOTATION_VIEW, "d_C_BD"));
+    expect(w.map((x) => x.id)).toEqual(["d_C_BD"]);
+    expect(w[0].from).toEqual([0, 4, 0]);
+    [75 / 34, 0, 45 / 34].forEach((v, i) => expect(w[0].foot[i]).toBeCloseTo(v, 12));
+    expect(w[0].u).toEqual([-3, 0, 5]);
   });
 });
 

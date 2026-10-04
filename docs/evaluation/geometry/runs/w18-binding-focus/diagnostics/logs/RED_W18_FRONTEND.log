@@ -1,0 +1,375 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts (23 tests | 14 failed) 52ms
+     × chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến 12ms
+     × chữ nhãn = ký hiệu = giá trị của payload; đơn vị chỉ khi payload có 3ms
+     × không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt 3ms
+     × dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7) 1ms
+     × chọn chủ thể thì nhãn liên quan được ưu tiên 1ms
+     × điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ 3ms
+     × mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian 1ms
+     × Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận 2ms
+     × chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn 1ms
+     × chọn một vật: các đại lượng có chủ thể là vật ấy 1ms
+     × same_as: không có nhãn thứ hai; chọn nó là đưa nhãn của dữ kiện lên 1ms
+     × envelope v109 không có `role`: suy từ category và origin (dữ kiện vẫn hiện mặc định) 1ms
+     × nhân chứng: neo ở trung điểm đoạn từ điểm tới CHÂN backend phát 0ms
+     × nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện 2ms
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx (36 tests | 6 failed) 61ms
+     × W18 · một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả 7ms
+     × lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị 5ms
+     × mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức) 3ms
+     × same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai 1ms
+     × nguồn của một đại lượng (cho ô soi): dữ kiện số trong chuỗi và đầu vào trực tiếp — do backend phát 0ms
+     × nhãn số đo bấm được: lớp nhãn không còn aria-hidden, mỗi nhãn là role=button có tabIndex, nghe bằng listener (không JSX onClick) 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 20 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến
+AssertionError: expected [] to deeply equal [ Array(3) ]
+
+- Expected
++ Received
+
+- [
+-   "AB_length",
+-   "dien_tich",
+-   "the_tich",
+- ]
++ []
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:69:20
+     67|   it("chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy …
+     68|     const a = annotationsAt(canh(), CUOI, TAT_CA, null);
+     69|     expect(ids(a)).toEqual(["AB_length", "dien_tich", "the_tich"]);
+       |                    ^
+     70|     expect(a.map((x) => x.id)).not.toContain("XY_length");
+     71|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > chữ nhãn = ký hiệu = giá trị của payload; đơn vị chỉ khi payload có
+AssertionError: expected {} to deeply equal { AB_length: 'AB = 3', …(2) }
+
+- Expected
++ Received
+
+- {
+-   "AB_length": "AB = 3",
+-   "dien_tich": "S(ABC) = 6",
+-   "the_tich": "V(ABCD) = 10",
+- }
++ {}
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:76:17
+     74|     const a = annotationsAt(canh(), CUOI, TAT_CA, null);
+     75|     const chu = Object.fromEntries(a.map((x) => [x.id, x.text]));
+     76|     expect(chu).toEqual({ AB_length: "AB = 3", dien_tich: "S(ABC) = 6"…
+       |                 ^
+     77|   });
+     78|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt
+AssertionError: expected [] to include 'the_tich'
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:87:25
+     85|       if (k < 5) expect(a).not.toContain("the_tich");
+     86|     }
+     87|     expect(theoBuoc[5]).toContain("the_tich");
+       |                         ^
+     88|   });
+     89|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7)
+AssertionError: expected [ false, false, false, false ] to deeply equal [ false, false, true, true ]
+
+- Expected
++ Received
+
+  [
+    false,
+    false,
+-   true,
+-   true,
++   false,
++   false,
+  ]
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:98:44
+     96|     (s.events[2] as unknown as { objects?: string[] }).objects = ["D"];
+     97|     expect([0, 1, 2, 3].map((k) => annotationsAt(s, k, TAT_CA, null)
+     98|       .some((x) => x.id === "AD_length"))).toEqual([false, false, true…
+       |                                            ^
+     99|   });
+    100|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > chọn chủ thể thì nhãn liên quan được ưu tiên
+TypeError: Cannot read properties of undefined (reading 'priority')
+ ❯ uu src/simulations/domains/geometry/scene3d-annotations.test.ts:104:98
+    102|     const thuong = annotationsAt(canh(), CUOI, TAT_CA, null);
+    103|     const chon = annotationsAt(canh(), CUOI, TAT_CA, "day_ABC");
+    104|     const uu = (xs: { id: string; priority: number }[], id: string) =>…
+       |                                                                                                  ^
+    105|     expect(uu(chon, "dien_tich")).toBeGreaterThan(uu(thuong, "dien_tic…
+    106|     expect(uu(chon, "AB_length")).toBe(uu(thuong, "AB_length"));
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:105:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ
+TypeError: Cannot read properties of undefined (reading 'subject_ids')
+ ❯ annotationAnchor src/simulations/domains/geometry/scene3d-annotations.ts:113:17
+    111|     ? o.vertex_ids.map(diem).filter((p): p is Vec3 => p !== null)
+    112|     : (o.polygon ?? o.vertices ?? []).map(toVec3));
+    113|   const chu = a.subject_ids.map((id) => byId.get(id));
+       |                 ^
+    114|   if (chu.length === 0 || chu.some((o) => !o)) return null;
+    115|   const vat = chu as SceneObject[];
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:123:15
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:122:64
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian
+AssertionError: expected undefined to deeply equal { showAll: false }
+
+- Expected:
+{
+  "showAll": false,
+}
+
++ Received:
+undefined
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:173:37
+    171| describe("W18 · nhãn tập trung (§16.5–16.7)", () => {
+    172|   it("mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trun…
+    173|     expect(DEFAULT_ANNOTATION_VIEW).toEqual({ showAll: false });
+       |                                     ^
+    174|     expect(ids(annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW…
+    175|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận
+AssertionError: expected [] to deeply equal [ 'AB_length', 'd_C_BD', …(2) ]
+
+- Expected
++ Received
+
+- [
+-   "AB_length",
+-   "d_C_BD",
+-   "dien_tich",
+-   "the_tich",
+- ]
++ []
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:178:64
+    176|
+    177|   it("Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận"…
+    178|     expect(ids(annotationsAt(canh18(), CUOI18, TAT_CA, null))).toEqual…
+       |                                                                ^
+    179|     expect(ids(annotationsAt(canh18(), 4, TAT_CA, null))).not.toContai…
+    180|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn
+TypeError: Cannot read properties of undefined (reading 'measurements')
+ ❯ annotationsAt src/simulations/domains/geometry/scene3d-annotations.ts:74:46
+     72|     if (!a || o.type !== "quantity" || o.value == null) continue;
+     73|     const ketQua = a.category === "result";
+     74|     if (!(ketQua ? toggles.results : toggles.measurements)) continue;
+       |                                              ^
+     75|     const khaDung = ketQua ? ketLuan.has(o.id) : daTinh.has(o.id) || (…
+     76|     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continu…
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:183:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > chọn một vật: các đại lượng có chủ thể là vật ấy
+TypeError: Cannot read properties of undefined (reading 'measurements')
+ ❯ annotationsAt src/simulations/domains/geometry/scene3d-annotations.ts:74:46
+     72|     if (!a || o.type !== "quantity" || o.value == null) continue;
+     73|     const ketQua = a.category === "result";
+     74|     if (!(ketQua ? toggles.results : toggles.measurements)) continue;
+       |                                              ^
+     75|     const khaDung = ketQua ? ketLuan.has(o.id) : daTinh.has(o.id) || (…
+     76|     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continu…
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:191:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > same_as: không có nhãn thứ hai; chọn nó là đưa nhãn của dữ kiện lên
+TypeError: Cannot read properties of undefined (reading 'measurements')
+ ❯ annotationsAt src/simulations/domains/geometry/scene3d-annotations.ts:74:46
+     72|     if (!a || o.type !== "quantity" || o.value == null) continue;
+     73|     const ketQua = a.category === "result";
+     74|     if (!(ketQua ? toggles.results : toggles.measurements)) continue;
+       |                                              ^
+     75|     const khaDung = ketQua ? ketLuan.has(o.id) : daTinh.has(o.id) || (…
+     76|     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continu…
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:196:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > envelope v109 không có `role`: suy từ category và origin (dữ kiện vẫn hiện mặc định)
+TypeError: Cannot read properties of undefined (reading 'measurements')
+ ❯ annotationsAt src/simulations/domains/geometry/scene3d-annotations.ts:74:46
+     72|     if (!a || o.type !== "quantity" || o.value == null) continue;
+     73|     const ketQua = a.category === "result";
+     74|     if (!(ketQua ? toggles.results : toggles.measurements)) continue;
+       |                                              ^
+     75|     const khaDung = ketQua ? ketLuan.has(o.id) : daTinh.has(o.id) || (…
+     76|     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continu…
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:202:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > nhân chứng: neo ở trung điểm đoạn từ điểm tới CHÂN backend phát
+TypeError: Cannot read properties of undefined (reading 'subject_ids')
+ ❯ annotationAnchor src/simulations/domains/geometry/scene3d-annotations.ts:113:17
+    111|     ? o.vertex_ids.map(diem).filter((p): p is Vec3 => p !== null)
+    112|     : (o.polygon ?? o.vertices ?? []).map(toVec3));
+    113|   const chu = a.subject_ids.map((id) => byId.get(id));
+       |                 ^
+    114|   if (chu.length === 0 || chu.some((o) => !o)) return null;
+    115|   const vat = chu as SceneObject[];
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:209:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/20]⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W18 · nhãn tập trung (§16.5–16.7) > nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện
+TypeError: Cannot read properties of undefined (reading 'measurements')
+ ❯ annotationsAt src/simulations/domains/geometry/scene3d-annotations.ts:74:46
+     72|     if (!a || o.type !== "quantity" || o.value == null) continue;
+     73|     const ketQua = a.category === "result";
+     74|     if (!(ketQua ? toggles.results : toggles.measurements)) continue;
+       |                                              ^
+     75|     const khaDung = ketQua ? ketLuan.has(o.id) : daTinh.has(o.id) || (…
+     76|     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continu…
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:215:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện > W18 · một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả
+AssertionError: expected -1 to be greater than -1
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:119:15
+    117|     const thanh = thanhCua(renderToString(<Scene3DExplorer scene={CANH…
+    118|     const i = thanh.indexOf("Hiện tất cả");
+    119|     expect(i).toBeGreaterThan(-1);
+       |               ^
+    120|     expect(thanh.slice(thanh.lastIndexOf("<button", i), i)).toContain(…
+    121|     expect(thanh).not.toContain("Số đo");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị
+AssertionError: expected 'geo3d-lg-ket-qua"><h4 class="geo3d-lg…' not to contain '10/3 · AB'
+
+Expected: "10/3 · AB"
+Received: "geo3d-lg-ket-qua"><h4 class="geo3d-lg-ten-muc">Kết quả</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="V" data-moi="true"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-tieu-de">Thể tích ABCD</span><span class="geo3d-lg-so">V = 10/3 · AB = 10</span></button><span class="geo3d-lg-dua-tren">Dựa trên: AB</span></li></ul></div><button type="button" class=""
+
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:473:27
+    471|     expect(h).not.toContain("geo3d-lg-than la-mo");
+    472|     expect(ketQua(h)).toContain("V = 10");
+    473|     expect(ketQua(h)).not.toContain("10/3 · AB");
+       |                           ^
+    474|   });
+    475|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)
+AssertionError: expected '<section class="geo3d-loi-giai" aria-…' to contain 'aria-expanded="true"'
+
+Expected: "aria-expanded="true""
+Received: "<section class="geo3d-loi-giai" aria-label="Lời giải"><div class="geo3d-lg-muc geo3d-lg-ket-qua"><h4 class="geo3d-lg-ten-muc">Kết quả</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="V" data-moi="true"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-tieu-de">Thể tích ABCD</span><span class="geo3d-lg-so">V = 10/3 · AB = 10</span></button><span class="geo3d-lg-dua-tren">Dựa trên: AB</span></li></ul></div><button type="button" class="geo3d-lg-gap" aria-expanded="false" aria-controls=":R0:">Xem dữ kiện và các bước tính</button><div id=":R0:" class="geo3d-lg-than"><div class="geo3d-lg-muc"><h4 class="geo3d-lg-ten-muc">Dữ kiện</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="AB_length"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-so">AB = 3</span></button></li></ul></div><div class="geo3d-lg-muc"><h4 class="geo3d-lg-ten-muc">Các bước tính</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="h" data-moi="true"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-tieu-de">Chiều cao</span><span class="geo3d-lg-so">h = 3</span></button></li></ul></div></div></section>"
+
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:478:15
+    476|   it("mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công th…
+    477|     const h = lg(true);
+    478|     expect(h).toContain('aria-expanded="true"');
+       |               ^
+    479|     expect(ketQua(h)).toContain("V = 10/3 · AB = 10");
+    480|     const src = readFileSync(new URL("./Scene3DExplorer.tsx", import.m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai
+AssertionError: expected '<section class="geo3d-loi-giai" aria-…' not to contain 'data-solution-id="h"'
+
+Expected: "data-solution-id="h""
+Received: "<section class="geo3d-loi-giai" aria-label="Lời giải"><div class="geo3d-lg-muc geo3d-lg-ket-qua"><h4 class="geo3d-lg-ten-muc">Kết quả</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="V" data-moi="true"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-tieu-de">Thể tích ABCD</span><span class="geo3d-lg-so">V = 10/3 · AB = 10</span></button><span class="geo3d-lg-dua-tren">Dựa trên: AB</span></li></ul></div><button type="button" class="geo3d-lg-gap" aria-expanded="false" aria-controls=":R0:">Xem dữ kiện và các bước tính</button><div id=":R0:" class="geo3d-lg-than"><div class="geo3d-lg-muc"><h4 class="geo3d-lg-ten-muc">Dữ kiện</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="AB_length"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-so">AB = 3</span></button></li></ul></div><div class="geo3d-lg-muc"><h4 class="geo3d-lg-ten-muc">Các bước tính</h4><ul class="geo3d-lg-ds"><li class="geo3d-lg-dong" data-solution-id="h" data-moi="true"><button type="button" class="geo3d-lg-nut" aria-pressed="false"><span class="geo3d-lg-tieu-de">Chiều cao</span><span class="geo3d-lg-so">h = 3</span></button></li></ul></div></div></section>"
+
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:487:19
+    485|     const h = lg(true);
+    486|     expect(h).toContain('data-solution-id="AB_length"');
+    487|     expect(h).not.toContain('data-solution-id="h"');
+       |                   ^
+    488|   });
+    489|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > nguồn của một đại lượng (cho ô soi): dữ kiện số trong chuỗi và đầu vào trực tiếp — do backend phát
+TypeError: quantitySources is not a function
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:491:12
+    489|
+    490|   it("nguồn của một đại lượng (cho ô soi): dữ kiện số trong chuỗi và đ…
+    491|     expect(quantitySources(CANH_LG, "V")).toEqual({ givens: ["AB_lengt…
+       |            ^
+    492|     expect(quantitySources(CANH_LG, "AB_length")).toEqual({ givens: []…
+    493|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/20]⎯
+
+ FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > W18 · một nơi giải thích (§16.6) > nhãn số đo bấm được: lớp nhãn không còn aria-hidden, mỗi nhãn là role=button có tabIndex, nghe bằng listener (không JSX onClick)
+AssertionError: expected 'className="geo3d-so-do-lop" aria-hidd…' not to contain 'aria-hidden="true"'
+
+- Expected
++ Received
+
+- aria-hidden="true"
++ className="geo3d-so-do-lop" aria-hidden="true">
++             {nhanSoDo.map((a) => {
++               const diu = !a.related && tang !== null && !tang.has(a.id)
++                 && !a.subject_ids.some((id) => tang.has(id));
++               return (
++                 <span
++                   key={a.id}
++                   data-ann-id={a.id}
++                   data-uu-tien={a.priority}
++                   className={`geo3d-so-do${a.category === "result" ? " la-ket-qua" : ""}${
++                     a.related ? " la-lien-quan" : diu ? " la-diu" : ""}`}
++                 >
++                   {a.text}
++                 </span>
++               );
++             })}
++
+
+ ❯ src/simulations/domains/geometry/Scene3DExplorer.test.tsx:498:21
+    496|     const view = readFileSync(new URL("./scene3d-view.tsx", import.met…
+    497|     const lop = view.slice(view.indexOf('className="geo3d-so-do-lop"')…
+    498|     expect(lop).not.toContain('aria-hidden="true"');
+       |                     ^
+    499|     expect(lop).toContain('role="button"');
+    500|     expect(lop).toContain("tabIndex={0}");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/20]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  20 failed | 39 passed (59)
+   Start at  15:12:57
+   Duration  743ms (transform 432ms, setup 78ms, import 547ms, tests 113ms, environment 0ms)
+
+exit=1 at 3b0d6989 + uncommitted test edits
