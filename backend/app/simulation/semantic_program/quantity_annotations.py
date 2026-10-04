@@ -9,14 +9,20 @@ không tự tính giá trị. Hai nguồn gắn, cả hai tất định:
 - độ dài ĐỀ CHO: đoạn mà bộ đọc đề của server đọc ngay trước span bằng chứng GIVEN (cùng thẩm quyền
   `grounding_gate`), VÀ khoảng cách CHÍNH XÁC giữa hai điểm trong bộ nhớ cuối bằng đúng giá trị.
 Không gắn được ⇒ không có nhãn, chẩn đoán `ANNOTATION_UNBOUND <id>: <lý do>`; đại lượng vẫn ở bảng
-chi tiết. `category` (`measurement`/`result`) do `scene3d` quyết: nó cần nhóm `target` và bí danh.
-Đăng ký: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §15.4.
+chi tiết. `category` (`measurement`/`result`) và `role` do `scene3d` quyết: chúng cần nhóm `target`
+và bí danh.
+
+W18 (§16.6–16.7): cùng chủ thể ⇒ `same_as` (một nhãn, một dòng — không còn bỏ gắn); khoảng cách điểm →
+đường/mặt phẳng mang `witness` — chân CHÍNH XÁC do kernel tính, neo nhãn ở trung điểm đoạn tới chân.
+Đăng ký: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §15.4, §16.6, §16.7.
 """
 from __future__ import annotations
 
 from fractions import Fraction
 from typing import Any
 
+from ..geometry import kernel as K
+from ..geometry.exact import Line3, Plane3, Vec3
 from .grounding_gate import _bang_chung_do_dai
 from .segment_relation import nhan_doan_truoc
 from .shape_constraint import che_muc_tieu
@@ -51,17 +57,43 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
             gan[o["id"]] = kq
         else:
             chan_doan.append(f"ANNOTATION_UNBOUND {o['id']}: {kq}")
-    # Một chủ thể, một nhãn: độ dài đề cho AA′ và chiều cao đo được AA′ (hình hộp) là cùng một số
-    # trên cùng một đoạn. Giữ nhãn của DỮ KIỆN (không có câu lệnh định nghĩa), rồi theo thứ tự cảnh.
+    # Một chủ thể, một nhãn: độ dài đề cho AA′ và chiều cao đo được AA′ (hình hộp) là cùng một phép
+    # đo trên cùng một đoạn. Nhãn thuộc DỮ KIỆN (không có câu lệnh định nghĩa), rồi theo thứ tự cảnh;
+    # vật sau trỏ `same_as` về nó (W18 §16.6). Tiêu chí là chủ thể — KHÔNG BAO GIỜ là giá trị.
     da_co: dict[tuple, str] = {}
     for q in sorted(gan, key=lambda q: dinh_nghia.get(q) is not None):
         k = (gan[q]["kind"], gan[q]["anchor"], frozenset(gan[q]["subject_ids"]))
         if k in da_co:
-            chan_doan.append(f"ANNOTATION_UNBOUND {q}: same subject as {da_co[k]}")
-            del gan[q]
+            chan_doan.append(f"ANNOTATION_SAME_AS {q}: {da_co[k]}")
+            gan[q]["same_as"] = da_co[k]
         else:
             da_co[k] = q
     return gan, chan_doan
+
+
+def _xau(v: Vec3) -> list[str]:
+    return [str(v.x), str(v.y), str(v.z)]
+
+
+def _nhan_chung(diem: str, nhan: str, mem: dict[str, Any]) -> dict[str, Any] | None:
+    """W18 §16.7 — chân đường vuông góc CHÍNH XÁC từ `diem` tới đường/mặt phẳng `nhan` (kernel), và hai
+    phương của ký hiệu vuông góc tại chân: `u` dọc vật nhận, `v` từ chân tới điểm. Vật nhận khác (đa
+    giác, khối…) hay khoảng cách 0 ⇒ không có nhân chứng."""
+    p, r = mem.get(diem), mem.get(nhan)
+    if isinstance(r, Line3):
+        chan, u = K.project_point_onto_line(p, r), r.direction
+    elif isinstance(r, Plane3):
+        chan = K.project_point_onto_plane(p, r)
+        u = r.point - chan
+        if u.is_zero():
+            u = next(w for w in (r.normal.cross(Vec3.of(*e)) for e in ((1, 0, 0), (0, 1, 0), (0, 0, 1)))
+                     if not w.is_zero())
+    else:
+        return None
+    v = p - chan
+    if v.is_zero():
+        return None
+    return {"from": diem, "foot": _xau(chan), "on": nhan, "marker": {"u": _xau(u), "v": _xau(v)}}
 
 
 def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, Any],
@@ -76,11 +108,17 @@ def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, An
             return "a measured operand is not a scene object"
         if cho_phep is not None and loai[expr.of] not in cho_phep:
             return f"{expr.quantity} of a {loai[expr.of]} has no registered anchor"
+        nhan_chung = None
         if expr.quantity == "distance":
             if all(loai[x] == "point3" for x in chu_the):
                 kind, anchor = "length", "segment"
             elif not any(loai[x] == "point3" for x in chu_the):
                 return "distance between two non-point objects has no registered anchor"
+            else:
+                diem = next(x for x in chu_the if loai[x] == "point3")
+                nhan_chung = _nhan_chung(diem, next(x for x in chu_the if x != diem), mem)
+        if nhan_chung is not None:
+            return {"kind": kind, "subject_ids": chu_the, "anchor": "witness", "unit": None, "witness": nhan_chung}
         return {"kind": kind, "subject_ids": chu_the, "anchor": anchor, "unit": None}
     if getattr(expr, "kind", None) == "var":
         return f"copy of {expr.name} — shares its identity"

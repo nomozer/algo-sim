@@ -50,6 +50,7 @@ from .formation import gan_vai_tro_dung
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
 from .quantity_annotations import gan_so_do
+from .shape_constraint import doc_quan_he_cat
 from .source_entities import ky_hieu_toan
 from .transport import TransportTypeError, is_json_native
 
@@ -732,6 +733,7 @@ def build_simulation_state(
     # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.
     gan_vai_tro_dung(scene["objects"], spec, contract)
+    _ky_hieu_dien_tich_thiet_dien(scene["objects"], contract)
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
     so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"])
@@ -760,6 +762,23 @@ def build_simulation_state(
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }
+
+
+def _ky_hieu_dien_tich_thiet_dien(objects: list[dict[str, Any]], contract: Any) -> None:
+    """W18 §16.6 — nhãn ngắn trên hình là `ký hiệu = giá trị`. Diện tích của một thiết diện mà ĐỀ đặt tên
+    (`… theo thiết diện (T)`, đọc bằng `doc_quan_he_cat`, không từ nhãn mô hình) có ký hiệu `S(T)`: tên
+    biến thiết diện trùng tên đề đặt, hoặc đề có đúng một tên và cảnh có đúng một thiết diện."""
+    ten_de = {q.thiet_dien for q in doc_quan_he_cat(getattr(contract, "problem_text", "") or "") if q.thiet_dien}
+    thiet_dien = [o["id"] for o in objects if o["type"] == "section"]
+    for o in objects:
+        nguon = o.get("sources") or []
+        if (o["type"] != "quantity" or o.get("notation") or o.get("producer") != "measure.area"
+                or len(nguon) != 1 or nguon[0] not in thiet_dien):
+            continue
+        ten = ky_hieu_toan(nguon[0])
+        ten = ten if ten in ten_de else (next(iter(ten_de)) if len(ten_de) == 1 == len(thiet_dien) else None)
+        if ten:
+            o["notation"] = o["reference"] = f"S({ten})"
 
 
 def _muc_tieu(contract: Any) -> set[str]:

@@ -715,13 +715,19 @@ def _danh_dau_bi_danh(objects: list[dict[str, Any]]) -> None:
 def _gan_so_do(objects: list[dict[str, Any]], gan: dict[str, dict[str, Any]]) -> None:
     """W17 §15.4: chở gắn kết của tầng ngữ nghĩa lên vật `quantity` và quyết `category` — `result`
     khi đại lượng là đích của đề hoặc được một đích `alias_of`, còn lại `measurement`. Bí danh
-    dùng CHUNG danh tính với nguồn: không có nhãn thứ hai."""
+    dùng CHUNG danh tính với nguồn: không có nhãn thứ hai.
+
+    W18 §16.5: `role` — `given` (dữ kiện đề cho: vật tự do), `result`, còn lại `intermediate`;
+    `category` giữ cho envelope v109. §16.6: đáp số không gộp vào dữ kiện cùng chủ thể — đề nêu hai
+    vai trò thì hai nhãn (bỏ `same_as`)."""
     dich = {o["id"] for o in objects if "target" in (o.get("display_group") or [])}
     ket_qua = dich | {o["alias_of"] for o in objects if o.get("alias_of") and o["id"] in dich}
     for o in objects:
         g = gan.get(o["id"])
         if g is not None and o["type"] == "quantity" and not o.get("alias_of"):
-            o["annotation"] = {**g, "category": "result" if o["id"] in ket_qua else "measurement"}
+            vai = "result" if o["id"] in ket_qua else "given" if o.get("origin") == "free" else "intermediate"
+            o["annotation"] = {**{k: v for k, v in g.items() if not (k == "same_as" and vai == "result")},
+                               "category": "result" if vai == "result" else "measurement", "role": vai}
 
 
 def _ten_diem_khoi(solid: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> list[str]:
