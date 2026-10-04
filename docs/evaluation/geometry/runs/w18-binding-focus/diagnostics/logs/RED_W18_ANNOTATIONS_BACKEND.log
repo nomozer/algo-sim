@@ -1,0 +1,36 @@
+..F.F.......FFFFF                                                        [100%]
+================================== FAILURES ===================================
+E   TypeError: 'NoneType' object is not subscriptable
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:77: TypeError: 'NoneType' object is not subscriptable
+E   AssertionError: assert {'kind': 'dis...t': None, ...} == {'kind': 'dis...witness', ...}
+
+      Omitting 4 identical items, use -vv to show
+      Differing items:
+      {'anchor': 'pair'} != {'anchor': 'witness'}
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:105: AssertionError: assert {'kind': 'dis...t': None, ...} == {'kind': 'dis...witness', ...}
+E   KeyError: 'role'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:132: KeyError: 'role'
+E   KeyError: 'role'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:152: KeyError: 'role'
+E   KeyError: 'witness'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:165: KeyError: 'witness'
+E   AssertionError: {'kind': 'distance', 'subject_ids': ['M', 'day'], 'anchor': 'pair', 'unit': None, ...}
+    assert ('pair' == 'witness'
+
+      - witness
+      + pair)
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:177: AssertionError: {'kind': 'distance', 'subject_ids': ['M', 'day'], 'anchor': 'pair', 'unit': None, ...}
+E   AssertionError: {'id': 'area_T', 'label': 'Diện tích thiết diện', 'notation': None, 'reference': 'Diện tích thiết diện', ...}
+    assert None == 'S(T)'
+D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_annotations.py:186: AssertionError: {'id': 'area_T', 'label': 'Diện tích thiết diện', 'notation': None, 'reference': 'Diện tích thiết diện', ...}
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_mot_chu_the_mot_nhan_du_kien_truoc
+FAILED tests/geometry/test_scene3d_annotations.py::test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap
+FAILED tests/geometry/test_scene3d_annotations.py::test_w18_vai_tro_du_kien_trung_gian_ket_qua
+FAILED tests/geometry/test_scene3d_annotations.py::test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan
+FAILED tests/geometry/test_scene3d_annotations.py::test_w18_nhan_chung_khoang_cach_diem_duong_thang
+FAILED tests/geometry/test_scene3d_annotations.py::test_w18_nhan_chung_khoang_cach_diem_mat_phang
+FAILED tests/geometry/test_scene3d_annotations.py::test_w18_dien_tich_thiet_dien_co_ky_hieu_ngan_theo_ten_de_dat
+7 failed, 10 passed in 1.37s
+exit=1 at 00654627 + uncommitted test edits
