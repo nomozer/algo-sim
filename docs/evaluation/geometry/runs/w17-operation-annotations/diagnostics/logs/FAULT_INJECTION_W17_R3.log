@@ -1,0 +1,162 @@
+W17 — backend fault injections (HEAD 6d52ab2f + working tree, 0 model calls)
+method: one exact in-memory source substitution per run (fault_injection_w17.py, W15 _tiem); files on disk are never edited, so 'revert' = the next run without W17_FI
+tests: tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py tests/geometry/test_source_grounding_closure.py tests/geometry/test_refusal_cause.py tests/geometry/test_scene3d_annotations.py tests/geometry/test_shape_class_formation.py tests/test_learner_messages.py
+
+baseline (no injection): 405 passed, 1 warning in 5.16s
+
+FO1 [assumption_gate] operation check removed (§15.1 is no longer a condition of PROVEN_SAFE)
+  predicted: test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan + the route test
+  observed : 12 failed, 393 passed, 1 warning in 6.23s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O1_cat_bang_alpha_khi_de_noi_beta]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O2_cat_khoi_khac]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O3_do_thiet_dien_khac]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O5_dung_P_thay_P_phay]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O8_cung_phuong_trinh_khac_danh_tinh]
+    FAILED test_assumption_certificate.py::test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep_dung
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q1_qua_M_va_song_song_voi_day]
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q2_ten_Q_song_song_khong_ghim]
+    FAILED test_assumption_certificate.py::test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung
+    FAILED test_refusal_cause.py::test_w17_lech_phep_dung_la_nguyen_nhan_dung
+
+FO2 [assumption_gate] plane identity not compared (any text-bound plane accepted: α where the text says β)
+  predicted: test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan (wrong-plane cases)
+  observed : 8 failed, 397 passed, 1 warning in 5.20s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O1_cat_bang_alpha_khi_de_noi_beta]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O3_do_thiet_dien_khac]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O5_dung_P_thay_P_phay]
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O8_cung_phuong_trinh_khac_danh_tinh]
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem
+    FAILED test_assumption_certificate.py::test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung
+    FAILED test_refusal_cause.py::test_w17_lech_phep_dung_la_nguyen_nhan_dung
+
+FO3 [assumption_gate] solid identity not compared (the program may cut another solid)
+  predicted: test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan (wrong-solid case)
+  observed : 1 failed, 404 passed, 1 warning in 4.86s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan[O2_cat_khoi_khac]
+
+FO7 [shape_constraint] the object of 'song song/vuông góc với (X)' read as the cutting plane (final-review defect 1)
+  predicted: test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat + Q1
+  observed : 3 failed, 402 passed, 1 warning in 6.05s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q1_qua_M_va_song_song_voi_day]
+    FAILED test_shape_constraint.py::test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat[G\u1ecdi M l\xe0 trung \u0111i\u1ec3m SA. M\u1eb7t ph\u1eb3ng (Q) qua M v\xe0 song song v\u1edbi (ABCD) c\u1eaft h\xecnh ch\xf3p S.ABCD theo thi\u1ebft di\u1ec7n (T).]
+    FAILED test_shape_constraint.py::test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat[M\u1eb7t ph\u1eb3ng (P) \u0111i qua A v\xe0 vu\xf4ng g\xf3c v\u1edbi (SBC) c\u1eaft kh\u1ed1i ch\xf3p theo thi\u1ebft di\u1ec7n (T).]
+
+FO8 [assumption_gate] an unpinned plane identity reported as a definite mismatch (final-review defect 2)
+  predicted: test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q2]
+  observed : 1 failed, 404 passed, 1 warning in 6.43s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q2_ten_Q_song_song_khong_ghim]
+
+FG4 [shape_constraint] the premise ', biết Y?' masked as the question (final-review defect 3)
+  predicted: test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet + test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien
+  observed : 4 failed, 401 passed, 1 warning in 5.46s -> CAUGHT
+    FAILED test_shape_constraint.py::test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet[Cho h\xecnh ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4. C\u1ea1nh b\xean SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y. Th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC b\u1eb1ng bao nhi\xeau, bi\u1ebft SA = 5?]
+    FAILED test_shape_constraint.py::test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet[Cho h\xecnh ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4. C\u1ea1nh b\xean SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y. H\u1ecfi th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC b\u1eb1ng bao nhi\xeau, bi\u1ebft SA = 5?]
+    FAILED test_source_grounding_closure.py::test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien[G6_bao_nhieu_biet]
+    FAILED test_source_grounding_closure.py::test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien[G7_hoi_bao_nhieu_biet]
+
+FO4 [assumption_gate] source binding ignored (W16 name/uniqueness rule only)
+  predicted: test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh + O7
+  observed : 2 failed, 403 passed, 1 warning in 5.85s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_phep_dung_dung_quan_he_van_duoc_C0[O7_doi_ten_may_giu_nguon]
+    FAILED test_assumption_certificate.py::test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh
+
+FO5 [assumption_gate] name/source conflict resolved silently in favour of the source
+  predicted: test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh
+  observed : 1 failed, 404 passed, 1 warning in 5.54s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh
+
+FO6 [assumption_gate] a point-named plane (MNP) looked up among the equations (no point-set identity)
+  predicted: test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem
+  observed : 1 failed, 404 passed, 1 warning in 6.48s -> CAUGHT
+    FAILED test_assumption_certificate.py::test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem
+
+FG1 [grounding_gate] grounding reads goal clauses as premises (no masking)
+  predicted: test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN
+  observed : 3 failed, 402 passed, 1 warning in 4.83s -> CAUGHT
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G1_do_dai_chi_trong_yeu_cau_chung_minh-<lambda>-SA]
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G3_toa_do_chi_trong_yeu_cau_chung_minh-_g_p1-S]
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau-_g_p4-A]
+
+FG2 [grounding_gate] a goal-only value keeps the generic source code (not classified)
+  predicted: test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN (code)
+  observed : 3 failed, 402 passed, 1 warning in 4.74s -> CAUGHT
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G1_do_dai_chi_trong_yeu_cau_chung_minh-<lambda>-SA]
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G3_toa_do_chi_trong_yeu_cau_chung_minh-_g_p1-S]
+    FAILED test_source_grounding_closure.py::test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN[G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau-_g_p4-A]
+
+FG3 [shape_constraint] a ', biết …' clause after the goal stays inside the goal
+  predicted: test_w17_menh_de_biet_sau_yeu_cau_chung_minh_la_gia_thiet + test_w17_chung_minh_biet_du_kien_sau_biet_van_la_du_kien
+  observed : 4 failed, 401 passed, 1 warning in 5.26s -> CAUGHT
+    FAILED test_shape_constraint.py::test_w17_menh_de_biet_sau_yeu_cau_chung_minh_la_gia_thiet
+    FAILED test_shape_constraint.py::test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet[Cho h\xecnh ch\xf3p S.ABC c\xf3 \u0111\xe1y ABC l\xe0 tam gi\xe1c vu\xf4ng t\u1ea1i A, AB = 3, AC = 4. C\u1ea1nh b\xean SA vu\xf4ng g\xf3c v\u1edbi \u0111\xe1y. H\u1ecfi th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC b\u1eb1ng bao nhi\xeau, bi\u1ebft SA = 5?]
+    FAILED test_source_grounding_closure.py::test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien[G7_hoi_bao_nhieu_biet]
+    FAILED test_source_grounding_closure.py::test_w17_chung_minh_biet_du_kien_sau_biet_van_la_du_kien
+
+FC1 [refusal_cause] cause swapped: a construction mismatch blamed on the text
+  predicted: test_w17_lech_phep_dung_la_nguyen_nhan_dung + test_w17_bang_nguyen_nhan_theo_ma_da_dang_ky
+  observed : 2 failed, 403 passed, 1 warning in 9.07s -> CAUGHT
+    FAILED test_refusal_cause.py::test_w17_lech_phep_dung_la_nguyen_nhan_dung
+    FAILED test_refusal_cause.py::test_w17_bang_nguyen_nhan_theo_ma_da_dang_ky
+
+FC2 [refusal_cause] a non-positive length always blamed on the text
+  predicted: test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung
+  observed : 1 failed, 404 passed, 1 warning in 6.92s -> CAUGHT
+    FAILED test_refusal_cause.py::test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung
+
+FC3 [refusal_cause] a system-chosen plane that misses the solid blamed on the text
+  predicted: test_w17_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung
+  observed : 1 failed, 404 passed, 1 warning in 7.79s -> CAUGHT
+    FAILED test_refusal_cause.py::test_w17_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung
+
+FC4 [route] route refusals carry no cause
+  predicted: test_w17_lech_phep_dung_la_nguyen_nhan_dung (route)
+  observed : 1 failed, 404 passed, 1 warning in 6.58s -> CAUGHT
+    FAILED test_refusal_cause.py::test_w17_lech_phep_dung_la_nguyen_nhan_dung
+
+FM1 [learner_messages] construction-cause messages tell the learner to fix the text
+  predicted: test_w17_*_khong_bao_sua_de + test_w17_so_lieu_he_doc_lech_de_la_loi_he
+  observed : 4 failed, 401 passed, 1 warning in 6.87s -> CAUGHT
+    FAILED test_learner_messages.py::test_w17_do_dai_khong_duong_de_khong_ghi_la_loi_he_khong_bao_sua_de
+    FAILED test_learner_messages.py::test_w17_lech_phep_dung_noi_ten_mat_phang_va_khong_bao_sua_de
+    FAILED test_learner_messages.py::test_w17_so_lieu_he_doc_lech_de_la_loi_he[SOURCE_EVIDENCE_CONFLICT]
+    FAILED test_learner_messages.py::test_w17_so_lieu_he_doc_lech_de_la_loi_he[SOURCE_SPAN_MISMATCH]
+
+FM2 [learner_messages] an unclassified refusal defaults to SOURCE
+  predicted: test_w17_nguyen_nhan_chua_ro_khong_bao_sua_de
+  observed : 1 failed, 404 passed, 1 warning in 6.08s -> CAUGHT
+    FAILED test_learner_messages.py::test_w17_tu_choi_khong_phan_xu_mang_nguyen_nhan_UNKNOWN_khong_phai_SOURCE
+
+FA1 [quantity_annotations] a measured distance keeps only its first operand (wrong subject set)
+  predicted: test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap
+  observed : 2 failed, 403 passed, 1 warning in 8.31s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w17_mot_chu_the_mot_nhan_du_kien_truoc
+    FAILED test_scene3d_annotations.py::test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap
+
+FA2 [scene3d] every quantity a measurement (the answer label would show at its MEASUREMENT step: early result)
+  predicted: test_w17_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the
+  observed : 4 failed, 401 passed, 1 warning in 6.04s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w17_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the
+    FAILED test_scene3d_annotations.py::test_w17_hinh_hop_do_dai_co_phay_gan_dung_dinh
+    FAILED test_scene3d_annotations.py::test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap
+    FAILED test_scene3d_annotations.py::test_w17_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan
+
+FA3 [quantity_annotations] dedup removed (one subject, two labels)
+  predicted: test_w17_mot_chu_the_mot_nhan_du_kien_truoc
+  observed : 1 failed, 404 passed, 1 warning in 7.28s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w17_mot_chu_the_mot_nhan_du_kien_truoc
+
+FA4 [quantity_annotations] exact-distance check removed (a given length labels a segment of another length)
+  predicted: test_w17_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac
+  observed : 1 failed, 404 passed, 1 warning in 8.10s -> CAUGHT
+    FAILED test_scene3d_annotations.py::test_w17_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac
+
+FN1 [scene3d] the group step loses its own label (the W16 'given data' symptom)
+  predicted: test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom
+  observed : 2 failed, 403 passed, 1 warning in 7.67s -> CAUGHT
+    FAILED test_shape_class_formation.py::test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom[lang_tru_tam_giac-C\xe1c c\u1ea1nh b\xean AD, BE, CF]
+    FAILED test_shape_class_formation.py::test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom[hop_chu_nhat-C\xe1c c\u1ea1nh b\xean AA\u2032, BB\u2032, CC\u2032, DD\u2032]
+
+after all injections (no injection again): 405 passed, 1 warning in 8.60s
