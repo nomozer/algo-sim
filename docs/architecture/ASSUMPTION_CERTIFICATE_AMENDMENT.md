@@ -1051,3 +1051,60 @@ v109.
 > còn lại không tô sáng cạnh khuất ở bước nào, nên ở đó luật "tô sáng không đổi nét" chỉ được test đơn vị
 > giữ (`scene3d-hidden-lines.test.tsx`). Vì vậy FW1 chạy trên `cross_section`/desktop (đã khai là giới
 > hạn của bằng chứng trình duyệt).
+
+## 17. W20 — đích của quan hệ dựng điểm đặt bằng toạ độ (ghi 2026-10-04, SAU bản sửa)
+
+**Nguồn:** brief W20 (`W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE`); đóng
+`ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`. Tái hiện và bằng chứng ở
+[`runs/w20-cleanup-premerge`](../evaluation/geometry/runs/w20-cleanup-premerge/).
+**Đăng ký trước bản sửa:** nhãn của probe `diagnostics/literal_target_corpus/LABELS.json` (27 hàng, `f0edcd11`, kèm
+`amendment_1` cũng trước bản sửa). Mục này ghi luật SAU khi đo, không phải bản đăng ký.
+
+Phép dò trước bản sửa (biên `run_pipeline`, 0 lượt gọi) khớp nhãn 20/27. Với đích của một quan hệ §16.1 mà chương
+trình khai bằng toạ độ:
+- trung điểm (mọi vùng) và hình chiếu khai bằng giả thiết mô hình (vùng U3) bị grounding ⑥/⑦ chặn sớm
+  (`DERIVED_ENTITY_WITHOUT_PRODUCER`);
+- hình chiếu trích fact trong U3 chỉ bị cổng giả định chặn, với mã chung;
+- ngoài U3, hình chiếu đặt bằng toạ độ được PHỤC VỤ, một ca với đáp số sai (2√14 thay vì 3√6);
+- toạ độ rồi mới dựng lại, bí danh `assign H = var A` (H của đề lấy trùng đỉnh A) và bí danh của một điểm đặt bằng
+  toạ độ đều được PHỤC VỤ, và `construction_binding` không ghi trạng thái nào cho đích ấy.
+
+### 17.1 Luật
+
+- Mỗi tên chương trình mang ĐÚNG MỘT ký hiệu đích của một quan hệ §16.1 được lần theo chuỗi `assign X = var Y` tới
+  gốc. Danh tính lấy theo nguồn §16.2 của riêng tên ấy, không qua nhóm bí danh, để đỉnh `A` không bị coi là `H`.
+- Có khai báo toạ độ ở bất kỳ mắt nào của chuỗi ⇒ trạng thái `DEFINED_BY_COORDINATES`. Khai báo toạ độ là một
+  `point3` mang giá trị không phải hạt giống (`grounding_gate._is_seed`), kể cả `declare_point` đã nâng về khai báo.
+  Mắt ấy có thể là chính tên đó, hay điểm nó trỏ tới, kể cả một đỉnh đề cho.
+- Có toạ độ rồi mới dựng lại vẫn tính: chương trình đã khẳng định toạ độ của một điểm đề bắt phải dựng.
+- Module không đọc giá trị toạ độ, chỉ hỏi CÓ toạ độ hay không. Trùng toạ độ không bao giờ là trùng danh tính (§16.2).
+- Không đổi: khai báo không kèm giá trị rồi dựng (vẫn MATCHED), bí danh của một điểm được dựng (vẫn đối chiếu theo
+  §16.3), và toạ độ bố cục của các điểm không là đích quan hệ.
+
+### 17.2 Thi hành
+
+- Từ chối ở MỌI vùng tại chặng `construction_binding`.
+  - Mã: `INPUT_NOT_GROUNDED`, `reason_code = CONSTRUCTION_REPLACED_BY_COORDINATES`, nguyên nhân CONSTRUCTION
+    (§15.3). Không gửi đi sửa.
+  - Thứ tự mã: `CONSTRUCTION_NOT_TEXT_BOUND` (có MISMATCHED), rồi mã này, rồi `CONSTRUCTION_BINDING_UNVERIFIED`.
+    Một tên có nhiều trạng thái thì giữ MISMATCHED > DEFINED_BY_COORDINATES > UNVERIFIED > phần còn lại.
+  - `reason_subjects` = các cặp [quan hệ đề nêu, việc chương trình đã làm] (`đặt H bằng toạ độ cho sẵn`,
+    `lấy H trùng với điểm A`).
+- Lời cho người học nêu quan hệ của đề và việc chương trình đã làm, rồi nói hệ CHƯA KIỂM CHỨNG được điểm ấy đúng là
+  điểm đề nói. Toạ độ có thể đúng, nên lời không nói "hình khác", không bảo sửa đề.
+- Grounding ⑥/⑦ giữ nguyên và vẫn chặn sớm hơn các ca của chúng. Gỡ một trong hai thì các ca ấy vẫn bị từ chối ở
+  chặng này (tiêm lỗi FL8/FL9 của run W20).
+
+### 17.3 Đo
+
+- Probe sau bản sửa (`65c90bde`): 26/27 khớp nhãn. Hàng còn lại (C7) bị cổng miền của pipeline từ chối vì lý do khác,
+  đã ghi ở `amendment_1` trước bản sửa; đối chứng thay thế C9 được phục vụ.
+- Census W14–W18: 179 hàng so với census W18, không hàng nào đổi tuyến; luật SHIP §9 giữ (AC2 18/18).
+- Quét 527 chương trình đã lưu trong kho: chỉ hàng L16 của corpus W20 vừa khai toạ độ vừa dựng cùng một điểm.
+- `CACHE_VERSION` 110 → 111: sáu yêu cầu từng được phục vụ vẫn HIT dưới 110 (`PROOF_CACHE_ROW_W20.json`).
+
+**Giới hạn:** chỉ quan hệ trong từ vựng §16.1; bí danh chỉ lần theo `assign X = var Y`. Một đích được định nghĩa bằng
+phép khác (tịnh tiến, giao) đi theo §16.3 như trước.
+
+> **Đính chính 2026-10-05.** Mã và bằng chứng W20 trước `a4f771b3` trích luật này là "§16.5". Số đó là chính sách
+> nhãn của W18 (§16.5 ở trên); luật của W20 là §17. Log và output đã commit giữ nguyên chữ cũ.

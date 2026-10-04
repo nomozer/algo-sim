@@ -566,12 +566,12 @@
 - **evidence:** W18 final self-review, deferred minor (`docs/evaluation/geometry/runs/w18-binding-focus/HANDOFF.md` § Known leftovers; `REPORT.md` limitations). No probe through the production boundary exists yet, so whether the backstops block the wrong identity in every case is unmeasured.
 - **impact:** unknown until probed. A literal target with the right coordinates but the wrong identity, or a projection outside U3, may be served without the identity check W18 promises for constructed points.
 - **scope:** `backend/app/simulation/semantic_program/construction_binding.py` (record `NOT_REALIZED` or check the literal's value against the relation), probes and corpus rows.
-- **status:** OPEN (registered w19) — **blocks merge** of `fix/cuboid-visual-semantic-closure`; not treated as a minor (W19 brief).
+- **status:** RESOLVED (w20, `65c90bde`; `CACHE_VERSION` 110 → 111 in `bedb1040`, served → rejected) — `construction_binding` follows each name that directly denotes a §16.1 relation target along its `assign X = var Y` chain; coordinates anywhere on it give `DEFINED_BY_COORDINATES`, refused in every scope with `CONSTRUCTION_REPLACED_BY_COORDINATES`, cause CONSTRUCTION (amendment §17). Probe through `run_pipeline` with labels registered before the fix: 20/27 → 26/27 (the remaining row C7 is refused by the domain gate for a reason recorded before the fix); census of the W14–W18 corpora: 179 rows compared with W18, no route change, AC2 18/18; fault injections FL1–FL7 caught, FL8/FL9 (grounding guards removed) still refused by this stage. No longer blocks merge.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** pre-merge correctness probe
 - **default_switch_blocker:** NO
 - **acceptance:** a probe through the production boundary (the route, not the census helper) with literal-declared targets for a midpoint and a projection, inside and outside U3, labelled before the run; evidence that each wrong identity is refused with a named code by a backstop, or a fix that makes the binding refuse or record it; no served gold row changes.
-- **verify:** the probe script of the closing wave (writes a new artifact, refuses to overwrite) + `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding.py -q`
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/probe_literal_target.py --tag <tag>` (writes a new artifact, refuses to overwrite) + `.venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding_literal.py tests/geometry/test_construction_binding.py -q`
 
 ### ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
 - **description:** 180 historical wave reports stay physically at the `docs/` root, next to the 11 canonical and 7 project documents. W19 kept their paths because they are frozen evidence (`AGENTS.md` §4; W19 brief: frozen evidence keeps content and path) and 190 of 208 root documents are named by frozen artifacts.
@@ -590,21 +590,33 @@
 - **evidence:** `docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json` (`temp`, class `UNKNOWN_EARLIER_WAVE`).
 - **impact:** disk use and confusion with live worktrees; possible unsaved diagnostics inside.
 - **scope:** a verification pass (each entry: duplicate of a committed file, reproducible output, or unique) or the user's decision to discard.
-- **status:** OPEN (w19)
+- **status:** OPEN (w19); PARTIAL (w20) — a bounded mechanical pass deleted 8 entries by exact path: 6 files equal to blobs reachable from a ref, 1 empty file and 1 clean clone whose HEAD and refs all exist in this repository (`docs/evaluation/geometry/runs/w20-cleanup-premerge/inventory/DELETION_LOG.json`). 204 entries stay `REVIEW_REQUIRED`: 126 loose files and 76 folders that match nothing in git, and the two settings backups (not opened).
 - **owner_class:** OPERATIONS
 - **suggested_wave:** housekeeping, any time
 - **default_switch_blocker:** NO
 - **acceptance:** every entry classified with evidence; deletion only by exact path of verified duplicates or reproducible outputs.
-- **verify:** re-run `inventory_docs.py` of the W19 run.
+- **verify:** re-run `inventory_cleanup_w20.py` of the W20 run (writes a new inventory; refuses to overwrite).
 
 ### ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE
 - **description:** Running the full backend suite in the main working tree rewrites committed evidence. `backend/tests/geometry/test_second_family_live_measurement_reconciliation.py` calls `run_reconciliation()` of `backend/scripts/reconcile_second_family_live_measurement.py` (lines 65 and 165), which writes four files into the frozen run folder `docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/`. Three come back byte-identical; `SOURCE_EVIDENCE_INTEGRITY.json` changes its `note` when the scratch raw-response file is absent. A later test that reads `git status` (`test_second_family_preregistration_evidence_repair.py::test_10_working_tree_co_favicon_deletion_khong_ghi_clean`) then sees a tree dirtier than the user's favicon deletion.
 - **evidence:** W19 main-tree run (`docs/evaluation/geometry/runs/w19-docs-organization/verification/logs/PYTEST_FULL_MAIN_TREE_DIRTY.log`); file mtime inside the run window; W19 restored the file to its committed blob `4d9fad55` before staging and did not commit the mutation.
 - **impact:** a full run outside a detached worktree mutates frozen evidence that can then be committed by accident, and one test becomes dependent on tree state and test order. Detached clean worktrees (the repository's rule for authoritative runs) are not affected in practice: the change is discarded with the worktree.
 - **scope:** `backend/scripts/reconcile_second_family_live_measurement.py` (write to a caller-given directory) and its test (use `tmp_path`, compare instead of writing); no product code, no candidate change.
-- **status:** OPEN (w19) — found by the W19 verification, not fixed (documentation wave).
+- **status:** RESOLVED (w20, `4e647861` + `654beda3`) — `run_reconciliation(out_dir)` takes a required output folder and refuses the frozen folder and any folder inside it; the CLI needs `--out`; the tests pass `tmp_path` and check that the frozen folder keeps its hashes and its `git status`. Root cause: the frozen `note` depends on a file outside the repository that no longer exists (`docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/FROZEN_WRITER_REPRODUCTION.json`). A full backend run in the main tree (`8b6a1a3a`) left `git status` identical and `test_10_…` passed with only the user's favicon deletion; fault injections FE1–FE3 caught.
 - **owner_class:** TEST
 - **suggested_wave:** the next wave that touches backend tests
 - **default_switch_blocker:** NO
 - **acceptance:** a full backend run in the main tree leaves `git status --porcelain -- docs/evaluation` empty, and `test_10_…` passes in the main tree with only the user's favicon deletion.
 - **verify:** `cd backend && .venv/Scripts/python.exe -m pytest -q && git status --porcelain -- ../docs/evaluation`
+
+### ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS
+- **description:** Five docs fault-injection tests write into the working tree. `test_fi_07` and `test_fi_08` append a line to `AGENTS.md`, `test_fi_11` to `docs/ROADMAP.md`, and each restores the original text in `finally`; `test_fi_14` and `test_fi_17` create a file under `docs/` and delete it.
+- **evidence:** `backend/tests/geometry/test_docs_information_architecture.py` (`test_fi_07`, `test_fi_08`, `test_fi_11`, `test_fi_14`, `test_fi_17`); found by the W20 scan for tests that write outside a temporary folder (`docs/evaluation/geometry/runs/w20-cleanup-premerge/REPORT.md`).
+- **impact:** a run killed between the write and the restore leaves a living document changed or a stray file at the docs root, and a concurrent reader (another test process, a docs audit) can see the injected line. No frozen evidence is written, so the rule of `AGENTS.md` §4 holds.
+- **scope:** the five tests only (inject into a temporary copy of the files the audit function reads); no product code, no candidate change.
+- **status:** OPEN (w20) — registered, not fixed (outside the scope of the W20 issues).
+- **owner_class:** TEST
+- **suggested_wave:** the next wave that touches the docs tests
+- **default_switch_blocker:** NO
+- **acceptance:** a full backend run leaves the bytes of `AGENTS.md` and of every file under `docs/` unchanged (hash before and after the run).
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_docs_information_architecture.py -q` with a hash of `AGENTS.md` and `docs/**` before and after.
