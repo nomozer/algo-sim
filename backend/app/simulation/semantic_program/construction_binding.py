@@ -383,10 +383,10 @@ def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str
         if len(k) != 1 or not any(map(dt.toa_do, chuoi)):
             continue
         R = qh[k.pop()]
-        dich_hs = _hien(dt.ky_hieu[R.dich])
         goc = dt.nguon(chuoi[-1]) - {R.dich}
-        lam = (f"lấy {dich_hs} trùng với điểm {_hien(dt.ky_hieu[next(iter(goc))])}" if len(chuoi) > 1 and len(goc) == 1
-               else f"đặt {dich_hs} bằng toạ độ cho sẵn")
+        # Thể bị động, không kèm tên (cuboid-final-review): lời học sinh nói "vì điểm này <lam>".
+        lam = (f"được lấy trùng với điểm {_hien(dt.ky_hieu[next(iter(goc))])}" if len(chuoi) > 1 and len(goc) == 1
+               else "được đặt bằng toạ độ")
         if (R.nhan_hoc_sinh, lam) not in toa_do:
             toa_do.append((R.nhan_hoc_sinh, lam))
         da_dat.add(R.dich)

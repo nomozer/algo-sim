@@ -1108,3 +1108,12 @@ phép khác (tịnh tiến, giao) đi theo §16.3 như trước.
 
 > **Đính chính 2026-10-05.** Mã và bằng chứng W20 trước `a4f771b3` trích luật này là "§16.5". Số đó là chính sách
 > nhãn của W18 (§16.5 ở trên); luật của W20 là §17. Log và output đã commit giữ nguyên chữ cũ.
+
+> **Bổ sung 2026-10-05 (run `cuboid-final-review`) — thẻ từ chối.** Luật §17.1 và mã không đổi; đổi cách nói:
+> - Vế sau của mỗi cặp `reason_subjects` viết ở thể bị động, không kèm tên điểm: `được đặt bằng toạ độ`,
+>   `được lấy trùng với điểm A` (W20 viết `đặt H bằng toạ độ cho sẵn`, `lấy H trùng với điểm A`).
+> - Lời cho người học: *"Hệ chưa kiểm chứng được ‹quan hệ của đề›, vì điểm này ‹cách đặt› thay vì dựng từ quan hệ
+>   trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."* Tên và quan hệ đọc từ chủ thể, không viết cứng.
+>   Câu đuôi "đề không cần sửa — em có thể gửi lại để hệ dựng lại" bị bỏ: chưa có cơ chế bảo đảm gửi lại sẽ sửa được.
+> - Nhãn "loại vấn đề" trên thẻ: "chưa kiểm chứng được phép dựng" (frontend đọc `reason_code`, không hiển thị nó), không
+>   phải "hệ dựng lệch với đề bài" — nhãn ấy chỉ dành cho ca lệch đã chứng minh (§16.4), và nhãn ấy giữ nguyên.

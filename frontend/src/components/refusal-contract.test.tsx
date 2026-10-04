@@ -49,6 +49,7 @@ type Envelope = {
   error_code?: string;
   stage_reached?: string;
   refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
+  reason_code?: string;
 };
 
 function docFixture(id: string): Envelope {
@@ -238,6 +239,39 @@ describe("W18 · đối chiếu phép dựng điểm với đề", () => {
 
   it("lệch — loại vấn đề vẫn nói hệ dựng lệch đề", () => {
     expect(the("CONSTRUCTION")).toContain("hệ dựng lệch với đề bài");
+  });
+});
+
+/* W20 §17 (thẻ sửa ở cuboid-final-review) — điểm đề định nghĩa bằng quan hệ mà chương trình ĐẶT BẰNG TOẠ
+   ĐỘ: toạ độ có thể đúng, hệ chỉ CHƯA KIỂM CHỨNG được, nên nhãn không được nói "hệ dựng lệch với đề bài"
+   (câu ấy chỉ dành cho ca lệch đã chứng minh). Phân nhánh bằng `reason_code` (trường có cấu trúc), không
+   dò chữ, và mã máy không bao giờ lên màn hình. */
+describe("W20 §17 · điểm đặt bằng toạ độ thay vì dựng từ quan hệ", () => {
+  const the = (reason_code: string, refusal_cause: Envelope["refusal_cause"]) => html({
+    reason: "…", learner_reason: "…", failure_category: "geometry_generation_failed",
+    error_code: "input_not_grounded", stage_reached: "construction_binding", refusal_cause, reason_code,
+  });
+
+  it("nhãn nói chưa kiểm chứng được phép dựng — không nói dựng lệch, không lộ mã, không gợi ý gửi lại", () => {
+    const out = the("CONSTRUCTION_REPLACED_BY_COORDINATES", "CONSTRUCTION");
+    expect(out).toContain("chưa kiểm chứng được phép dựng");
+    expect(out).not.toContain("hệ dựng lệch với đề bài");
+    expect(out).not.toContain(NHAN_LOAI_VAN_DE.input_not_grounded);
+    expect(out).not.toContain("CONSTRUCTION_REPLACED_BY_COORDINATES");
+    expect(out).not.toContain('class="notes"');
+    expect(out).toContain(NHAN_GIAI_DOAN.construction_binding);
+  });
+
+  it("đối chứng — ca lệch đã chứng minh giữ nhãn dựng lệch", () => {
+    const out = the("CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION");
+    expect(out).toContain("hệ dựng lệch với đề bài");
+    expect(out).not.toContain("chưa kiểm chứng được phép dựng");
+  });
+
+  it("đối chứng — ca chưa đối chiếu được giữ nhãn của nó", () => {
+    const out = the("CONSTRUCTION_BINDING_UNVERIFIED", "UNKNOWN");
+    expect(out).toContain("hệ chưa đối chiếu được phép dựng với đề");
+    expect(out).not.toContain("chưa kiểm chứng được phép dựng");
   });
 });
 

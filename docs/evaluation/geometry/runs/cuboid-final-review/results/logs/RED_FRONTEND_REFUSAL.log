@@ -1,0 +1,30 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+ ❯ src/components/refusal-contract.test.tsx (26 tests | 1 failed) 23ms
+     × nhãn nói chưa kiểm chứng được phép dựng — không nói dựng lệch, không lộ mã, không gợi ý gửi lại 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/refusal-contract.test.tsx > W20 §17 · điểm đặt bằng toạ độ thay vì dựng từ quan hệ > nhãn nói chưa kiểm chứng được phép dựng — không nói dựng lệch, không lộ mã, không gợi ý gửi lại
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'chưa kiểm chứng được phép dựng'
+
+Expected: "chưa kiểm chứng được phép dựng"
+Received: "<section class="card"><span class="eyebrow">CHƯA DỰNG ĐƯỢC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">…</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>đối chiếu phép dựng điểm với câu của đề</dd></div><div><dt>Loại vấn đề</dt><dd>hệ dựng lệch với đề bài</dd></div></dl></section>"
+
+ ❯ src/components/refusal-contract.test.tsx:257:17
+    255|   it("nhãn nói chưa kiểm chứng được phép dựng — không nói dựng lệch, k…
+    256|     const out = the("CONSTRUCTION_REPLACED_BY_COORDINATES", "CONSTRUCT…
+    257|     expect(out).toContain("chưa kiểm chứng được phép dựng");
+       |                 ^
+    258|     expect(out).not.toContain("hệ dựng lệch với đề bài");
+    259|     expect(out).not.toContain(NHAN_LOAI_VAN_DE.input_not_grounded);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 25 passed (26)
+   Start at  03:29:52
+   Duration  596ms (transform 284ms, setup 33ms, import 383ms, tests 23ms, environment 0ms)
+

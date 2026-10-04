@@ -78,6 +78,10 @@ export interface AnalysisUnsupported {
   /** (W17 §15.3) Nguyên nhân từ chối do backend quyết từ mã có cấu trúc — chỉ để chọn gợi ý:
    * `SOURCE` mời sửa dữ kiện trong đề; `CONSTRUCTION`/`UNKNOWN` không bao giờ bảo sửa đề. */
   refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
+  /** (W20 §17, thẻ sửa ở cuboid-final-review) Mã lý do chi tiết của backend — CHỈ để chọn nhãn "loại vấn
+   * đề" khi cùng một nguyên nhân gộp hai ca khác nhau (dựng lệch đã chứng minh vs chưa kiểm chứng được).
+   * KHÔNG BAO GIỜ hiển thị mã này. */
+  reason_code?: string;
 }
 
 export type AnalysisResult = AnalysisOk | AnalysisUnsupported;

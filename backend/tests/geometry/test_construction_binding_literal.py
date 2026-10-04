@@ -172,10 +172,13 @@ def test_w20_khai_bao_khong_toa_do_roi_dung_van_khop():
 
 
 def test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
+    """Cặp [quan hệ đề nêu, cách chương trình đã đặt điểm ấy]. Từ run `cuboid-final-review` vế sau viết ở thể bị
+    động, không kèm tên điểm (W20 ghi `đặt H bằng toạ độ cho sẵn`), để lời học sinh nói "vì điểm này được đặt bằng
+    toạ độ" mà không ghép chuỗi theo ký hiệu."""
     _sp, out, _sc = W.chay(*CA["L13_proj_outside_relation_fact"]())
-    assert out.reason_subjects == ["H là hình chiếu của S lên BD", "đặt H bằng toạ độ cho sẵn"], out.reason_subjects
+    assert out.reason_subjects == ["H là hình chiếu của S lên BD", "được đặt bằng toạ độ"], out.reason_subjects
     _sp, out, _sc = W.chay(*CA["L17_proj_outside_alias_to_vertex"]())
-    assert out.reason_subjects == ["H là hình chiếu của S lên BD", "lấy H trùng với điểm A"], out.reason_subjects
+    assert out.reason_subjects == ["H là hình chiếu của S lên BD", "được lấy trùng với điểm A"], out.reason_subjects
 
 
 def test_w20_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua():
@@ -197,16 +200,48 @@ def _pipeline(ca: str) -> dict:
     return attach_learner_reason(asyncio.run(GEN._run_frozen_program(contract.problem_text, contract, v.spec)))
 
 
-@pytest.mark.parametrize("ca,lam", [("L14_proj_outside_wrong_coords", "đặt H bằng toạ độ cho sẵn"),
-                                    ("L17_proj_outside_alias_to_vertex", "lấy H trùng với điểm A")])
-def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca, lam):
-    """Hai hàng nguy hiểm nhất của probe trước bản sửa: L14 phục vụ đáp số SAI, L17 đo SA thay cho SH."""
+_DUNG_LAI = " Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+
+
+@pytest.mark.parametrize("ca,cau", [
+    ("L14_proj_outside_wrong_coords", "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt "
+                                      "bằng toạ độ thay vì dựng từ quan hệ trong đề."),
+    ("L17_proj_outside_alias_to_vertex", "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được "
+                                         "lấy trùng với điểm A thay vì dựng từ quan hệ trong đề."),
+    ("L16_mid_U3_literal_then_constructed", "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt "
+                                            "bằng toạ độ thay vì dựng từ quan hệ trong đề."),
+])
+def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca, cau):
+    """L14 phục vụ đáp số SAI và L17 đo SA thay cho SH trước bản sửa W20. Lời (cuboid-final-review): nêu quan hệ
+    của đề và cách điểm bị đặt, nói hệ CHƯA KIỂM CHỨNG được — không nói hình khác, không bảo sửa đề, không hứa gửi
+    lại sẽ được (chưa có cơ chế bảo đảm điều đó). L16 là cùng lời với tên và quan hệ khác: không ghép cứng."""
     env = _pipeline(ca)
     assert (env["status"], env.get("reason_code"), env.get("refusal_cause")) == (
         "unsupported", MA_TOA_DO, "CONSTRUCTION"), {k: env.get(k) for k in ("status", "stage_reached", "reason_code")}
     assert not (env.get("scene3d") or {}).get("objects"), "lời từ chối không mang cảnh hay đáp số"
     msg = env["learner_reason"]
-    assert "H là hình chiếu của S lên BD" in msg and lam in msg and "chưa kiểm chứng" in msg, msg
-    assert "đề không cần sửa" in msg and "hình khác" not in msg and "_" not in msg, msg
-    for cam in ("sửa đề", "kiểm tra lại đề", "đề sai", "đề bài sai"):
+    assert msg == cau + _DUNG_LAI, msg
+    for cam in ("sửa đề", "kiểm tra lại đề", "đề sai", "đề bài sai", "gửi lại", "hình khác", "dựng lệch", "_"):
         assert cam not in msg, (cam, msg)
+
+
+def test_w20_loi_ghep_tu_chu_the_co_cau_truc():
+    """Tên, quan hệ và cách đặt đều đọc từ `reason_subjects` — không ký hiệu nào viết cứng; nhiều cặp gộp
+    lại; tên máy (có `_`) không bao giờ lên lời; không có chủ thể thì vẫn nói đúng giới hạn."""
+    from app.learner_messages import learner_reason
+
+    def loi(*chu_the: str) -> str:
+        return learner_reason({"reason_code": MA_TOA_DO, "refusal_cause": "CONSTRUCTION",
+                               "stage_reached": "construction_binding", "reason_subjects": list(chu_the)})
+
+    assert loi("K là hình chiếu của P lên (XYZ)", "được đặt bằng toạ độ") == (
+        "Hệ chưa kiểm chứng được K là hình chiếu của P lên (XYZ), vì điểm này được đặt bằng toạ độ thay vì dựng từ "
+        "quan hệ trong đề." + _DUNG_LAI)
+    assert loi("K là hình chiếu của P lên (XYZ)", "được đặt bằng toạ độ",
+               "N là trung điểm của PQ", "được lấy trùng với điểm X") == (
+        "Hệ chưa kiểm chứng được K là hình chiếu của P lên (XYZ) và N là trung điểm của PQ, vì các điểm này được "
+        "đặt bằng toạ độ hoặc được lấy trùng với điểm X thay vì dựng từ quan hệ trong đề." + _DUNG_LAI)
+    chung = ("Hệ chưa kiểm chứng được một điểm đề bài nêu bằng quan hệ, vì điểm này được đặt bằng toạ độ thay vì "
+             "dựng từ quan hệ trong đề." + _DUNG_LAI)
+    assert loi() == chung
+    assert loi("K_tmp là hình chiếu của P lên (XYZ)", "được đặt bằng toạ độ") == chung

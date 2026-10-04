@@ -150,6 +150,8 @@ export function UnsupportedNotice({
     /** (W17 §15.3) Nguyên nhân từ chối — backend quyết từ mã có cấu trúc. Chỉ `SOURCE` mới mời
      *  học sinh sửa đề; thiếu trường (envelope cũ) đi như `UNKNOWN`. */
     refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
+    /** (W20 §17) Mã lý do chi tiết — chỉ để chọn nhãn loại vấn đề, không bao giờ hiển thị. */
+    reason_code?: string;
   };
 }) {
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
@@ -274,7 +276,12 @@ export function UnsupportedNotice({
      sai phía thứ hai — đọc nguyên nhân có cấu trúc, không dò chữ. */
   /* (W18 §16.4) Ở chặng đối chiếu phép dựng điểm, nguyên nhân khác CONSTRUCTION nghĩa là hệ CHƯA đối
      chiếu được — giới hạn của hệ, không phải dữ kiện của đề thiếu nguồn. */
-  const nhanLoai = unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
+  /* (W20 §17) Điểm đề định nghĩa bằng quan hệ mà chương trình đặt bằng toạ độ: cùng nguyên nhân CONSTRUCTION
+     nhưng toạ độ có thể đúng — hệ CHƯA KIỂM CHỨNG được, chưa chứng minh là lệch. Nhãn "dựng lệch" chỉ dành cho
+     ca lệch đã chứng minh, nên mã chi tiết (có cấu trúc, không hiển thị) được đọc TRƯỚC nguyên nhân. */
+  const nhanLoai = unsupported.reason_code === "CONSTRUCTION_REPLACED_BY_COORDINATES"
+    ? "chưa kiểm chứng được phép dựng"
+    : unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
     ? "hệ dựng lệch với đề bài"
     : unsupported.stage_reached === "construction_binding" && khoaLoai === "input_not_grounded"
     ? "hệ chưa đối chiếu được phép dựng với đề"

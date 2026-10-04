@@ -223,20 +223,16 @@ _MSG_CHUA_DOI_CHIEU = (
 
 
 def _msg_toa_do_thay_dung(envelope: dict) -> str:
-    """W20 §17 — `reason_subjects` = các cặp [quan hệ đề nêu, việc chương trình đã làm] (`đặt H bằng toạ
-    độ cho sẵn`, `lấy H trùng với điểm A`). Toạ độ có thể đúng: nói giới hạn KIỂM CHỨNG, không nói hình
-    khác, không bảo sửa đề."""
+    """W20 §17 — `reason_subjects` = các cặp [quan hệ đề nêu, cách chương trình đã đặt điểm ấy] (`được đặt bằng
+    toạ độ`, `được lấy trùng với điểm A`). Toạ độ có thể đúng: nói giới hạn KIỂM CHỨNG, không nói hình khác,
+    không bảo sửa đề, và (cuboid-final-review) không hứa gửi lại sẽ sửa được — chưa có cơ chế bảo đảm điều ấy."""
     s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]
     cap = [(a, b) for a, b in zip(s[0::2], s[1::2]) if a and b and "_" not in a + b]
-    if cap:
-        de = " và ".join(f"\"{a}\"" for a in dict.fromkeys(a for a, _ in cap))
-        cau = (f"Đề bài nêu {de}, nhưng chương trình của AlgoSim {' và '.join(dict.fromkeys(b for _, b in cap))}"
-               + (" thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó" if len(cap) == 1
-                  else " thay vì dựng các điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được chúng"))
-    else:
-        cau = ("Chương trình của AlgoSim đặt một điểm đề nêu bằng toạ độ thay vì dựng nó từ quan hệ đề nêu, "
-               "nên hệ chưa kiểm chứng được nó")
-    return cau + " đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng." + _DUOI_LOI_HE
+    quan_he = list(dict.fromkeys(a for a, _ in cap)) or ["một điểm đề bài nêu bằng quan hệ"]
+    cach = " hoặc ".join(dict.fromkeys(b for _, b in cap)) or "được đặt bằng toạ độ"
+    diem = "các điểm này" if len(quan_he) > 1 else "điểm này"
+    return (f"Hệ chưa kiểm chứng được {' và '.join(quan_he)}, vì {diem} {cach} thay vì dựng từ quan hệ trong đề. "
+            "Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng.")
 
 
 def _msg_chua_doi_chieu(envelope: dict) -> str:

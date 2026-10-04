@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  45 passed (45)
+   Start at  03:32:15
+   Duration  606ms (transform 336ms, setup 62ms, import 447ms, tests 44ms, environment 0ms)
+
