@@ -1,0 +1,6310 @@
+{
+ "census": "W18_CONSTRUCTION_BINDING_CENSUS",
+ "model_calls": 0,
+ "measured_at_commit": "84ce7b70b41c29255e7647be89aee2e428a2a521",
+ "corpora": {
+  "W14": {
+   "path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/assumption_corpus/CORPUS.json",
+   "sha256_lf": "d8bd71e9a876fb44e7d0b04167ff84d931e576cb0ad318beb6ae93405bfb76a9"
+  },
+  "W15": {
+   "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_corpus_w15/CORPUS.json",
+   "sha256_lf": "1a2eb458e66e6ad9d9a36eedebbb4c9ad3cddb17ffae16be0f4b2f541188b511"
+  },
+  "W15B": {
+   "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/assumption_corpus_w15b/CORPUS.json",
+   "sha256_lf": "2d4380cf763a56f9151a203d25e15237eb56327a5a00ffcaf4c55df27bf27c1a"
+  },
+  "W16": {
+   "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_corpus_w16/CORPUS.json",
+   "sha256_lf": "042a1b74fcf29c3ddf34a076980f3b8110dcfda71dfe8b9c7423ce401b9b5d93"
+  },
+  "W16B": {
+   "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/assumption_corpus_w16b/CORPUS.json",
+   "sha256_lf": "fa56c41723e5b66baa4b216fd4fde1039e56511f90fc03d2559a1e296c32547a"
+  },
+  "W17": {
+   "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_corpus_w17/CORPUS.json",
+   "sha256_lf": "a6ef065b20d7d4dfe36a535d42ed80f637d45d4749dd3fcd92e5bbe2057a63a7"
+  },
+  "W17C": {
+   "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/assumption_corpus_w17c/CORPUS.json",
+   "sha256_lf": "c0d404839f2ac2cf08e386b6cf732d5fb6b59fbe5993fa2cfc1bbbc1a688e7dd"
+  },
+  "W18": {
+   "path": "docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/construction_corpus_w18/CORPUS.json",
+   "sha256_lf": "87bb205a67addb2357650085d30b86652256a3fbecfa7745061fb6c350517610"
+  }
+ },
+ "re_execution_budget": 24,
+ "rows": [
+  {
+   "id": "ac1_given_length",
+   "corpus": "W14",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ac1_layout_derived",
+   "corpus": "W14",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ac1_model_assumption",
+   "corpus": "W14",
+   "group": "AC1",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv10_quan_he_claimed",
+   "corpus": "W14",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "adv10_quan_he_gia_dinh",
+   "corpus": "W14",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): MODEL_ASSUMPTION",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE"
+  },
+  {
+   "id": "adv10_quan_he_khong_nguon",
+   "corpus": "W14",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE"
+  },
+  {
+   "id": "adv11_hai_dap_so_mot_ngoai_pham_vi",
+   "corpus": "W14",
+   "group": "CERT_LIMIT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "UNCERTIFIED g: measure angle_cos_sq outside C1"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv1_xy_length_gia_dinh",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "MODEL_ASSUMPTION_TYPE_NOT_ALLOWED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv2_xoay_thieu_AD",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv3_canh_khac_che_chieu_cao",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AA′"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AA′"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,36]",
+    "PREMISE right_prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,36]",
+    "PREMISE base_square(A,B,C,D)=4 @[40,64]",
+    "T6 MISSING AA′",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AA′)",
+    "changes": {
+     "chieu_cao_AA_prime": [
+      "4",
+      "8"
+     ],
+     "the_tich_khoi_lang_tru": [
+      "64",
+      "128"
+     ],
+     "V": [
+      "64",
+      "128"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv4_lang_tru_xien",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv5_chan_duong_cao_an",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv7_thieu_de",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "POLICY_5A",
+   "expect": null,
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_TEXT_MISSING",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED no solid notation",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "adv8_nhan_vo_huong_gia_dinh",
+   "corpus": "W14",
+   "group": "CERT_LIMIT",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "NO_ROLE diem M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "demo:n1_thoi_dinh_thu_tu",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "Q": "OUT_OF_SCOPE",
+     "H": "AUXILIARY"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "demo:n2_lang_tru_xien_hai_vecto",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "B_prime": "OUT_OF_SCOPE",
+     "C_prime": "OUT_OF_SCOPE",
+     "I": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "demo:n4_giao_duong_mat_roi_do",
+   "corpus": "W14",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "INPUT_NOT_GROUNDED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 5 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "demo:t3_hop_tinh_tien_day_chuyen",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "C": "OUT_OF_SCOPE",
+     "B_prime": "OUT_OF_SCOPE",
+     "C_prime": "OUT_OF_SCOPE",
+     "D_prime": "OUT_OF_SCOPE",
+     "M": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 1 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE"
+  },
+  {
+   "id": "demo:t4_mat_xich_trong_chuoi_sau",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "C": "OUT_OF_SCOPE",
+     "I": "OUT_OF_SCOPE",
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[99,129]",
+    "PREMISE base_parallelogram(A,B,C,D) @[24,50]",
+    "PREMISE line_perp_line(A,B,A,D) @[73,92]",
+    "C1 T2",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 1 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE"
+  },
+  {
+   "id": "gold:n1_khoi_tron_xoay_tong_quat",
+   "corpus": "W14",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "UNANCHORED_DERIVED_ASSUMPTION",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "NOT_APPLICABLE_NO_NUMERIC_ANSWER",
+   "certificate": null,
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "NO_NUMERIC_VALUE_SHOWN"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:n2_khoi_ghep_bu_can_boolean",
+   "corpus": "W14",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "EXECUTION_FAILED TypeError"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p1_chop_thiet_dien_khoang_cach",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p2_chop_day_ngu_giac_lom",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p3_mat_cau_va_thiet_dien_tron",
+   "corpus": "W14",
+   "group": "NOT_SERVED_TODAY",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "ir_static",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "EXECUTION_FAILED GeometryError"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p4_hinh_tru_the_tich_va_xung_quanh",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p5_hinh_non_the_tich_va_xung_quanh",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p6_thiet_dien_elip_cua_hinh_tru",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "gold:p7_thiet_dien_elip_cua_hinh_non",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ho:chop_chu_nhat",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[76,106]",
+    "PREMISE base_rectangle(A,B,C,D) @[24,49]",
+    "C1 T2",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 5 points"
+  },
+  {
+   "id": "ho:chop_tam_giac",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ho:hop_chu_nhat",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "ho:lang_tru_day_vuong",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): UNCONFIRMED",
+    "PREMISE right_prism() @[4,22]",
+    "PREMISE base_square()=3 @[26,50]",
+    "PREMISE height()=7 @[52,68]",
+    "C1 T6",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 5 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "ho:lang_tru_tam_giac",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "ho:lap_phuong",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "PREMISE cube(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "PREMISE cube_edge(A,B,C,D,A_prime,B_prime,C_prime,D_prime)=4 @[4,48]",
+    "C1 T5",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 6 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "mau:cau-cat-mat-phang",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:cau-the-tich",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:mat-cheo-sac",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:mp-vuong-goc-duong",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:non-duong-sinh",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:non-thiet-dien-truc",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:the-tich-chop",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:thiet-dien-chop",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:tru-thiet-dien-tron",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:tru-truc-xien",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "mau:vuong-goc-chop",
+   "corpus": "W14",
+   "group": "NO_CONTRACT",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": false,
+   "why": "NO_CONTRACT (offline sample, never routed)"
+  },
+  {
+   "id": "rf4_hai_dap_so_mot_phu_thuoc",
+   "corpus": "W14",
+   "group": "ADVERSARIAL",
+   "label": "DEPENDS",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "NO_ROLE diem M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rigid:prism_text_translate_swap",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "rot:chop_tam_giac_xoay",
+   "corpus": "W14",
+   "group": "AC2",
+   "label": "INVARIANT",
+   "expect": null,
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:ky_hieu_vuong_goc_mat",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,91]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:vuong_goc_mat_phang_ten",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,113]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:tam_giac_vuong_cau_rieng",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[72,92]",
+    "PREMISE right_triangle(A,B,C) @[21,45]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:goc_90",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[65,85]",
+    "PREMISE line_perp_line(A,B,A,C) @[41,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:khoi_chop",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:chieu_cao_thay_SA",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE height(S,A,B,C)=5 @[105,121]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "ph:binh_hanh_goc_vuong",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_SPAN_MISMATCH",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "AB",
+     "AD",
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[100,130]",
+    "PREMISE base_parallelogram(A,B,C,D) @[24,50]",
+    "PREMISE line_perp_line(A,B,A,D) @[70,89]",
+    "C1 T2",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 5 points"
+  },
+  {
+   "id": "ph:lang_tru_phay",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,A'|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,A_prime,B_prime,C_prime) @[4,33]",
+    "PREMISE right_prism(A,B,C,A_prime,B_prime,C_prime) @[4,33]",
+    "PREMISE right_triangle(A,B,C) @[37,68]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "ph:hop_khoi",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "ph:lap_phuong_canh_ten",
+   "corpus": "W15",
+   "group": "W15_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "PREMISE cube(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "C1 T5",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 6 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "oov:duong_cao",
+   "corpus": "W15",
+   "group": "W15_OUT_OF_VOCAB",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "oov:goc_vuong_dien_dat",
+   "corpus": "W15",
+   "group": "W15_OUT_OF_VOCAB",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_SPAN_MISMATCH",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "AB",
+     "AD",
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "TEMPLATE_NOT_MATCHED T2: base not stated rectangle/square (or parallelogram + right angle)",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "oov:chia_doan_canh",
+   "corpus": "W15",
+   "group": "W15_OUT_OF_VOCAB",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [
+     "M"
+    ],
+    "construction_binding": {
+     "M": "UNVERIFIED"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "NO_ROLE ti_so M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "oov:canh_ben_vuong_goc_mat_day",
+   "corpus": "W15",
+   "group": "W15_OUT_OF_VOCAB",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:chop_tam_giac_thieu_SA",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:SA",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "SA"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (SA)",
+    "changes": {
+     "the_tich_khoi_chop": [
+      "14",
+      "28"
+     ],
+     "the_tich_khoi": [
+      "14",
+      "28"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:chop_chu_nhat_thieu_AD",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:AD",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_SPAN_MISMATCH",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[68,98]",
+    "PREMISE base_rectangle(A,B,C,D) @[24,49]",
+    "T2 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 canh anchored at A (AD)",
+    "changes": {
+     "dien_tich_day_ABCD": [
+      "12",
+      "24"
+     ],
+     "the_tich_khoi_chop": [
+      "24",
+      "48"
+     ],
+     "v": [
+      "24",
+      "48"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:lang_tru_thieu_AC",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:AC",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AC"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AC"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AC",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 canh anchored at A (AC)",
+    "changes": {
+     "dien_tich_day_ABC": [
+      "6",
+      "12"
+     ],
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:hop_thieu_AA",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:AA′",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AA′"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AA′"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "T4 MISSING AA′",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AA′)",
+    "changes": {
+     "chieu_cao_AA_prime": [
+      "5",
+      "10"
+     ],
+     "the_tich_khoi_hop": [
+      "60",
+      "120"
+     ],
+     "V": [
+      "60",
+      "120"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:lap_phuong_thieu_canh",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "INPUT_NOT_GROUNDED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AB"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "PREMISE cube(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,33]",
+    "T5 MISSING AB",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 vi_tu anchored at A (AB)",
+    "changes": {
+     "dien_tich_day_ABCD": [
+      "16",
+      "64"
+     ],
+     "chieu_cao_AA_prime": [
+      "4",
+      "8"
+     ],
+     "the_tich_khoi_hop": [
+      "64",
+      "512"
+     ],
+     "V": [
+      "64",
+      "512"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "md:lang_tru_vuong_thieu_cao",
+   "corpus": "W15",
+   "group": "W15_MISSING_DIM",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AA′"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AA′"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): UNCONFIRMED",
+    "PREMISE right_prism() @[4,22]",
+    "PREMISE base_square()=3 @[26,50]",
+    "T6 MISSING AA′",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AA′)",
+    "changes": {
+     "chieu_cao_AA_prime": [
+      "7",
+      "14"
+     ],
+     "the_tich_khoi_lang_tru": [
+      "63",
+      "126"
+     ],
+     "V": [
+      "63",
+      "126"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "we:so_cua_AC_che_SA",
+   "corpus": "W15",
+   "group": "W15_WRONG_ENTITY",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:SA",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "SA"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (SA)",
+    "changes": {
+     "the_tich_khoi_chop": [
+      "25/2",
+      "25"
+     ],
+     "the_tich_khoi": [
+      "25/2",
+      "25"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "we:canh_day_che_canh_ben",
+   "corpus": "W15",
+   "group": "W15_WRONG_ENTITY",
+   "label": "DEPENDS",
+   "expect": "DEPENDENT:AD",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "assumption_enforced": true,
+    "assumption_status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "AD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "DEPENDENT_ON_UNSTATED_ASSUMPTION",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+   "subjects": [
+    "AD"
+   ],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "T3 MISSING AD",
+    "CE_VALID"
+   ],
+   "witness": {
+    "description": "x2 phap_tuyen anchored at A (AD)",
+    "changes": {
+     "the_tich_solid_ABCDEF": [
+      "30",
+      "60"
+     ],
+     "the_tich_lang_tru": [
+      "30",
+      "60"
+     ]
+    }
+   },
+   "compiler_cross_check": null
+  },
+  {
+   "id": "te:chop_vuong",
+   "corpus": "W15",
+   "group": "W15_TYPE_EQUAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[64,94]",
+    "PREMISE base_square(A,B,C,D)=3 @[24,53]",
+    "C1 T2",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 5 points"
+  },
+  {
+   "id": "te:lang_tru_vuong_co_ten",
+   "corpus": "W15",
+   "group": "W15_TYPE_EQUAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,36]",
+    "PREMISE right_prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,36]",
+    "PREMISE base_square(A,B,C,D)=3 @[40,69]",
+    "C1 T6",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 5 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "un:lang_tru_vuong_chieu_cao_khong_bang",
+   "corpus": "W15",
+   "group": "W15_UNNAMED",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): UNCONFIRMED",
+    "PREMISE right_prism() @[4,22]",
+    "PREMISE base_square()=3 @[26,50]",
+    "PREMISE height()=7 @[52,63]",
+    "C1 T6",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 5 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "mm:doi_ten_Q_MNP",
+   "corpus": "W15",
+   "group": "W15_METAMORPHIC",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(M,N|M,P): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(Q,M|M,N,P): SERVER_CONFIRMED",
+    "PREMISE pyramid(Q,M,N,P) @[4,19]",
+    "PREMISE line_perp_plane(Q,M,M,N,P) @[81,101]",
+    "PREMISE right_triangle(M,N,P) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "mm:chop_chu_nhat_tinh_tien_doi_truc",
+   "corpus": "W15",
+   "group": "W15_METAMORPHIC",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[76,106]",
+    "PREMISE base_rectangle(A,B,C,D) @[24,49]",
+    "C1 T2",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 5 points"
+  },
+  {
+   "id": "mm:hop_xoay",
+   "corpus": "W15",
+   "group": "W15_METAMORPHIC",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 8 points"
+  },
+  {
+   "id": "lr:ti_so_khong_cho",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "NO_ROLE ti_so M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "lr:ti_so_dung",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE"
+  },
+  {
+   "id": "lr:ti_so_sai_doc_duoc",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "source_invariant",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "NO_ROLE ti_so M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "lr:mat_phang_tu_chon",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "PLANE_BINDING alpha: no single text equation for (α)",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang alpha",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "lr:S_nhan_5",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "NO_ROLE literal the_tich_lang_tru"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "lr:chia_nguyen_3",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "NO_ROLE literal the_tich_khoi",
+    "UNCERTIFIED arithmetic '//' outside C1"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "lr:S_nhan_h",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "lr:S_nhan_AD_length",
+   "corpus": "W15",
+   "group": "W15_LITERAL_ROLE",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_prism(A,B,C,D,E,F) @[4,30]",
+    "PREMISE right_triangle(A,B,C) @[34,65]",
+    "C1 T3",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 6 points"
+  },
+  {
+   "id": "rd:C0_diem_ghi_de_khoi_phuc",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "X": "AUXILIARY",
+     "Q": "OUT_OF_SCOPE",
+     "H": "AUXILIARY"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:C0_bi_danh",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "X": "AUXILIARY",
+     "Q": "OUT_OF_SCOPE",
+     "H": "AUXILIARY"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS M"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:C0_vo_huong",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "postconditions",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS d0"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:C1_diem_ghi_de_khoi_phuc",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "S_xa": "AUXILIARY"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:C1_bi_danh",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "S_xa": "AUXILIARY"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:C1_vo_huong",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_MULTIPLE_DEFINITIONS h"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "rd:doi_chung_C0",
+   "corpus": "W15",
+   "group": "W15_REACHING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "t10:im_lang_xac_nhan",
+   "corpus": "W15",
+   "group": "W15_TEST10",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "t10:im_lang_khong_nguon",
+   "corpus": "W15",
+   "group": "W15_TEST10",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "t10:im_lang_gia_dinh",
+   "corpus": "W15",
+   "group": "W15_TEST10",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): MODEL_ASSUMPTION",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "t10:im_lang_claimed",
+   "corpus": "W15",
+   "group": "W15_TEST10",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED T3: the prism is not stated right ('lăng trụ đứng')",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E",
+    "NO_ROLE diem D",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "t10:xien_bac",
+   "corpus": "W15",
+   "group": "W15_TEST10",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A,D|A,B,C): REFUTED_BY_SOURCE",
+    "RELATION_REFUTED_BY_SOURCE"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "po:de_rong_tin_cay_gia",
+   "corpus": "W15",
+   "group": "W15_POLICY",
+   "label": "POLICY",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": true,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_TEXT_MISSING",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED no solid notation",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:goc_45",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ Góc giữa SB mặt phẳng đáy = 45"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:SA_bang_AB",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ SA = AB"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:vuong_can",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ cân",
+    "CE_CONSTRAINT_NOT_CHECKED right_triangle(A,S,B)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:SB_can",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ SB = 3 √ 2"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:SB_5",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "T1 MISSING SA: CE_INVALID breaks |BS| = 5",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "ur:AC_vuong_BD",
+   "corpus": "W15B",
+   "group": "W15B_UNREAD_TEXT",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_SPAN_MISMATCH",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C,D) @[4,20]",
+    "PREMISE line_perp_plane(S,A,A,B,C,D) @[91,121]",
+    "PREMISE base_rectangle(A,B,C,D) @[24,49]",
+    "T2 MISSING AD",
+    "CE_CONSTRAINT_NOT_CHECKED line_perp_line(A,C,B,D)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "vg:day_vuong_tai",
+   "corpus": "W15B",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[69,89]",
+    "PREMISE right_triangle(A,B,C) @[23,42]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "vg:vuong_dinh",
+   "corpus": "W15B",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[82,102]",
+    "PREMISE right_triangle(A,B,C) @[23,55]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "vg:vuong_o_dinh",
+   "corpus": "W15B",
+   "group": "W15B_PHRASING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[84,104]",
+    "PREMISE right_triangle(A,B,C) @[23,57]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "sk:phay_1",
+   "corpus": "W15B",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "AA1"
+    ],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "sk:phay_prime",
+   "corpus": "W15B",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "AAprime"
+    ],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 4 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "sk:phay_gach",
+   "corpus": "W15B",
+   "group": "W15B_SPELLING",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "AA_"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "T4 TEMPLATE_VERTEX_MISSING"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "sc:doan_r3",
+   "corpus": "W15B",
+   "group": "W15B_SCOPE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "P": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "TEMPLATE_NOT_MATCHED no solid notation",
+    "NO_ROLE diem F",
+    "NO_ROLE diem E"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "expect_route": "SERVED_NOT_ENFORCED"
+  },
+  {
+   "id": "sc:non_e4",
+   "corpus": "W15B",
+   "group": "W15B_SCOPE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": false,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "T": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "TEMPLATE_NOT_MATCHED no solid notation",
+    "NO_ROLE diem Q",
+    "NO_ROLE diem P",
+    "NO_ROLE diem W"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "expect_route": "SERVED_NOT_ENFORCED"
+  },
+  {
+   "id": "A1_beta_chua_xac_dinh_mang_he_so_alpha",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING beta_plane: no single text equation for (β)",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang beta_plane"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A2_hai_mat_phang_doi_cheo_he_so",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING beta_plane: bound by name to (β) @[168,173], coefficients not proportional",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang beta_plane"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A6_beta_chua_xac_dinh_mang_he_so_mp_khong_ten",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING beta: no single text equation for (β)",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang beta"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A6b_bien_khong_ten_khi_de_nhac_hai_mat_phang",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING mp_cat: unnamed program plane and the text plane is not unique",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang mp_cat"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A7_bien_khong_ten_hai_mat_phang_co_ten",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "source_invariant",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING mp: unnamed program plane and the text plane is not unique",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang mp"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A8_bien_khong_ten_mat_phang_thu_hai_khong_ten",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING mp_cat: unnamed program plane and the text plane is not unique",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang mp_cat"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A2_doi_chung_hai_mat_phang_dung_ten",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[175,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A3_ti_le_khac_0",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A3b_ti_le_am",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A4_doi_ten_nhat_quan_P",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A4b_doi_ten_nhat_quan_gamma",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A5_khong_ten_duy_nhat",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,180] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A5b_bien_khong_ten_de_chi_mot_mat_phang",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,185] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "RF1_mat_phang_qua_ba_diem_ben_canh",
+   "corpus": "W16",
+   "group": "W16_A_PLANE_BINDING",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,216] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "A2b_cat_bang_alpha_khi_de_noi_beta",
+   "corpus": "W16",
+   "group": "W16_A_PRIME_LIMIT",
+   "label": "MUST_REFUSE",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "(β)",
+     "(α)"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "(β)",
+    "(α)"
+   ],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts with (β), the program cuts with (α)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B1_chung_minh_SA_vuong_day",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[80,116]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B1b_CMR_ky_hieu",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[80,95]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B2_chung_minh_goc_vuong_day",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[78,118]",
+    "RELATION perpendicular_lines(A,B|A,C): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "TEMPLATE_NOT_MATCHED T1: no right angle at the foot of the apex edge",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B3b_kiem_tra_ky_hieu",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[80,99]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B3c_cau_hoi_hay_khong",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[80,100]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B5_cau_ghep_gia_thiet_va_yeu_cau",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[74,114]",
+    "RELATION perpendicular_lines(A,B|A,C): UNCONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "TEMPLATE_NOT_MATCHED T1: no right angle at the foot of the apex edge",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B7_chung_minh_do_dai",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[103,125]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ Chứng minh rằng",
+    "CE_GOAL_CLAUSE_PRESENT"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B0_gia_thiet",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "B4b_phu_dinh_trong_yeu_cau",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[111,152]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "B5b_gia_thiet_truoc_yeu_cau_cung_cau",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[107,145]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[85,105]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "B6_tinh_biet_gia_thiet",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[117,137]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "B3_hoi_co_khong",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[80,113]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B4_phu_dinh_gia_thiet",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): UNCONFIRMED",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem C",
+    "NO_ROLE diem B",
+    "NO_ROLE diem A",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "B6b_tinh_biet_chieu_cao",
+   "corpus": "W16",
+   "group": "W16_B_GOAL",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "T1 MISSING SA: CE_INVALID breaks a text invariant",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "C_CLOSURE_UNSUPPORTED_KIND",
+   "corpus": "W16",
+   "group": "W16_C_GUARD",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "CLOSURE_UNSUPPORTED_KIND control flow"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "C_TEMPLATE_CONSTRAINT_VIOLATED",
+   "corpus": "W16",
+   "group": "W16_C_GUARD",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "source_invariant",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "T1 TEMPLATE_CONSTRAINT_VIOLATED apex edge ⊥ base"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "C_FRAME_DEPENDENT",
+   "corpus": "W16",
+   "group": "W16_C_GUARD",
+   "label": "DEPENDS",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "FRAME_DEPENDENT construct_plane_from_equation"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "C_FORMATION_REJECTED",
+   "corpus": "W16",
+   "group": "W16_C_GUARD",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "formation",
+    "servable": false,
+    "reason_code": "SOLID_TOPOLOGY_MALFORMED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "FORMATION_REJECTED"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "C_T1_doi_chung",
+   "corpus": "W16",
+   "group": "W16_C_GUARD",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C1",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "A9_ten_phay_mang_he_so_cua_mat_phang_khong_phay",
+   "corpus": "W16",
+   "group": "W16B_A_PRIMED_NAME",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "PLANE_BINDING mp_P_prime: bound by name to (P') @[169,174], coefficients not proportional",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE mat_phang mp_P_prime"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "corpus_layer": "W16B"
+  },
+  {
+   "id": "A9b_ten_phay_dung_he_so",
+   "corpus": "W16",
+   "group": "W16B_A_PRIMED_NAME",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[176,224] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "corpus_layer": "W16B"
+  },
+  {
+   "id": "O1_cat_bang_alpha_khi_de_noi_beta",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED:CONSTRUCTION_NOT_TEXT_BOUND",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "(β)",
+     "(α)"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "(β)",
+    "(α)"
+   ],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts with (β), the program cuts with (α)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O1b_doi_chung_cat_bang_beta",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[175,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O2_cat_khoi_khac",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED:CONSTRUCTION_NOT_TEXT_BOUND",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "S.ABCD"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "S.ABCD"
+   ],
+   "details": [
+    "C0 5 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts S.ABCD, the program cuts another solid"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O3_do_thiet_dien_khac",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED:CONSTRUCTION_NOT_TEXT_BOUND",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "structural_coverage",
+    "servable": false,
+    "reason_code": null,
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "(β)",
+    "(α)"
+   ],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T_alpha: the text cuts with (β), the program cuts with (α)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O4_P_phay_dung",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[176,224] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O5_dung_P_thay_P_phay",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED:CONSTRUCTION_NOT_TEXT_BOUND",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "(P')",
+     "(P)"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "(P')",
+    "(P)"
+   ],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts with (P'), the program cuts with (P)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O6_bi_danh_hop_le",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[175,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O7_doi_ten_may_giu_nguon",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[175,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O8_cung_phuong_trinh_khac_danh_tinh",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "MUST_REFUSE",
+   "expect": "UNDETERMINED:CONSTRUCTION_NOT_TEXT_BOUND",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "(β)",
+     "(α)"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+   "subjects": [
+    "(β)",
+    "(α)"
+   ],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts with (β), the program cuts with (α)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O8b_cung_phuong_trinh_dung_danh_tinh",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[175,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O9_mat_phang_khong_ten_duy_nhat",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[131,180] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "O10_thiet_dien_cat_boi",
+   "corpus": "W17",
+   "group": "W17_O_OPERATION",
+   "label": "INVARIANT",
+   "expect": "PROVEN_SAFE:C0",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 6 literal(s) pinned by the text",
+    "OPERATION_BINDING T: matches the text cut @[172,222] (the only cut of the text and of the slice)"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "G1_do_dai_chi_trong_yeu_cau_chung_minh",
+   "corpus": "W17",
+   "group": "W17_G_GROUNDING",
+   "label": "MUST_REFUSE",
+   "expect": "grounding:GIVEN_ONLY_IN_GOAL_CLAUSE",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "SA"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[103,125]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "T1 MISSING SA",
+    "CE_TEXT_NOT_FULLY_READ Chứng minh rằng",
+    "CE_GOAL_CLAUSE_PRESENT"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "G2_tinh_biet_du_kien",
+   "corpus": "W17",
+   "group": "W17_G_GROUNDING",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "G3_toa_do_chi_trong_yeu_cau_chung_minh",
+   "corpus": "W17",
+   "group": "W17_G_GROUNDING",
+   "label": "MUST_REFUSE",
+   "expect": "grounding:GIVEN_ONLY_IN_GOAL_CLAUSE",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "S"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[114,138]",
+    "TEMPLATE_NOT_MATCHED pyramid: no apex edge stated perpendicular to the base",
+    "NO_ROLE diem S"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau",
+   "corpus": "W17",
+   "group": "W17_G_GROUNDING",
+   "label": "MUST_REFUSE",
+   "expect": "grounding:GIVEN_ONLY_IN_GOAL_CLAUSE",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "grounding",
+    "servable": false,
+    "reason_code": "GIVEN_ONLY_IN_GOAL_CLAUSE",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "SOURCE",
+    "reason_subjects": [
+     "A"
+    ],
+    "construction_binding": {}
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[91,115]",
+    "TEMPLATE_NOT_MATCHED no solid notation",
+    "NO_ROLE diem A"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "Q1_qua_M_va_song_song_voi_day",
+   "corpus": "W17C",
+   "group": "W17C_Q_UNPINNED_PLANE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED:ASSUMPTION_INVARIANCE_UNPROVEN",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED",
+     "N": "MATCHED",
+     "P": "MATCHED",
+     "Q": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "C0 5 literal(s) pinned by the text",
+    "OPERATION_BINDING T: no cut relation read from the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "Q2_ten_Q_song_song_khong_ghim",
+   "corpus": "W17C",
+   "group": "W17C_Q_UNPINNED_PLANE",
+   "label": "INVARIANT",
+   "expect": "UNDETERMINED:ASSUMPTION_INVARIANCE_UNPROVEN",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "assumption",
+    "servable": false,
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "assumption_enforced": true,
+    "assumption_status": "UNDETERMINED",
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED",
+     "N": "MATCHED",
+     "P": "MATCHED",
+     "Q": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "UNDETERMINED",
+   "certificate": null,
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "subjects": [],
+   "details": [
+    "C0 5 literal(s) pinned by the text",
+    "OPERATION_BINDING T: the text cuts with (Q), the program with (MNP) — the server cannot pin the text plane: not provable"
+   ],
+   "witness": null,
+   "compiler_cross_check": null
+  },
+  {
+   "id": "G6_bao_nhieu_biet_cau_hoi",
+   "corpus": "W17C",
+   "group": "W17C_G_QUESTION_WITH_BIET",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[103,142]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "G7_hoi_bao_nhieu_biet",
+   "corpus": "W17C",
+   "group": "W17C_G_QUESTION_WITH_BIET",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {}
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "GOAL_CLAUSE @[103,146]",
+    "RELATION perpendicular_lines(A,B|A,C): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(S,A|A,B,C): SERVER_CONFIRMED",
+    "PREMISE pyramid(S,A,B,C) @[4,19]",
+    "PREMISE line_perp_plane(S,A,A,B,C) @[81,101]",
+    "PREMISE right_triangle(A,B,C) @[23,54]",
+    "C1 T1",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 3 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "AGREES 4 points"
+  },
+  {
+   "id": "B1_mid_ok",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MATCHED"
+   }
+  },
+  {
+   "id": "B2_mid_wrong_SB",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của SA",
+     "M là trung điểm của SB"
+    ],
+    "construction_binding": {
+     "M": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B3_mid_swap_ends",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MATCHED"
+   }
+  },
+  {
+   "id": "B4_mid_same_value_SB",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của SB",
+     "M là trung điểm của SA"
+    ],
+    "construction_binding": {
+     "M": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B5_list_swap_targets",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT_LIST",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của SA",
+     "M là trung điểm của SB",
+     "N là trung điểm của SB",
+     "N là trung điểm của SA"
+    ],
+    "construction_binding": {
+     "M": "MISMATCHED",
+     "N": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MISMATCHED",
+    "N": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B6_list_ok",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT_LIST",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED",
+     "N": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MATCHED",
+    "N": "MATCHED"
+   }
+  },
+  {
+   "id": "B7_rename_target_X",
+   "corpus": "W18",
+   "group": "W18_TARGET",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của SA",
+     "X là trung điểm của SA"
+    ],
+    "construction_binding": {
+     "X": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "X": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B8_alias_ok",
+   "corpus": "W18",
+   "group": "W18_IDENTITY",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M_tam": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M_tam": "MATCHED"
+   }
+  },
+  {
+   "id": "B9_same_coord_diff_identity",
+   "corpus": "W18",
+   "group": "W18_IDENTITY",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của SH",
+     "M là trung điểm của SA"
+    ],
+    "construction_binding": {
+     "H": "MATCHED",
+     "M": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B10_proj_line_ok",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MATCHED"
+   }
+  },
+  {
+   "id": "B11_proj_line_wrong_BC",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "H là hình chiếu của S lên BD",
+     "H là hình chiếu của S lên BC"
+    ],
+    "construction_binding": {
+     "H": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B12_proj_plane_ok_SBD",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MATCHED"
+   }
+  },
+  {
+   "id": "B13_proj_plane_wrong_SBC",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "H là hình chiếu của A lên (SBD)",
+     "H là hình chiếu của A lên (SBC)"
+    ],
+    "construction_binding": {
+     "H": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B14_proj_plane_3_of_4",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MATCHED"
+   }
+  },
+  {
+   "id": "B15_foot_wording_ok",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MATCHED"
+   }
+  },
+  {
+   "id": "B16_out_of_vocab_ok",
+   "corpus": "W18",
+   "group": "W18_VOCABULARY",
+   "label": "INVARIANT",
+   "expect": "refused:construction_binding:CONSTRUCTION_BINDING_UNVERIFIED:UNKNOWN",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "UNKNOWN",
+    "reason_subjects": [
+     "M"
+    ],
+    "construction_binding": {
+     "M": "UNVERIFIED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "UNVERIFIED"
+   }
+  },
+  {
+   "id": "B17_auxiliary_foot",
+   "corpus": "W18",
+   "group": "W18_AUXILIARY",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "K": "AUXILIARY"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 3 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "K": "AUXILIARY"
+   }
+  },
+  {
+   "id": "B18_prime_ok",
+   "corpus": "W18",
+   "group": "W18_IDENTITY_PRIME",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 5 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE",
+   "binding": {
+    "M": "MATCHED"
+   }
+  },
+  {
+   "id": "B19_prime_wrong",
+   "corpus": "W18",
+   "group": "W18_IDENTITY_PRIME",
+   "label": "MUST_REFUSE",
+   "expect": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND:CONSTRUCTION",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "construction_binding",
+    "servable": false,
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "assumption_enforced": null,
+    "assumption_status": null,
+    "refusal_cause": "CONSTRUCTION",
+    "reason_subjects": [
+     "M là trung điểm của AA′",
+     "M là trung điểm của AB′"
+    ],
+    "construction_binding": {
+     "M": "MISMATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C1",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "RELATION perpendicular_lines(A,B|A,D): SERVER_CONFIRMED",
+    "RELATION perpendicular_line_plane(A',A|A,B,D): SERVER_CONFIRMED",
+    "PREMISE prism(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "PREMISE cuboid(A,B,C,D,A_prime,B_prime,C_prime,D_prime) @[4,35]",
+    "C1 T4",
+    "C1_CROSS_CHECK_AGREES canonical re-run, 5 value(s)"
+   ],
+   "witness": null,
+   "compiler_cross_check": "NOT_RECOGNIZABLE",
+   "binding": {
+    "M": "MISMATCHED"
+   }
+  },
+  {
+   "id": "B20_divide_half_ok",
+   "corpus": "W18",
+   "group": "W18_MIDPOINT",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "M": "MATCHED"
+   }
+  },
+  {
+   "id": "B21_not_realized",
+   "corpus": "W18",
+   "group": "W18_SCOPE",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "M": "NOT_REALIZED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 2 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {}
+  },
+  {
+   "id": "B22_out_of_scope_intersection",
+   "corpus": "W18",
+   "group": "W18_SCOPE",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "O": "OUT_OF_SCOPE"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 5 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "O": "OUT_OF_SCOPE"
+   }
+  },
+  {
+   "id": "B23_projection_base_wording",
+   "corpus": "W18",
+   "group": "W18_PROJECTION",
+   "label": "INVARIANT",
+   "expect": "served",
+   "measured": true,
+   "before_gate": false,
+   "route_today": {
+    "stage": "served",
+    "servable": true,
+    "reason_code": null,
+    "assumption_enforced": true,
+    "assumption_status": "PROVEN_SAFE",
+    "refusal_cause": null,
+    "reason_subjects": [],
+    "construction_binding": {
+     "H": "MATCHED"
+    }
+   },
+   "status": "PROVEN_SAFE",
+   "certificate": "C0",
+   "reason_code": null,
+   "subjects": [],
+   "details": [
+    "C0 4 literal(s) pinned by the text"
+   ],
+   "witness": null,
+   "compiler_cross_check": null,
+   "binding": {
+    "H": "MATCHED"
+   }
+  }
+ ]
+}

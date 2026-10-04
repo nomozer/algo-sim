@@ -1,0 +1,82 @@
+{
+ "decision": "SHIP",
+ "final_decision_if_stop": null,
+ "rule": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §9 (a)–(f), registered before this census — W18 re-run on W14 + W15 + W15B with the construction-binding stage (§9 unchanged)",
+ "census_sha256_lf": "275c221a85d482a22e3d1bbae2afa44fcebba85dd0deab5d15ef06325d4bf62a",
+ "a_PROVEN_SAFE_on_DEPENDS_or_MUST_REFUSE": [],
+ "b_must_refuse_not_refused": [],
+ "c_DEPENDENT_on_INVARIANT": [],
+ "d_ac2_rows": 18,
+ "d_ac2_proven_safe": 18,
+ "d_ac2_not_proven": [],
+ "e_guard_rows_not_served_or_not_proven": [],
+ "f_metamorphic_tests_exit_code": 0,
+ "report_w15_expectation_mismatches": {},
+ "report_compiler_cross_check": {
+  "c1_rows": 37,
+  "agrees": 32,
+  "not_recognizable": 5,
+  "disagrees": []
+ },
+ "claim_wording": "0 violations on the measured corpus within the certificate scope — not a general soundness proof",
+ "f_metamorphic_tests_tail": [
+  "3 passed, 160 deselected in 0.86s"
+ ],
+ "route_changes_not_by_binding": [],
+ "served_before_refused_by_binding": [],
+ "binding_statuses_by_corpus": {
+  "W14": {
+   "OUT_OF_SCOPE": 9,
+   "AUXILIARY": 1,
+   "MATCHED": 3
+  },
+  "W15": {
+   "UNVERIFIED": 1,
+   "OUT_OF_SCOPE": 5,
+   "AUXILIARY": 6
+  },
+  "W15B": {
+   "OUT_OF_SCOPE": 2
+  },
+  "W16": {},
+  "W16B": {},
+  "W17": {},
+  "W17C": {
+   "MATCHED": 6,
+   "OUT_OF_SCOPE": 2
+  },
+  "W18": {
+   "MATCHED": 13,
+   "MISMATCHED": 9,
+   "UNVERIFIED": 1,
+   "AUXILIARY": 1,
+   "NOT_REALIZED": 1,
+   "OUT_OF_SCOPE": 1
+  }
+ },
+ "w18_unmeasured": [],
+ "w18_expectation_mismatches": {},
+ "w18_pass": true
+}
+route changes since W17 R2: {
+ "W15:oov:chia_doan_canh": {
+  "label": "INVARIANT",
+  "w17_r2": [
+   "assumption",
+   "ASSUMPTION_INVARIANCE_UNPROVEN",
+   false
+  ],
+  "w18": [
+   "construction_binding",
+   "CONSTRUCTION_BINDING_UNVERIFIED",
+   false
+  ],
+  "subjects": [
+   "M"
+  ],
+  "binding": {
+   "M": "UNVERIFIED"
+  }
+ }
+}
+exit=0
