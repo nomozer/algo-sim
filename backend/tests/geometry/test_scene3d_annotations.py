@@ -153,6 +153,17 @@ def test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan():
     assert a["d_kq"]["role"] == "result" and "same_as" not in a["d_kq"], a["d_kq"]
 
 
+def test_w18_cung_gia_tri_khac_chu_the_khong_gop():
+    """§16.6: giá trị bằng nhau KHÔNG BAO GIỜ là tiêu chí gộp — SA = 6 (đề cho) và AB = 6 (đo) là hai
+    đoạn khác nhau, hai nhãn. (Tiêm lỗi FA4 W18: gộp theo giá trị.)"""
+    sc = _p1("Biết SA = 6. Tính độ dài đoạn AB.", [], "A", "B",
+             khai=({"name": "SA_length", "type": "float", "initial_value": 6, "source_fact_id": "SA_len"},),
+             facts=({"id": "SA_len", "kind": "float", "label": "SA", "value": ["6"]},))
+    a = _ann18(sc)
+    assert sc["objects"] and a["d_kq"]["subject_ids"] == ["A", "B"] and "same_as" not in a["d_kq"], a["d_kq"]
+    assert a["SA_length"]["subject_ids"] == ["S", "A"] and "same_as" not in a["SA_length"], a["SA_length"]
+
+
 def _vuong_goc_dung_chan(w: dict) -> None:
     from fractions import Fraction as F
 
