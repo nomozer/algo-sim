@@ -1,0 +1,141 @@
+{
+  "schema_version": "w20-literal-target-labels/1",
+  "issue": "ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET",
+  "registered": "2026-10-04, before the first probe run and before any product change (W20 Task 3)",
+  "rule": "A point the TEXT defines by a W18 §16.1 relation (midpoint, 'lần lượt' midpoints, projection/foot) is a consequence the kernel must construct. When the program defines that point by coordinates (declare_point / initial_value, with or without model_assumption or source_fact_id), the relation is not realized by any construction, and equal coordinates are never identity evidence: the request must be refused. The refusal must not tell the learner the problem text is wrong (refusal_cause != SOURCE). Layout literals of points without such a relation are untouched. No vocabulary is added: only relations the §16.1 reader already reads are in scope.",
+  "fixed_data": {
+    "polyhedral_text": "gold p1: khối chóp S.ABCD, A(0;0;0) B(6;0;0) C(6;6;0) D(0;6;0) S(0;0;6) — polyhedral scope U3",
+    "outside_text": "same five points, 'tứ giác ABCD là hình vuông', no solid named — outside U3",
+    "midpoint_M_of_SA": [
+      0,
+      0,
+      3
+    ],
+    "wrong_M": [
+      0,
+      0,
+      2
+    ],
+    "projection_H_of_S_on_BD": [
+      3,
+      3,
+      0
+    ],
+    "wrong_H_on_line_BD": [
+      2,
+      4,
+      0
+    ]
+  },
+  "rows": {
+    "C1_mid_constructed_U3": {
+      "expect": "served",
+      "note": "W18 B1: M = midpoint(S, A)"
+    },
+    "C2_proj_constructed_U3": {
+      "expect": "served",
+      "note": "W18 B10: H = project_onto(S, line BD)"
+    },
+    "C3_mid_divide_half_U3": {
+      "expect": "served",
+      "note": "W18 B20: M = divide_segment(S, A, 1/2) — same relation, other operation"
+    },
+    "C4_relation_not_realized_U3": {
+      "expect": "served",
+      "note": "W18 B21: the text names M, the program never defines M and measures SC"
+    },
+    "C5_mid_constructed_outside": {
+      "expect": "served",
+      "note": "M = midpoint(S, A), outside U3"
+    },
+    "C6_proj_constructed_outside": {
+      "expect": "served",
+      "note": "H = project_onto(S, line BD), outside U3"
+    },
+    "C7_layout_only_outside": {
+      "expect": "served",
+      "note": "only layout literals (the five given points), no relation"
+    },
+    "L1_mid_U3_assumption": {
+      "expect": "refused",
+      "note": "M declared [0,0,3] with model_assumption, no source_fact_id"
+    },
+    "L2_mid_U3_bogus_fid": {
+      "expect": "refused",
+      "note": "M declared [0,0,3], model_assumption + source_fact_id not in the contract"
+    },
+    "L3_mid_U3_relation_fact": {
+      "expect": "refused",
+      "note": "M declared [0,0,3] citing the contract's relational fact 'M là trung điểm của SA'"
+    },
+    "L4_mid_U3_wrong_coords": {
+      "expect": "refused",
+      "note": "M declared [0,0,2] (wrong), model_assumption + bogus source_fact_id"
+    },
+    "L5_mid_outside_assumption": {
+      "expect": "refused",
+      "note": "as L1, outside U3"
+    },
+    "L6_mid_outside_bogus_fid": {
+      "expect": "refused",
+      "note": "as L2, outside U3"
+    },
+    "L7_mid_outside_relation_fact": {
+      "expect": "refused",
+      "note": "as L3, outside U3"
+    },
+    "L8_mid_outside_wrong_coords": {
+      "expect": "refused",
+      "note": "as L4, outside U3"
+    },
+    "L9_proj_U3_assumption": {
+      "expect": "refused",
+      "note": "H declared [3,3,0] with model_assumption, no source_fact_id"
+    },
+    "L10_proj_U3_bogus_fid": {
+      "expect": "refused",
+      "note": "H declared [3,3,0], model_assumption + bogus source_fact_id"
+    },
+    "L11_proj_U3_relation_fact": {
+      "expect": "refused",
+      "note": "H declared [3,3,0] citing the relational fact 'H là hình chiếu vuông góc của S lên đường thẳng BD'"
+    },
+    "L12_proj_outside_bogus_fid": {
+      "expect": "refused",
+      "note": "as L10, outside U3"
+    },
+    "L13_proj_outside_relation_fact": {
+      "expect": "refused",
+      "note": "as L11, outside U3"
+    },
+    "L14_proj_outside_wrong_coords": {
+      "expect": "refused",
+      "note": "H declared [2,4,0] (on BD, not the foot), bogus source_fact_id, outside U3 — a wrong value if served"
+    },
+    "L15_mid_U3_literal_twin_of_constructed": {
+      "expect": "refused",
+      "note": "M declared [0,0,3] (bogus fid) while an unnamed N = midpoint(S, A) also exists: same coordinates, different identity"
+    },
+    "L16_mid_U3_literal_then_constructed": {
+      "expect": "refused",
+      "note": "M declared [0,0,3] (bogus fid) AND later construct_point M = midpoint(S, A): the model asserted the coordinates of a derived point"
+    },
+    "C8_alias_to_constructed_U3": {
+      "expect": "served",
+      "note": "W18 B8: M_tam = midpoint(S, A); assign M = var M_tam"
+    },
+    "C9_layout_only_outside_distance_clue": {
+      "expect": "served",
+      "note": "only layout literals, 'Tính khoảng cách từ S đến đường thẳng BC' (passes the domain gate)"
+    },
+    "L17_proj_outside_alias_to_vertex": {
+      "expect": "refused",
+      "note": "assign H = var A: the program equates the text's projection H with vertex A"
+    },
+    "L18_proj_outside_alias_to_cited_literal": {
+      "expect": "refused",
+      "note": "Q declared [3,3,0] citing the relational fact of H, then assign H = var Q"
+    }
+  },
+  "amendment_1": "2026-10-04, after the first before-run (LITERAL_TARGET_PROBE_before_2cb4ed8c.json) and BEFORE any product change: root-cause analysis found an alias path (assign <target> = var <other point>) that no guard reads, and C7's text is refused by the pipeline's domain gate for a reason unrelated to binding (ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE class). Rows C8, C9, L17, L18 added; no existing label changed."
+}
