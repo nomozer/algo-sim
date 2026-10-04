@@ -678,6 +678,34 @@ vẫn là từ chối thừa đã ghi.
 >   (lập phương: "cạnh bằng 0"); ca đề hợp lệ + hợp đồng sai là fixture riêng
 >   `cube_system_cause` (`CONSTRUCTION`).
 
+> **Đính chính 2026-10-04 (W17, tự rà soát cuối toàn nhánh, SAU lần đóng băng đầu).** Ba lỗi đọc
+> sai đều được tái hiện qua cổng trước khi sửa. Nhãn W17C và test đỏ commit trước bản sửa
+> (`01b0c27c`). Từ vựng không mở rộng; ba bản sửa giữ đúng nghĩa đã đăng ký.
+>
+> 1. **Tân ngữ của `với` không phải mặt phẳng cắt.** Câu "(Q) qua M và song song với (ABCD) cắt
+>    khối chóp theo thiết diện (T)" từng được đọc thành "(ABCD) cắt …". Cùng lỗi với "vuông góc
+>    với (SBC)". Bộ đọc nay bỏ mọi khớp có mặt phẳng đứng ngay sau `với` (`_TAN_NGU_VOI`). Câu ấy
+>    không còn quan hệ nào đọc được: từ chối `ASSUMPTION_INVARIANCE_UNPROVEN`, giới hạn từ vựng.
+> 2. **Danh tính không ghim được là CHƯA CHỨNG MINH, không phải LỆCH.** Mã
+>    `CONSTRUCTION_NOT_TEXT_BOUND` (nguyên nhân `CONSTRUCTION`) chỉ dùng khi cả hai danh tính đều
+>    xác định và khác nhau. Các trường hợp sau không xác định được danh tính:
+>    - mặt phẳng đề có tên mà không có phương trình và không gọi bằng điểm, như "(Q), song song
+>      với (ABCD),";
+>    - mặt phẳng của chương trình không gắn được với đề;
+>    - khối mà đề hoặc chương trình không ghim;
+>    - thiết diện không câu cắt nào gọi tên.
+>
+>    Những trường hợp này cho `ASSUMPTION_INVARIANCE_UNPROVEN` (nguyên nhân `UNKNOWN`). Lời "đề
+>    không cần sửa, gửi lại để hệ dựng lại" là lời hứa sai khi hệ không bao giờ chứng minh được.
+>    Cả hai đường vẫn TỪ CHỐI; chỉ điều được khẳng định thay đổi.
+> 3. **`…, biết Y?` trong câu hỏi.** Luật câu hỏi của `khoang_muc_tieu` lấy ranh giới cuối trước
+>    `?`, tức dấu phẩy của `, biết`. Vì vậy nó che chính giả thiết Y và để lộ câu hỏi. Mệnh đề mở
+>    bằng `biết` sau dấu phẩy nay là giả thiết, và mục tiêu là mệnh đề hỏi đứng trước nó
+>    (`_MO_BIET`).
+>
+> Không có yêu cầu nào đổi từ "từ chối" sang "phục vụ" sai. G6/G7 trước đây bị từ chối, nay
+> được phục vụ đúng. `CACHE_VERSION` giữ 109, vì 109 chưa phát hành và mọi row v108 đã trượt.
+
 ### 15.3 Nguyên nhân từ chối — lời cho người học dựa trên lý do có cấu trúc
 
 Mỗi envelope `unsupported` mang `refusal_cause` ∈ {`SOURCE`, `CONSTRUCTION`, `UNKNOWN`},

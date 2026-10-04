@@ -217,6 +217,9 @@ _MUC_TIEU = re.compile(r"(?<![^\W\d_])(?:chứng\s+minh|chứng\s+tỏ|cmr|kiể
 _HET_MENH_DE = re.compile(r"[?!;\n]|\.(?=\s|$)|,\s*biết(?![^\W\d_])")
 #: Ranh giới đứng trước một câu hỏi `…?`.
 _TRUOC_CAU_HOI = re.compile(r"[?!;,:\n]|\.(?=\s)")
+#: Mệnh đề mở bằng `biết` sau dấu phẩy là GIẢ THIẾT, kể cả khi câu kết bằng `?` (W17, tự rà soát
+#: cuối: "… bằng bao nhiêu, biết SA = 5?" từng che chính `biết SA = 5`).
+_MO_BIET = re.compile(r"\s*biết(?![^\W\d_])", re.I)
 
 
 def _nfc_theo_cum(de: str) -> tuple[str, list[int]]:
@@ -244,10 +247,15 @@ def khoang_muc_tieu(problem_text: str | None) -> tuple[tuple[int, int], ...]:
         h = _HET_MENH_DE.search(nfc, m.end())
         khoang.append([m.start(), h.start() if h else len(nfc)])
     for q in re.finditer(r"\?", nfc):
-        dau = max((b.end() for b in _TRUOC_CAU_HOI.finditer(nfc, 0, q.start())), default=0)
-        while dau < q.start() and nfc[dau].isspace():
+        ranh = list(_TRUOC_CAU_HOI.finditer(nfc, 0, q.start()))
+        cuoi = q.start()
+        # `…, biết Y?`: câu hỏi là mệnh đề TRƯỚC dấu phẩy ấy, Y là giả thiết.
+        while ranh and nfc[ranh[-1].start()] == "," and _MO_BIET.match(nfc, ranh[-1].end()):
+            cuoi = ranh.pop().start()
+        dau = ranh[-1].end() if ranh else 0
+        while dau < cuoi and nfc[dau].isspace():
             dau += 1
-        khoang.append([dau, q.start()])
+        khoang.append([dau, cuoi])
     gop: list[list[int]] = []
     for a, b in sorted(khoang):
         if gop and a <= gop[-1][1]:
@@ -315,6 +323,10 @@ def _td(k: int) -> str:
     return rf"(?:\s*\((?P<td{k}>[^\s()]{{1,4}})\))?"
 
 
+#: Mặt phẳng đứng ngay sau `với` là TÂN NGỮ ("song song/vuông góc với (X)"), không phải mặt phẳng
+#: cắt — W17, tự rà soát cuối: "(Q) qua M và song song với (ABCD) cắt …" từng đọc thành (ABCD) cắt.
+_TAN_NGU_VOI = re.compile(r"(?<![^\W\d_])với\s*(?:(?:mặt\s+phẳng|mp)\s*)?$", re.I)
+
 #: Ba dạng ĐÓNG: chủ động, `thiết diện (T) của <khối> cắt bởi (X)`, `cắt <khối> bởi (X) (ta) được thiết diện (T)`.
 _CAU_CAT = tuple(re.compile(m) for m in (
     rf"{_mp(1)}{_SONG_SONG}\s*,?\s*cắt\s+{_khoi(1)}\s+theo\s+(?:một\s+)?thiết\s+diện{_td(1)}",
@@ -330,6 +342,8 @@ def doc_quan_he_cat(problem_text: str | None) -> tuple[QuanHeCat, ...]:
     ra: list[QuanHeCat] = []
     for k, mau in enumerate(_CAU_CAT, 1):
         for m in mau.finditer(de):
+            if _TAN_NGU_VOI.search(de, max(0, m.start(f"mp{k}") - 40), m.start(f"mp{k}")):
+                continue
             kh, qua = m.group(f"kh{k}"), m.group(f"qua{k}")
             ten = "".join(re.findall(_E, qua)) if qua else m.group(f"ten{k}")
             q = QuanHeCat(ten, _ten(kh.replace(".", "")) if kh else (),

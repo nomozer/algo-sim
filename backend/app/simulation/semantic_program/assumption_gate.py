@@ -973,7 +973,10 @@ def _kiem_phep_dung(contract: Any, prog: dict, cm: _ChiMuc, lc: _LatCat, de: str
                     mp_de: tuple[MatPhangDe, ...], mp: dict, rb: tuple[RangBuoc, ...]):
     """§15.1 — mọi `construct_section` trên lát cắt phải gắn với một câu cắt của đề, cắt bằng mặt
     phẳng CÙNG danh tính (trùng phương trình không đủ) và cắt khối có CÙNG tập đỉnh.
-    → (details, mã lý do — None khi khớp hết, chủ thể)."""
+    → (details, mã lý do — None khi khớp hết, chủ thể). LỆCH (`CONSTRUCTION_NOT_TEXT_BOUND`) chỉ
+    khi cả hai danh tính đều xác định và khác nhau; danh tính mà server không ghim được (mặt phẳng
+    có tên mà không phương trình, không tên điểm; khối đề không ghim; thiết diện không câu cắt nào
+    gọi) là CHƯA CHỨNG MINH — không bao giờ đổ cho chương trình (W17, tự rà soát cuối)."""
     cat = [nut for n in sorted(lc.da_xet) if (nut := cm.dinh_nghia(n).nut).get("kind") == "construct_section"]
     if not cat:
         return [], None, ()
@@ -985,34 +988,38 @@ def _kiem_phep_dung(contract: Any, prog: dict, cm: _ChiMuc, lc: _LatCat, de: str
     khoi_duy_nhat = {frozenset(_khoa(e) for e in r.entities) for r in rb if r.kind in ("pyramid", "prism")}
     ra: list[str] = []
     chu_the: list[str] = []
-    sai = False
+    sai = chua_ro = False
     for s in cat:
         T = s["target_var"]
         q, cach = _gan_quan_he(s, len(cat), qh, contract, khai)
         if q is None:
-            ra.append(f"OPERATION_BINDING {T}: no cut relation of the text names this section")
-            sai = True
+            ra.append(f"OPERATION_BINDING {T}: no cut relation of the text names this section — not provable")
+            chua_ro = True
             continue
-        loi = []
+        loi, mo = [], []
         mp_d, nhan_d = _mp_cua_cau_cat(q, mp_de, de)
         mp_c, nhan_c = _mp_cua_chuong_trinh(s["plane"], cm, mp, de)
-        if mp_d is None or mp_d != mp_c:
-            loi.append(f"the text cuts with {nhan_d or 'a plane it does not pin'}, "
-                       f"the program cuts with {nhan_c or 'a plane not bound to the text'}")
+        if mp_d is None or mp_c is None:
+            mo.append(f"the text cuts with {nhan_d or 'a plane'}, the program with {nhan_c or 'a plane'} — "
+                      "the server cannot pin "
+                      f"{'the text plane' if mp_d is None else 'the program plane'}: not provable")
+        elif mp_d != mp_c:
+            loi.append(f"the text cuts with {nhan_d}, the program cuts with {nhan_c}")
             chu_the += [x for x in (nhan_d, nhan_c) if x and x not in chu_the]
         khoi_d = frozenset(_khoa(e) for e in q.khoi) if q.khoi else (
             next(iter(khoi_duy_nhat)) if len(khoi_duy_nhat) == 1 else None)
         nut_k = cm.dinh_nghia(s["solid"]).nut
         khoi_c = frozenset(_khoa(v) for v in nut_k["vertices"]) if nut_k.get("kind") == "construct_solid" else None
-        if khoi_d is None or khoi_d != khoi_c:
+        if khoi_d is None or khoi_c is None:
+            mo.append("the server cannot pin the cut solid of the text or of the program: not provable")
+        elif khoi_d != khoi_c:
             nhan_k = [x for x in (_ky_hieu_khoi(khoi_d, rb), _ky_hieu_khoi(khoi_c, rb)) if x]
-            loi.append(f"the text cuts {nhan_k[0] if nhan_k else 'a solid it does not pin'}, "
-                       "the program cuts another solid")
+            loi.append(f"the text cuts {nhan_k[0] if nhan_k else 'another solid'}, the program cuts another solid")
             chu_the += [x for x in nhan_k if x not in chu_the]
-        sai = sai or bool(loi)
-        ra += ([f"OPERATION_BINDING {T}: {x}" for x in loi] if loi
+        sai, chua_ro = sai or bool(loi), chua_ro or bool(mo)
+        ra += ([f"OPERATION_BINDING {T}: {x}" for x in loi + mo] if loi or mo
                else [f"OPERATION_BINDING {T}: matches the text cut @[{q.span[0]},{q.span[1]}] ({cach})"])
-    return ra, (MA_LECH_PHEP_DUNG if sai else None), tuple(chu_the)
+    return ra, (MA_LECH_PHEP_DUNG if sai else MA_CHUA_CHUNG_MINH if chua_ro else None), tuple(chu_the)
 
 
 def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa_giai=None, *,
