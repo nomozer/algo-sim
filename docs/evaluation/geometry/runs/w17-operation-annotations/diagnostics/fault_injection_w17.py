@@ -34,12 +34,25 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
             "        return _ket_qua(PROVEN_SAFE, chi_tiet + them, certificate=cc)\n",
             "operation check removed (§15.1 is no longer a condition of PROVEN_SAFE)",
             "test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan + the route test"),
-    "FO2": (GATE, "        if mp_d is None or mp_d != mp_c:\n", "        if mp_d is None or mp_c is None:\n",
+    # Run 3 (after the final-review fix d3817d5f): FO2/FO3 target the new definite-mismatch branches;
+    # runs 1-2 (logs FAULT_INJECTION_W17*.log) targeted `if mp_d is None or mp_d != mp_c:` etc.
+    "FO2": (GATE, "        elif mp_d != mp_c:\n", "        elif False:\n",
             "plane identity not compared (any text-bound plane accepted: α where the text says β)",
             "test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan (wrong-plane cases)"),
-    "FO3": (GATE, "        if khoi_d is None or khoi_d != khoi_c:\n", "        if False:\n",
+    "FO3": (GATE, "        elif khoi_d != khoi_c:\n", "        elif False:\n",
             "solid identity not compared (the program may cut another solid)",
             "test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan (wrong-solid case)"),
+    "FO7": (READER, '            if _TAN_NGU_VOI.search(de, max(0, m.start(f"mp{k}") - 40), m.start(f"mp{k}")):\n'
+                    "                continue\n", "",
+            "the object of 'song song/vuông góc với (X)' read as the cutting plane (final-review defect 1)",
+            "test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat + Q1"),
+    "FO8": (GATE, "        if mp_d is None or mp_c is None:\n", "        if False:\n",
+            "an unpinned plane identity reported as a definite mismatch (final-review defect 2)",
+            "test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung[Q2]"),
+    "FG4": (READER, '        while ranh and nfc[ranh[-1].start()] == "," and _MO_BIET.match(nfc, ranh[-1].end()):\n'
+                    "            cuoi = ranh.pop().start()\n", "",
+            "the premise ', biết Y?' masked as the question (final-review defect 3)",
+            "test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet + test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien"),
     "FO4": (GATE, "    for v in _gia_tri_fact(contract, fid):\n", "    for v in ():\n",
             "source binding ignored (W16 name/uniqueness rule only)",
             "test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh + O7"),
