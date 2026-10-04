@@ -42,7 +42,11 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     # keeps by layout) — three refusal kinds per family in the browser suite.
     # W17: + `cube_system_cause` (valid text, injected contract — refusal cause CONSTRUCTION), and the
     # §15.1 pair on one two-plane text: `cross_section_wrong_plane` (refused) / `_correct_plane` (served).
-    assert len(manifest["fixtures"]) == 27
+    # W18 (§16): + five point-construction cases on the gold p1 text — three refused at
+    # `construction_binding` (midpoint and projection mismatch, unverified), two served (witness).
+    assert len(manifest["fixtures"]) == 32
+    assert {"w18_midpoint_mismatch.json", "w18_projection_mismatch.json", "w18_unverified.json",
+            "w18_midpoint_plane_distance.json", "w18_projection_line.json"} <= set(manifest["fixtures"])
     system = json.loads((tmp_path / "fixtures" / "cube_system_cause.json").read_text(encoding="utf-8"))
     assert "cạnh bằng 4" in system["problem_text"] and system["envelope"]["refusal_cause"] == "CONSTRUCTION"
     sai = json.loads((tmp_path / "fixtures" / "cross_section_wrong_plane.json").read_text(encoding="utf-8"))
@@ -53,7 +57,7 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         name.removesuffix("_positive.json").removesuffix("_negative.json")
         .removesuffix("_ungrounded.json").removesuffix("_assumption.json").removesuffix("_system_cause.json")
         .removesuffix("_wrong_plane.json").removesuffix("_correct_plane.json")
-        for name in manifest["fixtures"]
+        for name in manifest["fixtures"] if not name.startswith("w18_")  # wave cases, not a family
     } == {
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
         "cuboid", "cube", "cross_section",
