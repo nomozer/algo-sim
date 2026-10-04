@@ -305,6 +305,13 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 
 ## 5. Bất biến (mỗi cái kèm nơi thực thi + test khóa)
 
+> **Con trỏ thực thi đã cũ (2026-10-05, `cuboid-final-review`).** Hai cột cuối ghi nơi khoá *lúc thêm hàng*. Ở 22
+> hàng — #1–#8, #10, #11, #14–#16, #18, #20–#26, #29 — ít nhất một file được nêu đã gỡ (phần lớn cùng miền Tin học,
+> `LEGACY_INFORMATICS_REMOVAL` 2026-09-02); ở #1–#8, #11, #14, #15 thì không file nào còn. Nguyên tắc của các hàng
+> ấy có thể vẫn đúng, nhưng nơi khoá hiện hành **chưa được ghi**: đừng coi chúng là đang được test khoá. Danh sách
+> theo hàng: `docs/evaluation/geometry/runs/cuboid-final-review/inventory/DOCS_INVENTORY.json`
+> (`architecture_map_invariant_pointers`); đối chiếu lại từng hàng: `ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE`.
+
 | # | Bất biến | Thực thi ở | Test |
 |---|---|---|---|
 | 1 | LLM không phải nguồn state runtime | `skills/*.md` cấm sinh timeline; validator có `FORBIDDEN` keys | `test_pipeline::test_simulate_sinh_timeline_bi_chan` |
@@ -363,25 +370,8 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 
 ## 6. Bốn trục khái niệm
 
-**Specialized ↔ Generic DSL.** Specialized = engine viết tay cho một bài (8
-algorithm, logic.and_gate, binary, network) — chính xác tuyệt đối, không dùng
-DSL. Generic = `generic.rule_scene` chạy SimulationSpec do AI compose trong DSL.
-Gap của DSL **không** được lây sang specialized (bất biến #5).
-
-**Interaction ↔ Edit.** *Interaction* đổi **state** (toggle/drag/what-if) qua
-`module.apply` — spec không đổi. *Edit* đổi **cấu trúc spec** qua SimulationPatch
-→ validate → rebuild. Không được trộn hai đường; UI không tự sửa scene.
-
-*EditPolicy v1 (M7.14D)*: thao tác sửa được suy từ **cấu trúc spec**, không mặc
-định giống nhau cho mọi cảnh generic — `spatial` (node/edge: thêm điểm/nối/xóa),
-`structural` (container/heading/paragraph: thêm/sửa/xóa nội dung, **không** thêm
-điểm), `value_only` (switch/lamp/value_box: chỉ tương tác sẵn có), `observation`
-(có `move_along_path`: **khóa topology**). reason_code hai namespace: `policy.*`
-(không hợp năng lực cảnh) vs `structure.*` (vi phạm luật DSL).
-**LIMITATION có chủ đích**: cảnh LAI (vừa structural vừa node/edge) dùng
-precedence bảo thủ (`move > structural > spatial > value_only`) — **multi-family
-edit CHƯA được hỗ trợ**. `EditFamily` là phân loại của EditPolicy **v1**, không
-phải taxonomy vĩnh viễn của hệ (taxonomy vĩnh viễn là `SEMANTIC_ROLES`).
+*Hai trục của hệ Tin học — specialized ↔ generic DSL, interaction ↔ edit (EditPolicy v1) — đã gỡ cùng mã:
+nguyên văn ở [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).*
 
 **Canonical ↔ Learner.** Mô phỏng hệ sinh ra: đúng hoặc `capability_gap`. Thao
 tác học sinh: được phép sai; sai mà có rule kiểm được → feedback; không có rule →
@@ -392,20 +382,21 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
 
 ## 7. Điểm mở rộng
 
-- **Domain chuyên biệt mới**: thêm `SimSpec` vào `catalog.py` + validator, tạo
-  `frontend/src/simulations/domains/<domain>/` và một dòng `register…()`. Không
-  đụng pipeline/store/registry.
-- **Primitive DSL mới**: **chỉ sửa manifest** — validator, contract prompt,
-  capability summary, `_GENERIC_SCHEMA` enum đều tự dẫn xuất. Nhớ mirror TS.
-- **Suite eval mới**: gắn `tags` trong `dataset.py`.
-- **Capability tùy chọn của module**: thêm field optional vào `SimulationModule`
-  (tiền lệ: `timeline?` → `SimulationControls` hiện nút theo capability). Module
-  không khai → UI mặc định **không** cho tính năng đó.
-- **Renderer mới cho module có sẵn (M8)**: khai `renderers[mode]` + thêm mode vào
-  `supportedVisualModes` — cả hai điều kiện mới có toggle (chống affordance rỗng).
-  KHÔNG tạo simulation_id mới, KHÔNG fork engine, KHÔNG đụng store/registry/pipeline.
-  Renderer nặng (Three.js) nạp qua `React.lazy` để code-split. Tiền lệ:
-  `network/ui3d.tsx`.
+- **Năng lực hình học mới** (phép dựng, phép đo, quan hệ): mở IR — lược đồ
+  `backend/app/simulation/semantic_program/contract.py`, `ir_static_check.py`, cầu nối `geometry_exec.py`;
+  sinh lại hai bản lược đồ bằng `backend/scripts/export_semantic_program_schema.py` (`test_schema_sync.py`).
+  Lược đồ, thẻ văn phạm (`grammar_card.py`), prompt (`backend/app/ai/skills/*.md`) và bảng năng lực là bề mặt
+  mô hình: đổi chúng thì phải đo lại. Hỏi trước: thiếu năng lực thật, hay chỉ thiếu cách nói cho mô hình biết?
+- **Họ hình mới**: đi qua `backend/app/simulation/product_capability.py` và
+  `docs/evaluation/geometry/missing-family-roadmap-refresh/CAPABILITY_MATRIX.json` trước khi viết mã.
+- **Lý do từ chối mới**: mã lý do ở chặng sinh ra nó, câu cho người học ở `backend/app/learner_messages.py`, nhãn
+  ở `frontend/src/components/SimulationWorkspace.tsx`; không lộ định danh kĩ thuật
+  (`frontend/src/components/ui-hygiene.test.ts`).
+- **Điều khiển giao diện mới**: không khai năng lực thì không có điều khiển — vắng mặt, không mờ đi (chống
+  affordance rỗng, `DESIGN_BRIEF.md` §3.2).
+
+Năm điểm mở rộng của hệ Tin học (`catalog.py`, manifest DSL, `dataset.py`, capability của `SimulationModule`,
+renderer theo module): nguyên văn ở [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).
 
 ## 8. Anti-pattern (đã từng gây bug thật)
 
@@ -488,16 +479,9 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
 - **Tầng 1 — exact cache** (`main.py`, bảng `simulation_cache`): trước pipeline;
   version ở **cột** (`dsl_version`/`policy_version`), lệch → miss. Chỉ cache
   `status == "ok"`.
-- **Tầng 2 — pattern reuse** (`patterns.py`, bảng `simulation_patterns`): **sau
-  classify**, chỉ generic; matching **tất định** (không embedding); template đóng
-  băng cấu trúc/op, chỉ điền content slot; mọi spec adapt vẫn qua **4 cổng**.
-- Edit (M7.14) **không** ghi cache, **không** persist pattern (chống poison).
+- *Tầng 2 (pattern reuse, `patterns.py`) và đường edit M7.14 đã gỡ cùng hệ Tin học: nguyên văn ở
+  [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).*
 
 ## 10. Hướng khả dĩ trong tương lai (chưa làm, không phải cam kết)
 
-- **M7.15 — Minimal Constraint-Aware Geometry**: projection/perpendicular/
-  intersection/circle thành **rule tất định** → khi đó `invalid_with_feedback`
-  mới có producer thật và generic experimental branch mới có nền.
-- **`code_experiment`** (deferred): nếu sau này cho học sinh chạy code, **bắt
-  buộc** sandbox (vd Pyodide), **không được bypass engine tất định**, và dự án
-  **không** pivot thành IDE/code playground.
+Hướng phát triển hiện hành: [`ROADMAP.md`](ROADMAP.md) và [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md). Hai hướng của hệ Tin học (M7.15, `code_experiment`): nguyên văn ở [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).

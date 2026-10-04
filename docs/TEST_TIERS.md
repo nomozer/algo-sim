@@ -21,6 +21,14 @@ nhau ở **phạm vi được bảo vệ**, và mỗi tầng chỉ được phá
 | **T2** WAVE | trước khi đóng một wave | `npm run test:wave` | `WAVE_GATE_PASS` |
 | **T3** FULL | mốc/phát hành | `npm run test:full` | `FULL_PRODUCT_GATE_PASS` |
 
+> **Thực trạng (2026-10-05, `cuboid-final-review`).** 8/10 script `test:domain:*` của `frontend/package.json`
+> (`algorithm`, `binary`, `logic`, `network`, `database`, `web`, `generic`, `tree`) trỏ vào thư mục miền Tin học đã
+> gỡ; chỉ `shared-ui` và `classroom` còn chọn được test. Miền hình học chưa có script T1 và chưa có chủ sở hữu trong
+> `frontend/scripts/impact.mjs`: sửa `src/simulations/domains/geometry/**` thì T0 báo `IMPACT_MAPPING_MISSING` và leo
+> thang lên toàn bộ `src/` + pytest. Kiểm nhanh miền hình học bằng tay:
+> `cd frontend && npx vitest run src/simulations/domains/geometry/`. Việc sửa script ghi ở `OPEN_ISSUES.md`
+> (`ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE`).
+
 ### Luật nhãn — **không tầng nhỏ nào được nói giọng tầng lớn**
 
 `IMPACT_GATE_PASS` nghĩa là *"những gì tôi chọn đều xanh"*, **không** nghĩa là

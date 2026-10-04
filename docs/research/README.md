@@ -21,6 +21,11 @@ Ngoại lệ đã ghi: [`RECTANGULAR_BASE_PYRAMID_COMPILER_VERTICAL_SLICE.md`](R
 là **báo cáo wave** (bằng chứng) do wave của nó đặt ở đây; giữ đường dẫn theo luật bất biến của bằng chứng, không phải
 tài liệu nghiên cứu.
 
+Hai tiền đăng ký niêm phong — `HYBRID_ARCHITECTURE_EVALUATION_PROTOCOL.md` và
+`LLM_ONLY_PAIRED_BASELINE_COLLECTION_PREREGISTRATION.md` — giữ nguyên byte, nên 9 link của chúng vẫn là đường dẫn tuyệt
+đối theo máy (`file:///d:/Documents/projects/algo-sim/…`). Bỏ tiền tố ấy là ra đường dẫn trong kho; chữ hiển thị của
+mỗi link đã ghi sẵn đường dẫn đó (ghi nhận 2026-10-05, `cuboid-final-review`).
+
 ## [`thesis/`](thesis/) — khoá luận
 
 | file | vai trò |

@@ -1,0 +1,434 @@
+# COVERAGE.md — phần đã tách, chép nguyên văn
+
+> Tách khỏi [`COVERAGE.md`](../COVERAGE.md) ở run `cuboid-final-review` (2026-10-05): nguồn SGK Tin học, ma trận và bộ đề của sản phẩm Tin học; độ phủ hiện hành ở research/GEOMETRY_CURRICULUM_COVERAGE.md và research/CLAIM_EVIDENCE_MAP.md §3.
+> Nguồn: `docs/COVERAGE.md` tại commit `4048ff83d14ad2a1fcd940d127590ca777dbc7cf` (blob `ff85189161b0e4d928ab86ec90faa3725e892f32`). Mỗi khối dưới đây là **nguyên văn** (byte-identical)
+> các dòng ghi trong chú thích của nó, theo thứ tự của bản gốc. Đây là lịch sử: không sửa, không thêm.
+> Đường dẫn tương đối trong các khối viết cho thư mục `docs/`, nên từ `legacy/` chúng trỏ lệch một cấp
+> (`README.md`). Kiểm lại: `docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/split_history_cfr.py --verify`.
+
+<!-- khối 1/3 · dòng 12–71 của bản gốc · §1 and §1b: informatics textbook provenance and its claims · sha256 dcb9a364b3c7d445375eb3dea291b96a54eece74637c7fa94b5336453c1f5aa5 -->
+## 1. Nguồn chương trình (provenance) — đọc trước khi trích số liệu
+
+**Nguồn:** 5 SGK trong `data/knowledge/sources/` (gitignore, không commit):
+`tin-hoc-10.pdf`, `tin-hoc-11-cs.pdf`, `tin-hoc-11-ict.pdf`, `tin-hoc-12-cs.pdf`,
+`tin-hoc-12-ict.pdf` — bộ **"Kết nối tri thức với cuộc sống"**, NXB Giáo dục Việt
+Nam (2022), biên soạn theo **Chương trình GDPT 2018**.
+
+Cấu trúc đã trích (từ `Mục lục` của từng cuốn):
+
+| Sách | Số trang | Chủ đề | Bài |
+|---|---|---|---|
+| Tin học 10 | 170 | 6 | 34 |
+| Tin học 11 — Khoa học máy tính (CS) | 151 | 6 | 31 |
+| Tin học 11 — Tin học ứng dụng (ICT) | 155 | 7 | 31 |
+| Tin học 12 — CS | 168 | 7 | 30 |
+| Tin học 12 — ICT | 160 | 7 | 28 |
+
+### GIỚI HẠN CỦA NGUỒN (bắt buộc nêu khi trích dẫn)
+
+1. Đây là SGK của **một bộ sách (KNTT)** — **không phải** văn bản *Chương trình
+   GDPT 2018* (văn bản quy phạm). Bộ sách khác có thể chia bài khác.
+2. **Các PDF là ảnh scan, KHÔNG có lớp text** (đã kiểm: `extract_text()` trả về
+   **0 ký tự** trên toàn bộ 170 trang của Tin học 10). Chỉ **Mục lục** được đọc
+   bằng mắt. **Không OCR toàn văn** — OCR/RAG là việc **cố ý không làm**.
+3. Độ mịn của taxonomy: **mức TÊN BÀI**, không phải mức *yêu cầu cần đạt*.
+
+### ✅ Được phép tuyên bố
+- "Phủ **đại diện**, **có neo nguồn**, ở mức tên bài của SGK KNTT (GDPT 2018)."
+- "Phủ **năng lực mô phỏng** / **hình thức tương tác** / **mức độ phức tạp**."
+
+### ❌ CẤM tuyên bố (overclaim)
+- ~~"Phủ **toàn bộ** kiến thức Tin học THPT Việt Nam"~~
+- ~~"Phủ **vét cạn** chương trình GDPT 2018"~~
+- ~~"Mọi chủ đề trong chương trình đều mô phỏng được"~~
+- ~~"3D **luôn** giúp học tốt hơn"~~ (xem §8)
+- ~~"`practice_activity` đã hoàn thiện"~~ (xem §6)
+- ~~"Hệ có **N mô phỏng tương tác**"~~ khi N gộp cả target CHƯA ĐO ĐƯỢC — 9/23
+  target chưa có bài mẫu offline nên chỉ đọc được **năng lực khai báo**, không
+  đọc được hành vi. Đo được và khai báo phải đếm RIÊNG (W4B-3A, xem §1b).
+- ~~"Học sinh **thao tác được** với mọi mô phỏng"~~ — có `predict` **không phải**
+  là thao tác trực tiếp; có `timeline` **không phải** là mô hình tương tác.
+
+### 1b. HAI TRỤC, đừng gộp (W4B-3A)
+
+`CoverageStatus` trả lời *"đơn vị kiến thức này đã ship tới đâu"*.
+`SupportKind` trả lời *"học sinh thật sự LÀM ĐƯỢC GÌ"*. Thiếu trục thứ hai thì
+một mục chỉ-bấm-Tiến-để-xem và một mục học sinh đổi được mô hình đều hiện
+`SUPPORTED` y hệt nhau — và "có mô phỏng" đọc thành lời hứa lớn hơn sự thật.
+
+Nguồn: `app/simulation/coverage.py` (enum ĐÓNG + `support_evidence` bắt buộc).
+Bảng: `backend/scripts/curriculum_support_report.py` →
+`docs/evaluation/m17/w4b3a-after/curriculum-support.md`.
+
+Ràng buộc chéo có test (`test_coverage_matrix.py`):
+`OUT_OF_SCOPE ⇔ NOT_SIMULATION_SUITABLE` · `CAPABILITY_GAP ⇒ UNSUPPORTED` ·
+nhãn **`CURRICULUM_SUPPORT_PARTIAL` chỉ được gỡ khi KHÔNG còn unit in-scope nào
+PARTIAL/UNSUPPORTED** — hiện còn 7, nên nhãn giữ nguyên.
+
+---
+
+<!-- hết khối 1 -->
+
+<!-- khối 2/3 · dòng 108–192 của bản gốc · §3, §4, §4b: value matrix and capability coverage of the informatics catalogue · sha256 75b3ae3fcd9ab4f09f944829fe0a886fd3df179cf40a38c0b966bf4a46ddcc21 -->
+## 3. Ma trận GIÁ TRỊ SƯ PHẠM theo chủ đề
+
+### Tier 1 — GIÁ TRỊ CAO (có cơ chế ẩn + biến thiên + phủ định được dự đoán)
+
+| Chủ đề (SGK) | Cơ chế ẩn | Result mode | Chiều | Hỗ trợ hiện tại |
+|---|---|---|---|---|
+| Sắp xếp (T11CS B21–22) | quyết định so sánh→đổi chỗ; đuôi đã sắp lớn dần | executable | **2D** | ✅ engine + **đã có bằng chứng (M8-PRE)** |
+| Tìm kiếm nhị phân (T11CS B19) | **nửa bị loại** mỗi bước | executable | **2D** | ✅ |
+| Lặp/rẽ nhánh/biến (T10 B17–21) | biến lặp, điều kiện, thân vòng lặp chạy khi nào | executable | **2D** | ⚠️ chỉ trong 8 thuật toán cố định |
+| Đếm/tổng có điều kiện (T10 CĐ5) | biến tích luỹ **sống sót** qua vòng lặp | executable | **2D** | ✅ |
+| Hệ nhị phân (T10 B4) | trọng số vị trí | executable | **2D** | ✅ |
+| Dữ liệu lôgic (T10 B5) | bảng chân trị sau một bóng đèn | interactive_viz | **2D** | ✅ |
+| Định tuyến gói tin (T10 CĐ2 · T12 CĐ2) | các CHẶNG; đường đi được **tính** (BFS) | executable | **2D** | ✅ |
+| **Hệ thống thông tin / luồng dữ liệu** (T11 B10 · T12CS B29) | **HƯỚNG và ĐÍCH của dữ liệu** | interactive_viz → executable | **2D** | ✅ **mới (M8-PRE S2)** |
+
+### Tier 2 — GIÁ TRỊ TRUNG BÌNH (có cơ chế, nhưng media tĩnh cũng làm được phần nào)
+
+| Chủ đề | Cơ chế ẩn | Hỗ trợ | Thiếu gì |
+|---|---|---|---|
+| HTML/CSS (T12 CĐ4, 12 bài) | quan hệ markup ↔ kết quả hiển thị | ⚠️ structural + reveal | **practice**: học sinh tự dựng/đổi thứ tự |
+| **CSDL: bảng, bản ghi, truy vấn** (T11 CĐ4, **cả hai ban**) | **vị từ WHERE giữ lại dòng nào** | ❌ | **table/grid + query** ← khối chương trình lớn nhất chưa phủ |
+| Giao thức, phân tầng mạng (T12 B4 · 12CS B22–24) | đóng gói/mở gói qua các tầng | ✅ **M10 (2D+3D) · định tuyến NL M10-AI-ROUTE** | — (`network.protocol_encapsulation`; **3D có nghĩa: Z=tầng**). Còn thiếu: TCP/UDP branching, handshake — cố ý ngoài v1 |
+| Hệ điều hành: tiến trình (T11 B1–2) | máy trạng thái | ❌ | FSM |
+| Kiểm soát truy cập (T10 B9 · T11 B15) | quy tắc logic sau cánh cửa | ✅ **tái sử dụng `boolean`** | — (đã có case) |
+| Mã hoá văn bản/âm thanh/ảnh (T10 B3, B6) | bảng mã / lấy mẫu | ⚠️ một phần | table/grid |
+| Mảng 1D/2D (T11CS B17) | chỉ số ↔ giá trị | ⚠️ ngầm trong trace | mảng 2D |
+
+### Tier 3 — GIÁ TRỊ THẤP / **KHÔNG MÔ PHỎNG** (§7)
+
+Xem §7 — danh sách chống "phủ giả".
+
+---
+
+## 4. Phủ NĂNG LỰC mô phỏng (khác với phủ kiến thức)
+
+| Năng lực | Trạng thái |
+|---|---|
+| Sequence/timeline · Iteration · Comparison · Accumulator · Search path | ✅ |
+| **Sorting movement** | ✅ engine — **bằng chứng benchmark: có từ M8-PRE** (trước đó **0 case**) |
+| Boolean rule · Weighted sum · Node-edge · Moving entity · Progressive reveal · Structural/textual · Toggle · Drag · Contextual edit | ✅ generic |
+| **Data flow (edge có chiều)** | ✅ **mới (M8-PRE S2)** |
+| Conditional branching · State transition | ⚠️ chỉ trong specialized |
+| **Single-pass scan (khai báo, tái dụng)** | ✅ **M12 PROOF + M12-AI-SCAN** — `core/scan.ts` + module `algorithm.scan` + route NL đầy đủ (analyze→classify→spec→validate→interpreter→UI với pseudocode DẪN XUẤT từ spec). Bài single-pass mới trong họ (tìm-đầu-tiên-vượt-ngưỡng) không cần module thực thi mới — live 4/4. Ngoài họ (sort/binary/routing/encap) vẫn specialized; prediction/what-if cho scan HOÃN. |
+| **Table/grid · Query/filter** | ❌ — ứng viên **post-M8** giá trị cao nhất (mở khoá CSDL, mảng 2D, bảng chân trị, bảng tính) |
+| State machine (FSM) · Client/server hai chiều | ❌ |
+| Stack/queue/tree | ❌ **KHÔNG có trong chương trình KNTT → scope creep** |
+| **practice_activity** | ⚠️ **substrate, CHƯA phải một mode** (§6) |
+| `capability_gap` (từ chối trung thực) | ✅ — 8 gap role, gate tất định, `gap_gate_recall = 1.0` |
+
+### §4b — HAI TRỤC TÁCH RỜI: năng lực ≠ neo chương trình (W4B-1B)
+
+Hai thuộc tính khác nhau, **không được suy cái này ra cái kia**:
+
+| Trục | Giá trị |
+|---|---|
+| **CAPABILITY** | `ENGINE_SUPPORTED` · `AI_REACHABLE` · `UNSUPPORTED` |
+| **CURRICULUM** | `ANCHORED` · `PARTIAL` · `NOT_ANCHORED` |
+
+Một target hoàn toàn có thể là **`ENGINE_SUPPORTED` + `AI_REACHABLE` +
+`NOT_ANCHORED`**. Trạng thái đó **không** sinh ra tuyên bố phủ chương trình.
+
+**"AI-reachable"** nghĩa là: pipeline ngôn ngữ tự nhiên **được phép** định tuyến
+tới năng lực đó khi hợp đồng hợp lệ và dữ kiện đủ. **"Curriculum anchored"** là
+một thuộc tính **bằng chứng** riêng, neo vào SGK.
+
+**Ca cụ thể — `binary.base_conversion`.** Hợp đồng engine nhận cơ số
+**{2, 8, 10, 16}**; target khai `ai_reachable`. Neo SGK thì chỉ có nhị phân
+(T10.CD1 Bài 4). Vậy: đề đổi sang bát phân/thập lục **được định tuyến** (đúng
+trục năng lực) nhưng **không** làm tăng độ phủ chương trình. Cơ số ngoài hợp
+đồng — ví dụ **cơ số 5** — vẫn `capability_gap`, fail-closed như cũ.
+
+> **Cấm suy diễn ngược.** Trước W4B-1B, ba ca đánh giá lịch sử từ chối
+> bát phân/thập lục với lý do trộn hai lập luận: *"ngoài neo SGK"* **và**
+> *"không target nào sở hữu"*. Lập luận thứ hai đã hết đúng từ khi
+> `binary.base_conversion` ship (M17 W1). Các artifact lịch sử **giữ nguyên,
+> không viết lại** — chúng phản ánh policy tại thời điểm đó; nhãn hiện hành của
+> chúng là `STALE_BY_CURRENT_CAPABILITY_POLICY`.
+
+**Tuyên bố được phép** sau khi 22/22 target có ca tường minh:
+*"22/22 catalog target có ca đánh giá tường minh, chọn được trực tiếp bằng
+runner hiện có."*
+**Cấm** nói *"22/22 curriculum-supported"* hoặc *"22/22 đã đo live"*.
+
+---
+
+<!-- hết khối 2 -->
+
+<!-- khối 3/3 · dòng 213–485 của bản gốc · §6–§12 of the informatics catalogue · sha256 e2f7c44ac77aa315bffb358767e050785cb0248519169ded27536d378487f9c3 -->
+## 6. `practice_activity` — nói thật về trạng thái
+
+**ĐANG CÓ:** học sinh *hành động được* (toggle, drag, what-if swap, edit tăng
+dần) và engine *phán được* **chỉ khi có rule tất định** (drag bounds →
+`InteractionFeedback`; không có rule → `unsupported_to_verify`).
+
+**M8-PRE-LIP (mới):** thêm **`PredictionCapability`** — vòng lặp *Quan sát → Dự đoán
+→ Nộp → engine tất định chấm → phản hồi là dữ liệu → canonical không đổi*, dùng
+**một** UI chung cho **hai** domain (`network`: chọn chặng kế tiếp, ground truth =
+BFS; `algorithm`: hệ quả của phép so sánh, ground truth = trace thật).
+`network.packet_routing` **hết watch-only**.
+
+**VẪN CHƯA CÓ:** cấu trúc **mục tiêu → nhiệm vụ → chấm điểm → theo dõi tiến độ**.
+Không có gợi ý, không có dashboard, không có phản hồi hội thoại.
+
+→ **`practice_activity` = PARTIAL / CHƯA IMPLEMENT. CẤM tuyên bố đã hoàn thiện.**
+M8-PRE-LIP là **bằng chứng khả thi** (một capability + một UI phục vụ nhiều domain),
+**không phải** practice mode đầy đủ.
+
+**Ưu tiên #1 sau M8** — cao hơn cả việc thêm primitive mới (kể cả table/grid):
+**learner practice/experimental mode**. Lý do: **ground truth đã có sẵn miễn phí**
+trong mọi engine tất định (trace biết bước kế tiếp; BFS biết đường đi ngắn nhất).
+Giá trị sư phạm của nó lớn hơn thêm hình vẽ mới.
+
+---
+
+## 7. Chủ đề GIÁ TRỊ THẤP / TRANG TRÍ — **cố ý KHÔNG có đề nào**
+
+Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương trình** nhưng
+**không có cơ chế ẩn động** → mô phỏng chỉ là trang trí:
+
+- Đạo đức, pháp luật, văn hoá môi trường số (CĐ3, **mọi khối**); bản quyền; ứng
+  xử trên mạng → *static_explanation_better*.
+- Hướng nghiệp (mọi khối) → **không mô phỏng**.
+- Kĩ năng dùng phần mềm: đồ hoạ Inkscape (T10 CĐ4), chỉnh sửa ảnh/làm video
+  (T11-ICT CĐ7) → **chính phần mềm đó mới là "mô phỏng"**.
+- Thông tin & xử lí thông tin; thiết bị số (T10 B1–2, B7) → khái niệm.
+- "Bên trong máy tính", "thiết bị mạng thông dụng" (T11 B4, T12 B3) → **sự kiện
+  tra cứu** (thông số, cổng cắm); một tấm ảnh có chú thích tốt hơn.
+- Lưu trữ đám mây, email, mạng xã hội (T11 B6–8) → thao tác công cụ.
+- **Tổng quan AI / Học máy / KHDL** (T12 CĐ1, 12CS CĐ7) → "mạng nơ-ron 3D xoay
+  tròn" là ví dụ kinh điển của mô phỏng trang trí.
+- **Bất kỳ sơ đồ tĩnh nào bị gắn nhãn "mô phỏng"** — vd vẽ heading + paragraph
+  thành hai cái hộp rồi gọi là mô phỏng web. (`d-webstatic` trung thực: nó là
+  `interactive_visualization`, `static_structural`, **không** reveal giả.)
+
+---
+
+## 7b. Dijkstra / đường đi ngắn nhất có trọng số (M13)
+
+**Phán quyết: A — NGOÀI phạm vi công khai đề tài.**
+
+Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy anchor):
+- Không bài/chủ đề nào trong Tin học 10–12 (cả CS lẫn ICT) nhắc tới Dijkstra,
+  đường đi ngắn nhất có trọng số, hay thuật toán đồ thị có trọng số nói chung.
+  Chỉ có **BFS** (không trọng số) làm oracle cho `network.packet_routing` — xem
+  Tier 1 §3 ("Định tuyến gói tin… đường đi được **tính** (BFS)") và §6 ("BFS
+  biết đường đi ngắn nhất" = ngắn nhất theo **số chặng**, không phải theo trọng
+  số cạnh).
+- `network.packet_routing` là minh hoạ **BFS trên mạng phân tầng**, KHÔNG phải
+  shortest-path **có trọng số** tổng quát — cùng họ "đồ thị" không có nghĩa là
+  "đã phủ Dijkstra một phần".
+- Sự cố M13 (kế hoạch `docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,
+  Task 7 — fixture pseudo-Dijkstra): một cảnh dựng bằng `generic.rule_scene`
+  (đường đi khai sẵn + `weighted_sum` cộng trọng số trên id cạnh) **trông hợp lý
+  nhưng dạy SAI cơ chế**. Dijkstra thật vận hành bằng khoảng cách tạm,
+  extract-min, nới cạnh (relaxation), tập finalized — generic DSL không sở hữu
+  engine nào cho các cơ chế này.
+
+**Hệ quả:**
+- `capability_gap` là câu trả lời đúng **dài hạn** cho lớp đề này, không phải
+  khoảng trống tạm chờ vá. Case `cap-dijkstra-gap` (`datasets/capability.py`,
+  pool `capability`) khoá kỳ vọng `unsupported` này cho harness live (M13).
+- `graph.shortest_path` (hay bất kỳ engine đồ thị có trọng số nào) **KHÔNG** ở
+  trong roadmap đề tài. Đổi phán quyết này là đổi roadmap → cần approval mới,
+  không tự quyết theo độ nổi tiếng của thuật toán.
+
+---
+
+## 8. 2D / 3D — vị trí chính thức của M8
+
+**M8 = architectural-first, pedagogically bounded 3D.**
+
+- **Mục tiêu kiến trúc (chính):** *cùng* config/state/timeline → renderer 2D **hoặc**
+  3D. Đây là hệ quả trực tiếp của **renderer-neutral state** (M7.FREEZE).
+- **Chỉ 3D hoá case có lý do sư phạm thật.**
+- **PoC ưu tiên:** kiến trúc mạng **phân tầng** / topology / dữ liệu di chuyển
+  trong không gian — **ứng viên 3D có cơ sở duy nhất** tìm được trong chương trình
+  (T12 B4; 12CS B22–24: đóng gói qua các tầng).
+- **KHÔNG 3D hoá cho đẹp:** cổng logic · đổi nhị phân · **sắp xếp** · **mảng** ·
+  cấu trúc trang web · **bảng CSDL**.
+
+**Tuyên bố được phép của M8:**
+> *"AlgoSim dùng lại config/state/timeline tất định trên nhiều renderer, và chỉ áp
+> dụng 3D cho nội dung mà chiều sâu/phân tầng thực sự mang giá trị biểu diễn."*
+
+**Tuyên bố bị cấm:** ~~"3D luôn giúp học tốt hơn."~~
+
+### Kết quả M8 (Slice 1+2 — đã ship, xem `CURRENT_STATE.md §2`)
+
+- **Đã chứng minh phần kiến trúc** của tuyên bố trên bằng PoC
+  `network.packet_routing`: cùng module/config/engine state/timeline/action/
+  PredictionCapability phục vụ renderer 2D **và** 3D; đổi mode không restart,
+  không reset cursor, không đụng canonical state (bất biến #16).
+- **M8 KHÔNG chứng minh** 3D dạy tốt hơn 2D cho bất kỳ chủ đề nào — nó chỉ chứng
+  minh **renderer sharing**. Mọi phát ngôn sư phạm về 3D vẫn bị ràng bởi mục này.
+- **Mạng phân tầng (ứng viên có cơ sở duy nhất) — (ghi chú M8) khi đó CHƯA làm**:
+  cần năng lực tất định mới (trạng thái PDU biến đổi khi đóng gói/mở gói qua tầng).
+  Hộp-tầng hiện dần bằng `reveal_sequence` là **progressive visualization**, CẤM
+  dán nhãn *executable simulation* (phân biệt ở §6). → **✅ ĐÃ SHIP ở M10** với
+  engine 9 bước tất định (xem mục M10 ngay dưới) — reveal-boxes vẫn bị cấm.
+- Phạm vi 3D hiện tại (W4B-2R): **một** module — `network.protocol_encapsulation`
+  (Z = tầng giao thức). `network.packet_routing` ĐÃ hạ về 2D_ONLY. logic/binary/
+  algorithm/generic **cố ý** 2D-only.
+
+### M10 — 3D SƯ PHẠM đầu tiên (đã ship, nhánh `m10-3d-ped`)
+
+- `network.protocol_encapsulation` là mô phỏng ĐẦU TIÊN có **chiều sâu 3D mang
+  nghĩa khái niệm**: `meaning_of_z = tầng giao thức` (X = chiều truyền gửi→nhận).
+  Đóng gói đi xuống, truyền băng ngang, mở gói đi lên — **cùng engine/state** cho
+  2D và 3D (PDU là danh sách phân đoạn ngữ nghĩa; renderer không tính lại).
+- `network.packet_routing` được **phân loại lại TRUNG THỰC** là `architectural_poc`
+  (Z ở đó chỉ tách nút trên/ngoài tuyến — bố cục). Khoá bằng `threeD` metadata
+  (bất biến #18, `ARCHITECTURE_MAP §5`).
+- 2D vẫn có, là baseline dễ đọc + **mặc định khi mở**; 3D là lựa chọn qua toggle.
+  Tuyên bố được phép: *"dùng chiều thứ ba để mã hoá độ sâu tầng giao thức, cho
+  biểu diễn 3D một vai trò ngữ nghĩa tường minh."* **CẤM**: ~~"3D dạy tốt hơn 2D."~~
+- Là **MÔ HÌNH SƯ PHẠM** của đóng gói (một transport TCP; không bắt tay/seq/ack/
+  phân mảnh/UDP) — không phải bộ mô phỏng chồng giao thức đầy đủ.
+- **M10-AI-ROUTE (đã ship):** đề tiếng Việt về đóng gói qua tầng nay được pipeline
+  LLM phân tích → classify → định tuyến tới `network.protocol_encapsulation` (không
+  còn catalog/offline-only). Tuyên bố được phép: *"LLM phân tích đề ngôn ngữ tự
+  nhiên và ĐỀ XUẤT ứng viên năng lực/config trong ranh giới được validate; engine
+  tất định sở hữu và sinh trạng thái/timeline/hệ quả."* **CẤM**: ~~"LLM sinh ra mô
+  phỏng."~~ Đề giao thức nâng cao (handshake/seq-ACK/retransmission/congestion/DNS)
+  → **unsupported trung thực** (kiểm live 5/5, xem `CURRENT_STATE.md §nhật-ký-live`).
+- `practice_activity` vẫn **PARTIAL / CHƯA làm**.
+
+---
+
+## 9. Bộ đề: baseline ĐÓNG BĂNG + pool mới
+
+| Pool | Nội dung | Ràng buộc |
+|---|---|---|
+| `regression` | **30 case lịch sử** (`dataset.py`) | **ĐÓNG BĂNG.** Khoá bởi `test_dataset_du_30_de_3_nhom` + `test_datasets::test_dataset_lich_su_van_dong_bang`. Giữ so sánh được số liệu M7.13/M7.14/M7.14T |
+| `curriculum` | phủ SGK đại diện (6 case) | chỉ chủ đề Tier 1/2 |
+| `capability` | phủ hình thức mô phỏng (4 case) — **sorting**, L3, data-flow | vá lỗ hổng bằng chứng |
+| `cross_domain` | **cùng năng lực, khác miền** (3 case) | bằng chứng tái sử dụng |
+| `thesis` | **flagship 12 case** | mỗi case chứng minh một tính chất RIÊNG |
+| `m16` | **50 case catalog-wide (M16)** — `datasets/m16_catalog.py`, mỗi case mang `M16Expectation` máy-đọc (expected route/gate/error_code/archetype) | admission KÉP (6 câu cũ + `check_m16_admission`); coverage lock ĐẾM THẬT; frozen fingerprint bảo vệ 30 case lịch sử |
+
+⛔ **Lệnh chạy đã GỠ** (`FINAL_DEAD_EVALUATION_CLEANUP`, 2026-09-02). Trước đây:
+`ALLOW_LIVE_AI=1 python -m app.evaluation.live --dataset thesis --suite full`.
+`app/evaluation/live.py`, `harness.py` và cả `datasets/` đã chết khi import từ
+lúc danh mục Tin học bị gỡ, nên lệnh này trả `ModuleNotFoundError` chứ không
+phải một lượt đo. Bảng pool bên trên **giữ nguyên** — nó mô tả bộ đề của đề tài
+CŨ, và các số liệu M7.13/M7.14/M16 trong `docs/evaluation/` là bằng chứng của
+thời điểm ấy. Bộ đo đang chạy là tuyến hình học (CLAUDE.md §4).
+
+### §9b — M16: representative public-catalog coverage (COMPLETE, 2026-07-20)
+
+- **14/14 AI-reachable public target** có CẢ explicit positive lẫn **paraphrase
+  positive** (không nêu tên thuật toán khi cơ chế mô tả tự nhiên được);
+- **8/8 capability family** có CẢ **valid-boundary** lẫn **near-miss/gap**
+  coverage (near-miss của structural_progressive qua authority-control
+  computation-leak, khai tường minh trong lock);
+- **Live suite `m16_catalog_live`** phủ **14 positive** (đủ 14 target) +
+  **8 near-miss** (đủ 8 family) + **2 recovery-control** — 24/24 đúng kỳ vọng,
+  66/80 HTTP, chi tiết `docs/evaluation/m16/` + CURRENT_STATE §1/§2;
+- Đây là **representative public catalog coverage trong phạm vi đề tài** —
+  targeted catalog-wide evaluation, KHÔNG phải bằng chứng bao phủ toàn bộ
+  chương trình Tin học THPT hay mọi cách diễn đạt tự nhiên (limitation
+  CURRENT_STATE §5-M16).
+
+### LUẬT KẾT NẠP (thực thi bằng `datasets.check_admission`, khoá bằng test)
+
+Case mới **chỉ** được thêm nếu trả lời rõ **6 câu**:
+
+1. `learning_objective` — học sinh hiểu/làm được gì?
+2. `pedagogical_rationale` — **cơ chế ẩn nào** được mô phỏng, và **vì sao hơn**
+   text/ảnh/video/quiz?
+3. `capability_family` — đang kiểm năng lực nào?
+4. `complexity` — L1/L2/L3/L4?
+5. `result_mode` — executable / interactive_viz / practice / unsupported?
+6. `curriculum_area` — neo vào đâu trong SGK?
+
+> **`pedagogical_rationale` mơ hồ → LOẠI case.** Không thêm đề chỉ vì chủ đề tồn
+> tại trong chương trình.
+
+**Metadata mới là optional + backward-compatible:** không metric nào đọc chúng →
+ngữ nghĩa metric cũ **giữ nguyên tuyệt đối**. Bộ flagship gắn nhãn cho case lịch
+sử bằng **bản sao** (`dataclasses.replace`), **không** sửa `DATASET`.
+
+---
+
+## 10. Bộ flagship (12 case) — mỗi case chứng minh một điều KHÁC nhau
+
+| Case | L | Chứng minh |
+|---|---|---|
+| `cap-bubble` | L2 | **sắp xếp** — engine có sẵn mà trước M8-PRE **không có bằng chứng nào** |
+| `cur-t11cs-binsearch` | L2 | định tuyến theo **năng lực** ("tìm nhanh"/"đã sắp xếp" → chia đôi) |
+| `a-sumif` | L2 | điều kiện + tích luỹ; **và** capability gate **không nổ oan** |
+| `a-binconv` | L1 | biểu diễn dữ liệu (trọng số vị trí) |
+| `b-xor` | L1 | DSL generic **compose được** cổng logic |
+| `a-and` | L1 | engine chuyên biệt cho cùng khái niệm → **cặp** với `b-xor` = ranh giới specialized ↔ generic (**trùng lặp DUY NHẤT được phép**) |
+| `a-packet` | L2 | đường đi do **BFS tất định** sinh — LLM không sinh timeline |
+| `d-webbuild` | L2 | cấu trúc + thời gian |
+| `d-webstatic` | L1 | **trung thực scene-mode**: cảnh tĩnh không được giả vờ có diễn biến |
+| `xd-access-boolean` | L2 | **tái sử dụng** `boolean` sang miền bảo mật — không thêm module |
+| `xd-order-workflow` | L3 | **tái sử dụng** node+edge+moving_entity **ngoài miền mạng** (S2) |
+| `c-geo-complex` | L4 | **từ chối trung thực** bài "nhìn có vẻ vẽ được" → `capability_gap` |
+| `m11-nested-canonical` | L2 | (M11) LLM compose **CHUỖI rule qua trung gian** — `A ∧ (B ∨ C)` = 2 rule nối, không module mới; khác hẳn `b-xor` (một rule phẳng) |
+| `m11-loop-gap` | L3 | **vòng lặp có biến trạng thái + điều kiện dừng cụ thể** do `algorithm.bounded_control_flow` THỰC THI (W2C/M17). Ranh giới đôi vẫn giữ: `algorithm.scan` không được nuốt (scan duyệt DÃY CHO SẴN), và generic representation không được phát lại dãy 2→5→8… do LLM tự tính (R0) |
+
+**Không** nhồi biến thể OR/NOT/XOR — chúng chứng minh lặp lại đúng một năng lực.
+(M11: `m11-nested-access`/`-not`/`-paraphrase` là case REGRESSION/robustness cho
+chuỗi rule — đã dùng để tune prompt, **không** được trình bày như held-out.)
+
+---
+
+## 11. Tái sử dụng liên miền (bằng chứng cho tuyên bố kiến trúc trung tâm)
+
+| Năng lực | Dùng lại ở các miền |
+|---|---|
+| `boolean` | cổng logic (T10 B5) · **kiểm soát truy cập** (T11 B15) · đèn cầu thang (XOR) · **biểu thức ghép lồng** `A ∧ (B ∨ C)` / `A ∧ ¬B` qua CHUỖI rule (M11 — T10 B5, phân quyền) |
+| `weighted_sum` | **đổi nhị phân** (T10 B4) · **mã ASCII** (T10 B3) |
+| `node`+`edge` | mạng · đồ thị · **hệ thống thông tin** · quy trình nghiệp vụ · hình học (node không node_type) |
+| `moving_entity`+`move_along_path` | **gói tin** · **dữ liệu qua các công đoạn xử lí** |
+| `reveal_sequence` | dựng hình · dựng trang web · **dựng mạng từng bước** |
+| `container`+`heading`/`paragraph` | trang web · tài liệu · mô tả I/O của hệ thống |
+
+**Không thêm module cho từng miền — dùng lại primitive.**
+
+---
+
+## 11b. Ngân sách object & NÉN DƯ THỪA AN TOÀN (M8-PRE plan C)
+
+`max_objects = 20` **không phải bất biến ngữ nghĩa** — nó là **ngân sách chứa đầu ra
+LLM + ngân sách dễ đọc của renderer**. Engine không phụ thuộc con số này.
+
+**Bằng chứng (đo live):** mọi cảnh hệ thống HỢP LỆ đều nằm gọn trong 20 (11–19 object).
+Chỉ bản nháp BỊ PHỒNG mới vượt: Gemini vừa đặt `label` inline cho node/edge, vừa tạo
+thêm **object `label` rời lặp lại đúng chuỗi đó**.
+
+→ **Không nâng hạn mức toàn cục. Không capability-aware budget.** Thay bằng
+`compact_redundant_labels` (cả hai tầng validator):
+
+| Được phép gỡ | KHÔNG BAO GIỜ gỡ |
+|---|---|
+| object `label` rời có chữ **TRÙNG HỆT** nhãn inline của node/edge có thật | label mang chữ **riêng** (có nghĩa) |
+| …và **chỉ khi** cảnh đã **vượt** hạn mức | label đang bị **tham chiếu cấu trúc** (rule/interaction/parent/path) |
+| | bất cứ gì chỉ để "lách" hạn mức |
+
+Cấm tuyệt đối: đoán liên kết theo **khoảng cách**; dùng **LLM** để nén; bỏ **chữ có
+nghĩa**. Cảnh đang trong hạn mức **không bị đụng tới** → 0 bề mặt regression.
+Thứ tự: candidate → suy `directed` (tất định) → nén dư thừa an toàn → kiểm hạn mức →
+validator còn lại → engine smoke.
+
+## 12. Cái gì phải ĐÓNG BĂNG
+
+1. `dataset.py` — 30 case lịch sử (id, text, group, expectation, tags).
+2. **Ngữ nghĩa metric** trong `harness.py` (`EvalReport.metrics()`); `gap_gate_recall`
+   là metric **song song**.
+3. **R0** — LLM không bao giờ sinh timeline/state/steps/kết quả.
+4. **8 gap role + capability gate** — đây là **bảo chứng trung thực**, không phải TODO.
+5. **Trung thực scene-mode** — cảnh tĩnh không được gắn reveal giả.
+6. **Renderer-neutral state** — không có pixel/layout trong engine state.
+7. Validate **hai tầng** + **manifest là nguồn chân lý duy nhất**.
+8. Danh sách **DO NOT ADD BEFORE M8** (`CURRENT_STATE.md §5b`) — gồm **không thêm
+   hệ learner-feedback mới** (vì vậy `practice_activity` chờ sau M8, dù nó là hạng
+   mục giá trị nhất).
+9. **Ranh giới canonical ↔ learner** (`CORRECTNESS.md §2`): hệ thì phải đúng hoặc
+   từ chối; **học sinh thì được phép sai**.
+<!-- hết khối 3 -->

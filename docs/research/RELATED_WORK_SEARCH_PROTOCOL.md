@@ -131,7 +131,7 @@ ngang hàng với Nature/ACL/NeurIPS.
 |---|---|
 | `FULL_TEXT_READ` | đã đọc toàn văn |
 | `ABSTRACT_PAGE_READ` | đã mở trang công bố chính thức và đọc tóm tắt |
-| `REPO_PREVERIFIED` | đã xác minh ở wave trước, ghi ở `docs/THESIS_REFERENCES.md` |
+| `REPO_PREVERIFIED` | đã xác minh ở wave trước, ghi ở `docs/research/thesis/THESIS_REFERENCES.md` (nằm ở `docs/` cho tới W19) |
 | `LISTING_ONLY` | chỉ xác minh ở trang liệt kê |
 
 **Luật cứng của ma trận:** không ô nào được ghi `No` chỉ vì tóm tắt không nhắc

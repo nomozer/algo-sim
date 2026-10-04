@@ -18,7 +18,8 @@ kịch bản vẽ do AI sinh; **không dùng cho quyết định implementation*
 4. `docs/OPEN_ISSUES.md` — danh mục các vấn đề kỹ thuật đang mở.
 5. `docs/ROADMAP.md` — lộ trình ưu tiên khóa luận (P0–P6).
 6. `docs/CORRECTNESS.md` — mô hình đúng đắn canonical ↔ learner.
-7. `docs/COVERAGE.md` — nguyên tắc sư phạm, phạm vi phủ, tuyên bố bị cấm.
+7. `docs/COVERAGE.md` — nguyên tắc sư phạm; §1 trỏ tới độ phủ và câu bị cấm hiện hành
+   (`research/GEOMETRY_CURRICULUM_COVERAGE.md`, `research/CLAIM_EVIDENCE_MAP.md` §3).
 8. `docs/CODE_INDEX.md` — **cái gì đã tồn tại ở đâu** (chống viết trùng).
 9. `docs/EVIDENCE_INDEX.md` — tra cứu báo cáo và artifact kiểm chứng.
 10. **Code và test thật.**

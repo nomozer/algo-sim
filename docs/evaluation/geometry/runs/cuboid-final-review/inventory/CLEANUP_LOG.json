@@ -1,0 +1,52 @@
+{
+  "schema_version": "cleanup-log/1",
+  "run_id": "cuboid-final-review",
+  "base_commit": "4048ff83d14ad2a1fcd940d127590ca777dbc7cf",
+  "date": "2026-10-05",
+  "rule": "nothing deleted or moved without exact path, reason, evidence and recovery; hash checked right before each deletion; historical reports, run folders, manifests and frozen evidence keep bytes and paths",
+  "moved_verbatim": {
+    "record": "HISTORY_SPLIT.json (per block: base line range, heading, reason, sha256)",
+    "tool": "docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/split_history_cfr.py (--plan, --apply refuses unless the source still equals its base blob, --verify)",
+    "recovery": "git show 4048ff83:<source> restores the source as it was; each block also stays verbatim in its companion",
+    "sources": [
+      {"source": "docs/CODE_INDEX.md", "companion": "docs/legacy/CODE_INDEX_REMOVED_ENTRIES.md", "blocks": 96, "lines": 1467, "of_lines": 8558, "base_blob": "a7758cf84b6f", "why": "94 entries whose subject file no longer exists (or whose heading marks it removed) and the two ⛔ sections §0h, §0i; §0j keeps the short traceability index plus a pointer"},
+      {"source": "docs/STATUS_LEDGER.md", "companion": "docs/legacy/STATUS_LEDGER_INFORMATICS_ERA.md", "blocks": 3, "lines": 782, "of_lines": 1628, "base_blob": "0bd207cd374a", "why": "status tables §1–§5 of the informatics product (incl. §4f–§4h and the W12 sections) and the topic lock of 2026-08-18 expired by §0-2026-08-24"},
+      {"source": "docs/COVERAGE.md", "companion": "docs/legacy/COVERAGE_INFORMATICS_ERA.md", "blocks": 3, "lines": 418, "of_lines": 485, "base_blob": "ff85189161b0", "why": "informatics textbook provenance and its claims, value matrix, capability coverage, datasets (§1, §1b, §3, §4, §6–§12); §2 and §5 stay because code cites them by number"},
+      {"source": "docs/CORRECTNESS.md", "companion": "docs/legacy/CORRECTNESS_INFORMATICS_ERA.md", "blocks": 6, "lines": 123, "of_lines": 344, "base_blob": "f6ece816a02e", "why": "what-if precedent of the removed algorithm domain, PatchResult taxonomy (§3), A/B/C classification and node/edge claims (§5–§6), the removed live.py runner and gap_gate_recall, §8–§9"},
+      {"source": "docs/ARCHITECTURE_MAP.md", "companion": "docs/legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md", "blocks": 4, "lines": 50, "of_lines": 503, "base_blob": "06bef93306dc", "why": "specialized/DSL and interaction/edit axes (§6), the five informatics extension points (§7), the pattern-reuse cache tier (§9), informatics future directions (§10)"},
+      {"source": "docs/DESIGN_BRIEF.md", "companion": "docs/legacy/DESIGN_BRIEF_INFORMATICS_ERA.md", "blocks": 5, "lines": 63, "of_lines": 232, "base_blob": "8710530dc5d1", "why": "informatics product description (topic, learners, scale), workspace layout, per-domain display contracts (§4), design backlog (§8)"},
+      {"source": "docs/POST_THESIS_BACKLOG.md", "companion": "docs/legacy/POST_THESIS_BACKLOG_INFORMATICS_ERA.md", "blocks": 2, "lines": 57, "of_lines": 153, "base_blob": "658666ee7dd9", "why": "two informatics idea sections and the 'môn Tin học' scope line"}
+    ]
+  },
+  "edited_in_place": [
+    {"path": "docs/OPERATIONS.md", "change": "three examples that named removed files (domains/algorithm/ui.tsx, tests/test_dsl.py, experience-gate.test.ts) replaced by existing files", "evidence": "the old paths are absent from git ls-files"},
+    {"path": "docs/TEST_TIERS.md", "change": "dated note: 8/10 T1 scripts point at removed domains; geometry has no T1 script and no impact.mjs owner", "evidence": "frontend/package.json lines 13–22; impact.mjs --dry on scene3d-view.tsx → IMPACT_MAPPING_MISSING"},
+    {"path": "docs/MIGRATION_CHECKLIST.md", "change": "GATE-02/03 evidence paths corrected (old names marked); GATE-11/12 dated audit lines, statuses unchanged", "evidence": "semantic_program/request_contract.py, geometry_compiler/fact_graph.py, routing.py, pipeline.py call, test_prism_production_route.py, test_AD_…"},
+    {"path": "docs/OPEN_ISSUES.md", "change": "ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE and ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE added; dated cfr_audit lines on ISSUE-ARCH-NO-COMPILER-FIRST-ROUTING and ISSUE-ARCH-NO-FALLBACK-MECHANISM (statuses unchanged)", "evidence": "see each entry"},
+    {"path": "docs/ARCHITECTURE_MAP.md", "change": "besides the split: §7 lists the current extension authorities; dated note under §5 on the 22 rows whose named enforcement files are gone", "evidence": "DOCS_INVENTORY.json architecture_map_invariant_pointers"},
+    {"path": "docs/CODE_INDEX.md", "change": "besides the split: pointer paragraph in §0j", "evidence": "HISTORY_SPLIT.json"},
+    {"path": "docs/COVERAGE.md", "change": "new §1 pointing at the current coverage and forbidden-claim authorities", "evidence": "research/GEOMETRY_CURRICULUM_COVERAGE.md, research/CLAIM_EVIDENCE_MAP.md §3"},
+    {"path": "docs/DESIGN_BRIEF.md", "change": "dated banner; note under the flow diagram (server box and two refusal kinds are informatics-era)", "evidence": "ARCHITECTURE_MAP §2a; SimulationWorkspace refusal card"},
+    {"path": "docs/RULES.md", "change": "reading item 7 (COVERAGE.md) names where the current coverage and forbidden claims live", "evidence": "COVERAGE.md §1"},
+    {"path": "docs/research/SYSTEMATIC_LITERATURE_GAP_SYNTHESIS.md", "change": "four machine-local file:/// links made relative (same-folder JSON files)", "evidence": "targets exist next to the file"},
+    {"path": "docs/research/RELATED_WORK_SEARCH_PROTOCOL.md", "change": "pointer to THESIS_REFERENCES.md updated to its W19 location", "evidence": "docs/research/thesis/THESIS_REFERENCES.md"},
+    {"path": "docs/research/README.md", "change": "note on the 9 machine-local links kept inside the two sealed preregistrations", "evidence": "DOCS_INVENTORY.json machine_local_links"},
+    {"path": "docs/legacy/README.md", "change": "table of the seven companions and how to verify them", "evidence": "HISTORY_SPLIT.json"}
+  ],
+  "deleted": [
+    {"path": "docs/evaluation/geometry/custodian/__pycache__/geometry_oracle.cpython-312.pyc", "sha256": "351dd721c52c2d4b87462ceab5f46930b1e14d48b471167aaec985454ebcfe0a", "class": "DELETE_REPRODUCIBLE_TEMP", "reason": "git-ignored interpreter cache inside docs/", "evidence": "git status --ignored; hash checked right before Remove-Item -LiteralPath", "recovery": "regenerated by the next import of geometry_oracle.py without PYTHONDONTWRITEBYTECODE"},
+    {"path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/__pycache__/occlusion_transfer_diagnostic.cpython-312.pyc", "sha256": "9a11f1191121b423bc6a8d3b6a18e103b1383f7e8b6d407b4a2f2c93ba59fb2d", "class": "DELETE_REPRODUCIBLE_TEMP", "reason": "git-ignored interpreter cache inside a frozen run folder (the run's tracked files are untouched)", "evidence": "as above", "recovery": "regenerated on import"},
+    {"path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/__pycache__/section_substeps_compare.cpython-312.pyc", "sha256": "5324a2a6c0d9753444a85a69da3b7e29f5f56f7005d967c2c070db9e18c6024d", "class": "DELETE_REPRODUCIBLE_TEMP", "reason": "as above", "evidence": "as above", "recovery": "regenerated on import"},
+    {"path": "docs/evaluation/geometry/custodian/__pycache__/", "class": "DELETE_REPRODUCIBLE_TEMP", "reason": "empty after the file above", "recovery": "recreated with the cache"},
+    {"path": "docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/__pycache__/", "class": "DELETE_REPRODUCIBLE_TEMP", "reason": "empty after the files above", "recovery": "recreated with the cache"}
+  ],
+  "considered_and_kept": [
+    {"path": "docs/<180 catalogued reports>.md", "decision": "FROZEN_KEEP", "reason": "historical reports keep bytes and paths; DOCS_ROOT_REMAINING_EXCEPTION, catalogued in docs/evaluation/HISTORICAL_REPORTS.md"},
+    {"path": "docs/evaluation/** (146 groups, 8470 files)", "decision": "FROZEN_KEEP", "reason": "execution evidence; 1814 byte-identical copies across wave folders are intended (each wave is self-contained)"},
+    {"path": "docs/legacy/** (34 files)", "decision": "KEEP_ARCHITECTURAL_HISTORY", "reason": "superseded but traceable; no tracked duplicate; relative links inside point at old locations (documented exception)"},
+    {"path": "docs/legacy/REPOSITORY_MAP.md", "decision": "KEEP_ARCHITECTURAL_HISTORY", "reason": "its still-true facts live elsewhere: evidence fingerprint over git ls-files -s (frontend/scripts/evidence.mjs, CODE_INDEX), evidence layers (docs/evaluation/README.md), schema mirrors (test_schema_sync.py); the rest describes the informatics layout"},
+    {"path": "docs/research/HYBRID_ARCHITECTURE_EVALUATION_PROTOCOL.md, docs/research/LLM_ONLY_PAIRED_BASELINE_COLLECTION_PREREGISTRATION.md", "decision": "FROZEN_KEEP, links not edited", "reason": "preregistrations: bytes kept; machine-local link targets documented in docs/research/README.md"},
+    {"path": "docs/research/thesis/RELATED_WORK_DRAFT.md", "decision": "REVIEW_REQUIRED", "reason": "second related-work text beside THESIS_DRAFT §1.8; choosing between them is thesis writing, left to the author"},
+    {"path": "D:/tmp (204 entries) and .superpowers (108 entries) registered by W20 as REVIEW_REQUIRED", "decision": "kept", "reason": "unverified; re-check 2026-10-05: D:/tmp holds exactly the 204 registered entries (none new, none gone); .superpowers was not re-listed (git-ignored plan workspaces of other plans are not this run's to touch); no deletion outside the repository in this run"}
+  ]
+}

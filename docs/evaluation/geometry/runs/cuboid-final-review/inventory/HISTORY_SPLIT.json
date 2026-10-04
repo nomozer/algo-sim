@@ -1,0 +1,1261 @@
+{
+ "schema_version": "history-split/1",
+ "run_id": "cuboid-final-review",
+ "base_commit": "4048ff83d14ad2a1fcd940d127590ca777dbc7cf",
+ "tool": "docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/split_history_cfr.py",
+ "sources": {
+  "docs/STATUS_LEDGER.md": {
+   "base_blob": "0bd207cd374a9535a231d762583344492a37ed82",
+   "base_line_count": 1628,
+   "companion": "docs/legacy/STATUS_LEDGER_INFORMATICS_ERA.md",
+   "why": "bảng trạng thái của sản phẩm Tin học (đã gỡ ở LEGACY_INFORMATICS_REMOVAL, 2026-09-02) và tên đề tài 2026-08-18 đã hết hiệu lực từ §0-2026-08-24",
+   "moved_line_count": 782,
+   "blocks": [
+    {
+     "base_lines": [
+      11,
+      252
+     ],
+     "line_count": 242,
+     "reason": "status tables §1–§4e of the informatics product",
+     "heading": "## 1. Kiến trúc & năng lực",
+     "sha256": "8bd425ccc829344f7287e491eda0462933b570b0cf0b7d835e57ffe381a802b1"
+    },
+    {
+     "base_lines": [
+      255,
+      456
+     ],
+     "line_count": 202,
+     "reason": "topic lock 2026-08-18, expired by §0-2026-08-24",
+     "heading": "### TÊN ĐỀ TÀI CANONICAL (chốt 2026-08-18)",
+     "sha256": "8b3047106a9a2848f740ded0f8c67330dfed3a5f22b8c2ffc61b49328afc4da4"
+    },
+    {
+     "base_lines": [
+      600,
+      937
+     ],
+     "line_count": 338,
+     "reason": "status tables §4f–§4h, W12 sections and §5 of the informatics product",
+     "heading": "## 4f. Wave 10 — guard ngữ nghĩa chuyển động",
+     "sha256": "af1ed5174b8e5044eae6df0791c41fc620aa9e675a36b068c6c169caae05b408"
+    }
+   ]
+  },
+  "docs/COVERAGE.md": {
+   "base_blob": "ff85189161b0e4d928ab86ec90faa3725e892f32",
+   "base_line_count": 485,
+   "companion": "docs/legacy/COVERAGE_INFORMATICS_ERA.md",
+   "why": "nguồn SGK Tin học, ma trận và bộ đề của sản phẩm Tin học; độ phủ hiện hành ở research/GEOMETRY_CURRICULUM_COVERAGE.md và research/CLAIM_EVIDENCE_MAP.md §3",
+   "moved_line_count": 418,
+   "blocks": [
+    {
+     "base_lines": [
+      12,
+      71
+     ],
+     "line_count": 60,
+     "reason": "§1 and §1b: informatics textbook provenance and its claims",
+     "heading": "## 1. Nguồn chương trình (provenance) — đọc trước khi trích số liệu",
+     "sha256": "dcb9a364b3c7d445375eb3dea291b96a54eece74637c7fa94b5336453c1f5aa5"
+    },
+    {
+     "base_lines": [
+      108,
+      192
+     ],
+     "line_count": 85,
+     "reason": "§3, §4, §4b: value matrix and capability coverage of the informatics catalogue",
+     "heading": "## 3. Ma trận GIÁ TRỊ SƯ PHẠM theo chủ đề",
+     "sha256": "75b3ae3fcd9ab4f09f944829fe0a886fd3df179cf40a38c0b966bf4a46ddcc21"
+    },
+    {
+     "base_lines": [
+      213,
+      485
+     ],
+     "line_count": 273,
+     "reason": "§6–§12 of the informatics catalogue",
+     "heading": "## 6. `practice_activity` — nói thật về trạng thái",
+     "sha256": "e2f7c44ac77aa315bffb358767e050785cb0248519169ded27536d378487f9c3"
+    }
+   ]
+  },
+  "docs/CORRECTNESS.md": {
+   "base_blob": "f6ece816a02e98684e51950ea40769163e17767b",
+   "base_line_count": 344,
+   "companion": "docs/legacy/CORRECTNESS_INFORMATICS_ERA.md",
+   "why": "tiền lệ, taxonomy, phân loại và chính sách của các miền Tin học đã gỡ; nguyên tắc chung (§1, §1a, §2, §2b, §4, §7) ở lại",
+   "moved_line_count": 123,
+   "blocks": [
+    {
+     "base_lines": [
+      60,
+      67
+     ],
+     "line_count": 8,
+     "reason": "§2 precedent: what-if branch of the removed algorithm domain",
+     "heading": "**Precedent kiến trúc:** what-if branch của domain algorithm",
+     "sha256": "b664c8f97b46c96721ed611827682c53d22bb1ad0506567b02fad8398cb38447"
+    },
+    {
+     "base_lines": [
+      208,
+      233
+     ],
+     "line_count": 26,
+     "reason": "§3 PatchResult taxonomy of the removed generic DSL edit path",
+     "heading": "## 3. Taxonomy kết quả patch/edit (PatchResult) — TÁCH với interaction feedback",
+     "sha256": "d2568bca0630984c4e5eff603db909353b4f8349fcaab8147ba3ca9b06f299f6"
+    },
+    {
+     "base_lines": [
+      246,
+      300
+     ],
+     "line_count": 55,
+     "reason": "§5 A/B/C classification and §6 node/edge claims of the informatics system",
+     "heading": "## 5. Phân loại A/B/C toàn hệ (audit M7.14C)",
+     "sha256": "4b0113e520247edea612af532b80a86a8a290bb62b05afd676f67f3652a47408"
+    },
+    {
+     "base_lines": [
+      311,
+      317
+     ],
+     "line_count": 7,
+     "reason": "§7: the removed live.py runner and its suites",
+     "heading": "- `live.py` **bắt buộc `ALLOW_LIVE_AI=1`**, có `--suite smoke|full|boundary` và",
+     "sha256": "6980e4f34c186747d2176ebec8824f3d200800960cc777e61c8a0cc461a077a3"
+    },
+    {
+     "base_lines": [
+      318,
+      322
+     ],
+     "line_count": 5,
+     "reason": "§7: gap_gate_recall metric of the removed capability gate",
+     "heading": "Metric `gap_gate_recall` (M7.14T) đo **chính capability gate** ở §5 bằng",
+     "sha256": "9c797aea3797186667341445eb68c5054ca6ec99770c2967b8bbe8e9051b1057"
+    },
+    {
+     "base_lines": [
+      323,
+      344
+     ],
+     "line_count": 22,
+     "reason": "§8 known-gap roadmap and §9 binary_search policy",
+     "heading": "## 8. Trạng thái known-gap & lộ trình",
+     "sha256": "cc20d892ce4bfaa78de76c61312482ac8ab7262c1d46dc179ad6910ed146c7eb"
+    }
+   ]
+  },
+  "docs/POST_THESIS_BACKLOG.md": {
+   "base_blob": "658666ee7dd92903911e2dda28e817973398cc74",
+   "base_line_count": 153,
+   "companion": "docs/legacy/POST_THESIS_BACKLOG_INFORMATICS_ERA.md",
+   "why": "ý tưởng của sản phẩm Tin học (quyết định thuật toán trên sân khấu, đợt nâng trải nghiệm toàn danh mục 23 target) — phạm vi đã bỏ từ 2026-08-24",
+   "moved_line_count": 57,
+   "blocks": [
+    {
+     "base_lines": [
+      9,
+      64
+     ],
+     "line_count": 56,
+     "reason": "two informatics-era idea sections",
+     "heading": "## Cam kết cơ chế ở tầng sân khấu cho điểm quyết định thuật toán",
+     "sha256": "8085ff2339c71a4bb3cfea5b59d3cdc3b62018a265e791a8ceaf683274be0644"
+    },
+    {
+     "base_lines": [
+      72,
+      72
+     ],
+     "line_count": 1,
+     "reason": "scope line of the informatics topic",
+     "heading": "- Môn học khác ngoài Tin học THPT — cổng phạm vi (W3) tồn tại để từ chối chúng.",
+     "sha256": "1e7e454e049e22c9a30a6fd1ce8a34b16f229a713e75d890d174ae171f97d41a"
+    }
+   ]
+  },
+  "docs/DESIGN_BRIEF.md": {
+   "base_blob": "8710530dc5d10139311e799b215da3e2de06d15d",
+   "base_line_count": 232,
+   "companion": "docs/legacy/DESIGN_BRIEF_INFORMATICS_ERA.md",
+   "why": "mô tả sản phẩm, bố cục workspace, hợp đồng hiển thị theo miền và việc thiết kế của giai đoạn Tin học; các ràng buộc §3, ngôn ngữ thị giác, giọng văn và quy trình kiểm ở lại",
+   "moved_line_count": 63,
+   "blocks": [
+    {
+     "base_lines": [
+      18,
+      24
+     ],
+     "line_count": 7,
+     "reason": "§1: informatics topic and the browser-engine sentence",
+     "heading": "**Tên đề tài:** *Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán",
+     "sha256": "4776e47363e4299d07437750329e0209b1d1116ef84816ae60714869768b4bfd"
+    },
+    {
+     "base_lines": [
+      28,
+      33
+     ],
+     "line_count": 6,
+     "reason": "§1: informatics learners and catalogue scale",
+     "heading": "**Người học:** học sinh THPT Việt Nam (lớp 10–12), môn Tin học, chương trình",
+     "sha256": "96d74c44f1ba9862689cddf1126bb0617ec7cc6c088745abd2e5e37ffe638664"
+    },
+    {
+     "base_lines": [
+      71,
+      82
+     ],
+     "line_count": 12,
+     "reason": "§2: workspace layout of the informatics stage",
+     "heading": "### Bố cục Workspace (2 cột)",
+     "sha256": "d987a931313ddbbae96bee304fa12ba17a6c0e0594c8878b2cf63772a2d99a31"
+    },
+    {
+     "base_lines": [
+      131,
+      153
+     ],
+     "line_count": 23,
+     "reason": "§4: display contracts of the removed domains",
+     "heading": "## 4. Hợp đồng hiển thị theo từng miền",
+     "sha256": "660bd3d891df895489cd35b74aee146875011085312791667ca08e4e1efa20c8"
+    },
+    {
+     "base_lines": [
+      211,
+      225
+     ],
+     "line_count": 15,
+     "reason": "§8: design backlog of the informatics product",
+     "heading": "## 8. Chỗ đang cần thiết kế",
+     "sha256": "c87792116e30e5b6e949f1cbf53fe103c5102c44523637c98e697979218ab731"
+    }
+   ]
+  },
+  "docs/ARCHITECTURE_MAP.md": {
+   "base_blob": "06bef93306dc8f60f89d8245d4fa826adbae21ae",
+   "base_line_count": 503,
+   "companion": "docs/legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md",
+   "why": "trục specialized/DSL và interaction/edit, điểm mở rộng, tầng cache pattern reuse và hướng tương lai của hệ Tin học đã gỡ",
+   "moved_line_count": 50,
+   "blocks": [
+    {
+     "base_lines": [
+      366,
+      385
+     ],
+     "line_count": 20,
+     "reason": "§6: specialized/DSL and interaction/edit axes of the removed system",
+     "heading": "**Specialized ↔ Generic DSL.** Specialized = engine viết tay cho một bài (8",
+     "sha256": "43fe069daed0cb77004c285dfb113eb2d052aef2a9bd398595d7880afe372505"
+    },
+    {
+     "base_lines": [
+      393,
+      409
+     ],
+     "line_count": 17,
+     "reason": "§7: extension points of the removed system",
+     "heading": "## 7. Điểm mở rộng",
+     "sha256": "6ea0d4baa76ad1e43fbd952311caa6595de191582d2817339abf93b06e17a81e"
+    },
+    {
+     "base_lines": [
+      491,
+      495
+     ],
+     "line_count": 5,
+     "reason": "§9: pattern-reuse tier and the M7.14 edit path",
+     "heading": "- **Tầng 2 — pattern reuse** (`patterns.py`, bảng `simulation_patterns`): **sau",
+     "sha256": "09eb5be999938244e19e1f76c7e0c043762994c4bd71ce9b2e03f1f1302ee5ff"
+    },
+    {
+     "base_lines": [
+      496,
+      503
+     ],
+     "line_count": 8,
+     "reason": "§10: future directions of the informatics system",
+     "heading": "## 10. Hướng khả dĩ trong tương lai (chưa làm, không phải cam kết)",
+     "sha256": "c2d1718bd1d573fe3454993713df3ab2a017b0b6361efdd27ccefed095ebea7d"
+    }
+   ]
+  },
+  "docs/CODE_INDEX.md": {
+   "base_blob": "a7758cf84b6f47528d551c4c1d3fbb9d82733ae3",
+   "base_line_count": 8558,
+   "companion": "docs/legacy/CODE_INDEX_REMOVED_ENTRIES.md",
+   "why": "mục mô tả mã đã gỡ (miền Tin học, DSL, công cụ và module đã xoá); chỉ mục truy vết ngắn của mã đã gỡ vẫn ở §0j",
+   "moved_line_count": 1467,
+   "blocks": [
+    {
+     "base_lines": [
+      246,
+      263
+     ],
+     "line_count": 18,
+     "reason": "whole section about removed code (⛔)",
+     "heading": "## ⛔ 0i. ĐÃ GỠ (HISTORICAL_REMOVED) — Đổi cơ số, MỘT nguồn (M17 P1a)",
+     "sha256": "e8b457b26a64e902ad0cd6270b176981721d0570dbdde7cff7b1f08391ee1f67"
+    },
+    {
+     "base_lines": [
+      264,
+      304
+     ],
+     "line_count": 41,
+     "reason": "whole section about removed code (⛔)",
+     "heading": "## ⛔ 0h. ĐÃ GỠ — Mô phỏng cơ chế ≠ biểu diễn tiến triển (M17 P1b)",
+     "sha256": "5be8b7d44d2ddcf05e49e10d2e868c19d76d7054658c623fcb12a3e76e74876d"
+    },
+    {
+     "base_lines": [
+      451,
+      457
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code",
+     "heading": "### `ai/edit.py` · Change impact: targeted live",
+     "sha256": "f868e76cc771193631d33c7f27aa9a74930a5033ebf32d8ec889e21a4203f29c"
+    },
+    {
+     "base_lines": [
+      468,
+      498
+     ],
+     "line_count": 31,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/dsl/manifest.py` · Change impact: targeted live",
+     "sha256": "cb5eb02b0a9492b0f215f9ef915c29aaa5991590ee85b7c88da3b40f2ce18cdf"
+    },
+    {
+     "base_lines": [
+      499,
+      515
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/computation_gate.py` (M13) · Change impact: offline",
+     "sha256": "94daa3ca57c0014c9eac19289ba0b07b22159291231b4ccbfe506ee331f4e49d"
+    },
+    {
+     "base_lines": [
+      516,
+      538
+     ],
+     "line_count": 23,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/mechanisms.py` (M15) · Change impact: offline (targeted live nếu đổi `analyze_exposed_values()`/`LEGACY_",
+     "sha256": "aa5488ddeaf251313a26ee231036d55c13deef0456c73e0fa2f6a1f63c4d2699"
+    },
+    {
+     "base_lines": [
+      539,
+      561
+     ],
+     "line_count": 23,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/mechanism_gate.py` (M14 §E4 + M15 mở rộng) · Change impact: offline",
+     "sha256": "137a3593e6b22c8a80b30ad0c71e5ea8d8250815710b496fe011d0d4167c639b"
+    },
+    {
+     "base_lines": [
+      562,
+      569
+     ],
+     "line_count": 8,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/dsl/validator.py` · Change impact: offline",
+     "sha256": "39684b9a8ff073b42bf5e686edf57cd3cde323bdf6ade9f1a680e37b43e8021e"
+    },
+    {
+     "base_lines": [
+      570,
+      574
+     ],
+     "line_count": 5,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/representation.py` · Change impact: offline",
+     "sha256": "ac20c7086ae72ed2ad8533bae9e1d63b2e5fb8107094729dbaed34c0561af496"
+    },
+    {
+     "base_lines": [
+      575,
+      587
+     ],
+     "line_count": 13,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/semantic.py` · Change impact: offline",
+     "sha256": "e8b16763a10d4ce97f3f1971ecff9271a28f48124d4aa21f8aff6627bc176782"
+    },
+    {
+     "base_lines": [
+      588,
+      605
+     ],
+     "line_count": 18,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/generic_engine.py` · Change impact: offline",
+     "sha256": "216d1107ba7c91ab46d386e11943a8420e1d498460bd2cabb6150a91531fad17"
+    },
+    {
+     "base_lines": [
+      606,
+      623
+     ],
+     "line_count": 18,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_dsl_contract.py` → `frontend/src/simulations/",
+     "sha256": "175d4f9020241d2e79241a1137fa977d482f3324a1efdb4c1ec3a9ea151a2313"
+    },
+    {
+     "base_lines": [
+      624,
+      633
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/scan_engine.py` (M12) · Change impact: offline",
+     "sha256": "988e235f1c3052e7a7440c11dd11252f6943d627d63055275169b8b19803192c"
+    },
+    {
+     "base_lines": [
+      634,
+      643
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/character_encoding.py` (M17 W3) · Change impact: targeted live",
+     "sha256": "b4b3b865391b4c48a873592c48f6ca5e7aa33c4c04409eaff9489b855508c2ed"
+    },
+    {
+     "base_lines": [
+      644,
+      650
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code",
+     "heading": "### `validation/character_encoding.py` (M17 W3) · Change impact: offline",
+     "sha256": "8105f06506092083bfe160cc605098cd322326b6fffca9d3480f4cbbfdebac7b"
+    },
+    {
+     "base_lines": [
+      651,
+      662
+     ],
+     "line_count": 12,
+     "reason": "entry of removed code",
+     "heading": "### `core`/`domains/binary/encoding-module.tsx` (M17 W3) · offline",
+     "sha256": "4f3f9d2d71a57e21995f39969c2dcafd3c0e3b4249edf75ab728fb2daa394c38"
+    },
+    {
+     "base_lines": [
+      663,
+      679
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/program_spec.py` (M17 W2C) · Change impact: targeted live",
+     "sha256": "97e6ca647071fb7a93e0d21ac1075b8694ee3ef187c10a5b5e4a91e86eb918ad"
+    },
+    {
+     "base_lines": [
+      680,
+      689
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code",
+     "heading": "### `validation/program.py` (M17 W2C) · Change impact: offline",
+     "sha256": "084ba37352d80abe829a1fe554a5733d3b3839184072dbfb6ab0ddd393b45ca9"
+    },
+    {
+     "base_lines": [
+      690,
+      717
+     ],
+     "line_count": 28,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/catalog.py` · Change impact: targeted live",
+     "sha256": "351f6dfc1b78d7d2695b50f1c61f22725a710abbae2903a591e102e0159d6026"
+    },
+    {
+     "base_lines": [
+      718,
+      735
+     ],
+     "line_count": 18,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/coverage.py` (M14 §O) · Change impact: offline",
+     "sha256": "72a4ed4fd89f6adfc0fdf270233ddf868643d6941c012ab912a506e6d297e545"
+    },
+    {
+     "base_lines": [
+      736,
+      741
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `backend/scripts/curriculum_support_report.py` · Change impact:",
+     "sha256": "2760697e4f61caba538cde74a3d113467feebcf570853dbba03af9721c6bbaaf"
+    },
+    {
+     "base_lines": [
+      759,
+      772
+     ],
+     "line_count": 14,
+     "reason": "entry of removed code",
+     "heading": "### `domains/web/props.ts` — miền màu (M20 W5 · W5A) · Change impact: targeted live",
+     "sha256": "b1706746874209637cf0008a13a4e3d955629e4369b3da699ff4116a97fa2665"
+    },
+    {
+     "base_lines": [
+      773,
+      778
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code",
+     "heading": "### `domains/web/apply.ts::applyChannelChange` (M20 W5) · offline",
+     "sha256": "9031b09a73f20238ac7219ecfd0e5c69680d45d58b512fc81aa770282bfcbfe6"
+    },
+    {
+     "base_lines": [
+      876,
+      883
+     ],
+     "line_count": 8,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/experience-gate.test.ts` (M20 W12) · cổng offline",
+     "sha256": "92dbcbd7a5fe366f270c45e5af74b1c584103d74540285a24822cc1e3b6e1892"
+    },
+    {
+     "base_lines": [
+      898,
+      913
+     ],
+     "line_count": 16,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/explore-vs-trace-w5e.test.ts` (W5E) · offline",
+     "sha256": "ed813906740c0d8c9291c286c36779faa4464ea3a2e85eff1f778a4161c11e5d"
+    },
+    {
+     "base_lines": [
+      914,
+      930
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code",
+     "heading": "### `domains/logic/dag-module.tsx::BoolDagState.exploreReveal` (W5E) · offline",
+     "sha256": "48218edad62865fc92dbb4d05315491b97c7c21009128813340271cd1662aa04"
+    },
+    {
+     "base_lines": [
+      931,
+      947
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/state-text-consistency-w5n.test.ts` (W5N) · offline",
+     "sha256": "9e5e803722bae621a4371bcbbc0e3935da062a2866daeddc9cbe8c76de50d11e"
+    },
+    {
+     "base_lines": [
+      1036,
+      1053
+     ],
+     "line_count": 18,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/generic-semantic-fit-w5m.test.ts` (W5M) · offline",
+     "sha256": "01effcf4aebc9b16dee4d29f4fdf25ba8818b20ede5681c652a2336da1a32b9e"
+    },
+    {
+     "base_lines": [
+      1087,
+      1105
+     ],
+     "line_count": 19,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/color/` — `color.rgb_model`",
+     "sha256": "755f41f45089cd81fb8f2188779fefbf71a7a8f06f68da59ba0f30707099e670"
+    },
+    {
+     "base_lines": [
+      1202,
+      1232
+     ],
+     "line_count": 31,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/domains/geometry/scene3d-silhouette.ts` (2026-09-11) · offline",
+     "sha256": "3eca701ab47e25694fbbf12b7a71f01553b79be61860b19939cd7ab475d3fc63"
+    },
+    {
+     "base_lines": [
+      1233,
+      1252
+     ],
+     "line_count": 20,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/scripts/scene3d-d2-gate.mjs` (2026-09-12) · offline",
+     "sha256": "c5fb5e778a64cafec631ba765d275916ca7b216af3b91ac7c9720ba59619f4bb"
+    },
+    {
+     "base_lines": [
+      1253,
+      1279
+     ],
+     "line_count": 27,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/domains/geometry/scene3d-nhan.ts` (2026-09-12) · offline",
+     "sha256": "556f9c73835b111518bdbbca2e6a4ae73a019bb1967a0e3f722b593b44134ccc"
+    },
+    {
+     "base_lines": [
+      1280,
+      1316
+     ],
+     "line_count": 37,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### `frontend/src/simulations/domains/geometry/scene3d-tokens.ts` (2026-09-12) · offline · ⚠️ **ĐÃ GỠ** (kiểm 2026-09-29",
+     "sha256": "551b11f33d3ed2749c055ef3a86e2358e8683442c34a4fddc5b3996fa5d5fa40"
+    },
+    {
+     "base_lines": [
+      1317,
+      1354
+     ],
+     "line_count": 38,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### `frontend/src/simulations/domains/geometry/scene3d-wide-line.ts` (2026-09-11) · offline · ⚠️ **ĐÃ GỠ** (kiểm 2026-09",
+     "sha256": "e6ca01713d146b02cc56826843e929bb9f9a0d598e8e8e8cd2afc18a84a563e4"
+    },
+    {
+     "base_lines": [
+      1355,
+      1385
+     ],
+     "line_count": 31,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/scripts/scene3d-fidelity-gate.mjs` (2026-09-11) · offline",
+     "sha256": "894dce050a5f13c7505cbe74c6a5795a2c8b20ee8b187776c768444474b548b4"
+    },
+    {
+     "base_lines": [
+      1535,
+      1549
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/interaction-semantics.test.ts` (M20 W12-B0) · offline",
+     "sha256": "bd34255887f2673aa70e96c0a8d950b74896206f97cba3a71f27f0b17ef8f5a3"
+    },
+    {
+     "base_lines": [
+      1670,
+      1679
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/logic/dag-module.tsx`",
+     "sha256": "b14bc60ba078a6f44415b7cbacf572d5c5be501459aed4551817e59b4f6ab5ec"
+    },
+    {
+     "base_lines": [
+      1932,
+      1943
+     ],
+     "line_count": 12,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/experience-manifest.test.ts` (M20 W6) · offline",
+     "sha256": "01f5b7a9a4bfac4d1cf9c325fb71f7e50ee91e6549483e98aae9fa8623159372"
+    },
+    {
+     "base_lines": [
+      1956,
+      1968
+     ],
+     "line_count": 13,
+     "reason": "entry of removed code",
+     "heading": "### `frontend/src/simulations/target-certification.test.ts` (M20 W4) · offline",
+     "sha256": "fd9be3e80931d831432dc62bb57275797ece4cedbff05786635beb952ce79875"
+    },
+    {
+     "base_lines": [
+      1969,
+      1975
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/scope.py` (M20 W3) · Change impact: offline",
+     "sha256": "1c25dbfdf894766d80026a6302bf0607a71003ba7aa607413e1dbb2446070b4c"
+    },
+    {
+     "base_lines": [
+      1976,
+      1988
+     ],
+     "line_count": 13,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/scope_gate.py` (M20 W3) · Change impact: targeted live",
+     "sha256": "e5f92871a44dec6e00b15f47057a4152c32541ac3f0a6c134bc043923322385d"
+    },
+    {
+     "base_lines": [
+      1989,
+      2001
+     ],
+     "line_count": 13,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/curriculum_schema.py` (M20 W2) · Change impact: off",
+     "sha256": "56c866ab671fd02fdff616c3f566de620e96b5ef46711f63ada5048512c254b7"
+    },
+    {
+     "base_lines": [
+      2015,
+      2020
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `backend/scripts/curriculum_benchmark_report.py` (M20 W2A) · Ch",
+     "sha256": "f6993d2edbdbeab6f6702da275c40abadd5e36a6639ef0304749393d16f1ae95"
+    },
+    {
+     "base_lines": [
+      2021,
+      2028
+     ],
+     "line_count": 8,
+     "reason": "entry of removed code",
+     "heading": "### `tests/test_curriculum_benchmark.py` (M20 W2) · Change impact: offline",
+     "sha256": "6ceabbe96c5eb48902945c7431dfb2df1f93ce311a3af807d9c5a81812cc6693"
+    },
+    {
+     "base_lines": [
+      2029,
+      2035
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/patterns.py` · Change impact: offline",
+     "sha256": "387baccaf1eec9b63bfb08a70cb1c2f163742ae28b0e86ada9419414cf2357d6"
+    },
+    {
+     "base_lines": [
+      2036,
+      2044
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/edit_policy.py` · Change impact: offline",
+     "sha256": "97f735bd4f3476001e82ec4815b05992ac9304fbad40a308f8e3c8aff7828333"
+    },
+    {
+     "base_lines": [
+      2045,
+      2050
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code",
+     "heading": "### `simulation/patch.py` · Change impact: offline",
+     "sha256": "fc4f14f90bed1466d45d45613c9e6e97f28859ec8a4b96083a13fc985efa9425"
+    },
+    {
+     "base_lines": [
+      2051,
+      2062
+     ],
+     "line_count": 12,
+     "reason": "entry of removed code",
+     "heading": "### `validation/simulation.py` · Change impact: offline",
+     "sha256": "400d651d06e63773f1c576e0d4f296d3d2d65798558390baebbbf135f339de93"
+    },
+    {
+     "base_lines": [
+      2063,
+      2069
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code",
+     "heading": "### `tests/test_encap_routing.py` · Change impact: offline",
+     "sha256": "66d2a4e2fff680da08fecfe6a02a6a879d3c206ac227fe60abb1c2e0b37111da"
+    },
+    {
+     "base_lines": [
+      2177,
+      2182
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/harness.py` · Change impact: offline (chạy live thì",
+     "sha256": "825370f693a8e6895e150d516f35d93085b5890d261da0c62134609b6287c537"
+    },
+    {
+     "base_lines": [
+      2183,
+      2195
+     ],
+     "line_count": 13,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_schema.py` · Change impact: offline",
+     "sha256": "2bc2971b82dc1925134b603f68dac322f194fbf20b5bd4524f9494dab13ebf80"
+    },
+    {
+     "base_lines": [
+      2196,
+      2210
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_record.py` · Change impact: offline",
+     "sha256": "d47e6099c23561ebbef28e95eab8a743efa85bb8bf546029b42c6973481e92e2"
+    },
+    {
+     "base_lines": [
+      2211,
+      2229
+     ],
+     "line_count": 19,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_metrics.py` · Change impact: offline",
+     "sha256": "75ddb13766961e6b246b9b1908bdd67f3b26ab02a958461fb8a06d61690e7781"
+    },
+    {
+     "base_lines": [
+      2230,
+      2244
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_offline_scripts.py` · Change impact: offline",
+     "sha256": "3e70ddb2bd9fe2be255db35c51b46d69919f0888c5e2a310bda0b5d69abbb443"
+    },
+    {
+     "base_lines": [
+      2245,
+      2259
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/m16_artifacts.py` · Change impact: offline",
+     "sha256": "d74d591178ec951ad33212c17c3373449b98382bd29724e749be25008d2f29f8"
+    },
+    {
+     "base_lines": [
+      2260,
+      2274
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/datasets/m16_catalog.py` · Change impact: offline",
+     "sha256": "e0591e885ca168c96d5a311a2663da2d2fbdcac15d38ef882b4ba2cf7dd28162"
+    },
+    {
+     "base_lines": [
+      2275,
+      2289
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.js",
+     "sha256": "22fd8c106f9ba6c25e6b7f608b8fef67fb4a69af930964c165c47a8194add8a0"
+    },
+    {
+     "base_lines": [
+      2290,
+      2303
+     ],
+     "line_count": 14,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16",
+     "sha256": "2cf3ee6a99895bd12c8fb572819c70e9adad3a853be2dc5ee731b630536d2aea"
+    },
+    {
+     "base_lines": [
+      2312,
+      2338
+     ],
+     "line_count": 27,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02) — `evaluation/live.py` · Change impact: full live",
+     "sha256": "5926cd4d40da67bfdd4a409ebdafee675037f83f398f81bbb7b3b878c4113daf"
+    },
+    {
+     "base_lines": [
+      2390,
+      2398
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code",
+     "heading": "### `simulations/observe-lifecycle-w4b2r.test.ts` · Change impact: offline",
+     "sha256": "82b9d5187ebb3ce3578911cedcce8992e82e33b3acca6599ff72596bae0c1912"
+    },
+    {
+     "base_lines": [
+      2399,
+      2413
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/learner-gate.ts` · `learner-gate.test.ts` · Chan",
+     "sha256": "ff4a9b1dc60f53b665e64e601d22a126fe8a370e9d420a47fd8839f2628ba141"
+    },
+    {
+     "base_lines": [
+      2606,
+      2639
+     ],
+     "line_count": 34,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/model.ts` · Change impact: offli",
+     "sha256": "bbda8ca8b17afb2e8d7e2d1995f0945260609afa29d1ada1a66697bbb3aabbb3"
+    },
+    {
+     "base_lines": [
+      2640,
+      2648
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/validate.ts` · Change impact: of",
+     "sha256": "c2be727fe90ecc6df89dfbfe31d912bf2025343b86fab10291c5ed97d9d5cf7e"
+    },
+    {
+     "base_lines": [
+      2649,
+      2652
+     ],
+     "line_count": 4,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/patch.ts` · Change impact: offli",
+     "sha256": "c349ddaee44322537dc3f5f8d2f93d3bb85f86fa9a4494f616f84e84022a019c"
+    },
+    {
+     "base_lines": [
+      2653,
+      2657
+     ],
+     "line_count": 5,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/edit-policy.ts` · Change impact:",
+     "sha256": "e2a6ef39fa977c33315eb3603ed43395df31f090e747b21acc9e02de688f70f4"
+    },
+    {
+     "base_lines": [
+      2658,
+      2662
+     ],
+     "line_count": 5,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/EditBar.tsx` · Change impact: of",
+     "sha256": "83fd248e088d05a362e6a775db4f7e1f7d0841dd294aa235cfae00d139501209"
+    },
+    {
+     "base_lines": [
+      2663,
+      2666
+     ],
+     "line_count": 4,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/index.ts` · Change impact: offli",
+     "sha256": "78a89429de676f8a96329311d5ddcf71551bf97e9c402d3abf4733ab6edbdbfa"
+    },
+    {
+     "base_lines": [
+      2667,
+      2671
+     ],
+     "line_count": 5,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/generic/ui.tsx` · Change impact: offline",
+     "sha256": "1d97fd8592bead7505fe02573f1d2136a4965d8a3b90e9b9f9a2f9a84864e26b"
+    },
+    {
+     "base_lines": [
+      2672,
+      2676
+     ],
+     "line_count": 5,
+     "reason": "entry of removed code",
+     "heading": "### `simulations/domains/{algorithm,logic,binary,network}/` · Change impact: offline",
+     "sha256": "7d0be78e1ce9bd4c8da96694da89b2458c81a0a078cbb2a45d3e2ae2474eb84d"
+    },
+    {
+     "base_lines": [
+      2677,
+      2707
+     ],
+     "line_count": 31,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/decision.ts` · Change impact: ",
+     "sha256": "a5ade308a967f031fa2cf3baa816528d489f0c5bbe520c0d3f921588bda4a21d"
+    },
+    {
+     "base_lines": [
+      2708,
+      2721
+     ],
+     "line_count": 14,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/condition-param.ts`",
+     "sha256": "937d499afaeabcae668333f32aea8dccb8383c9f323c38f9ab31f5605b19319c"
+    },
+    {
+     "base_lines": [
+      2722,
+      2789
+     ],
+     "line_count": 68,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/interaction-policy.ts` · Chang",
+     "sha256": "82f6ee15eb50ab1d7de49a01ba98e1487d4668e9bdc5f21f5ed99a40f84947d2"
+    },
+    {
+     "base_lines": [
+      2790,
+      2806
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/network/node-glyph.ts` · Change impact: ",
+     "sha256": "9b0dfb041158775fc694134d14eb54b0ec073f82350972ccc3022a9eb8b9514f"
+    },
+    {
+     "base_lines": [
+      2807,
+      2823
+     ],
+     "line_count": 17,
+     "reason": "entry of removed code",
+     "heading": "### ~~`simulations/domains/network/ui3d.tsx`~~ — ĐÃ NGHỈ (W4B-2R)",
+     "sha256": "a1330cc1711203f12ab62b4df194d48baa689bcbbd2aadbf82ff3ff15e0707fb"
+    },
+    {
+     "base_lines": [
+      2824,
+      2839
+     ],
+     "line_count": 16,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/network/encap-{model,ui,ui3d}.ts(x)` + `",
+     "sha256": "f95243c61603bd5bad2359ecad50a4b6774a899f7806057a5b83b2d75ee1eee2"
+    },
+    {
+     "base_lines": [
+      2864,
+      2874
+     ],
+     "line_count": 11,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/program-module.tsx` (M17 W2C) ",
+     "sha256": "25a329cce6bfae1317d6533516585cb895d433c3d4ab0ee1ec41313c851b9ae8"
+    },
+    {
+     "base_lines": [
+      2894,
+      2902
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `components/ScanActionZone.tsx` · `SearchActionZone.tsx` · `S",
+     "sha256": "c395364cb7eab30ceac2c29b24f256e1681d9f336c71732f8af079bc957570bf"
+    },
+    {
+     "base_lines": [
+      2903,
+      2911
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/algorithm/ui.tsx` — trạng thái TRÌNH BÀY",
+     "sha256": "d4de0bff44b30e1bd51b129dcc90360d4cdd2c357963efa44bd72816a0222417"
+    },
+    {
+     "base_lines": [
+      2937,
+      2970
+     ],
+     "line_count": 34,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z",
+     "sha256": "7ab8690a01d169eb7b1cc323e6865d1b03c9d791dcf3f69931d982d7659c292b"
+    },
+    {
+     "base_lines": [
+      2983,
+      2988
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `data/samples.ts` · Change impact: offline",
+     "sha256": "614be7f8716835b83f83ae1657e15a5cf8ccbb05813c36b98ec90fbeced0e0f4"
+    },
+    {
+     "base_lines": [
+      2989,
+      2999
+     ],
+     "line_count": 11,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `data/sim-samples.ts` — bổ sung W4B-3D",
+     "sha256": "86482db3894e5fc07efce76a7062cca4235e98345798454169e7b279d14f5cb7"
+    },
+    {
+     "base_lines": [
+      3000,
+      3024
+     ],
+     "line_count": 25,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ~~`components/SessionTabs.tsx`~~ — ĐÃ GỠ (M18-UI)",
+     "sha256": "b1176e3a03ea4378dd840bde7558f238e11c919a5a1544e2d5ca214c7de88643"
+    },
+    {
+     "base_lines": [
+      3060,
+      3074
+     ],
+     "line_count": 15,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `components/SearchStateView.tsx` — dữ kiện bước tìm kiếm · of",
+     "sha256": "c4cf8461a52ba7c54e2ac12d5839b850b697db95fa6a4cfef6715207bceee74f"
+    },
+    {
+     "base_lines": [
+      3075,
+      3084
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code",
+     "heading": "### `generic/narration-boundary.characterization.test.tsx` · offline · **ĐẶC TẢ**",
+     "sha256": "2d658a3aefbf3de9a871cb5269831459d92a7b4e5572cd5cc345c6b9da837754"
+    },
+    {
+     "base_lines": [
+      3085,
+      3093
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code",
+     "heading": "### `simulations/observation-preservation.test.tsx` · Change impact: offline",
+     "sha256": "fade0b01965746d17cb29586af91f632f7e1a3a236440eb75bcc8e84a105d107"
+    },
+    {
+     "base_lines": [
+      3094,
+      3102
+     ],
+     "line_count": 9,
+     "reason": "entry of removed code",
+     "heading": "### `simulations/spec-reuse.test.tsx` · Change impact: offline",
+     "sha256": "c74daa75306b918d4a55641ad6e295c61713e0eaeade06da3521366ac1150ca6"
+    },
+    {
+     "base_lines": [
+      3113,
+      3126
+     ],
+     "line_count": 14,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — W4B-4D: THAO TÁC THẲNG LÊN TRANG",
+     "sha256": "510c02b8a6ca1cc2a0cd4b79a1c4dbe60a7e7431490a78583e2e28b76268e0cd"
+    },
+    {
+     "base_lines": [
+      3127,
+      3151
+     ],
+     "line_count": 25,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/web/` — W4B-3F: TRANG CÓ CẤU TRÚC",
+     "sha256": "c1e4a456dbc5fc7f9630ee0392b70ff8fc27371a5f3bdc0c211f700343fd5a41"
+    },
+    {
+     "base_lines": [
+      3172,
+      3187
+     ],
+     "line_count": 16,
+     "reason": "entry of removed code",
+     "heading": "### `simulations/experience-audit-w4b4a.test.ts` · offline",
+     "sha256": "3cb1e9bee596af483a456abdf7376aaf595a75b689b67e54e380d67be9927af6"
+    },
+    {
+     "base_lines": [
+      3229,
+      3244
+     ],
+     "line_count": 16,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/renderer-fit.ts` · offline",
+     "sha256": "c02a068dd2eab39319031f623c58261be023a8538a9e25601fc811d6e49b440e"
+    },
+    {
+     "base_lines": [
+      3245,
+      3254
+     ],
+     "line_count": 10,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `simulations/domains/tree/layout-size.ts` · offline",
+     "sha256": "786c59a8ee3a70fb89361c58bd02b606e9e1be9a73d6b0b991585c291d81f9ca"
+    },
+    {
+     "base_lines": [
+      3954,
+      3961
+     ],
+     "line_count": 8,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/layout-compiler.ts`",
+     "sha256": "81ddfb42c434ba3b8fce2bf8a33b8c634b6d0617e04b66f76052e5de61cc004c"
+    },
+    {
+     "base_lines": [
+      3962,
+      3968
+     ],
+     "line_count": 7,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/anchor-resolver.ts`",
+     "sha256": "349d3daffa28af47166f59051fc2bd98aa317029a71415b3b67974b9c0585cdd"
+    },
+    {
+     "base_lines": [
+      3969,
+      3976
+     ],
+     "line_count": 8,
+     "reason": "entry of removed code (heading marked removed)",
+     "heading": "### ⛔ ĐÃ GỠ (FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02) — `frontend/src/simulations/domains/generic/disallowed-collisio",
+     "sha256": "d554f497adc206dcacba9afc6fa8f1b8aa07bf2e825740cc8c23137872e9a5d4"
+    },
+    {
+     "base_lines": [
+      6236,
+      6255
+     ],
+     "line_count": 20,
+     "reason": "entry of removed code",
+     "heading": "### ~~`.../geometry/Scene3DSection.tsx`~~ — GỠ 2026-08-30",
+     "sha256": "fc7035db6ee46056c5aa2caf0f811235d6f7db349be08c699a33351a67d0162c"
+    },
+    {
+     "base_lines": [
+      7386,
+      7391
+     ],
+     "line_count": 6,
+     "reason": "entry of removed code",
+     "heading": "### `backend/app/simulation/execution_authority_gate.py` (HISTORICAL_REMOVED) · offline",
+     "sha256": "c76fb2e25593dd916caa0390b399e0447f4997a94699bfdd7b95fda5d81be6bd"
+    }
+   ]
+  }
+ }
+}

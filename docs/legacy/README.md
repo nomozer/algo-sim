@@ -16,3 +16,23 @@
 | [`geometry/`](geometry/) | `docs/geometry/` | kế hoạch, thiết kế, soát của giai đoạn chuyển đề 2026-08-24 … 09-02 | `../ARCHITECTURE_MAP.md`, `../architecture/` |
 | [`architecture/`](architecture/) | `docs/architecture/` | quyết định đã thực thi (2026-09-25/26), không ai tham chiếu | `../architecture/README.md` |
 | [`REPOSITORY_MAP.md`](REPOSITORY_MAP.md) | `docs/` | bản đồ vị trí viết trước khi đổi đề | `../README.md`, `../CODE_INDEX.md` |
+
+## Phần tách nguyên văn khỏi tài liệu sống (2026-10-05, `cuboid-final-review`)
+
+Bảy file dưới đây chứa các **khối** chép nguyên văn từ tài liệu sống tại commit `4048ff83`: mỗi khối ghi dòng gốc và
+sha256 trong chú thích, và tài liệu sống để lại một dòng trỏ về đây. Kiểm lại byte:
+`docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/split_history_cfr.py --verify` (bản ghi:
+[`../evaluation/geometry/runs/cuboid-final-review/inventory/HISTORY_SPLIT.json`](../evaluation/geometry/runs/cuboid-final-review/inventory/HISTORY_SPLIT.json)).
+
+| file | tách từ | nội dung |
+|---|---|---|
+| [`CODE_INDEX_REMOVED_ENTRIES.md`](CODE_INDEX_REMOVED_ENTRIES.md) | `../CODE_INDEX.md` | mục mô tả mã đã gỡ (Tin học, DSL, công cụ và module đã xoá); chỉ mục truy vết ngắn vẫn ở §0j |
+| [`STATUS_LEDGER_INFORMATICS_ERA.md`](STATUS_LEDGER_INFORMATICS_ERA.md) | `../STATUS_LEDGER.md` | bảng trạng thái §1–§5 (gồm §4f–§4h, các mục W12) và tên đề tài 2026-08-18 |
+| [`COVERAGE_INFORMATICS_ERA.md`](COVERAGE_INFORMATICS_ERA.md) | `../COVERAGE.md` | nguồn SGK Tin học và tuyên bố cấm của nó, ma trận giá trị, phủ năng lực, bộ đề (§1, §1b, §3, §4, §6–§12) |
+| [`CORRECTNESS_INFORMATICS_ERA.md`](CORRECTNESS_INFORMATICS_ERA.md) | `../CORRECTNESS.md` | tiền lệ what-if, PatchResult (§3), phân loại A/B/C (§5–§6), runner `live.py`, §8–§9 |
+| [`ARCHITECTURE_MAP_INFORMATICS_ERA.md`](ARCHITECTURE_MAP_INFORMATICS_ERA.md) | `../ARCHITECTURE_MAP.md` | hai trục DSL/edit (§6), điểm mở rộng (§7), cache pattern reuse (§9), hướng tương lai (§10) |
+| [`DESIGN_BRIEF_INFORMATICS_ERA.md`](DESIGN_BRIEF_INFORMATICS_ERA.md) | `../DESIGN_BRIEF.md` | mô tả sản phẩm Tin học (§1), bố cục workspace, hợp đồng theo miền (§4), việc thiết kế (§8) |
+| [`POST_THESIS_BACKLOG_INFORMATICS_ERA.md`](POST_THESIS_BACKLOG_INFORMATICS_ERA.md) | `../POST_THESIS_BACKLOG.md` | hai mục ý tưởng của sản phẩm Tin học, dòng phạm vi "môn Tin học" |
+
+Link tương đối bên trong các khối viết cho thư mục `docs/` nên từ `legacy/` chúng trỏ lệch một cấp — cùng ngoại lệ đã
+ghi ở đầu file này.

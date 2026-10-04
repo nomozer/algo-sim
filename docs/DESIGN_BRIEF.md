@@ -10,26 +10,35 @@
 > - `docs/ARCHITECTURE_MAP.md` = kiến trúc kỹ thuật, bất biến, luồng dữ liệu.
 >
 > File này là **cầu nối**: dịch ràng buộc kiến trúc thành ràng buộc thiết kế.
+>
+> **Giai đoạn (2026-10-05, `cuboid-final-review`).** Brief này viết lần đầu cho sản phẩm Tin học. §1, bố cục
+> workspace, §4 và §8 nay mô tả miền hình học; phần cũ chép nguyên văn ở
+> [`legacy/DESIGN_BRIEF_INFORMATICS_ERA.md`](legacy/DESIGN_BRIEF_INFORMATICS_ERA.md). Các **luật** ở §3, §5–§7, §9
+> vẫn hiệu lực; ví dụ minh hoạ của chúng (cây, cổng logic, cơ số) là ví dụ của giai đoạn cũ.
 
 ---
 
 ## 1. Sản phẩm là gì
 
-**Tên đề tài:** *Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán
-bằng ngôn ngữ tự nhiên, hỗ trợ dạy học môn Tin học THPT.*
+**Tên đề tài:** *Nghiên cứu và xây dựng hệ thống mô phỏng 3D hình học không gian* (`STATUS_LEDGER
+§0-2026-08-24`).
 
-Học sinh **dán một đề bài bằng tiếng Việt**. LLM (Gemini) **chỉ đọc hiểu đề và
-điền một bản đặc tả đã kiểm định**. Sau đó **một engine tất định chạy trên
-trình duyệt** sinh ra toàn bộ diễn biến, hoạt cảnh và kết quả.
+Học sinh **gõ đề hình học không gian bằng tiếng Việt** (hoặc chụp ảnh đề: hệ chép lại, học sinh duyệt/sửa trước
+khi gửi). LLM **chỉ đọc đề** và viết các bước dựng hình bằng **tên** của vật đã dựng — không bao giờ phán toạ
+độ. **Engine hình học tất định** ở máy chủ dựng hình chính xác và kiểm định; trình duyệt diễn hoạt từng bước
+trong Scene3D (`ARCHITECTURE_MAP.md` §1–§2).
 
 > **Câu một dòng cho người thiết kế:** *AI hiểu đề — máy tất định mới được
 > phép "biết đáp án". Giao diện phải luôn nói đúng sự thật đó.*
 
-**Người học:** học sinh THPT Việt Nam (lớp 10–12), môn Tin học, chương trình
-GDPT 2018. Không phải lập trình viên. **Mọi chữ trên màn hình là tiếng Việt.**
+**Người học:** học sinh THPT Việt Nam, Toán 11–12, phần hình học không gian. Không phải lập trình viên. **Mọi
+chữ trên màn hình là tiếng Việt.**
 
-**Quy mô hiện tại:** 9 họ năng lực · 19 mô phỏng · 6 miền hiển thị
-(`algorithm`, `binary`, `logic`, `network`, `tree`, `generic`).
+**Quy mô hiện tại:** một mô phỏng sản phẩm (`generic.semantic_program`); họ hình được hỗ trợ:
+`backend/app/simulation/product_capability.py`.
+
+*(Ba đoạn mô tả sản phẩm Tin học — tên đề tài 2026-08-18, người học môn Tin học, quy mô 19 mô phỏng / 6 miền —
+nguyên văn ở [`legacy/DESIGN_BRIEF_INFORMATICS_ERA.md`](legacy/DESIGN_BRIEF_INFORMATICS_ERA.md).)*
 
 ---
 
@@ -60,6 +69,9 @@ GDPT 2018. Không phải lập trình viên. **Mọi chữ trên màn hình là 
                                   └──────────────────────────┘
 ```
 
+*Hộp máy chủ và hai loại từ chối trong sơ đồ là luồng Tin học. Luồng hiện hành: `ARCHITECTURE_MAP.md` §2a; thẻ
+từ chối nêu đúng chặng đã dừng và lý do của chặng ấy (`frontend/src/components/SimulationWorkspace.tsx`).*
+
 **Bốn màn hình** (thanh điều hướng trên cùng): **Trang chủ** · **Thư viện** ·
 **Lịch sử** · (**Workspace** hiện khi có mô phỏng đang mở).
 
@@ -68,15 +80,11 @@ GDPT 2018. Không phải lập trình viên. **Mọi chữ trên màn hình là 
 - **Lịch sử** — phiên đã học, mở lại **không cần AI** (chạy lại engine tất định).
 - **Workspace** — nơi diễn ra mô phỏng.
 
-### Bố cục Workspace (2 cột)
+### Bố cục Workspace
 
-| Vùng | Nội dung |
-|---|---|
-| **Sân khấu** (trái, lớn) | Hình ảnh mô phỏng: dãy cột, cây, đồ thị, mạch, bit… |
-| **Panel trạng thái** (dưới sân khấu) | Ngăn xếp/hàng đợi/biến — **sự thật engine**, cập nhật từng bước |
-| **Thuyết minh** (dưới panel) | Một câu nói **hành động & nguyên nhân** của bước hiện tại |
-| **Quan sát** (phải) | Siêu dữ liệu: biến thể, gốc, tiến độ, "Hỏi AI về bước này" |
-| **Dòng thời gian** (đáy, full width) | ⏮ ◀ ▶ Tự chạy ⏭ · Đặt lại · "Bước 12 / 22" · tốc độ · thanh trượt |
+Workspace là `Scene3DExplorer`: sân khấu 3D, dòng thời gian từng bước, vùng soi chi tiết của đại lượng đang
+chọn và lời giải (thu gọn mặc định) — mô tả và chủ sở hữu ở `CODE_INDEX.md` (miền hình học). Bảng bố cục hai
+cột của giai đoạn Tin học: nguyên văn ở [`legacy/DESIGN_BRIEF_INFORMATICS_ERA.md`](legacy/DESIGN_BRIEF_INFORMATICS_ERA.md).
 
 ---
 
@@ -130,24 +138,10 @@ renderer.** Nhờ vậy cùng một trạng thái vẽ được 2D lẫn 3D.
 
 ## 4. Hợp đồng hiển thị theo từng miền
 
-Mỗi mô phỏng phải thể hiện được **cơ chế ẩn** của nó — không chỉ vẽ đúng dữ liệu.
-
-| Miền | Phải nhìn thấy | Panel |
-|---|---|---|
-| **algorithm** (tìm/đếm/tổng/sắp xếp) | dãy cột, ô đang xét, vùng đã sắp, biến chạy, dòng mã giả đang thực hiện | biến + mã giả |
-| **tree** (duyệt cây) | gốc rõ, quan hệ **trái/phải** có nhãn, nút hiện tại/đã thăm/chưa thăm khác nhau, đường active | **ngăn xếp** (DFS) hoặc **hàng đợi** (theo mức) |
-| **network** (định tuyến, duyệt đồ thị) | đỉnh–cạnh, gói tin/nút đang xét, đường đi dựng dần | hàng đợi / ngăn xếp |
-| **network** (đóng gói TCP/IP) | chồng tầng hai đầu gửi–nhận, PDU dày thêm/mỏng đi qua từng tầng | delta từng bước |
-| **binary** (bit, đổi cơ số) | ô bit + hàng trọng số, hoặc bảng chia-lấy-dư / trọng số vị trí | tiến trình chuyển đổi |
-| **logic** (cổng, mạch) | cổng và dây, đầu vào bật/tắt, đầu ra sáng/tắt | **bảng chân trị** |
-| **generic** (cảnh tự dựng) | đúng các đối tượng đề khai (nút, cạnh, công tắc, đèn, ô giá trị) | — |
-
-**Phép thử vàng:** *người xem phải phân biệt được bốn biến thể duyệt cây mà
-KHÔNG cần đọc tiêu đề.* Nếu chỉ khác nhau ở chữ trên đầu thì thiết kế chưa đạt.
-
-**Về 3D:** 3D **không phải một miền riêng**, chỉ là renderer thứ hai đọc **cùng
-trạng thái**. Chỉ dùng 3D khi **trục sâu mang ý nghĩa thật** (ví dụ: Z = tầng
-giao thức). 3D xoay cho đẹp = bị cấm.
+Hợp đồng hiển thị hiện hành của miền hình học: định danh cạnh, chủ sở hữu thị giác và nét khuất ở
+[`architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md);
+bất biến khoá bằng test ở `ARCHITECTURE_MAP.md` §5 (#31, #35, #38, #39). Bảng hợp đồng theo bảy miền Tin học
+và đoạn *Về 3D*: nguyên văn ở [`legacy/DESIGN_BRIEF_INFORMATICS_ERA.md`](legacy/DESIGN_BRIEF_INFORMATICS_ERA.md).
 
 ---
 
@@ -210,16 +204,7 @@ thật) · `scripts/capture-tree-visual.mjs` (chụp theo kịch bản).
 
 ## 8. Chỗ đang cần thiết kế
 
-| Việc | Trạng thái |
-|---|---|
-| Cây 1 nút để lại khoảng trắng lớn dưới khung | thẩm mỹ, chưa xử lý |
-| Nhãn cạnh 9px khi cây dày hơn 8 nút | cần đo lại nếu nới giới hạn |
-| Miền **bảng/CSDL** (`relational_table_query`) | **chưa mở** — sẽ cần ngôn ngữ thị giác cho lưới dữ liệu, vị từ lọc, tổng hợp |
-| Chế độ luyện tập / tự kiểm | ngoài phạm vi hiện tại, cần duyệt riêng |
-
-**Đang bị đóng băng phạm vi** (đừng thiết kế nếu chưa được duyệt): miền chuyên
-biệt mới, trình soạn thảo mã, undo/redo, phóng to/kéo thả khung nhìn, trình sửa
-kiểu, sửa topology.
+Yêu cầu giao diện đang chờ (chưa làm) ghi ở [`ROADMAP.md`](ROADMAP.md). Bảng việc thiết kế của giai đoạn Tin học (cây, bảng/CSDL) và danh sách đóng băng của nó: nguyên văn ở [`legacy/DESIGN_BRIEF_INFORMATICS_ERA.md`](legacy/DESIGN_BRIEF_INFORMATICS_ERA.md).
 
 ---
 

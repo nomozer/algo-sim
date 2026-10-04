@@ -6,8 +6,8 @@
 > **Trạng thái kiểm toán bằng chứng**: `EVIDENCE_METADATA_CONSISTENT_WITH_NARROWED_CLAIM`  
 > **Kết luận khoảng trống nghiên cứu**: `GAP_PARTIALLY_ESTABLISHED_NEEDS_NARROWING`  
 > **Dữ liệu đính kèm**:
-> - Ma trận bằng chứng 23 công trình được kiểm chứng cấp nguồn: [`systematic_literature_evidence_matrix.json`](file:///d:/Documents/projects/algo-sim/docs/research/systematic_literature_evidence_matrix.json)
-> - Nhật ký 12 truy vấn và thẩm định cấp bản ghi (28 records): [`systematic_literature_search_log.json`](file:///d:/Documents/projects/algo-sim/docs/research/systematic_literature_search_log.json)
+> - Ma trận bằng chứng 23 công trình được kiểm chứng cấp nguồn: [`systematic_literature_evidence_matrix.json`](systematic_literature_evidence_matrix.json)
+> - Nhật ký 12 truy vấn và thẩm định cấp bản ghi (28 records): [`systematic_literature_search_log.json`](systematic_literature_search_log.json)
 
 ---
 
@@ -32,7 +32,7 @@ $$\mathbf{K\hat{e}t\,lu\hat{a}n\,kho\comp{a}ng\,tr\acute{o}ng:} \quad \textbf{GA
 ## 2. Phương Pháp Tổng Quan Có Hệ Thống & Kiểm Chứng Nguồn Gốc
 
 Khảo sát này được thực hiện theo nguyên tắc minh bạch học thuật với quy trình kiểm chứng cấp bản ghi:
-- **12 chuỗi truy vấn** có cấu trúc được lưu trữ đầy đủ trong [`systematic_literature_search_log.json`](file:///d:/Documents/projects/algo-sim/docs/research/systematic_literature_search_log.json).
+- **12 chuỗi truy vấn** có cấu trúc được lưu trữ đầy đủ trong [`systematic_literature_search_log.json`](systematic_literature_search_log.json).
 - **Thống kê sàng lọc cấp bản ghi (Search Summary):**
   - Tổng số bản ghi sàng lọc (Total): **28**
   - Bản ghi được chọn (Included): **23**
@@ -139,7 +139,7 @@ Khảo sát này được thực hiện theo nguyên tắc minh bạch học thu
 
 ## 5. Tóm Tắt Ma Trận Bằng Chứng (23 Công Trình)
 
-Phân bố 23 công trình được tổng hợp trong [`systematic_literature_evidence_matrix.json`](file:///d:/Documents/projects/algo-sim/docs/research/systematic_literature_evidence_matrix.json):
+Phân bố 23 công trình được tổng hợp trong [`systematic_literature_evidence_matrix.json`](systematic_literature_evidence_matrix.json):
 
 ```
 +------------------------------------------------------------------------------------------------------+

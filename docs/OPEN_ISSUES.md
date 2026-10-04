@@ -204,6 +204,7 @@
 - **impact:** Người dùng chưa được hưởng lợi từ tốc độ và tính tất định của compiler trong luồng chạy thực tế.
 - **scope:** `backend/app/ai/pipeline.py`
 - **status:** OPEN
+- **cfr_audit:** (2026-10-05, `cuboid-final-review`) the description is stale: the routing gate exists and is wired opt-in — `backend/app/simulation/geometry_compiler/routing.py::quyet_dinh_dinh_tuyen`, called from `backend/app/ai/pipeline.py` after analyze; the compiler runs only with `GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST`, the default `LLM_ONLY` returns `DISABLED`. What stays open is the default switch itself (`MIGRATION_CHECKLIST.md` GATE-11 audit line); the status is left to the migration wave.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P5 (Migration)
 - **default_switch_blocker:** YES
@@ -214,6 +215,7 @@
 - **impact:** Nếu bật compiler-first mà gặp bài toán không thuộc diện hỗ trợ thì hệ thống sẽ dừng thay vì fallback.
 - **scope:** `backend/app/ai/pipeline.py`
 - **status:** OPEN
+- **cfr_audit:** (2026-10-05, `cuboid-final-review`) the evidence path is stale (the package is `backend/app/simulation/geometry_compiler/`) and so is the description: `routing.py` returns `FALLBACK_TO_LLM` for `UNSUPPORTED` (unit test `backend/tests/geometry/test_geometry_primitive_compiler.py::test_AD_unsupported_tra_fallback_cho_caller_chu_khong_tu_gui`) and `pipeline.py` sends every decision other than `USE_COMPILER`/`REFUSE` on to `stage_semantic_program`. No test drives that fallback branch through `run_pipeline` yet (`MIGRATION_CHECKLIST.md` GATE-12 audit line); the status is left to the migration wave.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P5 (Migration)
 - **default_switch_blocker:** YES
@@ -620,3 +622,27 @@
 - **default_switch_blocker:** NO
 - **acceptance:** a full backend run leaves the bytes of `AGENTS.md` and of every file under `docs/` unchanged (hash before and after the run).
 - **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_docs_information_architecture.py -q` with a hash of `AGENTS.md` and `docs/**` before and after.
+
+### ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE
+- **description:** Eight of the ten T1 scripts in `frontend/package.json` (`test:domain:algorithm`, `binary`, `logic`, `network`, `database`, `web`, `generic`, `tree`) point at informatics domain folders removed by `LEGACY_INFORMATICS_REMOVAL` (2026-09-02); only `shared-ui` and `classroom` still select tests. The geometry domain has no T1 script and no owner entry in `frontend/scripts/impact.mjs`, so a change under `src/simulations/domains/geometry/` makes T0 report `IMPACT_MAPPING_MISSING` and escalate to all of `src/` plus pytest.
+- **evidence:** `frontend/package.json` lines 13–22; `node frontend/scripts/impact.mjs --dry --files src/simulations/domains/geometry/scene3d-view.tsx` (2026-10-05, `cuboid-final-review`); `docs/TEST_TIERS.md` (dated note under the tier table).
+- **impact:** T1 cannot be run for the only product domain; T0 is slow for geometry edits (it still never selects 0 tests, so no false green).
+- **scope:** `frontend/package.json` (drop the eight dead scripts, add `test:domain:geometry`) and the owner tables of `frontend/scripts/impact.mjs`; tooling only, no product code, no candidate change.
+- **status:** OPEN (`cuboid-final-review`) — registered with a dated note in `TEST_TIERS.md`; not fixed (tooling, outside this task).
+- **owner_class:** OPERATIONS
+- **suggested_wave:** the next wave that touches the test tooling
+- **default_switch_blocker:** NO
+- **acceptance:** every `test:domain:*` script selects at least one test file, a geometry script exists, and `impact.mjs --dry` maps a geometry file without `IMPACT_MAPPING_MISSING`.
+- **verify:** `cd frontend && npm run test:domain:geometry && node scripts/impact.mjs --dry --files src/simulations/domains/geometry/scene3d-view.tsx`
+
+### ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE
+- **description:** In the numbered invariant table of `docs/ARCHITECTURE_MAP.md` §5, the *enforced at* and *test* cells were written when each row was added. In 22 rows (#1–#8, #10, #11, #14–#16, #18, #20–#26, #29) at least one named file no longer exists, mostly removed with the informatics domain; in #1–#8, #11, #14 and #15 none of the named files exists. The principle of such a row may still hold, but its current lock is not recorded.
+- **evidence:** `docs/evaluation/geometry/runs/cuboid-final-review/inventory/DOCS_INVENTORY.json` (`architecture_map_invariant_pointers`: per row, the named files that exist and those that do not); dated note under the §5 heading.
+- **impact:** a reader can take a row as test-locked when nothing locks it any more; tests and docs cite rows by number (`#11/#12`, `#14`, `#31`), so the numbering must stay.
+- **scope:** per row: name the current lock, or mark the row as retired with the date and the removal that retired it; keep every number. Rows #27–#39 already point at live code.
+- **status:** OPEN (`cuboid-final-review`) — measured and made visible; not re-mapped (needs a per-invariant audit of the running system).
+- **owner_class:** DOCUMENTATION
+- **suggested_wave:** the next architecture or docs wave
+- **default_switch_blocker:** NO
+- **acceptance:** `architecture_map_invariant_pointers` reports no missing file for a row that is not marked retired.
+- **verify:** re-run `docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/inventory_docs_cfr.py --check` (or its `invariant_pointers` function) on the updated map.

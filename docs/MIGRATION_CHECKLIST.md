@@ -16,13 +16,13 @@
 
 ### GATE-02: Contract Validation
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/app/simulation/contract.py`, Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology đa diện tổng quát dạng 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema), giải quyết bế tắc kỹ thuật SSOT.
+- **EVIDENCE:** `backend/app/simulation/semantic_program/request_contract.py` (`RequestContract`; đường dẫn cũ `backend/app/simulation/contract.py` không tồn tại — sửa 2026-10-05, `cuboid-final-review`), Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology đa diện tổng quát dạng 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema), giải quyết bế tắc kỹ thuật SSOT.
 - **BLOCKER:** Chưa triển khai vertical slice mã sản phẩm (cần triển khai trên `RequestContract` và `contract_adapter`).
 - **NEXT_TEST:** Triển khai và kiểm thử vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
 ### GATE-03: FactGraph Safety
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/app/simulation/fact_graph.py`, `test_fact_graph_contract_extension.py` (fail-closed khi dữ kiện mâu thuẫn).
+- **EVIDENCE:** `backend/app/simulation/geometry_compiler/fact_graph.py`, `backend/tests/geometry/test_geometry_primitive_compiler.py::test_I_du_kien_do_dai_MAU_THUAN__INVALID_CONFLICT` (hai tên cũ `backend/app/simulation/fact_graph.py`, `test_fact_graph_contract_extension.py` không có trong kho — sửa 2026-10-05, `cuboid-final-review`) (fail-closed khi dữ kiện mâu thuẫn).
 - **BLOCKER:** Chưa tích hợp suy diễn quan hệ bắc cầu (transitive relation inference) cho đa giác phức tạp.
 - **NEXT_TEST:** Kiểm thử FactGraph với dữ kiện tam giác đồng dạng và thiết diện cắt.
 
@@ -73,12 +73,14 @@
 - **EVIDENCE:** Hệ thống hiện tại gọi LLM synthesis trực tiếp trong `ai/pipeline.py`.
 - **BLOCKER:** Chưa xây dựng module `Router` kiểm tra tính hợp lệ (`is_compiler_eligible`) trước khi gọi LLM.
 - **NEXT_TEST:** Tạo router middleware và unit tests rẽ nhánh.
+- **AUDIT (2026-10-05, `cuboid-final-review`):** evidence và blocker trên đã cũ. Router có thật và đã nối, ở dạng opt-in: `backend/app/simulation/geometry_compiler/routing.py::quyet_dinh_dinh_tuyen` trả `DISABLED` · `USE_COMPILER` · `FALLBACK_TO_LLM` · `REFUSE`; `backend/app/ai/pipeline.py` gọi nó ngay sau analyze, và compiler chỉ chạy khi `GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST` (mặc định `LLM_ONLY` ⇒ `DISABLED`, không chạm dòng nào của compiler). Test qua `run_pipeline`: `backend/tests/geometry/test_prism_production_route.py` (`…deterministic_compiler_success`, `test_default_mode_bypasses_compiler`). Chưa có lượt live nào chạy ở chế độ này. STATUS để nguyên — chấm lại là việc của wave di chuyển.
 
 ### GATE-12: Fallback Mechanism
 - **STATUS:** NOT_STARTED
 - **EVIDENCE:** Chưa có cơ chế chuyển giao lỗi sang LLM synthesis fallback.
 - **BLOCKER:** Cần định nghĩa rõ các mã lỗi compiler có thể chuyển tiếp (recoverable) và không thể chuyển tiếp (fatal).
 - **NEXT_TEST:** Test kịch bản cố tình đưa bài toán ngoài diện hỗ trợ để kiểm tra fallback suôn sẻ.
+- **AUDIT (2026-10-05, `cuboid-final-review`):** evidence trên đã cũ. Quyết định `FALLBACK_TO_LLM` có thật (`UNSUPPORTED` ⇒ trả về cho caller, compiler không tự gọi provider; `INVALID` ⇒ `REFUSE`, không lùi về LLM), test đơn vị `backend/tests/geometry/test_geometry_primitive_compiler.py::test_AD_unsupported_tra_fallback_cho_caller_chu_khong_tu_gui`; trong `backend/app/ai/pipeline.py` mọi quyết định khác `USE_COMPILER`/`REFUSE` đi tiếp vào `stage_semantic_program`. Chưa thấy test nào đi trọn nhánh lùi qua `run_pipeline` — NEXT_TEST trên vẫn còn nguyên. STATUS để nguyên — chấm lại là việc của wave di chuyển.
 
 ### GATE-13: Canary Deployment
 - **STATUS:** NOT_STARTED

@@ -13,12 +13,12 @@ nó sau mỗi lần sửa thì mỗi lần sửa mất hàng chục giây và m�
 ```bash
 # --- FRONTEND: watch, chỉ chạy lại file liên quan (~1s) ---
 cd frontend && npx vitest                       # để chạy nền, sửa tới đâu đỏ tới đó
-cd frontend && npx vitest related src/simulations/domains/algorithm/ui.tsx
+cd frontend && npx vitest related src/simulations/domains/geometry/scene3d-view.tsx
 cd frontend && npx vitest run -t "<tên test>"   # lọc theo tên
 
 # --- BACKEND: chỉ chạy cái vừa đỏ ---
 cd backend && .venv/Scripts/python.exe -m pytest -q -x --lf
-cd backend && .venv/Scripts/python.exe -m pytest -q tests/test_dsl.py
+cd backend && .venv/Scripts/python.exe -m pytest -q tests/geometry/test_geometry_kernel.py
 
 # --- CỔNG TRƯỚC COMMIT (chỗ DUY NHẤT cần full) ---
 cd backend && .venv/Scripts/python.exe -m pytest -q
@@ -33,8 +33,9 @@ cd frontend && node scripts/impact.mjs --files src/styles/global.css
 
 ⚠️ Script trình duyệt (`certify-*.mjs`, `audit-*.mjs`) **không** thuộc vòng lặp
 này — mỗi lượt vài phút và cần Chrome. Chạy khi cần **bằng chứng**, không chạy
-để lấy phản hồi. Việc chúng hỏi mà vitest không hỏi được thì đã có cổng offline
-tương ứng (vd `simulations/experience-gate.test.ts`).
+để lấy phản hồi. Ở giai đoạn Tin học, việc chúng hỏi mà vitest không hỏi được có cổng offline
+tương ứng (`simulations/experience-gate.test.ts`, đã gỡ); ở miền hình học, phần thuần tính toán của
+bộ đo trình duyệt có test node riêng (`frontend/scripts/compiler-scene-replay-lib.node-test.mjs`).
 
 ## "Sửa rồi mà nó vẫn nhận bản cũ" — BỐN tầng, bốn cách gỡ
 
