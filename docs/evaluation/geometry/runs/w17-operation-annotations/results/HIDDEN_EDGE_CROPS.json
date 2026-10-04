@@ -1,0 +1,4457 @@
+{
+  "schema_version": "scene3d-hidden-edge-crops/2",
+  "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+  "family_sheets": {
+    "triangular_pyramid": {
+      "family": "triangular_pyramid",
+      "sheet": "images/triangular-pyramid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 · đáy — Dựng tam giác đáy.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB, SC.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/formation/formation_step_4.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/triangular-pyramid/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+          "Bước dựng 2/5 · đáy — Dựng tam giác đáy.",
+          "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao SA.",
+          "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB, SC.",
+          "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB",
+            "= 3, AC = 4, SA = 5."
+          ],
+          [
+            "Bước dựng 2/5 · đáy — Dựng tam giác đáy."
+          ],
+          [
+            "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao",
+            "SA."
+          ],
+          [
+            "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB,",
+            "SC."
+          ],
+          [
+            "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABC (4",
+            "đỉnh, 4 mặt)."
+          ]
+        ]
+      }
+    },
+    "triangular_prism": {
+      "family": "triangular_prism",
+      "sheet": "images/triangular-prism/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 · đáy — Dựng tam giác đáy dưới.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 · đáy trên — Dựng đáy trên DEF.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AD, BE, CF.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 · khép khối — Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/formation/formation_step_4.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/triangular-prism/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+          "Bước dựng 2/5 · đáy — Dựng tam giác đáy dưới.",
+          "Bước dựng 3/5 · đáy trên — Dựng đáy trên DEF.",
+          "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AD, BE, CF.",
+          "Bước dựng 5/5 · khép khối — Dựng lăng trụ đứng ABC.DEF (6 đỉnh, 5 mặt)."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB",
+            "= 3, AC = 4, AD = 5."
+          ],
+          [
+            "Bước dựng 2/5 · đáy — Dựng tam giác đáy dưới."
+          ],
+          [
+            "Bước dựng 3/5 · đáy trên — Dựng đáy trên DEF."
+          ],
+          [
+            "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AD,",
+            "BE, CF."
+          ],
+          [
+            "Bước dựng 5/5 · khép khối — Dựng lăng trụ đứng",
+            "ABC.DEF (6 đỉnh, 5 mặt)."
+          ]
+        ]
+      }
+    },
+    "rectangular_pyramid": {
+      "family": "rectangular_pyramid",
+      "sheet": "images/rectangular-pyramid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            251
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            282
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            798
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 · đáy — Dựng đáy ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB, SC, SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/formation/formation_step_4.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/rectangular-pyramid/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "Bước dựng 2/5 · đáy — Dựng đáy ABCD.",
+          "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao SA.",
+          "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB, SC, SD.",
+          "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB",
+            "= 3, AD = 4, SA = 6."
+          ],
+          [
+            "Bước dựng 2/5 · đáy — Dựng đáy ABCD."
+          ],
+          [
+            "Bước dựng 3/5 · đường cao, cạnh bên — Dựng chiều cao",
+            "SA."
+          ],
+          [
+            "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên SB,",
+            "SC, SD."
+          ],
+          [
+            "Bước dựng 5/5 · khép khối — Dựng hình chóp S.ABCD",
+            "(5 đỉnh, 5 mặt)."
+          ]
+        ]
+      }
+    },
+    "cuboid": {
+      "family": "cuboid",
+      "sheet": "images/cuboid/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            281
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            313
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            904
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 · khép khối — Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/formation/formation_step_4.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/cuboid/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 3, AD = 4, AA′ = 5.",
+          "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD.",
+          "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′.",
+          "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "Bước dựng 5/5 · khép khối — Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt)."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB",
+            "= 3, AD = 4, AA′ = 5."
+          ],
+          [
+            "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD."
+          ],
+          [
+            "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′."
+          ],
+          [
+            "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′,",
+            "BB′, CC′, DD′."
+          ],
+          [
+            "Bước dựng 5/5 · khép khối — Dựng hình hộp chữ nhật",
+            "ABCD.A′B′C′D′ (8 đỉnh, 6 mặt)."
+          ]
+        ]
+      }
+    },
+    "cube": {
+      "family": "cube",
+      "sheet": "images/cube/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            388
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            420
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            324
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            990
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "negative/system_cause/desktop",
+          "label": "Desktop · đề hợp lệ, số liệu của hệ sai — từ chối, lỗi của hệ",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/system_cause/desktop/refusal.png"
+        },
+        {
+          "state": "negative/system_cause/mobile",
+          "label": "Mobile · đề hợp lệ, số liệu của hệ sai — từ chối, lỗi của hệ",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/negative/system_cause/mobile/refusal.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 4.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/5 · khép khối — Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/formation/formation_step_4.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/cube/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB = 4.",
+          "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD.",
+          "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′.",
+          "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+          "Bước dựng 5/5 · khép khối — Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt)."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/5 · các điểm dữ kiện — Dữ kiện đề cho: AB",
+            "= 4."
+          ],
+          [
+            "Bước dựng 2/5 · đáy — Dựng đáy dưới ABCD."
+          ],
+          [
+            "Bước dựng 3/5 · đáy trên — Dựng đáy trên A′B′C′D′."
+          ],
+          [
+            "Bước dựng 4/5 · cạnh bên — Dựng các cạnh bên AA′,",
+            "BB′, CC′, DD′."
+          ],
+          [
+            "Bước dựng 5/5 · khép khối — Dựng hình lập phương",
+            "ABCD.A′B′C′D′ (8 đỉnh, 6 mặt)."
+          ]
+        ]
+      }
+    },
+    "cross_section": {
+      "family": "cross_section",
+      "sheet": "images/cross-section/SHEET.png",
+      "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.",
+      "label_font_px": 28,
+      "font": "arial.ttf",
+      "cells": [
+        {
+          "state": "desktop/neutral_final",
+          "label": "Desktop · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/neutral_final.png"
+        },
+        {
+          "state": "desktop/causal_selected",
+          "label": "Desktop · causal — đã chọn đáp số",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/causal_selected.png"
+        },
+        {
+          "state": "desktop/rotated_neutral",
+          "label": "Desktop · đã xoay (qua cổng không suy biến)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/rotated_neutral.png"
+        },
+        {
+          "state": "mobile/neutral_final",
+          "label": "Mobile · trung tính, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            376,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_neutral_final",
+          "label": "Desktop · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1320,
+            196
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/solution_neutral_final.png"
+        },
+        {
+          "state": "desktop/solution_causal_selected",
+          "label": "Desktop · bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            952,
+            228
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/solution_causal_selected.png"
+        },
+        {
+          "state": "mobile/solution_neutral_final",
+          "label": "Mobile · bảng lời giải, bước cuối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            450
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/solution_neutral_final.png"
+        },
+        {
+          "state": "mobile/solution_expanded",
+          "label": "Mobile · bảng lời giải — mở dữ kiện và các bước tính",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            684,
+            474
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/solution_expanded.png"
+        },
+        {
+          "state": "desktop/annotations_off",
+          "label": "Desktop · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/annotations_off.png"
+        },
+        {
+          "state": "desktop/causal_restored",
+          "label": "Desktop · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/causal_restored.png"
+        },
+        {
+          "state": "mobile/annotations_off",
+          "label": "Mobile · tắt Số đo và Kết quả — chỉ nhãn đổi",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/annotations_off.png"
+        },
+        {
+          "state": "mobile/causal_restored",
+          "label": "Mobile · bỏ chọn — cùng camera, cùng vị trí cuộn",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/causal_restored.png"
+        },
+        {
+          "state": "negative/ungrounded_source/desktop",
+          "label": "Desktop · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/ungrounded_source/desktop/refusal.png"
+        },
+        {
+          "state": "negative/ungrounded_source/mobile",
+          "label": "Mobile · dữ kiện không có trong đề — từ chối, không dựng hình",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/ungrounded_source/mobile/refusal.png"
+        },
+        {
+          "state": "negative/assumption/desktop",
+          "label": "Desktop · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/assumption/desktop/refusal.png"
+        },
+        {
+          "state": "negative/assumption/mobile",
+          "label": "Mobile · đáp số phụ thuộc kích thước đề không cho — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/assumption/mobile/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/desktop",
+          "label": "Desktop · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/topology_kernel/desktop/refusal.png"
+        },
+        {
+          "state": "negative/topology_kernel/mobile",
+          "label": "Mobile · bảng mặt / hình học không dựng được — từ chối",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/topology_kernel/mobile/refusal.png"
+        },
+        {
+          "state": "negative/construction_mismatch/desktop",
+          "label": "Desktop · đề cắt bằng (β), hệ cắt bằng (α) — từ chối, đề không cần sửa",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/construction_mismatch/desktop/refusal.png"
+        },
+        {
+          "state": "negative/construction_mismatch/mobile",
+          "label": "Mobile · đề cắt bằng (β), hệ cắt bằng (α) — từ chối, đề không cần sửa",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/negative/construction_mismatch/mobile/refusal.png"
+        },
+        {
+          "state": "served/correct_plane/desktop",
+          "label": "Desktop · cắt đúng mặt phẳng đề nói — được phục vụ",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/served/correct_plane/desktop/served.png"
+        },
+        {
+          "state": "served/correct_plane/mobile",
+          "label": "Mobile · cắt đúng mặt phẳng đề nói — được phục vụ",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            0,
+            780,
+            1688
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/served/correct_plane/mobile/served.png"
+        },
+        {
+          "state": "desktop/geometry_step/0",
+          "label": "Bước dựng 1/11 · các điểm dữ kiện — Đặt các điểm đề cho vào không gian.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_0.png"
+        },
+        {
+          "state": "desktop/geometry_step/1",
+          "label": "Bước dựng 2/11 · đáy — Dựng đáy hình vuông ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_1.png"
+        },
+        {
+          "state": "desktop/geometry_step/2",
+          "label": "Bước dựng 3/11 · cạnh bên — Dựng các cạnh bên SA, SB, SC, SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_2.png"
+        },
+        {
+          "state": "desktop/geometry_step/3",
+          "label": "Bước dựng 4/11 · khép khối — Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_3.png"
+        },
+        {
+          "state": "desktop/geometry_step/4",
+          "label": "Bước dựng 5/11 · mặt cắt — Dựng mặt phẳng (α): z = 3.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_4.png"
+        },
+        {
+          "state": "desktop/geometry_step/5",
+          "label": "Bước dựng 6/11 · cạnh thiết diện — Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_5.png"
+        },
+        {
+          "state": "desktop/geometry_step/6",
+          "label": "Bước dựng 7/11 · cạnh thiết diện — Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_6.png"
+        },
+        {
+          "state": "desktop/geometry_step/7",
+          "label": "Bước dựng 8/11 · cạnh thiết diện — Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_7.png"
+        },
+        {
+          "state": "desktop/geometry_step/8",
+          "label": "Bước dựng 9/11 · cạnh thiết diện — Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_8.png"
+        },
+        {
+          "state": "desktop/geometry_step/9",
+          "label": "Bước dựng 10/11 · khép thiết diện — Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_9.png"
+        },
+        {
+          "state": "desktop/geometry_step/10",
+          "label": "Bước dựng 11/11 · dựng phụ — Dựng đường thẳng BD.",
+          "scale": 1.0,
+          "crop_box_px": [
+            0,
+            71,
+            1422,
+            804
+          ],
+          "source": "D:/tmp/w17-evidence/docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/formation/formation_step_10.png"
+        }
+      ],
+      "filmstrip": {
+        "filmstrip": "images/cross-section/FILMSTRIP.png",
+        "cell_width_px": 640,
+        "font": "arial.ttf",
+        "font_px": 24,
+        "captions": [
+          "Bước dựng 1/11 · các điểm dữ kiện — Đặt các điểm đề cho vào không gian.",
+          "Bước dựng 2/11 · đáy — Dựng đáy hình vuông ABCD.",
+          "Bước dựng 3/11 · cạnh bên — Dựng các cạnh bên SA, SB, SC, SD.",
+          "Bước dựng 4/11 · khép khối — Dựng khối chóp S.ABCD (5 đỉnh, 5 mặt).",
+          "Bước dựng 5/11 · mặt cắt — Dựng mặt phẳng (α): z = 3.",
+          "Bước dựng 6/11 · cạnh thiết diện — Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB.",
+          "Bước dựng 7/11 · cạnh thiết diện — Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC.",
+          "Bước dựng 8/11 · cạnh thiết diện — Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD.",
+          "Bước dựng 9/11 · cạnh thiết diện — Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA.",
+          "Bước dựng 10/11 · khép thiết diện — Thiết diện khép lại thành tứ giác: (α) cắt khối chóp S.ABCD.",
+          "Bước dựng 11/11 · dựng phụ — Dựng đường thẳng BD."
+        ],
+        "caption_lines": [
+          [
+            "Bước dựng 1/11 · các điểm dữ kiện — Đặt các điểm đề",
+            "cho vào không gian."
+          ],
+          [
+            "Bước dựng 2/11 · đáy — Dựng đáy hình vuông ABCD."
+          ],
+          [
+            "Bước dựng 3/11 · cạnh bên — Dựng các cạnh bên SA,",
+            "SB, SC, SD."
+          ],
+          [
+            "Bước dựng 4/11 · khép khối — Dựng khối chóp S.ABCD",
+            "(5 đỉnh, 5 mặt)."
+          ],
+          [
+            "Bước dựng 5/11 · mặt cắt — Dựng mặt phẳng (α): z = 3."
+          ],
+          [
+            "Bước dựng 6/11 · cạnh thiết diện — Trên mặt SAB, nối",
+            "giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+          ],
+          [
+            "Bước dựng 7/11 · cạnh thiết diện — Trên mặt SBC, nối",
+            "giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+          ],
+          [
+            "Bước dựng 8/11 · cạnh thiết diện — Trên mặt SCD, nối",
+            "giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD."
+          ],
+          [
+            "Bước dựng 9/11 · cạnh thiết diện — Trên mặt SDA, nối",
+            "giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA."
+          ],
+          [
+            "Bước dựng 10/11 · khép thiết diện — Thiết diện khép lại",
+            "thành tứ giác: (α) cắt khối chóp S.ABCD."
+          ],
+          [
+            "Bước dựng 11/11 · dựng phụ — Dựng đường thẳng BD."
+          ]
+        ]
+      }
+    }
+  },
+  "overview": {
+    "schema_version": "scene3d-evidence-overview/1",
+    "role": "INDEX_ONLY",
+    "families": [
+      {
+        "family": "triangular_pyramid",
+        "family_dir": "triangular-pyramid",
+        "sheet": "images/triangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "triangular_prism",
+        "family_dir": "triangular-prism",
+        "sheet": "images/triangular-prism/SHEET.png"
+      },
+      {
+        "family": "rectangular_pyramid",
+        "family_dir": "rectangular-pyramid",
+        "sheet": "images/rectangular-pyramid/SHEET.png"
+      },
+      {
+        "family": "cuboid",
+        "family_dir": "cuboid",
+        "sheet": "images/cuboid/SHEET.png"
+      },
+      {
+        "family": "cube",
+        "family_dir": "cube",
+        "sheet": "images/cube/SHEET.png"
+      },
+      {
+        "family": "cross_section",
+        "family_dir": "cross-section",
+        "sheet": "images/cross-section/SHEET.png"
+      }
+    ],
+    "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi."
+  },
+  "playback_films": {
+    "triangular_pyramid": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/playback/mobile/step-04.png"
+    ],
+    "triangular_prism": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/playback/mobile/step-04.png"
+    ],
+    "rectangular_pyramid": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/playback/mobile/step-04.png"
+    ],
+    "cuboid": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/playback/mobile/step-04.png"
+    ],
+    "cube": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/playback/mobile/step-04.png"
+    ],
+    "cross_section": [
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-05.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-06.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-07.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-08.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-09.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/desktop/step-10.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-00.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-01.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-02.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-03.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-04.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-05.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-06.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-07.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-08.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-09.png",
+      "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/playback/mobile/step-10.png"
+    ]
+  },
+  "crops": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.8624576278331,
+          287.86161396082485
+        ],
+        [
+          527.4016589676376,
+          375.26729003988913
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        375,
+        692,
+        508
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "493c6115cf3b03e41e6e6f5899f4aa0826ee89d3ebf00443522da5f4cb3f9e52"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          632.8624576278331,
+          287.86161396082485
+        ],
+        [
+          790.8363952646416,
+          387.84440565730347
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        645,
+        375,
+        848,
+        521
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "26701f1c759e008746a728ffc84d111fea6b20b5a835ec2c608b1ee732bfc6b1"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          622.4660804164799,
+          74.23999999999806
+        ],
+        [
+          632.8624576278331,
+          287.86161396082485
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        616,
+        164,
+        711,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "97bc0c460e8229067d20b96d0a657349a0efb28cec010d6f0cfb60ed91301db7"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          583.5142498015999,
+          325.68701752017375
+        ],
+        [
+          712.429578736963,
+          271.1489758901483
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        597,
+        359,
+        770,
+        459
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "768c2a135993eec1684f40ec49e76f0e0267a687d342c55dcbb631d254d83f3a"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.97438654018862,
+          258.21074491199414
+        ],
+        [
+          54.54120822312424,
+          334.696631730981
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        111,
+        932,
+        392,
+        1181
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "60d3d4a63593738c470f920510386d7eb87a97c4be00fab57900934bedf1fbe9"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          146.97438654018862,
+          258.21074491199414
+        ],
+        [
+          285.60000000000207,
+          345.6512885749109
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        295,
+        932,
+        669,
+        1203
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "c91256ed2059a6ca5669c56d8929f37726cbad568c2f829bc2d6a32bb95c32bf"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          138.0964246972406,
+          71.23465488675158
+        ],
+        [
+          146.97438654018862,
+          258.21074491199414
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        239,
+        558,
+        431,
+        1028
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "6163a7b9633aac23846d091c0ed9630190510d5aac1712d8961640492e74af28"
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          103.81220132390544,
+          291.10147216089894
+        ],
+        [
+          217.06803439508076,
+          243.46886000654138
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        209,
+        864,
+        532,
+        1057
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/triangular-pyramid/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "41034ff9e53ba8b5330543a652be7e7fc9fa3a842f563455a9a0954b8f15b38a"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          527.2529904816587,
+          389.16346790301276
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        541,
+        388,
+        679,
+        522
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "564d146599e4faf6bce4a0becee3b7804770861d2d832ba2e08153c3f2b1f4c3"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          793.3942592629671,
+          365.02606246816174
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        632,
+        388,
+        850,
+        498
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "3d4e3826cb74b3588af234b351489b9343800bee9d52dddabd7eb1d931d8614b"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.7881072969811,
+          300.42629948392016
+        ],
+        [
+          608.6081704424985,
+          74.23999999999971
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        164,
+        697,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "0e015e10e98e31c7da0b3cba8364af06fc765a212f5b22e84d38c6cef6d361dd"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          559.9745206349648,
+          341.5785393319661
+        ],
+        [
+          708.4409514167693,
+          288.23897613117555
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        573,
+        376,
+        767,
+        475
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/desktop/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/desktop/rotated_neutral__AC__hidden.png",
+      "sha256": "2805dd775bbd4a2fae5975a4c96865f1eaf9452a39d8fc9b44e5d04603ef7616"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          78.75027551309911,
+          316.31214304617816
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        159,
+        931,
+        380,
+        1145
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "86fd5930742d82d59cfd73c339ac4b83f806850ec5595fd9d227b13d42e028e7"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          262.1920408147615,
+          301.00408514130726
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        283,
+        926,
+        622,
+        1119
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "1ec3a5a7ab5f1aec0f4de65e15ea18f06fe6d86d7fadef4c7dcbf956d2897627"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "solid_ABCDEF::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          140.9111267152997,
+          257.97119238031786
+        ],
+        [
+          134.65192774656188,
+          101.46636142408842
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        229,
+        618,
+        422,
+        1028
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/neutral_final.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "e659db3025e310f9daafc2cfd4949d285cd8bb4e4272b6bb375812a38cc366e0"
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "solid_ABCDEF::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          100.59568089638232,
+          285.64336796666936
+        ],
+        [
+          204.30384076361767,
+          249.23925266546127
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        203,
+        864,
+        507,
+        1057
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/triangular-prism/mobile/rotated_neutral.png",
+      "path": "images/triangular-prism/hidden-edges/mobile/rotated_neutral__AC__hidden.png",
+      "sha256": "8a8ce183a027257f7c0787390b3c0e6f5d89b7e9e515a02b8bda8af752486d7c"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          569.7205180513049,
+          324.9924140943475
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        583,
+        348,
+        688,
+        458
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "52680276c4710bf13cac91d4fe778e3330580a8edcf42621adfdad0de76057a2"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          628.9586874977945,
+          259.8575510164736
+        ],
+        [
+          748.2183038798686,
+          308.3651705218009
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        642,
+        348,
+        806,
+        442
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "dbbc9d2b59b961a7264c3c8d58fad0490e41bccb199413f208401804693102ec"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          619.0905452543299,
+          74.23999999999987
+        ],
+        [
+          628.9586874977945,
+          259.8575510164736
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        613,
+        164,
+        707,
+        394
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "b75578a1f53f430e4df31896df5da32cb6f19c607d3d4a5066d786ef1531bd6a"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          589.7182505952111,
+          338.6972409448084
+        ],
+        [
+          639.2622454853017,
+          253.4296082907555
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        603,
+        341,
+        698,
+        472
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "09c0bc2bdc923138c726cd67e3899ece2198a7c88dca6ffd633fbb2444934aab"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          721.2517552844915,
+          273.7252346778064
+        ],
+        [
+          639.2622454853017,
+          253.4296082907555
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        652,
+        327,
+        779,
+        422
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "fde7c77ef271efacee331f4e6612102eae4dcfd717e3cd4e45cf64fafd4721c7"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          565.3666314321993,
+          167.79358140731898
+        ],
+        [
+          639.2622454853017,
+          253.4296082907555
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        579,
+        257,
+        698,
+        388
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "279939de0ce886ff49b013b1e49a936c1311a4fa095929de588525ab17f931b9"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          89.57150117552902,
+          292.773338559132
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        181,
+        884,
+        384,
+        1098
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "433fca27384a110c555e5b3820585f40c15321deba94f1a8223f6e66f2d7e11c"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          142.93692106482345,
+          234.09581104501288
+        ],
+        [
+          250.37338582281257,
+          277.7944855131741
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        287,
+        879,
+        599,
+        1072
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "575f733e36c7431b3dd967df8382799752ae9dcfc5f7de4bf530779c1d399718"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          134.04708602652988,
+          66.87999999999987
+        ],
+        [
+          142.93692106482345,
+          234.09581104501288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        230,
+        549,
+        423,
+        980
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/neutral_final.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "ac306ea268a20b6e53e780839016dbcc8bd70805791ddbf154c70947f6f5953e"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          107.48116615578498,
+          304.95945838876753
+        ],
+        [
+          152.41659016331883,
+          228.2671839929288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        213,
+        834,
+        406,
+        1084
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "6efb903b4fd48483152429731c38c342200d4d861a4071eedcd4d45ea7984159"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          226.2160498810356,
+          246.71474324466405
+        ],
+        [
+          152.41659016331883,
+          228.2671839929288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        306,
+        804,
+        550,
+        997
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "136c3cad9c4ad6d8a391a0e95d426de1047fb403d0fc3127b4f948a8657a9f54"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.51668650456202,
+          151.01312044830405
+        ],
+        [
+          152.41659016331883,
+          228.2671839929288
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        680,
+        403,
+        931
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/rectangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/rectangular-pyramid/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "93a56c821c7894ed12ccf7f3e75a26d201171272bc4e72ecc15f8503a1e3a95e"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          633.1565398045498,
+          74.36067412367743
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        164,
+        718,
+        390
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "b5c8d20dc78bbdd3a08f5caffa56c5612a43df053a3d8ea7c7ccf7258506873f"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          554.5629684364096,
+          307.45767830345585
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        568,
+        344,
+        697,
+        441
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "2d8a9936d9e71cd169984beb0b633913398f5ef572f57e4ff600c702e6adc094"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          637.7616240151638,
+          256.00531011782147
+        ],
+        [
+          762.9157762471036,
+          314.72332747151455
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        650,
+        344,
+        820,
+        448
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "ef2971fd92b01c69ad6b1001800593a8ef8282bf74aa6a540b2025ced8b48c39"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          567.4536315155417,
+          292.02145781632714
+        ],
+        [
+          692.2229817658964,
+          259.04536116624087
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        581,
+        339,
+        751,
+        434
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "6404b10ea73740cc422742b65e3498335ead6f0328c97187814c72a3f17fb1bd"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          746.3789729887756,
+          315.1786173491551
+        ],
+        [
+          692.2229817658964,
+          259.04536116624087
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        704,
+        347,
+        804,
+        449
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "4343b689728dce090114371bb900f33d897bcc55eea3fde891f6b133e8a2a199"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          692.2229817658964,
+          259.04536116624087
+        ],
+        [
+          698.6038780445812,
+          98.73170926262287
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        683,
+        189,
+        778,
+        393
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/desktop/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "ff95930a92f920bbbe182a230e266e36f32c70294f5b18e5213ef7c0afad2253"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          147.25696556163274,
+          70.29535889449568
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        252,
+        556,
+        444,
+        973
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "89ede43db1d4d7accc3e84d2bd6339f66ec19e7cfe53cbb0a59514d7e1c6b7d4"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          77.91839518077242,
+          275.74013629494004
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        157,
+        874,
+        400,
+        1066
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "1573bc80196e1c9765bcb29215a10494f5100e785275dd2e1adc7b524178ba7c"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.2363857665151,
+          230.39809114851894
+        ],
+        [
+          261.6389190511468,
+          282.12119776826006
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        876,
+        621,
+        1076
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/neutral_final.png",
+      "path": "images/cuboid/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "c222ba558ebdbf51029399c8f194ff235e372c1517cfc9ff144e58c2426e9b98"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          99.98653706040247,
+          254.80746889069133
+        ],
+        [
+          196.53022118687628,
+          230.3189612602529
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        201,
+        815,
+        491,
+        1007
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "2ccaa612f8177805ef41ff90c0fd4daaa34eb4aeb7f6d1c617b06c89ba8e9145"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          236.49985278504795,
+          272.82021760467075
+        ],
+        [
+          196.53022118687628,
+          230.3189612602529
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        387,
+        833,
+        579,
+        1025
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "f28bb36d0b7bc1d867446b3cd43bf44465657323ee62ae5bbdad4d13b3955de7"
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          196.53022118687628,
+          230.3189612602529
+        ],
+        [
+          200.8284677801462,
+          108.00066712929316
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        351,
+        594,
+        543,
+        935
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cuboid/mobile/rotated_neutral.png",
+      "path": "images/cuboid/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "61aa55985bb5a1c8565ec0d02adc5b6d684cbfc3d379e84b178f2616e75b8c5e"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          635.391721906552,
+          75.11878133063801
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        625,
+        165,
+        720,
+        372
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AA′__hidden.png",
+      "sha256": "8964f731f8de52dccc3d412f6f5802c92a8a8eaa11469e8fa293355b0f8c37ba"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          527.8429120749828,
+          315.93848326209473
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        542,
+        326,
+        697,
+        450
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "e9cb657d36d6a210d715ef233cb2b0c82c3f323c891f9c07f80e23f777d613df"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          638.5317719904077,
+          237.89567733286492
+        ],
+        [
+          793.2864790035081,
+          277.46705218693876
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        651,
+        322,
+        850,
+        416
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/neutral_final.png",
+      "path": "images/cube/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "22a5a64a6798aa0ca93507792e00b102759f7628d0be33495d92ecfae9d6bc3f"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          561.686619521607,
+          265.2368555469342
+        ],
+        [
+          679.4634410137816,
+          235.71418238753208
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        575,
+        314,
+        738,
+        409
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "b1d6f482871aa676ce320a6cd7a292576033e3afe2a0d7cac69ab7b76e061fce"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          760.3012647814148,
+          292.7452233574112
+        ],
+        [
+          679.4634410137816,
+          235.71418238753208
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        691,
+        324,
+        818,
+        427
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "3238d4473890a6846078ce16f2deac8bd123dedf33bdc05c0cd3e9afbdca9c48"
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          679.4634410137816,
+          235.71418238753208
+        ],
+        [
+          681.8546164284335,
+          111.47425513899613
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        669,
+        201,
+        763,
+        370
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/desktop/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/desktop/rotated_neutral__DD′__hidden.png",
+      "sha256": "beeefe2b76ea6418d065e28dac08b60495bed72fa124fd6ab4ad300b2a03dc99"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-A_prime",
+      "display_label": "AA′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          150.75113610198008,
+          92.74245882617167
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        257,
+        601,
+        450,
+        944
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AA′__hidden.png",
+      "sha256": "a7e2c605ce76fe932ab2ff70e4b9b481394600f6fa0b6e44b7ed423f95edede5"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          71.21571079303438,
+          274.5253513282365
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        144,
+        848,
+        404,
+        1061
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "20beadee7febe7abe0416ad7d5717bd652d0d8fe8cbec307ae980ebea90a0473"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          152.95561146614725,
+          216.13505385410446
+        ],
+        [
+          270.48014422854783,
+          246.39192970857383
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        307,
+        830,
+        639,
+        1023
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/neutral_final.png",
+      "path": "images/cube/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "89a84cba057eeea1f10bfa99bb1e2e98528489516a10eb0314452b1c21458cce"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          85.53444890738193,
+          240.9475989510486
+        ],
+        [
+          187.3628955912113,
+          214.59957116016383
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        173,
+        785,
+        473,
+        978
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "f28a46062b03ebc6394751fff1f0b030fe2e19106dfa523d0504f49c38b762a1"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          257.8984926422791,
+          264.0348056388192
+        ],
+        [
+          187.3628955912113,
+          214.59957116016383
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        376,
+        807,
+        614,
+        1002
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "d8279ff27c1603efb91f03fb94ae2eae2a2822cbc5b86abb33d0cfc636d38599"
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_hop::edge:D-D_prime",
+      "display_label": "DD′",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          187.3628955912113,
+          214.59957116016383
+        ],
+        [
+          189.3158630805773,
+          107.1173703481098
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        330,
+        592,
+        523,
+        903
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cube/mobile/rotated_neutral.png",
+      "path": "images/cube/hidden-edges/mobile/rotated_neutral__DD′__hidden.png",
+      "sha256": "8ee5bdb20ef9fa657403bf1c86bcd8ff4f3b2cd98659e51ac6c220557adbe41b"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          517.1060875889154,
+          318.35055131815017
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        531,
+        335,
+        696,
+        452
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AB__hidden.png",
+      "sha256": "4781f9e23b7bb427cadaac950fa2f343633bf54cf8e4a1917d7cab1743d69dc7"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          636.792035395796,
+          246.8358384145178
+        ],
+        [
+          800.1684484981176,
+          282.60636743582245
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        649,
+        328,
+        857,
+        423
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__AD__hidden.png",
+      "sha256": "865668e126e8999f8513fac7df24d8e03fa67b28480daf7d7eee425b879a234c"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": "HIDDEN",
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          633.9801545519734,
+          75.63794206634071
+        ],
+        [
+          636.792035395796,
+          246.8358384145178
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        624,
+        166,
+        718,
+        381
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/desktop/neutral_final__SA__hidden.png",
+      "sha256": "0a56f6f3b0844e91979a75860cbecd6a7b9fbef10d63c3810632b032c980daeb"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          525.8680546595396,
+          289.7742835363767
+        ],
+        [
+          653.3223559015862,
+          243.4954437887613
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        540,
+        330,
+        712,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__AD__hidden.png",
+      "sha256": "3f7ef2c307f4712fab8eb50de96dc0266dc3f6bb41a53e8e8d3e7b49a53218c4"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          778.9323092305634,
+          289.2595372241774
+        ],
+        [
+          653.3223559015862,
+          243.4954437887613
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        666,
+        330,
+        836,
+        425
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__CD__hidden.png",
+      "sha256": "4e8b3ede76802470ff18347a9b50f08f84760228f617dcd61511b1acd5af2379"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          507.17186935380306,
+          105.92350581785178
+        ],
+        [
+          653.3223559015862,
+          243.4954437887613
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        521,
+        196,
+        712,
+        378
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/desktop/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/desktop/rotated_neutral__SD__hidden.png",
+      "sha256": "be47328ae09a76034f07aaf4d3bab7a6e6d5c94c714ce7201a35cee1bb25adbf"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          54.399999999999935,
+          281.2714584906155
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        110,
+        862,
+        400,
+        1075
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AB__hidden.png",
+      "sha256": "27884a05c1cedae99210fe316162be74040656e58f012905e89b72a4b89e73ab"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          151.03344026730878,
+          223.0893253416244
+        ],
+        [
+          285.38519196973164,
+          252.58769960613813
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        304,
+        843,
+        669,
+        1036
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__AD__hidden.png",
+      "sha256": "51e2ef8c2fef737a460674b0ae386074345a3339013cdc8033b9ca80ca75860b"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "S.ABCD::edge:S-A",
+      "display_label": "SA",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          148.83491339514043,
+          81.98073048716282
+        ],
+        [
+          151.03344026730878,
+          223.0893253416244
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        253,
+        579,
+        446,
+        958
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/neutral_final.png",
+      "path": "images/cross-section/hidden-edges/mobile/neutral_final__SA__hidden.png",
+      "sha256": "f2483cd0fcaead0a6bcff6756ef9c572cf3106f0a07724d310c065d4fbb91542"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:A-D",
+      "display_label": "AD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          62.101991821796375,
+          257.7081376083316
+        ],
+        [
+          166.20958046793734,
+          220.07694256740638
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        126,
+        807,
+        430,
+        1000
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__AD__hidden.png",
+      "sha256": "20c9f09b84a9fa7c4d9060e9b3295bde095fa970c3793efd260c97ed27dfd016"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:C-D",
+      "display_label": "CD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          268.47449839948905,
+          257.82300530929456
+        ],
+        [
+          166.20958046793734,
+          220.07694256740638
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        334,
+        807,
+        635,
+        1000
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__CD__hidden.png",
+      "sha256": "9a3132bb0aed5db8daa60660a396937e9ddfdb37fdfadbe702c1462e9fa827a8"
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "S.ABCD::edge:S-D",
+      "display_label": "SD",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          48.58517163531514,
+          109.54444356975858
+        ],
+        [
+          166.20958046793734,
+          220.07694256740638
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        99,
+        597,
+        430,
+        914
+      ],
+      "source": "docs/evaluation/geometry/runs/w17-operation-annotations/images/cross-section/mobile/rotated_neutral.png",
+      "path": "images/cross-section/hidden-edges/mobile/rotated_neutral__SD__hidden.png",
+      "sha256": "48a470493b3182ea5b29bd14690e3ae6c9ab0e623c44ceff78237dea1153d4f1"
+    }
+  ],
+  "all_endpoints_inside": true,
+  "oracle_disagreements": [],
+  "duplicate_owner_edges": []
+}
