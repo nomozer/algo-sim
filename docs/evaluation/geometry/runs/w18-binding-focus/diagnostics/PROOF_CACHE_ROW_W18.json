@@ -1,0 +1,484 @@
+{
+  "proof": "W18_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "109",
+  "rows": {
+    "B1_mid_ok": {
+      "group": "W18_MIDPOINT",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "e9a3457096a1ec8b1c5468e97c47fccaf63b12d94a8d1f14066ecb85c1857f0d"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "49520ce16d7e971f2b140ebfb05ce304cf6820fe95a15ff4418264b09b132678"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B2_mid_wrong_SB": {
+      "group": "W18_MIDPOINT",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "294fd6867af6dd1d0634ca66358bed6e56f822de809332c3887d917c2cdb58fa"
+      },
+      "cached_before_w18": false
+    },
+    "B3_mid_swap_ends": {
+      "group": "W18_MIDPOINT",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "dce9835ae6804a8890bccbfba82acd35a1606bbf24ad58c605890522ce185a3c"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f91ac4995781847096a19e73442c74658dd9ad9d69440faec4546a504adabaa7"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B4_mid_same_value_SB": {
+      "group": "W18_MIDPOINT",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "171306cf9b5ad76648795312846806a6b3527b244370a3e94f0f6af5554372be"
+      },
+      "cached_before_w18": false
+    },
+    "B5_list_swap_targets": {
+      "group": "W18_MIDPOINT_LIST",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "e8aa3214a427fd301142e3c7906803a53c660d07ba19732dc65ff6b0e11c3745"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "3ec003f5e0c31e376073d60376d36e99ace1babefafd14627f5b6983cbae624a"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B6_list_ok": {
+      "group": "W18_MIDPOINT_LIST",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "498c4801204e54be7fa2103bd659786d030d5be0303b43dc73cc2a2037201934"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1e0fe8d49eea01591e9ea6d69db6afbec75dfd357779d1c06cbbbe342224da59"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B7_rename_target_X": {
+      "group": "W18_TARGET",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "fe978a701d84e2807a20390e77498c3685ff4bbc1ed585e8cc6a8ecbd73af925"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "aba2bd7dea9e2a2faeee5ba6dd4ff1db7bf01b6e598c3277e7510aa2847ef500"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B8_alias_ok": {
+      "group": "W18_IDENTITY",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "62010b2261ecd58679bd5884b42e4169c59b341f4f7dbfe6cc866b478f454d75"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1565908f1117488d53c520ac8be075665b6f246f69e2aabd3506a3d63131bd60"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B9_same_coord_diff_identity": {
+      "group": "W18_IDENTITY",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "f694f5ba79c7b8908d8ba3b2978bca381cfd1c7a6d71a1cefd2f0d60e50fabe1"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "0ff4e36e1658927d9f03ad2ebc906b503ffab22f1b79e808e877f2894efc09d8"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B10_proj_line_ok": {
+      "group": "W18_PROJECTION",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "caf9b9a1918d85015930961f33e1c9ad09661bc6994e94487da4fccb85d784aa"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7fc5049d1977b4bd33a3aec7dacf8cab7500ee32117446ab622939adc541e45e"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B11_proj_line_wrong_BC": {
+      "group": "W18_PROJECTION",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "77972252078acac1485ea03de70380d70abf95366c25053c933875499b7b6fd5"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "d81c6af2f7c2c80151122758655b4342a62461e2f17e94319f7a122603fb1280"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B12_proj_plane_ok_SBD": {
+      "group": "W18_PROJECTION",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "463071877008fe7df2de8ee608baff375df8bd402bae829b4dd117ffce565cfe"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "a24d60a923baa23c69cb68b533bf9d31894fe4077c4f11ee925aebda449d601a"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B13_proj_plane_wrong_SBC": {
+      "group": "W18_PROJECTION",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "22516878f64a1893288b0fc6029203ad56150fff955e2d17c3ee9642f3f9e1e6"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "96249df2e8f0e111defae2aead4212aed49a3df2ad336a1a0e8dfe319b237b70"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B14_proj_plane_3_of_4": {
+      "group": "W18_PROJECTION",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "5948447296751ac236a213828a85f20474ae8c92d08342f24db69411b4ff0d58"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d62b9ee939b6ab136959db05f367957ea8daf532a5b3f84f5e759ed29b11b17d"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B15_foot_wording_ok": {
+      "group": "W18_PROJECTION",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "caf9b9a1918d85015930961f33e1c9ad09661bc6994e94487da4fccb85d784aa"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "7fc5049d1977b4bd33a3aec7dacf8cab7500ee32117446ab622939adc541e45e"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B16_out_of_vocab_ok": {
+      "group": "W18_VOCABULARY",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "e9a3457096a1ec8b1c5468e97c47fccaf63b12d94a8d1f14066ecb85c1857f0d"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+        "envelope_sha256": "78b040f9f16c3de5de1c263e843850bec7cd1ded2ff841195e3f19fc8d5cdd10"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": true,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B17_auxiliary_foot": {
+      "group": "W18_AUXILIARY",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "1f8ec69d9dfad6254c0e607a49f2ea5083e109b4e00a57929ec7e567bfcc93b0"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "81f9a12035f46ca7ab356511ffd5335b83b213446cce4cde4fb63abf765dba96"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B18_prime_ok": {
+      "group": "W18_IDENTITY_PRIME",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "unsupported",
+        "stage_reached": "scope",
+        "reason_code": null,
+        "envelope_sha256": "c825a41ff8b4f2effca3650c4dd5eb1725e5da31b30b2e8cd5509fd90463c2c1"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "scope",
+        "reason_code": null,
+        "envelope_sha256": "c825a41ff8b4f2effca3650c4dd5eb1725e5da31b30b2e8cd5509fd90463c2c1"
+      },
+      "cached_before_w18": false
+    },
+    "B19_prime_wrong": {
+      "group": "W18_IDENTITY_PRIME",
+      "label": "MUST_REFUSE",
+      "before_w18": {
+        "status": "unsupported",
+        "stage_reached": "scope",
+        "reason_code": null,
+        "envelope_sha256": "c825a41ff8b4f2effca3650c4dd5eb1725e5da31b30b2e8cd5509fd90463c2c1"
+      },
+      "w18": {
+        "status": "unsupported",
+        "stage_reached": "scope",
+        "reason_code": null,
+        "envelope_sha256": "c825a41ff8b4f2effca3650c4dd5eb1725e5da31b30b2e8cd5509fd90463c2c1"
+      },
+      "cached_before_w18": false
+    },
+    "B20_divide_half_ok": {
+      "group": "W18_MIDPOINT",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "03c2081dce41d549e85bdf3ee5392f0a665f1d65a3631bcb806ecdfc5b52709d"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d410b660e64b1cd2e66d28dcc23574febca270ba035c0a926ac10aa3bde3702d"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B21_not_realized": {
+      "group": "W18_SCOPE",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "e0a32b74b15635cc5588d24172a577f9e6b07a8b0bcc1642a62364125a7549f9"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "2fa64315d883c7b99246ca5b6a3719d0270cee0f952919590fcdde28cf455448"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B22_out_of_scope_intersection": {
+      "group": "W18_SCOPE",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "da9b3a8ef928bb0e8422534b8bdbad8cbfd6cc573e431e70f39bf71c86b319ae"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d85fb023eeceb468e5022fa2ce00dfbbfc903128e4135c18e1c0ce6bdb0c2457"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    },
+    "B23_projection_base_wording": {
+      "group": "W18_PROJECTION",
+      "label": "INVARIANT",
+      "before_w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "5948447296751ac236a213828a85f20474ae8c92d08342f24db69411b4ff0d58"
+      },
+      "w18": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d62b9ee939b6ab136959db05f367957ea8daf532a5b3f84f5e759ed29b11b17d"
+      },
+      "cached_before_w18": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w18_refuses_what_was_served": false,
+      "replayed_envelope_differs_from_w18": true
+    }
+  },
+  "stale_rows_replayed_under_current_version": [
+    "B5_list_swap_targets",
+    "B7_rename_target_X",
+    "B9_same_coord_diff_identity",
+    "B11_proj_line_wrong_BC",
+    "B13_proj_plane_wrong_SBC",
+    "B16_out_of_vocab_ok"
+  ],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "BUMP — envelopes served before W18 would be replayed under the current version although W18 refuses them: ['B5_list_swap_targets', 'B7_rename_target_X', 'B9_same_coord_diff_identity', 'B11_proj_line_wrong_BC', 'B13_proj_plane_wrong_SBC', 'B16_out_of_vocab_ok']"
+}

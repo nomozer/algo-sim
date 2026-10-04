@@ -696,7 +696,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # mat phang/khoi cua cau cat trong de, grounding khong lay gia tri chi co trong yeu
     # cau chung minh — 5 yeu cau tung duoc phuc vu nay bi tu choi (served -> rejected).
     # Row v108 van HIT: runs/w17-operation-annotations/diagnostics/PROOF_CACHE_ROW_W17.json.
-    assert main_module.CACHE_VERSION == "109"
+    # 109 -> 110 (W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS, 2026-10-04):
+    # be mat mo hinh KHONG doi; chang construction_binding doi phep dung diem (trung diem,
+    # hinh chieu) gan voi quan he cua de bang danh tinh — 6 yeu cau tung duoc phuc vu nay
+    # bi tu choi (served -> rejected: tra dich "lan luot", doi ten dich, diem trung toa do,
+    # chieu sai duong/mat, cach noi ngoai tu vung). Row v109 van HIT:
+    # runs/w18-binding-focus/diagnostics/PROOF_CACHE_ROW_W18.json.
+    assert main_module.CACHE_VERSION == "110"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

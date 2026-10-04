@@ -750,7 +750,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       (`runs/w17-operation-annotations/diagnostics/PROOF_CACHE_ROW_W17.json`). Envelope
 #       phục vụ cũng đổi nội dung (nhãn số đo `annotation`, `refusal_cause`). Census: chỉ
 #       A2b (giới hạn A′ đã khai của W16) đổi trạng thái.
-CACHE_VERSION = "109"
+CACHE_VERSION = "110"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
