@@ -259,7 +259,7 @@ KHONG_SUA_NGUON = frozenset({
     # W18 §16.4: chưa đối chiếu được phép dựng điểm với câu của đề — viết lại chương trình không
     # làm câu ấy đọc được.
     "CONSTRUCTION_BINDING_UNVERIFIED",
-    # W20 §16.5: điểm đề bắt dựng bị đặt bằng toạ độ — cùng phán quyết với `KHONG_DUOC_SUA` (mô hình
+    # W20 §17: điểm đề bắt dựng bị đặt bằng toạ độ — cùng phán quyết với `KHONG_DUOC_SUA` (mô hình
     # đã tự giải rồi giấu kết luận vào toạ độ), nhưng từ chối có mã ở chặng `construction_binding`.
     "CONSTRUCTION_REPLACED_BY_COORDINATES",
 })

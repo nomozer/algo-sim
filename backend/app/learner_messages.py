@@ -223,7 +223,7 @@ _MSG_CHUA_DOI_CHIEU = (
 
 
 def _msg_toa_do_thay_dung(envelope: dict) -> str:
-    """W20 §16.5 — `reason_subjects` = các cặp [quan hệ đề nêu, việc chương trình đã làm] (`đặt H bằng toạ
+    """W20 §17 — `reason_subjects` = các cặp [quan hệ đề nêu, việc chương trình đã làm] (`đặt H bằng toạ
     độ cho sẵn`, `lấy H trùng với điểm A`). Toạ độ có thể đúng: nói giới hạn KIỂM CHỨNG, không nói hình
     khác, không bảo sửa đề."""
     s = [x for x in envelope.get("reason_subjects") or [] if isinstance(x, str)]

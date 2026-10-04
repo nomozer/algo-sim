@@ -14,7 +14,7 @@ Ba bước một chiều (thẩm quyền: `docs/architecture/ASSUMPTION_CERTIFIC
   bao giờ tạo bí danh.
 - `doi_chieu_phep_dung` — trạng thái từng phép dựng điểm (§16.3) và mã từ chối (§16.4).
 
-W20 (§16.5): đích của quan hệ mà chương trình ĐẶT BẰNG TOẠ ĐỘ — toạ độ của chính tên ấy, hay của điểm nó
+W20 (§17): đích của quan hệ mà chương trình ĐẶT BẰNG TOẠ ĐỘ — toạ độ của chính tên ấy, hay của điểm nó
 trỏ tới qua `assign X = var Y` (kể cả một đỉnh đề cho) — không được dựng. Trước bản sửa nó không có trạng
 thái nào, và ngoài vùng đa diện được phục vụ, có ca với đáp số sai
 (`docs/evaluation/geometry/runs/w20-cleanup-premerge/`). Module vẫn không đọc toạ độ nào: chỉ hỏi CÓ toạ độ.
@@ -39,7 +39,7 @@ DEFINED_BY_COORDINATES = "DEFINED_BY_COORDINATES"
 #: Cùng mã với W17 §15.1 (nguyên nhân CONSTRUCTION); chặng `construction_binding` phân biệt lời.
 MA_LECH_PHEP_DUNG = "CONSTRUCTION_NOT_TEXT_BOUND"
 MA_CHUA_DOI_CHIEU = "CONSTRUCTION_BINDING_UNVERIFIED"
-#: W20 §16.5 — nguyên nhân CONSTRUCTION, từ chối ở MỌI vùng; lời nói giới hạn kiểm chứng (toạ độ có thể đúng).
+#: W20 §17 — nguyên nhân CONSTRUCTION, từ chối ở MỌI vùng; lời nói giới hạn kiểm chứng (toạ độ có thể đúng).
 MA_TOA_DO_THAY_DUNG = "CONSTRUCTION_REPLACED_BY_COORDINATES"
 #: Ba phép dựng điểm trong phạm vi W18 (§16.3).
 PHEP_TRONG_PHAM_VI = frozenset({"midpoint", "divide_segment", "project_onto"})
@@ -318,7 +318,7 @@ _THU_TU = {MISMATCHED: 0, DEFINED_BY_COORDINATES: 1, UNVERIFIED: 2}
 def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str] | None = None) -> KetQuaDoiChieu:
     """§16.3/§16.4 — trạng thái của mọi phép dựng điểm (mọi tầng lồng) và mã từ chối:
     `CONSTRUCTION_NOT_TEXT_BOUND` khi có MISMATCHED (chủ thể: cặp [quan hệ đề, quan hệ chương
-    trình]), không thì `CONSTRUCTION_REPLACED_BY_COORDINATES` khi có DEFINED_BY_COORDINATES (§16.5; chủ thể:
+    trình]), không thì `CONSTRUCTION_REPLACED_BY_COORDINATES` khi có DEFINED_BY_COORDINATES (§17; chủ thể:
     cặp [quan hệ đề, việc chương trình đã làm]), không thì `CONSTRUCTION_BINDING_UNVERIFIED` khi có
     UNVERIFIED (chủ thể: đích)."""
     de = getattr(contract, "problem_text", "") or ""
@@ -373,7 +373,7 @@ def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str
         if T not in tt or _THU_TU.get(st, 9) < _THU_TU.get(tt[T], 9):
             tt[T] = st
         chi_tiet.append(f"CONSTRUCTION_BINDING {T}: {st} — {ly}" + (f" (text: {cau})" if cau else ""))
-    # §16.5 — tên mang ĐÚNG ký hiệu đích của một quan hệ, lần theo chuỗi bí danh: có toạ độ ở bất kỳ mắt
+    # §17 — tên mang ĐÚNG ký hiệu đích của một quan hệ, lần theo chuỗi bí danh: có toạ độ ở bất kỳ mắt
     # nào (kể cả rồi mới dựng lại) ⇒ chương trình khẳng định toạ độ của một điểm đề bắt phải dựng.
     toa_do: list[tuple[str, str]] = []
     da_dat: set[str] = set()

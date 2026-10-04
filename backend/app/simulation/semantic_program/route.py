@@ -447,7 +447,7 @@ def _sau_grounding(
     #
     # Trước bất biến nguồn: trung điểm sai đoạn mà tên khớp phải nhận lời từ chối CÓ CẤU TRÚC
     # (nguyên nhân CONSTRUCTION, nêu cả hai quan hệ) chứ không phải mã chung của bất biến toạ độ —
-    # bất biến ấy giữ làm lưới thứ hai. LỆCH và ĐÍCH ĐẶT BẰNG TOẠ ĐỘ (W20 §16.5) ⇒ từ chối ở MỌI vùng
+    # bất biến ấy giữ làm lưới thứ hai. LỆCH và ĐÍCH ĐẶT BẰNG TOẠ ĐỘ (W20 §17) ⇒ từ chối ở MỌI vùng
     # (lỗi toàn vẹn của chương trình, như U5); CHƯA ĐỐI CHIẾU ⇒ từ chối trong vùng U3, ngoài vùng chỉ
     # ghi. Lỗi bên trong ⇒ coi như chưa đối chiếu. Fixture tin cậy không đề: không có câu nào để gắn —
     # không kiểm (như cổng giả định).

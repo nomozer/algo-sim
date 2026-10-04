@@ -751,7 +751,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       phục vụ cũng đổi nội dung (nhãn số đo `annotation`, `refusal_cause`). Census: chỉ
 #       A2b (giới hạn A′ đã khai của W16) đổi trạng thái.
 #   111 (2026-10-04, W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE): BỀ MẶT MÔ HÌNH
-#       KHÔNG ĐỔI. Chặng `construction_binding` (§16.5) từ chối điểm đề định nghĩa bằng quan
+#       KHÔNG ĐỔI. Chặng `construction_binding` (§17) từ chối điểm đề định nghĩa bằng quan
 #       hệ (trung điểm, hình chiếu) mà chương trình đặt bằng TOẠ ĐỘ — của chính nó hay của
 #       điểm nó là bí danh — chiều **served → rejected**. Sáu yêu cầu TRƯỚC W20 được phục vụ
 #       (hình chiếu đặt bằng toạ độ ngoài vùng đa diện, một ca với đáp số sai; toạ độ rồi mới
