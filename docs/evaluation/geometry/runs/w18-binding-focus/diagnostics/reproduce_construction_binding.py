@@ -38,11 +38,7 @@ from tests.geometry import test_assumption_certificate as AC  # noqa: E402
 from tests.geometry import test_construction_binding as T  # noqa: E402
 
 NHAN = T.NHAN
-HANG = dict(T.CA)
-HANG["X1_outside_scope_mismatch"] = lambda: T._ngoai(
-    "Gọi M là trung điểm của SA. Tính độ dài đoạn MC.", [T._mid("M", "S", "B")], "M", "C")
-HANG["X2_outside_scope_out_of_vocab"] = lambda: T._ngoai(
-    "Gọi M là điểm chính giữa của đoạn SA. Tính độ dài đoạn MC.", [T._mid("M", "S", "A")], "M", "C")
+HANG = dict(T.CA) | dict(T.NGOAI)
 HANG["W17_O1_cut_alpha_text_beta"] = AC.PHEP_DUNG_SAI["O1_cat_bang_alpha_khi_de_noi_beta"]
 HANG["W17_O1b_cut_beta_control"] = AC.PHEP_DUNG_DUNG["O1b_doi_chung_cat_bang_beta"]
 

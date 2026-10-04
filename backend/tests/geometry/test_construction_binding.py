@@ -220,22 +220,30 @@ def test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh():
 
 # ── vùng thi hành (§16.4): MISMATCHED ở mọi vùng, UNVERIFIED chỉ trong vùng đa diện ─────────────
 
-NGOAI_VUNG = "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6). "
+#: Không ký hiệu khối ⇒ ngoài vùng U3; vẫn qua cổng miền và cổng phạm vi của pipeline (đo trước bản sửa).
+NGOAI_VUNG = ("Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); "
+              "tứ giác ABCD là hình vuông. ")
 
 
-def _ngoai(van: str, them: list[dict], of: str, wrt: str):
-    return _p1(van, them, of, wrt, nen=NGOAI_VUNG, co_khoi=False)
+def _ngoai(van: str, diem_m: dict):
+    return _p1(van + " Tính khoảng cách từ M đến đường thẳng BC.", [_duong("BC", "B", "C"), diem_m],
+               "M", "BC", nen=NGOAI_VUNG, co_khoi=False)
+
+
+NGOAI = {
+    "X1_outside_scope_mismatch": lambda: _ngoai("Gọi M là trung điểm của SA.", _mid("M", "S", "B")),
+    "X2_outside_scope_out_of_vocab": lambda: _ngoai("Gọi M là điểm chính giữa của đoạn SA.", _mid("M", "S", "A")),
+}
 
 
 def test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi():
-    _sp, out, _sc = W.chay(*_ngoai("Gọi M là trung điểm của SA. Tính độ dài đoạn MC.", [_mid("M", "S", "B")], "M", "C"))
+    _sp, out, _sc = W.chay(*NGOAI["X1_outside_scope_mismatch"]())
     assert (out.servable, out.stage_reached, out.reason_code) == (
         False, "construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND"), (out.stage_reached, out.details[:3])
 
 
 def test_w18_chua_doi_chieu_ngoai_vung_da_dien_chi_ghi_lai():
-    _sp, out, _sc = W.chay(*_ngoai("Gọi M là điểm chính giữa của đoạn SA. Tính độ dài đoạn MC.",
-                                   [_mid("M", "S", "A")], "M", "C"))
+    _sp, out, _sc = W.chay(*NGOAI["X2_outside_scope_out_of_vocab"]())
     assert out.servable and out.construction_binding.get("M") == "UNVERIFIED", (
         out.stage_reached, out.reason_code, out.construction_binding)
 
