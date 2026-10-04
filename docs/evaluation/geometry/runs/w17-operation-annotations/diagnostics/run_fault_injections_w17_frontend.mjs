@@ -66,9 +66,20 @@ const INJECTIONS = [
   ["FH1", LIB, "const cameraDoi = (a, b) => cameraMotion(a, b) > CAMERA_SETTLE_TOLERANCE;",
     "const cameraDoi = (a, b) => JSON.stringify(a) !== JSON.stringify(b);",
     "cameras compared by bytes (ULP damping reads as a camera change)", NODE, "W17 toggle isolation and causal restore …"],
-  ["FH2", LIB, "&& (hop ?? []).every((r) => x < r.x - margin || x > r.x + r.w + margin",
+  // Run 3 (final candidate, 83f101e4): add4afb0 shortened this line; runs 1-2 targeted `(hop ?? []).every(`.
+  ["FH2", LIB, "&& hop.every((r) => x < r.x - margin || x > r.x + r.w + margin",
     "&& [].every((r) => x < r.x - margin || x > r.x + r.w + margin",
     "section-fill samples under DOM labels", NODE, "W17 section fill sampler: no sample under a DOM label box"],
+  // Run 3: the causal-restore frame comparison registered after the failed attempt 1 at 83f101e4 (§15.5).
+  ["FH3", LIB, "if (!canvas.equal_bytes && !(canvas.same_size && canvas.max_channel_delta <= NHIEU_KHUNG_TOI_DA)) {",
+    "if (false) {",
+    "the restored canvas never compared with the neutral one", NODE, "W17 causal restore: capture noise … anything larger is"],
+  ["FH4", LIB, "export const NHIEU_KHUNG_TOI_DA = 1;", "export const NHIEU_KHUNG_TOI_DA = 255;",
+    "the noise tolerance widened until any restore failure passes", NODE, "W17 causal restore: capture noise … anything larger is"],
+  ["FH5", LIB, "if (!canvas.equal_bytes && !(canvas.same_size && canvas.max_channel_delta <= NHIEU_KHUNG_TOI_DA)) {",
+    "if (!canvas.equal_bytes) {",
+    "bytes compared again (capture noise reads as not restored: the attempt-1 state)", NODE,
+    "W17 causal restore: capture noise … anything larger is"],
 ];
 
 // [id, file, old, new, what it simulates, family, viewport, predicted reason code]
