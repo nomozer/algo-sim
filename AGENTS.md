@@ -2,7 +2,7 @@
 
 > **Entry Point duy nhất cho Coding Agents và AI Sessions.**
 > File này là cổng định hướng ngắn gọn. Tài liệu quy tắc ổn định và chi tiết là [`docs/RULES.md`](docs/RULES.md).
-> Nếu tài liệu mâu thuẫn với code hoặc test thật: **CODE/TESTS THẮNG**.
+> Tài liệu mâu thuẫn với code hoặc test thật: theo luật **CODE/TESTS** ở [`docs/RULES.md §1`](docs/RULES.md).
 
 ---
 
@@ -24,7 +24,7 @@
 
 - **Bảo toàn thay đổi của người dùng:** Tuyệt đối không sửa, khôi phục (restore), stage hoặc commit bất kỳ thay đổi nào của người dùng ngoài phạm vi nhiệm vụ được giao. Mọi trạng thái working tree chưa commit của người dùng phải được giữ nguyên.
 - **Staging Allowlist:** Luôn dùng `git add <từng file cụ thể>`. Tuyệt đối không dùng `git add .` hoặc `git add -A`. Trước khi commit, kiểm tra `git diff --cached --name-only`.
-- **Nhánh & Lịch sử:** Làm việc trên nhánh được chỉ định. Tuyệt đối **không merge vào `main`**, **không push**, và **không rewrite lịch sử** (`git commit --amend` trên commit đã công bố, `git rebase`).
+- **Nhánh & Lịch sử:** Làm việc trên nhánh được chỉ định. Mặc định **không merge vào `main`** và **không push**. Chỉ khi user cho phép rõ ràng **và** mọi điều kiện nghiệm thu của task đã đạt mới merge thẳng vào `main`, push `main` và xoá nhánh đã merge. Không bao giờ **rewrite lịch sử** (`git commit --amend` trên commit đã công bố, `git rebase`, force-push).
 - **Kiểm chứng độc lập:** Khi cần xác minh có thẩm quyền (authoritative verification), tạo git worktree detached sạch tại commit tương ứng.
 
 ---
@@ -40,7 +40,11 @@
 
 ## 4. Evidence & Documentation Safety
 
-- **Tính bất biến của lịch sử:** Báo cáo (`docs/*.md`) và artifact (`docs/evaluation/**`) từ các wave trước là bất biến. Không được sửa, di chuyển hoặc xóa.
+- **Tính bất biến của lịch sử:** Báo cáo lịch sử, input/output của lượt đo, manifest và artifact đã đông cứng của các wave trước (trong `docs/evaluation/**`, và các báo cáo liệt kê ở `HISTORICAL_REPORTS.md`) là bất biến. Không được sửa, di chuyển hoặc xóa.
+- **Nháp của công cụ agent không tự động là bằng chứng bất biến:** plan, brief, report, ledger và gói review do skill/agent sinh (`.superpowers/`, `docs/legacy/superpowers/`).
+- **Dọn có kiểm:** bản trùng, plan bỏ dở và tài liệu ngoài phạm vi được xoá sau khi đọc nội dung, kiểm mọi tham chiếu (code, test, tooling, docs, manifest) và chuyển thông tin duy nhất sang tài liệu có thẩm quyền kèm nguồn; xoá theo đường dẫn chính xác, ghi nhật ký xoá.
+- **Test không ghi vào bằng chứng đông cứng:** output tái sinh đi vào thư mục tạm hoặc một run mới.
+- **Phê duyệt là của người:** tự động hoá (script, test, agent) không bao giờ ghi `APPROVED_BY_USER`.
 - **Báo cáo wave mới nằm trong thư mục run** (`docs/evaluation/geometry/runs/<run>/`), không ở gốc `docs/`. Gốc `docs/` là danh sách đóng: tài liệu chuẩn tắc, tài liệu dự án, và các báo cáo cũ trong [`docs/evaluation/HISTORICAL_REPORTS.md`](docs/evaluation/HISTORICAL_REPORTS.md) — bộ kiểm tài liệu đỏ với file chưa phân lớp. Cổng điều hướng: [`docs/README.md`](docs/README.md).
 - **Correction Layer:** Khi phát hiện báo cáo cũ có sai sót hoặc cần đính chính cách diễn giải, tạo một wave mới với lớp đính chính (correction layer) và đăng ký chuỗi `CORRECTED_BY` vào [`docs/EVIDENCE_INDEX.md`](docs/EVIDENCE_INDEX.md).
 - **Tính trung thực của bằng chứng:**

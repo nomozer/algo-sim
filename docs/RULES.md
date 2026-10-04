@@ -23,9 +23,12 @@ kịch bản vẽ do AI sinh; **không dùng cho quyết định implementation*
 9. `docs/EVIDENCE_INDEX.md` — tra cứu báo cáo và artifact kiểm chứng.
 10. **Code và test thật.**
 
-> Nếu tài liệu mâu thuẫn với code/test: **CODE/TESTS THẮNG** — sửa tài liệu,
-> không bẻ code theo tài liệu. Nếu chỗ sai thuộc *update policy* của
-> `CODE_INDEX.md`, sửa luôn; nếu không, báo là stale entry.
+> Nếu tài liệu mâu thuẫn với code/test về việc hệ **đang làm gì**: **CODE/TESTS
+> THẮNG** — sửa tài liệu, không bẻ code theo tài liệu. Nếu chỗ sai thuộc *update
+> policy* của `CODE_INDEX.md`, sửa luôn; nếu không, báo là stale entry. Nhưng
+> code/test chỉ là **cơ sở tái hiện**, không phải thẩm quyền về việc hệ **phải làm
+> gì**: chúng có thể sai và cần sửa, và không bao giờ là lý do để bỏ qua yêu cầu
+> sản phẩm.
 
 **Không được nói "đã đọc" nếu chưa thực sự mở file.**
 
