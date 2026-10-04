@@ -72,23 +72,15 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
             "            elif False:\n",
             "grounding guard ⑥ (text-introduced point declared by coordinates) removed — defense in depth",
             "NOT CAUGHT — L9 still refused, now by construction_binding (stages)"),
-    "FE1": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:
-", "    if False:
-",
+    "FE1": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:\n", "    if False:\n",
             "the frozen reconciliation folder accepted as an output folder",
             "CAUGHT — the refusal tests (frozen folder and a folder inside it)"),
-    "FE2": (RECON, "    out_dir, dong_bang = Path(out_dir).resolve(), RECONCILIATION_DIR.resolve()
-"
-                   "    if out_dir == dong_bang or dong_bang in out_dir.parents:
-",
-            "    out_dir, dong_bang = RECONCILIATION_DIR, None
-    if False:
-",
+    "FE2": (RECON, "    out_dir, dong_bang = Path(out_dir).resolve(), RECONCILIATION_DIR.resolve()\n"
+                   "    if out_dir == dong_bang or dong_bang in out_dir.parents:\n",
+            "    out_dir, dong_bang = RECONCILIATION_DIR, None\n    if False:\n",
             "the pre-W20 behaviour: the four outputs written into the frozen folder whatever out_dir says",
             "CAUGHT — test_w20_reconciliation_writes_only_to_its_explicit_output_folder and the refusal tests"),
-    "FE3": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:
-", "    if out_dir == dong_bang:
-",
+    "FE3": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:\n", "    if out_dir == dong_bang:\n",
             "a folder INSIDE the frozen folder accepted (self-review finding F2)",
             "CAUGHT — test_w20_reconciliation_refuses_a_folder_inside_the_frozen_folder"),
 }
