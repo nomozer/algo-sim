@@ -1,0 +1,3698 @@
+{
+ "schema_version": "w20-cleanup-inventory/1",
+ "measured_at_commit": "a36f3e97b6605ff713969227de7b0516a26cce00",
+ "classes": [
+  "KEEP_ACTIVE",
+  "KEEP_ARCHITECTURAL_HISTORY",
+  "KEEP_RESEARCH_EVIDENCE",
+  "DUPLICATE_SAFE_TO_DELETE",
+  "ABANDONED_OUT_OF_SCOPE_SAFE_TO_DELETE",
+  "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+  "REVIEW_REQUIRED"
+ ],
+ "not_opened": [
+  "D:/Documents/projects/algo-sim/.superpowers/brainstorm/.last-token",
+  "D:/tmp/settings.json.bak",
+  "D:/tmp/settings.local.json.bak"
+ ],
+ "counts": {
+  "docs/legacy/superpowers": {
+   "KEEP_ARCHITECTURAL_HISTORY": 13,
+   "KEEP_RESEARCH_EVIDENCE": 3,
+   "KEEP_ACTIVE": 2
+  },
+  ".superpowers": {
+   "REVIEW_REQUIRED": 108,
+   "KEEP_ACTIVE": 3,
+   "REPRODUCIBLE_TEMP_SAFE_TO_DELETE": 46,
+   "KEEP_ARCHITECTURAL_HISTORY": 29,
+   "DUPLICATE_SAFE_TO_DELETE": 10
+  },
+  "D:/tmp": {
+   "REVIEW_REQUIRED": 204,
+   "REPRODUCIBLE_TEMP_SAFE_TO_DELETE": 1,
+   "DUPLICATE_SAFE_TO_DELETE": 7
+  },
+  "W19-registered": {
+   "REVIEW_REQUIRED": 2,
+   "KEEP_ACTIVE": 1
+  }
+ },
+ "delete_candidates": 64,
+ "items": [
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-07-15-m10-3d-ped-protocol-encapsulation.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "M10 plan; the module is gone but the 3D-meaning contract it introduced is live",
+   "sha256": "016e7c3d00b8f47aac5793d8a22026cad5948e9fbd3b85c6b58b01b6eb82c0ae",
+   "lines": 1523,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "ThreeDMeaning": 2,
+    "meaningOfZ": 3
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "cited by living docs (CODE_INDEX, COVERAGE)",
+   "sha256": "b00f6009c6f50ce5d9ab0b25a29e21e231c6b6de0e583ac3e4b026ca40d883a7",
+   "lines": 1287,
+   "referenced_by_living": [
+    "docs/CODE_INDEX.md",
+    "docs/COVERAGE.md"
+   ],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/REWRITE_LOG.json",
+    "docs/legacy/CURRENT_STATE_HISTORY.md",
+    "docs/legacy/superpowers/specs/2026-07-16-m13-semantic-matrix.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-07-18-m14-capability-family-formalization.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "plan of the same capability-family model",
+   "sha256": "8ee3a0bfdfd94d5da814fb5a0d2579de206ea3b958accf4c1e5f201b453d93e5",
+   "lines": 305,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "capability-descriptors.json": 4
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "plan of the same contract",
+   "sha256": "9abfb365728c5c5da732bdd5a8a1e0f7ca7f4d371f4f642a0130c34deb1e3860",
+   "lines": 1036,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "family_id": 41
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md",
+   "class": "KEEP_RESEARCH_EVIDENCE",
+   "reason": "plan of the M16 evaluation",
+   "sha256": "a85786b57763b4c87e0648d488d26ec46ebcb0b5ce4e1c5ec6e10353a23ab60c",
+   "lines": 163,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-08-17-w13-bo-hinh-thuc-hoi-dap.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "decision record behind frontend/src/simulations/no-verdict.test.ts (locks the removal)",
+   "sha256": "cf8c753376e838d186ac5086833677770ecc80290462603c9d81f77efd5d3b87",
+   "lines": 154,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "PredictionCapability": 4
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/plans/2026-08-20-semantic-program-generative-route.md",
+   "class": "KEEP_ACTIVE",
+   "reason": "plan of the running architecture; cited by STATUS_LEDGER",
+   "sha256": "d72612e60cff35c9271360f4be3bbf482618f5caa6b07900028e0562bf7bbe65",
+   "lines": 2154,
+   "referenced_by_living": [
+    "docs/STATUS_LEDGER.md"
+   ],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/REWRITE_LOG.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_BEFORE.json"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-15-m10-3d-ped-protocol-encapsulation-design.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "M10 design of the same live contract",
+   "sha256": "38f9184574685aa756e123c5a4d943c31b93a15210ffab80e3b6360729429724",
+   "lines": 236,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "ThreeDMeaning": 2,
+    "meaningOfZ": 3
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-15-m9-ux3-home-preview-design.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "design of the sample preview still in the frontend",
+   "sha256": "09161ccf2f6fe3148083ce707f2b0d66bae924c49e1f54f3491e05adfe050b20",
+   "lines": 126,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "previewKindOf": 9,
+    "KIND_BY_SIM_ID": 2
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-16-m13-generic-semantic-soundness-design.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "design of the M13 plan cited by living docs",
+   "sha256": "d0a785f4d1074875af5e156a1334a12d6416bfb2d656b63137d7f5597999f1de",
+   "lines": 431,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/legacy/CURRENT_STATE_HISTORY.md",
+    "docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md",
+    "docs/legacy/superpowers/specs/2026-07-16-m13-semantic-matrix.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-16-m13-semantic-matrix.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "matrix of the M13 plan cited by living docs",
+   "sha256": "b9819d939522da69f56a02fe7f3173a799c18b0d594be6858a8d0d03afc0fa41",
+   "lines": 864,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_AFTER_TASK2.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_AFTER_TASK3.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_BEFORE.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_FINAL.json",
+    "docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-17-m14-capability-family-formalization-design.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "capability-family model behind the descriptors still read by frontend tests",
+   "sha256": "b5eb842c154099b02c363177424a712c4c69c3a00e1f8a2246cbfc0708e10996",
+   "lines": 783,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/legacy/superpowers/plans/2026-07-18-m14-capability-family-formalization.md"
+   ],
+   "live_symbols_hits": {
+    "capability-descriptors.json": 4
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "public capability contract (family-prefixed mechanisms) still in the descriptors",
+   "sha256": "9f2f7a1be4dabd32a0baf6fce56376edd47f592eedf42481ef7452531440b5f8",
+   "lines": 624,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_AFTER_TASK2.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_AFTER_TASK3.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_BEFORE.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/verification/LINKS_FINAL.json",
+    "docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md"
+   ],
+   "live_symbols_hits": {
+    "family_id": 41
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-19-m16-comprehensive-llm-evaluation-design.md",
+   "class": "KEEP_RESEARCH_EVIDENCE",
+   "reason": "design of the M16 LLM evaluation (a measured, closed milestone)",
+   "sha256": "1b9a90367ac6b163baa1df169d4d038102a5d5ee26027b53a6bc249f3b91283f",
+   "lines": 282,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-19-m16-evaluation-audit.md",
+   "class": "KEEP_RESEARCH_EVIDENCE",
+   "reason": "audit of the M16 evaluation",
+   "sha256": "2edc10480c9a09541472f51a3b607826a96322735a0429162a59c501e1818c67",
+   "lines": 249,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/legacy/superpowers/specs/2026-07-19-m16-comprehensive-llm-evaluation-design.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-21-m17-lite-proposal.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "proposal behind obligation kinds still in the product taxonomy",
+   "sha256": "90f332d92b8552d5e027534e241c1b3cfa39762a9d88af4f65dc37b8376b7d0f",
+   "lines": 350,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "tree_traversal.preorder": 3,
+    "relational_table_query": 12
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-07-21-m17-wave2a-tree-traversal.md",
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "reason": "design behind the tree_traversal obligation kinds still in the product taxonomy",
+   "sha256": "34397bb0bce6afbe96175ec011d0b24fbb7f66bf2476c7c8916061731d999cc0",
+   "lines": 101,
+   "referenced_by_living": [],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json"
+   ],
+   "live_symbols_hits": {
+    "tree_traversal.preorder": 3
+   },
+   "action": "KEEP"
+  },
+  {
+   "area": "docs/legacy/superpowers",
+   "path": "docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md",
+   "class": "KEEP_ACTIVE",
+   "reason": "design of the running architecture; cited by docs/RULES.md §4.11, CODE_INDEX, STATUS_LEDGER",
+   "sha256": "5927540c4797dda9559e01957148453f4cc5b12667498dd13aa14d1714ef8b59",
+   "lines": 816,
+   "referenced_by_living": [
+    "docs/CODE_INDEX.md",
+    "docs/RULES.md",
+    "docs/STATUS_LEDGER.md"
+   ],
+   "referenced_by_frozen_or_legacy": [
+    "docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/inventory_docs.py",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json",
+    "docs/evaluation/geometry/runs/w19-docs-organization/inventory/REWRITE_LOG.json",
+    "docs/legacy/superpowers/plans/2026-08-20-semantic-program-generative-route.md"
+   ],
+   "live_symbols_hits": {},
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/.last-port",
+   "bytes": 5,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/.last-token",
+   "bytes": 64,
+   "class": "REVIEW_REQUIRED",
+   "reason": "brainstorm server token: not opened",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1630-1784056314/content/layout.html",
+   "bytes": 19166,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1630-1784056314/content/preview-set.html",
+   "bytes": 12932,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1630-1784056314/content/waiting.html",
+   "bytes": 307,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1630-1784056314/state/server-stopped",
+   "bytes": 51,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/content/cards-panel.html",
+   "bytes": 15976,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/content/icons-home-v2.html",
+   "bytes": 11631,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/content/redesign.html",
+   "bytes": 17826,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/content/workspace-v2.html",
+   "bytes": 11929,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/state/events",
+   "bytes": 201,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/state/server-info",
+   "bytes": 408,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/state/server-instance-id",
+   "bytes": 49,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/brainstorm/1820-1784057880/state/server.pid",
+   "bytes": 5,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "UI brainstorm draft or server state: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/.gitignore",
+   "bytes": 2,
+   "class": "KEEP_ACTIVE",
+   "reason": "workspace infrastructure",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/full_backend_p9.log",
+   "bytes": 16271,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/plan-path",
+   "bytes": 56,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "plan copy or pointer: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/prefreeze3_backend.log",
+   "bytes": 14149,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/prefreeze_backend.log",
+   "bytes": 14451,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/prefreeze_vitest.log",
+   "bytes": 243,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/progress-w14.md",
+   "bytes": 35252,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/progress.md",
+   "bytes": 34665,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/review-4f6a0ab6..751169dd.diff",
+   "bytes": 6890779,
+   "sha256": "bc6f9545442ee405c32db116455837da9a51ed098235bfb2e3ddf4086328c6c5",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=8, title 4f6a0ab6..HEAD)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-0-brief.md",
+   "bytes": 784,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-0-tests.log",
+   "bytes": 10,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-1-brief.md",
+   "bytes": 2074,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-1-tests.log",
+   "bytes": 9,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-10-brief.md",
+   "bytes": 918,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-10-tests.log",
+   "bytes": 103,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-11-brief.md",
+   "bytes": 3177,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-11-tests.log",
+   "bytes": 265,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-12-brief.md",
+   "bytes": 9798,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-12-tests.log",
+   "bytes": 327,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-2-brief.md",
+   "bytes": 3753,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-2-tests.log",
+   "bytes": 128,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-3-brief.md",
+   "bytes": 1836,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-3-tests.log",
+   "bytes": 9,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-4-brief.md",
+   "bytes": 428,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-4-tests.log",
+   "bytes": 626,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-5-brief.md",
+   "bytes": 1510,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-5-tests.log",
+   "bytes": 826,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-5a-brief.md",
+   "bytes": 3264,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-5a-tests.log",
+   "bytes": 1033,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-6-brief.md",
+   "bytes": 1713,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-6-tests.log",
+   "bytes": 1367,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-6b-brief.md",
+   "bytes": 1116,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-6b-tests.log",
+   "bytes": 327,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-7-brief.md",
+   "bytes": 1149,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-7-tests.log",
+   "bytes": 241,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-8-brief.md",
+   "bytes": 1821,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-8-tests.log",
+   "bytes": 110,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-9-brief.md",
+   "bytes": 1143,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/task-9-tests.log",
+   "bytes": 1614,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-1-brief.md",
+   "bytes": 3551,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-10-brief.md",
+   "bytes": 2042,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-11-brief.md",
+   "bytes": 4004,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-12-brief.md",
+   "bytes": 9798,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-2-brief.md",
+   "bytes": 16964,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-3-brief.md",
+   "bytes": 1467,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-4-brief.md",
+   "bytes": 17560,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-5-brief.md",
+   "bytes": 14422,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-5a-brief.md",
+   "bytes": 3264,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-6-brief.md",
+   "bytes": 4357,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-6b-brief.md",
+   "bytes": 1116,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-7-brief.md",
+   "bytes": 1901,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-8-brief.md",
+   "bytes": 6089,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/w14-briefs/task-9-brief.md",
+   "bytes": 1232,
+   "class": "KEEP_ARCHITECTURAL_HISTORY",
+   "action": "KEEP",
+   "reason": "W14/W15 task brief; the W14 plan file was overwritten by the W15 plan, so these briefs are the only copy of the W14 plan text"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/W14_BRIEF.txt",
+   "bytes": 17929,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/curried-splashing-finch/W15_BRIEF.txt",
+   "bytes": 19635,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/hotfix-role-compat-report.md",
+   "bytes": 12986,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m15-close-report.md",
+   "bytes": 17532,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-close-docs-uncommitted.diff",
+   "bytes": 41201,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "uncommitted diff: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-close-report.md",
+   "bytes": 4734,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-1-brief.md",
+   "bytes": 3448,
+   "sha256": "2a92bdfc43ad7f6902edc8dd6258d3c6c8a6eb8072f3e49e17250594d3683b2c",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 17/51 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-1-report.md",
+   "bytes": 7957,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-2-brief.md",
+   "bytes": 7100,
+   "sha256": "34687dda6fc54e43d6e791b341f10c961291aa5d2d957d66503d004f50425749",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 24/66 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-2-report.md",
+   "bytes": 9604,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-3-brief.md",
+   "bytes": 7727,
+   "sha256": "a69bad52381fa36ade3b1c5d848b5304196734bba43a644d2228f6dd011f5764",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 17/66 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-3-report.md",
+   "bytes": 9453,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-4-brief.md",
+   "bytes": 9654,
+   "sha256": "45c4072c2af90d1fb83d21cd6bfcfcd2f795a93a2053e96bc6bf26040788bade",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 17/35 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-4-report.md",
+   "bytes": 6263,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-5-brief.md",
+   "bytes": 7726,
+   "sha256": "05434d32866b168801e2bdd5958684d15cbb118fedd210b78e50d1db51ff02fb",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 21/53 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-5-report.md",
+   "bytes": 5878,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-6-brief.md",
+   "bytes": 6188,
+   "sha256": "092e29263022fbf2d6c3bc6d0d08d69da573b8d5710b0d9336ca028b8d2b33e9",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 13/29 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-6-report.md",
+   "bytes": 7777,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-7-brief.md",
+   "bytes": 3418,
+   "sha256": "99c1f686dd53d0e6006db790849de1a0798338f9878fa4bd022d80efb8ae11d0",
+   "class": "REVIEW_REQUIRED",
+   "reason": "task brief; 23/31 non-empty lines in docs/legacy/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md — carries lines found in no committed plan",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/m16-task-7-report.md",
+   "bytes": 843,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/progress.md",
+   "bytes": 19657,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-00c3d30..87c8a62.diff",
+   "bytes": 10623,
+   "sha256": "146e5fdcc5e3659d14e3e547269fabf15206d8d7d38432cc039ab0239af9462d",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 00c3d30..87c8a62)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-14a9438..6b730b7.diff",
+   "bytes": 38213,
+   "sha256": "7e5476d772285b41a9cc09c794713582cab386be5a1407790f16b91cedd8c83e",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 14a9438..6b730b7)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-277d681..29757d6.diff",
+   "bytes": 10885,
+   "sha256": "85b5b8813724cd217daae116458773b3fc177f6e696ae6f59884b9304c0f2d4d",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 277d681..29757d6)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-29757d6..bcadef5.diff",
+   "bytes": 9084,
+   "sha256": "11c5ecb15b2bb52315d8906aff0d4f4fca8b8d9f9b675ecae1c273d44d582836",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 29757d6..bcadef5)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-395827e..a3a060c.diff",
+   "bytes": 304585,
+   "sha256": "f62120a14980f57b0bcc44ad0ae6a230a91a4492ec0e0daf787069763390570d",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 395827e..a3a060c)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-395827e..db5ba3f.diff",
+   "bytes": 58492,
+   "sha256": "619b690a41c371ff162eef90905b743dc054daf9578e9f398f76933fa66b3afb",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 395827e..db5ba3f)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-3d1a0a2..4bdb702.diff",
+   "bytes": 26133,
+   "sha256": "3bfad0eabdacfedfc2a3e4bc80b5b610d19dd1681f457f21b81c0d12df7682d9",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 3d1a0a2..4bdb702)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-4bdb702..8571e3e.diff",
+   "bytes": 15574,
+   "sha256": "8a77696bfd40208399907380a9b7523e47c59869257848b567d3b671e0e765c0",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 4bdb702..8571e3e)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-4d6b271..b8b3734.diff",
+   "bytes": 6514,
+   "sha256": "1fd1151bd9dc5cdad27969292dfd7ba7d6347cf100d0896871480a67cd18272b",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 4d6b271..b8b3734)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-4f9ff7a..f515822.diff",
+   "bytes": 3153,
+   "sha256": "451c0716fd946438733080d3f09f3fe48de17e82e2edd4e8477575d8676e4374",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 4f9ff7a..f515822)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-52b8ca4..8e3cac6.diff",
+   "bytes": 8753,
+   "sha256": "c7365600308debbaf262be8f3d47965e25143dae37b25fbd30a593b3e8fb1548",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 52b8ca4..8e3cac6)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-59a5bbe..66d2d8e.diff",
+   "bytes": 191588,
+   "sha256": "d77fd7eff7470284c204a1965e1ee6cc586e93d54990378868a692a96ae98a69",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 59a5bbe..66d2d8e)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-60c9874..3485068.diff",
+   "bytes": 93958,
+   "sha256": "843f627dd1b72d9815fb7f4236d8475e3cee3f16fc260c65e2978ca44f45ca17",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 60c9874..3485068)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-63598a1..277d681.diff",
+   "bytes": 30260,
+   "sha256": "8c5ed0afc7f231c58bcd52ddf6f8e136639ff8a738bd017e1c3ff021f0049303",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 63598a1..277d681)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-66d2d8e..4bed975.diff",
+   "bytes": 39194,
+   "sha256": "861be9b6760a1cd12cec315bf743774894bb3c2fc4d6993ca7db0b0ed8fc3ca0",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 66d2d8e..4bed975)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-6b730b7..f26a69d.diff",
+   "bytes": 5698,
+   "sha256": "ee88a05af19bdc84b0a08db69964838be0537b80dc8d89a222c0fc89fb519b00",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 6b730b7..f26a69d)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-6c84db1..13aaada.diff",
+   "bytes": 501396,
+   "sha256": "abacf122a1fd5bb8d8ba9a64c0abc23d433ce5bdc68d4edddee645fda496a5a6",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 6c84db1..HEAD)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-6c84db1..cbd3812.diff",
+   "bytes": 19049,
+   "sha256": "ef037f11a9d4a1cf041f9818c9118e00d8952f773499f163c1e18b39e14483cd",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 6c84db1..cbd3812)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-6f69ff3..fd3c90c.diff",
+   "bytes": 70925,
+   "sha256": "6d2fc729b63758625cb777fd86818e8ce2ba3a75cdb57cdfe497ce2a89a71796",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 6f69ff3..fd3c90c)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-7c12903..a3a060c.diff",
+   "bytes": 43358,
+   "sha256": "e771ee625e1a1d53b46da9ef150350f4a69bd2bf6dfe7dc5137f22f60d55643a",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 7c12903..a3a060c)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-8571e3e..8aa2ea0.diff",
+   "bytes": 6641,
+   "sha256": "0980b02496b6a57c76c57d6a4ec02459fc167032f57345ac8e5e0f494c742eff",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 8571e3e..8aa2ea0)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-87c8a62..f17a174.diff",
+   "bytes": 14058,
+   "sha256": "5f2eb546c0f0e47899d2d1ec4bed0df50ae66caff963f827837b2da28f8f5e95",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 87c8a62..f17a174)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-88962a3..87ec064.diff",
+   "bytes": 6881,
+   "sha256": "09d95512790450d35a1d82db2708c0fe03534115c2f49a7e5320d8c53d9d4114",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 88962a3..87ec064)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-8aa2ea0..63598a1.diff",
+   "bytes": 5842,
+   "sha256": "8713ae0b7238739f7c10455ca0072cdd867786ba0a507de7d0bc7c1fcc346aa3",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 8aa2ea0..63598a1)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-8d2fedd..a69b66f.diff",
+   "bytes": 22398,
+   "sha256": "5a861fef3bf3c856fb64c4e928de636faf5fe2fb8c778f4fec9bc2b9a7e54c16",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title 8d2fedd..a69b66f)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-a3a060c..d7810e4.diff",
+   "bytes": 19033,
+   "sha256": "3f4c616b59a13887656c3e3efe15bf8a988c0690fe371db4647946a861482d0e",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title a3a060c..d7810e4)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-a660e28..d6c56a2.diff",
+   "bytes": 16357,
+   "sha256": "a359a891aed15453e264e5e15ba0b4bf425a0bc47e2ee4cecc164fe38b536349",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title a660e28..d6c56a2)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-a69b66f..00c3d30.diff",
+   "bytes": 13205,
+   "sha256": "5d8ee4582c8673c9848f8664f809395eb88621e176cce37c87c30e17391935bc",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title a69b66f..00c3d30)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-ac1e2c3..ff9d9f0.diff",
+   "bytes": 10552,
+   "sha256": "9702171901c33d4a4b235f173fea31a97d11d832dc49f616d10f71179d3d7d8a",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title ac1e2c3..ff9d9f0)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b54e507..3d1a0a2.diff",
+   "bytes": 7030,
+   "sha256": "12a3aa5e329cb58b51cf59a30c429c8537e5205522a843417e29a6c3593478df",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b54e507..3d1a0a2)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b54e507..6e31a2c.diff",
+   "bytes": 211631,
+   "sha256": "7cc84b5e930a1586d14666a515a27a0bfa237c25e0a0d0910506a2bf2edfecfc",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b54e507..6e31a2c)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b5fef42..499e2fb.diff",
+   "bytes": 47821,
+   "sha256": "570b7fc4a57024723657c27315bcc57d826f95ba95f0d7af2e61b59fb3519b9a",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b5fef42..499e2fb)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b5fef42..6e31a2c.diff",
+   "bytes": 48185,
+   "sha256": "1b5090984beb3c95db78394f73aa7bd609f51fd1daec8794d266a9ffd696fd2b",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b5fef42..6e31a2c)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b6e4b3f..14a9438.diff",
+   "bytes": 10160,
+   "sha256": "e1834ac61ec865885e1826f7d5d809cc6b2d5439191da4529cf2bd3911325f9e",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b6e4b3f..14a9438)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-b8b3734..7c12903.diff",
+   "bytes": 16873,
+   "sha256": "6c26cdad2b2ec981ceb1ceb482d87ea29e4aaaa1ce943befab82bad33d739f79",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title b8b3734..7c12903)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-bcadef5..4f9ff7a.diff",
+   "bytes": 19615,
+   "sha256": "e5ccfc10dd62c29a8a9fdda92c5cbb9fe20307bc842a630c957305076cfae77d",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title bcadef5..4f9ff7a)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-c93a7a4..1cc0123.diff",
+   "bytes": 690325,
+   "sha256": "0657817436b6aec5a0d6b92c530dc3f2448f91e10c2889f411b938cdf7775460",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title c93a7a4..HEAD)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-cbd3812..60c9874.diff",
+   "bytes": 37976,
+   "sha256": "459c84bc9120100b5f51038fa79d957c0807704e0227157f532b3e23c1d80f06",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title cbd3812..60c9874)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-d6c56a2..ac1e2c3.diff",
+   "bytes": 9926,
+   "sha256": "16935685b1fee97bd987deb954589474be20b350b721a8e3e9f6376217c87811",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title d6c56a2..ac1e2c3)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-d7810e4..6f69ff3.diff",
+   "bytes": 32890,
+   "sha256": "c07a90cbe931ab068ebe7656af88ce5749107747ba5ab8daf510c6e6304b3c60",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title d7810e4..6f69ff3)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-e99f196..bddbc12.diff",
+   "bytes": 68459,
+   "sha256": "1872cc86e2500650922e10c6c6b12af9aa672fc55c254bc7acf5a3839f31c496",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title e99f196..bddbc12)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-f17a174..52b8ca4.diff",
+   "bytes": 21409,
+   "sha256": "0ee36abc592667f3257a008c36670d01e2b378f8bbc4c5e9641fc1c4be4da9b4",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title f17a174..52b8ca4)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-f26a69d..4d6b271.diff",
+   "bytes": 23687,
+   "sha256": "5c547306274bb96cb17387ef2856ad90031522719776c7cfada1b85a17a5abbe",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title f26a69d..4d6b271)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-f26dde0..7d0f8fe.diff",
+   "bytes": 46933,
+   "sha256": "3095287033783e5f407c4fd5c202458560776e71329b3bf33edcf5ba1b5b8ca4",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title f26dde0..7d0f8fe)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/review-ff9d9f0..b5fef42.diff",
+   "bytes": 10529,
+   "sha256": "803c4d0c53b3190f59f661126516b2cb137f29971a85d4b1ea930607234eee5e",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "reason": "review package; regenerated byte for byte (core.abbrev=7, title ff9d9f0..b5fef42)",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-1-report.md",
+   "bytes": 5127,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-10-brief.md",
+   "bytes": 1215,
+   "sha256": "9e02815cfd3406c4fa1df56a4fd48bed3de5556cfd81e70c9d5d30440972556c",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 7/7 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-10-report.md",
+   "bytes": 5124,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-11-brief.md",
+   "bytes": 4659,
+   "sha256": "0d31c438c226f2fa79eb9e5d5e076e120cf60a40f7e6bad200b7b83e8e192673",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 69/69 non-empty lines in docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-11-report.md",
+   "bytes": 8785,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-12-brief.md",
+   "bytes": 3241,
+   "sha256": "d0f38541e71fc3a471bc21c293a47b88b3feec52bec01bf05dd1238f34ccb5c6",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 36/36 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-12-report.md",
+   "bytes": 7789,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-12b-report.md",
+   "bytes": 10538,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-13-brief.md",
+   "bytes": 1981,
+   "sha256": "fe2c495343e6a94dba4a443e4720b8baa85e48c3df969988349b047f296cf24d",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 26/26 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-13-report.md",
+   "bytes": 5825,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-14-brief.md",
+   "bytes": 2095,
+   "sha256": "f3bfb667852ec7d5195770627c19499002e83257208f3a62a390a1cd42618bbb",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 27/27 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-14-report.md",
+   "bytes": 6026,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-15-brief.md",
+   "bytes": 2640,
+   "sha256": "c8733dd1c1ddcb7999009d2b3893ab3824f9fd2aa30c1a9491db6c747350ea84",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 33/33 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-15-report.md",
+   "bytes": 9425,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-16-brief.md",
+   "bytes": 2864,
+   "sha256": "beb38c547811f3e5e47cdd4e3d1234f72d5e3fdb54f71bd4418da1f1c3e56ac7",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 24/24 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-16-report.md",
+   "bytes": 6796,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-2-report.md",
+   "bytes": 6875,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-2b-brief.md",
+   "bytes": 5978,
+   "sha256": "d84ca0ff42dc175df4ff446afa292651ffef4dea5e891b40438c2246e72a262b",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 61/61 non-empty lines in docs/legacy/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-2b-report.md",
+   "bytes": 12734,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-3-report.md",
+   "bytes": 5179,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-4-report.md",
+   "bytes": 4657,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-5-report.md",
+   "bytes": 4042,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-6-report.md",
+   "bytes": 7041,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-7-report.md",
+   "bytes": 5923,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-8-brief.md",
+   "bytes": 5714,
+   "sha256": "1163966d456992483760e6a654f2b549eb63df882fdd7656d56d17a668d134e4",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 78/78 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-8-report.md",
+   "bytes": 5974,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-9-brief.md",
+   "bytes": 2398,
+   "sha256": "e79bca87caafdde2b717ee8cc0f5b388f50e309563146769a364b8de832869b8",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "task brief; 24/24 non-empty lines in docs/legacy/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
+   "action": "DELETE"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task-9-report.md",
+   "bytes": 10660,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "subagent or close report: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task14-tier1-dijkstra.log",
+   "bytes": 895,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task14-tier2a-canonical-rerun.log",
+   "bytes": 938,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task14-tier2a-m11.log",
+   "bytes": 1541,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/task14-tier2b-m12.log",
+   "bytes": 1114,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w16-premerge-closure/plan-path",
+   "bytes": 53,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "plan copy or pointer: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w16-premerge-closure/PLAN_COPY.md",
+   "bytes": 14383,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "plan copy or pointer: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w16-premerge-closure/progress.md",
+   "bytes": 10537,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/plan-path",
+   "bytes": 58,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "plan copy or pointer: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/progress.md",
+   "bytes": 28402,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t2-full-pytest-committed.log",
+   "bytes": 54462,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t2-full-pytest.log",
+   "bytes": 59892,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t3-build.log",
+   "bytes": 1137,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t3-full-pytest.log",
+   "bytes": 32905,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t3-vitest.log",
+   "bytes": 5067,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t5-full-pytest.log",
+   "bytes": 28614,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t6-build.log",
+   "bytes": 1092,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t6-build2.log",
+   "bytes": 1092,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t6-tsc.log",
+   "bytes": 0,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t6-vite.log",
+   "bytes": 1232,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w17-operation-annotations/t6-vitest.log",
+   "bytes": 236,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/census-dry.log",
+   "bytes": 1986,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/collect.txt",
+   "bytes": 705484,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/plan-path",
+   "bytes": 50,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "plan copy or pointer: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/progress.md",
+   "bytes": 19411,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t1-red-route.log",
+   "bytes": 10464,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t1-red.log",
+   "bytes": 8501,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t2-full-backend.log",
+   "bytes": 26393,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t2-green1.log",
+   "bytes": 941,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t2-green2.log",
+   "bytes": 183,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t3-full-backend.log",
+   "bytes": 24552,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t4-vitest.log",
+   "bytes": 238,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w18-binding-focus/t5-node.log",
+   "bytes": 5686,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "test or tool log: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w19-docs-organization/CLAUDE.md.before-w19",
+   "bytes": 17227,
+   "class": "KEEP_ACTIVE",
+   "reason": "verbatim copy of the user's local CLAUDE.md before W19 (revert copy)",
+   "action": "KEEP"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w19-docs-organization/progress.md",
+   "bytes": 4621,
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "ledger: content not verified to exist elsewhere; the folder is git-ignored, so a deletion could not be undone"
+  },
+  {
+   "area": ".superpowers",
+   "path": ".superpowers/sdd/w20-cleanup-premerge/progress.md",
+   "bytes": 3088,
+   "class": "KEEP_ACTIVE",
+   "reason": "this wave's ledger",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a12_kiem.py",
+   "bytes": 2096,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a12_kv.py",
+   "bytes": 2022,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a14.py",
+   "bytes": 451,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a14b.py",
+   "bytes": 369,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a14c.py",
+   "bytes": 449,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/a14r.py",
+   "bytes": 176,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-accepted-quality",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-b02-coverage-revalidation",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-backup",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-before",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c01-downstream-checkpoint",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c01-single-run-e2e",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c02-controlled-capture",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c02-live-revalidation",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c02-synthesis-first-attempt-pilot",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c03-guard-live-revalidation",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-c03-safe-rejection",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-clean-verify",
+   "class": "REPRODUCIBLE_TEMP_SAFE_TO_DELETE",
+   "head": "8703fb506e9a757f6f07bdaa663ffce39c744333",
+   "refs": 13,
+   "refs_missing_here": [],
+   "stash": false,
+   "changes": false,
+   "ignored": [
+    "backend/.pytest_cache/",
+    "backend/__pycache__/",
+    "backend/alembic/__pycache__/",
+    "backend/alembic/versions/__pycache__/",
+    "backend/algosim.db",
+    "backend/app/__pycache__/",
+    "backend/app/accounts/__pycache__/",
+    "backend/app/ai/__pycache__/",
+    "backend/app/ingestion/__pycache__/",
+    "backend/app/persistence/__pycache__/",
+    "backend/app/simulation/__pycache__/",
+    "backend/app/simulation/geometry/__pycache__/",
+    "backend/app/simulation/geometry_compiler/__pycache__/",
+    "backend/app/simulation/semantic_program/__pycache__/",
+    "backend/scripts/__pycache__/",
+    "backend/tests/__pycache__/",
+    "backend/tests/geometry/__pycache__/",
+    "backend/tests/semantic_program/__pycache__/",
+    "docs/evaluation/geometry/custodian/__pycache__/"
+   ],
+   "ignored_not_cache": [],
+   "action": "DELETE",
+   "reason": "full clone of this repository: HEAD and every ref exist here, no stash, no change, only caches and a sqlite file ignored",
+   "recover": "git worktree add --detach <dir> 8703fb506e9a757f6f07bdaa663ffce39c744333"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-coverage-diagnosis",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-diagram-only-provenance-guard",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-docker-backend-image-rebuild",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-docker-backend-startup-diagnosis",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-docker-dev-auto-refresh",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-geometry-primitive-compiler-worktree",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-multicase-benchmark",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-original-c01",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-photo-corpus-candidates",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-provider-timeout-control",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-real-photo-input",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-real-photo-output",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-rejection-pointer-trace-gap",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-synthesis-memory-declaration-alignment",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-synthesis-repair-observability",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-telemetry",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-v3-thesis-evidence-alignment-worktree",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-vision-fix",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-vision-prompt-guard-simplification",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algo-sim-vmmu-audit",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-audit",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-baseline",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-d2-impl",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-fidelity",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-geometry-visual-mockup",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-mockup-restore",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-oracle-frames",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-restore",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-scene3d-product-scale-review",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-video-reference",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/algosim-zup-do",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/apdung.py",
+   "bytes": 1378,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/asrpd-at-da6ad17",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/audit22.json",
+   "bytes": 42025,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/audit_tables.md",
+   "bytes": 22908,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/b02.py",
+   "bytes": 333,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/b04.py",
+   "bytes": 467,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/b1.py",
+   "bytes": 334,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/b2.py",
+   "bytes": 326,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/backfill.py",
+   "bytes": 986,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/bangô.py",
+   "bytes": 276,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/before-recapture",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/before.json",
+   "bytes": 2600,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/before.txt",
+   "bytes": 286784,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/can.py",
+   "bytes": 531,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/case_ids_truoc.json",
+   "bytes": 280,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/chain_probe.py",
+   "bytes": 3268,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/cham_lai.py",
+   "bytes": 1999,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/cham_lai_xn.py",
+   "bytes": 2322,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/cham_thu.py",
+   "bytes": 1436,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/chuyen.py",
+   "bytes": 453,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/deA.py",
+   "bytes": 420,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/deep.mjs",
+   "bytes": 988,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi.html",
+   "bytes": 41961,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi.txt",
+   "bytes": 15457,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi_bai.py",
+   "bytes": 744,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi_doc.bin",
+   "bytes": 181584,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi_txt.py",
+   "bytes": 233,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dethi_txt2.py",
+   "bytes": 197,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dien_kyvong.py",
+   "bytes": 24140,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dinhvi.py",
+   "bytes": 515,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dongbang.py",
+   "bytes": 1072,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-merge",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-merge2",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-mx",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-neg",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-neg2",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dry-out",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dryrun.py",
+   "bytes": 5149,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dryrun2.py",
+   "bytes": 5309,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dubao.py",
+   "bytes": 2010,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dump41.py",
+   "bytes": 568,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/dump_con.py",
+   "bytes": 563,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/extract.mjs",
+   "bytes": 909,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/fill1.py",
+   "bytes": 5163,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/fill2.py",
+   "bytes": 5014,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/fill3.py",
+   "bytes": 3581,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/fixa14.py",
+   "bytes": 2929,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ghep.json",
+   "bytes": 10715,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/goi_cu_backup.txt",
+   "bytes": 74957,
+   "sha256": "193641a1a7457beca2db34079ce2029f5ead9546d0160e6dfcf788affbf1c73e",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob c6e6a4594e50a3e080a61ee54df439bddec282a7, reachable at docs/evaluation/geometry/holdout/PHASE7B_HUMAN_COPY_PACKET.txt",
+   "recover": "git show 69ece65cd5be17b82cf027792dd804cb19a1535e:docs/evaluation/geometry/holdout/PHASE7B_HUMAN_COPY_PACKET.txt"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/goi_moi.txt",
+   "bytes": 86398,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/goi_moi2.txt",
+   "bytes": 86357,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/hdg.py",
+   "bytes": 436,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/hdr.py",
+   "bytes": 4908,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/high.py",
+   "bytes": 671,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/hoanvi3.py",
+   "bytes": 1240,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ia.json",
+   "bytes": 603,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/kha_thi.py",
+   "bytes": 311,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/khoa_theo_nguon.py",
+   "bytes": 3270,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/khoi.txt",
+   "bytes": 4958,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/kiem_seal.py",
+   "bytes": 2591,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/kiem_seal2.py",
+   "bytes": 2550,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/kv3.py",
+   "bytes": 1854,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/kv_wave1.py",
+   "bytes": 3225,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/lan1.json",
+   "bytes": 21984,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/live_retry_evidence",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/manifest_smoke_n50_seed42.csv",
+   "bytes": 52449,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mk_env.py",
+   "bytes": 1390,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/moc.py",
+   "bytes": 634,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mvep-generator-run-a",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mvep-generator-run-b",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mvep-git-shim",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mvep-machine-evidence",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/mvep-red-before",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/nav2.py",
+   "bytes": 647,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/node_modules",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/now.txt",
+   "bytes": 286142,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/opt.mjs",
+   "bytes": 1275,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/payload_thietdien.json",
+   "bytes": 487,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/phase4c1_missing_packages.txt",
+   "bytes": 15,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/pilot-base-dev.log",
+   "bytes": 3063,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/posthoc.py",
+   "bytes": 2845,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/probe.txt",
+   "bytes": 606,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/q2.mjs",
+   "bytes": 1026,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/quet2.py",
+   "bytes": 865,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/quet_pdf.py",
+   "bytes": 827,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r10.py",
+   "bytes": 782,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r11.py",
+   "bytes": 575,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r3.py",
+   "bytes": 303,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r4.py",
+   "bytes": 234,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r5.py",
+   "bytes": 592,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r6.py",
+   "bytes": 614,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r7.py",
+   "bytes": 581,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r8.py",
+   "bytes": 951,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r9.py",
+   "bytes": 170,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r_a03.py",
+   "bytes": 287,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/r_high.py",
+   "bytes": 312,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ra2.py",
+   "bytes": 325,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ra3.py",
+   "bytes": 1173,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ra4.py",
+   "bytes": 729,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ra5.py",
+   "bytes": 788,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/ra_sharygin.py",
+   "bytes": 1264,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/render.py",
+   "bytes": 410,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/render2.py",
+   "bytes": 342,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/resid.mjs",
+   "bytes": 465,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/rrpmr-browser",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/rrpmr-ra",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/scene_keys.py",
+   "bytes": 984,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/seed_thu.json",
+   "bytes": 106341,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/settings.json.bak",
+   "class": "REVIEW_REQUIRED",
+   "reason": "settings backup: not opened (SENSITIVE_NOT_READ)",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/settings.local.json.bak",
+   "class": "REVIEW_REQUIRED",
+   "reason": "settings backup: not opened (SENSITIVE_NOT_READ)",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/sgralr-exec",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/soat2.py",
+   "bytes": 1572,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/soatchéo.py",
+   "bytes": 1415,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/soi2.py",
+   "bytes": 480,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/soi_gutenberg.py",
+   "bytes": 700,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/soi_reserve.py",
+   "bytes": 2082,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/strip.py",
+   "bytes": 580,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/than_cu.txt",
+   "bytes": 68857,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/than_moi.txt",
+   "bytes": 79529,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/them_chuyen.py",
+   "bytes": 6805,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/timA12.py",
+   "bytes": 725,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/toc.py",
+   "bytes": 257,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/toc4.py",
+   "bytes": 830,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/toc5.py",
+   "bytes": 326,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/tp.json",
+   "bytes": 111011,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/vaA03A06.py",
+   "bytes": 1240,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/vachot.py",
+   "bytes": 2751,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/vaghep.py",
+   "bytes": 2667,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/vj.html",
+   "bytes": 225076,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/vj.txt",
+   "bytes": 36870,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w09-out",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w10-build.log",
+   "bytes": 860,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w10-freeze4",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w10-out",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11 space",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-attempt1",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-before",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-builder.log",
+   "bytes": 86,
+   "sha256": "b6b46f9f2bc9aff08f4c33efd3f22f1ef447176a5fb65a6e7913a3c33ee63f04",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob 811682f2341c16de6a56032cf2e5a01729432800, reachable at docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/EVIDENCE_BUILDER_39e54046.log",
+   "recover": "git show 5e3dbab4577965fbb801750afce12fd45d09dfba:docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/EVIDENCE_BUILDER_39e54046.log"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-collect-base.txt",
+   "bytes": 14747,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-collect-new.txt",
+   "bytes": 14805,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-d1",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-ds-new.txt",
+   "bytes": 34103,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-gen",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-occlusion.log",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "reason": "empty file: carries no information",
+   "action": "DELETE"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-playback.log",
+   "bytes": 455,
+   "sha256": "767ec1f75f657559052e125af5379852deeed38c49ca1c0ab5ff1cc572cc4925",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob de3ae10cccff1570176e91aa267deaa3921a822b, reachable at docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/PLAYBACK_39e54046.log",
+   "recover": "git show 5e3dbab4577965fbb801750afce12fd45d09dfba:docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/PLAYBACK_39e54046.log"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-schema-1.txt",
+   "bytes": 149,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-schema-2.txt",
+   "bytes": 149,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-suite.log",
+   "bytes": 1415,
+   "sha256": "61aa94387085e56b23e0b2c01300a482e86048a69376948aab27055a3a74e0d8",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob cbb564ed3ad9a9a41be9534920f7a6f395a2d2a3, reachable at docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/BROWSER_SUITE_attempt1_48c676d5.log",
+   "recover": "git show 5e3dbab4577965fbb801750afce12fd45d09dfba:docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/BROWSER_SUITE_attempt1_48c676d5.log"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-suite2.log",
+   "bytes": 1415,
+   "sha256": "3f2a8e3be8fa7c635ce01f05a14d2a262c2035d895035322c40db09ceae9726b",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob 92950538fdf846370243db586a3fc14f502f23e8, reachable at docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/BROWSER_SUITE_39e54046.log",
+   "recover": "git show 5e3dbab4577965fbb801750afce12fd45d09dfba:docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/BROWSER_SUITE_39e54046.log"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w11-T3.log",
+   "bytes": 13081,
+   "sha256": "6f7c18fd61da093f78d35c41ecb3f8b552b94fd0b1bebe7e4e35bd4655236045",
+   "class": "DUPLICATE_SAFE_TO_DELETE",
+   "action": "DELETE",
+   "reason": "bytes equal blob a71f246bf946a1a2e1a464344afc0b1b716bd874, reachable at docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/T3_FULL_GATE_SPACED_5e3dbab4.log",
+   "recover": "git show a4fd5fece9d27d20cdb717beb1a89711a34990bc:docs/evaluation/geometry/runs/w11-pedagogical-polish/diagnostics/logs/T3_FULL_GATE_SPACED_5e3dbab4.log"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w12 space",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w12-backend-1.log",
+   "bytes": 1896,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w12-backend-2.log",
+   "bytes": 4949,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w12-backend-3.log",
+   "bytes": 3896,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w13-verify-c1",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w7bak",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/w7bbak",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/webgl-probe.html",
+   "bytes": 512,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/webgl-probe.png",
+   "bytes": 4414,
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: bytes match no reachable blob",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/wt-bmr-end",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/wt-fgce",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/wt-fgce-end",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "D:/tmp",
+   "path": "D:/tmp/wt630",
+   "class": "REVIEW_REQUIRED",
+   "reason": "UNKNOWN_EARLIER_WAVE: folder, not a clone of this repository",
+   "action": "KEEP"
+  },
+  {
+   "area": "W19-registered",
+   "path": "C:/Users/Bunny/.claude/plans/w19-docs-organization.md",
+   "class": "REVIEW_REQUIRED",
+   "reason": "the executed W19 plan, in the user's Claude plans folder; not a temporary file",
+   "action": "KEEP"
+  },
+  {
+   "area": "W19-registered",
+   "path": "CLAUDE.md",
+   "class": "KEEP_ACTIVE",
+   "reason": "the user's local instructions (git-ignored)",
+   "action": "KEEP"
+  },
+  {
+   "area": "W19-registered",
+   "path": "D:/Documents/projects/docs/evaluation/geometry/HOLDOUT_ACQUISITION_LOG.md",
+   "class": "REVIEW_REQUIRED",
+   "action": "KEEP",
+   "reason": "outside the repository; W19 found its blob in no committed version (unique) — kept with its folders"
+  }
+ ]
+}
