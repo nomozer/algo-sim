@@ -3,8 +3,8 @@
   "case_id": "rectangular_pyramid_assumption",
   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy. Tính thể tích khối chóp S.ABCD.",
   "source": "fake_analyze_transport_through_production_refusal",
-  "product_commit_sha": "add4afb0c5679fbfedf756e774437fca06649fff",
-  "product_tree_sha": "d4a24ebaec48c03d96b94d6915f2c76661959bdf7b0f98311bd3239eff3e731d",
+  "product_commit_sha": "d3817d5f5e6aedbc5b6c140a1503909ecfc8e6cc",
+  "product_tree_sha": "d63d6fd4704ae033ed0e7e32f612b681f421ed7507dafacfd28799d8d0a92b37",
   "application_llm_calls": 0,
   "envelope": {
     "status": "unsupported",

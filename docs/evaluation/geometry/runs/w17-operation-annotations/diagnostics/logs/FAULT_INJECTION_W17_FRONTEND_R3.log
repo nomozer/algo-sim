@@ -1,0 +1,159 @@
+W17 — frontend fault injections on the detached worktree at 99925723 (0 model calls)
+method: one exact one-line substitution per run in the scratch worktree, test, then the original bytes restored and verified; browser injections add a one-family/one-viewport run filter to the scratch copy
+
+baseline src/simulations/domains/geometry/scene3d-annotations.test.ts: exit 0 · Tests  17 passed (17)
+baseline src/simulations/domains/geometry/Scene3DExplorer.test.tsx: exit 0 · Tests  31 passed (31)
+baseline src/components/refusal-contract.test.tsx: exit 0 · Tests  20 passed (20)
+baseline scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 60 · ℹ fail 0
+
+FE1 [src/simulations/domains/geometry/scene3d-annotations.ts] a result label available from its MEASUREMENT step (early answer)
+  predicted: không lộ trước: tiến rồi lùi …
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt 4ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt
+  restored byte-identical: true
+
+FE2 [src/simulations/domains/geometry/scene3d-annotations.ts] one chip hides both categories (toggle side effect)
+  predicted: tắt Số đo ⇒ mất dữ kiện …; tắt Kết quả ⇒ mất đáp số
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × tắt Số đo ⇒ mất dữ kiện và số đo trung gian; tắt Kết quả ⇒ mất đáp số 5ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > tắt Số đo ⇒ mất dữ kiện và số đo trung gian; tắt Kết quả ⇒ mất đáp số
+  restored byte-identical: true
+
+FE3 [src/simulations/domains/geometry/scene3d-annotations.ts] a label whose subject is not on the figure yet
+  predicted: dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (added after run 1: NOT CAUGHT)
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7) 6ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7)
+  restored byte-identical: true
+
+FE4 [src/simulations/domains/geometry/scene3d-annotations.ts] labels may cover point labels and each other
+  predicted: chỗ trên đã có nhãn điểm ⇒ xuống dưới; ưu tiên cao đặt trước
+  observed : exit 1 · Tests  5 failed | 12 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × chỗ trên đã có nhãn điểm ⇒ xuống dưới, không đè 5ms
+    × bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn) 2ms
+    × tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px) 1ms
+    × không còn chỗ trong 24 px ⇒ ẩn — nhãn không bao giờ trôi xa vật nó gọi tên 2ms
+    × ưu tiên cao đặt trước; nhãn sau tránh nhãn trước 1ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · đặt nhãn số đo (§15.5) > chỗ trên đã có nhãn điểm ⇒ xuống dưới, không đè
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · đặt nhãn số đo (§15.5) > bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn)
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · đặt nhãn số đo (§15.5) > tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px)
+  restored byte-identical: true
+
+FE5 [src/simulations/domains/geometry/scene3d-annotations.ts] no corner positions (the T7 state: a crowded base label hidden)
+  predicted: bốn phía đã kín ⇒ thử bốn góc
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn) 6ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · đặt nhãn số đo (§15.5) > bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn)
+  restored byte-identical: true
+
+FE11 [src/simulations/domains/geometry/scene3d-annotations.ts] no outer rings (the T7 confirm-round state: a label half a pixel short of free is hidden)
+  predicted: tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px) 5ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · đặt nhãn số đo (§15.5) > tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px)
+  restored byte-identical: true
+
+FE6 [src/simulations/domains/geometry/scene3d-annotations.ts] the label of the selected subject loses its priority
+  predicted: chọn chủ thể thì nhãn liên quan được ưu tiên
+  observed : exit 1 · Tests  1 failed | 16 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × chọn chủ thể thì nhãn liên quan được ưu tiên 3ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > chọn chủ thể thì nhãn liên quan được ưu tiên
+  restored byte-identical: true
+
+FE7 [src/simulations/domains/geometry/scene3d-annotations.ts] Số đo OFF by default (U-W17-1 says both ON)
+  predicted: mặc định BẬT cả Số đo và Kết quả
+  observed : exit 1 · Tests  6 failed | 11 passed (17) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × mặc định BẬT cả Số đo và Kết quả (U-W17-1) 7ms
+    × chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến 2ms
+    × chữ nhãn = ký hiệu = giá trị của payload; đơn vị chỉ khi payload có 1ms
+    × dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7) 1ms
+    × chọn chủ thể thì nhãn liên quan được ưu tiên 0ms
+    × điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ 1ms
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > mặc định BẬT cả Số đo và Kết quả (U-W17-1)
+    FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > W17 · số đo trên hình (§15.4) > chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến
+  restored byte-identical: true
+
+FE8 [src/simulations/domains/geometry/Scene3DExplorer.tsx] a Số đo chip on a scene with no measurement label (fabricated affordance, §3.2)
+  predicted: cảnh không có nhãn số đo nào ⇒ không có công tắc
+  observed : exit 1 · Tests  1 failed | 30 passed (31) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × W17 · cảnh không có nhãn số đo nào ⇒ không có công tắc (không bịa affordance) 12ms
+    FAIL  src/simulations/domains/geometry/Scene3DExplorer.test.tsx > cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện > W17 · cảnh không có nhãn số đo nào ⇒ không có công tắc (không bịa affordance)
+  restored byte-identical: true
+
+FE9 [src/components/SimulationWorkspace.tsx] the hint repeats the backend message again (the T7 state)
+  predicted: SOURCE/CONSTRUCTION — không có câu gợi ý nhắc lại
+  observed : exit 1 · Tests  2 failed | 18 passed (20) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × SOURCE — không có câu gợi ý nhắc lại lời backend 6ms
+    × CONSTRUCTION — không có câu gợi ý nhắc lại lời backend 1ms
+    FAIL  src/components/refusal-contract.test.tsx > W17 · gợi ý theo nguyên nhân từ chối > SOURCE — không có câu gợi ý nhắc lại lời backend
+    FAIL  src/components/refusal-contract.test.tsx > W17 · gợi ý theo nguyên nhân từ chối > CONSTRUCTION — không có câu gợi ý nhắc lại lời backend
+  restored byte-identical: true
+
+FE10 [src/components/SimulationWorkspace.tsx] a CONSTRUCTION refusal labelled as untraceable data
+  predicted: CONSTRUCTION ở cổng nguồn — loại vấn đề …
+  observed : exit 1 · Tests  1 failed | 19 passed (20) · ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯ -> CAUGHT
+    × CONSTRUCTION ở cổng nguồn — loại vấn đề nói hệ dựng lệch đề, không nói dữ kiện thiếu nguồn 6ms
+    FAIL  src/components/refusal-contract.test.tsx > W17 · gợi ý theo nguyên nhân từ chối > CONSTRUCTION ở cổng nguồn — loại vấn đề nói hệ dựng lệch đề, không nói dữ kiện thiếu nguồn
+  restored byte-identical: true
+
+FH1 [scripts/compiler-scene-replay-lib.mjs] cameras compared by bytes (ULP damping reads as a camera change)
+  predicted: W17 toggle isolation and causal restore …
+  observed : exit 1 · ℹ pass 59 · ℹ fail 1 -> CAUGHT
+    ✖ W17 toggle isolation and causal restore record each state separately (0.7971ms)
+    ✖ failing tests:
+    ✖ W17 toggle isolation and causal restore record each state separately (0.7971ms)
+  restored byte-identical: true
+
+FH2 [scripts/compiler-scene-replay-lib.mjs] section-fill samples under DOM labels
+  predicted: W17 section fill sampler: no sample under a DOM label box
+  observed : exit 1 · ℹ pass 59 · ℹ fail 1 -> CAUGHT
+    ✖ W17 section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill) (1.6011ms)
+    ✖ failing tests:
+    ✖ W17 section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill) (1.6011ms)
+  restored byte-identical: true
+
+FH3 [scripts/compiler-scene-replay-lib.mjs] the restored canvas never compared with the neutral one
+  predicted: W17 causal restore: capture noise … anything larger is
+  observed : exit 1 · ℹ pass 59 · ℹ fail 1 -> CAUGHT
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.9987ms)
+    ✖ failing tests:
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.9987ms)
+  restored byte-identical: true
+
+FH4 [scripts/compiler-scene-replay-lib.mjs] the noise tolerance widened until any restore failure passes
+  predicted: W17 causal restore: capture noise … anything larger is
+  observed : exit 1 · ℹ pass 59 · ℹ fail 1 -> CAUGHT
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.7125ms)
+    ✖ failing tests:
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (0.7125ms)
+  restored byte-identical: true
+
+FH5 [scripts/compiler-scene-replay-lib.mjs] bytes compared again (capture noise reads as not restored: the attempt-1 state)
+  predicted: W17 causal restore: capture noise … anything larger is
+  observed : exit 1 · ℹ pass 59 · ℹ fail 1 -> CAUGHT
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (1.0523ms)
+    ✖ failing tests:
+    ✖ W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is (1.0523ms)
+  restored byte-identical: true
+
+browser baseline triangular_pyramid/desktop: positive pass true · predicted codes present: FB1:false FB2:false
+
+FB1 [src/simulations/domains/geometry/Scene3DExplorer.tsx] the Số đo chip also rewinds the construction to step 0 (triangular_pyramid/desktop)
+  predicted: TOGGLE_CHANGED_STEP
+  observed : suite exit 1 · TOGGLE_CHANGED_STEP in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w17-fi-fb1_r3
+  restored byte-identical: true
+
+FB2 [scripts/compiler-scene-replay-lib.mjs] quantity labels no longer masked from the figure's pixel measures (the T7 state) (triangular_pyramid/desktop)
+  predicted: CAUSAL_CANVAS_ROLE_HUE
+  observed : suite exit 1 · CAUSAL_CANVAS_ROLE_HUE in the positive evidence: true -> CAUGHT
+  evidence: D:\tmp\w17-fi-fb2_r3
+  restored byte-identical: true
+
+browser filter removed byte-identical: true
+
+after all injections src/simulations/domains/geometry/scene3d-annotations.test.ts: exit 0 · Tests  17 passed (17)
+after all injections src/simulations/domains/geometry/Scene3DExplorer.test.tsx: exit 0 · Tests  31 passed (31)
+after all injections src/components/refusal-contract.test.tsx: exit 0 · Tests  20 passed (20)
+after all injections scripts/compiler-scene-replay-lib.node-test.mjs: exit 0 · ℹ pass 60 · ℹ fail 0
