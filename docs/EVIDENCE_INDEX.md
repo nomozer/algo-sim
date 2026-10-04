@@ -879,7 +879,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash d63d6fd4… -> d3b4cab9…, 110 files; frozen once at 7a06ee47)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 109 -> 110 in 1e8c5658, real-row proof; lock 5cfb53a1; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE — w20 checks a text-relation target defined by coordinates (directly or through an alias chain) and refuses it in every scope, closing this run's deferred limit `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET` (amendment §17); the w18 artifacts stay as they are
 - **CORRECTS:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS (point constructions — midpoints, projections — not checked against the text)
 - **SUPERSEDES:** W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS for the human verdict only; inside this run, acceptance attempt 1 (8caa8307) is superseded by attempt 2 (0ca3accf), the backend fault-injection runs 1–2 by run 3, and the frontend run 1 by run 2
 - **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_d3b4cab9 — not visual acceptance (human review NOT_APPROVED). Inside the registered vocabulary (§16), a point the text defines as a midpoint or projection is built on the entities the text names, checked by identity; a mismatch is refused in every scope and named to the learner; numbers on the figure carry backend roles and one explanation place. The census is a corpus result, never a general proof; centres, intersections and unread phrasings are not checked.
@@ -904,4 +904,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **SUPERSEDES:** as claim authority only — `THESIS_READINESS.md`, `thesis/CLAIM_EVIDENCE_MATRIX.md`, `research/CLAIM_TO_EVIDENCE_MAP.md` (archived byte-identical in `docs/legacy/research/`) by `docs/research/CLAIM_EVIDENCE_MAP.md`
 - **THESIS_USE:** NAVIGATION_AND_CLAIM_AUTHORITY — no new measurement; the claim map quotes existing evidence only and lists 0 rows at HUMAN_REVIEWED
 - **AUTHORITATIVE_FILES:** `README.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MANIFEST.json` · `inventory/INVENTORY.json` · `inventory/MIGRATION_MAP.json` · `verification/FROZEN_IDENTITY.json` · `verification/LINKS_FINAL.json` · `verification/OLD_PATH_CONSUMERS_FINAL.json` · `verification/logs/`
+- **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE
+- **DATE:** 2026-10-04 → 2026-10-05
+- **REPORT:** docs/evaluation/geometry/runs/w20-cleanup-premerge/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/w20-cleanup-premerge/
+- **START_BASE:** 2cb4ed8c
+- **CODE_COMMIT:** 65c90bde (construction binding §17) · bedb1040 (CACHE_VERSION 110 -> 111) · a4f771b3 (comments only) · 4e647861 + 654beda3 (`run_reconciliation(out_dir)` and its tests)
+- **MEASUREMENT_COMMIT:** 5fbb397b7d485de183526451ae9003631c395d94 (authoritative verification in a clean detached worktree); probe, census and cache proof at 65c90bde
+- **EVIDENCE_COMMIT_ROLE:** f0edcd11 (labels + before probe, before any fix) · 8b6a1a3a (after probe, census, fault injections r1–r2) · 31716373 (cleanup inventory + deletion log) · the documentation commit (T3, gates, final probe, fault injections r3, report, handoff, manifest)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash d3b4cab9… -> 2a15102b… (intermediate, bedb1040) -> 27c31de6…, 110 files; frozen twice, declared in `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 110 -> 111 in bedb1040, real-row proof; lock ac241a8d; fingerprint b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (deferred limit: a text-relation target defined by coordinates was neither checked nor recorded by `construction_binding`)
+- **SUPERSEDES:** inside this run only — fault-injection logs r1 and r2 by r3 (clean worktree), probe `before` (23 rows) by `before-r2` (27 rows, labels amended before any fix)
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_27c31de6 — not visual acceptance (human review NOT_APPROVED). Inside the §16.1 vocabulary, a text-relation target the program defines by coordinates is refused in every scope (claim C6 of `docs/research/CLAIM_EVIDENCE_MAP.md`)
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `diagnostics/literal_target_corpus/LABELS.json` · `results/LITERAL_TARGET_PROBE_before-r2_2cb4ed8c.json` · `results/LITERAL_TARGET_PROBE_after_65c90bde.json` · `results/LITERAL_TARGET_PROBE_final_5fbb397b.json` · `diagnostics/CONSTRUCTION_BINDING_DECISION_W20.json` · `diagnostics/PROOF_CACHE_ROW_W20.json` · `inventory/CLEANUP_INVENTORY.json` · `inventory/DELETION_LOG.json` · `results/logs/T3_FULL_GATE_5fbb397b.log` · `results/logs/GATES_5fbb397b.log` · `results/logs/FAULT_INJECTION_W20_r3.log`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)

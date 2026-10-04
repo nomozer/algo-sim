@@ -11,8 +11,8 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 110` (w18: served → rejected cho điểm đề gọi tên bằng quan hệ trung điểm/hình
-  chiếu nhưng dựng trên thực thể khác); provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 111` (w20: served → rejected cho điểm đề định nghĩa bằng quan hệ mà chương trình đặt
+  bằng toạ độ); provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -20,12 +20,12 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure
-CURRENT_WAVE = W19_DOCS_REORGANIZATION_AND_RESEARCH_EVIDENCE_CURATION (w19, chỉ tài liệu)
-W19_COMMITS = a5c2e6f2 (cấu trúc + migration) · a44631a9 (bản đồ tuyên bố, hub, gốc docs đóng) · commit tài liệu trạng thái/báo cáo/handoff
-PRODUCT_STATE = w18 — measurement 0ca3accf7e921797e75aebcbc19e3a05b2557859, evidence 4a9db1ff, candidate d3b4cab96c69a09f… (product commit 7a06ee47)
-ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (re-fetched in w19, unchanged)
-FINAL_DECISION = DOCS_REORGANIZED_AND_VERIFIED (w19) · READY_FOR_HUMAN_VISUAL_REVIEW (w18, sản phẩm)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED for w18; MERGE_APPROVAL = NO
+CURRENT_WAVE = W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE (w20)
+W20_COMMITS = f0edcd11 … aa036c42 + commit trạng thái/báo cáo/handoff (từng vai trò: `RUN.json` của run w20)
+PRODUCT_STATE = w20 — kiểm chứng 5fbb397b (worktree tách rời sạch), candidate 27c31de6… (product commit a4f771b3), CACHE_VERSION 111
+ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (ls-remote trong w20: không đổi)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (w20)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (W18-H1); MERGE_APPROVAL = NO
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -51,7 +51,7 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - Hub: `docs/README.md` (năm câu hỏi: hệ làm gì · kiến trúc và cách chạy · việc mở · khoá luận/bài
   báo · bằng chứng).
 
-## 4. Hệ hiện tại (sau w18) — mỗi dòng một chỗ đọc thêm
+## 4. Hệ hiện tại (sau w20) — mỗi dòng một chỗ đọc thêm
 
 - Occlusion và danh tính cảnh: edge ID máy theo entity ID (`A_prime`), nhãn hiển thị riêng, một visual
   owner mỗi cạnh, span `VISIBLE`/`HIDDEN`/`MIXED`, oracle cài độc lập —
@@ -63,27 +63,31 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §2–§15.
 - Ràng buộc phép dựng (w18, §16): trung điểm/hình chiếu đối chiếu theo danh tính, chặng route
   `construction_binding` (`CONSTRUCTION_NOT_TEXT_BOUND` / `CONSTRUCTION_BINDING_UNVERIFIED`).
+- Đích quan hệ đặt bằng toạ độ (w20, §17): trực tiếp hay qua bí danh ⇒ `DEFINED_BY_COORDINATES` ⇒
+  `CONSTRUCTION_REPLACED_BY_COORDINATES`, từ chối mọi vùng. Test không ghi bằng chứng đông cứng
+  (`run_reconciliation(out_dir)`).
 - Trình bày (w17–w18): backend gắn nghĩa nhãn, frontend chỉ đặt chỗ; hình mặc định gọn, "Hiện tất cả",
   ô soi là nơi giải thích duy nhất, nhân chứng khoảng cách tới chân chính xác.
 - Sáu họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
   `cuboid`, `cube`, `cross_section`.
-- Tự động mới nhất (w18, `0ca3accf`): T3 `FULL_PRODUCT_GATE_PASS` (pytest 7001/0, vitest 1058/1058,
-  build, demo 5/5, bề mặt sập 6/6); trình duyệt 12/12 dương + 46/46 âm; occlusion
-  `HUMAN_REVIEW_PENDING` (bốn cảnh W14 đổi); census SHIP (AC2 18/18).
+- Tự động mới nhất (w20, `5fbb397b`): T3 `FULL_PRODUCT_GATE_PASS` (pytest 7077/0, vitest 1058/1058,
+  build, demo, bề mặt sập 6/6); census SHIP (AC2 18/18). Trình duyệt không đo lại (w20 không đổi giao
+  diện): bằng chứng hình gần nhất là w18 (12/12 dương + 46/46 âm; occlusion `HUMAN_REVIEW_PENDING`).
 - Tuyên bố được phép: `docs/research/CLAIM_EVIDENCE_MAP.md` — 0 hàng `HUMAN_REVIEWED`; năm ranh giới ở §0.
 
 ## 5. Còn mở — không được che
 
-- **Chặn merge:** (1) review người w18 `NOT_APPROVED` (W18-H1, kèm W17-H1/W16-H1: bốn cảnh W14 đổi
-  `HUMAN_REVIEW_PENDING`); (2) `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET` (quan hệ có đích khai
-  bằng literal chưa được `construction_binding` kiểm; đóng bằng probe ở biên sản phẩm).
+- **Chặn merge:** chỉ còn review người w18 `NOT_APPROVED` (W18-H1, kèm W17-H1/W16-H1: bốn cảnh W14 đổi
+  `HUMAN_REVIEW_PENDING`). `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET` đã đóng ở w20.
+- **Câu hỏi mới của w20** (`HANDOFF.md` của run w20): H-W20-1 câu chữ lời từ chối toạ độ, H-W20-2 nhãn loại
+  trên thẻ từ chối, H-W20-3 314 mục dọn chờ quyết định, H-W20-4 tàn dư Tin học trong mã.
 - **Quyết định chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị), W18-H3
   (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`), W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`), W15-H2
   (vùng chặn ngoài đa diện), W15-H3 (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
-- **Mới ở w19:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` (180 báo cáo vẫn ở gốc theo AGENTS.md §4 —
-  chờ quyết định), `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (212 mục ở `D:/tmp` của các wave trước, chưa
-  xác minh nên chưa xoá), `ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE` (pytest toàn bộ ở cây chính ghi đè một
-  artifact đóng băng — chạy đo có thẩm quyền trong worktree detached sạch).
+- **Từ w19–w20:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` (180 báo cáo vẫn ở gốc theo AGENTS.md §4 —
+  chờ quyết định), `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212 mục có bằng chứng, 204 chờ quyết
+  định), `ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS` (mới: năm test ghi tạm vào tài liệu sống).
+  `ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE` đã đóng ở w20.
 - Các issue khác và trạng thái từng cái: `docs/OPEN_ISSUES.md` (thẩm quyền).
 
 ## 6. Bước tiếp theo duy nhất
@@ -95,15 +99,20 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 
 Người dùng chọn họ hình từ `docs/ROADMAP.md` §0.2 (ứng viên + khoảng trống theo tầng, snapshot W13);
 wave làm họ ấy cùng chín chỉnh sửa giao diện đã chốt (§0.1) và giữ hồi quy §0.3. OCR và nhiều khối để
-sau, không tuyên bố đã hỗ trợ. Song song, trước merge: review người w18 và probe literal-target.
+sau, không tuyên bố đã hỗ trợ. Song song, trước merge: review người w18 (W18-H1). Đề xuất (người dùng chưa
+chọn): chóp tứ giác đều + chín chỉnh sửa giao diện, nhánh `feat/regular-square-pyramid-and-ui-requests` —
+`HANDOFF.md` §2 của run w20.
 Ràng buộc: `LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION` quyết bằng
 bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không push/merge.
 
 ## 7. Evidence có thẩm quyền
 
+- W20 (đóng tính đúng + dọn kho): `docs/evaluation/geometry/runs/w20-cleanup-premerge/` (`REPORT.md`,
+  `HANDOFF.md`, `RUN.json`, `MANIFEST.json`, `inventory/DELETION_LOG.json`); luật:
+  `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §17.
 - W19 (tài liệu): `docs/evaluation/geometry/runs/w19-docs-organization/` (`REPORT.md`, `HANDOFF.md`,
   `inventory/INVENTORY.json`, `inventory/MIGRATION_MAP.json`, `verification/`).
-- Sản phẩm hiện hành (w18): `docs/evaluation/geometry/runs/w18-binding-focus/` (`REPORT.md`,
+- Hình ảnh hiện hành, chờ người duyệt (w18): `docs/evaluation/geometry/runs/w18-binding-focus/` (`REPORT.md`,
   `HANDOFF.md`, `RUN.json`, `MANIFEST.json`, `diagnostics/CONSTRUCTION_BINDING_DECISION_W18.json`);
   phạm vi đăng ký: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §16.
 - Run trước (bất biến) và chủ đề: `docs/evaluation/README.md`; chuỗi đính chính: `docs/EVIDENCE_INDEX.md`.

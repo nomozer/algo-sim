@@ -1,0 +1,69 @@
+{
+  "schema_version": "cleanup-premerge-run/1",
+  "run_id": "w20-cleanup-premerge",
+  "task": "W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE",
+  "task_class": "CORRECTNESS_CLOSURE_AND_REPOSITORY_CLEANUP",
+  "dates": "2026-10-04 to 2026-10-05",
+  "branch": "fix/cuboid-visual-semantic-closure",
+  "start_head": "2cb4ed8cfecca31d1807af9738aa23534287568e",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git ls-remote: unchanged)",
+  "commits": {
+    "registration": "f0edcd11",
+    "literal_target_fix": "65c90bde",
+    "cache_bump_and_lock": "bedb1040, ac241a8d",
+    "frozen_evidence_writer": "4e647861, 654beda3",
+    "evidence": "8b6a1a3a",
+    "refreeze": "c43862da (intermediate 2a15102b), 908a1f2c (final 27c31de6)",
+    "rules": "a36f3e97",
+    "cleanup": "31716373",
+    "self_review_fix": "a4f771b3 (comments only)",
+    "living_docs_and_verification_commit": "5fbb397b",
+    "diagnostics_fix": "aa036c42",
+    "state_report_handoff": "the commit that contains this file (not recorded here)"
+  },
+  "product_state": {
+    "measurement_commit": "5fbb397b (authoritative verification); 65c90bde (probe, census, cache proof)",
+    "candidate": "27c31de6dcd7708e… (product commit a4f771b3; intermediate 2a15102b…; previous d3b4cab9…)",
+    "cache_version": "111 (was 110; lock verify exit 0; fingerprint b1714b566e25c912… unchanged)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (served -> rejected for text-relation targets defined by coordinates)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "111",
+    "CANDIDATE_REFROZEN": "YES, twice",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "BRANCH_DELETED": "NO",
+    "HISTORY_REWRITTEN": "NO",
+    "USER_FAVICON_DELETION_PRESERVED": "YES",
+    "HISTORICAL_ARTIFACTS_BYTE_IDENTICAL": "YES"
+  },
+  "counts": {
+    "probe_rows": 27,
+    "probe_matching_before": 20,
+    "probe_matching_after": 26,
+    "census_rows_compared": 179,
+    "census_route_changes": 0,
+    "stored_programs_scanned": 527,
+    "new_tests": 72,
+    "fault_injections_caught": "10 of 10 that must be caught; 2 defense-in-depth injections not caught by design",
+    "deleted": 64,
+    "kept_keep_classes": 51,
+    "review_required": 314,
+    "pytest_verification": "7077 passed / 0 failed / 1 skipped / 2 deselected",
+    "vitest_verification": "1058/1058",
+    "historical_reports_changed": "0 of 181 catalog links"
+  },
+  "issues": {
+    "resolved": ["ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET", "ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE"],
+    "partial": ["ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED"],
+    "opened": ["ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS"]
+  },
+  "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "next_action": "human visual review W18-H1 (last merge condition); in parallel NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (proposal: regular square pyramid + the nine UI requests, branch feat/regular-square-pyramid-and-ui-requests)"
+}

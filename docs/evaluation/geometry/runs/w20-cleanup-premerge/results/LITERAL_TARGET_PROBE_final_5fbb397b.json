@@ -1,0 +1,813 @@
+{
+  "probe": "W20_LITERAL_TARGET",
+  "tag": "final",
+  "measured_at_commit": "5fbb397b",
+  "model_calls": 0,
+  "boundary": "app.ai.pipeline.run_pipeline (semantic_route=serve, LLM_ONLY) + route.verify_and_compile",
+  "rows_matching_label": 26,
+  "rows": [
+    {
+      "id": "C1_mid_constructed_U3",
+      "expect": "served",
+      "note": "W18 B1: M = midpoint(S, A)",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "M": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "9"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C2_proj_constructed_U3",
+      "expect": "served",
+      "note": "W18 B10: H = project_onto(S, line BD)",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "H": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "3√6"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C3_mid_divide_half_U3",
+      "expect": "served",
+      "note": "W18 B20: M = divide_segment(S, A, 1/2) — same relation, other operation",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "M": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "9"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C4_relation_not_realized_U3",
+      "expect": "served",
+      "note": "W18 B21: the text names M, the program never defines M and measures SC",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn SC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "M": "NOT_REALIZED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "6√3"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C5_mid_constructed_outside",
+      "expect": "served",
+      "note": "M = midpoint(S, A), outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi M là trung điểm của SA. Tính khoảng cách từ M đến đường thẳng BC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "M": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "3√5"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C6_proj_constructed_outside",
+      "expect": "served",
+      "note": "H = project_onto(S, line BD), outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "H": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "3√6"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C7_layout_only_outside",
+      "expect": "served",
+      "note": "only layout literals (the five given points), no relation",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Tính độ dài đoạn SC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {},
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "domain",
+        "error_code": "gate_out_of_scope",
+        "reason_code": null,
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "Bài này thuộc môn học khác, không nằm trong phần AlgoSim mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống mô phỏng nhưng không dựa trên cơ chế nào. AlgoSim tập trung vào hình học không gian — bạn thử một bài về giao tuyến, thiết diện, quan hệ song song – vuông góc, khoảng cách hoặc thể tích nhé.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@domain",
+      "matches_label": false
+    },
+    {
+      "id": "L1_mid_U3_assumption",
+      "expect": "refused",
+      "note": "M declared [0,0,3] with model_assumption, no source_fact_id",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L2_mid_U3_bogus_fid",
+      "expect": "refused",
+      "note": "M declared [0,0,3], model_assumption + source_fact_id not in the contract",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L3_mid_U3_relation_fact",
+      "expect": "refused",
+      "note": "M declared [0,0,3] citing the contract's relational fact 'M là trung điểm của SA'",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L4_mid_U3_wrong_coords",
+      "expect": "refused",
+      "note": "M declared [0,0,2] (wrong), model_assumption + bogus source_fact_id",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L5_mid_outside_assumption",
+      "expect": "refused",
+      "note": "as L1, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi M là trung điểm của SA. Tính khoảng cách từ M đến đường thẳng BC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L6_mid_outside_bogus_fid",
+      "expect": "refused",
+      "note": "as L2, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi M là trung điểm của SA. Tính khoảng cách từ M đến đường thẳng BC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L7_mid_outside_relation_fact",
+      "expect": "refused",
+      "note": "as L3, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi M là trung điểm của SA. Tính khoảng cách từ M đến đường thẳng BC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L8_mid_outside_wrong_coords",
+      "expect": "refused",
+      "note": "as L4, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi M là trung điểm của SA. Tính khoảng cách từ M đến đường thẳng BC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L9_proj_U3_assumption",
+      "expect": "refused",
+      "note": "H declared [3,3,0] with model_assumption, no source_fact_id",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "H: được ĐỀ giới thiệu như một điểm phải dựng ra, nên không được khai bằng toạ độ. Hãy dựng nó bằng một câu lệnh (midpoint, project_onto, intersect…) để engine tính."
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L10_proj_U3_bogus_fid",
+      "expect": "refused",
+      "note": "H declared [3,3,0], model_assumption + bogus source_fact_id",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — declared with coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L11_proj_U3_relation_fact",
+      "expect": "refused",
+      "note": "H declared [3,3,0] citing the relational fact 'H là hình chiếu vuông góc của S lên đường thẳng BD'",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — declared with coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L12_proj_outside_bogus_fid",
+      "expect": "refused",
+      "note": "as L10, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — declared with coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L13_proj_outside_relation_fact",
+      "expect": "refused",
+      "note": "as L11, outside U3",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — declared with coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L14_proj_outside_wrong_coords",
+      "expect": "refused",
+      "note": "H declared [2,4,0] (on BD, not the foot), bogus source_fact_id, outside U3 — a wrong value if served",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — declared with coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L15_mid_U3_literal_twin_of_constructed",
+      "expect": "refused",
+      "note": "M declared [0,0,3] (bogus fid) while an unnamed N = midpoint(S, A) also exists: same coordinates, different identity",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "grounding",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "construction_binding": {},
+        "subjects": [],
+        "details": [
+          "[DERIVED_ENTITY_WITHOUT_PRODUCER]",
+          "M: được đề xác định bằng một QUAN HỆ CHIA ĐOẠN, nên vị trí của nó là HỆ QUẢ phải dựng ra, không phải dữ kiện để khai. Hãy dựng bằng `divide_segment(<đầu này>, <đầu kia>, <tỉ lệ>)` — engine sẽ tính toạ độ và ghi bước dựng"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "error_code": "input_not_grounded",
+        "reason_code": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+        "refusal_cause": "UNKNOWN",
+        "learner_reason": "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn một hình sai mà em tin theo. Em có thể gửi lại để hệ dựng lại; nếu vẫn chưa được, bài này có thể nằm ngoài những gì hệ đang kiểm chứng được.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@grounding",
+      "matches_label": true
+    },
+    {
+      "id": "L16_mid_U3_literal_then_constructed",
+      "expect": "refused",
+      "note": "M declared [0,0,3] (bogus fid) AND later construct_point M = midpoint(S, A): the model asserted the coordinates of a derived point",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "M": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "M là trung điểm của SA",
+          "đặt M bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING M: MATCHED — same unordered endpoints (text: M là trung điểm của SA)",
+          "CONSTRUCTION_BINDING M: DEFINED_BY_COORDINATES — declared with coordinates (text: M là trung điểm của SA)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng chương trình của AlgoSim đặt M bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "C8_alias_to_constructed_U3",
+      "expect": "served",
+      "note": "W18 B8: M_tam = midpoint(S, A); assign M = var M_tam",
+      "source_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {
+          "M_tam": "MATCHED"
+        },
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "9"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "C9_layout_only_outside_distance_clue",
+      "expect": "served",
+      "note": "only layout literals, 'Tính khoảng cách từ S đến đường thẳng BC' (passes the domain gate)",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Tính khoảng cách từ S đến đường thẳng BC.",
+      "route": {
+        "servable": true,
+        "stage": "served",
+        "reason_code": null,
+        "refusal_cause": null,
+        "construction_binding": {},
+        "subjects": [],
+        "details": []
+      },
+      "response": {
+        "status": "ok",
+        "stage_reached": null,
+        "error_code": null,
+        "reason_code": null,
+        "refusal_cause": null,
+        "learner_reason": null,
+        "shown_d_kq": "6√2"
+      },
+      "observed": "served",
+      "matches_label": true
+    },
+    {
+      "id": "L17_proj_outside_alias_to_vertex",
+      "expect": "refused",
+      "note": "assign H = var A: the program equates the text's projection H with vertex A",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "lấy H trùng với điểm A"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — alias chain H → A reaches coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim lấy H trùng với điểm A thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    },
+    {
+      "id": "L18_proj_outside_alias_to_cited_literal",
+      "expect": "refused",
+      "note": "Q declared [3,3,0] citing the relational fact of H, then assign H = var Q",
+      "source_text": "Trong không gian Oxyz, cho các điểm A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và S(0;0;6); tứ giác ABCD là hình vuông. Gọi H là hình chiếu vuông góc của S lên đường thẳng BD. Tính độ dài đoạn SH.",
+      "route": {
+        "servable": false,
+        "stage": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "construction_binding": {
+          "H": "DEFINED_BY_COORDINATES"
+        },
+        "subjects": [
+          "H là hình chiếu của S lên BD",
+          "đặt H bằng toạ độ cho sẵn"
+        ],
+        "details": [
+          "CONSTRUCTION_BINDING H: DEFINED_BY_COORDINATES — alias chain H → Q reaches coordinates (text: H là hình chiếu của S lên BD)"
+        ]
+      },
+      "response": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "error_code": "input_not_grounded",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng chương trình của AlgoSim đặt H bằng toạ độ cho sẵn thay vì dựng điểm này từ quan hệ ấy, nên hệ chưa kiểm chứng được nó đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại.",
+        "shown_d_kq": null
+      },
+      "observed": "refused@construction_binding",
+      "matches_label": true
+    }
+  ]
+}

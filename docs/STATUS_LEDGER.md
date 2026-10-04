@@ -1603,3 +1603,26 @@ chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envel
 - **CORRECTS:** NONE
 - **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 - **FINAL_DECISION:** DOCS_REORGANIZED_AND_VERIFIED
+
+### WAVE_ID = W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE
+- **DATE:** 2026-10-04 → 2026-10-05
+- **START_BASE:** 2cb4ed8c
+- **CODE_COMMIT_OR_NONE:** 65c90bde (construction binding §17: `DEFINED_BY_COORDINATES`, `CONSTRUCTION_REPLACED_BY_COORDINATES`) · bedb1040 (CACHE_VERSION 110 → 111) · a4f771b3 (comments only, self-review F1). Tooling/tests: 4e647861 + 654beda3 (`run_reconciliation(out_dir)`), 72 new tests
+- **COMMITS:** f0edcd11 · 65c90bde · bedb1040 · ac241a8d · 4e647861 · 8b6a1a3a · c43862da · a36f3e97 · 31716373 · 654beda3 · a4f771b3 · 908a1f2c · 5fbb397b · aa036c42 · documentation commit (state, report, handoff)
+- **CANDIDATE:** d3b4cab96c69a09f… → 2a15102b… (intermediate, bedb1040) → 27c31de6dcd7708e… (a4f771b3), two freezes in clean detached worktrees, `--verify` exit 0 · CACHE_VERSION 111 (lock `--verify` exit 0) · model surface unchanged (fingerprint b1714b566e25c912…)
+- **EVIDENCE_COMMIT_ROLE:** f0edcd11 (labels + before probe, before any fix) · 8b6a1a3a (after probe, census, fault injections) · 31716373 (cleanup inventory + deletion log) · documentation commit (verification logs, report, handoff)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES — served → rejected for a W18 §16.1 relation target defined by coordinates (directly or through an alias chain)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/w20-cleanup-premerge/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/w20-cleanup-premerge/
+- **PASS:** probe through `run_pipeline` with labels registered before the fix 20/27 → 26/27 (the remaining row is refused by the domain gate, recorded before the fix); census 179 rows of W14–W18, no route change, SHIP (AC2 18/18); 527 stored programs scanned for the literal-then-construct pattern: one (the W20 row itself); fault injections 10/10 caught, 2 defense-in-depth injections not caught by design; frozen reconciliation folder never written (main-tree full run, git status identical); 64 cleanup deletions with mechanical proof, 0 living references
+- **CLOSED:** ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET · ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE
+- **OPENED:** ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS (ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED partial: 8 of 212 entries deleted)
+- **OPEN (blocking merge of the branch):** W18 human visual review (NOT_APPROVED) only
+- **FULL_PRODUCT_SUITE:** T3 `frontend/scripts/full-gate.mjs` from 'D:/tmp/w20 space/algo-sim' (clean detached worktree) at 5fbb397b: FULL_PRODUCT_GATE_PASS — pytest 7077 passed / 0 failed / 1 skipped / 2 deselected; vitest 1058/1058; typecheck + build; demo; crash surface 6/6 · gates PASS (candidate + cache verify, schema ×2 identical, LLM_ONLY, model surface 0 files, 0/181 historical reports changed, docs audit PASS, node harness 70 + 2 skipped, 0 fail)
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no visual approval)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (amendment §17 carries an erratum for the "§16.5" citations of earlier W20 commits, logs and outputs, which stay as they are)
+- **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (merge waits for W18-H1)
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

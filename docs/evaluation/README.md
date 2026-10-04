@@ -25,6 +25,7 @@
 
 | run | chủ đề |
 |---|---|
+| [`w20-cleanup-premerge`](geometry/runs/w20-cleanup-premerge/) | đích quan hệ đặt bằng toạ độ bị từ chối (amendment §17), test không ghi bằng chứng đông cứng, dọn kho có bằng chứng |
 | [`w19-docs-organization`](geometry/runs/w19-docs-organization/) | tổ chức lại tài liệu, bản đồ tuyên bố ↔ bằng chứng, catalog đóng (0 thay đổi sản phẩm) |
 | [`w18-binding-focus`](geometry/runs/w18-binding-focus/) | phép dựng điểm gắn với quan hệ của đề, nhãn tập trung, nhân chứng khoảng cách |
 | [`w17-operation-annotations`](geometry/runs/w17-operation-annotations/) | phép cắt gắn câu cắt, nhãn số đo trên hình |

@@ -1,0 +1,113 @@
+{
+  "schema_version": "temp-file-inventory/1",
+  "wave": "W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE",
+  "scope": "every file or folder W20 created outside the committed run folder: the session temp folder (%TEMP%), D:/tmp worktrees, and the git-ignored plan workspace",
+  "classes": [
+    "USED",
+    "REPRODUCIBLE_TEMP",
+    "SUPERSEDED_DIAGNOSTIC",
+    "UNKNOWN"
+  ],
+  "deletion_rule": "only W20's own temporary files, each by exact path after its content was copied into the run folder or is reproducible; worktrees removed from the main repository with `git worktree remove` (never --force)",
+  "files": [
+    {
+      "area": "plan workspace",
+      "path": ".superpowers/sdd/w20-cleanup-premerge/progress.md",
+      "class": "USED",
+      "decision": "KEEP",
+      "note": "the W20 ledger: task completions and every Ruling (git-ignored)"
+    },
+    {
+      "area": "worktree",
+      "path": "D:/tmp/w20-before",
+      "class": "USED",
+      "decision": "REMOVED (git worktree remove, clean)",
+      "note": "detached at f0edcd11 (product = W19 end) for the 'before' envelopes of the cache proof"
+    },
+    {
+      "area": "worktree",
+      "path": "D:/tmp/w20-freeze",
+      "class": "USED",
+      "decision": "REMOVED (generated manifest restored to its committed blob first, then git worktree remove)",
+      "note": "first freeze at bedb1040 (2a15102b, intermediate)"
+    },
+    {
+      "area": "worktree",
+      "path": "D:/tmp/w20-freeze2",
+      "class": "USED",
+      "decision": "REMOVED (same procedure)",
+      "note": "second freeze at a4f771b3 (27c31de6)"
+    },
+    {
+      "area": "worktree",
+      "path": "D:/tmp/w20 space/algo-sim",
+      "class": "USED",
+      "decision": "REMOVED (its outputs copied into results/ and deleted first; git worktree remove without --force; the emptied parent folder D:/tmp/w20 space removed by exact path)",
+      "note": "verification worktree at 5fbb397b, path with a space; its logs and outputs copied into results/"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-status-before-pytest1.txt, w20-status-after-pytest1.txt, w20-status-before-prefreeze.txt, w20-prefreeze-head.txt",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETED",
+      "note": "git status snapshots around the two main-tree runs; the comparison results are in the log headers of results/logs/"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-pytest-interim.log, w20-pytest-prefreeze.log",
+      "class": "USED",
+      "decision": "DELETED after copy",
+      "note": "failure sections copied into results/logs/PYTEST_INTERIM_MAIN_TREE.log and PRE_FREEZE_FULL_BACKEND_8b6a1a3a.log"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-census.log",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETED",
+      "note": "console output of the census; the census writes CONSTRUCTION_BINDING_{CENSUS,DECISION}_W20.json"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-recon-copy/",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETED",
+      "note": "temporary copy of the frozen reconciliation folder used by the reproduction; result in diagnostics/FROZEN_WRITER_REPRODUCTION.json"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-env-before.json, w20-env-after.json, w20_cache_proof.db",
+      "class": "REPRODUCIBLE_TEMP",
+      "decision": "DELETED",
+      "note": "envelopes of the cache proof and its temporary sqlite file; regenerate with proof_cache_row_w20.py envelopes/prove; summaries in PROOF_CACHE_ROW_W20.json"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20-review-diff-check.txt, w20-tmp-files-check.txt, w20-tmp-dirs.txt, w20-all-objects.txt, w20-evidence-index-before.txt",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETED",
+      "note": "first manual runs of the cleanup checks; superseded by inventory_cleanup_w20.py and inventory/CLEANUP_INVENTORY.json"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20/literal_then_construct_scan.json",
+      "class": "SUPERSEDED_DIAGNOSTIC",
+      "decision": "DELETED",
+      "note": "first run of the F3 scan; superseded by diagnostics/LITERAL_THEN_CONSTRUCT_SCAN.json"
+    },
+    {
+      "area": "%TEMP%",
+      "path": "w20/T3_FULL_GATE.log and the other logs of the verification",
+      "class": "USED",
+      "decision": "DELETED after copy",
+      "note": "copied into results/logs/ (trailing spaces stripped)"
+    }
+  ],
+  "not_inventoried_as_temp": [
+    "backend/**/__pycache__: interpreter caches in git-ignored folders (W20 runs set PYTHONDONTWRITEBYTECODE=1)",
+    "node_modules/ and frontend/dist/ of the verification worktree: removed with the worktree",
+    ".claude/settings*.json, .secrets, backend/.env, D:/tmp/settings*.json.bak, .superpowers/brainstorm/.last-token: never read",
+    "the harness's background-task output files under the session temp folder: tool state",
+    "frontend/public/favicon.svg (deleted by the user before W17): preserved as an unstaged deletion, never touched"
+  ],
+  "final_state": "2026-10-05, before the documentation commit: no W20 file left in %TEMP% (17 entries deleted by exact path with PowerShell Remove-Item -LiteralPath) and none under D:/tmp; git worktree list = the main working tree only; kept: the W20 ledger in the git-ignored plan workspace"
+}

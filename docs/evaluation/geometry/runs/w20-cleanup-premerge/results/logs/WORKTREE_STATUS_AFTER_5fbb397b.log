@@ -1,0 +1,3 @@
+git status --porcelain of the verification worktree D:/tmp/w20 space/algo-sim at 5fbb397b, after T3, the gates and the final probe:
+?? docs/evaluation/geometry/runs/w20-cleanup-premerge/results/LITERAL_TARGET_PROBE_final_5fbb397b.json
+(tracked files: no change; the one untracked file is the probe output, copied into results/ and then removed)

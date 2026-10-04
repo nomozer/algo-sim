@@ -1,0 +1,327 @@
+{
+ "schema_version": "run-manifest/1",
+ "run": "w20-cleanup-premerge",
+ "verification_commit": "5fbb397b",
+ "files": [
+  {
+   "path": "diagnostics/apply_cleanup_w20.ps1",
+   "sha256": "ee3658fab0427f9203a258df028a65edbe7c59f1468bd6045d26d1ef8b753b13",
+   "basis": "git_blob_lf",
+   "bytes": 27395,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/build_manifest.py",
+   "sha256": "06f8783ebb17fad39f9f4685a8b68e2286a655d3bb8cb905d848eda01276888e",
+   "basis": "git_blob_lf",
+   "bytes": 5430,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/CONSTRUCTION_BINDING_CENSUS_W20.json",
+   "sha256": "5adb455f2eac8ea742ee96a4bec8e73cc7ed9e6afba4ddb6cc1c566735b7637c",
+   "basis": "git_blob_lf",
+   "bytes": 169225,
+   "producer": "diagnostics/construction_binding_census_w20.py @ 65c90bde",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/construction_binding_census_w20.py",
+   "sha256": "b3cb0f60dfb3f24578ba0ecf3c5e5244ed3eeddca71283915fcbfa9ce06840ca",
+   "basis": "git_blob_lf",
+   "bytes": 5968,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/CONSTRUCTION_BINDING_DECISION_W20.json",
+   "sha256": "1a25cbead7da25e38ce6baa3fd053488db3dbbdb4b5ef0d26827db04d98c827c",
+   "basis": "git_blob_lf",
+   "bytes": 4590,
+   "producer": "diagnostics/construction_binding_census_w20.py @ 65c90bde",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/fault_injection_w20.py",
+   "sha256": "48202792e94768b75072c1645ac62e20422bf711c0d88a7d380a335fb4d0eb5c",
+   "basis": "git_blob_lf",
+   "bytes": 7133,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/FROZEN_WRITER_REPRODUCTION.json",
+   "sha256": "6e0abfe84340bdb256943b8aed42b7664e34b2a4c26f2e7af4a25ee2421f0f76",
+   "basis": "git_blob_lf",
+   "bytes": 1709,
+   "producer": "hand-written record of a reproduction on a temporary copy @ f0edcd11",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/inventory_cleanup_w20.py",
+   "sha256": "63e6eec95c13ed05814f19287df864fca863c5ebcb28d058929d62188366c208",
+   "basis": "git_blob_lf",
+   "bytes": 16920,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/literal_target_corpus/CORPUS.json",
+   "sha256": "71247a82300d1e6a2036c34a4e0b684e710e6738042f558e001ef21124379306",
+   "basis": "git_blob_lf",
+   "bytes": 181096,
+   "producer": "diagnostics/proof_cache_row_w20.py corpus @ 65c90bde (the probe's builders)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/literal_target_corpus/LABELS.json",
+   "sha256": "f18107081ed654bf97321d803a376ff268c859eddc3a1a736951d57db1bd1087",
+   "basis": "git_blob_lf",
+   "bytes": 5768,
+   "producer": "hand-written labels, registered before any product change (f0edcd11)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/LITERAL_THEN_CONSTRUCT_SCAN.json",
+   "sha256": "30e0e9d2d08c6df2f186151752d79202cdc46e9f824f1fc0800f8569c414944a",
+   "basis": "git_blob_lf",
+   "bytes": 400,
+   "producer": "diagnostics/scan_literal_then_construct.py (commit in the file)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/probe_literal_target.py",
+   "sha256": "1a43c0d252923a859c54b138a40438bce4b49ce81ce3f45745f5cd27e4d7a86c",
+   "basis": "git_blob_lf",
+   "bytes": 9616,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/PROOF_CACHE_ROW_W20.json",
+   "sha256": "7e0ffb5040193c755401d14bf102073f0eb5c05149b66d75b133cab3660b19e7",
+   "basis": "git_blob_lf",
+   "bytes": 17878,
+   "producer": "diagnostics/proof_cache_row_w20.py prove (envelopes: before f0edcd11, after 65c90bde)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/proof_cache_row_w20.py",
+   "sha256": "ef45028962decb180265c3b01c5a9ae6303ba67d90e7fc1d4c3e44642008f73a",
+   "basis": "git_blob_lf",
+   "bytes": 8265,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/run_fault_injections_w20.py",
+   "sha256": "886b8abe617b6b87d443775b5414bdfd0d0cd332ee224d6ec2ce899de68c04e2",
+   "basis": "git_blob_lf",
+   "bytes": 3945,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/scan_literal_then_construct.py",
+   "sha256": "0fb9edb4ed215d99c0f4278b2bd43ff79bf46e1711ab032a9b7836f831c7d8c4",
+   "basis": "git_blob_lf",
+   "bytes": 4125,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/TEMP_FILE_INVENTORY.json",
+   "sha256": "dc88bf053ee1364831b6af948a3bdcdad216dfe97d31236d027e99d919ae1de4",
+   "basis": "git_blob_lf",
+   "bytes": 5309,
+   "producer": "hand-written inventory of the temporary files of the wave",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/w20_gates.sh",
+   "sha256": "9603c411cf01340bff9d47851505308d5711f61e3e7b8f03cd3ed8322fff62b0",
+   "basis": "git_blob_lf",
+   "bytes": 4080,
+   "producer": "hand-written W20 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "HANDOFF.md",
+   "sha256": "d2333ddfb9610afcee4c6ac579b6c41ebe4dcabeb0d93271a51aeeab574b32f5",
+   "basis": "git_blob_lf",
+   "bytes": 13798,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+   "sha256": "68fee2f8984646a3d19f5f7e7348822ee91b58f3758c5877d257fc5ac653c992",
+   "basis": "git_blob_lf",
+   "bytes": 4611,
+   "producer": "hand-written candidate divergence declaration (two freezes)",
+   "status": "RECORD"
+  },
+  {
+   "path": "inventory/CLEANUP_INVENTORY.json",
+   "sha256": "643174ae02e2ff77b5a2b40a5c4076e98c5952fa6121d41d8f76749fcbfdbbef",
+   "basis": "git_blob_lf",
+   "bytes": 128120,
+   "producer": "diagnostics/inventory_cleanup_w20.py @ a36f3e97",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "inventory/DELETION_LOG.json",
+   "sha256": "6e0b90d903e592442ca832d469da20763d1ab4d0e68b011b8526394b444ad13f",
+   "basis": "git_blob_lf",
+   "bytes": 71427,
+   "producer": "inventory/CLEANUP_INVENTORY.json + results/logs/CLEANUP_APPLY.log (deletion step)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "PLAN.md",
+   "sha256": "99302b184f2686e39cab67a6708912b55bbd7fb717e1baceeee09c36e8a45484",
+   "basis": "git_blob_lf",
+   "bytes": 6189,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "REPORT.md",
+   "sha256": "ef263a04626cb8afecc23d6b2203489cde65e4e195892b02ef63f4671eca4b83",
+   "basis": "git_blob_lf",
+   "bytes": 13072,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/LITERAL_TARGET_PROBE_after_65c90bde.json",
+   "sha256": "dc302c784b35a0da16ccd12ecc0aefcfc10128ab6d901b128c2ed1fd9258409d",
+   "basis": "git_blob_lf",
+   "bytes": 42535,
+   "producer": "diagnostics/probe_literal_target.py --tag after @ 65c90bde",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/LITERAL_TARGET_PROBE_before-r2_2cb4ed8c.json",
+   "sha256": "dd6a7921f37f51b3c23054768faf18f51639f3cc257248f5c19f2ebfbcaa0fcb",
+   "basis": "git_blob_lf",
+   "bytes": 36649,
+   "producer": "diagnostics/probe_literal_target.py --tag before-r2 @ 2cb4ed8c (27 rows)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/LITERAL_TARGET_PROBE_before_2cb4ed8c.json",
+   "sha256": "23e82c912700ea98fa8513eb3054434930e211ee6a0bdf37604851cddf13fae1",
+   "basis": "git_blob_lf",
+   "bytes": 32847,
+   "producer": "diagnostics/probe_literal_target.py --tag before @ 2cb4ed8c (23 rows, before amendment_1)",
+   "status": "SUPERSEDED"
+  },
+  {
+   "path": "results/LITERAL_TARGET_PROBE_final_5fbb397b.json",
+   "sha256": "35c9fd6d7ab51bde139a8c3de4774abc4b6b16d3ced8f4b521789f03c4a9f088",
+   "basis": "git_blob_lf",
+   "bytes": 42535,
+   "producer": "diagnostics/probe_literal_target.py --tag final @ 5fbb397b (clean detached worktree)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/CLEANUP_APPLY.log",
+   "sha256": "c989dbd9746de24a8dd08e61bb1a6f4d89873ed3e840db2aad321daaf2f2e865",
+   "basis": "git_blob_lf",
+   "bytes": 3179,
+   "producer": "diagnostics/apply_cleanup_w20.ps1 output",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/FAULT_INJECTION_W20.log",
+   "sha256": "dccd7020c313784884ea7c1792945f6012ae558495028b80fa89d43a2e80d00c",
+   "basis": "git_blob_lf",
+   "bytes": 13621,
+   "producer": "diagnostics/run_fault_injections_w20.py @ f0edcd11 + uncommitted fix",
+   "status": "SUPERSEDED"
+  },
+  {
+   "path": "results/logs/FAULT_INJECTION_W20_r2.log",
+   "sha256": "0ce3201e529116f06a77a4d7a3a791b06cf283ba3f7ab420abe7d0782fa3b342",
+   "basis": "git_blob_lf",
+   "bytes": 14710,
+   "producer": "diagnostics/run_fault_injections_w20.py _r2 @ ac241a8d + uncommitted E fix",
+   "status": "SUPERSEDED"
+  },
+  {
+   "path": "results/logs/FAULT_INJECTION_W20_r3.log",
+   "sha256": "2f071b15a335a24a6ec61d8b071ca96f2ac7f42f416ce17cc07e54ffb898fea3",
+   "basis": "git_blob_lf",
+   "bytes": 15424,
+   "producer": "diagnostics/run_fault_injections_w20.py _r3 @ 5fbb397b (clean detached worktree)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/GATES_5fbb397b.log",
+   "sha256": "00258cd82c80f05571abef242a6d323d913cf44e43a323982a6f037ba739648d",
+   "basis": "git_blob_lf",
+   "bytes": 2375,
+   "producer": "diagnostics/w20_gates.sh 5fbb397b 2cb4ed8c (clean detached worktree)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/PRE_FREEZE_FULL_BACKEND_8b6a1a3a.log",
+   "sha256": "81f79933c6efb45ea00b78163c8e34e10ad2f4a075bf8c64ed175522b31461ba",
+   "basis": "git_blob_lf",
+   "bytes": 21871,
+   "producer": "pytest, main tree before the first freeze (failure classification in the header)",
+   "status": "DIAGNOSTIC"
+  },
+  {
+   "path": "results/logs/PYTEST_INTERIM_MAIN_TREE.log",
+   "sha256": "264027c868108432b56d6caf2a6374e3626d60283678f66753de9020358c2cf1",
+   "basis": "git_blob_lf",
+   "bytes": 2062,
+   "producer": "pytest, main tree @ f0edcd11 + uncommitted fix (failure classification in the header)",
+   "status": "DIAGNOSTIC"
+  },
+  {
+   "path": "results/logs/RED_frozen_writer.log",
+   "sha256": "5bd280069dfe8ed0e6491f3abc854e147d6861b71578e67f0889927805669b74",
+   "basis": "git_blob_lf",
+   "bytes": 3199,
+   "producer": "pytest output before the fix (trailing spaces stripped)",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/RED_literal_target.log",
+   "sha256": "8c610c4137259c0ff988fa68b5226ca824543d28d20188b0accbc48d9c9460b9",
+   "basis": "git_blob_lf",
+   "bytes": 40518,
+   "producer": "pytest output before the fix (trailing spaces stripped)",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/T3_FULL_GATE_5fbb397b.log",
+   "sha256": "af2ef6fd872bfb4cb55c85c659f9dd8b2da237d9606cd8d2aeb15ed8edce812d",
+   "basis": "git_blob_lf",
+   "bytes": 13464,
+   "producer": "frontend/scripts/full-gate.mjs @ 5fbb397b from a path with a space (clean detached worktree)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/WORKTREE_STATUS_AFTER_5fbb397b.log",
+   "sha256": "435f8e807eefc572c7118ccfabebafb28d4a9ece08f28f08a1a9748f5294a6c6",
+   "basis": "git_blob_lf",
+   "bytes": 345,
+   "producer": "git status of the verification worktree after every run @ 5fbb397b",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "RUN.json",
+   "sha256": "0c209b90f6cf50cef32c783bdb8a01fd50658faf99373f2c980690b6714b9c1d",
+   "basis": "git_blob_lf",
+   "bytes": 3147,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  }
+ ]
+}
