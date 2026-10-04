@@ -1,0 +1,37 @@
+{
+  "schema": "w18_ponytail_review/v1",
+  "wave": "W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS",
+  "skill": "ponytail:ponytail-review (author run, before the freeze)",
+  "range": "0ec2bbbb..1e8c5658 -- backend/app frontend/src backend/scripts frontend/scripts",
+  "findings": [
+    {
+      "where": "frontend/src/simulations/domains/geometry/scene3d-annotations.ts AnnotationEntry",
+      "tag": "delete",
+      "finding": "`category` on AnnotationEntry is copied from the annotation and read nowhere (W18 role replaces the W17 category chips)",
+      "outcome": "APPLIED"
+    },
+    {
+      "where": "backend/app/simulation/semantic_program/construction_binding.py _quan_he_ct, _cau_ct",
+      "tag": "shrink",
+      "finding": "the midpoint test (`midpoint` or `divide_segment` ratio 1/2) is written twice; one helper `_la_trung_diem(e)` keeps the two readers on one rule",
+      "outcome": "APPLIED"
+    },
+    {
+      "where": "backend/scripts/build_scene3d_visual_evidence.py STATE_TITLES",
+      "tag": "shrink",
+      "finding": "four `detail_*` titles added by `STATE_TITLES.update(...)` after the literal; fold them into the literal",
+      "outcome": "APPLIED"
+    },
+    {
+      "where": "backend/app/simulation/semantic_program/construction_binding.py _DanhTinh.diem (fact-source branch)",
+      "tag": "yagni",
+      "finding": "identity through an InputFact source with exactly one symbol looks like a fourth path for one case",
+      "outcome": "KEPT",
+      "ruling": "registered identity rule (§16.2 of ASSUMPTION_CERTIFICATE_AMENDMENT): a program point bound to the text only through its fact source must resolve to that text name; removing it makes B8-style alias programs UNVERIFIED"
+    }
+  ],
+  "verification_after": {
+    "backend": "pytest tests/geometry/test_construction_binding.py tests/geometry/test_scene3d_visual_evidence.py tests/geometry/test_scene3d_annotations.py -> 96 passed",
+    "frontend": "npx vitest run src/simulations/domains/geometry/ -> 26 files, 583 tests passed; npx tsc -b -> exit 0"
+  }
+}

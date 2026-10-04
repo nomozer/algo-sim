@@ -31,7 +31,6 @@ export const DEFAULT_ANNOTATION_VIEW: AnnotationView = Object.freeze({ showAll: 
 export interface AnnotationEntry {
   id: string;
   kind: QuantityAnnotation["kind"];
-  category: QuantityAnnotation["category"];
   role: NonNullable<QuantityAnnotation["role"]>;
   subject_ids: string[];
   anchor: QuantityAnnotation["anchor"];
@@ -95,7 +94,7 @@ export function annotationsAt(
     const lienQuan = tieuDiem(o, a);
     if (!(view.showAll || vai === "given" || lienQuan)) continue;
     ra.push({
-      id: o.id, kind: a.kind, category: a.category, role: vai, subject_ids: [...a.subject_ids], anchor: a.anchor,
+      id: o.id, kind: a.kind, role: vai, subject_ids: [...a.subject_ids], anchor: a.anchor,
       witness: a.witness,
       text: `${o.notation ?? o.label} = ${o.value}${a.unit ? ` ${a.unit}` : ""}`,
       priority: (vai === "result" ? 2 : 1) + (lienQuan ? 10 : 0),

@@ -231,10 +231,15 @@ def _ti_so(r: Any) -> Fraction | None:
         return None
 
 
+def _la_trung_diem(e: dict) -> bool:
+    """`midpoint`, hoặc `divide_segment` tỉ số 1/2 — cùng một quan hệ (§16.3)."""
+    return e["kind"] == "midpoint" or (e["kind"] == "divide_segment" and _ti_so(e.get("ratio")) == Fraction(1, 2))
+
+
 def _quan_he_ct(e: dict, dt: _DanhTinh) -> tuple[str, Any] | None:
     """Quan hệ chương trình dựng, trong không gian khoá; None ⇒ phép ngoài ba phép §16.3."""
     k = e["kind"]
-    if k == "midpoint" or (k == "divide_segment" and _ti_so(e.get("ratio")) == Fraction(1, 2)):
+    if _la_trung_diem(e):
         return "midpoint", frozenset({dt.diem(e["a"]), dt.diem(e["b"])})
     if k == "divide_segment":
         return "division", (dt.diem(e["a"]), dt.diem(e["b"]), _ti_so(e.get("ratio")))
@@ -245,7 +250,7 @@ def _quan_he_ct(e: dict, dt: _DanhTinh) -> tuple[str, Any] | None:
 
 def _cau_ct(dich: str, e: dict, dt: _DanhTinh) -> str:
     L = dt.nhan_hoc_sinh
-    if e["kind"] == "midpoint" or (e["kind"] == "divide_segment" and _ti_so(e.get("ratio")) == Fraction(1, 2)):
+    if _la_trung_diem(e):
         return f"{dich} là trung điểm của {L(e['a'])}{L(e['b'])}"
     if e["kind"] == "divide_segment":
         return f"{dich} chia đoạn {L(e['a'])}{L(e['b'])} theo tỉ số {e.get('ratio')}"

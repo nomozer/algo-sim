@@ -48,15 +48,15 @@ STATE_TITLES = {"neutral_final": "mặc định gọn, bước cuối",
                 "selected_length": "chọn một độ dài — nhãn, chuỗi số, ô soi",
                 "selected_area": "chọn một diện tích — nhãn, chuỗi số, ô soi",
                 "selected_volume": "chọn thể tích — nhãn, chuỗi số, ô soi",
-                "selected_distance": "chọn một khoảng cách — nhân chứng tới chân, ô soi"}
+                "selected_distance": "chọn một khoảng cách — nhân chứng tới chân, ô soi",
+                "detail_length": "ô soi một độ dài — công thức, dữ kiện, đầu vào",
+                "detail_area": "ô soi một diện tích — công thức, dữ kiện, đầu vào",
+                "detail_volume": "ô soi thể tích — công thức, dữ kiện, đầu vào",
+                "detail_distance": "ô soi một khoảng cách — công thức, dữ kiện, đầu vào"}
 #: W18 §16.5–16.7 — ảnh "chọn từng loại đo" (`selected_<kind>`) và ô soi của đại lượng ấy (`detail_<kind>`,
 #: ảnh phần tử): chỉ có khi bộ chạy đã chọn được.
 TRANG_THAI_CHON = ("selected_length", "selected_area", "selected_volume", "selected_distance")
 TRANG_THAI_CHI_TIET = ("detail_length", "detail_area", "detail_volume", "detail_distance")
-STATE_TITLES.update({"detail_length": "ô soi một độ dài — công thức, dữ kiện, đầu vào",
-                     "detail_area": "ô soi một diện tích — công thức, dữ kiện, đầu vào",
-                     "detail_volume": "ô soi thể tích — công thức, dữ kiện, đầu vào",
-                     "detail_distance": "ô soi một khoảng cách — công thức, dữ kiện, đầu vào"})
 #: W16 §14.5 — tên NGƯỜI XEM của từng loại âm mà bộ chạy ghi (`negative[kind][viewport]`).
 #: Bảng ĐÓNG: loại lạ ⇒ `KeyError`, không in token máy lên ảnh.
 TEN_TU_CHOI = {"ungrounded_source": "dữ kiện không có trong đề — từ chối, không dựng hình",
