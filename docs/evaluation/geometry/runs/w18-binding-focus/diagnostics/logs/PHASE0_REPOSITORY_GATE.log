@@ -1,0 +1,33 @@
+# W18 Phase 0 repository gate — 2026-10-04T04:36:55Z
+## branch
+fix/cuboid-visual-semantic-closure
+## HEAD
+0ec2bbbb105d1aa899b6c292cb3821092fb59b40
+## fetch
+fetch_exit=0
+## origin/main
+a9492ee98ff9dc3302d1ff64465f1c06e9001bce
+## ls-remote main
+a9492ee98ff9dc3302d1ff64465f1c06e9001bce	refs/heads/main
+## ls-remote feature branch (empty = never pushed)
+## ancestry
+origin/main is an ancestor of HEAD
+behind/ahead: 0	217
+## commits after the W17 docs commit 0ec2bbbb
+(end)
+## working tree
+ D frontend/public/favicon.svg
+?? docs/evaluation/geometry/runs/w18-binding-focus/
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 109 file, d63d6fd4704ae033…).
+candidate_verify=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 109 · môi trường b1714b566e25c912…
+cache_verify=0
+## CACHE_VERSION
+753:CACHE_VERSION = "109"
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+## schema mirrors
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *docs/schemas/semantic_program.schema.json
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 *frontend/src/simulations/domains/semantic/semantic_program.schema.json

@@ -823,3 +823,158 @@ Luật mới:
 Ngưỡng 1 là đặc trưng nhiễu đo được, đặt TRƯỚC lượt đo lại. Nếu lượt đo lại trượt, đọc hai ảnh đã
 lưu, không nới ngưỡng. Lượt đỏ không lưu khung, nên độ lệch thật của nó là `NOT_RECOVERABLE`. Bằng
 chứng: `docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/browser-final-attempt1-83f101e4/`.
+
+## 16. W18 — binding phép dựng điểm, nhãn tập trung, một nơi giải thích (đăng ký 2026-10-04, TRƯỚC mọi bản sửa)
+
+**Nguồn:** brief W18 (`W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS`). Tái hiện và bằng chứng ở
+[`runs/w18-binding-focus`](../evaluation/geometry/runs/w18-binding-focus/).
+**Trạng thái:** REGISTERED, chưa đo. Phạm vi thi hành U3 và luật §15.1 (thiết diện) giữ nguyên.
+
+Phép dò Phase 1 (trước bản sửa, 0 lượt gọi) cho thấy:
+- hình chiếu lên sai đường/mặt phẳng được PHỤC VỤ với giá trị sai;
+- "M, N lần lượt là trung điểm của SA, SB" với hai đích bị tráo được phục vụ (3√6 thay cho 9);
+- đích đổi tên và một điểm trùng toạ độ nhưng khác danh tính được phục vụ.
+
+Trung điểm sai đoạn khi tên khớp đã bị bất biến toạ độ `segment_division` chặn, nhưng với mã chung
+(nguyên nhân UNKNOWN).
+
+### 16.1 Quan hệ dựng điểm đọc từ đề
+
+`construction_binding.doc_quan_he_dung(đề)` đọc trên đề đã che mệnh đề mục tiêu (§14.2). Từ vựng
+ĐÓNG, viết hoa/thường tự do:
+
+- **Trung điểm:**
+  - `<X> là trung điểm [của] [đoạn [thẳng]|cạnh] <A><B>`;
+  - danh sách `<X>, <Y> [và|,] <Z> lần lượt là trung điểm [của] [các (cạnh|đoạn [thẳng])] <AB>,
+    <CD> [và|,] <EF>`. Số đích phải bằng số đoạn; ghép theo thứ tự.
+- **Phép chiếu:**
+  - `<X> là hình chiếu [vuông góc] của <P> (lên|trên|xuống) <đích nhận>`;
+  - `<X> là chân (đường vuông góc|đường cao) [kẻ|hạ] từ <P> (xuống|đến|tới|lên) <đích nhận>`.
+- **Đích nhận:**
+  - `[mặt phẳng|mp] (<ba điểm trở lên>)`: mặt phẳng gọi bằng điểm;
+  - `[mặt [phẳng]] đáy`: đáy của khối DUY NHẤT đề nêu theo từ vựng §5;
+  - `[đường thẳng|cạnh|đoạn [thẳng]] <A><B>`: đường qua hai điểm.
+
+Kết quả: `QuanHeDung(kind ∈ {midpoint, projection}, dich, toan_hang, nhan_hoc_sinh, span)`.
+- Trung điểm: toán hạng là cặp KHÔNG thứ tự.
+- Phép chiếu: toán hạng là (điểm nguồn, đích nhận), hai vai trò riêng.
+
+Một đích được hai câu nói khác nhau thì bị bỏ cả hai (không phân xử). Cách nói ngoài các dạng trên
+không cho quan hệ nào.
+
+### 16.2 Danh tính
+
+**Danh tính điểm của một biến chương trình**, xét lần lượt:
+1. đi theo bí danh `assign var` về định nghĩa gốc;
+2. khoá ký hiệu `_khoa` (A′ ≡ A' ≡ A’ ≡ A_prime ≡ Aprime);
+3. nhãn (`label`) của câu lệnh/khai báo;
+4. fact nguồn: `source_fact_id` của khai báo trỏ tới fact nêu đúng một ký hiệu điểm của đề;
+5. lưới hoà giải C₁a.
+
+Các nguồn chỉ hai thực thể khác nhau ⇒ danh tính MƠ HỒ. Một biến không ra ký hiệu điểm nào của đề
+là một thực thể KHÔNG có trong đề. **Toạ độ hay giá trị bằng nhau không bao giờ tạo bí danh.**
+
+**Đích nhận:**
+- mặt phẳng = tập điểm; hai mặt phẳng khớp khi chung ≥ 3 điểm và tập này chứa tập kia (ba điểm
+  phân biệt của mặt phẳng đề nêu xác định chính nó);
+- đường = cặp điểm không thứ tự;
+- mặt phẳng phương trình hay đường dẫn xuất khác ⇒ không ghim.
+
+### 16.3 Trạng thái đối chiếu
+
+Phép dựng trong phạm vi:
+- mọi `construct_point` có biểu thức `midpoint`, `project_onto` hoặc `divide_segment`;
+- mọi `construct_point` có đích là điểm ĐỀ GIỚI THIỆU (`source_entities.la_ten_suy_ra`) mà đề có
+  quan hệ §16.1 cho nó.
+
+Mọi điểm dựng ra đều hiện trên hình, nên luật áp cho mọi phép dựng ấy, kể cả khi đáp số cuối tình
+cờ bằng nhau.
+
+| Trạng thái | Khi nào |
+|---|---|
+| MATCHED | Đích là điểm đề giới thiệu, có quan hệ cùng loại, toán hạng khớp. Trung điểm: cặp không thứ tự; `divide_segment(A, B, 1/2)` tương đương. Phép chiếu: cùng điểm nguồn và cùng đích nhận |
+| MISMATCHED | Chỉ khi mọi danh tính liên quan đều xác định: khác loại, khác toán hạng, khác đích nhận. Gồm cả hai đích đề giới thiệu bị tráo, và đổi tên đích: quan hệ của đề không được dựng dưới tên đích, mà được dựng nguyên vẹn (cùng loại, cùng toán hạng) dưới một tên không có trong đề |
+| UNVERIFIED | Một trong ba: điểm đề giới thiệu mà không đọc được quan hệ (cách nói ngoài từ vựng); quan hệ đọc được nhưng dựng bằng phép khác ba loại trên; danh tính mơ hồ hoặc đích nhận không ghim |
+| AUXILIARY | Đích không có trong đề và không thay cho quan hệ nào của đề: phép dựng phụ trợ của hệ. Điểm mang `source.binding = "AUXILIARY"` trong cảnh và không bao giờ là dữ kiện đề cho |
+| OUT_OF_SCOPE | Điểm đề giới thiệu với vai trò ngoài từ vựng W18 (giao điểm, trọng tâm, tâm, điểm đối xứng), dựng bằng phép khác ba loại trên. Hành vi cũ giữ nguyên (giới hạn khai) |
+| NOT_REALIZED | Quan hệ của đề không ứng với phép dựng nào. Chỉ ghi |
+
+Điểm MATCHED mang `source.binding = "TEXT_RELATION"`.
+
+### 16.4 Thi hành
+
+Chặng `construction_binding` chạy ngay sau thực thi, trước `source_invariant`. Bất biến toạ độ
+`segment_division` giữ làm lưới thứ hai.
+
+- **MISMATCHED ⇒ từ chối ở MỌI vùng.** Đây là lỗi toàn vẹn của chương trình, như U5.
+  - Mã: `INPUT_NOT_GROUNDED`, `reason_code = CONSTRUCTION_NOT_TEXT_BOUND`, nguyên nhân
+    CONSTRUCTION (§15.3).
+  - `reason_subjects` = [quan hệ đề nêu, quan hệ chương trình dựng], viết theo ký hiệu học sinh
+    (`M là trung điểm của SA`).
+  - Không gửi đi sửa. Lời cho người học nêu cả hai quan hệ và không bảo sửa đề.
+- **UNVERIFIED ⇒ từ chối trong vùng thi hành U3; ngoài vùng chỉ ghi trạng thái.**
+  - `reason_code = CONSTRUCTION_BINDING_UNVERIFIED`, nguyên nhân UNKNOWN.
+  - Lời người học: hệ CHƯA đối chiếu được phép dựng với câu của đề — không bao giờ "đề sai".
+- **MATCHED / AUXILIARY / OUT_OF_SCOPE / NOT_REALIZED ⇒ đi tiếp.** Quan trắc đếm theo trạng thái.
+
+### 16.5 Chính sách nhãn (thay quyết định U-W17-1)
+
+- **Mặc định:** nhãn điểm, và nhãn dữ kiện đề cho (`annotation.role = given`) khả dụng ở bước
+  đang xem.
+- **Chọn một đại lượng:** nhãn của nó, cùng nhãn các đại lượng trong chuỗi số của nó
+  (`tangNhanManh`: dữ kiện số, trung gian).
+- **Chọn một vật:** nhãn các đại lượng có chủ thể là vật ấy.
+- **"Hiện tất cả":** mọi nhãn khả dụng; một công tắc thay hai công tắc W17.
+
+Khả dụng (không lộ trước) và đặt chỗ giữ luật §15.4/§15.5. Hết chỗ thì nhãn ưu tiên thấp bị ẩn;
+giá trị vẫn có ở bảng chi tiết và lời giải. Không có trần số nhãn cố định.
+
+Nhãn bấm được (chuột, Enter/Space): bấm là chọn đại lượng. Backend phát
+`annotation.role ∈ {given, intermediate, result}`; `category` giữ cho tương thích với envelope
+v109.
+
+### 16.6 Một nơi giải thích
+
+- **Ô soi là bảng chi tiết của vật đang chọn.** Với một đại lượng, ô soi có công thức có tham
+  chiếu, nguồn dữ kiện (dữ kiện số trong chuỗi) và phụ thuộc trực tiếp. Desktop đặt bên phải
+  khung, mobile đặt dưới khung.
+- **Lời giải đầy đủ thu gọn mặc định.** Khi lời giải mở, ô soi bỏ khối công thức: không hai bản
+  sao cùng lúc.
+- **Gộp trình bày (`annotation.same_as`).** Một khoảng cách đo giữa hai điểm, có cùng tập chủ thể
+  với một độ dài đề cho đã gắn, được trình bày như dữ kiện ấy: một nhãn, một dòng. Ngoại lệ: nó
+  là đáp số của đề. Giá trị bằng nhau không bao giờ là tiêu chí gộp.
+
+### 16.7 Nhân chứng khoảng cách
+
+- **Backend** phát nhân chứng cho khoảng cách điểm → đường và điểm → mặt phẳng:
+  `annotation.witness = {from, foot (chính xác), on, marker}`, tính bằng
+  `kernel.project_point_onto_line/plane`. Neo nhãn `witness` là trung điểm đoạn từ điểm tới chân.
+  Ký hiệu vuông góc là hình trình bày do backend phát.
+- **Frontend** vẽ đoạn, chân và ký hiệu vuông góc CHỈ khi nhãn khoảng cách đang hiện (đang chọn,
+  hoặc "Hiện tất cả"). Lớp này không thêm bước dựng và không tính gì.
+- **Khoảng cách khác** (hai đường, đường–mặt, hai mặt) không có nhân chứng. Giá trị ở bảng chi
+  tiết, chủ thể được làm nổi, và trên hình không có nhãn. Đây là giới hạn khai.
+
+### 16.8 Kiểm trên trình duyệt và tiêm lỗi (đăng ký trước mọi phép đo)
+
+**Trình duyệt:**
+- **Mặc định gọn:** tập nhãn số đo đang hiện = tập dữ kiện đề cho khả dụng. Oracle độc lập đọc
+  payload, không nhập module trình bày.
+- **Chọn từng đại lượng** qua bảng lời giải:
+  - nhãn hiện ⊇ {đại lượng} ∪ chuỗi số của nó, mỗi nhãn ≤ 24 px quanh neo đúng chủ thể;
+  - ô soi có công thức;
+  - đúng một vùng chi tiết mang công thức ấy.
+- **"Hiện tất cả" bật → tắt → bật:** dash, vật hiện, camera, bước và lựa chọn không đổi.
+- **Nhân chứng:** chọn khoảng cách có nhân chứng ⇒ đoạn tới chân xuất hiện. Không nhân chứng ⇒
+  lối dự phòng đã khai.
+- Giữ mọi kiểm W17: đặt chỗ, xoay, đổi cỡ, nhân quả, khôi phục, playback, tô thiết diện.
+
+**Tiêm lỗi tối thiểu:**
+- đổi SA thành SB mà giữ nguyên giá trị;
+- đổi đích mà giữ nguyên toạ độ;
+- bỏ kiểm binding;
+- nhãn gắn sai chủ thể;
+- kết quả hiện quá sớm;
+- mặc định bật mọi nhãn;
+- hai bảng chi tiết trùng nội dung;
+- tô sáng đổi nét đứt thành nét liền.
