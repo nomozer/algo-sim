@@ -1,0 +1,39 @@
+{
+  "schema_version": "w15-assumption-corpus-labels/1",
+  "layer": "W17C — addendum from the final self-review (2026-10-04), written and committed BEFORE the fix it judges, together with its red tests",
+  "rule": "Hand labels for the three Important findings of the W17 final review. Q = a cut relation whose plane the closed vocabulary cannot pin: the program is mathematically right, so the label is INVARIANT, but §15.1 (closed vocabulary, unverifiable binding refused) requires a refusal — and the refusal must say 'not provable' (ASSUMPTION_INVARIANCE_UNPROVEN, cause UNKNOWN), never 'the program cut another plane' (CONSTRUCTION_NOT_TEXT_BOUND). G = a datum in a ', biết …' clause of a sentence that ends with '?': it is a premise and the request is served. Base of every Q row: gold p1 text (pyramid S.ABCD, coordinates given) + the stated sentence + 'Tính diện tích thiết diện (T).'; program = p1 points/base/solid + midpoints M, N, P, Q of SA, SB, SC, SD + construct_plane through M, N, P (the plane through M parallel to the base) + construct_section + area. Base of every G row: the W14 triangular-pyramid payload (AB = 3, AC = 4, SA ⊥ base) with the stated text.",
+  "rows": {
+    "Q1_qua_M_va_song_song_voi_day": {
+      "group": "W17C_Q_UNPINNED_PLANE",
+      "label": "INVARIANT",
+      "expect": "UNDETERMINED:ASSUMPTION_INVARIANCE_UNPROVEN",
+      "builder": "q",
+      "text": "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (Q) qua M và song song với (ABCD) cắt khối chóp theo thiết diện (T).",
+      "reason": "final review: read before the fix as '(ABCD) cắt khối chóp' and refused CONSTRUCTION_NOT_TEXT_BOUND with the false message 'Đề bài nêu mặt phẳng (ABCD)'; the plane (Q) is defined by a point and a parallel plane, which the closed vocabulary cannot pin"
+    },
+    "Q2_ten_Q_song_song_khong_ghim": {
+      "group": "W17C_Q_UNPINNED_PLANE",
+      "label": "INVARIANT",
+      "expect": "UNDETERMINED:ASSUMPTION_INVARIANCE_UNPROVEN",
+      "builder": "q",
+      "text": "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (Q), song song với (ABCD), cắt khối chóp theo thiết diện (T).",
+      "reason": "final review: the relation is read correctly as (Q) cuts the pyramid, but (Q) has no equation and no point name; before the fix the unknown identity was reported as a definite mismatch (CONSTRUCTION)"
+    },
+    "G6_bao_nhieu_biet_cau_hoi": {
+      "group": "W17C_G_QUESTION_WITH_BIET",
+      "label": "INVARIANT",
+      "expect": "served",
+      "builder": "g",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. Thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?",
+      "reason": "final review: the question rule took the ', biết' comma as the clause start, masked the premise 'biết SA = 5' and left the question unmasked; grounding refused GIVEN_ONLY_IN_GOAL_CLAUSE"
+    },
+    "G7_hoi_bao_nhieu_biet": {
+      "group": "W17C_G_QUESTION_WITH_BIET",
+      "label": "INVARIANT",
+      "expect": "served",
+      "builder": "g",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. Hỏi thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?",
+      "reason": "final review: same as G6 with the goal keyword 'Hỏi'; the question is the clause before ', biết'"
+    }
+  }
+}

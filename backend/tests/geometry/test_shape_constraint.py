@@ -380,3 +380,30 @@ def test_w17_mat_phang_khong_ten_mang_span_cua_phuong_trinh():
 def test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat(de):
     """Ngoài từ vựng ⇒ không có quan hệ; quan hệ nằm trong yêu cầu chứng minh không là tiền đề (§14.2)."""
     assert _cat(de) == []
+
+
+@pytest.mark.parametrize("de", [
+    "Gọi M là trung điểm SA. Mặt phẳng (Q) qua M và song song với (ABCD) cắt hình chóp S.ABCD theo thiết diện (T).",
+    "Mặt phẳng (P) đi qua A và vuông góc với (SBC) cắt khối chóp theo thiết diện (T).",
+])
+def test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat(de):
+    """Tự rà soát cuối W17: "(X)" đứng sau "song song/vuông góc với" là TÂN NGỮ của quan hệ — trước
+    bản sửa bộ đọc lấy "(ABCD) cắt hình chóp …" làm câu cắt, và một chương trình ĐÚNG bị từ chối
+    với lời "Đề bài nêu mặt phẳng (ABCD)" (sai)."""
+    assert _cat(de) == []
+
+
+@pytest.mark.parametrize("de", [
+    "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. "
+    "Thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?",
+    "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. "
+    "Hỏi thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?",
+])
+def test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet(de):
+    """Tự rà soát cuối W17: luật câu hỏi lấy ranh giới cuối trước "?" — dấu phẩy của ", biết" — nên
+    che chính GIẢ THIẾT "biết SA = 5" và để lộ câu hỏi. Mệnh đề "biết" là giả thiết dù câu kết bằng
+    "?"; mục tiêu là mệnh đề hỏi đứng trước nó."""
+    sp = _sc().khoang_muc_tieu(de)
+    i = de.index("SA = 5")
+    assert not any(a <= i < b for a, b in sp), [de[a:b] for a, b in sp]
+    assert any("bao nhiêu" in de[a:b] for a, b in sp), [de[a:b] for a, b in sp]

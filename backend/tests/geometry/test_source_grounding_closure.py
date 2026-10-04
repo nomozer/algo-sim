@@ -379,6 +379,21 @@ def test_w17_tinh_biet_van_la_du_kien():
     assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
 
 
+#: W17C (tự rà soát cuối): câu HỎI kết bằng ", biết … ?" — mệnh đề "biết" là giả thiết.
+G6_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với "
+           "đáy. Thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?")
+G7_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với "
+           "đáy. Hỏi thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?")
+
+
+@pytest.mark.parametrize("text", [G6_TEXT, G7_TEXT], ids=["G6_bao_nhieu_biet", "G7_hoi_bao_nhieu_biet"])
+def test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien(text):
+    """Trước bản sửa: luật câu hỏi che "biết SA = 5" ⇒ grounding từ chối GIVEN_ONLY_IN_GOAL_CLAUSE
+    ("chỉ nêu SA trong yêu cầu chứng minh" — sai)."""
+    _sp, out, sc = _w14().chay(*_g_chop(text))
+    assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
+
+
 G5_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Chứng minh rằng tam giác "
            "SAB vuông, biết cạnh bên SA vuông góc với đáy và SA = 5. Tính thể tích khối chóp S.ABC.")
 

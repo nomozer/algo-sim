@@ -1096,9 +1096,9 @@ def test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tin
 DIEM_CAT = "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (MNP) cắt khối chóp theo thiết diện (T)."
 
 
-def _p1_qua_diem(qua: list[str]):
+def _p1_qua_diem(qua: list[str], cau: str = DIEM_CAT):
     """p1 + trung điểm M, N, P, Q của SA, SB, SC, SD; (T) cắt bằng mặt phẳng dựng QUA `qua`."""
-    ct, raw = _p1_w17(DIEM_CAT, [], "mp_cat")
+    ct, raw = _p1_w17(cau, [], "mp_cat")
     i = next(k for k, s in enumerate(raw["statements"]) if s["kind"] == "construct_section")
     raw["statements"][i:i] = [
         {"kind": "construct_point", "target_var": t, "expr": {"kind": "midpoint", "a": "S", "b": d}}
@@ -1112,6 +1112,24 @@ def test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem():
     assert (lambda k: (k.status, k.certificate))(_kq(*_p1_qua_diem(["M", "N", "P"]))) == (AN_TOAN, "C0")
     kq = _kq(*_p1_qua_diem(["M", "N", "Q"]))
     assert (kq.status, kq.reason_code, kq.subjects) == (CHUA_RO, "CONSTRUCTION_NOT_TEXT_BOUND", ("(MNP)", "(MNQ)")), kq
+
+
+#: W17C (tự rà soát cuối): mặt phẳng cắt mà từ vựng đóng KHÔNG ghim được (một điểm + song song với
+#: một mặt; một tên không phương trình) — chương trình ĐÚNG (qua trung điểm M, N, P) vẫn phải bị từ
+#: chối (§15.1: không xác minh được ⇒ không PROVEN_SAFE), nhưng với "chưa chứng minh được"
+#: (UNKNOWN), không phải "chương trình cắt bằng mặt phẳng khác" (CONSTRUCTION).
+MAT_PHANG_KHONG_GHIM = {
+    "Q1_qua_M_va_song_song_voi_day": "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (Q) qua M "
+                                     "và song song với (ABCD) cắt khối chóp theo thiết diện (T).",
+    "Q2_ten_Q_song_song_khong_ghim": "Gọi M, N, P lần lượt là trung điểm của SA, SB, SC. Mặt phẳng (Q), song "
+                                     "song với (ABCD), cắt khối chóp theo thiết diện (T).",
+}
+
+
+@pytest.mark.parametrize("ca", sorted(MAT_PHANG_KHONG_GHIM))
+def test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung(ca):
+    kq = _kq(*_p1_qua_diem(["M", "N", "P"], cau=MAT_PHANG_KHONG_GHIM[ca]))
+    assert (kq.status, kq.reason_code, kq.subjects) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN", ()), (ca, kq)
 
 
 def test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung():
