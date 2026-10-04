@@ -25,6 +25,7 @@ Các kiểm tra cốt lõi:
 - Current state self-reference: CURRENT_STATE không tự ghi commit SHA của chính nó.
 - Handoff line limit: AI_CONTEXT_BUNDLE <= 300 dòng.
 - Secret scan: không chứa secret, API key hay raw trace dump.
+- Docs layout (W19): gốc docs/ là danh sách đóng — chuẩn tắc + tài liệu dự án + catalog báo cáo lịch sử.
 """
 from __future__ import annotations
 
@@ -132,6 +133,20 @@ ALLOWED_CANONICAL_ACTIONS = [
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 
+# W19: gốc docs/ là danh sách ĐÓNG = 11 tài liệu chuẩn tắc + tài liệu dự án dưới đây + báo cáo wave lịch sử đã vào
+# catalog. Báo cáo của wave mới nằm trong thư mục run (docs/evaluation/geometry/runs/<run>/).
+PROJECT_DOCS = (
+    "CORRECTNESS.md", "COVERAGE.md", "DESIGN_BRIEF.md", "OPERATIONS.md", "DEMO_RUNBOOK.md", "TEST_TIERS.md",
+    "POST_THESIS_BACKLOG.md",
+)
+DOCS_SUBDIRS = ("architecture", "evaluation", "legacy", "research", "schemas")
+HISTORICAL_REPORTS_CATALOG = "docs/evaluation/HISTORICAL_REPORTS.md"
+# Cổng điều hướng ngoài 11 tài liệu chuẩn tắc: link của chúng nằm trong phạm vi kiểm mặc định.
+NAVIGATION_DOCS = (
+    "README.md", "docs/research/README.md", "docs/research/CLAIM_EVIDENCE_MAP.md", "docs/evaluation/README.md",
+    HISTORICAL_REPORTS_CATALOG, "docs/legacy/README.md", "docs/architecture/README.md",
+)
+
 
 def get_repo_root() -> Path:
     """Trả về root của git repository."""
@@ -191,6 +206,7 @@ def audit_internal_links(repo_root: Path, file_paths: list[Path] | None = None) 
     if file_paths is None:
         file_paths = [repo_root / spec["canonical_path"] for spec in CANONICAL_DOMAINS.values()]
         file_paths.append(repo_root / "AGENTS.md")
+        file_paths += [repo_root / p for p in NAVIGATION_DOCS]
 
     broken_links: list[dict[str, str]] = []
     total_links = 0
@@ -553,6 +569,36 @@ def audit_secret_scan(repo_root: Path, target_paths: list[Path] | None = None) -
     }
 
 
+def audit_docs_layout(repo_root: Path, catalog_text: str | None = None) -> dict[str, Any]:
+    """Gốc docs/ là danh sách đóng; thư mục con của docs/ thuộc DOCS_SUBDIRS.
+
+    Mỗi docs/*.md phải thuộc đúng một lớp: chuẩn tắc (CANONICAL_DOMAINS), dự án (PROJECT_DOCS), hoặc báo cáo
+    lịch sử có DÒNG BẢNG `| [`TEN`](../TEN.md) | …` trong catalog (link ở phần dẫn nhập không tính). Catalog
+    đọc được nhưng rỗng là FAIL (không pass rỗng).
+    """
+    if catalog_text is None:
+        p = repo_root / HISTORICAL_REPORTS_CATALOG
+        catalog_text = p.read_text(encoding="utf-8", errors="ignore") if p.is_file() else ""
+    catalog = set(re.findall(r"^\| \[`[^`]+`\]\(\.\./([A-Za-z0-9_\-]+\.md)\) \|", catalog_text, re.MULTILINE))
+    canonical = {Path(spec["canonical_path"]).name for spec in CANONICAL_DOMAINS.values()}
+    project = set(PROJECT_DOCS)
+    docs_dir = repo_root / "docs"
+    root_docs = {p.name for p in docs_dir.glob("*.md")}
+    unclassified = sorted(root_docs - canonical - project - catalog)
+    catalog_missing = sorted(catalog - root_docs)
+    overlap = sorted(catalog & (canonical | project))
+    unexpected_dirs = sorted(p.name for p in docs_dir.iterdir() if p.is_dir() and p.name not in DOCS_SUBDIRS)
+    return {
+        "root_doc_count": len(root_docs),
+        "catalog_count": len(catalog),
+        "unclassified": unclassified,
+        "catalog_missing": catalog_missing,
+        "overlap": overlap,
+        "unexpected_dirs": unexpected_dirs,
+        "valid": bool(catalog) and not (unclassified or catalog_missing or overlap or unexpected_dirs),
+    }
+
+
 def reconcile_test_evidence() -> dict[str, Any]:
     """Đối soát bằng chứng kiểm thử Phase 0 theo đúng Section 5."""
     summary_focused_sha = "955d5be51888496739bb5cba896f3068e52a806cbf18a8b163306dbddc360be8"
@@ -636,6 +682,7 @@ def run_full_audit(repo_root: Path | None = None) -> dict[str, Any]:
     next_action = audit_canonical_next_action(repo_root)
     stable_mutable = audit_stable_mutable_separation(repo_root)
     secrets = audit_secret_scan(repo_root)
+    layout = audit_docs_layout(repo_root)
     recon = reconcile_test_evidence()
 
     overall_valid = (
@@ -648,6 +695,7 @@ def run_full_audit(repo_root: Path | None = None) -> dict[str, Any]:
         and next_action["valid"]
         and stable_mutable["valid"]
         and secrets["valid"]
+        and layout["valid"]
         and recon["INVARIANTS"]["BALANCED"]
     )
 
@@ -662,6 +710,7 @@ def run_full_audit(repo_root: Path | None = None) -> dict[str, Any]:
         "CANONICAL_NEXT_ACTION": next_action,
         "STABLE_MUTABLE": stable_mutable,
         "SECRET_SCAN": secrets,
+        "DOCS_LAYOUT": layout,
         "TEST_RECONCILIATION": recon,
     }
 
@@ -687,6 +736,9 @@ def main() -> int:
         print(f"- Next action canonical: {res['CANONICAL_NEXT_ACTION']['valid']}")
         print(f"- Stable/mutable separation: {res['STABLE_MUTABLE']['valid']}")
         print(f"- Secret leaks: {res['SECRET_SCAN']['leak_count']}")
+        lay = res["DOCS_LAYOUT"]
+        print(f"- Docs root closed list: {lay['valid']} ({lay['root_doc_count']} root docs, "
+              f"{lay['catalog_count']} catalogued, unclassified {lay['unclassified']})")
         print(f"- Test reconciliation balanced: {res['TEST_RECONCILIATION']['INVARIANTS']['BALANCED']}")
 
     return 0 if res["STATUS"] == "PASS" else 1

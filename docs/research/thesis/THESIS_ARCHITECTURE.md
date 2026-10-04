@@ -3,7 +3,7 @@
 > **Phạm vi tài liệu này.** Mô tả **hệ đang chạy** tại trạng thái
 > `IMPLEMENTATION_FROZEN_FOR_THESIS` (2026-09-02). Viết từ mã nguồn đã đóng
 > băng, không từ tài liệu cũ. Diễn giải bằng chứng (tuyên bố ↔ evidence ↔ giới
-> hạn) thuộc **`docs/THESIS_READINESS.md`** — ở đây **không chép số benchmark**.
+> hạn) thuộc **`docs/research/CLAIM_EVIDENCE_MAP.md`** — ở đây **không chép số benchmark**.
 >
 > Mọi đường dẫn dưới đây tồn tại trong repo tại bản đóng băng. Kiến trúc **cũ**
 > (miền Tin học: catalog, DSL, 24 target) đã gỡ; nó chỉ được nhắc khi cần giải
@@ -303,7 +303,7 @@ biên từ chối *đúng kiểu của nó*, không có biên nào thành lỗi 
 
 ## J. Phạm vi và giới hạn
 
-Giới hạn đã chốt (chi tiết + bằng chứng: `docs/THESIS_READINESS.md` §4):
+Giới hạn đã chốt (chi tiết + bằng chứng: `docs/legacy/research/THESIS_READINESS.md` §4):
 
 | giới hạn | trạng thái |
 |---|---|
@@ -329,7 +329,7 @@ biểu diễn được trước khi có nó. Nó giảm ma sát tổng hợp và
 
 Về ca `n3`: **không dùng làm bằng chứng tính đúng ngữ nghĩa**, vì oracle số học
 của nó không phân biệt được hai cách dựng khác nhau. Điểm số lịch sử giữ
-nguyên, không hồi tố (`docs/THESIS_READINESS.md` §3).
+nguyên, không hồi tố (`docs/legacy/research/THESIS_READINESS.md` §3).
 
 ---
 
@@ -337,7 +337,7 @@ nguyên, không hồi tố (`docs/THESIS_READINESS.md` §3).
 
 | cần gì | đọc file nào |
 |---|---|
-| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/THESIS_READINESS.md` |
+| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/research/CLAIM_EVIDENCE_MAP.md` |
 | kịch bản trình bày demo | `docs/research/thesis/THESIS_DEMO.md` |
 | trạng thái vận hành cuối | `docs/CURRENT_STATE.md` §1a |
 | module nào ở đâu, ai sở hữu gì | `docs/CODE_INDEX.md` §0b–§0d |

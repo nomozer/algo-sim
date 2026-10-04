@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import posixpath
 import re
 import subprocess
@@ -42,10 +41,13 @@ def main() -> int:
     ap.add_argument("--log", required=True)
     ap.add_argument("--map")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--only-merge", action="store_true",
+                    help="lượt hai: chỉ ánh xạ các file MERGE; link giải theo vị trí HIỆN TẠI (lượt một đã viết lại)")
     a = ap.parse_args()
     inv = json.loads((ROOT / a.inventory).read_text(encoding="utf-8"))
-    moves = {r["path"]: r["destination"] for r in inv["docs"] if r["decision"] in ("MOVE", "ARCHIVE")}
-    inverse = {v: k for k, v in moves.items()}
+    loai = ("MERGE",) if a.only_merge else ("MOVE", "ARCHIVE")
+    moves = {r["path"]: r["destination"] for r in inv["docs"] if r["decision"] in loai}
+    inverse = {} if a.only_merge else {v: k for k, v in moves.items()}
     khong_sua = {r["path"] for r in inv["docs"] if r["decision"] == "MERGE" or (
         r["decision"] == "KEEP" and r["type"] in ("EXECUTION_EVIDENCE", "EXPERIMENT_PROTOCOL", "ARCHIVED_DECISION"))}
 
@@ -111,6 +113,12 @@ def main() -> int:
 
     if a.map:
         base = inv["base_commit"]
+        nhat_ky = {}
+        for ten in ("REWRITE_LOG.json", "REWRITE_LOG_MERGE.json", "AUTHORITY_RETARGET.json"):
+            f_log = (ROOT / a.map).parent / ten
+            if f_log.is_file():
+                d = json.loads(f_log.read_text(encoding="utf-8"))
+                nhat_ky[ten] = {x["file"] for x in d.get("changes", d.get("replacements", []))}
         rows = []
         for r in inv["docs"]:
             if r["decision"] not in ("MOVE", "ARCHIVE", "MERGE"):
@@ -120,9 +128,8 @@ def main() -> int:
             rows.append({"old": r["path"], "new": moi, "decision": r["decision"], "type": r["type"],
                          "reason": r["reason"], "blob_before": r["blob_at_base"], "blob_after": after,
                          "content_changed": (after is not None and after != r["blob_at_base"]),
-                         "content_change_reason": ("relative links/paths rewritten for the new location "
-                                                   "(see REWRITE_LOG.json)") if (after and after != r["blob_at_base"])
-                         else None})
+                         "changed_by": sorted(t for t, fs in nhat_ky.items() if moi in fs)
+                         if (after and after != r["blob_at_base"]) else []})
         rows.append({"old": "docs/CURRENT_STATE.md (lines 88-5475 at " + base[:8] + ")",
                      "new": "docs/legacy/CURRENT_STATE_HISTORY.md (body below the 15-line provenance header)",
                      "decision": "ARCHIVE", "type": "EXECUTION_EVIDENCE",

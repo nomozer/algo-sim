@@ -1,0 +1,139 @@
+{
+ "schema_version": "w19-rewrite-log/1",
+ "dry_run": false,
+ "files_scanned": 40,
+ "lines_changed": 20,
+ "files_changed": [
+  "README.md",
+  "docs/CODE_INDEX.md",
+  "docs/CURRENT_STATE.md",
+  "docs/OPEN_ISSUES.md",
+  "docs/README.md",
+  "docs/STATUS_LEDGER.md",
+  "docs/research/thesis/THESIS_ARCHITECTURE.md",
+  "docs/research/thesis/THESIS_DEMO.md",
+  "docs/research/thesis/THESIS_DRAFT.md"
+ ],
+ "changes": [
+  {
+   "file": "README.md",
+   "line": 11,
+   "before": "[`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md) — đó là nguồn thẩm quyền",
+   "after": "[`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md) — đó là nguồn thẩm quyền"
+  },
+  {
+   "file": "README.md",
+   "line": 171,
+   "before": "Số liệu, phân loại và giới hạn: [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md).",
+   "after": "Số liệu, phân loại và giới hạn: [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md)."
+  },
+  {
+   "file": "README.md",
+   "line": 189,
+   "before": "Dẫn từ [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md):",
+   "after": "Dẫn từ [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md):"
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 215,
+   "before": "`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J.",
+   "after": "`docs/legacy/research/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J."
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "line": 8022,
+   "before": "### `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` (2026-09-09) · tài liệu · **0 API call**",
+   "after": "### `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` (2026-09-09) · tài liệu · **0 API call**"
+  },
+  {
+   "file": "docs/CURRENT_STATE.md",
+   "line": 18,
+   "before": "> Tuyên bố ↔ bằng chứng ↔ giới hạn: [`THESIS_READINESS.md`](THESIS_READINESS.md).",
+   "after": "> Tuyên bố ↔ bằng chứng ↔ giới hạn: [`THESIS_READINESS.md`](legacy/research/THESIS_READINESS.md)."
+  },
+  {
+   "file": "docs/OPEN_ISSUES.md",
+   "line": 274,
+   "before": "- **evidence:** `docs/THESIS_READINESS.md §7`, `docs/EVIDENCE_INDEX.md`.",
+   "after": "- **evidence:** `docs/legacy/research/THESIS_READINESS.md §7`, `docs/EVIDENCE_INDEX.md`."
+  },
+  {
+   "file": "docs/README.md",
+   "line": 43,
+   "before": "- [`docs/THESIS_READINESS.md`](THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài.",
+   "after": "- [`docs/legacy/research/THESIS_READINESS.md`](legacy/research/THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài."
+  },
+  {
+   "file": "docs/README.md",
+   "line": 45,
+   "before": "- [`docs/thesis/`](thesis/) — Bản thảo các chương khóa luận và ma trận trích dẫn nghiên cứu liên quan.",
+   "after": "- [`docs/legacy/research/`](thesis/) — Bản thảo các chương khóa luận và ma trận trích dẫn nghiên cứu liên quan."
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 73,
+   "before": "| ⛔ **CHỐT PHẠM VI 2026-09-01 — BENCHMARK ĐÓNG** | `SYNTHESIS_BENCHMARKING = CLOSED` · `TRANSLATION_EVIDENCE = CLOSED` · `NAME_ONLY_EVIDENCE = CLOSED` · `ANALYZE_STABILITY = NOT_MEASURED_BY_SCOPE_DECISION` | `docs/THESIS_READINESS.md` — bảng đối chiếu tuyên bố ↔ bằng chứng ↔ giới hạn DUY NHẤT của khoá luận. **Không** k=3/k=5/fresh probe/stability seed nữa. Đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông tin; `ANALYZE_STABILITY` dừng vì **phạm vi**, không vì thiếu điều kiện (điều kiện cũng thiếu — xem dòng artifact analyze) | — |",
+   "after": "| ⛔ **CHỐT PHẠM VI 2026-09-01 — BENCHMARK ĐÓNG** | `SYNTHESIS_BENCHMARKING = CLOSED` · `TRANSLATION_EVIDENCE = CLOSED` · `NAME_ONLY_EVIDENCE = CLOSED` · `ANALYZE_STABILITY = NOT_MEASURED_BY_SCOPE_DECISION` | `docs/legacy/research/THESIS_READINESS.md` — bảng đối chiếu tuyên bố ↔ bằng chứng ↔ giới hạn DUY NHẤT của khoá luận. **Không** k=3/k=5/fresh probe/stability seed nữa. Đề tài không nghiên cứu độ ổn định thống kê của trích xuất thông tin; `ANALYZE_STABILITY` dừng vì **phạm vi**, không vì thiếu điều kiện (điều kiện cũng thiếu — xem dòng artifact analyze) | — |"
+  },
+  {
+   "file": "docs/STATUS_LEDGER.md",
+   "line": 146,
+   "before": "| Mục tiêu khoá luận và bằng chứng có khớp nhau không | **PHẦN LỚN — 29 tuyên bố rà soát: `PROVED_ON_FROZEN_BENCHMARK 13` · `PARTIAL 8` · `NOT_MEASURED 2` · `OUT_OF_SCOPE 2` · **`CONTRADICTED 4`**; `OBJECTIVE_SOURCE` tìm thấy, không phải `NOT_LOCATED`** (2026-09-09) | Nguồn mục tiêu: `docs/research/thesis/THESIS_DRAFT.md §3·§4·§6·§1.6·§1.7` (bản thảo chính thức — ledger kỹ thuật KHÔNG được dùng làm nguồn đặt mục tiêu). Ma trận đầy đủ `docs/thesis/CLAIM_EVIDENCE_MATRIX.md`, 29 hàng, mỗi ô bằng chứng dẫn tới artifact có băm hoặc test chạy được. ⚠️ **Mọi số bàn giao ĐO LẠI**: 14 con số tra lại từ artifact, tất cả khớp (7+2 ca · 6/7 lần đầu · 7/7 sau sửa · 12/12 đại lượng · 2/2 fail-closed · 0 đáp số sai âm thầm · hidden-line 23/23 · UI 66/66 · visual fidelity 39/41 · display name 10/12 · `STABILITY NOT_MEASURED` · `PROMOTION NO`), cộng `doi_chieu_ket_qua_cuoi.py` PASS (0/31 lệch) và `scene3d_world_oracles.py` 7/7 tolerance 0. ⚠️ **BỐN TUYÊN BỐ TRÔI, đính chính mà GIỮ NGUYÊN bản gốc**: **D-2** bảng \"ngoài phạm vi\" của bản thảo khai mặt cong · khối không lồi · phương trình mặt phẳng là NGOÀI, trong khi lượt đo cuối **phục vụ đúng cả ba** (`p3` cầu, `p4` trụ, `p5` nón, `p2` đáy **LÕM**, `p6` phương trình `2x − z + 12 = 0`) — đã ghi đính chính bên trên bảng gốc; **D-4** bản thảo có **HAI THÂN CHƯƠNG 4 RỜI NHAU** (nó mô tả bốn lượt niêm phong `n = 4–6` và `rg` cho **0** kết quả khi tìm lượt đo cuối, còn `docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` mô tả lượt cuối 9 ca) — hợp nhất thuộc wave tích hợp; **D-1** ma trận ĐĂNG KÝ TRƯỚC ghi \"11 đại lượng\" trong khi artifact nói 12 — **không sửa** văn bản đăng ký trước; **D-3** `product_capability.py` ghi lý do *\"MÔ HÌNH: chưa đo\"* cho khối cong dù mô hình ĐÃ đo 5/5 — **trạng thái `foundation_only` vẫn ĐÚNG** (`n = 1` không đủ để bật), chỉ chuỗi lý do cũ, và sửa nó chạm `backend/app` nên chuyển thành nợ. ⚠️ **Một khoảng trống TRUY XUẤT đã vá**: báo cáo UI ghi \"6/6 phép tiêm\" nhưng artifact trên đĩa ghi `FAULT_INJECTIONS = 0` — lượt chạy SẠCH cuối đã ghi đè artifact của lượt `--faultcheck`, nên con số ĐÚNG mà KHÔNG DẪN VỀ ĐÂU; chạy lại (0 lượt gọi) ⇒ artifact nay ghi 6/6 và 66/66. ⚠️ **Ranh giới giữ được**: hidden-line PASS **không** đổi visual fidelity tổng thể từ `PARTIAL` sang `PASS` · không câu nào tuyên bố ổn định (quét `rg`, ba lần xuất hiện đều không phải tuyên bố — `C7` dùng theo nghĩa *mã lỗi không đổi tên*) · phạm vi hình học tách **ba nhóm** (đã chứng minh 10 họ · `foundation_only` · ngoài phạm vi vì kiến trúc) thay vì \"đã hỗ trợ đầy đủ\" · candidate **lịch sử** và **hiện tại** ghi hai trường dù đang trùng. Cổng: `freeze --verify` exit 0 (`d72db7c3…`) · cache identity exit 0 @ v94 · artifact lịch sử **nguyên byte** · `git diff --check` sạch · `PRODUCT_CODE_CHANGED = NO` · `MODEL_FACING_CHANGED = NO` · `APPLICATION_LLM_CALLS = 0`. Báo cáo `docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md` | **`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`** — follow-up DUY NHẤT chạm một mục tiêu đã đăng ký: `§1.6` và `§3.9` cam kết nguyên văn *\"từ chối có cấu trúc — nêu **giai đoạn dừng, loại thất bại, mã lỗi**\"*, mà `n1` giao `stage_reached: null` và `error_code: null`, tức **2/4** trường đã hứa. `DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND` = **OPTIONAL_POLISH**: `§1.6` cam kết *\"các đại lượng được hỏi, tính bằng số học chính xác\"*, không cam kết chất lượng tên gọi, và `rg` toàn bản thảo không có cam kết nào về nhãn cho người học |",
+   "after": "| Mục tiêu khoá luận và bằng chứng có khớp nhau không | **PHẦN LỚN — 29 tuyên bố rà soát: `PROVED_ON_FROZEN_BENCHMARK 13` · `PARTIAL 8` · `NOT_MEASURED 2` · `OUT_OF_SCOPE 2` · **`CONTRADICTED 4`**; `OBJECTIVE_SOURCE` tìm thấy, không phải `NOT_LOCATED`** (2026-09-09) | Nguồn mục tiêu: `docs/research/thesis/THESIS_DRAFT.md §3·§4·§6·§1.6·§1.7` (bản thảo chính thức — ledger kỹ thuật KHÔNG được dùng làm nguồn đặt mục tiêu). Ma trận đầy đủ `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md`, 29 hàng, mỗi ô bằng chứng dẫn tới artifact có băm hoặc test chạy được. ⚠️ **Mọi số bàn giao ĐO LẠI**: 14 con số tra lại từ artifact, tất cả khớp (7+2 ca · 6/7 lần đầu · 7/7 sau sửa · 12/12 đại lượng · 2/2 fail-closed · 0 đáp số sai âm thầm · hidden-line 23/23 · UI 66/66 · visual fidelity 39/41 · display name 10/12 · `STABILITY NOT_MEASURED` · `PROMOTION NO`), cộng `doi_chieu_ket_qua_cuoi.py` PASS (0/31 lệch) và `scene3d_world_oracles.py` 7/7 tolerance 0. ⚠️ **BỐN TUYÊN BỐ TRÔI, đính chính mà GIỮ NGUYÊN bản gốc**: **D-2** bảng \"ngoài phạm vi\" của bản thảo khai mặt cong · khối không lồi · phương trình mặt phẳng là NGOÀI, trong khi lượt đo cuối **phục vụ đúng cả ba** (`p3` cầu, `p4` trụ, `p5` nón, `p2` đáy **LÕM**, `p6` phương trình `2x − z + 12 = 0`) — đã ghi đính chính bên trên bảng gốc; **D-4** bản thảo có **HAI THÂN CHƯƠNG 4 RỜI NHAU** (nó mô tả bốn lượt niêm phong `n = 4–6` và `rg` cho **0** kết quả khi tìm lượt đo cuối, còn `docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md` mô tả lượt cuối 9 ca) — hợp nhất thuộc wave tích hợp; **D-1** ma trận ĐĂNG KÝ TRƯỚC ghi \"11 đại lượng\" trong khi artifact nói 12 — **không sửa** văn bản đăng ký trước; **D-3** `product_capability.py` ghi lý do *\"MÔ HÌNH: chưa đo\"* cho khối cong dù mô hình ĐÃ đo 5/5 — **trạng thái `foundation_only` vẫn ĐÚNG** (`n = 1` không đủ để bật), chỉ chuỗi lý do cũ, và sửa nó chạm `backend/app` nên chuyển thành nợ. ⚠️ **Một khoảng trống TRUY XUẤT đã vá**: báo cáo UI ghi \"6/6 phép tiêm\" nhưng artifact trên đĩa ghi `FAULT_INJECTIONS = 0` — lượt chạy SẠCH cuối đã ghi đè artifact của lượt `--faultcheck`, nên con số ĐÚNG mà KHÔNG DẪN VỀ ĐÂU; chạy lại (0 lượt gọi) ⇒ artifact nay ghi 6/6 và 66/66. ⚠️ **Ranh giới giữ được**: hidden-line PASS **không** đổi visual fidelity tổng thể từ `PARTIAL` sang `PASS` · không câu nào tuyên bố ổn định (quét `rg`, ba lần xuất hiện đều không phải tuyên bố — `C7` dùng theo nghĩa *mã lỗi không đổi tên*) · phạm vi hình học tách **ba nhóm** (đã chứng minh 10 họ · `foundation_only` · ngoài phạm vi vì kiến trúc) thay vì \"đã hỗ trợ đầy đủ\" · candidate **lịch sử** và **hiện tại** ghi hai trường dù đang trùng. Cổng: `freeze --verify` exit 0 (`d72db7c3…`) · cache identity exit 0 @ v94 · artifact lịch sử **nguyên byte** · `git diff --check` sạch · `PRODUCT_CODE_CHANGED = NO` · `MODEL_FACING_CHANGED = NO` · `APPLICATION_LLM_CALLS = 0`. Báo cáo `docs/THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW.md` | **`PRODUCT_RESPONSE_CONTRACT_ALIGNMENT`** — follow-up DUY NHẤT chạm một mục tiêu đã đăng ký: `§1.6` và `§3.9` cam kết nguyên văn *\"từ chối có cấu trúc — nêu **giai đoạn dừng, loại thất bại, mã lỗi**\"*, mà `n1` giao `stage_reached: null` và `error_code: null`, tức **2/4** trường đã hứa. `DISPLAY_NAME_AUTHORITY_ELLIPSE_AND_CURVED_KIND` = **OPTIONAL_POLISH**: `§1.6` cam kết *\"các đại lượng được hỏi, tính bằng số học chính xác\"*, không cam kết chất lượng tên gọi, và `rg` toàn bản thảo không có cam kết nào về nhãn cho người học |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "line": 6,
+   "before": "> hạn) thuộc **`docs/THESIS_READINESS.md`** — ở đây **không chép số benchmark**.",
+   "after": "> hạn) thuộc **`docs/legacy/research/THESIS_READINESS.md`** — ở đây **không chép số benchmark**."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "line": 306,
+   "before": "Giới hạn đã chốt (chi tiết + bằng chứng: `docs/THESIS_READINESS.md` §4):",
+   "after": "Giới hạn đã chốt (chi tiết + bằng chứng: `docs/legacy/research/THESIS_READINESS.md` §4):"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "line": 332,
+   "before": "nguyên, không hồi tố (`docs/THESIS_READINESS.md` §3).",
+   "after": "nguyên, không hồi tố (`docs/legacy/research/THESIS_READINESS.md` §3)."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "line": 340,
+   "before": "| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/THESIS_READINESS.md` |",
+   "after": "| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/legacy/research/THESIS_READINESS.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DEMO.md",
+   "line": 4,
+   "before": "> `docs/THESIS_READINESS.md` (§5 tập demo, §6 smoke trình duyệt) — ở đây không",
+   "after": "> `docs/legacy/research/THESIS_READINESS.md` (§5 tập demo, §6 smoke trình duyệt) — ở đây không"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 15,
+   "before": "> `docs/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên. Khi bản thảo",
+   "after": "> `docs/legacy/research/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên. Khi bản thảo"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 87,
+   "before": "> `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4.",
+   "after": "> `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 293,
+   "before": "> Truy xuất đầy đủ: `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2 và §F.",
+   "after": "> Truy xuất đầy đủ: `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` §D-2 và §F."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "line": 2422,
+   "before": "| bảng tuyên bố ↔ bằng chứng | `docs/THESIS_READINESS.md` |",
+   "after": "| bảng tuyên bố ↔ bằng chứng | `docs/legacy/research/THESIS_READINESS.md` |"
+  }
+ ]
+}

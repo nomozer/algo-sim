@@ -8,7 +8,7 @@ bằng **số chính xác tuyệt đối** — không làm tròn ở bất kỳ 
 [Phạm vi](#9-phạm-vi) · [Giới hạn](#10-giới-hạn)**
 
 Bảng đối chiếu **tuyên bố ↔ bằng chứng ↔ giới hạn**:
-[`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md) — đó là nguồn thẩm quyền
+[`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md) — đó là nguồn thẩm quyền
 duy nhất cho mọi con số; README này không chép lại chúng.
 
 ---
@@ -168,7 +168,7 @@ Bằng chứng đánh giá nằm ở [`docs/evaluation/geometry/`](docs/evaluati
 và **không được sửa lại** khi chạy lượt mới — mỗi lượt là một mốc so sánh, kể cả
 lượt thất bại.
 
-Số liệu, phân loại và giới hạn: [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md).
+Số liệu, phân loại và giới hạn: [`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md).
 
 ## 9. Phạm vi
 
@@ -186,7 +186,7 @@ Kéo–thả liên tục kiểu GeoGebra nằm **ngoài phạm vi**: nó liên t
 
 ## 10. Giới hạn
 
-Dẫn từ [`docs/THESIS_READINESS.md`](docs/THESIS_READINESS.md):
+Dẫn từ [`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md) (bản gốc của danh sách: [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md) §4):
 
 - `ANALYZE_SOURCE_FACT_COMPLETENESS = PARTIAL` — tầng đọc đề có lần **không**
   đưa toạ độ đề cho vào hợp đồng. Quan sát trên 4 đề, **chưa đo lặp lại**, nên

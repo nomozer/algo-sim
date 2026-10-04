@@ -60,8 +60,8 @@ def anchors(p: Path, cache: dict[Path, set[str]]) -> set[str]:
 
 
 def lop(p: str, frozen: set[str], merge: set[str]) -> str:
-    if p.startswith(RUN):
-        return "LIVING"
+    if p.startswith(RUN) or p in ("docs/evaluation/README.md", "docs/evaluation/HISTORICAL_REPORTS.md"):
+        return "LIVING"  # do W19 viết, không phải artifact đóng băng
     if p.startswith("docs/evaluation/") or p in frozen:
         return "FROZEN"
     if (p.startswith("docs/legacy/") and p != "docs/legacy/RULES_v0.3.md") or p in merge:

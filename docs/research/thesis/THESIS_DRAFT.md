@@ -12,7 +12,8 @@
 > `docs/research/thesis/THESIS_SUBMISSION_CHECKLIST.md`.
 >
 > **Thẩm quyền số liệu.** Mọi con số trong bản thảo này trích từ
-> `docs/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên. Khi bản thảo
+> `docs/legacy/research/THESIS_READINESS.md` (thẩm quyền tới W18) và các bản ghi mà tài liệu đó nêu tên; từ W19 thẩm quyền là
+> `docs/research/CLAIM_EVIDENCE_MAP.md`. Khi bản thảo
 > và bản ghi lệch nhau, **bản ghi thắng**.
 >
 > **Trích dẫn.** Kiểu **tác giả–năm**, tạm thời — kho chưa có quy định kiểu trích
@@ -84,7 +85,7 @@ lên người học **chưa được đánh giá**.
 > trình, có chủ đích; mỗi họ hình được đo **một ca, một lượt**, nên không tuyên
 > bố gì về độ ổn định; tác động lên người học chưa được đánh giá."*
 > Chi tiết: Chương 4 mới (`docs/research/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md`) và
-> `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4.
+> `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` §D-2, §D-4.
 
 **Từ khoá:** hình học không gian; mô phỏng 3D trong giáo dục; mô hình ngôn ngữ
 lớn; biểu diễn trung gian; thực thi tất định; số học chính xác; kiểm chứng
@@ -290,7 +291,7 @@ hệ song song và vuông góc, giao tuyến, thiết diện, khoảng cách, g�
 > vì mỗi họ mới có **một ca, một lượt**. Thẩm quyền:
 > `backend/app/simulation/product_capability.py`.
 >
-> Truy xuất đầy đủ: `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` §D-2 và §F.
+> Truy xuất đầy đủ: `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` §D-2 và §F.
 
 | ngoài phạm vi | lý do |
 |---|---|
@@ -2419,7 +2420,7 @@ cd frontend && node scripts/spot-check-demo.mjs
 | §4.6 `NAME_ONLY_CONTRACT_LIVE_PROBE` | `docs/evaluation/geometry/name-contract-probe/` |
 | §4.8 đính chính góc | `docs/evaluation/geometry/ANGLE_SEMANTICS_ERRATUM.md` |
 | §4.10 phủ chương trình | `docs/research/GEOMETRY_CURRICULUM_COVERAGE.md`, `CAPABILITY_GAP_AUDIT.md` |
-| bảng tuyên bố ↔ bằng chứng | `docs/THESIS_READINESS.md` |
+| bảng tuyên bố ↔ bằng chứng | `docs/research/CLAIM_EVIDENCE_MAP.md` |
 | kiến trúc hệ đóng băng | `docs/research/thesis/THESIS_ARCHITECTURE.md` |
 | kịch bản trình bày | `docs/research/thesis/THESIS_DEMO.md` |
 

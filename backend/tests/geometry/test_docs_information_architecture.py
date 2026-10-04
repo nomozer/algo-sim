@@ -214,6 +214,27 @@ def test_inv_22_secret_scan_clean():
     assert res["valid"] is True, f"Phát hiện rò rỉ: {res.get('leaks')}"
 
 
+def test_inv_23_docs_root_is_a_closed_list():
+    """23. (W19) Mọi docs/*.md là tài liệu chuẩn tắc, tài liệu dự án, hoặc báo cáo wave trong catalog đóng;
+    thư mục con của docs/ thuộc tập đã khai. Báo cáo wave mới nằm trong thư mục run của nó."""
+    res = A.audit_docs_layout(REPO)
+    assert res["valid"] is True, (
+        f"chưa phân loại: {res['unclassified']} · catalog trỏ file mất: {res['catalog_missing']} · "
+        f"trùng lớp: {res['overlap']} · thư mục lạ: {res['unexpected_dirs']}")
+    # Chống pass rỗng: catalog phải thật sự được đọc (hơn một trăm báo cáo lịch sử).
+    assert res["catalog_count"] >= 100
+
+
+def test_inv_24_navigation_hubs_links_resolve():
+    """24. (W19) Link trong các cổng điều hướng (README gốc, hub research/evaluation/legacy/architecture, bản đồ
+    tuyên bố, catalog báo cáo) resolve được — và chúng nằm trong phạm vi mặc định của audit."""
+    hubs = [REPO / p for p in A.NAVIGATION_DOCS]
+    assert all(h.is_file() for h in hubs), [str(h) for h in hubs if not h.is_file()]
+    res = A.audit_internal_links(REPO, hubs)
+    assert res["valid"] is True, f"link hỏng trong hub: {res['broken_links']}"
+    assert res["total_links_checked"] >= 200  # catalog một mình đã > 150 link
+
+
 # ==============================================================================
 # SECTION 2: 16 RED-BEFORE / GREEN-AFTER FAULT INJECTIONS (R8)
 # ==============================================================================
@@ -369,6 +390,26 @@ def test_fi_15_candidate_write_mode_rejected():
     allowed_flags = ["--verify"]
     test_flag = "--update"
     assert test_flag not in allowed_flags
+
+
+def test_fi_17_stray_root_report_rejected():
+    """FI-17: Một báo cáo wave mới đặt ở gốc docs/ (thay vì thư mục run) phải bị bắt."""
+    stray = REPO / "docs" / "_TEMP_FI17_STRAY_REPORT.md"
+    try:
+        stray.write_text("# stray report\n", encoding="utf-8")
+        res = A.audit_docs_layout(REPO)
+        assert res["valid"] is False
+        assert "_TEMP_FI17_STRAY_REPORT.md" in res["unclassified"]
+    finally:
+        if stray.exists():
+            stray.unlink()
+
+
+def test_fi_18_unreadable_catalog_rejected():
+    """FI-18: Catalog rỗng (mất file, sai cú pháp link) không được làm guard xanh rỗng."""
+    res = A.audit_docs_layout(REPO, catalog_text="")
+    assert res["valid"] is False
+    assert res["catalog_count"] == 0
 
 
 def test_fi_16_dirty_user_file_staged_rejected():

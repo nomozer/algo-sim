@@ -212,7 +212,7 @@ nào sau bước 4.
 ## 0f. Giới hạn đã biết (trung thực)
 
 Giới hạn của hệ **đang chạy** (hình học 3D). Diễn giải + bằng chứng:
-`docs/THESIS_READINESS.md` §4; ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J.
+`docs/research/CLAIM_EVIDENCE_MAP.md` (bản gốc §4: `docs/legacy/research/THESIS_READINESS.md`); ngữ cảnh kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md` §J.
 
 | giới hạn | trạng thái |
 |---|---|
@@ -8019,7 +8019,10 @@ hỏng ồn ào — nó **biến mất im lặng**, đúng cách nó đã vắng
 Tách khỏi `scene3d.test.tsx` vì file ấy cố ý **không nhập `three`**; các khẳng
 định ở đây phải so với hằng số thật của thư viện, không với con số ma.
 
-### `docs/thesis/CLAIM_EVIDENCE_MATRIX.md` (2026-09-09) · tài liệu · **0 API call**
+### `docs/legacy/research/CLAIM_EVIDENCE_MATRIX.md` (2026-09-09) · tài liệu · **0 API call**
+
+> Lưu trữ nguyên byte từ W19 (trước đó ở thư mục docs/thesis, nay không còn); thẩm quyền tuyên bố hiện hành:
+> `docs/research/CLAIM_EVIDENCE_MAP.md`.
 
 Ma trận **tuyên bố học thuật ↔ bằng chứng** cho khoá luận: 29 hàng (5 mục tiêu
 cụ thể · 7 đóng góp · 5 câu hỏi nghiên cứu · 9 claim đã đăng ký trước · 3 phát
@@ -8259,6 +8262,14 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   Issue ID, chuỗi đính chính không chu trình (Acyclic DAG), một next action duy nhất, kiểm tra độ dài handoff
   (<= 300 dòng), quét secret và đối soát bằng chứng kiểm thử máy.
   Test: `backend/tests/geometry/test_docs_information_architecture.py` (22 invariants, 14 fault injections F1–F14).
+  **W19 (2026-10-04)** thêm `audit_docs_layout(repo_root, catalog_text=None)` — gốc `docs/` là danh sách ĐÓNG:
+  mỗi `docs/*.md` thuộc `CANONICAL_DOMAINS`, `PROJECT_DOCS`, hoặc có dòng bảng trong
+  `HISTORICAL_REPORTS_CATALOG` (`docs/evaluation/HISTORICAL_REPORTS.md`); thư mục con thuộc `DOCS_SUBDIRS`; catalog
+  rỗng là FAIL. `NAVIGATION_DOCS` (README gốc + hub research/evaluation/legacy/architecture + bản đồ tuyên bố +
+  catalog) vào phạm vi mặc định của `audit_internal_links`. Producer của catalog:
+  `docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/build_report_catalog.py`; consumer:
+  `audit_docs_layout`. Test thêm: `test_inv_23_docs_root_is_a_closed_list`, `test_inv_24_navigation_hubs_links_resolve`,
+  `test_fi_17_stray_root_report_rejected`, `test_fi_18_unreadable_catalog_rejected`.
 
 - **Tài liệu Canonical mới:**
   - `AGENTS.md` (root entry point cho AI sessions và Coding Agents)

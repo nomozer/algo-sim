@@ -271,7 +271,7 @@
 
 ### ISSUE-EVAL-STATISTICAL-SIGNIFICANCE-UNESTABLISHED
 - **description:** Số lượng mẫu kiểm thử (n-count) của các phép đo live hiện tại còn nhỏ, chưa đủ để đưa ra các kết luận có ý nghĩa thống kê.
-- **evidence:** `docs/THESIS_READINESS.md §7`, `docs/EVIDENCE_INDEX.md`.
+- **evidence:** `docs/legacy/research/THESIS_READINESS.md §7`, `docs/EVIDENCE_INDEX.md`.
 - **impact:** Các công bố định lượng cần được giới hạn trong phạm vi thực nghiệm định tính hoặc nghiên cứu tình huống (case study).
 - **scope:** `docs/evaluation/`
 - **status:** OPEN

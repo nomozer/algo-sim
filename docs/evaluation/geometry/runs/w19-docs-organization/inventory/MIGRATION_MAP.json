@@ -12,7 +12,7 @@
    "blob_before": "a90c18b56ab994dad305e9d65b84d57f232c15b1",
    "blob_after": "a90c18b56ab994dad305e9d65b84d57f232c15b1",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/THESIS_ARCHITECTURE.md",
@@ -21,9 +21,13 @@
    "type": "RESEARCH_WRITING",
    "reason": "R5: bản thảo/tài liệu khoá luận, không phải báo cáo wave; ra khỏi gốc docs",
    "blob_before": "214817ef4ce0ac638c4a3b04152f8dc8b0bc94c8",
-   "blob_after": "050d245528828cb051b6b5d6f3e2b78167f5bdb8",
+   "blob_after": "f243631dda1d5195973e7179034302a443013109",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
   },
   {
    "old": "docs/THESIS_CITATION_MATRIX.md",
@@ -34,7 +38,9 @@
    "blob_before": "40e8190377b676af2d960e8ca8908b52d5d78ff4",
    "blob_after": "8ae944705027405f1da69d52d56de405df87980d",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/THESIS_DEMO.md",
@@ -43,9 +49,13 @@
    "type": "RESEARCH_WRITING",
    "reason": "R5: bản thảo/tài liệu khoá luận, không phải báo cáo wave; ra khỏi gốc docs",
    "blob_before": "10919e394fa0d8f2fc8749de5fb41c42e3ca2555",
-   "blob_after": "f38ff0685dc91c5ca492dfd48d9e458004644e55",
+   "blob_after": "77a15b8af3cf03dfc8364cc0b2c2a02452c8186c",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
   },
   {
    "old": "docs/THESIS_DRAFT.md",
@@ -54,9 +64,13 @@
    "type": "RESEARCH_WRITING",
    "reason": "R5: bản thảo/tài liệu khoá luận, không phải báo cáo wave; ra khỏi gốc docs",
    "blob_before": "c49faf86f2d0277cf53392311eb245bd3c59270b",
-   "blob_after": "8cea1a7be331a7fe375359185b4b62144a60310e",
+   "blob_after": "20fd8f8de9886cca50a783634b5cc05953a4f0bc",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "AUTHORITY_RETARGET.json",
+    "REWRITE_LOG.json",
+    "REWRITE_LOG_MERGE.json"
+   ]
   },
   {
    "old": "docs/THESIS_FIGURE_CAPTURE_PLAN.md",
@@ -67,7 +81,9 @@
    "blob_before": "2cc106fece3aa61bab1c53cf6392d6be6c9af0e3",
    "blob_after": "3d4d32d2cf3e343daf16df448d618cb6c1e78558",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/THESIS_READINESS.md",
@@ -76,9 +92,9 @@
    "type": "RESEARCH_WRITING",
    "reason": "R6: bảng tuyên bố hiện hành gộp vào docs/research/CLAIM_EVIDENCE_MAP.md; bản gốc (nhật ký tuyên bố/đính chính tới W18) giữ nguyên byte ở legacy",
    "blob_before": "b32c5471046f2dde7928f5abd61962eb5c14df90",
-   "blob_after": null,
+   "blob_after": "b32c5471046f2dde7928f5abd61962eb5c14df90",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/THESIS_REFERENCES.md",
@@ -89,7 +105,9 @@
    "blob_before": "d98c23c22a393b60d733e3483cb1c1283abf1c7b",
    "blob_after": "e6dfacc6005295b4fa20c7cd1b31650c105c1cf5",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/THESIS_REFERENCE_NEEDS.md",
@@ -100,7 +118,9 @@
    "blob_before": "48c6f32e89082152148411d9ac9884d8d7b4d346",
    "blob_after": "08dbba2342daeb7960acc5fab9a51c42dea0501e",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/THESIS_SUBMISSION_CHECKLIST.md",
@@ -111,7 +131,7 @@
    "blob_before": "992ea24443047c5a379c6113b26ed732724f86ab",
    "blob_after": "992ea24443047c5a379c6113b26ed732724f86ab",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/architecture/CUBOID_CUBE_CONTRACT_DECISION.md",
@@ -122,7 +142,7 @@
    "blob_before": "1ff42abbafb2d515ac91550d8db43b7ca909dd87",
    "blob_after": "1ff42abbafb2d515ac91550d8db43b7ca909dd87",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/architecture/NEXT_VERTICAL_SLICE_DECISION.md",
@@ -133,7 +153,7 @@
    "blob_before": "ba8ffbc18af5ceaeadbe8936f4468ba1b866efdf",
    "blob_after": "ba8ffbc18af5ceaeadbe8936f4468ba1b866efdf",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/CAPABILITY_GAP_AUDIT.md",
@@ -144,7 +164,7 @@
    "blob_before": "d55714f7cf091392b355ed5b649685bd1c05c534",
    "blob_after": "d55714f7cf091392b355ed5b649685bd1c05c534",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/CURRENT_SYSTEM_MAPPING.md",
@@ -155,7 +175,7 @@
    "blob_before": "8fa2c3593b5b2a0334c8876a82fdb63b4e5d3687",
    "blob_after": "8fa2c3593b5b2a0334c8876a82fdb63b4e5d3687",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/GEOMETRY_ARCHITECTURE_GAP_REPORT.md",
@@ -166,7 +186,7 @@
    "blob_before": "e4ca97eb14168ed54dd6dac2ad3afa765e8d3e93",
    "blob_after": "e4ca97eb14168ed54dd6dac2ad3afa765e8d3e93",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/GEOMETRY_CURRICULUM_COVERAGE.md",
@@ -177,7 +197,9 @@
    "blob_before": "536a05653bab9ab48d0c85f646837b8067e4772e",
    "blob_after": "f8ce6d262d6a5c90e2a0551fda36fad9590fd441",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/geometry/GEOMETRY_ROADMAP.md",
@@ -188,7 +210,7 @@
    "blob_before": "09c65f167d7ba65bfde3e3b3cba86e267448f088",
    "blob_after": "09c65f167d7ba65bfde3e3b3cba86e267448f088",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/MIGRATION_PLAN.md",
@@ -199,7 +221,7 @@
    "blob_before": "52b641c8bdf858245be62d5d07cf12e75b91f496",
    "blob_after": "52b641c8bdf858245be62d5d07cf12e75b91f496",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/PHASE6_SIMULATION_SEMANTICS_REPORT.md",
@@ -210,7 +232,7 @@
    "blob_before": "aa12e1c54191b9e4228a974b9f10fd76fcec9d61",
    "blob_after": "aa12e1c54191b9e4228a974b9f10fd76fcec9d61",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/SIMULATION_FOUNDATION_AUDIT.md",
@@ -221,7 +243,7 @@
    "blob_before": "3b93a010bb2bdc67ac2c7b99667ec4d2638fa891",
    "blob_after": "3b93a010bb2bdc67ac2c7b99667ec4d2638fa891",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/geometry/SIMULATION_STATE_DESIGN.md",
@@ -232,7 +254,7 @@
    "blob_before": "d120939c270d98804071499cee73f8af97fd6cd7",
    "blob_after": "d120939c270d98804071499cee73f8af97fd6cd7",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/research/CLAIM_TO_EVIDENCE_MAP.md",
@@ -241,9 +263,9 @@
    "type": "RESEARCH_WRITING",
    "reason": "R6: snapshot 2026-09-10 (lớp bằng chứng) gộp vào bản đồ duy nhất; bản gốc giữ nguyên byte ở legacy",
    "blob_before": "4fb3feee0bb3742aa0790df2dbb5b1966e7e227b",
-   "blob_after": null,
+   "blob_after": "4fb3feee0bb3742aa0790df2dbb5b1966e7e227b",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/research/PUBLICATION_READINESS_ASSESSMENT.md",
@@ -254,7 +276,7 @@
    "blob_before": "88088bc2b9581e6d0b63f8cd54d980a1e0379789",
    "blob_after": "88088bc2b9581e6d0b63f8cd54d980a1e0379789",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-07-15-m10-3d-ped-protocol-encapsulation.md",
@@ -265,7 +287,7 @@
    "blob_before": "b587564f3d0bb00230ed28c34396372271bd9e73",
    "blob_after": "b587564f3d0bb00230ed28c34396372271bd9e73",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md",
@@ -276,7 +298,7 @@
    "blob_before": "d2c758bf93ab8e3c5b3f5df69f5ae918df7b3e4e",
    "blob_after": "d2c758bf93ab8e3c5b3f5df69f5ae918df7b3e4e",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-07-18-m14-capability-family-formalization.md",
@@ -287,7 +309,7 @@
    "blob_before": "4a0f7d4777faea71ad88f50e388fed31b253266d",
    "blob_after": "4a0f7d4777faea71ad88f50e388fed31b253266d",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-07-18-m15-public-capability-contract-formalization.md",
@@ -298,7 +320,7 @@
    "blob_before": "012ac5ba8d75abcc14b806d8d437fa618468618a",
    "blob_after": "012ac5ba8d75abcc14b806d8d437fa618468618a",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-07-19-m16-comprehensive-llm-evaluation.md",
@@ -309,7 +331,7 @@
    "blob_before": "a52f671ea3daf7f1868362b57185edd04c0d7bf1",
    "blob_after": "a52f671ea3daf7f1868362b57185edd04c0d7bf1",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-08-17-w13-bo-hinh-thuc-hoi-dap.md",
@@ -320,7 +342,7 @@
    "blob_before": "09a26a4b9c371451806c2f342014df3ff08e9221",
    "blob_after": "09a26a4b9c371451806c2f342014df3ff08e9221",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/plans/2026-08-20-semantic-program-generative-route.md",
@@ -331,7 +353,7 @@
    "blob_before": "723ecd78566c4a2c93ca9fa08addea907312651c",
    "blob_after": "723ecd78566c4a2c93ca9fa08addea907312651c",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-15-m10-3d-ped-protocol-encapsulation-design.md",
@@ -342,7 +364,7 @@
    "blob_before": "c47fb5e0be9d95f80b7dc2c6b4b6f73014f01322",
    "blob_after": "c47fb5e0be9d95f80b7dc2c6b4b6f73014f01322",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-15-m9-ux3-home-preview-design.md",
@@ -353,7 +375,7 @@
    "blob_before": "6c60c03ea7b98a10ccde74a8abd39e07dee276c7",
    "blob_after": "6c60c03ea7b98a10ccde74a8abd39e07dee276c7",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-16-m13-generic-semantic-soundness-design.md",
@@ -364,7 +386,7 @@
    "blob_before": "cc84ad5e121be83b2717558afaf48573409a33a4",
    "blob_after": "cc84ad5e121be83b2717558afaf48573409a33a4",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-16-m13-semantic-matrix.md",
@@ -375,7 +397,7 @@
    "blob_before": "c1ed3f997b02fd9147551a32daf396086add8c82",
    "blob_after": "c1ed3f997b02fd9147551a32daf396086add8c82",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-17-m14-capability-family-formalization-design.md",
@@ -386,7 +408,7 @@
    "blob_before": "7fec5d64b79ac175dd4bcfc62c902c277c18a339",
    "blob_after": "7fec5d64b79ac175dd4bcfc62c902c277c18a339",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-18-m15-public-capability-contract-formalization-design.md",
@@ -397,7 +419,7 @@
    "blob_before": "58afddee3af7d7e8f23e44d13ba26e55b6eecd0b",
    "blob_after": "58afddee3af7d7e8f23e44d13ba26e55b6eecd0b",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-19-m16-comprehensive-llm-evaluation-design.md",
@@ -408,7 +430,7 @@
    "blob_before": "41100b4fdafc738720218329a92fa8d6b406d4dc",
    "blob_after": "41100b4fdafc738720218329a92fa8d6b406d4dc",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-19-m16-evaluation-audit.md",
@@ -419,7 +441,7 @@
    "blob_before": "1744536d719438278a75d66a812bceab13f78284",
    "blob_after": "1744536d719438278a75d66a812bceab13f78284",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-21-m17-lite-proposal.md",
@@ -430,7 +452,7 @@
    "blob_before": "b693e28b0b94895cc906c3524a6c558ba4fb2fa3",
    "blob_after": "b693e28b0b94895cc906c3524a6c558ba4fb2fa3",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-07-21-m17-wave2a-tree-traversal.md",
@@ -441,7 +463,7 @@
    "blob_before": "43dd54240cb1d40824af659667efdcb7230f8d4b",
    "blob_after": "43dd54240cb1d40824af659667efdcb7230f8d4b",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md",
@@ -452,7 +474,7 @@
    "blob_before": "5f871dc74d713c65e61ce01438dff2c871f2abcd",
    "blob_after": "5f871dc74d713c65e61ce01438dff2c871f2abcd",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis/CHAPTER_4_RESULTS_AND_DISCUSSION.md",
@@ -463,7 +485,7 @@
    "blob_before": "140de7d5ca20de54c6d385ba50b28959d34574c7",
    "blob_after": "140de7d5ca20de54c6d385ba50b28959d34574c7",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis/CHAPTER_5_CONCLUSION_AND_LIMITATIONS.md",
@@ -474,7 +496,7 @@
    "blob_before": "537121c48e13908eaa9994b8d46fbec0c5a905df",
    "blob_after": "537121c48e13908eaa9994b8d46fbec0c5a905df",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis/CLAIM_EVIDENCE_MATRIX.md",
@@ -483,9 +505,9 @@
    "type": "RESEARCH_WRITING",
    "reason": "R6: ma trận 29 tuyên bố 2026-09-09 gộp vào bản đồ duy nhất; bản gốc giữ nguyên byte ở legacy",
    "blob_before": "682aeedde8944d898bec65c7913538fe22044c53",
-   "blob_after": null,
+   "blob_after": "682aeedde8944d898bec65c7913538fe22044c53",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis/RELATED_WORK_DRAFT.md",
@@ -496,7 +518,9 @@
    "blob_before": "058c7beda02967fa3f01e84b124bbd71b59b27ef",
    "blob_after": "78f6d23923c008ad7c32ef64c7c7630d36e75ed8",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/thesis/references_geometry_systems.bib",
@@ -507,7 +531,7 @@
    "blob_before": "4b0a320f887e97d207a5b69249bdecc55240aa61",
    "blob_after": "4b0a320f887e97d207a5b69249bdecc55240aa61",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/FIGURE_MANIFEST.md",
@@ -518,7 +542,9 @@
    "blob_before": "d00e147575acff9d74c886f13bc9370057fd5684",
    "blob_after": "d9ab3960f0b4ea97515998845127399cbece5e1c",
    "content_changed": true,
-   "content_change_reason": "relative links/paths rewritten for the new location (see REWRITE_LOG.json)"
+   "changed_by": [
+    "REWRITE_LOG.json"
+   ]
   },
   {
    "old": "docs/thesis_figures/_capture_log.json",
@@ -529,7 +555,7 @@
    "blob_before": "00b6ae8f465538aedbba1dcb51201af8e7d79730",
    "blob_after": "00b6ae8f465538aedbba1dcb51201af8e7d79730",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/_viewport_audit.json",
@@ -540,7 +566,7 @@
    "blob_before": "7bba05099c93b8c3d9fe1ac0e8f0cb7599ba2eba",
    "blob_after": "7bba05099c93b8c3d9fe1ac0e8f0cb7599ba2eba",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_1_architecture.png",
@@ -551,7 +577,7 @@
    "blob_before": "6f44e843942d4e8f528b9269cad21833fdf8cc73",
    "blob_after": "6f44e843942d4e8f528b9269cad21833fdf8cc73",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_1_architecture.svg",
@@ -562,7 +588,7 @@
    "blob_before": "6f4e37a5707384697be2a5dbe607357c35bc5edb",
    "blob_after": "6f4e37a5707384697be2a5dbe607357c35bc5edb",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_2_semantic_pipeline.png",
@@ -573,7 +599,7 @@
    "blob_before": "fa227c67eccbf12a79b625497058e21d1e7338a7",
    "blob_after": "fa227c67eccbf12a79b625497058e21d1e7338a7",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_2_semantic_pipeline.svg",
@@ -584,7 +610,7 @@
    "blob_before": "98ed23ac02786b58d6641d81041cd39775bf3a0c",
    "blob_after": "98ed23ac02786b58d6641d81041cd39775bf3a0c",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_3_trace_scene3d.png",
@@ -595,7 +621,7 @@
    "blob_before": "aeeac6fd05b9f45e503f9bbec5b696367390c606",
    "blob_after": "aeeac6fd05b9f45e503f9bbec5b696367390c606",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_3_trace_scene3d.svg",
@@ -606,7 +632,7 @@
    "blob_before": "0d2bf89857e9756edbb2eaee4f572197d6c74a1c",
    "blob_after": "0d2bf89857e9756edbb2eaee4f572197d6c74a1c",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_4_request_sequence.png",
@@ -617,7 +643,7 @@
    "blob_before": "f3be8fe6ce03740a69d2a5d31c5bc067dfbcbcb7",
    "blob_after": "f3be8fe6ce03740a69d2a5d31c5bc067dfbcbcb7",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_3_4_request_sequence.svg",
@@ -628,7 +654,7 @@
    "blob_before": "00e5bbf797c36e247740b98b9b6ced8ef4d76e39",
    "blob_after": "00e5bbf797c36e247740b98b9b6ced8ef4d76e39",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_1_experiment_trajectory.png",
@@ -639,7 +665,7 @@
    "blob_before": "973392080efa1cd379f7f5c79cc419a8410f28c6",
    "blob_after": "973392080efa1cd379f7f5c79cc419a8410f28c6",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_1_experiment_trajectory.svg",
@@ -650,7 +676,7 @@
    "blob_before": "6198876bc75760db54bc0911aac00caabf4828a9",
    "blob_after": "6198876bc75760db54bc0911aac00caabf4828a9",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_2_provenance.png",
@@ -661,7 +687,7 @@
    "blob_before": "e43a09f792bccf610391ab8b897a8bea278bdafa",
    "blob_after": "e43a09f792bccf610391ab8b897a8bea278bdafa",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_3_playback.png",
@@ -672,7 +698,7 @@
    "blob_before": "d420c5027d576249eb4ed7573fe17a19f6b551bc",
    "blob_after": "d420c5027d576249eb4ed7573fe17a19f6b551bc",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_3a_step5.png",
@@ -683,7 +709,7 @@
    "blob_before": "48efc0b0d8c47231b39ef87e5a3c45d2b01a0360",
    "blob_after": "48efc0b0d8c47231b39ef87e5a3c45d2b01a0360",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_3b_step12.png",
@@ -694,7 +720,7 @@
    "blob_before": "1fa56ac3e923a03653fc8ba47d5a2385cf697590",
    "blob_after": "1fa56ac3e923a03653fc8ba47d5a2385cf697590",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_4_refusal.png",
@@ -705,7 +731,7 @@
    "blob_before": "f2c823c40a6b4ea33f7243a0ba5806e14a8f7cbd",
    "blob_after": "f2c823c40a6b4ea33f7243a0ba5806e14a8f7cbd",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/thesis_figures/fig_4_5_section.png",
@@ -716,7 +742,7 @@
    "blob_before": "5ad6ad8501671481b5afde88c0abd4261ea6d15a",
    "blob_after": "5ad6ad8501671481b5afde88c0abd4261ea6d15a",
    "content_changed": false,
-   "content_change_reason": null
+   "changed_by": []
   },
   {
    "old": "docs/CURRENT_STATE.md (lines 88-5475 at 6d0e6321)",

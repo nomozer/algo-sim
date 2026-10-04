@@ -1,45 +1,86 @@
-# AlgoSim Documentation Hub
+# docs/ — cổng tài liệu
 
-> **Cổng điều hướng tài liệu trung tâm của dự án AlgoSim.**
-> Hệ thống tài liệu được tổ chức theo 11 information domain chuẩn tắc. Bắt đầu từ mục **Start Here** bên dưới.
+> Bắt đầu ở đây. Mỗi câu hỏi dưới đây có **một** nơi trả lời. Từ W19 (2026-10-04) `docs/` chia bốn vùng:
+> **tài liệu dự án** ở gốc `docs/`, **nghiên cứu** ở [`research/`](research/), **bằng chứng** ở
+> [`evaluation/`](evaluation/), **lưu trữ** ở [`legacy/`](legacy/). Gốc `docs/` là danh sách đóng — bộ kiểm
+> `backend/scripts/audit_docs_information_architecture.py` (`audit_docs_layout`) từ chối file mới không được phân lớp.
+> Nếu tài liệu mâu thuẫn với code hoặc test: **code/test thắng**.
 
----
+## 0. Thứ tự đọc (agent và người mới)
 
-## 1. Start Here (Bắt Đầu Từ Đây)
-- [`AGENTS.md`](../AGENTS.md) — Điểm truy cập nhanh cho AI sessions và Coding Agents (quy tắc an toàn, thứ tự đọc, bảo vệ working tree).
-- [`docs/RULES.md`](RULES.md) — Quy tắc phát triển cứng, phân loại phạm vi (Scope Guard: Core, Supporting, Deep Hardening, Out of Scope), checklist chống viết trùng.
-- [`docs/AI_CONTEXT_BUNDLE.md`](AI_CONTEXT_BUNDLE.md) — Bản tóm tắt ngữ cảnh cô đọng (<= 300 dòng) dành cho bàn giao phiên làm việc mới.
+[`../AGENTS.md`](../AGENTS.md) → [`RULES.md`](RULES.md) → [`AI_CONTEXT_BUNDLE.md`](AI_CONTEXT_BUNDLE.md) →
+[`CURRENT_STATE.md`](CURRENT_STATE.md) → [`OPEN_ISSUES.md`](OPEN_ISSUES.md) → [`ROADMAP.md`](ROADMAP.md) →
+[`CODE_INDEX.md`](CODE_INDEX.md) → [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) → code và test liên quan.
 
-## 2. Current State & Baseline (Trạng Thái Hệ Thống)
-- [`docs/CURRENT_STATE.md`](CURRENT_STATE.md) — Nguồn sự thật canonical về trạng thái triển khai, cơ sở kho mã (`PRODUCT_AND_EVIDENCE_BASE_HEAD`), sync-lock danh tính runtime và các năng lực hình học đã chứng minh.
-- [`docs/MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) — 20 cổng kiểm soát điều kiện cần và đủ trước khi chuyển giao từ `LLM_ONLY` sang `COMPILER_FIRST`.
+## 1. Hệ thống làm gì
 
-## 3. Architecture & Design (Kiến Trúc & Thiết Kế)
-- [`docs/ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — Bản đồ kiến trúc hệ thống, luồng xử lý từ input → Analyze LLM → FactGraph → Primitive Compiler / LLM Synthesis → Visual Obligation Gate → Scene3D Replay.
-- [`docs/CORRECTNESS.md`](CORRECTNESS.md) — Mô hình đúng đắn giữa hệ thống chuẩn (canonical) và người học (learner).
-- [`docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) — Amendment hiện hành cho edge identity, visual ownership, occlusion spans, typed formation và oracle độc lập.
-- [`docs/architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md`](architecture/GEOMETRY_CAPABILITY_AND_NON_ABSOLUTE_AUDIT.md) — Kiểm kê w13: giả định tuyệt đối (A–J) và năng lực theo tầng của 17 nhóm hình; dữ liệu ở [`geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json).
-- [`docs/architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md`](architecture/GENERIC_GEOMETRY_FOUNDATION_PREREGISTRATION.md) — Mô hình dựng hình theo lớp hình, chính sách giả định/mặc định, grounding nguồn, chính sách môi trường; tiền đăng ký W14.
-- [`docs/COVERAGE.md`](COVERAGE.md) — Nguyên tắc sư phạm, phạm vi phủ chương trình và các tuyên bố bị cấm.
+- [`../README.md`](../README.md) — đề tài, nguyên lý R0 (*LLM đọc đề, engine tất định diễn hoạt*), demo, giới hạn.
+- [`ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — hệ đang chạy: luồng từ đề tới cảnh 3D, ai sở hữu gì.
+- [`CORRECTNESS.md`](CORRECTNESS.md) — đúng đắn chuẩn tắc (canonical) khác đúng đắn phía người học.
+- [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md) — hệ **được phép nói** đã làm được gì, và giới hạn.
 
-## 4. Planning & Issues (Kế Hoạch & Vấn Đề Đang Mở)
-- [`docs/ROADMAP.md`](ROADMAP.md) — Lộ trình ưu tiên khóa luận phân tầng từ P0 đến P6, chứa bước tiếp theo duy nhất (`CANONICAL_NEXT_ACTION`).
-- [`docs/OPEN_ISSUES.md`](OPEN_ISSUES.md) — Danh mục theo dõi các vấn đề kỹ thuật đang mở với mã định danh ổn định (`ISSUE-ARCH-*`, `ISSUE-EVAL-*`, etc.).
+## 2. Kiến trúc và cách chạy
 
-## 5. Indexes & Memory (Chỉ Mục & Bộ Nhớ Kiến Trúc)
-- [`docs/CODE_INDEX.md`](CODE_INDEX.md) — Chỉ mục toàn bộ module mã nguồn, tooling, test và lịch sử các thành phần đã gỡ (ngăn chặn viết trùng helper hoặc phá vỡ abstraction sẵn có).
-- [`docs/STATUS_LEDGER.md`](STATUS_LEDGER.md) — Sổ trạng thái theo thời gian ghi nhận lịch sử các wave phát triển và đánh giá.
-- [`docs/EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) — Chỉ mục bằng chứng đánh giá, báo cáo nghiệm thu và chuỗi đính chính (correction chains).
-- [`docs/POST_WAVE_LIVING_DOC_IMPACT_AUDIT.md`](POST_WAVE_LIVING_DOC_IMPACT_AUDIT.md) — Impact audit hậu wave, gồm lý do UPDATE/NO_CHANGE/IMMUTABLE/SUPERSEDED cho từng tài liệu bắt buộc.
+- [`ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — sở hữu, hướng phụ thuộc, bất biến đánh số, anti-pattern.
+- [`architecture/`](architecture/README.md) — contract đang hiệu lực (chứng chỉ giả định, occlusion/scene identity) và
+  snapshot kiểm kê năng lực (bất biến).
+- [`OPERATIONS.md`](OPERATIONS.md) — cơ sở dữ liệu, migration, dependency, vòng sửa code.
+- [`TEST_TIERS.md`](TEST_TIERS.md) — bốn tầng test; chỉ T3 được nói "sản phẩm xanh".
+- [`DEMO_RUNBOOK.md`](DEMO_RUNBOOK.md) — chạy buổi demo từ bản dựng, 0 lượt gọi model.
+- [`DESIGN_BRIEF.md`](DESIGN_BRIEF.md) — brief UI/UX (khác `../DESIGN.md` là token giao diện).
+- [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) — 20 cổng trước khi đổi `LLM_ONLY` sang compiler-first.
+- Lệnh chạy và kiểm thử: [`../README.md`](../README.md) §11.
 
-## 6. Historical Reports & Artifacts (Báo Cáo & Dữ Liệu Lịch Sử)
-- **Thư mục báo cáo lịch sử:** Các file báo cáo riêng lẻ trong `docs/*.md` ghi nhận từng wave phát triển cụ thể. Chúng là bằng chứng lịch sử bất biến.
-- **Thư mục dữ liệu máy:** `docs/evaluation/` chứa toàn bộ artifact JSON, telemetry máy, JUnit XML và contact sheet kiểm chứng qua từng thời kỳ.
-- **Quy tắc tra cứu:** Không tra cứu ngẫu nhiên hàng trăm file báo cáo; luôn tra cứu thông qua [`docs/EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) và [`docs/STATUS_LEDGER.md`](STATUS_LEDGER.md).
-- **Tên run mới:** Tuân thủ [`docs/evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md) (`wNN-short-slug`, ngày giờ nằm trong `RUN.json`); không đổi tên run lịch sử đã commit — ngoại lệ duy nhất là w09/w10 bỏ tiền tố ngày theo quyết định user (`e90363a4`, bảng đổi tên trong `RUN_NAMING.md`).
-- **Run hiện hành:** [`docs/evaluation/geometry/runs/w18-binding-focus/`](evaluation/geometry/runs/w18-binding-focus/). Bắt đầu từ `HANDOFF.md` của run. Việc chờ người duyệt trực quan: hình mặc định gọn, công tắc "Hiện tất cả", chọn từng đại lượng với ô soi là nơi giải thích duy nhất, lời giải thu gọn, nhân chứng khoảng cách, các ô từ chối W18, cùng phần còn lại của W17-H1 và W16-H1 (bốn cảnh W14 đổi). Quyết định chờ người dùng: W18-H1, W18-H2, W17-H2, W15-H2, W15-H3. Run trước (bất biến): [`w17-operation-annotations/`](evaluation/geometry/runs/w17-operation-annotations/) (`READY_FOR_HUMAN_VISUAL_REVIEW`; giới hạn phép dựng ngoài phép cắt do W18 đóng một phần), [`w16-premerge-closure/`](evaluation/geometry/runs/w16-premerge-closure/) (`READY_FOR_HUMAN_VISUAL_REVIEW`; giới hạn A′ do W17 đóng), [`w15-assumption-closure/`](evaluation/geometry/runs/w15-assumption-closure/) (`READY_FOR_HUMAN_VISUAL_REVIEW`; hai lỗ chứng chỉ do W16 đóng), [`w14-generic-formation-assumption/`](evaluation/geometry/runs/w14-generic-formation-assumption/) (`FORMATION_FOUNDATION_INCOMPLETE`, Track B STOP).
+## 3. Việc còn mở
 
-## 7. Thesis-Facing Evidence (Bằng Chứng Phục Vụ Khóa Luận)
-- [`docs/THESIS_READINESS.md`](THESIS_READINESS.md) — Ma trận tổng thể đối chiếu giữa Tuyên bố ↔ Bằng chứng ↔ Giới hạn của đề tài.
-- [`docs/research/thesis/THESIS_ARCHITECTURE.md`](research/thesis/THESIS_ARCHITECTURE.md) — Kiến trúc tổng thể và các ranh giới lý thuyết phục vụ viết chương kiến trúc trong khóa luận.
-- [`docs/thesis/`](thesis/) — Bản thảo các chương khóa luận và ma trận trích dẫn nghiên cứu liên quan.
+- [`CURRENT_STATE.md`](CURRENT_STATE.md) — trạng thái và con trỏ: danh tính kho mã (sync-lock), cơ sở, wave cuối.
+- [`ROADMAP.md`](ROADMAP.md) §0 — **việc kế tiếp duy nhất** (`CANONICAL_NEXT_ACTION`), việc chặn merge, hàng đợi;
+  [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md) là phụ lục của ROADMAP cho ý tưởng ngoài phạm vi khoá luận.
+- [`OPEN_ISSUES.md`](OPEN_ISSUES.md) — vấn đề đang mở: mô tả, ảnh hưởng, điều kiện đóng (`ISSUE-*`).
+
+## 4. Khoá luận và bài báo
+
+- [`research/README.md`](research/README.md) — cổng nghiên cứu: phương pháp, tài liệu tham khảo, khoá luận, bài báo.
+- [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md) — **thẩm quyền duy nhất** tuyên bố ↔ bằng chứng ↔ giới
+  hạn, kèm mức (PLANNED/IMPLEMENTED/MEASURED/HUMAN_REVIEWED) và mục khoá luận/bài báo dùng được.
+- [`research/thesis/`](research/thesis/) — bản thảo, chương 4–5, tài liệu tham khảo, hình.
+- [`research/paper/`](research/paper/) — đánh giá sẵn sàng bài báo.
+
+## 5. Bằng chứng theo hạng mục
+
+- [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) — **thẩm quyền**: wave → báo cáo → artifact → chuỗi đính chính
+  (`CORRECTED_BY`).
+- [`evaluation/README.md`](evaluation/README.md) — cách tổ chức run, đặt tên, run mới nhất.
+- [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ ở gốc `docs/` theo chủ đề
+  (danh sách đóng; bất biến, đọc như bằng chứng tại thời điểm đo).
+- [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
+- Run mới nhất: [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/) (tổ chức tài liệu) ·
+  [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/) (trạng thái sản phẩm, chờ người duyệt).
+
+## 6. Mỗi loại thông tin — một nơi có thẩm quyền
+
+| thông tin | nơi | không đặt ở |
+|---|---|---|
+| trạng thái hiện tại + con trỏ | `CURRENT_STATE.md` | README, báo cáo wave |
+| vấn đề mở, ảnh hưởng, điều kiện đóng | `OPEN_ISSUES.md` | ROADMAP |
+| việc tương lai, thứ tự | `ROADMAP.md` (+ phụ lục `POST_THESIS_BACKLOG.md`) | CURRENT_STATE |
+| mã, vai trò, producer → consumer | `CODE_INDEX.md` | tài liệu kiến trúc |
+| bằng chứng, chuỗi đính chính | `EVIDENCE_INDEX.md` | STATUS_LEDGER |
+| lịch sử wave (không chép báo cáo) | `STATUS_LEDGER.md` | CURRENT_STATE |
+| nguyên tắc, contract | `ARCHITECTURE_MAP.md`, `architecture/` | bảng test |
+| tuyên bố khoá luận/bài báo | `research/CLAIM_EVIDENCE_MAP.md` | README, bản thảo |
+| báo cáo của một wave | thư mục run của wave đó | gốc `docs/` |
+
+## 7. Lưu trữ
+
+[`legacy/README.md`](legacy/README.md) — tài liệu hết hiệu lực nhưng đáng giữ: kế hoạch/spec của skill, tài liệu giai
+đoạn chuyển đề, quyết định đã thực thi, nhật ký phát triển cũ của CURRENT_STATE, ba bảng tuyên bố cũ. **Không** dùng
+làm căn cứ hiện hành. Khi tìm luật hay trạng thái hiện hành, loại `docs/legacy/` và `docs/evaluation/` khỏi grep.
+Đường dẫn cũ của file đã di chuyển ở W19: [`MIGRATION_MAP.json`](evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json).
+
+## 8. Thêm tài liệu mới
+
+- Báo cáo wave: `REPORT.md`/`HANDOFF.md` trong thư mục run ([`evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md)),
+  **không** ở gốc `docs/`.
+- Tài liệu dự án mới ở gốc: thêm tên vào `PROJECT_DOCS` của bộ kiểm, kèm lý do.
+- Báo cáo và artifact đã commit là bất biến: đính chính bằng wave mới và `CORRECTED_BY`.

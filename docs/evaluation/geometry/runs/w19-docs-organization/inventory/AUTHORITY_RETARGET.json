@@ -1,0 +1,56 @@
+{
+ "schema_version": "w19-authority-retarget/1",
+ "rule": "Con trỏ 'nguồn thẩm quyền tuyên bố' chuyển từ THESIS_READINESS (đã lưu trữ) sang docs/research/CLAIM_EVIDENCE_MAP.md. Nhắc theo mục cụ thể của bảng cũ (§D-2, §7, …) giữ trỏ bản lưu trữ. Mỗi phép thay đã kiểm khớp đúng 1 lần trước khi ghi.",
+ "replacements": [
+  {
+   "file": "README.md",
+   "before": "[`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md) — đó là nguồn thẩm quyền\nduy nhất",
+   "after": "[`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md) — đó là nguồn thẩm quyền\nduy nhất"
+  },
+  {
+   "file": "README.md",
+   "before": "Số liệu, phân loại và giới hạn: [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md).",
+   "after": "Số liệu, phân loại và giới hạn: [`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md)."
+  },
+  {
+   "file": "README.md",
+   "before": "Dẫn từ [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md):",
+   "after": "Dẫn từ [`docs/research/CLAIM_EVIDENCE_MAP.md`](docs/research/CLAIM_EVIDENCE_MAP.md) (bản gốc của danh sách: [`docs/legacy/research/THESIS_READINESS.md`](docs/legacy/research/THESIS_READINESS.md) §4):"
+  },
+  {
+   "file": "docs/CURRENT_STATE.md",
+   "before": "Tuyên bố ↔ bằng chứng ↔ giới hạn: [`THESIS_READINESS.md`](legacy/research/THESIS_READINESS.md).",
+   "after": "Tuyên bố ↔ bằng chứng ↔ giới hạn: [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md)."
+  },
+  {
+   "file": "docs/CODE_INDEX.md",
+   "before": "Diễn giải + bằng chứng:\n`docs/legacy/research/THESIS_READINESS.md` §4;",
+   "after": "Diễn giải + bằng chứng:\n`docs/research/CLAIM_EVIDENCE_MAP.md` (bản gốc §4: `docs/legacy/research/THESIS_READINESS.md`);"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "before": "hạn) thuộc **`docs/legacy/research/THESIS_READINESS.md`**",
+   "after": "hạn) thuộc **`docs/research/CLAIM_EVIDENCE_MAP.md`**"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_ARCHITECTURE.md",
+   "before": "| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/legacy/research/THESIS_READINESS.md` |",
+   "after": "| tuyên bố ↔ bằng chứng ↔ giới hạn | `docs/research/CLAIM_EVIDENCE_MAP.md` |"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DEMO.md",
+   "before": "Bằng chứng và diễn giải số liệu thuộc\n> `docs/legacy/research/THESIS_READINESS.md` (§5 tập demo, §6 smoke trình duyệt)",
+   "after": "Tuyên bố và giới hạn thuộc\n> `docs/research/CLAIM_EVIDENCE_MAP.md` (hàng B3); số liệu gốc của tập demo và smoke trình duyệt: `docs/legacy/research/THESIS_READINESS.md` §5–§6"
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "before": "`docs/legacy/research/THESIS_READINESS.md` và các bản ghi mà tài liệu đó nêu tên.",
+   "after": "`docs/legacy/research/THESIS_READINESS.md` (thẩm quyền tới W18) và các bản ghi mà tài liệu đó nêu tên; từ W19 thẩm quyền là\n> `docs/research/CLAIM_EVIDENCE_MAP.md`."
+  },
+  {
+   "file": "docs/research/thesis/THESIS_DRAFT.md",
+   "before": "| bảng tuyên bố ↔ bằng chứng | `docs/legacy/research/THESIS_READINESS.md` |",
+   "after": "| bảng tuyên bố ↔ bằng chứng | `docs/research/CLAIM_EVIDENCE_MAP.md` |"
+  }
+ ]
+}

@@ -15,7 +15,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > [`architecture/`](architecture/). Năng lực sản phẩm:
 > `backend/app/simulation/product_capability.py`; năng lực theo tầng:
 > [`architecture/geometry_capability_matrix_v2.json`](architecture/geometry_capability_matrix_v2.json).
-> Tuyên bố ↔ bằng chứng ↔ giới hạn: [`THESIS_READINESS.md`](THESIS_READINESS.md).
+> Tuyên bố ↔ bằng chứng ↔ giới hạn: [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md).
 
 > ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (cập nhật 2026-10-04)
 >

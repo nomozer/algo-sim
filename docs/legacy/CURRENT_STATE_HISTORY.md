@@ -9,7 +9,7 @@
 > đã gỡ). Không sửa lại. Link tương đối trong thân viết cho vị trí cũ `docs/` — đọc chúng như đứng ở `docs/`; đường
 > đã di chuyển tra `docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json`. Trích dẫn
 > kiểu *"CURRENT_STATE §3/§4/§5"* trong tài liệu cũ trỏ vào mục cùng số ở file này. Trạng thái hiện tại:
-> [`docs/CURRENT_STATE.md`](../CURRENT_STATE.md).
+> `docs/CURRENT_STATE.md`.
 
 ---
 

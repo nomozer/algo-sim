@@ -1,7 +1,7 @@
 # THESIS_DEMO — kịch bản trình bày
 
-> **Đây là sổ tay TRÌNH BÀY.** Bằng chứng và diễn giải số liệu thuộc
-> `docs/THESIS_READINESS.md` (§5 tập demo, §6 smoke trình duyệt) — ở đây không
+> **Đây là sổ tay TRÌNH BÀY.** Tuyên bố và giới hạn thuộc
+> `docs/research/CLAIM_EVIDENCE_MAP.md` (hàng B3); số liệu gốc của tập demo và smoke trình duyệt: `docs/legacy/research/THESIS_READINESS.md` §5–§6 — ở đây không
 > chép lại số. Kiến trúc: `docs/research/thesis/THESIS_ARCHITECTURE.md`.
 >
 > **Không có bài demo nào được dựng mới cho tài liệu này.** Cả sáu ca đều lấy
