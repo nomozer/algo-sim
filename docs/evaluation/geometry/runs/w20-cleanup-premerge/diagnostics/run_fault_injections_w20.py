@@ -49,7 +49,7 @@ def main() -> None:
         raise SystemExit(f"refusing to overwrite {OUT}")
     head = subprocess.run(["git", "rev-parse", "--short=8", "HEAD"], cwd=BACKEND, capture_output=True,
                           text=True).stdout.strip()
-    ra = [f"W20 — §16.5 fault injections (HEAD {head} + working tree, 0 model calls)",
+    ra = [f"W20 — §17 fault injections (HEAD {head} + working tree, 0 model calls)",
           "method: one exact in-memory source substitution per run (fault_injection_w20.py, W15 _tiem); "
           "files on disk are never edited, so 'revert' = the next run without W20_FI",
           f"tests: {' '.join(TESTS)}", ""]

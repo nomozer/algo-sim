@@ -160,12 +160,12 @@ def corrected_pipeline_harness_call(contract: Any) -> dict[str, Any]:
 def run_reconciliation(out_dir: Path) -> dict[str, Any]:
     """Run full measurement reconciliation across Gate A, B, C, D.
 
-    The four outputs go to `out_dir` (required). `RECONCILIATION_DIR` is frozen evidence and is refused:
-    `SOURCE_EVIDENCE_INTEGRITY.note` depends on a file outside the repository, so regenerating there rewrote
-    history on every pytest run (W20, ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE).
+    The four outputs go to `out_dir` (required). `RECONCILIATION_DIR` and any folder inside it are frozen evidence
+    and are refused: `SOURCE_EVIDENCE_INTEGRITY.note` depends on a file outside the repository, so regenerating there
+    rewrote history on every pytest run (W20, ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE).
     """
-    out_dir = Path(out_dir)
-    if out_dir.resolve() == RECONCILIATION_DIR.resolve():
+    out_dir, dong_bang = Path(out_dir).resolve(), RECONCILIATION_DIR.resolve()
+    if out_dir == dong_bang or dong_bang in out_dir.parents:
         raise ValueError(f"{RECONCILIATION_DIR} is frozen evidence; write to a temporary folder or a new run")
     out_dir.mkdir(parents=True, exist_ok=True)
     

@@ -3,7 +3,7 @@
 0 model calls.
 
 Question: would an envelope served BEFORE W20 (CACHE_VERSION 110) still be returned from the cache after W20,
-although W20 refuses that request (§16.5, a text-relation target defined by coordinates)?
+although W20 refuses that request (§17, a text-relation target defined by coordinates)?
 
 Three modes:
   corpus --out <json>

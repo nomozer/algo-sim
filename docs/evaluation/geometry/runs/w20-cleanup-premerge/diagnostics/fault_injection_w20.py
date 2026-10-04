@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""W20 — fault injections for amendment §16.5 (a text-relation target defined by coordinates), pytest plugin,
+"""W20 — fault injections for amendment §17 (a text-relation target defined by coordinates), pytest plugin,
 0 model calls.
 
 `W20_FI=<id>` selects ONE exact source substitution applied IN MEMORY (the file on disk is never touched),
@@ -35,7 +35,7 @@ _VONG = "        if len(k) != 1 or not any(map(dt.toa_do, chuoi)):\n"
 #: id → (module, old text, new text, what it simulates, predicted outcome)
 INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
     "FL1": (BIND, _VONG, "        if True:\n",
-            "§16.5 removed: a relation target defined by coordinates gets no status",
+            "§17 removed: a relation target defined by coordinates gets no status",
             "CAUGHT — L10–L14 and L16–L18 served or refused by the assumption gate again"),
     "FL2": (BIND, "        chuoi = dt.chuoi(n)\n", "        chuoi = [n]\n",
             "the alias chain is not followed (only the name's own coordinates count)",
@@ -53,7 +53,7 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
     "FL5": (ROUTE, "        if dc.reason_code in (MA_LECH_PHEP_DUNG, MA_TOA_DO_THAY_DUNG) or (\n",
             "        if dc.reason_code == MA_LECH_PHEP_DUNG or (\n",
             "the route records the status but does not refuse",
-            "CAUGHT — every route-level §16.5 test"),
+            "CAUGHT — every route-level §17 test"),
     "FL6": (MSG, '    return cau + " đúng là điểm đề nói. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng."'
                  " + _DUOI_LOI_HE\n",
             '    return cau + "." + _DUOI_LECH_PHEP_DUNG\n',
@@ -72,13 +72,25 @@ INJECTIONS: dict[str, tuple[str, str, str, str, str]] = {
             "            elif False:\n",
             "grounding guard ⑥ (text-introduced point declared by coordinates) removed — defense in depth",
             "NOT CAUGHT — L9 still refused, now by construction_binding (stages)"),
-    "FE1": (RECON, "    if out_dir.resolve() == RECONCILIATION_DIR.resolve():\n", "    if False:\n",
+    "FE1": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:
+", "    if False:
+",
             "the frozen reconciliation folder accepted as an output folder",
-            "CAUGHT — test_w20_reconciliation_refuses_the_frozen_folder"),
-    "FE2": (RECON, "    out_dir = Path(out_dir)\n    if out_dir.resolve() == RECONCILIATION_DIR.resolve():\n",
-            "    out_dir = RECONCILIATION_DIR\n    if False:\n",
+            "CAUGHT — the refusal tests (frozen folder and a folder inside it)"),
+    "FE2": (RECON, "    out_dir, dong_bang = Path(out_dir).resolve(), RECONCILIATION_DIR.resolve()
+"
+                   "    if out_dir == dong_bang or dong_bang in out_dir.parents:
+",
+            "    out_dir, dong_bang = RECONCILIATION_DIR, None
+    if False:
+",
             "the pre-W20 behaviour: the four outputs written into the frozen folder whatever out_dir says",
-            "CAUGHT — test_w20_reconciliation_writes_only_to_its_explicit_output_folder and the refusal test"),
+            "CAUGHT — test_w20_reconciliation_writes_only_to_its_explicit_output_folder and the refusal tests"),
+    "FE3": (RECON, "    if out_dir == dong_bang or dong_bang in out_dir.parents:
+", "    if out_dir == dong_bang:
+",
+            "a folder INSIDE the frozen folder accepted (self-review finding F2)",
+            "CAUGHT — test_w20_reconciliation_refuses_a_folder_inside_the_frozen_folder"),
 }
 _BAN_SAO: list[str] = []
 

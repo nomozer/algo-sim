@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""W20 census — the construction-binding stage with amendment §16.5 on every registered corpus (W14, W15, W15B,
+"""W20 census — the construction-binding stage with amendment §17 on every registered corpus (W14, W15, W15B,
 W16, W16B, W17, W17C, W18), compared row by row with the W18 census. 0 model calls.
 
 Reuses the W18 census code as is (`w18-binding-focus/diagnostics/construction_binding_census_w18.py`, immutable:
@@ -42,7 +42,7 @@ def main() -> None:
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     R1 = C18.R1
     census = {"census": "W20_CONSTRUCTION_BINDING_CENSUS", "model_calls": 0, "measured_at_commit": head,
-              "working_tree": "measured on the commit above plus the uncommitted §16.5 change when run before its commit",
+              "working_tree": "measured on the commit above plus the uncommitted §17 change when run before its commit",
               "corpora": {k: {"path": str(p.relative_to(ROOT)).replace("\\", "/"), "sha256_lf": R1._sha_lf(p.read_bytes())}
                           for k, p in C18.CORPORA.items()},
               "re_execution_budget": R1.G.NGAN_SACH_CHAY_LAI, "rows": rows}
@@ -54,7 +54,7 @@ def main() -> None:
                         env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONDONTWRITEBYTECODE": "1"})
     # (1) the registered SHIP rule on the corpora it was registered for — unchanged.
     dec = R1.quyet_dinh([r for r in rows if r["corpus"] in ("W14", "W15", "W15B")], R1._sha_lf(raw), mm.returncode)
-    dec["rule"] += " — W20 re-run on W14 + W15 + W15B with the §16.5 construction-binding stage (§9 unchanged)"
+    dec["rule"] += " — W20 re-run on W14 + W15 + W15B with the §17 construction-binding stage (§9 unchanged)"
     dec["f_metamorphic_tests_tail"] = mm.stdout.strip().splitlines()[-1:] if mm.stdout else []
     # (2) every route change since the W18 census, row by row.
     truoc = {(r.get("corpus_layer", r["corpus"]), r["id"]): r for r in json.loads(PREV.read_text(encoding="utf-8"))["rows"]

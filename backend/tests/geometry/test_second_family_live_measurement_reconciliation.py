@@ -204,6 +204,16 @@ def test_w20_reconciliation_refuses_the_frozen_folder():
     assert _hashes(frozen) == before
 
 
+def test_w20_reconciliation_refuses_a_folder_inside_the_frozen_folder(tmp_path: Path, monkeypatch):
+    """A new subfolder would still add files to frozen evidence. The frozen folder is a temporary stand-in here."""
+    frozen = tmp_path / "frozen"
+    frozen.mkdir()
+    monkeypatch.setattr(R, "RECONCILIATION_DIR", frozen)
+    with pytest.raises(ValueError, match="frozen"):
+        R.run_reconciliation(frozen / "sub")
+    assert list(frozen.iterdir()) == []
+
+
 # ── Requirement 10: Original Historical Artifacts Preserved ───────────────────
 
 def test_historical_artifacts_byte_identical():

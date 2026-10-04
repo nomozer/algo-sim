@@ -1,0 +1,16 @@
+{
+ "scan": "W20_LITERAL_THEN_CONSTRUCT",
+ "measured_at_commit": "317163731f32ead2b2221c30d2d98da16f29e222",
+ "model_calls": 0,
+ "json_files_read": 2120,
+ "distinct_programs": 527,
+ "programs_declaring_and_constructing_the_same_point": 1,
+ "hits": [
+  {
+   "file": "docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/literal_target_corpus/CORPUS.json",
+   "names": [
+    "M"
+   ]
+  }
+ ]
+}
