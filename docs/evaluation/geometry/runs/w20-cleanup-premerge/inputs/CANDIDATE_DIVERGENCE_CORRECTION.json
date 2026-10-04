@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE",
+  "corrects": "docs/evaluation/geometry/runs/w18-binding-focus/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "2a15102b33b39a07c7fd5725f2150fc2a8f62a7217d64eacbf4999e70f07af76",
+  "current_candidate_source_commit": "bedb10408023bf146bec88bd68d7aaf998dfbf6a",
+  "current_candidate_frozen_at": "bedb10408023bf146bec88bd68d7aaf998dfbf6a",
+  "current_candidate_note": "Frozen ONCE in this wave, after the last product change (bedb1040, CACHE_VERSION 110 -> 111), in a clean detached worktree outside the repository (D:/tmp/w20-freeze; cay_lam_viec_sach = true, 110 files, CACHE_VERSION 111). No intermediate candidate. The W18 candidate d3b4cab9 was the identity at the W20 start (W19 changed no product code). Product commits, i.e. commits touching backend/app or frontend/src: 65c90bde (§16.5: construction_binding records DEFINED_BY_COORDINATES for a text-relation target defined by coordinates, directly or through an alias chain, and the route refuses it with CONSTRUCTION_REPLACED_BY_COORDINATES; refusal cause table, repair set, learner message); bedb1040 (CACHE_VERSION 110 -> 111). Commits after bedb1040 touch only the cache identity lock, backend/scripts, backend/tests and docs.",
+  "previous_candidate_hash": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "w20 closes ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET (ASSUMPTION_CERTIFICATE_AMENDMENT §16.5). backend/app changes:\n(1) semantic_program/construction_binding.py: each program name that directly denotes the target of a §16.1 text relation (midpoint, 'lần lượt' midpoints, projection or foot) is followed along its `assign X = var Y` chain; a non-seed coordinate declaration anywhere on that chain (the name's own coordinates, a declare_point lifted into memory_declarations, or the coordinates of the point it aliases, a given vertex included) gives the status DEFINED_BY_COORDINATES. The module still reads no coordinate value: it asks only whether coordinates are declared, so equal coordinates never create identity. Reason code CONSTRUCTION_REPLACED_BY_COORDINATES (precedence: CONSTRUCTION_NOT_TEXT_BOUND, then this code, then CONSTRUCTION_BINDING_UNVERIFIED), subjects = [text relation, what the program did].\n(2) semantic_program/route.py: the new code is refused in every scope at the construction_binding stage (INPUT_NOT_GROUNDED). refusal_cause.py: cause CONSTRUCTION. ai/pipeline.py: never sent to repair. learner_messages.py: one message that names the text relation and what the program did and states the verification limit, never that the text is wrong.\n(3) main.py: CACHE_VERSION 110 -> 111 (bedb1040): six requests served by the W18 candidate are refused by W20 and HIT as v110 rows (diagnostics/PROOF_CACHE_ROW_W20.json).\nProbe (results/LITERAL_TARGET_PROBE_after_65c90bde.json): 26/27 rows match their pre-registered labels, the remaining row refused by the domain gate for an unrelated reason registered before the fix. Census (diagnostics/CONSTRUCTION_BINDING_DECISION_W20.json): SHIP, 18/18 AC2 gold PROVEN_SAFE, 179 rows of the W14-W18 corpora compared with the W18 census, no route change. Prompt, grammar card, both schemas and the capability table are unchanged; the provider-facing fingerprint is still b1714b566e25c912.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 2a15102b (product commit bedb1040) is a new product identity and must not be used to rescore the historical run; the w18 evidence describes d3b4cab9 and stays as it is.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 111
+}

@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
-  "task_id": "W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS",
-  "product_commit_sha": "7a06ee473a481a1377d270b9a2318756807da91a",
-  "product_tree_sha": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+  "task_id": "W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE",
+  "product_commit_sha": "bedb10408023bf146bec88bd68d7aaf998dfbf6a",
+  "product_tree_sha": "2a15102b33b39a07c7fd5725f2150fc2a8f62a7217d64eacbf4999e70f07af76",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
