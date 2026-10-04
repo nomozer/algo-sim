@@ -1,12 +1,15 @@
 # Evaluation run naming policy
 
-Mọi evaluation run mới dùng định danh ngắn, ổn định, **không có ngày**:
+Mọi evaluation run mới dùng định danh ngắn, ổn định, **không có ngày**. Từ 2026-10-05 wave được đánh số **trong
+từng việc** (mục *Đánh số wave theo từng việc* dưới đây):
 
 ```text
-wNN-short-slug
+<task-slug>-wNN          wave thứ NN của việc <task-slug>; cũng là tên thư mục run
+<task-slug>-<mục-đích>   run không đánh số của việc ấy (vd lượt chốt trước khi merge)
 ```
 
-Ví dụ: `w09-verify-cleanup`, `w10-pedagogical-playback`, `w11-pedagogical-polish`.
+Run đặt tên trước đó dùng `wNN-short-slug` (ví dụ `w09-verify-cleanup`, `w10-pedagogical-playback`,
+`w11-pedagogical-polish`) và giữ nguyên tên.
 
 ## Quy tắc
 
@@ -22,6 +25,25 @@ Ví dụ: `w09-verify-cleanup`, `w10-pedagogical-playback`, `w11-pedagogical-pol
   sử — trừ các ngoại lệ do người dùng quyết ở bảng dưới. Run
   `20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair` là
   một ví dụ được giữ nguyên.
+
+## Đánh số wave theo từng việc (2026-10-05, run `cuboid-final-review`)
+
+- **Việc** = một mục tiêu làm trên một nhánh riêng. `task-slug` là `lower-kebab-case`, ngắn (≤ 28 ký tự để định danh
+  đầy đủ không quá 40), đặt khi tạo nhánh và **không đổi** — kể cả sau khi nhánh đã merge và bị xoá. `RUN.json` ghi
+  `task_slug` và `branch`.
+- Việc mới trên nhánh mới **bắt đầu ở W1**, rồi W2, W3…; số wave không nối tiếp từ việc trước.
+- **Định danh đầy đủ** `<task-slug>-wNN` (hai chữ số, `-w01`) là thứ được ghi vào manifest, `RUN.json`,
+  `EVIDENCE_INDEX`, `STATUS_LEDGER`, `CURRENT_STATE`, `OPEN_ISSUES` và mọi chỉ mục — **không bao giờ** `W1`/`W2` trần,
+  vì việc nào cũng có W1. Văn xuôi bên trong chính run được viết tắt khi không thể nhầm.
+- Tên thư mục run là định danh đầy đủ (ngắn); ngày, nhánh, commit đo, candidate và môi trường ghi trong `RUN.json`,
+  không ghi vào tên. Chạy lại cùng một wave: hậu tố `-r1`, `-r2` như trên.
+- Nhánh của việc mới **chỉ rẽ từ `main` đã tích hợp và cập nhật**: `git fetch`, `main` trùng `origin/main`, việc trước
+  đã merge (hoặc được ghi rõ là bỏ) — không rẽ từ một nhánh tính năng khác.
+- Các wave đặt tên trước quy tắc này — **W1–W20**, gồm các thư mục `w09-…` … `w20-…` và các `WAVE_ID` đã commit — giữ
+  nguyên tên. Việc đang làm khi quy tắc ra đời có slug `cuboid-visual-semantic-closure` (nhánh
+  `fix/cuboid-visual-semantic-closure`); trích các wave của nó ở mục mới bằng `cuboid-visual-semantic-closure-w20` hoặc
+  bằng tên thư mục run. Lượt chốt của việc ấy là run `cuboid-final-review`: không đánh số, không bắt đầu lại W1. Việc
+  kế tiếp, trên nhánh mới từ `main` đã cập nhật, bắt đầu ở W1.
 
 ## Đổi tên do người dùng quyết (2026-09-29, wave w11)
 

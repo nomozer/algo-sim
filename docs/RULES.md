@@ -43,6 +43,9 @@ git rev-parse HEAD
 git status --short
 ```
 
+Việc mới chỉ rẽ nhánh từ `main` đã tích hợp và cập nhật, và đánh số wave lại từ W1 trong việc ấy; định danh đầy đủ
+`<task-slug>-wNN` (luật: `docs/evaluation/RUN_NAMING.md`).
+
 Rồi báo đủ các mục sau. Chỉ **sau** PRE-FLIGHT mới được sửa code:
 
 ```
