@@ -1044,3 +1044,10 @@ v109.
 > kiểm rỗng). FW4 chạy trên một họ có đáp số mang công thức tham chiếu (`triangular_pyramid`); họ
 > `cross_section` không có công thức nào như vậy. FW2 giữ nguyên dự đoán. Sản phẩm và candidate `d3b4cab9`
 > không đổi. Mọi lượt đo nghiệm thu chạy lại ở commit đo mới; lượt `8caa8307` được giữ riêng làm lần thử 1.
+
+> **Đính chính 2026-10-04 (W18 Task 7 — sau lượt trình duyệt lần thử 2 tại `0ca3accf`, TRƯỚC lượt tiêm lỗi
+> frontend thứ hai).** Bằng chứng không rỗng của kiểm nét đứt theo bước (`formation.dash_under_highlight`)
+> cho thấy chỉ họ `cross_section` có bước dựng tô sáng một cạnh khuất (A-B, A-D, S-A, cả hai khổ). Năm họ
+> còn lại không tô sáng cạnh khuất ở bước nào, nên ở đó luật "tô sáng không đổi nét" chỉ được test đơn vị
+> giữ (`scene3d-hidden-lines.test.tsx`). Vì vậy FW1 chạy trên `cross_section`/desktop (đã khai là giới
+> hạn của bằng chứng trình duyệt).
