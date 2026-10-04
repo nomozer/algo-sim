@@ -61,13 +61,15 @@ import {
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
 import {
-  type AnnotationToggles,
+  type AnnotationView,
   type LabelRect,
   type LabelToPlace,
-  DEFAULT_ANNOTATION_TOGGLES,
+  type WitnessShown,
+  DEFAULT_ANNOTATION_VIEW,
   annotationAnchor,
   annotationsAt,
   placeAnnotationLabels,
+  witnessesShown,
 } from "./scene3d-annotations";
 
 /**
@@ -1230,8 +1232,36 @@ interface Props {
    * đồ kiến trúc cấm.
    */
   fitToken?: number;
-  /** W17: công tắc nhãn số đo / kết quả trên hình. Vắng ⇒ cả hai bật (U-W17-1). */
-  annotationToggles?: AnnotationToggles;
+  /** W18 §16.5: chế độ nhãn số đo trên hình. Vắng ⇒ gọn (dữ kiện + lựa chọn). */
+  annotationView?: AnnotationView;
+}
+
+/** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
+const NHAN_CHUNG_GOC = { tiLe: 0.15, toiDa: 0.5 };
+
+/** Nhân chứng một khoảng cách: đoạn nét đứt từ điểm tới CHÂN backend phát + ký hiệu vuông góc dựng từ
+ *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào. */
+function vatNhanChung(w: WitnessShown): THREE.Group {
+  const g = new THREE.Group();
+  const tu = new THREE.Vector3(...w.from);
+  const chan = new THREE.Vector3(...w.foot);
+  const v = new THREE.Vector3(...w.v);
+  const s = Math.min(v.length() * NHAN_CHUNG_GOC.tiLe, NHAN_CHUNG_GOC.toiDa);
+  const u1 = new THREE.Vector3(...w.u).normalize().multiplyScalar(s);
+  const v1 = v.normalize().multiplyScalar(s);
+  const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([tu, chan]),
+    new THREE.LineDashedMaterial({ color: MAU_VAI_TRO.dich, dashSize: 0.16, gapSize: 0.1, depthTest: false }));
+  doan.computeLineDistances();
+  const goc = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
+    [chan.clone().add(u1), chan.clone().add(u1).add(v1), chan.clone().add(v1)]),
+  new THREE.LineBasicMaterial({ color: MAU_VAI_TRO.dich, depthTest: false }));
+  for (const x of [doan, goc]) {
+    x.renderOrder = 10;
+    x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật
+    g.add(x);
+  }
+  g.userData = { nhanChung: w.id };
+  return g;
 }
 
 /** Vùng một lớp phủ khác đang che khung (`data-che-khung`: nút nổi, ô soi, ngăn kéo) — nhãn
@@ -1244,7 +1274,7 @@ function vungCheKhung(goc: DOMRect): LabelRect[] {
 }
 
 export function Scene3DWorkspace({
-  scene, step, interaction, onSelect, fitToken = 0, annotationToggles = DEFAULT_ANNOTATION_TOGGLES,
+  scene, step, interaction, onSelect, fitToken = 0, annotationView = DEFAULT_ANNOTATION_VIEW,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
@@ -1271,14 +1301,17 @@ export function Scene3DWorkspace({
     () => (tuongTac.selected_id ? tangNhanManh(scene, tuongTac.selected_id) : null),
     [scene, tuongTac.selected_id],
   );
-  // W17 · §15.4: nhãn số đo của bước. Chủ thể phải đang hiện — ẩn/cô lập theo cùng luật nhãn
-  // điểm. Bật/tắt chỉ đổi danh sách này: hình, camera, bước, chuỗi nhân quả, nét đứt không đọc nó.
+  // W17 · §15.4 / W18 · §16.5: nhãn số đo của bước — gọn mặc định, tập trung theo lựa chọn. Chủ thể
+  // phải đang hiện — ẩn/cô lập theo cùng luật nhãn điểm. "Hiện tất cả" chỉ đổi danh sách này (và nhân
+  // chứng của nó): hình, camera, bước, chuỗi nhân quả, nét đứt không đọc nó.
   const coMatNhan = useMemo(() => new Set(objectsAt(scene, buoc).map((o) => o.id)), [scene, buoc]);
   const nhanSoDo = useMemo(
-    () => annotationsAt(scene, buoc, annotationToggles, tuongTac.selected_id ?? null)
+    () => annotationsAt(scene, buoc, annotationView, tuongTac.selected_id ?? null)
       .filter((a) => a.subject_ids.every((id) => isVisible(tuongTac, id, coMatNhan))),
-    [scene, buoc, annotationToggles, tuongTac, coMatNhan],
+    [scene, buoc, annotationView, tuongTac, coMatNhan],
   );
+  const chonHienTai = useRef<string | null>(null);
+  chonHienTai.current = tuongTac.selected_id ?? null;
   useEffect(() => {
     // Điểm neo THẾ GIỚI + độ dời trình bày của chủ thể (tách khối), đọc trong vòng vẽ qua ref.
     const m = new Map<string, THREE.Vector3>();
@@ -1304,6 +1337,9 @@ export function Scene3DWorkspace({
   //: W17 · nhãn SỐ ĐO: lớp DOM thứ hai, cùng vòng chiếu — đặt SAU nhãn điểm để tránh chúng.
   const soDoRef = useRef<HTMLDivElement>(null);
   const viTriSoDo = useRef(new Map<string, THREE.Vector3>());
+  /** §16.7: nhóm nhân chứng — ngoài nhóm gốc, nên đổi bước/đổi lựa chọn không dựng lại nó và nó không
+   *  dựng lại hình; chỉ đổi khi danh sách nhãn khoảng cách đang hiện đổi. */
+  const nhanChungRef = useRef<THREE.Group | null>(null);
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -1349,6 +1385,9 @@ export function Scene3DWorkspace({
     const goc = new THREE.Group();
     scene3.add(goc);
     rootRef.current = goc;
+    const nhanChung = new THREE.Group();
+    scene3.add(nhanChung);
+    nhanChungRef.current = nhanChung;
 
     const dieuKhien = new OrbitControls(cam, renderer.domElement);
     dieuKhien.enableDamping = true;
@@ -1473,6 +1512,9 @@ export function Scene3DWorkspace({
         const el = theTheoId.get(c.id)!;
         const r = daDat.get(c.id);
         el.style.opacity = r ? "1" : "0";
+        // Nhãn chưa đặt được thì không bắt chuột, không nhận Tab — giá trị vẫn ở ô soi và lời giải.
+        el.style.pointerEvents = r ? "auto" : "none";
+        el.tabIndex = r ? 0 : -1;
         if (!r) continue;
         el.style.transform = `translate(${r.x}px,${r.y}px)`;
         hopSo.push({ id: c.id, box: r, anchor: { x: c.ax, y: c.ay } });
@@ -1621,11 +1663,53 @@ export function Scene3DWorkspace({
       renderer.dispose();
       container.removeChild(renderer.domElement);
       rootRef.current = null;
+      nhanChungRef.current = null;
       veRef.current = null;
       vuaKhungRef.current = null;
       delete (window as any).__geo3d_set_section_fill_visible;
     };
   }, []);
+
+  // §16.7 — nhân chứng của các nhãn khoảng cách ĐANG HIỆN (chọn, hoặc "Hiện tất cả"): đoạn tới chân
+  // + ký hiệu vuông góc. Không thêm bước dựng, không chạm nhóm gốc, nét đứt hay camera.
+  useEffect(() => {
+    const nhom = nhanChungRef.current;
+    if (!nhom) return;
+    for (const con of [...nhom.children]) {
+      nhom.remove(con);
+      con.traverse((x) => {
+        const m = x as THREE.Line;
+        m.geometry?.dispose?.();
+        (m.material as THREE.Material | undefined)?.dispose?.();
+      });
+    }
+    const ds = witnessesShown(scene, nhanSoDo);
+    for (const w of ds) nhom.add(vatNhanChung(w));
+    if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
+    veRef.current?.();
+  }, [scene, nhanSoDo]);
+
+  // §16.5 — nhãn số đo BẤM ĐƯỢC (chuột, Enter/Space): bấm là chọn đại lượng, bấm lại là bỏ chọn.
+  // Listener gắn bằng lệnh (lớp này không dùng prop sự kiện trong JSX — khoá ở `scene3d.test.tsx`).
+  useEffect(() => {
+    const lop = soDoRef.current;
+    if (!lop) return;
+    const chonNhan = (e: Event) => {
+      const id = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-ann-id]")?.dataset.annId;
+      if (!id || !chonRef.current) return;
+      if (e instanceof KeyboardEvent) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+      }
+      chonRef.current(chonHienTai.current === id ? null : id);
+    };
+    lop.addEventListener("click", chonNhan);
+    lop.addEventListener("keydown", chonNhan);
+    return () => {
+      lop.removeEventListener("click", chonNhan);
+      lop.removeEventListener("keydown", chonNhan);
+    };
+  }, [webglFailed]);
 
   // Đổi bước ⇒ dựng lại nội dung nhóm gốc. Rẻ vì cảnh nhỏ (≤ vài chục mesh).
   useEffect(() => {
@@ -1773,19 +1857,22 @@ export function Scene3DWorkspace({
           </div>
           {/* W17 · SỐ ĐO TRÊN HÌNH. W12 gỡ dải số nổi vì một con số không chủ thể đặt ở đâu cũng
               vô nghĩa. Nhãn ở đây khác ở đúng chỗ ấy: mỗi nhãn đứng cạnh CHỦ THỂ backend gắn
-              (đoạn, miền, khối, điểm của cặp), bật/tắt được, chỉ từ bước đại lượng khả dụng.
-              Bảng lời giải vẫn là bản đầy đủ — có công thức, nguồn số, và mọi đại lượng không gắn
-              được chủ thể. Không bắt chuột, giấu khỏi trình đọc màn hình: chữ đã có ở bảng. */}
-          <div ref={soDoRef} className="geo3d-so-do-lop" aria-hidden="true">
+              (đoạn, miền, khối, điểm của cặp, nhân chứng), chỉ từ bước đại lượng khả dụng.
+              W18 §16.5: mặc định chỉ dữ kiện; nhãn là NÚT (bấm/Enter/Space ⇒ chọn đại lượng, chi
+              tiết mở ở ô soi), nên lớp này không còn giấu khỏi trình đọc màn hình. */}
+          <div ref={soDoRef} className="geo3d-so-do-lop" aria-label="Số đo trên hình">
             {nhanSoDo.map((a) => {
               const diu = !a.related && tang !== null && !tang.has(a.id)
                 && !a.subject_ids.some((id) => tang.has(id));
               return (
                 <span
                   key={a.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={tuongTac.selected_id === a.id}
                   data-ann-id={a.id}
                   data-uu-tien={a.priority}
-                  className={`geo3d-so-do${a.category === "result" ? " la-ket-qua" : ""}${
+                  className={`geo3d-so-do${a.role === "result" ? " la-ket-qua" : ""}${
                     a.related ? " la-lien-quan" : diu ? " la-diu" : ""}`}
                 >
                   {a.text}

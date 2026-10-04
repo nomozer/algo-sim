@@ -486,11 +486,18 @@ export interface QuantityAnnotation {
   kind: "length" | "area" | "volume" | "distance";
   /** `result` = đích của đề (hoặc thứ một đích trỏ tới); còn lại `measurement`. */
   category: "measurement" | "result";
+  /** W18 §16.5 — dữ kiện đề cho / trung gian / đáp số. Vắng (envelope v109) ⇒ suy từ `category` + `origin`. */
+  role?: "given" | "intermediate" | "result";
   /** Id vật/điểm CÓ trong cảnh. */
   subject_ids: string[];
-  anchor: "segment" | "region" | "solid" | "pair";
+  anchor: "segment" | "region" | "solid" | "pair" | "witness";
   /** Chỉ khi payload có đơn vị. */
   unit?: string | null;
+  /** W18 §16.6 — CÙNG một phép đo với đại lượng này (cùng chủ thể): không nhãn thứ hai, không dòng thứ hai. */
+  same_as?: string;
+  /** W18 §16.7 — nhân chứng khoảng cách điểm → đường/mặt phẳng: chân CHÍNH XÁC do backend tính, `u` dọc vật
+   *  nhận, `v` từ chân tới điểm. Phía này chỉ vẽ — không bao giờ tự dựng chân đường vuông góc. */
+  witness?: { from: string; foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3 } };
 }
 
 export interface Scene3D {

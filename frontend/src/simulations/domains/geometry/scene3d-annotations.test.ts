@@ -159,14 +159,16 @@ const canh18 = (): Scene3D => {
           marker: { u: ["-3", "0", "5"], v: ["-75/34", "4", "-45/34"] } } } },
   );
   s.events.push(
-    { step_index: 6, action: "MEASURE", object: "h", depends: ["A", "B"], explanation: "h.",
+    { step_index: 6, action: "CREATE", object: "BD", depends: ["B", "D"], explanation: "Đường BD.",
+      semantic_kind: "GEOMETRY_CONSTRUCTION" },
+    { step_index: 7, action: "MEASURE", object: "h", depends: ["A", "B"], explanation: "h.",
       semantic_kind: "MEASUREMENT" },
-    { step_index: 7, action: "MEASURE", object: "d_C_BD", depends: ["C", "BD"], explanation: "d.",
+    { step_index: 8, action: "MEASURE", object: "d_C_BD", depends: ["C", "BD"], explanation: "d.",
       semantic_kind: "MEASUREMENT" },
   );
   return s;
 };
-const CUOI18 = 7;
+const CUOI18 = 8;
 
 describe("W18 · nhãn tập trung (§16.5–16.7)", () => {
   it("mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian", () => {

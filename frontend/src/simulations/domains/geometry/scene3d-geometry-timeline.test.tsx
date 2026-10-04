@@ -152,13 +152,18 @@ describe("W12 · lớp lời giải giữ công thức và nguồn", () => {
   });
 
   it("bảng lời giải dưới thanh bước: Kết quả có công thức và nguồn, đáp số MỘT lần", () => {
+    // W18 §16.6 (thay đổi có chủ đích): lời giải đầy đủ thu gọn mặc định — Kết quả mang `ký hiệu = giá
+    // trị`, công thức và nguồn của vật đang chọn ở ô soi; mở lời giải thì chúng về đây. Đáp số vẫn MỘT lần.
     const s = canh("triangular_pyramid");
-    const html = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} />);
+    const html = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} solutionOpen />);
     expect(html).toContain("Kết quả");
     expect(html).toContain("Dữ kiện");
     expect(html).toContain("Các bước tính");
     expect(html.split("V = 1/3 × S(ABC) × SA = 10")).toHaveLength(2);
     expect(html).toContain("Dựa trên: S(ABC), SA");
+    const gon = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} />);
+    expect(gon).not.toContain("V = 1/3 × S(ABC) × SA = 10");
+    expect(gon).not.toContain("Dựa trên: S(ABC), SA");
   });
 
   it("khung 3D không còn dải số đo nổi trên hình", () => {

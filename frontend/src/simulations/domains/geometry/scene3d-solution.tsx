@@ -21,7 +21,10 @@ import { tangNhanManh, type TangNhanManh } from "./interaction-state";
  * token với khung 3D (`scene3d-roles.ts`), nên xanh/cam đậm/cam nhạt/xám mang
  * một nghĩa ở cả hai nơi.
  *
- * Khổ hẹp: Dữ kiện và Các bước tính gập được; Kết quả luôn hiện.
+ * W18 §16.6 — MỘT NƠI GIẢI THÍCH: Dữ kiện và Các bước tính THU GỌN mặc định ở mọi khổ; Kết quả
+ * luôn hiện nhưng chỉ mang `ký hiệu = giá trị` cho tới khi lời giải mở — công thức của vật đang chọn
+ * nằm ở ô soi. Mở lời giải thì công thức về đây và ô soi bỏ khối công thức (`open` do xưởng giữ).
+ * Đại lượng `same_as` không có dòng thứ hai: nó là cùng một phép đo với dòng nó trỏ tới.
  */
 
 /** Lớp CSS của một dòng theo tầng causal; ngoài chuỗi thì dịu. */
@@ -48,23 +51,33 @@ interface Props {
   step: number;
   selectedId?: string | null;
   onSelect?: (id: string | null) => void;
+  /** Lời giải đầy đủ đang mở — do xưởng giữ để ô soi biết bỏ khối công thức (§16.6). Vắng ⇒ tự giữ. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function Scene3DSolution({ scene, step, selectedId = null, onSelect }: Props) {
-  const [moRong, setMoRong] = useState(false);
+export function Scene3DSolution({ scene, step, selectedId = null, onSelect, open, onOpenChange }: Props) {
+  const [moTrong, setMoTrong] = useState(false);
+  const moRong = open ?? moTrong;
   const idThan = useId();
   const lg = solutionAt(scene, step);
   if (lg.givens.length + lg.steps.length + lg.results.length === 0) return null;
 
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  // §16.6: `same_as` trỏ tới một dòng đang có ⇒ cùng phép đo, không dòng thứ hai; nguồn số trỏ về dòng ấy.
+  const coDong = new Set([...lg.givens, ...lg.steps, ...lg.results].map((x) => x.id));
+  const goc = (id: string) => {
+    const s = theoId.get(id)?.annotation?.same_as;
+    return s && coDong.has(s) ? s : id;
+  };
   const tang = selectedId ? tangNhanManh(scene, selectedId) : null;
   const kyHieu = (id: string) => {
-    const o = theoId.get(id);
+    const o = theoId.get(goc(id));
     return o?.reference || o?.notation || o?.label || "";
   };
   const vuaDung = !tang && geometryHighlightedAt(scene, step).length > 0;
 
-  const dong = (x: SolutionItem, coTieuDe: boolean) => {
+  const dong = (x: SolutionItem, coTieuDe: boolean, congThuc: boolean) => {
     const o = theoId.get(x.id)!;
     const ten = o.notation || o.label;
     return (
@@ -78,46 +91,48 @@ export function Scene3DSolution({ scene, step, selectedId = null, onSelect }: Pr
         >
           {coTieuDe && o.label !== ten && <span className="geo3d-lg-tieu-de">{o.label}</span>}
           <span className="geo3d-lg-so">
-            {x.formula ?? `${ten} = ${hienSo(o.exact, o.value)}`}
+            {(congThuc ? x.formula : null) ?? `${ten} = ${hienSo(o.exact, o.value)}`}
           </span>
         </button>
-        {x.basis.length > 0 && (
+        {moRong && x.basis.length > 0 && (
           <span className="geo3d-lg-dua-tren">
-            {`Dựa trên: ${x.basis.map(kyHieu).filter(Boolean).join(", ")}`}
+            {`Dựa trên: ${[...new Set(x.basis.map(kyHieu).filter(Boolean))].join(", ")}`}
           </span>
         )}
       </li>
     );
   };
+  const rieng = (xs: SolutionItem[]) => xs.filter((x) => goc(x.id) === x.id);
+  const doi = () => (onOpenChange ? onOpenChange(!moRong) : setMoTrong(!moRong));
 
   return (
     <section className="geo3d-loi-giai" aria-label="Lời giải">
       {lg.results.length > 0 && (
         <div className="geo3d-lg-muc geo3d-lg-ket-qua">
           <h4 className="geo3d-lg-ten-muc">Kết quả</h4>
-          <ul className="geo3d-lg-ds">{lg.results.map((x) => dong(x, true))}</ul>
+          <ul className="geo3d-lg-ds">{lg.results.map((x) => dong(x, true, moRong))}</ul>
         </div>
       )}
       <button
         type="button"
         className="geo3d-lg-gap"
-        onClick={() => setMoRong((m) => !m)}
+        onClick={doi}
         aria-expanded={moRong}
         aria-controls={idThan}
       >
-        {moRong ? "Ẩn dữ kiện và các bước tính" : "Xem dữ kiện và các bước tính"}
+        {moRong ? "Thu gọn lời giải" : "Xem lời giải đầy đủ"}
       </button>
       <div id={idThan} className={`geo3d-lg-than${moRong ? " la-mo" : ""}`}>
-        {lg.givens.length > 0 && (
+        {rieng(lg.givens).length > 0 && (
           <div className="geo3d-lg-muc">
             <h4 className="geo3d-lg-ten-muc">Dữ kiện</h4>
-            <ul className="geo3d-lg-ds">{lg.givens.map((x) => dong(x, false))}</ul>
+            <ul className="geo3d-lg-ds">{rieng(lg.givens).map((x) => dong(x, false, true))}</ul>
           </div>
         )}
-        {lg.steps.length > 0 && (
+        {rieng(lg.steps).length > 0 && (
           <div className="geo3d-lg-muc">
             <h4 className="geo3d-lg-ten-muc">Các bước tính</h4>
-            <ul className="geo3d-lg-ds">{lg.steps.map((x) => dong(x, true))}</ul>
+            <ul className="geo3d-lg-ds">{rieng(lg.steps).map((x) => dong(x, true, true))}</ul>
           </div>
         )}
       </div>

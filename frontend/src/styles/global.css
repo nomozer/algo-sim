@@ -4976,6 +4976,20 @@ html {
   font-weight: 700;
 }
 
+/* W18 §16.5: nhãn là NÚT chọn đại lượng (lớp `pointer-events` theo nhãn đã đặt được). */
+.geo3d-so-do[role="button"] {
+  cursor: pointer;
+}
+
+.geo3d-so-do[role="button"]:hover {
+  border-color: var(--primary);
+}
+
+.geo3d-so-do[role="button"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
 /* Liên quan tới vật đang chọn: viền xanh "đang xét" + nền đặc. */
 .geo3d-so-do.la-lien-quan {
   border-color: var(--primary);
@@ -5159,7 +5173,8 @@ html {
    khối này hiện cho MỌI học sinh (số đỉnh, chu trình, cắt khối nào), còn
    `.geo3d-soi-ky-thuat` chỉ mở khi bật «Chi tiết». Gộp hai khối là hoặc giấu
    đáp án của bài đi, hoặc đổ tên hàm ra trước mặt học sinh lớp 11. */
-.geo3d-soi-thiet-dien {
+.geo3d-soi-thiet-dien,
+.geo3d-soi-nguon {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 2px var(--sp-sm);
@@ -5169,11 +5184,14 @@ html {
   font-size: 0.8125rem;
 }
 
-.geo3d-soi-thiet-dien dt {
+.geo3d-soi-thiet-dien dt,
+.geo3d-soi-nguon dt {
   color: var(--ink-muted);
 }
 
-.geo3d-soi-thiet-dien dd {
+/* W18 §16.6: nguồn số của đại lượng đang chọn — cũng là nội dung bài, không phải chú thích máy. */
+.geo3d-soi-thiet-dien dd,
+.geo3d-soi-nguon dd {
   margin: 0;
   min-width: 0;
   /* Đậm hơn `--ink-secondary` của khối kỹ thuật: đây là ĐÁP ÁN của bài, không
@@ -5415,9 +5433,14 @@ html {
   font-size: 0.8125rem;
 }
 
-/* Nút gập chỉ có nghĩa ở khổ hẹp — màn rộng luôn hiện đủ. */
-.geo3d-lg-gap {
+/* W18 §16.6: lời giải đầy đủ thu gọn ở MỌI khổ — hình là trung tâm; công thức của vật đang chọn ở ô
+   soi. Nút gập luôn có mặt; Kết quả (`ký hiệu = giá trị`) luôn hiện. */
+.geo3d-lg-than:not(.la-mo) {
   display: none;
+}
+
+.geo3d-lg-gap {
+  display: inline-flex;
   justify-self: start;
   padding: 4px var(--sp-sm);
   border: 1px solid var(--hairline);
@@ -5489,17 +5512,6 @@ html {
 
 .geo3d-chu-giai-muc.la-trung-gian::before {
   background: var(--geo3d-vai-tro-trung-gian);
-}
-
-/* Khổ hẹp: Kết quả luôn hiện; Dữ kiện + Các bước tính gập lại, mở bằng nút. */
-@media (max-width: 48rem) {
-  .geo3d-lg-gap {
-    display: inline-flex;
-  }
-
-  .geo3d-lg-than:not(.la-mo) {
-    display: none;
-  }
 }
 
 .geo3d-fallback {

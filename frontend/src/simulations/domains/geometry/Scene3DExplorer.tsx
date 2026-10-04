@@ -69,14 +69,14 @@ import {
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
 import {
-  type AnnotationToggles,
-  DEFAULT_ANNOTATION_TOGGLES,
-  hasAnnotationCategory,
+  type AnnotationView,
+  DEFAULT_ANNOTATION_VIEW,
+  hasHiddenByDefault,
+  quantitySources,
 } from "./scene3d-annotations";
 import {
   IconClose,
   IconExperiment,
-  IconFlag,
   IconInfo,
   IconPanel,
   IconReset,
@@ -182,13 +182,13 @@ export function Scene3DExplorer({
   const [baoDongBo, setBaoDongBo] = useState(false);
   const [ngan, setNgan] = useState<"thanh-phan" | "de" | null>(null);
   const [chiTiet, setChiTiet] = useState(false);
-  /* W17 · §15.4: nhãn số đo / kết quả trên hình — SỞ THÍCH người dùng như `chiTiet` (giữ qua
-     các bài), bật mặc định (U-W17-1). Công tắc chỉ có mặt khi cảnh có nhãn loại ấy. */
-  const [soDo, setSoDo] = useState<AnnotationToggles>(DEFAULT_ANNOTATION_TOGGLES);
-  const coSoDo = useMemo(() => ({
-    measurements: hasAnnotationCategory(day, "measurement"),
-    results: hasAnnotationCategory(day, "result"),
-  }), [day]);
+  /* W18 · §16.5 (thay U-W17-1): hình mặc định GỌN — tên điểm và dữ kiện đề cho; đáp số và đại
+     lượng trung gian hiện khi người học chọn chúng (nhãn, dòng lời giải, vật). "Hiện tất cả" là
+     SỞ THÍCH người dùng như `chiTiet` (giữ qua các bài); công tắc chỉ có mặt khi có nhãn mặc định
+     đang ẩn. §16.6: lời giải đầy đủ thu gọn mặc định; khi nó mở, ô soi không lặp công thức. */
+  const [xem, setXem] = useState<AnnotationView>(DEFAULT_ANNOTATION_VIEW);
+  const coAn = useMemo(() => hasHiddenByDefault(day), [day]);
+  const [moLoiGiai, setMoLoiGiai] = useState(false);
   //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.
@@ -266,6 +266,12 @@ export function Scene3DExplorer({
   };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
+  // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
+  const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
+  const giaTri = (id: string) => {
+    const o = day.objects.find((x) => x.id === id);
+    return o ? `${o.notation || ten(id)} = ${o.value ?? ""}` : ten(id);
+  };
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
   const tapNguon = useMemo(() => {
@@ -313,26 +319,15 @@ export function Scene3DExplorer({
           >
             <IconPanel side="right" /> Thành phần
           </button>
-          {coSoDo.measurements && (
+          {coAn && (
             <button
               type="button"
-              className={`geo3d-chip${soDo.measurements ? " la-mo" : ""}`}
-              onClick={() => setSoDo((s) => ({ ...s, measurements: !s.measurements }))}
-              aria-pressed={soDo.measurements}
-              title="Hiện dữ kiện và số đo ngay cạnh đoạn, mặt, khối mà chúng đo"
+              className={`geo3d-chip${xem.showAll ? " la-mo" : ""}`}
+              onClick={() => setXem((s) => ({ showAll: !s.showAll }))}
+              aria-pressed={xem.showAll}
+              title="Hiện mọi số đo và đáp số đã có ở bước này ngay cạnh vật chúng đo"
             >
-              <IconRuler /> Số đo
-            </button>
-          )}
-          {coSoDo.results && (
-            <button
-              type="button"
-              className={`geo3d-chip${soDo.results ? " la-mo" : ""}`}
-              onClick={() => setSoDo((s) => ({ ...s, results: !s.results }))}
-              aria-pressed={soDo.results}
-              title="Hiện đáp số trên hình từ bước nó được kết luận"
-            >
-              <IconFlag /> Kết quả
+              <IconRuler /> Hiện tất cả
             </button>
           )}
           <button
@@ -355,7 +350,9 @@ export function Scene3DExplorer({
           onInteraction={setTt}
           onSelect={chon}
           fitToken={fitToken}
-          annotationToggles={soDo}
+          annotationView={xem}
+          solutionOpen={moLoiGiai}
+          onSolutionOpenChange={setMoLoiGiai}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
@@ -417,10 +414,28 @@ export function Scene3DExplorer({
               </p>
             )}
 
-            {formula && (
+            {/* §16.6: MỘT nơi mang công thức — ô soi khi lời giải thu gọn, lời giải khi nó mở. */}
+            {formula && !moLoiGiai && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>
+            )}
+
+            {nguon && nguon.givens.length + nguon.inputs.length > 0 && (
+              <dl className="geo3d-soi-nguon">
+                {nguon.givens.length > 0 && (
+                  <>
+                    <dt>Từ dữ kiện đề cho</dt>
+                    <dd>{nguon.givens.map(giaTri).join(", ")}</dd>
+                  </>
+                )}
+                {nguon.inputs.length > 0 && (
+                  <>
+                    <dt>Tính trực tiếp từ</dt>
+                    <dd>{[...new Set(nguon.inputs.map(ten))].join(", ")}</dd>
+                  </>
+                )}
+              </dl>
             )}
 
             {/* THIẾT DIỆN — đáp án của cả một họ bài, nên nó được nói đủ:
