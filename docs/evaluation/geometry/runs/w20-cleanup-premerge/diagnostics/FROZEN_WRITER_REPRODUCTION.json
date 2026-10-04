@@ -1,0 +1,19 @@
+{
+  "schema_version": "w20-frozen-writer-reproduction/1",
+  "issue": "ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE",
+  "date": "2026-10-04",
+  "measured_at_commit": "f0edcd11 (product code of this script unchanged since W19)",
+  "method": "copy of docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/ to a temp folder; module constant RECONCILIATION_DIR pointed at the copy; old run_reconciliation() called once; SHA-256 per file before/after. The real folder was never written.",
+  "result": {
+    "ATTRIBUTION_AUDIT.json": "same",
+    "CORRECTED_REPLAY_RESULT.json": "same",
+    "FINAL_DECISION.json": "same",
+    "SOURCE_EVIDENCE_INTEGRITY.json": "CHANGED (5288ac6fc43acd64… -> 3fd839632fd45662…, first 16 hex of SHA-256 of the checked-out bytes)"
+  },
+  "changed_field": {
+    "path": "note",
+    "frozen": "Raw response preview truncated at 500 chars (SHA-256 61841d5b8c342123... != expected 47e161b8af8dfa58...). Full candidate text was not serialized to disk.",
+    "regenerated": "Raw response file not found in scratch directory."
+  },
+  "root_cause": "run_reconciliation() always writes its four outputs into the frozen reconciliation folder, and SOURCE_EVIDENCE_INTEGRITY.note depends on a file OUTSIDE the repository (another tool's scratch folder) that existed when the folder was frozen and no longer exists. Two tests of backend/tests/geometry/test_second_family_live_measurement_reconciliation.py call it (test_missing_raw_response_not_inferred, test_offline_replay_zero_network), so every full pytest run rewrites the frozen note (W19 RUN.json incident). Line endings are not the cause: the checked-out copy and the rewrite both carry 17 CRLF."
+}

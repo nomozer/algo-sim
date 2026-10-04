@@ -59,10 +59,10 @@ def test_evidence_hash_mismatch_rejected(tmp_path: Path):
     assert verified is False
 
 
-def test_missing_raw_response_not_inferred():
+def test_missing_raw_response_not_inferred(tmp_path: Path):
     """2. Raw response missing from disk must NOT be inferred or hallucinated from reports."""
     # When raw response is not on disk or truncated, integrity must declare INSUFFICIENT
-    res = R.run_reconciliation()
+    res = R.run_reconciliation(tmp_path)
     # In the current workspace, raw response preview is truncated, so integrity must be INSUFFICIENT
     assert res["final_decision"] == "HISTORICAL_EVIDENCE_INSUFFICIENT"
     assert res["source_response_hash_verified"] is False
@@ -159,11 +159,49 @@ def test_r2_green_after_production_entry_point_succeeds():
 
 # ── Requirement 9: Zero Network / Zero Transport ─────────────────────────────
 
-def test_offline_replay_zero_network():
+def test_offline_replay_zero_network(tmp_path: Path):
     """9. Offline reconciliation and replay must make ZERO network/transport calls."""
     with patch("httpx.Client") as mock_client:
-        R.run_reconciliation()
+        R.run_reconciliation(tmp_path)
         mock_client.assert_not_called()
+
+
+# ── W20: the frozen reconciliation folder is read-only evidence ──────────────
+#
+# Before W20 every full pytest run rewrote SOURCE_EVIDENCE_INTEGRITY.json in the frozen folder: its `note`
+# depends on a file outside the repository that no longer exists
+# (docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/FROZEN_WRITER_REPRODUCTION.json).
+
+_OUTPUTS = ["ATTRIBUTION_AUDIT.json", "CORRECTED_REPLAY_RESULT.json", "FINAL_DECISION.json",
+            "SOURCE_EVIDENCE_INTEGRITY.json"]
+
+
+def _hashes(folder: Path) -> dict[str, str]:
+    return {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(folder.iterdir()) if p.is_file()}
+
+
+def _git_status(path: Path) -> str:
+    import subprocess
+
+    return subprocess.run(["git", "status", "--porcelain", "--", str(path.relative_to(REPO_ROOT))], cwd=REPO_ROOT,
+                          capture_output=True, text=True, check=True).stdout
+
+
+def test_w20_reconciliation_writes_only_to_its_explicit_output_folder(tmp_path: Path):
+    frozen = R.RECONCILIATION_DIR
+    before, status_before = _hashes(frozen), _git_status(R.EVAL_DIR)
+    R.run_reconciliation(tmp_path / "out")
+    assert _hashes(frozen) == before
+    assert _git_status(R.EVAL_DIR) == status_before
+    assert sorted(p.name for p in (tmp_path / "out").iterdir()) == _OUTPUTS
+
+
+def test_w20_reconciliation_refuses_the_frozen_folder():
+    frozen = R.RECONCILIATION_DIR
+    before = _hashes(frozen)
+    with pytest.raises(ValueError, match="frozen"):
+        R.run_reconciliation(frozen)
+    assert _hashes(frozen) == before
 
 
 # ── Requirement 10: Original Historical Artifacts Preserved ───────────────────

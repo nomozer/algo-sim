@@ -157,9 +157,17 @@ def corrected_pipeline_harness_call(contract: Any) -> dict[str, Any]:
 
 # ─── RECONCILIATION RUNNER ───────────────────────────────────────────────────
 
-def run_reconciliation() -> dict[str, Any]:
-    """Run full measurement reconciliation across Gate A, B, C, D."""
-    RECONCILIATION_DIR.mkdir(parents=True, exist_ok=True)
+def run_reconciliation(out_dir: Path) -> dict[str, Any]:
+    """Run full measurement reconciliation across Gate A, B, C, D.
+
+    The four outputs go to `out_dir` (required). `RECONCILIATION_DIR` is frozen evidence and is refused:
+    `SOURCE_EVIDENCE_INTEGRITY.note` depends on a file outside the repository, so regenerating there rewrote
+    history on every pytest run (W20, ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE).
+    """
+    out_dir = Path(out_dir)
+    if out_dir.resolve() == RECONCILIATION_DIR.resolve():
+        raise ValueError(f"{RECONCILIATION_DIR} is frozen evidence; write to a temporary folder or a new run")
+    out_dir.mkdir(parents=True, exist_ok=True)
     
     # ── GATE A: Source Evidence Integrity ──
     # Check scratch location for raw response matching EXPECTED_RESPONSE_SHA256
@@ -210,7 +218,7 @@ def run_reconciliation() -> dict[str, Any]:
             "docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/FINAL_DECISION.json"
         ]
     }
-    (RECONCILIATION_DIR / "SOURCE_EVIDENCE_INTEGRITY.json").write_text(
+    (out_dir / "SOURCE_EVIDENCE_INTEGRITY.json").write_text(
         json.dumps(source_evidence_integrity, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8"
     )
@@ -243,7 +251,7 @@ def run_reconciliation() -> dict[str, Any]:
         "original_pipeline_result": "NOT_MEASURABLE",
         "original_pipeline_apparatus_error": True
     }
-    (RECONCILIATION_DIR / "ATTRIBUTION_AUDIT.json").write_text(
+    (out_dir / "ATTRIBUTION_AUDIT.json").write_text(
         json.dumps(attribution_audit, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8"
     )
@@ -268,7 +276,7 @@ def run_reconciliation() -> dict[str, Any]:
         "measurement_apparatus_repaired": True,
         "note": "Replay with live candidate data was not executed because the full raw response was not retained on disk. Evaluator and harness were verified offline via synthetic red/green tests."
     }
-    (RECONCILIATION_DIR / "CORRECTED_REPLAY_RESULT.json").write_text(
+    (out_dir / "CORRECTED_REPLAY_RESULT.json").write_text(
         json.dumps(corrected_replay_result, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8"
     )
@@ -295,7 +303,7 @@ def run_reconciliation() -> dict[str, Any]:
         "merge_allowed": False,
         "next_action": "SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION"
     }
-    (RECONCILIATION_DIR / "FINAL_DECISION.json").write_text(
+    (out_dir / "FINAL_DECISION.json").write_text(
         json.dumps(final_decision, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8"
     )
@@ -304,5 +312,10 @@ def run_reconciliation() -> dict[str, Any]:
 
 
 if __name__ == "__main__":
-    dec = run_reconciliation()
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", type=Path, required=True,
+                    help="output folder (a temporary folder or a new run; the frozen folder is refused)")
+    dec = run_reconciliation(ap.parse_args().out)
     print("Reconciliation completed. Final decision:", dec["final_decision"])

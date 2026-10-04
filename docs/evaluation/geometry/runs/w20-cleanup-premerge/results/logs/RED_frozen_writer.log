@@ -1,0 +1,52 @@
+.F......FFF.                                                             [100%]
+================================== FAILURES ===================================
+___________________ test_missing_raw_response_not_inferred ____________________
+
+tmp_path = WindowsPath('C:/Users/Bunny/AppData/Local/Temp/pytest-of-Bunny/pytest-87/test_missing_raw_response_not_0')
+
+    def test_missing_raw_response_not_inferred(tmp_path: Path):
+        """2. Raw response missing from disk must NOT be inferred or hallucinated from reports."""
+        # When raw response is not on disk or truncated, integrity must declare INSUFFICIENT
+>       res = R.run_reconciliation(tmp_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_reconciliation() takes 0 positional arguments but 1 was given
+
+tests\geometry\test_second_family_live_measurement_reconciliation.py:65: TypeError
+______________________ test_offline_replay_zero_network _______________________
+
+tmp_path = WindowsPath('C:/Users/Bunny/AppData/Local/Temp/pytest-of-Bunny/pytest-87/test_offline_replay_zero_netwo0')
+
+    def test_offline_replay_zero_network(tmp_path: Path):
+        """9. Offline reconciliation and replay must make ZERO network/transport calls."""
+        with patch("httpx.Client") as mock_client:
+>           R.run_reconciliation(tmp_path)
+E           TypeError: run_reconciliation() takes 0 positional arguments but 1 was given
+
+tests\geometry\test_second_family_live_measurement_reconciliation.py:165: TypeError
+______ test_w20_reconciliation_writes_only_to_its_explicit_output_folder ______
+
+tmp_path = WindowsPath('C:/Users/Bunny/AppData/Local/Temp/pytest-of-Bunny/pytest-87/test_w20_reconciliation_writes0')
+
+    def test_w20_reconciliation_writes_only_to_its_explicit_output_folder(tmp_path: Path):
+        frozen = R.RECONCILIATION_DIR
+        before, status_before = _hashes(frozen), _git_status(R.EVAL_DIR)
+>       R.run_reconciliation(tmp_path / "out")
+E       TypeError: run_reconciliation() takes 0 positional arguments but 1 was given
+
+tests\geometry\test_second_family_live_measurement_reconciliation.py:193: TypeError
+______________ test_w20_reconciliation_refuses_the_frozen_folder ______________
+
+    def test_w20_reconciliation_refuses_the_frozen_folder():
+        frozen = R.RECONCILIATION_DIR
+        before = _hashes(frozen)
+        with pytest.raises(ValueError, match="frozen"):
+>           R.run_reconciliation(frozen)
+E           TypeError: run_reconciliation() takes 0 positional arguments but 1 was given
+
+tests\geometry\test_second_family_live_measurement_reconciliation.py:203: TypeError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_second_family_live_measurement_reconciliation.py::test_missing_raw_response_not_inferred
+FAILED tests/geometry/test_second_family_live_measurement_reconciliation.py::test_offline_replay_zero_network
+FAILED tests/geometry/test_second_family_live_measurement_reconciliation.py::test_w20_reconciliation_writes_only_to_its_explicit_output_folder
+FAILED tests/geometry/test_second_family_live_measurement_reconciliation.py::test_w20_reconciliation_refuses_the_frozen_folder
+4 failed, 8 passed in 1.92s
