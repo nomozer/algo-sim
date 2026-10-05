@@ -490,7 +490,7 @@ async function cssReadiness(session, viewport) {
     + `const scene=pick('.geo3d'),box=pick('.geo3d-canvas'),canvas=pick('.geo3d-canvas canvas'),`
     + `controls=pick('.geo3d-controls'),controlButton=pick('.geo3d-controls button'),`
     + `controlText=pick('.geo3d-scrub-label'),`
-    + `solution=pick('.geo3d-loi-giai'),solutionTitle=pick('.geo3d-lg-ten-muc');`
+    + `solution=pick('.geo3d-loi-giai'),solutionTitle=pick('.geo3d-lg-ten-muc')||pick('.geo3d-lg-gap');`
     + `const actual={scene:scene&&style(scene),box:box&&style(box),canvas:canvas&&style(canvas),`
     + `controls:controls&&style(controls),controlButton:controlButton&&style(controlButton),`
     + `controlText:controlText&&style(controlText),`
@@ -743,6 +743,16 @@ async function quantityDrawer(session) {
     + `text:(e.textContent||'').replace(/\\s+/g,' ').trim()}))`);
 }
 
+/** Id các đại lượng ngăn «Đại lượng» liệt kê ở bước đang xem; chip vắng (chưa có đại lượng) ⇒ []. Mở rồi đóng. */
+async function quantityDrawerIds(session) {
+  const coChip = await session.eval(`[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
+    + `.some((b)=>(b.textContent||'').includes('Đại lượng'))`);
+  if (!coChip) return [];
+  const ids = (await quantityDrawer(session)).map((x) => x.id);
+  await closeQuantityDrawer(session);
+  return ids;
+}
+
 async function closeQuantityDrawer(session) {
   if (await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
 }
@@ -808,6 +818,8 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     const annotationDom = (await annotationState(session)).dom;
     const expectedAnnotations = expectedAnnotationIds(scene, anchor);
     // W18 §16.8 (đính chính): bước dựng TÔ SÁNG cạnh đang dựng — nét vẽ phải theo phân loại khuất.
+    // §0.1-1/2: kết quả ẩn cùng lời giải thu gọn đọc qua ngăn — ghi id của ngăn ở bước này (sau ảnh, trước bước sau).
+    const picker = await quantityDrawerIds(session);
     const dash = assessDashFollowsSpans(await jsonEval(session, "({spans:window.__geo3d_edge_spans||[],"
       + "dash_signature:window.__geo3d_edge_dash_signature||{},"
       + "highlighted:window.__geo3d_highlighted_render_owner_ids||[]})"));
@@ -823,6 +835,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       rendered: await renderedIds(session),
       focus_label: panel.label,
       panel,
+      picker,
       solution_collapsed: solState.body_collapsed,
       solution,
       expected_solution: expectedSolution,
@@ -896,7 +909,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index])
       && JSON.stringify(s.annotation_dom) === JSON.stringify(backwardAnnotations[s.index]) }));
   const structuredReferences = assessStructuredReferences(scene, {
-    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution })) });
+    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution, picker: s.picker })) });
   const roleCoverage = assessFormation(scenario.expected_formation, scene,
     steps.map((s) => ({ index: s.index, renderedSets: renderedSets(scene, s.rendered) })),
     scenario.formation_coverage.enforce, scenario.formation_coverage.measure);
@@ -1231,7 +1244,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       { timeoutMs: 8_000 },
     );
     const scrollAfterClick = await session.eval("Math.round(window.scrollY)");
+    // §0.1-1: vai trò của các dòng (kể cả dòng Kết quả của đích) đọc ở lời giải MỞ — thu gọn thì không có dòng.
+    await setSolutionOpen(session, true);
     const solutionCausal = await solutionState(session);
+    await setSolutionOpen(session, false);
     const declared = eventDeclaredClosure(scene.events, causalId);
     const causal = compareClosures(expectedClosure, declared, causalState.highlighted_ids);
     causal.declared_target_id = scenario.causal_target_id;
@@ -1289,8 +1305,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.screenshots.causal_selected = await capture(session, join(outDir, "causal_selected.png"));
     result.canvas_boxes.causal_selected = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
     result.capture_order.push("causal_selected");
+    await setSolutionOpen(session, true);
     result.screenshots.solution_causal_selected = await captureElement(session, ".geo3d-loi-giai",
       join(outDir, "solution_causal_selected.png"));
+    await setSolutionOpen(session, false);
     // W17 §15.5 — KHÔI PHỤC: bỏ chọn bằng nút "Bỏ chọn" của ô soi (không phải "Xem lại toàn hình",
     // vốn đặt lại camera), cuộn về ĐÚNG vị trí trung tính, rồi so camera · lựa chọn · cuộn · khung.
     const causalSelected = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalAfterFrame.sha256,

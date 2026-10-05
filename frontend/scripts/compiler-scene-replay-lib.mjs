@@ -817,7 +817,7 @@ export function assessFormation(expected, scene, observedSteps, enforced, measur
 /** Mọi tham chiếu CÓ CẤU TRÚC của cảnh phải hiện ở đúng bước (W14, thay heuristic
  *  nhãn "Đang dựng"). Bước quan sát k ↔ nhóm `expectedGeometryTimeline(scene)[k]`:
  *  (a) vật trọng tâm vẽ được của mọi sự kiện trong nhóm ⊆ vật renderer báo;
- *  (b) đại lượng trọng tâm và `readout_ids` của khung neo ⊆ bảng lời giải;
+ *  (b) đại lượng trọng tâm và `readout_ids` của khung neo ⊆ bảng lời giải ∪ ngăn «Đại lượng» (W1);
  *  (c) mọi `formula.references[*].entity_id` của đại lượng đang hiện được vẽ hoặc hiện;
  *  (d) tiến độ thiết diện của khung neo đúng số cạnh, khép, tô mà renderer báo. */
 export function assessStructuredReferences(scene, observed) {
@@ -837,8 +837,10 @@ export function assessStructuredReferences(scene, observed) {
       const cut = v.indexOf("#");
       return cut < 0 ? [v, null] : [v.slice(0, cut), v.slice(cut + 1)];
     }));
+    // regular-square-pyramid-w01 §0.1-1/2: lời giải thu gọn giấu dòng Kết quả — đại lượng vẫn HIỆN với người
+    // học qua ngăn «Đại lượng» (`picker` = id các nút của ngăn ở bước ấy).
     const dong = new Set([...(s.solution?.givens ?? []), ...(s.solution?.steps ?? []),
-      ...(s.solution?.results ?? [])]);
+      ...(s.solution?.results ?? []), ...(s.picker ?? [])]);
     // W18 §16.6: đại lượng gộp (`same_as`) hiện qua dòng của đại lượng nó trỏ tới.
     const panel = { has: (id) => dong.has(solutionRowOf(scene, id, dong)) };
     const hien = (id) => drawn.has(id) || panel.has(id);
@@ -915,6 +917,8 @@ export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth)
       && actual.controls.fontFamily !== baseline.div.fontFamily
       && actual.controlText.color !== baseline.span.color,
     // W12: số đo ở BẢNG LỜI GIẢI dưới thanh bước (dải trên khung đã gỡ).
+    // regular-square-pyramid-w01 §0.1-1: thu gọn mà không có dữ kiện/bước tính thì bảng không còn tiêu đề mục
+    // nào — chữ có kiểu đo ở nút mở lời giải (bộ chạy chọn `.geo3d-lg-gap` khi thiếu `.geo3d-lg-ten-muc`).
     solution_styled: Boolean(actual.solution && actual.solutionTitle)
       && actual.solution.display === "grid"
       && actual.solution.fontFamily !== baseline.div.fontFamily

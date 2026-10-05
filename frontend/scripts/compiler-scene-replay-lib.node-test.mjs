@@ -1327,3 +1327,17 @@ test("§0.1-1 playback: collapsed solution hides the Results card at every step;
   assert.equal(bad.checks.solution_in_sync_with_geometry_step.pass, false);
   assert.equal(bad.checks.final_result_shown_once.pass, false);
 });
+
+test("§0.1-1 structured references: a result hidden with the collapsed solution counts when the drawer lists it", () => {
+  for (const family of ["triangular_pyramid", "cross_section"]) {
+    const sc = w11Scene(family);
+    const thuGon = quanSatRenderer(sc).map((s) => ({ ...s, solution: { ...s.solution, results: [] } }));
+    const v = assessStructuredReferences(sc, { steps: thuGon });
+    assert.equal(v.pass, false, `${family}: hidden result must not pass without the drawer`);
+    assert.ok(v.fail.some((f) => f.check === "b"), family);
+    const coNgan = quanSatRenderer(sc).map((s) => ({ ...s, solution: { ...s.solution, results: [] },
+      picker: [...s.solution.results, ...s.solution.steps, ...s.solution.givens] }));
+    const w = assessStructuredReferences(sc, { steps: coNgan });
+    assert.equal(w.pass, true, `${family}: ${JSON.stringify(w.fail.slice(0, 3))}`);
+  }
+});
