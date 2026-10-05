@@ -259,6 +259,60 @@ def test_cong_thuc_the_tich_tham_chieu_dien_tich_day_va_chieu_cao():
     assert {"dien_tich_day_ABCD", "chieu_cao_SO"} <= so
 
 
+def _chop_chu_nhat_co_ca_SA_va_khoang_cach():
+    """Chương trình kiểu LLM phục vụ được TRƯỚC W1 (CACHE_VERSION 111): chóp đáy chữ nhật, SA ⊥ đáy cho trong
+    đề, mô hình vừa khai SA_length vừa đo d(S, (ABC)). Trước W1 công thức là `V = 1/3 × S(ABCD) × SA`."""
+    van = ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, SA vuông góc với mặt phẳng "
+           "(ABCD), SA = 6. Tính thể tích khối chóp S.ABCD.")
+    pay = {"input_facts": [_f("f_ab", "AB", "3"), _f("f_ad", "AD", "4"), _f("f_sa", "SA", "6")],
+           "obligations": [{"kind": "volume", "container": "khoi_chop", "witness": THE_TICH}],
+           "solid_topology": {"solid_kind": "pyramid", "apex": "S", "base_cycle": list("ABCD"),
+                              "base_shape": "rectangle"}}
+    mem = [{"name": n, "type": "float", "provenance": "GIVEN", "source_fact_id": f, "initial_value": v}
+           for n, f, v in (("AB_length", "f_ab", "3"), ("AD_length", "f_ad", "4"), ("SA_length", "f_sa", "6"))]
+    mem += [{"name": p, "type": "point3", "provenance": "LAYOUT_DERIVED"} for p in "SABCD"]
+    mem += [{"name": "day_ABCD", "type": "polygon3"}, {"name": "mp_day", "type": "plane3"},
+            {"name": "khoi_chop", "type": "solid"}, {"name": "dt", "type": "float"}, {"name": "h", "type": "float"},
+            {"name": THE_TICH, "type": "float"}]
+    toa = {"A": "000", "B": "300", "C": "340", "D": "040", "S": "006"}
+    st = [{"kind": "declare_point", "target_var": p, "at": list(v)} for p, v in toa.items()]
+    st += [{"kind": "construct_polygon", "target_var": "day_ABCD", "vertices": list("ABCD"), "label": "Đáy ABCD"},
+           {"kind": "construct_solid", "target_var": "khoi_chop", "vertices": list("SABCD"),
+            "faces": [list("ABCD"), list("SAB"), list("SBC"), list("SCD"), list("SDA")], "label": "S.ABCD"},
+           {"kind": "construct_plane", "target_var": "mp_day", "through": ["A", "B", "C"]},
+           {"kind": "assign", "target_var": "dt", "expr": {"kind": "measure", "quantity": "area", "of": "day_ABCD"}},
+           {"kind": "assign", "target_var": "h",
+            "expr": {"kind": "measure", "quantity": "distance", "of": "S", "wrt": "mp_day"}},
+           {"kind": "assign", "target_var": THE_TICH,
+            "expr": {"kind": "measure", "quantity": "volume", "of": "khoi_chop"}}]
+    return W.hop_dong(van, pay), {"spec_version": "1.0", "title": "Chóp S.ABCD", "memory_declarations": mem,
+                                  "statements": st}
+
+
+def test_canh_ben_bang_khoang_cach_van_la_chieu_cao_cua_cong_thuc():
+    """Hồi quy W1 (đầu dò cache): luật chiều cao ĐO thêm d(S, (ABC)) làm ứng viên thứ hai, và công thức thể
+    tích — cần đúng MỘT ứng viên — biến mất. SA bằng khoảng cách từ S tới mặt đáy ⇒ SA là chiều cao: giữ
+    công thức trước W1."""
+    _sp, out, scene = W.chay(*_chop_chu_nhat_co_ca_SA_va_khoang_cach())
+    assert out.servable, (out.stage_reached, out.reason_code, out.details)
+    V = next(o for o in scene["objects"] if o["id"] == THE_TICH)
+    assert (V.get("formula") or {}).get("text") == "V = 1/3 × S(ABCD) × SA = 24", V.get("formula")
+
+
+def test_canh_ben_khong_vuong_goc_khong_thanh_chieu_cao_cua_chop_deu():
+    """Chóp đều S4 mà mô hình đặt tên cạnh bên là SA_length (= 3, KHÔNG vuông góc đáy): công thức không được
+    nói `× SA`; chiều cao là khoảng cách đo được từ S tới mặt đáy."""
+    contract, prog = CA["S4_side_lateral_volume"]()
+    for m in prog["memory_declarations"]:
+        if m["name"] == "canh_ben":
+            m["name"] = "SA_length"
+    _sp, out, scene = W.chay(contract, prog)
+    assert out.servable, (out.stage_reached, out.reason_code, out.details)
+    V = next(o for o in scene["objects"] if o["id"] == THE_TICH)
+    refs = [r["entity_id"] for r in (V.get("formula") or {}).get("references", [])]
+    assert refs == ["dien_tich_day_ABCD", "chieu_cao_SO"], V.get("formula")
+
+
 def test_du_kien_khong_ten_doan_mang_nhan_cua_fact_de():
     """'cạnh đáy bằng 4' không có tên đoạn; khai báo bộ nhớ không có ô nhãn — học sinh phải đọc 'Cạnh đáy = 4',
     không phải 'đại lượng = 4' (nhãn mượn từ InputFact mà khai báo GIVEN trích dẫn)."""

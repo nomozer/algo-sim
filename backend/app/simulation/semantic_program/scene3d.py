@@ -642,6 +642,13 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
             # thể sai — không in còn hơn in sai.
             cao = [by_id[source_id] for source_id in numerical
                    if source_id != (area or {}).get("id")]
+            # regular-square-pyramid-w01: khoảng cách ĐO từ đỉnh tới mặt đáy là chiều cao theo định nghĩa. Có nó
+            # thì một cạnh chỉ là chiều cao khi BẰNG nó (SA ⊥ đáy — giữ công thức `× SA` như trước W1); cạnh bên
+            # xiên của chóp đều không bao giờ thành chiều cao của công thức.
+            do = [c for c in cao if c.get("producer") == "measure.distance"]
+            if len(cao) > 1 and len(do) == 1:
+                bang = [c for c in cao if c is not do[0] and c.get("value") == do[0].get("value")]
+                cao = bang if len(bang) == 1 else do
             height = cao[0] if len(cao) == 1 else None
             solid = next(
                 (by_id[edge["source_id"]]
