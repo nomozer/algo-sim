@@ -59,7 +59,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANDIDATE = b2d4187a… (was 27c31de6…; một lần đóng băng), product commit 284a9bfa
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
 > CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp của việc cuboid-visual-semantic-closure, không đánh số wave; không đổi mã sản phẩm)
-> FINAL_DECISION = AWAITING_USER_VISUAL_APPROVAL (cuboid-merge) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói duyệt A–F: runs/cuboid-merge/REVIEW.md)
+> FINAL_DECISION = APPROVED_INTEGRATION_IN_PROGRESS (cuboid-merge) · HUMAN_VISUAL_REVIEW = APPROVED_BY_USER (A–F, 2026-10-05; nguyên văn: runs/cuboid-merge/APPROVAL.md)
 > CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (người dùng chọn họ từ `ROADMAP.md` §0.2 — đề xuất `regular-square-pyramid-w01`, chưa chọn; chỉnh sửa giao diện §0.1; chặn merge: chỉ còn phê duyệt hình theo `runs/cuboid-merge/REVIEW.md`; việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã cập nhật, bắt đầu ở W1)
 > ```

@@ -13,8 +13,8 @@ PRODUCT_COMMIT_SHA = 284a9bfad7e815f7a2228eca89736f714b53c26c (không đổi tro
 CANDIDATE_HASH = b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af
 VISUAL_EVIDENCE_TRANSFER_RESULT = TRANSFERRED — fixture W18 tái sinh offline trùng từng byte bản đã đo (manifest 10dbe2de…); 32/32 fixture ở 37b23f04 chỉ khác product_commit_sha/product_tree_sha; frontend chỉ đổi trong UnsupportedNotice (mã từ chối không fixture W18 nào mang) + một trường kiểu; viewport/camera/kỳ vọng không đổi (results/logs/TRANSFER.log, results/FIXTURE_TRANSFER.json)
 NEW_CAPTURES_IF_ANY = NONE
-HUMAN_VISUAL_REVIEW = NOT_APPROVED — chờ trả lời A–F của REVIEW.md
-APPROVAL_REFERENCE = NONE
+HUMAN_VISUAL_REVIEW = APPROVED_BY_USER — A–E ACCEPTED, F ACCEPTED (F1–F5 hoãn, vẫn mở), lời người dùng 2026-10-05
+APPROVAL_REFERENCE = APPROVAL.md (nguyên văn + phạm vi; gói REVIEW.md @ 1e03ef82, candidate b2d4187a)
 LOCAL_MAIN_SHA = a9492ee98ff9dc3302d1ff64465f1c06e9001bce
 REMOTE_MAIN_SHA = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git fetch --prune + ls-remote đầu run)
 CANDIDATE_VERIFY = PASS (b2d4187a…, 110 file; worktree tách rời sạch D:/tmp/cmerge-verify tại 1e03ef82, đã gỡ) — results/logs/GATES_FINAL.log
@@ -26,8 +26,8 @@ BRANCH_DELETION_RESULT = NOT_ATTEMPTED
 CI_RESULT = NOT_APPLICABLE (kho không có cấu hình CI)
 USER_FAVICON_DELETION_PRESERVED = YES
 LIVE_GEMINI_REQUESTS = 0
-FINAL_DECISION = AWAITING_USER_VISUAL_APPROVAL
-NEXT_ACTION = người dùng trả lời ACCEPTED hoặc NEEDS_CHANGES cho A–F của REVIEW.md
+FINAL_DECISION = APPROVED_INTEGRATION_IN_PROGRESS (kết quả merge/push/xoá nhánh ghi ở commit sau trên main)
+NEXT_ACTION = fast-forward main, kiểm cây tích hợp, push main, xoá nhánh local
 ```
 
 ## Khi có phê duyệt tường minh
