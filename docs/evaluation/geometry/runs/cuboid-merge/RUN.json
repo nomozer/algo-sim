@@ -1,0 +1,23 @@
+{
+ "schema_version": "run/1",
+ "run_id": "cuboid-merge",
+ "task": "CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION",
+ "task_slug": "cuboid-visual-semantic-closure",
+ "run_kind": "review package and integration of the work; no wave number (name set by the brief; docs/evaluation/RUN_NAMING.md)",
+ "date": "2026-10-05",
+ "branch": "fix/cuboid-visual-semantic-closure",
+ "start_head": "37b23f04ce07a1e57a1c974af56316447205c571",
+ "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (fetch --prune + ls-remote at the start; local main identical; ancestor of HEAD; HEAD 271 ahead, 0 behind; branch not on the remote)",
+ "product_change": "NONE",
+ "candidate": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af (product commit 284a9bfad7e815f7a2228eca89736f714b53c26c)",
+ "cache_version": "111",
+ "default_mode": "LLM_ONLY",
+ "live_gemini_requests": 0,
+ "transfer_method": {
+  "fixtures": "backend/scripts/generate_generic_tier_a_fixtures.py --out <scratch> in clean detached worktrees at 0ca3accf7e921797e75aebcbc19e3a05b2557859 (w18 measurement) and 37b23f04ce07a1e57a1c974af56316447205c571, GEMINI_API_KEY unset, HTTP(S) proxy pointed at a closed port, no backend/.env in either worktree; worktrees and fixture folders removed after the comparison",
+  "comparison": "diagnostics/fixture_transfer_cmerge.py → results/FIXTURE_TRANSFER.json (reproduction against w18 results/BROWSER_EVIDENCE.json fixture_manifest_sha256; every differing JSON path of all 32 fixtures)",
+  "frontend": "git diff 0ca3accf..37b23f04 of frontend/ (results/logs/TRANSFER.log)"
+ },
+ "verification": "diagnostics/cmerge_gates.sh in a clean detached worktree at the documentation commit → results/logs/GATES_FINAL.log",
+ "subagents": 0
+}

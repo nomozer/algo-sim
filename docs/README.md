@@ -54,7 +54,9 @@
 - [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ ở gốc `docs/` theo chủ đề
   (danh sách đóng; bất biến, đọc như bằng chứng tại thời điểm đo).
 - [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
-- Run mới nhất: [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (lượt chốt của việc cuboid:
+- Run mới nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
+  sang candidate hiện hành) · [`cuboid-acceptance`](evaluation/geometry/runs/cuboid-acceptance/) (đối chiếu 24 bất
+  biến) · [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (lượt chốt của việc cuboid:
   rà soát trọn tài liệu, thẻ từ chối §17) · [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)
   (đóng tính đúng trước merge, dọn kho có giới hạn) · [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/)
   (tổ chức tài liệu) · [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/) (hình ảnh hiện hành, chờ

@@ -967,3 +967,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** AUTHORITATIVE_RECONCILIATION_OF_ARCHITECTURE_MAP_§5 — 24 rows: 9 CURRENT_ENFORCED, 1 CURRENT_UNVERIFIED (#14, ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM), 14 HISTORICAL_NOT_APPLICABLE, 0 VIOLATED; not visual acceptance (human review NOT_APPROVED)
 - **AUTHORITATIVE_FILES:** `RUN.json` · `HANDOFF.md` · `REPORT.md` · `results/INVARIANT_RECONCILIATION.json` · `diagnostics/invariant_checks_cacc.sh` · `diagnostics/cacc_gates.sh` · `results/logs/INVARIANT_CHECKS_FINAL.log` · `results/logs/DOCS_GATES_FINAL.log`
 - **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief; `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION
+- **RUN_ID:** cuboid-merge (review package and integration of the work cuboid-visual-semantic-closure; no wave number)
+- **DATE:** 2026-10-05
+- **REPORT:** docs/evaluation/geometry/runs/cuboid-merge/REVIEW.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/cuboid-merge/
+- **START_BASE:** 37b23f04
+- **CODE_COMMIT:** NONE (documentation only; product commit 284a9bfa, candidate b2d4187a unchanged)
+- **MEASUREMENT_COMMIT:** fixture transfer at 0ca3accf (w18 measurement) and 37b23f04, clean detached worktrees, offline generator; gates at the documentation commit of this run
+- **EVIDENCE_COMMIT_ROLE:** documentation commit (REVIEW, HANDOFF, RUN.json, FIXTURE_TRANSFER.json, TRANSFER.log, scripts, living docs) · final log commit (`results/logs/GATES_FINAL.log`)
+- **CLASSIFICATION:** AWAITING_USER_VISUAL_APPROVAL
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (extends the w18 visual evidence to candidate b2d4187a; w18 artifacts unchanged)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** TRANSFER_OF_W18_VISUAL_EVIDENCE_TO_CANDIDATE_b2d4187a — the regenerated w18 fixtures are byte-exact (manifest 10dbe2de…), the 32 current fixtures differ only in product_commit_sha/product_tree_sha, frontend changes are confined to the refusal card; not visual acceptance (human review NOT_APPROVED)
+- **AUTHORITATIVE_FILES:** `REVIEW.md` · `HANDOFF.md` · `RUN.json` · `results/FIXTURE_TRANSFER.json` · `results/logs/TRANSFER.log` · `diagnostics/fixture_transfer_cmerge.py` · `diagnostics/cmerge_gates.sh` · `results/logs/GATES_FINAL.log`
+- **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief; `docs/evaluation/RUN_NAMING.md`)

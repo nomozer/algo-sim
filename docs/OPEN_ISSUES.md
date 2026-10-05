@@ -410,6 +410,7 @@
 - **impact:** For those four scenes the hidden-line gate cannot be green without a person; no visibility regression is measured.
 - **scope:** Evaluation evidence (human registry); no product code.
 - **status:** OPEN — needs human re-review of the four scenes and a new registry layer (the reviewed registry stays byte-identical).
+- **cmerge:** (2026-10-05, `cuboid-merge`) the four scenes are group C of `docs/evaluation/geometry/runs/cuboid-merge/REVIEW.md`; their w18 images transfer to candidate `b2d4187a` (regenerated fixtures equal except the two identity fields). Still waiting for a person.
 - **w15:** with the opt-in flag `--pending-human-review` (user decision U2), the four scenes count as `HUMAN_REVIEW_PENDING`, not as failures. That holds only while the independent oracle reproduces the reviewed sets at the registered and at the new camera and the product equals the oracle on every state; anything else is still a failure. Measured at `c57ebd1b`: verdict `HUMAN_REVIEW_PENDING`, product = oracle 24/24, cuboid and cube `DECLARED_CAMERA_CHANGE` (`docs/evaluation/geometry/runs/w15-assumption-closure/results/OCCLUSION_MEASUREMENT.json`). The cross-section's closed fill is now visible, so the reviewer also sees that change. Automation writes no `APPROVED_BY_USER`.
 - **owner_class:** EVALUATION
 - **suggested_wave:** `HUMAN_VISUAL_REVIEW_OF_ASSUMPTION_CLOSURE_EVIDENCE` (W15-H1)
@@ -651,7 +652,7 @@
 ### ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM
 - **description:** Invariant #14 (live evaluation is opt-in) has no lock over `backend/scripts` as a whole. Thirty scripts check `ALLOW_LIVE_AI` and five require `--live` or `--execute-live --confirm-live-execution`, but two scripts that can call the model have no opt-in: `run_live_gemini_semantic_smoke.py` (2026-08-20, informatics prompts; loads `backend/.env` at import and calls Gemini whenever `GEMINI_API_KEY` is set) and `run_rectangular_pyramid_live_analyze.py` (2026-09-24; one live Analyze request by default, `--offline-eval` opts out instead of in).
 - **evidence:** static probe, part 5 of `docs/evaluation/geometry/runs/cuboid-acceptance/diagnostics/invariant_checks_cacc.sh` (54 scripts listed with their opt-in tokens, `call_gemini` stub and call sites), then both scripts read by hand. Not reproduced by a run: that would need a live call and reading `backend/.env`.
-- **impact:** running either script by name spends quota without the `ALLOW_LIVE_AI=1` decision the repository requires (`CLAUDE.md` §6). No effect on the product, the learner, the candidate or any acceptance measurement (all made 0 live calls). Both scripts are already on `main`.
+- **impact:** running either script by name spends quota without the `ALLOW_LIVE_AI=1` decision the repository requires (`CLAUDE.md` §6). No effect on the product, the learner, the candidate or any acceptance measurement (all made 0 live calls). That both scripts already sit on `main` is history, not evidence that they are safe (`cuboid-merge`).
 - **scope:** `backend/scripts` only: retire or gate the informatics smoke script, make the pyramid script opt in, add one AST test that fails for a script with a model call site and no opt-in; no product code, no candidate change.
 - **status:** OPEN (`cuboid-acceptance`) — registered, not fixed (no product or tooling change in that task).
 - **owner_class:** OPERATIONS

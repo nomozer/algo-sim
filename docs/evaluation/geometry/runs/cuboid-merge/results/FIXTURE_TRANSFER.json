@@ -1,0 +1,690 @@
+{
+ "schema_version": "fixture-transfer/1",
+ "old_dir": "D:\\tmp\\cmerge-fx-w18",
+ "new_dir": "D:\\tmp\\cmerge-fx-cur",
+ "reproduction": {
+  "recorded_fixture_manifest_sha256": "10dbe2defb5fcdf8c598d304dbd24afcf3385467e3832038a8cff2d766b9cd17",
+  "regenerated_old_fixture_manifest_sha256": "10dbe2defb5fcdf8c598d304dbd24afcf3385467e3832038a8cff2d766b9cd17",
+  "byte_exact": true
+ },
+ "fixtures": {
+  "cross_section_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cross_section_correct_plane.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cross_section_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cross_section_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cross_section_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cross_section_wrong_plane.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cube_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cube_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cube_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cube_system_cause.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cube_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cuboid_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cuboid_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cuboid_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "cuboid_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "rectangular_pyramid_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "rectangular_pyramid_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "rectangular_pyramid_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "rectangular_pyramid_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_prism_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_prism_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_prism_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_prism_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_pyramid_assumption.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_pyramid_negative.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_pyramid_positive.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "triangular_pyramid_ungrounded.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "w18_midpoint_mismatch.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "w18_midpoint_plane_distance.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "w18_projection_line.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "w18_projection_mismatch.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  },
+  "w18_unverified.json": {
+   "byte_equal": false,
+   "differing_paths": 2,
+   "by_top_level_key": {
+    "product_commit_sha": 1,
+    "product_tree_sha": 1
+   },
+   "paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "7a06ee473a481a1377d270b9a2318756807da91a",
+     "new": "284a9bfad7e815f7a2228eca89736f714b53c26c"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
+     "new": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "fixtures": 32,
+  "byte_equal": 0,
+  "different": [
+   "cross_section_assumption.json",
+   "cross_section_correct_plane.json",
+   "cross_section_negative.json",
+   "cross_section_positive.json",
+   "cross_section_ungrounded.json",
+   "cross_section_wrong_plane.json",
+   "cube_assumption.json",
+   "cube_negative.json",
+   "cube_positive.json",
+   "cube_system_cause.json",
+   "cube_ungrounded.json",
+   "cuboid_assumption.json",
+   "cuboid_negative.json",
+   "cuboid_positive.json",
+   "cuboid_ungrounded.json",
+   "rectangular_pyramid_assumption.json",
+   "rectangular_pyramid_negative.json",
+   "rectangular_pyramid_positive.json",
+   "rectangular_pyramid_ungrounded.json",
+   "triangular_prism_assumption.json",
+   "triangular_prism_negative.json",
+   "triangular_prism_positive.json",
+   "triangular_prism_ungrounded.json",
+   "triangular_pyramid_assumption.json",
+   "triangular_pyramid_negative.json",
+   "triangular_pyramid_positive.json",
+   "triangular_pyramid_ungrounded.json",
+   "w18_midpoint_mismatch.json",
+   "w18_midpoint_plane_distance.json",
+   "w18_projection_line.json",
+   "w18_projection_mismatch.json",
+   "w18_unverified.json"
+  ]
+ }
+}

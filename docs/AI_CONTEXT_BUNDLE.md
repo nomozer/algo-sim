@@ -20,12 +20,12 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = fix/cuboid-visual-semantic-closure (task slug cuboid-visual-semantic-closure)
-CURRENT_WAVE = CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF (run cuboid-acceptance — hồ sơ nghiệm thu, không đánh số; chỉ tài liệu)
-RUN_COMMITS = commit tài liệu của run + commit log kiểm chứng cuối (START 903e874c; vai trò: `RUN.json` của run)
+CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp, không đánh số; chỉ tài liệu)
+RUN_COMMITS = commit tài liệu của run + commit log kiểm chứng (START 37b23f04; vai trò: `RUN.json` của run)
 PRODUCT_STATE = byte sản phẩm không đổi từ 284a9bfa: candidate b2d4187a… (kiểm chứng a1c53cdb, worktree tách rời sạch), CACHE_VERSION 111
 ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (fetch + ls-remote đầu run: không đổi; nhánh chưa có trên remote)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cuboid-acceptance)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (checklist: runs/cuboid-acceptance/HANDOFF.md §1); MERGE_APPROVAL = NO
+FINAL_DECISION = AWAITING_USER_VISUAL_APPROVAL (cuboid-merge)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói duyệt A–F: runs/cuboid-merge/REVIEW.md); MERGE_APPROVAL = NO
 USER_DIRTY_STATE = D frontend/public/favicon.svg
 PUSH_EXECUTED = NO
 MERGE_EXECUTED = NO
@@ -87,9 +87,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
-- **Chặn merge:** chỉ còn review người `NOT_APPROVED` — checklist gộp ở `HANDOFF.md` §1 của run
-  `cuboid-acceptance`: W18-H1 (kèm W17-H1/W16-H1: bốn cảnh W14 đổi `HUMAN_REVIEW_PENDING`), thẻ từ chối §17 mới,
-  giới hạn đã khai. Đối chiếu bất biến không tìm thấy lỗi chặn nào (0 vi phạm).
+- **Chặn merge:** chỉ còn phê duyệt hình — gói A–F ở `REVIEW.md` của run `cuboid-merge` (W18-H1 kèm bốn cảnh W14
+  `HUMAN_REVIEW_PENDING`, thẻ từ chối hiện hành, giới hạn đề nghị hoãn). Ảnh W18 đã chứng minh chuyển tiếp sang
+  candidate `b2d4187a` (fixture trùng trừ hai trường danh tính). Đối chiếu bất biến không tìm thấy lỗi chặn (0 vi phạm).
 - **Đã quyết (người dùng, brief `cuboid-acceptance`):** H-CFR-2 giữ chữ thường và "toạ độ"; H-CFR-1 = backlog giao
   diện, không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính đề xuất, chưa xoá `RELATED_WORK_DRAFT`
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.
@@ -116,8 +116,8 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 
 Người dùng chọn họ hình từ `docs/ROADMAP.md` §0.2 (ứng viên + khoảng trống theo tầng, snapshot W13);
 wave làm họ ấy cùng chín chỉnh sửa giao diện đã chốt (§0.1) và giữ hồi quy §0.3. OCR và nhiều khối để
-sau, không tuyên bố đã hỗ trợ. Trước đó, để merge: duyệt hình theo checklist `HANDOFF.md` §1 của run
-`cuboid-acceptance`; khi có phê duyệt tường minh thì merge thẳng vào `main` (không PR), chạy cổng trên cây tích hợp,
+sau, không tuyên bố đã hỗ trợ. Trước đó, để merge: duyệt hình theo `REVIEW.md` của run `cuboid-merge` (A–F); khi có
+phê duyệt tường minh thì merge thẳng vào `main` (không PR), chạy cổng trên cây tích hợp,
 push, kiểm SHA remote, xoá nhánh đã merge. Việc kế tiếp chạy trên **nhánh mới rẽ từ `main` đã tích hợp và cập
 nhật**, bắt đầu ở **W1**. Đề xuất (người dùng chưa chọn): chóp tứ giác đều + chín chỉnh sửa giao diện, slug
 `regular-square-pyramid`, run đầu `regular-square-pyramid-w01` — `HANDOFF.md` §4 của run `cuboid-acceptance`.
@@ -126,6 +126,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `cuboid-merge` (gói duyệt + chuyển tiếp ảnh W18 sang `b2d4187a`): `docs/evaluation/geometry/runs/cuboid-merge/`
+  (`REVIEW.md`, `HANDOFF.md`, `RUN.json`, `results/FIXTURE_TRANSFER.json`, `results/logs/`).
 - Run `cuboid-acceptance` (đối chiếu 24 bất biến + hồ sơ nghiệm thu, chỉ tài liệu):
   `docs/evaluation/geometry/runs/cuboid-acceptance/` (`REPORT.md`, `HANDOFF.md`, `RUN.json`,
   `results/INVARIANT_RECONCILIATION.json`, `results/logs/`).

@@ -25,6 +25,8 @@
 
 | run | chủ đề |
 |---|---|
+| [`cuboid-merge`](geometry/runs/cuboid-merge/) | gói duyệt hình A–F trước khi merge; ảnh W18 chứng minh chuyển tiếp sang candidate `b2d4187a` (fixture tái sinh offline chỉ khác hai trường danh tính); 0 thay đổi sản phẩm |
+| [`cuboid-acceptance`](geometry/runs/cuboid-acceptance/) | đối chiếu 24 bất biến có con trỏ chết của `ARCHITECTURE_MAP` §5 (9 đang khoá, 1 chưa đủ bằng chứng, 14 lịch sử, 0 vi phạm); 0 thay đổi sản phẩm |
 | [`cuboid-final-review`](geometry/runs/cuboid-final-review/) | lượt chốt của việc cuboid (không đánh số wave): rà soát trọn tài liệu (lịch sử Tin học tách nguyên văn sang `legacy/`), luật đánh số wave theo từng việc, thẻ từ chối §17 nói "chưa kiểm chứng được phép dựng" |
 | [`w20-cleanup-premerge`](geometry/runs/w20-cleanup-premerge/) | đích quan hệ đặt bằng toạ độ bị từ chối (amendment §17), test không ghi bằng chứng đông cứng, dọn kho có bằng chứng |
 | [`w19-docs-organization`](geometry/runs/w19-docs-organization/) | tổ chức lại tài liệu, bản đồ tuyên bố ↔ bằng chứng, catalog đóng (0 thay đổi sản phẩm) |

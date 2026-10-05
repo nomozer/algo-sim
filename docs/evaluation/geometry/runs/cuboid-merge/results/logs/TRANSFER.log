@@ -1,0 +1,153 @@
+# cuboid-merge — transfer of the w18 visual evidence to candidate b2d4187a; 0 model calls
+# fixtures: backend/scripts/generate_generic_tier_a_fixtures.py --out D:/tmp/cmerge-fx-<w18|cur>, run from backend/ of clean detached worktrees D:/tmp/cmerge-w18 @ 0ca3accf7e921797e75aebcbc19e3a05b2557859 and D:/tmp/cmerge-cur @ 37b23f04ce07a1e57a1c974af56316447205c571; env -u GEMINI_API_KEY, HTTP(S)_PROXY=http://127.0.0.1:9; no backend/.env in either worktree; both exit 0, 32 fixtures each; git status of both worktrees 0 after
+## fixture comparison (diagnostics/fixture_transfer_cmerge.py -> results/FIXTURE_TRANSFER.json)
+reproduction: {"recorded_fixture_manifest_sha256": "10dbe2defb5fcdf8c598d304dbd24afcf3385467e3832038a8cff2d766b9cd17", "regenerated_old_fixture_manifest_sha256": "10dbe2defb5fcdf8c598d304dbd24afcf3385467e3832038a8cff2d766b9cd17", "byte_exact": true}
+fixtures: 32 | byte-equal: 0 | union of differing JSON paths over all fixtures: ['$.product_commit_sha', '$.product_tree_sha']
+  cross_section_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cross_section_correct_plane.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cross_section_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cross_section_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cross_section_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cross_section_wrong_plane.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cube_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cube_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cube_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cube_system_cause.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cube_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cuboid_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cuboid_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cuboid_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  cuboid_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  rectangular_pyramid_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  rectangular_pyramid_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  rectangular_pyramid_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  rectangular_pyramid_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_prism_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_prism_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_prism_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_prism_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_pyramid_assumption.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_pyramid_negative.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_pyramid_positive.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  triangular_pyramid_ungrounded.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  w18_midpoint_mismatch.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  w18_midpoint_plane_distance.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  w18_projection_line.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  w18_projection_mismatch.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+  w18_unverified.json: 2 paths {'product_commit_sha': 1, 'product_tree_sha': 1}
+## frontend/ changes 0ca3accf..37b23f04 (tests excluded), stat
+ frontend/scripts/compiler-scene-suite.mjs       | 9 +++++++--
+ frontend/scripts/generic-tier-a-scenarios.json  | 6 +++---
+ frontend/src/components/SimulationWorkspace.tsx | 9 ++++++++-
+ frontend/src/core/types.ts                      | 4 ++++
+ 4 files changed, 22 insertions(+), 6 deletions(-)
+## frontend/src product diff (full)
+diff --git a/frontend/src/components/SimulationWorkspace.tsx b/frontend/src/components/SimulationWorkspace.tsx
+index 4ce856b7..5ecdf9ae 100644
+--- a/frontend/src/components/SimulationWorkspace.tsx
++++ b/frontend/src/components/SimulationWorkspace.tsx
+@@ -150,6 +150,8 @@ export function UnsupportedNotice({
+     /** (W17 §15.3) Nguyên nhân từ chối — backend quyết từ mã có cấu trúc. Chỉ `SOURCE` mới mời
+      *  học sinh sửa đề; thiếu trường (envelope cũ) đi như `UNKNOWN`. */
+     refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
++    /** (W20 §17) Mã lý do chi tiết — chỉ để chọn nhãn loại vấn đề, không bao giờ hiển thị. */
++    reason_code?: string;
+   };
+ }) {
+   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
+@@ -274,7 +276,12 @@ export function UnsupportedNotice({
+      sai phía thứ hai — đọc nguyên nhân có cấu trúc, không dò chữ. */
+   /* (W18 §16.4) Ở chặng đối chiếu phép dựng điểm, nguyên nhân khác CONSTRUCTION nghĩa là hệ CHƯA đối
+      chiếu được — giới hạn của hệ, không phải dữ kiện của đề thiếu nguồn. */
+-  const nhanLoai = unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
++  /* (W20 §17) Điểm đề định nghĩa bằng quan hệ mà chương trình đặt bằng toạ độ: cùng nguyên nhân CONSTRUCTION
++     nhưng toạ độ có thể đúng — hệ CHƯA KIỂM CHỨNG được, chưa chứng minh là lệch. Nhãn "dựng lệch" chỉ dành cho
++     ca lệch đã chứng minh, nên mã chi tiết (có cấu trúc, không hiển thị) được đọc TRƯỚC nguyên nhân. */
++  const nhanLoai = unsupported.reason_code === "CONSTRUCTION_REPLACED_BY_COORDINATES"
++    ? "chưa kiểm chứng được phép dựng"
++    : unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
+     ? "hệ dựng lệch với đề bài"
+     : unsupported.stage_reached === "construction_binding" && khoaLoai === "input_not_grounded"
+     ? "hệ chưa đối chiếu được phép dựng với đề"
+diff --git a/frontend/src/core/types.ts b/frontend/src/core/types.ts
+index 2c7fe35c..7b47a4c3 100644
+--- a/frontend/src/core/types.ts
++++ b/frontend/src/core/types.ts
+@@ -78,6 +78,10 @@ export interface AnalysisUnsupported {
+   /** (W17 §15.3) Nguyên nhân từ chối do backend quyết từ mã có cấu trúc — chỉ để chọn gợi ý:
+    * `SOURCE` mời sửa dữ kiện trong đề; `CONSTRUCTION`/`UNKNOWN` không bao giờ bảo sửa đề. */
+   refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
++  /** (W20 §17, thẻ sửa ở cuboid-final-review) Mã lý do chi tiết của backend — CHỈ để chọn nhãn "loại vấn
++   * đề" khi cùng một nguyên nhân gộp hai ca khác nhau (dựng lệch đã chứng minh vs chưa kiểm chứng được).
++   * KHÔNG BAO GIỜ hiển thị mã này. */
++  reason_code?: string;
+ }
+
+ export type AnalysisResult = AnalysisOk | AnalysisUnsupported;
+## harness and scenario manifest diff (full)
+diff --git a/frontend/scripts/compiler-scene-suite.mjs b/frontend/scripts/compiler-scene-suite.mjs
+index 6a024710..c651e6b2 100644
+--- a/frontend/scripts/compiler-scene-suite.mjs
++++ b/frontend/scripts/compiler-scene-suite.mjs
+@@ -1428,16 +1428,19 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
+   }
+ }
+
+-async function runNegative({ port, viewport, fixture, expected, outDir }) {
++export async function runNegative({ port, viewport, fixture, expected, outDir }) {
+   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
+   try {
+     await pollUntil(() => session.eval(`!!document.querySelector('.refusal-facts')`), Boolean);
+     // W16 §14.5: hộp của ĐOẠN LỜI từ chối (px CSS, toạ độ khung nhìn = toạ độ ảnh chụp) —
+     // bộ dựng sheet kiểm có chữ trong đúng hộp ấy, không chỉ kiểm tệp tồn tại.
++    // cuboid-final-review: nhãn "Loại vấn đề" (dd thứ hai của thẻ) đọc ra để kỳ vọng tuỳ chọn `problem_label`.
+     const observed = await jsonEval(session, `(()=>{const s=window.__ALGO_SIM_STORE__?.getState?.();`
+       + `const p=document.querySelector('.refusal-facts')?.closest('section')?.querySelector('p');`
+       + `const r=p?p.getBoundingClientRect():null;`
++      + `const dd=[...document.querySelectorAll('.refusal-facts dd')].map(e=>e.textContent.trim());`
+       + `return{unsupported:s?.unsupported||null,canvas:!!document.querySelector('.geo3d-canvas canvas'),`
++      + `stageLabel:dd[0]??null,problemLabel:dd[1]??null,`
+       + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
+       + `viewportWidth:window.innerWidth,`
+       + `refusalMessageBox:r?{x:r.left,y:r.top,w:r.width,h:r.height}:null}})()`);
+@@ -1479,6 +1482,8 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
+       contract_gate: assertion(kernelPass, fixture.contract_gate ?? null),
+       refusal_cause: assertion(!expected.refusal_cause || nguyenNhan === expected.refusal_cause,
+         { expected: expected.refusal_cause ?? null, actual: nguyenNhan }),
++      problem_label: assertion(!expected.problem_label || observed.problemLabel === expected.problem_label,
++        { expected: expected.problem_label ?? null, actual: observed.problemLabel }),
+       no_fix_text_advice_without_source_cause: assertion(nguyenNhan === "SOURCE" || baoSuaDe.length === 0,
+         { refusal_cause: nguyenNhan, phrases: baoSuaDe }),
+       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
+@@ -1506,7 +1511,7 @@ const BAO_SUA_DE = ["diễn đạt lại", "kiểm tra lại đề", "đối chi
+
+ /** W17: ca PHỤC VỤ thêm của một kịch bản (vd mặt phẳng ĐÚNG khi đề có hai mặt phẳng) — phục vụ,
+  *  đáp số ở mục Kết quả, nhãn số đo của đáp số có mặt, không lỗi; không chạy cả bộ kiểm dương. */
+-async function runServed({ port, viewport, fixture, expected, outDir }) {
++export async function runServed({ port, viewport, fixture, expected, outDir }) {
+   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
+   try {
+     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
+diff --git a/frontend/scripts/generic-tier-a-scenarios.json b/frontend/scripts/generic-tier-a-scenarios.json
+index 3f981e99..281fdd90 100644
+--- a/frontend/scripts/generic-tier-a-scenarios.json
++++ b/frontend/scripts/generic-tier-a-scenarios.json
+@@ -1,8 +1,8 @@
+ {
+   "schema_version": "generic-tier-a-suite/1",
+-  "task_id": "W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS",
+-  "product_commit_sha": "7a06ee473a481a1377d270b9a2318756807da91a",
+-  "product_tree_sha": "d3b4cab96c69a09f6ba1b82ac5ca1ee994abed3430d0f277fa30c6d7f328d57e",
++  "task_id": "COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE",
++  "product_commit_sha": "284a9bfad7e815f7a2228eca89736f714b53c26c",
++  "product_tree_sha": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
+   "viewports": [
+     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
+## where the product diff sits: UnsupportedNotice (refusal card) vs the Scene3D branch
+136:export function UnsupportedNotice({
+282:  const nhanLoai = unsupported.reason_code === "CONSTRUCTION_REPLACED_BY_COORDINATES"
+308:          <dd>{nhanLoai}</dd>
+475:  if (hopLeScene3D(canh3d)) {
+## dependency and build config changed 0ca3accf..HEAD
+changed: 0

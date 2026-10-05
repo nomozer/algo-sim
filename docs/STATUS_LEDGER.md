@@ -902,3 +902,27 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTS:** COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (count only: 24 invariant rows, not 22)
 - **NEXT_ACTION_AT_TIME:** human visual review; after approval merge into main without a PR, push, delete the branch; then a new work on a new branch from the updated main starting at W1 (proposal, not chosen: regular-square-pyramid-w01)
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION
+- **RUN_ID:** cuboid-merge (review package and integration of the work cuboid-visual-semantic-closure; no wave number)
+- **DATE:** 2026-10-05
+- **START_BASE:** 37b23f04
+- **CODE_COMMIT_OR_NONE:** NONE — documentation only
+- **COMMITS:** documentation commit · final log commit
+- **CANDIDATE:** b2d4187a78ed8bf6… unchanged · CACHE_VERSION 111 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit (review package, fixture transfer) · final log commit (gates in a clean detached worktree)
+- **CLASSIFICATION:** AWAITING_USER_VISUAL_APPROVAL
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/cuboid-merge/REVIEW.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/cuboid-merge/
+- **PASS:** w18 visual evidence transferred to candidate b2d4187a (fixtures regenerated offline: old run byte-exact to the measured manifest; 32/32 current fixtures differ only in two identity fields; frontend diff confined to the refusal card); 0 new captures; review package A–F
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **OPEN (blocking merge of the branch):** explicit visual approval of REVIEW.md A–F
+- **FULL_PRODUCT_SUITE:** not re-run (no product byte changed); last T3 at a1c53cdb: FULL_PRODUCT_GATE_PASS
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no explicit visual approval)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user answers ACCEPTED or NEEDS_CHANGES for A–F; on approval fast-forward main, push, delete the branch; then SELECT_AND_START_NEXT_FAMILY_W01
+- **FINAL_DECISION:** AWAITING_USER_VISUAL_APPROVAL

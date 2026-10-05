@@ -26,7 +26,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | | |
 > |---|---|
 > | Active development branch | **`fix/cuboid-visual-semantic-closure`** |
-> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Remote baseline | **`origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce`** tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi |
 > | `CACHE_VERSION` | **111** (W20, 2026-10-04: served → rejected — điểm đề định nghĩa bằng quan hệ mà chương trình đặt bằng toạ độ hay bí danh — `PROOF_CACHE_ROW_W20.json`; giữ ở run `cuboid-final-review`, 2026-10-05: lời từ chối không được cache, envelope được phục vụ trùng byte — `CACHE_DECISION_CFR.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -58,11 +58,19 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CACHE_VERSION = 111
 > CANDIDATE = b2d4187a… (was 27c31de6…; một lần đóng băng), product commit 284a9bfa
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF (run cuboid-acceptance — hồ sơ nghiệm thu của việc cuboid-visual-semantic-closure, không đánh số wave; không đổi mã sản phẩm)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cuboid-acceptance) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (checklist: runs/cuboid-acceptance/HANDOFF.md §1)
+> CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp của việc cuboid-visual-semantic-closure, không đánh số wave; không đổi mã sản phẩm)
+> FINAL_DECISION = AWAITING_USER_VISUAL_APPROVAL (cuboid-merge) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói duyệt A–F: runs/cuboid-merge/REVIEW.md)
 > CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
-> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (người dùng chọn họ từ `ROADMAP.md` §0.2 — đề xuất `regular-square-pyramid-w01`, chưa chọn; chỉnh sửa giao diện §0.1; chặn merge: chỉ còn review người theo checklist của run `cuboid-acceptance`; việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã cập nhật, bắt đầu ở W1)
+> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (người dùng chọn họ từ `ROADMAP.md` §0.2 — đề xuất `regular-square-pyramid-w01`, chưa chọn; chỉnh sửa giao diện §0.1; chặn merge: chỉ còn phê duyệt hình theo `runs/cuboid-merge/REVIEW.md`; việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã cập nhật, bắt đầu ở W1)
 > ```
+
+> **Gói duyệt hình + tích hợp — run `cuboid-merge` (2026-10-05; chỉ tài liệu; chưa có phê duyệt, chưa merge):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`AWAITING_USER_VISUAL_APPROVAL`** — chờ ACCEPTED/NEEDS_CHANGES cho nhóm A–F của [`REVIEW.md`](evaluation/geometry/runs/cuboid-merge/REVIEW.md) |
+> | Ảnh W18 → candidate `b2d4187a` | **chuyển tiếp được, 0 ảnh chụp mới**: fixture tái sinh offline trùng byte bản đã đo; 32/32 fixture hiện hành chỉ khác hai trường danh tính; frontend chỉ đổi ở thẻ từ chối (`results/logs/TRANSFER.log`) |
+> | Run | [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (`REVIEW.md`, `HANDOFF.md`, `results/FIXTURE_TRANSFER.json`) |
 
 > **Đối chiếu bất biến + hồ sơ nghiệm thu — run `cuboid-acceptance` (2026-10-05; chỉ tài liệu, byte sản phẩm không đổi so với candidate `b2d4187a`; chưa có review người):**
 >

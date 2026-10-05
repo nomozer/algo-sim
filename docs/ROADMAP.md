@@ -30,8 +30,9 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   `NOT_APPROVED` — duyệt bằng mắt theo `HANDOFF.md` của run w18 (W18-H1), gồm phần còn lại của W17-H1/W16-H1 (bốn
   cảnh W14 đổi, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`
   đã đóng ở W20. Cùng lượt duyệt: thẻ từ chối mới của §17 (nhãn "chưa kiểm chứng được phép dựng", desktop và mobile).
-  Checklist gộp — W18-H1, thẻ từ chối, giới hạn đã khai — ở `HANDOFF.md` §1 của run `cuboid-acceptance`; đối chiếu bất
-  biến ở run ấy không thêm lỗi chặn nào. Khi được duyệt: merge thẳng vào `main` (không PR), chạy cổng trên cây tích
+  Gói duyệt A–F — W18-H1, thẻ từ chối hiện hành, giới hạn đề nghị hoãn — ở
+  [`REVIEW.md`](evaluation/geometry/runs/cuboid-merge/REVIEW.md) của run `cuboid-merge` (ảnh W18 đã chứng minh chuyển
+  tiếp sang candidate `b2d4187a`); đối chiếu bất biến của run `cuboid-acceptance` không thêm lỗi chặn nào. Khi được duyệt: merge thẳng vào `main` (không PR), chạy cổng trên cây tích
   hợp, push, xoá nhánh đã merge (`AGENTS.md` §2).
 - **Đã quyết (người dùng, brief `cuboid-acceptance`, 2026-10-05):** H-CFR-2 giữ chữ thường và "toạ độ" theo quy ước
   kho; H-CFR-1 là backlog giao diện (dưới §0.1), không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính
