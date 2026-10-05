@@ -20,7 +20,9 @@
  },
  "verification": {
   "where": "clean detached worktree at the documentation commit, created under D:/tmp from the main repository, removed with git worktree remove (no --force)",
-  "scripts": ["diagnostics/invariant_checks_cacc.sh", "diagnostics/cacc_gates.sh <documentation commit> 903e874c 284a9bfa"],
+  "documentation_commit": "f93408b73d2b59cefc4a6391e57c027b0b139a0a",
+  "worktree": "D:/tmp/cacc-verify (npm ci --offline; git status 0 before and after; removed with git worktree remove)",
+  "scripts": ["diagnostics/invariant_checks_cacc.sh", "diagnostics/cacc_gates.sh f93408b7 903e874c 284a9bfa", "diagnostics/split_scope_cacc.py 903e874c (run from the worktree root; script committed in the final log commit, byte-identical to the one run)"],
   "logs": ["results/logs/INVARIANT_CHECKS_FINAL.log", "results/logs/DOCS_GATES_FINAL.log"]
  },
  "evidence_reused_not_remeasured": {

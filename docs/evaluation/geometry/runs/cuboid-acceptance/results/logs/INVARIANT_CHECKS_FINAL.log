@@ -1,0 +1,198 @@
+# invariant checks at f93408b7 (the documentation commit of cuboid-acceptance) — diagnostics/invariant_checks_cacc.sh from the root of the clean detached worktree D:/tmp/cacc-verify (exit 0), 0 model calls; ANSI codes and trailing spaces stripped
+# pytest warning: StarletteDeprecationWarning from fastapi/testclient.py (third-party import), unrelated to the checks
+# cuboid-acceptance invariant checks at f93408b73d2b59cefc4a6391e57c027b0b139a0a — 0 model calls
+## git status (before)
+0
+## part 1 — old pointers (row · pattern · TRACKED path | absent + deleting commit)
+#1  test_pipeline.py  absent (deleted 6d5f5fda 2026-09-02)
+#1  symbol test_simulate_sinh_timeline_bi_chan  in 0 non-test source file(s)
+#1  symbol FORBIDDEN  in 0 non-test source file(s)
+#2  algorithms.test.ts  absent (deleted 6703c48a 2026-09-02)
+#2  generic.test.ts  absent (deleted 6703c48a 2026-09-02)
+#3  patch.test.ts  absent (deleted 6703c48a 2026-09-02)
+#3  symbol WorkspaceProps  in 5 non-test source file(s)
+#4  manifest.py  absent (deleted e664f683 2026-09-02)
+#4  test_manifest.py  absent (deleted e664f683 2026-09-02)
+#5  test_capability_boundary.py  absent (deleted 6d5f5fda 2026-09-02)
+#6  test_reuse.py  absent (deleted 6d5f5fda 2026-09-02)
+#7  patterns.py  absent (deleted e664f683 2026-09-02)
+#7  test_patterns.py  absent (deleted e664f683 2026-09-02)
+#8  representation.py  absent (deleted e664f683 2026-09-02)
+#8  test_capability_boundary.py  absent (deleted 6d5f5fda 2026-09-02)
+#8  symbol build_representation_plan  in 1 non-test source file(s)
+#8  symbol check_semantic_compatibility  in 0 non-test source file(s)
+#10  patch.test.ts  absent (deleted 6703c48a 2026-09-02)
+#10  registry.test.ts  TRACKED frontend/src/simulations/registry.test.ts
+#11  patch.test.ts  absent (deleted 6703c48a 2026-09-02)
+#11  symbol InteractionFeedback  in 1 non-test source file(s)
+#12  symbol GenericState  in 0 non-test source file(s)
+#14  evaluation/live.py  absent (deleted f9a40935 2026-09-02)
+#14  test_live_budget.py  absent (deleted 6d5f5fda 2026-09-02)
+#15  patch.py  absent (deleted e664f683 2026-09-02)
+#15  test_patch.py  absent (deleted e664f683 2026-09-02)
+#16  renderer.ts  TRACKED frontend/src/simulations/renderer.ts
+#16  SimulationWorkspace.tsx  TRACKED frontend/src/components/SimulationWorkspace.tsx
+#16  visual-mode.test.tsx  absent (deleted 6703c48a 2026-09-02)
+#16  render3d.test.tsx  absent (deleted eebc22a8 2026-08-10)
+#16  m8-acceptance.test.tsx  absent (deleted 6703c48a 2026-09-02)
+#18  node-glyph.ts  absent (deleted 6703c48a 2026-09-02)
+#18  representation-policy-w4b2r.test.ts  absent (deleted 6703c48a 2026-09-02)
+#18  encap-render3d.test.tsx  absent (deleted 6703c48a 2026-09-02)
+#18  symbol representationPolicyOf  in 1 non-test source file(s)
+#18  symbol threeD  in 2 non-test source file(s)
+#20  dsl/validator.py  absent (deleted e664f683 2026-09-02)
+#20  generic/validate.ts  absent (deleted 6703c48a 2026-09-02)
+#20  generic_engine.py  absent (deleted e664f683 2026-09-02)
+#20  generic/model.ts  absent (deleted 6703c48a 2026-09-02)
+#20  dsl-contract.json  absent (deleted 6703c48a 2026-09-02)
+#20  generate_dsl_contract.py  absent (deleted f9a40935 2026-09-02)
+#20  test_dsl.py  absent (deleted 6d5f5fda 2026-09-02)
+#20  test_generic_engine_m13.py  absent (deleted e664f683 2026-09-02)
+#20  test_manifest_providers.py  absent (deleted e664f683 2026-09-02)
+#20  test_m13_dijkstra_fixture.py  absent (deleted e664f683 2026-09-02)
+#20  test_m13_pattern_revalidate.py  absent (deleted e664f683 2026-09-02)
+#21  computation_gate.py  absent (deleted e664f683 2026-09-02)
+#21  test_m13_routing.py  absent (deleted e664f683 2026-09-02)
+#21  datasets/capability.py  absent (deleted f9a40935 2026-09-02)
+#22  ai/pipeline.py  TRACKED backend/app/ai/pipeline.py
+#22  evaluation/observer.py  TRACKED backend/app/evaluation/observer.py
+#22  evaluation/harness.py  absent (deleted f9a40935 2026-09-02)
+#22  m16_record.py  absent (deleted f9a40935 2026-09-02)
+#22  m16_metrics.py  absent (deleted f9a40935 2026-09-02)
+#22  m16_offline_scripts.py  absent (deleted f9a40935 2026-09-02)
+#22  test_eval_convergence.py  absent (deleted 6d5f5fda 2026-09-02)
+#22  test_eval_parity.py  absent (deleted e664f683 2026-09-02)
+#22  test_eval_side_effects.py  absent (deleted 6d5f5fda 2026-09-02)
+#22  test_m16_offline_eval.py  absent (deleted 6d5f5fda 2026-09-02)
+#22  symbol AttemptObserver  in 1 non-test source file(s)
+#22  symbol evaluate_item  in 0 non-test source file(s)
+#23  mechanisms.py  absent (deleted e664f683 2026-09-02)
+#23  descriptor.py  absent (deleted e664f683 2026-09-02)
+#23  mechanism_gate.py  absent (deleted e664f683 2026-09-02)
+#23  test_mechanisms.py  absent (deleted e664f683 2026-09-02)
+#23  test_descriptor.py  absent (deleted e664f683 2026-09-02)
+#23  test_capability_descriptors.py  absent (deleted e664f683 2026-09-02)
+#23  test_pipeline_mechanism_consistency.py  absent (deleted 6d5f5fda 2026-09-02)
+#23  test_mechanism_gate.py  absent (deleted e664f683 2026-09-02)
+#23  symbol classify_with_one_route_recovery  in 0 non-test source file(s)
+#24  state/store.ts  TRACKED frontend/src/state/store.ts
+#24  SimulationControls.tsx  TRACKED frontend/src/components/SimulationControls.tsx
+#24  algorithm/interaction-policy.ts  absent (deleted 6703c48a 2026-09-02)
+#24  explore-ownership-w4b3a.test.ts  absent (deleted 6703c48a 2026-09-02)
+#24  secondary-actions-w4b2w.test.ts  absent (deleted 6703c48a 2026-09-02)
+#24  workspace-lifecycle.test.ts  TRACKED frontend/src/state/workspace-lifecycle.test.ts
+#24  interaction-family-w1.test.tsx  absent (deleted 6703c48a 2026-09-02)
+#24  accept-w4b3a.mjs  TRACKED frontend/scripts/accept-w4b3a.mjs
+#24  symbol exploreOpen  in 7 non-test source file(s)
+#24  symbol exploreEntry  in 2 non-test source file(s)
+#24  symbol challengeOpen  in 4 non-test source file(s)
+#24  symbol challengeEntry  in 1 non-test source file(s)
+#25  spec-drift-w4b4d.test.ts*  absent (deleted 6703c48a 2026-09-02)
+#25  accept-experience-w4b4c.mjs  TRACKED frontend/scripts/accept-experience-w4b4c.mjs
+#25  symbol specDrift  in 1 non-test source file(s)
+#25  symbol currentConfig  in 2 non-test source file(s)
+#26  experience-audit-w4b4a.test.ts  absent (deleted 6703c48a 2026-09-02)
+#26  condition-param.ts  absent (deleted 6703c48a 2026-09-02)
+#26  condition-param.test.ts  absent (deleted 6703c48a 2026-09-02)
+#29  accounts/policy.py  TRACKED backend/app/accounts/policy.py
+#29  accounts/router.py  TRACKED backend/app/accounts/router.py
+#29  AppSidebar.tsx  absent (deleted 75b981d6 2026-09-03)
+#29  test_auth_api.py  TRACKED backend/tests/test_auth_api.py
+#29  test_classroom_api.py  TRACKED backend/tests/test_classroom_api.py
+#29  ux-shell.test.tsx  TRACKED frontend/src/components/ux-shell.test.tsx
+#29  accept-classroom-m18.mjs  TRACKED frontend/scripts/accept-classroom-m18.mjs
+## part 2 — current pointers (row · path::symbol)
+#1  ok backend/app/simulation/semantic_program/contract.py :: class ConstructPointStmt
+#1  ok backend/app/simulation/semantic_program/validator.py :: def validate_semantic_program
+#1  ok backend/app/simulation/semantic_program/geometry_exec.py
+#1  ok backend/app/simulation/semantic_program/pipeline_adapter.py :: def compile_semantic_program_to_envelope
+#2  ok backend/app/simulation/geometry/exact.py
+#2  ok backend/app/simulation/semantic_program/interpreter.py
+#2  ok docs/evaluation/geometry/custodian/geometry_oracle.py
+#3  ok frontend/src/simulations/domains/geometry/interaction-state.ts :: export function explode
+#3  ok frontend/src/simulations/domains/geometry/scene3d-model.ts :: export function objectsAt
+#3  ok frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
+#8  ok backend/app/simulation/semantic_program/domain_profile.py :: def detect_domain
+#8  ok backend/app/simulation/semantic_program/coverage_gate.py
+#8  ok backend/app/simulation/semantic_program/grounding_gate.py :: def check_grounding
+#8  ok backend/app/simulation/semantic_program/assumption_gate.py :: def kiem_gia_dinh
+#8  ok backend/app/simulation/semantic_program/construction_binding.py :: def doi_chieu_phep_dung
+#8  ok backend/app/simulation/product_capability.py
+#8  ok backend/app/simulation/semantic_program/route.py :: def verify_and_compile
+#9  ok backend/app/simulation/semantic_program/geometry_obligations.py :: GEOMETRY_CHECKERS = {
+#9  ok backend/app/learner_messages.py
+#9  ok backend/app/simulation/semantic_program/refusal_cause.py
+#11  ok frontend/src/simulations/no-verdict.test.ts
+#14  ok backend/conftest.py
+#14  ok backend/scripts/run_geometry_dev_evaluation.py :: ALLOW_LIVE_AI
+#21  ok backend/app/simulation/semantic_program/coverage_gate.py
+#22  ok backend/app/ai/pipeline.py :: observer=None
+#22  ok backend/scripts/run_thesis_final_acceptance.py :: pipeline.stage_semantic_program(
+#22  ok backend/scripts/run_thesis_final_acceptance.py :: verify_and_compile
+#29  ok backend/app/accounts/policy.py :: def resolve_signup_role
+#29  ok backend/app/accounts/router.py :: require_role
+#29  ok frontend/src/components/TopNav.tsx :: export function itemsForRole
+## part 3 — focused pytest
+349 passed, 1 warning in 11.36s
+pytest_exit=0
+## part 4 — focused vitest
+ Test Files  9 passed (9)
+      Tests  138 passed (138)
+vitest_exit=0
+## part 5 — row #14 static probe (script · opt-in tokens · call_gemini stubbed · call sites · loads backend/.env)
+api_usage_log.py  opt-in=[]  stub=0  calls=0  dotenv=0
+capture_stability_seed.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=3  dotenv=2
+certify_acceptance_runner.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=0  dotenv=0
+collect_docs_provenance_evidence.py  opt-in=[]  stub=0  calls=0  dotenv=0
+collect_docs_telemetry_evidence.py  opt-in=[]  stub=0  calls=0  dotenv=0
+collect_llm_only_paired_baseline.py  opt-in=[--confirm-live-execution --execute-live]  stub=0  calls=0  dotenv=0
+diagnose_structured_relation_prompt.py  opt-in=[]  stub=0  calls=0  dotenv=1
+generate_cross_family_regression_envelopes.py  opt-in=[]  stub=2  calls=1  dotenv=0
+generate_cuboid_cube_envelopes.py  opt-in=[]  stub=2  calls=1  dotenv=0
+generate_generic_tier_a_fixtures.py  opt-in=[]  stub=6  calls=3  dotenv=0
+ingest_holdout_batch.py  opt-in=[]  stub=0  calls=0  dotenv=0
+kind_aware_trace_evaluator.py  opt-in=[]  stub=0  calls=0  dotenv=0
+measure_cache_impact_display_names.py  opt-in=[]  stub=2  calls=0  dotenv=0
+measure_cache_impact_response_contract.py  opt-in=[]  stub=2  calls=0  dotenv=0
+measure_geometry_stability.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=1  dotenv=2
+measurement_policy.py  opt-in=[]  stub=0  calls=0  dotenv=0
+probe_dihedral_synthesis.py  opt-in=[ALLOW_LIVE_AI]  stub=3  calls=1  dotenv=2
+probe_point_init_repair.py  opt-in=[ALLOW_LIVE_AI]  stub=4  calls=1  dotenv=2
+prove_photo_live_runner.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=1  dotenv=0
+prove_photo_scorer_correction.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=0  dotenv=0
+provider_health_gate.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=1  dotenv=2
+register_nonconvex_polyhedron.py  opt-in=[]  stub=0  calls=0  dotenv=0
+register_oblique_ellipse_after_axis_scale.py  opt-in=[]  stub=0  calls=0  dotenv=0
+register_oblique_ellipse_final_rerun.py  opt-in=[]  stub=0  calls=0  dotenv=0
+replay_negative_boundaries.py  opt-in=[]  stub=2  calls=1  dotenv=0
+run_affordance_ab.py  opt-in=[ALLOW_LIVE_AI]  stub=4  calls=2  dotenv=2
+run_clean_baseline.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=2  dotenv=2
+run_clean_baseline_v2.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=2  dotenv=2
+run_curved_acceptance.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=2  dotenv=2
+run_curved_end_to_end.py  opt-in=[ALLOW_LIVE_AI]  stub=4  calls=1  dotenv=2
+run_curved_ergonomics_v2.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=2  dotenv=0
+run_fresh_probe.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=1  dotenv=2
+run_generalization_matrix.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=1  dotenv=2
+run_geometry_dev_evaluation.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=2  dotenv=2
+run_live_gemini_semantic_smoke.py  opt-in=[]  stub=0  calls=2  dotenv=1
+run_multicase_benchmark.py  opt-in=["--live"]  stub=0  calls=3  dotenv=0
+run_name_contract_probe.py  opt-in=[ALLOW_LIVE_AI]  stub=3  calls=2  dotenv=2
+run_phase7a_pilot.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=0  dotenv=2
+run_phase7b_official.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=0  dotenv=2
+run_photo_problem_live.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=6  dotenv=0
+run_postfix_confirmation.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=0  dotenv=2
+run_preregistered_failure_reproduction.py  opt-in=["--live" ALLOW_LIVE_AI]  stub=0  calls=3  dotenv=0
+run_primitive_compiler_ab.py  opt-in=["--live"]  stub=0  calls=1  dotenv=0
+run_ratio_affordance_ab.py  opt-in=[ALLOW_LIVE_AI]  stub=4  calls=1  dotenv=2
+run_rectangular_pyramid_live_analyze.py  opt-in=[]  stub=0  calls=2  dotenv=0
+run_sealed_evaluation.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=1  dotenv=2
+run_section_discoverability_probe.py  opt-in=[ALLOW_LIVE_AI]  stub=4  calls=2  dotenv=2
+run_stability_k3.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=1  dotenv=2
+run_structured_relation_analyze_live.py  opt-in=["--live"]  stub=0  calls=2  dotenv=0
+run_structured_relation_revalidation.py  opt-in=["--live"]  stub=0  calls=2  dotenv=0
+run_thesis_final_acceptance.py  opt-in=["--live" ALLOW_LIVE_AI]  stub=0  calls=3  dotenv=2
+run_translation_probe.py  opt-in=[ALLOW_LIVE_AI]  stub=2  calls=2  dotenv=2
+run_wave1_dev_stability.py  opt-in=[ALLOW_LIVE_AI]  stub=0  calls=0  dotenv=2
+wave_counters.py  opt-in=[]  stub=0  calls=0  dotenv=0
+## git status (after)
+0

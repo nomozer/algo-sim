@@ -88,6 +88,23 @@ liệu, test tài liệu (pytest + vitest) — và `invariant_checks_cacc.sh`. K
 `results/logs/INVARIANT_CHECKS_FINAL.log`, tóm tắt ở `HANDOFF.md` (commit log cuối). Không chạy lại bộ trình duyệt và
 T3: byte sản phẩm không đổi, bằng chứng sản phẩm gần nhất là T3 `FULL_PRODUCT_GATE_PASS` tại `a1c53cdb`.
 
+Kết quả tại commit tài liệu `f93408b7` (worktree `D:/tmp/cacc-verify`, `git status` 0 trước và sau, đã gỡ):
+
+| cổng | kết quả |
+|---|---|
+| byte sản phẩm (`backend/app`, `frontend/src`) so với `903e874c` · so với `284a9bfa` | 0 · 0 file đổi |
+| candidate · khoá cache · `CACHE_VERSION` · chế độ mặc định | `b2d4187a` khớp (110 file) · khớp (môi trường `b1714b56`) · 111 · `LLM_ONLY` |
+| bề mặt mô hình · hai bản lược đồ | 0 file đổi · trùng byte |
+| `docs/evaluation` ngoài run · `docs/legacy` · báo cáo lịch sử trong catalog | 0 · 0 · 0/180 (link thứ 181 là `EVIDENCE_INDEX.md` sống) |
+| tách lịch sử của `cuboid-final-review` | khối nguyên văn 0 lỗi, hash khớp; mệnh đề "mọi dòng BASE còn ở một trong hai nơi" báo 25 dòng — đúng 25 dòng run này thay (24 hàng §5, 1 hàng CODE_INDEX), 0 dòng khác (`diagnostics/split_scope_cacc.py`) |
+| `git diff --check` · con trỏ §5 · audit tài liệu | exit 0 · 39/39 hàng, 0 file thiếu · PASS |
+| test tài liệu | pytest 110 passed · vitest 22/22 |
+| kiểm bất biến | con trỏ hiện hành đủ · pytest 349 passed · vitest 9 file / 138 test · dò #14: đúng hai script |
+
+Mệnh đề thứ ba của `split_history_cfr.py --verify` là tính chất của lúc tách (tài liệu sống chưa ai sửa dòng nào từ
+BASE); sửa đúng chỗ một con trỏ cũ tất yếu làm nó báo. Các lượt sau nên kiểm khối bằng hai mệnh đề đầu và giải thích
+mệnh đề ba theo diff như `split_scope_cacc.py`, không coi nó là cổng bền.
+
 ## 7. Giới hạn của run này
 
 - Đối chiếu là đọc mã và chạy test hiện có; không viết test mới (một test chỉ kiểm đường dẫn không chứng minh hành

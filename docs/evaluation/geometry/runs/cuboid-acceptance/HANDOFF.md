@@ -8,7 +8,7 @@ chiếu từng bất biến: [`results/INVARIANT_RECONCILIATION.json`](results/I
 ```text
 TASK = CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF (run cuboid-acceptance; không đánh số wave)
 START_HEAD = 903e874c291aa99137074ddff2a6688bc5a84b42
-END_HEAD = PENDING (commit log cuối của run; tra bằng git log -1)
+END_HEAD = SELF — commit cuối của run, thêm results/logs/ (kiểm chứng tại commit tài liệu f93408b7, worktree sạch); tra bằng git log -1
 BRANCH = fix/cuboid-visual-semantic-closure (task slug cuboid-visual-semantic-closure)
 INVARIANTS_TOTAL = 24 (ARCHITECTURE_MAP §5: #1–#12, #14–#16, #18, #20–#26, #29 — đính chính số 22 của cuboid-final-review: #9, #12 thừa hưởng con trỏ chết qua "như trên")
 HISTORICAL_NOT_APPLICABLE = 14 (#4, #5, #6, #7, #10, #12, #15, #16, #18, #20, #23, #24, #25, #26)
@@ -17,17 +17,18 @@ CURRENT_UNVERIFIED = 1 (#14 live eval opt-in — dò tĩnh thấy hai script g�
 VIOLATED = 0
 MERGE_BLOCKERS = NONE từ đối chiếu bất biến (#14 là công cụ dev đã có trên main, ngoài đường sản phẩm); điều kiện merge còn thiếu: phê duyệt hình tường minh (§1)
 PRODUCT_BYTES_CHANGED = NO (backend/app, frontend/src: 0 file đổi so với 903e874c và so với 284a9bfa — commit sản phẩm của candidate)
-CANDIDATE_VERIFY / CACHE_VERIFY = PENDING (cacc_gates.sh trong worktree sạch tại commit tài liệu)
-DOCS_VERIFICATION = PENDING (results/logs/DOCS_GATES_FINAL.log, results/logs/INVARIANT_CHECKS_FINAL.log)
-HISTORICAL_ARTIFACTS_BYTE_IDENTICAL = PENDING (docs/evaluation ngoài run này, docs/legacy, báo cáo lịch sử trong catalog)
+CANDIDATE_VERIFY / CACHE_VERIFY = PASS (b2d4187a…, 110 file) / PASS (CACHE_VERSION 111, môi trường b1714b566e25c912) — worktree tách rời sạch D:/tmp/cacc-verify tại f93408b7; LLM_ONLY; bề mặt mô hình 0 file đổi; hai bản lược đồ trùng byte
+DOCS_VERIFICATION = PASS — results/logs/DOCS_GATES_FINAL.log: audit tài liệu PASS (0 link chết, 0 đường dẫn cũ trong CODE_INDEX); pytest tài liệu 110 passed; vitest tài liệu 22/22; con trỏ §5 39/39 hàng, 0 file thiếu; git diff --check 903e874c..f93408b7 exit 0; git status 0 trước và sau. results/logs/INVARIANT_CHECKS_FINAL.log: con trỏ hiện hành đủ, pytest 349 passed, vitest 9 file / 138 test passed, dò #14 đúng hai script
+HISTORICAL_ARTIFACTS_BYTE_IDENTICAL = YES — docs/evaluation ngoài run này 0 file đổi; docs/legacy 0; báo cáo lịch sử trong catalog 0/180 (link thứ 181 là docs/EVIDENCE_INDEX.md, tài liệu sống); khối tách lịch sử của cuboid-final-review vẫn nguyên văn, hash khớp HISTORY_SPLIT.json. split_history_cfr.py --verify báo FAIL ở mệnh đề "mọi dòng BASE còn ở một trong hai nơi": đúng 25 dòng do run này cố ý thay (24 hàng §5 + 1 hàng CODE_INDEX), 0 dòng khác — giải thích ở split_scope_cacc.py, ghi trong cùng log
 HUMAN_VISUAL_REVIEW / APPROVAL_REFERENCE = NOT_APPROVED / NONE — tự động hoá không ghi APPROVED_BY_USER; việc gửi brief này không phải phê duyệt
 LOCAL_MAIN_SHA / REMOTE_MAIN_SHA = a9492ee98ff9dc3302d1ff64465f1c06e9001bce / a9492ee98ff9dc3302d1ff64465f1c06e9001bce (fetch --prune + ls-remote đầu run; HEAD đi trước 269, sau 0)
 PUSH_RESULT / MERGE_RESULT / CI_RESULT = NOT_ATTEMPTED / NOT_ATTEMPTED / NOT_APPLICABLE (kho không có cấu hình CI; không push)
 BRANCH_DELETION_RESULT = NOT_ATTEMPTED (chưa merge)
 USER_FAVICON_DELETION_PRESERVED = YES (không stage, restore hay sửa)
 LIVE_GEMINI_REQUESTS = 0
-SKILLS = PENDING (ghi ở commit log cuối)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (xác nhận lại ở commit log cuối)
+SKILLS = gọi trong run: superpowers:verification-before-completion · áp dụng, không gọi lại (đã nạp trước trong phiên): systematic-debugging (code-index-sync đỏ; HISTORY_SPLIT FAIL), karpathy-guidelines · không dùng: ponytail-review (diff là tài liệu + script chẩn đoán chỉ đọc) · subagent: 0
+TEMP_FILES = worktree D:/tmp/cacc-verify gỡ bằng git worktree remove (sạch, không --force); thư mục tạm của phiên: 4 log (bản có thẩm quyền chép vào results/logs/) + 2 script trợ giúp sửa/kiểm bảng §5 — xoá theo tên chính xác khi kết thúc; ledger .superpowers/sdd/cuboid-acceptance/progress.md (gitignore) giữ lại
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW
 NEXT_ACTION = người dùng duyệt hình theo §1 và ghi ACCEPTED hoặc NEEDS_CHANGES; khi có phê duyệt tường minh: §3 (merge thẳng vào main, không PR); sau đó việc mới theo §4
 ```
 

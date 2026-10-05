@@ -1,0 +1,88 @@
+{
+ "schema_version": "run-manifest/1",
+ "run": "cuboid-acceptance",
+ "verification_commit": "f93408b7",
+ "images": "NOT_APPLICABLE (no image captured; the review checklist links the measured images of w18-binding-focus and cuboid-final-review)",
+ "files": [
+  {
+   "path": "diagnostics/build_manifest_cacc.py",
+   "sha256": "616c51165e914365b1255a64440049a64f7d553116c0783f858564fef710eb14",
+   "basis": "git_blob_lf",
+   "bytes": 2557,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/cacc_gates.sh",
+   "sha256": "665dcce83c35e348b76351eaf943abd79e4d670a4ba2569d965d1f82548da624",
+   "basis": "git_blob_lf",
+   "bytes": 5331,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/invariant_checks_cacc.sh",
+   "sha256": "93d0d9e5919b93476df03f9fad2887131ea1a3b7a494e1e8f099326bad79f034",
+   "basis": "git_blob_lf",
+   "bytes": 9400,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/split_scope_cacc.py",
+   "sha256": "72c125f13ae0ca9bf2f64eb3e614e9917f1699fc3dd22875dbbb5e1eac171889",
+   "basis": "git_blob_lf",
+   "bytes": 2984,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "HANDOFF.md",
+   "sha256": "f7369f7f115f71de3f6cb0010e93b11658bf9179c595a9a4e31f2a3319c0a2bf",
+   "basis": "git_blob_lf",
+   "bytes": 12906,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "REPORT.md",
+   "sha256": "48038e08fc4aa880ec7c6866e34f783dce96461b676a08fa0501c5393f245ef2",
+   "basis": "git_blob_lf",
+   "bytes": 10916,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/INVARIANT_RECONCILIATION.json",
+   "sha256": "c68557197bfb8249ad10fd0c057409c1765b832862cb898a6ff154d2fb8b482d",
+   "basis": "git_blob_lf",
+   "bytes": 41695,
+   "producer": "hand-written per-row reconciliation; checks in results/logs/",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/DOCS_GATES_FINAL.log",
+   "sha256": "003f0067b816243affc74934e3a70eb5e8216c705070fe2e7e48492021cf0744",
+   "basis": "git_blob_lf",
+   "bytes": 4674,
+   "producer": "diagnostics/cacc_gates.sh + diagnostics/split_scope_cacc.py @ f93408b7 (clean detached worktree D:/tmp/cacc-verify)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/INVARIANT_CHECKS_FINAL.log",
+   "sha256": "872f07b3694d817c5680b2d64dd7a2b075e8b1df515e0f40bd90be0b9b915a45",
+   "basis": "git_blob_lf",
+   "bytes": 13524,
+   "producer": "diagnostics/invariant_checks_cacc.sh @ f93408b7 (clean detached worktree D:/tmp/cacc-verify)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "RUN.json",
+   "sha256": "96c355910100a44c4cae932e45b6467779de73d3c6f9365419717b5795b37736",
+   "basis": "git_blob_lf",
+   "bytes": 2484,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  }
+ ]
+}
