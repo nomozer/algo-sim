@@ -940,9 +940,30 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash 27c31de6… -> b2d4187a…, 110 files; frozen once at 284a9bfa, declared in `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`)
 - **CACHE_CHANGE:** NO (111; `diagnostics/cache_proof/CACHE_DECISION_CFR.json`: served envelopes byte-identical, refusals never cached; lock `--verify` exit 0)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF (count only: the rows of ARCHITECTURE_MAP §5 with dead pointers were 24, not 22 — #9 and #12 inherit through "như trên"; this run's artifacts unchanged)
 - **CORRECTS:** W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE (scope note only: W20's cleanup was bounded; the full docs review is this run)
 - **SUPERSEDES:** inside this run only — browser check attempt 1 (stopped by the dist freshness guard) by attempt 2; the docs inventory committed in 42dd1af5 by the inventories measured at 4048ff83 and a1c53cdb
 - **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_b2d4187a — not visual acceptance (human review NOT_APPROVED). The §17 refusal states the verification limit in learner terms; the docs keep one current authority per topic, with the informatics-era history kept verbatim in `docs/legacy/`
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `inventory/DOCS_INVENTORY.json` · `inventory/DOCS_INVENTORY_BEFORE_4048ff83.json` · `inventory/HISTORY_SPLIT.json` · `inventory/CLEANUP_LOG.json` · `diagnostics/cache_proof/CACHE_DECISION_CFR.json` · `results/BROWSER_REFUSAL_CFR.json` · `results/logs/T3_FULL_GATE_a1c53cdb.log` · `results/logs/GATES_a1c53cdb.log` · `images/`
 - **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief, an abbreviation of the task slug; `docs/evaluation/RUN_NAMING.md` — waves of new works use `<task-slug>-wNN`)
+
+## WAVE_ID = CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF
+- **RUN_ID:** cuboid-acceptance (acceptance package of the work cuboid-visual-semantic-closure; no wave number)
+- **DATE:** 2026-10-05
+- **REPORT:** docs/evaluation/geometry/runs/cuboid-acceptance/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/cuboid-acceptance/
+- **START_BASE:** 903e874c
+- **CODE_COMMIT:** NONE (documentation only; product bytes equal to candidate b2d4187a, product commit 284a9bfa)
+- **MEASUREMENT_COMMIT:** the documentation commit of this run (invariant checks and docs gates in a clean detached worktree); product evidence reused, not re-measured: a1c53cdb (cuboid-final-review) and 0ca3accf (w18)
+- **EVIDENCE_COMMIT_ROLE:** documentation commit (reconciliation, check script, living docs) · final log commit (`results/logs/INVARIANT_CHECKS_FINAL.log`, `results/logs/DOCS_GATES_FINAL.log`)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (b2d4187a…, `--verify` in the clean worktree)
+- **CACHE_CHANGE:** NO (111; no product byte changed)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (count only: 24 invariant rows with dead pointers, not 22)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** AUTHORITATIVE_RECONCILIATION_OF_ARCHITECTURE_MAP_§5 — 24 rows: 9 CURRENT_ENFORCED, 1 CURRENT_UNVERIFIED (#14, ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM), 14 HISTORICAL_NOT_APPLICABLE, 0 VIOLATED; not visual acceptance (human review NOT_APPROVED)
+- **AUTHORITATIVE_FILES:** `RUN.json` · `HANDOFF.md` · `REPORT.md` · `results/INVARIANT_RECONCILIATION.json` · `diagnostics/invariant_checks_cacc.sh` · `diagnostics/cacc_gates.sh` · `results/logs/INVARIANT_CHECKS_FINAL.log` · `results/logs/DOCS_GATES_FINAL.log`
+- **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief; `docs/evaluation/RUN_NAMING.md`)

@@ -1,0 +1,32 @@
+{
+ "schema_version": "run/1",
+ "run_id": "cuboid-acceptance",
+ "task": "CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF",
+ "task_slug": "cuboid-visual-semantic-closure",
+ "run_kind": "acceptance package of the work; no wave number (name set by the brief; docs/evaluation/RUN_NAMING.md)",
+ "date": "2026-10-05",
+ "branch": "fix/cuboid-visual-semantic-closure",
+ "start_head": "903e874c291aa99137074ddff2a6688bc5a84b42",
+ "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git fetch --prune origin + ls-remote at the start; local main identical; ancestor of HEAD; branch 269 ahead, 0 behind; branch not on the remote)",
+ "product_change": "NONE — documentation only",
+ "candidate": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af (product commit 284a9bfa, frozen by cuboid-final-review; unchanged)",
+ "cache_version": "111 (unchanged)",
+ "default_mode": "LLM_ONLY",
+ "environment_fingerprint": "b1714b566e25c912 (unchanged)",
+ "live_gemini_requests": 0,
+ "commits": {
+  "documentation": "the documentation commit of this run (git log: docs(state): record cuboid-acceptance)",
+  "final_log": "the last commit of this run (git log: eval: final verification logs of cuboid-acceptance)"
+ },
+ "verification": {
+  "where": "clean detached worktree at the documentation commit, created under D:/tmp from the main repository, removed with git worktree remove (no --force)",
+  "scripts": ["diagnostics/invariant_checks_cacc.sh", "diagnostics/cacc_gates.sh <documentation commit> 903e874c 284a9bfa"],
+  "logs": ["results/logs/INVARIANT_CHECKS_FINAL.log", "results/logs/DOCS_GATES_FINAL.log"]
+ },
+ "evidence_reused_not_remeasured": {
+  "refusal_cards": "docs/evaluation/geometry/runs/cuboid-final-review/ — measured at a1c53cdb, product 284a9bfa, candidate b2d4187a (current)",
+  "w18_scenes": "docs/evaluation/geometry/runs/w18-binding-focus/ — measured at 0ca3accf, candidate d3b4cab9; since then frontend/src changed only in the refusal-label choice (SimulationWorkspace.tsx, core/types.ts) and backend/app added the W20 §17 refusal and the §17 card text"
+ },
+ "skills_invoked": "recorded in HANDOFF.md (SKILLS line)",
+ "subagents": 0
+}

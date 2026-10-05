@@ -874,7 +874,31 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **OPEN (blocking merge of the branch):** W18 human visual review (NOT_APPROVED) and the new §17 refusal cards
 - **FULL_PRODUCT_SUITE:** T3 `frontend/scripts/full-gate.mjs` from 'D:/tmp/cfr space/algo-sim' (clean detached worktree) at a1c53cdb: FULL_PRODUCT_GATE_PASS — pytest 7079 passed / 0 failed / 1 skipped / 2 deselected; vitest 1061/1061; typecheck + build; demo 5/5; crash surface 6/6
 - **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no visual approval)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF (count only: 24 rows of ARCHITECTURE_MAP §5 had dead pointers, not 22; results unchanged)
 - **CORRECTS:** W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE (scope note only: W20's cleanup was bounded; the full docs review is this run)
 - **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES on a new branch from the updated main, starting at W1 (merge waits for the visual review)
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = CUBOID_INVARIANT_RECONCILIATION_AND_MERGE_HANDOFF
+- **RUN_ID:** cuboid-acceptance (acceptance package of the work cuboid-visual-semantic-closure; no wave number, `docs/evaluation/RUN_NAMING.md`)
+- **DATE:** 2026-10-05
+- **START_BASE:** 903e874c
+- **CODE_COMMIT_OR_NONE:** NONE — documentation only
+- **COMMITS:** documentation commit · final log commit
+- **CANDIDATE:** b2d4187a78ed8bf6… unchanged (no product byte changed since 284a9bfa) · CACHE_VERSION 111 unchanged · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit (reconciliation JSON, check scripts, living docs) · final log commit (invariant checks and docs gates in a clean detached worktree)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/cuboid-acceptance/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/cuboid-acceptance/
+- **PASS:** 24 rows of ARCHITECTURE_MAP §5 reconciled to the assertion (9 CURRENT_ENFORCED, 1 CURRENT_UNVERIFIED, 14 HISTORICAL_NOT_APPLICABLE, 0 VIOLATED); pointer cells name only live files (39/39 rows, 0 missing); user decisions H-CFR-1/2/3 recorded
+- **CLOSED:** ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE
+- **OPENED:** ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM
+- **OPEN (blocking merge of the branch):** the human visual review only (checklist: HANDOFF.md §1 of the run)
+- **FULL_PRODUCT_SUITE:** not re-run (no product byte changed); last T3 at a1c53cdb (cuboid-final-review): FULL_PRODUCT_GATE_PASS
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no explicit visual approval)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (count only: 24 invariant rows, not 22)
+- **NEXT_ACTION_AT_TIME:** human visual review; after approval merge into main without a PR, push, delete the branch; then a new work on a new branch from the updated main starting at W1 (proposal, not chosen: regular-square-pyramid-w01)
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

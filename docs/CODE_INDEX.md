@@ -144,7 +144,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
 | Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
 | Danh tính runtime | `app/runtime_identity.py` + `scripts/runtime_doctor.py` | `stable_capability_hash()` dẫn từ bốn bảng thẩm quyền — thêm một phép dựng là hash đổi, không sửa tay |
-| Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22) |
+| Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22). *2026-10-05 (`cuboid-acceptance`):* tham số thụ động là `run_pipeline(observer=…)` (khoá: `test_synthesis_repair_trace.py::test_F2_…`); lớp `AttemptObserver` không còn nơi nào dùng |
 
 > **Lịch sử:** bảng này trước đây liệt kê `sufficiency_gate`, `completeness_gate`,
 > `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
@@ -361,6 +361,10 @@ Notes: **biên mạng duy nhất** của hệ. Guard offline nằm ở `conftest
 đây (test_gemini có quyền dùng transport giả). `ApiBudget` inert khi `BUDGET=None`.
 
 ### `ai/pipeline.py` · Change impact: targeted live
+> *2026-10-05 (`cuboid-acceptance`):* phần Tin học của mục này (classify, pattern reuse, M13–M15, các test nêu ở
+> Deps/Tests) mô tả đường đã gỡ ở `6d5f5fda`/`e664f683`; bất biến #5/#6/#23 nay là **LỊCH SỬ**, #22 khoá bằng observer
+> thụ động và runner nghiệm thu — đối chiếu từng hàng ở `ARCHITECTURE_MAP.md` §5.
+
 Orchestrator: analyze → plan/gate → classify → (pattern reuse | simulate) → envelope.
 Exports: `ANALYZE_SCHEMA`, `stage_analyze`, `stage_classify`, `stage_simulate`,
 `stage_adapt`, `try_pattern_reuse`, `run_pipeline(text, api_key, pattern_store=None,
@@ -1446,6 +1450,8 @@ việc tương lai cần duyệt riêng.)
 M8 — chọn renderer từ HỢP ĐỒNG module (không switch-case id). Exports:
 `rendererFor`, `availableVisualModes` (= tuyên bố ∩ có renderer thật),
 `effectiveVisualMode` (rơi an toàn về "2d"). Tests: `visual-mode.test.tsx`.
+*2026-10-05 (`cuboid-acceptance`):* test ấy đã gỡ; module duy nhất chỉ khai "2d" và không khai `threeD`, nên chính
+sách W4B-2R dưới đây không còn chủ thể (bất biến #16/#18 **LỊCH SỬ**); cảnh hình học đi `Scene3DExplorer`.
 
 **W4B-2R — CHỦ SỞ HỮU CHÍNH SÁCH BIỂU DIỄN** cũng ở đây (đừng đẻ file thứ hai):
 `RepresentationPolicy` = `"2d_only" | "3d_only" | "2d_and_3d_justified"`,
@@ -1887,10 +1893,16 @@ nháy). Hằng `DEFAULT_CHALLENGE` là câu mời mặc định cho module chưa
 đừng dùng nó để tắt LỐI VÀO (đó chính là lỗi đã sinh ra dải).
 Tests: `explore-ownership-w4b3a.test.ts`, `secondary-actions-w4b2w.test.ts`,
 `dequiz-observe.test.tsx`, `interaction-family-w1.test.tsx`.
+*2026-10-05 (`cuboid-acceptance`):* `challengeEntry`, `challengeSurfaceVisible`, `DEFAULT_CHALLENGE` đã gỡ ở W13;
+`exploreEntry` và `specDrift` còn nhưng không module nào khai `explore`/`currentConfig`, và cảnh 3D trả về trước khay
+2D — bất biến #24/#25/#26 **LỊCH SỬ**; các test nêu trên đã gỡ. Mã còn sót chờ quyết định H-W20-4.
 
 ### `llm/client.ts` · Change impact: offline
 Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,
 `EditResponse`. Notes: trình duyệt không bao giờ giữ API key.
+*2026-10-05 (`cuboid-acceptance`):* `editViaServer` không còn nơi gọi (backend `/api/edit` đã gỡ — bất biến #15
+**LỊCH SỬ**); `explainViaServer` chỉ do panel trợ giúp AI gọi, và panel ấy không được gắn ở đâu (#12; panel vẫn
+nằm trong `KNOWN_GAPS` của `code-index-sync.test.ts`).
 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): `extractImageViaServer(req, signal)`
 → `/api/image/extract`, cùng các kiểu `ImageExtractionRequest`,
 `ImageExtractionResponse`, `PhotoExtraction`, `PhotoAssessment`,

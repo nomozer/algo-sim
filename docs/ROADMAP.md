@@ -20,21 +20,29 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   giác đều (G03) — lý do và giới hạn ở `HANDOFF.md` §2 của run w20. Lượt chốt của việc này, run
   [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (2026-10-05, không đánh số wave), rà soát
   trọn tài liệu, đặt luật đánh số wave theo từng việc (`evaluation/RUN_NAMING.md`) và sửa thẻ từ chối của §17; nó
-  không đổi việc kế tiếp. Việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã tích hợp, bắt đầu ở W1.
+  không đổi việc kế tiếp. Run [`cuboid-acceptance`](evaluation/geometry/runs/cuboid-acceptance/) (2026-10-05, chỉ
+  tài liệu) đối chiếu 24 bất biến có con trỏ chết (0 vi phạm, 0 lỗi chặn) và gom hồ sơ nghiệm thu của nhánh. Việc kế
+  tiếp chạy trên nhánh mới rẽ từ `main` đã tích hợp, bắt đầu ở W1; đề xuất (chưa chọn): slug `regular-square-pyramid`,
+  run đầu `regular-square-pyramid-w01`, cùng chín mục §0.1 — `HANDOFF.md` §4 của run `cuboid-acceptance`.
 - **Điều kiện bắt đầu:** người dùng chọn họ hình từ bảng ứng viên §0.2 (W19 không chọn theo tên). Wave mở bằng tiền
   đăng ký: họ, các tầng phải đóng, corpus gắn nhãn trước, cổng trình duyệt desktop/mobile, hồi quy §0.3.
 - **Chặn merge nhánh `fix/cuboid-visual-semantic-closure`** (không chặn phát triển): chỉ còn review người của W18 =
   `NOT_APPROVED` — duyệt bằng mắt theo `HANDOFF.md` của run w18 (W18-H1), gồm phần còn lại của W17-H1/W16-H1 (bốn
   cảnh W14 đổi, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`
-  đã đóng ở W20. Cùng lượt duyệt: thẻ từ chối mới của §17 (nhãn "chưa kiểm chứng được phép dựng", desktop và mobile
-  — danh sách ảnh trong `HANDOFF.md` của run `cuboid-final-review`). Khi được duyệt: merge thẳng vào `main`, push,
-  xoá nhánh đã merge (`AGENTS.md` §2).
+  đã đóng ở W20. Cùng lượt duyệt: thẻ từ chối mới của §17 (nhãn "chưa kiểm chứng được phép dựng", desktop và mobile).
+  Checklist gộp — W18-H1, thẻ từ chối, giới hạn đã khai — ở `HANDOFF.md` §1 của run `cuboid-acceptance`; đối chiếu bất
+  biến ở run ấy không thêm lỗi chặn nào. Khi được duyệt: merge thẳng vào `main` (không PR), chạy cổng trên cây tích
+  hợp, push, xoá nhánh đã merge (`AGENTS.md` §2).
+- **Đã quyết (người dùng, brief `cuboid-acceptance`, 2026-10-05):** H-CFR-2 giữ chữ thường và "toạ độ" theo quy ước
+  kho; H-CFR-1 là backlog giao diện (dưới §0.1), không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính
+  đề xuất, chưa xoá `RELATED_WORK_DRAFT` khi chưa đối chiếu nội dung riêng; H-W20-3: 204 mục `D:/tmp` + 108 mục
+  `.superpowers` giữ nguyên, không đòi dọn trước merge.
 - **Quyết định còn chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị của đáp số không công thức — trùng mục 2 của
   §0.1); W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`); W15-H2 (vùng chặn ngoài đa diện); W15-H3 (từ vựng —
   `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); W18-H3 (manh mối "độ dài" của cổng phạm vi,
-  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`); W20: H-W20-3 (mục dọn ngoài kho chưa kiểm), H-W20-4 (tàn dư Tin học trong
-  mã) — `HANDOFF.md` của run w20. H-W20-1 (câu chữ) và H-W20-2 (nhãn) đã sửa theo brief ở run `cuboid-final-review`,
-  còn chờ người xem ảnh.
+  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`); H-W20-4 (tàn dư Tin học trong mã — `HANDOFF.md` của run w20; run
+  `cuboid-acceptance` liệt kê thêm phần còn ngủ ở shell). H-W20-1 (câu chữ) và H-W20-2 (nhãn) đã sửa ở run
+  `cuboid-final-review`, còn chờ người xem ảnh.
 - **Ràng buộc:** giữ `DEFAULT_MODE = LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION`
   quyết bằng bằng chứng; automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ vọng người; không
   push/merge.
@@ -53,6 +61,10 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 
 Nguồn: brief W19 (2026-10-04), phản hồi của người dùng sau W18. Mỗi mục cần test đơn vị và cổng trình duyệt
 desktop + mobile khi làm; sửa `frontend/src` thì đóng băng lại candidate.
+
+Backlog giao diện thêm, ngoài chín mục (H-CFR-1, người dùng 2026-10-05): các lời CONSTRUCTION khác (dựng lệch điểm
+hay mặt phẳng, số liệu hệ dùng lệch đề) vẫn kết bằng câu mời gửi lại — xét bỏ cùng việc giao diện kế tiếp (lời ở
+`backend/app/learner_messages.py`, đụng mã đo nên đóng băng lại candidate). Chưa sửa, không tuyên bố đã xong.
 
 ### 0.2 Ứng viên họ hình kế tiếp — khoảng trống theo tầng
 

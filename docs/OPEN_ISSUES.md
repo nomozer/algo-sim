@@ -641,9 +641,21 @@
 - **evidence:** `docs/evaluation/geometry/runs/cuboid-final-review/inventory/DOCS_INVENTORY.json` (`architecture_map_invariant_pointers`: per row, the named files that exist and those that do not); dated note under the §5 heading.
 - **impact:** a reader can take a row as test-locked when nothing locks it any more; tests and docs cite rows by number (`#11/#12`, `#14`, `#31`), so the numbering must stay.
 - **scope:** per row: name the current lock, or mark the row as retired with the date and the removal that retired it; keep every number. Rows #27–#39 already point at live code.
-- **status:** OPEN (`cuboid-final-review`) — measured and made visible; not re-mapped (needs a per-invariant audit of the running system).
+- **status:** RESOLVED (`cuboid-acceptance`, 2026-10-05) — the count was 24, not 22: #9 and #12 write "như trên" and inherited the dead pointers of #8 and #11. Each of the 24 rows was reconciled against the running system down to the assertion: 9 `CURRENT_ENFORCED` (#1, #2, #3, #8, #9, #11, #21, #22, #29), 1 `CURRENT_UNVERIFIED` (#14 → `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM`), 14 `HISTORICAL_NOT_APPLICABLE` (marked **LỊCH SỬ** in the map, with the product-path reason and the successor row), 0 `VIOLATED`. The pointer cells now name only live files; requirement text kept verbatim; every number kept. Old pointers and the commit that deleted each file: `docs/evaluation/geometry/runs/cuboid-acceptance/results/INVARIANT_RECONCILIATION.json`.
 - **owner_class:** DOCUMENTATION
 - **suggested_wave:** the next architecture or docs wave
 - **default_switch_blocker:** NO
-- **acceptance:** `architecture_map_invariant_pointers` reports no missing file for a row that is not marked retired.
+- **acceptance:** `architecture_map_invariant_pointers` reports no missing file for a row that is not marked retired. Met: 39/39 rows, 0 missing files (`cuboid-acceptance`, `results/logs/DOCS_GATES_FINAL.log`).
 - **verify:** re-run `docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/inventory_docs_cfr.py --check` (or its `invariant_pointers` function) on the updated map.
+
+### ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM
+- **description:** Invariant #14 (live evaluation is opt-in) has no lock over `backend/scripts` as a whole. Thirty scripts check `ALLOW_LIVE_AI` and five require `--live` or `--execute-live --confirm-live-execution`, but two scripts that can call the model have no opt-in: `run_live_gemini_semantic_smoke.py` (2026-08-20, informatics prompts; loads `backend/.env` at import and calls Gemini whenever `GEMINI_API_KEY` is set) and `run_rectangular_pyramid_live_analyze.py` (2026-09-24; one live Analyze request by default, `--offline-eval` opts out instead of in).
+- **evidence:** static probe, part 5 of `docs/evaluation/geometry/runs/cuboid-acceptance/diagnostics/invariant_checks_cacc.sh` (54 scripts listed with their opt-in tokens, `call_gemini` stub and call sites), then both scripts read by hand. Not reproduced by a run: that would need a live call and reading `backend/.env`.
+- **impact:** running either script by name spends quota without the `ALLOW_LIVE_AI=1` decision the repository requires (`CLAUDE.md` §6). No effect on the product, the learner, the candidate or any acceptance measurement (all made 0 live calls). Both scripts are already on `main`.
+- **scope:** `backend/scripts` only: retire or gate the informatics smoke script, make the pyramid script opt in, add one AST test that fails for a script with a model call site and no opt-in; no product code, no candidate change.
+- **status:** OPEN (`cuboid-acceptance`) — registered, not fixed (no product or tooling change in that task).
+- **owner_class:** OPERATIONS
+- **suggested_wave:** the next task that touches `backend/scripts`
+- **default_switch_blocker:** NO
+- **acceptance:** every `backend/scripts/*.py` that can reach the model aborts without `ALLOW_LIVE_AI=1` (or an explicit live flag), locked by a test.
+- **verify:** `bash docs/evaluation/geometry/runs/cuboid-acceptance/diagnostics/invariant_checks_cacc.sh --no-vitest` (part 5) plus the new AST test.

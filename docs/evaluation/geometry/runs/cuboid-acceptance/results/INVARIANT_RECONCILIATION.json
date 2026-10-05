@@ -1,0 +1,473 @@
+{
+ "schema_version": "invariant-reconciliation/1",
+ "run_id": "cuboid-acceptance",
+ "source": "docs/ARCHITECTURE_MAP.md §5 at 903e874c (rows #1–#39)",
+ "scope": "every §5 row whose 'enforced at' or 'test' cell named something that no longer exists (ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE)",
+ "list_correction": {
+  "recorded_by": "cuboid-final-review (§5 note, OPEN_ISSUES, inventory/DOCS_INVENTORY.json)",
+  "recorded": "22 rows: #1–#8, #10, #11, #14–#16, #18, #20–#26, #29",
+  "corrected": "24 rows: #1–#12, #14–#16, #18, #20–#26, #29",
+  "why": "#9 and #12 write 'như trên' in their pointer cells and so inherit the dead pointers of #8 and #11; the inventory matched file basenames only. Rows #13, #17, #19, #27, #28 and #30–#39 were re-checked file by file and symbol by symbol (diagnostics/invariant_checks_cacc.sh part 2 and the session pre-check): every pointer resolves. Text-level drift in two of them is listed under out_of_scope_observations."
+ },
+ "classes": {
+  "HISTORICAL_NOT_APPLICABLE": "the requirement's subject no longer reaches the product (removed with its domain) or a later row replaced it; the reason cites product-path evidence, not the domain name",
+  "CURRENT_ENFORCED": "the requirement holds today; a named implementation and a named assertion that fails if it breaks",
+  "CURRENT_UNVERIFIED": "the requirement holds today but the evidence found is partial; evidence gaps are told apart from reproduced faults",
+  "VIOLATED": "a probe or test reproduces behaviour contrary to the requirement"
+ },
+ "classification_rule": "same requirement, new mechanism ⇒ CURRENT_* with the pointers replaced; subject gone from the product, or superseded by a later row ⇒ HISTORICAL_NOT_APPLICABLE with the successor named. A file existing, a test count or a green full suite never counts as evidence: each cited test is named down to the assertion.",
+ "verification": {
+  "script": "diagnostics/invariant_checks_cacc.sh — part 1 old pointers (tracked, or the deleting commit), part 2 current pointers (file + symbol), part 3 focused pytest, part 4 focused vitest, part 5 static live opt-in probe for #14",
+  "pre_check": "main tree at 903e874c with this run's folder untracked (log kept out of the repository): part 2 all present; pytest 348 passed; vitest 9 files, 138 tests passed",
+  "authoritative": "results/logs/INVARIANT_CHECKS_FINAL.log — the same script in a clean detached worktree at the documentation commit of this run"
+ },
+ "removal_commits": {
+  "6d5f5fda": "2026-09-02 refactor(pipeline): gỡ nhánh Tin học khỏi run_pipeline (460 dòng)",
+  "6703c48a": "2026-09-02 refactor(frontend): xoá 9 domain Tin học; dựng lại khoá 1:1 năng lực",
+  "e664f683": "2026-09-02 refactor(backend): xoá implementation môn Tin học — catalog, DSL, 30 module",
+  "f9a40935": "2026-09-02 chore(eval): gỡ bộ đo lịch sử đã chết khỏi cây mã đang chạy",
+  "eebc22a8": "2026-08-10 feat(simulations): choose 2D or 3D by mechanism, not by what already exists",
+  "75b981d6": "2026-09-03 feat(shell): thay cột điều hướng trái bằng thanh trên ngang"
+ },
+ "summary": {
+  "INVARIANTS_TOTAL": 24,
+  "HISTORICAL_NOT_APPLICABLE": 14,
+  "CURRENT_ENFORCED": 9,
+  "CURRENT_UNVERIFIED": 1,
+  "VIOLATED": 0,
+  "historical": [4, 5, 6, 7, 10, 12, 15, 16, 18, 20, 23, 24, 25, 26],
+  "current_enforced": [1, 2, 3, 8, 9, 11, 21, 22, 29],
+  "current_unverified": [14],
+  "violated": [],
+  "MERGE_BLOCKERS": []
+ },
+ "rows": [
+  {
+   "id": 1,
+   "requirement": "LLM không phải nguồn state runtime",
+   "applicability": "CURRENT — the R0 boundary: the model writes a Semantic Program whose geometric operands are names; the interpreter and the exact kernel compute every runtime value and frame",
+   "old_pointer": {"enforced_at": "skills/*.md cấm sinh timeline; validator FORBIDDEN keys", "test": "test_pipeline::test_simulate_sinh_timeline_bi_chan", "status": "test_pipeline.py deleted 6d5f5fda; symbol FORBIDDEN in 0 non-test source files"},
+   "current_implementation": [
+    "backend/app/simulation/semantic_program/contract.py — construct statements carry no result or coordinate field; the five geometric expressions take names",
+    "semantic_program/validator.py::validate_semantic_program — a geometric type assigned a literal is refused; keys Pydantic would drop are reported (SCHEMA_SILENTLY_DROPPED_KEY)",
+    "semantic_program/geometry_exec.py — the executor imports no AI layer",
+    "semantic_program/pipeline_adapter.py::compile_semantic_program_to_envelope — frames come from the interpreter trace (#31)",
+    "declared channel: base-point coordinates (initial_value) are model layout, bounded by #36 (grounding) and #37 (assumption certificate) with their recorded limits"
+   ],
+   "tests": [
+    "backend/tests/geometry/test_geometry_ir.py::test_R0_cau_lenh_dung_KHONG_co_truong_toa_do_ket_qua — ConstructPoint/Line/SectionStmt have no field in {result, coords, value, toa_do, answer, output}",
+    "backend/tests/geometry/test_geometry_ir.py::test_R0_bieu_thuc_hinh_hoc_chi_nhan_TEN — every operand field of the five geometric expressions is annotated str",
+    "backend/tests/geometry/test_geometry_ir.py::test_R0_geometry_exec_khong_import_tang_AI — 'app.ai' and 'gemini' absent from the executor source",
+    "backend/tests/geometry/test_refusal_truthful.py::test_moi_kieu_hinh_hoc_deu_CAM_gan_literal — a literal into point3/vector3/line3/plane3/polygon3/solid is refused",
+    "backend/tests/semantic_program/test_frame_state_invariant.py::test_envelope_giu_du_moi_khung_cua_adapter"
+   ],
+   "verification": "part 1: test_pipeline.py absent (deleted 6d5f5fda 2026-09-02); part 2 ok; part 3 node ids above PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Each cited assertion fails if the model gains a field or a literal through which it could supply a computed value, or if the executor imports the AI layer.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 2,
+   "requirement": "Engine tất định là nguồn chân lý",
+   "applicability": "CURRENT — the exact kernel (rationals and radicals) and the interpreter compute every served value; an oracle written independently cross-checks them",
+   "old_pointer": {"enforced_at": "init/apply/timeline của module", "test": "algorithms.test.ts, generic.test.ts", "status": "both deleted 6703c48a"},
+   "current_implementation": [
+    "backend/app/simulation/geometry/exact.py → predicates → kernel → measure (exact arithmetic)",
+    "backend/app/simulation/semantic_program/interpreter.py",
+    "docs/evaluation/geometry/custodian/geometry_oracle.py — independent oracle, different algorithms"
+   ],
+   "tests": [
+    "backend/tests/geometry/test_geometry_kernel.py::test_toa_do_la_HUU_TI_khong_phai_float",
+    "backend/tests/geometry/test_geometry_kernel.py::test_dong_phang_o_ca_ma_FLOAT_TRA_LOI_SAI — the case floats get wrong is right",
+    "backend/tests/geometry/test_oracle_independence.py — the oracle imports no product code (static or dynamic import), agrees with the kernel on volumes, a distance and a correct section, and reports each injected section fault (vertex off the cutting plane, vertex outside the solid, reversed order, missing vertex)",
+    "frontend/src/simulations/domains/geometry/interaction-state.test.ts — 'E · bung hình không chạm GeometryState', 'J · phát lại theo timeline'"
+   ],
+   "verification": "part 1: algorithms.test.ts and generic.test.ts absent (deleted 6703c48a 2026-09-02); part 2 ok; part 3 and part 4 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Exactness, determinism and an independent check that can catch a wrong kernel are each locked by a named assertion.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 3,
+   "requirement": "Renderer không sở hữu state",
+   "applicability": "CURRENT — Scene3DExplorer draws the backend scene3d at a step; selecting, seeking, exploding and hiding are presentation transforms",
+   "old_pointer": {"enforced_at": "WorkspaceProps chỉ có state + dispatch", "test": "patch.test.ts (drag qua action)", "status": "patch.test.ts deleted 6703c48a; WorkspaceProps still tracked (5 non-test files) for the 2D SemanticWorkspace path"},
+   "current_implementation": [
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts::objectsAt (objects at a step, read from the envelope)",
+    "frontend/src/simulations/domains/geometry/interaction-state.ts (explode/hide/isolate/select: presentation only)",
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx; display names owned by backend display_names.py"
+   ],
+   "tests": [
+    "interaction-state.test.ts 'E · bung hình không chạm GeometryState' — every coordinate, direction, normal and measure intact after explode; V stays 1/6",
+    "interaction-state.test.ts 'J · phát lại theo timeline' — same step ⇒ same result, no randomness, no time",
+    "scene3d-geometry-timeline.test.tsx 'W12 · tua tiến/lùi và dừng ở bước hình học cuối'",
+    "semantic-dumb-frontend.test.ts '(G1/G4) frontend KHÔNG dịch ngữ nghĩa hình học sang tiếng Việt'",
+    "backend/tests/semantic_program/test_frame_state_invariant.py"
+   ],
+   "verification": "part 1: patch.test.ts absent (deleted 6703c48a); part 2 ok; part 4 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "The geometry renderer reads the envelope and a step; the tests fail if a presentation transform changes geometry or if the same step renders differently.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 4,
+   "requirement": "Manifest là từ vựng capability",
+   "applicability": "NOT APPLICABLE — the DSL manifest and the enums derived from it were removed with the informatics catalog",
+   "old_pointer": {"enforced_at": "mọi enum/allowlist dẫn xuất", "test": "test_manifest::*_dan_xuat_tu_manifest", "status": "manifest.py and test_manifest.py deleted e664f683"},
+   "current_implementation": [
+    "successor: backend/app/simulation/semantic_program/contract.py is the single source of the IR vocabulary; scripts/export_semantic_program_schema.py writes its two mirrors",
+    "successor: backend/app/simulation/product_capability.py (product capability authority) and stable_capability_hash"
+   ],
+   "tests": ["successor: backend/tests/semantic_program/test_schema_sync.py"],
+   "verification": "part 1: manifest.py, test_manifest.py absent (deleted e664f683 2026-09-02); part 3 test_schema_sync.py PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Superseded with grounds: the running system's vocabulary is the IR schema, exported from one source and locked against drift.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 5,
+   "requirement": "Specialized không bị chặn bởi gap của DSL generic",
+   "applicability": "NOT APPLICABLE — there are neither specialized modules nor a generic DSL",
+   "old_pointer": {"enforced_at": "pipeline.run_pipeline (gate chỉ chặn đường generic)", "test": "test_capability_boundary::test_gap_role_khong_va_lay_specialized", "status": "test_capability_boundary.py deleted 6d5f5fda"},
+   "current_implementation": ["one product route: the semantic program route; the registry holds one module, generic.semantic_program"],
+   "tests": [
+    "frontend/src/simulations/registry.test.ts 'đăng ký domain hình học ⇒ registry có đúng module của nó' — exactly one module",
+    "backend/tests/geometry/test_geometry_route_independence.py::test_run_pipeline_khong_con_mot_nhanh_TIN_HOC_nao"
+   ],
+   "verification": "part 1: test_capability_boundary.py absent; part 3 and part 4 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Both sides of the carve-out are gone from the product path, shown by the registry and route tests.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 6,
+   "requirement": "Pattern reuse chỉ sau classify, chỉ generic.rule_scene",
+   "applicability": "NOT APPLICABLE — the pattern store, classify and the generic.rule_scene target were removed",
+   "old_pointer": {"enforced_at": "pipeline.run_pipeline", "test": "test_reuse::test_case_g_specialized_khong_dung_store", "status": "test_reuse.py deleted 6d5f5fda; patterns.py deleted e664f683"},
+   "current_implementation": ["none — no pattern reuse exists; the /api/analyze response cache is a separate mechanism (see #7)"],
+   "tests": ["backend/tests/geometry/test_geometry_route_independence.py (classify and its recovery loop are forbidden names on the geometry route)"],
+   "verification": "part 1: test_reuse.py, patterns.py absent; part 3 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The mechanism the row ordered no longer exists.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 7,
+   "requirement": "Reuse không bypass validation (4 cổng)",
+   "applicability": "NOT APPLICABLE — pattern reuse removed",
+   "old_pointer": {"enforced_at": "patterns.run_gates", "test": "test_patterns::test_run_gates_khong_bypass_validation", "status": "patterns.py, test_patterns.py deleted e664f683"},
+   "current_implementation": ["related, not governed by this row (it coexisted with #7): main.py caches only status=='ok' envelopes under CACHE_VERSION; a policy change is decided by a bump or a recorded NO_BUMP proof (CLAUDE.md §5)"],
+   "tests": ["related: backend/tests/test_api.py::test_cache_version_9_cu_bi_invalidate_sau_bump_10, ::test_khong_cache_ket_qua_unsupported"],
+   "verification": "part 1: patterns.py, test_patterns.py absent; part 3 cache test PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The reused artefact and its four gates are gone; the response cache has its own discipline and is not re-labelled as this row.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 8,
+   "requirement": "Thà capability_gap còn hơn mô phỏng xấp xỉ gây hiểu lầm",
+   "applicability": "CURRENT — every stage that cannot certify refuses",
+   "old_pointer": {"enforced_at": "representation.build_representation_plan + semantic.check_semantic_compatibility", "test": "test_capability_boundary::*", "status": "representation.py deleted e664f683; check_semantic_compatibility in 0 source files; build_representation_plan only in a comment of ai/pipeline.py listing what is gone"},
+   "current_implementation": [
+    "semantic_program/domain_profile.py::detect_domain (not geometry ⇒ fail closed)",
+    "semantic_program/coverage_gate.py (C₁a/C₁b)",
+    "semantic_program/grounding_gate.py::check_grounding",
+    "semantic_program/assumption_gate.py::kiem_gia_dinh",
+    "semantic_program/construction_binding.py::doi_chieu_phep_dung",
+    "backend/app/simulation/product_capability.py",
+    "semantic_program/route.py::verify_and_compile (stage order)"
+   ],
+   "tests": [
+    "backend/tests/geometry/test_geometry_coverage_gate.py::test_2_khai_thang_diem_ket_qua_thi_TRUOT, ::test_3_gan_dap_an_bang_assign_thi_TRUOT, ::test_phu_thuoc_RONG_thi_ca_dung_cung_truot__khoa_hoi_quy",
+    "backend/tests/geometry/test_assumption_gate.py::test_kenh_layout_derived_bi_tu_choi, ::test_het_ngan_sach_khong_thanh_an_toan",
+    "backend/tests/geometry/test_construction_binding.py (route cases by label)",
+    "backend/tests/geometry/test_source_grounding_closure.py"
+   ],
+   "verification": "part 1: representation.py, test_capability_boundary.py absent; part 2 ok; part 3 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Refusal is the default at each certifying stage; each cited test fails if that stage serves instead of refusing.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 9,
+   "requirement": "Canonical simulation: đúng hoặc từ chối trung thực",
+   "applicability": "CURRENT",
+   "old_pointer": {"enforced_at": "như trên (#8)", "test": "như trên (#8)", "status": "inherits the dead pointers of #8"},
+   "current_implementation": [
+    "semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS and postconditions on served answers",
+    "backend/app/learner_messages.py, semantic_program/refusal_cause.py — refusal carries stage, code and a message chosen by code"
+   ],
+   "tests": [
+    "backend/tests/geometry/test_product_response_contract.py::test_KHONG_hua_he_mo_phong_duoc_dang_bai_nay, ::test_ca_duong_khong_mang_truong_tu_choi, ::test_moi_ca_am_deu_du_bon_truong, ::test_thong_diep_chon_theo_MA_truoc_roi_moi_den_loai",
+    "backend/tests/geometry/test_refusal_truthful.py::test_loi_tu_choi_NOI_DUNG_thu_da_xay_ra",
+    "backend/tests/geometry/test_oracle_independence.py",
+    "browser: docs/evaluation/geometry/runs/cuboid-final-review/results/BROWSER_REFUSAL_CFR.json (refusal cards with no answer and no scene, 6/6 desktop + 6/6 mobile)"
+   ],
+   "verification": "part 3 PASS (pre-check); browser evidence measured at a1c53cdb on candidate b2d4187a (product bytes unchanged since)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Served answers pass deterministic checkers; refusals are structured, promise nothing and say what happened.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 10,
+   "requirement": "Learner được phép sai",
+   "applicability": "NOT APPLICABLE — no learner manipulation of the model reaches the product",
+   "old_pointer": {"enforced_at": "what-if branch (algorithm), drag tự do", "test": "registry.test.ts, patch.test.ts", "status": "patch.test.ts deleted 6703c48a; registry.test.ts kept but now asserts the single geometry module"},
+   "current_implementation": ["frontend/src/simulations/domains/semantic/index.ts — the only module: apply is the identity, no explore, no currentConfig; Scene3D interaction is select/seek/explode (dragging is out of scope, #31); W13 removed predict"],
+   "tests": [
+    "registry.test.ts 'đăng ký domain hình học ⇒ registry có đúng module của nó'",
+    "interaction-state.test.ts 'E · bung hình không chạm GeometryState'",
+    "no-verdict.test.ts 'W13 §1 — không module nào khai lại năng lực chấm điểm'"
+   ],
+   "verification": "part 1: patch.test.ts absent; part 4 PASS (pre-check); source read of semantic/index.ts",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "There is no learner input that can be wrong; the requirement returns if a manipulation feature is designed.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 11,
+   "requirement": "Chỉ engine/rule tất định mới phán đúng/sai",
+   "applicability": "CURRENT, narrowed — no learner-verdict surface exists (W13); the judgements left are the checkers on served answers, all deterministic",
+   "old_pointer": {"enforced_at": "InteractionFeedback sinh từ rule", "test": "patch.test.ts::drag bounds", "status": "patch.test.ts deleted 6703c48a; InteractionFeedback only in a comment of simulations/types.ts"},
+   "current_implementation": ["semantic_program/geometry_obligations.py::GEOMETRY_CHECKERS, postconditions, the independent oracle; no-verdict guard on the frontend"],
+   "tests": [
+    "frontend/src/simulations/no-verdict.test.ts — W13 §1 no module declares predict; §2 the store keeps no predict/challengeOpen; §3 PredictionBar and SearchActionZone removed",
+    "backend/tests/geometry/test_geometry_obligations.py — point on line/plane, parallel, perpendicular judged by the kernel (DUNG/SAI pairs)",
+    "backend/tests/geometry/test_geometry_ir.py::test_R0_geometry_exec_khong_import_tang_AI"
+   ],
+   "verification": "part 1: patch.test.ts absent; part 3 and part 4 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Every correctness judgement is made by deterministic code, and the test suite fails if a verdict surface returns.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 12,
+   "requirement": "Feedback là state data, không phải lượt chat",
+   "applicability": "NOT APPLICABLE — the geometry product gives no feedback on learner actions",
+   "old_pointer": {"enforced_at": "GenericState.feedback", "test": "như trên (#11)", "status": "GenericState in 0 source files; inherits the dead pointers of #11"},
+   "current_implementation": ["learner-facing text that remains (refusals) is chosen from structured codes (#9); the chat panel is not mounted: components/AIHelpPanel.tsx has no importer and /api/explain has no UI consumer"],
+   "tests": ["frontend/src/components/ux-shell.test.tsx 'Panel Giải thích không còn control AI nào'", "test_product_response_contract.py::test_thong_diep_chon_theo_MA_truoc_roi_moi_den_loai"],
+   "verification": "part 1: GenericState in 0 files; part 3 and part 4 PASS (pre-check); git grep: AIHelpPanel only in its own file",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The feedback channel the row governed no longer exists; no chat turn reaches the learner.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4 (informatics remnants in product code)", "task": "dormant AIHelpPanel.tsx + /api/explain + client explainViaServer"}
+  },
+  {
+   "id": 14,
+   "requirement": "Live eval là opt-in, không phải thói quen",
+   "applicability": "CURRENT — live runs need ALLOW_LIVE_AI=1 and a user decision (CLAUDE.md §6, RULES)",
+   "old_pointer": {"enforced_at": "evaluation/live.py (ALLOW_LIVE_AI=1)", "test": "test_live_budget::test_live_khong_co_opt_in_thi_abort", "status": "evaluation/live.py deleted f9a40935; test_live_budget.py deleted 6d5f5fda"},
+   "current_implementation": [
+    "backend/conftest.py — the default suites make 0 real calls (#13)",
+    "per-script opt-in: ALLOW_LIVE_AI in 30 scripts; --live or --execute-live --confirm-live-execution in 5 more (part 5)"
+   ],
+   "tests": [
+    "backend/tests/geometry/test_geometry_dev_runner.py::test_khong_co_ALLOW_LIVE_AI_thi_TU_CHOI",
+    "backend/tests/geometry/test_holdout_protocol.py::test_khong_co_con_dau_thi_KHONG_chay_duoc",
+    "backend/tests/test_offline_guard.py"
+   ],
+   "probe": {
+    "kind": "static, heuristic (part 5) then read by hand; nothing executed",
+    "findings": [
+     "backend/scripts/run_live_gemini_semantic_smoke.py — load_dotenv(backend/.env) at import; run_live_smoke() calls Gemini whenever GEMINI_API_KEY is set; no ALLOW_LIVE_AI, no flag; informatics prompts; added 09c0f49b (2026-08-20), on origin/main",
+     "backend/scripts/run_rectangular_pyramid_live_analyze.py — live by default (one Analyze request through httpx.AsyncHTTPTransport), --offline-eval opts out instead of in; reads the key from the environment or backend/.env; last change a0b08238 (2026-09-24), on origin/main"
+    ],
+    "not_reproduced_because": "running either would make a live call and read backend/.env; both are forbidden in this task (LIVE_GEMINI_REQUESTS = 0, no secrets)"
+   },
+   "verification": "part 1: live.py, test_live_budget.py absent; part 3 PASS (pre-check); part 5 lists 54 scripts, exactly the two above have call sites, no opt-in token and no stub",
+   "classification": "CURRENT_UNVERIFIED",
+   "reason": "The requirement is current and tested for the runners named above, but no lock covers backend/scripts as a whole and two live-capable scripts have no opt-in. Evidence gap with a static finding, not a reproduced violation.",
+   "merge_impact": "none — developer tooling outside the product path and outside MEASURED_SYSTEM_PATHS; both scripts are already on origin/main; no effect on correctness, source grounding, fail-closed refusal, identity, the default mode or the acceptance scope (every acceptance measurement of this branch made 0 live calls)",
+   "follow_up": {"owner": "next task that touches backend/scripts", "task": "ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM: retire the informatics smoke script or gate it, make the pyramid script opt in, add one AST lock over backend/scripts"}
+  },
+  {
+   "id": 15,
+   "requirement": "Patch fail → spec hiện tại nguyên vẹn",
+   "applicability": "NOT APPLICABLE — /api/edit was removed; a geometry config is a compiled artefact, not a spec the learner patches",
+   "old_pointer": {"enforced_at": "patch.py áp trên bản sao", "test": "test_patch::test_patch_fail_giua_chung_khong_mutate_spec", "status": "patch.py, test_patch.py deleted e664f683"},
+   "current_implementation": ["backend/app/main.py — dated comment '/api/edit ĐÃ GỠ (LEGACY_INFORMATICS_REMOVAL)': incremental editing of the geometry route is a separate, undesigned feature"],
+   "tests": ["frontend/src/llm/offline-guard.test.ts (the dormant client editViaServer is still blocked at fetch)"],
+   "verification": "part 1: patch.py, test_patch.py absent; git grep: editViaServer has no caller outside offline-guard.test.ts; part 4 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "No edit path exists to fail.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4", "task": "dormant frontend/src/llm/client.ts::editViaServer"}
+  },
+  {
+   "id": 16,
+   "requirement": "3D là renderer, không phải domain (M8)",
+   "applicability": "NOT APPLICABLE — the 2D/3D toggle over informatics modules is gone; superseded by #31 and #35",
+   "old_pointer": {"enforced_at": "simulations/renderer.ts + SimulationWorkspace", "test": "visual-mode.test.tsx, render3d.test.tsx, m8-acceptance.test.tsx", "status": "visual-mode.test.tsx, m8-acceptance.test.tsx deleted 6703c48a; render3d.test.tsx deleted eebc22a8 (2026-08-10); renderer.ts and SimulationWorkspace.tsx tracked"},
+   "current_implementation": ["SimulationWorkspace returns Scene3DExplorer when the envelope has a valid scene3d, before the 2D mode logic; the only module declares supportedVisualModes ['2d'] for the 2D fallback; both views are projections of one backend trace (#31, #35)"],
+   "tests": ["successor: test_frame_state_invariant.py (#31), scene3d-geometry-timeline.test.tsx (#35)"],
+   "verification": "part 1 as stated; part 3 and part 4 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Superseded with grounds by the geometry-era rows that lock frame k ⇔ trace[k] and the Scene3D step partition.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 18,
+   "requirement": "Nghĩa của chiều sâu 3D phải trung thực, chỉ nghĩa sư phạm được bày cho học sinh (M10/W4B-2R/2S)",
+   "applicability": "NOT APPLICABLE as written — the representation policy governed informatics modules that chose a meaning for Z; in geometry Z is a real coordinate from the exact kernel",
+   "old_pointer": {"enforced_at": "SimulationModule.threeD (types.ts) + renderer.ts::representationPolicyOf/representationPolicyProblems + domains/network/node-glyph.ts", "test": "representation-policy-w4b2r.test.ts, encap-render3d.test.tsx", "status": "node-glyph.ts and both tests deleted 6703c48a; threeD and representationPolicyOf survive in types.ts/renderer.ts with no module declaring threeD"},
+   "current_implementation": ["truthful depth cues in geometry: docs/architecture/OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md — the product classifies hidden/visible edges, an independent oracle checks it"],
+   "tests": ["successor: frontend/src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts 'Scene3D occlusion fault gates'; human review of four W14-changed scenes still pending (ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4)"],
+   "verification": "part 1 as stated; part 4 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Superseded with grounds by the occlusion contract; the old policy code is dormant.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4", "task": "dormant SimulationModule.threeD, renderer.ts::representationPolicyOf/representationPolicyProblems"}
+  },
+  {
+   "id": 20,
+   "requirement": "Toán hạng của rule generic phải có nguồn giá trị theo hợp đồng dẫn xuất từ manifest; thiếu thì reject, không hoá 0 (M13)",
+   "applicability": "NOT APPLICABLE — generic rules, the DSL and its contract were removed",
+   "old_pointer": {"enforced_at": "dsl/validator.py + generic/validate.ts; generic_engine.py + generic/model.ts + store.ts; manifest.py::dsl_semantic_contract → dsl-contract.json", "test": "test_dsl.py, test_generic_engine_m13.py, generic.test.ts, test_manifest_providers.py, test_m13_dijkstra_fixture.py, test_m13_pattern_revalidate.py", "status": "all deleted (e664f683, 6703c48a, 6d5f5fda, f9a40935); store.ts tracked"},
+   "current_implementation": ["successor in the IR: operands are names checked by the validator and the static check (undeclared name, wrong type, use before construction refused with typed codes); a failing construction fails the program"],
+   "tests": [
+    "successor: backend/tests/geometry/test_geometry_ir.py::test_tham_chieu_ten_KHONG_KHAI_bi_VALIDATOR_bat_tinh, ::test_dung_SAI_KIEU_thi_hong, ::test_giao_duong_CHEO_NHAU_thi_chuong_trinh_HONG"
+   ],
+   "verification": "part 1: every named file absent with its deleting commit; part 3 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The subject (rule operands of the DSL) is gone; the fail-closed idea lives on in the IR checks named as successor.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 21,
+   "requirement": "Yêu cầu tính kết quả mà không có executor tất định nào sở hữu → từ chối, không dựng cảnh minh hoạ đáp án (M13)",
+   "applicability": "CURRENT — a requested quantity that no supported construction derives is refused",
+   "old_pointer": {"enforced_at": "simulation/computation_gate.py::check_computation_ownership in run_pipeline; analyze.md/classify.md", "test": "test_m13_routing.py", "status": "computation_gate.py, test_m13_routing.py deleted e664f683; datasets/capability.py deleted f9a40935"},
+   "current_implementation": ["semantic_program/coverage_gate.py — C₁a: every obligation needs a covering step; C₁b: the witness must be derived from data, a declared or assigned answer is refused", "backend/app/simulation/product_capability.py — out-of-scope families refused"],
+   "tests": [
+    "backend/tests/geometry/test_geometry_coverage_gate.py::test_2_khai_thang_diem_ket_qua_thi_TRUOT, ::test_3_gan_dap_an_bang_assign_thi_TRUOT, ::test_phu_thuoc_RONG_thi_ca_dung_cung_truot__khoa_hoi_quy",
+    "backend/tests/semantic_program/test_coverage_gate_c1a.py"
+   ],
+   "verification": "part 1 as stated; part 2 ok; part 3 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Same requirement, new mechanism: a result the program declares instead of computing never reaches the learner.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 22,
+   "requirement": "Evaluation chạy cùng production orchestration với /api/analyze; observer thụ động (M14/M16)",
+   "applicability": "CURRENT — measurements must exercise product code, not a re-implementation",
+   "old_pointer": {"enforced_at": "ai/pipeline.py::run_pipeline(observer=...) + evaluation/observer.py::AttemptObserver + evaluation/harness.py::evaluate_item + m16_*", "test": "test_eval_convergence.py, test_eval_parity.py, test_eval_side_effects.py, test_m16_offline_eval.py", "status": "harness.py and m16_* deleted f9a40935; the four tests deleted (6d5f5fda, e664f683); pipeline.py tracked; observer.py tracked but AttemptObserver has no user"},
+   "current_implementation": [
+    "backend/app/ai/pipeline.py::run_pipeline(observer=None) — passive observer; measurement scripts pass their own (measure_geometry_stability.py, replay_negative_boundaries.py, …)",
+    "backend/scripts/run_thesis_final_acceptance.py — the authoritative acceptance runner calls the product stages pipeline.stage_semantic_analyze, pipeline.stage_semantic_program and route.verify_and_compile; the one string it must rebuild (repair diagnosis) is byte-locked"
+   ],
+   "tests": [
+    "backend/tests/test_synthesis_repair_trace.py::test_F2_pipeline__final_memory_chuong_trinh_so_luot_GIONG_khi_co_observer — same memory, program and turn count with and without an observer",
+    "backend/tests/geometry/test_thesis_runner_alignment.py::test_A1_prompt_sua_cua_runner_TRUNG_TUNG_BYTE_voi_san_pham, ::test_B7_chuoi_su_kien_du_va_DUNG_THU_TU, ::test_C4_khong_lượt_gọi_thật_nao"
+   ],
+   "verification": "part 1 as stated; part 2 ok; part 3 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "Observer passivity and the acceptance runner's parity with the product are each locked; diagnostic runners that replay a frozen contract evaluate a sub-chain by design and say so in their reports.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4", "task": "dormant backend/app/evaluation/observer.py::AttemptObserver"}
+  },
+  {
+   "id": 23,
+   "requirement": "Mechanism ownership khai ở FamilyMembership; taxonomy canonical; consistency gate trên final route (M15)",
+   "applicability": "NOT APPLICABLE — classify, families and the mechanism taxonomy were removed",
+   "old_pointer": {"enforced_at": "simulation/mechanisms.py + descriptor.py + mechanism_gate.py + ai/pipeline.py::classify_with_one_route_recovery", "test": "test_mechanisms.py, test_descriptor.py, test_capability_descriptors.py, test_pipeline_mechanism_consistency.py, test_mechanism_gate.py", "status": "all deleted (e664f683, 6d5f5fda); classify_with_one_route_recovery in 0 source files"},
+   "current_implementation": ["the geometry route does not classify: domain_profile.detect_domain is deterministic"],
+   "tests": ["backend/tests/geometry/test_geometry_route_independence.py::test_duong_hinh_hoc_khong_goi_mot_tham_quyen_TIN_HOC_nao — classify_with_one_route_recovery among the forbidden names"],
+   "verification": "part 1 as stated; part 3 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The subject (classify and mechanisms) is gone, and a test keeps it from coming back into the geometry route.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 24,
+   "requirement": "Khám phá và Thử thách là hai trách nhiệm khác nhau; lối vào thuộc shell (W4B-3A)",
+   "applicability": "NOT APPLICABLE — Challenge was removed by W13; no module declares explore",
+   "old_pointer": {"enforced_at": "state/store.ts exploreOpen/challengeOpen + SimulationControls.tsx + SimulationWorkspace.tsx challengeEntry/exploreEntry/challengeSurfaceVisible + types.ts ExploreCapability/PresentationEntry + domains/algorithm/interaction-policy.ts", "test": "explore-ownership-w4b3a.test.ts, secondary-actions-w4b2w.test.ts, workspace-lifecycle.test.ts, interaction-family-w1.test.tsx, accept-w4b3a.mjs", "status": "interaction-policy.ts and three tests deleted 6703c48a; store.ts, SimulationControls.tsx, workspace-lifecycle.test.ts and accept-w4b3a.mjs tracked"},
+   "current_implementation": ["the only module (generic.semantic_program) declares no explore; the Scene3D path renders before the 2D controls tray; W13 removed predict, challengeOpen and challengeEntry"],
+   "tests": [
+    "no-verdict.test.ts 'W13 §2 — store không giữ trạng thái hỏi-đáp' (no challengeOpen)",
+    "registry.test.ts (single module)",
+    "ux-shell.test.tsx 'một khay điều khiển trên một màn hình — khay 2D ẩn khi cảnh là 3D'"
+   ],
+   "verification": "part 1 as stated; part 4 PASS (pre-check); source read of semantic/index.ts",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Neither responsibility reaches the geometry learner; the explore half survives only as dormant shell code.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4", "task": "dormant store.exploreOpen, SimulationWorkspace.exploreEntry, the SimulationControls explore toggle, classroom exploreOpen/challengeOpen fields, frontend/scripts/accept-w4b3a.mjs"}
+  },
+  {
+   "id": 25,
+   "requirement": "Tiêu đề là đề bài; mô hình lệch đề thì màn hình phải nói ra (W4B-4D)",
+   "applicability": "NOT APPLICABLE — the learner cannot change the model's parameters",
+   "old_pointer": {"enforced_at": "components/SimulationWorkspace.tsx specDrift + contract currentConfig? (types.ts) + 7 modules", "test": "spec-drift-w4b4d.test.ts, accept-experience-w4b4c.mjs", "status": "the test was spec-drift-w4b4d.test.tsx (the map wrote .ts), added bd2c13ea, deleted 6703c48a; the seven modules deleted; accept-experience-w4b4c.mjs tracked"},
+   "current_implementation": ["semantic module: apply is the identity and currentConfig is not declared ⇒ specDrift returns false; the Scene3D path returns earlier"],
+   "tests": ["registry.test.ts (single module)"],
+   "verification": "part 1 as stated; part 4 PASS (pre-check); source read of semantic/index.ts and SimulationWorkspace.tsx",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "Nothing can drift from the problem statement when nothing can change it.",
+   "merge_impact": "none",
+   "follow_up": {"owner": "user decision H-W20-4", "task": "dormant SimulationWorkspace.specDrift, SimulationModule.currentConfig, frontend/scripts/accept-experience-w4b4c.mjs"}
+  },
+  {
+   "id": 26,
+   "requirement": "Lối vào Khám phá phải có hệ quả; đo bằng cửa thật (W4B-4A/4D)",
+   "applicability": "NOT APPLICABLE — no explore entry exists (see #24)",
+   "old_pointer": {"enforced_at": "experience-audit-w4b4a.test.ts + domains/algorithm/interaction-policy.ts + condition-param.ts", "test": "experience-audit-w4b4a.test.ts, explore-ownership-w4b3a.test.ts, condition-param.test.ts", "status": "all deleted 6703c48a"},
+   "current_implementation": ["none needed"],
+   "tests": ["registry.test.ts (single module, no explore)"],
+   "verification": "part 1 as stated; part 4 PASS (pre-check)",
+   "classification": "HISTORICAL_NOT_APPLICABLE",
+   "reason": "The subject of the measurement is gone.",
+   "merge_impact": "none",
+   "follow_up": null
+  },
+  {
+   "id": 29,
+   "requirement": "Vai trò do máy chủ sở hữu; thanh điều hướng ứng dụng nằm ngoài lưới workspace (M18)",
+   "applicability": "CURRENT",
+   "old_pointer": {"enforced_at": "accounts/policy.py::resolve_signup_role + accounts/router.py::Caller.require_role + components/AppSidebar.tsx + .app-root/.app-nav", "test": "test_auth_api.py, test_classroom_api.py, ux-shell.test.tsx, accept-classroom-m18.mjs", "status": "AppSidebar.tsx and .app-nav* removed 75b981d6 (2026-09-03, top bar replaces the left column); the rest tracked"},
+   "current_implementation": ["backend/app/accounts/policy.py::resolve_signup_role, backend/app/accounts/router.py (require_role)", "frontend/src/components/TopNav.tsx::itemsForRole — a row in the top bar, outside the workspace grid"],
+   "tests": [
+    "backend/tests/test_auth_api.py::TestVaiTro::test_tu_khai_giao_vien_ma_khong_co_ma_thi_BI_CHAN, ::TestVaiTro::test_he_thong_chua_cau_hinh_ma_thi_DONG_chu_khong_mo, ::TestApiDangKyDangNhap::test_client_gui_role_teacher_KHONG_thanh_giao_vien",
+    "frontend/src/components/canvas-first-shell.test.tsx 'KHÔNG còn cột điều hướng thường trực — bất biến 1', 'xưởng có ĐƯỜNG RA: hàng điều hướng luôn hiện — bất biến 2'",
+    "frontend/src/components/ux-shell.test.tsx 'hai vai KHÔNG dùng chung một thanh điều hướng'"
+   ],
+   "verification": "part 1: AppSidebar.tsx absent (deleted 75b981d6); part 2 ok; part 3 and part 4 PASS (pre-check)",
+   "classification": "CURRENT_ENFORCED",
+   "reason": "The role half is unchanged and tested; the navigation half moved from a left column to the top bar, and the new tests lock its absence from the grid and its role split.",
+   "merge_impact": "none",
+   "follow_up": null
+  }
+ ],
+ "dormant_code_observed": {
+  "note": "informatics-era code still in the product tree with no path to the geometry learner; evidence for the pending user decision H-W20-4 (w20 HANDOFF: 'tàn dư Tin học trong mã'); not changed here (no product change in this task)",
+  "items": [
+   "frontend/src/state/store.ts exploreOpen/setExploreOpen; components/SimulationWorkspace.tsx exploreEntry, specDrift; components/SimulationControls.tsx explore toggle",
+   "frontend/src/simulations/types.ts threeD?, currentConfig?; simulations/renderer.ts representationPolicyOf/representationPolicyProblems",
+   "frontend/src/llm/client.ts editViaServer (backend /api/edit removed); components/AIHelpPanel.tsx + client explainViaServer (not mounted) and backend /api/explain (no UI consumer)",
+   "backend/app/evaluation/observer.py AttemptObserver (no user)",
+   "backend/app/accounts/classroom_router.py exploreOpen/challengeOpen fields, frontend PracticeReporter.tsx/ObserveView.tsx/state/classroom.ts readers",
+   "frontend/scripts/accept-w4b3a.mjs, frontend/scripts/accept-experience-w4b4c.mjs (informatics browser acceptance scripts)"
+  ]
+ },
+ "out_of_scope_observations": [
+  "#27 requirement text still says correctness belongs to the engine and predict.check (predict removed by W13) and lists the explore/challenge flags; #28 text names SimSpec.validate (classroom_router._validated_envelope now accepts only the semantic route). Their pointer cells resolve; text drift is left to the H-W20-4 decision.",
+  "backend/tests/semantic_program/test_postconditions.py exercises informatics obligations (extremum, aggregate, ordering); not a pointer of any reconciled row."
+ ]
+}
