@@ -19,16 +19,17 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = fix/cuboid-visual-semantic-closure (task slug cuboid-visual-semantic-closure)
+CURRENT_BRANCH = main (nhánh fix/cuboid-visual-semantic-closure đã fast-forward vào main, push và xoá — run cuboid-merge)
 CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp, không đánh số; chỉ tài liệu)
-RUN_COMMITS = commit tài liệu của run + commit log kiểm chứng (START 37b23f04; vai trò: `RUN.json` của run)
-PRODUCT_STATE = byte sản phẩm không đổi từ 284a9bfa: candidate b2d4187a… (kiểm chứng a1c53cdb, worktree tách rời sạch), CACHE_VERSION 111
-ORIGIN_MAIN_AT_GATE = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (fetch + ls-remote đầu run: không đổi; nhánh chưa có trên remote)
-FINAL_DECISION = AWAITING_USER_VISUAL_APPROVAL (cuboid-merge)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói duyệt A–F: runs/cuboid-merge/REVIEW.md); MERGE_APPROVAL = NO
+RUN_COMMITS = 1e03ef82 (gói duyệt) · f668097d (log cổng) · c282a5f3 (ghi phê duyệt) · commit ghi kết quả tích hợp trên main
+PRODUCT_STATE = byte sản phẩm không đổi từ 284a9bfa: candidate b2d4187a…, CACHE_VERSION 111, LLM_ONLY
+ORIGIN_MAIN = c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec sau push fast-forward (trước: a9492ee9); commit ghi kết quả đi sau
+FINAL_DECISION = MERGED_AND_PUSHED (cuboid-merge)
+HUMAN_VISUAL_REVIEW = APPROVED_BY_USER (A–F, 2026-10-05; nguyên văn: runs/cuboid-merge/APPROVAL.md)
 USER_DIRTY_STATE = D frontend/public/favicon.svg
-PUSH_EXECUTED = NO
-MERGE_EXECUTED = NO
+PUSH_EXECUTED = YES (main, không force)
+MERGE_EXECUTED = YES (fast-forward, không PR)
+NEXT_ACTION = SELECT_AND_START_NEXT_FAMILY_W01
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -87,9 +88,10 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
-- **Chặn merge:** chỉ còn phê duyệt hình — gói A–F ở `REVIEW.md` của run `cuboid-merge` (W18-H1 kèm bốn cảnh W14
-  `HUMAN_REVIEW_PENDING`, thẻ từ chối hiện hành, giới hạn đề nghị hoãn). Ảnh W18 đã chứng minh chuyển tiếp sang
-  candidate `b2d4187a` (fixture trùng trừ hai trường danh tính). Đối chiếu bất biến không tìm thấy lỗi chặn (0 vi phạm).
+- **Đã tích hợp:** người dùng ACCEPTED A–F của `REVIEW.md` (run `cuboid-merge`, `APPROVAL.md`); `main` fast-forward
+  tới `c282a5f3` và push. Giới hạn F1–F5 được **hoãn, vẫn mở** (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`, vùng đa
+  diện của #37, `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`, `ROADMAP.md` §0.4,
+  `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM`); registry khuất/hiện mới vẫn chưa có (`ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`).
 - **Đã quyết (người dùng, brief `cuboid-acceptance`):** H-CFR-2 giữ chữ thường và "toạ độ"; H-CFR-1 = backlog giao
   diện, không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính đề xuất, chưa xoá `RELATED_WORK_DRAFT`
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.

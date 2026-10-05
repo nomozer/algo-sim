@@ -911,7 +911,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **COMMITS:** documentation commit · final log commit
 - **CANDIDATE:** b2d4187a78ed8bf6… unchanged · CACHE_VERSION 111 · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** documentation commit (review package, fixture transfer) · final log commit (gates in a clean detached worktree)
-- **CLASSIFICATION:** AWAITING_USER_VISUAL_APPROVAL
+- **CLASSIFICATION:** MERGED_AND_PUSHED
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/cuboid-merge/REVIEW.md
@@ -919,10 +919,10 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **PASS:** w18 visual evidence transferred to candidate b2d4187a (fixtures regenerated offline: old run byte-exact to the measured manifest; 32/32 current fixtures differ only in two identity fields; frontend diff confined to the refusal card); 0 new captures; review package A–F
 - **CLOSED:** NONE
 - **OPENED:** NONE
-- **OPEN (blocking merge of the branch):** explicit visual approval of REVIEW.md A–F
+- **OPEN (not blocking):** F1–F5 deferred by the user and still open; reviewed hidden-line registry layer (ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4)
 - **FULL_PRODUCT_SUITE:** not re-run (no product byte changed); last T3 at a1c53cdb: FULL_PRODUCT_GATE_PASS
-- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no explicit visual approval)
+- **PUSH / MERGE / BRANCH_DELETION:** YES (a9492ee9..c282a5f3, no force) / FAST_FORWARD (no PR) / LOCAL DELETED (no remote branch) — approval: runs/cuboid-merge/APPROVAL.md
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE
 - **NEXT_ACTION_AT_TIME:** user answers ACCEPTED or NEEDS_CHANGES for A–F; on approval fast-forward main, push, delete the branch; then SELECT_AND_START_NEXT_FAMILY_W01
-- **FINAL_DECISION:** AWAITING_USER_VISUAL_APPROVAL
+- **FINAL_DECISION:** MERGED_AND_PUSHED

@@ -977,7 +977,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** NONE (documentation only; product commit 284a9bfa, candidate b2d4187a unchanged)
 - **MEASUREMENT_COMMIT:** fixture transfer at 0ca3accf (w18 measurement) and 37b23f04, clean detached worktrees, offline generator; gates at the documentation commit of this run
 - **EVIDENCE_COMMIT_ROLE:** documentation commit (REVIEW, HANDOFF, RUN.json, FIXTURE_TRANSFER.json, TRANSFER.log, scripts, living docs) · final log commit (`results/logs/GATES_FINAL.log`)
-- **CLASSIFICATION:** AWAITING_USER_VISUAL_APPROVAL
+- **CLASSIFICATION:** MERGED_AND_PUSHED (user approval A–F in `APPROVAL.md`; main fast-forwarded to c282a5f3 and pushed; integrated-tree gates `results/logs/INTEGRATED_MAIN_GATES.log`)
 - **PRODUCT_CHANGE:** NO
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** NO

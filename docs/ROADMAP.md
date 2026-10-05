@@ -26,14 +26,10 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   run đầu `regular-square-pyramid-w01`, cùng chín mục §0.1 — `HANDOFF.md` §4 của run `cuboid-acceptance`.
 - **Điều kiện bắt đầu:** người dùng chọn họ hình từ bảng ứng viên §0.2 (W19 không chọn theo tên). Wave mở bằng tiền
   đăng ký: họ, các tầng phải đóng, corpus gắn nhãn trước, cổng trình duyệt desktop/mobile, hồi quy §0.3.
-- **Chặn merge nhánh `fix/cuboid-visual-semantic-closure`** (không chặn phát triển): chỉ còn review người của W18 =
-  `NOT_APPROVED` — duyệt bằng mắt theo `HANDOFF.md` của run w18 (W18-H1), gồm phần còn lại của W17-H1/W16-H1 (bốn
-  cảnh W14 đổi, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`
-  đã đóng ở W20. Cùng lượt duyệt: thẻ từ chối mới của §17 (nhãn "chưa kiểm chứng được phép dựng", desktop và mobile).
-  Gói duyệt A–F — W18-H1, thẻ từ chối hiện hành, giới hạn đề nghị hoãn — ở
-  [`REVIEW.md`](evaluation/geometry/runs/cuboid-merge/REVIEW.md) của run `cuboid-merge` (ảnh W18 đã chứng minh chuyển
-  tiếp sang candidate `b2d4187a`); đối chiếu bất biến của run `cuboid-acceptance` không thêm lỗi chặn nào. Khi được duyệt: merge thẳng vào `main` (không PR), chạy cổng trên cây tích
-  hợp, push, xoá nhánh đã merge (`AGENTS.md` §2).
+- **Nhánh `fix/cuboid-visual-semantic-closure` đã tích hợp** (2026-10-05, run `cuboid-merge`): người dùng ACCEPTED A–F
+  của [`REVIEW.md`](evaluation/geometry/runs/cuboid-merge/REVIEW.md) — W18-H1 cùng bốn cảnh W14, thẻ từ chối hiện hành;
+  F1–F5 hoãn và **vẫn mở** ([`APPROVAL.md`](evaluation/geometry/runs/cuboid-merge/APPROVAL.md)). `main` fast-forward
+  tới `c282a5f3`, push thường, nhánh local đã xoá. Việc kế tiếp: `NEXT_ACTION = SELECT_AND_START_NEXT_FAMILY_W01`.
 - **Đã quyết (người dùng, brief `cuboid-acceptance`, 2026-10-05):** H-CFR-2 giữ chữ thường và "toạ độ" theo quy ước
   kho; H-CFR-1 là backlog giao diện (dưới §0.1), không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính
   đề xuất, chưa xoá `RELATED_WORK_DRAFT` khi chưa đối chiếu nội dung riêng; H-W20-3: 204 mục `D:/tmp` + 108 mục
