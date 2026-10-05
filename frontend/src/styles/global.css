@@ -6067,6 +6067,10 @@ html {
   outline-offset: -2px;
 }
 
+.geo3d-bang-noi-dong {
+  flex-shrink: 0;
+}
+
 .geo3d-bang-noi-tieu {
   flex: 1;
   margin: 0;

@@ -255,7 +255,7 @@
       "served_fixtures": [
         { "kind": "correct_plane", "fixture": "fixtures/cross_section_correct_plane.json", "expected": {"answer": "16", "annotation_id": "area_T"} },
         { "kind": "point_construction_witness", "fixture": "fixtures/w18_midpoint_plane_distance.json", "expected": {"answer": "3", "annotation_id": "d_kq", "witness": true} },
-        { "kind": "projection_correct", "fixture": "fixtures/w18_projection_line.json", "expected": {"answer": "3√6", "annotation_id": "d_kq"} }
+        { "kind": "projection_correct", "fixture": "fixtures/w18_projection_line.json", "expected": {"answer": "3√6", "annotation_absent_id": "d_kq"} }
       ]
     },
     {

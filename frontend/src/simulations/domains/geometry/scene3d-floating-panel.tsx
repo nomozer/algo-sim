@@ -149,7 +149,10 @@ export function BangNoi({
                 onClick={() => onViTri(null)} disabled={viTri === null}>
           <IconReset />
         </button>
-        <button type="button" className="geo3d-soi-dong" aria-label="Đóng" onClick={onDong}>
+        {/* Tên riêng, không "Đóng" trơn: ngăn và ô soi cũng có nút "Đóng" — hai nút cùng tên là mơ hồ với trình đọc
+            màn hình (và lượt đo W2 đầu bấm nhầm nút này khi tìm nút "Đóng" của ngăn). */}
+        <button type="button" className="geo3d-soi-dong geo3d-bang-noi-dong" aria-label={`Đóng ${tieuDe.toLowerCase()}`}
+                onClick={onDong}>
           <IconClose />
         </button>
       </div>

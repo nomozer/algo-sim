@@ -1,0 +1,23 @@
+{
+  "schema_version": "preregistration-corrections/1",
+  "run_id": "regular-square-pyramid-w02",
+  "corrections": [
+    {
+      "id": "PC1-W2",
+      "written": "after browser attempt 1 (c453fae3), before attempt 2",
+      "registered": "frontend/scripts/generic-tier-a-scenarios.json — cross_section served fixture w18_projection_line expects annotation_id d_kq (a W18 expectation carried over unchanged)",
+      "observed": "attempt 1: annotation_present false, DOM labels []",
+      "cause": "W2 requirement A (a length label only once the segment carrying it is built): 'Tính độ dài đoạn SH' measures the distance between points S and H, and no segment SH is built, so the result has no label on the canvas by design. The expectation was not updated when A was registered — an omission in the W2 registration, not a product defect.",
+      "corrected": "expected.annotation_absent_id = d_kq: the label must be ABSENT from the canvas AND the result must still be selectable through the quantity drawer (the inspector opens on it). Same strictness: both halves are asserted; nothing is dropped.",
+      "open_question": "H-W2-2 in HANDOFF.md: should the shared formation planner build the segment whose length the problem asks for (SH), so the result has a carrier and a label?"
+    },
+    {
+      "id": "PC2-W2",
+      "written": "after the W2 self-review fix to the label oracle, before any browser run",
+      "registered": "test_regular_square_pyramid_w02.py::test_canh_tinh_co_bang_chieu_cao_khong_thanh_chieu_cao_cua_cong_thuc expected text 'V = S(ABC) × d(D, (ABC)) = 24' at the red commit 687520ce",
+      "observed": "'V = S(ABC) × AD = 24'",
+      "cause": "the measured distance from D to (ABC) has its foot at A and the lateral edge AD is built by the shared formation step, so the distance is labelled on AD — the right prism's real height. The locked property (DF is never the height; the height is the measured distance h) is unchanged.",
+      "corrected": "expected text 'V = S(ABC) × AD = 24'; references ['dt', 'h'] unchanged; commit 9f454d6b"
+    }
+  ]
+}

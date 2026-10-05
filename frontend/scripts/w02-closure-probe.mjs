@@ -77,7 +77,7 @@ const tamTieuDe = async (s) => {
   const r = await hop(s, ".geo3d-bang-noi-tieu");
   return [r.x + Math.min(r.w / 2, 40), r.y + r.h / 2];
 };
-const thayNutDong = (s) => j(s, "(()=>{const b=document.querySelector('.geo3d-bang-noi [aria-label=\"Đóng\"]');"
+const thayNutDong = (s) => j(s, "(()=>{const b=document.querySelector('.geo3d-bang-noi-dong');"
   + "if(!b)return false;const r=b.getBoundingClientRect();const x=r.x+r.width/2,y=r.y+r.height/2;"
   + "return x>=0&&y>=0&&x<=innerWidth&&y<=innerHeight&&(document.elementFromPoint(x,y)===b||b.contains(document.elementFromPoint(x,y)))})()");
 

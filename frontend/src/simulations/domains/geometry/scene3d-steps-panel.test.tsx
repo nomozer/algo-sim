@@ -157,7 +157,9 @@ describe("W2 · B · bảng nổi «Các bước dựng»", () => {
 
   it("bảng có đóng, về vị trí mặc định, thu gọn và tiêu đề nhận bàn phím", () => {
     const mo = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen />));
-    expect(mo).toContain('aria-label="Đóng"');
+    expect(mo).toContain('aria-label="Đóng các bước dựng"');
+    // không trùng tên với nút "Đóng" của ngăn / ô soi
+    expect(mo).not.toContain('aria-label="Đóng"');
     expect(mo).toContain('aria-label="Về vị trí mặc định"');
     expect(mo).toContain('aria-label="Thu gọn bảng"');
     expect(mo).toMatch(/class="geo3d-bang-noi-dau" tabindex="0"/);
