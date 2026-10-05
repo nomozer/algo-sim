@@ -1512,6 +1512,9 @@ export function Scene3DWorkspace({
         const el = theTheoId.get(c.id)!;
         const r = daDat.get(c.id);
         el.style.opacity = r ? "1" : "0";
+        // W2 · A: nhãn HỢP LỆ ở bước này nhưng thiếu chỗ — khác nhãn chưa hợp lệ (không có trong lớp này). Giá
+        // trị vẫn ở ngăn «Đại lượng» và ô soi.
+        el.dataset.thieuCho = r ? "" : "1";
         // Nhãn chưa đặt được thì không bắt chuột, không nhận Tab — giá trị vẫn ở ô soi và lời giải.
         el.style.pointerEvents = r ? "auto" : "none";
         el.tabIndex = r ? 0 : -1;
@@ -1522,6 +1525,8 @@ export function Scene3DWorkspace({
       if (typeof window !== "undefined") {
         // Móc ĐO của bộ kiểm trình duyệt (§15.5): hộp nhãn số đo đang hiện + hộp nhãn điểm đang hiện.
         (window as any).__geo3d_annotation_boxes = hopSo;
+        // W2 · A: nhãn hợp lệ ở bước này mà không đặt được vì thiếu chỗ.
+        (window as any).__geo3d_annotation_unplaced = canDat.filter((c) => !daDat.has(c.id)).map((c) => c.id);
         (window as any).__geo3d_point_label_boxes = hopDiem;
       }
     };

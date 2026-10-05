@@ -54,6 +54,28 @@ export function hasHiddenByDefault(scene: Scene3D): boolean {
     && vaiTro(o, o.annotation) !== "given");
 }
 
+/** Cặp điểm không hướng — khoá của một đoạn theo danh tính hai đầu mút. */
+const capDiem = (a: string, b: string) => (a < b ? `${a}\u0000${b}` : `${b}\u0000${a}`);
+
+/**
+ * regular-square-pyramid-w02 · A — những ĐOẠN đang có mặt trên hình ở bước này, theo danh tính: đoạn dựng
+ * (`endpoint_ids`), cạnh của đa giác (`vertex_ids` theo vòng), cạnh của khối (`edge_ownership`). Một nhãn độ dài
+ * chỉ có chỗ bám khi đoạn nó đo đã được dựng; hai điểm đầu mút có mặt chưa đủ.
+ */
+function doanCoMat(coMat: SceneObject[]): Set<string> {
+  const ra = new Set<string>();
+  for (const o of coMat) {
+    if (o.endpoint_ids?.length === 2) ra.add(capDiem(o.endpoint_ids[0], o.endpoint_ids[1]));
+    if (o.type === "polygon3" && o.vertex_ids && o.vertex_ids.length >= 3) {
+      o.vertex_ids.forEach((v, i, d) => ra.add(capDiem(v, d[(i + 1) % d.length])));
+    }
+    for (const e of o.edge_ownership ?? []) {
+      if (e.endpoint_ids?.length === 2) ra.add(capDiem(e.endpoint_ids[0], e.endpoint_ids[1]));
+    }
+  }
+  return ra;
+}
+
 /**
  * Nhãn số đo của bước `step`.
  *
@@ -70,7 +92,9 @@ export function annotationsAt(
   selectedId: string | null,
 ): AnnotationEntry[] {
   const k = clampStep(scene, step);
-  const coMat = new Set(objectsAt(scene, k).map((o) => o.id));
+  const vatCoMat = objectsAt(scene, k);
+  const coMat = new Set(vatCoMat.map((o) => o.id));
+  const doan = doanCoMat(vatCoMat);
   const daTinh = new Set<string>();
   const ketLuan = new Set<string>();
   for (const e of scene.events) {
@@ -91,6 +115,10 @@ export function annotationsAt(
     const vai = vaiTro(o, a);
     const khaDung = vai === "result" ? ketLuan.has(o.id) : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id));
     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continue;
+    // W2 · A: nhãn của một ĐOẠN chờ đoạn ấy được dựng — ở MỌI chế độ, kể cả "Hiện tất cả" và khi đang chọn nó.
+    if (a.anchor === "segment" && !(a.subject_ids.length === 2 && doan.has(capDiem(a.subject_ids[0], a.subject_ids[1])))) {
+      continue;
+    }
     const lienQuan = tieuDiem(o, a);
     if (!(view.showAll || vai === "given" || lienQuan)) continue;
     ra.push({

@@ -94,6 +94,10 @@ describe("W17 · số đo trên hình (§15.4)", () => {
       render: "readout", origin: "free", producer: null, depends: [], value: "5", exact: { kind: "rational", value: "5" },
       annotation: { kind: "length", category: "measurement", subject_ids: ["A", "D"], anchor: "segment" } });
     (s.events[2] as unknown as { objects?: string[] }).objects = ["D"];
+    // W2 · A: chỗ bám của nhãn AD là CẠNH AD của khối dựng ở bước 2 (backend phát `edge_ownership` cho khối);
+    // điểm D có mặt thôi chưa đủ.
+    (s.objects.find((o) => o.id === "khoi") as unknown as { edge_ownership: object[] }).edge_ownership = [
+      { edge_id: "khoi::edge:A-D", endpoint_ids: ["A", "D"], adjacent_surface_ids: [] }];
     expect([0, 1, 2, 3].map((k) => annotationsAt(s, k, TAT_CA, null)
       .some((x) => x.id === "AD_length"))).toEqual([false, false, true, true]);
   });
