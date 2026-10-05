@@ -115,7 +115,10 @@ def test_canh_tinh_co_bang_chieu_cao_khong_thanh_chieu_cao_cua_cong_thuc():
     refs = [r["entity_id"] for r in (V.get("formula") or {}).get("references", [])]
     assert "DF_length" not in refs, V.get("formula")
     assert refs == ["dt", "h"], V.get("formula")
-    assert V["formula"]["text"] == "V = S(ABC) × d(D, (ABC)) = 24"
+    # Đính chính kỳ vọng (ghi ở REPORT §đính chính, trước commit sửa): lúc viết test đỏ tôi kỳ vọng ký hiệu
+    # `d(D, (ABC))`. Khoảng cách đo có chân là A, và cạnh bên AD đã được bước bổ sung dựng ⇒ nó bám đoạn AD —
+    # đúng chiều cao của lăng trụ đứng. Điều test khoá không đổi: DF không bao giờ là chiều cao.
+    assert V["formula"]["text"] == "V = S(ABC) × AD = 24"
 
 
 #: Công thức của sáu họ cũ trước W2 — mọi chiều cao ở đây là cạnh VUÔNG GÓC đáy thật, nên luật quan hệ phải giữ

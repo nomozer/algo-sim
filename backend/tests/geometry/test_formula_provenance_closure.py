@@ -158,11 +158,10 @@ def test_missing_height_never_compiles_an_answer(case, height):
     assert decision.program is None
 
 
-def test_ambiguous_height_gets_no_formula():
-    """Two lengths qualify as the height (SA and SB) ⇒ fail closed: no card."""
+def _chop_SA_SB(s: list[int]):
     decl = [
         {"name": n, "type": "point3", "initial_value": v, "provenance": "LAYOUT_DERIVED"}
-        for n, v in (("A", [0, 0, 0]), ("B", [3, 0, 0]), ("C", [0, 4, 0]), ("S", [0, 0, 4]))
+        for n, v in (("A", [0, 0, 0]), ("B", [3, 0, 0]), ("C", [0, 4, 0]), ("S", s))
     ] + [
         {"name": n, "type": "float", "initial_value": v, "provenance": "GIVEN", "source_fact_id": f"f_{n}"}
         for n, v in (("AB_length", "3"), ("AC_length", "4"), ("SA_length", "4"), ("SB_length", "5"))
@@ -181,9 +180,25 @@ def test_ambiguous_height_gets_no_formula():
              "expr": {"kind": "measure", "quantity": "volume", "of": "khoi"}},
         ],
     })
-    scene = build_scene3d(build_simulation_state(spec, SemanticProgramInterpreter().execute(spec)))
-    volume = _by_id(scene)["tt"]
+    return _by_id(build_scene3d(build_simulation_state(spec, SemanticProgramInterpreter().execute(spec))))["tt"]
+
+
+def test_two_named_lengths_height_is_the_perpendicular_one():
+    """SA and SB both name an apex edge (both stay numerical sources). Before regular-square-pyramid-w02 this was
+    'ambiguous ⇒ no card'; the height is now chosen by the exact relation — SA ⊥ (ABC) with A on the base, SB is
+    slanted — so the card reads × SA. Value equality plays no part."""
+    volume = _chop_SA_SB([0, 0, 4])
     heights = {e["source_id"] for e in volume["dependency_edges"]
                if e["relation"] == "numerical"} - {"dt"}
     assert heights == {"SA_length", "SB_length"}
+    assert volume["formula"]["text"] == "V = 1/3 × S(ABC) × SA = 8"
+
+
+def test_ambiguous_height_gets_no_formula():
+    """Apex not above a named base vertex: neither SA nor SB is perpendicular to the base and no distance to the
+    base plane is measured (the stated lengths do not even fit the figure) ⇒ no verified height ⇒ fail closed: no
+    card (the old "two candidates" lock, kept)."""
+    volume = _chop_SA_SB([0, 0, 4])
+    assert volume.get("formula")  # control: the perpendicular case has a card
+    volume = _chop_SA_SB([1, 0, 4])
     assert "formula" not in volume

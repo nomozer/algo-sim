@@ -23,10 +23,11 @@ from typing import Any
 
 from ..geometry import kernel as K
 from ..geometry.exact import Line3, Plane3, Vec3
+from .display_names import ky_hieu_dai_luong
 from .grounding_gate import _bang_chung_do_dai
 from .segment_relation import nhan_doan_truoc
 from .shape_constraint import che_muc_tieu
-from .source_entities import dinh_danh_thuc_the
+from .source_entities import dinh_danh_thuc_the, ky_hieu_toan
 
 #: `measure.quantity` → (kind, anchor, kiểu được phép của toán hạng `of` — None: mọi kiểu).
 #: Điểm neo phải đặt được ở phía trình bày CHỈ bằng trung bình toạ độ (frontend cấm suy luận hình
@@ -47,12 +48,16 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
     dinh_nghia = {getattr(s, "target_var", None): s for s in spec.statements}
     khai = {d.name: d for d in spec.memory_declarations}
     de = che_muc_tieu(getattr(contract, "problem_text", "") or "")
+    doan = {frozenset(o.get("endpoint_ids") or ()) for o in objects
+            if o["type"] == "segment3" and len(o.get("endpoint_ids") or ()) == 2}
     gan: dict[str, dict[str, Any]] = {}
     chan_doan: list[str] = []
     for o in objects:
         if o["type"] != "quantity":
             continue
         kq = _gan_mot(o["id"], dinh_nghia.get(o["id"]), khai.get(o["id"]), loai, final_memory, de)
+        if isinstance(kq, dict) and kq.get("anchor") == "witness":
+            kq = _bam_doan_da_dung(kq, loai, final_memory, doan)
         if isinstance(kq, dict):
             gan[o["id"]] = kq
         else:
@@ -69,6 +74,20 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
         else:
             da_co[k] = q
     return gan, chan_doan
+
+
+def _bam_doan_da_dung(kq: dict[str, Any], loai: dict[str, str], mem: dict[str, Any],
+                      doan: set[frozenset]) -> dict[str, Any]:
+    """regular-square-pyramid-w02: chân của nhân chứng TRÙNG một điểm của cảnh (cùng toạ độ chính xác) và đoạn từ
+    điểm đo tới điểm ấy đã được DỰNG (vd đường cao SO) ⇒ đại lượng là độ dài của đoạn ấy: nhãn bám đoạn, không vẽ
+    thêm nét đứt chồng lên một đoạn đã có. Không có đoạn đã dựng ⇒ giữ nhân chứng."""
+    w = kq["witness"]
+    chan = Vec3.of(*w["foot"])
+    for p, kieu in loai.items():
+        if (kieu == "point3" and p != w["from"] and isinstance(mem.get(p), Vec3) and mem[p] == chan
+                and frozenset((w["from"], p)) in doan):
+            return {"kind": "length", "subject_ids": [w["from"], p], "anchor": "segment", "unit": kq.get("unit")}
+    return kq
 
 
 def _xau(v: Vec3) -> list[str]:
@@ -151,3 +170,74 @@ def _do_dai_de_cho(q: str, loai: dict[str, str], mem: dict[str, Any], de: str) -
     if not bang:
         return f"the figure's {p}{r} is not {v}"
     return {"kind": "length", "subject_ids": [p, r], "anchor": "segment", "unit": bc.get("unit")}
+
+
+def _doan_cua_ten(name: str, vertices: list[str]) -> tuple[str, str] | None:
+    """Đoạn mà TÊN đại lượng độ dài gọi giữa hai đỉnh khai — cùng luật với `simulation_state._length_joins_vertices`."""
+    symbol = ky_hieu_dai_luong(name)
+    labels = [(v, (ky_hieu_toan(v) or "").replace("'", "′")) for v in vertices]
+    cap = [(a, b) for i, (a, la) in enumerate(labels) for b, lb in labels[i + 1:]
+           if la and lb and symbol in (la + lb, lb + la)]
+    return cap[0] if symbol and len(cap) == 1 else None
+
+
+def chieu_cao_the_tich(objects: list[dict[str, Any]], memory: dict[str, Any],
+                       so_do: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """regular-square-pyramid-w02 — CHIỀU CAO của công thức thể tích, chọn bằng QUAN HỆ HÌNH HỌC kiểm chính xác.
+
+    Ứng viên là các nguồn số của thể tích (ngoài diện tích đáy). Một ứng viên là chiều cao khi đoạn nó đo — đoạn
+    gắn nhãn của tầng số đo, hoặc đoạn tên nó gọi giữa hai đỉnh khối — có độ dài đúng bằng giá trị (chỉ là kiểm
+    NHẤT QUÁN), cùng phương pháp tuyến mặt đáy, một đầu trên mặt đáy và đầu kia ngoài; hoặc khi nó đo khoảng cách
+    từ một điểm tới một mặt phẳng trùng mặt đáy. Giá trị bằng nhau KHÔNG BAO GIỜ là lý do (W1 `98e2b8f7` chọn theo
+    giá trị và in `× DF` cho một cạnh đáy trên tình cờ bằng chiều cao). Nhiều chiều cao thật: ưu tiên dữ kiện đề
+    cho; còn hơn một ⇒ không chọn (không in còn hơn in mơ hồ).
+
+    → {id thể tích: {"height": id, "symbol": ký hiệu đoạn đã DỰNG khi chiều cao là khoảng cách đo bám đoạn ấy}}.
+    """
+    by_id = {o["id"]: o for o in objects}
+    ra: dict[str, dict[str, Any]] = {}
+    for v in objects:
+        if v.get("type") != "quantity" or v.get("producer") != "measure.volume":
+            continue
+        nguon = [by_id[x] for x in v.get("sources") or () if x in by_id]
+        dt = next((x for x in nguon if x.get("producer") == "measure.area"), None)
+        khoi = next((x for x in nguon if x.get("type") == "solid"), None)
+        da_giac = by_id.get(next(iter((so_do.get(dt["id"]) or {}).get("subject_ids") or ()), "")) if dt else None
+        day = [memory.get(p) for p in (da_giac or {}).get("vertex_ids") or ()]
+        if not khoi or len(day) < 3 or not all(isinstance(p, Vec3) for p in day):
+            continue
+        n = (day[1] - day[0]).cross(day[2] - day[0])
+        if n.is_zero():
+            continue
+        tren_day = lambda p: n.dot(p - day[0]) == 0  # noqa: E731
+        cao: list[dict[str, Any]] = []
+        for c in nguon:
+            if c is dt or c.get("type") != "quantity":
+                continue
+            g = so_do.get(c["id"]) or {}
+            cap = (tuple(g["subject_ids"]) if g.get("anchor") == "segment" and len(g.get("subject_ids") or ()) == 2
+                   else _doan_cua_ten(c["id"], list(khoi.get("vertex_ids") or ())))
+            gt = memory.get(c["id"])
+            if cap and all(isinstance(memory.get(p), Vec3) for p in cap):
+                p, q = memory[cap[0]], memory[cap[1]]
+                try:
+                    nhat_quan = (p - q).dot(p - q) == gt * gt
+                except TypeError:
+                    nhat_quan = False
+                if nhat_quan and (p - q).cross(n).is_zero() and tren_day(p) != tren_day(q):
+                    cao.append(c)
+            elif g.get("anchor") == "witness":
+                mat = memory.get((g.get("witness") or {}).get("on"))
+                if isinstance(mat, Plane3) and mat.normal.cross(n).is_zero() and tren_day(mat.point):
+                    cao.append(c)
+        de_cho = [c for c in cao if c.get("origin") == "free"]
+        chon = de_cho if de_cho else cao
+        if len(chon) != 1:
+            continue
+        h = chon[0]
+        g = so_do.get(h["id"]) or {}
+        doan = next((o for o in objects if o.get("type") == "segment3"
+                     and set(o.get("endpoint_ids") or ()) == set(g.get("subject_ids") or ())), None)
+        ky = doan.get("notation") if (doan and h.get("producer") == "measure.distance") else None
+        ra[v["id"]] = {"height": h["id"], "symbol": ky}
+    return ra

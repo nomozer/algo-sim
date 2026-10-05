@@ -49,7 +49,7 @@ from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
-from .quantity_annotations import gan_so_do
+from .quantity_annotations import chieu_cao_the_tich, gan_so_do
 from .shape_constraint import doc_quan_he_cat
 from .source_entities import ky_hieu_toan
 from .transport import TransportTypeError, is_json_native
@@ -770,6 +770,7 @@ def build_simulation_state(
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
     so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"])
+    chieu_cao = chieu_cao_the_tich(scene["objects"], exec_result.final_memory, so_do)
     dependencies = dependency_graph(spec)
     return {
         "scene": scene,
@@ -792,6 +793,7 @@ def build_simulation_state(
         "provenance": _xuat_xu_hien_thi(spec, contract),
         "annotations": so_do,
         "annotation_diagnostics": chan_doan_so_do,
+        "volume_heights": chieu_cao,
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }

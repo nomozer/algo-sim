@@ -457,7 +457,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         ra.append(v)
 
     _attach_topology(ra)
-    _attach_formulas(ra)
+    _attach_formulas(ra, state.get("volume_heights"))
     _danh_dau_bi_danh(ra)
     _gan_so_do(ra, state.get("annotations") or {})
     events = build_scene_events(state)
@@ -607,7 +607,8 @@ def _formula_symbol(obj: dict[str, Any]) -> str:
     )
 
 
-def _attach_formulas(objects: list[dict[str, Any]]) -> None:
+def _attach_formulas(objects: list[dict[str, Any]],
+                     cao_theo_the_tich: dict[str, dict[str, Any]] | None = None) -> None:
     """Gắn formula có references tới entity thật; thiếu nguồn thì ẩn.
 
     `references` = ĐÚNG các vật chữ công thức nhắc tới, theo thứ tự trong chữ
@@ -615,6 +616,8 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
     không nhất quán và ẩn thẻ; nguồn số vẫn nằm nguyên ở `dependency_edges`.
     """
     by_id = {obj["id"]: obj for obj in objects}
+    cao_theo_the_tich = cao_theo_the_tich or {}
+    doan_chieu_cao = {c["height"]: c["symbol"] for c in cao_theo_the_tich.values() if c.get("symbol")}
 
     def ref(o: dict[str, Any]) -> dict[str, Any]:
         return {"entity_id": o["id"], "display_label": _formula_symbol(o),
@@ -637,19 +640,11 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
                  if by_id[source_id].get("producer") == "measure.area"),
                 None,
             )
-            # ĐÚNG MỘT ứng viên chiều cao. Hai độ dài cùng qua được luật tên
-            # (`SA` và cạnh bên `SB`) thì chọn cái đầu là in một công thức có
-            # thể sai — không in còn hơn in sai.
-            cao = [by_id[source_id] for source_id in numerical
-                   if source_id != (area or {}).get("id")]
-            # regular-square-pyramid-w01: khoảng cách ĐO từ đỉnh tới mặt đáy là chiều cao theo định nghĩa. Có nó
-            # thì một cạnh chỉ là chiều cao khi BẰNG nó (SA ⊥ đáy — giữ công thức `× SA` như trước W1); cạnh bên
-            # xiên của chóp đều không bao giờ thành chiều cao của công thức.
-            do = [c for c in cao if c.get("producer") == "measure.distance"]
-            if len(cao) > 1 and len(do) == 1:
-                bang = [c for c in cao if c is not do[0] and c.get("value") == do[0].get("value")]
-                cao = bang if len(bang) == 1 else do
-            height = cao[0] if len(cao) == 1 else None
+            # Chiều cao do tầng ngữ nghĩa chọn bằng QUAN HỆ hình học kiểm chính xác
+            # (`simulation_state.chieu_cao_the_tich`, regular-square-pyramid-w02) — không
+            # theo tên, không theo giá trị bằng nhau. Không chọn được ⇒ không in.
+            chon = cao_theo_the_tich.get(obj["id"]) or {}
+            height = by_id.get(chon.get("height")) if chon.get("height") in numerical else None
             solid = next(
                 (by_id[edge["source_id"]]
                  for edge in obj.get("dependency_edges", [])
@@ -664,15 +659,17 @@ def _attach_formulas(objects: list[dict[str, Any]]) -> None:
                 solid.get("vertices") or []
             )
             prefix = "1/3 × " if is_pyramid else ""
-            text = (
-                f"V = {prefix}{_formula_symbol(area)} × "
-                f"{_formula_symbol(height)}"
-            )
+            ky_cao = chon.get("symbol") or _formula_symbol(height)
+            text = f"V = {prefix}{_formula_symbol(area)} × {ky_cao}"
             if value is not None:
                 text += f" = {value}"
-            obj["formula"] = {"text": text, "references": [ref(area), ref(height)]}
+            obj["formula"] = {"text": text, "references": [
+                ref(area), {**ref(height), "display_label": ky_cao}]}
         elif value is not None:
-            obj["formula"] = {"text": f"{_formula_symbol(obj)} = {value}", "references": []}
+            # Khoảng cách đo bám ĐOẠN chiều cao đã dựng (vd SO): nói cả hai tên của cùng một độ dài.
+            ten_doan = doan_chieu_cao.get(obj["id"])
+            dau = f"{ten_doan} = " if ten_doan and ten_doan != _formula_symbol(obj) else ""
+            obj["formula"] = {"text": f"{dau}{_formula_symbol(obj)} = {value}", "references": []}
 
 
 _TEN_DA_GIAC = {3: "tam giác", 4: "tứ giác", 5: "ngũ giác", 6: "lục giác"}

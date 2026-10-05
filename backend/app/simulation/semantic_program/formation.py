@@ -5,7 +5,8 @@ vật trong cảnh (preregistration W13 §2).
 
 Chỉ đọc dữ liệu CÓ KIỂU: bảng mặt của `construct_solid` (`solid_faces`), tô-pô và
 quan hệ `perpendicular_line_plane` của hợp đồng, nhà sản xuất `project_onto` của
-chương trình. Không đọc nhãn, mã họ, tiêu đề, câu chữ đề hay tên `*_length`; không
+chương trình, ràng buộc hình dạng có kiểu của `shape_constraint` (chóp tứ giác đều —
+regular-square-pyramid-w02). Không đọc nhãn, mã họ, tiêu đề, câu chữ đề hay tên `*_length`; không
 phép hình học — mọi điều kiện là tổ hợp trên TÊN đỉnh. Không THỰC THI chương trình:
 bước bổ sung chạy trước mọi cổng, kể cả với chương trình không chạy nổi. Khoá:
 `test_planner_khong_re_nhanh_theo_ho`, `test_vai_tro_bat_bien_khi_doi_ten_may`.
@@ -21,6 +22,7 @@ from pydantic import ValidationError
 
 from .contract import SemanticProgramSpec
 from .ir_static_check import kiem_tinh
+from .shape_constraint import che_muc_tieu, doc_rang_buoc
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -149,6 +151,34 @@ def _chan_ung_vien(cau: list[dict[str, Any]], contract: Any, apex: str, day: tup
         e = s.get("expr") if s.get("kind") == "construct_point" else None
         if (isinstance(e, dict) and e.get("kind") == "project_onto" and e.get("point") == apex
                 and len(mat_qua.get(e.get("target"), ())) >= 3 and mat_qua[e["target"]] <= dat):
+            ra.append(s["target_var"])
+    ra += _tam_day_deu(cau, contract, apex, day)
+    return ra
+
+
+def _tam_day_deu(cau: list[dict[str, Any]], contract: Any, apex: str, day: tuple) -> list[str]:
+    """③ (regular-square-pyramid-w02) chóp tứ giác ĐỀU — ràng buộc có kiểu `regular_square_pyramid` đọc từ PHẦN
+    TIỀN ĐỀ của đề (mục tiêu "chứng minh … đều" bị che) cùng đỉnh và cùng tập đỉnh đáy — chân đường cao là TÂM đáy:
+    điểm chương trình dựng bằng giao hai đường chéo đáy (`intersect_line_line` trên hai `construct_line` qua hai cặp
+    đỉnh đối) hoặc trung điểm một đường chéo. Chỉ tổ hợp trên tên; đỉnh có thật ở trên tâm không là việc của chứng
+    chỉ T7 và cổng gắn phép dựng trên route — sai thì bài bị từ chối, đoạn dựng thêm không bao giờ được phục vụ."""
+    if len(day) != 4:
+        return []
+    deu = any(r.kind == "regular_square_pyramid" and r.entities[0] == apex and set(r.entities[1:]) == set(day)
+              for r in doc_rang_buoc(che_muc_tieu(getattr(contract, "problem_text", None))))
+    if not deu:
+        return []
+    cheo = {frozenset((day[0], day[2])), frozenset((day[1], day[3]))}
+    duong = {s["target_var"]: frozenset((s.get("through_a"), s.get("through_b"))) for s in cau
+             if s.get("kind") == "construct_line"}
+    ra = []
+    for s in cau:
+        e = s.get("expr") if s.get("kind") == "construct_point" else None
+        if not isinstance(e, dict):
+            continue
+        if ((e.get("kind") == "intersect_line_line"
+             and {duong.get(e.get("line_a")), duong.get(e.get("line_b"))} == cheo)
+                or (e.get("kind") == "midpoint" and frozenset((e.get("a"), e.get("b"))) in cheo)):
             ra.append(s["target_var"])
     return ra
 
