@@ -603,6 +603,15 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
            for k in ("height", "apothem", "lateral_edge")}
     tam = {r.entities[0] for r in rb if r.kind == "base_centre" and set(r.entities[1:]) == set(day)}
     so = next((do_dai[frozenset({S, o})] for o in tam if frozenset({S, o}) in do_dai), None)
+    # Cạnh bên: cụm "cạnh bên bằng l" HOẶC độ dài server tự đọc từ đề cho đoạn nối đỉnh với một đỉnh đáy (`SA = 3`,
+    # "cạnh bên SA = 3") — cùng hạng bằng chứng nguồn với cạnh đáy `AB = s`. Mọi cạnh bên của chóp đều bằng nhau:
+    # hai giá trị khác nhau là mâu thuẫn của chính đề (tự rà soát cuối của W1).
+    ben = {do_dai[frozenset({S, v})] for v in day if frozenset({S, v}) in do_dai}
+    if doc["lateral_edge"] is not None:
+        ben.add(doc["lateral_edge"].value)
+    if len(ben) > 1:
+        return "TEMPLATE_CONTRADICTION T7: lateral edges " + ", ".join(str(x) for x in sorted(ben))
+    l = next(iter(ben), None)
     ung: list[tuple[str, Fraction]] = []
     if doc["height"] is not None:
         ung.append(("height", doc["height"].value ** 2))
@@ -610,8 +619,8 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
         ung.append(("apex to centre", so ** 2))
     if s is not None and doc["apothem"] is not None:
         ung.append(("apothem", doc["apothem"].value ** 2 - (s / 2) ** 2))
-    if s is not None and doc["lateral_edge"] is not None:
-        ung.append(("lateral edge", doc["lateral_edge"].value ** 2 - s * s / 2))
+    if s is not None and l is not None:
+        ung.append(("lateral edge", l ** 2 - s * s / 2))
     if len({v for _, v in ung}) > 1:
         return "TEMPLATE_CONTRADICTION T7: " + ", ".join(f"{k} ⇒ h² = {v}" for k, v in ung)
     h = None
@@ -641,8 +650,7 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
         m = doc["apothem"].value
         rbuoc.append(("apothem", lambda V: (V[S] - V[a] - (V[b] - V[a]).scale(Fraction(1, 2))).dot(
             V[S] - V[a] - (V[b] - V[a]).scale(Fraction(1, 2))) == m * m))
-    if doc["lateral_edge"] is not None:
-        l = doc["lateral_edge"].value
+    if l is not None:
         rbuoc.append(("lateral edge", lambda V: all((V[S] - V[p]).dot(V[S] - V[p]) == l * l for p in day)))
     tien_de = [r for r in rb if r.kind in ("base_square", "base_centre") and set(r.entities) >= set(day)]
     tien_de += [r for r in doc.values() if r is not None]
