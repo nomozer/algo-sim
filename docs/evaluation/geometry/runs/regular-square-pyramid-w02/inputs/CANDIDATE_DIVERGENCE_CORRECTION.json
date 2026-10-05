@@ -6,9 +6,9 @@
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
-  "current_candidate_source_commit": "75a0af9ab0016b54cc35fd27042924cdc8f68c0e",
-  "current_candidate_frozen_at": "75a0af9ab0016b54cc35fd27042924cdc8f68c0e",
-  "current_candidate_note": "Frozen THREE times in this run, each in a clean detached worktree (core.autocrlf=true, outside the repository, in the cloud session scratchpad): c5142f07 (first; the last commit touching backend/app), 527d642e (second; frontend/src changed — the panel close button's accessible name — and the freeze records the last commit touching backend/app OR frontend/src as product_commit_sha) and 75a0af9a (third; frontend/src — drawers and inspector above the floating panel, found by browser attempt 3). Both freezes give the same measured-system tree hash d3de9c44… (110 files; frontend/src/simulations/domains/geometry is not in measured_system), CACHE_VERSION 113; cay_lam_viec_sach = true; --verify matched in each worktree and in the main tree. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged. The freeze script's parser was read first: any argument other than --verify freezes, so only the bare and --verify forms were run. Browser attempt 2 at 527d642e stopped at the candidate verify (product_commit_sha drift) before any browser run — the reason for the second freeze. Browser attempt 3 at bac5d80f was stopped after three families once the covered close button was diagnosed (the fix is the third freeze).",
+  "current_candidate_source_commit": "70665542c53d2217a029d533b01d6655dc7814f2",
+  "current_candidate_frozen_at": "70665542c53d2217a029d533b01d6655dc7814f2",
+  "current_candidate_note": "Frozen FOUR times in this run, each in a clean detached worktree (core.autocrlf=true, outside the repository, in the cloud session scratchpad): c5142f07 (first; the last commit touching backend/app), 527d642e (second; frontend/src changed — the panel close button's accessible name — and the freeze records the last commit touching backend/app OR frontend/src as product_commit_sha) 75a0af9a (third; frontend/src — drawers and inspector above the floating panel, found by browser attempt 3) and 70665542 (fourth; frontend/src test only — the steps-panel CSS test read line endings literally and failed on CRLF checkouts, found by T3 at 89194960). All four freezes give the same measured-system tree hash d3de9c44… (110 files; frontend/src/simulations/domains/geometry is not in measured_system), CACHE_VERSION 113; cay_lam_viec_sach = true; --verify matched in each worktree and in the main tree. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged. The freeze script's parser was read first: any argument other than --verify freezes, so only the bare and --verify forms were run. Browser attempt 2 at 527d642e stopped at the candidate verify (product_commit_sha drift) before any browser run — the reason for the second freeze. Browser attempt 3 at bac5d80f was stopped after three families once the covered close button was diagnosed (the fix is the third freeze). The browser evidence measured at 94200b50 (product 75a0af9a) transfers to 70665542: the only product-path change is a vitest file, and the production dist is byte-identical (results/EVIDENCE_TRANSFER_70665542.json).",
   "previous_candidate_hash": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa",
   "intermediate_candidates_in_this_wave": [
     {
@@ -20,6 +20,11 @@
       "hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
       "frozen_at": "527d642e58e77b01677560af611b969c3243ccca",
       "superseded_because": "same tree hash; product_commit_sha moved to 75a0af9a after a frontend/src fix found by browser attempt 3"
+    },
+    {
+      "hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+      "frozen_at": "75a0af9ab0016b54cc35fd27042924cdc8f68c0e",
+      "superseded_because": "same tree hash; product_commit_sha moved to 70665542 after a frontend/src test fix found by T3"
     }
   ],
   "diverged": true,

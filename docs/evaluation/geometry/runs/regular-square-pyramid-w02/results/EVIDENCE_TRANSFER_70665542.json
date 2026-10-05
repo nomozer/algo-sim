@@ -1,0 +1,52 @@
+{
+  "schema_version": "evidence-transfer/1",
+  "question": "Does the browser evidence measured at 94200b50 (product commit 75a0af9a) describe the product at 70665542 (fourth freeze)?",
+  "from": {
+    "measurement_commit": "94200b50403bdf823eb49697d54c0cb53e8e4ccb",
+    "product_commit_sha": "75a0af9ab0016b54cc35fd27042924cdc8f68c0e"
+  },
+  "to": {
+    "commit": "70665542c53d2217a029d533b01d6655dc7814f2",
+    "product_commit_sha": "70665542c53d2217a029d533b01d6655dc7814f2"
+  },
+  "measured_system_tree_hash": {
+    "from": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+    "to": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098"
+  },
+  "product_path_changes": [
+    "frontend/src/simulations/domains/geometry/scene3d-steps-panel.test.tsx (vitest file; not bundled)"
+  ],
+  "checks": {
+    "git_diff_name_only_94200b50_70665542_product_paths": "backend/app, frontend/src, frontend/index.html, vite.config.ts, package.json, package-lock.json, public: only the test file above",
+    "production_dist": {
+      "method": "npm ci --offline; npm run build (tsc -b && vite build) at each commit in one clean detached CRLF worktree in the cloud scratchpad",
+      "byte_identical": true,
+      "files": [
+        {
+          "path": "assets/index-CsHwsS1D.js",
+          "sha256": "3804a5217845a3861fcb572c846beb2f6199e4dc73d4fb4920b67051b0f85c11"
+        },
+        {
+          "path": "assets/index-DA73iDSM.css",
+          "sha256": "0e08f24cb3ff01d4e567937e18b9092eeb726ee0b2467a80006e207887b874ac"
+        },
+        {
+          "path": "favicon.svg",
+          "sha256": "84c60f2115425c3de7bf435556cf39fa0ccfee6b0e9a590b0f0ded4db8c3a83a"
+        },
+        {
+          "path": "index.html",
+          "sha256": "63b30855dd8490be76941647b7a515e5de3a857512376341b18c0789432471c5"
+        }
+      ]
+    },
+    "fixtures": {
+      "method": "generate_generic_tier_a_fixtures.py --out <tmp> at 70665542 (candidate --verify exit 0), compared with inputs/fixtures of this run",
+      "count": 37,
+      "identical_except_product_commit_sha": 37,
+      "different": 0
+    }
+  },
+  "verdict": "TRANSFERS — same served envelopes, same production bundle; only the recorded product_commit_sha differs",
+  "application_llm_calls": 0
+}
