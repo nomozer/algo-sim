@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (run cuboid-final-review, closing run of the work cuboid-visual-semantic-closure; no wave number)",
+  "corrects": "docs/evaluation/geometry/runs/w20-cleanup-premerge/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "current_candidate_source_commit": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "current_candidate_frozen_at": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "current_candidate_note": "Frozen once in this run, in a clean detached worktree outside the repository (D:/tmp/cfr-freeze) at 284a9bfa, the last commit touching backend/app or frontend/src: cay_lam_viec_sach = true, 110 files, CACHE_VERSION 111. Taxonomy, primitive set, schema and DEV fingerprints are unchanged. The W20 candidate 27c31de6 was the identity at the start of the run (the docs cleanup and the rules commit changed no product code). Product commit of the run: 284a9bfa (the refusal card of W20 §17: construction_binding writes the second element of each subject pair in the passive without the point's name; learner_messages builds the message from the subjects and drops the resend promise; frontend/src/core/types.ts and components/SimulationWorkspace.tsx read reason_code to label the card, outside the measured paths). Commits after 284a9bfa touch only tooling and docs.",
+  "previous_candidate_hash": "27c31de6dcd7708ee29bc1b94d7af29147281f991cc97bee7a5434f904564d38",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "cuboid-final-review changes the learner-facing refusal of W20 §17 (CONSTRUCTION_REPLACED_BY_COORDINATES). backend/app changes:\n(1) semantic_program/construction_binding.py: the second element of each reason_subjects pair is passive and nameless — 'được đặt bằng toạ độ' or 'được lấy trùng với điểm A' (W20: 'đặt H bằng toạ độ cho sẵn', 'lấy H trùng với điểm A'). Statuses, reason code, precedence and the refusal itself are unchanged.\n(2) learner_messages.py: _msg_toa_do_thay_dung says 'Hệ chưa kiểm chứng được <relation of the text>, vì điểm này <how it was placed> thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng.', built from the subjects, and no longer promises that resending fixes it.\nNo change to prompts, grammar card, schemas or the capability table; CACHE_VERSION stays 111 (diagnostics/cache_proof/CACHE_DECISION_CFR.json: the 8 served rows of the W20 corpus are byte-identical before and after, refusals are never cached).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate b2d4187a (product commit 284a9bfa) is a new product identity and must not be used to rescore the historical run; the W20 evidence describes 27c31de6 and stays as it is.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 111
+}
