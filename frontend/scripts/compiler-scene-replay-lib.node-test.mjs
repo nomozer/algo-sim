@@ -1221,3 +1221,109 @@ test("role tokens are machine data: on screen they are a raw-token leak", () => 
     assert.deepEqual(detectRawTokenLeakage(sc, `Bước: ${token}`).leaked_tokens, [token], token);
   }
 });
+
+/* regular-square-pyramid-w01 · ROADMAP §0.1 — lối đọc đáp số khi lời giải thu gọn và panel «Các bước dựng».
+   Quan sát thật qua mỗi bộ đánh giá; mỗi lỗi tiêm làm đúng mã của nó đỏ. */
+test("§0.1-1/2 quantity picker: genuine drawer passes; each injected fault fails with its own code", () => {
+  const sc = w11Scene("triangular_pyramid");
+  const anchor = expectedGeometryTimeline(sc).at(-1).anchor;
+  const want = expectedSolutionRows(sc, anchor);
+  const sec = { results: "Kết quả", steps: "Đại lượng trung gian", givens: "Dữ kiện" };
+  const genuine = () => ({ scene: sc, anchor, expectedAnswer: "V = 10",
+    resultCardWhileCollapsed: false,
+    drawer: ["results", "steps", "givens"].flatMap((k) => want[k].map((id) => ({ id, sec: sec[k],
+      text: id === "the_tich_khoi_chop" ? "V = 10" : id }))) });
+  assert.equal(LIB.assessQuantityPicker(genuine()).pass, true);
+  const fault = (code, mutate) => {
+    const x = genuine();
+    mutate(x);
+    const r = LIB.assessQuantityPicker(x);
+    assert.equal(r.pass, false, code);
+    assert.ok(r.reason_codes.includes(code), `${code} ∉ ${r.reason_codes}`);
+  };
+  fault("RESULT_CARD_SHOWN_COLLAPSED", (x) => { x.resultCardWhileCollapsed = true; });
+  fault("PICKER_RESULTS_MISMATCH", (x) => { x.drawer = x.drawer.filter((d) => d.sec !== "Kết quả"); });
+  fault("PICKER_GIVENS_MISMATCH", (x) => { x.drawer.push({ ...x.drawer.at(-1) }); });
+  fault("PICKER_STEPS_MISMATCH", (x) => { x.drawer = x.drawer.filter((d) => d.sec !== "Đại lượng trung gian"); });
+  fault("PICKER_NO_ANSWER", (x) => { x.expectedAnswer = "V = 11"; });
+  fault("PICKER_UNKNOWN_SECTION", (x) => { x.drawer[0].sec = "Khác"; });
+});
+
+test("§0.1-3/4/5 steps panel: synced at every step, jump and close keep sync; faults fail their own code", () => {
+  const sc = w11Scene("rectangular_pyramid");
+  const t = expectedGeometryTimeline(sc);
+  const genuine = () => ({
+    steps: t.map((g) => ({ index: g.index, panel: { count: t.length, current: g.index, marked: 1, label: `b${g.index}` } })),
+    backward: t.map((g) => ({ index: g.index, panel: { count: t.length, current: g.index, marked: 1, label: `b${g.index}` } })),
+    jump: { target: 1, indicator: 1, rendered_matches: true, playing: false },
+    close: { step_before: 1, step_after: 1, selected_before: null, selected_after: null },
+  });
+  assert.equal(LIB.assessStepsPanel(sc, genuine()).pass, true);
+  const fault = (code, mutate) => {
+    const x = genuine();
+    mutate(x);
+    const r = LIB.assessStepsPanel(sc, x);
+    assert.equal(r.pass, false, code);
+    assert.ok(r.reason_codes.some((c) => c.startsWith(code)), `${code} ∉ ${r.reason_codes}`);
+  };
+  fault("PANEL_COUNT", (x) => { x.steps[0].panel.count = t.length + 1; });
+  fault("PANEL_OUT_OF_SYNC", (x) => { x.steps[2].panel.current = 1; });
+  fault("PANEL_OUT_OF_SYNC", (x) => { x.backward[1].panel.current = 2; });
+  fault("PANEL_OUT_OF_SYNC", (x) => { x.steps[1].panel.marked = 0; });
+  fault("PANEL_LABEL_EMPTY", (x) => { x.steps[1].panel.label = " "; });
+  fault("PANEL_STEPS_NOT_OBSERVED", (x) => { x.steps.pop(); });
+  fault("PANEL_JUMP_NOT_SYNCED", (x) => { x.jump.indicator = 0; });
+  fault("PANEL_JUMP_NOT_SYNCED", (x) => { x.jump.rendered_matches = false; });
+  fault("PANEL_JUMP_NOT_SYNCED", (x) => { x.jump.playing = true; });
+  fault("PANEL_JUMP_NOT_SYNCED", (x) => { x.jump = null; });
+  fault("PANEL_CLOSE_RESET", (x) => { x.close.step_after = 0; });
+  fault("PANEL_CLOSE_RESET", (x) => { x.close.selected_after = "AB"; x.close.selected_before = null; });
+});
+
+test("§0.1-1 geometry steps: results hidden while the solution is collapsed is in sync, a leaked card is not", () => {
+  const sc = w11Scene("triangular_pyramid");
+  const t = expectedGeometryTimeline(sc);
+  const draw = (k) => sc.formation.steps[k].visible_ids.filter((id) =>
+    sc.objects.find((o) => o.id === id)?.render !== "readout").sort();
+  const obs = (leak) => ({ step_count: t.length, steps: t.map((g) => {
+    const want = expectedSolutionRows(sc, g.anchor);
+    return { index: g.index, rendered: draw(g.anchor), focus_label: g.index === 0 ? "Dữ kiện đề cho"
+      : sc.objects.find((o) => o.id === sc.events[g.start].object).label,
+    solution_collapsed: true, solution: { ...want, results: leak ? want.results : [] } };
+  }) });
+  assert.equal(assessGeometrySteps(sc, obs(false)).pass, true);
+  assert.equal(assessGeometrySteps(sc, obs(true)).checks.solution_in_sync, false);
+});
+
+test("§0.1 evidence verdict: answer judged on the OPEN solution; leaked card, picker and panel faults fail", () => {
+  const moi = () => ({ ...passingFacts(),
+    solution_final: { answer_hidden_collapsed: true, open: { answer_once: true } },
+    quantity_picker: { pass: true, reason_codes: [] },
+    steps_panel: { pass: true, reason_codes: [] } });
+  assert.equal(evaluateEvidenceGates(moi()).pass, true);
+  const faults = [
+    [(f) => { f.solution_final.open.answer_once = false; }, "ANSWER_NOT_SHOWN_ONCE"],
+    [(f) => { f.solution_final.answer_hidden_collapsed = false; }, "RESULT_CARD_SHOWN_COLLAPSED"],
+    [(f) => { f.quantity_picker = { pass: false, reason_codes: ["PICKER_NO_ANSWER"] }; }, "PICKER_NO_ANSWER"],
+    [(f) => { f.steps_panel = { pass: false, reason_codes: ["PANEL_JUMP_NOT_SYNCED"] }; }, "PANEL_JUMP_NOT_SYNCED"],
+  ];
+  for (const [mutate, code] of faults) {
+    const f = moi();
+    mutate(f);
+    const g = evaluateEvidenceGates(f);
+    assert.equal(g.pass, false, code);
+    assert.ok(g.reason_codes.includes(code), `${code}:${g.reason_codes}`);
+  }
+});
+
+test("§0.1-1 playback: collapsed solution hides the Results card at every step; a leaked card fails", () => {
+  const thu = (rows) => rows.filter((r) => r.sec !== "Kết quả");
+  const collapsed = () => genuine().map((s) => ({ ...s, collapsed: true, rows: thu(s.rows) }));
+  const ok = judge(collapsed());
+  assert.equal(ok.checks.solution_in_sync_with_geometry_step.pass, true);
+  assert.equal(ok.checks.final_result_shown_once.pass, true);
+  const leak = collapsed().map((s) => ({ ...s, rows: ROWS[s.step] ?? [] }));
+  const bad = judge(leak);
+  assert.equal(bad.checks.solution_in_sync_with_geometry_step.pass, false);
+  assert.equal(bad.checks.final_result_shown_once.pass, false);
+});

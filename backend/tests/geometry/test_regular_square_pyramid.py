@@ -34,11 +34,12 @@ def _so(x: F) -> str:
 
 def chop_deu(ca: str, *, s: F, dinh: tuple[str, ...] = ("S", "A", "B", "C", "D"), apex: tuple | None = None,
              given: tuple = (), facts: tuple = (), hoi: str = "volume", o_lech: bool = False,
-             h: F = F(3)) -> tuple:
+             h: F = F(3), van: str | None = None) -> tuple:
     """(hợp đồng, chương trình) cho đề `NHAN[ca]`: đáy vuông cạnh `s` trên Oxy, đỉnh trên tâm ở độ cao `h`
-    (hoặc `apex`), tâm O = giao hai đường chéo (`o_lech`: trung điểm cạnh đầu, sai danh tính), một phép đo hỏi."""
+    (hoặc `apex`), tâm O = giao hai đường chéo (`o_lech`: trung điểm cạnh đầu, sai danh tính), một phép đo hỏi.
+    `van` thay đề của ca (fixture trình duyệt: biến thể ngoài corpus, vd cạnh đáy bằng 0)."""
     S, a, b, c, d = dinh
-    van = NHAN[ca]["text"]
+    van = van or NHAN[ca]["text"]
     o = [_so(s / 2), _so(s / 2), _so(h)] if apex is None else [_so(F(x)) for x in apex]
     nghia_vu = ({"kind": "volume", "container": "khoi_chop", "witness": THE_TICH} if hoi == "volume"
                 else {"kind": "distance", "container": a, "witness": CANH_BEN, "wrt": S})

@@ -257,6 +257,42 @@
         { "kind": "point_construction_witness", "fixture": "fixtures/w18_midpoint_plane_distance.json", "expected": {"answer": "3", "annotation_id": "d_kq", "witness": true} },
         { "kind": "projection_correct", "fixture": "fixtures/w18_projection_line.json", "expected": {"answer": "3√6", "annotation_id": "d_kq"} }
       ]
+    },
+    {
+      "id": "regular_square_pyramid",
+      "evidence_dir": "regular-square-pyramid",
+      "family": "regular_square_pyramid_volume",
+      "positive_fixture": "fixtures/regular_square_pyramid_positive.json",
+      "topology": { "vertices": 5, "edges": 8, "faces": 5, "euler": 2 },
+      "expected_labels": ["A", "B", "C", "D", "S"],
+      "expected_answer": "16",
+      "causal_target_id": "V",
+      "oracle_expected_closure": [
+        "A", "B", "C", "D", "S", "V", "chieu_cao_SO",
+        "day_ABCD", "dien_tich_day_ABCD", "khoi_chop", "mp_day"
+      ],
+      "oracle_source": {
+        "kind": "w1_corpus_program_dependency_graph",
+        "path": "backend/tests/geometry/test_regular_square_pyramid.py",
+        "sha256": "b92bae8fa7a285ff01cc0ef54a3151b1295b86f92d9f57f8b7eb52d37b0250f4",
+        "hash_basis": "git_blob_at_measurement_commit",
+        "symbol": "chop_deu"
+      },
+      "expected_formation": [
+        { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_BASE", "kind": "polygon3", "vertices": ["A", "B", "C", "D"] },
+        { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["A", "S"] },
+        { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["B", "S"] },
+        { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["C", "S"] },
+        { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_LATERAL_BOUNDARY", "kind": "segment3", "vertices": ["D", "S"] },
+        { "class": "PYRAMID_LIKE", "role": "CLOSE_SOLID", "kind": "solid", "vertices": ["A", "B", "C", "D", "S"] }
+      ],
+      "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
+      "negative_fixtures": [
+        { "kind": "ungrounded_source", "fixture": "fixtures/regular_square_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/regular_square_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "topology_kernel", "fixture": "fixtures/regular_square_pyramid_non_positive.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "refusal_cause": "UNKNOWN"} },
+        { "kind": "point_construction_mismatch", "fixture": "fixtures/regular_square_pyramid_wrong_centre.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "construction_binding", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} }
+      ]
     }
   ]
 }

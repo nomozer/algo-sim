@@ -496,6 +496,61 @@ def main() -> None:
             ensure_ascii=False, indent=2,
         ), encoding="utf-8")
 
+    # regular-square-pyramid-w01 — chóp tứ giác đều: chương trình kiểu LLM của corpus W1 (cùng builder với
+    # `tests/geometry/test_regular_square_pyramid.py`, tâm O = giao hai đường chéo) qua route sản phẩm, 0 lượt gọi.
+    # Ba loại từ chối đăng ký trước ở LABELS.json: thiếu chiều cao (assumption), O sai danh tính
+    # (construction_binding), chiều cao chỉ có ở đầu ra mô hình (grounding).
+    from tests.geometry import test_regular_square_pyramid as RSP
+
+    w1 = (
+        ("regular_square_pyramid_positive", "S1_side_height_volume", None),
+        ("regular_square_pyramid_assumption", "N1_missing_height",
+         ("assumption", "ASSUMPTION_DETERMINES_ANSWER", "SOURCE")),
+        ("regular_square_pyramid_wrong_centre", "N4_wrong_centre_identity",
+         ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION")),
+        ("regular_square_pyramid_ungrounded", "N7_model_only_height",
+         ("grounding", "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE")),
+        # Ngoài corpus: loại topo/kernel bắt buộc của bộ đo — đề tự ghi cạnh đáy bằng 0. Họ này đi route mặc định
+        # LLM_ONLY, không qua compiler (nơi có NON_POSITIVE_LENGTH): kernel từ chối đáy suy biến ở `execution`,
+        # nguyên nhân UNKNOWN (đính chính đăng ký trước — diagnostics/PREREGISTRATION_CORRECTIONS.json).
+        ("regular_square_pyramid_non_positive", "S1_side_height_volume",
+         ("execution", None, "UNKNOWN")),
+    )
+    from fractions import Fraction
+
+    def _dung(ca: str, name: str):
+        if name != "regular_square_pyramid_non_positive":
+            return RSP.CA[ca]()
+        van = RSP.NHAN[ca]["text"].replace("cạnh đáy bằng 4", "cạnh đáy bằng 0")
+        return RSP._ca(ca, s=Fraction(0), van=van, gf=RSP._g(
+            ((("canh_day", "f_canh_day", "0"),), (RSP._f("f_canh_day", "cạnh đáy", "0"),)), RSP.CAO_3))
+
+    for name, ca, refusal in w1:
+        contract, program = _dung(ca, name)
+        validation = validate_semantic_program(program)
+        assert validation.ok and validation.spec is not None, validation.error
+        envelope = attach_learner_reason(asyncio.run(
+            _run_frozen_program(contract.problem_text, contract, validation.spec)))
+        if refusal is None:
+            v = next(o for o in envelope["scene3d"]["objects"] if o["id"] == RSP.THE_TICH)
+            assert envelope["status"] == "ok" and v.get("value") == "16", (envelope["status"], v.get("value"))
+        else:
+            assert (envelope["status"], envelope["stage_reached"], envelope.get("reason_code"),
+                    envelope["refusal_cause"]) == ("unsupported", *refusal), (name, envelope.get("stage_reached"),
+                                                   envelope.get("reason_code"), envelope.get("reason"))
+            assert "scene3d" not in envelope, name
+        # Ca âm "thiếu chiều cao" (N1, N7) là đề S1 bỏ đúng một mệnh đề — ghi ra như các họ khác.
+        bo = ", chiều cao bằng 3"
+        mat = ({"removed_from_text": bo.strip(" ,.")} if name.endswith(("_assumption", "_ungrounded"))
+               and bo in RSP.NHAN["S1_side_height_volume"]["text"] and bo not in contract.problem_text else {})
+        (fixtures / f"{name}.json").write_text(json.dumps(
+            _wrapper(name, contract.problem_text, envelope, "w1_corpus_frozen_program_through_production_route",
+                     corpus_row=ca, **mat,
+                     **({} if refusal is None else {"refusal_cause": refusal[2],
+                                                   **({"source_reason_code": refusal[1]} if refusal[1] else {})})),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"
     canonical = json.loads(canonical_path.read_text(encoding="utf-8"))

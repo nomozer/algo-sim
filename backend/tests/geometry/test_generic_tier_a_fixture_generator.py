@@ -44,7 +44,9 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     # §15.1 pair on one two-plane text: `cross_section_wrong_plane` (refused) / `_correct_plane` (served).
     # W18 (§16): + five point-construction cases on the gold p1 text — three refused at
     # `construction_binding` (midpoint and projection mismatch, unverified), two served (witness).
-    assert len(manifest["fixtures"]) == 32
+    # regular-square-pyramid-w01: + five regular-square-pyramid cases (served S1; refused at assumption,
+    # grounding, construction_binding, and by the kernel for a zero base edge).
+    assert len(manifest["fixtures"]) == 37
     assert {"w18_midpoint_mismatch.json", "w18_projection_mismatch.json", "w18_unverified.json",
             "w18_midpoint_plane_distance.json", "w18_projection_line.json"} <= set(manifest["fixtures"])
     system = json.loads((tmp_path / "fixtures" / "cube_system_cause.json").read_text(encoding="utf-8"))
@@ -54,13 +56,14 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     assert sai["problem_text"] == dung["problem_text"] and "(β) cắt khối chóp" in sai["problem_text"]
     assert (sai["envelope"]["reason_code"], dung["envelope"]["status"]) == ("CONSTRUCTION_NOT_TEXT_BOUND", "ok")
     assert {
-        name.removesuffix("_positive.json").removesuffix("_negative.json")
+        name.removesuffix("_non_positive.json").removesuffix("_positive.json").removesuffix("_negative.json")
         .removesuffix("_ungrounded.json").removesuffix("_assumption.json").removesuffix("_system_cause.json")
         .removesuffix("_wrong_plane.json").removesuffix("_correct_plane.json")
+        .removesuffix("_wrong_centre.json")
         for name in manifest["fixtures"] if not name.startswith("w18_")  # wave cases, not a family
     } == {
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-        "cuboid", "cube", "cross_section",
+        "cuboid", "cube", "cross_section", "regular_square_pyramid",
     }
     for name in [n for n in manifest["fixtures"] if n.endswith("_ungrounded.json")]:
         negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))

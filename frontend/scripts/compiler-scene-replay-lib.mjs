@@ -692,8 +692,9 @@ export function solutionRowOf(scene, id, rows) {
 
 /** Phán quyết các bước dựng QUAN SÁT trong trình duyệt (W12).
  *  `observed = { step_count, steps: [{ index, rendered, focus_label, solution }] }`
- *  — `rendered`: vật vẽ lên khung; `focus_label`: dòng "Đang dựng"; `solution`:
- *  `{ givens, steps, results }` đọc từ bảng lời giải. */
+ *  — `rendered`: vật vẽ lên khung; `focus_label`: nhãn bước (dòng "Đang dựng" tới W20; từ
+ *  regular-square-pyramid-w01 là nhãn bước đang đánh dấu của panel «Các bước dựng»); `solution`:
+ *  `{ givens, steps, results }` đọc từ bảng lời giải; `solution_collapsed: true` ⇒ card Kết quả vắng (§0.1-1). */
 export function assessGeometrySteps(scene, observed) {
   const t = expectedGeometryTimeline(scene);
   // Nhãn → MỌI vật mang nhãn ấy: đáp số và bí danh của nó trùng nhãn.
@@ -713,7 +714,9 @@ export function assessGeometrySteps(scene, observed) {
     .map((s) => s.index);
   const cung = (a, b) => JSON.stringify(a ?? []) === JSON.stringify(b ?? []);
   const sync = steps.map((s) => {
-    const want = t[s.index] ? expectedSolutionRows(scene, t[s.index].anchor) : null;
+    const day = t[s.index] ? expectedSolutionRows(scene, t[s.index].anchor) : null;
+    // ROADMAP §0.1-1: lời giải thu gọn ⇒ card Kết quả vắng; đáp số đọc qua ngăn «Đại lượng».
+    const want = day && s.solution_collapsed === true ? { ...day, results: [] } : day;
     return { index: s.index, want, got: s.solution,
       pass: Boolean(want) && cung(want.givens, s.solution?.givens)
         && cung(want.steps, s.solution?.steps) && cung(want.results, s.solution?.results) };
@@ -1062,8 +1065,15 @@ export function evaluateEvidenceGates(facts) {
     if (g?.checks?.no_final_result_geometry_steps !== true) reasons.push("FINAL_RESULT_GEOMETRY_STEP");
     if (g?.checks?.solution_in_sync !== true) reasons.push("SOLUTION_LAYER_OUT_OF_SYNC");
   }
-  if (facts.solution_final !== undefined && facts.solution_final?.answer_once !== true) {
+  // regular-square-pyramid-w01 §0.1-1: card Kết quả chỉ có khi lời giải MỞ — "đáp số đúng một lần" phán ở đó
+  // (`open`); bằng chứng cũ mang `answer_once` ở gốc. Thu gọn mà card vẫn hiện là lỗi riêng.
+  const sf = facts.solution_final;
+  if (sf !== undefined && (sf?.open?.answer_once ?? sf?.answer_once) !== true) {
     reasons.push("ANSWER_NOT_SHOWN_ONCE");
+  }
+  if (sf?.answer_hidden_collapsed === false) reasons.push("RESULT_CARD_SHOWN_COLLAPSED");
+  for (const k of ["quantity_picker", "steps_panel"]) {
+    if (facts[k] !== undefined && facts[k]?.pass !== true) reasons.push(...(facts[k]?.reason_codes ?? [k.toUpperCase()]));
   }
   // W14 — cùng luật "chỉ phán khi bộ đo cung cấp dữ kiện".
   if (facts.formation_coverage !== undefined && facts.formation_coverage?.pass !== true) {
@@ -1121,7 +1131,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   if (!Array.isArray(manifest?.viewports) || manifest.viewports.length !== 2) {
     errors.push("viewports");
   }
-  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 6) {
+  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 7) {
     errors.push("scenarios");
   }
   const names = new Set();
@@ -1170,7 +1180,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   }
   const requiredScenarios = [
     "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-    "cuboid", "cube", "cross_section",
+    "cuboid", "cube", "cross_section", "regular_square_pyramid",
   ];
   if (JSON.stringify([...names].sort()) !== JSON.stringify(requiredScenarios.sort())) {
     errors.push("cross_family_scenarios");
@@ -1320,7 +1330,9 @@ export function assessPlayback({
   for (let g = 0; g <= last; g += 1) {
     const sample = settledAt(g);
     if (!sample || !t[g]) continue;
-    const want = expectedSolutionRows(scene, t[g].anchor);
+    const day = expectedSolutionRows(scene, t[g].anchor);
+    // §0.1-1 (regular-square-pyramid-w01): lời giải thu gọn ⇒ card Kết quả vắng.
+    const want = sample.collapsed === true ? { ...day, results: [] } : day;
     const got = { givens: theoMuc(sample, "Dữ kiện"), steps: theoMuc(sample, "Các bước tính"),
       results: theoMuc(sample, "Kết quả") };
     dongBo.push({ step: g, want, got, pass: JSON.stringify(want) === JSON.stringify(got) });
@@ -1330,6 +1342,8 @@ export function assessPlayback({
   // Đáp số + mọi BÍ DANH của nó (`alias_of`) là MỘT kết luận ⇒ đúng MỘT dòng, ở
   // mục Kết quả. Không so giá trị: AB = AD = 4 ở hình lập phương là hai đại lượng.
   const finalRows = firstFinal >= 0 ? settledAt(last).rows ?? [] : [];
+  // §0.1-1: thu gọn ⇒ đáp số KHÔNG có dòng (đọc qua ngăn «Đại lượng», bộ đo suite kiểm); mở ⇒ đúng một dòng.
+  const thuGon = firstFinal >= 0 && settledAt(last).collapsed === true;
   const objects = scene?.objects ?? [];
   const answers = (scene?.events ?? [])
     .filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
@@ -1340,7 +1354,8 @@ export function assessPlayback({
       return { id, rows, in_results: rows.every((row) => row.sec === "Kết quả") };
     });
   add("final_result_shown_once", answers.length > 0
-    && answers.every((a) => a.rows.length === 1 && a.in_results), { rows: finalRows, answers });
+    && answers.every((a) => (thuGon ? a.rows.length === 0 : a.rows.length === 1 && a.in_results)),
+  { rows: finalRows, answers, collapsed: thuGon });
   if (replay) {
     add("replay_resets_step_selection_highlight",
       replay.step === 0 && replay.selected === null && replay.highlighted.length === 0, replay);
@@ -1512,6 +1527,50 @@ export function assessDetailRegion({ formula_text, regions }) {
   if (!formula_text) r.push("DETAIL_NO_FORMULA");
   else if (regions.length !== 1) r.push(`DETAIL_REGIONS_${regions.length}`);
   return { pass: r.length === 0, reason_codes: r, regions };
+}
+
+/** regular-square-pyramid-w01 · ROADMAP §0.1-1/2 — lời giải thu gọn: card Kết quả VẮNG; ngăn «Đại lượng»
+ *  liệt kê đúng ba nhóm của oracle độc lập (Kết quả → trung gian → dữ kiện, `same_as` gộp) và một dòng Kết
+ *  quả mang đáp số. `drawer = [{id, sec, text}]` theo thứ tự DOM. */
+export function assessQuantityPicker({ scene, anchor, resultCardWhileCollapsed, drawer, expectedAnswer }) {
+  const want = expectedSolutionRows(scene, anchor);
+  const nhom = { "Kết quả": "results", "Đại lượng trung gian": "steps", "Dữ kiện": "givens" };
+  const got = { results: [], steps: [], givens: [] };
+  const r = [];
+  if (resultCardWhileCollapsed) r.push("RESULT_CARD_SHOWN_COLLAPSED");
+  for (const d of drawer ?? []) {
+    if (nhom[d.sec]) got[nhom[d.sec]].push(d.id);
+    else r.push("PICKER_UNKNOWN_SECTION");
+  }
+  for (const k of ["results", "steps", "givens"]) {
+    if (JSON.stringify(got[k]) !== JSON.stringify(want[k])) r.push(`PICKER_${k.toUpperCase()}_MISMATCH`);
+  }
+  if (!(drawer ?? []).some((d) => d.sec === "Kết quả" && String(d.text).includes(expectedAnswer))) {
+    r.push("PICKER_NO_ANSWER");
+  }
+  return { pass: r.length === 0, reason_codes: sortedUnique(r), expected: want, observed: got };
+}
+
+/** regular-square-pyramid-w01 · ROADMAP §0.1-3/4/5 — panel «Các bước dựng» đồng bộ với thanh bước ở MỌI bước
+ *  (tiến và lùi): một nút mỗi bước dựng, đúng một nút đánh dấu bước hiện tại, nhãn không rỗng. Chọn một bước
+ *  từ panel ⇒ chỉ báo = bước ấy, vật dựng = vật của bước ấy khi đi tuần tự, phát lại dừng. Đóng panel không
+ *  đổi bước hay lựa chọn. */
+export function assessStepsPanel(scene, { steps, backward, jump, close }) {
+  const t = expectedGeometryTimeline(scene);
+  const r = [];
+  for (const s of [...(steps ?? []), ...(backward ?? [])]) {
+    if (s.panel?.count !== t.length) r.push(`PANEL_COUNT:${s.index}`);
+    if (s.panel?.current !== s.index || s.panel?.marked !== 1) r.push(`PANEL_OUT_OF_SYNC:${s.index}`);
+    if (!String(s.panel?.label ?? "").trim()) r.push(`PANEL_LABEL_EMPTY:${s.index}`);
+  }
+  if ((steps ?? []).length !== t.length || (backward ?? []).length !== t.length) r.push("PANEL_STEPS_NOT_OBSERVED");
+  if (!jump || jump.indicator !== jump.target || jump.rendered_matches !== true || jump.playing !== false) {
+    r.push("PANEL_JUMP_NOT_SYNCED");
+  }
+  if (!close || close.step_after !== close.step_before || close.selected_after !== close.selected_before) {
+    r.push("PANEL_CLOSE_RESET");
+  }
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }
 
 /** W18 §16.7 — nhân chứng vẽ ĐÚNG cho các nhãn khoảng cách đang hiện có `witness` trong payload:

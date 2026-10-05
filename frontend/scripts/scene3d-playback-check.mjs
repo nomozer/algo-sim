@@ -53,6 +53,7 @@ playing:!!pause,selected:window.__geo3d_selected_id||null,
 highlighted:(window.__geo3d_highlighted_ids||[]).slice(),panel_open:!!document.querySelector('.geo3d-soi'),
 rows:[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>({id:e.dataset.solutionId,
 sec:(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')?.textContent||'').trim()})),
+collapsed:(()=>{const t=document.querySelector('.geo3d-lg-than');return !!t&&getComputedStyle(t).display==='none'})(),
 rendered:(window.__geo3d_rendered_object_ids||[]).slice().sort(),
 narration:(document.querySelector('.geo3d-buoc-loi')?.textContent||'').trim()}};
 window.__w10_snap=snap;let prev='';
@@ -223,9 +224,17 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     await chup("rotated_neutral");
 
     // ── Causal: CHỈ sau cú bấm của người dùng; đóng ô soi ⇒ trung tính ───
-    // W12: đích causal là dòng Kết quả của bảng lời giải (luôn hiện, kể cả khổ hẹp).
-    const KET_QUA = "[...document.querySelectorAll('.geo3d-lg-ket-qua .geo3d-lg-nut')].at(-1)";
-    const rows = await session.eval("document.querySelectorAll('.geo3d-lg-ket-qua .geo3d-lg-nut').length");
+    // W12: đích causal là đáp số. regular-square-pyramid-w01 (ROADMAP §0.1-1/2): card Kết quả ẩn khi lời giải
+    // thu gọn — người học chọn đáp số qua ngăn «Đại lượng» (chip mở ngăn, chọn thì ngăn tự đóng).
+    const CHIP = "[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')].find((b)=>(b.textContent||'').includes('Đại lượng'))";
+    const KET_QUA = "[...document.querySelectorAll('.geo3d-dai-luong section[aria-label=\"Kết quả\"] [data-quantity-id]')].at(-1)";
+    const moNgan = async () => {
+      if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await trustedClick(session, CHIP);
+      await sleep(200);
+    };
+    await moNgan();
+    const rows = await session.eval(`(${KET_QUA}) ? 1 : 0`);
+    if (rows === 0 && await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await trustedClick(session, CHIP);
     const causal = { restored: null };
     if (rows > 0) {
       await trustedClick(session, KET_QUA);
@@ -241,6 +250,7 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // Lặp orbit ở trạng thái trung tính ("Xem lại toàn hình" cũng bỏ chọn).
     const orbitRepeat = lapOrbit > 0 ? await orbitLap(session, scene, lapOrbit) : null;
     if (rows > 0) {
+      await moNgan();
       await trustedClick(session, KET_QUA);
       await sleep(400);
     }

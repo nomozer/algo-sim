@@ -25,6 +25,8 @@ import {
   assessDetailRegion,
   assessShowAllIsolation,
   assessWitness,
+  assessQuantityPicker,
+  assessStepsPanel,
   coherentFormulaText,
   expectedAnnotationIds,
   cauTrucKhoi,
@@ -295,7 +297,14 @@ export async function capture(session, path) {
     path: relative(REPO_ROOT, absolute).replaceAll("\\", "/"),
     bytes: statSync(absolute).size,
     sha256: sha256File(absolute),
+    scroll: await scrollOffsets(session),
   };
+}
+
+/** ROADMAP §0.1-9 — vị trí cuộn của TRANG lúc chụp: bộ đo có thể đã cuộn (`scrollIntoView`) khác người học;
+ *  ghi ra để ảnh không bị đọc như khung người học thấy khi mở trang. */
+async function scrollOffsets(session) {
+  return jsonEval(session, "({x:Math.round(window.scrollX),y:Math.round(window.scrollY)})");
 }
 
 /** Hộp cắt ảnh theo toạ độ TÀI LIỆU: `clip` của `Page.captureScreenshot` tính
@@ -514,6 +523,7 @@ export async function solutionState(session) {
     + `return{present:!!document.querySelector('.geo3d-loi-giai'),rows,legend,`
     + `panel:hop(document.querySelector('.geo3d-loi-giai')),canvas:hop(document.querySelector('.geo3d-canvas canvas')),`
     + `body_collapsed:!!than&&getComputedStyle(than).display==='none',`
+    + `results_card:!!document.querySelector('.geo3d-lg-ket-qua'),`
     + `result_text:(document.querySelector('.geo3d-lg-ket-qua')?.textContent||'').replace(/\\s+/g,' ').trim()}})()`);
 }
 
@@ -543,6 +553,7 @@ async function captureElement(session, selector, path) {
     path: relative(REPO_ROOT, absolute).replaceAll("\\", "/"),
     bytes: statSync(absolute).size,
     sha256: sha256File(absolute),
+    scroll: await scrollOffsets(session),
   };
 }
 
@@ -706,9 +717,44 @@ async function clickChip(session, ten) {
     + `.find((b)=>(b.textContent||'').includes(${JSON.stringify(ten)}))`);
 }
 
-async function focusLabel(session) {
-  return session.eval(`(()=>{const d=[...document.querySelectorAll('.geo3d-focus dt')]`
-    + `.find(e=>(e.textContent||'').trim()==='Đang dựng');return (d?.nextElementSibling?.textContent||'').trim()})()`);
+/** ROADMAP §0.1-3 — panel «Các bước dựng»: số nút, bước đang đánh dấu, nhãn của nó (thay dải "Đang dựng" đã
+ *  gỡ ở §0.1-8 — nhãn bước giờ đọc ở đây). Panel đóng ⇒ `open:false`, không có nút. */
+async function stepsPanelState(session) {
+  return jsonEval(session, `(()=>{const t=document.querySelector('.geo3d-cac-buoc-mo');`
+    + `const b=[...document.querySelectorAll('.geo3d-cac-buoc-nut')];const c=b.filter(e=>e.getAttribute('aria-current')==='step');`
+    + `return{open:t?.getAttribute('aria-expanded')==='true',count:b.length,marked:c.length,`
+    + `current:c.length===1?Number(c[0].dataset.geometryStep):null,`
+    + `label:(c[0]?.querySelector('.geo3d-cac-buoc-chu')?.textContent||'').trim(),`
+    + `scroll_top:Math.round(document.querySelector('.geo3d-cac-buoc')?.scrollTop||0)}})()`);
+}
+
+async function setStepsPanelOpen(session, mo) {
+  if ((await stepsPanelState(session)).open === mo) return;
+  await trustedClick(session, "document.querySelector('.geo3d-cac-buoc-mo')");
+  await pollUntil(() => stepsPanelState(session), (p) => p.open === mo, { timeoutMs: 5_000 });
+}
+
+/** ROADMAP §0.1-2 — ngăn «Đại lượng»: mở (nếu đang đóng), đọc các nút theo mục (id máy qua `data-quantity-id`). */
+async function quantityDrawer(session) {
+  if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
+  await pollUntil(() => session.eval("!!document.querySelector('.geo3d-dai-luong')"), Boolean, { timeoutMs: 5_000 });
+  return jsonEval(session, `[...document.querySelectorAll('.geo3d-dai-luong [data-quantity-id]')].map(e=>({`
+    + `id:e.dataset.quantityId,sec:(e.closest('section')?.getAttribute('aria-label')||''),`
+    + `text:(e.textContent||'').replace(/\\s+/g,' ').trim()}))`);
+}
+
+async function closeQuantityDrawer(session) {
+  if (await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
+}
+
+/** Chọn một đại lượng như người học khi lời giải thu gọn: chip «Đại lượng» → nút của nó (ngăn tự đóng). */
+async function selectViaPicker(session, id) {
+  if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
+  return trustedClick(session, `document.querySelector('.geo3d-dai-luong [data-quantity-id=${JSON.stringify(id)}]')`);
+}
+
+async function deselect(session) {
+  return trustedClick(session, `document.querySelector('[aria-label="Bỏ chọn"]')`);
 }
 
 /** W12: thanh bước đi qua BƯỚC DỰNG. Mỗi bước: khung = snapshot neo của bước
@@ -718,6 +764,8 @@ async function focusLabel(session) {
  *  mọi tham chiếu có cấu trúc. */
 async function formationEvidence(session, scene, outDir, captureMode, scenario) {
   await goToStart(session);
+  // §0.1-3: đi các bước với panel «Các bước dựng» MỞ — nhãn bước đọc ở panel, panel phải theo kịp thanh bước.
+  await setStepsPanelOpen(session, true);
   const timeline = expectedGeometryTimeline(scene);
   const stepTotal = timeline.length;
   const steps = [];
@@ -737,8 +785,12 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     const expectedPointIds = expectedIds.filter((id) =>
       scene.objects.some((object) => object.id === id && object.type === "point3")).sort();
     const actualPointIds = Object.keys(labels).sort();
-    const solution = rowsBySection(await solutionState(session));
-    const expectedSolution = expectedSolutionRows(scene, anchor);
+    const solState = await solutionState(session);
+    const solution = rowsBySection(solState);
+    // §0.1-1: thu gọn ⇒ không có card Kết quả (đáp số đọc qua ngăn «Đại lượng»).
+    const expectedSolution = solState.body_collapsed
+      ? { ...expectedSolutionRows(scene, anchor), results: [] } : expectedSolutionRows(scene, anchor);
+    const panel = await stepsPanelState(session);
     const shouldCapture = captureMode === "full" || index === representative;
     const image = shouldCapture
       ? await capture(session, join(outDir,
@@ -769,7 +821,9 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       observed_point_ids: actualPointIds,
       point_visibility_pass: JSON.stringify(expectedPointIds) === JSON.stringify(actualPointIds),
       rendered: await renderedIds(session),
-      focus_label: await focusLabel(session),
+      focus_label: panel.label,
+      panel,
+      solution_collapsed: solState.body_collapsed,
       solution,
       expected_solution: expectedSolution,
       solution_pass: JSON.stringify(solution) === JSON.stringify(expectedSolution),
@@ -790,6 +844,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
   const endLocked = !await moveStep(session, 1);
   const backwardRendered = [];
   const backwardAnnotations = [];
+  const backwardPanel = [];
   for (let index = stepTotal - 1; index >= 0; index -= 1) {
     const anchor = timeline[index].anchor;
     const tree = await observeTree(session, scene, expectedVisibleIds(scene, anchor));
@@ -800,16 +855,42 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
         .filter((item) => item.observed_present === true).map((item) => item.id).sort(),
     });
     backwardRendered[index] = await renderedIds(session);
+    backwardPanel[index] = { index, panel: await stepsPanelState(session) };
     backwardAnnotations[index] = (await annotationState(session)).dom;
     if (index > 0 && !await moveStep(session, -1)) {
       throw new Error(`FORMATION_BACKWARD_STOPPED_AT:${index}`);
     }
   }
+  // §0.1-5: chọn một bước TỪ PANEL (đang phát) ⇒ phát dừng, chỉ báo + vật dựng = bước ấy khi đi tuần tự.
+  const target = Math.max(1, representative);
+  if (await session.eval(`!!document.querySelector('[aria-label="Phát lại quá trình dựng"]')`)) {
+    await clickAria(session, "Phát lại quá trình dựng");
+  }
+  await trustedClick(session, `document.querySelector('.geo3d-cac-buoc-nut[data-geometry-step="${target}"]')`);
+  await pollUntil(() => currentStep(session), (s) => s?.index === target, { timeoutMs: 5_000 }).catch(() => null);
+  await new Promise((done) => setTimeout(done, 1_600));   // hơn một nhịp phát: phát còn chạy thì bước đã trôi
+  const jumpStep = await currentStep(session);
+  const jump = { target, indicator: jumpStep?.index ?? null,
+    rendered_matches: JSON.stringify(await renderedIds(session)) === JSON.stringify(steps[target]?.rendered),
+    playing: Boolean(await session.eval(`!!document.querySelector('[aria-label="Tạm dừng"]')`)),
+    panel: await stepsPanelState(session) };
+  const panelOpenShot = await capture(session, join(outDir, "steps_panel_open.png"));
+  // §0.1-5: đóng panel không reset bước hay lựa chọn.
+  const truocDong = { step: (await currentStep(session))?.index ?? null,
+    selected: await session.eval("window.__geo3d_selected_id||null") };
+  await setStepsPanelOpen(session, false);
+  const close = { step_before: truocDong.step, selected_before: truocDong.selected,
+    step_after: (await currentStep(session))?.index ?? null,
+    selected_after: await session.eval("window.__geo3d_selected_id||null") };
+  const panelClosedShot = await capture(session, join(outDir, "steps_panel_closed.png"));
+  const stepsPanel = { ...assessStepsPanel(scene, {
+    steps: steps.map((s) => ({ index: s.index, panel: s.panel })), backward: backwardPanel, jump, close }),
+  jump, close, screenshots: { open: panelOpenShot, closed: panelClosedShot } };
   const trace = assessFormationSnapshots(scene, observations, timeline.map((g) => g.anchor));
   const geometry = assessGeometrySteps(scene, {
     step_count: steps[0]?.indicator?.count ?? null,
     steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, focus_label: s.focus_label,
-      solution: s.solution })),
+      solution_collapsed: s.solution_collapsed, solution: s.solution })),
   });
   const forwardBackward = steps.map((s) => ({ index: s.index,
     pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index])
@@ -828,8 +909,8 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     && step.indicator?.count === stepTotal
     && step.tree.pass && step.point_visibility_pass && step.solution_pass && step.annotation_pass && step.dash.pass)
     && canvasHashes.size >= 2 && trace.pass && geometry.pass && endLocked
-    && forwardBackward.every((x) => x.pass) && structuredReferences.pass && roleCoverage.pass;
-  return { steps, observations, trace, geometry, forward_backward: forwardBackward,
+    && forwardBackward.every((x) => x.pass) && structuredReferences.pass && roleCoverage.pass && stepsPanel.pass;
+  return { steps, observations, trace, geometry, forward_backward: forwardBackward, steps_panel: stepsPanel,
     structured_references: structuredReferences, role_coverage: roleCoverage, dash_under_highlight: dashUnderHighlight,
     end_locked: endLocked, distinct_canvas_frames: canvasHashes.size, pass };
 }
@@ -841,9 +922,17 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
-    // W12: đáp số ở mục Kết quả của bảng lời giải (dải số trên khung đã gỡ).
-    await pollUntil(() => session.eval(`document.querySelector('.geo3d-lg-ket-qua')?.textContent||''`),
-      (text) => String(text).includes(scenario.expected_answer));
+    // §0.1-1/2: lời giải thu gọn ⇒ không card Kết quả; đáp số đọc qua ngăn «Đại lượng» (mở rồi đóng, không chọn).
+    const cardThuGon = (await solutionState(session)).results_card;
+    const ngan = await pollUntil(() => quantityDrawer(session),
+      (d) => d.some((x) => x.text.includes(scenario.expected_answer)), { timeoutMs: 8_000 })
+      .catch(() => quantityDrawer(session));
+    result.quantity_picker = assessQuantityPicker({ scene, anchor: expectedGeometryTimeline(scene).at(-1).anchor,
+      resultCardWhileCollapsed: cardThuGon, drawer: ngan, expectedAnswer: scenario.expected_answer });
+    result.assertions.quantity_picker = assertion(result.quantity_picker.pass, result.quantity_picker);
+    result.screenshots.quantity_picker = await capture(session, join(outDir, "quantity_picker.png"));
+    result.capture_order.push("quantity_picker");
+    await closeQuantityDrawer(session);
 
     const topology = solidTopology(scene);
     result.topology = topology;
@@ -905,7 +994,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       || finalIds.has(scene.objects.find((object) => object.id === row.id)?.alias_of));
     result.solution_final = {
       rows: solutionNeutral.rows,
-      expected: expectedSolutionRows(scene, lastAnchor),
+      // §0.1-1: mặc định thu gọn ⇒ không có dòng Kết quả; đáp số một lần ở lời giải MỞ (kiểm ở `open`).
+      expected: { ...expectedSolutionRows(scene, lastAnchor), results: [] },
+      results_card: solutionNeutral.results_card,
       observed: rowsBySection(solutionNeutral),
       answer_rows: answerRows.map((row) => ({ id: row.id, sec: row.sec, text: row.text })),
       body_collapsed: solutionNeutral.body_collapsed,
@@ -915,12 +1006,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     };
     result.solution_final.in_sync = JSON.stringify(result.solution_final.expected)
       === JSON.stringify(result.solution_final.observed);
-    result.solution_final.answer_once = answerRows.length === finalIds.size
-      && answerRows.every((row) => row.sec === "Kết quả")
-      && solutionNeutral.result_text.includes(scenario.expected_answer);
+    result.solution_final.answer_hidden_collapsed = answerRows.length === 0 && !solutionNeutral.results_card;
     result.solution_final.panel_over_canvas = overlaps(solutionNeutral.panel, solutionNeutral.canvas);
     result.assertions.solution_final = assertion(result.solution_final.in_sync
-      && result.solution_final.answer_once && !result.solution_final.panel_over_canvas
+      && result.solution_final.answer_hidden_collapsed && !result.solution_final.panel_over_canvas
       && solutionNeutral.legend.length === 0
       // W18 §16.6: lời giải đầy đủ thu gọn mặc định ở MỌI khổ.
       && result.solution_final.body_collapsed === true, result.solution_final);
@@ -944,6 +1033,19 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     await setSolutionOpen(session, true);
     result.screenshots.solution_expanded = await captureElement(session, ".geo3d-loi-giai",
       join(outDir, "solution_expanded.png"));
+    {
+      // Lời giải MỞ: card Kết quả có mặt, đáp số ĐÚNG MỘT dòng và nằm ở Kết quả (W12, giữ).
+      const mo = await solutionState(session);
+      const dapSo = mo.rows.filter((row) => finalIds.has(row.id)
+        || finalIds.has(scene.objects.find((object) => object.id === row.id)?.alias_of));
+      result.solution_final.open = { results_card: mo.results_card,
+        in_sync: JSON.stringify(rowsBySection(mo)) === JSON.stringify(expectedSolutionRows(scene, lastAnchor)),
+        answer_rows: dapSo.map((row) => ({ id: row.id, sec: row.sec, text: row.text })),
+        answer_once: mo.results_card && dapSo.length === finalIds.size && dapSo.every((row) => row.sec === "Kết quả")
+          && mo.result_text.includes(scenario.expected_answer) };
+      result.assertions.solution_open = assertion(result.solution_final.open.in_sync
+        && result.solution_final.open.answer_once, result.solution_final.open);
+    }
     await setSolutionOpen(session, false);
     const chup = async () => {
       const a = await annotationState(session);
@@ -1009,8 +1111,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       for (const row of hang) {
         const q = scene.objects.find((o) => o.id === row.id);
         if (!q) continue;
+        // §0.1-2: Kết quả không còn dòng khi thu gọn — chọn qua ngăn «Đại lượng» như người học.
         await setSolutionOpen(session, row.sec !== "Kết quả");
-        await clickSolutionRow(session, row.id);
+        if (row.sec === "Kết quả") await selectViaPicker(session, row.id);
+        else await clickSolutionRow(session, row.id);
         const daChon = await choHet((s) => s.selected === row.id);
         await settleOrRecord(session, result, `select_${row.id}`);
         const ann = await annotationState(session);
@@ -1046,7 +1150,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           kq.pass = kq.pass && kq.detail_region_open.pass;
           await setSolutionOpen(session, false);
         }
-        await clickSolutionRow(session, row.id);
+        await deselect(session);
         await choHet((s) => s.selected === null);
       }
       await setSolutionOpen(session, false);
@@ -1109,9 +1213,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       : scenario.oracle_expected_closure;
     const target = scene.objects.find((object) => object.id === causalId);
     if (!target) throw new Error(`MISSING_CAUSAL_TARGET:${scenario.causal_target_id}`);
-    // W12: dòng của đích nằm ở BẢNG LỜI GIẢI (kết quả luôn hiện, kể cả khổ hẹp).
-    const rowButton = `document.querySelector('.geo3d-lg-dong[data-solution-id=${JSON.stringify(causalId)}] .geo3d-lg-nut')`;
-    const clicked = await trustedClick(session, rowButton);
+    // regular-square-pyramid-w01 (ROADMAP §0.1-1/2): card Kết quả ẩn khi lời giải thu gọn — đích (một đáp số)
+    // chọn qua ngăn «Đại lượng» như người học; dòng Dữ kiện/Các bước tính vẫn chọn ở bảng lời giải nếu cần.
+    const clicked = await selectViaPicker(session, causalId);
     if (!clicked) throw new Error(`CAUSAL_TARGET_NOT_CLICKABLE:${causalId}`);
     await pollUntil(() => session.eval(`window.__geo3d_selected_id||null`),
       (id) => id === causalId, { timeoutMs: 5_000 });
@@ -1395,6 +1499,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       formation_coverage: viewport.formation ? result.formation.role_coverage : undefined,
       structured_references: viewport.formation ? result.formation.structured_references : undefined,
       solution_final: result.solution_final,
+      quantity_picker: result.quantity_picker,
+      steps_panel: viewport.formation ? result.formation.steps_panel : undefined,
       role_colors: roleColors,
       canvas_role_hues: causal.visual.canvas_role_hues,
       panel_over_canvas: result.solution_final.panel_over_canvas,
@@ -1516,11 +1622,13 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
-    const ketQua = await pollUntil(
-      () => session.eval(`document.querySelector('.geo3d-lg-ket-qua')?.textContent||''`),
-      (text) => String(text).includes(expected.answer), { timeoutMs: 8_000 });
-    // W18 §16.5: nhãn đáp số hiện khi người học CHỌN nó (mặc định gọn) — chọn qua dòng Kết quả.
-    if (expected.annotation_id) await clickSolutionRow(session, expected.annotation_id);
+    // §0.1-2: đáp số đọc qua ngăn «Đại lượng» (card Kết quả ẩn khi lời giải thu gọn).
+    const ngan = await pollUntil(() => quantityDrawer(session),
+      (d) => d.some((x) => x.text.includes(expected.answer)), { timeoutMs: 8_000 });
+    const ketQua = ngan.filter((x) => x.sec === "Kết quả").map((x) => x.text).join(" ");
+    // W18 §16.5: nhãn đáp số hiện khi người học CHỌN nó (mặc định gọn) — chọn trong ngăn (tự đóng).
+    if (expected.annotation_id) await selectViaPicker(session, expected.annotation_id);
+    else await closeQuantityDrawer(session);
     const ann = await pollUntil(() => annotationState(session),
       (s) => !expected.annotation_id || (s.dom.includes(expected.annotation_id)
         && (!expected.witness || s.witness.includes(expected.annotation_id))), { timeoutMs: 5_000 })

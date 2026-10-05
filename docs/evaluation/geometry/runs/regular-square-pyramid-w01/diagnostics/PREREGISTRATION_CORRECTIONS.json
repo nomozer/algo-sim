@@ -1,0 +1,29 @@
+{
+  "schema_version": "preregistration-corrections/1",
+  "run_id": "regular-square-pyramid-w01",
+  "recorded_before_browser_measurement": true,
+  "corrections": [
+    {
+      "id": "PC1",
+      "artifact": "frontend/scripts/generic-tier-a-scenarios.json · regular_square_pyramid · negative_fixtures[topology_kernel]",
+      "first_registration": {
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "semantic_analyze",
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "refusal_cause": "SOURCE"
+      },
+      "corrected_registration": {
+        "product_error_code": "semantic_program_invalid",
+        "stage_reached": "execution",
+        "reason_code": null,
+        "refusal_cause": "UNKNOWN"
+      },
+      "observed_by": "backend/scripts/generate_generic_tier_a_fixtures.py (offline, 0 model calls), before any browser run",
+      "root_cause": "The first registration copied the topology_kernel expectation of the six older families. Their negatives run the deterministic compiler (GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST), whose eligibility check is the only producer of NON_POSITIVE_LENGTH (app/simulation/geometry_compiler/compiler.py). The regular square pyramid is not a compiler family; its fixtures run the default LLM_ONLY route, where the zero base edge reaches the kernel and is refused at execution (GEOMETRY_OPERAND_TYPE: coincident base vertices).",
+      "why_not_a_product_fix_in_w1": "The refusal is fail-closed (no answer, no scene). The six older families take the same path on the default route; only their fixtures use the compiler. Adding a source-level non-positive check to the LLM_ONLY route changes every family and is outside the W1 scope.",
+      "open_limit": "On the default route a text that states a zero length is refused with cause UNKNOWN, so the learner is not told the text is at fault. Recorded as an open limit in HANDOFF.md, not hidden.",
+      "label_lowered_after_seeing_result": false,
+      "note": "The corpus labels (diagnostics/corpus/LABELS.json) are unchanged; this negative is a browser-suite fixture outside the corpus."
+    }
+  ]
+}
