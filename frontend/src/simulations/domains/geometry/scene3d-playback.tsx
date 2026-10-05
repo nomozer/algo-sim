@@ -6,6 +6,7 @@ import {
   geometryStepCount,
   geometryStepList,
   geometryStepOf,
+  geometryTimeline,
   isFirstGeometryStep,
   isLastGeometryStep,
   nextGeometryStep,
@@ -167,9 +168,11 @@ export function Scene3DPlayer({
    * hiệu và cách duy nhất là kéo thanh bước về đầu. */
   const dsBuoc = geometryStepList(scene);
   /** W2 · D: bước chỉ dựng hình phụ đang ẩn — nói ra ở danh sách, để bước ấy không trông như "không có gì". */
-  const anHet = (neo: number) => {
-    const moi = scene.formation?.steps[neo]?.focus_ids ?? [];
-    const an = auxiliaryHiddenAt(scene, neo, !!auxiliaryShown, interaction?.selected_id ?? null);
+  const anHet = (g: number) => {
+    // Vật mới của bước = tiêu điểm của các sự kiện DỰNG của nó (neo có thể là một sự kiện kết luận).
+    const buocG = geometryTimeline(scene)[g];
+    const moi = (buocG?.construction ?? []).flatMap((k) => scene.formation?.steps[k]?.focus_ids ?? []);
+    const an = auxiliaryHiddenAt(scene, buocG?.anchor ?? 0, !!auxiliaryShown, interaction?.selected_id ?? null);
     return moi.length > 0 && moi.every((id) => an.has(id));
   };
   const nutBuoc = (b: (typeof dsBuoc)[number]) => (
@@ -185,7 +188,7 @@ export function Scene3DPlayer({
     >
       <span className="geo3d-cac-buoc-so">{b.index + 1}</span>
       <span className="geo3d-cac-buoc-chu">{b.label}</span>
-      {anHet(b.anchor) && <span className="geo3d-cac-buoc-phu">hình phụ, đang ẩn</span>}
+      {anHet(b.index) && <span className="geo3d-cac-buoc-phu">hình phụ, đang ẩn</span>}
     </button>
   );
 

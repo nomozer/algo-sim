@@ -163,3 +163,19 @@ describe("W2 · B · bảng nổi «Các bước dựng»", () => {
     expect(mo).toMatch(/class="geo3d-bang-noi-dau" tabindex="0"/);
   });
 });
+
+describe("W2 · D · danh sách bước nói ra bước chỉ dựng hình phụ đang ẩn", () => {
+  it("bước «Mặt phẳng qua A, B, C» của chóp đều mang chú thích; bật «Hình phụ» thì không", () => {
+    const rsp: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
+      "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures/regular_square_pyramid_positive.json",
+      import.meta.url)), "utf8")).envelope.scene3d;
+    const an = sach(renderToString(<Scene3DPlayer scene={rsp} stepsOpen />));
+    const nut = an.match(/<button[^>]*data-geometry-step="[^"]*"[^>]*>[\s\S]*?<\/button>/g) ?? [];
+    const mp = nut.filter((b) => b.includes("Mặt phẳng qua A, B, C"));
+    expect(mp).toHaveLength(1);
+    expect(mp[0]).toContain("hình phụ, đang ẩn");
+    expect(nut.filter((b) => b.includes("hình phụ, đang ẩn"))).toHaveLength(1);
+    const hien = sach(renderToString(<Scene3DPlayer scene={rsp} stepsOpen auxiliaryShown />));
+    expect(hien).not.toContain("hình phụ, đang ẩn");
+  });
+});
