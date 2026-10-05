@@ -85,17 +85,17 @@
   },
   {
    "path": "diagnostics/TEMP_FILE_INVENTORY.json",
-   "sha256": "50a416e6321359461777af5f94a7ecbce15ed57fe8744b218be46f1c93e44387",
+   "sha256": "92653a76920f73b73dbcc35af1b4daffcb5fd476aa73ebe7fc1da8c0106f9c58",
    "basis": "git_blob_lf",
-   "bytes": 5565,
+   "bytes": 6718,
    "producer": "hand-written inventory of the temporary files of the run",
    "status": "RECORD"
   },
   {
    "path": "HANDOFF.md",
-   "sha256": "24bf8fa30c770458c981ccbed7300b908e6348137705eed53d736e5ee00333c2",
+   "sha256": "ac243a98520d6666904fea9a00e5d129e2bf3171614b504d2194489efcf0bf69",
    "basis": "git_blob_lf",
-   "bytes": 13349,
+   "bytes": 13525,
    "producer": "hand-written run document",
    "status": "RECORD"
   },
@@ -338,6 +338,14 @@
    "bytes": 720,
    "producer": "npm run build @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), before the second browser attempt",
    "status": "RECORD"
+  },
+  {
+   "path": "results/logs/DOCS_GATES_FINAL.log",
+   "sha256": "d6201848d3b95a351b86d03cf5e7cbe0734686b59f7f7f25caf89650b89e6b91",
+   "basis": "git_blob_lf",
+   "bytes": 4003,
+   "producer": "docs gates in a clean detached worktree at the documentation commit",
+   "status": "AUTHORITATIVE"
   },
   {
    "path": "results/logs/GATES_a1c53cdb.log",

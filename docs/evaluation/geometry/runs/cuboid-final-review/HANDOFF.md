@@ -7,7 +7,7 @@ Cho người dùng (chủ kho, người duyệt hình) và phiên agent kế ti�
 ```text
 TASK = COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (run cuboid-final-review; không đánh số wave)
 START_HEAD = 4048ff83d14ad2a1fcd940d127590ca777dbc7cf (END_HEAD của W20)
-END_HEAD = commit kế tiếp thêm results/logs/DOCS_GATES_FINAL.log, ngay sau commit tài liệu chứa file này (tra bằng git log -2)
+END_HEAD = SELF — commit cuối của run, thêm results/logs/DOCS_GATES_FINAL.log (cổng tài liệu tại commit tài liệu f4e5b318, worktree sạch: audit PASS, 97 + 22 test tài liệu, tách lịch sử --verify OK, 180 báo cáo lịch sử không đổi); tra bằng git log -1
 BRANCH = fix/cuboid-visual-semantic-closure (task slug cuboid-visual-semantic-closure)
 ORIGIN_MAIN = a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git ls-remote đầu và cuối run: không đổi; tổ tiên của HEAD; nhánh chưa có trên remote)
 DOCS_FILES_REVIEWED = 8812 file (mọi file đã theo dõi dưới docs/ + AGENTS.md, README.md, DESIGN.md): 342 hàng theo file + 146 nhóm bằng chứng (8470 file) — inventory/DOCS_INVENTORY_BEFORE_4048ff83.json; sau run 8819 (thêm 7 file đồng hành) — inventory/DOCS_INVENTORY.json
@@ -109,6 +109,6 @@ H-W20-1 và H-W20-2 đã xử lý ở run này theo brief (lời và nhãn mới
 ## 4. File tạm
 
 `diagnostics/TEMP_FILE_INVENTORY.json`:
-- bốn worktree (trước, đóng băng, kiểm kê gốc, kiểm chứng) đã gỡ không ép;
-- 32 file tạm trong `%TEMP%` xoá theo đường dẫn sau khi chép phần cần giữ;
+- năm worktree (trước, đóng băng, kiểm kê gốc, kiểm chứng, cổng tài liệu cuối) đã gỡ không ép;
+- 35 file tạm trong `%TEMP%` xoá theo đường dẫn sau khi chép phần cần giữ;
 - ledger giữ trong vùng git-ignore.
