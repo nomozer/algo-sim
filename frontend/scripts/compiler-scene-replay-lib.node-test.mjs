@@ -1021,10 +1021,12 @@ const CAM_W17 = (() => {
   const v = [0.5, 0, 0, 0, 0, 2 / 3, 0, 0, 0, 0, 1, 0, 0, 0, -1, 1];
   return { projection_matrix_column_major: p, view_matrix_column_major: v, viewport_width: 400, viewport_height: 300 };
 })();
+// W2 · A: nhãn đoạn cần ĐOẠN đã dựng — hai cảnh mẫu mang đoạn `seg_AB` có từ đầu (như đoạn dữ kiện thật).
+const SEG_AB = { id: "seg_AB", type: "segment3", endpoint_ids: ["A", "B"] };
 const CANH_W17 = {
-  free_objects: ["A", "B", "AB"],
+  free_objects: ["A", "B", "AB", "seg_AB"],
   objects: [
-    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] },
+    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] }, SEG_AB,
     { id: "AB", type: "quantity", origin: "free", value: "3",
       annotation: { kind: "length", category: "measurement", subject_ids: ["A", "B"], anchor: "segment" } },
     { id: "V", type: "quantity", origin: "derived", value: "9",
@@ -1041,11 +1043,25 @@ test("W17 annotation oracle: a result label only from its concluding event", () 
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 2, tatCa), ["AB", "V"]);
 });
 
+test("W2 annotation oracle: a segment label waits for its segment to be built, in every mode", () => {
+  const khongDoan = { ...CANH_W17, free_objects: ["A", "B", "AB"], objects: CANH_W17.objects.filter((o) => o !== SEG_AB) };
+  for (const opt of [{}, { showAll: true }, { selectedId: "AB" }]) {
+    assert.deepEqual(LIB.expectedAnnotationIds(khongDoan, 2, opt), [], JSON.stringify(opt));
+  }
+  // a polygon edge and a solid edge are carriers too
+  const day = { id: "day", type: "polygon3", vertex_ids: ["C", "A", "B"] };
+  const coDay = { ...khongDoan, free_objects: [...khongDoan.free_objects, "day"], objects: [...khongDoan.objects, day] };
+  assert.deepEqual(LIB.expectedAnnotationIds(coDay, 0), ["AB"]);
+  const khoi = { id: "k", type: "solid", edge_ownership: [{ edge_id: "k::edge:A-B", endpoint_ids: ["B", "A"] }] };
+  const coKhoi = { ...khongDoan, free_objects: [...khongDoan.free_objects, "k"], objects: [...khongDoan.objects, khoi] };
+  assert.deepEqual(LIB.expectedAnnotationIds(coKhoi, 0), ["AB"]);
+});
+
 /* W18 §16.5–16.7: default compact (given data), selection focus, same_as, witness anchor. */
 const CANH_W18 = {
-  free_objects: ["A", "B", "C", "AB"],
+  free_objects: ["A", "B", "C", "AB", "seg_AB"],
   objects: [
-    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] },
+    { id: "A", type: "point3", xyz: ["0", "0", "0"] }, { id: "B", type: "point3", xyz: ["1", "0", "0"] }, SEG_AB,
     { id: "C", type: "point3", xyz: ["0", "1", "0"] },
     { id: "AB", type: "quantity", render: "readout", origin: "free", value: "3",
       annotation: { kind: "length", category: "measurement", role: "given", subject_ids: ["A", "B"], anchor: "segment" } },
@@ -1340,4 +1356,111 @@ test("§0.1-1 structured references: a result hidden with the collapsed solution
     const w = assessStructuredReferences(sc, { steps: coNgan });
     assert.equal(w.pass, true, `${family}: ${JSON.stringify(w.fail.slice(0, 3))}`);
   }
+});
+
+/* ══ regular-square-pyramid-w02 — fault injection: every reason code of the four W2 gates turns red ══ */
+const CAM = { viewport_width: 800, viewport_height: 500, device_pixel_ratio: 1,
+  view_matrix_column_major: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -8, 1],
+  projection_matrix_column_major: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0] };
+const CAM2 = { ...CAM, view_matrix_column_major: CAM.view_matrix_column_major.map((v, i) => (i === 12 ? 0.3 : v)) };
+const PANEL_OK = {
+  position: "absolute", canvas_before: { x: 50, y: 100, w: 800, h: 450 }, canvas_open: { x: 50, y: 100, w: 800, h: 450 },
+  camera_before: CAM, camera_open: CAM, camera_after_drag: CAM,
+  panel_open: { x: 570, y: 116, w: 272, h: 300 }, panel_dragged: { x: 300, y: 200, w: 272, h: 300 },
+  panel_far: { x: 58, y: 108, w: 272, h: 300 }, close_visible_far: true,
+  canvas_resized: { x: 40, y: 100, w: 600, h: 400 }, panel_resized: { x: 360, y: 108, w: 272, h: 300 },
+  close_visible_resized: true, key_dx: 48, panel_reset: { x: 570, y: 116, w: 272, h: 300 },
+  panel_closed_at: { x: 300, y: 200, w: 272, h: 300 }, panel_reopened: { x: 300, y: 200, w: 272, h: 300 },
+  focus_after_close: "geo3d-cac-buoc-mo", step_before: 3, step_after: 3, selected_before: null, selected_after: null,
+};
+
+test("W2 floating panel gate: passes the measured shape; each injected fault has its code", () => {
+  assert.deepEqual(LIB.assessFloatingPanel(PANEL_OK).reason_codes, []);
+  const loi = [
+    [{ position: "static" }, "PANEL_NOT_FLOATING"],
+    [{ canvas_open: { x: 50, y: 100, w: 560, h: 450 } }, "PANEL_RESIZES_CANVAS"],
+    [{ camera_open: CAM2 }, "PANEL_MOVES_CAMERA"],
+    [{ camera_after_drag: CAM2 }, "PANEL_MOVES_CAMERA"],
+    [{ panel_open: { x: 60, y: 116, w: 272, h: 300 }, panel_reset: { x: 60, y: 116, w: 272, h: 300 } }, "PANEL_NOT_RIGHT"],
+    [{ panel_far: { x: -20, y: 108, w: 272, h: 300 } }, "PANEL_OUTSIDE_CANVAS:far"],
+    [{ panel_resized: { x: 500, y: 108, w: 272, h: 300 } }, "PANEL_OUTSIDE_CANVAS:resized"],
+    [{ panel_dragged: { x: 570, y: 116, w: 272, h: 300 } }, "PANEL_DRAG_IGNORED"],
+    [{ close_visible_far: false }, "PANEL_CLOSE_HIDDEN"],
+    [{ key_dx: 0 }, "PANEL_KEYBOARD_IGNORED"],
+    [{ panel_reset: { x: 300, y: 200, w: 272, h: 300 } }, "PANEL_RESET_FAILED"],
+    [{ panel_reopened: { x: 570, y: 116, w: 272, h: 300 } }, "PANEL_REOPEN_LOST_POSITION"],
+    [{ focus_after_close: "body" }, "PANEL_FOCUS_NOT_RETURNED"],
+    [{ step_after: 0 }, "PANEL_CHANGES_STATE"],
+  ];
+  for (const [d, ma] of loi) {
+    assert.ok(LIB.assessFloatingPanel({ ...PANEL_OK, ...d }).reason_codes.includes(ma), ma);
+  }
+});
+
+const SHEET_OK = {
+  position: "static", panel: { x: 16, y: 700, w: 358, h: 200 }, canvas_before: { x: 16, y: 100, w: 358, h: 420 },
+  canvas_open: { x: 16, y: 100, w: 358, h: 420 }, controls: { x: 16, y: 530, w: 358, h: 160 },
+  panel_after_drag: { x: 16, y: 700, w: 358, h: 200 }, camera_before: CAM, camera_after_drag: CAM,
+  collapsed_body_present: false, expanded_body_present: true, step_clicked: 2, step_indicator: 2,
+};
+
+test("W2 narrow steps sheet gate: each injected fault has its code", () => {
+  assert.deepEqual(LIB.assessStepsSheet(SHEET_OK).reason_codes, []);
+  for (const [d, ma] of [
+    [{ position: "absolute" }, "SHEET_FLOATS"],
+    [{ panel: { x: 16, y: 400, w: 358, h: 200 }, panel_after_drag: { x: 16, y: 400, w: 358, h: 200 } }, "SHEET_COVERS_CANVAS"],
+    [{ panel: { x: 16, y: 600, w: 358, h: 200 }, panel_after_drag: { x: 16, y: 600, w: 358, h: 200 } }, "SHEET_COVERS_CONTROLS"],
+    [{ canvas_open: { x: 16, y: 100, w: 358, h: 300 } }, "SHEET_RESIZES_CANVAS"],
+    [{ panel_after_drag: { x: 16, y: 650, w: 358, h: 200 } }, "SHEET_DRAGS"],
+    [{ camera_after_drag: CAM2 }, "SHEET_DRAG_ORBITS"],
+    [{ collapsed_body_present: true }, "SHEET_NOT_COLLAPSIBLE"],
+    [{ step_indicator: 1 }, "SHEET_STEP_NOT_SYNCED"],
+  ]) assert.ok(LIB.assessStepsSheet({ ...SHEET_OK, ...d }).reason_codes.includes(ma), ma);
+});
+
+/* A regular-pyramid-like scene: AC, BD build O (step 3); mp only measured. BD2 is a line only measured (kept). */
+const CANH_PHU = {
+  free_objects: ["A", "C"],
+  objects: [
+    { id: "A", type: "point3" }, { id: "C", type: "point3" },
+    { id: "AC", type: "line3", origin: "derived", depends: ["A", "C"], formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"] },
+    { id: "BD", type: "line3", origin: "derived", depends: ["A", "C"], formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"] },
+    { id: "O", type: "point3", origin: "derived", depends: ["AC", "BD"], formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"] },
+    { id: "mp", type: "plane3", origin: "derived", depends: ["A", "C"], formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"] },
+    { id: "BD2", type: "line3", origin: "derived", depends: ["A", "C"], formation_roles: ["CONSTRUCT_AUXILIARY_GEOMETRY"] },
+    { id: "alpha", type: "plane3", origin: "derived", depends: ["A", "C"], formation_roles: ["CONSTRUCT_CUTTING_OBJECT"] },
+    { id: "d", type: "quantity", origin: "derived", depends: ["A", "mp", "BD2", "alpha"] },
+  ],
+  events: [],
+  formation: { steps: [
+    { visible_ids: ["A", "C"] }, { visible_ids: ["A", "C", "AC"] }, { visible_ids: ["A", "C", "AC", "BD"] },
+    { visible_ids: ["A", "C", "AC", "BD", "O"] }, { visible_ids: ["A", "C", "AC", "BD", "O", "mp", "BD2", "alpha", "d"] },
+  ] },
+};
+
+test("W2 auxiliary oracle and gate: helper lines leave after their task, a measured-only plane is hidden", () => {
+  assert.deepEqual(LIB.expectedAuxiliaryHidden(CANH_PHU, 3), ["mp"]);
+  assert.deepEqual(LIB.expectedAuxiliaryHidden(CANH_PHU, 4), ["AC", "BD", "mp"]);
+  const ok = { scene: CANH_PHU, step: 4, hidden_default: ["AC", "BD", "mp"], rendered_default: ["A", "C", "O", "BD2", "alpha"],
+    hidden_shown: [], rendered_shown: ["A", "C", "AC", "BD", "O", "mp", "BD2", "alpha"], chip: true };
+  assert.deepEqual(LIB.assessAuxiliary(ok).reason_codes, []);
+  for (const [d, ma] of [
+    [{ hidden_default: ["AC", "BD", "mp", "BD2"] }, "AUX_HIDDEN_MISMATCH"],
+    [{ rendered_default: ["A", "mp"] }, "AUX_RENDERED_WHILE_HIDDEN"],
+    [{ rendered_shown: ["A", "C", "O"] }, "AUX_TOGGLE_NOT_SHOWING"],
+    [{ hidden_shown: ["mp"] }, "AUX_TOGGLE_NOT_SHOWING"],
+    [{ chip: false }, "AUX_CHIP_MISSING"],
+  ]) assert.ok(LIB.assessAuxiliary({ ...ok, ...d }).reason_codes.includes(ma), ma);
+});
+
+test("W2 grid gate: default off, toggles without touching camera, step, selection, figure or occlusion", () => {
+  const ok = { initial: false, on: true, off: false, camera_before: CAM, camera_on: CAM, step_before: 4, step_on: 4,
+    selected_before: "V", selected_on: "V", rendered_before: ["A"], rendered_on: ["A"], recompute_idle_delta: 0 };
+  assert.deepEqual(LIB.assessGridToggle(ok).reason_codes, []);
+  for (const [d, ma] of [
+    [{ initial: true }, "GRID_DEFAULT_ON"], [{ on: false }, "GRID_NOT_SHOWN"], [{ off: true }, "GRID_NOT_HIDDEN"],
+    [{ camera_on: CAM2 }, "GRID_MOVES_CAMERA"], [{ step_on: 0 }, "GRID_CHANGES_STEP"],
+    [{ selected_on: null }, "GRID_CHANGES_SELECTION"], [{ rendered_on: ["A", "grid"] }, "GRID_CHANGES_FIGURE"],
+    [{ recompute_idle_delta: 2 }, "OCCLUSION_RECOMPUTE_ON_IDLE"],
+  ]) assert.ok(LIB.assessGridToggle({ ...ok, ...d }).reason_codes.includes(ma), ma);
 });

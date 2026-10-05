@@ -1388,12 +1388,30 @@ const vaiNhan = (o) => o.annotation.role
  * có nhãn; rồi TIÊU ĐIỂM: dữ kiện đề cho luôn; chọn đại lượng ⇒ nó + chuỗi số (tầng ĐỘC LẬP
  * `expectedCausalTiers`); chọn vật ⇒ đại lượng có chủ thể là vật ấy; "Hiện tất cả" ⇒ mọi nhãn khả dụng.
  */
+/** regular-square-pyramid-w02 · A (oracle ĐỘC LẬP, không nhập `scene3d-annotations.ts`): cặp đầu mút của mọi ĐOẠN
+ *  có mặt ở bước — đoạn dựng (`endpoint_ids`), cạnh vòng của đa giác (`vertex_ids`), cạnh khối (`edge_ownership`). */
+export function builtSegmentPairs(scene, step) {
+  const coMat = new Set(expectedVisibleIds(scene, step));
+  const cap = (a, b) => [a, b].sort().join("|");
+  const ra = new Set();
+  for (const o of scene?.objects ?? []) {
+    if (!coMat.has(o.id)) continue;
+    if (o.endpoint_ids?.length === 2) ra.add(cap(...o.endpoint_ids));
+    if (o.type === "polygon3" && (o.vertex_ids?.length ?? 0) >= 3) {
+      o.vertex_ids.forEach((v, i) => ra.add(cap(v, o.vertex_ids[(i + 1) % o.vertex_ids.length])));
+    }
+    for (const e of o.edge_ownership ?? []) if (e.endpoint_ids?.length === 2) ra.add(cap(...e.endpoint_ids));
+  }
+  return ra;
+}
+
 export function expectedAnnotationIds(scene, step, { showAll = false, selectedId = null } = {}) {
   const sk = (scene?.events ?? []).filter((e) => (e.step_index ?? 0) <= step && e.object);
   const ketLuan = new Set(sk.filter((e) => e.semantic_kind === "FINAL_RESULT").map((e) => e.object));
   const daTinh = new Set(sk.filter((e) => e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT")
     .map((e) => e.object));
   const coMat = new Set(expectedVisibleIds(scene, step));
+  const doan = builtSegmentPairs(scene, step);
   const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
   const chon = selectedId ? byId.get(selectedId)?.annotation?.same_as ?? selectedId : null;
   const tang = chon && byId.get(chon)?.type === "quantity" ? expectedCausalTiers(scene, chon) : null;
@@ -1405,6 +1423,9 @@ export function expectedAnnotationIds(scene, step, { showAll = false, selectedId
     .filter((o) => (vaiNhan(o) === "result" ? ketLuan.has(o.id)
       : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id))))
     .filter((o) => o.annotation.subject_ids.every((s) => coMat.has(s)))
+    // W2 · A: nhãn của một ĐOẠN chỉ khi đoạn ấy đã được dựng — ở mọi chế độ.
+    .filter((o) => o.annotation.anchor !== "segment" || (o.annotation.subject_ids.length === 2
+      && doan.has([...o.annotation.subject_ids].sort().join("|"))))
     .filter((o) => showAll || vaiNhan(o) === "given" || tieuDiem(o))
     .map((o) => o.id));
 }
@@ -1615,4 +1636,102 @@ export function assessCausalRestore({ neutral, selected, restored, canvasDelta }
     camera_reset: cameraDoi(neutral.camera, restored.camera),
     selection_reset: restored.selected_id === null,
     scroll: { neutral: neutral.scroll_y, selected: selected.scroll_y, restored: restored.scroll_y } };
+}
+
+/* ══ regular-square-pyramid-w02 — cổng của bảng nổi, bảng khổ hẹp, hình phụ và lưới ══════════════════════════════
+ * Hàm THUẦN trên quan sát do `w02-closure-probe.mjs` ghi trong trình duyệt thật (chuột/phím CDP). Mỗi mã lỗi có
+ * một ca tiêm lỗi ở `compiler-scene-replay-lib.node-test.mjs`. Oracle hình phụ ĐỘC LẬP: không nhập
+ * `scene3d-auxiliary.ts`, đọc payload (vai trò, nhóm hiển thị, `depends`, `visible_ids`). */
+
+const trongHop = (r, k, e = 0.5) => !!r && !!k && r.x >= k.x - e && r.y >= k.y - e
+  && r.x + r.w <= k.x + k.w + e && r.y + r.h <= k.y + k.h + e;
+const cungCo = (a, b) => !!a && !!b && Math.abs(a.w - b.w) <= 0.5 && Math.abs(a.h - b.h) <= 0.5;
+const cungCho = (a, b) => !!a && !!b && Math.abs(a.x - b.x) <= 0.5 && Math.abs(a.y - b.y) <= 0.5;
+
+/** W2 · B desktop. `o` = {position, canvas_before, canvas_open, camera_before, camera_open, camera_after_drag,
+ *  panel_open, panel_dragged, panel_far, close_visible_far, canvas_resized, panel_resized, close_visible_resized,
+ *  key_dx, panel_reset, panel_closed_at, panel_reopened, focus_after_close, step_before, step_after,
+ *  selected_before, selected_after}; mọi hộp {x, y, w, h} theo khung nhìn. */
+export function assessFloatingPanel(o) {
+  const r = [];
+  if (o.position !== "absolute") r.push("PANEL_NOT_FLOATING");
+  if (!cungCo(o.canvas_before, o.canvas_open) || !cungCho(o.canvas_before, o.canvas_open)) r.push("PANEL_RESIZES_CANVAS");
+  if (!(cameraMotion(o.camera_before, o.camera_open) <= CAMERA_SETTLE_TOLERANCE)
+      || !(cameraMotion(o.camera_before, o.camera_after_drag) <= CAMERA_SETTLE_TOLERANCE)) r.push("PANEL_MOVES_CAMERA");
+  const c = o.canvas_open;
+  if (!o.panel_open || !c || o.panel_open.x + o.panel_open.w / 2 <= c.x + c.w / 2) r.push("PANEL_NOT_RIGHT");
+  for (const [k, p, kh] of [["open", o.panel_open, c], ["dragged", o.panel_dragged, c], ["far", o.panel_far, c],
+    ["resized", o.panel_resized, o.canvas_resized]]) if (!trongHop(p, kh)) r.push(`PANEL_OUTSIDE_CANVAS:${k}`);
+  if (cungCho(o.panel_open, o.panel_dragged)) r.push("PANEL_DRAG_IGNORED");
+  if (o.close_visible_far !== true || o.close_visible_resized !== true) r.push("PANEL_CLOSE_HIDDEN");
+  if (!(o.key_dx > 0)) r.push("PANEL_KEYBOARD_IGNORED");
+  if (!cungCho(o.panel_reset, o.panel_open)) r.push("PANEL_RESET_FAILED");
+  if (!cungCho(o.panel_closed_at, o.panel_reopened)) r.push("PANEL_REOPEN_LOST_POSITION");
+  if (o.focus_after_close !== "geo3d-cac-buoc-mo") r.push("PANEL_FOCUS_NOT_RETURNED");
+  if (o.step_before !== o.step_after || o.selected_before !== o.selected_after) r.push("PANEL_CHANGES_STATE");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** W2 · B khổ hẹp: bảng trong dòng chảy dưới điều khiển, không phủ khung hay điều khiển, không kéo, thu gọn được. */
+export function assessStepsSheet(o) {
+  const r = [];
+  if (o.position === "absolute" || o.position === "fixed") r.push("SHEET_FLOATS");
+  const giao = (a, b) => !!a && !!b && a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  if (giao(o.panel, o.canvas_open)) r.push("SHEET_COVERS_CANVAS");
+  if (giao(o.panel, o.controls)) r.push("SHEET_COVERS_CONTROLS");
+  if (!cungCo(o.canvas_before, o.canvas_open)) r.push("SHEET_RESIZES_CANVAS");
+  if (!cungCho(o.panel, o.panel_after_drag)) r.push("SHEET_DRAGS");
+  if (!(cameraMotion(o.camera_before, o.camera_after_drag) <= CAMERA_SETTLE_TOLERANCE)) r.push("SHEET_DRAG_ORBITS");
+  if (o.collapsed_body_present !== false || o.expanded_body_present !== true) r.push("SHEET_NOT_COLLAPSIBLE");
+  if (o.step_clicked !== o.step_indicator) r.push("SHEET_STEP_NOT_SYNCED");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** Oracle hình phụ ẩn ở bước `step` (cảnh trung tính, công tắc tắt, không chọn gì). */
+export function expectedAuxiliaryHidden(scene, step) {
+  const objs = scene?.objects ?? [];
+  const n = scene?.formation?.steps?.length ?? 0;
+  const ra = [];
+  for (const o of objs) {
+    const vai = o.formation_roles ?? [];
+    const nhom = o.display_group ?? [];
+    if (!["line3", "plane3"].includes(o.type) || o.origin !== "derived" || vai.length !== 1
+        || vai[0] !== "CONSTRUCT_AUXILIARY_GEOMETRY" || nhom.includes("given") || nhom.includes("target")) continue;
+    const con = objs.filter((x) => (x.depends ?? []).includes(o.id));
+    const hinh = con.filter((x) => x.type !== "quantity").map((x) => x.id);
+    if (hinh.length) {
+      const xong = [...Array(n).keys()].find((k) => hinh.every((id) => expectedVisibleIds(scene, k).includes(id)));
+      if (xong !== undefined && step > xong) ra.push(o.id);
+    } else if (o.type === "plane3" && con.length) ra.push(o.id);
+  }
+  return sortedUnique(ra);
+}
+
+/** W2 · D: `o` = {scene, step, hidden_default, rendered_default, hidden_shown, rendered_shown, chip}. */
+export function assessAuxiliary(o) {
+  const r = [];
+  const mong = expectedAuxiliaryHidden(o.scene, o.step);
+  if (JSON.stringify(sortedUnique(o.hidden_default ?? [])) !== JSON.stringify(mong)) r.push("AUX_HIDDEN_MISMATCH");
+  const goc = (id) => String(id).split("#")[0];
+  if ((o.rendered_default ?? []).some((id) => mong.includes(goc(id)))) r.push("AUX_RENDERED_WHILE_HIDDEN");
+  if ((o.hidden_shown ?? []).length || mong.some((id) => !(o.rendered_shown ?? []).map(goc).includes(id))) {
+    r.push("AUX_TOGGLE_NOT_SHOWING");
+  }
+  if (mong.length > 0 && o.chip !== true) r.push("AUX_CHIP_MISSING");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r), expected: mong };
+}
+
+/** W2 · F: `o` = {initial, on, off, camera_before, camera_on, step_before, step_on, selected_before, selected_on,
+ *  rendered_before, rendered_on, recompute_idle_delta}. */
+export function assessGridToggle(o) {
+  const r = [];
+  if (o.initial !== false) r.push("GRID_DEFAULT_ON");
+  if (o.on !== true) r.push("GRID_NOT_SHOWN");
+  if (o.off !== false) r.push("GRID_NOT_HIDDEN");
+  if (!(cameraMotion(o.camera_before, o.camera_on) <= CAMERA_SETTLE_TOLERANCE)) r.push("GRID_MOVES_CAMERA");
+  if (o.step_before !== o.step_on) r.push("GRID_CHANGES_STEP");
+  if (o.selected_before !== o.selected_on) r.push("GRID_CHANGES_SELECTION");
+  if (JSON.stringify(o.rendered_before) !== JSON.stringify(o.rendered_on)) r.push("GRID_CHANGES_FIGURE");
+  if (o.recompute_idle_delta !== 0) r.push("OCCLUSION_RECOMPUTE_ON_IDLE");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }
