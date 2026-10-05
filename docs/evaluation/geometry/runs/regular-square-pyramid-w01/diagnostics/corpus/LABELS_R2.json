@@ -1,0 +1,56 @@
+{
+ "schema_version": "regular-square-pyramid-corpus-labels/1",
+ "run_id": "regular-square-pyramid-w01",
+ "layer": "R2 — written during the final self-review (2026-10-06), AFTER a read-only probe showed that the route refuses 'AB = 4, SA = 3' and BEFORE any product change of the fix pass. LABELS.json (layer 1) is unchanged.",
+ "rule": "Same rule as LABELS.json. Expected values are derived by hand from the stated data (V = s²h/3, h² = l² − s²/2 for a lateral edge l) and re-derived by diagnostics/oracle_rsp_w01_r2.py (no product import). `served:<value>` rows state what the text determines, not what the probe observed. A row with `product_limit: true` is determined by the text but refused by a component this run does not change; its label records that refusal and the reason, so it is not counted as served.",
+ "rows": {
+  "R2_S8_side_AB_lateral_SA": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SA_length = 3 (fact SA)",
+   "expect": "served:16/3",
+   "cause": "SA is a lateral edge: h² = 9 − 16/2 = 1, V = 16·1/3"
+  },
+  "R2_S9_side_lateral_named": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, cạnh bên SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN canh_day = 4 (fact cạnh đáy), SA_length = 3 (fact SA)",
+   "expect": "served:16/3",
+   "cause": "'cạnh bên SA = 3' names the lateral edge; same derivation as R2_S8"
+  },
+  "R2_S10_lateral_other_vertex": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SC = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SC_length = 3 (fact SC)",
+   "expect": "served:16/3",
+   "cause": "every lateral edge of a regular pyramid has the same length; SC gives h² = 1"
+  },
+  "R2_N8_lateral_contradiction": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4, SA_length = 3, SB_length = 5",
+   "expect": "refused:source_invariant:*",
+   "cause": "a regular pyramid has equal lateral edges; 3 ≠ 5 is a contradiction in the text",
+   "expect_first_registration": "refused:assumption:*",
+   "amendment": "2026-10-06, after the RED run and before any product change: stage corrected from `assumption` to `source_invariant` (PREREGISTRATION_CORRECTIONS.json PC2). The registered program places the apex above the centre, which breaks a length the text states; the source-invariant stage, which precedes the assumption certificate on the route, refuses it. The outcome (refused) is unchanged."
+  },
+  "R2_N9_contradiction_program_fits_lengths": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4, apex S(0;0;3) — satisfies AB = 4, SA = 3 and SB = 5, so only the certificate can refuse it",
+   "expect": "refused:assumption:*",
+   "cause": "same contradiction as R2_N8 (equal lateral edges required, 3 ≠ 5); the apex over A is not above the centre",
+   "registered": "2026-10-06, with the PC2 amendment, before any product change of the fix pass"
+  },
+  "R2_U4_irrational_via_lateral": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 2, SA = 2. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=2 h=1 (any rational placement breaks |SA| = 2), GIVEN AB_length = 2, SA_length = 2",
+   "expect": "refused:source_invariant:*",
+   "cause": "h² = 4 − 2 = 2 is not a rational square: no rational coordinates (as U1)",
+   "expect_first_registration": "refused:assumption:*",
+   "amendment": "2026-10-06, after the RED run and before any product change: stage corrected from `assumption` to `source_invariant` (PREREGISTRATION_CORRECTIONS.json PC2). The registered program places the apex above the centre, which breaks a length the text states; the source-invariant stage, which precedes the assumption certificate on the route, refuses it. The outcome (refused) is unchanged."
+  },
+  "R2_L1_chained_equal_lateral_edges": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4, SA_length = 3",
+   "expect": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "product_limit": true,
+   "cause": "the text determines V = 16/3, but the chained equality is refused by the length reader at grounding (observed in the self-review probe); grounding and segment_relation are unchanged by this run — a declared limit, not a W1 capability"
+  }
+ }
+}

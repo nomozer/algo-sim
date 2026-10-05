@@ -21,8 +21,11 @@ import pytest
 from app.simulation.semantic_program.shape_constraint import doc_rang_buoc, phan_chua_doc
 from tests.geometry import w14_cases as W
 
-NHAN = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/regular-square-pyramid-w01"
-                   / "diagnostics/corpus/LABELS.json").read_text(encoding="utf-8"))["rows"]
+_CORPUS = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus"
+#: Lớp 1 (`LABELS.json`, trước sản phẩm) + lớp R2 (`LABELS_R2.json`, tự rà soát cuối — cạnh bên gọi bằng tên đoạn,
+#: ghi trước bản sửa). Hai lớp không trùng khoá; lớp 1 không đổi.
+NHAN = {**json.loads((_CORPUS / "LABELS.json").read_text(encoding="utf-8"))["rows"],
+        **json.loads((_CORPUS / "LABELS_R2.json").read_text(encoding="utf-8"))["rows"]}
 
 THE_TICH = "V"
 CANH_BEN = "d_SA"
@@ -88,6 +91,11 @@ def _f(fid: str, nhan: str, v: str) -> dict:
     return {"id": fid, "kind": "float", "label": nhan, "value": [v]}
 
 
+def _do_dai(doan: str, v: str) -> tuple:
+    """Dữ kiện độ dài gọi bằng TÊN ĐOẠN (`SA = 3`): GIVEN `<doan>_length`, InputFact nhãn là chính tên đoạn."""
+    return ((f"{doan}_length", f"f_{doan.lower()}", v),), (_f(f"f_{doan.lower()}", doan, v),)
+
+
 CANH_DAY_4 = (("canh_day", "f_canh_day", "4"),), (_f("f_canh_day", "cạnh đáy", "4"),)
 CAO_3 = (("chieu_cao", "f_chieu_cao", "3"),), (_f("f_chieu_cao", "chiều cao", "3"),)
 
@@ -134,6 +142,22 @@ CA = {
         ((("canh_ben", "f_canh_ben", "2"),), (_f("f_canh_ben", "cạnh bên", "2"),)))),
     "U2_angle_data": lambda: _ca("U2_angle_data", s=F(4), gf=_g(CANH_DAY_4)),
     "U3_regular_triangular": None,                       # chương trình riêng (đáy tam giác) — test riêng dưới
+    # ── lớp R2: cạnh bên gọi bằng TÊN ĐOẠN (SA, SC) — độ dài server đọc từ đề, không qua cụm "cạnh bên bằng" ──
+    "R2_S8_side_AB_lateral_SA": lambda: _ca("R2_S8_side_AB_lateral_SA", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SA", "3"))),
+    "R2_S9_side_lateral_named": lambda: _ca("R2_S9_side_lateral_named", s=F(4), h=F(1), gf=_g(
+        CANH_DAY_4, _do_dai("SA", "3"))),
+    "R2_S10_lateral_other_vertex": lambda: _ca("R2_S10_lateral_other_vertex", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SC", "3"))),
+    "R2_N8_lateral_contradiction": lambda: _ca("R2_N8_lateral_contradiction", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SA", "3"), _do_dai("SB", "5"))),
+    "R2_N9_contradiction_program_fits_lengths": lambda: _ca(
+        "R2_N9_contradiction_program_fits_lengths", s=F(4), apex=(0, 0, 3), gf=_g(
+            _do_dai("AB", "4"), _do_dai("SA", "3"), _do_dai("SB", "5"))),
+    "R2_U4_irrational_via_lateral": lambda: _ca("R2_U4_irrational_via_lateral", s=F(2), h=F(1), gf=_g(
+        _do_dai("AB", "2"), _do_dai("SA", "2"))),
+    "R2_L1_chained_equal_lateral_edges": lambda: _ca("R2_L1_chained_equal_lateral_edges", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SA", "3"))),
 }
 
 
@@ -247,6 +271,27 @@ def test_ca_duong_mang_chung_chi_C1_chop_deu():
     kq = danh_gia_doc_lap(contract, W.spec_cua(prog))
     assert kq.certificate == "C1" and "C1 T7" in kq.details, kq.details
     assert any(d.startswith("PREMISE regular_square_pyramid(S,A,B,C,D)") for d in kq.details), kq.details
+
+
+@pytest.mark.parametrize("ca", ["R2_S8_side_AB_lateral_SA", "R2_S10_lateral_other_vertex"])
+def test_r2_canh_ben_goi_bang_ten_doan_cho_chieu_cao_T7(ca):
+    """Tự rà soát cuối: `SA = 3` (hay `SC = 3`) là CẠNH BÊN của chóp đều — độ dài server tự đọc từ đề (bất biến
+    nguồn), cùng hạng với "cạnh bên bằng 3". Trước bản sửa T7 bỏ qua nó: `T7 MISSING chiều cao: CE_INVALID breaks
+    |AS| = 3` và đề bị từ chối dù xác định đáp số."""
+    from app.simulation.semantic_program.assumption_gate import danh_gia_doc_lap
+    contract, prog = _nap(ca)
+    kq = danh_gia_doc_lap(contract, W.spec_cua(prog))
+    assert kq.certificate == "C1" and "C1 T7" in kq.details, kq.details
+
+
+def test_r2_hai_canh_ben_khac_nhau_la_mau_thuan_T7():
+    """Đề nói chóp ĐỀU mà SA = 3, SB = 5: chương trình khớp mọi độ dài (đỉnh trên A) vẫn bị từ chối, và chứng chỉ
+    gọi đúng tên — mâu thuẫn giữa các cạnh bên, không phải "thiếu chiều cao"."""
+    from app.simulation.semantic_program.assumption_gate import danh_gia_doc_lap
+    contract, prog = _nap("R2_N9_contradiction_program_fits_lengths")
+    kq = danh_gia_doc_lap(contract, W.spec_cua(prog))
+    assert kq.certificate is None, kq.details
+    assert any("TEMPLATE_CONTRADICTION T7" in d and "lateral" in d for d in kq.details), kq.details
 
 
 def test_cong_thuc_the_tich_tham_chieu_dien_tich_day_va_chieu_cao():

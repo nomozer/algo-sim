@@ -24,6 +24,22 @@
       "open_limit": "On the default route a text that states a zero length is refused with cause UNKNOWN, so the learner is not told the text is at fault. Recorded as an open limit in HANDOFF.md, not hidden.",
       "label_lowered_after_seeing_result": false,
       "note": "The corpus labels (diagnostics/corpus/LABELS.json) are unchanged; this negative is a browser-suite fixture outside the corpus."
+    },
+    {
+      "id": "PC2",
+      "artifact": "diagnostics/corpus/LABELS_R2.json · R2_N8_lateral_contradiction, R2_U4_irrational_via_lateral",
+      "first_registration": {
+        "expect": "refused:assumption:*"
+      },
+      "corrected_registration": {
+        "expect": "refused:source_invariant:*"
+      },
+      "observed_by": "the RED run of tests/geometry/test_regular_square_pyramid.py (route, 0 model calls), before any product change of the fix pass",
+      "root_cause": "Both registered programs place the apex above the base centre (h = 1). For N8 that breaks SB = 5 (|SB|² = 9); for U4 it breaks SA = 2 (|SA|² = 3, the true height √2 has no rational coordinates). The route checks the text's lengths (source_invariant) before the assumption certificate, so the refusal stage is source_invariant, not assumption.",
+      "outcome_changed": false,
+      "label_lowered_after_seeing_result": false,
+      "added_with_it": "R2_N9_contradiction_program_fits_lengths — same text as N8, a program that satisfies every stated length (apex over A), so that only the certificate can refuse it; labelled refused:assumption:* before the fix",
+      "recorded_before_browser_measurement": true
     }
   ]
 }
