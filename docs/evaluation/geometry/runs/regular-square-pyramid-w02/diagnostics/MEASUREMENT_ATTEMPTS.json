@@ -119,6 +119,52 @@
       "classification": "AUTHORITATIVE",
       "log": "diagnostics/logs/*_94200b50.log",
       "evidence_commit": "c5b39092"
+    },
+    {
+      "id": "ENV-CAUSAL-DESKTOP",
+      "commit": "94200b50 (clean CRLF worktree) vs e821b9b5 (clean CRLF worktree, W1 fixture)",
+      "gate": "runPositive x3 per side, cross_section desktop, causal_restore",
+      "result": "W2 2/3 red, W1 1/3 red, same reason CANVAS_NOT_RESTORED; differing pixels are anti-aliasing intensity of one line from B",
+      "classification": "DIAGNOSTIC (ENVIRONMENT_SUSPECTED, LOCAL_VERIFICATION_REQUIRED)",
+      "log": "diagnostics/logs/CAUSAL_RESTORE_DESKTOP_REPEAT_94200b50_vs_e821b9b5.log; diagnostics/ENV_CAMERA_SETTLE_BASELINE.json"
+    },
+    {
+      "id": "T3-1",
+      "commit": "89194960 (clean CRLF worktree, path with a space)",
+      "gate": "frontend/scripts/full-gate.mjs",
+      "result": "FULL_PRODUCT_GATE_FAIL: pytest 15 failed / 7137 passed (14 environment names + test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3: divergence declaration still at CACHE_VERSION 112); vitest 1 failed / 1088 (steps-panel CSS test not CRLF-safe); typecheck + build, demo set, demo collapse surface green",
+      "classification": "SUPERSEDED (two real W2 defects, fixed in 70665542)",
+      "log": "diagnostics/logs/T3_FULL_GATE_89194960.log"
+    },
+    {
+      "id": "GATES-1",
+      "commit": "89194960 (same worktree, after T3)",
+      "gate": "diagnostics/w02_gates.sh",
+      "result": "candidate and cache verify exit 0; schema export idempotent; LLM_ONLY; 0 model-surface files; diff --check 0; docs audit PASS; node-test section empty (grep expected the TTY marker; fixed in 70665542); status 4 = EOL-only rewrites left by T3",
+      "classification": "SUPERSEDED",
+      "log": "diagnostics/logs/GATES_89194960.log"
+    },
+    {
+      "id": "FREEZE-4",
+      "commit": "70665542 (clean CRLF worktree)",
+      "gate": "freeze + --verify",
+      "result": "same tree hash d3de9c44, product commit 70665542",
+      "classification": "AUTHORITATIVE"
+    },
+    {
+      "id": "TRANSFER-70665542",
+      "commit": "94200b50 -> 70665542 (one clean CRLF worktree)",
+      "gate": "dist build at both commits; fixtures regenerated at 70665542",
+      "result": "dist byte-identical (4 files); 37/37 fixtures identical apart from product_commit_sha ⇒ TRANSFERS",
+      "classification": "AUTHORITATIVE",
+      "log": "results/EVIDENCE_TRANSFER_70665542.json"
+    },
+    {
+      "id": "T3-2",
+      "commit": "final documentation commit",
+      "gate": "full-gate.mjs + w02_gates.sh",
+      "result": "recorded in the next commit together with its logs",
+      "classification": "AUTHORITATIVE"
     }
   ]
 }

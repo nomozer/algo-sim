@@ -1016,17 +1016,17 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **REPORT:** docs/evaluation/geometry/runs/regular-square-pyramid-w02/REPORT.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/regular-square-pyramid-w02/
 - **START_BASE:** e821b9b5 (W1 head)
-- **CODE_COMMIT:** 2a63da7d · 9f454d6b · 71cf0e80 · 6ca3b35e · c86cf53c · e68fa199 (CACHE_VERSION 113) · 7a88a789 · c5142f07 · 527d642e · 75a0af9a
+- **CODE_COMMIT:** 2a63da7d · 9f454d6b · 71cf0e80 · 6ca3b35e · c86cf53c · e68fa199 (CACHE_VERSION 113) · 7a88a789 · c5142f07 · 527d642e · 75a0af9a · 70665542 (CRLF-safe test; divergence declaration at 113)
 - **MEASUREMENT_COMMIT:** 94200b50403bdf823eb49697d54c0cb53e8e4ccb (cloud, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, occlusion, playback, builder); earlier attempts at c453fae3, 527d642e, bac5d80f, 4a6af4e9 kept (`diagnostics/MEASUREMENT_ATTEMPTS.json`)
 - **EVIDENCE_COMMIT_ROLE:** evidence commit after the measurement (results, images, inputs, logs)
 - **CLASSIFICATION:** CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
-- **CANDIDATE_CHANGE:** YES (5234c37e… → d3de9c44…; three freezes, same tree hash, product commit 75a0af9a)
+- **CANDIDATE_CHANGE:** YES (5234c37e… → d3de9c44…; four freezes, same tree hash, product commit 70665542; evidence of 94200b50 transferred, `results/EVIDENCE_TRANSFER_70665542.json`)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 112 -> 113 in e68fa199, row proof `diagnostics/PROOF_CACHE_ROW_W02.json`; semantic environment b1714b56… unchanged)
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE (W1 artifacts unchanged; the W1 equal-value height rule is replaced in code, not in W1 evidence)
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE — claims C8 and D6 in `docs/research/CLAIM_EVIDENCE_MAP.md`; cloud measurement, local acceptance and human review pending
-- **AUTHORITATIVE_FILES:** `REPORT.md` · `HANDOFF.md` · `RUN.json` · `diagnostics/PROOF_CACHE_ROW_W02.json` · `diagnostics/PREREGISTRATION_CORRECTIONS.json` · `diagnostics/ENV_CAMERA_SETTLE_BASELINE.json` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **AUTHORITATIVE_FILES:** `REPORT.md` · `HANDOFF.md` · `RUN.json` · `diagnostics/PROOF_CACHE_ROW_W02.json` · `diagnostics/PREREGISTRATION_CORRECTIONS.json` · `diagnostics/ENV_CAMERA_SETTLE_BASELINE.json` · `diagnostics/MEASUREMENT_ATTEMPTS.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `results/EVIDENCE_TRANSFER_70665542.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

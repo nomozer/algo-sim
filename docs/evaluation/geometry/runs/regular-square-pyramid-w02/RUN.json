@@ -19,15 +19,17 @@
     "cache_bump_and_lock": "e68fa199",
     "harness": "caa9a141, 445f31a7, a4abb188",
     "self_review": "7a88a789, c5142f07",
-    "fixes_after_measurement": "527d642e (close-button name), 75a0af9a (drawers above the panel)",
-    "freezes": "d72dd350, bac5d80f, 4a6af4e9",
+    "fixes_after_measurement": "527d642e (close-button name), 75a0af9a (drawers above the panel), 70665542 (CRLF-safe CSS test; divergence declaration at CACHE_VERSION 113 — both found by T3 at 89194960)",
+    "freezes": "d72dd350, bac5d80f, 4a6af4e9, 41ea58f8",
     "measurement_driver_and_logs": "c453fae3, 94200b50",
     "evidence": "c5b39092",
-    "living_docs_and_state": "the commits that contain this file (not recorded here)"
+    "living_docs_and_state": "the commits that contain this file (not recorded here)",
+    "evidence_transfer": "41ea58f8 (results/EVIDENCE_TRANSFER_70665542.json)",
+    "first_docs": "89194960"
   },
   "product_state": {
-    "measurement_commit": "94200b50403bdf823eb49697d54c0cb53e8e4ccb (attempt 5; clean detached CRLF worktree, path with a space)",
-    "candidate": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098 (product commit 75a0af9a; previous 5234c37e…; three freezes, same tree hash)",
+    "measurement_commit": "94200b50403bdf823eb49697d54c0cb53e8e4ccb (attempt 5; clean detached CRLF worktree, path with a space) — transferred to product 70665542 (dist byte-identical; 37/37 fixtures identical apart from product_commit_sha)",
+    "candidate": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098 (product commit 70665542; previous 5234c37e…; four freezes, same tree hash)",
     "cache_version": "113 (was 112; row proof diagnostics/PROOF_CACHE_ROW_W02.json; semantic environment b1714b56… unchanged)",
     "default_mode": "LLM_ONLY",
     "human_visual_review": "NOT_APPROVED"
@@ -37,7 +39,7 @@
     "MODEL_SURFACE_CHANGED": "NO",
     "DEFAULT_MODE": "LLM_ONLY",
     "CACHE_VERSION": "113",
-    "CANDIDATE_REFROZEN": "YES, three times (c5142f07, 527d642e, 75a0af9a)",
+    "CANDIDATE_REFROZEN": "YES, four times (c5142f07, 527d642e, 75a0af9a, 70665542)",
     "LIVE_GEMINI_REQUESTS": 0,
     "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
     "MAIN_PUSH_EXECUTED": "NO",
@@ -52,7 +54,8 @@
     "playback": "14/14",
     "images": "68 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
     "repo_gates_in_session": "vitest 1089/1089; tsc -b + vite build; node harness 82 pass, 1 Windows-only fail, 2 skipped; docs audit exit 0",
-    "local_verification_required": "T3 full gate; camera_settled_rotated_neutral; cross-section causal_restore; Windows-path node test"
+    "local_verification_required": "T3 full gate; camera_settled_rotated_neutral; cross-section causal_restore; Windows-path node test",
+    "t3": "attempt 1 at 89194960 red: 14 environment names + 2 real W2 defects (fixed in 70665542); attempt 2: REPORT §10.1"
   },
   "final_decision": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 113
-> CANDIDATE = d3de9c44… (was 5234c37e…; ba lần đóng băng cùng tree hash), product commit 75a0af9a
+> CANDIDATE = d3de9c44… (was 5234c37e…; bốn lần đóng băng cùng tree hash), product commit 70665542 (bằng chứng trình duyệt đo ở 75a0af9a chuyển sang: dist trùng byte)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (cloud không kiểm, không đụng)
 > CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE (việc regular-square-pyramid, W2, run regular-square-pyramid-w02)
 > FINAL_DECISION = CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = máy local tiếp nhận nhánh và chạy các kiểm còn lại (runs/regular-square-pyramid-w02/HANDOFF.md §2, §4), rồi người dùng duyệt H-W2-1; duyệt thì merge thẳng vào main + push + xoá nhánh
@@ -74,7 +74,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | SO + chiều cao | bước bổ sung dựng SO khi đề nói "đều" và tâm dựng từ hai đường chéo; chiều cao của công thức chọn theo quan hệ ⊥ kiểm chính xác (gỡ luật giá trị W1) |
 > | Hình phụ · lưới | AC, BD ẩn sau khi có O; mặt phẳng chỉ để đo ẩn; chip «Hình phụ», «Lưới» (mặc định tắt) |
 > | Trình duyệt | đầu dò W2 **14/14** (7 họ × desktop + mobile: kéo, phím, đổi cỡ, về mặc định, Escape; canvas/camera không đổi; nhãn theo bước khớp oracle); từ chối 54/54, phục vụ 6/6, chọn 68/68, ngăn 14/14; occlusion 0 lỗi; phát 14/14; 68 crop, 0 bất đồng oracle. Đỏ chỉ ở hai cổng nghi môi trường, cũng đỏ ở W1 head trên cloud: `camera_settled_rotated_neutral` (6 desktop), `causal_restore` thiết diện (desktop + mobile) — chạy lại ở máy local |
-> | Candidate · `CACHE_VERSION` | `5234c37e…` → **`d3de9c44…`** (ba lần đóng băng cùng tree hash; product commit `75a0af9a`) · 112 → **113** (13 row v112 vẫn HIT; sáu họ cũ trùng byte) |
+> | Candidate · `CACHE_VERSION` | `5234c37e…` → **`d3de9c44…`** (bốn lần đóng băng cùng tree hash; product commit `70665542`) · 112 → **113** (13 row v112 vẫn HIT; sáu họ cũ trùng byte) |
 > | Run | [`regular-square-pyramid-w02`](evaluation/geometry/runs/regular-square-pyramid-w02/) (`REPORT.md`, `HANDOFF.md`) |
 
 > **Chóp tứ giác đều + chín chỉnh sửa giao diện §0.1 — regular-square-pyramid-w01 (đo `ed37f9fa`, worktree tách rời sạch; chưa có review người):**

@@ -955,8 +955,8 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **RUN_ID:** regular-square-pyramid-w02 (task regular-square-pyramid, wave W2; cloud implementation, local acceptance)
 - **DATE:** 2026-10-05
 - **START_BASE:** e821b9b5 (W1 head, pushed)
-- **CODE_COMMIT_OR_NONE:** 2a63da7d (labels wait for their segment) · 9f454d6b (SO via the shared formation step; volume height by an exact perpendicularity relation) · 71cf0e80 (floating steps panel) · 6ca3b35e (helper geometry, step groups, grid) · c86cf53c (text-stated length ≤ 0 ⇒ SOURCE; no machine-token fact labels) · e68fa199 (CACHE_VERSION 112 → 113) · 7a88a789, c5142f07 (self-review) · 527d642e (panel close button name) · 75a0af9a (drawers above the panel)
-- **CANDIDATE:** 5234c37e… → d3de9c44… (three freezes, same tree hash; product commit 75a0af9a) · CACHE_VERSION 113 · LLM_ONLY
+- **CODE_COMMIT_OR_NONE:** 2a63da7d (labels wait for their segment) · 9f454d6b (SO via the shared formation step; volume height by an exact perpendicularity relation) · 71cf0e80 (floating steps panel) · 6ca3b35e (helper geometry, step groups, grid) · c86cf53c (text-stated length ≤ 0 ⇒ SOURCE; no machine-token fact labels) · e68fa199 (CACHE_VERSION 112 → 113) · 7a88a789, c5142f07 (self-review) · 527d642e (panel close button name) · 75a0af9a (drawers above the panel) · 70665542 (CRLF-safe CSS test; divergence declaration at CACHE_VERSION 113 — both found by T3)
+- **CANDIDATE:** 5234c37e… → d3de9c44… (four freezes, same tree hash; product commit 70665542; browser evidence of 94200b50 transferred) · CACHE_VERSION 113 · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** measurement 94200b50 (cloud) · evidence c5b39092
 - **CLASSIFICATION:** CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED
 - **PRODUCT_CHANGED:** YES

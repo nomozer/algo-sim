@@ -22,7 +22,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 đã push lên origin; chưa merge)
 CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE (việc regular-square-pyramid, W2; run regular-square-pyramid-w02; triển khai trên cloud)
-PRODUCT_STATE = candidate d3de9c44… (product commit 75a0af9a; ba lần đóng băng cùng tree hash), CACHE_VERSION 113, LLM_ONLY
+PRODUCT_STATE = candidate d3de9c44… (product commit 70665542; bốn lần đóng băng cùng tree hash), CACHE_VERSION 113, LLM_ONLY
 MEASUREMENT = 94200b50 (bằng chứng c5b39092) (cloud, worktree tách rời sạch CRLF) — T3, cổng camera-settle và causal_restore thiết diện phải chạy lại ở máy local (HANDOFF.md §2 của run)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
 FINAL_DECISION = CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED (regular-square-pyramid-w02)

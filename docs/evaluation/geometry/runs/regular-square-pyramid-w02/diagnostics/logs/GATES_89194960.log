@@ -1,0 +1,60 @@
+# cwd: <worktree '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02f'>
+2026-10-05T21:24:15Z
+# regular-square-pyramid-w02 verification gates at 891949607cb07560d9ac55c312e9f08f1b907884 (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+4
+## HEAD
+891949607cb07560d9ac55c312e9f08f1b907884
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, d3de9c446ef75b9b…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 113 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2 (idempotence: the two mirrors byte-identical, git status unchanged)
+export_exit=0
+667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4 667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4  (run 1)
+export_exit=0
+667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4 667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4  (run 2)
+git status after export: 4 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since e821b9b5330480b791284548c3e49d683955682e: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since e821b9b5330480b791284548c3e49d683955682e
+model-surface files changed: 0
+## CACHE_VERSION
+772:CACHE_VERSION = "113"
+## historical evidence byte-identical since e821b9b5330480b791284548c3e49d683955682e (tracked docs/evaluation outside the W2 run folder)
+  M	docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json
+  M	docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+changed outside the W2 run: 2 (allowed: the living candidate registry and divergence declaration)
+## historical reports at the docs root (catalogued in docs/evaluation/HISTORICAL_REPORTS.md) changed since e821b9b5330480b791284548c3e49d683955682e
+  changed: docs/EVIDENCE_INDEX.md
+catalogued reports changed: 1 of 181
+## git diff --check e821b9b5330480b791284548c3e49d683955682e..891949607cb07560d9ac55c312e9f08f1b907884 (captured *.log excluded: verbatim tool output may carry trailing spaces)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## node harness tests
+## git status (after)
+4
+ M AGENTS.md
+ M docs/ROADMAP.md
+ M docs/schemas/semantic_program.schema.json
+ M frontend/src/simulations/domains/semantic/semantic_program.schema.json
+exit=0
+2026-10-05T21:24:21Z

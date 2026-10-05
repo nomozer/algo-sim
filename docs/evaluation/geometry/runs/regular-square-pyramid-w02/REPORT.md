@@ -39,6 +39,9 @@ Kết luận: **`CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED`** �
 | bộ đo: bước chỉ dựng hình phụ đang ẩn | `445f31a7`, `a4abb188` | oracle độc lập miễn đúng bước ấy (khung tĩnh, tham chiếu, phát) |
 | đóng băng 3 | `4a6af4e9` | cùng tree hash `d3de9c44`, product commit `75a0af9a` |
 | lượt đo có thẩm quyền (lần 5) | `94200b50` → bằng chứng `c5b39092` | §10 |
+| tài liệu | `89194960` | REPORT, HANDOFF, tài liệu sống |
+| T3 lần 1 (tại `89194960`) tìm ra hai lỗi thật → sửa | `70665542` | test CSS đọc checkout CRLF; bản khai lệch candidate mang `CACHE_VERSION` 113 (§10.1) |
+| đóng băng 4 + chuyển bằng chứng | `41ea58f8` | cùng tree hash `d3de9c44`, product commit `70665542`; dist trùng byte |
 
 ## 2. A — nhãn số đo chỉ khi đối tượng mang nó đã được dựng
 
@@ -149,9 +152,9 @@ dựng; không tính lại occlusion khi nghỉ (đo `recompute_count`).
   `d(S, (ABC))` lên SA; lăng trụ trùng giá trị không còn "× DF"); bump giả lập làm cả 13 MISS;
 - sáu họ cũ (chương trình compiler) trùng byte. Môi trường ngữ nghĩa `b1714b56` không đổi; khoá danh tính tạo lại.
 
-**Candidate** `5234c37e…` → **`d3de9c44…`** (110 file). Đóng băng BA lần, mỗi lần trong worktree tách rời sạch
-(`core.autocrlf=true`) trong scratchpad: `c5142f07`, `527d642e`, rồi `75a0af9a` (cùng tree hash — `frontend/src` đổi
-nên `product_commit_sha` đổi). Parser của script đóng băng được đọc trước: mọi đối số khác `--verify` đều đóng băng, nên chỉ
+**Candidate** `5234c37e…` → **`d3de9c44…`** (110 file). Đóng băng BỐN lần, mỗi lần trong worktree tách rời sạch
+(`core.autocrlf=true`) trong scratchpad: `c5142f07`, `527d642e`, `75a0af9a`, rồi `70665542` (cùng tree hash —
+`frontend/src` đổi nên `product_commit_sha` đổi; lần 4 chỉ là một file test vitest). Parser của script đóng băng được đọc trước: mọi đối số khác `--verify` đều đóng băng, nên chỉ
 chạy dạng trơn và `--verify`. Khai ở `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json` và `CANDIDATE_DIVERGENCE.json` sống.
 
 ## 10. Bằng chứng
@@ -163,6 +166,7 @@ Bằng chứng commit `c5b39092`. Bốn lần trước và lý do bị thay: `di
 | cổng | kết quả | file |
 |---|---|---|
 | fixture W2 (7 họ; chặng LLM thay bằng hợp đồng đóng băng) | dựng lại tại candidate `d3de9c44` / product `75a0af9a` | `inputs/FIXTURE_MANIFEST.json` |
+| chuyển sang product `70665542` (đóng băng 4) | dist production trùng byte; 37/37 fixture trùng trừ trường `product_commit_sha` ⇒ TRANSFERS | `results/EVIDENCE_TRANSFER_70665542.json` |
 | đầu dò W2 (`w02-closure-probe.mjs`) | **14/14** (7 họ × desktop 1440×900 + mobile 390×844) | `results/W02_CLOSURE_PROBE.json` |
 | bộ đo chính — từ chối | **54/54** | `results/BROWSER_EVIDENCE.json` |
 | — phục vụ (W18) | **6/6** (PC1-W2: nhãn `d_kq` vắng, chọn được qua ngăn) | 〃 |
@@ -187,13 +191,33 @@ camera, bước, lựa chọn, tập vật dựng, `recompute_count`.
 
 Hai cổng này là `LOCAL_VERIFICATION_REQUIRED`; nếu máy local vẫn đỏ thì là lỗi thật của W2.
 
-**Cổng repo.** Trong phiên: vitest, `tsc -b` + `vite build`, test node của bộ đo, pytest các test W2 và test khoá
-literal, kiểm tài liệu — xanh trừ lớp môi trường đã biết (dưới). T3 (`frontend/scripts/full-gate.mjs`) và
-`diagnostics/w02_gates.sh` chạy ở worktree tách rời sạch tại commit tài liệu; log và số liệu ở §10.1 (thêm cùng log).
+**Cổng repo.** T3 (`frontend/scripts/full-gate.mjs`) và `diagnostics/w02_gates.sh` chạy ở worktree tách rời sạch
+(CRLF, đường dẫn có dấu cách) tại commit tài liệu — §10.1.
 Lớp lỗi MÔI TRƯỜNG của pytest trên cloud, có trước W2 (cùng tập ở W1 head trong worktree CRLF): thiếu ref `main` cục
 bộ (`test_branch_independent_harness` ×9, `test_precheck_kho`, `test_tien_kiem_kho`, `test_12_final_decision…`) và
 Python Linux ghi LF vào cây CRLF (`test_exporter_idempotence`, `test_holdout_readiness_7b`). Test node "repo root keeps
 a Windows path with spaces" chỉ đúng trên Windows.
+
+### 10.1 T3 và cổng định danh
+
+**Lần 1 — tại `89194960`, ĐỎ, tìm ra hai lỗi thật của W2** (`diagnostics/logs/T3_FULL_GATE_89194960.log`,
+`GATES_89194960.log`). Ngoài 14 tên môi trường ở trên:
+- vitest 1 đỏ / 1088: `scene3d-steps-panel.test.tsx` (test W2 của bảng nổi) so mẫu CSS nhiều dòng trên `"\n"` ⇒ đỏ ở
+  mọi checkout CRLF, kể cả cây Windows của người dùng; trong phiên nó xanh vì cây chính của cloud là LF;
+- pytest thêm 1 đỏ: `test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3` — bản khai lệch candidate sống vẫn ghi
+  `cache_version_hien_tai = 112` sau khi bump lên 113 (`e68fa199` sót).
+
+Sửa ở `70665542` (bộ đọc nguồn dùng chung của file test chuẩn hoá xuống dòng; trường khai = 113), kiểm đỏ → xanh trong
+worktree CRLF; đóng băng 4 (`41ea58f8`); bằng chứng trình duyệt chuyển sang (bảng trên). Cùng lượt, `w02_gates.sh` lộ
+một lỗi của chính nó: phần test node trống vì node in TAP `# tests` khi đi qua ống — sửa grep. Các cổng định danh khác
+xanh: candidate và khoá cache `--verify` exit 0, schema export hai lần trùng, `DEFAULT_MODE = LLM_ONLY`, 0 file bề mặt
+mô hình đổi từ W1, ngoài thư mục run chỉ đổi sổ candidate sống và bản khai lệch, `git diff --check` exit 0, kiểm tài
+liệu PASS. (`docs/EVIDENCE_INDEX.md` hiện ở mục "báo cáo lịch sử đổi" chỉ vì `HISTORICAL_REPORTS.md` trỏ tới nó làm chỉ
+mục; nó là tài liệu sống theo AGENTS.md §4.) T3 để lại `AGENTS.md`, `docs/ROADMAP.md` và hai bản schema "đã sửa" — chỉ
+khác xuống dòng (băm nội dung bỏ `\r` trùng): lớp "Python Linux ghi LF vào cây CRLF".
+
+**Lần 2 — tại commit tài liệu chứa đoạn này:** kết quả ghi ở commit kế tiếp, cùng log `T3_FULL_GATE_<sha>.log` và
+`GATES_<sha>.log` (một commit không thể mang kết quả T3 của chính nó).
 
 ## 11. Tự rà soát
 

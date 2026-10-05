@@ -19,7 +19,7 @@ FINAL_HEAD = SELF (commit chứa bản cuối của file này; tra bằng git lo
 REMOTE_SHA = = FINAL_HEAD sau push (ghi lại trong trả lời của phiên cloud)
 MEASUREMENT_COMMIT = 94200b50403bdf823eb49697d54c0cb53e8e4ccb (lượt đo 5, worktree tách rời sạch CRLF, đường dẫn có dấu cách); bằng chứng commit c5b39092
 CANDIDATE_BEFORE = 5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa
-CANDIDATE_AFTER = d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098 (product commit 75a0af9a; 110 file) — đóng băng 3 lần, cùng tree hash: c5142f07 → 527d642e → 75a0af9a (frontend/src đổi hai lần sau lần đo 1 và 3)
+CANDIDATE_AFTER = d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098 (product commit 70665542; 110 file) — đóng băng 4 lần, cùng tree hash: c5142f07 → 527d642e → 75a0af9a → 70665542 (frontend/src đổi sau lần đo 1, lần đo 3 và T3 lần 1); bằng chứng trình duyệt đo ở product 75a0af9a chuyển sang 70665542 (results/EVIDENCE_TRANSFER_70665542.json)
 CACHE_VERSION_BEFORE = 112
 CACHE_VERSION_AFTER = 113
 CACHE_VERSION_REASON = envelope phục vụ đổi nội dung; 13 row v112 vẫn HIT dù W2 dựng khác, bump làm cả 13 MISS; sáu họ cũ trùng byte (diagnostics/PROOF_CACHE_ROW_W02.json); môi trường ngữ nghĩa b1714b56 không đổi
