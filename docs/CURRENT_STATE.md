@@ -25,8 +25,8 @@ thuộc thư mục run trong `docs/evaluation/`.
 >
 > | | |
 > |---|---|
-> | Active development branch | **`main`** — nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`, 2026-10-05); việc kế tiếp rẽ nhánh mới từ `main` |
-> | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi |
+> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`, W1 (run `regular-square-pyramid-w01`, 2026-10-05), rẽ từ `main` = `38d41588`; chưa push, chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
+> | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi; regular-square-pyramid-w01 (2026-10-05): `ls-remote` = `38d41588…` — không đổi (commit ghi kết quả tích hợp của cuboid-merge) |
 > | `CACHE_VERSION` | **112** (regular-square-pyramid-w01, 2026-10-05: envelope phục vụ đổi nội dung — nhãn dữ kiện không ký hiệu, chiều cao đo được của thể tích; hai row v111 vẫn HIT — `PROOF_CACHE_ROW_W01.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
@@ -52,17 +52,29 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = a1c53cdb (kiểm chứng có thẩm quyền, worktree tách rời sạch; candidate đóng băng tại 284a9bfa)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = ed37f9fa (đo trình duyệt có thẩm quyền, worktree tách rời sạch có dấu cách; candidate đóng băng tại de5b2331) · T3 + cổng danh tính ở commit tài liệu (log trong run)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 112
-> CANDIDATE = b2d4187a… (was 27c31de6…; một lần đóng băng), product commit 284a9bfa
+> CANDIDATE = 4629c3e8… (was b2d4187a…; một lần đóng băng), product commit de5b2331
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp của việc cuboid-visual-semantic-closure, không đánh số wave; không đổi mã sản phẩm)
-> FINAL_DECISION = MERGED_AND_PUSHED (cuboid-merge) · HUMAN_VISUAL_REVIEW = APPROVED_BY_USER (A–F, 2026-10-05; nguyên văn: runs/cuboid-merge/APPROVAL.md) · NEXT_ACTION = SELECT_AND_START_NEXT_FAMILY_W01
-> CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
-> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (người dùng chọn họ từ `ROADMAP.md` §0.2 — đề xuất `regular-square-pyramid-w01`, chưa chọn; chỉnh sửa giao diện §0.1; nhánh cuboid đã tích hợp vào `main`; việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã cập nhật, bắt đầu ở W1)
+> CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (việc regular-square-pyramid, W1, run regular-square-pyramid-w01)
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt H-W1-1 (runs/regular-square-pyramid-w01/HANDOFF.md §1), rồi merge thẳng vào main + push + xoá nhánh
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
+> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi W1 được duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Chóp tứ giác đều + chín chỉnh sửa giao diện §0.1 — regular-square-pyramid-w01 (đo `ed37f9fa`, worktree tách rời sạch; chưa có review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng tự động đạt; điều kiện merge: người duyệt H-W1-1 (`HANDOFF.md` §1) |
+> | Chóp tứ giác đều | bộ đọc "đều"/cạnh đáy/cạnh bên/trung đoạn/tâm đáy; khuôn C1 T7; tâm O theo danh tính; chiều cao đo được của thể tích; corpus đăng ký trước **17/17** (7 phục vụ, 10 từ chối có cấu trúc) |
+> | Giao diện §0.1 | card Kết quả ẩn khi thu gọn · ngăn «Đại lượng» · panel «Các bước dựng» (desktop cạnh khung, mobile dưới điều khiển) · gỡ dải «Đang dựng» · ghi vị trí cuộn mỗi ảnh |
+> | Trình duyệt · occlusion · playback | **7/7 họ**: 14/14 dương, 54/54 âm, 6/6 phục vụ, chọn đại lượng 68/68, ngăn + panel 14/14 · occlusion 0 lỗi (bốn cảnh W14 chờ người) · playback 14/14 · 68 crop, 0 bất đồng |
+> | Lỗi tìm ra | công thức thể tích mất khi có hai ứng viên chiều cao (`98e2b8f7`) · cổng phạm vi từ chối "độ dài" (`9d66c603`, đóng `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) |
+> | Candidate · `CACHE_VERSION` | `b2d4187a…` → **`4629c3e8…`** (một lần đóng băng, `de5b2331`) · 111 → **112** (`de5b2331`, chứng minh theo hàng); vân tay bề mặt mô hình không đổi |
+> | Run | [`regular-square-pyramid-w01`](evaluation/geometry/runs/regular-square-pyramid-w01/) (`REPORT.md`, `HANDOFF.md`) |
 
 > **Gói duyệt hình + tích hợp — run `cuboid-merge` (2026-10-05; chỉ tài liệu; đã duyệt, đã merge và push):**
 >

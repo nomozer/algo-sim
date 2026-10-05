@@ -11,25 +11,25 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 111` (w20: served → rejected cho điểm đề định nghĩa bằng quan hệ mà chương trình đặt
-  bằng toạ độ); provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 112` (regular-square-pyramid-w01: envelope phục vụ đổi nội dung — nhãn dữ kiện không ký
+  hiệu, chiều cao đo được của thể tích); provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = main (nhánh fix/cuboid-visual-semantic-closure đã fast-forward vào main, push và xoá — run cuboid-merge)
-CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp, không đánh số; chỉ tài liệu)
-RUN_COMMITS = 1e03ef82 (gói duyệt) · f668097d (log cổng) · c282a5f3 (ghi phê duyệt) · commit ghi kết quả tích hợp trên main
-PRODUCT_STATE = byte sản phẩm không đổi từ 284a9bfa: candidate b2d4187a…, CACHE_VERSION 111, LLM_ONLY
-ORIGIN_MAIN = c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec sau push fast-forward (trước: a9492ee9); commit ghi kết quả đi sau
-FINAL_DECISION = MERGED_AND_PUSHED (cuboid-merge)
-HUMAN_VISUAL_REVIEW = APPROVED_BY_USER (A–F, 2026-10-05; nguyên văn: runs/cuboid-merge/APPROVAL.md)
+CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; chưa push, chưa merge)
+CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (việc regular-square-pyramid, W1; run regular-square-pyramid-w01)
+PRODUCT_STATE = candidate 4629c3e8… (product commit de5b2331, một lần đóng băng), CACHE_VERSION 112, LLM_ONLY
+MEASUREMENT = ed37f9fa (bộ trình duyệt 7/7 họ, occlusion, playback, ảnh); T3 + cổng danh tính ở commit tài liệu
+ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (git ls-remote; không đổi)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w01)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (H-W1-1 ở HANDOFF.md §1 của run)
 USER_DIRTY_STATE = D frontend/public/favicon.svg
-PUSH_EXECUTED = YES (main, không force)
-MERGE_EXECUTED = YES (fast-forward, không PR)
-NEXT_ACTION = SELECT_AND_START_NEXT_FAMILY_W01
+PUSH_EXECUTED = NO
+MERGE_EXECUTED = NO
+NEXT_ACTION = người dùng duyệt hình W1; khi duyệt: merge thẳng vào main, push, xoá nhánh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -52,7 +52,7 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - Hub: `docs/README.md` (năm câu hỏi: hệ làm gì · kiến trúc và cách chạy · việc mở · khoá luận/bài
   báo · bằng chứng).
 
-## 4. Hệ hiện tại (sau w20) — mỗi dòng một chỗ đọc thêm
+## 4. Hệ hiện tại (sau regular-square-pyramid-w01) — mỗi dòng một chỗ đọc thêm
 
 - Occlusion và danh tính cảnh: edge ID máy theo entity ID (`A_prime`), nhãn hiển thị riêng, một visual
   owner mỗi cạnh, span `VISIBLE`/`HIDDEN`/`MIXED`, oracle cài độc lập —
@@ -71,9 +71,16 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   phép dựng" (frontend đọc `reason_code`, không hiển thị).
 - Trình bày (w17–w18): backend gắn nghĩa nhãn, frontend chỉ đặt chỗ; hình mặc định gọn, "Hiện tất cả",
   ô soi là nơi giải thích duy nhất, nhân chứng khoảng cách tới chân chính xác.
-- Sáu họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
-  `cuboid`, `cube`, `cross_section`.
-- Tự động mới nhất (run `cuboid-final-review`, `a1c53cdb`): T3 `FULL_PRODUCT_GATE_PASS` (pytest 7079/0,
+- Chóp tứ giác đều (regular-square-pyramid-w01): bộ đọc "đều"/cạnh đáy/cạnh bên/trung đoạn/tâm đáy, khuôn C1 T7,
+  tâm O gắn theo danh tính (giao hai đường chéo), chiều cao đo được của thể tích; chiều cao vô tỉ, góc, chóp tam
+  giác đều chưa phục vụ. Giao diện ROADMAP §0.1: card Kết quả ẩn khi thu gọn, ngăn «Đại lượng», panel «Các bước
+  dựng», gỡ dải «Đang dựng»; cổng phạm vi nhận "độ dài".
+- Bảy họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
+  `cuboid`, `cube`, `cross_section`, `regular_square_pyramid`.
+- Đo mới nhất (regular-square-pyramid-w01, `ed37f9fa`): bảy họ 14/14 dương, 54/54 âm, 6/6 phục vụ, chọn đại lượng
+  68/68, ngăn đại lượng + panel bước 14/14; occlusion 0 lỗi (bốn cảnh W14 `HUMAN_REVIEW_PENDING`); playback 14/14;
+  T3 ở commit tài liệu (log trong run).
+- Tự động trước đó (run `cuboid-final-review`, `a1c53cdb`): T3 `FULL_PRODUCT_GATE_PASS` (pytest 7079/0,
   vitest 1061/1061, build, demo 5/5, bề mặt sập 6/6); thẻ từ chối trong trình duyệt 12/12 (desktop +
   mobile). Sáu họ không đo lại: bằng chứng hình gần nhất của chúng là w18 (12/12 dương + 46/46 âm;
   occlusion `HUMAN_REVIEW_PENDING`); census SHIP (AC2 18/18) của w20.
@@ -97,8 +104,11 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.
 - **Câu hỏi còn mở từ w20:** H-W20-4 (tàn dư Tin học trong mã — run `cuboid-acceptance` liệt kê thêm phần ở
   shell). H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
-- **Quyết định chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị), W18-H3
-  (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`), W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`), W15-H2
+- **W1 chờ người dùng:** H-W1-1 (duyệt hình — chặn merge), H-W1-2 (chiều cao hiện `d(S, (ABC))`, không vẽ SO),
+  H-W1-3 (mặt phẳng phụ để đo), H-W1-4 (bước dựng phụ AC, BD, O), H-W1-5
+  (`ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE`) — `HANDOFF.md` §1 của run regular-square-pyramid-w01.
+- **Quyết định chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị), W18-H3 đã giải quyết ở W1
+  (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE` RESOLVED), W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`), W15-H2
   (vùng chặn ngoài đa diện), W15-H3 (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
 - **Từ w19 tới run `cuboid-final-review`:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` = `INTENDED_LIMITATION`
   (180 báo cáo ở gốc, catalog đóng); `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212; 204 + 108 mục chờ quyết
@@ -112,11 +122,14 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 ## 6. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-Người dùng chọn họ hình từ `docs/ROADMAP.md` §0.2 (ứng viên + khoảng trống theo tầng, snapshot W13);
+W1 của việc `regular-square-pyramid` đã xong phần tự động (`READY_FOR_HUMAN_VISUAL_REVIEW`). Việc duy nhất: người
+dùng duyệt hình H-W1-1 (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/HANDOFF.md` §1); khi có phê duyệt
+tường minh thì merge thẳng `feat/regular-square-pyramid` vào `main` (không PR), push, xoá nhánh. Sau đó (phần dưới
+là bối cảnh trước W1, giữ để tra): người dùng chọn họ hình từ `docs/ROADMAP.md` §0.2 (ứng viên + khoảng trống theo tầng, snapshot W13);
 wave làm họ ấy cùng chín chỉnh sửa giao diện đã chốt (§0.1) và giữ hồi quy §0.3. OCR và nhiều khối để
 sau, không tuyên bố đã hỗ trợ. Trước đó, để merge: duyệt hình theo `REVIEW.md` của run `cuboid-merge` (A–F); khi có
 phê duyệt tường minh thì merge thẳng vào `main` (không PR), chạy cổng trên cây tích hợp,
@@ -127,6 +140,10 @@ Ràng buộc: `LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ng�
 bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không push/merge.
 
 ## 7. Evidence có thẩm quyền
+
+- Run `regular-square-pyramid-w01` (chóp tứ giác đều + giao diện §0.1):
+  `docs/evaluation/geometry/runs/regular-square-pyramid-w01/` (`REPORT.md`, `HANDOFF.md`, `RUN.json`,
+  `results/BROWSER_EVIDENCE.json`, `results/OCCLUSION_MEASUREMENT.json`, `results/PLAYBACK_EVIDENCE.json`, `images/`).
 
 - Run `cuboid-merge` (gói duyệt + chuyển tiếp ảnh W18 sang `b2d4187a`): `docs/evaluation/geometry/runs/cuboid-merge/`
   (`REVIEW.md`, `HANDOFF.md`, `RUN.json`, `results/FIXTURE_TRANSFER.json`, `results/logs/`).

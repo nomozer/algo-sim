@@ -1,0 +1,50 @@
+{
+  "schema_version": "family-slice-run/1",
+  "run_id": "regular-square-pyramid-w01",
+  "task": "REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI",
+  "task_slug": "regular-square-pyramid",
+  "wave": "W1",
+  "dates": "2026-10-05",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "38d4158826cbbffd013d971a9484b9f0fd2a6130",
+  "origin_main": "38d4158826cbbffd013d971a9484b9f0fd2a6130 (git ls-remote: unchanged)",
+  "commits": {
+    "readme": "ab98a2df",
+    "registration": "e537dbd9",
+    "family_capability": "3bdada32",
+    "ui_roadmap_0_1": "ae9c72a5, b2d224f6",
+    "harness": "c37b2cc4, 3ad9442f, 1310658b, ed37f9fa",
+    "defect_fixes": "98e2b8f7 (volume height selection), 9d66c603 (scope clue for length)",
+    "cache_bump_and_lock": "de5b2331",
+    "refreeze": "5aaf11ee",
+    "evidence": "025bbff4",
+    "living_docs_and_state": "the commits that contain this file (not recorded here)"
+  },
+  "product_state": {
+    "measurement_commit": "ed37f9fa (browser, occlusion, playback, images)",
+    "candidate": "4629c3e8e3f5be60… (product commit de5b2331; previous b2d4187a…)",
+    "cache_version": "112 (was 111; lock verify exit 0; semantic environment b1714b566e25c912… unchanged)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (regular square pyramid served; Results card hidden while collapsed; length questions pass the scope gate)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "112",
+    "CANDIDATE_REFROZEN": "YES, once",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "USER_FAVICON_DELETION_PRESERVED": "YES"
+  },
+  "results": {
+    "corpus": "17/17 rows match the labels registered before the product change",
+    "browser": "7/7 families PASS; 14/14 positives, 54/54 refusals, 6/6 served, 68/68 selections, quantity drawer 14/14, steps panel 14/14",
+    "occlusion": "pass, 0 failures, HUMAN_REVIEW_PENDING (four W14 scenes)",
+    "playback": "14/14",
+    "images": "68 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners"
+  },
+  "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW"
+}

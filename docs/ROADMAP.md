@@ -9,9 +9,18 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
+
+- **W1 của việc `regular-square-pyramid` (2026-10-05, run
+  [`regular-square-pyramid-w01`](evaluation/geometry/runs/regular-square-pyramid-w01/), nhánh
+  `feat/regular-square-pyramid`):** chóp tứ giác đều (bộ đọc, khuôn C1 T7, tâm O theo danh tính, chiều cao đo được)
+  và chín chỉnh sửa §0.1 trên bảy họ; corpus 17/17, trình duyệt 7/7 họ, occlusion 0 lỗi, playback 14/14;
+  `CACHE_VERSION` 112, candidate `4629c3e8…`. Kết luận **`READY_FOR_HUMAN_VISUAL_REVIEW`**. Việc duy nhất: người
+  dùng duyệt hình H-W1-1 (`HANDOFF.md` §1 của run), cùng H-W1-2…H-W1-5; duyệt thì merge thẳng vào `main`, push,
+  xoá nhánh. Sau đó trở lại `NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES` (họ kế tiếp từ §0.2). Gạch đầu dòng dưới là
+  bối cảnh trước W1.
 
 - **Vì sao:** W19 (run [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/)) khép việc tổ
   chức tài liệu; W20 (run [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)) đóng hai issue
@@ -36,15 +45,15 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   `.superpowers` giữ nguyên, không đòi dọn trước merge.
 - **Quyết định còn chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị của đáp số không công thức — trùng mục 2 của
   §0.1); W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`); W15-H2 (vùng chặn ngoài đa diện); W15-H3 (từ vựng —
-  `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); W18-H3 (manh mối "độ dài" của cổng phạm vi,
-  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`); H-W20-4 (tàn dư Tin học trong mã — `HANDOFF.md` của run w20; run
+  `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`, PARTIAL ở W1); W18-H3 đã giải quyết ở W1
+  (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE` RESOLVED); H-W20-4 (tàn dư Tin học trong mã — `HANDOFF.md` của run w20; run
   `cuboid-acceptance` liệt kê thêm phần còn ngủ ở shell). H-W20-1 (câu chữ) và H-W20-2 (nhãn) đã sửa ở run
   `cuboid-final-review`, còn chờ người xem ảnh.
 - **Ràng buộc:** giữ `DEFAULT_MODE = LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION`
   quyết bằng bằng chứng; automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ vọng người; không
   push/merge.
 
-### 0.1 Chỉnh sửa giao diện đã chốt (đăng ký sau W18; W19 và W20 không sửa giao diện; `cuboid-final-review` chỉ sửa thẻ từ chối của §17, không thuộc chín mục dưới)
+### 0.1 Chỉnh sửa giao diện đã chốt (đăng ký sau W18; **đã làm ở regular-square-pyramid-w01**, chờ người duyệt — bảng §3 của `REPORT.md` run ấy)
 
 1. Ẩn mặc định card **Kết quả** dưới mô phỏng.
 2. Truy cập mọi kết quả qua nút chọn đại lượng và **một** ô chi tiết.

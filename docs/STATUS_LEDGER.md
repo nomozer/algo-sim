@@ -926,3 +926,27 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTS:** NONE
 - **NEXT_ACTION_AT_TIME:** user answers ACCEPTED or NEEDS_CHANGES for A–F; on approval fast-forward main, push, delete the branch; then SELECT_AND_START_NEXT_FAMILY_W01
 - **FINAL_DECISION:** MERGED_AND_PUSHED
+
+### WAVE_ID = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI
+- **RUN_ID:** regular-square-pyramid-w01 (task regular-square-pyramid, wave W1)
+- **DATE:** 2026-10-05
+- **START_BASE:** 38d41588
+- **CODE_COMMIT_OR_NONE:** 3bdada32 (regular square pyramid: reader, C1 template T7, centre binding, measured height, given labels) · ae9c72a5 + b2d224f6 (ROADMAP §0.1 UI) · 98e2b8f7 (volume formula height selection) · 9d66c603 (scope clue "độ dài") · de5b2331 (CACHE_VERSION 111 → 112)
+- **COMMITS:** ab98a2df (README) · e537dbd9 (registration) · product commits above · c37b2cc4, 3ad9442f, 1310658b, ed37f9fa (harness) · 5aaf11ee (refreeze) · 025bbff4 (evidence) · living docs and state commits
+- **CANDIDATE:** b2d4187a… → 4629c3e8… (one freeze at de5b2331, clean detached worktree) · CACHE_VERSION 112 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** 025bbff4 (browser, occlusion, playback, images at ed37f9fa) · state commit (T3 and identity gates at the documentation commit)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w01/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w01/
+- **PASS:** corpus 17/17 rows match labels registered before the change; browser 7/7 families (14/14 positives, 54/54 refusals, 6/6 served, 68/68 selections, quantity drawer 14/14, steps panel 14/14); occlusion pass 0 failures; playback 14/14; 68 crops, 0 oracle disagreements
+- **CLOSED:** ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE
+- **OPENED:** ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE · ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY PARTIAL (centre, intersection of two lines)
+- **OPEN (not blocking):** four W14 scenes HUMAN_REVIEW_PENDING; F1–F5 of cuboid-merge
+- **FULL_PRODUCT_SUITE:** T3 at the documentation commit from a path with a space — see the run's `diagnostics/logs/T3_FULL_GATE_*.log`
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (preregistration correction PC1 inside the run, before any browser run)
+- **NEXT_ACTION_AT_TIME:** human visual review H-W1-1 (HANDOFF.md §1); on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

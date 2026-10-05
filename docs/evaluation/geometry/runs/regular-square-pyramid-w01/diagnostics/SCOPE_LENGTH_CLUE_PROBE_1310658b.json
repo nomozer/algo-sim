@@ -1,0 +1,25 @@
+{
+  "probe": "ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE acceptance",
+  "commit": "1310658bc59a17520d0e53befb2ad8b622cc8421",
+  "boundary": "app.ai.pipeline.run_pipeline (frozen analyze + program)",
+  "model_calls": 0,
+  "rows": [
+    {
+      "id": "B18_prime_ok",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gọi M là trung điểm của AA'. Tính độ dài đoạn MC.",
+      "expected": "served",
+      "observed": "served",
+      "reason_code": null,
+      "pass": true
+    },
+    {
+      "id": "B19_prime_wrong",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Gọi M là trung điểm của AA'. Tính độ dài đoạn MC.",
+      "expected": "refused:construction_binding",
+      "observed": "refused:construction_binding",
+      "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

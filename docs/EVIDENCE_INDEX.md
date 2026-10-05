@@ -988,3 +988,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** TRANSFER_OF_W18_VISUAL_EVIDENCE_TO_CANDIDATE_b2d4187a — the regenerated w18 fixtures are byte-exact (manifest 10dbe2de…), the 32 current fixtures differ only in product_commit_sha/product_tree_sha, frontend changes are confined to the refusal card; not visual acceptance (human review NOT_APPROVED)
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `HANDOFF.md` · `RUN.json` · `results/FIXTURE_TRANSFER.json` · `results/logs/TRANSFER.log` · `diagnostics/fixture_transfer_cmerge.py` · `diagnostics/cmerge_gates.sh` · `results/logs/GATES_FINAL.log`
 - **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief; `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI
+- **RUN_ID:** regular-square-pyramid-w01 (task regular-square-pyramid, wave W1; `docs/evaluation/RUN_NAMING.md`)
+- **DATE:** 2026-10-05
+- **REPORT:** docs/evaluation/geometry/runs/regular-square-pyramid-w01/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/regular-square-pyramid-w01/
+- **START_BASE:** 38d41588
+- **CODE_COMMIT:** 3bdada32 · ae9c72a5 · b2d224f6 · 98e2b8f7 · 9d66c603 · de5b2331
+- **MEASUREMENT_COMMIT:** ed37f9fa (clean detached worktree with a space in its path; browser suite attempt 3, occlusion, playback, builder); T3 and identity gates at the documentation commit
+- **EVIDENCE_COMMIT_ROLE:** 025bbff4 (evidence) · state commit (`diagnostics/logs/T3_FULL_GATE_*.log`, `GATES_*.log`, `MEASUREMENT_ATTEMPTS.json`, `MANIFEST.json`)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (b2d4187a… → 4629c3e8…, one freeze at de5b2331)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 111 -> 112 in de5b2331, real-row proof `diagnostics/PROOF_CACHE_ROW_W01.json`; semantic environment b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (the w18/cuboid evidence describes b2d4187a and earlier candidates and stays as it is)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** REGULAR_SQUARE_PYRAMID_CERTIFICATE_AND_ROADMAP_0_1_UI — claim C7 and the W1 notes of B2/D5 in `docs/research/CLAIM_EVIDENCE_MAP.md`; offline only; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `REPORT.md` · `HANDOFF.md` · `RUN.json` · `diagnostics/corpus/LABELS.json` · `diagnostics/PREREGISTRATION_CORRECTIONS.json` · `diagnostics/PROOF_CACHE_ROW_W01.json` · `diagnostics/SCOPE_LENGTH_CLUE_PROBE_1310658b.json` · `results/BROWSER_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

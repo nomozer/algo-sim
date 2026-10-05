@@ -546,6 +546,7 @@
 - **impact:** Over-refusal of correct programs on unread phrasings, with a truthful message ("AlgoSim chưa đối chiếu được … Đây là giới hạn của hệ, không phải lỗi của đề"). For limit (2), a wrong centre or intersection point is caught only by the coordinate invariants and the W15 certificate, as before W18.
 - **scope:** `construction_binding.py` vocabulary (divisions with a ratio, unnamed receivers, centres and intersections), each with labelled corpus rows before the change.
 - **status:** OPEN (w18) — the brief keeps the vocabulary narrow ("Giữ vocabulary mở rộng hẹp cho trung điểm và phép chiếu đã hỗ trợ"); widening belongs to the user's vocabulary decision W15-H3.
+- **w01:** PARTIAL (regular-square-pyramid-w01, `3bdada32`) — limit (2) narrowed: "X là giao điểm (của) PQ và RT" (two lines named by two points each) and "X là tâm (của) (mặt) đáy / hình vuông ABCD" of the unique solid are bound by identity (`intersect_line_line` on the same two lines, or the midpoint of a diagonal for a centre); corpus rows S7 (MATCHED, served) and N4 (midpoint of AB for O, MISMATCHED, refused CONSTRUCTION), labelled before the change. Centroids, orthocentres, symmetric points and intersections with planes remain OUT_OF_SCOPE; `intersect_line_line` is not added to `PHEP_TRONG_PHAM_VI`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with W15-H3
 - **default_switch_blocker:** NO
@@ -557,12 +558,24 @@
 - **evidence:** W18 Phase 1 reproduction through the product boundary: rows B18/B19 (`docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/CONSTRUCTION_BINDING_REPRODUCTION_84ce7b70.json`) stop at `scope`; the same rows reach `construction_binding` in the route-level census. The gold p1 rows pass only through "hình vuông".
 - **impact:** An over-refusal of a plain length question on a text without a solid keyword; never a wrong answer.
 - **scope:** the scope-gate clue table (routing policy). A change here moves requests from refused to served, so it needs the corpus re-run and a `CACHE_VERSION` decision.
-- **status:** OPEN (w18) — found by the W18 reproduction, outside the W18 brief (routing policy change).
+- **status:** RESOLVED (regular-square-pyramid-w01, `9d66c603`; `CACHE_VERSION` 111 → 112 in `de5b2331`) — `_MANH_MOI_NGHIA_VU["distance"]` += "độ dài" (the length of a segment is the distance between its endpoints). Found again by the W1 cache probe through `run_pipeline` (corpus row S5 "Tính độ dài cạnh bên SA", served by the route, refused at `scope`). Acceptance probe through the product boundary: B18 served, B19 refused at `construction_binding` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/SCOPE_LENGTH_CLUE_PROBE_1310658b.json`); refused → served only, so no stale cache row (refusals are never cached); the bump is for other served-envelope changes of W1.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next routing wave
 - **default_switch_blocker:** NO
 - **acceptance:** B18 served and B19 refused at `construction_binding` through the product boundary; no served gold row changes.
 - **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/reproduce_construction_binding.py` (writes `CONSTRUCTION_BINDING_REPRODUCTION_<sha>.json`; refuses to overwrite)
+
+### ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE
+- **description:** On the default `LLM_ONLY` route a text that itself states a zero length ("cạnh đáy bằng 0") is refused by the kernel at `execution` (coincident base vertices), with `refusal_cause` UNKNOWN, so the learner is not told the text is at fault. `NON_POSITIVE_LENGTH` (cause SOURCE) is produced only by the deterministic compiler's eligibility check, which the older families' browser negatives use (`DETERMINISTIC_FIRST`).
+- **evidence:** fixture `regular_square_pyramid_non_positive` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures/`), first registered with the compiler-route code and corrected before any browser run (`diagnostics/PREREGISTRATION_CORRECTIONS.json` PC1).
+- **impact:** Fail-closed (no answer, no scene) but the refusal does not point at the text; the same holds for the six older families on the default route.
+- **scope:** a source-level non-positive length check on the default route (server-side reader of the text), shared by every family.
+- **status:** OPEN (regular-square-pyramid-w01) — outside the W1 scope (changes every family's refusal).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next refusal-message wave
+- **default_switch_blocker:** NO
+- **acceptance:** a text stating a length ≤ 0 is refused with cause SOURCE on the default route for every family; labelled rows before the change.
+- **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out <scratch>` (asserts the current refusal of `regular_square_pyramid_non_positive`)
 
 ### ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET
 - **description:** A text relation of the W18 vocabulary (midpoint, projection; amendment §16.1) whose target point the program declares as a literal — coordinates, not a construction operation — is neither matched by `construction_binding` nor recorded `NOT_REALIZED`. The binding only sees construction operations. Safety then rests on backstops: the `segment_division` coordinate invariant for midpoints and the W15 assumption certificate for projections, the latter only inside the polyhedral scope (U3).
