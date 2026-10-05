@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
@@ -17,6 +17,7 @@ import type { InteractionState } from "./interaction-state";
 import type { AnnotationView } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { Scene3DSolution } from "./scene3d-solution";
+import { BangNoi, type ViTriBang } from "./scene3d-floating-panel";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
 /**
@@ -81,8 +82,18 @@ export function Scene3DPlayer({
 }: Props) {
   const [moBuocTrong, setMoBuocTrong] = useState(false);
   const moBuoc = stepsOpen ?? moBuocTrong;
-  const doiBuoc = () => (onStepsOpenChange ? onStepsOpenChange(!moBuoc) : setMoBuocTrong(!moBuoc));
+  const datMoBuoc = (mo: boolean) => (onStepsOpenChange ? onStepsOpenChange(mo) : setMoBuocTrong(mo));
+  const doiBuoc = () => datMoBuoc(!moBuoc);
   const idBuoc = useId();
+  /* W2 · B: bảng nổi trên vùng mô phỏng — vị trí người học kéo tới sống ở đây, nên đóng/mở không mất nó (`null` =
+     mặc định, phía phải khung). Vùng kẹp là khung canvas của renderer. */
+  const [viTriBuoc, setViTriBuoc] = useState<ViTriBang | null>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const khungRef = useRef<HTMLElement | null>(null);
+  const nutBuocRef = useRef<HTMLButtonElement>(null);
+  useLayoutEffect(() => {
+    khungRef.current = playerRef.current?.querySelector<HTMLElement>(".geo3d-canvas") ?? null;
+  });
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
   // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
@@ -156,7 +167,7 @@ export function Scene3DPlayer({
   };
 
   return (
-    <div className={`geo3d-player${moBuoc ? " co-cac-buoc" : ""}`}>
+    <div ref={playerRef} className="geo3d-player">
       <Scene3DWorkspace
         scene={scene}
         step={step}
@@ -208,16 +219,6 @@ export function Scene3DPlayer({
           Bước sau <IconNext />
         </button>
 
-        <button
-          type="button"
-          className={`geo3d-btn geo3d-cac-buoc-mo${moBuoc ? " la-mo" : ""}`}
-          aria-expanded={moBuoc}
-          aria-controls={idBuoc}
-          onClick={doiBuoc}
-        >
-          Các bước dựng
-        </button>
-
         <label className="geo3d-scrub">
           <span className="geo3d-scrub-label">Bước</span>
           <input
@@ -232,12 +233,27 @@ export function Scene3DPlayer({
             aria-label={`Chọn bước dựng, hiện ở bước ${buocHinh + 1} trên ${tong}`}
           />
         </label>
+
+        {/* W2 · B: nút ở phía PHẢI thanh điều khiển; `aria-controls` chỉ khi bảng có mặt (W1 trỏ tới id vắng). */}
+        <button
+          ref={nutBuocRef}
+          type="button"
+          className={`geo3d-btn geo3d-cac-buoc-mo${moBuoc ? " la-mo" : ""}`}
+          aria-expanded={moBuoc}
+          aria-controls={moBuoc ? idBuoc : undefined}
+          onClick={doiBuoc}
+        >
+          Các bước dựng
+        </button>
       </div>
 
       {moBuoc && (
-        /* ROADMAP §0.1-3/4/5: một mục mỗi bước DỰNG; chọn ⇒ dừng phát rồi đặt đúng neo của thanh bước. Desktop:
-           cột cạnh khung (lưới `.co-cac-buoc`); khổ hẹp: trong dòng chảy dưới điều khiển, cuộn bên trong. */
-        <nav className="geo3d-cac-buoc" id={idBuoc} aria-label="Các bước dựng">
+        /* ROADMAP §0.1-3/4/5: một mục mỗi bước DỰNG; chọn ⇒ dừng phát rồi đặt đúng neo của thanh bước. W2: bảng NỔI
+           trên khung (desktop, kéo được) — không chiếm cột, không đổi cỡ canvas; khổ hẹp: trong dòng chảy dưới điều
+           khiển, thu gọn được. */
+        <BangNoi id={idBuoc} tieuDe="Các bước dựng" viTri={viTriBuoc} onViTri={setViTriBuoc} khungRef={khungRef}
+                 onDong={() => { datMoBuoc(false); nutBuocRef.current?.focus(); }}>
+        <nav className="geo3d-cac-buoc" aria-label="Các bước dựng">
           <ol className="geo3d-cac-buoc-ds">
             {geometryStepList(scene).map((b) => (
               <li key={b.index}>
@@ -258,6 +274,7 @@ export function Scene3DPlayer({
             ))}
           </ol>
         </nav>
+        </BangNoi>
       )}
 
       <Scene3DSolution

@@ -92,10 +92,13 @@ describe("§0.1-3/4/5 · «Các bước dựng»", () => {
   });
 
   it("mobile: panel trong dòng chảy dưới điều khiển, cuộn bên trong, không phủ lên khung", () => {
+    // W2 · B: cuộn bên trong chuyển từ danh sách sang THÂN bảng nổi; khổ hẹp đưa bảng về dòng chảy (static).
     const css = nguon("../../../styles/global.css");
-    const khoi = css.slice(css.indexOf(".geo3d-cac-buoc {"), css.indexOf("}", css.indexOf(".geo3d-cac-buoc {")));
-    expect(khoi).toContain("overflow-y: auto");
-    expect(khoi).not.toContain("position: absolute");
+    const khoi = (sel: string, tu = 0) => css.slice(css.indexOf(sel, tu), css.indexOf("}", css.indexOf(sel, tu)));
+    expect(khoi(".geo3d-bang-noi-than {")).toContain("overflow-y: auto");
+    const hep = css.indexOf("@media (max-width: 48rem) {\n  .geo3d-bang-noi {");
+    expect(hep).toBeGreaterThan(0);
+    expect(khoi(".geo3d-bang-noi {", hep)).toContain("position: static");
   });
 });
 
@@ -103,5 +106,60 @@ describe("§0.1-8 · bớt dòng mô tả lặp", () => {
   it("không còn dải «Đang dựng / Dựa trên» — dòng thuyết minh và ô soi đã nói điều ấy", () => {
     expect(nguon("./scene3d-playback.tsx")).not.toContain("geo3d-focus");
     expect(sach(renderToString(<Scene3DPlayer scene={CANH} />))).not.toContain("Đang dựng");
+  });
+});
+
+describe("W2 · B · bảng nổi «Các bước dựng»", () => {
+  it("kẹp trong vùng mô phỏng: kéo ra ngoài mọi phía vẫn để nguyên bảng (và nút đóng) trong khung", async () => {
+    const { kepBang, LE_BANG } = await import("./scene3d-floating-panel");
+    const khung = { x: 0, y: 0, w: 800, h: 500 };
+    const co = { w: 272, h: 300 };
+    expect(kepBang({ x: -500, y: -500 }, co, khung)).toEqual({ x: LE_BANG, y: LE_BANG });
+    expect(kepBang({ x: 5000, y: 5000 }, co, khung)).toEqual({ x: 800 - 272 - LE_BANG, y: 500 - 300 - LE_BANG });
+    // khung thu lại (đổi cỡ cửa sổ) sau khi đã kéo: vị trí cũ bị kẹp lại vào trong
+    expect(kepBang({ x: 500, y: 150 }, co, { ...khung, w: 600, h: 400 })).toEqual({ x: 600 - 272 - LE_BANG, y: 400 - 300 - LE_BANG });
+    // bảng cao hơn khung ⇒ dính lề trên (tiêu đề + nút đóng vẫn thấy)
+    expect(kepBang({ x: 10, y: 99 }, { w: 272, h: 900 }, khung).y).toBe(LE_BANG);
+  });
+
+  it("vị trí mặc định ở phía phải vùng mô phỏng; phím mũi tên dời bảng, Shift dời xa hơn", async () => {
+    const { viTriMacDinh, dichBangPhim, BUOC_PHIM } = await import("./scene3d-floating-panel");
+    const p = viTriMacDinh({ w: 272, h: 300 }, { x: 0, y: 10, w: 1000, h: 560 });
+    expect(p.x).toBeGreaterThan(1000 / 2);
+    expect(p.y).toBeLessThan(560 / 4);
+    expect(dichBangPhim({ x: 100, y: 100 }, "ArrowLeft", false)).toEqual({ x: 100 - BUOC_PHIM, y: 100 });
+    expect(dichBangPhim({ x: 100, y: 100 }, "ArrowDown", true)).toEqual({ x: 100, y: 100 + 4 * BUOC_PHIM });
+    expect(dichBangPhim({ x: 100, y: 100 }, "Enter", false)).toBeNull();
+  });
+
+  it("không còn cột lưới: mở bảng không đổi lưới/kích thước của trình phát", () => {
+    const css = nguon("../../../styles/global.css");
+    expect(css).not.toContain("co-cac-buoc");
+    const mo = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen />));
+    const dong = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen={false} />));
+    const lop = (h: string) => h.match(/class="(geo3d-player[^"]*)"/)?.[1];
+    expect(lop(mo)).toBe(lop(dong));
+    expect(mo).toContain("geo3d-bang-noi");
+  });
+
+  it("nút ở phía phải thanh điều khiển; aria-controls chỉ trỏ tới bảng khi bảng có mặt", () => {
+    const dong = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen={false} />));
+    const mo = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen />));
+    const nut = (h: string) => h.match(/<button[^>]*geo3d-cac-buoc-mo[^>]*>/)?.[0] ?? "";
+    expect(nut(dong)).not.toContain("aria-controls");
+    const id = nut(mo).match(/aria-controls="([^"]+)"/)?.[1];
+    expect(id).toBeTruthy();
+    expect(mo).toContain(`id="${id}"`);
+    // nút mở là phần tử cuối của thanh điều khiển (sau thanh bước)
+    const dieuKhien = dong.slice(dong.indexOf("geo3d-controls"));
+    expect(dieuKhien.indexOf("geo3d-scrub")).toBeLessThan(dieuKhien.indexOf("geo3d-cac-buoc-mo"));
+  });
+
+  it("bảng có đóng, về vị trí mặc định, thu gọn và tiêu đề nhận bàn phím", () => {
+    const mo = sach(renderToString(<Scene3DPlayer scene={CANH} stepsOpen />));
+    expect(mo).toContain('aria-label="Đóng"');
+    expect(mo).toContain('aria-label="Về vị trí mặc định"');
+    expect(mo).toContain('aria-label="Thu gọn bảng"');
+    expect(mo).toMatch(/class="geo3d-bang-noi-dau" tabindex="0"/);
   });
 });

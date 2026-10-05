@@ -335,19 +335,24 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     //
     // THÊM `./scene3d-annotations` (W17), nói ra: CHỈ một `type` — công tắc Số
     // đo/Kết quả do xưởng giữ, trình phát chuyển tiếp nguyên xuống khung nhìn.
+    //
+    // THÊM `./scene3d-floating-panel` (regular-square-pyramid-w02 · B), nói ra: bảng «Các bước dựng» nổi trên
+    // khung thay cột lưới W1. Nó chỉ là khung trình bày (kéo, kẹp, đóng) quanh danh sách bước; nó không đọc cảnh.
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
       "../../../components/icons", "./interaction-state", "./scene3d-annotations",
-      "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
+      "./scene3d-floating-panel", "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
     ]);
   });
 
-  it("chỉ có ĐÚNG ba `useState`: bước, trạng thái phát, panel các bước mở/đóng", () => {
+  it("chỉ có ĐÚNG bốn `useState`: bước, trạng thái phát, panel các bước mở/đóng, vị trí panel", () => {
     // Thêm state là dấu hiệu playback bắt đầu sở hữu một thứ khác ngoài thời gian — và đó là lúc nó trượt
     // thành công cụ dựng hình. Cái thứ ba (regular-square-pyramid-w01, §0.1-3) là sở thích TRÌNH BÀY: panel
-    // «Các bước dựng» mở hay đóng, dự phòng khi xưởng không giữ; nó không chạm hình hay bước.
-    expect((src.match(/useState/g) ?? []).length).toBe(4); // 1 import + 3 dùng
+    // «Các bước dựng» mở hay đóng, dự phòng khi xưởng không giữ; nó không chạm hình hay bước. Cái thứ tư
+    // (regular-square-pyramid-w02 · B) cũng là trình bày: chỗ người học kéo bảng nổi tới, giữ qua đóng/mở.
+    expect((src.match(/useState/g) ?? []).length).toBe(5); // 1 import + 4 dùng
     expect(src).toMatch(/const \[moBuocTrong, setMoBuocTrong\] = useState\(false\)/);
+    expect(src).toMatch(/const \[viTriBuoc, setViTriBuoc\] = useState<ViTriBang \| null>\(null\)/);
   });
 
   it("`scene` đi vào và đi ra NGUYÊN VẸN cùng tham chiếu", () => {
