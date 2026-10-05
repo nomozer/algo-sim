@@ -197,11 +197,14 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
   it("không tích có hướng, không giao điểm, không tích vô hướng", () => {
     // W17: lớp nhãn số đo cũng là phía trình bày — điểm neo chỉ là trung bình toạ độ backend phát.
     const soDo = readFileSync(join(__dirname, "scene3d-annotations.ts"), "utf8");
+    // W2 · D: hình phụ cũng là phía trình bày — chỉ quyết dựng hay không.
+    const phu = readFileSync(join(__dirname, "scene3d-auxiliary.ts"), "utf8");
     for (const cam of [".cross(", ".dot(", "Plane(", "distanceTo", "angleTo",
                        "projectOnPlane"]) {
       expect(view, `view dùng ${cam}`).not.toContain(cam);
       expect(model, `model dùng ${cam}`).not.toContain(cam);
       expect(soDo, `scene3d-annotations dùng ${cam}`).not.toContain(cam);
+      expect(phu, `scene3d-auxiliary dùng ${cam}`).not.toContain(cam);
     }
   });
 
@@ -270,13 +273,18 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // phát — không chân đường vuông góc, không giao điểm) và đặt hộp chữ
       // tránh nhau. Chủ thể do backend gắn; giá trị là chữ payload. Quét chuỗi
       // cấm ở test "không tích có hướng…" phía trên nay soi cả module này.
+      //
+      // `./scene3d-auxiliary` THÊM ở regular-square-pyramid-w02 · D, nói ra:
+      // hình phụ (vai CONSTRUCT_AUXILIARY_GEOMETRY của backend) nào ẩn ở bước
+      // nào. THUẦN, không three, không toạ độ: chỉ đọc vai trò, `depends` và
+      // tập vật có mặt theo bước — quyết DỰNG hay KHÔNG, không tính hình.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-edge-visibility",
               "./polygon-triangulate", "./scene3d-roles",
-              "./scene3d-annotations"]).toContain(i);
+              "./scene3d-annotations", "./scene3d-auxiliary"]).toContain(i);
     }
   });
 

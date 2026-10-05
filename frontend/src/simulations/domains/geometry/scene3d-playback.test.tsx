@@ -338,10 +338,12 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     //
     // THÊM `./scene3d-floating-panel` (regular-square-pyramid-w02 · B), nói ra: bảng «Các bước dựng» nổi trên
     // khung thay cột lưới W1. Nó chỉ là khung trình bày (kéo, kẹp, đóng) quanh danh sách bước; nó không đọc cảnh.
+    // THÊM `./scene3d-auxiliary` (W2 · D), nói ra: chỉ để NHÓM các bước dựng hình phụ (AC, BD) với bước dùng
+    // chúng (O) trong danh sách — mỗi bước con vẫn là một nút đặt đúng neo, không đổi timeline.
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
       "../../../components/icons", "./interaction-state", "./scene3d-annotations",
-      "./scene3d-floating-panel", "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
+      "./scene3d-auxiliary", "./scene3d-floating-panel", "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
     ]);
   });
 

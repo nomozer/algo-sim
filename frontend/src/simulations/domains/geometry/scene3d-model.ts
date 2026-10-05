@@ -169,6 +169,8 @@ export interface SceneObject {
   edge_ownership?: LogicalEdgeOwnership[];
   surfaces?: CanonicalSurface[];
   boundary_edge_ids?: string[];
+  /** Vai trò dựng hình của vật (formation W14, backend) — W2 · D đọc `CONSTRUCT_AUXILIARY_GEOMETRY`. */
+  formation_roles?: string[];
   surface_role?: SurfaceRole;
   occludes_edges?: boolean;
   /**

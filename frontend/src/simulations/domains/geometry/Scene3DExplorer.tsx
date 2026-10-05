@@ -69,6 +69,7 @@ import {
   withSubEntities,
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
+import { hasAuxiliary } from "./scene3d-auxiliary";
 import {
   type AnnotationView,
   DEFAULT_ANNOTATION_VIEW,
@@ -193,6 +194,11 @@ export function Scene3DExplorer({
   const [xem, setXem] = useState<AnnotationView>(DEFAULT_ANNOTATION_VIEW);
   const coAn = useMemo(() => hasHiddenByDefault(day), [day]);
   const [moLoiGiai, setMoLoiGiai] = useState(false);
+  /* W2 · D/F: «Hình phụ» (hiện đường/mặt phẳng phụ đã xong việc) và «Lưới» (lưới nền) — SỞ THÍCH trình bày như
+     `xem`, mặc định TẮT, giữ qua các bài; bật/tắt không đụng `tt` (bước, lựa chọn) hay camera. */
+  const [hinhPhu, setHinhPhu] = useState(false);
+  const [luoi, setLuoi] = useState(false);
+  const coHinhPhu = useMemo(() => hasAuxiliary(day), [day]);
   //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.
@@ -348,6 +354,26 @@ export function Scene3DExplorer({
               <IconRuler /> Hiện tất cả
             </button>
           )}
+          {coHinhPhu && (
+            <button
+              type="button"
+              className={`geo3d-chip${hinhPhu ? " la-mo" : ""}`}
+              onClick={() => setHinhPhu((x) => !x)}
+              aria-pressed={hinhPhu}
+              title="Hiện các đường và mặt phẳng phụ đã dùng xong (vd đường chéo dựng tâm, mặt phẳng để đo)"
+            >
+              Hình phụ
+            </button>
+          )}
+          <button
+            type="button"
+            className={`geo3d-chip${luoi ? " la-mo" : ""}`}
+            onClick={() => setLuoi((x) => !x)}
+            aria-pressed={luoi}
+            title="Lưới nền mảnh để dễ cảm nhận chiều sâu"
+          >
+            Lưới
+          </button>
           <button
             type="button"
             className={`geo3d-chip${chiTiet ? " la-mo" : ""}`}
@@ -373,6 +399,8 @@ export function Scene3DExplorer({
           onSolutionOpenChange={setMoLoiGiai}
           stepsOpen={moBuoc}
           onStepsOpenChange={setMoBuoc}
+          auxiliaryShown={hinhPhu}
+          gridShown={luoi}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}

@@ -18,6 +18,7 @@ import type { AnnotationView } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { Scene3DSolution } from "./scene3d-solution";
 import { BangNoi, type ViTriBang } from "./scene3d-floating-panel";
+import { auxiliaryHiddenAt, geometryStepGroups } from "./scene3d-auxiliary";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
 /**
@@ -74,11 +75,14 @@ interface Props {
   /** ROADMAP §0.1-3: danh sách «Các bước dựng» đang mở — xưởng giữ (đóng/mở không đụng bước hay lựa chọn). */
   stepsOpen?: boolean;
   onStepsOpenChange?: (open: boolean) => void;
+  /** W2 · D/F: công tắc «Hình phụ» và «Lưới» — xưởng giữ, chuyển tiếp nguyên xuống khung nhìn. */
+  auxiliaryShown?: boolean;
+  gridShown?: boolean;
 }
 
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
-  solutionOpen, onSolutionOpenChange, stepsOpen, onStepsOpenChange,
+  solutionOpen, onSolutionOpenChange, stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
 }: Props) {
   const [moBuocTrong, setMoBuocTrong] = useState(false);
   const moBuoc = stepsOpen ?? moBuocTrong;
@@ -161,6 +165,30 @@ export function Scene3DPlayer({
   /* Ở bước cuối, Phát không còn gì để phát: nút thành XEM LẠI — về bước 0,
    * bỏ chọn (nên tô sáng causal cũng hết), rồi phát. Trước w10 nút này bị vô
    * hiệu và cách duy nhất là kéo thanh bước về đầu. */
+  const dsBuoc = geometryStepList(scene);
+  /** W2 · D: bước chỉ dựng hình phụ đang ẩn — nói ra ở danh sách, để bước ấy không trông như "không có gì". */
+  const anHet = (neo: number) => {
+    const moi = scene.formation?.steps[neo]?.focus_ids ?? [];
+    const an = auxiliaryHiddenAt(scene, neo, !!auxiliaryShown, interaction?.selected_id ?? null);
+    return moi.length > 0 && moi.every((id) => an.has(id));
+  };
+  const nutBuoc = (b: (typeof dsBuoc)[number]) => (
+    <button
+      type="button"
+      className="geo3d-cac-buoc-nut"
+      data-geometry-step={b.index}
+      aria-current={b.index === buocHinh ? "step" : undefined}
+      onClick={() => {
+        setDangPhat(false);
+        setStep(b.anchor);
+      }}
+    >
+      <span className="geo3d-cac-buoc-so">{b.index + 1}</span>
+      <span className="geo3d-cac-buoc-chu">{b.label}</span>
+      {anHet(b.anchor) && <span className="geo3d-cac-buoc-phu">hình phụ, đang ẩn</span>}
+    </button>
+  );
+
   const xemLai = () => {
     datTrangThai(0, true);
     setDangPhat(true);
@@ -175,6 +203,8 @@ export function Scene3DPlayer({
         onSelect={onSelect}
         fitToken={fitToken}
         annotationView={annotationView}
+        auxiliaryShown={auxiliaryShown}
+        gridShown={gridShown}
       />
 
       <div className="geo3d-controls" role="group" aria-label="Điều khiển bước dựng">
@@ -255,23 +285,23 @@ export function Scene3DPlayer({
                  onDong={() => { datMoBuoc(false); nutBuocRef.current?.focus(); }}>
         <nav className="geo3d-cac-buoc" aria-label="Các bước dựng">
           <ol className="geo3d-cac-buoc-ds">
-            {geometryStepList(scene).map((b) => (
-              <li key={b.index}>
-                <button
-                  type="button"
-                  className="geo3d-cac-buoc-nut"
-                  data-geometry-step={b.index}
-                  aria-current={b.index === buocHinh ? "step" : undefined}
-                  onClick={() => {
-                    setDangPhat(false);
-                    setStep(b.anchor);
-                  }}
-                >
-                  <span className="geo3d-cac-buoc-so">{b.index + 1}</span>
-                  <span className="geo3d-cac-buoc-chu">{b.label}</span>
-                </button>
+            {/* W2 · D: dãy bước chỉ dựng hình phụ (AC, BD) cùng bước dùng chúng (O) thành MỘT mục có bước con —
+                `<details>` gốc của trình duyệt: thu gọn được mà không thêm state; mỗi bước con vẫn là một nút bước. */}
+            {geometryStepGroups(scene).map((m) => (m.loai === "buoc" ? (
+              <li key={m.index}>{nutBuoc(dsBuoc[m.index])}</li>
+            ) : (
+              <li key={`nhom-${m.chinh}`} className="geo3d-cac-buoc-nhom">
+                <details open>
+                  <summary className="geo3d-cac-buoc-nhom-dau">
+                    <span className="geo3d-cac-buoc-chu">{dsBuoc[m.chinh].label}</span>
+                    <span className="geo3d-cac-buoc-so">{`${m.con.length} bước`}</span>
+                  </summary>
+                  <ol className="geo3d-cac-buoc-ds geo3d-cac-buoc-con">
+                    {m.con.map((g) => <li key={g}>{nutBuoc(dsBuoc[g])}</li>)}
+                  </ol>
+                </details>
               </li>
-            ))}
+            )))}
           </ol>
         </nav>
         </BangNoi>

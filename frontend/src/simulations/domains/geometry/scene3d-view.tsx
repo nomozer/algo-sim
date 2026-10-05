@@ -71,6 +71,7 @@ import {
   placeAnnotationLabels,
   witnessesShown,
 } from "./scene3d-annotations";
+import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -1234,6 +1235,10 @@ interface Props {
   fitToken?: number;
   /** W18 §16.5: chế độ nhãn số đo trên hình. Vắng ⇒ gọn (dữ kiện + lựa chọn). */
   annotationView?: AnnotationView;
+  /** W2 · D: công tắc «Hình phụ» — vắng/false ⇒ hình phụ xong nhiệm vụ và mặt phẳng chỉ để đo ẩn (`scene3d-auxiliary`). */
+  auxiliaryShown?: boolean;
+  /** W2 · F: lưới nền mảnh, mặc định TẮT; ngoài nhóm gốc ⇒ không vào occlusion, raycast hay khung nhìn. */
+  gridShown?: boolean;
 }
 
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
@@ -1275,6 +1280,7 @@ function vungCheKhung(goc: DOMRect): LabelRect[] {
 
 export function Scene3DWorkspace({
   scene, step, interaction, onSelect, fitToken = 0, annotationView = DEFAULT_ANNOTATION_VIEW,
+  auxiliaryShown = false, gridShown = false,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
@@ -1340,6 +1346,8 @@ export function Scene3DWorkspace({
   /** §16.7: nhóm nhân chứng — ngoài nhóm gốc, nên đổi bước/đổi lựa chọn không dựng lại nó và nó không
    *  dựng lại hình; chỉ đổi khi danh sách nhãn khoảng cách đang hiện đổi. */
   const nhanChungRef = useRef<THREE.Group | null>(null);
+  /** W2 · F: nhóm lưới nền — ngoài nhóm gốc như nhân chứng: không dựng lại hình, không vào occlusion/raycast. */
+  const luoiRef = useRef<THREE.Group | null>(null);
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -1388,6 +1396,9 @@ export function Scene3DWorkspace({
     const nhanChung = new THREE.Group();
     scene3.add(nhanChung);
     nhanChungRef.current = nhanChung;
+    const luoi = new THREE.Group();
+    scene3.add(luoi);
+    luoiRef.current = luoi;
 
     const dieuKhien = new OrbitControls(cam, renderer.domElement);
     dieuKhien.enableDamping = true;
@@ -1669,6 +1680,7 @@ export function Scene3DWorkspace({
       container.removeChild(renderer.domElement);
       rootRef.current = null;
       nhanChungRef.current = null;
+      luoiRef.current = null;
       veRef.current = null;
       vuaKhungRef.current = null;
       delete (window as any).__geo3d_set_section_fill_visible;
@@ -1693,6 +1705,37 @@ export function Scene3DWorkspace({
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
   }, [scene, nhanSoDo]);
+
+  // W2 · F — LƯỚI NỀN tuỳ chọn: mảnh, nhạt, nằm dưới đáy hình (mặt z thấp nhất của cảnh), ô theo cỡ cảnh — không
+  // số toạ độ, không đơn vị. Bật/tắt chỉ thêm/bớt nhóm này rồi vẽ lại một khung: camera, bước, lựa chọn không đổi.
+  useEffect(() => {
+    const nhom = luoiRef.current;
+    if (!nhom) return;
+    for (const con of [...nhom.children]) {
+      nhom.remove(con);
+      const l = con as THREE.LineSegments;
+      l.geometry?.dispose?.();
+      (l.material as THREE.Material | undefined)?.dispose?.();
+    }
+    const diem = diemHuuHan(scene.objects);
+    if (gridShown && diem.length > 0) {
+      const lo = [0, 1, 2].map((i) => Math.min(...diem.map((p) => p[i])));
+      const hi = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])));
+      const canh = Math.max(hi[0] - lo[0], hi[1] - lo[1], 1) * 2;
+      const l = new THREE.GridHelper(canh, 16, 0xc8cdd3, 0xdde1e5);
+      l.rotation.x = Math.PI / 2;             // GridHelper nằm trong XZ; trục lên của bài là z
+      // Hạ lưới một chút dưới đáy: nằm đúng mặt đáy thì tranh độ sâu với mặt đáy (nhấp nháy).
+      l.position.set((lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, lo[2] - canh * 0.002);
+      const m = l.material as THREE.Material;
+      m.transparent = true;
+      m.opacity = 0.55;
+      m.depthWrite = false;
+      l.raycast = () => {};
+      nhom.add(l);
+    }
+    if (typeof window !== "undefined") (window as any).__geo3d_grid_visible = nhom.children.length > 0;
+    veRef.current?.();
+  }, [scene, gridShown]);
 
   // §16.5 — nhãn số đo BẤM ĐƯỢC (chuột, Enter/Space): bấm là chọn đại lượng, bấm lại là bỏ chọn.
   // Listener gắn bằng lệnh (lớp này không dùng prop sự kiện trong JSX — khoá ở `scene3d.test.tsx`).
@@ -1766,7 +1809,9 @@ export function Scene3DWorkspace({
     // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì một
     // mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm. Backend NÓI vật
     // nào không có hình trên khung (`render: "non_visual"`); phía này chỉ tuân.
-    const seDung = hienTai.filter((o) => isVisible(tuongTac, o.id, daTonTai) && veTrenKhung(o));
+    // W2 · D: hình phụ đã xong nhiệm vụ / mặt phẳng chỉ để đo — không dựng (dữ liệu, xuất xứ, timeline giữ nguyên).
+    const anPhu = auxiliaryHiddenAt(scene, buoc, auxiliaryShown, tuongTac.selected_id ?? null);
+    const seDung = hienTai.filter((o) => isVisible(tuongTac, o.id, daTonTai) && veTrenKhung(o) && !anPhu.has(o.id));
     const nhuong = doanNhuongCanh(seDung,
       (id) => visualTransformOf(tuongTac, scene, id).translate.join(","));
     for (const o of seDung) {
@@ -1797,10 +1842,11 @@ export function Scene3DWorkspace({
     }
     if (typeof window !== "undefined") {
       (window as any).__geo3d_rendered_object_ids = daDung;
+      (window as any).__geo3d_auxiliary_hidden_ids = [...anPhu].sort();
       (window as any).__geo3d_causal_tiers = tang ? Object.fromEntries(tang) : null;
     }
     veRef.current?.();
-  }, [scene, buoc, tuongTac, tapNoiBat, tang]);
+  }, [scene, buoc, tuongTac, tapNoiBat, tang, auxiliaryShown]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //

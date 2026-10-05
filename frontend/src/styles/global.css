@@ -6264,3 +6264,36 @@ html {
   margin: 0;
   color: var(--ink-secondary);
 }
+
+/* W2 · D: nhóm bước con trong «Các bước dựng» (AC, BD rồi giao điểm O) — `<details>` gốc, thu gọn được. */
+.geo3d-cac-buoc-nhom-dau {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-xs);
+  padding: 6px var(--sp-sm);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.geo3d-cac-buoc-nhom-dau .geo3d-cac-buoc-so {
+  margin-left: auto;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.geo3d-cac-buoc-con {
+  padding-left: var(--sp-md);
+}
+
+.geo3d-cac-buoc-nhom {
+  border-radius: var(--rounded-md);
+}
+
+.geo3d-cac-buoc-phu {
+  margin-left: auto;
+  color: var(--ink-secondary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
