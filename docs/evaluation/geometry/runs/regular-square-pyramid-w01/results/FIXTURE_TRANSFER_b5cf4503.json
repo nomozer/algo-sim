@@ -1,0 +1,689 @@
+{
+ "schema_version": "fixture-transfer/1",
+ "old_dir": "docs\\evaluation\\geometry\\runs\\regular-square-pyramid-w01\\inputs",
+ "new_dir": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\d--Documents-projects-algo-sim\\2545b257-a2d8-4acd-a69b-bf10d44adec1\\scratchpad\\fx-b5cf4503",
+ "reproduction": {
+  "recorded_fixture_manifest_sha256": "58839cec659a32c9cd5c30010300a8269a84537f8ac08699e3fbef3182aa3d2a",
+  "committed_fixture_manifest_sha256_lf": "8ba4bf35f65a3214881583f5fb204bc2241e537b299b5529fb7d3aae3965978a",
+  "byte_exact": false
+ },
+ "fixtures": {
+  "cross_section_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cross_section_correct_plane.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cross_section_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cross_section_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cross_section_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cross_section_wrong_plane.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cube_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cube_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cube_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cube_system_cause.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cube_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cuboid_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cuboid_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cuboid_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "cuboid_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "rectangular_pyramid_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "rectangular_pyramid_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "rectangular_pyramid_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "rectangular_pyramid_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "regular_square_pyramid_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "regular_square_pyramid_non_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "regular_square_pyramid_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "regular_square_pyramid_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "regular_square_pyramid_wrong_centre.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_prism_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_prism_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_prism_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_prism_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_pyramid_assumption.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_pyramid_negative.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_pyramid_positive.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "triangular_pyramid_ungrounded.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "w18_midpoint_mismatch.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "w18_midpoint_plane_distance.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "w18_projection_line.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "w18_projection_mismatch.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  },
+  "w18_unverified.json": {
+   "byte_equal": false,
+   "envelope_byte_equal": true,
+   "differing_paths": [
+    {
+     "path": "$.product_commit_sha",
+     "old": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+     "new": "ad7172ab96e81b28deaf373f7a82616c7d60f297"
+    },
+    {
+     "path": "$.product_tree_sha",
+     "old": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+     "new": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa"
+    }
+   ],
+   "identity_only": true
+  }
+ },
+ "fixture_manifest_differing_paths": [
+  "$.fixtures.cross_section_assumption.json.sha256",
+  "$.fixtures.cross_section_correct_plane.json.sha256",
+  "$.fixtures.cross_section_negative.json.sha256",
+  "$.fixtures.cross_section_positive.json.sha256",
+  "$.fixtures.cross_section_ungrounded.json.sha256",
+  "$.fixtures.cross_section_wrong_plane.json.sha256",
+  "$.fixtures.cube_assumption.json.sha256",
+  "$.fixtures.cube_negative.json.sha256",
+  "$.fixtures.cube_positive.json.sha256",
+  "$.fixtures.cube_system_cause.json.sha256",
+  "$.fixtures.cube_ungrounded.json.sha256",
+  "$.fixtures.cuboid_assumption.json.sha256",
+  "$.fixtures.cuboid_negative.json.sha256",
+  "$.fixtures.cuboid_positive.json.sha256",
+  "$.fixtures.cuboid_ungrounded.json.sha256",
+  "$.fixtures.rectangular_pyramid_assumption.json.sha256",
+  "$.fixtures.rectangular_pyramid_negative.json.sha256",
+  "$.fixtures.rectangular_pyramid_positive.json.sha256",
+  "$.fixtures.rectangular_pyramid_ungrounded.json.sha256",
+  "$.fixtures.regular_square_pyramid_assumption.json.sha256",
+  "$.fixtures.regular_square_pyramid_non_positive.json.sha256",
+  "$.fixtures.regular_square_pyramid_positive.json.sha256",
+  "$.fixtures.regular_square_pyramid_ungrounded.json.sha256",
+  "$.fixtures.regular_square_pyramid_wrong_centre.json.sha256",
+  "$.fixtures.triangular_prism_assumption.json.sha256",
+  "$.fixtures.triangular_prism_negative.json.sha256",
+  "$.fixtures.triangular_prism_positive.json.sha256",
+  "$.fixtures.triangular_prism_ungrounded.json.sha256",
+  "$.fixtures.triangular_pyramid_assumption.json.sha256",
+  "$.fixtures.triangular_pyramid_negative.json.sha256",
+  "$.fixtures.triangular_pyramid_positive.json.sha256",
+  "$.fixtures.triangular_pyramid_ungrounded.json.sha256",
+  "$.fixtures.w18_midpoint_mismatch.json.sha256",
+  "$.fixtures.w18_midpoint_plane_distance.json.sha256",
+  "$.fixtures.w18_projection_line.json.sha256",
+  "$.fixtures.w18_projection_mismatch.json.sha256",
+  "$.fixtures.w18_unverified.json.sha256",
+  "$.product_commit_sha",
+  "$.product_tree_sha"
+ ],
+ "summary": {
+  "fixtures": 37,
+  "byte_equal": 0,
+  "envelopes_byte_equal": 37,
+  "differences_only_in_identity_fields": true
+ },
+ "verdict": "DOES_NOT_TRANSFER — re-measure"
+}

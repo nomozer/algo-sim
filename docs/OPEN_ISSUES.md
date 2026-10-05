@@ -577,6 +577,18 @@
 - **acceptance:** a text stating a length ≤ 0 is refused with cause SOURCE on the default route for every family; labelled rows before the change.
 - **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out <scratch>` (asserts the current refusal of `regular_square_pyramid_non_positive`)
 
+### ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY
+- **description:** The source length reader binds a number only to the segment written next to it. In "SA = SB = SC = SD = 3" it reads SD = 3 and nothing for SA, SB, SC, so a program that cites SA = 3 is refused at `grounding` with `SOURCE_EVIDENCE_CONFLICT` although the text determines the answer.
+- **evidence:** corpus row `R2_L1_chained_equal_lateral_edges` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus/LABELS_R2.json`, `product_limit: true`; the independent oracle derives V = 16/3); `segment_relation.do_dai_trong_de` on that text returns {AB: 4, SD: 3}.
+- **impact:** Over-refusal (never a wrong answer) of a common way to state equal lateral edges; the refusal cause is CONSTRUCTION, so the learner is not told the text is at fault.
+- **scope:** `backend/app/simulation/semantic_program/segment_relation.py` (one length reader, shared by grounding and the certificate) — a chain `X1 = X2 = … = v` of segment names.
+- **status:** OPEN (regular-square-pyramid-w01) — found by the final self-review; the reader is unchanged by W1.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next source-reader wave
+- **default_switch_blocker:** NO
+- **acceptance:** a chain of segment names ending in one value binds every segment of the chain; a chain mixing segments of different lengths in the text stays a conflict; labelled rows before the change; CACHE_VERSION decided by rows (refused → served).
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_regular_square_pyramid.py -q -k R2_L1`
+
 ### ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET
 - **description:** A text relation of the W18 vocabulary (midpoint, projection; amendment §16.1) whose target point the program declares as a literal — coordinates, not a construction operation — is neither matched by `construction_binding` nor recorded `NOT_REALIZED`. The binding only sees construction operations. Safety then rests on backstops: the `segment_division` coordinate invariant for midpoints and the W15 assumption certificate for projections, the latter only inside the polyhedral scope (U3).
 - **evidence:** W18 final self-review, deferred minor (`docs/evaluation/geometry/runs/w18-binding-focus/HANDOFF.md` § Known leftovers; `REPORT.md` limitations). No probe through the production boundary exists yet, so whether the backstops block the wrong identity in every case is unmeasured.

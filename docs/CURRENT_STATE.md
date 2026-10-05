@@ -52,11 +52,11 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = ed37f9fa (đo trình duyệt có thẩm quyền, worktree tách rời sạch có dấu cách; candidate đóng băng tại de5b2331) · T3 + cổng danh tính ở commit tài liệu (log trong run)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = ed37f9fa (đo trình duyệt có thẩm quyền, worktree tách rời sạch có dấu cách; chuyển tiếp sang candidate 5234c37e đóng băng tại ad7172ab — results/FIXTURE_TRANSFER_b5cf4503_r2.json) · T3 + cổng danh tính ở commit tài liệu cuối (log trong run)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 112
-> CANDIDATE = 4629c3e8… (was b2d4187a…; một lần đóng băng), product commit de5b2331
+> CANDIDATE = 5234c37e… (was b2d4187a…; hai lần đóng băng, trung gian 4629c3e8…), product commit ad7172ab
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
 > CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (việc regular-square-pyramid, W1, run regular-square-pyramid-w01)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt H-W1-1 (runs/regular-square-pyramid-w01/HANDOFF.md §1), rồi merge thẳng vào main + push + xoá nhánh
@@ -69,11 +69,11 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | Mục | Kết quả |
 > |---|---|
 > | Kết luận | **`READY_FOR_HUMAN_VISUAL_REVIEW`** — mọi cổng tự động đạt; điều kiện merge: người duyệt H-W1-1 (`HANDOFF.md` §1) |
-> | Chóp tứ giác đều | bộ đọc "đều"/cạnh đáy/cạnh bên/trung đoạn/tâm đáy; khuôn C1 T7; tâm O theo danh tính; chiều cao đo được của thể tích; corpus đăng ký trước **17/17** (7 phục vụ, 10 từ chối có cấu trúc) |
+> | Chóp tứ giác đều | bộ đọc "đều"/cạnh đáy/cạnh bên/trung đoạn/tâm đáy; khuôn C1 T7 (cạnh bên cả từ `SA = 3`); tâm O theo danh tính; chiều cao đo được của thể tích; corpus đăng ký trước **24/24** (hai lớp: 17 + 7) |
 > | Giao diện §0.1 | card Kết quả ẩn khi thu gọn · ngăn «Đại lượng» · panel «Các bước dựng» (desktop cạnh khung, mobile dưới điều khiển) · gỡ dải «Đang dựng» · ghi vị trí cuộn mỗi ảnh |
 > | Trình duyệt · occlusion · playback | **7/7 họ**: 14/14 dương, 54/54 âm, 6/6 phục vụ, chọn đại lượng 68/68, ngăn + panel 14/14 · occlusion 0 lỗi (bốn cảnh W14 chờ người) · playback 14/14 · 68 crop, 0 bất đồng |
-> | Lỗi tìm ra | công thức thể tích mất khi có hai ứng viên chiều cao (`98e2b8f7`) · cổng phạm vi từ chối "độ dài" (`9d66c603`, đóng `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) |
-> | Candidate · `CACHE_VERSION` | `b2d4187a…` → **`4629c3e8…`** (một lần đóng băng, `de5b2331`) · 111 → **112** (`de5b2331`, chứng minh theo hàng); vân tay bề mặt mô hình không đổi |
+> | Lỗi tìm ra | công thức thể tích mất khi có hai ứng viên chiều cao (`98e2b8f7`) · cổng phạm vi từ chối "độ dài" (`9d66c603`, đóng `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`) · tự rà soát cuối: T7 bỏ qua cạnh bên `SA = 3` (`ad7172ab`; lớp nhãn R2 7/7) |
+> | Candidate · `CACHE_VERSION` | `b2d4187a…` → `4629c3e8…` (trung gian, `de5b2331`) → **`5234c37e…`** (`ad7172ab`, sau tự rà soát) · 111 → **112** (`de5b2331`, chứng minh theo hàng; bản sửa giữ 112); vân tay bề mặt mô hình không đổi |
 > | Run | [`regular-square-pyramid-w01`](evaluation/geometry/runs/regular-square-pyramid-w01/) (`REPORT.md`, `HANDOFF.md`) |
 
 > **Gói duyệt hình + tích hợp — run `cuboid-merge` (2026-10-05; chỉ tài liệu; đã duyệt, đã merge và push):**

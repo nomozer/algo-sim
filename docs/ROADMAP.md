@@ -17,7 +17,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   [`regular-square-pyramid-w01`](evaluation/geometry/runs/regular-square-pyramid-w01/), nhánh
   `feat/regular-square-pyramid`):** chóp tứ giác đều (bộ đọc, khuôn C1 T7, tâm O theo danh tính, chiều cao đo được)
   và chín chỉnh sửa §0.1 trên bảy họ; corpus 17/17, trình duyệt 7/7 họ, occlusion 0 lỗi, playback 14/14;
-  `CACHE_VERSION` 112, candidate `4629c3e8…`. Kết luận **`READY_FOR_HUMAN_VISUAL_REVIEW`**. Việc duy nhất: người
+  `CACHE_VERSION` 112, candidate `5234c37e…` (sau bản sửa của tự rà soát: T7 đọc cạnh bên `SA = 3`). Kết luận **`READY_FOR_HUMAN_VISUAL_REVIEW`**. Việc duy nhất: người
   dùng duyệt hình H-W1-1 (`HANDOFF.md` §1 của run), cùng H-W1-2…H-W1-5; duyệt thì merge thẳng vào `main`, push,
   xoá nhánh. Sau đó trở lại `NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES` (họ kế tiếp từ §0.2). Gạch đầu dòng dưới là
   bối cảnh trước W1.

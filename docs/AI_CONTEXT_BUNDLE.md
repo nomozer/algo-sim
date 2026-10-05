@@ -21,8 +21,8 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; chưa push, chưa merge)
 CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (việc regular-square-pyramid, W1; run regular-square-pyramid-w01)
-PRODUCT_STATE = candidate 4629c3e8… (product commit de5b2331, một lần đóng băng), CACHE_VERSION 112, LLM_ONLY
-MEASUREMENT = ed37f9fa (bộ trình duyệt 7/7 họ, occlusion, playback, ảnh); T3 + cổng danh tính ở commit tài liệu
+PRODUCT_STATE = candidate 5234c37e… (product commit ad7172ab; hai lần đóng băng, trung gian 4629c3e8…), CACHE_VERSION 112, LLM_ONLY
+MEASUREMENT = ed37f9fa (bộ trình duyệt 7/7 họ, occlusion, playback, ảnh) — chuyển tiếp sang 5234c37e (FIXTURE_TRANSFER_b5cf4503_r2.json: 37/37 envelope trùng byte); T3 + cổng danh tính ở commit tài liệu cuối
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (git ls-remote; không đổi)
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w01)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (H-W1-1 ở HANDOFF.md §1 của run)
@@ -73,7 +73,8 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   ô soi là nơi giải thích duy nhất, nhân chứng khoảng cách tới chân chính xác.
 - Chóp tứ giác đều (regular-square-pyramid-w01): bộ đọc "đều"/cạnh đáy/cạnh bên/trung đoạn/tâm đáy, khuôn C1 T7,
   tâm O gắn theo danh tính (giao hai đường chéo), chiều cao đo được của thể tích; chiều cao vô tỉ, góc, chóp tam
-  giác đều chưa phục vụ. Giao diện ROADMAP §0.1: card Kết quả ẩn khi thu gọn, ngăn «Đại lượng», panel «Các bước
+  giác đều chưa phục vụ; cạnh bên đọc cả từ `SA = 3` (tự rà soát cuối, `ad7172ab`), chuỗi `SA = SB = … = 3` chưa
+  (`ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY`). Giao diện ROADMAP §0.1: card Kết quả ẩn khi thu gọn, ngăn «Đại lượng», panel «Các bước
   dựng», gỡ dải «Đang dựng»; cổng phạm vi nhận "độ dài".
 - Bảy họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
   `cuboid`, `cube`, `cross_section`, `regular_square_pyramid`.

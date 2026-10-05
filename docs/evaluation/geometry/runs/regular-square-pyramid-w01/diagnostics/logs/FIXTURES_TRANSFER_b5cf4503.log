@@ -1,0 +1,9 @@
+# cwd: <worktree 'D:/tmp/rsp w01b'>/backend @ b5cf450320ae920242660c3c695b18916b06f912 (clean, path with a space); fixtures written OUTSIDE the worktree
+git status before: 0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 5234c37e424c60ba…).
+candidate_verify_exit=0
+Khoá khớp · CACHE_VERSION 112 · môi trường b1714b566e25c912…
+cache_verify_exit=0
+Wrote 37 frozen fixtures to C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\2545b257-a2d8-4acd-a69b-bf10d44adec1\scratchpad\fx-b5cf4503\fixtures
+generator_exit=0
+git status after: 0

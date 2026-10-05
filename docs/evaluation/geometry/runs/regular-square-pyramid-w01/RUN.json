@@ -18,11 +18,13 @@
     "cache_bump_and_lock": "de5b2331",
     "refreeze": "5aaf11ee",
     "evidence": "025bbff4",
-    "living_docs_and_state": "the commits that contain this file (not recorded here)"
+    "living_docs_and_state": "the commits that contain this file (not recorded here)",
+    "self_review": "21c172e8 (R2 labels, red), ad7172ab (T7 fix), b5cf4503 (second freeze)",
+    "verification_before_self_review": "96181b87 (docs), c7fcd7dd (logs)"
   },
   "product_state": {
-    "measurement_commit": "ed37f9fa (browser, occlusion, playback, images)",
-    "candidate": "4629c3e8e3f5be60… (product commit de5b2331; previous b2d4187a…)",
+    "measurement_commit": "ed37f9fa (browser, occlusion, playback, images) — transferred to 5234c37e at b5cf4503 (results/FIXTURE_TRANSFER_b5cf4503_r2.json)",
+    "candidate": "5234c37e424c60ba… (product commit ad7172ab; intermediate 4629c3e8… at de5b2331; previous b2d4187a…)",
     "cache_version": "112 (was 111; lock verify exit 0; semantic environment b1714b566e25c912… unchanged)",
     "default_mode": "LLM_ONLY",
     "human_visual_review": "NOT_APPROVED"
@@ -32,7 +34,7 @@
     "MODEL_SURFACE_CHANGED": "NO",
     "DEFAULT_MODE": "LLM_ONLY",
     "CACHE_VERSION": "112",
-    "CANDIDATE_REFROZEN": "YES, once",
+    "CANDIDATE_REFROZEN": "YES, twice (de5b2331, ad7172ab)",
     "LIVE_GEMINI_REQUESTS": 0,
     "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
     "PUSH_EXECUTED": "NO",
@@ -40,11 +42,13 @@
     "USER_FAVICON_DELETION_PRESERVED": "YES"
   },
   "results": {
-    "corpus": "17/17 rows match the labels registered before the product change",
+    "corpus": "24/24 rows match labels registered before the corresponding change (layer 1 17/17, layer R2 7/7)",
     "browser": "7/7 families PASS; 14/14 positives, 54/54 refusals, 6/6 served, 68/68 selections, quantity drawer 14/14, steps panel 14/14",
     "occlusion": "pass, 0 failures, HUMAN_REVIEW_PENDING (four W14 scenes)",
     "playback": "14/14",
-    "images": "68 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners"
+    "images": "68 hidden-edge crops, 0 oracle disagreements, 0 duplicate owners",
+    "evidence_transfer": "TRANSFERS: 37/37 envelopes byte-identical at b5cf4503; frontend/src unchanged since ed37f9fa",
+    "final_review": "self-review (no subagent): 1 Important fixed (ad7172ab), 2 Minor deferred"
   },
   "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW"
 }
