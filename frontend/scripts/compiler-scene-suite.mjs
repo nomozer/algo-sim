@@ -1428,16 +1428,19 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   }
 }
 
-async function runNegative({ port, viewport, fixture, expected, outDir }) {
+export async function runNegative({ port, viewport, fixture, expected, outDir }) {
   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.refusal-facts')`), Boolean);
     // W16 §14.5: hộp của ĐOẠN LỜI từ chối (px CSS, toạ độ khung nhìn = toạ độ ảnh chụp) —
     // bộ dựng sheet kiểm có chữ trong đúng hộp ấy, không chỉ kiểm tệp tồn tại.
+    // cuboid-final-review: nhãn "Loại vấn đề" (dd thứ hai của thẻ) đọc ra để kỳ vọng tuỳ chọn `problem_label`.
     const observed = await jsonEval(session, `(()=>{const s=window.__ALGO_SIM_STORE__?.getState?.();`
       + `const p=document.querySelector('.refusal-facts')?.closest('section')?.querySelector('p');`
       + `const r=p?p.getBoundingClientRect():null;`
+      + `const dd=[...document.querySelectorAll('.refusal-facts dd')].map(e=>e.textContent.trim());`
       + `return{unsupported:s?.unsupported||null,canvas:!!document.querySelector('.geo3d-canvas canvas'),`
+      + `stageLabel:dd[0]??null,problemLabel:dd[1]??null,`
       + `active:!!s?.active,body:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,`
       + `viewportWidth:window.innerWidth,`
       + `refusalMessageBox:r?{x:r.left,y:r.top,w:r.width,h:r.height}:null}})()`);
@@ -1479,6 +1482,8 @@ async function runNegative({ port, viewport, fixture, expected, outDir }) {
       contract_gate: assertion(kernelPass, fixture.contract_gate ?? null),
       refusal_cause: assertion(!expected.refusal_cause || nguyenNhan === expected.refusal_cause,
         { expected: expected.refusal_cause ?? null, actual: nguyenNhan }),
+      problem_label: assertion(!expected.problem_label || observed.problemLabel === expected.problem_label,
+        { expected: expected.problem_label ?? null, actual: observed.problemLabel }),
       no_fix_text_advice_without_source_cause: assertion(nguyenNhan === "SOURCE" || baoSuaDe.length === 0,
         { refusal_cause: nguyenNhan, phrases: baoSuaDe }),
       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
@@ -1506,7 +1511,7 @@ const BAO_SUA_DE = ["diễn đạt lại", "kiểm tra lại đề", "đối chi
 
 /** W17: ca PHỤC VỤ thêm của một kịch bản (vd mặt phẳng ĐÚNG khi đề có hai mặt phẳng) — phục vụ,
  *  đáp số ở mục Kết quả, nhãn số đo của đáp số có mặt, không lỗi; không chạy cả bộ kiểm dương. */
-async function runServed({ port, viewport, fixture, expected, outDir }) {
+export async function runServed({ port, viewport, fixture, expected, outDir }) {
   const { session, analyzeCalls, apiEvents } = await openFixture({ port, viewport, fixture });
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
