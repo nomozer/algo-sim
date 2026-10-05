@@ -36,6 +36,7 @@ Renderer hoá float ở **bước cuối cùng trước khi đặt vào buffer**
 """
 from __future__ import annotations
 
+import re
 from fractions import Fraction
 from typing import Any
 
@@ -744,8 +745,9 @@ def _nhan_du_kien_tu_fact(objects: list[dict[str, Any]], spec: SemanticProgramSp
     for o in objects:
         d = khai.get(o["id"])
         nhan = nhan_fact.get(getattr(d, "source_fact_id", None) or "")
+        # W2: nhãn kiểu TOKEN MÁY (gạch dưới, camelCase) không lên bề mặt học sinh — giữ tên do tầng đặt tên dựng.
         if (o.get("type") != "quantity" or o.get("notation") or getattr(d, "provenance", None) != "GIVEN"
-                or not nhan):
+                or not nhan or "_" in nhan or re.fullmatch(r"[a-z]+[A-Z]\w*", nhan)):
             continue
         o["label"] = o["reference"] = nhan[0].upper() + nhan[1:]
 

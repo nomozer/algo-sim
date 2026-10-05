@@ -56,7 +56,7 @@ from .pipeline_adapter import (
 from .ir_static_check import kiem_tinh
 from .postconditions import check_postconditions, check_source_invariants
 from .request_contract import RequestContract
-from .refusal_cause import MA_KHONG_CAT, mat_phang_khong_cat, theo_ma
+from .refusal_cause import MA_KHONG_CAT, do_dai_de_ghi_khong_duong, mat_phang_khong_cat, theo_ma
 from .shape_constraint import neu_khoi_da_dien
 
 
@@ -406,7 +406,9 @@ def _sau_grounding(
             details=[f"[{ma or type(e).__name__}]", str(e)],
             weak=list(c1a.weak_kinds),
             # §15.3: thiết diện rỗng — mặt phẳng ĐỀ cho không cắt khối, hay mặt phẳng hệ tự đặt?
-            **(mat_phang_khong_cat(contract, spec, getattr(e, "mat_phang", None)) if ma == MA_KHONG_CAT else {}),
+            **(mat_phang_khong_cat(contract, spec, getattr(e, "mat_phang", None)) if ma == MA_KHONG_CAT
+               # W2: đề tự ghi độ dài ≤ 0 ⇒ nguyên nhân chắc chắn là đề (thay UNKNOWN); không thì giữ nguyên.
+               else do_dai_de_ghi_khong_duong(contract) or {}),
         )
 
     # Chạm trần thực thi phải BÁO, cấm cắt câm (luật cứng #12). Trace cụt thì

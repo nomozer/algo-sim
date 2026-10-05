@@ -10,6 +10,8 @@ E. Chiều cao của công thức thể tích được chọn bằng quan hệ h
 """
 from __future__ import annotations
 
+from fractions import Fraction as F
+
 import pytest
 
 from app.simulation.semantic_program.formation import DUNG_CAO, hoan_thien_dung_hinh
@@ -167,3 +169,43 @@ def test_canh_ben_xien_cua_chop_deu_khong_thanh_chieu_cao():
 
 def test_nhan_cua_ca_dung_trong_ho_so_w02():
     assert NHAN["S1_side_height_volume"]["expect"] == "served:16"
+
+
+# ── Độ dài không dương do chính đề ghi (ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE) ───────────────────
+
+def _khong_duong(van_canh: str, s: str):
+    from fractions import Fraction as Fr
+
+    from tests.geometry import test_regular_square_pyramid as RSP
+    van = RSP.NHAN["S1_side_height_volume"]["text"].replace("cạnh đáy bằng 4", f"cạnh đáy bằng {van_canh}")
+    return RSP._ca("S1_side_height_volume", s=Fr(0), van=van, gf=RSP._g(
+        ((("canh_day", "f_canh_day", s),), (RSP._f("f_canh_day", "cạnh đáy", s),)), RSP.CAO_3))
+
+
+def test_de_ghi_canh_day_bang_0_la_loi_cua_de():
+    """Đề tự ghi 'cạnh đáy bằng 0': kernel từ chối đáy suy biến ở `execution`. Nguyên nhân CHẮC CHẮN là đề — một
+    độ dài ≤ 0 không có hình nào — nên lời từ chối nói đúng điều ấy (SOURCE), không UNKNOWN."""
+    _sp, out, _scene = W.chay(*_khong_duong("0", "0"))
+    assert not out.servable and out.stage_reached == "execution"
+    assert (out.reason_code, out.refusal_cause, out.reason_subjects) == ("NON_POSITIVE_LENGTH", "SOURCE", ["cạnh đáy"])
+
+
+def test_de_hop_le_ma_he_dung_suy_bien_khong_bi_goi_la_loi_de():
+    """Đối chứng: đề ghi 'cạnh đáy bằng 4' (hợp lệ), chương trình đặt đáy suy biến. Hệ không gọi đề sai."""
+    _sp, out, _scene = W.chay(*_khong_duong("4", "4"))
+    assert not out.servable and out.stage_reached == "execution"
+    assert out.refusal_cause == "UNKNOWN" and out.reason_code != "NON_POSITIVE_LENGTH"
+
+
+@pytest.mark.parametrize("nhan", ["canh_day", "canhDay"])
+def test_nhan_InputFact_kieu_token_may_khong_len_be_mat_hoc_sinh(nhan):
+    """Tự rà soát W1 (Minor, hoãn): GIVEN không ký hiệu mượn nguyên nhãn InputFact; nhãn mô hình kiểu token máy sẽ
+    lên bề mặt học sinh. Nay nhãn ấy không được mượn."""
+    from tests.geometry import test_regular_square_pyramid as RSP
+    contract, prog = RSP._ca("S1_side_height_volume", s=F(4), gf=RSP._g(
+        ((("canh_day", "f_canh_day", "4"),), (RSP._f("f_canh_day", nhan, "4"),)), RSP.CAO_3))
+    _sp, out, scene = W.chay(contract, prog)
+    o = _vat(scene)["canh_day"] if scene else None
+    assert o is not None, (out.stage_reached, out.reason_code, out.details)
+    for chu in (o["label"], o.get("reference") or "", (o.get("formula") or {}).get("text", "")):
+        assert "_" not in chu and (nhan[0].upper() + nhan[1:]) not in chu, chu

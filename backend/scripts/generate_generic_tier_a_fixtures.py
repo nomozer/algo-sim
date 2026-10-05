@@ -511,10 +511,10 @@ def main() -> None:
         ("regular_square_pyramid_ungrounded", "N7_model_only_height",
          ("grounding", "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE")),
         # Ngoài corpus: loại topo/kernel bắt buộc của bộ đo — đề tự ghi cạnh đáy bằng 0. Họ này đi route mặc định
-        # LLM_ONLY, không qua compiler (nơi có NON_POSITIVE_LENGTH): kernel từ chối đáy suy biến ở `execution`,
-        # nguyên nhân UNKNOWN (đính chính đăng ký trước — diagnostics/PREREGISTRATION_CORRECTIONS.json).
+        # LLM_ONLY, không qua compiler: kernel từ chối đáy suy biến ở `execution`. W1 ghi nguyên nhân UNKNOWN (đính
+        # chính đăng ký trước PC1); từ regular-square-pyramid-w02 route đọc độ dài ≤ 0 CHÍNH ĐỀ ghi ⇒ SOURCE.
         ("regular_square_pyramid_non_positive", "S1_side_height_volume",
-         ("execution", None, "UNKNOWN")),
+         ("execution", "NON_POSITIVE_LENGTH", "SOURCE")),
     )
     from fractions import Fraction
 

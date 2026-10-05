@@ -71,6 +71,25 @@ def do_dai_khong_duong(contract: Any) -> dict[str, Any]:
             "refusal_cause": SOURCE if de_ghi else CONSTRUCTION}
 
 
+#: Số đo đề nêu không kèm tên đoạn (bộ đọc `shape_constraint`) → cách học sinh gọi nó.
+_TEN_SO_DO = {"base_square": "cạnh đáy", "height": "chiều cao", "lateral_edge": "cạnh bên", "apothem": "trung đoạn",
+              "cube_edge": "cạnh của hình lập phương"}
+
+
+def do_dai_de_ghi_khong_duong(contract: Any) -> dict[str, Any] | None:
+    """regular-square-pyramid-w02 — tuyến mặc định: PHẦN TIỀN ĐỀ (mục tiêu đã che) tự ghi một độ dài ≤ 0 mà bộ đọc
+    của server đọc được — đoạn có tên (`AB = 0`) hoặc số đo của khối duy nhất ("cạnh đáy bằng 0"). Không hình nào có
+    độ dài như vậy, nên khi thực thi hỏng thì nguyên nhân chắc chắn là ĐỀ: `NON_POSITIVE_LENGTH` + `SOURCE`. Đề không
+    ghi số nào như vậy ⇒ `None` — giữ `UNKNOWN`, không gọi đề sai khi hệ chỉ chưa kiểm chứng được."""
+    de = che_muc_tieu(getattr(contract, "problem_text", "") or "")
+    chu = ["".join(dinh_danh_thuc_the(t)[1] for t in sorted(k)) for k, v in do_dai_trong_de(de).items() if v <= 0]
+    chu += [_TEN_SO_DO[r.kind] for r in doc_rang_buoc(de)
+            if r.kind in _TEN_SO_DO and r.value is not None and r.value <= 0]
+    chu = list(dict.fromkeys(chu))
+    return ({"reason_code": MA_DO_DAI_KHONG_DUONG, "reason_subjects": chu, "refusal_cause": SOURCE}
+            if chu else None)
+
+
 def mat_phang_khong_cat(contract: Any, spec: Any, bien: str | None) -> dict[str, Any]:
     """`PLANE_DOES_NOT_CUT` của kernel: `SOURCE` khi mặt phẳng của câu lệnh hỏng (`bien`) có phương
     trình tỉ lệ với một phương trình mặt phẳng đề cho — chủ thể là cách đề gọi nó; không thì
