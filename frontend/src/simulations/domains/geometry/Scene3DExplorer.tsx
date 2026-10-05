@@ -69,7 +69,7 @@ import {
   withSubEntities,
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
-import { hasAuxiliary } from "./scene3d-auxiliary";
+import { auxiliaryObjects } from "./scene3d-auxiliary";
 import {
   type AnnotationView,
   DEFAULT_ANNOTATION_VIEW,
@@ -198,7 +198,7 @@ export function Scene3DExplorer({
      `xem`, mặc định TẮT, giữ qua các bài; bật/tắt không đụng `tt` (bước, lựa chọn) hay camera. */
   const [hinhPhu, setHinhPhu] = useState(false);
   const [luoi, setLuoi] = useState(false);
-  const coHinhPhu = useMemo(() => hasAuxiliary(day), [day]);
+  const coHinhPhu = useMemo(() => auxiliaryObjects(day).size > 0, [day]);
   //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.

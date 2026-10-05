@@ -1,0 +1,10 @@
+{
+  "skill": "ponytail:ponytail-review (invoked through the Skill tool in this session)",
+  "scope": "git diff e821b9b5..7a88a789 -- backend/app frontend/src",
+  "findings": [
+    {"n": 1, "where": "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts hasAuxiliary", "tag": "yagni", "what": "one-line wrapper with one caller", "action": "APPLIED — inlined as auxiliaryObjects(day).size > 0"},
+    {"n": 2, "where": "global.css .geo3d-cac-buoc-nhom + playback <li className>", "tag": "delete", "what": "class whose only CSS rule existed to satisfy the class-coverage test", "action": "APPLIED — class and rule removed"},
+    {"n": 3, "where": "backend quantity_annotations._doan_cua_ten vs simulation_state._length_joins_vertices", "tag": "reuse", "what": "same pair-of-symbols loop", "action": "KEPT — different semantics (exactly one pair vs any pair); merging would touch the W1 numerical-source rule"}
+  ],
+  "net": "-8 lines"
+}

@@ -293,7 +293,7 @@ export function Scene3DPlayer({
             {geometryStepGroups(scene).map((m) => (m.loai === "buoc" ? (
               <li key={m.index}>{nutBuoc(dsBuoc[m.index])}</li>
             ) : (
-              <li key={`nhom-${m.chinh}`} className="geo3d-cac-buoc-nhom">
+              <li key={`nhom-${m.chinh}`}>
                 <details open>
                   <summary className="geo3d-cac-buoc-nhom-dau">
                     <span className="geo3d-cac-buoc-chu">{dsBuoc[m.chinh].label}</span>

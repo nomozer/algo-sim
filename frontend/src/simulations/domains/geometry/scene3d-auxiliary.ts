@@ -62,10 +62,6 @@ export function auxiliaryHiddenAt(scene: Scene3D, step: number, shown: boolean, 
   return ra;
 }
 
-export function hasAuxiliary(scene: Scene3D): boolean {
-  return auxiliaryObjects(scene).size > 0;
-}
-
 export type MucBuoc = { loai: "buoc"; index: number } | { loai: "nhom"; chinh: number; con: number[] };
 
 /**

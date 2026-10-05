@@ -6287,10 +6287,6 @@ html {
   padding-left: var(--sp-md);
 }
 
-.geo3d-cac-buoc-nhom {
-  border-radius: var(--rounded-md);
-}
-
 .geo3d-cac-buoc-phu {
   margin-left: auto;
   color: var(--ink-secondary);
