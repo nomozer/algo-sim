@@ -259,6 +259,16 @@ def test_cong_thuc_the_tich_tham_chieu_dien_tich_day_va_chieu_cao():
     assert {"dien_tich_day_ABCD", "chieu_cao_SO"} <= so
 
 
+@pytest.mark.parametrize("ca", sorted(c for c in NHAN if NHAN[c]["expect"].startswith("served:")))
+def test_moi_ca_phuc_vu_qua_duoc_cong_pham_vi(ca):
+    """Kết cục `served` của nhãn là kết cục của SẢN PHẨM, không chỉ của route: cổng phạm vi tất định chạy trước
+    mọi lượt gọi. Đầu dò cache W1 (`run_pipeline`) bắt được S5 "Tính độ dài cạnh bên SA" bị từ chối ở `scope`
+    dù route phục vụ √17 — cổng không có manh mối cho câu hỏi độ dài."""
+    from app.simulation.semantic_program.domain_profile import DOMAIN_HINH_HOC, co_duong_thuc_thi
+
+    assert co_duong_thuc_thi(NHAN[ca]["text"], DOMAIN_HINH_HOC), NHAN[ca]["text"]
+
+
 def _chop_chu_nhat_co_ca_SA_va_khoang_cach():
     """Chương trình kiểu LLM phục vụ được TRƯỚC W1 (CACHE_VERSION 111): chóp đáy chữ nhật, SA ⊥ đáy cho trong
     đề, mô hình vừa khai SA_length vừa đo d(S, (ABC)). Trước W1 công thức là `V = 1/3 × S(ABCD) × SA`."""

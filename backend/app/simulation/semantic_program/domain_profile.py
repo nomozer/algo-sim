@@ -99,7 +99,9 @@ _MANH_MOI_NGHIA_VU: dict[str, tuple[str, ...]] = {
     "angle": ("góc giữa", "góc tạo bởi", "số đo góc", "côsin của góc",
               "cosin của góc", "tính góc", "hợp với nhau một góc",
               "góc phẳng nhị diện", "góc nhị diện"),
-    "distance": ("khoảng cách",),
+    # "độ dài" (regular-square-pyramid-w01): độ dài đoạn = khoảng cách giữa hai đầu mút — cùng nghĩa vụ
+    # `distance`. Thiếu nó, "Tính độ dài cạnh bên SA" chết ở cổng này dù route phục vụ được.
+    "distance": ("khoảng cách", "độ dài"),
     "volume": ("thể tích",),
     # ─── DIỄN ĐẠT TƯƠNG ĐƯƠNG, KHÔNG PHẢI TỪ KHOÁ ĐỒNG NGHĨA ──────────────
     #
