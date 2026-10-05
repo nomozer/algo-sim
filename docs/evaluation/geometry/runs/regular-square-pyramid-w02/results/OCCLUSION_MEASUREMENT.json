@@ -1,0 +1,4750 @@
+{
+  "schema_version": "scene3d-occlusion-measurement/1",
+  "oracle_implementation": "analytic_projected_interval_clip_w",
+  "reference_implementation": "camera_ray_triangle",
+  "physical_pixel_tolerance": 0.5,
+  "scenarios": {
+    "triangular_pyramid": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "HUMAN_REVIEW_PENDING",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "verdict": "REVIEWED_SETS_REPRODUCED",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-C",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-C",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-C",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-C",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-C",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                584.381408604969,
+                313.69998799171753
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.15359401653498614,
+                  -0.19390012921309144,
+                  -0.9689229164261711
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 10.339464484649627,
+              "surface_camera_depth": 9.25169190044498,
+              "depth_delta": 1.0877725842046466,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                709.0019357971944,
+                319.6497226426276
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10334270198252327,
+                  -0.20698684512270749,
+                  -0.9728703571869685
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 10.215220227139605,
+              "surface_camera_depth": 9.15208900990567,
+              "depth_delta": 1.063131217233936,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-A",
+              "screen_coordinate": [
+                629.3526165963933,
+                171.29591436293236
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.06253285809120575,
+                  0.10167302812269001,
+                  -0.9928505612685667
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 9.42055871633857,
+              "surface_camera_depth": 8.509020023970333,
+              "depth_delta": 0.9115386923682376,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                598.4331431036247,
+                303.45985017872385
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.12566543086514925,
+                  -0.1742017216798013,
+                  -0.9766585686150863
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 12.885250679253977,
+              "surface_camera_depth": 11.368726443303087,
+              "depth_delta": 1.5165242359508895,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                659.4837273734942,
+                277.7591637712182
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.0010198525831573999,
+                  -0.12282901882413938,
+                  -0.9924273233015141
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.615901396880739,
+              "surface_camera_depth": 11.933740089288136,
+              "depth_delta": 1.6821613075926027,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 6,
+          "triangle_count": 4,
+          "sample_count": 4096,
+          "span_count": 6,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-C",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-C",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                100.75779738165645,
+                296.45368832148745
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1499157754507592,
+                  -0.18934532705450824,
+                  -0.9703986847649883
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 10.59665326937705,
+              "surface_camera_depth": 9.50819035508607,
+              "depth_delta": 1.0884629142909805,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                216.28719327009526,
+                301.9310167434524
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10060919947765401,
+                  -0.20199356540470484,
+                  -0.974205516570072
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 10.472902238647656,
+              "surface_camera_depth": 9.408436798044567,
+              "depth_delta": 1.0644654406030885,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-A",
+              "screen_coordinate": [
+                142.5354056187146,
+                164.7226998993728
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.06086737184389491,
+                  0.098127897031861,
+                  -0.9933106658387
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 9.682814294795094,
+              "surface_camera_depth": 8.765868623269784,
+              "depth_delta": 0.9169456715253101,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                114.0771885162464,
+                286.78427149315075
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.12201535441314935,
+                  -0.16971384667887543,
+                  -0.9779107646063074
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 13.234455977565245,
+              "surface_camera_depth": 11.720136194890783,
+              "depth_delta": 1.5143197826744625,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "screen_coordinate": [
+                170.70510508154533,
+                262.9679654603352
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.001561902287588754,
+                  -0.11954627886707518,
+                  -0.992827400745104
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.967377458649759,
+              "surface_camera_depth": 12.291308670242218,
+              "depth_delta": 1.676068788407541,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 6,
+          "triangle_count": 4,
+          "sample_count": 4096,
+          "span_count": 6,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "triangular_prism": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "HUMAN_REVIEW_PENDING",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "verdict": "REVIEWED_SETS_REPRODUCED",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "solid_ABCDEF::edge:B-C",
+                  "solid_ABCDEF::edge:B-E",
+                  "solid_ABCDEF::edge:C-F",
+                  "solid_ABCDEF::edge:D-E",
+                  "solid_ABCDEF::edge:D-F",
+                  "solid_ABCDEF::edge:E-F"
+                ],
+                "hidden_edge_ids": [
+                  "solid_ABCDEF::edge:A-B",
+                  "solid_ABCDEF::edge:A-C",
+                  "solid_ABCDEF::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "solid_ABCDEF::edge:B-C",
+                  "solid_ABCDEF::edge:B-E",
+                  "solid_ABCDEF::edge:C-F",
+                  "solid_ABCDEF::edge:D-E",
+                  "solid_ABCDEF::edge:D-F",
+                  "solid_ABCDEF::edge:E-F"
+                ],
+                "hidden_edge_ids": [
+                  "solid_ABCDEF::edge:A-B",
+                  "solid_ABCDEF::edge:A-C",
+                  "solid_ABCDEF::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "solid_ABCDEF::edge:B-C",
+                  "solid_ABCDEF::edge:B-E",
+                  "solid_ABCDEF::edge:C-F",
+                  "solid_ABCDEF::edge:D-E",
+                  "solid_ABCDEF::edge:D-F",
+                  "solid_ABCDEF::edge:E-F"
+                ],
+                "hidden_edge_ids": [
+                  "solid_ABCDEF::edge:A-B",
+                  "solid_ABCDEF::edge:A-C",
+                  "solid_ABCDEF::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-C",
+              "solid_ABCDEF::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-C",
+              "solid_ABCDEF::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "solid_ABCDEF::edge:A-B",
+              "screen_coordinate": [
+                578.1261227638174,
+                326.21757314963753
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1652533215182627,
+                  -0.21806093673292784,
+                  -0.9618423818892261
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 10.018588125278345,
+              "surface_camera_depth": 8.62905316263196,
+              "depth_delta": 1.389534962646385,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                705.9931344673537,
+                315.53073162535856
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.09735315607863733,
+                  -0.1989417158534928,
+                  -0.9751638614585737
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 10.309688942803897,
+              "surface_camera_depth": 8.87433916358399,
+              "depth_delta": 1.4353497792199068,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                623.8669483541337,
+                284.97114547225266
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.07372414795612243,
+                  -0.13738642644272245,
+                  -0.9877700743783658
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 11.243916358987056,
+              "surface_camera_depth": 8.285114021698128,
+              "depth_delta": 2.958802337288928,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-D",
+              "screen_coordinate": [
+                612.2582233099664,
+                89.15591419434463
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0952623217877485,
+                  0.2656484439496239,
+                  -0.9593518615579744
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:1",
+              "edge_camera_depth": 8.943755404090332,
+              "surface_camera_depth": 7.595580306101543,
+              "depth_delta": 1.348175097988789,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-D",
+              "screen_coordinate": [
+                617.5470080934984,
+                196.15568302348413
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.08761674062899452,
+                  0.0493415039933856,
+                  -0.9949315166106771
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 10.084845475356524,
+              "surface_camera_depth": 7.403160510398326,
+              "depth_delta": 2.6816849649581975,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-D",
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-D",
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                589.6730596426694,
+                314.49649535240866
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1428868206439673,
+                  -0.1957932532903106,
+                  -0.9701795495949473
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:2",
+              "edge_camera_depth": 11.32824351493478,
+              "surface_camera_depth": 8.893462846372042,
+              "depth_delta": 2.4347806685627376,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                682.0699587368301,
+                281.1412418994489
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.04853785005098455,
+                  -0.12968958420785717,
+                  -0.9903659368437614
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 12.461548284550345,
+              "surface_camera_depth": 10.790650777679678,
+              "depth_delta": 1.6708975068706664,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                636.3203073143346,
+                297.6568526346834
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04747662391807259,
+                  -0.1636099549753763,
+                  -0.985382033941302
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 11.873396389854152,
+              "surface_camera_depth": 8.277113246867419,
+              "depth_delta": 3.5962831429867332,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 9,
+          "triangle_count": 8,
+          "sample_count": 5632,
+          "span_count": 9,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-C",
+              "solid_ABCDEF::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-C",
+              "solid_ABCDEF::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "solid_ABCDEF::edge:A-B",
+              "screen_coordinate": [
+                109.83070111419936,
+                287.14166771324807
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.13110943999737698,
+                  -0.17027139228911328,
+                  -0.9766360466988208
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 12.896044019476605,
+              "surface_camera_depth": 11.507376654170075,
+              "depth_delta": 1.3886673653065298,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                202.22841293179494,
+                279.72779127918
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.07084860583686055,
+                  -0.15548284728308157,
+                  -0.9852946560555979
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 13.18621233102724,
+              "surface_camera_depth": 11.7522671512376,
+              "depth_delta": 1.4339451797896405,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                141.587955882064,
+                258.2113448986853
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0628877561140783,
+                  -0.10892532206370281,
+                  -0.9920586698095304
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 14.107439810003324,
+              "surface_camera_depth": 11.173761182603565,
+              "depth_delta": 2.9336786273997593,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-D",
+              "screen_coordinate": [
+                135.30890247573467,
+                117.8933386531642
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.07563218517446824,
+                  0.19862720909281414,
+                  -0.9771524980133524
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:1",
+              "edge_camera_depth": 11.838477292076933,
+              "surface_camera_depth": 10.480116848826938,
+              "depth_delta": 1.3583604432499943,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-D",
+              "screen_coordinate": [
+                138.43850196010357,
+                196.14575413127892
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.07021535722539214,
+                  0.028597041382330837,
+                  -0.9971218645852109
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 13.012366198812696,
+              "surface_camera_depth": 10.292719386894243,
+              "depth_delta": 2.7196468119184534,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-D",
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "solid_ABCDEF::edge:A-B",
+              "solid_ABCDEF::edge:A-D",
+              "solid_ABCDEF::edge:B-C",
+              "solid_ABCDEF::edge:B-E",
+              "solid_ABCDEF::edge:C-F",
+              "solid_ABCDEF::edge:D-E",
+              "solid_ABCDEF::edge:D-F",
+              "solid_ABCDEF::edge:E-F"
+            ],
+            "hidden_edge_ids": [
+              "solid_ABCDEF::edge:A-C"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                120.60343380817578,
+                278.62015448493594
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.10826438978922046,
+                  -0.1525892207379869,
+                  -0.9823417692525049
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:2",
+              "edge_camera_depth": 14.656540736537599,
+              "surface_camera_depth": 12.333170784445578,
+              "depth_delta": 2.323369952092021,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                186.30789475199936,
+                255.5562724403821
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.036166754509232554,
+                  -0.10324994745320001,
+                  -0.9939976932665289
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 15.763675283637404,
+              "surface_camera_depth": 14.144236736081355,
+              "depth_delta": 1.619438547556049,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "solid_ABCDEF::edge:A-C",
+              "screen_coordinate": [
+                154.461567687068,
+                266.73511662275575
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.03436396475561084,
+                  -0.12768389196728996,
+                  -0.9912194215502239
+                ]
+              },
+              "candidate_surface_id": "solid_ABCDEF::face:3",
+              "edge_camera_depth": 15.206907222553287,
+              "surface_camera_depth": 11.644695891353312,
+              "depth_delta": 3.5622113311999755,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 9,
+          "triangle_count": 8,
+          "sample_count": 4608,
+          "span_count": 9,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "rectangular_pyramid": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "HUMAN_REVIEW_PENDING",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "verdict": "REVIEWED_SETS_REPRODUCED",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:C-D",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C",
+                  "khoi_chop::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-D",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:C-D",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C",
+                  "khoi_chop::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-D",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "khoi_chop::edge:B-C",
+                  "khoi_chop::edge:C-D",
+                  "khoi_chop::edge:S-B",
+                  "khoi_chop::edge:S-C",
+                  "khoi_chop::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_chop::edge:A-B",
+                  "khoi_chop::edge:A-D",
+                  "khoi_chop::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                602.5540638319553,
+                276.66932616772675
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.11820494183748845,
+                  -0.11971981214779186,
+                  -0.9857457878705308
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 14.534713316657957,
+              "surface_camera_depth": 12.98808825784712,
+              "depth_delta": 1.546625058810836,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                650.8852726496797,
+                254.1166668686674
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.017190028038639577,
+                  -0.07333104963201881,
+                  -0.9971594958159387
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 15.297745677418241,
+              "surface_camera_depth": 12.183833083301987,
+              "depth_delta": 3.113912594116254,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                707.3022678993893,
+                277.0636980786229
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10133070705520249,
+                  -0.1207597589241313,
+                  -0.9874964143895806
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 14.52204696407033,
+              "surface_camera_depth": 12.92409361972233,
+              "depth_delta": 1.5979533443480012,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-A",
+              "screen_coordinate": [
+                625.9090659247656,
+                158.04830268990497
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0695384215541815,
+                  0.12913670019268259,
+                  -0.9891855845042922
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.397246768719729,
+              "surface_camera_depth": 12.07218869365233,
+              "depth_delta": 1.325058075067398,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:C-D",
+              "screen_coordinate": [
+                679.1508270718916,
+                249.38635840676028
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.042683629359881244,
+                  -0.06330550307436979,
+                  -0.9970810002528225
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 17.30964624583367,
+              "surface_camera_depth": 14.658473528736055,
+              "depth_delta": 2.651172717097614,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                611.672137629067,
+                289.0676311147015
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.09897497187582815,
+                  -0.14548416066376926,
+                  -0.9843974369827145
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 15.831071806097556,
+              "surface_camera_depth": 13.501204512268021,
+              "depth_delta": 2.329867293829535,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                635.1450372692859,
+                248.74519511083534
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0505155825185935,
+                  -0.06193000943118842,
+                  -0.9968013091156434
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 17.335807587536134,
+              "surface_camera_depth": 12.65289542334063,
+              "depth_delta": 4.682912164195505,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-D",
+              "screen_coordinate": [
+                605.376194455126,
+                199.24241866162703
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.11308346366778697,
+                  0.042719785363948694,
+                  -0.9926666863471113
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.551065431146943,
+              "surface_camera_depth": 11.87033690913859,
+              "depth_delta": 1.6807285220083532,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4608,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                116.25421112017625,
+                263.4345748020724
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.11820494183748845,
+                  -0.11971981214779186,
+                  -0.9857457878705308
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 14.534713316657957,
+              "surface_camera_depth": 12.988088257847119,
+              "depth_delta": 1.5466250588108377,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                162.27344867327133,
+                241.96074430775167
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.017190028038639595,
+                  -0.0733310496320188,
+                  -0.9971594958159387
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 15.297745677418241,
+              "surface_camera_depth": 12.183833083301986,
+              "depth_delta": 3.1139125941162558,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                215.99168105226585,
+                263.81008154183223
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10133070705520247,
+                  -0.12075975892413127,
+                  -0.9874964143895806
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 14.52204696407033,
+              "surface_camera_depth": 12.92409361972233,
+              "depth_delta": 1.5979533443480012,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-A",
+              "screen_coordinate": [
+                138.4920035456767,
+                150.48790552250634
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0695384215541815,
+                  0.12913670019268259,
+                  -0.9891855845042922
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.397246768719729,
+              "surface_camera_depth": 12.072188693652329,
+              "depth_delta": 1.3250580750673997,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:C-D",
+              "screen_coordinate": [
+                189.31632005405754,
+                237.49096362726416
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.042970820258256395,
+                  -0.06338060632591973,
+                  -0.9970638933128064
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 17.308180926882113,
+              "surface_camera_depth": 14.664397123034412,
+              "depth_delta": 2.6437838038477004,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                124.88170027829327,
+                275.26158487753344
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.09909261669486713,
+                  -0.1455292835138657,
+                  -0.9843789315891035
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 15.8302919573146,
+              "surface_camera_depth": 13.505855754978963,
+              "depth_delta": 2.3244362023356366,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                147.34941231103016,
+                236.91544769132685
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.05037479269196785,
+                  -0.062083814762954534,
+                  -0.9967988664749375
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 17.332837105306737,
+              "surface_camera_depth": 12.661094724661298,
+              "depth_delta": 4.671742380645439,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-D",
+              "screen_coordinate": [
+                118.96663834021768,
+                189.64015220305532
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.11302739060809294,
+                  0.04287769819370796,
+                  -0.9926662641441658
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.554428286667859,
+              "surface_camera_depth": 11.877493060459532,
+              "depth_delta": 1.676935226208327,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4608,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "cuboid": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "DECLARED_CAMERA_CHANGE",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "status": "EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:A-B",
+              "screen_coordinate": [
+                599.5479483687936,
+                266.5519956001517
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.12469331830330185,
+                  -0.09868573586946917,
+                  -0.9872753931433788
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 12.958759887232494,
+              "surface_camera_depth": 10.411649603910176,
+              "depth_delta": 2.5471102833223185,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                663.8251563892863,
+                253.90316181685836
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.010222800662959514,
+                  -0.07288813813582908,
+                  -0.9972877286248425
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.494121165084051,
+              "surface_camera_depth": 8.821290973036666,
+              "depth_delta": 4.672830192047385,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                737.5129433675098,
+                288.4749333272752
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.16282880074317105,
+                  -0.14304782362379326,
+                  -0.9762295333603859
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 12.125015510227719,
+              "surface_camera_depth": 10.6107325931214,
+              "depth_delta": 1.5142829171063195,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                703.2267002792795,
+                272.3890090431438
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.09296374120249519,
+                  -0.11117176090676573,
+                  -0.9894435721144103
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 12.725775501687355,
+              "surface_camera_depth": 9.03112988054994,
+              "depth_delta": 3.694645621137415,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                635.2382935898158,
+                97.54419959457562
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.048807908588584165,
+                  0.25050421275655443,
+                  -0.9668843919778762
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 11.864332584749151,
+              "surface_camera_depth": 9.437278714626983,
+              "depth_delta": 2.427053870122169,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                638.4160172186266,
+                222.8874996182592
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04368590885148622,
+                  -0.007189376377230022,
+                  -0.9990194463748572
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.695930016357172,
+              "surface_camera_depth": 8.95321617040489,
+              "depth_delta": 4.742713845952283,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                636.9268604670048,
+                164.14865278824672
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04652107196118516,
+                  0.11665780497320595,
+                  -0.9920820260454353
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 12.771938817773432,
+              "surface_camera_depth": 8.34919052697713,
+              "depth_delta": 4.422748290796301,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                708.7729461176172,
+                264.9919024593621
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.1046695864773499,
+                  -0.09566680274937515,
+                  -0.9898950148972226
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.316745336821043,
+              "surface_camera_depth": 14.322467642917942,
+              "depth_delta": 1.9942776939031006,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                596.7780075095424,
+                265.33572112678746
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.13043866161281797,
+                  -0.09608741023125249,
+                  -0.9867892202247184
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:2",
+              "edge_camera_depth": 16.299081916139713,
+              "surface_camera_depth": 14.192296573662658,
+              "depth_delta": 2.106785342477055,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                677.9168721630775,
+                244.54386974400794
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.04009813185787322,
+                  -0.05308554091657265,
+                  -0.9977845785374232
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 17.440835187682417,
+              "surface_camera_depth": 13.415419445881785,
+              "depth_delta": 4.025415741800632,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                639.2738108055876,
+                254.44616246342616
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.041755026093573344,
+                  -0.0739716075492134,
+                  -0.9963858284181436
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.877759828111323,
+              "surface_camera_depth": 12.982304170896453,
+              "depth_delta": 3.8954556572148693,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                690.6406666897152,
+                143.82344143105016
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06621985055595159,
+                  0.15838131503889855,
+                  -0.9851549575771805
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.640205069751387,
+              "surface_camera_depth": 12.539849841011186,
+              "depth_delta": 3.1003552287402005,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                691.3472809157156,
+                123.92551814599658
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06719251862549531,
+                  0.19852951995656526,
+                  -0.9777889317979511
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.29855065284241,
+              "surface_camera_depth": 13.955987544486106,
+              "depth_delta": 1.3425631083563037,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                687.5417576442231,
+                231.08725835641948
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06050493451585521,
+                  -0.024563529577000403,
+                  -0.9978656151576483
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 17.3383336001719,
+              "surface_camera_depth": 13.336575641928318,
+              "depth_delta": 4.001757958243582,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                689.1682106365976,
+                185.28710931017903
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06379079857007733,
+                  0.07234329025291454,
+                  -0.9953377227721124
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.403575324101816,
+              "surface_camera_depth": 12.617563380242247,
+              "depth_delta": 3.7860119438595685,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 6144,
+          "span_count": 12,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:A-B",
+              "screen_coordinate": [
+                114.5773904736441,
+                253.06911372172914
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.12214062242415821,
+                  -0.09711973192264303,
+                  -0.9877496778157476
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.218289681400817,
+              "surface_camera_depth": 10.677954415105084,
+              "depth_delta": 2.540335266295733,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                174.37678143721365,
+                241.2392658651603
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.009739572802978784,
+                  -0.07174145693878063,
+                  -0.997375708586246
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.755628643180103,
+              "surface_camera_depth": 9.083750409019405,
+              "depth_delta": 4.6718782341606975,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                243.03776008497732,
+                273.406635703117
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.1592421021844801,
+                  -0.14042391294669357,
+                  -0.9772016565502778
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 12.386460795302334,
+              "surface_camera_depth": 10.87149723543553,
+              "depth_delta": 1.5149635598668034,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                210.9768891133599,
+                258.3862571098879
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.09050212532842088,
+                  -0.10907517205847281,
+                  -0.9899050318851064
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 12.990211715382488,
+              "surface_camera_depth": 9.291745153435317,
+              "depth_delta": 3.6984665619471713,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                147.8971746735601,
+                96.05268603166758
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04776484898855424,
+                  0.24408243361117757,
+                  -0.9685774542098043
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 12.129344216482155,
+              "surface_camera_depth": 9.705748267802925,
+              "depth_delta": 2.42359594867923,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                150.79323104077048,
+                212.5687897050569
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04281228763042518,
+                  -0.007954906505603345,
+                  -0.9990514638847875
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.958244466326104,
+              "surface_camera_depth": 9.21755102359828,
+              "depth_delta": 4.7406934427278244,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                149.44373005025628,
+                158.27475071521724
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04552567200903445,
+                  0.11234047164983456,
+                  -0.9926263303064344
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.041898029000718,
+              "surface_camera_depth": 8.612426929252738,
+              "depth_delta": 4.42947109974798,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                216.51503701179954,
+                251.56958946068173
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10276942700920723,
+                  -0.09405243116933724,
+                  -0.9902487490844593
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.66634504462438,
+              "surface_camera_depth": 14.677703965820065,
+              "depth_delta": 1.9886410788043136,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                112.16890740434586,
+                251.7173851172238
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.12740036349875308,
+                  -0.09410526668935022,
+                  -0.9873770030549183
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:2",
+              "edge_camera_depth": 16.6581748275702,
+              "surface_camera_depth": 14.557870931252479,
+              "depth_delta": 2.1003038963177207,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                187.63060678807517,
+                232.57636711051214
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.03925172002402502,
+                  -0.05248900234286766,
+                  -0.997849791856573
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 17.787479149738534,
+              "surface_camera_depth": 13.772371031755007,
+              "depth_delta": 4.015108117983527,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                151.5411350274533,
+                241.73053716584118
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.041040275647952665,
+                  -0.07277101107730538,
+                  -0.9965039265961408
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 17.228887107922308,
+              "surface_camera_depth": 13.339868101434389,
+              "depth_delta": 3.889019006487919,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                199.737169351298,
+                139.05653311596086
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.0654138892639052,
+                  0.15385708516626015,
+                  -0.9859254639350339
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.997122364313253,
+              "surface_camera_depth": 12.892958193119076,
+              "depth_delta": 3.104164171194176,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                200.39298267600103,
+                120.3935817869759
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.0663767100531544,
+                  0.19351185743341112,
+                  -0.9788499851331616
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.651939855730273,
+              "surface_camera_depth": 14.307017155609422,
+              "depth_delta": 1.3449227001208506,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                196.9054526118699,
+                219.64073245249
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.05990506553515933,
+                  -0.023691620583527927,
+                  -0.9979228879213836
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 17.680770650598596,
+              "surface_camera_depth": 13.68974948487783,
+              "depth_delta": 3.991021165720767,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                198.39876258860122,
+                177.14453671348778
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06307624809765965,
+                  0.07075389638041626,
+                  -0.9954975002846124
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.751051578281146,
+              "surface_camera_depth": 12.969892786159322,
+              "depth_delta": 3.7811587921218237,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 6144,
+          "span_count": 12,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "cube": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "DECLARED_CAMERA_CHANGE",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "status": "EXPECTATION_HOLDS_AFTER_DECLARED_CAMERA_CHANGE",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "khoi_hop::edge:A_prime-B_prime",
+                  "khoi_hop::edge:A_prime-D_prime",
+                  "khoi_hop::edge:B-B_prime",
+                  "khoi_hop::edge:B-C",
+                  "khoi_hop::edge:B_prime-C_prime",
+                  "khoi_hop::edge:C-C_prime",
+                  "khoi_hop::edge:C-D",
+                  "khoi_hop::edge:C_prime-D_prime",
+                  "khoi_hop::edge:D-D_prime"
+                ],
+                "hidden_edge_ids": [
+                  "khoi_hop::edge:A-A_prime",
+                  "khoi_hop::edge:A-B",
+                  "khoi_hop::edge:A-D"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:A-B",
+              "screen_coordinate": [
+                587.2720757593821,
+                261.99697898834825
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.15004413038785033,
+                  -0.08889734819353154,
+                  -0.984674575898206
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 10.918746792309086,
+              "surface_camera_depth": 8.375766693062328,
+              "depth_delta": 2.5429800992467584,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                681.9252581127167,
+                235.89191010970845
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.0486155568434174,
+                  -0.034760866542596296,
+                  -0.9982125073299835
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 12.127074101834426,
+              "surface_camera_depth": 7.105050510842433,
+              "depth_delta": 5.022023590991993,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                769.9032967840976,
+                258.38823357789676
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.22858717842813672,
+                  -0.08015407878208715,
+                  -0.9702181329540579
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 11.07124203881863,
+              "surface_camera_depth": 9.412420319816734,
+              "depth_delta": 1.658821719001896,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                738.9856538339594,
+                250.48247314968074
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.16716937359526557,
+                  -0.06475311984841572,
+                  -0.9837994887179314
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 11.420674021428413,
+              "surface_camera_depth": 7.465060799688708,
+              "depth_delta": 3.9556132217397044,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                637.1023013396385,
+                93.8070470885053
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04489959898422969,
+                  0.25772403157075,
+                  -0.9651747766917526
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 11.23994791530658,
+              "surface_camera_depth": 8.348559177829282,
+              "depth_delta": 2.891388737477298,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                639.4790616623413,
+                217.0158041271103
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.0414342561859327,
+                  0.0052728412145425,
+                  -0.9991273189938532
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 12.608461137993759,
+              "surface_camera_depth": 7.387087148736762,
+              "depth_delta": 5.221373989256997,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                638.432210177879,
+                162.7481234642387
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04333948283834217,
+                  0.11958489465503988,
+                  -0.9918775842802618
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 11.96672051475488,
+              "surface_camera_depth": 7.011102017889575,
+              "depth_delta": 4.955618496865304,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                723.8417187140922,
+                255.08384964076387
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.13608064447939036,
+                  -0.07467835967649172,
+                  -0.9878791428075108
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 14.126027316920833,
+              "surface_camera_depth": 12.075983075770447,
+              "depth_delta": 2.0500442411503865,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                685.5076283393132,
+                228.15029244858172
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.056214491944932825,
+                  -0.0183445983528797,
+                  -0.9982501723549285
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 15.79363054703453,
+              "surface_camera_depth": 11.086987878347525,
+              "depth_delta": 4.706642668687005,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                594.1211885226409,
+                244.16553656911668
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1363547154029434,
+                  -0.051839146595903524,
+                  -0.9893028325379397
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:2",
+              "edge_camera_depth": 14.75769872670283,
+              "surface_camera_depth": 11.965254449956591,
+              "depth_delta": 2.79244427674624,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                649.7957440399052,
+                230.14336249888936
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.019544868643014843,
+                  -0.022600753701621387,
+                  -0.9995535023408432
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 15.656855748547471,
+              "surface_camera_depth": 10.576935655409043,
+              "depth_delta": 5.079920093138428,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                679.7659983830432,
+                139.37367497559262
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.043448828031901573,
+                  0.16764880997277393,
+                  -0.9848888647240189
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 14.918516954516972,
+              "surface_camera_depth": 10.947522467137663,
+              "depth_delta": 3.9709944873793095,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                680.1897746869516,
+                117.13823189746611
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.04394520831405823,
+                  0.21228678875151935,
+                  -0.9762187961660039
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 14.620160125896556,
+              "surface_camera_depth": 13.02560584539503,
+              "depth_delta": 1.5945542805015265,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                678.8685405850175,
+                186.46307473432293
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.042068048529915456,
+                  0.06994972627248301,
+                  -0.9966630900596698
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 15.59238322660267,
+              "surface_camera_depth": 10.5333814624661,
+              "depth_delta": 5.059001764136571,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 6144,
+          "span_count": 12,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:C_prime-D_prime",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:A-B",
+              "screen_coordinate": [
+                112.08566112959082,
+                245.33020259117046
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1277373550215029,
+                  -0.08013082902967586,
+                  -0.9885657380119581
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 13.004159687403693,
+              "surface_camera_depth": 10.45280656502657,
+              "depth_delta": 2.5513531223771224,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                184.3728867283509,
+                224.22348079740482
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.03203295194394423,
+                  -0.03392867682181892,
+                  -0.9989107742330531
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 14.228274038441405,
+              "surface_camera_depth": 9.155274425175286,
+              "depth_delta": 5.07299961326612,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                255.63958577224255,
+                242.57120458617558
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.1871725123090469,
+                  -0.0733726891247076,
+                  -0.9795830230901966
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 13.152068631069904,
+              "surface_camera_depth": 11.496544633904232,
+              "depth_delta": 1.6555239971656714,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                228.2945946532458,
+                235.53119360224122
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.12875525682518135,
+                  -0.058599440762128654,
+                  -0.9899435283804058
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:4",
+              "edge_camera_depth": 13.545183047076115,
+              "surface_camera_depth": 9.528308685448648,
+              "depth_delta": 4.016874361627467,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                151.15602127515723,
+                115.40537128993691
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.041120929402493,
+                  0.20424020722148,
+                  -0.9780567503571569
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 13.351096134134163,
+              "surface_camera_depth": 10.503571831832838,
+              "depth_delta": 2.8475243023013252,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                152.86346769220665,
+                210.97742788693802
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.03820566678727725,
+                  -0.004408648703674229,
+                  -0.9992601717480524
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 14.681370010345551,
+              "surface_camera_depth": 9.446821941937786,
+              "depth_delta": 5.234548068407765,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-A_prime",
+              "screen_coordinate": [
+                152.16611518330012,
+                171.94404283673688
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.039623403112088576,
+                  0.08233108733602114,
+                  -0.995817040416504
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 14.107289246892783,
+              "surface_camera_depth": 9.077425983058719,
+              "depth_delta": 5.029863263834065,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_hop::edge:A-A_prime",
+              "khoi_hop::edge:A-B",
+              "khoi_hop::edge:A_prime-B_prime",
+              "khoi_hop::edge:A_prime-D_prime",
+              "khoi_hop::edge:B-B_prime",
+              "khoi_hop::edge:B-C",
+              "khoi_hop::edge:B_prime-C_prime",
+              "khoi_hop::edge:C-C_prime",
+              "khoi_hop::edge:C_prime-D_prime"
+            ],
+            "hidden_edge_ids": [
+              "khoi_hop::edge:A-D",
+              "khoi_hop::edge:C-D",
+              "khoi_hop::edge:D-D_prime"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                229.8101576150102,
+                244.34895217108607
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.13186980296156037,
+                  -0.07793758691799334,
+                  -0.9881984049836751
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 14.684045583905647,
+              "surface_camera_depth": 12.646342338966877,
+              "depth_delta": 2.03770324493877,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:C-D",
+              "screen_coordinate": [
+                194.54235911385433,
+                219.63133491983604
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.05466013239296284,
+                  -0.023677844967402745,
+                  -0.998224238127127
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.336608587155503,
+              "surface_camera_depth": 11.63288119203475,
+              "depth_delta": 4.703727395120753,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                111.38591448412649,
+                234.25855324163263
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1294699352962864,
+                  -0.05579244690231264,
+                  -0.9900124942257184
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:2",
+              "edge_camera_depth": 15.31654277894748,
+              "surface_camera_depth": 12.515726270479997,
+              "depth_delta": 2.8008165084674843,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:A-D",
+              "screen_coordinate": [
+                162.300137837274,
+                221.08453936092485
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.017170675484823074,
+                  -0.02694849587756139,
+                  -0.9994893428513042
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.2292268940719,
+              "surface_camera_depth": 11.110406165615652,
+              "depth_delta": 5.118820728456248,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                188.71948834990664,
+                139.93905045880786
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.04124347828922075,
+                  0.152157672250125,
+                  -0.9874953256973069
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.50799084469873,
+              "surface_camera_depth": 11.504198601220255,
+              "depth_delta": 4.003792243478475,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                189.11032366013535,
+                118.4293021350934
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.041756539545546194,
+                  0.19789926085620801,
+                  -0.9793325655556174
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:1",
+              "edge_camera_depth": 15.190828743176855,
+              "surface_camera_depth": 13.593651229219534,
+              "depth_delta": 1.5971775139573214,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_hop::edge:D-D_prime",
+              "screen_coordinate": [
+                187.94854407702206,
+                182.36821908139734
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.03994325408060652,
+                  0.059267202246929315,
+                  -0.9974426976981052
+                ]
+              },
+              "candidate_surface_id": "khoi_hop::face:3",
+              "edge_camera_depth": 16.174105972163158,
+              "surface_camera_depth": 11.07267079876013,
+              "depth_delta": 5.101435173403027,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 6144,
+          "span_count": 12,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "cross_section": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": {
+            "status": "HUMAN_REVIEW_PENDING",
+            "declaration": "W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS",
+            "measured_identity": {
+              "status": "FROZEN_CAMERA_IDENTITY_MISMATCH",
+              "reason": "VIEWPORT_OR_DPR_CHANGED",
+              "max_projected_delta_px": null
+            },
+            "transfer": {
+              "verdict": "REVIEWED_SETS_REPRODUCED",
+              "oracle_at_registered_camera": {
+                "visible_edge_ids": [
+                  "S.ABCD::edge:B-C",
+                  "S.ABCD::edge:C-D",
+                  "S.ABCD::edge:S-B",
+                  "S.ABCD::edge:S-C",
+                  "S.ABCD::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "S.ABCD::edge:A-B",
+                  "S.ABCD::edge:A-D",
+                  "S.ABCD::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "oracle_at_new_camera": {
+                "visible_edge_ids": [
+                  "S.ABCD::edge:B-C",
+                  "S.ABCD::edge:C-D",
+                  "S.ABCD::edge:S-B",
+                  "S.ABCD::edge:S-C",
+                  "S.ABCD::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "S.ABCD::edge:A-B",
+                  "S.ABCD::edge:A-D",
+                  "S.ABCD::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              },
+              "expected": {
+                "visible_edge_ids": [
+                  "S.ABCD::edge:B-C",
+                  "S.ABCD::edge:C-D",
+                  "S.ABCD::edge:S-B",
+                  "S.ABCD::edge:S-C",
+                  "S.ABCD::edge:S-D"
+                ],
+                "hidden_edge_ids": [
+                  "S.ABCD::edge:A-B",
+                  "S.ABCD::edge:A-D",
+                  "S.ABCD::edge:S-A"
+                ],
+                "mixed_edge_ids": []
+              }
+            }
+          },
+          "product": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C",
+              "S.ABCD::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C",
+              "S.ABCD::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "S.ABCD::edge:A-B",
+              "screen_coordinate": [
+                581.369909472293,
+                267.36726841879477
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.16190712322789616,
+                  -0.09983308886775683,
+                  -0.9817430609967097
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 15.44137418833933,
+              "surface_camera_depth": 13.21360186889274,
+              "depth_delta": 2.22777231944659,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                661.356436614841,
+                238.65277937644757
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.005001832616470205,
+                  -0.04065417927128834,
+                  -0.9991607575251615
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 17.769124162947666,
+              "surface_camera_depth": 12.703710917108321,
+              "depth_delta": 5.065413245839345,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                738.6433389337199,
+                255.5743981699311
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.16634977064919285,
+                  -0.07534801958604194,
+                  -0.9831838229697549
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:3",
+              "edge_camera_depth": 16.319369318403233,
+              "surface_camera_depth": 13.7366177595798,
+              "depth_delta": 2.582751558823432,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-A",
+              "screen_coordinate": [
+                636.65839589124,
+                152.54955779213026
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.04693799315939505,
+                  0.14065773357515138,
+                  -0.9889450069562362
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 17.17242344574615,
+              "surface_camera_depth": 14.461019941869795,
+              "depth_delta": 2.7114035038763564,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:S-A",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:S-A",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "S.ABCD::edge:C-D",
+              "screen_coordinate": [
+                713.8258207611584,
+                252.2993082038911
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.11541426501825572,
+                  -0.06904608078646765,
+                  -0.9909148228573051
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 18.44969808201079,
+              "surface_camera_depth": 15.71062717679567,
+              "depth_delta": 2.7390709052151205,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                565.9388040387513,
+                261.9865688800354
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.193190253567581,
+                  -0.08819993049056024,
+                  -0.9771889777253703
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:1",
+              "edge_camera_depth": 17.613799945444853,
+              "surface_camera_depth": 14.866557580963013,
+              "depth_delta": 2.7472423644818402,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                626.5816437427385,
+                240.39788859881665
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.06863979122368362,
+                  -0.044247360941296075,
+                  -0.9966597965757924
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 19.591988673121758,
+              "surface_camera_depth": 14.087994158876525,
+              "depth_delta": 5.503994514245234,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-D",
+              "screen_coordinate": [
+                585.360198860926,
+                165.20425187036884
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.15356713460913146,
+                  0.1132273897098062,
+                  -0.9816296110995454
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 17.153854538806836,
+              "surface_camera_depth": 14.761086794973703,
+              "depth_delta": 2.392767743833133,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4608,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C",
+              "S.ABCD::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C",
+              "S.ABCD::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:S-A"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "S.ABCD::edge:A-B",
+              "screen_coordinate": [
+                102.7167201336533,
+                252.18039191612087
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.14778557526751718,
+                  -0.09484435170635305,
+                  -0.9844612601277161
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 16.970003442518166,
+              "surface_camera_depth": 14.714937309416717,
+              "depth_delta": 2.255066133101449,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                171.0758118006373,
+                227.48984389941847
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.0023982368986658884,
+                  -0.04121819993412426,
+                  -0.9991472906703837
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 19.27698529888027,
+              "surface_camera_depth": 14.207552176743539,
+              "depth_delta": 5.069433122136731,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                238.25168765184958,
+                242.23903103167544
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.15014043678355968,
+                  -0.07311940274377669,
+                  -0.9859570995661197
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:3",
+              "edge_camera_depth": 17.829115826403203,
+              "surface_camera_depth": 15.251539256098246,
+              "depth_delta": 2.5775765703049576,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-A",
+              "screen_coordinate": [
+                149.93417683122436,
+                152.5350279143934
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.044374748072728884,
+                  0.12486997867754807,
+                  -0.9911802914498202
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 18.67337372056369,
+              "surface_camera_depth": 15.978822212652803,
+              "depth_delta": 2.6945515079108855,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:S-A",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "S.ABCD::edge:A-B",
+              "S.ABCD::edge:B-C",
+              "S.ABCD::edge:S-A",
+              "S.ABCD::edge:S-B",
+              "S.ABCD::edge:S-C"
+            ],
+            "hidden_edge_ids": [
+              "S.ABCD::edge:A-D",
+              "S.ABCD::edge:C-D",
+              "S.ABCD::edge:S-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "S.ABCD::edge:C-D",
+              "screen_coordinate": [
+                217.34203949038238,
+                238.94997395845843
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.10481106356502402,
+                  -0.06630657779263008,
+                  -0.9922792342359072
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 20.223979446654162,
+              "surface_camera_depth": 17.46009155118906,
+              "depth_delta": 2.7638878954651034,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                90.83954564695858,
+                247.3205327393277
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.17331274040116368,
+                  -0.08389841363297103,
+                  -0.9812867828542836
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:1",
+              "edge_camera_depth": 19.383653113954992,
+              "surface_camera_depth": 16.618357788259402,
+              "depth_delta": 2.7652953256955897,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:A-D",
+              "screen_coordinate": [
+                142.89333999799183,
+                228.5049352409485
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.060311497323480345,
+                  -0.04339789002009002,
+                  -0.9972357526845917
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 21.38059135770145,
+              "surface_camera_depth": 15.827001613499053,
+              "depth_delta": 5.553589744202398,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "S.ABCD::edge:S-D",
+              "screen_coordinate": [
+                107.39737611391106,
+                164.81069306023358
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.13767740412110796,
+                  0.09718233345056021,
+                  -0.9856979894772927
+                ]
+              },
+              "candidate_surface_id": "S.ABCD::face:2",
+              "edge_camera_depth": 18.928780872333412,
+              "surface_camera_depth": 16.486192417028363,
+              "depth_delta": 2.4425884553050494,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4608,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    },
+    "regular_square_pyramid": {
+      "desktop": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                567.7424259032125,
+                168.58214886807076
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.1892605307911927,
+                  0.10559933931352554,
+                  -0.9762321604112327
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 9.622650990877958,
+              "surface_camera_depth": 7.525887222684388,
+              "depth_delta": 2.0967637681935694,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                625.4386186304841,
+                174.43165962352592
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.07079544080508607,
+                  0.09506858457870952,
+                  -0.9929501345925758
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 9.461788269684709,
+              "surface_camera_depth": 6.078445515471508,
+              "depth_delta": 3.383342754213201,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                720.8747420064428,
+                184.10742164105577
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.12996551014946303,
+                  0.07434074636539206,
+                  -0.9887276771697182
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 9.207191158919859,
+              "surface_camera_depth": 7.220998468663968,
+              "depth_delta": 1.9861926902558906,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                620.3468808597402,
+                196.76822623542176
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.08174493556921919,
+                  0.04807393098126627,
+                  -0.9954931756013161
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 10.110894244343422,
+              "surface_camera_depth": 8.089515112613196,
+              "depth_delta": 2.0213791317302263,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                688.7110819787559,
+                200.6214133891613
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.06294271841723957,
+                  0.03999415309113031,
+                  -0.9972154641384033
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 10.007307475950931,
+              "surface_camera_depth": 6.6803919611029245,
+              "depth_delta": 3.3269155148480065,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                759.7761983337705,
+                204.62683126775886
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.20924608168204722,
+                  0.030881818632510424,
+                  -0.9773752557634445
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:4",
+              "edge_camera_depth": 9.901854465144613,
+              "surface_camera_depth": 7.933835816967821,
+              "depth_delta": 1.968018648176792,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 5632,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      },
+      "mobile": {
+        "neutral_final": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-D"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                116.3579830675182,
+                171.6182955512631
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.11842923402078112,
+                  0.0825302044445389,
+                  -0.9895267969507414
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:1",
+              "edge_camera_depth": 12.389747582828214,
+              "surface_camera_depth": 10.406930243959161,
+              "depth_delta": 1.9828173388690526,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                158.98561102947247,
+                176.04101286312053
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.02450107883507686,
+                  0.07331598187841115,
+                  -0.9970077552041017
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 12.230050633792947,
+              "surface_camera_depth": 8.862082250186441,
+              "depth_delta": 3.367968383606506,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-D",
+              "screen_coordinate": [
+                223.11645112191826,
+                182.69473933727403
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.1174871588716399,
+                  0.05818405170834713,
+                  -0.9913684398986436
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 11.997403772260581,
+              "surface_camera_depth": 10.096121765890212,
+              "depth_delta": 1.9012820063703693,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "rotated_neutral": {
+          "frozen_camera_identity": null,
+          "product": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B"
+            ],
+            "mixed_edge_ids": []
+          },
+          "oracle": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-A",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B"
+            ],
+            "mixed_edge_ids": []
+          },
+          "witnesses": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                141.6112247595999,
+                194.3026138135839
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  -0.06317875362437009,
+                  0.032708791870399705,
+                  -0.9974660796362201
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:2",
+              "edge_camera_depth": 13.135255487399062,
+              "surface_camera_depth": 11.224076380187736,
+              "depth_delta": 1.9111791072113267,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                192.88643541969378,
+                194.35551419261265
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.050969205897836836,
+                  0.03261398285476921,
+                  -0.9981675551591991
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:3",
+              "edge_camera_depth": 13.133333019177671,
+              "surface_camera_depth": 9.797135100132786,
+              "depth_delta": 3.336197919044885,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "screen_coordinate": [
+                238.5088656703216,
+                194.40258262629436
+              ],
+              "camera_ray": {
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "direction": [
+                  0.15101949877380821,
+                  0.03217823902934807,
+                  -0.9880069189651851
+                ]
+              },
+              "candidate_surface_id": "khoi_chop::face:4",
+              "edge_camera_depth": 13.13162296443841,
+              "surface_camera_depth": 11.221156999548462,
+              "depth_delta": 1.9104659648899478,
+              "perspective_correction_method": "CLIP_W_RECIPROCAL_INTERPOLATION"
+            }
+          ],
+          "failures": [],
+          "pass": true
+        },
+        "performance": {
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4096,
+          "span_count": 8,
+          "median_recomputation_ms": 0,
+          "p95_recomputation_ms": 0,
+          "max_recomputation_ms": 0,
+          "recomputes_per_orbit": 0,
+          "immutable_120_frame_recomputations": 0
+        }
+      }
+    }
+  },
+  "failures": [],
+  "human_review_pending": [
+    {
+      "scenario_id": "triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final"
+    },
+    {
+      "scenario_id": "triangular_prism",
+      "viewport": "desktop",
+      "state": "neutral_final"
+    },
+    {
+      "scenario_id": "rectangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final"
+    },
+    {
+      "scenario_id": "cross_section",
+      "viewport": "desktop",
+      "state": "neutral_final"
+    }
+  ],
+  "pass": true,
+  "verdict": "HUMAN_REVIEW_PENDING"
+}

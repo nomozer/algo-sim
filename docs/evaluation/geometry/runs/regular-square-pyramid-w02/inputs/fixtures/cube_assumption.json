@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cube_assumption",
+  "problem_text": "Cho hình lập phương ABCD.A'B'C'D'. Tính thể tích của hình lập phương đó.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "75a0af9ab0016b54cc35fd27042924cdc8f68c0e",
+  "product_tree_sha": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "reason_subjects": [
+      "AB"
+    ],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Đề bài chưa cho độ dài AB, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+  },
+  "source_reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+  "removed_from_text": "có cạnh bằng 4"
+}

@@ -1,0 +1,18 @@
+# cwd: <worktree '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02e'> @ 94200b50403bdf823eb49697d54c0cb53e8e4ccb; node frontend/scripts/w02-closure-probe.mjs --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w02/results --anh docs/evaluation/geometry/runs/regular-square-pyramid-w02/images --bo-qua-build
+2026-10-05T20:44:47Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/mobile: PASS []
+W02 probe: 14/14 PASS
+exit=0
