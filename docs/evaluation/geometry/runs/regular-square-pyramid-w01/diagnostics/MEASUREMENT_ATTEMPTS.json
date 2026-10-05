@@ -2,29 +2,243 @@
   "schema_version": "measurement-attempts/1",
   "rule": "Every red check, probe, cache proof, pre-freeze, freeze, browser, occlusion, playback, builder, T3 and gate run of this wave is listed; failed and superseded ones are included. Authoritative runs used a clean detached worktree with a space in its path ('D:/tmp/rsp w01'): npm ci --offline inside it, Python from the main tree's backend/.venv, dist built by the suite inside it. A failed attempt is kept apart from the acceptance images.",
   "measurement_commit": "ed37f9fa127d50e53ccfde3017b2b5ea7615d03b",
-  "verification_commit": "96181b87b2bf42aeced85ee909526310267693b3",
-  "product_commit": "de5b2331f22efb1e0828f05ad94392e1b9596033",
-  "candidate": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea (110 files, CACHE_VERSION 112; one freeze at de5b2331, committed in 5aaf11ee)",
+  "verification_commit": "7b99ccaafce273bd2767ec0a42ea699fb052c091 (final documentation commit; 96181b87 was verified before the self-review)",
+  "product_commit": "ad7172ab96e81b28deaf373f7a82616c7d60f297 (after the final self-review; de5b2331 before it)",
+  "candidate": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa (110 files, CACHE_VERSION 112; frozen at ad7172ab, committed in b5cf4503); intermediate 4629c3e8… (de5b2331, committed in 5aaf11ee) — the browser evidence was measured on the intermediate and transfers by byte-identical envelopes",
   "application_llm_calls": 0,
   "live_gemini_requests": 0,
   "attempts": [
-    {"id": "PHASE1-PROBE", "commit": "38d41588 (main tree, scratchpad probe)", "gate": "LLM-style program for S1 through verify_and_compile", "result": "V = 16 executed but refused at assumption (TEMPLATE_NOT_MATCHED) — RC1–RC4 in PLAN.md", "classification": "SUPERSEDED_DIAGNOSTIC (by the committed tests)", "log": "summarised in PLAN.md §0 and the ledger; console output not captured to a file"},
-    {"id": "RED-BACKEND", "commit": "e537dbd9 + uncommitted tests", "gate": "pytest tests/geometry/test_regular_square_pyramid.py before product code", "result": "17 failed / 11 passed (positives TEMPLATE_NOT_MATCHED; N4 refused only by source_invariant)", "classification": "AUTHORITATIVE (red)", "log": "ledger Task 4; console output not captured to a file"},
-    {"id": "REGRESSION-1", "commit": "3bdada32 (main tree)", "gate": "pytest tests/geometry tests/semantic_program", "result": "13 failed: 1 real (W18 B22 binding label, correction layer W18_LABEL_CORRECTIONS.json), 12 pre-freeze / dirty tree", "classification": "DIAGNOSTIC", "log": "ledger Task 4"},
-    {"id": "CACHE-PROBE", "commit": "c37b2cc4 (main tree) vs 38d41588 (detached worktree D:/tmp/rsp-cache-base)", "gate": "fixture envelopes base vs HEAD; two LLM-route probes", "result": "9 served fixtures byte-identical; probes found two real defects (lost volume formula; scope gate refused 'độ dài')", "classification": "DIAGNOSTIC (led to 98e2b8f7, 9d66c603)", "log": "ledger Task 7"},
-    {"id": "CACHE-PROOF", "commit": "before 38d41588 (worktree), after 9d66c603 (main tree)", "gate": "diagnostics/proof_cache_row_w01.py corpus / envelopes / prove (temporary sqlite)", "result": "2 v111 rows HIT with changed W1 envelopes; simulated bump: both MISS ⇒ BUMP 111 -> 112", "classification": "AUTHORITATIVE", "log": "diagnostics/PROOF_CACHE_ROW_W01.json"},
-    {"id": "PRE-FREEZE", "commit": "de5b2331 (main tree)", "gate": "full backend pytest", "result": "13 failed / 7104 passed — all stale-candidate / dirty-tree", "classification": "DIAGNOSTIC", "log": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_de5b2331.log"},
-    {"id": "FREEZE-ACCIDENT", "commit": "de5b2331 (main tree, dirty)", "gate": "freeze_evaluation_candidate.py --help (no help flag: it froze)", "result": "EVALUATION_CANDIDATE.json overwritten in the main tree; restored with git checkout before any commit", "classification": "NOT_A_FREEZE (reverted)", "log": "ledger Task 8"},
-    {"id": "FREEZE", "commit": "de5b2331 (clean detached worktree D:/tmp/rsp-freeze)", "gate": "freeze_evaluation_candidate.py + --verify", "result": "cay_sach true, 110 files, 4629c3e8…; verify match", "classification": "AUTHORITATIVE", "log": "ledger Task 8; 5aaf11ee"},
-    {"id": "SCOPE-CLUE-PROBE", "commit": "1310658b (main tree)", "gate": "diagnostics/probe_scope_length_clue.py through run_pipeline", "result": "B18 served, B19 refused at construction_binding", "classification": "AUTHORITATIVE", "log": "diagnostics/SCOPE_LENGTH_CLUE_PROBE_1310658b.json"},
-    {"id": "BROWSER-ATTEMPT1", "commit": "3ad9442f", "gate": "fixtures + compiler-scene-replay.mjs --suite", "result": "stopped at INVALID_SUITE_MANIFEST:oracle_source_hash:regular_square_pyramid (hash taken before two tests were added to the oracle source); no browser run", "classification": "FAILED (fixed in 1310658b)", "log": "diagnostics/logs/BROWSER_SUITE_attempt1_3ad9442f.log"},
-    {"id": "BROWSER-ATTEMPT2", "commit": "1310658b", "gate": "fixtures + suite", "result": "every negative and served case passed; every positive failed structured references (b) — the harness looked for the Results row in the collapsed solution — and cross-section also CSS readiness and causal readout/role colours", "classification": "FAILED (harness; fixed in ed37f9fa)", "log": "diagnostics/logs/BROWSER_SUITE_attempt2_1310658b.log"},
-    {"id": "BROWSER", "commit": "ed37f9fa", "gate": "fixtures + suite (attempt 3)", "result": "PASS 7/7 families: 14/14 positives, 54/54 refusals, 6/6 served, 68/68 selections, drawer 14/14, steps panel 14/14", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/BROWSER_SUITE_ed37f9fa.log, FIXTURES_ed37f9fa.log"},
-    {"id": "OCCLUSION", "commit": "ed37f9fa", "gate": "backend/scripts/measure_scene3d_occlusion.py (frozen human registry, camera preimages, declared camera change, --pending-human-review)", "result": "pass, 0 failures, HUMAN_REVIEW_PENDING (four W14 scenes); regular pyramid product = oracle on 4/4 states", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/OCCLUSION_ed37f9fa.log"},
-    {"id": "PLAYBACK", "commit": "ed37f9fa", "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build", "result": "14/14", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/PLAYBACK_ed37f9fa.log"},
-    {"id": "BUILDER", "commit": "ed37f9fa", "gate": "backend/scripts/build_scene3d_visual_evidence.py", "result": "68 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; seven sheets + filmstrips + overview", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/EVIDENCE_BUILDER_ed37f9fa.log"},
-    {"id": "T3-ATTEMPT1", "commit": "96181b87", "gate": "frontend/scripts/full-gate.mjs from a path with a space", "result": "FULL_PRODUCT_GATE_FAIL: 1 failed (test_holdout_readiness_7b — dirty tree); the only untracked file was this run's own log, written inside the worktree", "classification": "FAILED (procedure; the log moved outside the worktree)", "log": "diagnostics/logs/T3_FULL_GATE_attempt1_96181b87.log"},
-    {"id": "T3", "commit": "96181b87", "gate": "frontend/scripts/full-gate.mjs from a path with a space; log outside the worktree", "result": "FULL_PRODUCT_GATE_PASS: pytest 7118 passed / 0 failed / 1 skipped / 2 deselected; vitest 1071/1071; build; demo 5/5; crash surface 6/6; git status 0 before and after", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/T3_FULL_GATE_96181b87.log"},
-    {"id": "GATES", "commit": "96181b87", "gate": "diagnostics/w01_gates.sh 96181b87 38d41588", "result": "candidate + cache verify 0; schema export x2 byte-identical (d852b47c…), git status unchanged; LLM_ONLY; model-surface files changed 0; outside the run only the two living registries changed; git diff --check 0; docs audit PASS; node harness 76 passed / 0 failed / 2 skipped (the two full-gate interpreter tests skip when the worktree has no backend/.venv of its own); 'catalogued reports changed: 1 of 181' is the known false positive — the catalog's introduction links the living docs/EVIDENCE_INDEX.md, updated on purpose; the 180 historical reports: 0 changed", "classification": "AUTHORITATIVE", "log": "diagnostics/logs/GATES_96181b87.log"}
+    {
+      "id": "PHASE1-PROBE",
+      "commit": "38d41588 (main tree, scratchpad probe)",
+      "gate": "LLM-style program for S1 through verify_and_compile",
+      "result": "V = 16 executed but refused at assumption (TEMPLATE_NOT_MATCHED) — RC1–RC4 in PLAN.md",
+      "classification": "SUPERSEDED_DIAGNOSTIC (by the committed tests)",
+      "log": "summarised in PLAN.md §0 and the ledger; console output not captured to a file"
+    },
+    {
+      "id": "RED-BACKEND",
+      "commit": "e537dbd9 + uncommitted tests",
+      "gate": "pytest tests/geometry/test_regular_square_pyramid.py before product code",
+      "result": "17 failed / 11 passed (positives TEMPLATE_NOT_MATCHED; N4 refused only by source_invariant)",
+      "classification": "AUTHORITATIVE (red)",
+      "log": "ledger Task 4; console output not captured to a file"
+    },
+    {
+      "id": "REGRESSION-1",
+      "commit": "3bdada32 (main tree)",
+      "gate": "pytest tests/geometry tests/semantic_program",
+      "result": "13 failed: 1 real (W18 B22 binding label, correction layer W18_LABEL_CORRECTIONS.json), 12 pre-freeze / dirty tree",
+      "classification": "DIAGNOSTIC",
+      "log": "ledger Task 4"
+    },
+    {
+      "id": "CACHE-PROBE",
+      "commit": "c37b2cc4 (main tree) vs 38d41588 (detached worktree D:/tmp/rsp-cache-base)",
+      "gate": "fixture envelopes base vs HEAD; two LLM-route probes",
+      "result": "9 served fixtures byte-identical; probes found two real defects (lost volume formula; scope gate refused 'độ dài')",
+      "classification": "DIAGNOSTIC (led to 98e2b8f7, 9d66c603)",
+      "log": "ledger Task 7"
+    },
+    {
+      "id": "CACHE-PROOF",
+      "commit": "before 38d41588 (worktree), after 9d66c603 (main tree)",
+      "gate": "diagnostics/proof_cache_row_w01.py corpus / envelopes / prove (temporary sqlite)",
+      "result": "2 v111 rows HIT with changed W1 envelopes; simulated bump: both MISS ⇒ BUMP 111 -> 112",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/PROOF_CACHE_ROW_W01.json"
+    },
+    {
+      "id": "PRE-FREEZE",
+      "commit": "de5b2331 (main tree)",
+      "gate": "full backend pytest",
+      "result": "13 failed / 7104 passed — all stale-candidate / dirty-tree",
+      "classification": "DIAGNOSTIC",
+      "log": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_de5b2331.log"
+    },
+    {
+      "id": "FREEZE-ACCIDENT",
+      "commit": "de5b2331 (main tree, dirty)",
+      "gate": "freeze_evaluation_candidate.py --help (no help flag: it froze)",
+      "result": "EVALUATION_CANDIDATE.json overwritten in the main tree; restored with git checkout before any commit",
+      "classification": "NOT_A_FREEZE (reverted)",
+      "log": "ledger Task 8"
+    },
+    {
+      "id": "FREEZE",
+      "commit": "de5b2331 (clean detached worktree D:/tmp/rsp-freeze)",
+      "gate": "freeze_evaluation_candidate.py + --verify",
+      "result": "cay_sach true, 110 files, 4629c3e8…; verify match",
+      "classification": "AUTHORITATIVE",
+      "log": "ledger Task 8; 5aaf11ee"
+    },
+    {
+      "id": "SCOPE-CLUE-PROBE",
+      "commit": "1310658b (main tree)",
+      "gate": "diagnostics/probe_scope_length_clue.py through run_pipeline",
+      "result": "B18 served, B19 refused at construction_binding",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/SCOPE_LENGTH_CLUE_PROBE_1310658b.json"
+    },
+    {
+      "id": "BROWSER-ATTEMPT1",
+      "commit": "3ad9442f",
+      "gate": "fixtures + compiler-scene-replay.mjs --suite",
+      "result": "stopped at INVALID_SUITE_MANIFEST:oracle_source_hash:regular_square_pyramid (hash taken before two tests were added to the oracle source); no browser run",
+      "classification": "FAILED (fixed in 1310658b)",
+      "log": "diagnostics/logs/BROWSER_SUITE_attempt1_3ad9442f.log"
+    },
+    {
+      "id": "BROWSER-ATTEMPT2",
+      "commit": "1310658b",
+      "gate": "fixtures + suite",
+      "result": "every negative and served case passed; every positive failed structured references (b) — the harness looked for the Results row in the collapsed solution — and cross-section also CSS readiness and causal readout/role colours",
+      "classification": "FAILED (harness; fixed in ed37f9fa)",
+      "log": "diagnostics/logs/BROWSER_SUITE_attempt2_1310658b.log"
+    },
+    {
+      "id": "BROWSER",
+      "commit": "ed37f9fa",
+      "gate": "fixtures + suite (attempt 3)",
+      "result": "PASS 7/7 families: 14/14 positives, 54/54 refusals, 6/6 served, 68/68 selections, drawer 14/14, steps panel 14/14",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/BROWSER_SUITE_ed37f9fa.log, FIXTURES_ed37f9fa.log"
+    },
+    {
+      "id": "OCCLUSION",
+      "commit": "ed37f9fa",
+      "gate": "backend/scripts/measure_scene3d_occlusion.py (frozen human registry, camera preimages, declared camera change, --pending-human-review)",
+      "result": "pass, 0 failures, HUMAN_REVIEW_PENDING (four W14 scenes); regular pyramid product = oracle on 4/4 states",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/OCCLUSION_ed37f9fa.log"
+    },
+    {
+      "id": "PLAYBACK",
+      "commit": "ed37f9fa",
+      "gate": "frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --bo-qua-build",
+      "result": "14/14",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/PLAYBACK_ed37f9fa.log"
+    },
+    {
+      "id": "BUILDER",
+      "commit": "ed37f9fa",
+      "gate": "backend/scripts/build_scene3d_visual_evidence.py",
+      "result": "68 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; seven sheets + filmstrips + overview",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/EVIDENCE_BUILDER_ed37f9fa.log"
+    },
+    {
+      "id": "T3-ATTEMPT1",
+      "commit": "96181b87",
+      "gate": "frontend/scripts/full-gate.mjs from a path with a space",
+      "result": "FULL_PRODUCT_GATE_FAIL: 1 failed (test_holdout_readiness_7b — dirty tree); the only untracked file was this run's own log, written inside the worktree",
+      "classification": "FAILED (procedure; the log moved outside the worktree)",
+      "log": "diagnostics/logs/T3_FULL_GATE_attempt1_96181b87.log"
+    },
+    {
+      "id": "T3",
+      "commit": "96181b87",
+      "gate": "frontend/scripts/full-gate.mjs from a path with a space; log outside the worktree",
+      "result": "FULL_PRODUCT_GATE_PASS: pytest 7118 passed / 0 failed / 1 skipped / 2 deselected; vitest 1071/1071; build; demo 5/5; crash surface 6/6; git status 0 before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/T3_FULL_GATE_96181b87.log"
+    },
+    {
+      "id": "GATES",
+      "commit": "96181b87",
+      "gate": "diagnostics/w01_gates.sh 96181b87 38d41588",
+      "result": "candidate + cache verify 0; schema export x2 byte-identical (d852b47c…), git status unchanged; LLM_ONLY; model-surface files changed 0; outside the run only the two living registries changed; git diff --check 0; docs audit PASS; node harness 76 passed / 0 failed / 2 skipped (the two full-gate interpreter tests skip when the worktree has no backend/.venv of its own); 'catalogued reports changed: 1 of 181' is the known false positive — the catalog's introduction links the living docs/EVIDENCE_INDEX.md, updated on purpose; the 180 historical reports: 0 changed",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/GATES_96181b87.log"
+    },
+    {
+      "id": "SELF-REVIEW-PROBE",
+      "commit": "c7fcd7dd (main tree)",
+      "gate": "read-only probe of regular-pyramid phrasings through verify_and_compile",
+      "result": "'AB = 4, SA = 3' and 'cạnh đáy bằng 4, cạnh bên SA = 3' refused (ASSUMPTION_INVARIANCE_UNPROVEN, 'T7 MISSING chiều cao: CE_INVALID breaks |AS| = 3'); 'SA = SB = SC = SD = 3' refused at grounding (SOURCE_EVIDENCE_CONFLICT)",
+      "classification": "DIAGNOSTIC (led to LABELS_R2 and ad7172ab)",
+      "log": "ledger 'Final:' lines; console output not captured to a file"
+    },
+    {
+      "id": "RED-R2",
+      "commit": "21c172e8",
+      "gate": "pytest tests/geometry/test_regular_square_pyramid.py with layer R2",
+      "result": "first run: 5 failed (S8, S9, S10 refused; N8, U4 refused at source_invariant, not at the registered assumption stage → PC2); after PC2 and N9: 6 failed (S8, S9, S10 route; two T7 certificate tests; N9 contradiction not named)",
+      "classification": "AUTHORITATIVE (red)",
+      "log": "commit 21c172e8; PREREGISTRATION_CORRECTIONS.json PC2"
+    },
+    {
+      "id": "GREEN-R2",
+      "commit": "ad7172ab",
+      "gate": "pytest tests/geometry/test_regular_square_pyramid.py; tests/geometry + tests/semantic_program",
+      "result": "51 passed; 12 failed / 6113 passed in the two directories — the same stale-candidate / dirty-tree list as before the freeze",
+      "classification": "AUTHORITATIVE",
+      "log": "ledger"
+    },
+    {
+      "id": "CACHE-PROOF-R2",
+      "commit": "before de5b2331 (worktree D:/tmp/rsp-cache-112), after ad7172ab (main tree)",
+      "gate": "diagnostics/proof_cache_row_w01.py corpus / envelopes / prove (temporary sqlite)",
+      "result": "NO_BUMP — 9/9 envelopes served under 112 byte-identical; S8–S10 were refused under 112",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/PROOF_CACHE_ROW_W01_R2.json, cache_proof_corpus_w01_r2.json"
+    },
+    {
+      "id": "PRE-FREEZE-2",
+      "commit": "ad7172ab (main tree)",
+      "gate": "full backend pytest",
+      "result": "11 failed / 7120 passed — all stale-candidate / dirty-tree",
+      "classification": "DIAGNOSTIC",
+      "log": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_ad7172ab.log"
+    },
+    {
+      "id": "FREEZE-2",
+      "commit": "ad7172ab (clean detached worktree D:/tmp/rsp-freeze2)",
+      "gate": "freeze_evaluation_candidate.py + --verify",
+      "result": "cay_sach true, 110 files, 5234c37e…; verify match",
+      "classification": "AUTHORITATIVE",
+      "log": "b5cf4503"
+    },
+    {
+      "id": "TRANSFER-FIXTURES",
+      "commit": "b5cf4503 (clean detached worktree 'D:/tmp/rsp w01b', fixtures written outside it)",
+      "gate": "candidate + cache verify; generate_generic_tier_a_fixtures.py",
+      "result": "verify 0/0; 37 fixtures; worktree status 0 before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/FIXTURES_TRANSFER_b5cf4503.log"
+    },
+    {
+      "id": "TRANSFER-ATTEMPT1",
+      "commit": "b5cf4503",
+      "gate": "diagnostics/fixture_transfer_w01.py (first version)",
+      "result": "DOES_NOT_TRANSFER — script defect: it compared the recorded manifest hash with the LF form only, while the suite hashed the raw CRLF bytes; envelopes 37/37 identical",
+      "classification": "SUPERSEDED (script fixed)",
+      "log": "results/FIXTURE_TRANSFER_b5cf4503.json"
+    },
+    {
+      "id": "TRANSFER",
+      "commit": "b5cf4503",
+      "gate": "diagnostics/fixture_transfer_w01.py (raw / LF / CRLF forms)",
+      "result": "TRANSFERS — recorded manifest reproduced (raw form), 37/37 envelopes byte-identical, differences only in product_commit_sha / product_tree_sha; frontend/src unchanged since ed37f9fa",
+      "classification": "AUTHORITATIVE",
+      "log": "results/FIXTURE_TRANSFER_b5cf4503_r2.json"
+    },
+    {
+      "id": "T3-FINAL",
+      "commit": "7b99ccaa",
+      "gate": "frontend/scripts/full-gate.mjs from a path with a space ('D:/tmp/rsp w01b', npm ci --offline); log outside the worktree",
+      "result": "FULL_PRODUCT_GATE_PASS: pytest 7131 passed / 0 failed / 1 skipped / 2 deselected; vitest 1071/1071; build; demo 5/5; crash surface 6/6; git status 0 before and after",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/T3_FULL_GATE_7b99ccaa.log"
+    },
+    {
+      "id": "GATES-FINAL",
+      "commit": "7b99ccaa",
+      "gate": "diagnostics/w01_gates.sh 7b99ccaa 38d41588",
+      "result": "candidate 5234c37e + cache 112 verify 0; schema export x2 byte-identical (d852b47c…); LLM_ONLY; model-surface files changed 0; outside the run only the two living registries changed; git diff --check 0; docs audit PASS; node harness 76/0/2 skipped (environment); 'catalogued reports changed: 1 of 181' = the catalog's link to the living EVIDENCE_INDEX (known false positive), 180 historical reports unchanged",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/GATES_7b99ccaa.log"
+    }
   ]
 }

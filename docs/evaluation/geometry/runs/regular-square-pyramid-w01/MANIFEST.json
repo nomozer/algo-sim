@@ -2,13 +2,13 @@
  "schema_version": "run-manifest/1",
  "run": "regular-square-pyramid-w01",
  "measurement_commit": "ed37f9fa",
- "verification_commit": "96181b87",
+ "verification_commit": "7b99ccaafce273bd2767ec0a42ea699fb052c091",
  "files": [
   {
    "path": "diagnostics/build_manifest.py",
-   "sha256": "0d5b1149df28777d627df83b28d0657d34a02d01a702411c96f6606164a2b9d9",
+   "sha256": "3ca3f2ae9cc6aee971afe0babb1fc63971224b8bc34cad3c3941d1891100b3ee",
    "basis": "git_blob_lf",
-   "bytes": 5729,
+   "bytes": 7062,
    "producer": "hand-written W1 diagnostic script (0 model calls)",
    "status": "RECORD"
   },
@@ -21,11 +21,27 @@
    "status": "AUTHORITATIVE"
   },
   {
+   "path": "diagnostics/cache_proof_corpus_w01_r2.json",
+   "sha256": "ba48ed1e82b6398836c9616311e1249fd70b1afc8831ede00b27083fdaa9e148",
+   "basis": "git_blob_lf",
+   "bytes": 146462,
+   "producer": "diagnostics/proof_cache_row_w01.py corpus (main tree @ ad7172ab)",
+   "status": "AUTHORITATIVE"
+  },
+  {
    "path": "diagnostics/corpus/LABELS.json",
    "sha256": "95a75599f3d2056ab872f572e3c447392f592a8e9269560ecf4e16193c7a625f",
    "basis": "git_blob_lf",
    "bytes": 8107,
    "producer": "hand-written labels, registered before any product change (e537dbd9)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/corpus/LABELS_R2.json",
+   "sha256": "f6a15b077f9375006b6b3da6bf127d0481e853686b40613796ae06c4f27d78a4",
+   "basis": "git_blob_lf",
+   "bytes": 4774,
+   "producer": "hand-written labels R2, final self-review, before the fix (21c172e8; PC2 amendment)",
    "status": "AUTHORITATIVE"
   },
   {
@@ -35,6 +51,14 @@
    "bytes": 930,
    "producer": "hand-written correction layer over the W18 labels (3bdada32)",
    "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/fixture_transfer_w01.py",
+   "sha256": "1e60333c8a4e003818c9db00e503be9cc0d81ad302b72c85face531c4faea632",
+   "basis": "git_blob_lf",
+   "bytes": 5787,
+   "producer": "hand-written W1 diagnostic script (0 model calls)",
+   "status": "RECORD"
   },
   {
    "path": "diagnostics/logs/BROWSER_SUITE_attempt1_3ad9442f.log",
@@ -93,12 +117,28 @@
    "status": "AUTHORITATIVE"
   },
   {
+   "path": "diagnostics/logs/FIXTURES_TRANSFER_b5cf4503.log",
+   "sha256": "24f29942c6febcda0c7414029a9f60c2382e3f56294a121259942fb9fa47782c",
+   "basis": "git_blob_lf",
+   "bytes": 588,
+   "producer": "generate_generic_tier_a_fixtures.py @ b5cf4503 (clean detached worktree 'D:/tmp/rsp w01b'), output outside the worktree",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/logs/GATES_7b99ccaa.log",
+   "sha256": "5ef12e4310fadef8b7f6540b19c6d83d49f724705a83a9fadfb130ac0d7be516",
+   "basis": "git_blob_lf",
+   "bytes": 2603,
+   "producer": "diagnostics/w01_gates.sh 7b99ccaa 38d41588 (clean detached worktree 'D:/tmp/rsp w01b')",
+   "status": "AUTHORITATIVE"
+  },
+  {
    "path": "diagnostics/logs/GATES_96181b87.log",
    "sha256": "7dffb11799d01b663e956d3c8b8b8d34bddeba21cfcdc727dba1e9b4df809a8a",
    "basis": "git_blob_lf",
    "bytes": 2603,
-   "producer": "diagnostics/w01_gates.sh 96181b87 38d41588 (clean detached worktree 'D:/tmp/rsp w01')",
-   "status": "AUTHORITATIVE"
+   "producer": "w01_gates.sh @ 96181b87, before the final self-review (superseded)",
+   "status": "SUPERSEDED"
   },
   {
    "path": "diagnostics/logs/OCCLUSION_ed37f9fa.log",
@@ -117,6 +157,14 @@
    "status": "AUTHORITATIVE"
   },
   {
+   "path": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_ad7172ab.log",
+   "sha256": "4d518094cd18ee8b17eebc0c456df13c00b617bb99aba560c4f1fbf177a56b19",
+   "basis": "git_blob_lf",
+   "bytes": 25132,
+   "producer": "pytest, main tree before the second freeze (stale-candidate class)",
+   "status": "DIAGNOSTIC"
+  },
+  {
    "path": "diagnostics/logs/PRE_FREEZE_FULL_BACKEND_de5b2331.log",
    "sha256": "9c593850b33b80b0f00410d9b783b545c289ced70625a3fedcd5655493312a73",
    "basis": "git_blob_lf",
@@ -125,12 +173,20 @@
    "status": "DIAGNOSTIC"
   },
   {
+   "path": "diagnostics/logs/T3_FULL_GATE_7b99ccaa.log",
+   "sha256": "850f4e18ad37b8c1e8b533438f5abb3d738c05a13790f81a1f2713a5f647be6a",
+   "basis": "git_blob_lf",
+   "bytes": 14060,
+   "producer": "frontend/scripts/full-gate.mjs @ 7b99ccaa from a path with a space (clean detached worktree 'D:/tmp/rsp w01b')",
+   "status": "AUTHORITATIVE"
+  },
+  {
    "path": "diagnostics/logs/T3_FULL_GATE_96181b87.log",
    "sha256": "756c84423405b8ff117aca6d909ead53e5ac8316f2dd950f6bd23157c0161ebe",
    "basis": "git_blob_lf",
    "bytes": 13944,
-   "producer": "frontend/scripts/full-gate.mjs @ 96181b87 from a path with a space (clean detached worktree 'D:/tmp/rsp w01')",
-   "status": "AUTHORITATIVE"
+   "producer": "full-gate.mjs @ 96181b87, before the final self-review (superseded)",
+   "status": "SUPERSEDED"
   },
   {
    "path": "diagnostics/logs/T3_FULL_GATE_attempt1_96181b87.log",
@@ -142,9 +198,9 @@
   },
   {
    "path": "diagnostics/MEASUREMENT_ATTEMPTS.json",
-   "sha256": "121731dcdb55a75c1335f9a5945dd24a34ca2ae856b0bac88e2c877cd63882d2",
+   "sha256": "35b4010c6bd82ceb647bed77d89a344aed7fcbbbbd33cfc6fe6b958622d4dde3",
    "basis": "git_blob_lf",
-   "bytes": 7625,
+   "bytes": 13638,
    "producer": "hand-written record of every measurement attempt",
    "status": "RECORD"
   },
@@ -153,6 +209,14 @@
    "sha256": "7f745019d155773df38ba6737d7575d391299170a1ba0f6b7a34d34a7cf8ddcb",
    "basis": "git_blob_lf",
    "bytes": 4652,
+   "producer": "hand-written W1 diagnostic script (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/oracle_rsp_w01_r2.py",
+   "sha256": "2e568809289722b7e1dcecec1a4ad04bdfc80558bc30f94de89483803925000f",
+   "basis": "git_blob_lf",
+   "bytes": 3494,
    "producer": "hand-written W1 diagnostic script (0 model calls)",
    "status": "RECORD"
   },
@@ -166,9 +230,9 @@
   },
   {
    "path": "diagnostics/PREREGISTRATION_CORRECTIONS.json",
-   "sha256": "679ba7d2c89f5e63a524425c1927ece0a617ebf9f966de0a92c404107c0fdfd0",
+   "sha256": "9c1e2093f6ce215c12276108f3bdf902f63add0334d47b97861567b072af6708",
    "basis": "git_blob_lf",
-   "bytes": 2132,
+   "bytes": 3340,
    "producer": "hand-written, before any browser run (c37b2cc4)",
    "status": "AUTHORITATIVE"
   },
@@ -197,6 +261,14 @@
    "status": "RECORD"
   },
   {
+   "path": "diagnostics/PROOF_CACHE_ROW_W01_R2.json",
+   "sha256": "f41fbe2e7c1e90ce087a274ed21cabc612852607090b4bb4d40ddacae053ee99",
+   "basis": "git_blob_lf",
+   "bytes": 16205,
+   "producer": "diagnostics/proof_cache_row_w01.py prove (before de5b2331, after ad7172ab)",
+   "status": "AUTHORITATIVE"
+  },
+  {
    "path": "diagnostics/SCOPE_LENGTH_CLUE_PROBE_1310658b.json",
    "sha256": "9bfdbb26047b1ab865f0e51cd5da87e82938f4ea9cf484674063e4678d0fffca",
    "basis": "git_blob_lf",
@@ -206,9 +278,9 @@
   },
   {
    "path": "diagnostics/TEMP_FILE_INVENTORY.json",
-   "sha256": "a5d7848bf20e44f20cfee9c92f8da8601e74fd37759a9bc39ba019063ecade83",
+   "sha256": "8319a7bda430700eea07eb71af4d0d2ce2130e7b048c901f6241baf7c7bb7959",
    "basis": "git_blob_lf",
-   "bytes": 5042,
+   "bytes": 6243,
    "producer": "hand-written inventory of the temporary files of the wave",
    "status": "RECORD"
   },
@@ -222,17 +294,17 @@
   },
   {
    "path": "diagnostics/WORKTREE_CLEANUP.json",
-   "sha256": "2a1b0be2a7b2b2d7baa9b111cb7cc9f36eb170aafa9990a40936b6218677c6da",
+   "sha256": "abfc061eb40425d4f6c9f5a121f8b4224750870240e2cae1578d13f091c42072",
    "basis": "git_blob_lf",
-   "bytes": 1139,
+   "bytes": 2123,
    "producer": "hand-written record of worktree removal",
    "status": "RECORD"
   },
   {
    "path": "HANDOFF.md",
-   "sha256": "c1f85eb1ff5fbb76de0006c22b9ef8f73c2bc359bee279144617e196ac93caf7",
+   "sha256": "6c8bea01b9f9987c0be2988c80f6f97ecf1933be2f82e9d61d079b62fff59ff5",
    "basis": "git_blob_lf",
-   "bytes": 10067,
+   "bytes": 12520,
    "producer": "hand-written run document",
    "status": "RECORD"
   },
@@ -4910,9 +4982,9 @@
   },
   {
    "path": "inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
-   "sha256": "6032cbe23efe2627bc3453ec9acdd6d7dad11b9d47238e6adad7b08dce9977ae",
+   "sha256": "568fd1e5c9bc4b0807278be887e8125ae32882ba1703f7de94f7793c70085fa5",
    "basis": "git_blob_lf",
-   "bytes": 3812,
+   "bytes": 4422,
    "producer": "hand-written candidate divergence declaration (one freeze)",
    "status": "RECORD"
   },
@@ -5230,9 +5302,9 @@
   },
   {
    "path": "REPORT.md",
-   "sha256": "828c837a8d2c29b3f48e6271f3300046ea5c7655393efe03553841826c79b4d7",
+   "sha256": "8f92f0c7e504d6a06f65a78cee9f711f89ad998d4a80f279ada740d03f3a9400",
    "basis": "git_blob_lf",
-   "bytes": 14534,
+   "bytes": 20678,
    "producer": "hand-written run document",
    "status": "RECORD"
   },
@@ -5242,6 +5314,22 @@
    "basis": "git_blob_lf",
    "bytes": 2938619,
    "producer": "frontend/scripts/compiler-scene-replay.mjs --suite @ ed37f9fa (clean detached worktree 'D:/tmp/rsp w01', attempt 3)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/FIXTURE_TRANSFER_b5cf4503.json",
+   "sha256": "db012135693d8550afe7b1efe48f92bd446a74a2e863cc700890f70317fa3f06",
+   "basis": "git_blob_lf",
+   "bytes": 22028,
+   "producer": "diagnostics/fixture_transfer_w01.py first version (LF-only hash: wrong verdict)",
+   "status": "SUPERSEDED"
+  },
+  {
+   "path": "results/FIXTURE_TRANSFER_b5cf4503_r2.json",
+   "sha256": "e73e40082ccbc5d4c6d4612eff56c3ba16c1d91674626069afd793a9f4ed97f8",
+   "basis": "git_blob_lf",
+   "bytes": 22301,
+   "producer": "diagnostics/fixture_transfer_w01.py @ b5cf4503 (clean detached worktree 'D:/tmp/rsp w01b')",
    "status": "AUTHORITATIVE"
   },
   {
@@ -5270,9 +5358,9 @@
   },
   {
    "path": "RUN.json",
-   "sha256": "107a94928851f95d61c40d07eccb1651064446ab3fca65f2739f111592ad55ed",
+   "sha256": "a3c350dd29412f336b46b7ec8ef1437590cb0770864e3902fbaa2372c6bc7caa",
    "basis": "git_blob_lf",
-   "bytes": 2235,
+   "bytes": 2797,
    "producer": "hand-written run document",
    "status": "RECORD"
   }

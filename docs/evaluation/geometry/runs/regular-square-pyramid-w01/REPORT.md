@@ -105,6 +105,8 @@ Cách đo:
 | playback (`results/PLAYBACK_EVIDENCE.json`) | 14/14, có `--lap-orbit 5` |
 | ảnh | sheet + filmstrip mỗi họ (`images/<họ>/`), `images/overview/INDEX.png` · 68 crop cạnh khuất, 0 bất đồng oracle, 0 owner trùng |
 | **chuyển tiếp sang `5234c37e`** (`results/FIXTURE_TRANSFER_b5cf4503_r2.json`) | **TRANSFERS** — 37 fixture tái sinh trong worktree sạch tại `b5cf4503`: 37/37 envelope trùng byte, chỉ khác hai trường danh tính; manifest fixture đã đo tái lập trùng byte; `frontend/src` không đổi từ `ed37f9fa` (`frontend/scripts` chỉ đổi danh tính ở manifest bộ đo) |
+| **T3 tại commit tài liệu cuối `7b99ccaa`**, đường dẫn có dấu cách, log ngoài worktree | **`FULL_PRODUCT_GATE_PASS`** — pytest 7131/0 (1 skipped, 2 deselected) · vitest 1071/1071 · build · demo 5/5 · bề mặt sập 6/6 · git status 0 trước/sau |
+| **cổng danh tính tại `7b99ccaa`** (`diagnostics/w01_gates.sh`) | candidate `5234c37e` + cache 112 verify · schema ×2 trùng byte · `LLM_ONLY` · 0 file bề mặt mô hình đổi · ngoài run chỉ hai registry sống đổi, 0/180 báo cáo lịch sử đổi · `git diff --check` 0 · audit tài liệu PASS · node harness 76/0 (2 skip môi trường) |
 | T3 tại `96181b87` (trước tự rà soát) | `FULL_PRODUCT_GATE_PASS` — pytest 7118/0 · vitest 1071/1071 · build · demo 5/5 · bề mặt sập 6/6 (lần 1 đỏ một test vì log của chính nó nằm trong worktree) |
 | cổng danh tính tại `96181b87` | candidate + cache verify · schema ×2 trùng byte · `LLM_ONLY` · 0 file bề mặt mô hình đổi · 0/180 báo cáo lịch sử đổi · audit tài liệu PASS · node harness 76/0 (2 skip môi trường) |
 
