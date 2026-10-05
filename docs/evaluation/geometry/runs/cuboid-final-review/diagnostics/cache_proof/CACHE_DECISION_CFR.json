@@ -1,0 +1,283 @@
+{
+  "decision": "CACHE_DECISION_CFR",
+  "model_calls": 0,
+  "before": "4048ff83 (end of W20; detached worktree D:/tmp/cfr-before)",
+  "after": "284a9bfa (product commit of cuboid-final-review)",
+  "cache_version_current": "111",
+  "w20_prove_stale_rows": [],
+  "served_envelopes_changed": [],
+  "status_changed": [],
+  "refused_rows_differing_beyond_reason_subjects": [],
+  "rows": {
+    "C1_mid_constructed_U3": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C2_proj_constructed_U3": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C3_mid_divide_half_U3": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C4_relation_not_realized_U3": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C5_mid_constructed_outside": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C6_proj_constructed_outside": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C7_layout_only_outside": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "L1_mid_U3_assumption": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L2_mid_U3_bogus_fid": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L3_mid_U3_relation_fact": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L4_mid_U3_wrong_coords": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L5_mid_outside_assumption": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L6_mid_outside_bogus_fid": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L7_mid_outside_relation_fact": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L8_mid_outside_wrong_coords": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L9_proj_U3_assumption": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L10_proj_U3_bogus_fid": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "L11_proj_U3_relation_fact": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "L12_proj_outside_bogus_fid": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "L13_proj_outside_relation_fact": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "L14_proj_outside_wrong_coords": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "L15_mid_U3_literal_twin_of_constructed": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "DERIVED_ENTITY_WITHOUT_PRODUCER",
+      "identical": true,
+      "differing_keys": []
+    },
+    "L16_mid_U3_literal_then_constructed": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "M là trung điểm của SA",
+        "đặt M bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "M là trung điểm của SA",
+        "được đặt bằng toạ độ"
+      ]
+    },
+    "C8_alias_to_constructed_U3": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "C9_layout_only_outside_distance_clue": {
+      "status_before": "ok",
+      "status_after": "ok",
+      "reason_code_after": null,
+      "identical": true,
+      "differing_keys": []
+    },
+    "L17_proj_outside_alias_to_vertex": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "lấy H trùng với điểm A"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được lấy trùng với điểm A"
+      ]
+    },
+    "L18_proj_outside_alias_to_cited_literal": {
+      "status_before": "unsupported",
+      "status_after": "unsupported",
+      "reason_code_after": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+      "identical": false,
+      "differing_keys": [
+        "reason_subjects"
+      ],
+      "reason_subjects_before": [
+        "H là hình chiếu của S lên BD",
+        "đặt H bằng toạ độ cho sẵn"
+      ],
+      "reason_subjects_after": [
+        "H là hình chiếu của S lên BD",
+        "được đặt bằng toạ độ"
+      ]
+    }
+  },
+  "CACHE_DECISION": "NO_BUMP — every served envelope is byte-identical before and after, no status changes, and refusals (never cached: main.py writes only status == \"ok\", pinned by test_api.py::test_khong_cache_ket_qua_unsupported) differ only in reason_subjects; the learner message and the card label are rebuilt on every response"
+}
