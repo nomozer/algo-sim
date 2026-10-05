@@ -1,0 +1,35 @@
+{
+  "schema_version": "ponytail-review/1",
+  "run_id": "regular-square-pyramid-w01",
+  "skill": "ponytail:ponytail-review (over-engineering only; correctness out of scope)",
+  "reviewed_range": "38d4158826cbbffd013d971a9484b9f0fd2a6130..de5b2331 -- backend/app frontend/src frontend/scripts backend/scripts",
+  "reviewed_before_freeze": true,
+  "findings": [
+    {
+      "id": "PT1",
+      "location": "backend/app/simulation/semantic_program/construction_binding.py:_TAM_DAY + shape_constraint.py:_TAM_DAY",
+      "tag": "shrink",
+      "finding": "Two readers of 'O là tâm (của) đáy / giao điểm của AC và BD'.",
+      "decision": "NOT_APPLIED",
+      "reason": "Different authorities with different outputs: construction_binding binds a program construction to a text relation by identity (any two lines, W18 vocabulary); shape_constraint emits certificate premises for the unique regular pyramid only. Merging crosses the boundary the W15/W18 amendments keep separate. About 10 lines."
+    },
+    {
+      "id": "PT2",
+      "location": "frontend/src/simulations/domains/geometry/scene3d-model.ts:quantityChoices",
+      "tag": "shrink",
+      "finding": "The same_as filter repeats the goc/rieng merge of Scene3DSolution.",
+      "decision": "NOT_APPLIED",
+      "reason": "Different output shapes (ids vs SolutionItem rows); a shared helper would add an export to save about 5 lines."
+    },
+    {
+      "id": "PT3",
+      "location": "frontend/src/simulations/domains/geometry/scene3d-playback.tsx:moBuocTrong",
+      "tag": "yagni",
+      "finding": "Fallback open state when the workspace does not hold stepsOpen.",
+      "decision": "NOT_APPLIED",
+      "reason": "Same idiom as Scene3DSolution (open ?? moTrong); the standalone player is rendered without the workspace in tests and stays usable. 3 lines."
+    }
+  ],
+  "applied": [],
+  "net": "Lean enough to freeze; net -0 lines applied."
+}

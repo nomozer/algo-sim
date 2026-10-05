@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (W1, run regular-square-pyramid-w01)",
+  "corrects": "docs/evaluation/geometry/runs/cuboid-final-review/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+  "current_candidate_source_commit": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+  "current_candidate_frozen_at": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+  "current_candidate_note": "Frozen once in this run, in a clean detached worktree outside the repository (D:/tmp/rsp-freeze) at de5b2331, the last commit touching backend/app or frontend/src: cay_lam_viec_sach = true, 110 files, CACHE_VERSION 112. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged. An earlier accidental run of the freeze script in the dirty main tree (the script has no --help flag) was reverted with git checkout before any commit; it is not a freeze of this run. Product commits of the run: 3bdada32 (regular square pyramid backend), ae9c72a5 and b2d224f6 (ROADMAP §0.1 UI), 98e2b8f7 (volume height selection), 9d66c603 (scope clue for length questions), de5b2331 (CACHE_VERSION 111 -> 112). Commits after de5b2331 touch only tooling, evidence and docs.",
+  "previous_candidate_hash": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "regular-square-pyramid-w01 adds the regular square pyramid family and the agreed ROADMAP §0.1 interface changes. backend/app changes:\n(1) semantic_program/shape_constraint.py: reads 'chóp tứ giác đều' (regular_square_pyramid + base_square), cạnh đáy, cạnh bên, trung đoạn / đường cao của mặt bên, and the named base centre (O là tâm đáy / giao điểm của hai đường chéo) for the unique regular pyramid; the read 'đều' is no longer reported as unread.\n(2) semantic_program/assumption_gate.py: C1 template T7 (side and height direct, from SO, from the apothem or the lateral edge; contradiction and non-rational height refused with structured details).\n(3) semantic_program/construction_binding.py: intersection of two lines and base centre bound by identity.\n(4) semantic_program/simulation_state.py: the measured apex-to-base-plane distance is a numerical volume source; a notation-less GIVEN quantity borrows its InputFact label.\n(5) semantic_program/scene3d.py: with a measured height present, an edge is the formula height only when it equals it.\n(6) semantic_program/domain_profile.py: 'độ dài' is a scope clue for the distance obligation.\n(7) main.py: CACHE_VERSION 111 -> 112 (served envelopes change content; PROOF_CACHE_ROW_W01.json).\nfrontend/src/simulations/domains/geometry: Results card hidden while the solution is collapsed, 'Đại lượng' drawer, 'Các bước dựng' panel, focus strip removed. No change to prompts, grammar card, schemas or the capability table (semantic environment b1714b56 unchanged).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 4629c3e8 (product commit de5b2331) is a new product identity and must not be used to rescore the historical run; the cuboid evidence describes b2d4187a and stays as it is.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 112
+}
