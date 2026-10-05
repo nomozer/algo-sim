@@ -712,7 +712,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # doi noi dung (nhan du kien khong ky hieu, khoang cach dinh -> mat day la nguon so cua the tich,
     # cong pham vi nhan "do dai"). Hai row v111 van HIT du W1 dung envelope khac:
     # runs/regular-square-pyramid-w01/diagnostics/PROOF_CACHE_ROW_W01.json.
-    assert main_module.CACHE_VERSION == "112"
+    # 112 -> 113 (regular-square-pyramid-w02, 2026-10-05): be mat mo hinh KHONG doi; envelope phuc vu doi noi
+    # dung (doan duong cao SO, khoang cach do bam doan da dung, chieu cao cua cong thuc theo quan he vuong goc).
+    # 13 row v112 van HIT du W2 dung envelope khac: runs/regular-square-pyramid-w02/diagnostics/PROOF_CACHE_ROW_W02.json.
+    assert main_module.CACHE_VERSION == "113"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

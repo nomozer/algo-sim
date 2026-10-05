@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa",
+ "current_candidate_hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -195,6 +195,11 @@
    "hash": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa",
    "sau_wave": "REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (run regular-square-pyramid-w01, sau tự rà soát cuối)",
    "ghi_chu": "Bản sửa của tự rà soát cuối: khuôn T7 đọc cạnh bên gọi bằng tên đoạn (SA = 3) từ bất biến độ dài của server; hai cạnh bên khác nhau là mâu thuẫn (ad7172ab). Lần đóng băng thứ hai của wave, worktree tách rời sạch D:/tmp/rsp-freeze2; 4629c3e8 là candidate trung gian. CACHE_VERSION giữ 112 (runs/regular-square-pyramid-w01/diagnostics/PROOF_CACHE_ROW_W01_R2.json: 9/9 row phục vụ dưới 112 trùng byte)."
+  },
+  {
+   "hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+   "sau_wave": "REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE (run regular-square-pyramid-w02)",
+   "ghi_chu": "Đường cao SO của chóp đều qua bước bổ sung dựng hình (nguồn chân đường cao thứ ba: ràng buộc 'đều' có kiểu + tâm dựng từ hai đường chéo), khoảng cách đo bám đoạn đã dựng, chiều cao của công thức thể tích chọn theo quan hệ ⊥ kiểm chính xác (gỡ luật giá trị bằng nhau của W1), độ dài ≤ 0 do chính đề ghi ⇒ NON_POSITIVE_LENGTH/SOURCE trên tuyến mặc định, nhãn InputFact kiểu token máy không mượn. Giao diện (frontend/src/simulations/domains/geometry, ngoài measured_system): nhãn đoạn chờ đoạn được dựng, bảng nổi «Các bước dựng», hình phụ, lưới. Một lần đóng băng ở c5142f07, worktree tách rời sạch CRLF trong scratchpad phiên cloud. CACHE_VERSION 112 → 113 (runs/regular-square-pyramid-w02/diagnostics/PROOF_CACHE_ROW_W02.json)."
   }
  ],
  "diverged": true,
