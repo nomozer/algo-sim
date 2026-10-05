@@ -1,0 +1,9 @@
+{
+  "schema_version": "env-baseline/1",
+  "question": "Is the browser gate camera_settled_rotated_neutral red because of W2, or because of the cloud environment?",
+  "method": "runPositive of the main suite (exported in a throw-away copy, not committed), desktop 1440x900, triangular_pyramid, in the clean detached CRLF worktree at the W1 head e821b9b5 with the W1 fixture and the W1 scenario manifest; dist built in that worktree; headless Chromium 141 with SwiftShader (--use-angle=swiftshader), no GPU; 0 model calls.",
+  "w1_head_result": {"camera_settled_rotated_neutral": {"pass": false, "samples": 190, "streak": 1, "last_motion": 9.42e-10, "max_motion": 0.00576, "tolerance": 1e-9}, "other_assertions": "all pass"},
+  "w2_result_same_gate": {"pass": false, "samples": 182, "streak": 0, "last_motion": 9.10e-7, "max_motion": 0.00347, "tolerance": 1e-9},
+  "classification": "ENVIRONMENT — the accepted W1 code fails the same gate here; W1 passed it on the user's Windows machine (ed37f9fa). The settle window (stable samples over animation frames) is not met under this machine's frame timing.",
+  "status": "LOCAL_VERIFICATION_REQUIRED"
+}

@@ -703,8 +703,19 @@ export function assessGeometrySteps(scene, observed) {
   const finalIds = new Set((scene?.events ?? [])
     .filter((e) => e.semantic_kind === "FINAL_RESULT" && e.object).map((e) => e.object));
   const steps = observed?.steps ?? [];
+  // regular-square-pyramid-w02 · D: một bước chỉ dựng HÌNH PHỤ đang ẩn (oracle độc lập `expectedAuxiliaryHidden`)
+  // tĩnh theo thiết kế — mọi khung tĩnh khác vẫn đỏ.
+  const chiPhuAn = (s) => {
+    const g = t[s.index];
+    if (!g) return false;
+    const an = new Set(expectedAuxiliaryHidden(scene, g.anchor));
+    const moi = Array.from({ length: g.end - g.start + 1 }, (_, d) => scene?.formation?.steps?.[g.start + d]?.focus_ids ?? [])
+      .flat().filter((id) => { const o = (scene?.objects ?? []).find((x) => x.id === id);
+        return o && o.render !== "readout" && o.render !== "non_visual"; });
+    return moi.length > 0 && moi.every((id) => an.has(id));
+  };
   const staticFrames = steps.slice(1)
-    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered))
+    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered) && !chiPhuAn(s))
     .map((s) => s.index);
   const focusOf = (s) => byLabel.get(String(s.focus_label ?? "").trim()) ?? [];
   const measurementSteps = steps.slice(1)
@@ -844,10 +855,13 @@ export function assessStructuredReferences(scene, observed) {
     // W18 §16.6: đại lượng gộp (`same_as`) hiện qua dòng của đại lượng nó trỏ tới.
     const panel = { has: (id) => dong.has(solutionRowOf(scene, id, dong)) };
     const hien = (id) => drawn.has(id) || panel.has(id);
+    // W2 · D: hình phụ mà oracle độc lập nói đang ẩn ở neo này không được vẽ — và không phải là lỗi (a).
+    const anPhu = new Set(expectedAuxiliaryHidden(scene, g.anchor));
     for (let j = g.start; j <= g.end; j += 1) {
       for (const id of buoc[j]?.focus_ids ?? []) {
         const o = byId.get(id);
-        if (ve(o) && !drawn.has(id)) fail.push({ index: s.index, check: "a", id, kind: o.type });
+        if (ve(o) && anPhu.has(id) && drawn.has(id)) fail.push({ index: s.index, check: "a_hidden_drawn", id, kind: o.type });
+        if (ve(o) && !drawn.has(id) && !anPhu.has(id)) fail.push({ index: s.index, check: "a", id, kind: o.type });
         if (o?.render === "readout" && !panel.has(id)) {
           fail.push({ index: s.index, check: "b", id, kind: o.type });
         }

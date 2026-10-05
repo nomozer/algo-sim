@@ -1,0 +1,25 @@
+# cwd: <worktree '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02c'> @ bac5d80f5edb472af6d3712bb8e706c3abe47ff1; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w02/results --screenshots docs/evaluation/geometry/runs/regular-square-pyramid-w02/images
+2026-10-05T19:13:44Z
+
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 93 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.50 kB │ gzip:   0.34 kB
+dist/assets/index-CVe0LU10.css   84.13 kB │ gzip:  14.20 kB
+dist/assets/index-BgV3BWUh.js   948.60 kB │ gzip: 249.54 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.82s
+triangular_pyramid: FAIL
+triangular_prism: FAIL
+rectangular_pyramid: FAIL
+Terminated
+exit=143
