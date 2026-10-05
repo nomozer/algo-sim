@@ -1,0 +1,550 @@
+# cwd: <worktree '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02g'> @ ca4f1421a333b825b3b282145c1d105fbe9cec59; node frontend/scripts/full-gate.mjs
+2026-10-05T21:30:23Z
+PYTHON main_worktree_venv 3.12 /home/user/algo-sim/backend/.venv/bin/python
+T3 FULL PRODUCT GATE
+
+.................................................F...................... [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+....................................................FFFF...FFFFF........ [  5%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 16%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+................................................F....................... [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 31%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+..F..................................................................... [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+..............................F......................................... [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+..........................s............................................. [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+.........................                                                [100%]
+=================================== FAILURES ===================================
+______________________________ test_tien_kiem_kho ______________________________
+
+    def test_tien_kiem_kho():
+        pk = D.precheck()
+        curr_branch = subprocess.run(["git", "branch", "--show-current"], cwd=D.REPO,
+                                     capture_output=True, text=True).stdout.strip()
+        assert pk["BRANCH"] in (curr_branch, "feat/photo-problem-to-scene", "HEAD")
+        is_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "12df583", pk["HEAD"]],
+                                      cwd=D.REPO).returncode == 0)
+        assert pk["HEAD"].startswith("12df583") or is_ancestor
+        is_main_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "085cae6", pk["MAIN"]],
+                                           cwd=D.REPO).returncode == 0)
+>       assert pk["MAIN"].startswith("085cae6") or is_main_ancestor
+E       AssertionError: assert (False or False)
+E        +  where False = <built-in method startswith of str object at 0x7fd33f7af6f0>('085cae6')
+E        +    where <built-in method startswith of str object at 0x7fd33f7af6f0> = 'refs/heads/main'.startswith
+
+tests/geometry/test_analyze_failure_cluster_diagnosis.py:54: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+fatal: Not a valid object name refs/heads/main
+______________ test_diagnose_precheck_independent_of_branch[main] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b94fb90>
+branch_name = 'main'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:47: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+_ test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9ba3f0>
+branch_name = 'feat/rectangular-base-pyramid-compiler'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:47: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+__ test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9b8230>
+branch_name = 'arbitrary-feature-branch-xyz'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:47: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+___ test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9bbec0>
+branch_name = 'hotfix/test-isolation-123'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:47: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+________________ test_precheck_accepts_detached_head[precheck] _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9baf60>
+precheck = <function precheck at 0x7fd341aa7560>
+
+    @pytest.mark.parametrize("precheck", [D.precheck, R.run_precheck])
+    def test_precheck_accepts_detached_head(monkeypatch, precheck):
+        """Authoritative runs use a detached worktree: `git branch --show-current`
+        prints nothing there, and HEAD ancestry alone proves the base (w09)."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout="\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+>       assert precheck()["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:83: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+______________ test_precheck_accepts_detached_head[run_precheck] _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd3412288f0>
+precheck = <function run_precheck at 0x7fd340e41580>
+
+    @pytest.mark.parametrize("precheck", [D.precheck, R.run_precheck])
+    def test_precheck_accepts_detached_head(monkeypatch, precheck):
+        """Authoritative runs use a detached worktree: `git branch --show-current`
+        prints nothing there, and HEAD ancestry alone proves the base (w09)."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout="\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+>       assert precheck()["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests/geometry/test_branch_independent_harness.py:83: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+________ test_audit_second_family_precheck_independent_of_branch[main] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9bb1d0>
+branch_name = 'main'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "custom-branch-name",
+    ])
+    def test_audit_second_family_precheck_independent_of_branch(monkeypatch, branch_name):
+        """audit_precheck() của second family evidence repair chạy độc lập với branch."""
+        real_run_git = AUDIT.run_git
+    
+        def fake_run_git(args):
+            if len(args) >= 3 and args[0] == "rev-parse" and args[1] == "--abbrev-ref" and args[2] == "HEAD":
+                return 0, branch_name
+            return real_run_git(args)
+    
+        monkeypatch.setattr(AUDIT, "run_git", fake_run_git)
+        pk = AUDIT.audit_precheck()
+        assert pk["branch"] == branch_name
+>       assert pk["valid"] is True
+E       assert False is True
+
+tests/geometry/test_branch_independent_harness.py:103: AssertionError
+_ test_audit_second_family_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9bbad0>
+branch_name = 'feat/rectangular-base-pyramid-compiler'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "custom-branch-name",
+    ])
+    def test_audit_second_family_precheck_independent_of_branch(monkeypatch, branch_name):
+        """audit_precheck() của second family evidence repair chạy độc lập với branch."""
+        real_run_git = AUDIT.run_git
+    
+        def fake_run_git(args):
+            if len(args) >= 3 and args[0] == "rev-parse" and args[1] == "--abbrev-ref" and args[2] == "HEAD":
+                return 0, branch_name
+            return real_run_git(args)
+    
+        monkeypatch.setattr(AUDIT, "run_git", fake_run_git)
+        pk = AUDIT.audit_precheck()
+        assert pk["branch"] == branch_name
+>       assert pk["valid"] is True
+E       assert False is True
+
+tests/geometry/test_branch_independent_harness.py:103: AssertionError
+_ test_audit_second_family_precheck_independent_of_branch[custom-branch-name] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd33b9bbbf0>
+branch_name = 'custom-branch-name'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "custom-branch-name",
+    ])
+    def test_audit_second_family_precheck_independent_of_branch(monkeypatch, branch_name):
+        """audit_precheck() của second family evidence repair chạy độc lập với branch."""
+        real_run_git = AUDIT.run_git
+    
+        def fake_run_git(args):
+            if len(args) >= 3 and args[0] == "rev-parse" and args[1] == "--abbrev-ref" and args[2] == "HEAD":
+                return 0, branch_name
+            return real_run_git(args)
+    
+        monkeypatch.setattr(AUDIT, "run_git", fake_run_git)
+        pk = AUDIT.audit_precheck()
+        assert pk["branch"] == branch_name
+>       assert pk["valid"] is True
+E       assert False is True
+
+tests/geometry/test_branch_independent_harness.py:103: AssertionError
+______________________ test_bao_cao_da_sinh_va_KHONG_TROI ______________________
+
+RP = <module 'report_holdout_readiness' from '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02g/backend/scripts/report_holdout_readiness.py'>
+
+    def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
+        """Báo cáo mang băm và số đếm. Viết tay thì nó đúng đúng một lần."""
+        f = GEO / "PHASE7B_READINESS_REPORT.md"
+        assert f.exists(), "chưa sinh PHASE7B_READINESS_REPORT.md"
+        src = f.read_text(encoding="utf-8")
+        d = RP.thu_thap()
+        assert d["pool_hash"] in src, "báo cáo trôi khỏi pool — chạy lại script"
+        assert f"accepted`: {d['accepted']}/40" in src
+>       assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
+E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\n\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
+E        +  where True = bool(['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'])
+E        +    where ['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'] = <function blockers at 0x7fd33ad80a40>({'luc': '2026-10-05T21:31:18+00:00', 'git_sha': 'ca4f1421a333b825b3b282145c1d105fbe9cec59', 'cay_sach': False, 'cache_version': '113', ...})
+E        +      where <function blockers at 0x7fd33ad80a40> = <module 'report_holdout_readiness' from '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02g/backend/scripts/report_holdout_readiness.py'>.blockers
+
+tests/geometry/test_holdout_readiness_7b.py:832: AssertionError
+______________________________ test_precheck_kho _______________________________
+
+    def test_precheck_kho():
+        pk = R.run_precheck()
+        curr_branch = subprocess.run(["git", "branch", "--show-current"], cwd=REPO,
+                                     capture_output=True, text=True).stdout.strip()
+        assert pk["BRANCH"] in (curr_branch, "feat/photo-problem-to-scene", "feat/photo-problem-to-scene (detached worktree)", "HEAD")
+        is_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "0ff69cbb", pk["HEAD"]],
+                                      cwd=REPO).returncode == 0)
+        assert pk["HEAD"].startswith("0ff69cbb") or is_ancestor
+        is_main_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "085cae6", pk["MAIN"]],
+                                           cwd=REPO).returncode == 0)
+>       assert pk["MAIN"].startswith("085cae6") or is_main_ancestor
+E       AssertionError: assert (False or False)
+E        +  where False = <built-in method startswith of str object at 0x7fd3394495f0>('085cae6')
+E        +    where <built-in method startswith of str object at 0x7fd3394495f0> = 'refs/heads/main'.startswith
+
+tests/geometry/test_preregistered_failure_reproduction.py:52: AssertionError
+----------------------------- Captured stderr call -----------------------------
+fatal: Not a valid object name refs/heads/main
+fatal: Not a valid object name refs/heads/main
+______ test_12_final_decision_fail_closed_neu_con_claim_thieu_provenance _______
+
+    def test_12_final_decision_fail_closed_neu_con_claim_thieu_provenance():
+        """12. Quyết định cuối cùng fail-closed nếu có vị từ nào chưa đạt."""
+        # Khi các vị từ đạt, final decision là PASS
+        precheck = AUDIT.audit_precheck()
+        integrity = AUDIT.audit_historical_integrity()
+        matrix = AUDIT.audit_selection_matrix()
+        scope = AUDIT.audit_vertical_slice_scope()
+    
+>       assert precheck["valid"] is True
+E       assert False is True
+
+tests/geometry/test_second_family_preregistration_evidence_repair.py:187: AssertionError
+=============================== warnings summary ===============================
+../../../../../../../home/user/algo-sim/backend/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/user/algo-sim/backend/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[run_precheck]
+FAILED tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[main]
+FAILED tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+FAILED tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[custom-branch-name]
+FAILED tests/geometry/test_holdout_readiness_7b.py::test_bao_cao_da_sinh_va_KHONG_TROI
+FAILED tests/geometry/test_preregistered_failure_reproduction.py::test_precheck_kho
+FAILED tests/geometry/test_second_family_preregistration_evidence_repair.py::test_12_final_decision_fail_closed_neu_con_claim_thieu_provenance
+13 failed, 7139 passed, 1 skipped, 2 deselected, 1 warning in 215.44s (0:03:35)
+
+  ✘ pytest (toàn bộ backend) — 218.2s  (exit 1)
+
+ RUN  v4.1.10 /tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02g/frontend
+
+
+ Test Files  71 passed (71)
+      Tests  1089 passed (1089)
+   Start at  21:34:03
+   Duration  7.98s (transform 2.64s, setup 730ms, import 7.13s, tests 3.87s, environment 8ms)
+
+
+  ✔ vitest (toàn bộ frontend) — 8.7s
+
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 93 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.50 kB │ gzip:   0.34 kB
+dist/assets/index-DA73iDSM.css   84.15 kB │ gzip:  14.20 kB
+dist/assets/index-CsHwsS1D.js   948.60 kB │ gzip: 249.54 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.90s
+
+  ✔ typecheck + build production — 10.2s
+✔ n1_thoi_dinh_thu_tu                [PASS   ] dừng=—  bước=6  cảnh=8
+    dựng đỉnh thứ tư từ vectơ · đo tới đường · đáp số vô tỉ √3
+    loại: line3,point3,quantity,vector3 · producer 5/8 · depends 5/8 · sự kiện 6
+✔ n2_lang_tru_xien_hai_vecto         [PASS   ] dừng=—  bước=7  cảnh=10
+    lăng trụ XIÊN · hai vectơ dẫn xuất · trung điểm · 3√3
+    loại: line3,point3,quantity,vector3 · producer 6/10 · depends 6/10 · sự kiện 7
+✔ t3_hop_tinh_tien_day_chuyen        [PASS   ] dừng=—  bước=10  cảnh=13
+    dây chuyền tịnh tiến 4 đỉnh · chuỗi sâu · 3√89/5
+    loại: line3,point3,quantity,vector3 · producer 9/13 · depends 9/13 · sự kiện 10
+✔ t4_mat_xich_trong_chuoi_sau        [PASS   ] dừng=—  bước=9  cảnh=12
+    hình chiếu trong chuỗi phụ thuộc · 2√2
+    loại: line3,plane3,point3,quantity,vector3 · producer 8/12 · depends 8/12 · sự kiện 9
+✔ n4_giao_duong_mat_roi_do           [REFUSAL] dừng=GROUNDING  bước=None  cảnh=None
+    CỔNG TỪ CHỐI: trích dẫn dữ kiện không có trong hợp đồng
+    INPUT_NOT_GROUNDED A: source_fact_id 'A(0; 0; 0)' không có trong RequestContract; B: source_fact_id 'B(2; 0; 0)' không có trong RequestContract; C: source_fact_id 'C(2; 2; 0)' không có trong RequestContract
+
+── chạy RÚT GỌN (artifact không lưu hợp đồng ⇒ bỏ grounding) ──
+✔ v2_04_thiet_dien_goc_va_the_tich   bước=12 cảnh=13  THIẾT DIỆN · góc · thể tích
+    loại: plane3,point3,quantity,section,solid
+
+  DEMO_CASES               5
+  DEMO_REPLAY_PASS         5/5
+  REDUCED_CHAIN_CASES      1/1
+
+  ✔ tập demo khoá luận — 0.6s
+✔ toạ độ ký hiệu tới kernel            mong=STATIC             thực=STATIC
+    #0 IR_NOT_EXACT_RATIONAL: 'A[0]' — cần số hữu tỉ chính xác, vd 3 hoặc -1/2 hoặc "4/3", có {'kind': 'var', 'name': 'a'} —
+✔ toán hạng SAI KIỂU tới kernel        mong=SCHEMA             thực=SCHEMA
+    `angle_cos.of` sai kiểu: 'd' khai 'line3'. Đường thẳng không có chiều nên không cho được dấu — dựng vectơ bằng `vector_f
+✔ ràng buộc LẦN ĐẦU không khai         mong=OK_SAU_CHUAN_HOA   thực=OK_SAU_CHUAN_HOA
+    chạy được, 3 bước
+✔ ràng buộc lần đầu TRONG NHÁNH        mong=STATIC             thực=STATIC
+    #2 CONDITIONAL_UNINITIALIZED_TARGET: 'M' — cần khai trong memory_declarations, hoặc dựng ngoài nhánh, có ràng buộc lần đ
+✔ toạ độ THÔ ở một ô TÊN               mong=SCHEMA             thực=SCHEMA
+    Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec
+statements.0.construct_point.expr.tra
+✔ rửa năng lực qua biểu thức lồng      mong=SCHEMA             thực=SCHEMA
+    Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec
+statements.0.construct_point.expr.tra
+
+  BIÊN ĐÚNG KỲ VỌNG      6/6
+  NÉM RA NGOÀI (=500)    0
+
+  ✔ bề mặt sập của demo — 0.4s
+
+── TỔNG KẾT ──
+  ✘ pytest (toàn bộ backend)           218.2s   (engine tất định, validator, cổng phạm vi, lớp học)
+  ✔ vitest (toàn bộ frontend)          8.7s   (module, renderer, guard kiến trúc, manifest)
+  ✔ typecheck + build production       10.2s   (cổng kiểu duy nhất của repo)
+  ✔ tập demo khoá luận                 0.6s   (chuỗi dựng tất định chạy hết, thiết diện/thể tích ra hình)
+  ✔ bề mặt sập của demo                0.4s   (sáu biên từ chối ĐÚNG KIỂU, không ném 500)
+
+Tổng: 238.0s
+
+FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua.
+exit=1
+2026-10-05T21:34:22Z

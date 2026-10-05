@@ -161,10 +161,11 @@
     },
     {
       "id": "T3-2",
-      "commit": "final documentation commit",
+      "commit": "ca4f1421 (fresh clean CRLF worktree, path with a space)",
       "gate": "full-gate.mjs + w02_gates.sh",
-      "result": "recorded in the next commit together with its logs",
-      "classification": "AUTHORITATIVE"
+      "result": "w02_gates.sh at ca4f1421: clean tree, candidate/cache verify exit 0, schema export idempotent, LLM_ONLY, 0 model-surface files, diff --check 0, docs audit PASS, node 82 pass / 1 Windows-only fail / 2 skipped. T3 at ca4f1421: vitest 1089/1089; typecheck + build, demo set, demo collapse surface green; pytest 13 failed / 7139 passed, all 13 in the W1-head environment set; FULL_PRODUCT_GATE_FAIL on the environment class only ⇒ LOCAL_VERIFICATION_REQUIRED",
+      "classification": "AUTHORITATIVE (environment failures only)",
+      "log": "diagnostics/logs/GATES_ca4f1421.log; diagnostics/logs/T3_FULL_GATE_ca4f1421.log"
     }
   ]
 }

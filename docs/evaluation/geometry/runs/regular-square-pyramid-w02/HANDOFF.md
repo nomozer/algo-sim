@@ -120,3 +120,6 @@ merge; không PR.
   - Lớp phủ có `z-index` phải xếp dưới ngăn/ô soi.
   - Script `.sh` trong worktree CRLF: chạy qua `tr -d '\r' | bash -s --`.
   - `pkill -f <mẫu>` trên cloud tự giết chính lệnh chứa mẫu ấy.
+  - Cây chính của cloud là LF: test so mẫu nhiều dòng trên `"\n"` xanh ở đây mà đỏ ở checkout CRLF — chỉ T3 trong
+    worktree CRLF bắt được (`70665542`).
+  - Bump `CACHE_VERSION` phải sửa cả `cache_version_hien_tai` của `CANDIDATE_DIVERGENCE.json` sống.

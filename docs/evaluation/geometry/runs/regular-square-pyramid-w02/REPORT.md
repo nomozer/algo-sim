@@ -216,8 +216,18 @@ liệu PASS. (`docs/EVIDENCE_INDEX.md` hiện ở mục "báo cáo lịch sử �
 mục; nó là tài liệu sống theo AGENTS.md §4.) T3 để lại `AGENTS.md`, `docs/ROADMAP.md` và hai bản schema "đã sửa" — chỉ
 khác xuống dòng (băm nội dung bỏ `\r` trùng): lớp "Python Linux ghi LF vào cây CRLF".
 
-**Lần 2 — tại commit tài liệu chứa đoạn này:** kết quả ghi ở commit kế tiếp, cùng log `T3_FULL_GATE_<sha>.log` và
-`GATES_<sha>.log` (một commit không thể mang kết quả T3 của chính nó).
+**Lần 2 — tại `ca4f1421`** (commit tài liệu; worktree tách rời sạch mới, CRLF, đường dẫn có dấu cách;
+`diagnostics/logs/GATES_ca4f1421.log` chạy trước, `T3_FULL_GATE_ca4f1421.log` sau):
+- `w02_gates.sh`: cây sạch (0) trước khi chạy; candidate và khoá cache `--verify` exit 0; schema export hai lần trùng
+  (`66775800…`); `DEFAULT_MODE = LLM_ONLY`, `routing.py` không đổi; 0 file bề mặt mô hình đổi từ W1; ngoài thư mục run
+  chỉ đổi sổ candidate sống và bản khai lệch; `git diff --check` exit 0; kiểm tài liệu PASS; test node 85: 82 pass,
+  1 fail (đường dẫn Windows), 2 skip;
+- T3: vitest **1089/1089**; typecheck + build production, tập demo khoá luận, bề mặt sập của demo xanh; pytest
+  **13 đỏ / 7139 xanh**, cả 13 thuộc tập môi trường của W1 head (tên thứ 14, `test_exporter_idempotence`, xanh lần này
+  vì cổng định danh đã ghi lại schema trước khi T3 chạy). Không lỗi nào của W2. Nhãn `FULL_PRODUCT_GATE_PASS` KHÔNG được
+  phát trên cloud (cổng pytest đỏ vì lớp môi trường) ⇒ `LOCAL_VERIFICATION_REQUIRED`.
+
+Commit sau `ca4f1421` chỉ thêm log này và đoạn này (tài liệu trong thư mục run); kiểm tài liệu chạy lại ở commit cuối.
 
 ## 11. Tự rà soát
 
