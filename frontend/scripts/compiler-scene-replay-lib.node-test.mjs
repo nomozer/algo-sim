@@ -1495,3 +1495,18 @@ test("W2 geometry-step gates: a step that only builds a hidden helper may be sta
   sc.formation.steps[2].visible_ids.push("BD2");
   assert.equal(geo(["A", "C", "AC", "BD", "O"]), false);
 });
+
+test("W2 playback gate: the hidden-helper exemption is exact", () => {
+  const sc = JSON.parse(JSON.stringify(CANH_PHU));
+  sc.formation.steps = [
+    { visible_ids: ["A", "C"], focus_ids: [], semantic_kind: "EXPLANATION" },
+    { visible_ids: ["A", "C", "AC", "BD", "O"], focus_ids: ["AC", "BD", "O"], semantic_kind: "GEOMETRY_CONSTRUCTION" },
+    { visible_ids: ["A", "C", "AC", "BD", "O", "mp", "d"], focus_ids: ["mp"], semantic_kind: "GEOMETRY_CONSTRUCTION" },
+  ];
+  sc.objects.forEach((o) => { o.render = o.type === "quantity" ? "readout" : "mesh"; });
+  sc.events = sc.formation.steps.map((st, k) => ({ step_index: k, semantic_kind: st.semantic_kind }));
+  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 2), true);
+  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 1), false);
+  sc.formation.steps[2].focus_ids = ["mp", "BD2"];
+  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 2), false);
+});

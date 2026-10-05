@@ -690,6 +690,20 @@ export function solutionRowOf(scene, id, rows) {
   return s && rows.has(s) ? s : id;
 }
 
+/** regular-square-pyramid-w02 · D: bước dựng `g` chỉ đưa vào HÌNH PHỤ mà oracle độc lập (`expectedAuxiliaryHidden`)
+ *  nói đang ẩn ở neo của nó — bước ấy không đổi hình theo thiết kế (cảnh trung tính không vẽ hình phụ). */
+export function stepOnlyBuildsHiddenHelper(scene, g) {
+  const b = expectedGeometryTimeline(scene)[g];
+  if (!b) return false;
+  const an = new Set(expectedAuxiliaryHidden(scene, b.anchor));
+  const moi = Array.from({ length: b.end - b.start + 1 }, (_, d) => scene?.formation?.steps?.[b.start + d]?.focus_ids ?? [])
+    .flat().filter((id) => {
+      const o = (scene?.objects ?? []).find((x) => x.id === id);
+      return o && o.render !== "readout" && o.render !== "non_visual";
+    });
+  return moi.length > 0 && moi.every((id) => an.has(id));
+}
+
 /** Phán quyết các bước dựng QUAN SÁT trong trình duyệt (W12).
  *  `observed = { step_count, steps: [{ index, rendered, focus_label, solution }] }`
  *  — `rendered`: vật vẽ lên khung; `focus_label`: nhãn bước (dòng "Đang dựng" tới W20; từ
@@ -703,19 +717,10 @@ export function assessGeometrySteps(scene, observed) {
   const finalIds = new Set((scene?.events ?? [])
     .filter((e) => e.semantic_kind === "FINAL_RESULT" && e.object).map((e) => e.object));
   const steps = observed?.steps ?? [];
-  // regular-square-pyramid-w02 · D: một bước chỉ dựng HÌNH PHỤ đang ẩn (oracle độc lập `expectedAuxiliaryHidden`)
-  // tĩnh theo thiết kế — mọi khung tĩnh khác vẫn đỏ.
-  const chiPhuAn = (s) => {
-    const g = t[s.index];
-    if (!g) return false;
-    const an = new Set(expectedAuxiliaryHidden(scene, g.anchor));
-    const moi = Array.from({ length: g.end - g.start + 1 }, (_, d) => scene?.formation?.steps?.[g.start + d]?.focus_ids ?? [])
-      .flat().filter((id) => { const o = (scene?.objects ?? []).find((x) => x.id === id);
-        return o && o.render !== "readout" && o.render !== "non_visual"; });
-    return moi.length > 0 && moi.every((id) => an.has(id));
-  };
+  // regular-square-pyramid-w02 · D: một bước chỉ dựng HÌNH PHỤ đang ẩn tĩnh theo thiết kế — mọi khung tĩnh khác vẫn đỏ.
   const staticFrames = steps.slice(1)
-    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered) && !chiPhuAn(s))
+    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered)
+      && !stepOnlyBuildsHiddenHelper(scene, s.index))
     .map((s) => s.index);
   const focusOf = (s) => byLabel.get(String(s.focus_label ?? "").trim()) ?? [];
   const measurementSteps = steps.slice(1)
@@ -1337,8 +1342,10 @@ export function assessPlayback({
   for (let g = 1; g <= last; g += 1) {
     const now = settledAt(g);
     const before = settledAt(g - 1);
-    doiHinh.push({ step: g, changed: Boolean(now && before)
-      && JSON.stringify(now.rendered) !== JSON.stringify(before.rendered) });
+    // W2 · D: bước chỉ dựng hình phụ đang ẩn được miễn (oracle độc lập) — ghi riêng, không gộp vào "đổi hình".
+    const phu = stepOnlyBuildsHiddenHelper(scene, g);
+    doiHinh.push({ step: g, hidden_helper_only: phu || undefined, changed: phu || (Boolean(now && before)
+      && JSON.stringify(now.rendered) !== JSON.stringify(before.rendered)) });
   }
   add("every_geometry_step_changes_the_figure", doiHinh.every((c) => c.changed), doiHinh);
   // Bảng lời giải ĐỒNG BỘ với bước dựng đang hiện: đúng dữ kiện / bước tính /
