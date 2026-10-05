@@ -52,6 +52,8 @@ describe("§0.1-2 · mọi kết quả qua nút chọn đại lượng + một �
     expect(src).toContain("Đại lượng");
     expect(src).toMatch(/ngan === "dai-luong"/);
     expect(src).toMatch(/chon\(id\);\s*setNgan\(null\)/);
+    // Bộ đo trình duyệt bấm đúng đại lượng qua id máy — thuộc tính dữ liệu, không phải chữ hiển thị.
+    expect(src).toMatch(/data-quantity-id=\{id\}/);
   });
 });
 

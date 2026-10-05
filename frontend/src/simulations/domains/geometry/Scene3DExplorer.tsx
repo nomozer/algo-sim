@@ -583,6 +583,7 @@ export function Scene3DExplorer({
                             type="button"
                             className={`geo3d-tree-item${tt.selected_id === id ? " la-chon" : ""}`}
                             aria-pressed={tt.selected_id === id}
+                            data-quantity-id={id}
                             onClick={() => {
                               chon(id);
                               setNgan(null);
