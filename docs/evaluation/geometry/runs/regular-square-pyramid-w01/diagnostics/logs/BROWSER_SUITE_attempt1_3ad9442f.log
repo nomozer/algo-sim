@@ -1,0 +1,11 @@
+file:///D:/tmp/rsp%20w01/frontend/scripts/compiler-scene-replay-lib.mjs:1188
+  if (errors.length > 0) throw new Error(`INVALID_SUITE_MANIFEST:${errors.join(",")}`);
+                               ^
+
+Error: INVALID_SUITE_MANIFEST:oracle_source_hash:regular_square_pyramid
+    at validateSuiteManifest (file:///D:/tmp/rsp%20w01/frontend/scripts/compiler-scene-replay-lib.mjs:1188:32)
+    at runSuite (file:///D:/tmp/rsp%20w01/frontend/scripts/compiler-scene-suite.mjs:1673:3)
+    at file:///D:/tmp/rsp%20w01/frontend/scripts/compiler-scene-replay.mjs:42:24
+
+Node.js v24.13.0
+suite_exit=1

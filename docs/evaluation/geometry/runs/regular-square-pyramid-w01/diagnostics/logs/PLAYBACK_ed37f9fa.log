@@ -1,0 +1,18 @@
+# cwd: <worktree 'D:/tmp/rsp w01'> @ ed37f9fa; timeout --signal=KILL 2400 node frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w01/images --bo-qua-build (dist built by the suite run at the same commit)
+2026-10-05T13:30:19Z
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+regular_square_pyramid/desktop: PASS
+regular_square_pyramid/mobile: PASS
+Wrote D:\tmp\rsp w01\docs\evaluation\geometry\runs\regular-square-pyramid-w01\images\PLAYBACK_EVIDENCE.json: PASS c8e372ae0e35
+exit=0

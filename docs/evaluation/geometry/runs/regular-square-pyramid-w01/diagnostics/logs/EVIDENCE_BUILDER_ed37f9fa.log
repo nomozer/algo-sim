@@ -1,0 +1,4 @@
+# cwd: <worktree 'D:/tmp/rsp w01'>/backend @ ed37f9fa; python scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/regular-square-pyramid-w01 --browser ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/results/PLAYBACK_EVIDENCE.json (PLAYBACK_EVIDENCE.json moved from images/ to results/ before this run)
+2026-10-05T13:36:36Z
+68 crops · endpoints inside: True · oracle disagreements: 0 · duplicate owners: 0
+exit=0

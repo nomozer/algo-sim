@@ -1,0 +1,7 @@
+# fixtures at ed37f9fa127d50e53ccfde3017b2b5ea7615d03b — clean detached worktree '/d/tmp/rsp w01' (git status before: 0)
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 4629c3e8e3f5be60…).
+candidate_verify_exit=0
+Khoá khớp · CACHE_VERSION 112 · môi trường b1714b566e25c912…
+cache_verify_exit=0
+Wrote 37 frozen fixtures to D:\tmp\rsp w01\docs\evaluation\geometry\runs\regular-square-pyramid-w01\inputs\fixtures
+generator_exit=0

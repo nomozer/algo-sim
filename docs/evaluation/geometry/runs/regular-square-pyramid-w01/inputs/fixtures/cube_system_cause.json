@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cube_injected_non_positive",
+  "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+  "source": "deterministic_compiler_injected_contract_refusal",
+  "product_commit_sha": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+  "product_tree_sha": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "NON_POSITIVE_LENGTH",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "semantic_analyze",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "NON_POSITIVE_LENGTH",
+    "reason_subjects": [
+      "AB"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Khâu dựng hình của AlgoSim đã dùng độ dài AB không dương, trong khi đề bài không cho số liệu như vậy. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+  },
+  "source_reason_code": "NON_POSITIVE_LENGTH",
+  "refusal_cause": "CONSTRUCTION"
+}

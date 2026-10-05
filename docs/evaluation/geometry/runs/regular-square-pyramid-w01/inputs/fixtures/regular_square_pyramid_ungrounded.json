@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_square_pyramid_ungrounded",
+  "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4. Tính thể tích khối chóp S.ABCD.",
+  "source": "w1_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "de5b2331f22efb1e0828f05ad94392e1b9596033",
+  "product_tree_sha": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "grounding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+    "reason_subjects": [],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+  },
+  "corpus_row": "N7_model_only_height",
+  "removed_from_text": "chiều cao bằng 3",
+  "refusal_cause": "SOURCE",
+  "source_reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+}

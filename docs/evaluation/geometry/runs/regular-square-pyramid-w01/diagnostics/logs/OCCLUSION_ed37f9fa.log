@@ -1,0 +1,8 @@
+# cwd: <worktree 'D:/tmp/rsp w01'>/backend @ ed37f9fa; python scripts/measure_scene3d_occlusion.py --fixture-root ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs --browser ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/results/BROWSER_EVIDENCE.json --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --camera-preimages ../docs/evaluation/geometry/runs/w09-verify-cleanup/inputs/REGISTERED_CAMERA_PREIMAGES.json --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS --registered-fixture-root ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs --pending-human-review --output ../docs/evaluation/geometry/runs/regular-square-pyramid-w01/results/OCCLUSION_MEASUREMENT.json
+2026-10-05T13:29:57Z
+exit=0
+pass True verdict HUMAN_REVIEW_PENDING failures 0 pending ['cross_section', 'rectangular_pyramid', 'triangular_prism', 'triangular_pyramid']
+desktop neutral_final True None True
+desktop rotated_neutral True None True
+mobile neutral_final True None True
+mobile rotated_neutral True None True
