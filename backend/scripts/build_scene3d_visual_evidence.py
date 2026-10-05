@@ -30,7 +30,7 @@ from scene3d_occlusion_oracle import _project
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-                "cuboid", "cube", "cross_section")
+                "cuboid", "cube", "cross_section", "regular_square_pyramid")
 SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
 # W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas.
@@ -52,7 +52,11 @@ STATE_TITLES = {"neutral_final": "mặc định gọn, bước cuối",
                 "detail_length": "ô soi một độ dài — công thức, dữ kiện, đầu vào",
                 "detail_area": "ô soi một diện tích — công thức, dữ kiện, đầu vào",
                 "detail_volume": "ô soi thể tích — công thức, dữ kiện, đầu vào",
-                "detail_distance": "ô soi một khoảng cách — công thức, dữ kiện, đầu vào"}
+                "detail_distance": "ô soi một khoảng cách — công thức, dữ kiện, đầu vào",
+                # regular-square-pyramid-w01 · ROADMAP §0.1
+                "quantity_picker": "ngăn «Đại lượng» — lời giải thu gọn, đáp số chọn ở đây",
+                "steps_panel_open": "panel «Các bước dựng» mở — bước đang xem được đánh dấu",
+                "steps_panel_closed": "đóng panel — bước và lựa chọn giữ nguyên"}
 #: W18 §16.5–16.7 — ảnh "chọn từng loại đo" (`selected_<kind>`) và ô soi của đại lượng ấy (`detail_<kind>`,
 #: ảnh phần tử): chỉ có khi bộ chạy đã chọn được.
 TRANG_THAI_CHON = ("selected_length", "selected_area", "selected_volume", "selected_distance")
@@ -71,6 +75,10 @@ TEN_TU_CHOI_W17 = {"construction_mismatch": "đề cắt bằng (β), hệ cắt
                    "projection_mismatch": "đề chiếu S lên BD, hệ chiếu lên BC — từ chối, đề không cần sửa",
                    "construction_unverified": "cách nói ngoài từ vựng — hệ chưa đối chiếu được, từ chối "
                                               "(giới hạn của hệ)"}
+#: regular-square-pyramid-w01 — chú thích từ chối RIÊNG của một họ khi ca của họ khác ca W18 cùng loại.
+TEN_TU_CHOI_THEO_HO = {"regular_square_pyramid": {
+    "point_construction_mismatch": "đề: O là giao điểm của AC và BD, hệ dựng trung điểm AB — từ chối, "
+                                   "đề không cần sửa"}}
 #: W17 — ca PHỤC VỤ thêm (`served[kind][viewport]`). Bảng đóng như `TEN_TU_CHOI`.
 TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — được phục vụ",
                "point_construction_witness": "trung điểm đúng; khoảng cách tới (ABCD) có nhân chứng — phục vụ",
@@ -308,10 +316,22 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
         cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
                       "path": _path(record.get("screenshots", {}).get(state)), "record": record,
                       "box_state": state, "crop": False})
+    # regular-square-pyramid-w01 · ROADMAP §0.1: ngăn «Đại lượng» (ảnh trang) và panel «Các bước dựng» mở/đóng
+    # (ảnh của bước formation) — chỉ khi bộ chạy đã chụp.
+    for vp in ("desktop", "mobile"):
+        record = records.get(vp, {})
+        anh = {"quantity_picker": record.get("screenshots", {}).get("quantity_picker"),
+               **{f"steps_panel_{s}": v for s, v in ((record.get("formation") or {}).get("steps_panel") or {})
+                  .get("screenshots", {}).items()}}
+        for state in ("quantity_picker", "steps_panel_open", "steps_panel_closed"):
+            if anh.get(state):
+                cells.append({"state": f"{vp}/{state}", "label": f"{vp.capitalize()} · {STATE_TITLES[state]}",
+                              "path": _path(anh[state]), "record": record, "box_state": state, "crop": False})
     am = scenario.get("negative", {})
     if la := sorted(set(am) - TEN_TU_CHOI.keys() - TEN_TU_CHOI_W17.keys()):
         raise KeyError(f"loại từ chối chưa có tên người xem: {la}")
     for kind, ten in {**TEN_TU_CHOI, **{k: v for k, v in TEN_TU_CHOI_W17.items() if k in am}}.items():
+        ten = TEN_TU_CHOI_THEO_HO.get(family, {}).get(kind, ten)
         for vp in ("desktop", "mobile"):
             record, state = (am.get(kind) or {}).get(vp), f"negative/{kind}/{vp}"
             ly_do = "no record" if record is None else _loi_tu_choi(

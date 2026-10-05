@@ -368,3 +368,27 @@ def test_oracle_disagreement_is_recorded_not_hidden():
     assert rec["oracle_agreement"] is False
     assert rec["visual_owner_count"] == ">=2"
     assert rec["expected_visibility"] is None
+
+
+def test_w01_o_ngan_dai_luong_panel_buoc_va_tu_choi_tam_O(tmp_path):
+    """regular-square-pyramid-w01 (ROADMAP §0.1): sheet có ảnh ngăn «Đại lượng» và panel «Các bước dựng» mở/đóng
+    khi bộ chạy đã chụp; ca từ chối phép dựng điểm của chóp đều nói ĐÚNG ca của họ (O là giao AC và BD), không
+    mượn chú thích trung điểm SA của W18."""
+    images = tmp_path / "images"
+    kb = _kich_ban_du(tmp_path, "regular-square-pyramid")
+    for vp, rec in kb["positive"].items():
+        rec["screenshots"]["quantity_picker"] = str(_anh(tmp_path / vp / "quantity_picker.png", (780, 1200), "white"))
+        rec["formation"]["steps_panel"] = {"pass": True, "screenshots": {
+            s: {"path": str(_anh(tmp_path / vp / f"steps_panel_{s}.png", (780, 1200), "white"))}
+            for s in ("open", "closed")}}
+    kb["negative"]["point_construction_mismatch"] = {
+        vp: _tu_choi(images, "regular-square-pyramid", "point_construction_mismatch", vp) for vp in ("desktop", "mobile")}
+    meta = B.family_sheet("regular_square_pyramid", kb, images)
+    nhan = {c["state"]: c["label"] for c in meta["cells"]}
+    for state in ("desktop/quantity_picker", "mobile/quantity_picker", "desktop/steps_panel_open",
+                  "desktop/steps_panel_closed", "mobile/steps_panel_open", "mobile/steps_panel_closed"):
+        assert state in nhan, (state, sorted(nhan))
+    loi = nhan["negative/point_construction_mismatch/desktop"]
+    assert "giao điểm của AC và BD" in loi and "trung điểm của SA" not in loi, loi
+    assert not any("_" in nhan_xem for nhan_xem in nhan.values()), nhan
+    assert "regular_square_pyramid" in B.FAMILY_ORDER

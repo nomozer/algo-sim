@@ -40,7 +40,7 @@ const PLAYBACK_INTERVAL_MS = Number(/export const PLAYBACK_INTERVAL_MS = (\d+);/
   join(FRONTEND, "src/simulations/domains/geometry/scene3d-model.ts"), "utf-8"))[1]);
 const DIST = join(FRONTEND, "dist");
 const FAMILIES = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-  "cuboid", "cube", "cross_section"];
+  "cuboid", "cube", "cross_section", "regular_square_pyramid"];
 const VIEWPORTS = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
 const PLAY = '[aria-label="Phát lại quá trình dựng"]';
 const REPLAY = '[aria-label="Xem lại quá trình dựng"]';
