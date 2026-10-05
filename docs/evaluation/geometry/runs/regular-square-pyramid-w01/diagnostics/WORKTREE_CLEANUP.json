@@ -1,0 +1,10 @@
+{
+  "schema_version": "worktree-cleanup/1",
+  "rule": "Every worktree of the wave is created under D:/tmp, used through subshells, emptied of its own untracked outputs (copied byte-identical into the main tree first) and removed from the main repository with `git worktree remove` without --force.",
+  "worktrees": [
+    {"path": "D:/tmp/rsp-cache-base", "commit": "38d41588", "purpose": "cache probe (before W1)", "removed": true, "force": false},
+    {"path": "D:/tmp/rsp-freeze", "commit": "de5b2331", "purpose": "candidate freeze", "removed": true, "force": false, "note": "the freeze output EVALUATION_CANDIDATE.json was copied to the main tree, then restored in the worktree with git checkout before removal"},
+    {"path": "D:/tmp/rsp w01", "commits": ["3ad9442f", "1310658b", "ed37f9fa", "96181b87"], "purpose": "measurement and verification (path with a space)", "removed": true, "force": false, "note": "631 generated files copied and compared byte-for-byte (0 mismatches) before `git clean -fd` of the run folder; worktree status 0 before removal"}
+  ],
+  "remaining_worktrees": ["D:/Documents/projects/algo-sim (main tree)"]
+}

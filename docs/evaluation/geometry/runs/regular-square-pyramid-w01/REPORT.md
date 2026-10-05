@@ -101,6 +101,8 @@ Cách đo:
 | occlusion (`results/OCCLUSION_MEASUREMENT.json`) | pass, 0 lỗi · `HUMAN_REVIEW_PENDING` cho bốn cảnh W14 như trước · chóp đều: product = oracle ở bốn trạng thái |
 | playback (`results/PLAYBACK_EVIDENCE.json`) | 14/14, có `--lap-orbit 5` |
 | ảnh | sheet + filmstrip mỗi họ (`images/<họ>/`), `images/overview/INDEX.png` · 68 crop cạnh khuất, 0 bất đồng oracle, 0 owner trùng |
+| T3 tại commit tài liệu `96181b87`, đường dẫn có dấu cách | **`FULL_PRODUCT_GATE_PASS`** — pytest 7118/0 (1 skipped, 2 deselected) · vitest 1071/1071 · build · demo 5/5 · bề mặt sập 6/6 · git status 0 trước/sau (lần 1 đỏ một test vì log của chính nó nằm trong worktree) |
+| cổng danh tính (`diagnostics/w01_gates.sh`) | candidate + cache verify · schema ×2 trùng byte · `LLM_ONLY` · 0 file bề mặt mô hình đổi · 0/180 báo cáo lịch sử đổi · audit tài liệu PASS · node harness 76/0 (2 skip môi trường) |
 
 Ba lần đo, giữ cả hai lần hỏng ([`diagnostics/MEASUREMENT_ATTEMPTS.json`](diagnostics/MEASUREMENT_ATTEMPTS.json)):
 1. `3ad9442f` — dừng ở kiểm manifest. Hash nguồn oracle lấy trước khi thêm hai test vào file ấy.

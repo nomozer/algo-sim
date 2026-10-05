@@ -1,0 +1,57 @@
+# regular-square-pyramid-w01 verification gates at 96181b87 (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+96181b87b2bf42aeced85ee909526310267693b3
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 4629c3e8e3f5be60…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 112 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2 (idempotence: the two mirrors byte-identical, git status unchanged)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git status after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since 38d4158826cbbffd013d971a9484b9f0fd2a6130: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since 38d4158826cbbffd013d971a9484b9f0fd2a6130
+model-surface files changed: 0
+## CACHE_VERSION
+767:CACHE_VERSION = "112"
+## historical evidence byte-identical since 38d4158826cbbffd013d971a9484b9f0fd2a6130 (tracked docs/evaluation outside the W1 run folder)
+  M	docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json
+  M	docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+changed outside the W1 run: 2 (allowed: the living candidate registry and divergence declaration)
+## historical reports at the docs root (catalogued in docs/evaluation/HISTORICAL_REPORTS.md) changed since 38d4158826cbbffd013d971a9484b9f0fd2a6130
+  changed: docs/EVIDENCE_INDEX.md
+catalogued reports changed: 1 of 181
+## git diff --check 38d4158826cbbffd013d971a9484b9f0fd2a6130..96181b87 (captured *.log excluded: verbatim tool output may carry trailing spaces)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## node harness tests
+ℹ tests 78
+ℹ pass 76
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0
+gates_exit=0
