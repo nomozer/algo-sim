@@ -5099,6 +5099,7 @@ html {
   position: absolute;
   top: var(--sp-sm);
   right: var(--sp-sm);
+  z-index: 4;                 /* W2: trên bảng nổi, như ngăn */
   width: min(19rem, calc(100% - 2 * var(--sp-sm)));
   display: flex;
   flex-direction: column;
@@ -5227,6 +5228,9 @@ html {
   top: 0;
   right: 0;
   bottom: 0;
+  /* W2: trên bảng nổi «Các bước dựng» (z 3) — ngăn vừa mở là lớp người học đang dùng, nút "Đóng" của nó phải bấm
+     được (lượt đo W2 thứ 3: bảng nổi che nút này). */
+  z-index: 4;
   width: min(20rem, 80%);
   display: flex;
   flex-direction: column;

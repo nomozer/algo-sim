@@ -181,3 +181,12 @@ describe("W2 · D · danh sách bước nói ra bước chỉ dựng hình phụ
     expect(hien).not.toContain("hình phụ, đang ẩn");
   });
 });
+
+describe("W2 · B · thứ tự lớp: ngăn và ô soi nằm trên bảng nổi", () => {
+  it("nút Đóng của ngăn/ô soi không bị bảng nổi che", () => {
+    const css = nguon("../../../styles/global.css");
+    const z = (sel: string) => Number(/z-index:\s*(\d+)/.exec(css.slice(css.indexOf(sel), css.indexOf("}", css.indexOf(sel))))?.[1]);
+    expect(z(".geo3d-ngan {")).toBeGreaterThan(z(".geo3d-bang-noi {"));
+    expect(z(".geo3d-soi {")).toBeGreaterThan(z(".geo3d-bang-noi {"));
+  });
+});
