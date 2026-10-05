@@ -758,7 +758,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       dựng; bí danh của một đỉnh hay của điểm đặt bằng toạ độ) nay bị từ chối; lưu thành row
 #       v110 chúng vẫn HIT (`runs/w20-cleanup-premerge/diagnostics/PROOF_CACHE_ROW_W20.json`).
 #       Census W14–W18: 179 hàng so với W18, không hàng nào đổi trạng thái.
-CACHE_VERSION = "111"
+#   112 (2026-10-05, regular-square-pyramid-w01): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope PHỤC VỤ đổi nội dung:
+#       dữ kiện GIVEN không ký hiệu mượn nhãn InputFact ("đại lượng = 4" → "Cạnh = 4"), khoảng cách đo từ
+#       đỉnh tới mặt đáy thành nguồn số của thể tích (cạnh chỉ là chiều cao của công thức khi bằng nó), và
+#       cổng phạm vi nhận câu hỏi "độ dài" (chiều refused → served, không bị cache). Hai yêu cầu TRƯỚC W1
+#       được phục vụ lưu thành row v111 vẫn HIT dù W1 dựng envelope khác
+#       (`runs/regular-square-pyramid-w01/diagnostics/PROOF_CACHE_ROW_W01.json`).
+CACHE_VERSION = "112"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

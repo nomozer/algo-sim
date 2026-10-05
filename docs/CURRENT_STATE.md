@@ -27,7 +27,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > |---|---|
 > | Active development branch | **`main`** — nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`, 2026-10-05); việc kế tiếp rẽ nhánh mới từ `main` |
 > | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi |
-> | `CACHE_VERSION` | **111** (W20, 2026-10-04: served → rejected — điểm đề định nghĩa bằng quan hệ mà chương trình đặt bằng toạ độ hay bí danh — `PROOF_CACHE_ROW_W20.json`; giữ ở run `cuboid-final-review`, 2026-10-05: lời từ chối không được cache, envelope được phục vụ trùng byte — `CACHE_DECISION_CFR.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **112** (regular-square-pyramid-w01, 2026-10-05: envelope phục vụ đổi nội dung — nhãn dữ kiện không ký hiệu, chiều cao đo được của thể tích; hai row v111 vẫn HIT — `PROOF_CACHE_ROW_W01.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = a1c53cdb (kiểm chứng có thẩm quyền, worktree tách rời sạch; candidate đóng băng tại 284a9bfa)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 111
+> CACHE_VERSION = 112
 > CANDIDATE = b2d4187a… (was 27c31de6…; một lần đóng băng), product commit 284a9bfa
 > USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
 > CURRENT_WAVE = CUBOID_ACCEPTANCE_AND_DIRECT_MAIN_INTEGRATION (run cuboid-merge — gói duyệt + tích hợp của việc cuboid-visual-semantic-closure, không đánh số wave; không đổi mã sản phẩm)

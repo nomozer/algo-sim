@@ -1,0 +1,5777 @@
+{
+ "source": "tests/geometry/test_regular_square_pyramid.py (_nap, NHAN, _chop_chu_nhat_co_ca_SA_va_khoang_cach) + _lap_phuong (this script)",
+ "rows": [
+  {
+   "id": "N1_missing_height",
+   "label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N2_not_regular",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "A",
+      "params": {
+       "witness": "d_SA",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 70,
+      "source_end": 71,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, chiều cao bằng 3. Tính độ dài SA."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "d_SA",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_SA",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "A"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N3_contradiction",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       6
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "6",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6, chiều cao bằng 4, trung đoạn bằng 6. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "6"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "4"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "6",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "6",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "3",
+       "3",
+       "4"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N4_wrong_centre_identity",
+   "label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_ab",
+      "label": "AB",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 41,
+      "source_end": 42,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_so",
+      "label": "SO",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 87,
+      "source_end": 88,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "f_khoi",
+      "scale_symbol": "",
+      "source_text": "AB = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "O",
+       "S"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "f_so",
+      "scale_symbol": "",
+      "source_text": "OS = 3"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_ab",
+      "initial_value": "4"
+     },
+     {
+      "name": "SO_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_so",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "midpoint",
+       "a": "A",
+       "b": "B"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N5_apex_over_vertex",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "A",
+      "params": {
+       "witness": "d_SA",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "d_SA",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "0",
+       "0",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_SA",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "A"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N6_goal_clause_regular",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "A",
+      "params": {
+       "witness": "d_SA",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 52,
+      "source_end": 53,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 70,
+      "source_end": 71,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, chiều cao bằng 3. Chứng minh S.ABCD là hình chóp tứ giác đều. Tính độ dài SA."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "d_SA",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_SA",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "A"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "N7_model_only_height",
+   "label": "refused:*:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "claimed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [
+       3
+      ],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S1_side_height_volume",
+   "label": "served:16",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S2_side_apothem_volume",
+   "label": "served:48",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       6
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "6",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_trung_doan",
+      "label": "trung đoạn",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 69,
+      "source_end": 70,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6, trung đoạn bằng 5. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "6"
+     },
+     {
+      "name": "trung_doan",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_trung_doan",
+      "initial_value": "5"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "6",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "6",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "3",
+       "3",
+       "4"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S3_apothem_phrasing",
+   "label": "served:48",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       6
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "6",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_trung_doan",
+      "label": "đường cao của mặt bên",
+      "values": [
+       5
+      ],
+      "provenance": "confirmed",
+      "source_start": 80,
+      "source_end": 81,
+      "source_text": "5",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6, đường cao của mặt bên bằng 5. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "6"
+     },
+     {
+      "name": "trung_doan",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_trung_doan",
+      "initial_value": "5"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "6",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "6",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "6",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "3",
+       "3",
+       "4"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S4_side_lateral_volume",
+   "label": "served:16/3",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_ben",
+      "label": "cạnh bên",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 67,
+      "source_end": 68,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, cạnh bên bằng 3. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "canh_ben",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_ben",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "1"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S5_lateral_edge_length",
+   "label": "served:√17",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "distance",
+      "container": "A",
+      "params": {
+       "witness": "d_SA",
+       "wrt": "S"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "d_SA",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "d_SA",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "A"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S6_renamed_vertices",
+   "label": "served:16",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.MNPQ"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "M",
+      "N",
+      "P",
+      "Q"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.MNPQ có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp S.MNPQ."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.MNPQ",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "M",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "N",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "P",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "Q",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "MP",
+      "type": "line3"
+     },
+     {
+      "name": "NQ",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_MNPQ",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_MNPQ",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "M",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "N",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "P",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "Q",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_MNPQ",
+      "vertices": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "label": "Đáy MNPQ"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "MP",
+      "through_a": "M",
+      "through_b": "P"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "NQ",
+      "through_a": "N",
+      "through_b": "Q"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "MP",
+       "line_b": "NQ"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "faces": [
+       [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       [
+        "S",
+        "M",
+        "N"
+       ],
+       [
+        "S",
+        "N",
+        "P"
+       ],
+       [
+        "S",
+        "P",
+        "Q"
+       ],
+       [
+        "S",
+        "Q",
+        "M"
+       ]
+      ],
+      "label": "S.MNPQ"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "M",
+       "N",
+       "P"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_MNPQ",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_MNPQ"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "S7_named_centre",
+   "label": "served:16",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_ab",
+      "label": "AB",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 41,
+      "source_end": 42,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_so",
+      "label": "SO",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 87,
+      "source_end": 88,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "f_khoi",
+      "scale_symbol": "",
+      "source_text": "AB = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "O",
+       "S"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "f_so",
+      "scale_symbol": "",
+      "source_text": "OS = 3"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_ab",
+      "initial_value": "4"
+     },
+     {
+      "name": "SO_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_so",
+      "initial_value": "3"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "U1_irrational_height",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       2
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "2",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_ben",
+      "label": "cạnh bên",
+      "values": [
+       2
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "2",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2, cạnh bên bằng 2. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "2"
+     },
+     {
+      "name": "canh_ben",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_ben",
+      "initial_value": "2"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "2",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "2",
+       "2",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "2",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "1",
+       "1",
+       "1"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "U2_angle_data",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_khoi",
+      "label": "Khối chóp",
+      "values": [
+       "S.ABCD"
+      ],
+      "provenance": "confirmed",
+      "source_start": null,
+      "source_end": null,
+      "source_text": null,
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "square"
+    },
+    "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, góc giữa cạnh bên và mặt đáy bằng 60°. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tứ giác đều S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "4"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "AC",
+      "type": "line3"
+     },
+     {
+      "name": "BD",
+      "type": "line3"
+     },
+     {
+      "name": "O",
+      "type": "point3"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dien_tich_day_ABCD",
+      "type": "float"
+     },
+     {
+      "name": "chieu_cao_SO",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "AC",
+      "through_a": "A",
+      "through_b": "C"
+     },
+     {
+      "kind": "construct_line",
+      "target_var": "BD",
+      "through_a": "B",
+      "through_b": "D"
+     },
+     {
+      "kind": "construct_point",
+      "target_var": "O",
+      "expr": {
+       "kind": "intersect_line_line",
+       "line_a": "AC",
+       "line_b": "BD"
+      }
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "2",
+       "2",
+       "3"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dien_tich_day_ABCD",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "chieu_cao_SO",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "U3_regular_triangular",
+   "label": "refused:assumption:*",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_canh_day",
+      "label": "cạnh đáy",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 50,
+      "source_end": 51,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_chieu_cao",
+      "label": "chiều cao",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 68,
+      "source_end": 69,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C"
+     ],
+     "base_shape": null
+    },
+    "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 3, chiều cao bằng 4. Tính thể tích khối chóp S.ABC."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp tam giác S.ABC",
+    "memory_declarations": [
+     {
+      "name": "canh_day",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh_day",
+      "initial_value": "3"
+     },
+     {
+      "name": "chieu_cao",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_chieu_cao",
+      "initial_value": "4"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "3",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "3/2",
+       "5/2",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "3/2",
+       "5/6",
+       "4"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "A"
+       ]
+      ],
+      "label": "S.ABC"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "P_cube_notationless_given",
+   "label": "probe:served_before_w1",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_canh",
+      "label": "cạnh",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 47,
+      "source_end": 48,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "prism",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "top_cycle": [
+      "A'",
+      "B'",
+      "C'",
+      "D'"
+     ],
+     "correspondence": [
+      [
+       "A",
+       "A'"
+      ],
+      [
+       "B",
+       "B'"
+      ],
+      [
+       "C",
+       "C'"
+      ],
+      [
+       "D",
+       "D'"
+      ]
+     ],
+     "base_shape": null,
+     "lateral_structure": "right",
+     "solid_subkind": null,
+     "source_grounding": null
+    },
+    "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích khối lập phương."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Lập phương",
+    "memory_declarations": [
+     {
+      "name": "canh",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_canh",
+      "initial_value": "4"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A_prime",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B_prime",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C_prime",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D_prime",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "khoi",
+      "type": "solid"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "4",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "4",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "A_prime",
+      "at": [
+       "0",
+       "0",
+       "4"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B_prime",
+      "at": [
+       "4",
+       "0",
+       "4"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C_prime",
+      "at": [
+       "4",
+       "4",
+       "4"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D_prime",
+      "at": [
+       "0",
+       "4",
+       "4"
+      ]
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime"
+       ],
+       [
+        "A",
+        "B",
+        "B_prime",
+        "A_prime"
+       ],
+       [
+        "B",
+        "C",
+        "C_prime",
+        "B_prime"
+       ],
+       [
+        "C",
+        "D",
+        "D_prime",
+        "C_prime"
+       ],
+       [
+        "D",
+        "A",
+        "A_prime",
+        "D_prime"
+       ]
+      ],
+      "label": "ABCD.A'B'C'D'"
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "P_rect_pyramid_two_heights",
+   "label": "probe:served_before_w1",
+   "contract": {
+    "obligations": [
+     {
+      "kind": "volume",
+      "container": "khoi_chop",
+      "params": {
+       "witness": "V"
+      }
+     }
+    ],
+    "input_facts": [
+     {
+      "fact_id": "f_ab",
+      "label": "AB",
+      "values": [
+       3
+      ],
+      "provenance": "confirmed",
+      "source_start": 56,
+      "source_end": 57,
+      "source_text": "3",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_ad",
+      "label": "AD",
+      "values": [
+       4
+      ],
+      "provenance": "confirmed",
+      "source_start": 64,
+      "source_end": 65,
+      "source_text": "4",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     },
+     {
+      "fact_id": "f_sa",
+      "label": "SA",
+      "values": [
+       6
+      ],
+      "provenance": "confirmed",
+      "source_start": 107,
+      "source_end": 108,
+      "source_text": "6",
+      "unproven_values": [],
+      "scale_symbol": null,
+      "original_values": []
+     }
+    ],
+    "scale_binding": null,
+    "source_invariants": [
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "B"
+      ],
+      "expected": "3",
+      "coefficients": [],
+      "source_fact_id": "f_ab",
+      "scale_symbol": "",
+      "source_text": "AB = 3"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "D"
+      ],
+      "expected": "4",
+      "coefficients": [],
+      "source_fact_id": "f_ad",
+      "scale_symbol": "",
+      "source_text": "AD = 4"
+     },
+     {
+      "kind": "segment_length",
+      "points": [
+       "A",
+       "S"
+      ],
+      "expected": "6",
+      "coefficients": [],
+      "source_fact_id": "f_sa",
+      "scale_symbol": "",
+      "source_text": "AS = 6"
+     }
+    ],
+    "geometric_relations": [],
+    "solid_topology": {
+     "solid_kind": "pyramid",
+     "apex": "S",
+     "base_cycle": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "base_shape": "rectangle"
+    },
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, SA vuông góc với mặt phẳng (ABCD), SA = 6. Tính thể tích khối chóp S.ABCD."
+   },
+   "program": {
+    "spec_version": "1.0",
+    "title": "Chóp S.ABCD",
+    "memory_declarations": [
+     {
+      "name": "AB_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_ab",
+      "initial_value": "3"
+     },
+     {
+      "name": "AD_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_ad",
+      "initial_value": "4"
+     },
+     {
+      "name": "SA_length",
+      "type": "float",
+      "provenance": "GIVEN",
+      "source_fact_id": "f_sa",
+      "initial_value": "6"
+     },
+     {
+      "name": "S",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "A",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "B",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "C",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "D",
+      "type": "point3",
+      "provenance": "LAYOUT_DERIVED"
+     },
+     {
+      "name": "day_ABCD",
+      "type": "polygon3"
+     },
+     {
+      "name": "mp_day",
+      "type": "plane3"
+     },
+     {
+      "name": "khoi_chop",
+      "type": "solid"
+     },
+     {
+      "name": "dt",
+      "type": "float"
+     },
+     {
+      "name": "h",
+      "type": "float"
+     },
+     {
+      "name": "V",
+      "type": "float"
+     }
+    ],
+    "statements": [
+     {
+      "kind": "declare_point",
+      "target_var": "A",
+      "at": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "B",
+      "at": [
+       "3",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "C",
+      "at": [
+       "3",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "D",
+      "at": [
+       "0",
+       "4",
+       "0"
+      ]
+     },
+     {
+      "kind": "declare_point",
+      "target_var": "S",
+      "at": [
+       "0",
+       "0",
+       "6"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "label": "Đáy ABCD"
+     },
+     {
+      "kind": "construct_solid",
+      "target_var": "khoi_chop",
+      "vertices": [
+       "S",
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "faces": [
+       [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "A",
+        "B"
+       ],
+       [
+        "S",
+        "B",
+        "C"
+       ],
+       [
+        "S",
+        "C",
+        "D"
+       ],
+       [
+        "S",
+        "D",
+        "A"
+       ]
+      ],
+      "label": "S.ABCD"
+     },
+     {
+      "kind": "construct_plane",
+      "target_var": "mp_day",
+      "through": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "kind": "assign",
+      "target_var": "dt",
+      "expr": {
+       "kind": "measure",
+       "quantity": "area",
+       "of": "day_ABCD"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "h",
+      "expr": {
+       "kind": "measure",
+       "quantity": "distance",
+       "of": "S",
+       "wrt": "mp_day"
+      }
+     },
+     {
+      "kind": "assign",
+      "target_var": "V",
+      "expr": {
+       "kind": "measure",
+       "quantity": "volume",
+       "of": "khoi_chop"
+      }
+     }
+    ]
+   }
+  }
+ ]
+}
