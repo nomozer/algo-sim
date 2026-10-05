@@ -107,7 +107,9 @@ export function Scene3DSolution({ scene, step, selectedId = null, onSelect, open
 
   return (
     <section className="geo3d-loi-giai" aria-label="Lời giải">
-      {lg.results.length > 0 && (
+      {/* ROADMAP §0.1-1: card Kết quả ẨN mặc định — đáp số đọc qua nhãn trên hình khi chọn, nút «Đại lượng» và ô
+          soi; mở lời giải đầy đủ thì Kết quả về đây cùng công thức. */}
+      {moRong && lg.results.length > 0 && (
         <div className="geo3d-lg-muc geo3d-lg-ket-qua">
           <h4 className="geo3d-lg-ten-muc">Kết quả</h4>
           <ul className="geo3d-lg-ds">{lg.results.map((x) => dong(x, true, moRong))}</ul>

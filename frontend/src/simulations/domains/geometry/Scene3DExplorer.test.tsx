@@ -322,7 +322,8 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
   it("ngăn kéo KHÔNG giữ một bản chọn riêng", () => {
     // `ngan` chỉ giữ *bảng nào đang mở*. Nếu nó giữ thêm một id được chọn thì
     // cây và khung nhìn sẽ chỉ về hai vật khác nhau.
-    expect(ma).toContain('useState<"thanh-phan" | "de" | null>');
+    // regular-square-pyramid-w01 §0.1-2: thêm ngăn «Đại lượng» — vẫn chỉ là TÊN ngăn đang mở.
+    expect(ma).toContain('useState<"thanh-phan" | "de" | "dai-luong" | null>');
     for (const x of ["nganSelected", "treeSelected", "viewportSelected"]) {
       expect(ma, `ngăn kéo giữ chọn riêng: ${x}`).not.toContain(x);
     }
@@ -465,12 +466,14 @@ describe("W18 · một nơi giải thích (§16.6)", () => {
     .replace(/<!--.*?-->/g, "");
   const ketQua = (h: string) => h.slice(h.indexOf("geo3d-lg-ket-qua"), h.indexOf("geo3d-lg-gap"));
 
-  it("lời giải đầy đủ THU GỌN mặc định; Kết quả chỉ mang ký hiệu = giá trị", () => {
+  it("lời giải đầy đủ THU GỌN mặc định; card Kết quả KHÔNG hiện (ROADMAP §0.1-1)", () => {
+    // W18 để Kết quả luôn hiện dạng `ký hiệu = giá trị`; §0.1-1 bỏ hẳn card khi thu gọn — đáp số đọc qua nút
+    // «Đại lượng», nhãn trên hình khi chọn và ô soi. Vẫn giữ: thu gọn không lộ công thức.
     const h = lg();
     expect(h).toContain('aria-expanded="false"');
     expect(h).not.toContain("geo3d-lg-than la-mo");
-    expect(ketQua(h)).toContain("V = 10");
-    expect(ketQua(h)).not.toContain("10/3 · AB");
+    expect(h).not.toContain("geo3d-lg-ket-qua");
+    expect(h).not.toContain("10/3 · AB");
   });
 
   it("mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)", () => {

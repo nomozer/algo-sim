@@ -5,6 +5,8 @@ import { join } from "node:path";
 import {
   PLAYBACK_INTERVAL_MS,
   focusAt,
+  geometryStepList,
+  numericalBasis,
   isFirstStep,
   isLastStep,
   nextStep,
@@ -13,6 +15,8 @@ import {
   type Scene3D,
 } from "./scene3d-model";
 import { Scene3DPlayer } from "./scene3d-playback";
+import { Scene3DSolution } from "./scene3d-solution";
+import { directDependencies } from "./interaction-state";
 
 /**
  * PHASE 5E — phát lại quá trình dựng.
@@ -136,11 +140,14 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).toContain("disabled");
   });
 
-  it("nêu đối tượng đang dựng và phụ thuộc của nó", () => {
+  /* regular-square-pyramid-w01 · ROADMAP §0.1-8: dải «Đang dựng / Dựa trên» dưới khung đã GỠ — nó lặp dòng
+   * thuyết minh và ô soi. Tên bước nay ở panel «Các bước dựng» (§0.1-3), phụ thuộc số ở «Dựa trên» của lời giải
+   * đầy đủ và ô soi. Các test dưới giữ NỘI DUNG cũ (tên chứ không id IR; bước nhóm không tự nhận là dữ kiện; INIT
+   * nói đúng là dữ kiện; nguồn số của thể tích không kèm khối) trên hai bề mặt mới ấy. */
+  it("§0.1-8 · không còn dải «Đang dựng / Dựa trên» dưới thanh bước", () => {
     const html = renderToString(<Scene3DPlayer scene={scene()} initialStep={1} />);
-    expect(html).toContain("Đang dựng");
-    expect(html).toContain("Dựa trên");
-    expect(html).toContain("A, B");
+    expect(html).not.toContain("Đang dựng");
+    expect(html).not.toContain("geo3d-focus");
   });
 
   it("bước 0 nói rõ đây là dữ kiện đề cho, không phải chỗ trống", () => {
@@ -176,20 +183,23 @@ describe("(5E) vỏ điều khiển", () => {
     ],
   });
 
-  it("`Đang dựng` dùng TÊN, không dùng tên biến IR", () => {
+  it("trình phát (cả panel các bước đang mở) không in tên biến IR", () => {
     const html = renderToString(
-      <Scene3DPlayer scene={canhCoTenXau()} initialStep={1} />);
-    expect(html).toContain("Thể tích S.ABCD");
+      <Scene3DPlayer scene={canhCoTenXau()} initialStep={1} stepsOpen />);
     expect(html).not.toContain("the_tich_sabcd");
+    expect(html).not.toContain("S_ABCD");
   });
 
-  it("`Dựa trên` tra id phụ thuộc sang KÝ HIỆU của vật ấy", () => {
-    const html = renderToString(
-      <Scene3DPlayer scene={canhCoTenXau()} initialStep={1} />);
+  it("`Dựa trên` của lời giải tra id phụ thuộc sang KÝ HIỆU, không in id IR (payload thật)", () => {
+    const that: Scene3D = JSON.parse(readFileSync(join(__dirname,
+      "../../../../../docs/evaluation/geometry/runs/w11-pedagogical-polish/inputs/fixtures/rectangular_pyramid_positive.json"),
+      "utf8")).envelope.scene3d;
+    const html = renderToString(<Scene3DSolution scene={that} step={that.events.length - 1} open />);
+    const ds = [...html.matchAll(/Dựa trên: ([^<]*)</g)].map((m) => m[1]);
     // Ký hiệu chứ không phải câu đầy đủ: đây là một DANH SÁCH, và nối các câu
     // đầy đủ bằng dấu phẩy sẽ dài hơn cả khung.
-    expect(html).toContain("S.ABCD");
-    expect(html).not.toContain("S_ABCD");
+    expect(ds.length).toBeGreaterThan(0);
+    for (const d of ds) expect(d).not.toMatch(/_/);
   });
 
   /* W17 · nhãn nhóm cạnh: một câu lệnh NHÓM (`construct_segment` có `items`) có biến
@@ -219,14 +229,15 @@ describe("(5E) vỏ điều khiển", () => {
   });
 
   it("W17 · bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho", () => {
-    const html = renderToString(<Scene3DPlayer scene={canhNhom()} initialStep={1} />);
+    const ds = geometryStepList(canhNhom());
+    expect(ds.at(-1)?.label).toBe("Các cạnh bên AD");
+    expect(ds.at(-1)?.label.toLowerCase()).not.toContain("dữ kiện đề cho");
+    const html = renderToString(<Scene3DPlayer scene={canhNhom()} initialStep={1} stepsOpen />);
     expect(html).toContain("Các cạnh bên AD");
-    expect(html).not.toContain("dữ kiện đề cho");
   });
 
   it("W17 · bước INIT vẫn nói đúng là dữ kiện đề cho", () => {
-    const html = renderToString(<Scene3DPlayer scene={canhNhom()} initialStep={0} />);
-    expect(html).toContain("dữ kiện đề cho");
+    expect(geometryStepList(canhNhom())[0].label.toLowerCase()).toContain("dữ kiện đề cho");
   });
 
   /* w11 (review W10-H3): bước đo thể tích "Dựa trên" ĐÚNG các đại lượng số
@@ -261,17 +272,15 @@ describe("(5E) vỏ điều khiển", () => {
         depends: ["khoi", "dt", "SA_length"], explanation: "" },
     ],
   });
-  const duaTren = (html: string) =>
-    /<dt>Dựa trên<\/dt><dd>([^<]*)<\/dd>/.exec(html)?.[1];
-
-  it("`Dựa trên` của bước thể tích là S(ABC), SA — không kèm khối", () => {
-    const html = renderToString(<Scene3DPlayer scene={canhTheTich()} initialStep={2} />);
-    expect(duaTren(html)).toBe("S(ABC), SA");
+  it("nguồn số của bước thể tích là S(ABC), SA — không kèm khối", () => {
+    const s = canhTheTich();
+    expect(numericalBasis(s, s.objects.find((o) => o.id === "tt"))).toEqual(["dt", "SA_length"]);
   });
 
-  it("bước không có nguồn số vẫn kể phụ thuộc hình học", () => {
-    const html = renderToString(<Scene3DPlayer scene={canhTheTich()} initialStep={1} />);
-    expect(duaTren(html)).toBe("S.ABC");
+  it("bước không có nguồn số vẫn còn phụ thuộc hình học (ô soi «Dựa trên» đọc nó)", () => {
+    const s = canhTheTich();
+    expect(numericalBasis(s, s.objects.find((o) => o.id === "dt"))).toEqual([]);
+    expect(directDependencies(s, "dt")).toEqual(["khoi"]);
   });
 
   it("mọi điều khiển đều có nhãn cho trình đọc màn hình", () => {
@@ -333,10 +342,12 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     ]);
   });
 
-  it("chỉ có ĐÚNG hai `useState`: bước và trạng thái phát", () => {
-    // Thêm state thứ ba là dấu hiệu playback bắt đầu sở hữu một thứ khác ngoài
-    // thời gian — và đó là lúc nó trượt thành công cụ dựng hình.
-    expect((src.match(/useState/g) ?? []).length).toBe(3); // 1 import + 2 dùng
+  it("chỉ có ĐÚNG ba `useState`: bước, trạng thái phát, panel các bước mở/đóng", () => {
+    // Thêm state là dấu hiệu playback bắt đầu sở hữu một thứ khác ngoài thời gian — và đó là lúc nó trượt
+    // thành công cụ dựng hình. Cái thứ ba (regular-square-pyramid-w01, §0.1-3) là sở thích TRÌNH BÀY: panel
+    // «Các bước dựng» mở hay đóng, dự phòng khi xưởng không giữ; nó không chạm hình hay bước.
+    expect((src.match(/useState/g) ?? []).length).toBe(4); // 1 import + 3 dùng
+    expect(src).toMatch(/const \[moBuocTrong, setMoBuocTrong\] = useState\(false\)/);
   });
 
   it("`scene` đi vào và đi ra NGUYÊN VẸN cùng tham chiếu", () => {

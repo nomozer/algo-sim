@@ -1175,3 +1175,31 @@ export function solutionAt(scene: Scene3D, step: number): SolutionLayer {
   }
   return { givens, steps, results };
 }
+
+/**
+ * Danh sách «Các bước dựng» (ROADMAP §0.1-3): MỘT mục mỗi bước DỰNG — cùng phân hoạch với thanh bước, nên chọn
+ * một mục là đặt đúng neo mà thanh bước và phát lại đang dùng (#31/#35). Nhãn: hành động backend phát cho bước,
+ * hoặc lời kể của nó; bước 0 là dữ kiện đề cho.
+ */
+export function geometryStepList(scene: Scene3D): { index: number; anchor: number; label: string }[] {
+  return geometryTimeline(scene).map((g, index) => ({
+    index,
+    anchor: g.anchor,
+    label: geometryActionLabelAt(scene, g.anchor) || geometryNarrationAt(scene, g.anchor) || "Dữ kiện đề cho",
+  }));
+}
+
+/**
+ * Đại lượng chọn được ở bước đang xem (ROADMAP §0.1-2): kết quả trước, rồi đại lượng trung gian, rồi dữ kiện —
+ * cùng ba mục của lớp lời giải, nên một đại lượng chỉ có một mục; `same_as` trỏ về dòng gốc không lặp.
+ */
+export function quantityChoices(scene: Scene3D, step: number): { results: string[]; steps: string[]; givens: string[] } {
+  const lg = solutionAt(scene, step);
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const co = new Set([...lg.givens, ...lg.steps, ...lg.results].map((x) => x.id));
+  const rieng = (xs: SolutionItem[]) => xs.map((x) => x.id).filter((id) => {
+    const s = byId.get(id)?.annotation?.same_as;
+    return !(s && co.has(s));
+  });
+  return { results: rieng(lg.results), steps: rieng(lg.steps), givens: rieng(lg.givens) };
+}

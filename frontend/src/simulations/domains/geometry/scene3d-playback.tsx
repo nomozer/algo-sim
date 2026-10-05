@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
-  geometryActionLabelAt,
   geometryAnchor,
-  geometryFocusAt,
   geometryStepCount,
+  geometryStepList,
   geometryStepOf,
   isFirstGeometryStep,
   isLastGeometryStep,
   nextGeometryStep,
-  numericalBasis,
   prefersReducedMotion,
   prevGeometryStep,
   type Scene3D,
@@ -72,12 +70,19 @@ interface Props {
   /** W18 §16.6: lời giải đầy đủ đang mở — xưởng giữ, vì ô soi đọc nó (không hai bản công thức). */
   solutionOpen?: boolean;
   onSolutionOpenChange?: (open: boolean) => void;
+  /** ROADMAP §0.1-3: danh sách «Các bước dựng» đang mở — xưởng giữ (đóng/mở không đụng bước hay lựa chọn). */
+  stepsOpen?: boolean;
+  onStepsOpenChange?: (open: boolean) => void;
 }
 
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
-  solutionOpen, onSolutionOpenChange,
+  solutionOpen, onSolutionOpenChange, stepsOpen, onStepsOpenChange,
 }: Props) {
+  const [moBuocTrong, setMoBuocTrong] = useState(false);
+  const moBuoc = stepsOpen ?? moBuocTrong;
+  const doiBuoc = () => (onStepsOpenChange ? onStepsOpenChange(!moBuoc) : setMoBuocTrong(!moBuoc));
+  const idBuoc = useId();
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
   // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
@@ -150,36 +155,8 @@ export function Scene3DPlayer({
     setDangPhat(true);
   };
 
-  const tieuDiem = geometryFocusAt(scene, step);
-
-  /* ── ID LÀ ĐỊNH DANH MÁY, KHÔNG PHẢI TÊN ────────────────────────────────
-   *
-   * `focusAt` trả về **id** — đúng, vì trace nói bằng id. Nhưng dải này là bề
-   * mặt học sinh, và in id thẳng ra là cách `Đang dựng the_tich_sabcd` /
-   * `Dựa trên S_ABCD` lên tới màn hình (`GEOMETRY_ARCHITECTURE_EXPRESSIVENESS_
-   * AUDIT §4`). Tra ngược sang siêu dữ liệu backend đã phát.
-   *
-   * Hai vai, hai cách gọi: *"Đang dựng"* nói MỘT vật nên dùng câu đầy đủ
-   * (*"Trung điểm của A và B"*); *"Dựa trên"* là một DANH SÁCH nên dùng ký
-   * hiệu (*"A, B"*) — câu đầy đủ nối bằng dấu phẩy sẽ dài hơn cả khung.
-   *
-   * Id KHÔNG có vật tương ứng trong cảnh ⇒ coi như **không có gì để nói**, chứ
-   * không in id ra. Envelope lưu trước 2026-09-02 mang `object: "system"` ở
-   * bước `INIT` — một sentinel của trace, không phải một vật — và in nó ra cho
-   * ra dòng *"Đang dựng system"*. Backend nay phát `null` ở đó; nhánh này giữ
-   * cho những bản ghi cũ vẫn đọc được. */
-  const vat = (id: string) => scene.objects.find((o) => o.id === id) ?? null;
-  const tenDayDu = (id: string) => vat(id)?.label ?? null;
-  const tenNgan = (id: string) => {
-    const o = vat(id);
-    return o ? o.reference ?? o.notation ?? o.label : null;
-  };
-  // Bước ĐO: "Dựa trên" = đúng các đại lượng số trực tiếp (w11), không kèm
-  // khối — khối là ngữ cảnh cấu trúc. Bước dựng hình giữ phụ thuộc của trace.
-  const nguonSo = numericalBasis(scene, tieuDiem.created ? vat(tieuDiem.created) : null);
-
   return (
-    <div className="geo3d-player">
+    <div className={`geo3d-player${moBuoc ? " co-cac-buoc" : ""}`}>
       <Scene3DWorkspace
         scene={scene}
         step={step}
@@ -231,6 +208,16 @@ export function Scene3DPlayer({
           Bước sau <IconNext />
         </button>
 
+        <button
+          type="button"
+          className={`geo3d-btn geo3d-cac-buoc-mo${moBuoc ? " la-mo" : ""}`}
+          aria-expanded={moBuoc}
+          aria-controls={idBuoc}
+          onClick={doiBuoc}
+        >
+          Các bước dựng
+        </button>
+
         <label className="geo3d-scrub">
           <span className="geo3d-scrub-label">Bước</span>
           <input
@@ -247,23 +234,31 @@ export function Scene3DPlayer({
         </label>
       </div>
 
-      <dl className="geo3d-focus">
-        <dt>Đang dựng</dt>
-        <dd>
-          {/* W17: tên HÀNH ĐỘNG tách khỏi XUẤT XỨ. Đích không phải vật của cảnh (câu lệnh nhóm
-              "Các cạnh bên AD, BE, CF") ⇒ nhãn backend phát cho bước; "dữ kiện đề cho" chỉ của INIT. */}
-          {(tieuDiem.created && tenDayDu(tieuDiem.created))
-            || geometryActionLabelAt(scene, step)
-            || "— (dữ kiện đề cho)"}
-        </dd>
-        <dt>Dựa trên</dt>
-        <dd>
-          {(nguonSo.length > 0 ? nguonSo : tieuDiem.depends)
-            .map(tenNgan)
-            .filter((t): t is string => !!t)
-            .join(", ") || "—"}
-        </dd>
-      </dl>
+      {moBuoc && (
+        /* ROADMAP §0.1-3/4/5: một mục mỗi bước DỰNG; chọn ⇒ dừng phát rồi đặt đúng neo của thanh bước. Desktop:
+           cột cạnh khung (lưới `.co-cac-buoc`); khổ hẹp: trong dòng chảy dưới điều khiển, cuộn bên trong. */
+        <nav className="geo3d-cac-buoc" id={idBuoc} aria-label="Các bước dựng">
+          <ol className="geo3d-cac-buoc-ds">
+            {geometryStepList(scene).map((b) => (
+              <li key={b.index}>
+                <button
+                  type="button"
+                  className="geo3d-cac-buoc-nut"
+                  data-geometry-step={b.index}
+                  aria-current={b.index === buocHinh ? "step" : undefined}
+                  onClick={() => {
+                    setDangPhat(false);
+                    setStep(b.anchor);
+                  }}
+                >
+                  <span className="geo3d-cac-buoc-so">{b.index + 1}</span>
+                  <span className="geo3d-cac-buoc-chu">{b.label}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
 
       <Scene3DSolution
         scene={scene}

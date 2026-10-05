@@ -42,6 +42,7 @@ import {
   geometryStepCount,
   geometryStepOf,
   objectsAt,
+  quantityChoices,
 } from "./scene3d-model";
 import {
   type InteractionState,
@@ -180,7 +181,10 @@ export function Scene3DExplorer({
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
-  const [ngan, setNgan] = useState<"thanh-phan" | "de" | null>(null);
+  const [ngan, setNgan] = useState<"thanh-phan" | "de" | "dai-luong" | null>(null);
+  /* ROADMAP §0.1-3: danh sách «Các bước dựng» — SỞ THÍCH trình bày như `chiTiet`, không gắn với cảnh; đóng/mở
+     không đụng `tt` (bước, lựa chọn, tô sáng causal). */
+  const [moBuoc, setMoBuoc] = useState(false);
   const [chiTiet, setChiTiet] = useState(false);
   /* W18 · §16.5 (thay U-W17-1): hình mặc định GỌN — tên điểm và dữ kiện đề cho; đáp số và đại
      lượng trung gian hiện khi người học chọn chúng (nhãn, dòng lời giải, vật). "Hiện tất cả" là
@@ -274,6 +278,9 @@ export function Scene3DExplorer({
   };
   const coMatBung = day.objects.some((o) => o.type === "face");
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
+  // ROADMAP §0.1-2: mọi đại lượng đã có ở bước này — một lối chọn cho cả đáp số bị ẩn mặc định.
+  const daiLuong = useMemo(() => quantityChoices(day, buocHien), [day, buocHien]);
+  const coDaiLuong = daiLuong.results.length + daiLuong.steps.length + daiLuong.givens.length > 0;
   const tapNguon = useMemo(() => {
     if (!tt.selected_id) return new Set<string>();
     return new Set(dependencyClosure(day, tt.selected_id));
@@ -319,6 +326,17 @@ export function Scene3DExplorer({
           >
             <IconPanel side="right" /> Thành phần
           </button>
+          {coDaiLuong && (
+            <button
+              type="button"
+              className={`geo3d-chip${ngan === "dai-luong" ? " la-mo" : ""}`}
+              onClick={() => setNgan((x) => (x === "dai-luong" ? null : "dai-luong"))}
+              aria-expanded={ngan === "dai-luong"}
+              title="Chọn một đại lượng để xem giá trị, công thức và dữ kiện nó dựa vào"
+            >
+              Đại lượng
+            </button>
+          )}
           {coAn && (
             <button
               type="button"
@@ -353,6 +371,8 @@ export function Scene3DExplorer({
           annotationView={xem}
           solutionOpen={moLoiGiai}
           onSolutionOpenChange={setMoLoiGiai}
+          stepsOpen={moBuoc}
+          onStepsOpenChange={setMoBuoc}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
@@ -532,12 +552,12 @@ export function Scene3DExplorer({
         {ngan && (
           <aside
             className="geo3d-ngan"
-            aria-label={ngan === "de" ? "Đề bài" : "Các thành phần của hình"}
+            aria-label={ngan === "de" ? "Đề bài" : ngan === "dai-luong" ? "Các đại lượng" : "Các thành phần của hình"}
             data-che-khung=""
           >
             <div className="geo3d-ngan-dau">
               <h4 className="geo3d-ngan-tieu">
-                {ngan === "de" ? "Đề bài" : "Các thành phần của hình"}
+                {ngan === "de" ? "Đề bài" : ngan === "dai-luong" ? "Các đại lượng" : "Các thành phần của hình"}
               </h4>
               <button
                 type="button"
@@ -550,6 +570,32 @@ export function Scene3DExplorer({
             </div>
             {ngan === "de" ? (
               <p className="geo3d-de">{de}</p>
+            ) : ngan === "dai-luong" ? (
+              <div className="geo3d-dai-luong">
+                {([["Kết quả", daiLuong.results], ["Đại lượng trung gian", daiLuong.steps],
+                   ["Dữ kiện", daiLuong.givens]] as const).filter(([, ids]) => ids.length > 0).map(([muc, ids]) => (
+                  <section key={muc} aria-label={muc}>
+                    <h5 className="geo3d-dai-luong-muc">{muc}</h5>
+                    <ul className="geo3d-dai-luong-ds">
+                      {ids.map((id) => (
+                        <li key={id}>
+                          <button
+                            type="button"
+                            className={`geo3d-tree-item${tt.selected_id === id ? " la-chon" : ""}`}
+                            aria-pressed={tt.selected_id === id}
+                            onClick={() => {
+                              chon(id);
+                              setNgan(null);
+                            }}
+                          >
+                            {giaTri(id)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
             ) : (
               <ul className="geo3d-tree">
                 {cay.map((n) => (
