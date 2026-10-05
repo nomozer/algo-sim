@@ -1,0 +1,74 @@
+{
+  "schema_version": "closing-run/1",
+  "run_id": "cuboid-final-review",
+  "task": "COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE",
+  "task_class": "DOCS_CLEANUP_AND_LEARNER_FACING_FIX (not docs-only)",
+  "work": {
+    "task_slug": "cuboid-visual-semantic-closure",
+    "branch": "fix/cuboid-visual-semantic-closure",
+    "wave_number": "none — closing run of the work after W20 (docs/evaluation/RUN_NAMING.md); W1–W20 keep their names"
+  },
+  "dates": "2026-10-05",
+  "start_head": "4048ff83d14ad2a1fcd940d127590ca777dbc7cf",
+  "origin_main": "a9492ee98ff9dc3302d1ff64465f1c06e9001bce (git ls-remote at the start and at the end: unchanged; ancestor of HEAD; the branch is not on the remote)",
+  "commits": {
+    "docs_cleanup": "42dd1af5 (history split, stale pointers, inventory)",
+    "rules": "3f8127fd (wave numbering per work)",
+    "product_fix": "284a9bfa (refusal card of §17: message from subjects, label from reason_code)",
+    "tooling": "fac2769e (focused browser check of the refusal card)",
+    "cache_decision": "6ec40806 (NO_BUMP with proof)",
+    "refreeze": "a1c53cdb (candidate b2d4187a)",
+    "documentation": "the commit that contains this file (not recorded here); a last commit adds the final docs-gate log"
+  },
+  "product_state": {
+    "verification_commit": "a1c53cdb (authoritative verification in a clean detached worktree, path with a space)",
+    "product_commit": "284a9bfa",
+    "candidate": "b2d4187a78ed8bf6… (was 27c31de6…; one freeze)",
+    "cache_version": "111 (unchanged; diagnostics/cache_proof/CACHE_DECISION_CFR.json)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (learner-facing only: the refusal of §17 says the construction is unverified, with a message built from structured subjects and its own card label; refusal and served routes unchanged)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "111",
+    "CANDIDATE_REFROZEN": "YES, once",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "BRANCH_DELETED": "NO",
+    "HISTORY_REWRITTEN": "NO",
+    "USER_FAVICON_DELETION_PRESERVED": "YES",
+    "HISTORICAL_ARTIFACTS_BYTE_IDENTICAL": "YES"
+  },
+  "counts": {
+    "docs_files_reviewed": 8812,
+    "per_file_rows": 342,
+    "evaluation_groups": "146 (8470 files)",
+    "blocks_moved_verbatim": 119,
+    "lines_moved_verbatim": 2960,
+    "living_docs_split": 7,
+    "legacy_companions_added": 7,
+    "docs_cleanup_in_place_edits": "13 files (inventory/CLEANUP_LOG.json; living-docs updates of the closing commits are listed in HANDOFF.md)",
+    "tracked_files_deleted": 0,
+    "ignored_cache_files_deleted": 3,
+    "review_required": 1,
+    "machine_local_links_in_living_docs": "4 -> 0",
+    "removed_path_mentions_in_living_docs": "51 -> 28 (all 28 intentional: 8 point at git-ignored local files, 20 sit in dated notes, the §0j index or the 'old location' column)",
+    "dead_relative_links_in_living_docs": "0 -> 0",
+    "new_or_changed_tests": "backend: 2 W20 tests reworded to the new wording (one gains a third parametrised case, L16) + 1 new composition test; frontend: 3 new card tests (label + 2 controls)",
+    "pytest_verification": "7079 passed / 0 failed / 1 skipped / 2 deselected",
+    "vitest_verification": "1061/1061",
+    "browser_refusal_check": "12/12 (6 cases x desktop 1440x900 + mobile 390x844)",
+    "catalogued_reports_changed": "0 of 181 catalogue links"
+  },
+  "issues": {
+    "opened": ["ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE", "ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE"],
+    "status_changed": ["ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT: OPEN -> INTENDED_LIMITATION"],
+    "annotated": ["ISSUE-ARCH-NO-COMPILER-FIRST-ROUTING (cfr_audit)", "ISSUE-ARCH-NO-FALLBACK-MECHANISM (cfr_audit)", "ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED (cfr_check)"]
+  },
+  "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "next_action": "human visual review W18-H1 plus the new refusal cards (merge condition); then merge main, push, delete the merged branch; the next work branches from the updated main and starts at W1 (NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES)"
+}

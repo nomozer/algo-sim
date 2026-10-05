@@ -1,0 +1,86 @@
+{
+  "schema_version": "cfr-refusal-cases/1",
+  "product_commit_sha": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "product_tree_sha": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "application_llm_calls": 0,
+  "cases": [
+    {
+      "case": "cfr_projection_by_coordinates",
+      "mode": "negative",
+      "fixture": "fixtures/cfr_projection_by_coordinates.json",
+      "expected": {
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "problem_label": "chưa kiểm chứng được phép dựng",
+        "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+      },
+      "sha256": "1105effcda22c766174e34148af3e246f23961666361d77115772fc9fea824b1"
+    },
+    {
+      "case": "cfr_projection_alias_vertex",
+      "mode": "negative",
+      "fixture": "fixtures/cfr_projection_alias_vertex.json",
+      "expected": {
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "problem_label": "chưa kiểm chứng được phép dựng",
+        "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được lấy trùng với điểm A thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+      },
+      "sha256": "0cb27690cfa9ce141992e859402d6923a7d104e40227b095f536bfeaaf836115"
+    },
+    {
+      "case": "cfr_midpoint_by_coordinates",
+      "mode": "negative",
+      "fixture": "fixtures/cfr_midpoint_by_coordinates.json",
+      "expected": {
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+        "refusal_cause": "CONSTRUCTION",
+        "problem_label": "chưa kiểm chứng được phép dựng",
+        "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+      },
+      "sha256": "3b715f386ec875a033c83e8ed47e0dcea8bf868316254df4808528080d0b4332"
+    },
+    {
+      "case": "w18_projection_mismatch",
+      "mode": "negative",
+      "fixture": "fixtures/w18_projection_mismatch.json",
+      "expected": {
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "refusal_cause": "CONSTRUCTION",
+        "problem_label": "hệ dựng lệch với đề bài"
+      },
+      "sha256": "b955fdd406f3bebd80a5bf58461b3a4e9df7bc097caeb38a6635b4b26ff466b1"
+    },
+    {
+      "case": "w18_unverified",
+      "mode": "negative",
+      "fixture": "fixtures/w18_unverified.json",
+      "expected": {
+        "product_error_code": "input_not_grounded",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+        "refusal_cause": "UNKNOWN",
+        "problem_label": "hệ chưa đối chiếu được phép dựng với đề"
+      },
+      "sha256": "33f1f5cbc70bd02242d4a66b5963e5634563ac00ab19f62e4bb6cd68fbdfcccd"
+    },
+    {
+      "case": "w18_projection_line",
+      "mode": "served",
+      "fixture": "fixtures/w18_projection_line.json",
+      "expected": {
+        "answer": "3√6",
+        "annotation_id": "d_kq"
+      },
+      "sha256": "b72ad94b41dff8fabcd692ec7565e1c87e57c3c64f02c438cf26cd7b8e9dd700"
+    }
+  ]
+}

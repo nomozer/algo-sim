@@ -580,7 +580,7 @@
 - **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md` (closed catalog); `docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json`.
 - **impact:** navigation only. The catalog groups them by theme and `audit_docs_layout` stops the list from growing; a reader browsing the folder still sees about 200 files.
 - **scope:** relocation (for example into a reports folder under docs/evaluation) needs the user to amend `AGENTS.md` §4; the move is mechanical from the catalog, frozen artifacts' old paths resolve through a migration map as in W19.
-- **status:** OPEN (w19) — user decision.
+- **status:** INTENDED_LIMITATION (`cuboid-final-review`, 2026-10-05) — was OPEN (w19), user decision. The brief of the closing run of the cuboid work keeps historical reports at their bytes and paths and asks to record the 180 reports at the root as an intended limitation; they stay catalogued in `docs/evaluation/HISTORICAL_REPORTS.md`, and `audit_docs_layout` keeps the list closed.
 - **owner_class:** DOCUMENTATION
 - **suggested_wave:** only after the user amends `AGENTS.md` §4
 - **default_switch_blocker:** NO
@@ -593,6 +593,7 @@
 - **impact:** disk use and confusion with live worktrees; possible unsaved diagnostics inside.
 - **scope:** a verification pass (each entry: duplicate of a committed file, reproducible output, or unique) or the user's decision to discard.
 - **status:** OPEN (w19); PARTIAL (w20) — a bounded mechanical pass deleted 8 entries by exact path: 6 files equal to blobs reachable from a ref, 1 empty file and 1 clean clone whose HEAD and refs all exist in this repository (`docs/evaluation/geometry/runs/w20-cleanup-premerge/inventory/DELETION_LOG.json`). 204 entries stay `REVIEW_REQUIRED`: 126 loose files and 76 folders that match nothing in git, and the two settings backups (not opened).
+- **cfr_check:** (2026-10-05, `cuboid-final-review`) `D:/tmp` holds exactly the 204 registered entries — none new, none gone; nothing outside the repository deleted (no entry verified anew). Inside `docs/`, two git-ignored `__pycache__` folders were deleted by exact path after a hash check (`docs/evaluation/geometry/runs/cuboid-final-review/inventory/CLEANUP_LOG.json`).
 - **owner_class:** OPERATIONS
 - **suggested_wave:** housekeeping, any time
 - **default_switch_blocker:** NO

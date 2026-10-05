@@ -1,0 +1,15 @@
+# browser refusal check at a1c53cdb after npm run build in the worktree (BUILD_BEFORE_BROWSER_a1c53cdb.log); results/BROWSER_REFUSAL_CFR.json, images/
+cfr_projection_by_coordinates desktop: PASS
+cfr_projection_by_coordinates mobile: PASS
+cfr_projection_alias_vertex desktop: PASS
+cfr_projection_alias_vertex mobile: PASS
+cfr_midpoint_by_coordinates desktop: PASS
+cfr_midpoint_by_coordinates mobile: PASS
+w18_projection_mismatch desktop: PASS
+w18_projection_mismatch mobile: PASS
+w18_unverified desktop: PASS
+w18_unverified mobile: PASS
+w18_projection_line desktop: PASS
+w18_projection_line mobile: PASS
+BROWSER_REFUSAL_CFR PASS
+exit=0

@@ -250,7 +250,8 @@ luận và bài báo, cùng bảng tuyên bố ↔ bằng chứng, ở
 [`docs/evaluation/`](docs/evaluation/README.md); tài liệu hết hiệu lực ở
 [`docs/legacy/`](docs/legacy/README.md). Nhánh phát triển hiện tại **chưa được
 người duyệt trực quan và chưa sẵn sàng merge**; bằng chứng sản phẩm mới nhất ở
-[run w20](docs/evaluation/geometry/runs/w20-cleanup-premerge/) (hình ảnh chờ duyệt ở
-[run w18](docs/evaluation/geometry/runs/w18-binding-focus/)), tổ chức tài liệu ở
-[run w19](docs/evaluation/geometry/runs/w19-docs-organization/) — trạng thái
+[run cuboid-final-review](docs/evaluation/geometry/runs/cuboid-final-review/) (lượt chốt:
+rà soát tài liệu, thẻ từ chối) và [run w20](docs/evaluation/geometry/runs/w20-cleanup-premerge/)
+(hình ảnh chờ duyệt ở [run w18](docs/evaluation/geometry/runs/w18-binding-focus/)), tổ chức tài
+liệu ở [run w19](docs/evaluation/geometry/runs/w19-docs-organization/) — trạng thái
 chính xác luôn ở `docs/CURRENT_STATE.md`, không ở README này.

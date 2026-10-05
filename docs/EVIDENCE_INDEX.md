@@ -919,9 +919,30 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (tree_hash d3b4cab9… -> 2a15102b… (intermediate, bedb1040) -> 27c31de6…, 110 files; frozen twice, declared in `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`)
 - **CACHE_CHANGE:** YES (CACHE_VERSION 110 -> 111 in bedb1040, real-row proof; lock ac241a8d; fingerprint b1714b56… unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (scope note only: W20 was a correctness closure plus a bounded cleanup; the full docs review is the run cuboid-final-review; W20 measurements and conclusions unchanged)
 - **CORRECTS:** W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (deferred limit: a text-relation target defined by coordinates was neither checked nor recorded by `construction_binding`)
 - **SUPERSEDES:** inside this run only — fault-injection logs r1 and r2 by r3 (clean worktree), probe `before` (23 rows) by `before-r2` (27 rows, labels amended before any fix)
 - **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_27c31de6 — not visual acceptance (human review NOT_APPROVED). Inside the §16.1 vocabulary, a text-relation target the program defines by coordinates is refused in every scope (claim C6 of `docs/research/CLAIM_EVIDENCE_MAP.md`)
 - **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `diagnostics/literal_target_corpus/LABELS.json` · `results/LITERAL_TARGET_PROBE_before-r2_2cb4ed8c.json` · `results/LITERAL_TARGET_PROBE_after_65c90bde.json` · `results/LITERAL_TARGET_PROBE_final_5fbb397b.json` · `diagnostics/CONSTRUCTION_BINDING_DECISION_W20.json` · `diagnostics/PROOF_CACHE_ROW_W20.json` · `inventory/CLEANUP_INVENTORY.json` · `inventory/DELETION_LOG.json` · `results/logs/T3_FULL_GATE_5fbb397b.log` · `results/logs/GATES_5fbb397b.log` · `results/logs/FAULT_INJECTION_W20_r3.log`
 - **RUN_ID_POLICY:** SHORT_RUN_ID (`wNN-short-slug`, `docs/evaluation/RUN_NAMING.md`)
+
+## WAVE_ID = COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE
+- **RUN_ID:** cuboid-final-review (closing run of the work cuboid-visual-semantic-closure; no wave number)
+- **DATE:** 2026-10-05
+- **REPORT:** docs/evaluation/geometry/runs/cuboid-final-review/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/cuboid-final-review/
+- **START_BASE:** 4048ff83
+- **CODE_COMMIT:** 284a9bfa (refusal card of §17: message from `reason_subjects`, label from `reason_code`) · fac2769e (tooling: focused browser check)
+- **MEASUREMENT_COMMIT:** a1c53cdbf9cd35667f0e1d918584e880a67daab3 (authoritative verification in a clean detached worktree); cache proof at 284a9bfa against 4048ff83; inventories at 4048ff83 (before) and a1c53cdb (after)
+- **EVIDENCE_COMMIT_ROLE:** 42dd1af5 (docs inventory, verbatim history split, cleanup log) · 284a9bfa (red and green logs) · 6ec40806 (cache proof) · a1c53cdb (refreeze, pre-freeze log) · the documentation commit (T3, gates, browser check and images, inventories, report, handoff) · the final docs-gate log commit
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGE:** YES (learner-facing only)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (tree_hash 27c31de6… -> b2d4187a…, 110 files; frozen once at 284a9bfa, declared in `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`)
+- **CACHE_CHANGE:** NO (111; `diagnostics/cache_proof/CACHE_DECISION_CFR.json`: served envelopes byte-identical, refusals never cached; lock `--verify` exit 0)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE (scope note only: W20's cleanup was bounded; the full docs review is this run)
+- **SUPERSEDES:** inside this run only — browser check attempt 1 (stopped by the dist freshness guard) by attempt 2; the docs inventory committed in 42dd1af5 by the inventories measured at 4048ff83 and a1c53cdb
+- **THESIS_USE:** AUTHORITATIVE_AUTOMATION_FOR_CANDIDATE_b2d4187a — not visual acceptance (human review NOT_APPROVED). The §17 refusal states the verification limit in learner terms; the docs keep one current authority per topic, with the informatics-era history kept verbatim in `docs/legacy/`
+- **AUTHORITATIVE_FILES:** `RUN.json` · `MANIFEST.json` · `HANDOFF.md` · `REPORT.md` · `inventory/DOCS_INVENTORY.json` · `inventory/DOCS_INVENTORY_BEFORE_4048ff83.json` · `inventory/HISTORY_SPLIT.json` · `inventory/CLEANUP_LOG.json` · `diagnostics/cache_proof/CACHE_DECISION_CFR.json` · `results/BROWSER_REFUSAL_CFR.json` · `results/logs/T3_FULL_GATE_a1c53cdb.log` · `results/logs/GATES_a1c53cdb.log` · `images/`
+- **RUN_ID_POLICY:** CLOSING_RUN_OF_A_WORK (short id set by the brief, an abbreviation of the task slug; `docs/evaluation/RUN_NAMING.md` — waves of new works use `<task-slug>-wNN`)

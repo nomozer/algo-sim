@@ -1,0 +1,24 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "w18_unverified",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là điểm chính giữa của đoạn SA. Tính độ dài đoạn MC.",
+  "source": "cfr_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "product_tree_sha": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "construction_binding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+    "reason_subjects": [
+      "M"
+    ],
+    "refusal_cause": "UNKNOWN",
+    "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+  }
+}

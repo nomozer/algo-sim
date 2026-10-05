@@ -1,0 +1,72 @@
+# cuboid-final-review verification gates at a1c53cdb (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+a1c53cdbf9cd35667f0e1d918584e880a67daab3
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, b2d4187a78ed8bf6…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 111 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2 (idempotence: the two mirrors byte-identical, git status unchanged)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git status after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since 4048ff83: 0
+## model surface: prompts, grammar card, schemas, capability changed since 4048ff83
+model-surface files changed: 0
+## product code changed since 4048ff83 (backend/app, frontend/src)
+  M	backend/app/learner_messages.py
+  M	backend/app/simulation/semantic_program/construction_binding.py
+  M	frontend/src/components/SimulationWorkspace.tsx
+  M	frontend/src/components/refusal-contract.test.tsx
+  M	frontend/src/core/types.ts
+## CACHE_VERSION
+761:CACHE_VERSION = "111"
+## docs/evaluation changed since 4048ff83 outside this run
+  M	docs/evaluation/RUN_NAMING.md
+  M	docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json
+  M	docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+changed outside this run: 3 (allowed: the living candidate registry and divergence declaration, and the living navigation and policy files RUN_NAMING.md and README.md of docs/evaluation)
+## docs/legacy changed since 4048ff83 (allowed: the seven new companions added, legacy/README.md edited)
+  A	docs/legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md
+  A	docs/legacy/CODE_INDEX_REMOVED_ENTRIES.md
+  A	docs/legacy/CORRECTNESS_INFORMATICS_ERA.md
+  A	docs/legacy/COVERAGE_INFORMATICS_ERA.md
+  A	docs/legacy/DESIGN_BRIEF_INFORMATICS_ERA.md
+  A	docs/legacy/POST_THESIS_BACKLOG_INFORMATICS_ERA.md
+  M	docs/legacy/README.md
+  A	docs/legacy/STATUS_LEDGER_INFORMATICS_ERA.md
+## historical reports at the docs root (catalogued in docs/evaluation/HISTORICAL_REPORTS.md) changed since 4048ff83
+catalogued reports changed: 0 of 181
+## verbatim history split (blocks cut from the 4048ff83 blobs)
+HISTORY_SPLIT OK --verify
+exit=0
+## git diff --check 4048ff83..a1c53cdb (captured *.log excluded: verbatim tool output may carry trailing spaces)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## node harness tests
+ℹ tests 72
+ℹ pass 70
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0

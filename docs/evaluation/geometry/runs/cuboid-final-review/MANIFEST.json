@@ -1,0 +1,415 @@
+{
+ "schema_version": "run-manifest/1",
+ "run": "cuboid-final-review",
+ "verification_commit": "a1c53cdb",
+ "files": [
+  {
+   "path": "diagnostics/browser_refusal_cfr.mjs",
+   "sha256": "b70b950166237dec8d65cd719b9db6a97a32be30027b970150e2394a6dd6f0b5",
+   "basis": "git_blob_lf",
+   "bytes": 3040,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/build_manifest.py",
+   "sha256": "15a81b47f9c5a4870b0665616de1fd62ea2a18fee997166327881e6ce3769c85",
+   "basis": "git_blob_lf",
+   "bytes": 5165,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/cache_decision_cfr.py",
+   "sha256": "8f44995ba63cbda4b84a116b471c784e3b5495bc0d6c20b6977312799def5425",
+   "basis": "git_blob_lf",
+   "bytes": 4296,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/cache_proof/CACHE_DECISION_CFR.json",
+   "sha256": "bcd27fb89bbddd5ec18761d5ed1bffc347318351e24b2a86c3da665a0e1a05c7",
+   "basis": "git_blob_lf",
+   "bytes": 9068,
+   "producer": "diagnostics/cache_decision_cfr.py on the same envelopes",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/cache_proof/CORPUS_W20_LABELS.json",
+   "sha256": "71247a82300d1e6a2036c34a4e0b684e710e6738042f558e001ef21124379306",
+   "basis": "git_blob_lf",
+   "bytes": 181096,
+   "producer": "runs/w20-cleanup-premerge/diagnostics/proof_cache_row_w20.py corpus (W20 corpus builders, main tree @ fac2769e)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/cache_proof/PROOF_CACHE_ROW_CFR.json",
+   "sha256": "faa6fa0cd6510200c86fa3bbbc4539d95491fa5541bf1f2d986dee3b747845a3",
+   "basis": "git_blob_lf",
+   "bytes": 17019,
+   "producer": "runs/w20-cleanup-premerge/diagnostics/proof_cache_row_w20.py prove (envelopes: before 4048ff83, after 284a9bfa)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "diagnostics/cfr_gates.sh",
+   "sha256": "2bb166e4bc0765852553fc03a19d75fbf039dd7d8aef6df303878fa2fdf09680",
+   "basis": "git_blob_lf",
+   "bytes": 4267,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/inventory_docs_cfr.py",
+   "sha256": "01ad91cfb772ffe576805889b78c8952fa305520e7e7554a493b24616ccd9657",
+   "basis": "git_blob_lf",
+   "bytes": 23897,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/refusal_fixtures_cfr.py",
+   "sha256": "fc20e37a3d625e1c00ca1e79ebe2439a40ade57dfe8c29a99b2b8ad85107c0b0",
+   "basis": "git_blob_lf",
+   "bytes": 6076,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/split_history_cfr.py",
+   "sha256": "6b261add1f1de27e6edc16c333262f5f9e228f6833b47718997acc667e7526b6",
+   "basis": "git_blob_lf",
+   "bytes": 26655,
+   "producer": "hand-written diagnostic script of this run (0 model calls)",
+   "status": "RECORD"
+  },
+  {
+   "path": "diagnostics/TEMP_FILE_INVENTORY.json",
+   "sha256": "50a416e6321359461777af5f94a7ecbce15ed57fe8744b218be46f1c93e44387",
+   "basis": "git_blob_lf",
+   "bytes": 5565,
+   "producer": "hand-written inventory of the temporary files of the run",
+   "status": "RECORD"
+  },
+  {
+   "path": "HANDOFF.md",
+   "sha256": "24bf8fa30c770458c981ccbed7300b908e6348137705eed53d736e5ee00333c2",
+   "basis": "git_blob_lf",
+   "bytes": 13349,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "images/cfr_midpoint_by_coordinates/desktop/refusal.png",
+   "sha256": "21aa6692f7411d39ddbeb348b73293d436fe9703267bbc46d5494fe9586942b2",
+   "basis": "raw_bytes",
+   "bytes": 56561,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/cfr_midpoint_by_coordinates/mobile/refusal.png",
+   "sha256": "2fcb2cd9b0d2f99b6910a8bca4b98e08a07689e41be8814c726701abdb99871f",
+   "basis": "raw_bytes",
+   "bytes": 130831,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/cfr_projection_alias_vertex/desktop/refusal.png",
+   "sha256": "1ae11d0d3f5d782bbece24586baeceda625cff94a49a265bcadf768aa55702df",
+   "basis": "raw_bytes",
+   "bytes": 56818,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/cfr_projection_alias_vertex/mobile/refusal.png",
+   "sha256": "a20cd6250068826815e04020d62215b7dcde2c54113182b9c6cc2fe8bc7986ec",
+   "basis": "raw_bytes",
+   "bytes": 128658,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/cfr_projection_by_coordinates/desktop/refusal.png",
+   "sha256": "735fa69dc4ebd511add39f29e56a609586516e3aac92538d76ff00d9718c7320",
+   "basis": "raw_bytes",
+   "bytes": 56607,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/cfr_projection_by_coordinates/mobile/refusal.png",
+   "sha256": "557c2b8d02f7eab7f4fb7006f62e4faaf2257f7fbac8c052b4d4a3c820b057a7",
+   "basis": "raw_bytes",
+   "bytes": 127611,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_projection_line/desktop/served.png",
+   "sha256": "dbb50474fabbc3e61e9d8357ea2df38736fae9986ca20c0743409382f5ae09fa",
+   "basis": "raw_bytes",
+   "bytes": 155328,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_projection_line/mobile/served.png",
+   "sha256": "cc23f7c37c11d3257a67197570f0dd29eace1500b249b665ea61f271cc68eae9",
+   "basis": "raw_bytes",
+   "bytes": 188613,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_projection_mismatch/desktop/refusal.png",
+   "sha256": "1fd5ab76436ecbd834cd19df20988506c02c61073ae2d994dba792a410578906",
+   "basis": "raw_bytes",
+   "bytes": 60323,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_projection_mismatch/mobile/refusal.png",
+   "sha256": "536df72384024967f9bc133e06016e35e9b4de710ff129934031a65527a0ae40",
+   "basis": "raw_bytes",
+   "bytes": 142843,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_unverified/desktop/refusal.png",
+   "sha256": "9a182f4c9da09ca979fe6c9369e37e4e648e16e359461ace283abafbd3ae783d",
+   "basis": "raw_bytes",
+   "bytes": 60868,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "images/w18_unverified/mobile/refusal.png",
+   "sha256": "a9bade67f79a1251bd351ade274635548a6f95209a32cc27714ae4a808539e50",
+   "basis": "raw_bytes",
+   "bytes": 152920,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+   "sha256": "79727141ef83bc9b091091ebabd162e0dda6115c6dfadbe84e5210c35b6cdf50",
+   "basis": "git_blob_lf",
+   "bytes": 3401,
+   "producer": "hand-written candidate divergence declaration (one freeze)",
+   "status": "RECORD"
+  },
+  {
+   "path": "inventory/CLEANUP_LOG.json",
+   "sha256": "572446d1ce02d146b476802b62f23728316dda1030295f3b0b05ea6886a39f64",
+   "basis": "git_blob_lf",
+   "bytes": 9637,
+   "producer": "hand-written log of the moves, in-place edits and deletions",
+   "status": "RECORD"
+  },
+  {
+   "path": "inventory/DOCS_INVENTORY.json",
+   "sha256": "4ca60c99260bde507834d583ef742c9466de92b53f8824ef728c2cd2486b653c",
+   "basis": "git_blob_lf",
+   "bytes": 477352,
+   "producer": "diagnostics/inventory_docs_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim')",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "inventory/DOCS_INVENTORY_BEFORE_4048ff83.json",
+   "sha256": "c71a3ca2a5fad3b5a026e82d9e7051ce76a56847c70f8ed12bce6a3193160632",
+   "basis": "git_blob_lf",
+   "bytes": 472903,
+   "producer": "diagnostics/inventory_docs_cfr.py @ 4048ff83 (detached worktree)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "inventory/HISTORY_SPLIT.json",
+   "sha256": "4a5fdd5fe11f6a5ea724af68d0578a245872192cb2ed466306b8e45212dc36c9",
+   "basis": "git_blob_lf",
+   "bytes": 43212,
+   "producer": "diagnostics/split_history_cfr.py --apply (blocks of the 4048ff83 blobs)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "PLAN.md",
+   "sha256": "966996c7e06e5e5eb3d78d0522b12b53adec8050358bd1f60405f72e74935d60",
+   "basis": "git_blob_lf",
+   "bytes": 4972,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "REPORT.md",
+   "sha256": "e76deb4d3b8815265e83184e15baae121f92bfde57edd0cff68a08868598f5ef",
+   "basis": "git_blob_lf",
+   "bytes": 18996,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/browser/CASES.json",
+   "sha256": "d8f6613b4eb6c42e3a5bef0a1f75ddf65b273d08e5def51f8bcf728e81f7a1d6",
+   "basis": "git_blob_lf",
+   "bytes": 3985,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim')",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/cfr_midpoint_by_coordinates.json",
+   "sha256": "bb00cf94b2795bab90b35e4b5458c739e308a830c4ac5e6fe3a6e596c4292c51",
+   "basis": "git_blob_lf",
+   "bytes": 1409,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/cfr_projection_alias_vertex.json",
+   "sha256": "25da43b21fe6860eebcaebb48b283c8e1e51288461a14c16a922b80ee16fa90e",
+   "basis": "git_blob_lf",
+   "bytes": 1447,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/cfr_projection_by_coordinates.json",
+   "sha256": "abb6af7cc00f404ef696d4e2d919948a06e483e56d86b640d184a08bb59d8785",
+   "basis": "git_blob_lf",
+   "bytes": 1443,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/w18_projection_line.json",
+   "sha256": "e6893aded965b39b1cf1392a9ee609840eb8799d35054b8d99ab043825b0d23a",
+   "basis": "git_blob_lf",
+   "bytes": 39826,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/w18_projection_mismatch.json",
+   "sha256": "e6823b3629a301a41819521f91e1f90b9695b130dcb328daf8f1e6ac7c878769",
+   "basis": "git_blob_lf",
+   "bytes": 1545,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/browser/fixtures/w18_unverified.json",
+   "sha256": "6e5edf4e19b0d3697842b0c922a89d4d65426ad075cfa557c72fb57ad445a0fe",
+   "basis": "git_blob_lf",
+   "bytes": 1552,
+   "producer": "diagnostics/refusal_fixtures_cfr.py @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (frozen corpus programs through run_pipeline)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/BROWSER_REFUSAL_CFR.json",
+   "sha256": "ce2b557e2a367893372e689bff70285b572114355ba80d42a0128ef5988914cd",
+   "basis": "git_blob_lf",
+   "bytes": 55886,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), production build",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/BROWSER_REFUSAL_a1c53cdb.log",
+   "sha256": "7a35f4a57f2ebbdf6aa0fd1831949e14a9137357215d0342333447a30a96748e",
+   "basis": "git_blob_lf",
+   "bytes": 635,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim') (console)",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/BROWSER_REFUSAL_attempt1_DIST_CU_a1c53cdb.log",
+   "sha256": "8e9e32007d766f21ded1cef5810d19f7b44a1d41f637ae2de27c82174cbb9484",
+   "basis": "git_blob_lf",
+   "bytes": 765,
+   "producer": "diagnostics/browser_refusal_cfr.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), stopped by the dist freshness guard",
+   "status": "SUPERSEDED"
+  },
+  {
+   "path": "results/logs/BUILD_BEFORE_BROWSER_a1c53cdb.log",
+   "sha256": "e329043a512fd1f61fc8225cd21a356b046932f2b9e56294dcb7bb5151ad0d5c",
+   "basis": "git_blob_lf",
+   "bytes": 720,
+   "producer": "npm run build @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim'), before the second browser attempt",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/GATES_a1c53cdb.log",
+   "sha256": "ceb3f6f699eb85da331f19fd55fda507a08daf3d8485f2d8040fb3eb692124ca",
+   "basis": "git_blob_lf",
+   "bytes": 3209,
+   "producer": "diagnostics/cfr_gates.sh a1c53cdb 4048ff83 @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim')",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/GREEN_BACKEND_REFUSAL.log",
+   "sha256": "6d43f6d198a6201a20819bc5af743b0bdd1b59adb89b6b3d2ebcced446a80040",
+   "basis": "git_blob_lf",
+   "bytes": 744,
+   "producer": "test output after the fix, main tree @ the fix before its commit",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/GREEN_FRONTEND_REFUSAL.log",
+   "sha256": "7a8205b28901c9653d2ed6bae2c9a437442877e7a742ac397180096fe4e3b44e",
+   "basis": "git_blob_lf",
+   "bytes": 226,
+   "producer": "test output after the fix, main tree @ the fix before its commit",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/PRE_FREEZE_FULL_BACKEND_fac2769e.log",
+   "sha256": "8fc139e2aa2dd2ccae4156f5189ddfce737cf3fbadc6ec4bee1c5fa4c3b60ac2",
+   "basis": "git_blob_lf",
+   "bytes": 26911,
+   "producer": "pytest, main tree before the freeze (failure classification in the header)",
+   "status": "DIAGNOSTIC"
+  },
+  {
+   "path": "results/logs/RED_BACKEND_REFUSAL.log",
+   "sha256": "9ee5b54b5230c82be85fbf25bc8ac0f55eceac0dd78ae586793a200f42f9550f",
+   "basis": "git_blob_lf",
+   "bytes": 16151,
+   "producer": "test output before the fix, main tree (trailing spaces stripped)",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/RED_FRONTEND_REFUSAL.log",
+   "sha256": "9a7f66911507cc95e333562571017f273d2b38dea9230936eb897dc4fe3806ee",
+   "basis": "git_blob_lf",
+   "bytes": 1909,
+   "producer": "test output before the fix, main tree (trailing spaces stripped)",
+   "status": "RECORD"
+  },
+  {
+   "path": "results/logs/T3_FULL_GATE_a1c53cdb.log",
+   "sha256": "388b3fc187c6da99b0255ee7336f618818a8db197c69554747efa26b318fbe9e",
+   "basis": "git_blob_lf",
+   "bytes": 13675,
+   "producer": "frontend/scripts/full-gate.mjs @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim')",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "results/logs/WORKTREE_STATUS_a1c53cdb.log",
+   "sha256": "d1f86219197be0f01204e9c3cfae05e8254b35379869056c54006a4e559cd1bc",
+   "basis": "git_blob_lf",
+   "bytes": 994,
+   "producer": "git status of the verification worktree after every run @ a1c53cdb (clean detached worktree 'D:/tmp/cfr space/algo-sim')",
+   "status": "AUTHORITATIVE"
+  },
+  {
+   "path": "RUN.json",
+   "sha256": "9979ca530cafbe861a42ba78e32dbe713830139b2c2bac41527fb44d483366ac",
+   "basis": "git_blob_lf",
+   "bytes": 4255,
+   "producer": "hand-written run document",
+   "status": "RECORD"
+  }
+ ]
+}

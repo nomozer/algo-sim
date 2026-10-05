@@ -1,0 +1,31 @@
+{
+  "schema_version": "temp-file-inventory/1",
+  "run_id": "cuboid-final-review",
+  "scope": "every file or folder this run created outside its committed run folder: the session temp folder (%TEMP%), D:/tmp worktrees, and the git-ignored plan workspace; plus the git-ignored caches deleted inside docs/",
+  "classes": ["USED", "REPRODUCIBLE_TEMP", "SUPERSEDED_DIAGNOSTIC", "UNKNOWN"],
+  "deletion_rule": "only this run's own temporary files, each by exact path (PowerShell Remove-Item -LiteralPath) after its content was copied into the run folder or is reproducible; worktrees removed from the main repository with `git worktree remove` (never --force)",
+  "files": [
+    {"area": "plan workspace", "path": ".superpowers/sdd/cuboid-final-review/progress.md", "class": "USED", "decision": "KEEP", "note": "the run ledger: task completions, every Ruling and the self-review (git-ignored)"},
+    {"area": "worktree", "path": "D:/tmp/cfr-before", "class": "USED", "decision": "REMOVED (clean; git worktree remove)", "note": "detached at 4048ff83 (end of W20) for the 'before' envelopes of the cache proof"},
+    {"area": "worktree", "path": "D:/tmp/cfr-freeze", "class": "USED", "decision": "REMOVED (generated EVALUATION_CANDIDATE.json copied to the main tree, restored to its committed blob, then git worktree remove)", "note": "the single freeze at 284a9bfa (b2d4187a)"},
+    {"area": "worktree", "path": "D:/tmp/cfr-inv-base", "class": "USED", "decision": "REMOVED (the copied inventory script and its output deleted by exact path first)", "note": "detached at 4048ff83 for inventory/DOCS_INVENTORY_BEFORE_4048ff83.json"},
+    {"area": "worktree", "path": "D:/tmp/cfr space/algo-sim", "class": "USED", "decision": "REMOVED (outputs copied byte-identical into the run, then deleted by exact path; the tracked inventory restored with git checkout; git worktree remove without --force; the emptied parent D:/tmp/cfr space removed by exact path)", "note": "verification worktree at a1c53cdb, path with a space: T3, gates, fixtures, browser check, after-inventory"},
+    {"area": "%TEMP%", "path": "cfr-T3.log, cfr-GATES.log, cfr-BROWSER.log, cfr-BROWSER-attempt1-DIST_CU.log, cfr-BUILD-before-browser.log, cfr-pytest-prefreeze.log", "class": "USED", "decision": "DELETED after copy", "note": "copied into results/logs/ (ANSI codes and trailing spaces stripped; headers added)"},
+    {"area": "%TEMP%", "path": "cfr-WT-status-after-browser.txt, cfr-WT-status-before-cleanup.txt, cfr-st-before.txt, cfr-st-after.txt, cfr-st-prefreeze-before.txt, cfr-st-prefreeze-after.txt, cfr-prefreeze-head.txt", "class": "REPRODUCIBLE_TEMP", "decision": "DELETED", "note": "git status snapshots around the runs; the comparisons are in the log headers and results/logs/WORKTREE_STATUS_a1c53cdb.log"},
+    {"area": "%TEMP%", "path": "cfr-env-before.json, cfr-env-after.json, w20_cache_proof_cfr.db", "class": "REPRODUCIBLE_TEMP", "decision": "DELETED", "note": "envelopes of the cache proof and its scratch sqlite file; regenerate with runs/w20-cleanup-premerge/diagnostics/proof_cache_row_w20.py envelopes/prove on diagnostics/cache_proof/CORPUS_W20_LABELS.json; summaries in diagnostics/cache_proof/"},
+    {"area": "%TEMP%", "path": "cfr-fixtures-dryrun/ (CASES.json + 6 fixtures)", "class": "SUPERSEDED_DIAGNOSTIC", "decision": "DELETED", "note": "dry run of refusal_fixtures_cfr.py before the freeze; the authoritative fixtures are results/browser/ (generated at a1c53cdb)"},
+    {"area": "%TEMP%", "path": "cfr-inv-before.json, cfr-split-before.py", "class": "SUPERSEDED_DIAGNOSTIC", "decision": "DELETED", "note": "copies kept while the ponytail-audit simplifications were checked; the committed tools and inventories supersede them"},
+    {"area": "%TEMP%", "path": "cfr-blobs.tsv, cfr-blobs.txt, cfr-ci-heads.tsv, cfr-basenames.txt, cfr-catalog.txt, cfr-root.txt, cfr-scan.txt", "class": "SUPERSEDED_DIAGNOSTIC", "decision": "DELETED", "note": "first manual survey of the docs (blob list, CODE_INDEX headings, basenames, catalogue); superseded by diagnostics/inventory_docs_cfr.py and inventory/DOCS_INVENTORY*.json"},
+    {"area": "docs/ (git-ignored)", "path": "docs/evaluation/geometry/custodian/__pycache__/, docs/evaluation/geometry/runs/w14-generic-formation-assumption/diagnostics/__pycache__/", "class": "REPRODUCIBLE_TEMP", "decision": "DELETED (hash checked right before; inventory/CLEANUP_LOG.json)", "note": "interpreter caches left by earlier runs, regenerated on import"}
+  ],
+  "not_inventoried_as_temp": [
+    "backend/**/__pycache__: interpreter caches in git-ignored folders (this run set PYTHONDONTWRITEBYTECODE=1)",
+    "node_modules/ and frontend/dist/ of the verification worktree: removed with the worktree",
+    "frontend/dist/ of the main tree: owned by another Windows account (ISSUE-OPS-DIST-ACL-OWNERSHIP), not touched",
+    ".claude/settings*.json, .secrets, backend/.env, D:/tmp/settings*.json.bak, .superpowers/brainstorm/.last-token: never read",
+    "the harness's background-task output files under the session temp folder: tool state",
+    "D:/tmp entries registered by W20 (204) and .superpowers REVIEW_REQUIRED entries (108): not this run's, unverified, kept",
+    "frontend/public/favicon.svg (deleted by the user before W17): preserved as an unstaged deletion, never touched"
+  ],
+  "final_state": "2026-10-05, before the documentation commit: no file of this run left in %TEMP% (32 files deleted by exact path) and none under D:/tmp; git worktree list = the main working tree only; kept: the ledger in the git-ignored plan workspace"
+}

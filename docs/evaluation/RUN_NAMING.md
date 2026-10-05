@@ -28,9 +28,9 @@ Run đặt tên trước đó dùng `wNN-short-slug` (ví dụ `w09-verify-clean
 
 ## Đánh số wave theo từng việc (2026-10-05, run `cuboid-final-review`)
 
-- **Việc** = một mục tiêu làm trên một nhánh riêng. `task-slug` là `lower-kebab-case`, ngắn (≤ 28 ký tự để định danh
-  đầy đủ không quá 40), đặt khi tạo nhánh và **không đổi** — kể cả sau khi nhánh đã merge và bị xoá. `RUN.json` ghi
-  `task_slug` và `branch`.
+- **Việc** = một mục tiêu làm trên một nhánh riêng. `task-slug` là `lower-kebab-case`, ngắn (định danh đầy đủ
+  `<task-slug>-wNN` không quá 40 ký tự), đặt khi tạo nhánh và **không đổi** — kể cả sau khi nhánh đã merge và bị xoá.
+  `RUN.json` ghi `task_slug` và `branch`.
 - Việc mới trên nhánh mới **bắt đầu ở W1**, rồi W2, W3…; số wave không nối tiếp từ việc trước.
 - **Định danh đầy đủ** `<task-slug>-wNN` (hai chữ số, `-w01`) là thứ được ghi vào manifest, `RUN.json`,
   `EVIDENCE_INDEX`, `STATUS_LEDGER`, `CURRENT_STATE`, `OPEN_ISSUES` và mọi chỉ mục — **không bao giờ** `W1`/`W2` trần,
@@ -42,8 +42,9 @@ Run đặt tên trước đó dùng `wNN-short-slug` (ví dụ `w09-verify-clean
 - Các wave đặt tên trước quy tắc này — **W1–W20**, gồm các thư mục `w09-…` … `w20-…` và các `WAVE_ID` đã commit — giữ
   nguyên tên. Việc đang làm khi quy tắc ra đời có slug `cuboid-visual-semantic-closure` (nhánh
   `fix/cuboid-visual-semantic-closure`); trích các wave của nó ở mục mới bằng `cuboid-visual-semantic-closure-w20` hoặc
-  bằng tên thư mục run. Lượt chốt của việc ấy là run `cuboid-final-review`: không đánh số, không bắt đầu lại W1. Việc
-  kế tiếp, trên nhánh mới từ `main` đã cập nhật, bắt đầu ở W1.
+  bằng tên thư mục run. Lượt chốt của việc ấy là run `cuboid-final-review` (tên do brief đặt trước quy tắc này, viết tắt
+  slug — không theo mẫu `<task-slug>-<mục-đích>`): không đánh số, không bắt đầu lại W1. Việc kế tiếp, trên nhánh mới từ
+  `main` đã cập nhật, bắt đầu ở W1.
 
 ## Đổi tên do người dùng quyết (2026-09-29, wave w11)
 

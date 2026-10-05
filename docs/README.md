@@ -54,9 +54,11 @@
 - [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ ở gốc `docs/` theo chủ đề
   (danh sách đóng; bất biến, đọc như bằng chứng tại thời điểm đo).
 - [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
-- Run mới nhất: [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/) (đóng tính đúng trước merge,
-  dọn kho) · [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/) (tổ chức tài liệu) ·
-  [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/) (hình ảnh hiện hành, chờ người duyệt).
+- Run mới nhất: [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (lượt chốt của việc cuboid:
+  rà soát trọn tài liệu, thẻ từ chối §17) · [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)
+  (đóng tính đúng trước merge, dọn kho có giới hạn) · [`w19-docs-organization`](evaluation/geometry/runs/w19-docs-organization/)
+  (tổ chức tài liệu) · [`w18-binding-focus`](evaluation/geometry/runs/w18-binding-focus/) (hình ảnh hiện hành, chờ
+  người duyệt).
 
 ## 6. Mỗi loại thông tin — một nơi có thẩm quyền
 
@@ -79,10 +81,14 @@
 làm căn cứ hiện hành. Khi tìm luật hay trạng thái hiện hành, loại `docs/legacy/` và `docs/evaluation/` khỏi grep.
 Đường dẫn cũ của file đã di chuyển ở W19: [`MIGRATION_MAP.json`](evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json).
 Mục đã xoá ở W20 (bản trùng hoặc tái tạo được, kèm cách khôi phục): [`DELETION_LOG.json`](evaluation/geometry/runs/w20-cleanup-premerge/inventory/DELETION_LOG.json).
+Phần thời Tin học của bảy tài liệu sống (CODE_INDEX, STATUS_LEDGER, COVERAGE, CORRECTNESS, ARCHITECTURE_MAP,
+DESIGN_BRIEF, POST_THESIS_BACKLOG) đã tách **nguyên văn** sang `legacy/*_INFORMATICS_ERA.md` và
+`legacy/CODE_INDEX_REMOVED_ENTRIES.md` ở run `cuboid-final-review`; kiểm kê mọi file `docs/` và nhật ký dọn:
+[`inventory/`](evaluation/geometry/runs/cuboid-final-review/inventory/).
 
 ## 8. Thêm tài liệu mới
 
-- Báo cáo wave: `REPORT.md`/`HANDOFF.md` trong thư mục run ([`evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md)),
-  **không** ở gốc `docs/`.
+- Báo cáo wave: `REPORT.md`/`HANDOFF.md` trong thư mục run ([`evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md):
+  wave đánh số theo từng việc, định danh đầy đủ `<task-slug>-wNN`), **không** ở gốc `docs/`.
 - Tài liệu dự án mới ở gốc: thêm tên vào `PROJECT_DOCS` của bộ kiểm, kèm lý do.
 - Báo cáo và artifact đã commit là bất biến: đính chính bằng wave mới và `CORRECTED_BY`.

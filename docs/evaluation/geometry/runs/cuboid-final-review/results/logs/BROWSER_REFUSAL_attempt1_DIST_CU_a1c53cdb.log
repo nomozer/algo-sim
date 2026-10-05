@@ -1,0 +1,11 @@
+# browser refusal check, attempt 1 at a1c53cdb — stopped by the dist freshness guard (cfr_gates.sh had re-exported the schema mirror, byte-identical, newer mtime); rebuilt and rerun (BROWSER_REFUSAL_a1c53cdb.log)
+file:///D:/tmp/cfr%20space/algo-sim/frontend/scripts/scene3d-orbit-gate.mjs:594
+    throw new Error("DIST_CU — `dist/` cũ hơn `src/` "
+          ^
+
+Error: DIST_CU — `dist/` cũ hơn `src/` (53 s). Chạy `npm run build` trước, và ĐỪNG tin số đo nào cho tới lúc ấy.
+    at kiemDistMoi (file:///D:/tmp/cfr%20space/algo-sim/frontend/scripts/scene3d-orbit-gate.mjs:594:11)
+    at file:///D:/tmp/cfr%20space/algo-sim/docs/evaluation/geometry/runs/cuboid-final-review/diagnostics/browser_refusal_cfr.mjs:26:1
+
+Node.js v24.13.0
+exit=1

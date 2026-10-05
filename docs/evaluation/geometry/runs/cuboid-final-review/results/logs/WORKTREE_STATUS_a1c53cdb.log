@@ -1,0 +1,11 @@
+# git status of the verification worktree 'D:/tmp/cfr space/algo-sim' at a1c53cdb (porcelain; empty = clean)
+## after T3 (full-gate.mjs): 0 lines (T3_FULL_GATE log, then gates log '## git status (before)' = 0)
+## after cfr_gates.sh: 0 lines ('## git status (after)' in GATES_a1c53cdb.log)
+## after the fixtures, the rebuild and the browser check (outputs, copied byte-identical into the main tree):
+?? docs/evaluation/geometry/runs/cuboid-final-review/images/
+?? docs/evaluation/geometry/runs/cuboid-final-review/results/BROWSER_REFUSAL_CFR.json
+?? docs/evaluation/geometry/runs/cuboid-final-review/results/browser/
+## after the after-inventory run, captured after restoring its tracked output inventory/DOCS_INVENTORY.json with git checkout (copied into the main tree first):
+?? docs/evaluation/geometry/runs/cuboid-final-review/images/
+?? docs/evaluation/geometry/runs/cuboid-final-review/results/BROWSER_REFUSAL_CFR.json
+?? docs/evaluation/geometry/runs/cuboid-final-review/results/browser/

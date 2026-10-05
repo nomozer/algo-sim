@@ -17,22 +17,29 @@ TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
   chức tài liệu; W20 (run [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)) đóng hai issue
   tính đúng còn chặn merge và dọn kho. Theo brief W19, việc kế tiếp là **một lát cắt hình học mới cùng các chỉnh sửa
   giao diện đã chốt** (§0.1), không phải thêm wave tài liệu nhỏ lẻ. Đề xuất của W20 (người dùng chưa chọn): chóp tứ
-  giác đều (G03) — lý do và giới hạn ở `HANDOFF.md` §2 của run w20.
+  giác đều (G03) — lý do và giới hạn ở `HANDOFF.md` §2 của run w20. Lượt chốt của việc này, run
+  [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (2026-10-05, không đánh số wave), rà soát
+  trọn tài liệu, đặt luật đánh số wave theo từng việc (`evaluation/RUN_NAMING.md`) và sửa thẻ từ chối của §17; nó
+  không đổi việc kế tiếp. Việc kế tiếp chạy trên nhánh mới rẽ từ `main` đã tích hợp, bắt đầu ở W1.
 - **Điều kiện bắt đầu:** người dùng chọn họ hình từ bảng ứng viên §0.2 (W19 không chọn theo tên). Wave mở bằng tiền
   đăng ký: họ, các tầng phải đóng, corpus gắn nhãn trước, cổng trình duyệt desktop/mobile, hồi quy §0.3.
 - **Chặn merge nhánh `fix/cuboid-visual-semantic-closure`** (không chặn phát triển): chỉ còn review người của W18 =
   `NOT_APPROVED` — duyệt bằng mắt theo `HANDOFF.md` của run w18 (W18-H1), gồm phần còn lại của W17-H1/W16-H1 (bốn
   cảnh W14 đổi, `ISSUE-EVAL-HUMAN-VISIBILITY-REGISTRY-PREDATES-S4`). `ISSUE-ARCH-CONSTRUCTION-BINDING-LITERAL-TARGET`
-  đã đóng ở W20. Khi được duyệt: merge thẳng vào `main`, push, xoá nhánh đã merge (`AGENTS.md` §2).
+  đã đóng ở W20. Cùng lượt duyệt: thẻ từ chối mới của §17 (nhãn "chưa kiểm chứng được phép dựng", desktop và mobile
+  — danh sách ảnh trong `HANDOFF.md` của run `cuboid-final-review`). Khi được duyệt: merge thẳng vào `main`, push,
+  xoá nhánh đã merge (`AGENTS.md` §2).
 - **Quyết định còn chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị của đáp số không công thức — trùng mục 2 của
   §0.1); W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`); W15-H2 (vùng chặn ngoài đa diện); W15-H3 (từ vựng —
   `ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`); W18-H3 (manh mối "độ dài" của cổng phạm vi,
-  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`); W20: H-W20-1…H-W20-4 (`HANDOFF.md` của run w20).
+  `ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE`); W20: H-W20-3 (mục dọn ngoài kho chưa kiểm), H-W20-4 (tàn dư Tin học trong
+  mã) — `HANDOFF.md` của run w20. H-W20-1 (câu chữ) và H-W20-2 (nhãn) đã sửa theo brief ở run `cuboid-final-review`,
+  còn chờ người xem ảnh.
 - **Ràng buộc:** giữ `DEFAULT_MODE = LLM_ONLY`; 0 lượt gọi live khi chưa có quyết định ngân sách; `CACHE_VERSION`
   quyết bằng bằng chứng; automation không tự ghi `APPROVED_BY_USER`, không sửa registry kỳ vọng người; không
   push/merge.
 
-### 0.1 Chỉnh sửa giao diện đã chốt (đăng ký sau W18; W19 và W20 không sửa giao diện)
+### 0.1 Chỉnh sửa giao diện đã chốt (đăng ký sau W18; W19 và W20 không sửa giao diện; `cuboid-final-review` chỉ sửa thẻ từ chối của §17, không thuộc chín mục dưới)
 
 1. Ẩn mặc định card **Kết quả** dưới mô phỏng.
 2. Truy cập mọi kết quả qua nút chọn đại lượng và **một** ô chi tiết.

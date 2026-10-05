@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cfr_midpoint_by_coordinates",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+  "source": "cfr_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "product_tree_sha": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "construction_binding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+    "reason_subjects": [
+      "M là trung điểm của SA",
+      "được đặt bằng toạ độ"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+  }
+}

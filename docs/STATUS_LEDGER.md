@@ -850,7 +850,31 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **OPEN (blocking merge of the branch):** W18 human visual review (NOT_APPROVED) only
 - **FULL_PRODUCT_SUITE:** T3 `frontend/scripts/full-gate.mjs` from 'D:/tmp/w20 space/algo-sim' (clean detached worktree) at 5fbb397b: FULL_PRODUCT_GATE_PASS — pytest 7077 passed / 0 failed / 1 skipped / 2 deselected; vitest 1058/1058; typecheck + build; demo; crash surface 6/6 · gates PASS (candidate + cache verify, schema ×2 identical, LLM_ONLY, model surface 0 files, 0/181 historical reports changed, docs audit PASS, node harness 70 + 2 skipped, 0 fail)
 - **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no visual approval)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE (scope note only: W20 was a correctness closure plus a bounded cleanup — mechanical duplicates, rules, temp files; the full docs review is the run cuboid-final-review; W20 results unchanged)
 - **CORRECTS:** NONE (amendment §17 carries an erratum for the "§16.5" citations of earlier W20 commits, logs and outputs, which stay as they are)
 - **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (merge waits for W18-H1)
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = COMPLETE_DOCS_CLEANUP_AND_CUBOID_BRANCH_ACCEPTANCE
+- **RUN_ID:** cuboid-final-review (closing run of the work cuboid-visual-semantic-closure; no wave number, `docs/evaluation/RUN_NAMING.md`)
+- **DATE:** 2026-10-05
+- **START_BASE:** 4048ff83
+- **CODE_COMMIT_OR_NONE:** 284a9bfa (refusal card of §17: message built from `reason_subjects`, no resend promise; card label "chưa kiểm chứng được phép dựng" from `reason_code`). Tooling: fac2769e (focused browser check of the refusal card)
+- **COMMITS:** 42dd1af5 · 3f8127fd · 284a9bfa · fac2769e · 6ec40806 · a1c53cdb · documentation commit · final docs-gate log commit
+- **CANDIDATE:** 27c31de6dcd7708e… → b2d4187a78ed8bf6… (284a9bfa), one freeze in a clean detached worktree, `--verify` exit 0 · CACHE_VERSION 111 kept (row proof, 6ec40806) · model surface unchanged (fingerprint b1714b566e25c912)
+- **EVIDENCE_COMMIT_ROLE:** 42dd1af5 (docs inventory, verbatim history split, cleanup log) · 284a9bfa (red and green logs) · 6ec40806 (cache proof) · a1c53cdb (refreeze, pre-freeze log) · documentation commit (T3, gates, browser check, inventories before/after, report, handoff)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **PRODUCT_CHANGED:** YES — learner-facing only: the §17 refusal says the construction is unverified (not mismatched); routes unchanged
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/cuboid-final-review/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/cuboid-final-review/
+- **PASS:** docs: 8812 files classified, 119 blocks (2960 lines) of 7 living docs moved verbatim to `docs/legacy/` (split `--verify` OK), living docs 0 dead links and 0 machine-local links, 0 tracked files deleted, 0/181 catalogued reports changed; wave numbering per work in RUN_NAMING; refusal card TDD (backend 5 red → green, frontend 1 red → green) and browser 12/12 (desktop + mobile, three new-code cases and three controls)
+- **CLOSED:** NONE (ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT → INTENDED_LIMITATION)
+- **OPENED:** ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE · ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE
+- **OPEN (blocking merge of the branch):** W18 human visual review (NOT_APPROVED) and the new §17 refusal cards
+- **FULL_PRODUCT_SUITE:** T3 `frontend/scripts/full-gate.mjs` from 'D:/tmp/cfr space/algo-sim' (clean detached worktree) at a1c53cdb: FULL_PRODUCT_GATE_PASS — pytest 7079 passed / 0 failed / 1 skipped / 2 deselected; vitest 1061/1061; typecheck + build; demo 5/5; crash surface 6/6
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO (no visual approval)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** W20_REPOSITORY_CLEANUP_AND_PREMERGE_CORRECTNESS_CLOSURE (scope note only: W20's cleanup was bounded; the full docs review is this run)
+- **NEXT_ACTION_AT_TIME:** NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES on a new branch from the updated main, starting at W1 (merge waits for the visual review)
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

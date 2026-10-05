@@ -1,0 +1,1561 @@
+{
+  "schema_version": "cfr-browser-refusal/1",
+  "measured_at": "2026-10-05T02:36:47.167Z",
+  "measurement_commit_sha": "a1c53cdbf9cd35667f0e1d918584e880a67daab3",
+  "product_commit_sha": "284a9bfad7e815f7a2228eca89736f714b53c26c",
+  "product_tree_sha": "b2d4187a78ed8bf6df15118edc7e4e251c5f22df536e50b73ac043f108f3b7af",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "id": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "application_llm_calls": 0,
+  "results": {
+    "cfr_projection_by_coordinates": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "được đặt bằng toạ độ"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "được đặt bằng toạ độ"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_projection_by_coordinates/desktop/refusal.png",
+          "bytes": 56607,
+          "sha256": "735fa69dc4ebd511add39f29e56a609586516e3aac92538d76ff00d9718c7320"
+        },
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "được đặt bằng toạ độ"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "được đặt bằng toạ độ"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_projection_by_coordinates/mobile/refusal.png",
+          "bytes": 127611,
+          "sha256": "557c2b8d02f7eab7f4fb7006f62e4faaf2257f7fbac8c052b4d4a3c820b057a7"
+        },
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "cfr_projection_alias_vertex": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "được lấy trùng với điểm A"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được lấy trùng với điểm A thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "được lấy trùng với điểm A"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được lấy trùng với điểm A thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_projection_alias_vertex/desktop/refusal.png",
+          "bytes": 56818,
+          "sha256": "1ae11d0d3f5d782bbece24586baeceda625cff94a49a265bcadf768aa55702df"
+        },
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "được lấy trùng với điểm A"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được lấy trùng với điểm A thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "được lấy trùng với điểm A"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được H là hình chiếu của S lên BD, vì điểm này được lấy trùng với điểm A thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_projection_alias_vertex/mobile/refusal.png",
+          "bytes": 128658,
+          "sha256": "a20cd6250068826815e04020d62215b7dcde2c54113182b9c6cc2fe8bc7986ec"
+        },
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "cfr_midpoint_by_coordinates": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "M là trung điểm của SA",
+                  "được đặt bằng toạ độ"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "M là trung điểm của SA",
+              "được đặt bằng toạ độ"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_midpoint_by_coordinates/desktop/refusal.png",
+          "bytes": 56561,
+          "sha256": "21aa6692f7411d39ddbeb348b73293d436fe9703267bbc46d5494fe9586942b2"
+        },
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+                "reason_subjects": [
+                  "M là trung điểm của SA",
+                  "được đặt bằng toạ độ"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "chưa kiểm chứng được phép dựng",
+              "actual": "chưa kiểm chứng được phép dựng"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Điểm đề định nghĩa bằng quan hệ bị đặt bằng toạ độ, không được dựng.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_REPLACED_BY_COORDINATES",
+            "reason_subjects": [
+              "M là trung điểm của SA",
+              "được đặt bằng toạ độ"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt bằng toạ độ thay vì dựng từ quan hệ trong đề. Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm chứng."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "chưa kiểm chứng được phép dựng",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/cfr_midpoint_by_coordinates/mobile/refusal.png",
+          "bytes": 130831,
+          "sha256": "2fcb2cd9b0d2f99b6910a8bca4b98e08a07689e41be8814c726701abdb99871f"
+        },
+        "refusal_message_box": {
+          "x": 49,
+          "y": 489,
+          "w": 292,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "w18_projection_mismatch": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "H là hình chiếu của S lên BC"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "hệ dựng lệch với đề bài",
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "H là hình chiếu của S lên BC"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_projection_mismatch/desktop/refusal.png",
+          "bytes": 60323,
+          "sha256": "1fd5ab76436ecbd834cd19df20988506c02c61073ae2d994dba792a410578906"
+        },
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "H là hình chiếu của S lên BC"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "hệ dựng lệch với đề bài",
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "H là hình chiếu của S lên BC"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_projection_mismatch/mobile/refusal.png",
+          "bytes": 142843,
+          "sha256": "536df72384024967f9bc133e06016e35e9b4de710ff129934031a65527a0ae40"
+        },
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 192
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "w18_unverified": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+                "reason_subjects": [
+                  "M"
+                ],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "hệ chưa đối chiếu được phép dựng với đề",
+              "actual": "hệ chưa đối chiếu được phép dựng với đề"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+            "reason_subjects": [
+              "M"
+            ],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ chưa đối chiếu được phép dựng với đề",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_unverified/desktop/refusal.png",
+          "bytes": 60868,
+          "sha256": "9a182f4c9da09ca979fe6c9369e37e4e648e16e359461ace283abafbd3ae783d"
+        },
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+                "reason_subjects": [
+                  "M"
+                ],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": "hệ chưa đối chiếu được phép dựng với đề",
+              "actual": "hệ chưa đối chiếu được phép dựng với đề"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+            "reason_subjects": [
+              "M"
+            ],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ chưa đối chiếu được phép dựng với đề",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_unverified/mobile/refusal.png",
+          "bytes": 152920,
+          "sha256": "a9bade67f79a1251bd351ade274635548a6f95209a32cc27714ae4a808539e50"
+        },
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 240
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "w18_projection_line": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "answer_shown": {
+            "pass": true,
+            "details": {
+              "answer": "3√6"
+            }
+          },
+          "annotation_present": {
+            "pass": true,
+            "details": [
+              "d_kq"
+            ]
+          },
+          "witness_drawn": {
+            "pass": true,
+            "details": []
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_projection_line/desktop/served.png",
+          "bytes": 155328,
+          "sha256": "dbb50474fabbc3e61e9d8357ea2df38736fae9986ca20c0743409382f5ae09fa"
+        },
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "answer_shown": {
+            "pass": true,
+            "details": {
+              "answer": "3√6"
+            }
+          },
+          "annotation_present": {
+            "pass": true,
+            "details": [
+              "d_kq"
+            ]
+          },
+          "witness_drawn": {
+            "pass": true,
+            "details": []
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "screenshot": {
+          "path": "docs/evaluation/geometry/runs/cuboid-final-review/images/w18_projection_line/mobile/served.png",
+          "bytes": 188613,
+          "sha256": "cc23f7c37c11d3257a67197570f0dd29eace1500b249b665ea61f271cc68eae9"
+        },
+        "pass": true
+      }
+    }
+  },
+  "pass": true
+}
