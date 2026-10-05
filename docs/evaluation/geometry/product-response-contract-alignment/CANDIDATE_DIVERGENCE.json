@@ -257,5 +257,5 @@
   "analyze_schema": "Thành phần `analyze_schema` ĐỔI (515001b5… → a1b9e20a…) ở wave (12) — `tests/structured_relation_identity.py` dựng lại đúng 515001b5… (= ANALYZE_SCHEMA_HASH của con dấu thesis-final/V3) chỉ bằng bỏ thuộc tính `geometric_relations` khỏi lược đồ hình học; lược đồ Tin học và mọi trường khác trùng từng byte. Đây là thay đổi bề mặt mô hình của tuyến ĐỌC ĐỀ: số của lượt đo cuối mô tả hợp đồng analyze TRƯỚC ô này."
  },
  "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
- "cache_version_hien_tai": 112
+ "cache_version_hien_tai": 113
 }

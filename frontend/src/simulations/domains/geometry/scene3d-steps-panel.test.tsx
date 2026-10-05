@@ -22,7 +22,8 @@ const CANH: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
   import.meta.url)), "utf8")).envelope.scene3d;
 const CUOI = anchorOfGeometryStep(CANH, geometryStepCount(CANH) - 1);
 const sach = (h: string) => h.replace(/<!--.*?-->/g, "");
-const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8");
+// Checkout Windows (CRLF) phải cho cùng kết quả: so mẫu nhiều dòng trên "\n".
+const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
 describe("§0.1-1 · card Kết quả ẩn mặc định", () => {
   it("lời giải thu gọn ⇒ không có mục Kết quả dưới hình; mở ⇒ có", () => {

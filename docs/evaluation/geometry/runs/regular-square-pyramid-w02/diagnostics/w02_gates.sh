@@ -39,5 +39,5 @@ echo "## git diff --check $START..$M (captured *.log excluded: verbatim tool out
 git diff --check "$START" "$M" -- . ':(exclude)*.log'; echo "exit=$?"
 echo "## docs audit"; "$PY" backend/scripts/audit_docs_information_architecture.py 2>&1 | tail -12; echo "exit=${PIPESTATUS[0]}"
 echo "## node harness tests"
-node --test frontend/scripts/*.node-test.mjs 2>&1 | grep -E '^ℹ (tests|pass|fail|skipped)'
+node --test frontend/scripts/*.node-test.mjs 2>&1 | grep -E '^(ℹ|#) (tests|pass|fail|skipped)'  # TTY prints ℹ, a pipe prints TAP #
 echo "## git status (after)"; git status --porcelain | wc -l; git status --porcelain | head -20
