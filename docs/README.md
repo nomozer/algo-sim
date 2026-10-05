@@ -14,7 +14,7 @@
 
 ## 1. Hệ thống làm gì
 
-- [`../README.md`](../README.md) — đề tài, nguyên lý R0 (*LLM đọc đề, engine tất định diễn hoạt*), demo, giới hạn.
+- [`../README.md`](../README.md) — cho người mới: hệ làm gì, nguyên lý R0 (*LLM đọc đề, engine tất định diễn hoạt*), chức năng, giới hạn, chạy nhanh. Kịch bản demo: [`research/thesis/THESIS_DEMO.md`](research/thesis/THESIS_DEMO.md), [`DEMO_RUNBOOK.md`](DEMO_RUNBOOK.md).
 - [`ARCHITECTURE_MAP.md`](ARCHITECTURE_MAP.md) — hệ đang chạy: luồng từ đề tới cảnh 3D, ai sở hữu gì.
 - [`CORRECTNESS.md`](CORRECTNESS.md) — đúng đắn chuẩn tắc (canonical) khác đúng đắn phía người học.
 - [`research/CLAIM_EVIDENCE_MAP.md`](research/CLAIM_EVIDENCE_MAP.md) — hệ **được phép nói** đã làm được gì, và giới hạn.
@@ -29,7 +29,7 @@
 - [`DEMO_RUNBOOK.md`](DEMO_RUNBOOK.md) — chạy buổi demo từ bản dựng, 0 lượt gọi model.
 - [`DESIGN_BRIEF.md`](DESIGN_BRIEF.md) — brief UI/UX (khác `../DESIGN.md` là token giao diện).
 - [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md) — 20 cổng trước khi đổi `LLM_ONLY` sang compiler-first.
-- Lệnh chạy và kiểm thử: [`../README.md`](../README.md) §11.
+- Lệnh chạy nhanh và kiểm thử: [`../README.md`](../README.md) §4; lệnh đầy đủ cho người sửa mã: [`OPERATIONS.md`](OPERATIONS.md) và [`TEST_TIERS.md`](TEST_TIERS.md).
 
 ## 3. Việc còn mở
 
