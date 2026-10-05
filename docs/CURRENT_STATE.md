@@ -25,7 +25,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 >
 > | | |
 > |---|---|
-> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`, W1 (run `regular-square-pyramid-w01`, 2026-10-05), rẽ từ `main` = `38d41588`; chưa push, chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
+> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, triển khai trên cloud, chờ nghiệm thu local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
 > | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi; regular-square-pyramid-w01 (2026-10-05): `ls-remote` = `38d41588…` — không đổi (commit ghi kết quả tích hợp của cuboid-merge) |
 > | `CACHE_VERSION` | **113** (regular-square-pyramid-w02, 2026-10-05: envelope phục vụ đổi nội dung — đoạn đường cao SO, khoảng cách đo bám đoạn đã dựng, chiều cao của công thức theo quan hệ ⊥; 13 row v112 vẫn HIT, sáu họ cũ trùng byte — `PROOF_CACHE_ROW_W02.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
@@ -52,17 +52,30 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = ed37f9fa (đo trình duyệt có thẩm quyền, worktree tách rời sạch có dấu cách; chuyển tiếp sang candidate 5234c37e đóng băng tại ad7172ab — results/FIXTURE_TRANSFER_b5cf4503_r2.json) · T3 + cổng danh tính ở commit tài liệu cuối (log trong run)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 94200b50403bdf823eb49697d54c0cb53e8e4ccb (lượt đo có thẩm quyền của regular-square-pyramid-w02 trên cloud, worktree tách rời sạch CRLF, đường dẫn có dấu cách) — phần còn phải kiểm ở máy local: T3, cổng camera-settle và causal_restore thiết diện (HANDOFF.md §2 của run)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 112
-> CANDIDATE = 5234c37e… (was b2d4187a…; hai lần đóng băng, trung gian 4629c3e8…), product commit ad7172ab
-> USER_DIRTY_STATE = D frontend/public/favicon.svg (bảo tồn tuyệt đối)
-> CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI (việc regular-square-pyramid, W1, run regular-square-pyramid-w01)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt H-W1-1 (runs/regular-square-pyramid-w01/HANDOFF.md §1), rồi merge thẳng vào main + push + xoá nhánh
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi W1 được duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
+> CACHE_VERSION = 113
+> CANDIDATE = d3de9c44… (was 5234c37e…; ba lần đóng băng cùng tree hash), product commit 75a0af9a
+> USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (cloud không kiểm, không đụng)
+> CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE (việc regular-square-pyramid, W2, run regular-square-pyramid-w02)
+> FINAL_DECISION = CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = máy local tiếp nhận nhánh và chạy các kiểm còn lại (runs/regular-square-pyramid-w02/HANDOFF.md §2, §4), rồi người dùng duyệt H-W2-1; duyệt thì merge thẳng vào main + push + xoá nhánh
+> CANONICAL_NEXT_ACTION = LOCAL_ACCEPTANCE_AND_HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_W1_W2
+> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Khép phần sư phạm của chóp đều — regular-square-pyramid-w02 (triển khai trên cloud, đo `94200b50`; chờ nghiệm thu local và review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Kết luận | **`CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED`** — HANDOFF.md §2 (kiểm còn phải chạy ở máy local), §3 (H-W2-1 chặn merge) |
+> | Nhãn theo formation state | nhãn đoạn chỉ khi đoạn mang nó đã dựng (đoạn, cạnh đa giác, cạnh khối), ở mọi chế độ; nhãn hợp lệ thiếu chỗ phân biệt được |
+> | Bảng nổi «Các bước dựng» | nổi trên khung, kéo bằng tiêu đề, phím, về mặc định, kẹp khi kéo/đổi cỡ; không đổi cỡ canvas/camera; mobile trong dòng chảy, thu gọn |
+> | SO + chiều cao | bước bổ sung dựng SO khi đề nói "đều" và tâm dựng từ hai đường chéo; chiều cao của công thức chọn theo quan hệ ⊥ kiểm chính xác (gỡ luật giá trị W1) |
+> | Hình phụ · lưới | AC, BD ẩn sau khi có O; mặt phẳng chỉ để đo ẩn; chip «Hình phụ», «Lưới» (mặc định tắt) |
+> | Trình duyệt | đầu dò W2 **14/14** (7 họ × desktop + mobile: kéo, phím, đổi cỡ, về mặc định, Escape; canvas/camera không đổi; nhãn theo bước khớp oracle); từ chối 54/54, phục vụ 6/6, chọn 68/68, ngăn 14/14; occlusion 0 lỗi; phát 14/14; 68 crop, 0 bất đồng oracle. Đỏ chỉ ở hai cổng nghi môi trường, cũng đỏ ở W1 head trên cloud: `camera_settled_rotated_neutral` (6 desktop), `causal_restore` thiết diện (desktop + mobile) — chạy lại ở máy local |
+> | Candidate · `CACHE_VERSION` | `5234c37e…` → **`d3de9c44…`** (ba lần đóng băng cùng tree hash; product commit `75a0af9a`) · 112 → **113** (13 row v112 vẫn HIT; sáu họ cũ trùng byte) |
+> | Run | [`regular-square-pyramid-w02`](evaluation/geometry/runs/regular-square-pyramid-w02/) (`REPORT.md`, `HANDOFF.md`) |
 
 > **Chóp tứ giác đều + chín chỉnh sửa giao diện §0.1 — regular-square-pyramid-w01 (đo `ed37f9fa`, worktree tách rời sạch; chưa có review người):**
 >

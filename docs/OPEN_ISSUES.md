@@ -570,7 +570,8 @@
 - **evidence:** fixture `regular_square_pyramid_non_positive` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures/`), first registered with the compiler-route code and corrected before any browser run (`diagnostics/PREREGISTRATION_CORRECTIONS.json` PC1).
 - **impact:** Fail-closed (no answer, no scene) but the refusal does not point at the text; the same holds for the six older families on the default route.
 - **scope:** a source-level non-positive length check on the default route (server-side reader of the text), shared by every family.
-- **status:** OPEN (regular-square-pyramid-w01) — outside the W1 scope (changes every family's refusal).
+- **status:** PARTIAL (regular-square-pyramid-w02, `c86cf53c`) — when execution fails on the default route and the premise text (goal clauses masked) states a length ≤ 0 that the server reader reads (a named segment, or a single solid's base edge, height, lateral edge, apothem, cube edge), the refusal is `NON_POSITIVE_LENGTH` with cause SOURCE and the learner's subject ("cạnh đáy"); otherwise UNKNOWN stays (a valid text whose program degenerates is not called wrong). Labelled red-then-green rows: `tests/geometry/test_regular_square_pyramid_w02.py` (`cạnh đáy bằng 0` ⇒ SOURCE; `cạnh đáy bằng 4` with a degenerate program ⇒ UNKNOWN); the regular-pyramid browser negative now expects SOURCE. **Not closed:** the six older families have no labelled rows on the default route (their browser negatives use the compiler route), and a text-stated ≤ 0 length refused at an EARLIER stage keeps that stage's cause.
+- **w01:** OPEN (regular-square-pyramid-w01) — outside the W1 scope (changes every family's refusal).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next refusal-message wave
 - **default_switch_blocker:** NO
@@ -685,3 +686,15 @@
 - **default_switch_blocker:** NO
 - **acceptance:** every `backend/scripts/*.py` that can reach the model aborts without `ALLOW_LIVE_AI=1` (or an explicit live flag), locked by a test.
 - **verify:** `bash docs/evaluation/geometry/runs/cuboid-acceptance/diagnostics/invariant_checks_cacc.sh --no-vitest` (part 5) plus the new AST test.
+
+### ISSUE-ARCH-INSPECTOR-COLUMN-RESIZES-CANVAS
+- **description:** regular-square-pyramid-w02 moved «Các bước dựng» to a floating panel (`scene3d-floating-panel.tsx`) so opening it no longer resizes the canvas. The inspector (`.geo3d-soi`) still becomes a grid COLUMN at ≥ 1100 px when an object is selected (decision recorded in `global.css` §2: a column does not cover the figure), so selecting an object still narrows the canvas and changes the camera aspect; the drawers («Thành phần», «Đề bài», «Đại lượng») are already overlays.
+- **evidence:** `frontend/src/styles/global.css` (`.geo3d-san:has(.geo3d-soi)` grid); the W2 brief asks the floating mechanism to be used "for the information panels where it fits" without naming the inspector.
+- **impact:** Presentation only; no wrong value. The causal-restore gate already measures the camera at equal selection states.
+- **scope:** `Scene3DExplorer.tsx` (inspector), `global.css`, the causal-restore and inspector browser gates.
+- **status:** OPEN (regular-square-pyramid-w02) — a user decision (H-W2-3 in the run's `HANDOFF.md`): keep the column, or float the inspector with `BangNoi`.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next UI wave, after the user decides
+- **default_switch_blocker:** NO
+- **acceptance:** the decided layout, with the browser gates re-measured on desktop and mobile.
+- **verify:** `node frontend/scripts/w02-closure-probe.mjs …` (extend with the inspector) and the main suite's causal restore.

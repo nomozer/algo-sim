@@ -125,5 +125,95 @@
     ],
     "classification": "ENVIRONMENT — identical failure pattern on the W1 head (15 / 326 / 15 changed pixels, max channel delta 6 / 33 / 6) and on W2; W1 passed this gate on the user's Windows machine at ed37f9fa",
     "status": "LOCAL_VERIFICATION_REQUIRED"
+  },
+  "causal_restore_cross_section_desktop": {
+    "question": "Attempt 5 (94200b50) also showed causal_restore red for cross_section on desktop (attempt 4 had it on mobile only). Is it W2's?",
+    "method": "runPositive x3 per side, sequential, no other load, desktop 1440x900; W2 = clean CRLF worktree at 94200b50 (product 75a0af9a) with the attempt-5 W2 fixture and its built dist; W1 = clean CRLF worktree at e821b9b5 with the W1 fixture and W1 manifest; 0 model calls",
+    "runs": [
+      {
+        "side": "w2",
+        "run": 0,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 43,
+          "changed_pixels": 211
+        }
+      },
+      {
+        "side": "w2",
+        "run": 1,
+        "causal_restore": {
+          "pass": true,
+          "details": []
+        },
+        "canvas": {
+          "equal_bytes": true
+        }
+      },
+      {
+        "side": "w2",
+        "run": 2,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 10,
+          "changed_pixels": 1
+        }
+      },
+      {
+        "side": "w1",
+        "run": 0,
+        "causal_restore": {
+          "pass": true,
+          "details": []
+        },
+        "canvas": {
+          "equal_bytes": true
+        }
+      },
+      {
+        "side": "w1",
+        "run": 1,
+        "causal_restore": {
+          "pass": true,
+          "details": []
+        },
+        "canvas": {
+          "equal_bytes": true
+        }
+      },
+      {
+        "side": "w1",
+        "run": 2,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 10,
+          "changed_pixels": 1
+        }
+      }
+    ],
+    "pixel_inspection": "W2 run 0: the 211 differing pixels lie on one line (bbox x 279-522, y 301-333) ending at vertex B; same geometry and colour in both frames, the restored frame's anti-aliased line pixels are lighter (e.g. 101,166,160 vs 144,190,186) in a dash-like pattern; no object appears or disappears. W2 run 2 and W1 run 2: one pixel at (521,301), the end of that line at B.",
+    "classification": "ENVIRONMENT_SUSPECTED — the same failure code occurs at the W1 head on desktop (1/3) and mobile (3/3); both sides are nondeterministic (W2 desktop 2/3); n=3 cannot separate the rates; the difference is line rasterization intensity, not visibility state. W1 passed this gate on the user's Windows machine at ed37f9fa.",
+    "status": "LOCAL_VERIFICATION_REQUIRED"
   }
 }

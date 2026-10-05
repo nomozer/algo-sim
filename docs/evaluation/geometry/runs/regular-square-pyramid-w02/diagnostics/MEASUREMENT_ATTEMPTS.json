@@ -1,0 +1,124 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "rule": "Every red check, probe, cache proof, freeze, browser, occlusion, playback, builder, T3 and gate run of this wave is listed; failed, interrupted and superseded ones are included. Authoritative browser runs used a clean detached worktree (core.autocrlf=true) whose path contains a space, inside the cloud session scratchpad: npm ci --offline inside it, Python 3.12 from the main tree's backend/.venv, dist built by the suite inside it, logs written outside the worktree.",
+  "environment": "cloud container: Linux, Python 3.12.3, Node 22.22.0, headless Chromium 141 (Playwright build 1194, run with --no-sandbox through a /usr/bin/google-chrome wrapper) + SwiftShader, no GPU; repository clone unshallowed; no local main ref",
+  "application_llm_calls": 0,
+  "live_gemini_requests": 0,
+  "attempts": [
+    {
+      "id": "BASELINE-LF",
+      "commit": "e821b9b5 (main tree, LF checkout)",
+      "gate": "full backend pytest",
+      "result": "131 failed / 6996 passed — hash locks recorded on Windows CRLF and a shallow clone",
+      "classification": "DIAGNOSTIC (environment)",
+      "log": "not kept (scratchpad)"
+    },
+    {
+      "id": "BASELINE-CRLF",
+      "commit": "e821b9b5 (clean CRLF worktree)",
+      "gate": "full backend pytest",
+      "result": "14 failed / 7117 passed — no local main ref (11), Linux LF writes into a CRLF tree (schema export idempotence, holdout readiness), all environment",
+      "classification": "AUTHORITATIVE (environment baseline)",
+      "log": "not kept (scratchpad); the 14 names are listed in REPORT §10"
+    },
+    {
+      "id": "RED-A",
+      "commit": "200e30b3",
+      "gate": "vitest scene3d-label-formation.test.ts",
+      "result": "4 failed / 2 passed (labels before their segment)",
+      "classification": "AUTHORITATIVE (red)"
+    },
+    {
+      "id": "RED-CE",
+      "commit": "687520ce",
+      "gate": "pytest test_regular_square_pyramid_w02.py",
+      "result": "5 failed / 11 passed (no SO; × DF)",
+      "classification": "AUTHORITATIVE (red)"
+    },
+    {
+      "id": "CRLF-CE",
+      "commit": "9f454d6b (+ uncommitted at the time)",
+      "gate": "full backend pytest, CRLF worktree",
+      "result": "18 failed: the 14 environment names + 4 stale-candidate (pre-freeze)",
+      "classification": "DIAGNOSTIC"
+    },
+    {
+      "id": "CACHE-PROOF",
+      "commit": "before e821b9b5 (CRLF worktree), after e68fa199 parent (main tree)",
+      "gate": "diagnostics/proof_cache_row_w02.py corpus / envelopes / prove (temporary sqlite)",
+      "result": "13 v112 rows HIT with changed W2 envelopes, bump makes all miss; six families byte-identical ⇒ BUMP 112 -> 113",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/PROOF_CACHE_ROW_W02.json"
+    },
+    {
+      "id": "FREEZE-1",
+      "commit": "c5142f07 (clean CRLF worktree)",
+      "gate": "freeze_evaluation_candidate.py + --verify",
+      "result": "cay_sach true, 110 files, d3de9c44…",
+      "classification": "SUPERSEDED (product commit moved)"
+    },
+    {
+      "id": "BROWSER-1",
+      "commit": "c453fae3",
+      "gate": "w02_measure.sh",
+      "result": "suite: every positive aborted in observeTree — the floating panel's close button shared aria-label 'Đóng' with the drawer's (fixed 527d642e); served w18_projection_line expected a label for an unbuilt segment (PC1-W2); W2 probe 8/8 before it was stopped",
+      "classification": "FAILED (product a11y defect + stale expectation)",
+      "log": "diagnostics/logs/*attempt1_c453fae3*"
+    },
+    {
+      "id": "FREEZE-2",
+      "commit": "527d642e (clean CRLF worktree)",
+      "gate": "freeze + --verify",
+      "result": "same tree hash; product commit 527d642e",
+      "classification": "SUPERSEDED"
+    },
+    {
+      "id": "BROWSER-2",
+      "commit": "527d642e",
+      "gate": "w02_measure.sh",
+      "result": "stopped at the candidate verify (product_commit_sha drift) — no browser run",
+      "classification": "FAILED (process; led to FREEZE-2)",
+      "log": "diagnostics/logs/FIXTURES_attempt2_527d642e.log"
+    },
+    {
+      "id": "BROWSER-3",
+      "commit": "bac5d80f",
+      "gate": "w02_measure.sh",
+      "result": "three families red, then stopped: the floating panel covered the drawer's close button (fixed 75a0af9a); the regular pyramid's hidden-helper step tripped the W12 static-frame gates (harness exemption 445f31a7)",
+      "classification": "FAILED (product defect + harness)",
+      "log": "diagnostics/logs/*attempt3_bac5d80f*"
+    },
+    {
+      "id": "ENV-BASELINE",
+      "commit": "e821b9b5 (CRLF worktree) vs 445f31a7/a4abb188 (main tree)",
+      "gate": "runPositive of the suite",
+      "result": "camera_settled_rotated_neutral red on the W1 head too; cross-section mobile causal_restore red 3/3 on both sides with identical pixel counts",
+      "classification": "AUTHORITATIVE (environment)",
+      "log": "diagnostics/ENV_CAMERA_SETTLE_BASELINE.json"
+    },
+    {
+      "id": "FREEZE-3",
+      "commit": "445f31a7 (clean CRLF worktree)",
+      "gate": "freeze + --verify",
+      "result": "same tree hash d3de9c44, product commit 75a0af9a",
+      "classification": "AUTHORITATIVE"
+    },
+    {
+      "id": "BROWSER-4",
+      "commit": "4a6af4e9",
+      "gate": "w02_measure.sh",
+      "result": "suite: only camera_settled_rotated_neutral (7 desktop) and cross-section mobile causal_restore (environment); W2 probe 14/14; occlusion pass; playback 12/14 — the regular pyramid's hidden-helper step flagged by every_geometry_step_changes_the_figure (harness exemption a4abb188); builder 68 crops, 0 disagreements",
+      "classification": "SUPERSEDED (harness fix)",
+      "log": "diagnostics/logs/*attempt4_4a6af4e9*"
+    },
+    {
+      "id": "BROWSER-5",
+      "commit": "94200b50",
+      "gate": "w02_measure.sh",
+      "result": "W2 probe 14/14; suite refusals 54/54, served 6/6, selections 68/68, drawer 14/14; positives green on every gate except camera_settled_rotated_neutral (6 desktop) and cross-section causal_restore (desktop + mobile), both red at the W1 head in this environment (diagnostics/ENV_CAMERA_SETTLE_BASELINE.json); occlusion pass (0 failures); playback 14/14; builder 68 crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
+      "classification": "AUTHORITATIVE",
+      "log": "diagnostics/logs/*_94200b50.log",
+      "evidence_commit": "c5b39092"
+    }
+  ]
+}

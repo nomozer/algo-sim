@@ -9,9 +9,19 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
+CANONICAL_NEXT_ACTION = LOCAL_ACCEPTANCE_AND_HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_W1_W2
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
+
+- **W2 của việc `regular-square-pyramid` (2026-10-05, run
+  [`regular-square-pyramid-w02`](evaluation/geometry/runs/regular-square-pyramid-w02/), cùng nhánh, triển khai trên
+  cloud):** khép phần còn lại của hình và giao diện W1 trên bảy họ — nhãn số đo chờ đoạn mang nó được dựng; bảng nổi
+  «Các bước dựng» thay cột (không đổi cỡ canvas); đoạn đường cao SO của chóp đều qua bước bổ sung dùng chung; chiều cao
+  của công thức theo quan hệ ⊥ (gỡ luật giá trị W1); hình phụ ẩn sau khi xong việc / mặt phẳng chỉ để đo ẩn mặc định;
+  lưới tuỳ chọn; độ dài ≤ 0 do đề ghi ⇒ SOURCE. `CACHE_VERSION` 113, candidate `d3de9c44…`. Kết luận
+  **`CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED`**. Việc kế tiếp: máy local tiếp nhận và chạy các kiểm còn lại (`HANDOFF.md` §2, §4 của run), rồi
+  người dùng duyệt H-W2-1 (gộp H-W1-1) và trả lời H-W2-2…H-W2-5; duyệt thì merge thẳng vào `main`, push, xoá nhánh.
+  Gạch đầu dòng W1 dưới là bối cảnh.
 
 - **W1 của việc `regular-square-pyramid` (2026-10-05, run
   [`regular-square-pyramid-w01`](evaluation/geometry/runs/regular-square-pyramid-w01/), nhánh

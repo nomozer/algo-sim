@@ -1,0 +1,6 @@
+w2 run 0 viewport desktop causal_restore {"pass":false,"details":["CANVAS_NOT_RESTORED"]} canvas {"equal_bytes":false,"same_size":true,"max_channel_delta":43,"changed_pixels":211}
+w2 run 1 viewport desktop causal_restore {"pass":true,"details":[]} canvas {"equal_bytes":true}
+w2 run 2 viewport desktop causal_restore {"pass":false,"details":["CANVAS_NOT_RESTORED"]} canvas {"equal_bytes":false,"same_size":true,"max_channel_delta":10,"changed_pixels":1}
+w1 run 0 viewport desktop causal_restore {"pass":true,"details":[]} canvas {"equal_bytes":true}
+w1 run 1 viewport desktop causal_restore {"pass":true,"details":[]} canvas {"equal_bytes":true}
+w1 run 2 viewport desktop causal_restore {"pass":false,"details":["CANVAS_NOT_RESTORED"]} canvas {"equal_bytes":false,"same_size":true,"max_channel_delta":10,"changed_pixels":1}

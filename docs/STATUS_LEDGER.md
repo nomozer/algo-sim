@@ -950,3 +950,26 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTS:** NONE (preregistration correction PC1 inside the run, before any browser run)
 - **NEXT_ACTION_AT_TIME:** human visual review H-W1-1 (HANDOFF.md §1); on approval merge into main, push, delete the branch
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE
+- **RUN_ID:** regular-square-pyramid-w02 (task regular-square-pyramid, wave W2; cloud implementation, local acceptance)
+- **DATE:** 2026-10-05
+- **START_BASE:** e821b9b5 (W1 head, pushed)
+- **CODE_COMMIT_OR_NONE:** 2a63da7d (labels wait for their segment) · 9f454d6b (SO via the shared formation step; volume height by an exact perpendicularity relation) · 71cf0e80 (floating steps panel) · 6ca3b35e (helper geometry, step groups, grid) · c86cf53c (text-stated length ≤ 0 ⇒ SOURCE; no machine-token fact labels) · e68fa199 (CACHE_VERSION 112 → 113) · 7a88a789, c5142f07 (self-review) · 527d642e (panel close button name) · 75a0af9a (drawers above the panel)
+- **CANDIDATE:** 5234c37e… → d3de9c44… (three freezes, same tree hash; product commit 75a0af9a) · CACHE_VERSION 113 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** measurement 94200b50 (cloud) · evidence c5b39092
+- **CLASSIFICATION:** CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w02/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w02/
+- **PASS:** W2 probe 14/14 (7 families × desktop + mobile); refusals 54/54; served 6/6; selections 68/68; quantity drawer 14/14; occlusion pass (0 failures); playback 14/14; 68 crops, 0 oracle disagreements, 0 duplicate owners; positives green on every gate except camera_settled_rotated_neutral (6 desktop) and cross-section causal_restore (desktop + mobile), both red at the W1 head in the cloud environment too (diagnostics/ENV_CAMERA_SETTLE_BASELINE.json) ⇒ LOCAL_VERIFICATION_REQUIRED
+- **CLOSED:** —
+- **PARTIAL:** ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE
+- **OPENED:** ISSUE-ARCH-INSPECTOR-COLUMN-RESIZES-CANVAS
+- **LOCAL_VERIFICATION_REQUIRED:** T3 full gate; browser gates camera_settled_rotated_neutral and cross-section causal_restore (both red at the W1 head in the cloud environment too); Windows-path node test
+- **PUSH / MERGE / BRANCH_DELETION:** working branch pushed / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (preregistration corrections PC1-W2, PC2-W2 inside the run)
+- **NEXT_ACTION_AT_TIME:** local acceptance (HANDOFF.md §2, §4), human visual review H-W2-1; on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED
