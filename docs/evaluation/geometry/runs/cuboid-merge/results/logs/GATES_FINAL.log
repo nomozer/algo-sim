@@ -1,0 +1,64 @@
+# cuboid-merge gates at 1e03ef82 (the documentation commit) — clean detached worktree D:/tmp/cmerge-verify, npm ci --offline, 0 model calls, exit 0; trailing spaces stripped
+# 'HISTORY_SPLIT FAIL --verify' is the unchanged result of the old cuboid-final-review check (third clause); it is kept as it is. The next section scopes it: the 25 lines are exactly those cuboid-acceptance replaced (903e874c..HEAD), block clauses and block hashes intact
+# cuboid-merge gates at 1e03ef8203973e5d7a4d57d9630ed94b3109fdfa (clean detached worktree), start 37b23f04, product commit 284a9bfa — 0 model calls
+## git status (before)
+0
+## product bytes (backend/app, frontend/src) changed since 37b23f04 / since 284a9bfa
+changed: 0 / 0
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, b2d4187a78ed8bf6…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 111 · môi trường b1714b566e25c912…
+exit=0
+## CACHE_VERSION
+761:CACHE_VERSION = "111"
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+## model surface changed since 37b23f04: 0
+## docs/evaluation changed since 37b23f04 outside this run (allowed: docs/evaluation/README.md, the living navigation)
+  M	docs/evaluation/README.md
+changed: 1
+## docs/legacy changed since 37b23f04: 0
+## historical reports at the docs root changed since 37b23f04
+  changed: docs/EVIDENCE_INDEX.md
+catalogued links changed: 1 of 181 (the living docs/EVIDENCE_INDEX.md linked from the catalogue introduction may change)
+## old check, result kept as is: split_history_cfr.py --verify
+FAIL docs/ARCHITECTURE_MAP.md: 24 BASE lines in neither file, first: '| 1 | LLM không phải nguồn state runtime | `skills/*.md` cấm sinh timeline; validator có `FORBIDDEN`'
+FAIL docs/CODE_INDEX.md: 1 BASE lines in neither file, first: '| Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (b'
+HISTORY_SPLIT FAIL --verify
+exit=1
+## scope of that result: cuboid-acceptance/diagnostics/split_scope_cacc.py 903e874c
+docs/STATUS_LEDGER.md: block checks failed 0/9, block hashes differ 0, BASE lines in neither file 0 (removed by 903e874c..HEAD: 0, other: 0)
+docs/COVERAGE.md: block checks failed 0/9, block hashes differ 0, BASE lines in neither file 0 (removed by 903e874c..HEAD: 0, other: 0)
+docs/CORRECTNESS.md: block checks failed 0/18, block hashes differ 0, BASE lines in neither file 0 (removed by 903e874c..HEAD: 0, other: 0)
+docs/POST_THESIS_BACKLOG.md: block checks failed 0/6, block hashes differ 0, BASE lines in neither file 0 (removed by 903e874c..HEAD: 0, other: 0)
+docs/DESIGN_BRIEF.md: block checks failed 0/15, block hashes differ 0, BASE lines in neither file 0 (removed by 903e874c..HEAD: 0, other: 0)
+docs/ARCHITECTURE_MAP.md: block checks failed 0/12, block hashes differ 0, BASE lines in neither file 24 (removed by 903e874c..HEAD: 24, other: 0)
+docs/CODE_INDEX.md: block checks failed 0/288, block hashes differ 0, BASE lines in neither file 1 (removed by 903e874c..HEAD: 1, other: 0)
+SPLIT_SCOPE OK
+exit=0
+## git diff --check 37b23f04..1e03ef82 (captured *.log excluded)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## docs tests (pytest)
+......................................                                   [100%]
+110 passed in 31.70s
+## docs tests (vitest)
+ Test Files  3 passed (3)
+      Tests  22 passed (22)
+## git status (after)
+0
