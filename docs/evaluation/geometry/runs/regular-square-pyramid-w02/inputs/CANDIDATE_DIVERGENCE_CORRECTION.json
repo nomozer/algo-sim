@@ -6,11 +6,17 @@
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
-  "current_candidate_source_commit": "c5142f07dd142c50a23d356e5e670f28c8e03153",
-  "current_candidate_frozen_at": "c5142f07dd142c50a23d356e5e670f28c8e03153",
-  "current_candidate_note": "Frozen ONCE in this run, in a clean detached worktree (core.autocrlf=true, outside the repository, in the cloud session scratchpad) at c5142f07 = the last commit touching backend/app; cay_lam_viec_sach = true, 110 files, CACHE_VERSION 113; --verify matched inside the worktree and again in the main tree. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged. The freeze script's parser was read first: any argument other than --verify freezes, so only the bare and --verify forms were run.",
+  "current_candidate_source_commit": "527d642e58e77b01677560af611b969c3243ccca",
+  "current_candidate_frozen_at": "527d642e58e77b01677560af611b969c3243ccca",
+  "current_candidate_note": "Frozen TWICE in this run, each in a clean detached worktree (core.autocrlf=true, outside the repository, in the cloud session scratchpad): c5142f07 (first; the last commit touching backend/app) and 527d642e (second; frontend/src changed — the panel close button's accessible name — and the freeze records the last commit touching backend/app OR frontend/src as product_commit_sha). Both freezes give the same measured-system tree hash d3de9c44… (110 files; frontend/src/simulations/domains/geometry is not in measured_system), CACHE_VERSION 113; cay_lam_viec_sach = true; --verify matched in each worktree and in the main tree. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged. The freeze script's parser was read first: any argument other than --verify freezes, so only the bare and --verify forms were run. Browser attempt 2 at 527d642e stopped at the candidate verify (product_commit_sha drift) before any browser run — the reason for the second freeze.",
   "previous_candidate_hash": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa",
-  "intermediate_candidates_in_this_wave": [],
+  "intermediate_candidates_in_this_wave": [
+    {
+      "hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+      "frozen_at": "c5142f07dd142c50a23d356e5e670f28c8e03153",
+      "superseded_because": "same tree hash; product_commit_sha moved to 527d642e after a frontend/src fix found by browser attempt 1"
+    }
+  ],
   "diverged": true,
   "reason": "regular-square-pyramid-w02 backend/app changes: (1) semantic_program/formation.py: third typed foot-of-height source (_tam_day_deu) — the planner builds the regular pyramid's apex-to-centre segment SO with CONSTRUCT_HEIGHT; (2) semantic_program/quantity_annotations.py: a witness whose foot is a scene point joined by a built segment is labelled on that segment; chieu_cao_the_tich picks the volume height by an exact perpendicularity relation; (3) semantic_program/simulation_state.py: volume_heights in the state; machine-token InputFact labels not borrowed; (4) semantic_program/scene3d.py: _attach_formulas uses the relation-chosen height and the built segment's notation (the W1 equal-value rule removed); (5) semantic_program/refusal_cause.py + route.py: a length <= 0 stated by the premise text ⇒ NON_POSITIVE_LENGTH/SOURCE at execution; (6) main.py: CACHE_VERSION 112 -> 113. No change to prompts, grammar card, schemas or the capability table (semantic environment b1714b56 unchanged).",
   "hieu_luc_len_ket_qua_da_do": {

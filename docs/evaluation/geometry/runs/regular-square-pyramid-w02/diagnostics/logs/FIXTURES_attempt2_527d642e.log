@@ -1,0 +1,6 @@
+# cwd: <worktree '/tmp/claude-0/-home-user-algo-sim/4b898215-6d45-558a-89c7-bbca2eae20a7/scratchpad/wt rsp w02b'> @ 527d642e58e77b01677560af611b969c3243ccca; bash -c cd backend && /home/user/algo-sim/backend/.venv/bin/python scripts/freeze_evaluation_candidate.py --verify && /home/user/algo-sim/backend/.venv/bin/python scripts/lock_cache_identity.py --verify && /home/user/algo-sim/backend/.venv/bin/python scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs
+2026-10-05T19:11:57Z
+
+CANDIDATE LỆCH so với bản đã đóng băng: product_commit_sha
+Nếu lệch vì một kết quả SEALED thì đây là VI PHẠM luật con dấu (§7.4).
+exit=1
