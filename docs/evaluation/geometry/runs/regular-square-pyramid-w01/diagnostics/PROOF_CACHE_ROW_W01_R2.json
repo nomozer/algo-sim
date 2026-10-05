@@ -1,0 +1,453 @@
+{
+  "proof": "W01_CACHE_ROW_PROOF",
+  "model_calls": 0,
+  "cache_version_current": "112",
+  "rows": {
+    "N1_missing_height": {
+      "label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "envelope_sha256": "73a3eb2b7b0a90f3622e70026159dea92bbd659974e69cbaf61378ab8a2e3577"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+        "envelope_sha256": "73a3eb2b7b0a90f3622e70026159dea92bbd659974e69cbaf61378ab8a2e3577"
+      },
+      "cached_before_w01": false
+    },
+    "N2_not_regular": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "N3_contradiction": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "N4_wrong_centre_identity": {
+      "label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "a0519e51caf4c01c4359eb70ae0e00dbd7967fba4beac390ad291130a43dc772"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "construction_binding",
+        "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+        "envelope_sha256": "a0519e51caf4c01c4359eb70ae0e00dbd7967fba4beac390ad291130a43dc772"
+      },
+      "cached_before_w01": false
+    },
+    "N5_apex_over_vertex": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "N6_goal_clause_regular": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "N7_model_only_height": {
+      "label": "refused:*:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "envelope_sha256": "a7e01857ac11050c4b3749a36bdb0c2a73384d4a471358e9ebc64501737abeab"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+        "envelope_sha256": "a7e01857ac11050c4b3749a36bdb0c2a73384d4a471358e9ebc64501737abeab"
+      },
+      "cached_before_w01": false
+    },
+    "R2_L1_chained_equal_lateral_edges": {
+      "label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+        "envelope_sha256": "84b94152904710db827d59fb899fc1db7a1e32a5ef6cd96fb1a9cbd50e74baeb"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "grounding",
+        "reason_code": "SOURCE_EVIDENCE_CONFLICT",
+        "envelope_sha256": "84b94152904710db827d59fb899fc1db7a1e32a5ef6cd96fb1a9cbd50e74baeb"
+      },
+      "cached_before_w01": false
+    },
+    "R2_N8_lateral_contradiction": {
+      "label": "refused:source_invariant:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "cached_before_w01": false
+    },
+    "R2_N9_contradiction_program_fits_lengths": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "R2_S10_lateral_other_vertex": {
+      "label": "served:16/3",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "9bff1fc46ffe74e3d0ea8fb6aa19cae7100fc468bf5ff000bb1da93daf0c364e"
+      },
+      "cached_before_w01": false
+    },
+    "R2_S8_side_AB_lateral_SA": {
+      "label": "served:16/3",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "b237fc1aaf7ff4b107b85c337626ee9cae52da7e96b1d4de603cc0356a34458a"
+      },
+      "cached_before_w01": false
+    },
+    "R2_S9_side_lateral_named": {
+      "label": "served:16/3",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "880578cccc801a23cb70e0eb1a362b752a64cde17b6a0105c0b5685b9ed831cf"
+      },
+      "cached_before_w01": false
+    },
+    "R2_U4_irrational_via_lateral": {
+      "label": "refused:source_invariant:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "source_invariant",
+        "reason_code": null,
+        "envelope_sha256": "ca9eb2f736a89f892e596055f48e5624e592a930e5ad3b18852a6d9fcaf66405"
+      },
+      "cached_before_w01": false
+    },
+    "S1_side_height_volume": {
+      "label": "served:16",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "0dc7e923dacf5ca2312f526001b997ae402bb28ed23dba64be797a80ccf7ab0d"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "0dc7e923dacf5ca2312f526001b997ae402bb28ed23dba64be797a80ccf7ab0d"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S2_side_apothem_volume": {
+      "label": "served:48",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "ca87c1f44f7d14020b3ab5b0a48beada1a82b05208b468d1dda5ba22825f37e3"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "ca87c1f44f7d14020b3ab5b0a48beada1a82b05208b468d1dda5ba22825f37e3"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S3_apothem_phrasing": {
+      "label": "served:48",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d065b2fa03a70fb10b22b36ee30f5497cd272b92c2b631fcc2032b88b085b631"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "d065b2fa03a70fb10b22b36ee30f5497cd272b92c2b631fcc2032b88b085b631"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S4_side_lateral_volume": {
+      "label": "served:16/3",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "144e4e95dba5c23cde10b89460357267394f591076682916137e698551980de9"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "144e4e95dba5c23cde10b89460357267394f591076682916137e698551980de9"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S5_lateral_edge_length": {
+      "label": "served:√17",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "0abac259eb598a6e23d46b85c61570951b65896d90a5854a3f1dfce2d03bd70c"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "0abac259eb598a6e23d46b85c61570951b65896d90a5854a3f1dfce2d03bd70c"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S6_renamed_vertices": {
+      "label": "served:16",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "24b3745a7c76414972c9db50f9c8149429a79dab45124877aa4b79496d903b0b"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "24b3745a7c76414972c9db50f9c8149429a79dab45124877aa4b79496d903b0b"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "S7_named_centre": {
+      "label": "served:16",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "5037254eb45338d09fd7d4140461b011924b12f42098b62ed95b0aaddc9ccd9b"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "5037254eb45338d09fd7d4140461b011924b12f42098b62ed95b0aaddc9ccd9b"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "U1_irrational_height": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "U2_angle_data": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "U3_regular_triangular": {
+      "label": "refused:assumption:*",
+      "before_w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "w01": {
+        "status": "unsupported",
+        "stage_reached": "assumption",
+        "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+        "envelope_sha256": "f38400697fe586caf8b212fed25fc498c2def113b8e144c66afad8108db0e349"
+      },
+      "cached_before_w01": false
+    },
+    "P_cube_notationless_given": {
+      "label": "probe:served_before_w1",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "02519bcbbc698a37ac59b0f4d39ef7247dc9658b10938ee67d1e5bc5155a81c2"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "02519bcbbc698a37ac59b0f4d39ef7247dc9658b10938ee67d1e5bc5155a81c2"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    },
+    "P_rect_pyramid_two_heights": {
+      "label": "probe:served_before_w1",
+      "before_w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "4f0ec4aa77c0bbae72d0dfa4206e00b0da2504f12625463d7421b5536374e5cd"
+      },
+      "w01": {
+        "status": "ok",
+        "stage_reached": null,
+        "reason_code": null,
+        "envelope_sha256": "4f0ec4aa77c0bbae72d0dfa4206e00b0da2504f12625463d7421b5536374e5cd"
+      },
+      "cached_before_w01": true,
+      "HIT_under_current_version": true,
+      "HIT_after_simulated_bump": false,
+      "w01_envelope_differs": false
+    }
+  },
+  "stale_rows_replayed_under_current_version": [],
+  "bump_makes_them_miss": true,
+  "CACHE_DECISION": "NO_BUMP — every envelope served before W1 is unchanged under W1"
+}

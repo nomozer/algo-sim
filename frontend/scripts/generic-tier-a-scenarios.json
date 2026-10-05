@@ -1,8 +1,8 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "REGULAR_SQUARE_PYRAMID_AND_PEDAGOGICAL_UI",
-  "product_commit_sha": "de5b2331f22efb1e0828f05ad94392e1b9596033",
-  "product_tree_sha": "4629c3e8e3f5be60dd2bc4176c108a132d5aee5604e0e8f7a9b8d90cca4547ea",
+  "product_commit_sha": "ad7172ab96e81b28deaf373f7a82616c7d60f297",
+  "product_tree_sha": "5234c37e424c60bae4741e68170a0c95e5361cfbe71e2114b96c08d2310d44fa",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [
     { "id": "desktop", "width": 1440, "height": 900, "formation": "full", "orbit": true },
@@ -274,7 +274,7 @@
       "oracle_source": {
         "kind": "w1_corpus_program_dependency_graph",
         "path": "backend/tests/geometry/test_regular_square_pyramid.py",
-        "sha256": "8dd17deadbfef483fce55232b70f59186dc259a14e8049d73caaf86ca263d723",
+        "sha256": "52e2f66e114bb324569f8de32f3a9bf82489cdba88190861ab7e96581c6d0c82",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "chop_deu"
       },
