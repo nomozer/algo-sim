@@ -274,7 +274,7 @@
       "oracle_source": {
         "kind": "w1_corpus_program_dependency_graph",
         "path": "backend/tests/geometry/test_regular_square_pyramid.py",
-        "sha256": "b92bae8fa7a285ff01cc0ef54a3151b1295b86f92d9f57f8b7eb52d37b0250f4",
+        "sha256": "8dd17deadbfef483fce55232b70f59186dc259a14e8049d73caaf86ca263d723",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "chop_deu"
       },
