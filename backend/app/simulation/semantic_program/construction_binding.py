@@ -93,6 +93,14 @@ _HINH_CHIEU = tuple(re.compile(m) for m in (
     rf"{_TRUOC}(?P<x>{_E})\s+(?i:là\s+chân\s+đường\s+(?:vuông\s+góc|cao)\s+(?:(?:kẻ|hạ)\s+)?từ)\s+"
     rf"(?P<p>{_E})\s+(?i:xuống|đến|tới|lên)\s+{_NHAN}",
 ))
+#: regular-square-pyramid-w01 — giao điểm của HAI ĐƯỜNG gọi bằng hai cặp điểm, và tâm của đáy (tứ giác) của khối
+#: duy nhất. Giao với mặt phẳng, trọng tâm, trực tâm, đối xứng vẫn ngoài từ vựng.
+_GIAO_HAI_DUONG = re.compile(
+    rf"{_TRUOC}(?P<x>{_E})\s+(?i:là\s+giao\s+điểm\s+(?:của\s+)?(?:(?:hai\s+)?(?:đường\s+(?:thẳng\s+|chéo\s+)?)?)?)"
+    rf"(?P<p>{_E})(?P<q>{_E})\s+(?i:và|với)\s+(?P<r>{_E})(?P<t>{_E}){_SAU}")
+_TAM_DAY = re.compile(
+    rf"{_TRUOC}(?P<x>{_E})\s+(?i:là\s+tâm\s+(?:của\s+)?)(?:(?i:(?:mặt\s+)?đáy)(?![^\W\d_])(?:\s+(?P<ten1>(?:{_E}){{4}}))?"
+    rf"|(?i:hình\s+vuông\s+)(?P<ten2>(?:{_E}){{4}})){_SAU}")
 #: Vai trò đề nêu mà W18 KHÔNG đọc (§16.3 OUT_OF_SCOPE): tâm, trọng tâm, trực tâm, giao điểm, đối xứng.
 _VAI_KHAC = re.compile(
     rf"{_TRUOC}(?P<x>{_E}(?:{_VA}{_E})*)\s+(?i:(?:lần\s+lượt\s+|tương\s+ứng\s+)?là\s+"
@@ -147,6 +155,19 @@ def doc_quan_he_dung(problem_text: str | None) -> tuple[QuanHeDung, ...]:
                 hien = _hien(m["l1"]) + _hien(m["l2"])
             ra.append(QuanHeDung("projection", _khoa(m["x"]), (_khoa(m["p"]), nhan),
                                  f"{_hien(m['x'])} là hình chiếu của {_hien(m['p'])} lên {hien}", m.span()))
+    for m in _GIAO_HAI_DUONG.finditer(de):
+        hai = frozenset({frozenset({_khoa(m["p"]), _khoa(m["q"])}), frozenset({_khoa(m["r"]), _khoa(m["t"])})})
+        if len(hai) == 2 and all(len(x) == 2 for x in hai):
+            ra.append(QuanHeDung("intersection", _khoa(m["x"]), hai,
+                                 f"{_hien(m['x'])} là giao điểm của {_hien(m['p'])}{_hien(m['q'])} và "
+                                 f"{_hien(m['r'])}{_hien(m['t'])}", m.span()))
+    for m in _TAM_DAY.finditer(de):
+        ten = m["ten1"] or m["ten2"]
+        if day is None or len(day) != 4 or (ten and set(map(_khoa, re.findall(_E, ten))) != set(map(_khoa, day))):
+            continue
+        a, b, c, d = map(_khoa, day)
+        ra.append(QuanHeDung("centre", _khoa(m["x"]), frozenset({frozenset({a, c}), frozenset({b, d})}),
+                             f"{_hien(m['x'])} là tâm của đáy {''.join(map(_hien, day))}", m.span()))
     loai: dict[str, set] = {}
     for q in ra:
         loai.setdefault(q.dich, set()).add((q.kind, q.toan_hang))
@@ -265,6 +286,10 @@ def _quan_he_ct(e: dict, dt: _DanhTinh) -> tuple[str, Any] | None:
         return "division", (dt.diem(e["a"]), dt.diem(e["b"]), _ti_so(e.get("ratio")))
     if k == "project_onto":
         return "projection", (dt.diem(e["point"]), dt.nhan(e["target"]))
+    if k == "intersect_line_line":
+        hai = [dt.nhan(e["line_a"]), dt.nhan(e["line_b"])]
+        return "intersection", (None if any(x is None or x[0] != "line" for x in hai)
+                                else frozenset(x[1] for x in hai))
     return None
 
 
@@ -281,6 +306,13 @@ def _cau_ct(dich: str, e: dict, dt: _DanhTinh) -> str:
                 else "(" + "".join(map(L, s["through"])) + ")" if s.get("kind") == "construct_plane"
                 else ky_hieu_toan(e["target"]) or "một đối tượng phụ")
         return f"{dich} là hình chiếu của {L(e['point'])} lên {nhan}"
+    if e["kind"] == "intersect_line_line":
+        def duong(t: str) -> str:
+            ds = dt.dinh.get(dt.goc_cua(t), [])
+            s = ds[0] if len(ds) == 1 else {}
+            return (L(s["through_a"]) + L(s["through_b"]) if s.get("kind") == "construct_line"
+                    else ky_hieu_toan(t) or "một đường phụ")
+        return f"{dich} là giao điểm của {duong(e['line_a'])} và {duong(e['line_b'])}"
     return f"{dich} dựng bằng {e['kind']}"
 
 
@@ -298,6 +330,18 @@ def _so(R: QuanHeDung, p: tuple[str, Any] | None) -> tuple[str, str]:
     if p is None:
         return UNVERIFIED, "the text relation is read, the program builds it with another operation"
     kind, th = p
+    if kind == "intersection":
+        if th is None or any(_MO_HO in x or None in x for x in th):
+            return UNVERIFIED, "lines of the intersection not pinned"
+        if R.kind in ("intersection", "centre"):
+            return (MATCHED, "same two lines") if th == R.toan_hang else (MISMATCHED, "other lines")
+        return MISMATCHED, f"the text states a {R.kind}, the program builds an intersection"
+    if R.kind == "centre" and kind == "midpoint":
+        if _MO_HO in th:
+            return UNVERIFIED, "ambiguous identity of an operand"
+        return (MATCHED, "midpoint of a diagonal") if th in R.toan_hang else (MISMATCHED, "not a diagonal")
+    if R.kind in ("intersection", "centre"):
+        return MISMATCHED, f"the text states a {R.kind}, the program builds a {kind}"
     if _MO_HO in (th if kind == "midpoint" else th[:2] if kind == "division" else th[:1]):
         return UNVERIFIED, "ambiguous identity of an operand"
     if kind != R.kind:

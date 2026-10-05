@@ -296,6 +296,23 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                             )
                             if is_solid_edge and not is_base_edge and d_name not in nguon:
                                 nguon.append(d_name)
+                        # Chiều cao ĐO được (regular-square-pyramid-w01): khoảng cách từ một đỉnh của khối
+                        # NGOÀI đáy tới mặt phẳng dựng qua các đỉnh của đáy — đúng định nghĩa chiều cao, không
+                        # đoán theo tên. Chân đường cao không phải đỉnh của khối (vd tâm O của chóp đều), nên
+                        # luật cạnh `*_length` ở trên không bao giờ thấy nó.
+                        mat_day = {
+                            getattr(s, "target_var", None)
+                            for s in spec.statements or ()
+                            if getattr(s, "kind", None) == "construct_plane"
+                            and base_vertices
+                            and set(getattr(s, "through", None) or ()) <= set(base_vertices)
+                        }
+                        dinh_ngoai = set(solid_vertices) - set(base_vertices)
+                        for other_tv, other_info in ra.items():
+                            src = other_info.get("sources", [])
+                            if (other_info.get("producer") == "measure.distance" and len(src) == 2
+                                    and src[0] in dinh_ngoai and src[1] in mat_day and other_tv not in nguon):
+                                nguon.append(other_tv)
                     ra[tv] = {"producer": f"measure.{e.quantity}",
                               "sources": nguon, "label": None}
                 elif ek == "var":
@@ -718,6 +735,21 @@ def _json_an_toan(x: Any) -> Any:
     return x
 
 
+def _nhan_du_kien_tu_fact(objects: list[dict[str, Any]], spec: SemanticProgramSpec, contract: Any) -> None:
+    """Dữ kiện đề cho KHÔNG có ký hiệu (`cạnh đáy bằng 4` — không tên đoạn) mang NHÃN của InputFact mà khai
+    báo GIVEN trích dẫn (regular-square-pyramid-w01). Khai báo bộ nhớ không có ô nhãn, nên trước bản này học
+    sinh đọc "đại lượng = 4". Chỉ đổi TÊN hiển thị; giá trị, ký hiệu và chứng chỉ không đổi."""
+    nhan_fact = {f.fact_id: (f.label or "").strip() for f in (getattr(contract, "input_facts", None) or ())}
+    khai = {d.name: d for d in spec.memory_declarations or ()}
+    for o in objects:
+        d = khai.get(o["id"])
+        nhan = nhan_fact.get(getattr(d, "source_fact_id", None) or "")
+        if (o.get("type") != "quantity" or o.get("notation") or getattr(d, "provenance", None) != "GIVEN"
+                or not nhan):
+            continue
+        o["label"] = o["reference"] = nhan[0].upper() + nhan[1:]
+
+
 # ══ 4. SIMULATION STATE ══════════════════════════════════════════════════
 def build_simulation_state(
     spec: SemanticProgramSpec, exec_result: Any, contract: Any = None
@@ -730,6 +762,7 @@ def build_simulation_state(
     sách ai đó phải nhớ cập nhật.
     """
     scene = build_scene(spec, exec_result.final_memory)
+    _nhan_du_kien_tu_fact(scene["objects"], spec, contract)
     # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.
     gan_vai_tro_dung(scene["objects"], spec, contract)

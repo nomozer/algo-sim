@@ -77,6 +77,18 @@ _GOC_90 = re.compile(
 _CHIEU_CAO = re.compile(
     rf"chiều\s+cao(?:\s+của\s+(?:hình|khối)\s+[^\s,.]+(?:\s+[^\s,.]+)?)?\s*(?:bằng|=|là)?\s*"
     rf"(?P<so>{_SO})(?![\d/])")
+#: regular-square-pyramid-w01 — số đo của chóp tứ giác ĐỀU duy nhất: cạnh đáy, cạnh bên, trung đoạn (đường
+#: cao của mặt bên). Chỉ gắn khi đề nêu đúng một khối và khối ấy là chóp tứ giác đều.
+_CANH_DAY = re.compile(rf"cạnh\s+đáy\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+_CANH_BEN = re.compile(rf"cạnh\s+bên\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+_TRUNG_DOAN = re.compile(
+    rf"(?:trung\s+đoạn|đường\s+cao\s+(?:của\s+)?(?:mỗi\s+)?mặt\s+bên)\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+#: Tâm đáy được ĐỀ gọi tên: `O là tâm (của) (mặt) đáy` · `O là tâm (của) hình vuông ABCD` · `O là giao điểm
+#: (của) AC và BD` (hai đường chéo của đáy). Phát `base_centre(O, *đáy)` chỉ khi khớp đáy của chóp đều duy nhất.
+_TAM_DAY = re.compile(
+    rf"{_TRUOC}(?P<o>{_E})\s+là\s+(?:tâm\s+(?:của\s+)?(?:(?:mặt\s+)?đáy|hình\s+vuông\s+(?P<ten>(?:{_E}){{4}}))"
+    rf"|giao\s+điểm\s+(?:của\s+)?(?:hai\s+đường\s+chéo\s+)?(?P<p>{_E})(?P<q>{_E})\s+(?:và|với)\s+(?P<r>{_E})"
+    rf"(?P<t>{_E}))(?![A-Za-z0-9'])")
 _TINH = re.compile(rf"(?<![A-Za-zÀ-ỹ])Tính{_HET_CHU}")
 #: Một ký hiệu khối có chấm mà các mẫu trên không đọc được (vd `ABC.DE`).
 _KY_HIEU_KHOI_LOI = re.compile(rf"\s+(?:{_E})+\.(?:{_E})+")
@@ -139,7 +151,12 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
 
     # ── ký hiệu khối ─────────────────────────────────────────────────────
     for m in _KHOI_CHOP.finditer(de):
-        phat("pyramid", _ten(m.group("dinh")) + _ten(m.group("day")), None, m.start(), m.end())
+        ent = _ten(m.group("dinh")) + _ten(m.group("day"))
+        phat("pyramid", ent, None, m.start(), m.end())
+        # Chóp tứ giác ĐỀU: đáy vuông và chân đường cao ở tâm đáy (khuôn T7). Tam/ngũ/lục giác đều chưa đọc.
+        if len(ent) == 5 and re.search(r"tứ\s+giác\s+đều", m.group(0)):
+            phat("regular_square_pyramid", ent, None, m.start(), m.end())
+            phat("base_square", ent[1:], None, m.start(), m.end())
     for m in _KHOI_LANG_TRU.finditer(de):
         day, tren = _ten(m.group("day")), _ten(m.group("tren"))
         if len(day) != len(tren):
@@ -204,6 +221,22 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
     if khoi is not None:
         for m in _CHIEU_CAO.finditer(du_kien):
             phat("height", khoi[0], _phan(m.group("so")), m.start(), m.end())
+    # ── số đo của chóp tứ giác đều duy nhất ──────────────────────────────
+    if khoi is not None and any(r.kind == "regular_square_pyramid" and r.entities == khoi[0] for r in ra):
+        for m in _CANH_DAY.finditer(du_kien):
+            phat("base_square", khoi[1], _phan(m.group("so")), m.start(), m.end())
+        for mau, kind in ((_CANH_BEN, "lateral_edge"), (_TRUNG_DOAN, "apothem")):
+            for m in mau.finditer(du_kien):
+                phat(kind, khoi[0], _phan(m.group("so")), m.start(), m.end())
+        a, b, c, d = khoi[1]
+        cheo = {frozenset({a, c}), frozenset({b, d})}
+        for m in _TAM_DAY.finditer(du_kien):
+            if m.group("p"):
+                if {frozenset(_ten(m.group("p") + m.group("q"))), frozenset(_ten(m.group("r") + m.group("t")))} != cheo:
+                    continue
+            elif m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1]):
+                continue
+            phat("base_centre", _ten(m.group("o")) + khoi[1], None, m.start(), m.end())
     return tuple(ra)
 
 
@@ -370,10 +403,13 @@ def phan_chua_doc(problem_text: str | None) -> tuple[str, ...]:
     de = (problem_text or "").replace("′", "'").replace("’", "'")
     du_kien = de[:t.start()] if (t := _TINH.search(de)) else de
     con = list(du_kien)
-    for r in doc_rang_buoc(problem_text):
+    rb = doc_rang_buoc(problem_text)
+    for r in rb:
         con[r.span[0]:r.span[1]] = " " * len(con[r.span[0]:r.span[1]])
     sot = MAU_DO_DAI.sub(" ", _chuan("".join(con)))
     ra = [t for t in re.findall(r"[^\W\d_]+|\d+|[^\w\s]", sot) if t.lower() not in _TU_NOI and t not in ",.;:"]
-    ra += _TU_BI_BO.findall(du_kien)
+    # "đều" của chóp tứ giác đều ĐÃ được đọc (khuôn T7); mọi "đều"/"cân" khác vẫn là chữ bị nuốt.
+    deu = [r.span for r in rb if r.kind == "regular_square_pyramid"]
+    ra += [m.group(0) for m in _TU_BI_BO.finditer(du_kien) if not any(a <= m.start() < b for a, b in deu)]
     ra += [m.group("canh") for m in _DAY.finditer(du_kien) if m.group("canh") and _gon(m.group("loai")) != "hình vuông"]
     return tuple(ra)

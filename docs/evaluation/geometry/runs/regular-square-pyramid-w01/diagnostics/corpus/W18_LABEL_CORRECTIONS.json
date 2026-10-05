@@ -1,0 +1,13 @@
+{
+ "schema_version": "label-correction-layer/1",
+ "run_id": "regular-square-pyramid-w01",
+ "corrects": "docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/construction_corpus_w18/LABELS.json (unchanged, historical)",
+ "rule": "Only the `binding` status of a row may be overridden here, and only where a registered later change of vocabulary closes a limit the W18 label declared. The route outcome (`expect`) of every W18 row is unchanged.",
+ "rows": {
+  "B22_out_of_scope_intersection": {
+   "binding": {"O": "MATCHED"},
+   "was": {"O": "OUT_OF_SCOPE"},
+   "reason": "W18 declared 'an intersection is outside the W18 vocabulary'. regular-square-pyramid-w01 adds the closed relation 'X là giao điểm (của) PQ và RT' (two lines named by two points each) to construction_binding; the W18 program builds O = intersect_line_line(AC, BD), the relation the text states, so O is MATCHED. Outcome stays `served`."
+  }
+ }
+}

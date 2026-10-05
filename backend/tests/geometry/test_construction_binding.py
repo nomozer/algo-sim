@@ -22,6 +22,12 @@ from tests.geometry import w14_cases as W
 
 NHAN = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/w18-binding-focus"
                    / "diagnostics/construction_corpus_w18/LABELS.json").read_text(encoding="utf-8"))["rows"]
+#: Lớp đính chính (regular-square-pyramid-w01): chỉ trạng thái binding của hàng mà giới hạn W18 đã khai nay được
+#: từ vựng mới đóng; kết cục route của mọi hàng W18 giữ nguyên. Nhãn W18 gốc không sửa.
+for _ca, _dc in json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs"
+                            / "regular-square-pyramid-w01/diagnostics/corpus/W18_LABEL_CORRECTIONS.json")
+                           .read_text(encoding="utf-8"))["rows"].items():
+    NHAN[_ca] = {**NHAN[_ca], "binding": _dc["binding"]}
 
 NEN_P1 = ("Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), "
           "B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). ")
