@@ -2,8 +2,128 @@
   "schema_version": "env-baseline/1",
   "question": "Is the browser gate camera_settled_rotated_neutral red because of W2, or because of the cloud environment?",
   "method": "runPositive of the main suite (exported in a throw-away copy, not committed), desktop 1440x900, triangular_pyramid, in the clean detached CRLF worktree at the W1 head e821b9b5 with the W1 fixture and the W1 scenario manifest; dist built in that worktree; headless Chromium 141 with SwiftShader (--use-angle=swiftshader), no GPU; 0 model calls.",
-  "w1_head_result": {"camera_settled_rotated_neutral": {"pass": false, "samples": 190, "streak": 1, "last_motion": 9.42e-10, "max_motion": 0.00576, "tolerance": 1e-9}, "other_assertions": "all pass"},
-  "w2_result_same_gate": {"pass": false, "samples": 182, "streak": 0, "last_motion": 9.10e-7, "max_motion": 0.00347, "tolerance": 1e-9},
+  "w1_head_result": {
+    "camera_settled_rotated_neutral": {
+      "pass": false,
+      "samples": 190,
+      "streak": 1,
+      "last_motion": 9.42e-10,
+      "max_motion": 0.00576,
+      "tolerance": 1e-09
+    },
+    "other_assertions": "all pass"
+  },
+  "w2_result_same_gate": {
+    "pass": false,
+    "samples": 182,
+    "streak": 0,
+    "last_motion": 9.1e-07,
+    "max_motion": 0.00347,
+    "tolerance": 1e-09
+  },
   "classification": "ENVIRONMENT — the accepted W1 code fails the same gate here; W1 passed it on the user's Windows machine (ed37f9fa). The settle window (stable samples over animation frames) is not met under this machine's frame timing.",
-  "status": "LOCAL_VERIFICATION_REQUIRED"
+  "status": "LOCAL_VERIFICATION_REQUIRED",
+  "causal_restore_cross_section_mobile": {
+    "method": "runPositive x3 per side, sequential, no other load; W2 = main tree at a4abb188 (product 75a0af9a) with the attempt-4 W2 fixture; W1 = clean CRLF worktree at e821b9b5 with the W1 fixture and W1 manifest",
+    "runs": [
+      {
+        "side": "w2",
+        "run": 0,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 6,
+          "changed_pixels": 15
+        }
+      },
+      {
+        "side": "w2",
+        "run": 1,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 33,
+          "changed_pixels": 326
+        }
+      },
+      {
+        "side": "w2",
+        "run": 2,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 6,
+          "changed_pixels": 15
+        }
+      },
+      {
+        "side": "w1",
+        "run": 0,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 6,
+          "changed_pixels": 15
+        }
+      },
+      {
+        "side": "w1",
+        "run": 1,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 33,
+          "changed_pixels": 326
+        }
+      },
+      {
+        "side": "w1",
+        "run": 2,
+        "causal_restore": {
+          "pass": false,
+          "details": [
+            "CANVAS_NOT_RESTORED"
+          ]
+        },
+        "canvas": {
+          "equal_bytes": false,
+          "same_size": true,
+          "max_channel_delta": 6,
+          "changed_pixels": 15
+        }
+      }
+    ],
+    "classification": "ENVIRONMENT — identical failure pattern on the W1 head (15 / 326 / 15 changed pixels, max channel delta 6 / 33 / 6) and on W2; W1 passed this gate on the user's Windows machine at ed37f9fa",
+    "status": "LOCAL_VERIFICATION_REQUIRED"
+  }
 }
