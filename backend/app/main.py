@@ -764,7 +764,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       cổng phạm vi nhận câu hỏi "độ dài" (chiều refused → served, không bị cache). Hai yêu cầu TRƯỚC W1
 #       được phục vụ lưu thành row v111 vẫn HIT dù W1 dựng envelope khác
 #       (`runs/regular-square-pyramid-w01/diagnostics/PROOF_CACHE_ROW_W01.json`).
-CACHE_VERSION = "112"
+#   113 (2026-10-05, regular-square-pyramid-w02): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope PHỤC VỤ đổi nội dung: chóp
+#       tứ giác đều có đoạn đường cao SO (bước bổ sung), khoảng cách đo bám đoạn đã dựng thay nhân chứng, chiều cao
+#       của công thức thể tích chọn theo quan hệ ⊥ kiểm chính xác ("× SO"; không còn "× DF" cho một cạnh tình cờ
+#       bằng chiều cao). 13 yêu cầu phục vụ dưới 112 lưu thành row vẫn HIT dù W2 dựng envelope khác; sáu họ cũ trùng
+#       byte (`runs/regular-square-pyramid-w02/diagnostics/PROOF_CACHE_ROW_W02.json`).
+CACHE_VERSION = "113"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
