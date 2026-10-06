@@ -938,11 +938,12 @@ export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth)
       && actual.controls.fontFamily !== baseline.div.fontFamily
       && actual.controlText.color !== baseline.span.color,
     // W12 đo BẢNG LỜI GIẢI dưới thanh bước; regular-square-pyramid-w05 gỡ bảng ấy — vùng chữ luôn có mặt của xưởng
-    // nay là HÀNG TRÊN (nút quay lại · tên bài · công cụ nhóm): bố cục flex, phông sản phẩm, tên bài khác mặc định.
+    // nay là HÀNG TRÊN (nút quay lại · tên bài · công cụ nhóm): bố cục flex, phông sản phẩm trên cả hàng lẫn tên bài.
+    // Không so MÀU tên bài: `--ink` là #000, trùng màu mặc định của trình duyệt (lượt đo 1 của W05 đỏ oan vì thế).
     toolbar_styled: Boolean(actual.toolbar && actual.toolbarTitle)
       && actual.toolbar.display === "flex"
       && actual.toolbar.fontFamily !== baseline.div.fontFamily
-      && actual.toolbarTitle.color !== baseline.span.color,
+      && actual.toolbarTitle.fontFamily !== baseline.span.fontFamily,
     no_document_overflow: scrollWidth <= viewportWidth + 1,
   };
   return { checks, pass: Object.values(checks).every(Boolean) };

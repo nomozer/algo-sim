@@ -96,7 +96,7 @@ test("CSS readiness is driven by computed sentinel styles, not stylesheet rules"
   const baseline = {
     div: { display: "inline", fontFamily: "Times", color: "rgb(0, 0, 0)" },
     ul: { position: "static", fontFamily: "Times" },
-    span: { color: "rgb(0, 0, 0)" },
+    span: { color: "rgb(0, 0, 0)", fontFamily: "Times" },
   };
   const actual = {
     scene: { display: "flex", width: 900 },
@@ -106,11 +106,14 @@ test("CSS readiness is driven by computed sentinel styles, not stylesheet rules"
     controlButton: { color: "rgb(0, 0, 0)" },
     controlText: { color: "rgb(97, 93, 89)" },
     toolbar: { display: "flex", fontFamily: "Inter" },
-    toolbarTitle: { color: "rgb(97, 93, 89)" },
+    // W05: tên bài màu `--ink` = #000 — trùng màu mặc định; phép kiểm phải đọc phông, không đọc màu.
+    toolbarTitle: { fontFamily: "Inter", color: "rgb(0, 0, 0)" },
   };
   assert.equal(assessCssReadiness(actual, baseline, 900, 900).pass, true);
-  // W05: hàng trên không có kiểu (CSS chưa nạp) ⇒ đỏ.
+  // W05: hàng trên không có kiểu (CSS chưa nạp) ⇒ đỏ — cả bố cục lẫn phông tên bài.
   assert.equal(assessCssReadiness({ ...actual, toolbar: { display: "block", fontFamily: "Inter" } },
+    baseline, 900, 900).checks.toolbar_styled, false);
+  assert.equal(assessCssReadiness({ ...actual, toolbarTitle: { fontFamily: "Times", color: "rgb(0, 0, 0)" } },
     baseline, 900, 900).checks.toolbar_styled, false);
   assert.equal(assessCssReadiness(actual, baseline, 901.5, 900).checks.no_document_overflow, false);
 });
