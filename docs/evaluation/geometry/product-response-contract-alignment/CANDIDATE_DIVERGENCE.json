@@ -209,7 +209,7 @@
   {
    "hash": "8a27a58b5a96311dd052a6cc981af558a50878876bef574ec71f8a1b666ed025",
    "sau_wave": "SHARED_SIMULATION_UI_CLOSURE (run regular-square-pyramid-w04)",
-   "ghi_chu": "Đoạn nằm trên cạnh khối (SM trên SA) nhường nét cho cạnh, tô sáng đúng khúc (quantity_annotations.doan_tren_canh → scene3d boundary_edge_ids + edge_span); lời kể gọi vật theo ký hiệu của đề (geometry_exec.ten_trong_loi_ke). Giao diện (ngoài measured_system): một cơ chế bảng nổi cho mọi bảng thông tin, canvas theo chiều cao khả dụng + «Bước n/N» trong thanh, cây thành phần theo bước. Hai lần đóng băng, cùng tree hash: c8c49f3c (D:/tmp/rsp w04b) rồi ecbe55c0 (D:/tmp/rsp w04d) sau khi lượt đo 1 bắt canvas WebGL không theo khung trên mobile (chỉ frontend/src). CACHE_VERSION 114 → 115 (runs/regular-square-pyramid-w04/diagnostics/PROOF_CACHE_ROW_W04.json)."
+   "ghi_chu": "Đoạn nằm trên cạnh khối (SM trên SA) nhường nét cho cạnh, tô sáng đúng khúc (quantity_annotations.doan_tren_canh → scene3d boundary_edge_ids + edge_span); lời kể gọi vật theo ký hiệu của đề (geometry_exec.ten_trong_loi_ke). Giao diện (ngoài measured_system): một cơ chế bảng nổi cho mọi bảng thông tin, canvas theo chiều cao khả dụng + «Bước n/N» trong thanh, cây thành phần theo bước. Ba lần đóng băng, cùng tree hash: c8c49f3c (D:/tmp/rsp w04b), ecbe55c0 (D:/tmp/rsp w04d) sau khi lượt đo 1 bắt canvas WebGL không theo khung trên mobile, rồi 53e4bec5 (D:/tmp/rsp w04e) sau khi soát lượt đo 3 thấy khúc tô sáng của đoạn con bị làm dịu theo khối (cả hai chỉ frontend/src). CACHE_VERSION 114 → 115 (runs/regular-square-pyramid-w04/diagnostics/PROOF_CACHE_ROW_W04.json)."
   }
  ],
  "diverged": true,
