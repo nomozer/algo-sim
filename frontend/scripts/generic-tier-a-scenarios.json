@@ -1,7 +1,7 @@
 {
   "schema_version": "generic-tier-a-suite/1",
   "task_id": "REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE",
-  "product_commit_sha": "70665542c53d2217a029d533b01d6655dc7814f2",
+  "product_commit_sha": "45beaed35fa314ee096bc31ba2b11044b38f9e9d",
   "product_tree_sha": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
   "human_expected_visibility": "docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json",
   "viewports": [

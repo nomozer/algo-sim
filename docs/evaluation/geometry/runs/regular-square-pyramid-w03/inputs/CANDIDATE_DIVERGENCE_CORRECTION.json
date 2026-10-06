@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE (W3, run regular-square-pyramid-w03)",
+  "corrects": "docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "5dec4572e6439a19592547515d389185703990d92ef2b959940946c957f63632",
+  "current_candidate_source_commit": "45beaed35fa314ee096bc31ba2b11044b38f9e9d",
+  "current_candidate_frozen_at": "45beaed35fa314ee096bc31ba2b11044b38f9e9d",
+  "current_candidate_note": "Frozen ONCE in this run, in a clean detached worktree D:/tmp/rsp w03b (core.autocrlf=true, path with a space, outside the repository) at 45beaed3, the last commit touching backend/app or frontend/src. Bare freeze then --verify, both exit 0 (diagnostics/logs/FREEZE_45beaed3.log); 110 files, CACHE_VERSION 114, cay_lam_viec_sach = true. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged.",
+  "previous_candidate_hash": "d3de9c446ef75b9b92b89e496f9b905349f4b30f3e5757849f46c6ce3c9d2098",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "regular-square-pyramid-w03 backend/app changes: (1) semantic_program/formation.py: _doan_duoc_hoi + _canh_da_dung — when an obligation's witness is a distance between two points that no segment, polygon edge or solid face edge joins before the measurement, the supplementary formation step builds construct_segment 'Đoạn PQ' right before it, named in the order the problem writes it (H-W2-2); (2) main.py: CACHE_VERSION 113 -> 114. frontend/src (outside measured_system): a measurement-only helper plane opens no geometry step (H-W2-4). No change to prompts, grammar card, schemas or the capability table (semantic environment b1714b56 unchanged).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 5dec4572 (product commit 45beaed3) is the current product identity. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 114
+}
