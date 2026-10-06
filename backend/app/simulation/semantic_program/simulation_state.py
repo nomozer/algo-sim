@@ -50,7 +50,7 @@ from .display_names import ky_hieu_dai_luong, ten_hien_thi
 from .formation import gan_vai_tro_dung
 from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
-from .quantity_annotations import chieu_cao_the_tich, gan_so_do
+from .quantity_annotations import chieu_cao_the_tich, doan_tren_canh, gan_so_do
 from .shape_constraint import doc_quan_he_cat
 from .source_entities import ky_hieu_toan
 from .transport import TransportTypeError, is_json_native
@@ -796,6 +796,9 @@ def build_simulation_state(
         "annotations": so_do,
         "annotation_diagnostics": chan_doan_so_do,
         "volume_heights": chieu_cao,
+        # regular-square-pyramid-w04: đoạn nằm TRÊN cạnh khối (kiểm chính xác ở `quantity_annotations`) — tầng cảnh
+        # chỉ tra id cạnh chuẩn, để cạnh ấy là owner nét duy nhất.
+        "segments_on_edges": doan_tren_canh(scene["objects"], exec_result.final_memory),
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }

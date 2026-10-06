@@ -169,6 +169,8 @@ export interface SceneObject {
   edge_ownership?: LogicalEdgeOwnership[];
   surfaces?: CanonicalSurface[];
   boundary_edge_ids?: string[];
+  /** regular-square-pyramid-w04: đoạn CON nằm trên cạnh chuẩn (backend kiểm chính xác) — khúc [t0, t1] từ `edge.a`. */
+  edge_span?: { edge_id: string; t0: number; t1: number };
   /** Vai trò dựng hình của vật (formation W14, backend) — W2 · D đọc `CONSTRUCT_AUXILIARY_GEOMETRY`. */
   formation_roles?: string[];
   surface_role?: SurfaceRole;

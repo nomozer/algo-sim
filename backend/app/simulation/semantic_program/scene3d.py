@@ -154,11 +154,15 @@ def _coordinate_hash(coordinate: list[str]) -> str:
     return f"{value:016x}"
 
 
-def _attach_topology(objects: list[dict[str, Any]]) -> None:
+def _attach_topology(objects: list[dict[str, Any]],
+                     doan_tren_canh: dict[str, dict[str, Any]] | None = None) -> None:
     """Attach renderer topology without performing geometric inference.
 
     Faces already contain the authoritative cyclic vertex indices.  This pass
     only normalises that topology into named edge and surface records.
+    `doan_tren_canh` (regular-square-pyramid-w04) is the exact segment-on-edge
+    relation computed upstream (`quantity_annotations.doan_tren_canh`); this pass
+    only looks the edge up by its endpoint names.
     """
     solids: dict[str, dict[str, Any]] = {}
     edge_ids_by_solid: dict[str, dict[frozenset[str], str]] = {}
@@ -295,6 +299,12 @@ def _attach_topology(objects: list[dict[str, Any]]) -> None:
             owned = [edges[key] for edges in edge_ids_by_solid.values() if key in edges]
             if len(key) == 2 and owned:
                 obj["boundary_edge_ids"] = owned
+            elif (tren := (doan_tren_canh or {}).get(obj.get("id"))) and (
+                    edge_id := edge_ids_by_solid.get(tren["solid"], {}).get(frozenset(tren["edge"]))):
+                # regular-square-pyramid-w04: đoạn CON nằm trên cạnh khối (SM trên SA) — cùng luật một cạnh, một nét;
+                # `edge_span` cho renderer tô sáng đúng khúc của đoạn trên owner của cạnh.
+                obj["boundary_edge_ids"] = [edge_id]
+                obj["edge_span"] = {"edge_id": edge_id, "t0": tren["t0"], "t1": tren["t1"]}
 
 
 def _cha(objs: list[dict[str, Any]]) -> dict[str, str]:
@@ -456,7 +466,7 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
                 v[f] = o[f]
         ra.append(v)
 
-    _attach_topology(ra)
+    _attach_topology(ra, state.get("segments_on_edges"))
     _attach_formulas(ra, state.get("volume_heights"))
     _danh_dau_bi_danh(ra)
     _gan_so_do(ra, state.get("annotations") or {})

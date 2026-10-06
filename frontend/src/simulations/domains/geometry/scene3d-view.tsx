@@ -359,6 +359,40 @@ export function canonicalEdgeMaterial(
     : new THREE.LineBasicMaterial({ ...common, depthTest: false });
 }
 
+/** Khúc tô sáng trên một cạnh chuẩn (`edge_span` của đoạn con nằm trên cạnh) — tham số đo từ `edge.a`. */
+export interface KhucToSang { t0: number; t1: number; mau: number }
+
+/**
+ * regular-square-pyramid-w04 — cắt các đoạn khuất/hiện của MỘT cạnh tại biên khúc tô sáng: phần trong khúc `sang`,
+ * phần ngoài giữ như cũ. Không khúc ⇒ không phần nào `sang` (độ sáng cả cạnh do owner quyết như trước).
+ */
+export function chiaKhucToSang<S extends { t0: number; t1: number }>(
+  spans: S[], khuc: { t0: number; t1: number } | undefined,
+): (S & { sang: boolean })[] {
+  if (!khuc) return spans.map((s) => ({ ...s, sang: false }));
+  return spans.flatMap((s) => [
+    { ...s, t1: Math.min(s.t1, khuc.t0), sang: false },
+    { ...s, t0: Math.max(s.t0, khuc.t0), t1: Math.min(s.t1, khuc.t1), sang: true },
+    { ...s, t0: Math.max(s.t0, khuc.t1), sang: false },
+  ]).filter((s) => s.t1 > s.t0);
+}
+
+/**
+ * Cạnh chuẩn được tô QUA vật khác: đoạn/đáy trùng cả cạnh ⇒ `ca` (cả cạnh); đoạn con trên cạnh (`edge_span`, W4) ⇒
+ * `khuc` (chỉ khúc của nó). `vat` đã xếp theo độ mạnh — vật sau ghi đè vật trước.
+ */
+export function toSangCanhChuan(
+  vat: SceneObject[], laNoiBat: (id: string) => boolean, mau: (id: string) => number,
+): { ca: Map<string, number>; khuc: Map<string, KhucToSang> } {
+  const ca = new Map<string, number>();
+  const khuc = new Map<string, KhucToSang>();
+  for (const o of vat.filter((x) => laNoiBat(x.id))) {
+    if (o.edge_span) khuc.set(o.edge_span.edge_id, { t0: o.edge_span.t0, t1: o.edge_span.t1, mau: mau(o.id) });
+    else for (const id of o.boundary_edge_ids ?? []) ca.set(id, mau(o.id));
+  }
+  return { ca, khuc };
+}
+
 function rebuildCanonicalEdgeOwner(
   owner: THREE.Group,
   edge: ReturnType<typeof canonicalEdgesOf>[number],
@@ -370,7 +404,8 @@ function rebuildCanonicalEdgeOwner(
     const material = (child as THREE.Line).material as THREE.Material | undefined;
     material?.dispose();
   }
-  const ownSpans = spans.filter((span) => span.edge_id === edge.id);
+  const khuc = owner.userData.khuc as KhucToSang | undefined;
+  const ownSpans = chiaKhucToSang(spans.filter((span) => span.edge_id === edge.id), khuc);
   for (const span of ownSpans) {
     const a = edge.a.clone().lerp(edge.b, span.t0);
     const b = edge.a.clone().lerp(edge.b, span.t1);
@@ -378,10 +413,10 @@ function rebuildCanonicalEdgeOwner(
     const isHidden = span.visibility === "HIDDEN";
     const material = canonicalEdgeMaterial(
       isHidden,
-      owner.userData.highlighted === true,
+      owner.userData.highlighted === true || span.sang,
       owner.userData.edgeColor as number,
       owner.userData.dashSize as number,
-      owner.userData.highlightColor as number | undefined,
+      span.sang ? khuc!.mau : owner.userData.highlightColor as number | undefined,
     );
     // Làm dịu (ngoài chuỗi nhân quả) phải sống qua lần dựng lại khi xoay.
     if (owner.userData.lamDiu) lamDiuVatLieu(material, owner.userData.lamDiu as number);
@@ -654,6 +689,8 @@ export function buildObject3D(
   cameraPosition = new THREE.Vector3(8, 3, 6),
   /** Cạnh chuẩn được tô qua vật khác (đoạn/đáy trùng cạnh) → màu tô. */
   highlightedEdgeIds: ReadonlySet<string> | ReadonlyMap<string, number> = new Set(),
+  /** W4: khúc tô sáng của đoạn con nằm trên cạnh chuẩn (`toSangCanhChuan().khuc`). */
+  khucToSang: ReadonlyMap<string, KhucToSang> = new Map(),
 ): THREE.Object3D | null {
   // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nền xám nhạt, nét xám trung tính.
   // Cạnh khối vốn đã là mực trung tính nên giữ nguyên; còn MÀU KIỂU (hổ phách
@@ -1017,6 +1054,7 @@ export function buildObject3D(
       owner.userData.edgeColor = MAU.canh;
       owner.userData.highlightColor = mau ?? mauQua ?? MAU.highlight;
       owner.userData.dashSize = dashSize;
+      owner.userData.khuc = khucToSang.get(edge.id);
       rebuildCanonicalEdgeOwner(owner, edge, audit.edge_spans);
       owner.userData.spanSignature = audit.edge_spans.filter((span) => span.edge_id === edge.id)
         .map((span) => `${span.visibility}:${span.t0}:${span.t1}`).join("|");
@@ -1798,11 +1836,9 @@ export function Scene3DWorkspace({
     const mucMau = (id: string) => (tang
       ? MAU_TANG[(tangCua(id) ?? "trung_gian") as Exclude<TangNhanManh, "boi_canh">] : MAU.highlight);
     const doManh = (id: string) => ["trung_gian", "du_kien_so", "dich"].indexOf(tangCua(id) ?? "");
-    const canonicalHighlights = new Map<string, number>();
-    for (const object of hienTai.filter((x) => noiBat.has(x.id) && tangCua(x.id) !== "boi_canh")
-      .sort((a, b) => doManh(a.id) - doManh(b.id))) {
-      for (const id of object.boundary_edge_ids ?? []) canonicalHighlights.set(id, mucMau(object.id));
-    }
+    const { ca: canonicalHighlights, khuc: khucToSang } = toSangCanhChuan(
+      [...hienTai].sort((a, b) => doManh(a.id) - doManh(b.id)),
+      (id) => noiBat.has(id) && tangCua(id) !== "boi_canh", mucMau);
     // Quan sát cho bằng chứng playback: vật nào THỰC SỰ được dựng lên khung ở
     // bước này (thiết diện đang hình thành kèm số cạnh đã hiện).
     const daDung: string[] = [];
@@ -1823,7 +1859,7 @@ export function Scene3DWorkspace({
         renderObject = theoBuoc;
       }
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights, khucToSang);
       if (!obj) continue;
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);

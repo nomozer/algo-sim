@@ -23,6 +23,7 @@ from typing import Any
 
 from ..geometry import kernel as K
 from ..geometry.exact import Line3, Plane3, Vec3
+from ..geometry.predicates import collinear
 from .display_names import ky_hieu_dai_luong
 from .grounding_gate import _bang_chung_do_dai
 from .segment_relation import nhan_doan_truoc
@@ -179,6 +180,37 @@ def _doan_cua_ten(name: str, vertices: list[str]) -> tuple[str, str] | None:
     cap = [(a, b) for i, (a, la) in enumerate(labels) for b, lb in labels[i + 1:]
            if la and lb and symbol in (la + lb, lb + la)]
     return cap[0] if symbol and len(cap) == 1 else None
+
+
+def doan_tren_canh(objects: list[dict[str, Any]], memory: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """regular-square-pyramid-w04 — đoạn mà HAI đầu mút nằm trên một cạnh khối (SM, M trung điểm SA) nhưng không trùng
+    tên hai đầu cạnh: `{id đoạn: {solid, edge: [u, w], t0, t1}}`, kiểm CHÍNH XÁC (thẳng hàng + tham số trong [0, 1]).
+    `edge` theo thứ tự chỉ số đỉnh của khối (cùng chiều cạnh chuẩn của tầng cảnh); `t` đo từ `u`. Tầng cảnh chỉ chép
+    nó để cạnh chuẩn là owner nét duy nhất — không phép hình học nào ở đó."""
+    khoi = [(o["id"], o["vertex_ids"], o.get("faces") or []) for o in objects
+            if o.get("type") == "solid" and o.get("vertex_ids")]
+    ra: dict[str, dict[str, Any]] = {}
+    for s in objects:
+        ten = s.get("endpoint_ids") or []
+        if s.get("type") != "segment3" or len(ten) != 2:
+            continue
+        p = [memory.get(x) for x in ten]
+        if not all(isinstance(x, Vec3) for x in p):
+            continue
+        for sid, vids, faces in khoi:
+            canh = {tuple(sorted((f[i], f[(i + 1) % len(f)]))) for f in faces for i in range(len(f))}
+            for i, j in sorted(canh):
+                u, w = vids[i], vids[j]
+                a, b = memory.get(u), memory.get(w)
+                if {u, w} == set(ten) or not (isinstance(a, Vec3) and isinstance(b, Vec3)):
+                    continue
+                d = b - a
+                if d.is_zero() or not all(collinear(a, b, x) for x in p):
+                    continue
+                t = [(x - a).dot(d) / d.dot(d) for x in p]
+                if all(0 <= x <= 1 for x in t) and t[0] != t[1]:
+                    ra[s["id"]] = {"solid": sid, "edge": [u, w], "t0": float(min(t)), "t1": float(max(t))}
+    return ra
 
 
 def chieu_cao_the_tich(objects: list[dict[str, Any]], memory: dict[str, Any],
