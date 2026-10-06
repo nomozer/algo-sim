@@ -94,8 +94,12 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # "S(T)" (đề gọi thiết diện là (T)) cùng hai hệ quả chữ của ký hiệu ấy: `formula.text` "S(T) = 9" và
 # `learner_text` của bước diện tích "Tính diện tích thiết diện: S(T) = 9.". 0 trường hình học/giá trị,
 # số vật 17, final_memory giữ nguyên; P6 không đổi. Hằng W17 của P1: `84b1b7d4…`.
-SCENE_START = {CA_P1: "c1ba6d59261987c207c0f606f2f14419d8e4f1a737b49d18b0eb5f0ee77d6df0",
-               CA_P6: "52ab72fbeac51dc30af9a49b6d0bbb6b00d246dda5472d8a490131ba0054ad28"}
+# regular-square-pyramid-w04 (yêu cầu 6, lời kể): CHỈ đổi chuỗi lời kể — P1 4 `explanation` (đường thẳng BD, nhóm
+# cạnh bên, mặt phẳng (α), câu khép thiết diện), P6 `explanation`/`learner_text` của hình trụ + mặt phẳng. 0 trường
+# thêm/xoá, 0 trường hình học/giá trị, số vật và final_memory giữ nguyên. Hằng trước W4 (f3db0f6f): P1 `c1ba6d59…`,
+# P6 `52ab72fb…`. Đối soát: `docs/evaluation/geometry/runs/regular-square-pyramid-w04/diagnostics/scene_hash/`.
+SCENE_START = {CA_P1: "8b7573053b6cbdea33ed3009fc46163ab27b3092a7eac62a1ffd5a49f96f2d3f",
+               CA_P6: "b582e45a72ec8ebc6683e9a9d07047395f60dee572d9acb1e128e8e6187dacac"}
 SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 
 

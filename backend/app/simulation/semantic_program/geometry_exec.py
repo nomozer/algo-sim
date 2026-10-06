@@ -21,6 +21,7 @@ nuốt lỗi ở đây là xoá mất phân biệt ấy.
 """
 from __future__ import annotations
 
+import re
 from fractions import Fraction
 from typing import Any
 
@@ -593,18 +594,67 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
     raise GeometryError(ERR_SAI_LOAI, f"biểu thức hình học lạ: {kind}")
 
 
+# ── lời kể: tên của vật trong câu (regular-square-pyramid-w04 · yêu cầu 6) ────
+#: Ký hiệu được đứng trong lời kể: "(T)", "(α)", "(SBD)"; nhãn hoa `S.ABCD`, `A′`, `MN`; một chữ thường/Hy Lạp `d`, `Δ`.
+_TEN_LOI_KE = re.compile(r"\([^()_]+\)|[A-Z][A-Z0-9₀-₉'’′.]*|[a-zα-ωΔ][0-9₀-₉'’′]*")
+
+
+def ten_trong_loi_ke(nhan: Any, bien: Any, danh_tu: str) -> str:
+    """Tên một vật được phép đứng trong LỜI KỂ sau danh từ `danh_tu` ("mặt phẳng", "thiết diện"…), hoặc `""`.
+
+    Lời kể đi tới bề mặt học sinh (khe thuyết minh, panel Giải thích, `explanation` của sự kiện). Bản trước ghép
+    thẳng `node.label or node.target_var` ⇒ "Thiết diện thiết diện …", "khối chop bởi mặt phẳng mp", "mặt phẳng
+    alpha_plane". Luật: nhãn của câu lệnh, bỏ danh từ đã đứng trước nó; nhãn còn gạch dưới là tên biến, không phải
+    tên; không có nhãn dùng được thì KÝ HIỆU TOÁN của tên biến (`ky_hieu_toan`: `S.ABCD`, `T`, `A_prime` → `A′`);
+    không có ký hiệu thì không tên — câu vẫn đúng nghĩa, không bịa một chữ. Nhãn hay kèm phương trình
+    ("(α): z = 3") — tên là phần trước dấu hai chấm. Phần còn lại phải TRÔNG như ký hiệu (`_TEN_LOI_KE`): một từ
+    ("alpha" của P6, "Hình trụ") không phải tên, và không đoán nó thành ký hiệu của đề."""
+    from .source_entities import dinh_danh_thuc_the, ky_hieu_toan
+
+    t = str(nhan or "").strip()
+    if t.lower().startswith(danh_tu.lower()):
+        t = t[len(danh_tu):]
+    t = t.split(":")[0].strip()
+    if not _TEN_LOI_KE.fullmatch(t):
+        t = ""
+    if not t and bien:
+        k = ky_hieu_toan(str(bien))
+        t = dinh_danh_thuc_the(k)[1] if k else ""
+    return t
+
+
+def _kem(ten: str) -> str:
+    return f" {ten}" if ten else ""
+
+
+def _ten_hoac(bien: Any, mo_ta: str) -> str:
+    """Ký hiệu của một toán hạng trong câu, không có thì mô tả trung tính (không bao giờ là tên biến thô)."""
+    return ten_trong_loi_ke(None, bien, "") or mo_ta
+
+
+def _ten_diem(bien: Any) -> str:
+    return _ten_hoac(bien, "một điểm đã dựng")
+
+
+def ke_thiet_dien(nhan: Any, khoi: Any, mat_phang: Any, so_dinh: int) -> str:
+    """Lời kể bước KHÉP thiết diện — tên lấy theo `ten_trong_loi_ke`, thiếu tên thì mô tả trung tính."""
+    return (f"Thiết diện{_kem(ten_trong_loi_ke(nhan, nhan, 'thiết diện'))} là đa giác {so_dinh} đỉnh, giao của "
+            f"mặt phẳng{_kem(ten_trong_loi_ke(mat_phang, mat_phang, 'mặt phẳng'))} với khối"
+            f"{_kem(ten_trong_loi_ke(None, khoi, 'khối'))}.")
+
+
 # ── câu lệnh dựng: trả (giá trị, mô tả bước) ──────────────────────────────
 def exec_construct_point(node: Any, mem: dict[str, Any]) -> tuple[Point3, str]:
     p = eval_geometry_expr(node.expr.kind, node.expr, mem)
-    ten = node.label or node.target_var
-    return p, f"Dựng điểm {ten} = ({p.x}, {p.y}, {p.z})."
+    ten = ten_trong_loi_ke(node.label, node.target_var, "điểm")
+    return p, f"Dựng điểm{_kem(ten)} = ({p.x}, {p.y}, {p.z})."
 
 
 def exec_construct_line(node: Any, mem: dict[str, Any]) -> tuple[Line3, str]:
     a = _lay(mem, node.through_a, Vec3, "điểm")
     b = _lay(mem, node.through_b, Vec3, "điểm")
-    ten = node.label or node.target_var
-    return Line3.through(a, b), f"Dựng đường thẳng {ten} qua hai điểm đã có."
+    ten = ten_trong_loi_ke(node.label, node.target_var, "đường thẳng")
+    return Line3.through(a, b), f"Dựng đường thẳng{_kem(ten)} qua hai điểm đã có."
 
 
 def exec_construct_segment(node: Any, mem: dict[str, Any]) -> tuple[Segment3 | list[Segment3], str]:
@@ -624,8 +674,8 @@ def exec_construct_segment(node: Any, mem: dict[str, Any]) -> tuple[Segment3 | l
             seg = Segment3.between(a, b)
             mem[name] = seg
             res.append(seg)
-        ten = node.label or node.target_var
-        return res, f"Dựng {ten}."
+        nhan = str(node.label or "").strip()
+        return res, f"Dựng {nhan[:1].lower() + nhan[1:]}." if nhan and "_" not in nhan else "Dựng các đoạn thẳng."
     a = _lay(mem, node.endpoint_a, Vec3, "điểm")
     b = _lay(mem, node.endpoint_b, Vec3, "điểm")
     if a == b:
@@ -633,16 +683,17 @@ def exec_construct_segment(node: Any, mem: dict[str, Any]) -> tuple[Segment3 | l
             ERR_HINH_HOC_KHONG_HOP_LE,
             f"construct_segment: hai điểm đầu mút trùng nhau ({node.endpoint_a})",
         )
-    ten = node.label or node.target_var
-    return Segment3.between(a, b), f"Dựng đoạn thẳng {ten} nối {node.endpoint_a} và {node.endpoint_b}."
+    ten = ten_trong_loi_ke(node.label, node.target_var, "đoạn thẳng")
+    return Segment3.between(a, b), (f"Dựng đoạn thẳng{_kem(ten)} nối {_ten_diem(node.endpoint_a)} "
+                                    f"và {_ten_diem(node.endpoint_b)}.")
 
 
 def exec_construct_plane(node: Any, mem: dict[str, Any]) -> tuple[Plane3, str]:
     """Mặt phẳng qua BA ĐIỂM ĐÃ CÓ. Ba điểm thẳng hàng ⇒ kernel NÉM, không đoán."""
     p = [_lay(mem, t, Vec3, "điểm") for t in node.through]
-    ten = node.label or node.target_var
+    ten = ten_trong_loi_ke(node.label, node.target_var, "mặt phẳng")
     return Plane3.through(p[0], p[1], p[2]), (
-        f"Dựng mặt phẳng {ten} qua ba điểm {', '.join(node.through)}."
+        f"Dựng mặt phẳng{_kem(ten)} qua ba điểm {', '.join(_ten_diem(t) for t in node.through)}."
     )
 
 
@@ -662,9 +713,9 @@ def exec_construct_plane_from_equation(
     from fractions import Fraction
 
     he = [Fraction(getattr(node, t)) for t in ("a", "b", "c", "d")]
-    ten = node.label or node.target_var
+    ten = ten_trong_loi_ke(node.label, node.target_var, "mặt phẳng")
     return Plane3.from_equation(*he), (
-        f"Dựng mặt phẳng {ten} từ phương trình {_viet_pt(*he)}."
+        f"Dựng mặt phẳng{_kem(ten)} từ phương trình {_viet_pt(*he)}."
     )
 
 
@@ -841,19 +892,17 @@ def exec_construct_curved_solid(
             _lay_dai_luong(mem, node.height, "chiều cao"))
     kh = CurvedSolid(node.curved_kind, tam, dinh, vanh, q,
                      height_sq_khai=h2, pose_canonical=canonical)
-    ten = node.label or node.target_var
-    neo = "hệ quy chiếu do hệ chọn" if canonical else f"tâm {node.anchor}"
+    dau = f"Dựng {kc.danh_tu.lower()}{_kem(ten_trong_loi_ke(node.label, node.target_var, kc.danh_tu.lower()))}"
+    neo = "hệ quy chiếu do hệ chọn" if canonical else f"tâm {_ten_diem(node.anchor)}"
+    ban_kinh, cao = _ten_hoac(node.radius, "đã cho"), _ten_hoac(getattr(node, "height", None), "đã cho")
     if q is not None and h2 is not None:
-        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: {neo}, bán kính "
-              f"{node.radius}, chiều cao {node.height}.")
+        ke = f"{dau}: {neo}, bán kính {ban_kinh}, chiều cao {cao}."
     elif q is not None:
-        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: {neo}, bán kính "
-              f"{node.radius}"
-              + (f", {kc.vai_dinh} {node.apex_or_top}." if dinh else "."))
+        ke = (f"{dau}: {neo}, bán kính {ban_kinh}"
+              + (f", {kc.vai_dinh} {_ten_diem(node.apex_or_top)}." if dinh else "."))
     elif kc.co_truc:
-        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: đáy tâm {node.anchor} đi qua "
-              f"{node.rim_point}, {kc.vai_dinh} {node.apex_or_top}.")
+        ke = (f"{dau}: đáy tâm {_ten_diem(node.anchor)} đi qua {_ten_diem(node.rim_point)}, "
+              f"{kc.vai_dinh} {_ten_diem(node.apex_or_top)}.")
     else:
-        ke = (f"Dựng {kc.danh_tu.lower()} {ten}: tâm {node.anchor}, đi qua "
-              f"{node.rim_point}.")
+        ke = f"{dau}: tâm {_ten_diem(node.anchor)}, đi qua {_ten_diem(node.rim_point)}."
     return kh, ke

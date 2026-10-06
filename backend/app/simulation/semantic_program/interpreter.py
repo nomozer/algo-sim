@@ -57,6 +57,7 @@ DEFAULT_MAX_STEPS = 300
 
 from .geometry_exec import (  # noqa: E402
     GEOMETRY_TYPES,
+    ke_thiet_dien,
     build_initial,
     chuan_hoa_dai_luong,
     exec_construct_line,
@@ -468,11 +469,12 @@ class SemanticProgramInterpreter:
                          "chu_trinh": [[str(v.x), str(v.y), str(v.z)]
                                        for v in sec.polygon],
                          "mat_sinh_canh": [s.face_index for s in sec.steps]},
-                narration=(
-                    f"Thiết diện {stmt.label or stmt.target_var} là đa giác "
-                    f"{len(sec.polygon)} đỉnh, cắt khối {stmt.solid} bởi mặt "
-                    f"phẳng {stmt.plane}."
-                ),
+                # W4 · yêu cầu 6: tên qua `ke_thiet_dien` — không tên biến IR, không lặp danh từ.
+                # Mặt phẳng được gọi theo NHÃN câu lệnh đã dựng nó ("Mặt phẳng (α): z = 3"), không theo tên biến.
+                narration=ke_thiet_dien(stmt.label or stmt.target_var, stmt.solid,
+                                        next((b.details.get("label") for b in reversed(self.trace)
+                                              if b.target == stmt.plane and b.details.get("label")), stmt.plane),
+                                        len(sec.polygon)),
                 # Khép thiết diện là một bước DỰNG. Kết luận của bài (đáp số)
                 # do tầng cảnh xác định từ mục tiêu của đề (w10); gắn
                 # FINAL_RESULT ở đây từng đẩy "kết luận" lên TRƯỚC các bước đo.

@@ -12,6 +12,7 @@ về cạnh ấy (`boundary_edge_ids`) kèm khoảng tham số trên cạnh (`ed
 from __future__ import annotations
 
 import copy
+import json
 
 from app.simulation.semantic_program.scene3d import _attach_topology
 from tests.geometry import test_construction_binding as CB
@@ -72,3 +73,88 @@ def test_tang_canh_chi_chep_khoang_da_tinh():
     objs2[1].pop("boundary_edge_ids"), objs2[1].pop("edge_span")
     _attach_topology(objs2)
     assert "boundary_edge_ids" not in objs2[1]
+
+
+# ── Yêu cầu 6 — lời kể không lộ tên nội bộ, không lặp danh từ (nguồn: interpreter / geometry_exec) ─────────────
+import re  # noqa: E402
+
+import pytest  # noqa: E402
+
+TOKEN_IR = re.compile(r"\b[\w.]*[A-Za-z0-9]_[A-Za-z0-9][\w.]*\b")
+LAP_DANH_TU = re.compile(r"(?i)\b(thiết diện|mặt phẳng|đoạn thẳng|đường thẳng|khối)\s+\1\b")
+
+
+def test_cau_thiet_dien_cua_nguoi_dung():
+    """Ảnh của người dùng: "Thiết diện thiết diện là đa giác 4 đỉnh, cắt khối chop bởi mặt phẳng mp."."""
+    from app.simulation.semantic_program.geometry_exec import ke_thiet_dien
+
+    cau = ke_thiet_dien("thiết diện", "chop", "mp", 4)
+    assert not LAP_DANH_TU.search(cau), cau
+    assert "chop" not in cau and " mp" not in cau, cau
+    assert cau == "Thiết diện là đa giác 4 đỉnh, giao của mặt phẳng với khối."
+    assert ke_thiet_dien("Thiết diện (T)", "S.ABCD", "alpha_plane", 4) == \
+        "Thiết diện (T) là đa giác 4 đỉnh, giao của mặt phẳng với khối S.ABCD."
+    assert ke_thiet_dien("T", "S.ABCD", "P", 3) == "Thiết diện T là đa giác 3 đỉnh, giao của mặt phẳng P với khối S.ABCD."
+    # nhãn câu lệnh mặt phẳng hay kèm phương trình — tên là phần trước dấu hai chấm
+    assert ke_thiet_dien("Thiết diện (T)", "S.ABCD", "Mặt phẳng (α): z = 3", 4) == \
+        "Thiết diện (T) là đa giác 4 đỉnh, giao của mặt phẳng (α) với khối S.ABCD."
+
+
+def test_cau_thiet_dien_p1_goi_ten_mat_phang_cua_de():
+    """Đối soát băm cảnh P1 (W4): câu khép thiết diện từng mất "(α)" vì chỉ tên biến `alpha_plane` tới được nó;
+    tên của mặt phẳng phải lấy từ NHÃN câu lệnh đã dựng nó ("Mặt phẳng (α): z = 3"), đúng như đề gọi."""
+    _ho, contract, prog = next(x for x in _bay_ho() if x[0] == "cross_section")
+    _sp, out, scene = W.chay(contract, prog)
+    cau = next(e["explanation"] for e in scene["events"] if (e.get("explanation") or "").startswith("Thiết diện"))
+    assert cau == "Thiết diện (T) là đa giác 4 đỉnh, giao của mặt phẳng (α) với khối S.ABCD.", cau
+
+
+@pytest.mark.parametrize("nhan,bien,danh_tu,mong", [
+    ("thiết diện", "td", "thiết diện", ""),
+    ("Thiết diện (T)", "T", "thiết diện", "(T)"),
+    (None, "alpha_plane", "mặt phẳng", ""),
+    (None, "S.ABCD", "khối", "S.ABCD"),
+    ("Mặt phẳng (P)", "mp", "mặt phẳng", "(P)"),
+    ("mp_day", "mp_day", "mặt phẳng", ""),
+    (None, "A_prime", "điểm", "A′"),
+    ("Mặt phẳng (α): z = 3", "alpha_plane", "mặt phẳng", "(α)"),
+    # P6: mô hình viết "alpha" thay ký hiệu của đề — một TỪ, không phải ký hiệu ⇒ không in, không đoán thành α
+    ("Mặt phẳng alpha", "mat_phang_alpha", "mặt phẳng", ""),
+    ("Hình trụ", "hinh_tru", "hình trụ", ""),
+    ("Đường thẳng d", "d", "đường thẳng", "d"),
+])
+def test_ten_trong_loi_ke(nhan, bien, danh_tu, mong):
+    from app.simulation.semantic_program.geometry_exec import ten_trong_loi_ke
+
+    assert ten_trong_loi_ke(nhan, bien, danh_tu) == mong
+
+
+def _bay_ho():
+    from app.simulation.semantic_program.analyze_contract import build_request_contract
+    from scripts import replay_negative_boundaries as RNB
+    from tests.geometry import test_assumption_certificate as AC
+    from tests.geometry import test_regular_square_pyramid as RSP
+
+    for ho, f in sorted(W.HO.items()):
+        _t, contract = f()
+        yield ho, contract, W.chuong_trinh(contract)
+    raw = RNB.doc_raw_theo_thu_tu("p1_chop_thiet_dien_khoang_cach")
+    yield "cross_section", build_request_contract(
+        json.loads(raw["semantic_analyze"][0]), problem_text=RNB.doc_de_bai()["p1_chop_thiet_dien_khoang_cach"],
+        domain="hinh_hoc"), json.loads(raw["semantic_program"][0])
+    yield ("cross_section_correct_plane", *AC.PHEP_DUNG_DUNG["O1b_doi_chung_cat_bang_beta"]())
+    yield ("regular_square_pyramid", *RSP._nap("S1_side_height_volume"))
+    yield ("sm_on_edge", *CB._p1(VAN_SM, [CB._mid("M", "S", "A")], "S", "M"))
+
+
+def test_loi_ke_bay_ho_khong_lo_ten_noi_bo():
+    loi = []
+    for ho, contract, prog in _bay_ho():
+        _sp, out, scene = W.chay(contract, prog)
+        assert out.servable, (ho, out.stage_reached, out.reason_code)
+        for e in scene["events"]:
+            for truong in ("explanation", "learner_text"):
+                cau = e.get(truong) or ""
+                if TOKEN_IR.search(cau) or LAP_DANH_TU.search(cau):
+                    loi.append((ho, truong, cau))
+    assert not loi, loi

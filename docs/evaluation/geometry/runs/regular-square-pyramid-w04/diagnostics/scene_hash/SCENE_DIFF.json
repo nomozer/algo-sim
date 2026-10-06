@@ -1,0 +1,66 @@
+{
+ "P1": {
+  "bam_truoc": "c1ba6d59261987c207c0f606f2f14419d8e4f1a737b49d18b0eb5f0ee77d6df0",
+  "bam_sau": "8b7573053b6cbdea33ed3009fc46163ab27b3092a7eac62a1ffd5a49f96f2d3f",
+  "so_vat": [
+   17,
+   17
+  ],
+  "them": [],
+  "xoa": [],
+  "doi": [
+   {
+    "truong": ".events[12].explanation",
+    "truoc": "Dựng đường thẳng Đường thẳng BD qua hai điểm đã có.",
+    "sau": "Dựng đường thẳng BD qua hai điểm đã có."
+   },
+   {
+    "truong": ".events[2].explanation",
+    "truoc": "Dựng Các cạnh bên SA, SB, SC, SD.",
+    "sau": "Dựng các cạnh bên SA, SB, SC, SD."
+   },
+   {
+    "truong": ".events[4].explanation",
+    "truoc": "Dựng mặt phẳng Mặt phẳng (α): z = 3 từ phương trình z - 3 = 0.",
+    "sau": "Dựng mặt phẳng (α) từ phương trình z - 3 = 0."
+   },
+   {
+    "truong": ".events[9].explanation",
+    "truoc": "Thiết diện Thiết diện (T) là đa giác 4 đỉnh, cắt khối S.ABCD bởi mặt phẳng alpha_plane.",
+    "sau": "Thiết diện (T) là đa giác 4 đỉnh, giao của mặt phẳng (α) với khối S.ABCD."
+   }
+  ]
+ },
+ "P6": {
+  "bam_truoc": "52ab72fbeac51dc30af9a49b6d0bbb6b00d246dda5472d8a490131ba0054ad28",
+  "bam_sau": "b582e45a72ec8ebc6683e9a9d07047395f60dee572d9acb1e128e8e6187dacac",
+  "so_vat": [
+   7,
+   7
+  ],
+  "them": [],
+  "xoa": [],
+  "doi": [
+   {
+    "truong": ".events[1].explanation",
+    "truoc": "Dựng hình trụ Hình trụ: đáy tâm O đi qua A, tâm đáy trên K.",
+    "sau": "Dựng hình trụ: đáy tâm O đi qua A, tâm đáy trên K."
+   },
+   {
+    "truong": ".events[1].learner_text",
+    "truoc": "Dựng hình trụ Hình trụ: đáy tâm O đi qua A, tâm đáy trên K.",
+    "sau": "Dựng hình trụ: đáy tâm O đi qua A, tâm đáy trên K."
+   },
+   {
+    "truong": ".events[2].explanation",
+    "truoc": "Dựng mặt phẳng Mặt phẳng alpha từ phương trình 2x - z + 12 = 0.",
+    "sau": "Dựng mặt phẳng từ phương trình 2x - z + 12 = 0."
+   },
+   {
+    "truong": ".formation.steps[1].learner_text",
+    "truoc": "Dựng hình trụ Hình trụ: đáy tâm O đi qua A, tâm đáy trên K.",
+    "sau": "Dựng hình trụ: đáy tâm O đi qua A, tâm đáy trên K."
+   }
+  ]
+ }
+}
