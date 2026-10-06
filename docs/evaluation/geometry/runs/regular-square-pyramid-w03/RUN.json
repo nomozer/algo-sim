@@ -44,8 +44,10 @@
     "occlusion": "pass, 0 failures, HUMAN_REVIEW_PENDING (4 W14 scenes, U2)",
     "playback": "PASS; every geometry step changes the figure, no exemption",
     "images": "68 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
-    "t3_and_gates_at_final_commit": "HANDOFF.md section 2"
+    "t3_at_4c0f9219": "FULL_PRODUCT_GATE_PASS (pytest 7156 passed / 1 skipped, vitest 1091/1091, build, demo 5/5, crash surface 6/6; clean worktree before and after)",
+    "identity_gates_at_4c0f9219": "w03_gates.sh: all green (candidate 5dec4572, cache 114, schema x2 d852b47c, LLM_ONLY, model surface 0, diff --check 0, docs audit PASS, node harness 82 pass / 0 fail / 2 skip)"
   },
+  "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW",
   "questions": {
     "H-W2-1": "visual review (blocks merge) - REVIEW.md",
     "H-W2-2": "DEFECT, fixed (45beaed3)",

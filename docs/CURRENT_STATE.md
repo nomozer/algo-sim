@@ -59,7 +59,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANDIDATE = 5dec4572… (was d3de9c44…; một lần đóng băng), product commit 45beaed3
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên, không stage)
 > CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE (việc regular-square-pyramid, W3, run regular-square-pyramid-w03)
-> FINAL_DECISION = xem runs/regular-square-pyramid-w03/HANDOFF.md §2 · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w03/REVIEW.md (H-W2-1, chặn merge) và quyết định H-W2-3, H-W2-5; duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại 4c0f9219 — runs/regular-square-pyramid-w03/HANDOFF.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w03/REVIEW.md (H-W2-1, chặn merge) và quyết định H-W2-3, H-W2-5; duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```

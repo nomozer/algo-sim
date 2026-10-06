@@ -24,7 +24,7 @@ CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE (việc regular-square-py
 PRODUCT_STATE = candidate 5dec4572… (product commit 45beaed3; một lần đóng băng), CACHE_VERSION 114, LLM_ONLY
 MEASUREMENT = a5d233ce (bằng chứng 0d0d1de3) (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = runs/regular-square-pyramid-w03/HANDOFF.md §2
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w03; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại 4c0f9219)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (H-W2-1, gộp H-W1-1; gói runs/regular-square-pyramid-w03/REVIEW.md)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO

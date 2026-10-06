@@ -31,7 +31,8 @@ Trạng thái duyệt: **NOT_APPROVED** — chỉ người dùng ghi `APPROVED_B
   lượt, `causal_restore` thiết diện qua ở desktop và mobile. Hai cổng đỏ trên cloud là lỗi môi trường (SwiftShader).
 - Sau hai bản sửa W3, đo lại tại `a5d233ce`: suite 7/7 họ PASS, 14/14 lượt dương xanh trọn; đầu dò W2 14/14; occlusion
   pass, 0 lỗi; phát lại PASS với "mọi bước dựng đổi hình" KHÔNG còn miễn trừ; 68 crop, 0 bất đồng oracle, 0 chủ sở
-  hữu trùng. T3 và cổng danh tính tại commit cuối: `REPORT.md` §6.
+  hữu trùng. Tại commit tài liệu `4c0f9219`: T3 `FULL_PRODUCT_GATE_PASS` (pytest 7156 passed, vitest 1091/1091, build,
+  demo 5/5, bề mặt sập 6/6) và mọi cổng danh tính xanh (`HANDOFF.md` §2).
 
 ## 3. Đánh giá bốn câu hỏi của W2
 

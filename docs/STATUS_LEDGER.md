@@ -981,7 +981,8 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CODE_COMMIT_OR_NONE:** 824924d7 (a measurement-only helper plane opens no geometry step; W2 gate exemptions removed — H-W2-4) · 45beaed3 (the segment whose length the problem asks for is built before the answer; CACHE_VERSION 113 → 114 — H-W2-2) · a5d233ce (scenario file pins the refrozen tree hash)
 - **CANDIDATE:** d3de9c44… → 5dec4572… (one freeze at 45beaed3, de3f9ec2) · CACHE_VERSION 114 · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** baseline at fe68b4ca 47941832 · measurement a5d233ce · evidence 0d0d1de3
-- **CLASSIFICATION:** see the run's HANDOFF.md §2 (T3 and gates at the final commit)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 4c0f9219 from a path with a space (pytest 7156 passed / 1 skipped, vitest 1091/1091, build, demo 5/5, crash surface 6/6); identity gates green (`diagnostics/logs/GATES_4c0f9219.log`)
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w03/REPORT.md
@@ -993,4 +994,4 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** regular-square-pyramid-w02 — PC1-W2 (lowered W18 expectation restored), the hidden-helper exemption of three gates, the cloud classification of two browser gates (environment)
 - **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md, H-W2-1); user decision on H-W2-3, H-W2-5; on approval merge into main, push, delete the branch
-- **FINAL_DECISION:** HANDOFF.md §2 of the run
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

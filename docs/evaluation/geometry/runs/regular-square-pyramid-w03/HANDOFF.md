@@ -13,7 +13,7 @@ MODEL_SURFACE_CHANGED = NO · DEFAULT_MODE = LLM_ONLY · LIVE_GEMINI_REQUESTS = 
 HUMAN_VISUAL_REVIEW  = NOT_APPROVED
 MERGE / PUSH / PR    = NO / NO / NO
 FAVICON_TOUCHED      = NO
-FINAL_DECISION       = xem §2
+FINAL_DECISION       = READY_FOR_HUMAN_VISUAL_REVIEW
 ```
 
 ## 1. Đã làm
@@ -26,7 +26,23 @@ FINAL_DECISION       = xem §2
 
 ## 2. Cổng tại commit cuối
 
-Điền từ log thật ở commit kiểm chứng (`diagnostics/logs/T3_FULL_GATE_*.log`, `GATES_*.log`).
+Commit tài liệu `4c0f9219`, worktree tách rời sạch `D:/tmp/rsp w03b` (CRLF, có dấu cách), log ngoài worktree rồi chép vào
+`diagnostics/logs/T3_FULL_GATE_4c0f9219.log`, `GATES_4c0f9219.log`. Cây sạch trước và sau.
+
+| Cổng | Kết quả |
+|---|---|
+| T3 `full-gate.mjs` | **`FULL_PRODUCT_GATE_PASS`** — pytest 7156 passed, 1 skipped; vitest 1091/1091; tsc + build; demo 5/5; bề mặt sập 6/6 |
+| candidate / cache verify | `5dec4572…` khớp / khoá 114 khớp, môi trường `b1714b56…` |
+| schema ×2 | trùng byte `d852b47c…`; git status không đổi |
+| `DEFAULT_MODE` | `LLM_ONLY`; routing.py không đổi từ `fe68b4ca`; compiler không được gọi từ `app/ai`/`main.py`; `FIXTURE_TIN_CAY` 0 |
+| bề mặt mô hình | 0 file đổi từ `fe68b4ca` |
+| bằng chứng lịch sử | ngoài run W3 chỉ hai sổ sống (candidate, khai lệch); "1 of 181" báo cáo catalog = `EVIDENCE_INDEX.md` — dương tính giả đã biết (tài liệu sống khớp regex catalog) |
+| `git diff --check fe68b4ca..4c0f9219` | 0 |
+| audit tài liệu | PASS |
+| node harness (gồm `full-gate.node-test.mjs`, đường dẫn có dấu cách) | 84: 82 pass, 0 fail, 2 skip |
+
+Mọi cổng bắt buộc đạt ⇒ **`READY_FOR_HUMAN_VISUAL_REVIEW`**. Không có cổng nào bị hạ hay bỏ; hai cổng W2 từng nới đã được
+khôi phục (`REPORT.md` §3–4).
 
 ## 3. Chờ người dùng
 

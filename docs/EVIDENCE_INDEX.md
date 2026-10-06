@@ -1040,7 +1040,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** 824924d7 (H-W2-4) · 45beaed3 (H-W2-2; CACHE_VERSION 114) · a5d233ce (scenario tree-hash pin)
 - **MEASUREMENT_COMMIT:** a5d233ce4e635b0228f04af55aa04f3407d4a8d8 (local, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, occlusion, playback, builder); baseline at fe68b4ca (`diagnostics/baseline_fe68b4ca/`) and attempt 1 at 47941832 (`diagnostics/attempts/`) kept (`MEASUREMENT_ATTEMPTS.json`)
 - **EVIDENCE_COMMIT_ROLE:** evidence commit 0d0d1de3 after the measurement (results, images, inputs, logs)
-- **CLASSIFICATION:** HANDOFF.md §2 of the run
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + identity gates at 4c0f9219)
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (d3de9c44… → 5dec4572…; one freeze at 45beaed3)
