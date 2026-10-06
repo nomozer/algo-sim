@@ -1072,3 +1072,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** SHARED_SIMULATION_UI_CLOSURE — presentation layer of the simulation (panels, layout, selection); human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/PANEL_INVENTORY.md` · `diagnostics/PROOF_CACHE_ROW_W04.json` · `diagnostics/scene_hash/SCENE_DIFF.json` · `diagnostics/sm_overlap/` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/SM_OVERLAP_AFTER_103494c4.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+## WAVE_ID = IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE
+- **RUN_ID:** regular-square-pyramid-w05 (task regular-square-pyramid, wave W5; `docs/evaluation/RUN_NAMING.md`)
+- **DATE:** 2026-10-06/07
+- **REPORT:** docs/evaluation/geometry/runs/regular-square-pyramid-w05/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/regular-square-pyramid-w05/
+- **START_BASE:** 73bc404e (W4 head)
+- **CODE_COMMIT:** c15e6fab · 470adc3a · 82225a7b (harness c1070389 · f01df0e5)
+- **MEASUREMENT_COMMIT:** f01df0e5 (local, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, W4 panels probe, W05 focus probe, occlusion, playback, builder); attempts 1–3 at a588f8db, c1070389, 74c91060 kept (`diagnostics/attempts/`, `MEASUREMENT_ATTEMPTS.json`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit 3b31aa18 after the measurement (results, images, inputs, logs)
+- **CLASSIFICATION:** see `HANDOFF.md` §2
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (8a27a58b… → 5e1c0639…; two freezes, same tree hash, product commit 82225a7b)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 115; `diagnostics/cache_proof/CACHE_DECISION_W05.json`)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-square-pyramid-w01 `LABELS_R2.json` row R2_L1 (by a new layer; W1 files untouched)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** focused simulation workspace (presentation) + chained-equality source reader; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/TOOL_INVENTORY.md` · `diagnostics/SKILL_NOTES.md` · `diagnostics/corpus/LABELS_W05.json` · `diagnostics/cache_proof/` · `results/BROWSER_EVIDENCE.json` · `results/W05_FOCUS_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W02_CLOSURE_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

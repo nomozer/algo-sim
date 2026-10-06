@@ -13,13 +13,21 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **W5 của việc `regular-square-pyramid` (2026-10-06/07, run
+  [`regular-square-pyramid-w05`](evaluation/geometry/runs/regular-square-pyramid-w05/), máy local):**
+  IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE — cảnh 3D lấp trang không thanh trên toàn cục, nút quay lại, công cụ nhóm
+  trong menu, toàn màn hình tuỳ chọn, thẻ lời giải lặp đã gỡ; bộ đọc độ dài nguồn đọc chuỗi bằng nhau (`R2_L1` phục vụ
+  `16/3`); `CACHE_VERSION` 115 (không bump), candidate `5e1c0639…`. Việc duy nhất: người dùng duyệt hình theo
+  `REVIEW.md` của run W5 cùng gói W4 (chặn merge); duyệt thì merge, push, xoá nhánh ở một lượt riêng có lệnh. Việc mở rộng
+  họ đề xuất sau duyệt: chóp tam giác đều + tứ diện đều trên bộ đọc mới (`REPORT.md` §7 của run W5).
+
 - **W4 của việc `regular-square-pyramid` (2026-10-06, run
   [`regular-square-pyramid-w04`](evaluation/geometry/runs/regular-square-pyramid-w04/), máy local):**
   SHARED_SIMULATION_UI_CLOSURE — một cơ chế bảng nổi cho mọi bảng thông tin (ô soi thôi là cột; H-W2-3 khép theo yêu
   cầu người dùng), canvas theo chiều cao khả dụng với «Bước n/N» trong thanh, cây «Thành phần» theo bước, lời kể theo
-  ký hiệu đề, SM trên SA nhường nét; `CACHE_VERSION` 115, candidate `8a27a58b…`. Việc duy nhất: người dùng duyệt hình
-  theo `REVIEW.md` của run W4 (R1–R10, gộp duyệt W1–W3; chặn merge); duyệt thì merge, push, xoá nhánh ở một lượt riêng
-  có lệnh. Gạch đầu dòng W3, W2, W1 dưới là bối cảnh.
+  ký hiệu đề, SM trên SA nhường nét; `CACHE_VERSION` 115, candidate `8a27a58b…`. Gói duyệt hình W4 (R1–R10, gộp W1–W3)
+  duyệt cùng gói W5; câu R4 (trần chiều cao canvas mobile) được brief W5 trả lời: không trần. Gạch đầu dòng W3, W2, W1
+  dưới là bối cảnh.
 
 - **W3 của việc `regular-square-pyramid` (2026-10-06, run
   [`regular-square-pyramid-w03`](evaluation/geometry/runs/regular-square-pyramid-w03/), máy local):** tiếp nhận W2

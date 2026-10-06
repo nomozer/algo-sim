@@ -25,9 +25,9 @@ thuộc thư mục run trong `docs/evaluation/`.
 >
 > | | |
 > |---|---|
-> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung; W3 + W4 chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
+> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung) + W5 (`regular-square-pyramid-w05`, 2026-10-06/07, chế độ tập trung + bộ đọc chuỗi bằng nhau; W3–W5 chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
 > | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi; regular-square-pyramid-w01 (2026-10-05): `ls-remote` = `38d41588…` — không đổi (commit ghi kết quả tích hợp của cuboid-merge) |
-> | `CACHE_VERSION` | **115** (regular-square-pyramid-w04, 2026-10-06: envelope phục vụ đổi nội dung — đoạn nằm trên cạnh khối nhường nét cho cạnh, lời kể gọi vật theo ký hiệu của đề; 36 row v114 vẫn HIT — `PROOF_CACHE_ROW_W04.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **115** (regular-square-pyramid-w04, 2026-10-06: envelope phục vụ đổi nội dung — đoạn nằm trên cạnh khối nhường nét cho cạnh, lời kể gọi vật theo ký hiệu của đề; 36 row v114 vẫn HIT — `PROOF_CACHE_ROW_W04.json`; regular-square-pyramid-w05 giữ nguyên — mọi hàng phục vụ trước/sau bộ đọc chuỗi có cảnh trùng băm, `CACHE_DECISION_W05.json`) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
 > | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
@@ -52,17 +52,28 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 103494c4 (lượt đo 4 có thẩm quyền của regular-square-pyramid-w04 ở máy local, worktree tách rời sạch CRLF, đường dẫn có dấu cách; bằng chứng b4f924c1)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = f01df0e5 (lượt đo 4 có thẩm quyền của regular-square-pyramid-w05 ở máy local, worktree tách rời sạch CRLF, đường dẫn có dấu cách; bằng chứng 3b31aa18)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 115
-> CANDIDATE = 8a27a58b… (was 5dec4572…; ba lần đóng băng cùng tree hash), product commit 53e4bec5
-> USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên, không stage)
-> CURRENT_WAVE = SHARED_SIMULATION_UI_CLOSURE (việc regular-square-pyramid, W4, run regular-square-pyramid-w04)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại d6e41d80 — runs/regular-square-pyramid-w04/HANDOFF.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w04/REVIEW.md (R1–R10, gộp duyệt W1–W3; chặn merge); duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
+> CANDIDATE = 5e1c0639… (was 8a27a58b…; hai lần đóng băng cùng tree hash), product commit 82225a7b
+> USER_DIRTY_STATE = D frontend/public/favicon.svg + thay đổi chưa commit không thuộc W5 (xoá script/fixture Tin học cũ, sửa vài tài liệu) ở máy local (giữ nguyên, không stage)
+> CURRENT_WAVE = IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (việc regular-square-pyramid, W5, run regular-square-pyramid-w05)
+> FINAL_DECISION = xem runs/regular-square-pyramid-w05/HANDOFF.md §2 (T3 + cổng danh tính tại commit tài liệu) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w05/REVIEW.md (R1–R10) cùng gói W4 (runs/regular-square-pyramid-w04/REVIEW.md, gộp W1–W3; chặn merge); duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Chế độ tập trung + bộ đọc chuỗi bằng nhau — regular-square-pyramid-w05 (đo `f01df0e5`, worktree tách rời sạch; chờ review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Không gian mô phỏng | cảnh 3D lấp trang, không thanh trên toàn cục; «← trang trước» · tên bài · «Đề bài» · menu «Khám phá»/«Hiển thị»/«Thêm»; toàn màn hình tuỳ chọn; trang vừa một màn ở desktop/màn thấp, mobile cuộn |
+> | Bỏ lặp | thẻ lời giải dưới thanh phát gỡ — đại lượng ở «Đại lượng», công thức + nguồn ở ô soi, chú giải màu trong «Hiển thị» |
+> | Backend | `segment_relation` đọc `SA = SB = SC = SD = 3` cho mọi đoạn; `R2_L1` phục vụ `V = 16/3` (`ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY` khép) |
+> | Trình duyệt `f01df0e5` | suite 7/7, 14/14; W2 14/14; W4 21/21; **W05 21/21**; occlusion pass (4 cảnh chờ duyệt, U2); phát lại 14/14; 4 lần đo, chỉ lần 4 dùng |
+> | Candidate · `CACHE_VERSION` | `8a27a58b…` → **`5e1c0639…`** (product `82225a7b`, hai lần đóng băng) · **115** (không bump) |
+> | Run | [`regular-square-pyramid-w05`](evaluation/geometry/runs/regular-square-pyramid-w05/) (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`) |
 
 > **Giao diện mô phỏng dùng chung — regular-square-pyramid-w04 (đo `103494c4`, worktree tách rời sạch; chờ review người):**
 >

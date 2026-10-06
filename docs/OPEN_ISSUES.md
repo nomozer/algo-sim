@@ -583,7 +583,7 @@
 - **evidence:** corpus row `R2_L1_chained_equal_lateral_edges` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus/LABELS_R2.json`, `product_limit: true`; the independent oracle derives V = 16/3); `segment_relation.do_dai_trong_de` on that text returns {AB: 4, SD: 3}.
 - **impact:** Over-refusal (never a wrong answer) of a common way to state equal lateral edges; the refusal cause is CONSTRUCTION, so the learner is not told the text is at fault.
 - **scope:** `backend/app/simulation/semantic_program/segment_relation.py` (one length reader, shared by grounding and the certificate) — a chain `X1 = X2 = … = v` of segment names.
-- **status:** OPEN (regular-square-pyramid-w01) — found by the final self-review; the reader is unchanged by W1.
+- **status:** RESOLVED (regular-square-pyramid-w05, `c15e6fab`) — `segment_relation.MAU_DO_DAI` reads the chain prefix and every segment of the chain gets the value (one value per segment, a segment with two values still dropped); `cac_doan_truoc` replaces `nhan_doan_truoc` for GIVEN evidence and quantity annotations. Labels registered first (`runs/regular-square-pyramid-w05/diagnostics/corpus/LABELS_W05.json`, RED log before the fix): R2_L1 and W5_A served V = 16/3; mixed chains, a chain without a value, a wrong value and a segment outside the chain refused. The two W13 probe rows for `AB = AC = 5` moved to the registered-change set (`test_source_length_reader.py`). `CACHE_VERSION` kept at 115 by row proof (`diagnostics/cache_proof/CACHE_DECISION_W05.json`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next source-reader wave
 - **default_switch_blocker:** NO

@@ -1,0 +1,59 @@
+{
+  "schema_version": "family-slice-run/1",
+  "run_id": "regular-square-pyramid-w05",
+  "task": "IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE",
+  "task_slug": "regular-square-pyramid",
+  "wave": "W5",
+  "execution": "LOCAL",
+  "dates": "2026-10-06/07",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "73bc404e (W4 head)",
+  "commits": {
+    "red_chain_reader_labels_first": "b65bbdad",
+    "chained_equality_reader": "c15e6fab",
+    "focused_mode_grouped_tools_no_solution_card": "470adc3a",
+    "diagnostics_cache_proof": "c70e1698",
+    "freeze_1": "a588f8db",
+    "harness_css_readiness_title_font": "c1070389",
+    "focused_page_one_screen_and_playback_harness": "82225a7b",
+    "freeze_2": "74c91060",
+    "w04_probe_rotation_by_angle": "f01df0e5",
+    "evidence": "3b31aa18",
+    "docs_and_verification": "the commits that contain this file (not recorded here)"
+  },
+  "product_state": {
+    "measurement_commit": "f01df0e5 (attempt 4; clean detached CRLF worktree, path with a space)",
+    "candidate": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18 (product commit 82225a7b; previous 8a27a58b…; two freezes, same tree hash)",
+    "cache_version": "115 (unchanged; diagnostics/cache_proof/CACHE_DECISION_W05.json)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (focused simulation mode, grouped tools, solution card removed; chained equal lengths read from the source)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "115",
+    "CANDIDATE_REFROZEN": "YES, twice (470adc3a, 82225a7b; same measured-system tree hash)",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "SUBAGENTS": 0
+  },
+  "measurement": {
+    "attempts": 4,
+    "used": 4,
+    "suite": "7/7 families, 14/14 positive runs",
+    "w02_probe": "14/14",
+    "w04_probe": "21/21",
+    "w05_focus_probe": "21/21",
+    "occlusion": "pass (4 scenes HUMAN_REVIEW_PENDING, U2)",
+    "playback": "14/14",
+    "hidden_edge_crops": "68, 0 oracle disagreement, 0 duplicate owner",
+    "real_viewports": {"desktop": "1422x804", "low": "1348x554", "mobile": "390x844"}
+  },
+  "backend_slice": {
+    "name": "source length reader reads chains of equal segments",
+    "issue": "ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY (RESOLVED)",
+    "callers": ["grounding_gate._bang_chung", "refusal_cause (do_dai_trong_de)", "bat_bien_do_dai <- analyze_contract, assumption_gate", "shape_constraint.phan_chua_doc", "quantity_annotations._do_dai_de_cho"],
+    "labels": "diagnostics/corpus/LABELS_W05.json (written before the change)"
+  },
+  "foreign_uncommitted_changes": "present in the working tree, not part of this run, never staged (deleted legacy informatics scripts/fixtures; edits in AI_CONTEXT_BUNDLE, ARCHITECTURE_MAP, OPEN_ISSUES, CODE_INDEX)"
+}
