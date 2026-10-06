@@ -1,0 +1,18 @@
+# cwd: <worktree '/d/tmp/rsp w04c'> @ 643b7d7a7158398dab83e9a31be451bf60ae751e; timeout --signal=KILL 2400 node frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w04/images --bo-qua-build
+2026-10-06T07:30:07Z
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+regular_square_pyramid/desktop: PASS
+regular_square_pyramid/mobile: PASS
+Wrote D:\tmp\rsp w04c\docs\evaluation\geometry\runs\regular-square-pyramid-w04\images\PLAYBACK_EVIDENCE.json: PASS 30a868a8f5a5
+exit=0

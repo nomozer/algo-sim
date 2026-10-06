@@ -1,0 +1,36 @@
+{
+ "attempt": 2,
+ "measurement_commit": "643b7d7a7158398dab83e9a31be451bf60ae751e",
+ "suite_pass": false,
+ "families": {
+  "triangular_pyramid": true,
+  "triangular_prism": true,
+  "rectangular_pyramid": true,
+  "cuboid": true,
+  "cube": true,
+  "cross_section": true,
+  "regular_square_pyramid": false
+ },
+ "only_failure": {
+  "run": "regular_square_pyramid/positive/desktop",
+  "assertion": "camera_settled_rotated_neutral",
+  "details": {
+   "samples": 160,
+   "streak": 10,
+   "last_motion": 2.410107668993078e-10,
+   "max_motion": 0.05867804231894291,
+   "tolerance": 1e-09
+  },
+  "reading": "SETTLING_TIMEOUT on the frame condition, not on motion: last_motion 2.4e-10 <= tolerance 1e-9 and a stable streak of 10 >= 5 samples, but fewer than 30 rendered frames inside the streak (settleCamera minFrames). The orbit gate itself passed (actual_gate pass)."
+ },
+ "other_steps": {
+  "W02_PROBE": "exit 0",
+  "W04_PROBE": "21/21 PASS",
+  "SM_FIXTURE": "exit 0",
+  "SM_BROWSER": "exit 0, duplicate_visual_owner_ids []",
+  "OCCLUSION": "pass, HUMAN_REVIEW_PENDING",
+  "PLAYBACK": "pass",
+  "EVIDENCE_BUILDER": "exit 0"
+ },
+ "decision": "not used for acceptance (one gate red); attempt 3 = the complete script again at the same commit, no threshold or gate changed"
+}

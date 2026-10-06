@@ -57,7 +57,16 @@ try {
   await sleep(500);
   const coSM = await j(s, "[...document.querySelectorAll('.geo3d-tree-item')].some(b=>/\\bSM\\b/.test(b.textContent||''))");
   if (coSM) {
-    await trustedClick(s, "[...document.querySelectorAll('.geo3d-tree-item')].find(b=>/\\bSM\\b/.test(b.textContent||''))");
+    // W4: nhóm của cây thu gọn mặc định — mở các nhóm chứa dòng SM như người dùng (bấm tiêu đề nhóm), rồi bấm dòng
+    const dongSM = "[...document.querySelectorAll('.geo3d-tree-item')].find(b=>/\\bSM\\b/.test(b.textContent||''))";
+    for (let i = 0; i < 4; i += 1) {
+      const dong = await j(s, `!!${dongSM}?.closest('details:not([open])')`);
+      if (!dong) break;
+      await trustedClick(s, `${dongSM}.closest('details:not([open])').querySelector(':scope > summary')`);
+      await sleep(300);
+    }
+    out.sm_tree_id = await j(s, `${dongSM}?.dataset.treeId??null`);
+    await trustedClick(s, dongSM);
     await sleep(900);
   }
   out.sm_in_tree = coSM;

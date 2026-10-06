@@ -1,0 +1,16 @@
+{
+ "attempt": 3,
+ "measurement_commit": "643b7d7a7158398dab83e9a31be451bf60ae751e",
+ "product_commit": "ecbe55c06f45b7cd590547d82cdceb938ed56e84",
+ "gates": {
+  "suite": "7/7 families, 14/14 positives PASS",
+  "W02_PROBE": "14/14",
+  "W04_PROBE": "21/21",
+  "OCCLUSION": "pass, HUMAN_REVIEW_PENDING",
+  "PLAYBACK": "pass",
+  "EVIDENCE_BUILDER": "exit 0"
+ },
+ "superseded_because": "Reviewing the SM-on-edge result: selected_sm.selected was null — the diagnostic clicked SM's tree row inside a group W4 now collapses by default, so selection was never exercised. Re-run with the diagnostic fixed (opens the row's groups by clicking their summaries) at the same dist: SM is selected but the S-M span is NOT highlighted (sm-overlap-after-selected/sm_selected.png). Root cause (product): lamDiu fades every object outside the causal chain; the solid is outside SM's chain, and the canonical edge owner carrying SM's span highlight was faded with it (only whole-edge highlights were exempt). Fixed in the next commit (red test scene3d-sub-edge.test.ts, fault injection 0.3 opacity).",
+ "evidence_kept": "logs *_643b7d7a.log, SM_OVERLAP_AFTER_SELECTION_643b7d7a.json, sm-overlap-after-selected/ (bug image); the run's results/images/inputs from this attempt are replaced by attempt 4",
+ "used_for_acceptance": false
+}

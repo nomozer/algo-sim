@@ -158,6 +158,7 @@ export function lamDiu(obj: THREE.Object3D, k = HE_SO_LAM_DIU): void {
   obj.traverse((x) => {
     if (bo.has(x)) return;
     if (x.userData?.visualOwnerId) x.userData.lamDiu = k;
+    if (x.userData?.sang === true) return;   // khúc tô sáng của đoạn con nằm trên cạnh (W4)
     const m = (x as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
     for (const vl of Array.isArray(m) ? m : m ? [m] : []) lamDiuVatLieu(vl, k);
   });
@@ -418,11 +419,13 @@ function rebuildCanonicalEdgeOwner(
       owner.userData.dashSize as number,
       span.sang ? khuc!.mau : owner.userData.highlightColor as number | undefined,
     );
-    // Làm dịu (ngoài chuỗi nhân quả) phải sống qua lần dựng lại khi xoay.
-    if (owner.userData.lamDiu) lamDiuVatLieu(material, owner.userData.lamDiu as number);
+    // Làm dịu (ngoài chuỗi nhân quả) phải sống qua lần dựng lại khi xoay — trừ KHÚC đang tô sáng (W4: chọn SM thì
+    // khối ngoài chuỗi bị làm dịu, nhưng khúc S–M của nó là chính vật đang chọn).
+    if (owner.userData.lamDiu && !span.sang) lamDiuVatLieu(material, owner.userData.lamDiu as number);
     const line = new THREE.Line(geometry, material);
     if (isHidden) line.computeLineDistances();
     line.userData.hidden = isHidden;
+    line.userData.sang = span.sang;
     line.userData.logicalEdgeId = edge.id;
     line.renderOrder = THU_TU_DUONG;
     owner.add(line);

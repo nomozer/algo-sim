@@ -1,0 +1,95 @@
+{
+  "fixture": "D:/Documents/projects/algo-sim/docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs/sm_overlap/w04_sm_on_edge_sa_643b7d7a.json",
+  "dist": "dist",
+  "application_llm_calls": 0,
+  "neutral": {
+    "step": "Bước 6/6",
+    "rendered": [
+      "A",
+      "ABCD_base",
+      "B",
+      "C",
+      "D",
+      "M",
+      "S",
+      "S.ABCD",
+      "S.ABCD::edge:A-B",
+      "S.ABCD::edge:A-D",
+      "S.ABCD::edge:B-C",
+      "S.ABCD::edge:C-D",
+      "S.ABCD::edge:S-A",
+      "S.ABCD::edge:S-B",
+      "S.ABCD::edge:S-C",
+      "S.ABCD::edge:S-D",
+      "S.ABCD::face:0",
+      "S.ABCD::face:1",
+      "S.ABCD::face:2",
+      "S.ABCD::face:3",
+      "S.ABCD::face:4",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D",
+      "doan_SM"
+    ],
+    "duplicate_visual_owner_ids": [],
+    "segment_strokes": null,
+    "highlighted_render_owner_ids": [],
+    "selected": null,
+    "image": {
+      "path": "../../Documents/projects/algo-sim/docs/evaluation/geometry/runs/regular-square-pyramid-w04/images/sm-overlap-after-selected/sm_neutral.png",
+      "bytes": 182050,
+      "sha256": "a1c2294a1d783d63ce340dbcf9b28b1d21e8f0cc65b330bbcdbf5fc2a33be0af",
+      "scroll": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "sm_tree_id": "doan_SM",
+  "sm_in_tree": true,
+  "selected_sm": {
+    "step": "Bước 6/6",
+    "rendered": [
+      "A",
+      "ABCD_base",
+      "B",
+      "C",
+      "D",
+      "M",
+      "S",
+      "S.ABCD",
+      "S.ABCD::edge:A-B",
+      "S.ABCD::edge:A-D",
+      "S.ABCD::edge:B-C",
+      "S.ABCD::edge:C-D",
+      "S.ABCD::edge:S-A",
+      "S.ABCD::edge:S-B",
+      "S.ABCD::edge:S-C",
+      "S.ABCD::edge:S-D",
+      "S.ABCD::face:0",
+      "S.ABCD::face:1",
+      "S.ABCD::face:2",
+      "S.ABCD::face:3",
+      "S.ABCD::face:4",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D",
+      "doan_SM"
+    ],
+    "duplicate_visual_owner_ids": [],
+    "segment_strokes": null,
+    "highlighted_render_owner_ids": [],
+    "selected": "doan_SM",
+    "image": {
+      "path": "../../Documents/projects/algo-sim/docs/evaluation/geometry/runs/regular-square-pyramid-w04/images/sm-overlap-after-selected/sm_selected.png",
+      "bytes": 192208,
+      "sha256": "33c1feec0fb3c094ee646883d0be268914be3718ee768e80c07332a5db0e9f9e",
+      "scroll": {
+        "x": 0,
+        "y": 119
+      }
+    }
+  }
+}
