@@ -1,0 +1,56 @@
+{
+  "schema_version": "family-slice-run/1",
+  "run_id": "regular-square-pyramid-w03",
+  "task": "REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE",
+  "task_slug": "regular-square-pyramid",
+  "wave": "W3",
+  "execution": "LOCAL_ACCEPTANCE_AND_FIXES",
+  "dates": "2026-10-06",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "fe68b4ca0e36218fe789a50ded1161775bbccfae (cloud W2 head, fast-forwarded; W1 head e821b9b5 is an ancestor)",
+  "origin_main": "38d4158826cbbffd013d971a9484b9f0fd2a6130 (unchanged; ref main not touched)",
+  "commits": {
+    "fix_H_W2_4_helper_plane_step": "824924d7",
+    "fix_H_W2_2_asked_segment_and_cache_114": "45beaed3",
+    "freeze": "de3f9ec2",
+    "baseline_fe68b4ca_evidence": "47941832",
+    "provenance_pin_fix_after_attempt_1": "a5d233ce",
+    "evidence": "0d0d1de3",
+    "docs_and_verification": "the commits that contain this file (not recorded here)"
+  },
+  "product_state": {
+    "measurement_commit": "a5d233ce4e635b0228f04af55aa04f3407d4a8d8 (attempt 2; clean detached CRLF worktree, path with a space)",
+    "candidate": "5dec4572e6439a19592547515d389185703990d92ef2b959940946c957f63632 (product commit 45beaed3; previous d3de9c44…; one freeze)",
+    "cache_version": "114 (was 113; diagnostics/PROOF_CACHE_ROW_W03.json; semantic environment b1714b56… unchanged)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (a measurement-only helper plane opens no geometry step; the segment whose length the problem asks for is built before the answer)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "114",
+    "CANDIDATE_REFROZEN": "YES, once (45beaed3)",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "MAIN_PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "PR_CREATED": "NO",
+    "FAVICON_TOUCHED": "NO"
+  },
+  "results": {
+    "w2_as_received_fe68b4ca": "identity gates green; T3 FULL_PRODUCT_GATE_PASS (pytest 7152 passed, vitest 1089/1089, build, demo 5/5, crash surface 6/6); spaced-path node test 5 pass / 2 skip; browser 14/14 positives fully green incl. camera_settled_rotated_neutral and cross-section causal_restore",
+    "browser_a5d233ce": "suite 7/7 PASS, 14/14 positives fully green; projection_correct d_kq label present (desktop + mobile); W2 probe 14/14",
+    "occlusion": "pass, 0 failures, HUMAN_REVIEW_PENDING (4 W14 scenes, U2)",
+    "playback": "PASS; every geometry step changes the figure, no exemption",
+    "images": "68 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners",
+    "t3_and_gates_at_final_commit": "HANDOFF.md section 2"
+  },
+  "questions": {
+    "H-W2-1": "visual review (blocks merge) - REVIEW.md",
+    "H-W2-2": "DEFECT, fixed (45beaed3)",
+    "H-W2-3": "presentation choice, unchanged; deferral proposed, not accepted",
+    "H-W2-4": "DEFECT, fixed (824924d7)",
+    "H-W2-5": "presentation choice, unchanged; deferral proposed, not accepted"
+  }
+}

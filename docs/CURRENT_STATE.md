@@ -52,19 +52,31 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 94200b50403bdf823eb49697d54c0cb53e8e4ccb (lượt đo có thẩm quyền của regular-square-pyramid-w02 trên cloud, worktree tách rời sạch CRLF, đường dẫn có dấu cách) — phần còn phải kiểm ở máy local: T3, cổng camera-settle và causal_restore thiết diện (HANDOFF.md §2 của run)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = a5d233ce4e635b0228f04af55aa04f3407d4a8d8 (lượt đo có thẩm quyền của regular-square-pyramid-w03 ở máy local, worktree tách rời sạch CRLF, đường dẫn có dấu cách; bằng chứng 0d0d1de3)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 114
-> CANDIDATE = d3de9c44… (was 5234c37e…; bốn lần đóng băng cùng tree hash), product commit 70665542 (bằng chứng trình duyệt đo ở 75a0af9a chuyển sang: dist trùng byte)
-> USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (cloud không kiểm, không đụng)
-> CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_PEDAGOGICAL_CLOSURE (việc regular-square-pyramid, W2, run regular-square-pyramid-w02)
-> FINAL_DECISION = CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = máy local tiếp nhận nhánh và chạy các kiểm còn lại (runs/regular-square-pyramid-w02/HANDOFF.md §2, §4), rồi người dùng duyệt H-W2-1; duyệt thì merge thẳng vào main + push + xoá nhánh
-> CANONICAL_NEXT_ACTION = LOCAL_ACCEPTANCE_AND_HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_W1_W2
+> CANDIDATE = 5dec4572… (was d3de9c44…; một lần đóng băng), product commit 45beaed3
+> USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên, không stage)
+> CURRENT_WAVE = REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE (việc regular-square-pyramid, W3, run regular-square-pyramid-w03)
+> FINAL_DECISION = xem runs/regular-square-pyramid-w03/HANDOFF.md §2 · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w03/REVIEW.md (H-W2-1, chặn merge) và quyết định H-W2-3, H-W2-5; duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
+> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
 
-> **Khép phần sư phạm của chóp đều — regular-square-pyramid-w02 (triển khai trên cloud, đo `94200b50`; chờ nghiệm thu local và review người):**
+> **Nghiệm thu local W2 + hai bản sửa — regular-square-pyramid-w03 (đo `a5d233ce`, worktree tách rời sạch; chờ review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | W2 nguyên trạng `fe68b4ca` | T3 `FULL_PRODUCT_GATE_PASS`; cổng danh tính xanh; test node đường dẫn có dấu cách qua; 14/14 lượt dương xanh trọn — `camera_settled_rotated_neutral` và `causal_restore` thiết diện đỏ trên cloud là lỗi môi trường |
+> | H-W2-4 (lỗi) | mặt phẳng phụ chỉ để đo không mở bước dựng (`measurementOnlyPlanes`); miễn trừ W2 ở ba cổng đã gỡ; chóp đều 8 bước |
+> | H-W2-2 (lỗi) | đoạn đề hỏi độ dài được dựng trước đáp số (`formation._doan_duoc_hoi`); kỳ vọng W18 `d_kq` khôi phục (đính chính PC1-W2) |
+> | H-W2-3, H-W2-5 | lựa chọn trình bày, chưa đổi; đề nghị giữ — chưa được người dùng chấp nhận |
+> | Trình duyệt `a5d233ce` | suite 7/7, 14/14 lượt dương xanh; đầu dò W2 14/14; occlusion 0 lỗi (4 cảnh chờ duyệt, U2); phát lại PASS không miễn trừ; 68 crop, 0 bất đồng |
+> | Candidate · `CACHE_VERSION` | `d3de9c44…` → **`5dec4572…`** (product `45beaed3`) · 113 → **114** (13 row v113 vẫn HIT) |
+> | Run | [`regular-square-pyramid-w03`](evaluation/geometry/runs/regular-square-pyramid-w03/) (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`) |
+
+> **Khép phần sư phạm của chóp đều — regular-square-pyramid-w02 (triển khai trên cloud, đo `94200b50`; nghiệm thu local ở W3):**
 >
 > | Mục | Kết quả |
 > |---|---|

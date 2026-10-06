@@ -9,9 +9,17 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = LOCAL_ACCEPTANCE_AND_HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_W1_W2
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
+
+- **W3 của việc `regular-square-pyramid` (2026-10-06, run
+  [`regular-square-pyramid-w03`](evaluation/geometry/runs/regular-square-pyramid-w03/), máy local):** tiếp nhận W2
+  (`fe68b4ca`, fast-forward) — T3 `FULL_PRODUCT_GATE_PASS` và 14/14 lượt dương xanh ở local (hai cổng đỏ trên cloud là
+  môi trường); sửa H-W2-4 (mặt phẳng phụ chỉ để đo không mở bước dựng; gỡ miễn trừ W2) và H-W2-2 (đoạn đề hỏi độ dài
+  được dựng; kỳ vọng W18 khôi phục); `CACHE_VERSION` 114, candidate `5dec4572…`. Việc duy nhất: người dùng duyệt hình
+  theo `REVIEW.md` của run (H-W2-1, chặn merge) và quyết định H-W2-3, H-W2-5; duyệt thì merge, push, xoá nhánh ở một
+  lượt riêng có lệnh. Gạch đầu dòng W2, W1 dưới là bối cảnh.
 
 - **W2 của việc `regular-square-pyramid` (2026-10-05, run
   [`regular-square-pyramid-w02`](evaluation/geometry/runs/regular-square-pyramid-w02/), cùng nhánh, triển khai trên

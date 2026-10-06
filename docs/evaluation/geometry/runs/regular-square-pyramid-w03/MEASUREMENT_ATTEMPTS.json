@@ -1,0 +1,34 @@
+{
+  "schema": "measurement-attempts/1",
+  "run_id": "regular-square-pyramid-w03",
+  "model_calls": 0,
+  "attempts": [
+    {
+      "attempt": "baseline",
+      "commit": "fe68b4ca0e36218fe789a50ded1161775bbccfae",
+      "worktree": "D:/tmp/rsp w03 (clean detached, CRLF, path with a space)",
+      "purpose": "accept cloud W2 as received: identity gates, T3, browser measurement",
+      "outcome": "ALL_GREEN",
+      "evidence": "diagnostics/baseline_fe68b4ca/ (results JSON + logs; images not kept — superseded by attempt 2)",
+      "used_for_acceptance": "W2 local verification only"
+    },
+    {
+      "attempt": 1,
+      "commit": "4794183200073cb5f023df9f932a88e1973ece27",
+      "worktree": "D:/tmp/rsp w03b",
+      "outcome": "STOPPED_AT_PROVENANCE_GATE",
+      "reason": "PRODUCT_PROVENANCE_MISMATCH — generic-tier-a-scenarios.json still pinned product_tree_sha d3de9c44 after the refreeze to 5dec4572; probe and playback then PAGE_NOT_LOADED (they skip the build the suite would have made). No browser evidence produced.",
+      "fix": "a5d233ce",
+      "evidence": "diagnostics/attempts/attempt1_47941832/",
+      "used_for_acceptance": false
+    },
+    {
+      "attempt": 2,
+      "commit": "a5d233ce4e635b0228f04af55aa04f3407d4a8d8",
+      "worktree": "D:/tmp/rsp w03b (clean detached, CRLF, path with a space)",
+      "outcome": "ALL_GREEN",
+      "evidence": "inputs/fixtures, results/, images/, diagnostics/logs/*_a5d233ce.log (commit 0d0d1de3)",
+      "used_for_acceptance": true
+    }
+  ]
+}

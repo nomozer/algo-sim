@@ -698,3 +698,16 @@
 - **default_switch_blocker:** NO
 - **acceptance:** the decided layout, with the browser gates re-measured on desktop and mobile.
 - **verify:** `node frontend/scripts/w02-closure-probe.mjs …` (extend with the inspector) and the main suite's causal restore.
+- **W3 note (regular-square-pyramid-w03):** re-assessed as a presentation choice (no wrong value, no lost operation); still a user decision — the W3 `REVIEW.md` §3 proposes keeping the column on this branch. Not accepted by the user yet.
+
+### ISSUE-ARCH-ASKED-SEGMENT-OVER-EXISTING-EDGE
+- **description:** regular-square-pyramid-w03 (H-W2-2) builds the segment whose length the problem asks for (`formation._doan_duoc_hoi`) when no segment, polygon edge or solid face edge joins its two points. The check is on endpoint identity only: a requested segment that lies ON an existing edge without sharing both endpoints (SM with M the midpoint of SA) is built and drawn over that edge.
+- **evidence:** `backend/app/simulation/semantic_program/formation.py` (`_canh_da_dung`); no row of the construction-binding corpus or the W1/W2 corpora has this shape (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
+- **impact:** Presentation only — two coincident strokes; the value and the label are right.
+- **scope:** formation planner (IR level, no coordinates) or the renderer's visual-owner rule.
+- **status:** OPEN (regular-square-pyramid-w03)
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** when a corpus row needs it
+- **default_switch_blocker:** NO
+- **acceptance:** a requested collinear sub-segment is not drawn twice, with a test on a real program.
+- **verify:** `pytest tests/geometry/test_regular_square_pyramid_w03.py -q`

@@ -973,3 +973,24 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTS:** NONE (preregistration corrections PC1-W2, PC2-W2 inside the run)
 - **NEXT_ACTION_AT_TIME:** local acceptance (HANDOFF.md §2, §4), human visual review H-W2-1; on approval merge into main, push, delete the branch
 - **FINAL_DECISION:** CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED
+
+### WAVE_ID = REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE
+- **RUN_ID:** regular-square-pyramid-w03 (task regular-square-pyramid, wave W3; local acceptance of W2 + fixes)
+- **DATE:** 2026-10-06
+- **START_BASE:** fe68b4ca (cloud W2 head, fast-forwarded; 0 local commits)
+- **CODE_COMMIT_OR_NONE:** 824924d7 (a measurement-only helper plane opens no geometry step; W2 gate exemptions removed — H-W2-4) · 45beaed3 (the segment whose length the problem asks for is built before the answer; CACHE_VERSION 113 → 114 — H-W2-2) · a5d233ce (scenario file pins the refrozen tree hash)
+- **CANDIDATE:** d3de9c44… → 5dec4572… (one freeze at 45beaed3, de3f9ec2) · CACHE_VERSION 114 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** baseline at fe68b4ca 47941832 · measurement a5d233ce · evidence 0d0d1de3
+- **CLASSIFICATION:** see the run's HANDOFF.md §2 (T3 and gates at the final commit)
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w03/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w03/
+- **PASS:** W2 as received at fe68b4ca — T3 FULL_PRODUCT_GATE_PASS, identity gates, spaced-path node test, browser 14/14 positives fully green (camera_settled_rotated_neutral and cross-section causal_restore green locally: the cloud reds were environment). At a5d233ce — suite 7/7, 14/14 positives fully green, w18_projection_line label restored, W2 probe 14/14, occlusion 0 failures (4 scenes HUMAN_REVIEW_PENDING, U2), playback with every step changing the figure and no exemption, 68 crops 0 disagreements
+- **CLOSED:** —
+- **OPENED:** ISSUE-ARCH-ASKED-SEGMENT-OVER-EXISTING-EDGE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-square-pyramid-w02 — PC1-W2 (lowered W18 expectation restored), the hidden-helper exemption of three gates, the cloud classification of two browser gates (environment)
+- **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md, H-W2-1); user decision on H-W2-3, H-W2-5; on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** HANDOFF.md §2 of the run
