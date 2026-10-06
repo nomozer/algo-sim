@@ -1,0 +1,64 @@
+{
+  "schema_version": "family-slice-run/1",
+  "run_id": "regular-square-pyramid-w04",
+  "task": "SHARED_SIMULATION_UI_CLOSURE",
+  "task_slug": "regular-square-pyramid",
+  "wave": "W4",
+  "execution": "LOCAL",
+  "dates": "2026-10-06",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "f3db0f6f95bf60db92ef1d121bd3a8fb66235dbc (W3 head)",
+  "commits": {
+    "sm_segment_on_edge": "ce44eb38",
+    "shared_floating_panels": "98b1ce8d",
+    "narration_names": "270cae4e",
+    "canvas_height_step_counter": "a1c17714",
+    "component_tree_by_step": "e41b0ab1",
+    "cache_115": "aa754cb9",
+    "probe_fixes_panels_tree_layout": "c8c49f3c",
+    "freeze_1": "d47488f6",
+    "renderer_follows_container": "ecbe55c0",
+    "freeze_2": "643b7d7a",
+    "sub_segment_span_not_faded": "53e4bec5",
+    "freeze_3": "103494c4",
+    "evidence": "b4f924c1",
+    "docs_and_verification": "the commits that contain this file (not recorded here)"
+  },
+  "product_state": {
+    "measurement_commit": "103494c4 (attempt 4; clean detached CRLF worktree, path with a space)",
+    "candidate": "8a27a58b5a96311dd052a6cc981af558a50878876bef574ec71f8a1b666ed025 (product commit 53e4bec5; previous 5dec4572…; three freezes, same tree hash)",
+    "cache_version": "115 (was 114; diagnostics/PROOF_CACHE_ROW_W04.json; semantic environment b1714b56… unchanged)",
+    "default_mode": "LLM_ONLY",
+    "human_visual_review": "NOT_APPROVED"
+  },
+  "invariants": {
+    "PRODUCT_BEHAVIOR_CHANGED": "YES (shared floating panels; canvas by available height; component tree by step; narration names; SM yields its stroke to SA)",
+    "MODEL_SURFACE_CHANGED": "NO",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "CACHE_VERSION": "115",
+    "CANDIDATE_REFROZEN": "YES, three times (c8c49f3c, ecbe55c0, 53e4bec5; same measured-system tree hash)",
+    "LIVE_GEMINI_REQUESTS": 0,
+    "HUMAN_VISUAL_REVIEW": "NOT_APPROVED",
+    "MAIN_PUSH_EXECUTED": "NO",
+    "MERGE_EXECUTED": "NO",
+    "PR_CREATED": "NO",
+    "FAVICON_TOUCHED": "NO",
+    "SUBAGENTS_USED": "NO"
+  },
+  "results": {
+    "browser_103494c4": "suite 7/7 (14/14 positives); W2 probe 14/14; W4 panels probe 21/21; SM control (selected, only S-M lit, 0 duplicate owners); occlusion pass, HUMAN_REVIEW_PENDING (4 W14 scenes, U2); playback pass; 68 crops, 0 oracle disagreements",
+    "measurement_attempts": "4 (only attempt 4 used; MEASUREMENT_ATTEMPTS.json)"
+  },
+  "requirements": {
+    "1_intake": "done",
+    "2_skills": "Impeccable, Superpowers (plan, debugging, TDD, verification), Karpathy, Ponytail review",
+    "3_shared_panels": "done, measured",
+    "4_canvas_controls": "done, measured; open question R4 (mobile canvas height)",
+    "5_component_selection": "done, measured",
+    "6_wording": "done, seven-family sweep test",
+    "7_sm": "done, measured",
+    "8_verification": "browser done; T3 and identity gates in HANDOFF.md §2",
+    "9_cache_evidence": "done",
+    "10_git_finish": "committed on the branch; no push/merge/PR"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "measurement-attempts/1",
+  "run_id": "regular-square-pyramid-w04",
+  "model_calls": 0,
+  "script": "diagnostics/w04_measure.sh (copy of w03_measure.sh + w04-panels-probe + SM-on-edge control)",
+  "worktree": "D:/tmp/rsp w04c (clean detached, CRLF, path with a space); logs outside the worktree, copied in afterwards",
+  "attempts": [
+    {
+      "attempt": 1,
+      "commit": "d7154ab8b7379e2088ded5f2132602642ca1143c",
+      "product_commit": "c8c49f3c782279e5ec08f947a407e1887904f162",
+      "outcome": "FAIL",
+      "reason": "suite: on every mobile run the WebGL canvas stayed 503 px tall inside a 456 px box (css_readiness, BLANK_OR_PREMATURE_SCREENSHOT) — product: the renderer resized only on window resize while W4's canvas height variable can change after mount; and the hidden answer-alias tree check expected a row at every step (harness, W4 lists only present objects). Stopped after the W4 probe step; orphaned playback processes from the stop were found and stopped before the next attempt.",
+      "fix": "ecbe55c0 (renderer observes its container; aliasTreeRowCheck counts present sources); refreeze 643b7d7a",
+      "evidence": "diagnostics/attempts/attempt1_d7154ab8/",
+      "used_for_acceptance": false
+    },
+    {
+      "attempt": 2,
+      "commit": "643b7d7a7158398dab83e9a31be451bf60ae751e",
+      "product_commit": "ecbe55c06f45b7cd590547d82cdceb938ed56e84",
+      "outcome": "ONE_GATE_RED",
+      "reason": "suite: camera_settled_rotated_neutral on the regular square pyramid desktop run — the camera was still (last motion 2.4e-10 <= 1e-9, stable streak 10 >= 5) but fewer than 30 frames were rendered inside the stable window. Every other step green (W2 probe, W4 probe 21/21, SM, occlusion, playback, builder).",
+      "fix": "none to the product or the gate; attempt 3 = the complete script again at the same commit",
+      "evidence": "diagnostics/attempts/attempt2_643b7d7a/",
+      "used_for_acceptance": false
+    },
+    {
+      "attempt": 3,
+      "commit": "643b7d7a7158398dab83e9a31be451bf60ae751e",
+      "product_commit": "ecbe55c06f45b7cd590547d82cdceb938ed56e84",
+      "outcome": "ALL_GATES_GREEN_THEN_SUPERSEDED",
+      "reason": "every gate green (suite 7/7, 14/14 positives; W2 probe 14/14; W4 probe 21/21; occlusion; playback). Reviewing the SM-on-edge result showed the diagnostic never selected SM (its tree row sits in a group W4 collapses by default); with the diagnostic fixed, selecting SM lit nothing — product: lamDiu faded the canonical edge owner carrying SM's span along with its solid.",
+      "fix": "53e4bec5 (lit span exempt from fading; red test + fault injection); refreeze 103494c4",
+      "evidence": "diagnostics/attempts/attempt3_643b7d7a/ (logs, ATTEMPT3_SUMMARY.json, bug image sm-overlap-after-selected/)",
+      "used_for_acceptance": false
+    },
+    {
+      "attempt": 4,
+      "commit": "103494c4",
+      "product_commit": "53e4bec5f61722161a20c613c08c4d1f94e2d742",
+      "outcome": "ALL_GREEN",
+      "results": "suite 7/7 (14/14 positives); W2 probe 14/14; W4 panels probe 21/21; SM control: SM selected via the tree, only S-M lit, 0 duplicate owners; occlusion pass, HUMAN_REVIEW_PENDING (U2); playback pass; 68 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners; worktree clean before, only run outputs after",
+      "evidence": "inputs/fixtures, inputs/sm_overlap, results/, images/, diagnostics/logs/*_103494c4.log (commit b4f924c1)",
+      "used_for_acceptance": true
+    }
+  ]
+}

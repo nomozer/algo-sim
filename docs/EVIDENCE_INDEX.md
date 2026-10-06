@@ -1051,3 +1051,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** REGULAR_SQUARE_PYRAMID_LOCAL_ACCEPTANCE — local measurement of the W1/W2 claims; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `diagnostics/PROOF_CACHE_ROW_W03.json` · `diagnostics/baseline_fe68b4ca/` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+## WAVE_ID = SHARED_SIMULATION_UI_CLOSURE
+- **RUN_ID:** regular-square-pyramid-w04 (task regular-square-pyramid, wave W4; `docs/evaluation/RUN_NAMING.md`)
+- **DATE:** 2026-10-06
+- **REPORT:** docs/evaluation/geometry/runs/regular-square-pyramid-w04/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/regular-square-pyramid-w04/
+- **START_BASE:** f3db0f6f (W3 head)
+- **CODE_COMMIT:** ce44eb38 · 98b1ce8d · 270cae4e · a1c17714 · e41b0ab1 · aa754cb9 (CACHE_VERSION 115) · c8c49f3c · ecbe55c0 · 53e4bec5
+- **MEASUREMENT_COMMIT:** 103494c4 (local, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, W4 panels probe, SM control, occlusion, playback, builder); attempts 1–3 at d7154ab8 and 643b7d7a kept (`diagnostics/attempts/`, `MEASUREMENT_ATTEMPTS.json`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit b4f924c1 after the measurement (results, images, inputs, logs)
+- **CLASSIFICATION:** see the run's HANDOFF.md §2
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (5dec4572… → 8a27a58b…; three freezes, same tree hash, product commit 53e4bec5)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 114 -> 115 in aa754cb9, row proof `diagnostics/PROOF_CACHE_ROW_W04.json`; semantic environment b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (W1–W3 files untouched)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** SHARED_SIMULATION_UI_CLOSURE — presentation layer of the simulation (panels, layout, selection); human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/PANEL_INVENTORY.md` · `diagnostics/PROOF_CACHE_ROW_W04.json` · `diagnostics/scene_hash/SCENE_DIFF.json` · `diagnostics/sm_overlap/` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/SM_OVERLAP_AFTER_103494c4.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
+- **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

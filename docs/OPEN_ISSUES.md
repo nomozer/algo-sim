@@ -692,7 +692,7 @@
 - **evidence:** `frontend/src/styles/global.css` (`.geo3d-san:has(.geo3d-soi)` grid); the W2 brief asks the floating mechanism to be used "for the information panels where it fits" without naming the inspector.
 - **impact:** Presentation only; no wrong value. The causal-restore gate already measures the camera at equal selection states.
 - **scope:** `Scene3DExplorer.tsx` (inspector), `global.css`, the causal-restore and inspector browser gates.
-- **status:** OPEN (regular-square-pyramid-w02) — a user decision (H-W2-3 in the run's `HANDOFF.md`): keep the column, or float the inspector with `BangNoi`.
+- **status:** RESOLVED (regular-square-pyramid-w04, `98b1ce8d` + `c8c49f3c`) — the user did not accept the W3 deferral and asked for one shared mechanism: the inspector is a `BangNoi` like every information panel and the ≥ 1100 px grid column is removed (`scene3d-panels.test.tsx` locks its absence). Browser evidence `runs/regular-square-pyramid-w04/results/W04_PANELS_PROBE.json` (canvas and camera unchanged while opening, closing and selecting; 7 families × desktop, 1366×650, mobile). The visual result awaits the human review (`runs/regular-square-pyramid-w04/REVIEW.md`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next UI wave, after the user decides
 - **default_switch_blocker:** NO
@@ -705,7 +705,7 @@
 - **evidence:** `backend/app/simulation/semantic_program/formation.py` (`_canh_da_dung`); no row of the construction-binding corpus or the W1/W2 corpora has this shape (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
 - **impact:** Presentation only — two coincident strokes; the value and the label are right.
 - **scope:** formation planner (IR level, no coordinates) or the renderer's visual-owner rule.
-- **status:** OPEN (regular-square-pyramid-w03)
+- **status:** RESOLVED (regular-square-pyramid-w04, `ce44eb38`) — observed in the browser before the fix (`runs/regular-square-pyramid-w04/diagnostics/sm_overlap/before/`: SM drawn over SA). `quantity_annotations.doan_tren_canh` decides exactly (collinear + parameter in [0, 1]) that SM lies on edge SA; the scene only looks the edge id up (`boundary_edge_ids` + `edge_span`, no geometry in `scene3d.py`); the renderer lets the canonical edge own the stroke and highlights only the S–M span when SM is selected; selection, label and provenance kept. Verify: `pytest tests/geometry/test_regular_square_pyramid_w04.py -q`, `npx vitest run src/simulations/domains/geometry/scene3d-sub-edge.test.ts`, browser `runs/regular-square-pyramid-w04/results/SM_OVERLAP_AFTER_<sha>.json`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** when a corpus row needs it
 - **default_switch_blocker:** NO

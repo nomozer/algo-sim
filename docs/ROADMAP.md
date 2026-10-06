@@ -13,13 +13,19 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **W4 của việc `regular-square-pyramid` (2026-10-06, run
+  [`regular-square-pyramid-w04`](evaluation/geometry/runs/regular-square-pyramid-w04/), máy local):**
+  SHARED_SIMULATION_UI_CLOSURE — một cơ chế bảng nổi cho mọi bảng thông tin (ô soi thôi là cột; H-W2-3 khép theo yêu
+  cầu người dùng), canvas theo chiều cao khả dụng với «Bước n/N» trong thanh, cây «Thành phần» theo bước, lời kể theo
+  ký hiệu đề, SM trên SA nhường nét; `CACHE_VERSION` 115, candidate `8a27a58b…`. Việc duy nhất: người dùng duyệt hình
+  theo `REVIEW.md` của run W4 (R1–R10, gộp duyệt W1–W3; chặn merge); duyệt thì merge, push, xoá nhánh ở một lượt riêng
+  có lệnh. Gạch đầu dòng W3, W2, W1 dưới là bối cảnh.
+
 - **W3 của việc `regular-square-pyramid` (2026-10-06, run
   [`regular-square-pyramid-w03`](evaluation/geometry/runs/regular-square-pyramid-w03/), máy local):** tiếp nhận W2
   (`fe68b4ca`, fast-forward) — T3 `FULL_PRODUCT_GATE_PASS` và 14/14 lượt dương xanh ở local (hai cổng đỏ trên cloud là
   môi trường); sửa H-W2-4 (mặt phẳng phụ chỉ để đo không mở bước dựng; gỡ miễn trừ W2) và H-W2-2 (đoạn đề hỏi độ dài
-  được dựng; kỳ vọng W18 khôi phục); `CACHE_VERSION` 114, candidate `5dec4572…`. Việc duy nhất: người dùng duyệt hình
-  theo `REVIEW.md` của run (H-W2-1, chặn merge) và quyết định H-W2-3, H-W2-5; duyệt thì merge, push, xoá nhánh ở một
-  lượt riêng có lệnh. Gạch đầu dòng W2, W1 dưới là bối cảnh.
+  được dựng; kỳ vọng W18 khôi phục); `CACHE_VERSION` 114, candidate `5dec4572…`. Duyệt hình của W3 gộp vào gói W4.
 
 - **W2 của việc `regular-square-pyramid` (2026-10-05, run
   [`regular-square-pyramid-w02`](evaluation/geometry/runs/regular-square-pyramid-w02/), cùng nhánh, triển khai trên

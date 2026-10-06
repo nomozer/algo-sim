@@ -995,3 +995,25 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTS:** regular-square-pyramid-w02 — PC1-W2 (lowered W18 expectation restored), the hidden-helper exemption of three gates, the cloud classification of two browser gates (environment)
 - **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md, H-W2-1); user decision on H-W2-3, H-W2-5; on approval merge into main, push, delete the branch
 - **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+
+### WAVE_ID = SHARED_SIMULATION_UI_CLOSURE
+- **RUN_ID:** regular-square-pyramid-w04 (task regular-square-pyramid, wave W4; local)
+- **DATE:** 2026-10-06
+- **START_BASE:** f3db0f6f (W3 head)
+- **CODE_COMMIT_OR_NONE:** ce44eb38 (segment on a solid edge yields its stroke) · 98b1ce8d (one floating-panel mechanism) · 270cae4e (narration names) · a1c17714 (canvas height, step counter in the bar) · e41b0ab1 (tree by step) · aa754cb9 (CACHE_VERSION 114 → 115) · c8c49f3c (panels never lost, tree hoist, height settles; W4 probe) · ecbe55c0 (renderer follows its container) · 53e4bec5 (lit sub-segment span not faded)
+- **CANDIDATE:** 5dec4572… → 8a27a58b… (three freezes, same tree hash: d47488f6, 643b7d7a, 103494c4) · CACHE_VERSION 115 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** measurement 103494c4 (attempt 4) · evidence b4f924c1; attempts 1–3 kept (`MEASUREMENT_ATTEMPTS.json`)
+- **CLASSIFICATION:** see the run's HANDOFF.md §2 (T3 + identity gates at the documentation commit)
+- **FULL_PRODUCT_SUITE:** see the run's HANDOFF.md §2
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w04/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w04/
+- **PASS:** at 103494c4 — suite 7/7, 14/14 positives; W2 probe 14/14; W4 panels probe 21/21 (7 families × desktop, 1366×650, mobile); SM control (selected, only S–M lit, 0 duplicate owners); occlusion 0 failures (4 scenes HUMAN_REVIEW_PENDING, U2); playback pass; 68 crops 0 disagreements
+- **CLOSED:** ISSUE-ARCH-INSPECTOR-COLUMN-RESIZES-CANVAS · ISSUE-ARCH-ASKED-SEGMENT-OVER-EXISTING-EDGE (RESOLVED, visual review pending)
+- **OPENED:** —
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (W1–W3 artifacts unchanged)
+- **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md R1–R10, incl. R4 mobile canvas height); on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** see the run's HANDOFF.md §2
