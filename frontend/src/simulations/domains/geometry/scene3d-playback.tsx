@@ -6,7 +6,6 @@ import {
   geometryStepCount,
   geometryStepList,
   geometryStepOf,
-  geometryTimeline,
   isFirstGeometryStep,
   isLastGeometryStep,
   nextGeometryStep,
@@ -19,7 +18,7 @@ import type { AnnotationView } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { Scene3DSolution } from "./scene3d-solution";
 import { BangNoi, type ViTriBang } from "./scene3d-floating-panel";
-import { auxiliaryHiddenAt, geometryStepGroups } from "./scene3d-auxiliary";
+import { geometryStepGroups } from "./scene3d-auxiliary";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
 /**
@@ -166,15 +165,8 @@ export function Scene3DPlayer({
   /* Ở bước cuối, Phát không còn gì để phát: nút thành XEM LẠI — về bước 0,
    * bỏ chọn (nên tô sáng causal cũng hết), rồi phát. Trước w10 nút này bị vô
    * hiệu và cách duy nhất là kéo thanh bước về đầu. */
+  // W3 · H-W2-4: không còn bước nào chỉ dựng hình phụ đang ẩn (`measurementOnlyPlanes`) — chú thích W2 đã gỡ.
   const dsBuoc = geometryStepList(scene);
-  /** W2 · D: bước chỉ dựng hình phụ đang ẩn — nói ra ở danh sách, để bước ấy không trông như "không có gì". */
-  const anHet = (g: number) => {
-    // Vật mới của bước = tiêu điểm của các sự kiện DỰNG của nó (neo có thể là một sự kiện kết luận).
-    const buocG = geometryTimeline(scene)[g];
-    const moi = (buocG?.construction ?? []).flatMap((k) => scene.formation?.steps[k]?.focus_ids ?? []);
-    const an = auxiliaryHiddenAt(scene, buocG?.anchor ?? 0, !!auxiliaryShown, interaction?.selected_id ?? null);
-    return moi.length > 0 && moi.every((id) => an.has(id));
-  };
   const nutBuoc = (b: (typeof dsBuoc)[number]) => (
     <button
       type="button"
@@ -188,7 +180,6 @@ export function Scene3DPlayer({
     >
       <span className="geo3d-cac-buoc-so">{b.index + 1}</span>
       <span className="geo3d-cac-buoc-chu">{b.label}</span>
-      {anHet(b.index) && <span className="geo3d-cac-buoc-phu">hình phụ, đang ẩn</span>}
     </button>
   );
 

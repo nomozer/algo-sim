@@ -996,10 +996,34 @@ function _loaiSuKien(scene: Scene3D, k: number): string | undefined {
     ?? scene.events.find((e) => e.step_index === k)?.semantic_kind;
 }
 
-/** Chữ ký HÌNH ở sự kiện `k`: vật vẽ được đang hiện + tiến độ thiết diện. */
+const _chiDeDo = new WeakMap<Scene3D, Set<string>>();
+
+/**
+ * regular-square-pyramid-w03 · H-W2-4 — MẶT PHẲNG PHỤ CHỈ ĐỂ ĐO: `plane3` dẫn xuất, đúng một vai
+ * `CONSTRUCT_AUXILIARY_GEOMETRY`, không phải dữ kiện/mục tiêu, và mọi vật dựa trên nó là đại lượng (vd mặt phẳng qua
+ * A, B, C chỉ để đo chiều cao). Cảnh trung tính không vẽ nó (`scene3d-auxiliary`), nên nó không phải thay đổi HÌNH:
+ * sự kiện chỉ dựng nó không mở bước dựng — dù công tắc «Hình phụ» bật hay tắt (dòng thời gian không phụ thuộc công tắc).
+ */
+export function measurementOnlyPlanes(scene: Scene3D): Set<string> {
+  const co = _chiDeDo.get(scene);
+  if (co) return co;
+  const ra = new Set(scene.objects.filter((o) => {
+    const vai = o.formation_roles ?? [];
+    const nhom = o.display_group ?? [];
+    const con = scene.objects.filter((x) => x.depends?.includes(o.id));
+    return o.type === "plane3" && o.origin === "derived" && vai.length === 1
+      && vai[0] === "CONSTRUCT_AUXILIARY_GEOMETRY" && !nhom.includes("given") && !nhom.includes("target")
+      && con.length > 0 && con.every((x) => x.type === "quantity");
+  }).map((o) => o.id));
+  _chiDeDo.set(scene, ra);
+  return ra;
+}
+
+/** Chữ ký HÌNH ở sự kiện `k`: vật vẽ được đang hiện (trừ mặt phẳng phụ chỉ để đo) + tiến độ thiết diện. */
 function _chuKyHinh(scene: Scene3D, k: number): string {
+  const chiDeDo = measurementOnlyPlanes(scene);
   const ve = new Set(scene.objects
-    .filter((o) => o.render !== "readout" && o.render !== "non_visual").map((o) => o.id));
+    .filter((o) => o.render !== "readout" && o.render !== "non_visual" && !chiDeDo.has(o.id)).map((o) => o.id));
   const s = scene.formation?.steps[k];
   const hien = (s ? s.visible_ids : objectsAt(scene, k).map((o) => o.id))
     .filter((id) => ve.has(id)).sort();

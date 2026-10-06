@@ -1465,38 +1465,8 @@ test("W2 grid gate: default off, toggles without touching camera, step, selectio
   ]) assert.ok(LIB.assessGridToggle({ ...ok, ...d }).reason_codes.includes(ma), ma);
 });
 
-test("W2 geometry-step gates: a step that only builds a hidden helper may be static; any other static step stays red", () => {
-  // CANH_PHU: step 4 builds mp (measured-only plane, hidden) together with BD2/alpha; make a scene whose last step
-  // builds ONLY the hidden plane.
-  const sc = JSON.parse(JSON.stringify(CANH_PHU));
-  sc.formation.steps = [
-    { visible_ids: ["A", "C"], focus_ids: [], semantic_kind: "EXPLANATION" },
-    { visible_ids: ["A", "C", "AC", "BD", "O"], focus_ids: ["AC", "BD", "O"], semantic_kind: "GEOMETRY_CONSTRUCTION" },
-    { visible_ids: ["A", "C", "AC", "BD", "O", "mp", "d"], focus_ids: ["mp"], semantic_kind: "GEOMETRY_CONSTRUCTION" },
-  ];
-  sc.objects.forEach((o) => { if (o.type !== "quantity") o.render = "mesh"; else o.render = "readout"; });
-  sc.events = sc.formation.steps.map((st, k) => ({ step_index: k, semantic_kind: st.semantic_kind }));
-  const t = LIB.expectedGeometryTimeline(sc);
-  const obs = (r2) => ({ step_count: t.length, steps: [
-    { index: 0, rendered: ["A", "C"], solution: {} },
-    { index: 1, rendered: ["A", "C", "AC", "BD", "O"], solution: {} },
-    { index: 2, rendered: r2, solution: {} }].slice(0, t.length) });
-  const geo = (r2) => LIB.assessGeometrySteps(sc, obs(r2)).checks.no_static_frames;
-  // step 2 renders the same as step 1 (AC, BD hidden after O… and the plane hidden) — allowed only because its new
-  // object is a hidden helper
-  assert.equal(t.length, 3);
-  assert.equal(geo(["A", "C", "AC", "BD", "O"]), true);
-  const ref = (r2) => LIB.assessStructuredReferences(sc, obs(r2));
-  assert.deepEqual(ref(["A", "C", "O"]).failures ?? ref(["A", "C", "O"]).fail ?? [], []);
-  const ve = ref(["A", "C", "O", "mp"]);
-  assert.ok(JSON.stringify(ve).includes("a_hidden_drawn"), JSON.stringify(ve));
-  // a static step whose new object is NOT a hidden helper stays red
-  sc.formation.steps[2].focus_ids = ["BD2"];
-  sc.formation.steps[2].visible_ids.push("BD2");
-  assert.equal(geo(["A", "C", "AC", "BD", "O"]), false);
-});
-
-test("W2 playback gate: the hidden-helper exemption is exact", () => {
+test("W3 H-W2-4: a measured-only helper plane opens no geometry step; every static step stays red", () => {
+  // CANH_PHU: event 2 builds ONLY mp (a plane that is only an operand of the quantity d, hidden by default).
   const sc = JSON.parse(JSON.stringify(CANH_PHU));
   sc.formation.steps = [
     { visible_ids: ["A", "C"], focus_ids: [], semantic_kind: "EXPLANATION" },
@@ -1505,8 +1475,20 @@ test("W2 playback gate: the hidden-helper exemption is exact", () => {
   ];
   sc.objects.forEach((o) => { o.render = o.type === "quantity" ? "readout" : "mesh"; });
   sc.events = sc.formation.steps.map((st, k) => ({ step_index: k, semantic_kind: st.semantic_kind }));
-  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 2), true);
-  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 1), false);
-  sc.formation.steps[2].focus_ids = ["mp", "BD2"];
-  assert.equal(LIB.stepOnlyBuildsHiddenHelper(sc, 2), false);
+  const t = LIB.expectedGeometryTimeline(sc);
+  // the event that builds only the measured-only plane joins the step before it — no step without a figure change
+  assert.deepEqual(t.map((g) => [g.start, g.end]), [[0, 0], [1, 2]]);
+  const obs = (r1) => ({ step_count: t.length, steps: [
+    { index: 0, rendered: ["A", "C"], solution: {} }, { index: 1, rendered: r1, solution: {} }] });
+  assert.equal(LIB.assessGeometrySteps(sc, obs(["A", "C", "O"])).checks.no_static_frames, true);
+  assert.equal(LIB.assessGeometrySteps(sc, obs(["A", "C"])).checks.no_static_frames, false);
+  const ref = (r1) => LIB.assessStructuredReferences(sc, obs(r1));
+  assert.deepEqual(ref(["A", "C", "O"]).failures ?? ref(["A", "C", "O"]).fail ?? [], []);
+  assert.ok(JSON.stringify(ref(["A", "C", "O", "mp"])).includes("a_hidden_drawn"));
+  // the W2 exemption is gone: no gate excuses a static step any more
+  assert.equal(LIB.stepOnlyBuildsHiddenHelper, undefined);
+  // a plane that is NOT a measured-only helper still opens its own step
+  sc.formation.steps[2] = { visible_ids: ["A", "C", "AC", "BD", "O", "alpha", "d"], focus_ids: ["alpha"],
+    semantic_kind: "GEOMETRY_CONSTRUCTION" };
+  assert.equal(LIB.expectedGeometryTimeline(sc).length, 3);
 });

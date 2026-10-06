@@ -12,8 +12,10 @@ import {
   anchorOfGeometryStep,
   geometryStepCount,
   geometryStepList,
+  objectsAt,
   quantityChoices,
 } from "./scene3d-model";
+import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
 import { Scene3DPlayer } from "./scene3d-playback";
 import { Scene3DSolution } from "./scene3d-solution";
 
@@ -167,19 +169,42 @@ describe("W2 · B · bảng nổi «Các bước dựng»", () => {
   });
 });
 
-describe("W2 · D · danh sách bước nói ra bước chỉ dựng hình phụ đang ẩn", () => {
-  it("bước «Mặt phẳng qua A, B, C» của chóp đều mang chú thích; bật «Hình phụ» thì không", () => {
-    const rsp: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
-      "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures/regular_square_pyramid_positive.json",
-      import.meta.url)), "utf8")).envelope.scene3d;
-    const an = sach(renderToString(<Scene3DPlayer scene={rsp} stepsOpen />));
-    const nut = an.match(/<button[^>]*data-geometry-step="[^"]*"[^>]*>[\s\S]*?<\/button>/g) ?? [];
-    const mp = nut.filter((b) => b.includes("Mặt phẳng qua A, B, C"));
-    expect(mp).toHaveLength(1);
-    expect(mp[0]).toContain("hình phụ, đang ẩn");
-    expect(nut.filter((b) => b.includes("hình phụ, đang ẩn"))).toHaveLength(1);
-    const hien = sach(renderToString(<Scene3DPlayer scene={rsp} stepsOpen auxiliaryShown />));
-    expect(hien).not.toContain("hình phụ, đang ẩn");
+/* regular-square-pyramid-w03 · H-W2-4. W2 mở một bước dựng cho «Mặt phẳng qua A, B, C» — mặt phẳng chỉ làm toán hạng
+ * của chiều cao, ẩn mặc định — nên bước ấy KHÔNG đổi hình khi hình phụ tắt (bất biến W12), và W2 nới ba cổng để nó
+ * qua. Thay chú thích «hình phụ, đang ẩn» bằng gốc: mặt phẳng chỉ để đo không mở bước dựng. */
+describe("W3 · H-W2-4 · mặt phẳng phụ chỉ để đo không mở bước dựng", () => {
+  const RSP: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
+    "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs/fixtures/regular_square_pyramid_positive.json",
+    import.meta.url)), "utf8")).envelope.scene3d;
+  const hinhTrungTinh = (sc: Scene3D, g: number) => {
+    const k = anchorOfGeometryStep(sc, g);
+    const an = auxiliaryHiddenAt(sc, k, false, null);
+    return JSON.stringify(objectsAt(sc, k)
+      .filter((o) => o.render !== "readout" && o.render !== "non_visual" && !an.has(o.id)).map((o) => o.id).sort());
+  };
+
+  it("mọi bước dựng sau bước 0 đổi hình trung tính (hình phụ tắt, không chọn gì)", () => {
+    const tinh = Array.from({ length: geometryStepCount(RSP) }, (_, g) => g)
+      .filter((g) => g > 0 && hinhTrungTinh(RSP, g) === hinhTrungTinh(RSP, g - 1));
+    expect(tinh).toEqual([]);
+  });
+
+  it("danh sách bước không có bước riêng cho mặt phẳng ấy; bật «Hình phụ» thì nó hiện ở khung cuối", () => {
+    const html = sach(renderToString(<Scene3DPlayer scene={RSP} stepsOpen />));
+    expect(html).not.toContain("Mặt phẳng qua A, B, C");
+    expect(html).not.toContain("hình phụ, đang ẩn");
+    const cuoi = anchorOfGeometryStep(RSP, geometryStepCount(RSP) - 1);
+    expect(objectsAt(RSP, cuoi).map((o) => o.id)).toContain("mp_day");
+    expect(auxiliaryHiddenAt(RSP, cuoi, false, null).has("mp_day")).toBe(true);
+    expect(auxiliaryHiddenAt(RSP, cuoi, true, null).has("mp_day")).toBe(false);
+  });
+
+  it("mặt phẳng KHÔNG phải hình phụ chỉ để đo vẫn mở bước của nó", () => {
+    const sc: Scene3D = JSON.parse(JSON.stringify(RSP));
+    const mp = sc.objects.find((o) => o.id === "mp_day")!;
+    mp.formation_roles = ["CONSTRUCT_CUTTING_OBJECT"];
+    expect(geometryStepCount(sc)).toBe(geometryStepCount(RSP) + 1);
+    expect(sach(renderToString(<Scene3DPlayer scene={sc} stepsOpen />))).toContain("Mặt phẳng qua A, B, C");
   });
 });
 

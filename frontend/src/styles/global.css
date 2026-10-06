@@ -6294,10 +6294,3 @@ html {
 .geo3d-cac-buoc-con {
   padding-left: var(--sp-md);
 }
-
-.geo3d-cac-buoc-phu {
-  margin-left: auto;
-  color: var(--ink-secondary);
-  font-size: 0.75rem;
-  white-space: nowrap;
-}

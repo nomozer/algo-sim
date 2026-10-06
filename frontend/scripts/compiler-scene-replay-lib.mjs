@@ -622,9 +622,24 @@ export function assessCausalCanvasHues(scene, tiers, census) {
  * GEOMETRY_CONSTRUCTION làm đổi chữ ký HÌNH (vật vẽ được + tiến độ thiết diện);
  * khung hiện là sự kiện CUỐI đoạn. Cảnh không gõ loại ⇒ mỗi sự kiện một bước.
  * Không import sản phẩm: bộ đo nói điều sản phẩm PHẢI làm. */
+/** regular-square-pyramid-w03 · H-W2-4: mặt phẳng phụ CHỈ ĐỂ ĐO — `plane3` dẫn xuất, vai duy nhất
+ *  CONSTRUCT_AUXILIARY_GEOMETRY, không given/target, mọi vật dựa trên nó là đại lượng. Cảnh trung tính không vẽ nó ⇒
+ *  không phải thay đổi hình, không mở bước dựng. */
+function matPhangChiDeDo(scene) {
+  const objs = scene?.objects ?? [];
+  return new Set(objs.filter((o) => {
+    const con = objs.filter((x) => (x.depends ?? []).includes(o.id));
+    return o.type === "plane3" && o.origin === "derived" && (o.formation_roles ?? []).length === 1
+      && o.formation_roles[0] === "CONSTRUCT_AUXILIARY_GEOMETRY"
+      && !(o.display_group ?? []).some((g) => g === "given" || g === "target")
+      && con.length > 0 && con.every((x) => x.type === "quantity");
+  }).map((o) => o.id));
+}
+
 function chuKyHinh(scene, k) {
+  const chiDeDo = matPhangChiDeDo(scene);
   const ve = new Set((scene?.objects ?? [])
-    .filter((o) => o.render !== "readout" && o.render !== "non_visual").map((o) => o.id));
+    .filter((o) => o.render !== "readout" && o.render !== "non_visual" && !chiDeDo.has(o.id)).map((o) => o.id));
   const s = scene?.formation?.steps?.[k];
   const hien = (s?.visible_ids ?? expectedVisibleIds(scene, k)).filter((id) => ve.has(id)).sort();
   const tienDo = (s?.geometry_progress ?? []).map((p) =>
@@ -690,20 +705,6 @@ export function solutionRowOf(scene, id, rows) {
   return s && rows.has(s) ? s : id;
 }
 
-/** regular-square-pyramid-w02 · D: bước dựng `g` chỉ đưa vào HÌNH PHỤ mà oracle độc lập (`expectedAuxiliaryHidden`)
- *  nói đang ẩn ở neo của nó — bước ấy không đổi hình theo thiết kế (cảnh trung tính không vẽ hình phụ). */
-export function stepOnlyBuildsHiddenHelper(scene, g) {
-  const b = expectedGeometryTimeline(scene)[g];
-  if (!b) return false;
-  const an = new Set(expectedAuxiliaryHidden(scene, b.anchor));
-  const moi = Array.from({ length: b.end - b.start + 1 }, (_, d) => scene?.formation?.steps?.[b.start + d]?.focus_ids ?? [])
-    .flat().filter((id) => {
-      const o = (scene?.objects ?? []).find((x) => x.id === id);
-      return o && o.render !== "readout" && o.render !== "non_visual";
-    });
-  return moi.length > 0 && moi.every((id) => an.has(id));
-}
-
 /** Phán quyết các bước dựng QUAN SÁT trong trình duyệt (W12).
  *  `observed = { step_count, steps: [{ index, rendered, focus_label, solution }] }`
  *  — `rendered`: vật vẽ lên khung; `focus_label`: nhãn bước (dòng "Đang dựng" tới W20; từ
@@ -717,10 +718,9 @@ export function assessGeometrySteps(scene, observed) {
   const finalIds = new Set((scene?.events ?? [])
     .filter((e) => e.semantic_kind === "FINAL_RESULT" && e.object).map((e) => e.object));
   const steps = observed?.steps ?? [];
-  // regular-square-pyramid-w02 · D: một bước chỉ dựng HÌNH PHỤ đang ẩn tĩnh theo thiết kế — mọi khung tĩnh khác vẫn đỏ.
+  // W3 · H-W2-4: miễn trừ "bước chỉ dựng hình phụ đang ẩn" của W2 đã gỡ — mặt phẳng chỉ để đo không mở bước nữa.
   const staticFrames = steps.slice(1)
-    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered)
-      && !stepOnlyBuildsHiddenHelper(scene, s.index))
+    .filter((s, i) => JSON.stringify(s.rendered) === JSON.stringify(steps[i].rendered))
     .map((s) => s.index);
   const focusOf = (s) => byLabel.get(String(s.focus_label ?? "").trim()) ?? [];
   const measurementSteps = steps.slice(1)
@@ -1342,10 +1342,9 @@ export function assessPlayback({
   for (let g = 1; g <= last; g += 1) {
     const now = settledAt(g);
     const before = settledAt(g - 1);
-    // W2 · D: bước chỉ dựng hình phụ đang ẩn được miễn (oracle độc lập) — ghi riêng, không gộp vào "đổi hình".
-    const phu = stepOnlyBuildsHiddenHelper(scene, g);
-    doiHinh.push({ step: g, hidden_helper_only: phu || undefined, changed: phu || (Boolean(now && before)
-      && JSON.stringify(now.rendered) !== JSON.stringify(before.rendered)) });
+    // W3 · H-W2-4: không còn miễn trừ — mọi bước dựng sau bước 0 phải đổi hình (bất biến W12).
+    doiHinh.push({ step: g, changed: Boolean(now && before)
+      && JSON.stringify(now.rendered) !== JSON.stringify(before.rendered) });
   }
   add("every_geometry_step_changes_the_figure", doiHinh.every((c) => c.changed), doiHinh);
   // Bảng lời giải ĐỒNG BỘ với bước dựng đang hiện: đúng dữ kiện / bước tính /

@@ -6,12 +6,13 @@
  * `depends` của các vật khác — không đọc tên:
  *   - DỰNG — có vật hình học dựng TỪ nó (AC, BD → giao điểm O): hiện từ lúc dựng tới bước mọi vật ấy đã có (xong
  *     nhiệm vụ), sau đó ẩn khỏi cảnh trung tính;
- *   - ĐO — mặt phẳng chỉ làm toán hạng cho đại lượng (mặt phẳng qua A, B, C để đo chiều cao): ẩn mặc định.
+ *   - ĐO — mặt phẳng chỉ làm toán hạng cho đại lượng (mặt phẳng qua A, B, C để đo chiều cao): ẩn mặc định; phân loại
+ *     ở `measurementOnlyPlanes` (scene3d-model) — cùng thẩm quyền khiến sự kiện chỉ dựng nó không mở bước dựng (W3).
  * Đường chỉ để đo (vd đường BD của "khoảng cách từ S tới BD") KHÔNG ẩn: đó là vật đề gọi tên.
  * Công tắc «Hình phụ» hiện tất cả; chọn hình phụ — hoặc một vật mà chuỗi phụ thuộc chứa nó — cũng hiện nó.
  */
 import type { Scene3D } from "./scene3d-model";
-import { clampStep, geometryStepOf, geometryTimeline, objectsAt, stepCount } from "./scene3d-model";
+import { clampStep, geometryStepOf, geometryTimeline, measurementOnlyPlanes, objectsAt, stepCount } from "./scene3d-model";
 import { dependencyClosure } from "./interaction-state";
 
 export const VAI_PHU = "CONSTRUCT_AUXILIARY_GEOMETRY";
@@ -42,7 +43,7 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
         return dung.every((id) => hien.has(id));
       });
       if (k !== undefined) ra.set(o.id, { loai: "dung", xongTai: k });
-    } else if (o.type === "plane3" && con.length > 0) {
+    } else if (measurementOnlyPlanes(scene).has(o.id)) {
       ra.set(o.id, { loai: "do", xongTai: -1 });
     }
   }
