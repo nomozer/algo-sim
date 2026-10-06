@@ -156,9 +156,13 @@ async function boCuc(s, viewport, frames) {
     narration_live: await j(s, "document.querySelector('.geo3d-narration')?.getAttribute('aria-live')==='polite'"),
     frames };
 }
+/* OrbitControls quay góc = 2π·(độ kéo px)/(chiều cao canvas), nên một cú kéo PIXEL cố định là một tư thế khác ở mỗi cỡ
+   canvas. W4 chấm cú kéo 160×40 px trên canvas cao 626 px; W05 (canvas cao hơn) kéo cùng GÓC ấy — tỉ lệ theo chiều cao.
+   (Cú kéo pixel cũ trên canvas 681 px là một tư thế chưa từng được chấm: đỉnh B rơi cách đáy 3 px — ghi ở báo cáo W05.) */
+const KEO_XOAY = { dx: 160 / 626, dy: 40 / 626 };
 const xoayKhung = async (s) => {
   const c = await hop(s, ".geo3d-canvas");
-  await keo(s, c.x + c.w * 0.3, c.y + c.h * 0.5, 160, 40);
+  await keo(s, c.x + c.w * 0.3, c.y + c.h * 0.5, Math.round(KEO_XOAY.dx * c.h), Math.round(KEO_XOAY.dy * c.h));
 };
 
 async function quanSatBang(s, ids) {
