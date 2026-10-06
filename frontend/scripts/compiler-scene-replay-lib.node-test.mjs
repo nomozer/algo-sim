@@ -105,10 +105,13 @@ test("CSS readiness is driven by computed sentinel styles, not stylesheet rules"
     controls: { display: "flex", fontFamily: "Inter" },
     controlButton: { color: "rgb(0, 0, 0)" },
     controlText: { color: "rgb(97, 93, 89)" },
-    solution: { display: "grid", fontFamily: "Inter" },
-    solutionTitle: { color: "rgb(97, 93, 89)" },
+    toolbar: { display: "flex", fontFamily: "Inter" },
+    toolbarTitle: { color: "rgb(97, 93, 89)" },
   };
   assert.equal(assessCssReadiness(actual, baseline, 900, 900).pass, true);
+  // W05: hàng trên không có kiểu (CSS chưa nạp) ⇒ đỏ.
+  assert.equal(assessCssReadiness({ ...actual, toolbar: { display: "block", fontFamily: "Inter" } },
+    baseline, 900, 900).checks.toolbar_styled, false);
   assert.equal(assessCssReadiness(actual, baseline, 901.5, 900).checks.no_document_overflow, false);
 });
 
@@ -1652,4 +1655,60 @@ test("W4 layout gate: the WebGL canvas follows its container (no stale drawing-b
   assert.deepEqual(LIB.assessLayout(o).reason_codes, []);
   o.canvas_element = HOP(241, 121, 1178, 757);   // canvas giữ cỡ cũ sau khi khung co (đo mobile W4: 503 trong 456)
   assert.ok(LIB.assessLayout(o).reason_codes.includes("CANVAS_ELEMENT_SIZE_STALE"));
+});
+
+/* regular-square-pyramid-w05 — chế độ tập trung: một quan sát đạt, rồi tiêm từng lỗi. */
+const CAM5 = (dx = 0, w = 1440) => ({ viewport_width: w, viewport_height: 700, device_pixel_ratio: 1,
+  view_matrix_column_major: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, dx, 0, -10, 1],
+  projection_matrix_column_major: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0] });
+const MENU5 = (items) => ({ opened: true, items, focus_in_menu: true, arrow_moves: true, escape_closed: true,
+  focus_returned: true, outside_closed: true, inside_viewport: true });
+const W5_FOCUS = {
+  kind: "desktop", viewport: { w: 1440, h: 900 },
+  layout: { nav_bar: false, focus_root: true, scroll_width: 1440, client_width: 1440, back_text: "Trang chủ",
+    title_text: "Thể tích", top_row: HOP(16, 8, 1408, 44), canvas: HOP(16, 60, 1408, 760),
+    controls: HOP(16, 828, 1408, 52), solution_card: false },
+  has_faces: true, tach_khoi: true,
+  menus: { "kham-pha": MENU5(["Thành phần", "Đại lượng"]), "hien-thi": MENU5(["Lưới nền"]),
+    them: MENU5(["Cách máy dựng", "Toàn màn hình"]) },
+  legend_count: 5, grid: { on: true, off: false },
+  state: { before: { step: 3, selected: "V", camera: CAM5() }, after_menus: { step: 3, selected: "V", camera: CAM5() },
+    after_resize: { step: 3, selected: "V", camera: CAM5(0, 1366) },
+    after_fullscreen: { step: 3, selected: "V", camera: CAM5(0, 1440) } },
+  fullscreen: { supported: true, entered: true, exited: true },
+  back: { left_workspace: true, nav_bar_after: true },
+};
+
+test("W5 focus gate: a clean focused workspace passes", () => {
+  assert.deepEqual(LIB.assessFocusMode(W5_FOCUS).reason_codes, []);
+});
+
+test("W5 focus gate: each injected fault is named", () => {
+  const tiem = (f, ma) => {
+    const o = JSON.parse(JSON.stringify(W5_FOCUS));
+    f(o);
+    assert.ok(LIB.assessFocusMode(o).reason_codes.includes(ma), ma);
+  };
+  tiem((o) => { o.layout.nav_bar = true; }, "GLOBAL_HEADER_SHOWN");
+  tiem((o) => { o.layout.scroll_width = 1460; }, "HORIZONTAL_SCROLL");
+  tiem((o) => { o.layout.back_text = ""; }, "NO_BACK_BUTTON");
+  tiem((o) => { o.layout.solution_card = true; }, "SOLUTION_CARD_PRESENT");
+  tiem((o) => { o.layout.controls = HOP(16, 870, 1408, 52); }, "CONTROLS_BELOW_FOLD");
+  tiem((o) => { o.layout.controls = HOP(16, 700, 1408, 52); }, "GAP_BELOW_CONTROLS");
+  tiem((o) => { o.layout.top_row = HOP(16, 8, 1408, 80); }, "TOP_ROW_OVERLAPS_CANVAS");
+  tiem((o) => { o.tach_khoi = true; o.has_faces = false; }, "EXPLODE_BUTTON_MISMATCH");
+  tiem((o) => { o.menus["hien-thi"].escape_closed = false; }, "MENU_ESCAPE:hien-thi");
+  tiem((o) => { o.menus.them.focus_returned = false; }, "MENU_FOCUS_RETURN:them");
+  tiem((o) => { o.menus["kham-pha"].arrow_moves = false; }, "MENU_ARROW:kham-pha");
+  tiem((o) => { o.legend_count = 0; }, "LEGEND_MISSING");
+  tiem((o) => { o.state.after_menus.selected = null; }, "STATE_CHANGED_BY_MENUS");
+  tiem((o) => { o.state.after_resize.camera = CAM5(0.5, 1366); }, "STATE_CHANGED_BY_RESIZE");
+  tiem((o) => { o.state.after_fullscreen.step = 0; }, "STATE_CHANGED_BY_FULLSCREEN");
+  tiem((o) => { o.fullscreen = { supported: false }; }, "FULLSCREEN_OFFERED_UNSUPPORTED");
+  tiem((o) => { o.back.nav_bar_after = false; }, "BACK_NOT_WORKING");
+  // mobile: được cuộn, thanh điều khiển dưới nếp gấp không phải lỗi
+  const m = JSON.parse(JSON.stringify(W5_FOCUS));
+  m.kind = "mobile";
+  m.layout.controls = HOP(16, 1200, 358, 52);
+  assert.deepEqual(LIB.assessFocusMode(m).reason_codes, []);
 });

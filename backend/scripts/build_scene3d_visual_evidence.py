@@ -33,16 +33,13 @@ FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
                 "cuboid", "cube", "cross_section", "regular_square_pyramid")
 SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
-# W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas.
-PANEL_STATES = (("desktop", "solution_neutral_final"), ("desktop", "solution_expanded"),
-                ("desktop", "solution_causal_selected"),
-                ("mobile", "solution_neutral_final"), ("mobile", "solution_expanded"))
+# W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas. regular-square-pyramid-w05 · E: thẻ lời
+# giải đã gỡ (ảnh thu gọn/mở không còn); `solution_causal_selected` nay là ảnh bảng «Đại lượng» khi đã chọn đáp số.
+PANEL_STATES = (("desktop", "solution_causal_selected"),)
 STATE_TITLES = {"neutral_final": "mặc định gọn, bước cuối",
                 "causal_selected": "causal — đã chọn đáp số",
                 "rotated_neutral": "đã xoay (qua cổng không suy biến)",
-                "solution_neutral_final": "bảng lời giải mặc định — thu gọn",
-                "solution_causal_selected": "bảng lời giải — đã chọn đáp số (vai trò + chú giải)",
-                "solution_expanded": "bảng lời giải — mở dữ kiện và các bước tính",
+                "solution_causal_selected": "bảng «Đại lượng» — đã chọn đáp số (vai trò trong chuỗi)",
                 "show_all": "Hiện tất cả — mọi số đo khả dụng (chỉ nhãn đổi)",
                 "causal_restored": "bỏ chọn — cùng camera, cùng vị trí cuộn",
                 "selected_length": "chọn một độ dài — nhãn, chuỗi số, ô soi",
@@ -98,10 +95,12 @@ class ThieuAnhBangChung(ValueError):
 # khung trung tính — chú giải không được hứa "trung tính" cho chúng (w12).
 LEGEND = ("XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: "
           "khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\n"
-          "Causal (bấm một dòng của bảng lời giải): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số "
+          "Causal (chọn một mục của bảng «Đại lượng»): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số "
           "· xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi.")
 LABEL_PX = 28
-HEADER_CSS = 44   # hàng tiêu đề + chip ngay trên canvas: giữ, bỏ thanh điều hướng
+# Hàng trên của xưởng ngay trên canvas: giữ. W05: chế độ tập trung không còn thanh điều hướng, và hàng trên (nút quay
+# lại · tên bài · nút nhóm) cao hơn hàng chip cũ — 72 px giữ trọn nó (trước: 44).
+HEADER_CSS = 72
 STATES = ("neutral_final", "rotated_neutral")
 #: W14 — tên NGƯỜI XEM của từng vai trò dựng hình, theo thứ tự kế hoạch. Token máy
 #: (`CONSTRUCT_BASE`…) không bao giờ lên ảnh: vai trò lạ ⇒ `KeyError`, không in thô.

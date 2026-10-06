@@ -17,7 +17,6 @@ import {
 import type { InteractionState } from "./interaction-state";
 import type { AnnotationView } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
-import { Scene3DSolution } from "./scene3d-solution";
 import { BangNoi } from "./scene3d-floating-panel";
 import { geometryStepGroups } from "./scene3d-auxiliary";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
@@ -48,8 +47,8 @@ import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../com
  *
  * Review người: thanh bước đi qua cả sự kiện chỉ tính số hay ghi kết luận —
  * chỉ số tăng mà hình đứng yên. Nay nó đi qua `geometryTimeline`: mỗi nấc là
- * một bước DỰNG, hiện ở khung `anchor` của bước ấy; số đo và kết luận lên bảng
- * lời giải ngay dưới (`scene3d-solution.tsx`). Tự phát dừng ở bước dựng cuối.
+ * một bước DỰNG, hiện ở khung `anchor` của bước ấy; số đo và kết luận đọc ở bảng
+ * «Đại lượng» và ô soi (W05 gỡ thẻ lời giải dưới thanh). Tự phát dừng ở bước dựng cuối.
  */
 
 interface Props {
@@ -70,9 +69,6 @@ interface Props {
   fitToken?: number;
   /** W18 §16.5: chế độ nhãn trên hình ("Hiện tất cả") — chuyển tiếp tới khung nhìn (mặc định gọn). */
   annotationView?: AnnotationView;
-  /** W18 §16.6: lời giải đầy đủ đang mở — xưởng giữ, vì ô soi đọc nó (không hai bản công thức). */
-  solutionOpen?: boolean;
-  onSolutionOpenChange?: (open: boolean) => void;
   /** ROADMAP §0.1-3: danh sách «Các bước dựng» đang mở — xưởng giữ (đóng/mở không đụng bước hay lựa chọn). */
   stepsOpen?: boolean;
   onStepsOpenChange?: (open: boolean) => void;
@@ -96,7 +92,7 @@ export function caoKhungKhaDung(cuaSo: number, trenKhung: number, caoThanh: numb
 
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
-  solutionOpen, onSolutionOpenChange, stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
+  stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
 }: Props) {
   const [moBuocTrong, setMoBuocTrong] = useState(false);
   const moBuoc = stepsOpen ?? moBuocTrong;
@@ -340,14 +336,8 @@ export function Scene3DPlayer({
         </BangNoi>
       )}
 
-      <Scene3DSolution
-        scene={scene}
-        step={step}
-        selectedId={interaction?.selected_id ?? null}
-        onSelect={onSelect}
-        open={solutionOpen}
-        onOpenChange={onSolutionOpenChange}
-      />
+      {/* W05 · E: thẻ lời giải dưới thanh phát ĐÃ GỠ — nó lặp đúng tập đại lượng của bảng «Đại lượng», còn công
+          thức và nguồn số ở ô soi khi chọn; chú giải màu ở menu «Hiển thị». */}
     </div>
   );
 }

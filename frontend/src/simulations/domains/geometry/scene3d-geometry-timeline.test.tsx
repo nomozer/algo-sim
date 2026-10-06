@@ -20,6 +20,7 @@ import {
   nextGeometryStep,
   objectsAt,
   prevGeometryStep,
+  quantityChoices,
   solutionAt,
 } from "./scene3d-model";
 import { Scene3DPlayer } from "./scene3d-playback";
@@ -151,19 +152,14 @@ describe("W12 · lớp lời giải giữ công thức và nguồn", () => {
     expect(solutionAt(s, geometryAnchor(s, 0)).results).toEqual([]);
   });
 
-  it("bảng lời giải dưới thanh bước: Kết quả có công thức và nguồn, đáp số MỘT lần", () => {
-    // W18 §16.6 (thay đổi có chủ đích): lời giải đầy đủ thu gọn mặc định — Kết quả mang `ký hiệu = giá
-    // trị`, công thức và nguồn của vật đang chọn ở ô soi; mở lời giải thì chúng về đây. Đáp số vẫn MỘT lần.
+  it("W05 · E: không còn bảng lời giải dưới thanh bước — đáp số MỘT mục ở «Đại lượng», công thức ở ô soi", () => {
+    // W18 §16.6 thu gọn lời giải; W05 gỡ hẳn thẻ ấy: nó lặp tập `quantityChoices` mà bảng «Đại lượng» liệt kê.
     const s = canh("triangular_pyramid");
-    const html = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} solutionOpen />);
-    expect(html).toContain("Kết quả");
-    expect(html).toContain("Dữ kiện");
-    expect(html).toContain("Các bước tính");
-    expect(html.split("V = 1/3 × S(ABC) × SA = 10")).toHaveLength(2);
-    expect(html).toContain("Dựa trên: S(ABC), SA");
-    const gon = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} />);
-    expect(gon).not.toContain("V = 1/3 × S(ABC) × SA = 10");
-    expect(gon).not.toContain("Dựa trên: S(ABC), SA");
+    const html = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} />);
+    expect(html).not.toContain("V = 1/3 × S(ABC) × SA = 10");
+    expect(html).not.toContain("Các bước tính");
+    const q = quantityChoices(s, geometryAnchor(s, s.events.length - 1));
+    expect([...q.results, ...q.steps, ...q.givens].filter((id) => id === "the_tich_khoi_chop")).toHaveLength(1);
   });
 
   it("khung 3D không còn dải số đo nổi trên hình", () => {

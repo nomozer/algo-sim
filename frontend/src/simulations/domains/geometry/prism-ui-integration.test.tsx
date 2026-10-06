@@ -721,7 +721,7 @@ describe("PRISM_P01 UI End-to-End Integration", () => {
     );
     expect(html).toContain("geo3d");
     expect(html).toContain("Bước 1/6");
-    expect(html).toContain("Thành phần");
+    expect(html).toContain("Khám phá"); // W05: cây «Thành phần» mở từ menu «Khám phá»
     // 6 nhãn điểm A, B, C, D, E, F trong geo3d-labels
     for (const label of ["A", "B", "C", "D", "E", "F"]) {
       expect(html).toContain(`>${label}</span>`);

@@ -82,7 +82,8 @@ describe("xưởng — hợp đồng, không phải bài đọc", () => {
   it("canvas đứng TRƯỚC mọi bảng chữ trong thứ tự đọc", () => {
     const html = renderToString(<Scene3DExplorer scene={scene()} />);
     const iCanvas = html.indexOf("geo3d-canvas");
-    const iThanhPhan = html.indexOf("Thành phần");
+    // W05: lối vào cây «Thành phần» là menu «Khám phá» của hàng trên.
+    const iThanhPhan = html.indexOf("Khám phá");
     expect(iCanvas).toBeGreaterThan(-1);
     expect(html).not.toContain("geo3d-ngan");
     expect(iThanhPhan).toBeGreaterThan(-1);
@@ -91,7 +92,7 @@ describe("xưởng — hợp đồng, không phải bài đọc", () => {
   it("đề bài KHÔNG đổ ra màn hình, chỉ có nút gọi", () => {
     const de = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a.";
     const html = renderToString(<Scene3DExplorer scene={scene()} de={de} />);
-    expect(html).toContain("Xem đề");
+    expect(html).toContain("Đề bài");
     expect(html).not.toContain(de);
   });
 });

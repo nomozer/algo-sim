@@ -937,13 +937,12 @@ export function assessCssReadiness(actual, baseline, scrollWidth, viewportWidth)
       && actual.controls.display !== baseline.div.display
       && actual.controls.fontFamily !== baseline.div.fontFamily
       && actual.controlText.color !== baseline.span.color,
-    // W12: số đo ở BẢNG LỜI GIẢI dưới thanh bước (dải trên khung đã gỡ).
-    // regular-square-pyramid-w01 §0.1-1: thu gọn mà không có dữ kiện/bước tính thì bảng không còn tiêu đề mục
-    // nào — chữ có kiểu đo ở nút mở lời giải (bộ chạy chọn `.geo3d-lg-gap` khi thiếu `.geo3d-lg-ten-muc`).
-    solution_styled: Boolean(actual.solution && actual.solutionTitle)
-      && actual.solution.display === "grid"
-      && actual.solution.fontFamily !== baseline.div.fontFamily
-      && actual.solutionTitle.color !== baseline.span.color,
+    // W12 đo BẢNG LỜI GIẢI dưới thanh bước; regular-square-pyramid-w05 gỡ bảng ấy — vùng chữ luôn có mặt của xưởng
+    // nay là HÀNG TRÊN (nút quay lại · tên bài · công cụ nhóm): bố cục flex, phông sản phẩm, tên bài khác mặc định.
+    toolbar_styled: Boolean(actual.toolbar && actual.toolbarTitle)
+      && actual.toolbar.display === "flex"
+      && actual.toolbar.fontFamily !== baseline.div.fontFamily
+      && actual.toolbarTitle.color !== baseline.span.color,
     no_document_overflow: scrollWidth <= viewportWidth + 1,
   };
   return { checks, pass: Object.values(checks).every(Boolean) };
@@ -1883,5 +1882,62 @@ export function assessGridToggle(o) {
   if (o.selected_before !== o.selected_on) r.push("GRID_CHANGES_SELECTION");
   if (JSON.stringify(o.rendered_before) !== JSON.stringify(o.rendered_on)) r.push("GRID_CHANGES_FIGURE");
   if (o.recompute_idle_delta !== 0) r.push("OCCLUSION_RECOMPUTE_ON_IDLE");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** regular-square-pyramid-w05 — CHẾ ĐỘ TẬP TRUNG (thao tác thật của `w05-focus-probe.mjs`). `o` =
+ *  {kind: "desktop"|"low"|"mobile", viewport: {w, h}, layout: {nav_bar, focus_root, scroll_width, client_width,
+ *  back_text, title_text, top_row, canvas, controls, solution_card}, has_faces, tach_khoi,
+ *  menus: {[khoa]: {opened, items, focus_in_menu, arrow_moves, escape_closed, focus_returned, outside_closed,
+ *  inside_viewport}}, legend_count, grid: {on, off}, state: {before, after_menus, after_resize, after_fullscreen},
+ *  fullscreen: {supported, entered, exited}, back: {left_workspace, nav_bar_after}}.
+ *  `state.*` = {step, selected, camera}; hộp theo khung nhìn ở scrollY = 0. */
+export const KHOANG_TRONG_DAY_TOI_DA = 32;
+export function assessFocusMode(o) {
+  const r = [];
+  const L = o.layout ?? {};
+  if (L.nav_bar) r.push("GLOBAL_HEADER_SHOWN");
+  if (!L.focus_root) r.push("FOCUS_ROOT_MISSING");
+  if (!(L.scroll_width <= L.client_width + 1)) r.push("HORIZONTAL_SCROLL");
+  if (!String(L.back_text ?? "").trim()) r.push("NO_BACK_BUTTON");
+  if (!String(L.title_text ?? "").trim()) r.push("NO_TITLE");
+  if (L.solution_card) r.push("SOLUTION_CARD_PRESENT");
+  if (L.top_row && L.canvas && L.top_row.y + L.top_row.h > L.canvas.y + 0.5) r.push("TOP_ROW_OVERLAPS_CANVAS");
+  if (L.canvas && L.canvas.h < 320 - 0.5) r.push("CANVAS_BELOW_FLOOR");
+  if (o.kind !== "mobile" && L.controls) {
+    const day = L.controls.y + L.controls.h;
+    if (day > o.viewport.h + 1) r.push("CONTROLS_BELOW_FOLD");
+    else if (o.viewport.h - day > KHOANG_TRONG_DAY_TOI_DA) r.push("GAP_BELOW_CONTROLS");
+  }
+  if (Boolean(o.tach_khoi) !== Boolean(o.has_faces)) r.push("EXPLODE_BUTTON_MISMATCH");
+  for (const khoa of ["kham-pha", "hien-thi", "them"]) {
+    const m = o.menus?.[khoa];
+    if (!m?.opened || !(m.items ?? []).length) { r.push(`MENU_NOT_OPENED:${khoa}`); continue; }
+    if (!m.focus_in_menu) r.push(`MENU_FOCUS:${khoa}`);
+    if ((m.items ?? []).length > 1 && !m.arrow_moves) r.push(`MENU_ARROW:${khoa}`);
+    if (!m.escape_closed) r.push(`MENU_ESCAPE:${khoa}`);
+    if (!m.focus_returned) r.push(`MENU_FOCUS_RETURN:${khoa}`);
+    if (!m.outside_closed) r.push(`MENU_OUTSIDE_CLICK:${khoa}`);
+    if (!m.inside_viewport) r.push(`MENU_OFFSCREEN:${khoa}`);
+  }
+  if (!(o.legend_count >= 4)) r.push("LEGEND_MISSING");
+  if (!(o.grid?.on === true && o.grid?.off === false)) r.push("GRID_TOGGLE");
+  const s = o.state ?? {};
+  const giong = (a, b) => Boolean(a && b) && a.step === b.step && a.selected === b.selected
+    && cameraMotion(a.camera, b.camera) <= CAMERA_SETTLE_TOLERANCE;
+  if (!s.before?.selected) r.push("NO_SELECTION_TO_KEEP");
+  if (!giong(s.before, s.after_menus)) r.push("STATE_CHANGED_BY_MENUS");
+  // Đổi cỡ khung đổi tỉ lệ chiếu (ma trận chiếu) — góc nhìn (ma trận nhìn), bước và lựa chọn phải giữ.
+  const giuNhin = (a, b) => Boolean(a && b) && a.step === b.step && a.selected === b.selected
+    && Boolean(a.camera && b.camera) && a.camera.view_matrix_column_major.every((v, i) =>
+      Math.abs(v - b.camera.view_matrix_column_major[i]) <= 1e-9 * Math.max(1, Math.abs(v)));
+  if (s.after_resize !== undefined && !giuNhin(s.before, s.after_resize)) r.push("STATE_CHANGED_BY_RESIZE");
+  if (o.fullscreen?.supported) {
+    if (!o.fullscreen.entered || !o.fullscreen.exited) r.push("FULLSCREEN_TOGGLE");
+    if (!giuNhin(s.before, s.after_fullscreen)) r.push("STATE_CHANGED_BY_FULLSCREEN");
+  } else if ((o.menus?.them?.items ?? []).some((t) => t.includes("Toàn màn hình"))) {
+    r.push("FULLSCREEN_OFFERED_UNSUPPORTED");
+  }
+  if (!o.back?.left_workspace || !o.back?.nav_bar_after) r.push("BACK_NOT_WORKING");
   return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }

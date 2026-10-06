@@ -122,8 +122,9 @@ describe("MIRROR — hai bờ khai cùng một hình dạng", () => {
     // `visual_transform` đã đo được trong Chrome thật.
     const src = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf-8");
     expect(src).not.toMatch(/toNumber\([^)]*\.value/);
-    // W12: con số hiện ở BẢNG LỜI GIẢI, không còn dải trên khung.
-    const bang = readFileSync(join(__dirname, "scene3d-solution.tsx"), "utf-8");
+    // W12: con số hiện ở BẢNG LỜI GIẢI, không còn dải trên khung. W05: thẻ lời giải gỡ — con số hiện ở bảng
+    // «Đại lượng» và ô soi của xưởng; guard đi theo nó.
+    const bang = readFileSync(join(__dirname, "Scene3DExplorer.tsx"), "utf-8");
     expect(bang).not.toMatch(/toNumber\([^)]*\.value/);
     expect(bang).toContain("hienSo(o.exact, o.value)");
   });

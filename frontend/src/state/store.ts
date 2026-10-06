@@ -146,6 +146,10 @@ interface AppState {
 
   /** M9-UX1 — điều hướng trình bày + lịch sử bền. */
   goHome: () => void;
+  /** W05 — trang đứng TRƯỚC khi vào xưởng (ghi lúc `loadEnvelope` từ ngoài xưởng); đích của nút quay lại. */
+  returnView: AppView;
+  /** W05 — rời xưởng như `goHome` (dọn bài, bài giao) nhưng về đúng `returnView`. */
+  roiXuong: () => void;
   openHistory: () => void;
   /** Mở lại từ lịch sử: envelope đã validate + engine tất định — 0 gọi AI. */
   reopenFromHistory: (id: string) => void;
@@ -221,6 +225,7 @@ export const useAppStore = create<AppState>((set, get) => {
     unsupported: null,
     activeSampleId: null,
     view: "home",
+    returnView: "home",
     history: historyStore.list(),
     activeHistoryId: null,
     active: null,
@@ -317,9 +322,17 @@ export const useAppStore = create<AppState>((set, get) => {
         // của người dùng SAU đó, và chỉ khi module khai hỗ trợ.
         visualMode: "2d",
         view: "workspace",
+        // Đổi bài ngay trong xưởng không phải "trang trước" — giữ đích quay lại cũ.
+        returnView: get().view === "workspace" ? get().returnView : get().view,
         history: historyStore.list(),
         activeHistoryId: item.id,
       });
+    },
+
+    roiXuong: () => {
+      const ve = get().returnView;
+      get().goHome();
+      get().setView(ve);
     },
 
     /* W4B-2Z §26 — về Home KHÔNG đóng phiên nào: chụp bản làm việc lại trước

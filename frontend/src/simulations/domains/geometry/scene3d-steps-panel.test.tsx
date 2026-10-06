@@ -17,7 +17,6 @@ import {
 } from "./scene3d-model";
 import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
 import { Scene3DPlayer } from "./scene3d-playback";
-import { Scene3DSolution } from "./scene3d-solution";
 
 const CANH: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
   "../../../../../docs/evaluation/geometry/runs/w11-pedagogical-polish/inputs/fixtures/rectangular_pyramid_positive.json",
@@ -27,13 +26,12 @@ const sach = (h: string) => h.replace(/<!--.*?-->/g, "");
 // Checkout Windows (CRLF) phải cho cùng kết quả: so mẫu nhiều dòng trên "\n".
 const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
-describe("§0.1-1 · card Kết quả ẩn mặc định", () => {
-  it("lời giải thu gọn ⇒ không có mục Kết quả dưới hình; mở ⇒ có", () => {
-    const thu = sach(renderToString(<Scene3DSolution scene={CANH} step={CUOI} open={false} />));
-    const mo = sach(renderToString(<Scene3DSolution scene={CANH} step={CUOI} open />));
-    expect(thu).not.toContain("geo3d-lg-ket-qua");
-    expect(thu).toContain('aria-expanded="false"');
-    expect(mo).toContain("geo3d-lg-ket-qua");
+describe("§0.1-1 · không có card Kết quả dưới hình", () => {
+  it("W05 · E: trình phát không dựng thẻ lời giải nào — đáp số đọc ở «Đại lượng» và ô soi", () => {
+    // §0.1-1 ẩn card Kết quả khi lời giải thu gọn; W05 gỡ hẳn thẻ lời giải (nó lặp tập đại lượng của «Đại lượng»).
+    const h = sach(renderToString(<Scene3DPlayer scene={CANH} initialStep={CUOI} />));
+    expect(h).not.toContain("geo3d-lg-ket-qua");
+    expect(h).not.toContain("geo3d-loi-giai");
   });
 });
 

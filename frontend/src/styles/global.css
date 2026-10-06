@@ -5020,9 +5020,19 @@ html {
   gap: var(--sp-sm);
 }
 
+/* W05 · hàng trên: tên bài là tiêu đề trang (một dòng, cắt bằng dấu ba chấm — đủ chữ ở `title`), nút quay lại và
+   các nút nhóm cùng kiểu nút tiện ích của DESIGN.md (bo 8 px, viền hairline, một màu nhấn khi đang mở). */
 .geo3d-ten-bai {
-  color: var(--ink-secondary);
+  flex: 1 1 12rem;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .geo3d-thanh-nut {
@@ -5031,28 +5041,109 @@ html {
   gap: var(--sp-xs);
 }
 
-.geo3d-chip {
+.geo3d-quay-lai,
+.geo3d-menu-nut {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px var(--sp-sm);
+  min-height: 36px;
+  padding: 6px var(--sp-sm);
   border: 1px solid var(--hairline);
-  border-radius: 999px;
+  border-radius: var(--rounded-md);
   background: var(--canvas);
-  color: var(--ink-secondary);
+  color: var(--ink);
+  font: inherit;
   font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.geo3d-chip:hover {
+.geo3d-quay-lai:hover,
+.geo3d-menu-nut:hover {
   border-color: var(--ink-faint);
-  color: var(--ink);
 }
 
-.geo3d-chip.la-mo {
+.geo3d-quay-lai:focus-visible,
+.geo3d-menu-nut:focus-visible,
+.geo3d-menu-muc:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.geo3d-menu-nut.la-mo {
   border-color: var(--primary);
   background: var(--accent-sky-tint);
   color: var(--secondary);
+}
+
+/* Menu nhóm: hộp nổi dưới nút, trên canvas và trên bảng nổi (z 3) — không đẩy bố cục, không bị cắt. */
+.geo3d-menu {
+  position: relative;
+}
+
+.geo3d-menu-hop {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 13rem;
+  max-width: min(18rem, calc(100vw - 2 * var(--sp-md)));
+  padding: var(--sp-xxs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas);
+  box-shadow: var(--shadow-elevated);
+}
+
+.geo3d-menu-muc {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  min-height: 36px;
+  padding: 6px var(--sp-sm);
+  border: 0;
+  border-radius: var(--rounded-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.geo3d-menu-muc:hover {
+  background: var(--canvas-soft);
+}
+
+.geo3d-menu-dau {
+  display: inline-flex;
+  width: 14px;
+  color: var(--primary);
+}
+
+.geo3d-chu-giai-hop {
+  display: grid;
+  gap: var(--sp-xxs);
+  margin-top: var(--sp-xxs);
+  padding: var(--sp-xs) var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+}
+
+.geo3d-chu-giai-ten {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* Trên màn cảm ứng (hoặc khổ hẹp): vùng chạm 44 px (UI UX Pro Max · touch-target). */
+@media (pointer: coarse), (max-width: 48rem) {
+  .geo3d-quay-lai,
+  .geo3d-menu-nut,
+  .geo3d-menu-muc {
+    min-height: 44px;
+  }
 }
 
 /* SÂN KHẤU — mọi lớp phủ neo vào đây, nên chúng phủ LÊN hình chứ không đẩy
@@ -5262,6 +5353,31 @@ html {
     height: var(--geo3d-cao-khung, min(52vh, 420px));
   }
 
+  /* W05: bốn nút nhóm thành lưới 2 × 2 trọn bề rộng (không còn một nút lẻ trên dòng riêng), và hộp menu neo vào CẢ
+     hàng nút thay vì vào nút của nó — nút ở cột trái từng đẩy hộp `right: 0` ra ngoài mép trái (đo W05, 390 px). */
+  .geo3d-thanh-nut {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .geo3d-menu {
+    position: static;
+  }
+
+  .geo3d-thanh-nut > button,
+  .geo3d-menu-nut {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .geo3d-menu-hop {
+    left: 0;
+    right: 0;
+    max-width: none;
+  }
+
   /* Khổ hẹp: ô soi và MỌI bảng thông tin CHẢY DƯỚI sân khấu (`.geo3d-bang-noi` tĩnh, khối «Các bước dựng» dưới).
      Nổi góc phải thì nó che gần hết hình; neo đáy sân khấu (bản trước) thì nó che đúng dòng đáp số đang chọn và nút
      "Xem lại" — sân khấu chứa cả số đo lẫn điều khiển (ảnh w10, 390×844). W4: ngăn cũng thôi phủ lên hình. */
@@ -5301,141 +5417,49 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-/* LỜI GIẢI — bảng THỨ CẤP dưới thanh bước (W12, review NEEDS_CHANGES).
-   Dải số đo nổi trên khung đã gỡ: nó che hình và trộn dữ kiện, bước tính, đáp
-   số thành một dải. Bảng này tách ba mục; đáp số chỉ ở mục Kết quả. Màu một
-   dòng = vai trò của nó trong chuỗi quanh vật đang chọn, cùng token với khung
-   3D (`--geo3d-vai-tro-*`), và luôn đi kèm vạch trái — hai kênh, không một. */
-.geo3d-loi-giai {
-  display: grid;
-  gap: var(--sp-sm);
-  padding: var(--sp-sm) var(--sp-md);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  background: var(--canvas);
-  color: var(--ink);
-}
-
-.geo3d-lg-than {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: var(--sp-sm) var(--sp-lg);
-}
-
-.geo3d-lg-muc {
-  min-width: 0;
-}
-
-.geo3d-lg-ten-muc {
-  margin: 0 0 var(--sp-xxs);
-  color: var(--ink-muted);
-  font-size: 0.8125rem;
-  font-weight: 600;
-}
-
-.geo3d-lg-ds {
-  display: grid;
-  gap: 2px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.geo3d-lg-dong {
-  display: grid;
-  gap: 2px;
-  padding: 3px 8px;
-  border-left: 3px solid transparent;
-  border-radius: var(--rounded-sm);
-}
-
-.geo3d-lg-nut {
+/* W05 · E: thẻ LỜI GIẢI dưới thanh bước (W12, `.geo3d-loi-giai`/`.geo3d-lg-*`) ĐÃ GỠ — nó lặp đúng tập đại lượng
+   của bảng «Đại lượng». Vai trò trong chuỗi nhân quả quanh vật đang chọn (W10) nay tô ở MỤC của bảng ấy: nền nhạt +
+   vạch trái cùng màu, cùng token với khung 3D (`--geo3d-vai-tro-*`) — hai kênh, không một. */
+.geo3d-dai-luong .geo3d-tree-item {
   display: grid;
   gap: 1px;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  border-left: 3px solid transparent;
 }
 
-.geo3d-lg-nut:hover .geo3d-lg-so {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.geo3d-lg-nut:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-  border-radius: var(--rounded-xs);
-}
-
-.geo3d-lg-tieu-de {
+.geo3d-dai-luong-ten {
   color: var(--ink-muted);
   font-size: 0.8125rem;
 }
 
-.geo3d-lg-so {
+.geo3d-dai-luong-so {
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 
-.geo3d-lg-ket-qua .geo3d-lg-so {
-  font-weight: 700;
-}
-
-.geo3d-lg-dua-tren {
-  color: var(--ink-muted);
-  font-size: 0.8125rem;
-}
-
-/* W18 §16.6: lời giải đầy đủ thu gọn ở MỌI khổ — hình là trung tâm; công thức của vật đang chọn ở ô
-   soi. Nút gập luôn có mặt; Kết quả (`ký hiệu = giá trị`) luôn hiện. */
-.geo3d-lg-than:not(.la-mo) {
-  display: none;
-}
-
-.geo3d-lg-gap {
-  display: inline-flex;
-  justify-self: start;
-  padding: 4px var(--sp-sm);
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  background: var(--canvas);
-  color: var(--ink-secondary);
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-/* Vai trò trong chuỗi nhân quả — nền nhạt + vạch trái cùng màu. */
-.geo3d-lg-dong.la-chon {
-  background: color-mix(in srgb, var(--geo3d-vai-tro-dich) 12%, transparent);
+.geo3d-dai-luong .geo3d-tree-item.la-chon {
   border-left-color: var(--geo3d-vai-tro-dich);
 }
 
-.geo3d-lg-dong.la-so-lieu {
+.geo3d-dai-luong .geo3d-tree-item.la-so-lieu {
   background: color-mix(in srgb, var(--geo3d-vai-tro-du-kien-so) 12%, transparent);
   border-left-color: var(--geo3d-vai-tro-du-kien-so);
 }
 
-.geo3d-lg-dong.la-trung-gian {
+.geo3d-dai-luong .geo3d-tree-item.la-trung-gian {
   background: color-mix(in srgb, var(--geo3d-vai-tro-trung-gian) 14%, transparent);
   border-left-color: var(--geo3d-vai-tro-trung-gian);
 }
 
-.geo3d-lg-dong.la-boi-canh {
+.geo3d-dai-luong .geo3d-tree-item.la-boi-canh {
   border-left-color: var(--geo3d-vai-tro-boi-canh);
 }
 
 /* Ngoài chuỗi nhân quả của vật đang chọn: lùi xuống, không biến mất (w10). */
-.geo3d-lg-dong.la-diu {
+.geo3d-dai-luong .geo3d-tree-item.la-diu {
   color: var(--ink-quiet);
 }
 
-/* Chú giải — chỉ hiện khi có vai trò để giải nghĩa. */
+/* Chú giải màu — W05: sống trong menu «Hiển thị» (`.geo3d-chu-giai-hop`), không còn khối thường trực. */
 .geo3d-chu-giai {
   display: flex;
   flex-wrap: wrap;
@@ -5980,6 +6004,29 @@ html {
      hình thành một dải ngang dẹt, và mắt phải quét chứ không nhìn. */
   max-width: 1320px;
   margin-inline: auto;
+}
+
+/* ── W05 · CHẾ ĐỘ TẬP TRUNG: mô phỏng lấp trang ──────────────────────────
+   Vỏ không dựng `nav-bar` (57 px) khi cảnh là 3D (`App`, lớp `la-tap-trung` trên gốc), nên lưới nội dung cao
+   đúng khung nhìn, lề mảnh, và xưởng nhận TRỌN bề rộng (bỏ trần 1320 px — brief W05: "lấp đầy trang"). Chiều cao
+   canvas vẫn do `caoKhungKhaDung` đo (phần còn lại dưới đỉnh canvas), nên không có trần cao nào ở đây. */
+.app-root.la-tap-trung .app-layout.la-canh-3d {
+  height: auto;
+  min-height: 100dvh;
+  max-width: none;
+  padding: var(--sp-sm) var(--sp-md);
+}
+
+/* Trang sở hữu cuộn (màn thấp/mobile cuộn được, desktop vừa đúng một màn vì canvas đo phần còn lại). Đệm đáy
+   140/190 px của nhánh màn thấp là chỗ cho khay 2D ghim đáy — xưởng 3D không có khay ấy (`App`: `!canvasFirst`),
+   nên nó chỉ đẻ ra một khoảng trắng dưới thanh phát. */
+.app-root.la-tap-trung .app-layout.la-canh-3d > .panel-center {
+  overflow-y: visible;
+  padding-bottom: 0;
+}
+
+.app-root.la-tap-trung .app-layout.la-canh-3d > .panel-center > .geo3d-xuong {
+  max-width: none;
 }
 
 /* ── 2 · SÂN KHẤU MỘT KHUNG ─────────────────────────────────────────────

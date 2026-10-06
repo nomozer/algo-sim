@@ -12,10 +12,11 @@ import {
   nextStep,
   prefersReducedMotion,
   prevStep,
+  quantityChoices,
   type Scene3D,
 } from "./scene3d-model";
 import { Scene3DPlayer } from "./scene3d-playback";
-import { Scene3DSolution } from "./scene3d-solution";
+import { quantitySources } from "./scene3d-annotations";
 import { directDependencies } from "./interaction-state";
 
 /**
@@ -190,14 +191,19 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).not.toContain("S_ABCD");
   });
 
-  it("`Dựa trên` của lời giải tra id phụ thuộc sang KÝ HIỆU, không in id IR (payload thật)", () => {
+  it("nguồn số của một đại lượng (ô soi «Tính trực tiếp từ») tra id sang KÝ HIỆU, không in id IR (payload thật)", () => {
+    // W05: thẻ lời giải (nơi dòng «Dựa trên:» từng sống) đã gỡ; nguồn số đọc ở ô soi khi chọn đại lượng, cùng
+    // `quantitySources` và cùng cách gọi ngắn `reference`/`display_label` như ô soi (`ten` của xưởng).
     const that: Scene3D = JSON.parse(readFileSync(join(__dirname,
       "../../../../../docs/evaluation/geometry/runs/w11-pedagogical-polish/inputs/fixtures/rectangular_pyramid_positive.json"),
       "utf8")).envelope.scene3d;
-    const html = renderToString(<Scene3DSolution scene={that} step={that.events.length - 1} open />);
-    const ds = [...html.matchAll(/Dựa trên: ([^<]*)</g)].map((m) => m[1]);
-    // Ký hiệu chứ không phải câu đầy đủ: đây là một DANH SÁCH, và nối các câu
-    // đầy đủ bằng dấu phẩy sẽ dài hơn cả khung.
+    const theoId = new Map(that.objects.map((o) => [o.id, o]));
+    const ten = (id: string) => {
+      const o = theoId.get(id);
+      return o?.reference?.trim() || o?.display_label?.trim() || o?.label?.trim() || "";
+    };
+    const q = quantityChoices(that, that.events.length - 1);
+    const ds = [...q.results, ...q.steps].flatMap((id) => quantitySources(that, id).inputs.map(ten));
     expect(ds.length).toBeGreaterThan(0);
     for (const d of ds) expect(d).not.toMatch(/_/);
   });
@@ -340,10 +346,11 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     // khung thay cột lưới W1. Nó chỉ là khung trình bày (kéo, kẹp, đóng) quanh danh sách bước; nó không đọc cảnh.
     // THÊM `./scene3d-auxiliary` (W2 · D), nói ra: chỉ để NHÓM các bước dựng hình phụ (AC, BD) với bước dùng
     // chúng (O) trong danh sách — mỗi bước con vẫn là một nút đặt đúng neo, không đổi timeline.
+    // BỎ `./scene3d-solution` (regular-square-pyramid-w05 · E): thẻ lời giải dưới thanh bước đã gỡ.
     const imports = [...src.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     expect(imports.sort()).toEqual([
       "../../../components/icons", "./interaction-state", "./scene3d-annotations",
-      "./scene3d-auxiliary", "./scene3d-floating-panel", "./scene3d-model", "./scene3d-solution", "./scene3d-view", "react",
+      "./scene3d-auxiliary", "./scene3d-floating-panel", "./scene3d-model", "./scene3d-view", "react",
     ]);
   });
 

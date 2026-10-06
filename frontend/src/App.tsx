@@ -51,6 +51,7 @@ export default function App() {
   const rightOpen = useAppStore((s) => s.rightOpen);
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
+  const roiXuong = useAppStore((s) => s.roiXuong);
   const setView = useAppStore((s) => s.setView);
   const assignment = useAppStore((s) => s.activeAssignment);
 
@@ -94,11 +95,15 @@ export default function App() {
     : <HomeView />;
 
   return (
-    <div className={`app-root${user ? " is-authed" : ""}`}>
+    <div className={`app-root${user ? " is-authed" : ""}${canvasFirst ? " la-tap-trung" : ""}`}>
       {/* Không vẽ gì — chỉ chuyển state engine thành bằng chứng thực hành. */}
       {user && <PracticeReporter />}
 
       <div className="app-main">
+        {/* W05 · CHẾ ĐỘ TẬP TRUNG: cảnh 3D lấp trang — thanh trên toàn cục (đăng nhập/đăng ký, điều hướng, «Giải
+            thích» vốn không tác dụng với cảnh 3D) KHÔNG dựng. Xưởng tự mang đường ra (nút quay lại về đúng trang
+            trước — `roiXuong`), tên bài, giao bài và dải lớp (`SimulationWorkspace` truyền xuống). */}
+        {!canvasFirst && (
         <header className="nav-bar">
           {/* Tên sản phẩm sống ở ĐẦU TRÁI cho cả hai vỏ — khách thì đứng một
               mình, đã đăng nhập thì `TopNav` mang nó cùng hàng mục điều hướng.
@@ -160,6 +165,7 @@ export default function App() {
             {user && <TopNavAccount />}
           </nav>
         </header>
+        )}
 
         {/* ─── LƯỚI CHẶN TRONG: giữ ĐIỀU HƯỚNG khi nội dung vỡ ──────────────
             Năm miền hỏng — HOME, WORKSPACE, SCENE3D, INSPECTOR, PLAYBACK —
@@ -185,6 +191,10 @@ export default function App() {
                 hanhDong="Thử lại"
                 onHanhDong={thuLai}
               />
+              {/* W05: chế độ tập trung không có thanh trên — xưởng vỡ thì đường ra phải nằm ngay ở đây. */}
+              {canvasFirst && (
+                <button type="button" className="btn-utility" onClick={roiXuong}>Rời mô phỏng</button>
+              )}
             </main>
           )}
         >

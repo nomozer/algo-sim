@@ -39,6 +39,7 @@ import {
   coherentFormula,
   geometryAnchor,
   objectsAt,
+  hienSo,
   quantityChoices,
 } from "./scene3d-model";
 import {
@@ -57,6 +58,7 @@ import {
   semanticTree,
   showAll,
   taoTrangThai,
+  tangNhanManh,
   treeAt,
 } from "./interaction-state";
 import {
@@ -76,15 +78,20 @@ import {
   hasHiddenByDefault,
   quantitySources,
 } from "./scene3d-annotations";
-import {
-  IconExperiment,
-  IconInfo,
-  IconPanel,
-  IconReset,
-  IconRuler,
-} from "../../../components/icons";
+import { MenuCongCu, hoTroToanManHinh } from "./scene3d-tool-menu";
+import { IconBack, IconExperiment, IconReset } from "../../../components/icons";
 
 const NHOM_BUNG = "face";
+
+/** Chú giải màu — cùng lớp vai trò với khung 3D và bảng «Đại lượng» (`scene3d-roles.ts`); sống trong menu «Hiển
+ *  thị» (W05 · E — trước là khối dưới thẻ lời giải đã gỡ). "Vừa dựng" dùng cùng màu với "Đang xét". */
+const CHU_GIAI_VAI_TRO: { lop: string; chu: string }[] = [
+  { lop: "la-chon", chu: "Đang xét" },
+  { lop: "la-chon", chu: "Vừa dựng ở bước này" },
+  { lop: "la-so-lieu", chu: "Dữ kiện số" },
+  { lop: "la-trung-gian", chu: "Đại lượng trung gian" },
+  { lop: "la-boi-canh", chu: "Hình liên quan" },
+];
 
 /** `type` → cách gọi của HỌC SINH. Bề mặt học sinh không nói tiếng máy. */
 /* ─── HAI BẢNG ĐÃ GỠ, KHÔNG ĐỔI TÊN ─────────────────────────────────────
@@ -157,18 +164,23 @@ function NutCay({
   );
 }
 
-/** Bảng thông tin mở bằng chip trên thanh xưởng (ô soi mở theo lựa chọn, «Các bước dựng» ở trình phát). */
+/** Bảng thông tin mở từ hàng trên của xưởng (ô soi mở theo lựa chọn, «Các bước dựng» ở trình phát). */
 type BangThongTin = "de" | "thanh-phan" | "dai-luong";
-/** Nút đã mở bảng — nơi trả tiêu điểm khi đóng bằng Escape. */
+/** Nút đã mở bảng — nơi trả tiêu điểm khi đóng bằng Escape: «Đề bài» là nút riêng, hai bảng kia mở từ menu «Khám phá». */
 const nutMoBang = (id: BangThongTin) =>
-  typeof document === "undefined" ? null : document.querySelector<HTMLElement>(`[data-mo-bang="${id}"]`);
+  typeof document === "undefined" ? null
+    : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
 
 export function Scene3DExplorer({
-  scene, de, phien, onFocus, daiLop,
+  scene, de, tieuDe, quayLai, phien, onFocus, daiLop,
 }: {
   scene: Scene3D;
-  /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Xem đề». */
+  /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
   de?: string | null;
+  /** W05 — tên bài (tiêu đề envelope) ở hàng trên. */
+  tieuDe?: string | null;
+  /** W05 — đường ra của chế độ tập trung: chữ là tên trang đích. Vỏ quyết đích, xưởng chỉ bày nút. */
+  quayLai?: { nhan: string; onClick: () => void };
   /**
    * Trạng thái phiên lớp. `null`/vắng ⇒ xưởng chạy y như khi tự học.
    *
@@ -210,12 +222,25 @@ export function Scene3DExplorer({
      đang ẩn. §16.6: lời giải đầy đủ thu gọn mặc định; khi nó mở, ô soi không lặp công thức. */
   const [xem, setXem] = useState<AnnotationView>(DEFAULT_ANNOTATION_VIEW);
   const coAn = useMemo(() => hasHiddenByDefault(day), [day]);
-  const [moLoiGiai, setMoLoiGiai] = useState(false);
+  /* W05 · C3: toàn màn hình là thao tác RIÊNG (chế độ tập trung không cần nó); trạng thái đọc từ trình duyệt, vì
+     người dùng còn thoát bằng Esc/F11. Vào/ra chỉ đổi cỡ khung — bước, lựa chọn, camera không đi qua đây. */
+  const [toanManHinh, setToanManHinh] = useState(false);
+  useEffect(() => {
+    const doi = () => setToanManHinh(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", doi);
+    return () => document.removeEventListener("fullscreenchange", doi);
+  }, []);
+  const doiToanManHinh = () => {
+    void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen())
+      .catch(() => {});
+  };
   /* W2 · D/F: «Hình phụ» (hiện đường/mặt phẳng phụ đã xong việc) và «Lưới» (lưới nền) — SỞ THÍCH trình bày như
      `xem`, mặc định TẮT, giữ qua các bài; bật/tắt không đụng `tt` (bước, lựa chọn) hay camera. */
   const [hinhPhu, setHinhPhu] = useState(false);
   const [luoi, setLuoi] = useState(false);
   const coHinhPhu = useMemo(() => auxiliaryObjects(day).size > 0, [day]);
+  // «Tách khối» chỉ có nghĩa khi cảnh có mặt để tách (W05: không mặt ⇒ không dựng nút).
+  const coMatBung = day.objects.some((o) => o.type === "face");
   //: Tăng để yêu cầu khung nhìn đặt lại cho vừa hình. Trạng thái TRÌNH BÀY
   //: thuần — không đi vào `InteractionState`, vì nó không mô tả cách nhìn mà
   //: mô tả một YÊU CẦU xảy ra một lần.
@@ -312,15 +337,36 @@ export function Scene3DExplorer({
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
   // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
   const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
+  // `hienSo` đọc số CHÍNH XÁC (căn, π) — cùng cách hiện mà thẻ lời giải (đã gỡ ở W05) dùng; không `toNumber`.
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
-    return o ? `${o.notation || ten(id)} = ${o.value ?? ""}` : ten(id);
+    return o ? `${o.notation || ten(id)} = ${hienSo(o.exact, o.value)}` : ten(id);
   };
-  const coMatBung = day.objects.some((o) => o.type === "face");
+  /* W05 · E: một mục của bảng «Đại lượng» thay dòng của thẻ lời giải: nhãn backend (`label`) rồi `ký hiệu = giá
+     trị`. Không dựng tên từ kiểu hay phép dựng — `display_names.py` là thẩm quyền đặt tên duy nhất. */
+  const dongDaiLuong = (id: string) => {
+    const o = day.objects.find((x) => x.id === id);
+    if (!o) return ten(id);
+    return (
+      <>
+        {o.label && o.label !== o.notation && <span className="geo3d-dai-luong-ten">{o.label}</span>}
+        <span className="geo3d-dai-luong-so">{giaTri(id)}</span>
+      </>
+    );
+  };
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
   // ROADMAP §0.1-2: mọi đại lượng đã có ở bước này — một lối chọn cho cả đáp số bị ẩn mặc định.
   const daiLuong = useMemo(() => quantityChoices(day, buocHien), [day, buocHien]);
   const coDaiLuong = daiLuong.results.length + daiLuong.steps.length + daiLuong.givens.length > 0;
+  /* W05 · E: vai trò trong chuỗi nhân quả quanh vật đang chọn (W10) tô ở mục bảng «Đại lượng» — trước ở dòng thẻ
+     lời giải đã gỡ. Không chọn gì ⇒ trung tính; ngoài chuỗi ⇒ dịu, không biến mất. */
+  const tang = useMemo(() => (tt.selected_id ? tangNhanManh(day, tt.selected_id) : null), [day, tt.selected_id]);
+  const lopDaiLuong = (id: string) => {
+    if (!tang) return "";
+    const t = tang.get(id);
+    return t === "dich" ? " la-chon" : t === "du_kien_so" ? " la-so-lieu"
+      : t === "trung_gian" ? " la-trung-gian" : t ? " la-boi-canh" : " la-diu";
+  };
   const tapNguon = useMemo(() => {
     if (!tt.selected_id) return new Set<string>();
     return new Set(dependencyClosure(day, tt.selected_id));
@@ -329,14 +375,17 @@ export function Scene3DExplorer({
   return (
     <BangNoiHost>
     <div className="geo3d-xuong">
-      {/* ── THANH TRÊN: mảnh, chỉ những gì cần gọi ra ───────────────────── */}
+      {/* ── HÀNG TRÊN (W05 · chế độ tập trung): đường ra · tên bài · công cụ đã NHÓM ─────────────────────────────
+          Vỏ không dựng thanh trên toàn cục cho cảnh 3D, nên đường ra nằm ở đây. Thao tác chính có chữ («Đề bài»);
+          công cụ cùng loại vào menu («Khám phá», «Hiển thị», «Thêm») — tính năng mới vào một nhóm, không thêm chip. */}
       <div className="geo3d-thanh">
-        {/* Không còn chip «Menu». Nó tồn tại vì cột điều hướng thường trực bị
-            tắt trong xưởng (`app-root.is-canvas-first`) và học sinh cần một
-            đường ra. Điều hướng nay là một HÀNG NGANG luôn hiện ở thanh trên
-            của vỏ (`TopNav`), nên đường ra có sẵn ở mọi trang và một chip mở
-            lại cột đã không còn gì để mở. */}
-        <span className="geo3d-ten-bai">Hình dựng theo từng bước</span>
+        {quayLai && (
+          <button type="button" className="geo3d-quay-lai" onClick={quayLai.onClick}
+                  title={`Rời mô phỏng, về ${quayLai.nhan}`}>
+            <IconBack size={16} /> {quayLai.nhan}
+          </button>
+        )}
+        <h1 className="geo3d-ten-bai" title={tieuDe ?? undefined}>{tieuDe || "Hình dựng theo từng bước"}</h1>
         {/* Lời báo NGẮN, KHÔNG modal: giáo viên vừa gọi cả lớp về, học sinh
             cần biết vì sao màn hình mình vừa đổi — nhưng một hộp thoại chặn
             màn hình giữa tiết thì tệ hơn cả việc không báo. */}
@@ -350,78 +399,44 @@ export function Scene3DExplorer({
           {de && (
             <button
               type="button"
-              className={`geo3d-chip${moBang.has("de") ? " la-mo" : ""}`}
+              className={`geo3d-menu-nut${moBang.has("de") ? " la-mo" : ""}`}
               onClick={() => doiBang("de")}
               aria-expanded={moBang.has("de")}
               aria-controls={moBang.has("de") ? "geo3d-bang-de" : undefined}
               data-mo-bang="de"
-            >
-              Xem đề
-            </button>
+            >Đề bài</button>
           )}
-          <button
-            type="button"
-            className={`geo3d-chip${moBang.has("thanh-phan") ? " la-mo" : ""}`}
-            onClick={() => doiBang("thanh-phan")}
-            aria-expanded={moBang.has("thanh-phan")}
-            aria-controls={moBang.has("thanh-phan") ? "geo3d-bang-thanh-phan" : undefined}
-            data-mo-bang="thanh-phan"
-          >
-            <IconPanel side="right" /> Thành phần
-          </button>
-          {coDaiLuong && (
-            <button
-              type="button"
-              className={`geo3d-chip${moBang.has("dai-luong") ? " la-mo" : ""}`}
-              onClick={() => doiBang("dai-luong")}
-              aria-expanded={moBang.has("dai-luong")}
-              aria-controls={moBang.has("dai-luong") ? "geo3d-bang-dai-luong" : undefined}
-              data-mo-bang="dai-luong"
-              title="Chọn một đại lượng để xem giá trị, công thức và dữ kiện nó dựa vào"
-            >
-              Đại lượng
-            </button>
-          )}
-          {coAn && (
-            <button
-              type="button"
-              className={`geo3d-chip${xem.showAll ? " la-mo" : ""}`}
-              onClick={() => setXem((s) => ({ showAll: !s.showAll }))}
-              aria-pressed={xem.showAll}
-              title="Hiện mọi số đo và đáp số đã có ở bước này ngay cạnh vật chúng đo"
-            >
-              <IconRuler /> Hiện tất cả
-            </button>
-          )}
-          {coHinhPhu && (
-            <button
-              type="button"
-              className={`geo3d-chip${hinhPhu ? " la-mo" : ""}`}
-              onClick={() => setHinhPhu((x) => !x)}
-              aria-pressed={hinhPhu}
-              title="Hiện các đường và mặt phẳng phụ đã dùng xong (vd đường chéo dựng tâm, mặt phẳng để đo)"
-            >
-              Hình phụ
-            </button>
-          )}
-          <button
-            type="button"
-            className={`geo3d-chip${luoi ? " la-mo" : ""}`}
-            onClick={() => setLuoi((x) => !x)}
-            aria-pressed={luoi}
-            title="Lưới nền mảnh để dễ cảm nhận chiều sâu"
-          >
-            Lưới
-          </button>
-          <button
-            type="button"
-            className={`geo3d-chip${chiTiet ? " la-mo" : ""}`}
-            onClick={() => setChiTiet((x) => !x)}
-            aria-pressed={chiTiet}
-            title="Hiện cách máy dựng từng đối tượng"
-          >
-            <IconInfo /> Chi tiết
-          </button>
+          <MenuCongCu nhan="Khám phá" khoa="kham-pha" muc={[
+            { nhan: "Thành phần", chon: moBang.has("thanh-phan"), onChon: () => doiBang("thanh-phan"),
+              title: "Cây các thành phần đã dựng ở bước này" },
+            ...(coDaiLuong ? [{ nhan: "Đại lượng", chon: moBang.has("dai-luong"), onChon: () => doiBang("dai-luong"),
+              title: "Chọn một đại lượng để xem giá trị, công thức và dữ kiện nó dựa vào" }] : []),
+          ]} />
+          <MenuCongCu nhan="Hiển thị" khoa="hien-thi" muc={[
+            ...(coAn ? [{ nhan: "Hiện tất cả số đo", chon: xem.showAll, giuMo: true,
+              onChon: () => setXem((s) => ({ showAll: !s.showAll })),
+              title: "Hiện mọi số đo và đáp số đã có ở bước này ngay cạnh vật chúng đo" }] : []),
+            ...(coHinhPhu ? [{ nhan: "Hình phụ", chon: hinhPhu, giuMo: true, onChon: () => setHinhPhu((x) => !x),
+              title: "Hiện các đường và mặt phẳng phụ đã dùng xong (vd đường chéo dựng tâm, mặt phẳng để đo)" }] : []),
+            { nhan: "Lưới nền", chon: luoi, giuMo: true, onChon: () => setLuoi((x) => !x),
+              title: "Lưới nền mảnh để dễ cảm nhận chiều sâu" },
+          ]} chanMenu={(
+            /* W05 · E: chú giải màu ở đây — trước là khối thường trực dưới thẻ lời giải (đã gỡ). */
+            <div className="geo3d-chu-giai-hop">
+              <p className="geo3d-chu-giai-ten">Chú giải màu</p>
+              <ul className="geo3d-chu-giai" aria-label="Chú giải màu">
+                {CHU_GIAI_VAI_TRO.map((m) => (
+                  <li key={m.chu} className={`geo3d-chu-giai-muc ${m.lop}`}>{m.chu}</li>
+                ))}
+              </ul>
+            </div>
+          )} />
+          <MenuCongCu nhan="Thêm" khoa="them" muc={[
+            { nhan: "Cách máy dựng", chon: chiTiet, giuMo: true, onChon: () => setChiTiet((x) => !x),
+              title: "Ô chi tiết nêu thêm vật mà mỗi đối tượng dựa vào và giả thiết đặt hình" },
+            ...(hoTroToanManHinh(typeof document === "undefined" ? undefined : document)
+              ? [{ nhan: toanManHinh ? "Thoát toàn màn hình" : "Toàn màn hình", onChon: doiToanManHinh }] : []),
+          ]} />
         </div>
       </div>
 
@@ -434,8 +449,6 @@ export function Scene3DExplorer({
           onSelect={chon}
           fitToken={fitToken}
           annotationView={xem}
-          solutionOpen={moLoiGiai}
-          onSolutionOpenChange={setMoLoiGiai}
           stepsOpen={moBuoc}
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
@@ -445,16 +458,18 @@ export function Scene3DExplorer({
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
         {/* `data-che-khung`: lớp phủ nằm TRÊN khung — nhãn số đo (W17) tránh chỗ nó che. */}
         <div className="geo3d-noi" role="group" aria-label="Thao tác xem" data-che-khung="">
-          <button
-            type="button"
-            className="geo3d-noi-nut"
-            onClick={() =>
-              setTt((s) => (daBung ? collapseAll(s) : explode(s, NHOM_BUNG)))
-            }
-            disabled={!coMatBung}
-          >
-            <IconExperiment /> {daBung ? "Ráp lại" : "Tách khối"}
-          </button>
+          {/* W05: chỉ dựng khi cảnh có mặt để tách — một nút vô hiệu thường trực là công cụ giả. */}
+          {coMatBung && (
+            <button
+              type="button"
+              className="geo3d-noi-nut"
+              onClick={() =>
+                setTt((s) => (daBung ? collapseAll(s) : explode(s, NHOM_BUNG)))
+              }
+            >
+              <IconExperiment /> {daBung ? "Ráp lại" : "Tách khối"}
+            </button>
+          )}
           <button
             type="button"
             className="geo3d-noi-nut"
@@ -491,8 +506,8 @@ export function Scene3DExplorer({
               </p>
             )}
 
-            {/* §16.6: MỘT nơi mang công thức — ô soi khi lời giải thu gọn, lời giải khi nó mở. */}
-            {formula && !moLoiGiai && (
+            {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). */}
+            {formula && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>
@@ -641,12 +656,12 @@ export function Scene3DExplorer({
                         {/* W4: chọn GIỮ bảng mở — ô soi mở thành bảng riêng, không chiếm chỗ bảng này. */}
                         <button
                           type="button"
-                          className={`geo3d-tree-item${tt.selected_id === id ? " la-chon" : ""}`}
+                          className={`geo3d-tree-item${lopDaiLuong(id)}`}
                           aria-pressed={tt.selected_id === id}
                           data-quantity-id={id}
                           onClick={() => chon(id)}
                         >
-                          {giaTri(id)}
+                          {dongDaiLuong(id)}
                         </button>
                       </li>
                     ))}

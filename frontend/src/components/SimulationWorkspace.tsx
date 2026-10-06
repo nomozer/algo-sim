@@ -14,6 +14,8 @@ import type {
   WorkspaceProps,
 } from "../simulations/types";
 import { useAppStore } from "../state/store";
+import { AssignDialog } from "./AssignDialog";
+import { TEN_TRANG } from "./TopNav";
 import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
 import { useClassroomStore } from "../state/classroom";
@@ -428,6 +430,9 @@ export function SimulationWorkspace() {
      không được biết tới tầng lớp học (xem `LiveClassStrip`). */
   const session = useClassroomStore((s) => s.session);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
+  const returnView = useAppStore((s) => s.returnView);
+  const roiXuong = useAppStore((s) => s.roiXuong);
+  const assignment = useAppStore((s) => s.activeAssignment);
 
   if (unsupported) {
     return <UnsupportedNotice unsupported={unsupported} />;
@@ -473,13 +478,28 @@ export function SimulationWorkspace() {
    * được; một cảnh đã dựng thì hoặc có hoặc không. */
   const canh3d = (active.envelope as { scene3d?: unknown }).scene3d;
   if (hopLeScene3D(canh3d)) {
+    /* W05 · CHẾ ĐỘ TẬP TRUNG: vỏ không dựng thanh trên toàn cục cho cảnh 3D (`App`), nên những gì thanh ấy từng
+       mang cho xưởng đi vào hàng trên của xưởng — đường ra về đúng trang trước, tên bài, nhãn bài được giao, nút
+       giao bài (giáo viên) và dải lớp. Xưởng vẫn không biết tới store; nó chỉ nhận props. */
     return (
       <Scene3DExplorer
         scene={canh3d}
         de={active.envelope.description ?? active.envelope.title ?? null}
+        tieuDe={active.envelope.title ?? null}
+        quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
         phien={session}
         onFocus={(selectedId, action) => setSemanticFocus({ selectedId, action })}
-        daiLop={<LiveClassStrip />}
+        daiLop={(
+          <>
+            {assignment && (
+              <span className="nav-assignment" title={assignment.instruction}>
+                Bài: <strong>{assignment.title}</strong>
+              </span>
+            )}
+            <AssignDialog />
+            <LiveClassStrip />
+          </>
+        )}
       />
     );
   }

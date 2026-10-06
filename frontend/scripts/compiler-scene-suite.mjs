@@ -490,11 +490,11 @@ async function cssReadiness(session, viewport) {
     + `const scene=pick('.geo3d'),box=pick('.geo3d-canvas'),canvas=pick('.geo3d-canvas canvas'),`
     + `controls=pick('.geo3d-controls'),controlButton=pick('.geo3d-controls button'),`
     + `controlText=pick('.geo3d-scrub-label'),`
-    + `solution=pick('.geo3d-loi-giai'),solutionTitle=pick('.geo3d-lg-ten-muc')||pick('.geo3d-lg-gap');`
+    + `toolbar=pick('.geo3d-thanh'),toolbarTitle=pick('.geo3d-ten-bai');`
     + `const actual={scene:scene&&style(scene),box:box&&style(box),canvas:canvas&&style(canvas),`
     + `controls:controls&&style(controls),controlButton:controlButton&&style(controlButton),`
     + `controlText:controlText&&style(controlText),`
-    + `solution:solution&&style(solution),solutionTitle:solutionTitle&&style(solutionTitle)};`
+    + `toolbar:toolbar&&style(toolbar),toolbarTitle:toolbarTitle&&style(toolbarTitle)};`
     + `const baseline={div:baselineTag('div'),button:baselineTag('button'),`
     + `ul:baselineTag('ul'),span:baselineTag('span')};`
     + `let sheets={count:document.styleSheets.length,readableRules:0,unreadable:0};`
@@ -507,29 +507,37 @@ async function cssReadiness(session, viewport) {
   return { ...measured, ...assessed };
 }
 
-/** BẢNG LỜI GIẢI (W12): các dòng theo mục học sinh thấy, lớp vai trò, màu vạch
- *  trái; chú giải; hộp của bảng so với canvas; mục thân đang gập hay mở. */
+/** Đọc các mục của bảng «Đại lượng» + chú giải (nếu menu «Hiển thị» đang mở) — không đổi trạng thái. */
+const DOC_DAI_LUONG = `(()=>{const hop=e=>{if(!e)return null;const r=e.getBoundingClientRect();`
+  + `return{x:r.left,y:r.top,w:r.width,h:r.height}};`
+  + `const rows=[...document.querySelectorAll('.geo3d-dai-luong [data-quantity-id]')].map(e=>({`
+  + `id:e.dataset.quantityId,sec:(e.closest('section')?.getAttribute('aria-label')||''),`
+  + `classes:[...e.classList].filter(c=>c.startsWith('la-')),`
+  + `text:(e.textContent||'').replace(/\\s+/g,' ').trim(),border:getComputedStyle(e).borderLeftColor}));`
+  + `const legend=[...document.querySelectorAll('.geo3d-chu-giai-muc')].map(e=>({`
+  + `text:(e.textContent||'').trim(),classes:[...e.classList].filter(c=>c.startsWith('la-')),`
+  + `swatch:getComputedStyle(e,'::before').backgroundColor}));`
+  + `const kq=rows.filter(r=>r.sec==='Kết quả');`
+  + `return{present:!!document.querySelector('.geo3d-loi-giai'),rows,legend,`
+  + `panel:hop(document.querySelector('.geo3d-dai-luong')?.closest('.geo3d-bang-noi')),`
+  + `canvas:hop(document.querySelector('.geo3d-canvas canvas')),`
+  + `results_card:kq.length>0,result_text:kq.map(r=>r.text).join(' ')}})()`;
+
+/** W05 · E — BẢNG «ĐẠI LƯỢNG» thay thẻ lời giải (W12) đã gỡ: các mục theo nhóm học sinh thấy, lớp vai trò, màu
+ *  vạch trái. Mở bảng qua menu «Khám phá» nếu đang đóng, đọc, rồi đóng lại đúng như trước — đo không đổi trạng
+ *  thái người học. `present` = thẻ lời giải CŨ còn trong DOM (phải `false`). */
 export async function solutionState(session) {
-  return jsonEval(session, `(()=>{const muc=e=>(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')`
-    + `?.textContent||'').trim();const hop=e=>{if(!e)return null;const r=e.getBoundingClientRect();`
-    + `return{x:r.left,y:r.top,w:r.width,h:r.height}};`
-    + `const rows=[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>({`
-    + `id:e.dataset.solutionId,sec:muc(e),classes:[...e.classList].filter(c=>c.startsWith('la-')),`
-    + `text:(e.textContent||'').replace(/\\s+/g,' ').trim(),border:getComputedStyle(e).borderLeftColor}));`
-    + `const legend=[...document.querySelectorAll('.geo3d-chu-giai-muc')].map(e=>({`
-    + `text:(e.textContent||'').trim(),classes:[...e.classList].filter(c=>c.startsWith('la-')),`
-    + `swatch:getComputedStyle(e,'::before').backgroundColor}));`
-    + `const than=document.querySelector('.geo3d-lg-than');`
-    + `return{present:!!document.querySelector('.geo3d-loi-giai'),rows,legend,`
-    + `panel:hop(document.querySelector('.geo3d-loi-giai')),canvas:hop(document.querySelector('.geo3d-canvas canvas')),`
-    + `body_collapsed:!!than&&getComputedStyle(than).display==='none',`
-    + `results_card:!!document.querySelector('.geo3d-lg-ket-qua'),`
-    + `result_text:(document.querySelector('.geo3d-lg-ket-qua')?.textContent||'').replace(/\\s+/g,' ').trim()}})()`);
+  const daMo = await session.eval("!!document.querySelector('.geo3d-dai-luong')");
+  const coMuc = await menuItems(session, "kham-pha").then((xs) => xs.some((t) => t.includes("Đại lượng")));
+  if (!daMo && coMuc) await quantityDrawer(session);
+  const st = await jsonEval(session, DOC_DAI_LUONG);
+  if (!daMo && coMuc) await closeQuantityDrawer(session);
+  return st;
 }
 
 const rowsBySection = (state) => ({
   givens: state.rows.filter((row) => row.sec === "Dữ kiện").map((row) => row.id),
-  steps: state.rows.filter((row) => row.sec === "Các bước tính").map((row) => row.id),
+  steps: state.rows.filter((row) => row.sec === "Đại lượng trung gian").map((row) => row.id),
   results: state.rows.filter((row) => row.sec === "Kết quả").map((row) => row.id),
 });
 
@@ -632,7 +640,7 @@ export async function openFixture({ port, viewport, fixture }) {
 }
 
 async function observeTree(session, scene, expectedIds) {
-  await clickText(session, "Thành phần");
+  await clickChip(session, "Thành phần"); // W05: mục của menu «Khám phá»
   await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-tree')`), Boolean,
     { timeoutMs: 5_000 });
   const rows = await jsonEval(session, `(()=>[...document.querySelectorAll('.geo3d-tree-item')].map(e=>({`
@@ -680,26 +688,41 @@ async function annotationState(session) {
     + `dom:[...document.querySelectorAll('.geo3d-so-do')].map((e)=>e.dataset.annId).sort()})`);
 }
 
-/** W18 §16.6 — mọi vùng ĐANG HIỆN mang chữ công thức `f`: ô soi, hoặc một dòng lời giải đang hiện. */
+/** W18 §16.6 — mọi vùng ĐANG HIỆN mang chữ công thức `f`: ô soi, hoặc một vùng chữ khác của xưởng (bảng nổi,
+ *  menu, mục «Đại lượng») — W05 gỡ thẻ lời giải, nên vùng thứ hai nào cũng là bản sao. */
 async function formulaRegions(session, f) {
   return jsonEval(session, `(()=>{const f=${JSON.stringify(f)};const hien=e=>!!e&&e.offsetParent!==null;`
     + `const ra=[];const o=document.querySelector('.geo3d-soi-cong-thuc');`
     + `if(hien(o)&&(o.textContent||'').includes(f))ra.push('inspector');`
-    + `for(const d of document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')){const s=d.querySelector('.geo3d-lg-so');`
-    + `if(hien(s)&&(s.textContent||'').includes(f))ra.push('solution:'+d.dataset.solutionId)}return ra})()`);
+    + `for(const d of document.querySelectorAll('.geo3d-loi-giai,.geo3d-dai-luong [data-quantity-id],.geo3d-menu-hop,.geo3d-ngan')){`
+    + `if(hien(d)&&(d.textContent||'').includes(f))ra.push('other:'+(d.dataset.quantityId||d.className))}return ra})()`);
 }
 
-/** Bấm nút của một dòng lời giải (chọn/bỏ chọn đại lượng ấy) — sự kiện chuột thật. */
-async function clickSolutionRow(session, id) {
-  return trustedClick(session, `document.querySelector('[data-solution-id=${JSON.stringify(id)}] .geo3d-lg-nut')`);
+/** W05 · D — menu nhóm của hàng trên (`data-mo-nhom`): mở/đóng bằng chuột thật, chờ trạng thái. */
+async function setMenuOpen(session, khoa, mo) {
+  const nut = `document.querySelector('[data-mo-nhom=${JSON.stringify(khoa)}]')`;
+  const dangMo = () => session.eval(`${nut}?.getAttribute('aria-expanded')==='true'`);
+  if (!await session.eval(`!!${nut}`) || await dangMo() === mo) return;
+  await trustedClick(session, nut);
+  await pollUntil(dangMo, (x) => x === mo, { timeoutMs: 5_000 });
 }
 
-/** Mở/thu gọn lời giải đầy đủ cho tới khi thân ở trạng thái `mo`. */
-async function setSolutionOpen(session, mo) {
-  const st = await solutionState(session);
-  if (st.body_collapsed === !mo) return;
-  await trustedClick(session, "document.querySelector('.geo3d-lg-gap')");
-  await pollUntil(() => solutionState(session), (s) => s.body_collapsed === !mo, { timeoutMs: 5_000 });
+/** Chữ các mục của một menu nhóm (mở rồi đóng lại); menu vắng ⇒ []. */
+async function menuItems(session, khoa) {
+  if (!await session.eval(`!!document.querySelector('[data-mo-nhom=${JSON.stringify(khoa)}]')`)) return [];
+  await setMenuOpen(session, khoa, true);
+  const ds = await jsonEval(session, `[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')]`
+    + `.map((b)=>(b.textContent||'').trim())`);
+  await setMenuOpen(session, khoa, false);
+  return ds;
+}
+
+/** Chú giải màu trong menu «Hiển thị» (mở, đọc, đóng). */
+async function legendState(session) {
+  await setMenuOpen(session, "hien-thi", true);
+  const st = await jsonEval(session, DOC_DAI_LUONG);
+  await setMenuOpen(session, "hien-thi", false);
+  return st.legend;
 }
 
 /** Bước NEO (chỉ số sự kiện) của bước dựng đang xem — qua dòng thời gian ĐỘC LẬP của bộ đo. */
@@ -715,9 +738,20 @@ function annotationsMustShow(scene, ids, hep) {
   return hep ? [] : ids;
 }
 
+/** W05 · D: công cụ cũ là chip phẳng, nay là mục của menu nhóm — tên công cụ → nhóm chứa nó. */
+const NHOM_CONG_CU = { "Thành phần": "kham-pha", "Đại lượng": "kham-pha", "Hiện tất cả": "hien-thi",
+  "Hình phụ": "hien-thi", "Lưới": "hien-thi", "Cách máy dựng": "them" };
+
+/** Bấm công cụ như người học: mở menu nhóm, bấm mục theo chữ, rồi đóng menu nếu mục giữ nó mở (công tắc) — để
+ *  hộp menu không phủ lên khung khi đo tiếp. */
 async function clickChip(session, ten) {
-  return trustedClick(session, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
+  const khoa = NHOM_CONG_CU[ten];
+  if (!khoa) throw new Error(`UNKNOWN_TOOL:${ten}`);
+  await setMenuOpen(session, khoa, true);
+  const ok = await trustedClick(session, `[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')]`
     + `.find((b)=>(b.textContent||'').includes(${JSON.stringify(ten)}))`);
+  await setMenuOpen(session, khoa, false);
+  return ok;
 }
 
 /** ROADMAP §0.1-3 — panel «Các bước dựng»: số nút, bước đang đánh dấu, nhãn của nó (thay dải "Đang dựng" đã
@@ -748,9 +782,7 @@ async function quantityDrawer(session) {
 
 /** Id các đại lượng ngăn «Đại lượng» liệt kê ở bước đang xem; chip vắng (chưa có đại lượng) ⇒ []. Mở rồi đóng. */
 async function quantityDrawerIds(session) {
-  const coChip = await session.eval(`[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
-    + `.some((b)=>(b.textContent||'').includes('Đại lượng'))`);
-  if (!coChip) return [];
+  if (!(await menuItems(session, "kham-pha")).some((t) => t.includes("Đại lượng"))) return [];
   const ids = (await quantityDrawer(session)).map((x) => x.id);
   await closeQuantityDrawer(session);
   return ids;
@@ -803,11 +835,10 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     const expectedPointIds = expectedIds.filter((id) =>
       scene.objects.some((object) => object.id === id && object.type === "point3")).sort();
     const actualPointIds = Object.keys(labels).sort();
+    // W05 · E: thẻ lời giải đã gỡ — mỗi bước đọc bảng «Đại lượng» (mở qua menu rồi đóng) so với oracle độc lập.
     const solState = await solutionState(session);
     const solution = rowsBySection(solState);
-    // §0.1-1: thu gọn ⇒ không có card Kết quả (đáp số đọc qua ngăn «Đại lượng»).
-    const expectedSolution = solState.body_collapsed
-      ? { ...expectedSolutionRows(scene, anchor), results: [] } : expectedSolutionRows(scene, anchor);
+    const expectedSolution = expectedSolutionRows(scene, anchor);
     const panel = await stepsPanelState(session);
     const shouldCapture = captureMode === "full" || index === representative;
     const image = shouldCapture
@@ -827,7 +858,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     const expectedAnnotations = expectedAnnotationIds(scene, anchor);
     // W18 §16.8 (đính chính): bước dựng TÔ SÁNG cạnh đang dựng — nét vẽ phải theo phân loại khuất.
     // §0.1-1/2: kết quả ẩn cùng lời giải thu gọn đọc qua ngăn — ghi id của ngăn ở bước này (sau ảnh, trước bước sau).
-    const picker = await quantityDrawerIds(session);
+    const picker = solState.rows.map((row) => row.id);
     const dash = assessDashFollowsSpans(await jsonEval(session, "({spans:window.__geo3d_edge_spans||[],"
       + "dash_signature:window.__geo3d_edge_dash_signature||{},"
       + "highlighted:window.__geo3d_highlighted_render_owner_ids||[]})"));
@@ -844,10 +875,9 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       focus_label: panel.label,
       panel,
       picker,
-      solution_collapsed: solState.body_collapsed,
       solution,
       expected_solution: expectedSolution,
-      solution_pass: JSON.stringify(solution) === JSON.stringify(expectedSolution),
+      solution_pass: JSON.stringify(solution) === JSON.stringify(expectedSolution) && !solState.present,
       screenshot: image,
       canvas,
       learner_text: learnerText,
@@ -911,7 +941,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
   const geometry = assessGeometrySteps(scene, {
     step_count: steps[0]?.indicator?.count ?? null,
     steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, focus_label: s.focus_label,
-      solution_collapsed: s.solution_collapsed, solution: s.solution })),
+      solution: s.solution })),
   });
   const forwardBackward = steps.map((s) => ({ index: s.index,
     pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index])
@@ -943,8 +973,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
-    // §0.1-1/2: lời giải thu gọn ⇒ không card Kết quả; đáp số đọc qua ngăn «Đại lượng» (mở rồi đóng, không chọn).
-    const cardThuGon = (await solutionState(session)).results_card;
+    // §0.1-1/2 → W05 · E: không thẻ lời giải nào dưới hình; đáp số đọc qua bảng «Đại lượng» (mở rồi đóng, không chọn).
+    const cardThuGon = await session.eval("!!document.querySelector('.geo3d-loi-giai')");
     const ngan = await pollUntil(() => quantityDrawer(session),
       (d) => d.some((x) => x.text.includes(scenario.expected_answer)), { timeoutMs: 8_000 })
       .catch(() => quantityDrawer(session));
@@ -1004,8 +1034,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     const visibleText = await session.eval(`document.body.innerText||''`);
     result.raw_token_leakage = detectRawTokenLeakage(scene, visibleText);
     result.formula_entity_coherence = validateFormulaReferences(scene);
-    // W12 — bảng lời giải ở khung cuối: đúng ba mục của oracle, đáp số ĐÚNG MỘT
-    // dòng (ở Kết quả), bảng không đè lên canvas, chưa có chú giải (trung tính).
+    // W12 → W05 · E — khung cuối: KHÔNG thẻ lời giải dưới hình; mặc định không bảng nào mở (đáp số không lộ
+    // trên màn hình trung tính); mở «Đại lượng" thì đúng ba nhóm của oracle và đáp số ĐÚNG MỘT mục (ở Kết quả);
+    // chú giải màu không thường trực (nằm trong menu «Hiển thị»).
+    const trungTinh = await jsonEval(session, "({card:!!document.querySelector('.geo3d-loi-giai'),"
+      + "panel_open:!!document.querySelector('.geo3d-dai-luong'),legend:document.querySelectorAll('.geo3d-chu-giai-muc').length})");
     const solutionNeutral = await solutionState(session);
     const lastAnchor = expectedGeometryTimeline(scene).at(-1).anchor;
     const finalIds = new Set(scene.events
@@ -1015,25 +1048,18 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       || finalIds.has(scene.objects.find((object) => object.id === row.id)?.alias_of));
     result.solution_final = {
       rows: solutionNeutral.rows,
-      // §0.1-1: mặc định thu gọn ⇒ không có dòng Kết quả; đáp số một lần ở lời giải MỞ (kiểm ở `open`).
-      expected: { ...expectedSolutionRows(scene, lastAnchor), results: [] },
-      results_card: solutionNeutral.results_card,
+      expected: expectedSolutionRows(scene, lastAnchor),
       observed: rowsBySection(solutionNeutral),
       answer_rows: answerRows.map((row) => ({ id: row.id, sec: row.sec, text: row.text })),
-      body_collapsed: solutionNeutral.body_collapsed,
-      panel_box: solutionNeutral.panel,
-      canvas_box: solutionNeutral.canvas,
-      legend: solutionNeutral.legend,
+      neutral: trungTinh,
     };
     result.solution_final.in_sync = JSON.stringify(result.solution_final.expected)
       === JSON.stringify(result.solution_final.observed);
-    result.solution_final.answer_hidden_collapsed = answerRows.length === 0 && !solutionNeutral.results_card;
-    result.solution_final.panel_over_canvas = overlaps(solutionNeutral.panel, solutionNeutral.canvas);
-    result.assertions.solution_final = assertion(result.solution_final.in_sync
-      && result.solution_final.answer_hidden_collapsed && !result.solution_final.panel_over_canvas
-      && solutionNeutral.legend.length === 0
-      // W18 §16.6: lời giải đầy đủ thu gọn mặc định ở MỌI khổ.
-      && result.solution_final.body_collapsed === true, result.solution_final);
+    result.solution_final.answer_once = answerRows.length === finalIds.size
+      && answerRows.every((row) => row.sec === "Kết quả")
+      && solutionNeutral.result_text.includes(scenario.expected_answer);
+    result.assertions.solution_final = assertion(result.solution_final.in_sync && result.solution_final.answer_once
+      && !trungTinh.card && !trungTinh.panel_open && trungTinh.legend === 0, result.solution_final);
     // W17 §15.5 — nhãn số đo ở khung cuối trung tính (camera đã lắng; hộp và camera cùng một khung).
     const ann0 = await annotationState(session);
     const neoCuoi = await anchorNow(session, scene);
@@ -1048,26 +1074,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // (w10: crop mobile lệch vì hộp ghi ở y = -226).
     result.canvas_boxes = { neutral_final: await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`) };
     result.capture_order.push("neutral_final");
-    // Bảng lời giải ở trạng thái mặc định (W18 §16.6: thu gọn ở mọi khổ), rồi mở đủ, rồi thu lại.
-    result.screenshots.solution_neutral_final = await captureElement(session, ".geo3d-loi-giai",
-      join(outDir, "solution_neutral_final.png"));
-    await setSolutionOpen(session, true);
-    result.screenshots.solution_expanded = await captureElement(session, ".geo3d-loi-giai",
-      join(outDir, "solution_expanded.png"));
-    {
-      // Lời giải MỞ: card Kết quả có mặt, đáp số ĐÚNG MỘT dòng và nằm ở Kết quả (W12, giữ).
-      const mo = await solutionState(session);
-      const dapSo = mo.rows.filter((row) => finalIds.has(row.id)
-        || finalIds.has(scene.objects.find((object) => object.id === row.id)?.alias_of));
-      result.solution_final.open = { results_card: mo.results_card,
-        in_sync: JSON.stringify(rowsBySection(mo)) === JSON.stringify(expectedSolutionRows(scene, lastAnchor)),
-        answer_rows: dapSo.map((row) => ({ id: row.id, sec: row.sec, text: row.text })),
-        answer_once: mo.results_card && dapSo.length === finalIds.size && dapSo.every((row) => row.sec === "Kết quả")
-          && mo.result_text.includes(scenario.expected_answer) };
-      result.assertions.solution_open = assertion(result.solution_final.open.in_sync
-        && result.solution_final.open.answer_once, result.solution_final.open);
-    }
-    await setSolutionOpen(session, false);
+    // W05 · E: ảnh thẻ lời giải (thu gọn / mở) đã bỏ cùng thẻ; ảnh bảng «Đại lượng» là `quantity_picker` ở trên.
     const chup = async () => {
       const a = await annotationState(session);
       return { ...await jsonEval(session, `({dash_signature:window.__geo3d_edge_dash_signature||{},`
@@ -1081,8 +1088,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       .then(() => null, (e) => String(e?.message ?? e).slice(0, 160));
     // W18 §16.8 — "Hiện tất cả" bật → tắt → bật: tập nhãn đúng oracle ở mỗi trạng thái; nét đứt, vật
     // dựng, camera, bước, lựa chọn y nguyên. Công tắc vắng (không có nhãn mặc định đang ẩn) ⇒ không đo.
-    const congTac = await jsonEval(session, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
-      + `.map((b)=>(b.textContent||'').trim()).filter((t)=>t.includes('Hiện tất cả'))`);
+    const congTac = (await menuItems(session, "hien-thi")).filter((t) => t.includes("Hiện tất cả"));
     if (congTac.length) {
       const expectedOn = expectedAnnotationIds(scene, neoCuoi, { showAll: true });
       const expectedOff = expectedAnnotationIds(scene, neoCuoi);
@@ -1124,18 +1130,14 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // thức (ô soi khi lời giải thu gọn — mục Kết quả; dòng lời giải khi mở — Dữ kiện/Các bước tính);
     // nhân chứng vẽ đúng cho nhãn khoảng cách đang hiện. Ảnh đại diện theo loại đo.
     {
-      await setSolutionOpen(session, true);
       const hang = (await solutionState(session)).rows;
-      await setSolutionOpen(session, false);
       result.selection_checks = [];
       const daChup = new Set();
       for (const row of hang) {
         const q = scene.objects.find((o) => o.id === row.id);
         if (!q) continue;
-        // §0.1-2: Kết quả không còn dòng khi thu gọn — chọn qua ngăn «Đại lượng» như người học.
-        await setSolutionOpen(session, row.sec !== "Kết quả");
-        if (row.sec === "Kết quả") await selectViaPicker(session, row.id);
-        else await clickSolutionRow(session, row.id);
+        // W05 · E: mọi đại lượng chọn qua bảng «Đại lượng» như người học (thẻ lời giải đã gỡ).
+        await selectViaPicker(session, row.id);
         const daChon = await choHet((s) => s.selected === row.id);
         await settleOrRecord(session, result, `select_${row.id}`);
         const ann = await annotationState(session);
@@ -1163,18 +1165,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
           result.screenshots[`detail_${loai}`] = await captureElement(session, ".geo3d-soi", join(outDir, `detail_${loai}.png`));
           result.capture_order.push(`selected_${loai}`, `detail_${loai}`);
         }
-        // Đính chính §16.8: đáp số có công thức tham chiếu được chọn cả khi lời giải MỞ — công thức ở dòng
-        // lời giải, ô soi bỏ khối công thức (đúng một vùng). Trạng thái duy nhất có thể sinh hai bản (FW4).
-        if (f && row.sec === "Kết quả") {
-          await setSolutionOpen(session, true);
-          kq.detail_region_open = assessDetailRegion({ formula_text: f, regions: await formulaRegions(session, f) });
-          kq.pass = kq.pass && kq.detail_region_open.pass;
-          await setSolutionOpen(session, false);
-        }
+        // Đính chính §16.8 (FW4: lời giải MỞ là trạng thái duy nhất từng sinh hai bản công thức) — W05 gỡ trạng
+        // thái ấy cùng thẻ; vùng công thức đếm ở trên (`detail_region`) bao mọi vùng chữ còn lại của xưởng.
         await deselect(session);
         await choHet((s) => s.selected === null);
       }
-      await setSolutionOpen(session, false);
       await settleOrRecord(session, result, "selection_done");
       result.assertions.selection_per_quantity = assertion(
         result.selection_checks.length > 0 && result.selection_checks.every((c) => c.pass),
@@ -1252,10 +1247,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       { timeoutMs: 8_000 },
     );
     const scrollAfterClick = await session.eval("Math.round(window.scrollY)");
-    // §0.1-1: vai trò của các dòng (kể cả dòng Kết quả của đích) đọc ở lời giải MỞ — thu gọn thì không có dòng.
-    await setSolutionOpen(session, true);
-    const solutionCausal = await solutionState(session);
-    await setSolutionOpen(session, false);
+    // W05 · E: vai trò của các mục đọc ở bảng «Đại lượng» (thay dòng lời giải); chú giải ở menu «Hiển thị».
+    const solutionCausal = { ...await solutionState(session), legend: await legendState(session) };
     const declared = eventDeclaredClosure(scene.events, causalId);
     const causal = compareClosures(expectedClosure, declared, causalState.highlighted_ids);
     causal.declared_target_id = scenario.causal_target_id;
@@ -1276,7 +1269,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       return { id: row.id, sec: row.sec, classes: row.classes, tier: tier ?? null, expected_class: want,
         pass: row.classes.length === 1 && row.classes[0] === want };
     });
-    const legendClasses = solutionCausal.legend.map((item) => item.classes[0]).sort();
+    const legendClasses = sortedUnique(solutionCausal.legend.map((item) => item.classes[0]));
     const roleColors = assessRoleColors(solutionCausal);
     result.role_colors = roleColors;
     const canvasRoleHues = assessCausalCanvasHues(scene, causalState.tiers,
@@ -1313,10 +1306,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.screenshots.causal_selected = await capture(session, join(outDir, "causal_selected.png"));
     result.canvas_boxes.causal_selected = await rectFor(session, `document.querySelector('.geo3d-canvas canvas')`);
     result.capture_order.push("causal_selected");
-    await setSolutionOpen(session, true);
-    result.screenshots.solution_causal_selected = await captureElement(session, ".geo3d-loi-giai",
+    // W05 · E: ảnh vai trò ở bảng «Đại lượng» (thay ảnh thẻ lời giải) — mở, chụp, đóng.
+    await quantityDrawer(session);
+    result.screenshots.solution_causal_selected = await captureElement(session, ".geo3d-bang-noi[data-panel=\"dai-luong\"]",
       join(outDir, "solution_causal_selected.png"));
-    await setSolutionOpen(session, false);
+    await closeQuantityDrawer(session);
     // W17 §15.5 — KHÔI PHỤC: bỏ chọn bằng nút "Bỏ chọn" của ô soi (không phải "Xem lại toàn hình",
     // vốn đặt lại camera), cuộn về ĐÚNG vị trí trung tính, rồi so camera · lựa chọn · cuộn · khung.
     const causalSelected = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalAfterFrame.sha256,
@@ -1531,7 +1525,6 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       steps_panel: viewport.formation ? result.formation.steps_panel : undefined,
       role_colors: roleColors,
       canvas_role_hues: causal.visual.canvas_role_hues,
-      panel_over_canvas: result.solution_final.panel_over_canvas,
       capture_order: result.capture_order,
       formation_required: Boolean(viewport.formation),
       formation: viewport.formation

@@ -1757,7 +1757,7 @@ describe("RECT_PYRAMID_P01 UI End-to-End Integration", () => {
       );
       expect(html).toContain("geo3d");
       expect(html).toContain("Bước 1/8");
-      expect(html).toContain("Thành phần");
+      expect(html).toContain("Khám phá"); // W05: cây «Thành phần» mở từ menu «Khám phá»
       for (const label of ["A", "B", "C", "D", "S"]) {
         expect(html).toContain(`>${label}</span>`);
       }

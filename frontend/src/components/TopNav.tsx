@@ -59,6 +59,19 @@ const TEACHER_ITEMS: Item[] = [
   { view: "history", label: "Lịch sử", icon: <IconBack size={16} /> },
 ];
 
+/** W05 — tên trang đích của nút quay lại trong xưởng 3D (chế độ tập trung không dựng thanh này, nên đường ra
+ *  của xưởng nói tên trang bằng cùng bảng điều hướng). Khoá `AppView` vào, tiếng Việt ra. */
+export const TEN_TRANG: Partial<Record<AppView, string>> = {
+  home: "Trang chủ",
+  library: "Thư viện",
+  history: "Lịch sử",
+  classes: "Lớp học",
+  assignments: "Bài thực hành",
+  observe: "Quan sát lớp",
+  account: "Tài khoản",
+  monitor: "Theo dõi lớp",
+};
+
 export function itemsForRole(role: "student" | "teacher"): Item[] {
   return role === "teacher" ? TEACHER_ITEMS : STUDENT_ITEMS;
 }

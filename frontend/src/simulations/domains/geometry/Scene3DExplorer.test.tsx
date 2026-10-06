@@ -19,11 +19,10 @@ import { renderToString } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Scene3D } from "./scene3d-model";
-import { geometryStepCount, objectsAt } from "./scene3d-model";
+import { geometryStepCount, objectsAt, quantityChoices } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
 import { Scene3DPlayer } from "./scene3d-playback";
-import { Scene3DSolution } from "./scene3d-solution";
-import { quantitySources } from "./scene3d-annotations";
+import { hasHiddenByDefault, quantitySources } from "./scene3d-annotations";
 import {
   entitiesPresentAt,
   faceId,
@@ -90,8 +89,8 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
     const h = html();
     expect(h).not.toContain("geo3d-tree-item");
     expect(h).not.toContain("geo3d-ngan");
-    // …nhưng lối vào thì phải nhìn thấy được.
-    expect(h).toContain("Thành phần");
+    // …nhưng lối vào thì phải nhìn thấy được. W05: «Thành phần» nằm trong menu «Khám phá» của hàng trên.
+    expect(h).toMatch(/data-mo-nhom="kham-pha"[^>]*>Khám phá/);
   });
 
   /* W17 · §15.4 / U-W17-1: hai công tắc nằm trong THANH CHIP có sẵn (không thêm nút nổi
@@ -114,11 +113,17 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
    * mà mặc định đang ẩn (DESIGN_BRIEF §3.2). */
   const thanhCua = (h: string) => h.slice(h.indexOf("geo3d-thanh-nut"), h.indexOf("geo3d-san"));
 
+  /* W05: công tắc nay là mục `menuitemcheckbox` của menu «Hiển thị» (đóng khi SSR — thao tác thật ở đầu dò trình
+     duyệt W05). Luật giữ nguyên và khoá ở hai chỗ kiểm được: điều kiện có mặt là `hasHiddenByDefault` (hàm thuần),
+     mục chỉ được dựng dưới điều kiện ấy và mang trạng thái `xem.showAll` (mặc định tắt). */
+  const ma = () => readFileSync(join(__dirname, "Scene3DExplorer.tsx"), "utf8");
+
   it("W18 · một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả", () => {
+    expect(hasHiddenByDefault(withSubEntities(CANH_CO_SO_DO))).toBe(true);
+    expect(ma()).toMatch(/\.\.\.\(coAn \? \[\{ nhan: "Hiện tất cả số đo", chon: xem\.showAll/);
+    expect(ma()).toContain("useState<AnnotationView>(DEFAULT_ANNOTATION_VIEW)");
     const thanh = thanhCua(renderToString(<Scene3DExplorer scene={CANH_CO_SO_DO} />));
-    const i = thanh.indexOf("Hiện tất cả");
-    expect(i).toBeGreaterThan(-1);
-    expect(thanh.slice(thanh.lastIndexOf("<button", i), i)).toContain('aria-pressed="false"');
+    expect(thanh).toMatch(/data-mo-nhom="hien-thi"[^>]*>Hiển thị/);
     expect(thanh).not.toContain("Số đo");
     expect(thanh).not.toContain("Kết quả");
   });
@@ -126,8 +131,8 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
   it("W18 · chỉ có dữ kiện (mặc định đã hiện hết) hoặc không có nhãn ⇒ không có công tắc", () => {
     const chiDuKien: Scene3D = { ...CANH_CO_SO_DO,
       objects: CANH_CO_SO_DO.objects.map((o) => (o.id === "V" ? { ...o, annotation: undefined } : o)) };
-    expect(thanhCua(renderToString(<Scene3DExplorer scene={chiDuKien} />))).not.toContain("Hiện tất cả");
-    expect(thanhCua(html())).not.toContain("Hiện tất cả");
+    expect(hasHiddenByDefault(withSubEntities(chiDuKien))).toBe(false);
+    expect(hasHiddenByDefault(day())).toBe(false);
   });
 
   it("cây có đủ hạng mục Điểm, Cạnh, Mặt", () => {
@@ -471,32 +476,14 @@ const CANH_LG = {
 } as unknown as Scene3D;
 
 describe("W18 · một nơi giải thích (§16.6)", () => {
-  const lg = (open?: boolean) => renderToString(<Scene3DSolution scene={CANH_LG} step={4} open={open} />)
-    .replace(/<!--.*?-->/g, "");
-  const ketQua = (h: string) => h.slice(h.indexOf("geo3d-lg-ket-qua"), h.indexOf("geo3d-lg-gap"));
-
-  it("lời giải đầy đủ THU GỌN mặc định; card Kết quả KHÔNG hiện (ROADMAP §0.1-1)", () => {
-    // W18 để Kết quả luôn hiện dạng `ký hiệu = giá trị`; §0.1-1 bỏ hẳn card khi thu gọn — đáp số đọc qua nút
-    // «Đại lượng», nhãn trên hình khi chọn và ô soi. Vẫn giữ: thu gọn không lộ công thức.
-    const h = lg();
-    expect(h).toContain('aria-expanded="false"');
-    expect(h).not.toContain("geo3d-lg-than la-mo");
-    expect(h).not.toContain("geo3d-lg-ket-qua");
-    expect(h).not.toContain("10/3 · AB");
-  });
-
-  it("mở lời giải ⇒ công thức ở lời giải (ô soi khi ấy bỏ khối công thức)", () => {
-    const h = lg(true);
-    expect(h).toContain('aria-expanded="true"');
-    expect(ketQua(h)).toContain("V = 10/3 · AB = 10");
-    const src = readFileSync(new URL("./Scene3DExplorer.tsx", import.meta.url), "utf8");
-    expect(src).toMatch(/\{formula && !moLoiGiai && \(/);
-  });
-
-  it("same_as: đại lượng đo lại đúng dữ kiện không có dòng thứ hai", () => {
-    const h = lg(true);
-    expect(h).toContain('data-solution-id="AB_length"');
-    expect(h).not.toContain('data-solution-id="h"');
+  /* W05 · E: thẻ lời giải dưới mô phỏng ĐÃ GỠ — hai ca "thu gọn mặc định" / "mở ⇒ công thức về lời giải" nói về nó
+     và đi cùng nó. Bất biến còn lại: ô soi là nơi DUY NHẤT mang công thức (`scene3d-focus-mode.test.tsx`), và
+     `same_as` không đẻ mục thứ hai ở bảng «Đại lượng». */
+  it("same_as: đại lượng đo lại đúng dữ kiện không có mục thứ hai ở «Đại lượng»", () => {
+    const q = quantityChoices(CANH_LG, 4);
+    const moi = [...q.results, ...q.steps, ...q.givens];
+    expect(moi).toContain("AB_length");
+    expect(moi).not.toContain("h");
   });
 
   it("nguồn của một đại lượng (cho ô soi): dữ kiện số trong chuỗi và đầu vào trực tiếp — do backend phát", () => {

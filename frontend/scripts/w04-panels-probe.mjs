@@ -56,11 +56,17 @@ const chonId = (s) => j(s, "window.__geo3d_selected_id||null");
 const nghi = () => sleep(700);
 const coBang = (s, id) => j(s, `!!${q(`.geo3d-bang-noi[data-panel="${id}"]`)}`);
 const choBang = (s, id, mo) => pollUntil(() => coBang(s, id), (x) => x === mo, { timeoutMs: 5000 });
-const NUT_MO = { "thanh-phan": "[data-mo-bang=\"thanh-phan\"]", "dai-luong": "[data-mo-bang=\"dai-luong\"]",
-  de: "[data-mo-bang=\"de\"]", "cac-buoc": ".geo3d-cac-buoc-mo" };
+const NUT_MO = { de: "[data-mo-bang=\"de\"]", "cac-buoc": ".geo3d-cac-buoc-mo" };
+/** W05 · D: «Thành phần» và «Đại lượng» mở từ menu «Khám phá» (mục đóng menu sau khi chọn). */
+const MUC_KHAM_PHA = { "thanh-phan": "Thành phần", "dai-luong": "Đại lượng" };
 async function moBang(s, id, mo = true) {
   if (await coBang(s, id) === mo) return;
-  if (mo) await trustedClick(s, q(NUT_MO[id]));
+  if (mo && MUC_KHAM_PHA[id]) {
+    await trustedClick(s, q("[data-mo-nhom=\"kham-pha\"]"));
+    await pollUntil(() => j(s, "!!document.querySelector('.geo3d-menu-hop')"), Boolean, { timeoutMs: 5000 });
+    await trustedClick(s, `[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')]`
+      + `.find((b)=>(b.textContent||'').includes(${JSON.stringify(MUC_KHAM_PHA[id])}))`);
+  } else if (mo) await trustedClick(s, q(NUT_MO[id]));
   else await trustedClick(s, q(`.geo3d-bang-noi[data-panel="${id}"] .geo3d-bang-noi-dong`));
   await choBang(s, id, mo);
   await nghi();

@@ -49,10 +49,29 @@ const buoc = (s) => j(s, "(document.querySelector('.geo3d-buoc-so')?.textContent
 const chon = (s) => j(s, "window.__geo3d_selected_id||null");
 const veNgay = (s) => j(s, "(window.__geo3d_rendered_object_ids||[]).slice()");
 const nghi = () => sleep(700);
-const chip = (s, t) => trustedClick(s, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
-  + `.find((b)=>(b.textContent||'').trim()===${JSON.stringify(t)})`);
-const coChip = (s, t) => j(s, `[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')]`
-  + `.some((b)=>(b.textContent||'').trim()===${JSON.stringify(t)})`);
+// regular-square-pyramid-w05 · D: công cụ là mục của menu nhóm trên hàng trên — mở menu, bấm mục theo chữ, đóng
+// menu nếu mục giữ nó mở (công tắc), để hộp menu không phủ khung khi đo tiếp.
+const NHOM = { "Đại lượng": "kham-pha", "Thành phần": "kham-pha", "Hiện tất cả": "hien-thi", "Hình phụ": "hien-thi",
+  "Lưới": "hien-thi" };
+const MUC = (t) => `[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')]`
+  + `.find((b)=>(b.textContent||'').includes(${JSON.stringify(t)}))`;
+const menu = async (s, t, mo) => {
+  const nut = `document.querySelector('[data-mo-nhom="${NHOM[t]}"]')`;
+  if (await j(s, `${nut}?.getAttribute('aria-expanded')==='true'`) !== mo) await trustedClick(s, nut);
+  await pollUntil(() => j(s, `${nut}?.getAttribute('aria-expanded')==='true'`), (x) => x === mo, { timeoutMs: 5000 });
+};
+const chip = async (s, t) => {
+  await menu(s, t, true);
+  const ok = await trustedClick(s, MUC(t));
+  await menu(s, t, false);
+  return ok;
+};
+const coChip = async (s, t) => {
+  await menu(s, t, true);
+  const co = await j(s, `!!(${MUC(t)})`);
+  await menu(s, t, false);
+  return co;
+};
 const moBang = async (s, mo) => {
   const dang = await j(s, "document.querySelector('.geo3d-cac-buoc-mo')?.getAttribute('aria-expanded')==='true'");
   if (dang !== mo) await trustedClick(s, "document.querySelector('.geo3d-cac-buoc-mo')");

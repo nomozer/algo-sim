@@ -51,9 +51,9 @@ const pause=document.querySelector('[aria-label="Tạm dừng"]');
 return{t:Math.round(performance.now()-t0),step:m?Number(m[1])-1:null,total:m?Number(m[2]):null,
 playing:!!pause,selected:window.__geo3d_selected_id||null,
 highlighted:(window.__geo3d_highlighted_ids||[]).slice(),panel_open:!!document.querySelector('.geo3d-soi'),
-rows:[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>({id:e.dataset.solutionId,
-sec:(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')?.textContent||'').trim()})),
-collapsed:(()=>{const t=document.querySelector('.geo3d-lg-than');return !!t&&getComputedStyle(t).display==='none'})(),
+rows:[...document.querySelectorAll('.geo3d-dai-luong [data-quantity-id]')].map(e=>({id:e.dataset.quantityId,
+sec:(e.closest('section')?.getAttribute('aria-label')||'')})),
+solution_card:!!document.querySelector('.geo3d-loi-giai'),
 rendered:(window.__geo3d_rendered_object_ids||[]).slice().sort(),
 narration:(document.querySelector('.geo3d-narration')?.textContent||'').trim()}};
 window.__w10_snap=snap;let prev='';
@@ -178,14 +178,15 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
       const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
       states[ten] = { ...await capture(session, join(outDir, `${ten}.png`)), ...await observe(session),
         dimmed_labels: await session.eval("document.querySelectorAll('.geo3d-label.la-diu').length"),
-        dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-lg-dong.la-diu').length"),
+        // W05 · E: vai trò đọc ở mục bảng «Đại lượng» (thẻ lời giải đã gỡ).
+        dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-dai-luong .geo3d-tree-item.la-diu').length"),
         // nhãn điểm: dịu ⇔ nằm ngoài tập tô sáng; số đo: lớp của từng dòng (w11:
         // đích / dữ kiện số / trung gian số / ngoài chuỗi)
         label_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-label')]"
           + ".map(e=>({id:e.dataset.id,dimmed:e.classList.contains('la-diu')}))"),
         // W12: dòng của BẢNG LỜI GIẢI theo id, cùng lớp vai trò của nó.
-        readout_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')]"
-          + ".map(e=>({id:e.dataset.solutionId,classes:[...e.classList].filter(c=>c.startsWith('la-'))}))"),
+        readout_tiers: await jsonEval(session, "[...document.querySelectorAll('.geo3d-dai-luong [data-quantity-id]')]"
+          + ".map(e=>({id:e.dataset.quantityId,classes:[...e.classList].filter(c=>c.startsWith('la-'))}))"),
         causal_tiers: await jsonEval(session, "window.__geo3d_causal_tiers||null"),
         vertex_marker_px: await vertexMarkerCheck(session),
         view: snap ? chatLuongGocNhin(scene, snap, await overlayRects(session)) : null };
@@ -226,15 +227,20 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // ── Causal: CHỈ sau cú bấm của người dùng; đóng ô soi ⇒ trung tính ───
     // W12: đích causal là đáp số. regular-square-pyramid-w01 (ROADMAP §0.1-1/2): card Kết quả ẩn khi lời giải
     // thu gọn — người học chọn đáp số qua ngăn «Đại lượng» (chip mở ngăn, chọn thì ngăn tự đóng).
-    const CHIP = "[...document.querySelectorAll('.geo3d-thanh-nut .geo3d-chip')].find((b)=>(b.textContent||'').includes('Đại lượng'))";
+    // W05 · D: «Đại lượng» là mục của menu «Khám phá» — mở menu rồi bấm mục (một cú bấm mỗi bước, như người học).
+    const MENU = "document.querySelector('[data-mo-nhom=\"kham-pha\"]')";
+    const CHIP = "[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')].find((b)=>(b.textContent||'').includes('Đại lượng'))";
     const KET_QUA = "[...document.querySelectorAll('.geo3d-dai-luong section[aria-label=\"Kết quả\"] [data-quantity-id]')].at(-1)";
-    const moNgan = async () => {
-      if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await trustedClick(session, CHIP);
+    const doiNgan = async () => {
+      await trustedClick(session, MENU);
+      await sleep(200);
+      if (await session.eval(`!!(${CHIP})`)) await trustedClick(session, CHIP);
+      else await trustedClick(session, MENU);
       await sleep(200);
     };
-    await moNgan();
+    if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNgan();
     const rows = await session.eval(`(${KET_QUA}) ? 1 : 0`);
-    if (rows === 0 && await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await trustedClick(session, CHIP);
+    if (rows === 0 && await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNgan();
     const causal = { restored: null };
     if (rows > 0) {
       await trustedClick(session, KET_QUA);
@@ -250,7 +256,7 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // Lặp orbit ở trạng thái trung tính ("Xem lại toàn hình" cũng bỏ chọn).
     const orbitRepeat = lapOrbit > 0 ? await orbitLap(session, scene, lapOrbit) : null;
     if (rows > 0) {
-      await moNgan();
+      if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNgan();
       await trustedClick(session, KET_QUA);
       await sleep(400);
     }

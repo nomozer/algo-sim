@@ -75,8 +75,9 @@ def _ban_ghi(tmp: Path, viewport: str, width_css: int, size: tuple[int, int], st
     shots = {s: str(_anh(tmp / viewport / f"{s}.png", size, c)) for s, c in
              (("neutral_final", "white"), ("causal_selected", "orange"), ("rotated_neutral", "gray"))}
     # W12: ảnh PHẦN TỬ của bảng lời giải — nhỏ hơn trang, dùng nguyên.
+    # W05 · E: thẻ lời giải đã gỡ — chỉ còn ảnh bảng «Đại lượng» khi đã chọn đáp số.
     shots.update({s: str(_anh(tmp / viewport / f"{s}.png", (600, 300), "white")) for s in
-                  ("solution_neutral_final", "solution_causal_selected", "solution_expanded")})
+                  ("solution_causal_selected",)})
     return {"viewport": {"id": viewport, "width": width_css}, "screenshots": shots,
             "canvas_boxes": {s: {"x": 10, "y": 100, "w": 900, "h": 400} for s in shots},
             "formation": {"steps": [
@@ -127,17 +128,16 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
     meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     from PIL import Image
     sheet = Image.open(tmp_path / "images" / "triangular-pyramid" / "SHEET.png")
-    # W18 §16.6: lời giải thu gọn ở MỌI khổ ⇒ desktop cũng có ảnh "mở dữ kiện và các bước tính".
+    # W05 · E: thẻ lời giải đã gỡ ⇒ chỉ còn ảnh bảng «Đại lượng» khi đã chọn đáp số (desktop).
     assert [c["state"] for c in meta["cells"]] == [
         "desktop/neutral_final", "desktop/causal_selected", "desktop/rotated_neutral", "mobile/neutral_final",
-        "desktop/solution_neutral_final", "desktop/solution_expanded", "desktop/solution_causal_selected",
-        "mobile/solution_neutral_final", "mobile/solution_expanded",
+        "desktop/solution_causal_selected",
     ] + [f"negative/{k}/{vp}" for k in ("ungrounded_source", "assumption", "topology_kernel")
          for vp in ("desktop", "mobile")] + [f"desktop/geometry_step/{k}" for k in range(3)]
     # Ô desktop: crop bỏ thanh điều hướng trên cùng, KHÔNG thu nhỏ bề ngang;
     # ảnh phần tử và lời từ chối dùng NGUYÊN khung.
     assert all(c["scale"] == 1.0 for c in meta["cells"])
-    panel = next(c for c in meta["cells"] if c["state"] == "desktop/solution_neutral_final")
+    panel = next(c for c in meta["cells"] if c["state"] == "desktop/solution_causal_selected")
     assert panel["crop_box_px"] == [0, 0, 600, 300]
     assert sheet.width >= 2 * 1400 and meta["legend"] and meta["label_font_px"] >= 24
     assert "XANH = đang xét" in meta["legend"] and "cam đậm = dữ kiện số" in meta["legend"]
