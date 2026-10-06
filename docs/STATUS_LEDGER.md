@@ -1025,8 +1025,8 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CODE_COMMIT_OR_NONE:** c15e6fab (source length reader reads chained equal segments) · 470adc3a (focused simulation mode, grouped tools, solution card removed) · 82225a7b (focused page exactly one screen tall); harness c1070389, f01df0e5
 - **CANDIDATE:** 8a27a58b… → 5e1c0639… (two freezes, same tree hash: a588f8db at 470adc3a, 74c91060 at 82225a7b) · CACHE_VERSION 115 (no bump, row proof) · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** measurement f01df0e5 (attempt 4) · evidence 3b31aa18; attempts 1–3 kept (`MEASUREMENT_ATTEMPTS.json`)
-- **CLASSIFICATION:** see `HANDOFF.md` §2 (T3 + identity gates at the docs commit)
-- **FULL_PRODUCT_SUITE:** see `HANDOFF.md` §2
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 4123fb4f from a path with a space (pytest 7191 passed / 1 skipped, vitest 1136/1136, build, demo, crash surface); identity gates green (`diagnostics/logs/GATES_4123fb4f.log`)
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w05/REPORT.md
@@ -1038,7 +1038,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** regular-square-pyramid-w01 LABELS_R2 row R2_L1 (product_limit → served 16/3, new label layer `diagnostics/corpus/LABELS_W05.json`; W1 files unchanged)
 - **NEXT_ACTION_AT_TIME:** human visual review (W5 REVIEW.md R1–R10 with the W4 package); on approval merge into main, push, delete the branch
-- **FINAL_DECISION:** see `HANDOFF.md` §2
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE — focused simulation workspace + one source-grounding reader slice; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/TOOL_INVENTORY.md` · `diagnostics/corpus/LABELS_W05.json` · `diagnostics/cache_proof/CACHE_DECISION_W05.json` · `results/` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`

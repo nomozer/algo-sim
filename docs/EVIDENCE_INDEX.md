@@ -1082,7 +1082,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** c15e6fab · 470adc3a · 82225a7b (harness c1070389 · f01df0e5)
 - **MEASUREMENT_COMMIT:** f01df0e5 (local, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, W4 panels probe, W05 focus probe, occlusion, playback, builder); attempts 1–3 at a588f8db, c1070389, 74c91060 kept (`diagnostics/attempts/`, `MEASUREMENT_ATTEMPTS.json`)
 - **EVIDENCE_COMMIT_ROLE:** evidence commit 3b31aa18 after the measurement (results, images, inputs, logs)
-- **CLASSIFICATION:** see `HANDOFF.md` §2
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + identity gates at 4123fb4f)
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (8a27a58b… → 5e1c0639…; two freezes, same tree hash, product commit 82225a7b)

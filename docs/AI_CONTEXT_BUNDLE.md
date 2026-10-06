@@ -24,7 +24,7 @@ CURRENT_WAVE = IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (việc regular-squar
 PRODUCT_STATE = candidate 5e1c0639… (product commit 82225a7b; hai lần đóng băng cùng tree hash), CACHE_VERSION 115, LLM_ONLY
 MEASUREMENT = f01df0e5 (lần đo 4; bằng chứng 3b31aa18) (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = xem runs/regular-square-pyramid-w05/HANDOFF.md §2 (T3 + cổng danh tính tại commit tài liệu)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w05; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại 4123fb4f)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-square-pyramid-w05/REVIEW.md R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg + thay đổi chưa commit không thuộc W5 (xoá script/fixture Tin học cũ, sửa vài tài liệu) ở máy local (giữ nguyên)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO

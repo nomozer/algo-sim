@@ -59,7 +59,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANDIDATE = 5e1c0639… (was 8a27a58b…; hai lần đóng băng cùng tree hash), product commit 82225a7b
 > USER_DIRTY_STATE = D frontend/public/favicon.svg + thay đổi chưa commit không thuộc W5 (xoá script/fixture Tin học cũ, sửa vài tài liệu) ở máy local (giữ nguyên, không stage)
 > CURRENT_WAVE = IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (việc regular-square-pyramid, W5, run regular-square-pyramid-w05)
-> FINAL_DECISION = xem runs/regular-square-pyramid-w05/HANDOFF.md §2 (T3 + cổng danh tính tại commit tài liệu) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w05/REVIEW.md (R1–R10) cùng gói W4 (runs/regular-square-pyramid-w04/REVIEW.md, gộp W1–W3; chặn merge); duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại 4123fb4f — runs/regular-square-pyramid-w05/HANDOFF.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w05/REVIEW.md (R1–R10) cùng gói W4 (runs/regular-square-pyramid-w04/REVIEW.md, gộp W1–W3; chặn merge); duyệt thì merge vào main + push + xoá nhánh ở một lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```

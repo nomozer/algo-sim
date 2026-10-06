@@ -13,7 +13,7 @@ MODEL_SURFACE_CHANGED = NO · DEFAULT_MODE = LLM_ONLY · LIVE_GEMINI_REQUESTS = 
 HUMAN_VISUAL_REVIEW  = NOT_APPROVED
 MERGE / PUSH / PR    = NO / NO / NO
 FAVICON_TOUCHED      = NO (deletion của người dùng giữ ngoài staging)
-FINAL_DECISION       = xem §2
+FINAL_DECISION       = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính tại 4123fb4f — §2)
 ```
 
 ## 1. Đã làm
@@ -31,8 +31,24 @@ FINAL_DECISION       = xem §2
 
 ## 2. Cổng tại commit cuối
 
-Chạy ở worktree tách rời sạch sau commit tài liệu — kết quả ghi ở mục này bởi commit kế tiếp (`T3_FULL_GATE_<sha>.log`,
-`GATES_<sha>.log` trong `diagnostics/logs/`).
+Worktree tách rời sạch `D:/tmp/rsp w05t` (CRLF, có dấu cách) tại commit tài liệu **`4123fb4f`**, log ngoài worktree rồi
+chép vào `diagnostics/logs/` (`T3_FULL_GATE_4123fb4f.log`, `GATES_4123fb4f.log`); cây sạch trước và sau.
+
+| Cổng | Kết quả |
+|---|---|
+| T3 `full-gate.mjs` | **`FULL_PRODUCT_GATE_PASS`** — pytest 7191 passed, 1 skipped; vitest 1136/1136; tsc + build; demo; bề mặt sập |
+| candidate / cache verify | `5e1c0639…` khớp (110 file) / khoá 115 khớp, môi trường `b1714b56…` |
+| schema ×2 | trùng byte `d852b47c…`; git status không đổi |
+| `DEFAULT_MODE` | `LLM_ONLY`; routing.py không đổi từ `73bc404e`; compiler không được gọi từ `app/ai`/`main.py`; `FIXTURE_TIN_CAY` 0 |
+| bề mặt mô hình | 0 file đổi từ `73bc404e` |
+| bằng chứng lịch sử | ngoài run W5 chỉ hai sổ sống (candidate, khai lệch); "1 of 181" báo cáo catalog = `EVIDENCE_INDEX.md` — dương tính giả đã biết (tài liệu sống khớp regex catalog), như W4 |
+| `git diff --check 73bc404e..4123fb4f` | 0 |
+| audit tài liệu | PASS (0 đường dẫn cũ trong `CODE_INDEX` của cây đã commit) |
+| node harness | 93: 91 pass, 0 fail, 2 skip |
+
+Mọi cổng bắt buộc đạt, mọi yêu cầu đối chiếu ở §1 ⇒ **`FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW`**. Không cổng nào bị
+hạ ngưỡng; thay đổi bộ đo và ba lần đo không dùng ghi ở `REPORT.md` §4 và `MEASUREMENT_ATTEMPTS.json`. Kiến trúc tổng
+thể KHÔNG được tuyên bố hoàn tất (`REPORT.md` §2).
 
 ## 3. Chờ người dùng
 
