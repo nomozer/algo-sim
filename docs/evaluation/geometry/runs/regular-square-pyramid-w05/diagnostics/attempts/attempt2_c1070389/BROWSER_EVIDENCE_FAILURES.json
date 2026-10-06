@@ -1,0 +1,45 @@
+{
+ "pass": false,
+ "measurement_commit_sha": "c10703895fa6f7113105444e2abce3238e1ec0ef",
+ "families": {
+  "triangular_pyramid": {
+   "desktop": [],
+   "mobile": []
+  },
+  "triangular_prism": {
+   "desktop": [],
+   "mobile": []
+  },
+  "rectangular_pyramid": {
+   "desktop": [],
+   "mobile": []
+  },
+  "cuboid": {
+   "desktop": [],
+   "mobile": []
+  },
+  "cube": {
+   "desktop": [],
+   "mobile": []
+  },
+  "cross_section": {
+   "desktop": [],
+   "mobile": []
+  },
+  "regular_square_pyramid": {
+   "desktop": [
+    {
+     "assertion": "camera_settled_rotated_neutral",
+     "details": {
+      "samples": 166,
+      "streak": 11,
+      "last_motion": 2.2411983380266065e-10,
+      "max_motion": 0.058675369342864325,
+      "tolerance": 1e-9
+     }
+    }
+   ],
+   "mobile": []
+  }
+ }
+}

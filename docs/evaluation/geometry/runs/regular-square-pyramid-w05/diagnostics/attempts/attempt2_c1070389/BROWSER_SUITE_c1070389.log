@@ -1,0 +1,11 @@
+# cwd: <worktree '/d/tmp/rsp w05n'> @ c10703895fa6f7113105444e2abce3238e1ec0ef; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w05/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w05/results --screenshots docs/evaluation/geometry/runs/regular-square-pyramid-w05/images --bo-qua-build
+2026-10-06T16:21:38Z
+triangular_pyramid: PASS
+triangular_prism: PASS
+rectangular_pyramid: PASS
+cuboid: PASS
+cube: PASS
+cross_section: PASS
+regular_square_pyramid: FAIL
+Wrote D:\tmp\rsp w05n\docs\evaluation\geometry\runs\regular-square-pyramid-w05\results\BROWSER_EVIDENCE.json: FAIL
+exit=1

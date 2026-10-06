@@ -214,7 +214,7 @@
   {
    "hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
    "sau_wave": "IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (run regular-square-pyramid-w05)",
-   "ghi_chu": "Bộ đọc độ dài nguồn đọc chuỗi bằng nhau (SA = SB = SC = SD = 3 ⇒ mọi đoạn của chuỗi cùng giá trị; segment_relation.MAU_DO_DAI/cac_doan_truoc, grounding_gate._bang_chung, quantity_annotations._do_dai_de_cho). Giao diện (ngoài measured_system): chế độ tập trung không thanh trên toàn cục, nút quay lại, công cụ nhóm trong menu, toàn màn hình tuỳ chọn, gỡ thẻ lời giải lặp. Một lần đóng băng tại 470adc3a (D:/tmp/rsp w05a). CACHE_VERSION giữ 115 (runs/regular-square-pyramid-w05/diagnostics/cache_proof/CACHE_DECISION_W05.json)."
+   "ghi_chu": "Bộ đọc độ dài nguồn đọc chuỗi bằng nhau (SA = SB = SC = SD = 3 ⇒ mọi đoạn của chuỗi cùng giá trị; segment_relation.MAU_DO_DAI/cac_doan_truoc, grounding_gate._bang_chung, quantity_annotations._do_dai_de_cho). Giao diện (ngoài measured_system): chế độ tập trung không thanh trên toàn cục, nút quay lại, công cụ nhóm trong menu, toàn màn hình tuỳ chọn, gỡ thẻ lời giải lặp. Hai lần đóng băng, cùng tree hash: 470adc3a (D:/tmp/rsp w05a) rồi 82225a7b (D:/tmp/rsp w05b) sau khi lượt đo 2 bắt trang chế độ tập trung cao hơn khung nhìn 16 px (chỉ frontend/src). CACHE_VERSION giữ 115 (runs/regular-square-pyramid-w05/diagnostics/cache_proof/CACHE_DECISION_W05.json)."
   }
  ],
  "diverged": true,

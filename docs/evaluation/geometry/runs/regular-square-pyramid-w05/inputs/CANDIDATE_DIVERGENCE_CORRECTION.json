@@ -6,16 +6,22 @@
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
-  "current_candidate_source_commit": "470adc3a1cfc292572d09f7865cc21d7383ef069",
-  "current_candidate_frozen_at": "470adc3a1cfc292572d09f7865cc21d7383ef069",
-  "current_candidate_note": "Frozen ONCE in this run, in a clean detached worktree (core.autocrlf=true, path with a space, outside the repository): D:/tmp/rsp w05a at 470adc3a, the last product commit (backend c15e6fab + frontend 470adc3a). Bare freeze then --verify, both exit 0 (diagnostics/logs/FREEZE_470adc3a.log); 110 files, CACHE_VERSION 115, cay_lam_viec_sach = true. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged.",
+  "current_candidate_source_commit": "82225a7b129a45e722af6abd13d3d63cb9cc40d2",
+  "current_candidate_frozen_at": "82225a7b129a45e722af6abd13d3d63cb9cc40d2",
+  "current_candidate_note": "Frozen TWICE in this run, each in a clean detached worktree (core.autocrlf=true, path with a space, outside the repository): D:/tmp/rsp w05a at 470adc3a; D:/tmp/rsp w05b at 82225a7b after measurement attempt 2 found the focused page 16 px taller than the viewport (an empty grid row of the 2D controls kept its row gap). The fix is frontend/src only, so the measured-system tree hash is the same; product_commit_sha moves. Bare freeze then --verify, both exit 0 each time (diagnostics/logs/FREEZE_470adc3a.log, FREEZE_82225a7b.log); 110 files, CACHE_VERSION 115, cay_lam_viec_sach = true. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged.",
   "previous_candidate_hash": "8a27a58b5a96311dd052a6cc981af558a50878876bef574ec71f8a1b666ed025",
-  "intermediate_candidates_in_this_wave": [],
+  "intermediate_candidates_in_this_wave": [
+    {
+      "hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
+      "product_commit_sha": "470adc3a1cfc292572d09f7865cc21d7383ef069",
+      "superseded_because": "measurement attempt 2: focused page 16 px taller than the viewport, a click could scroll the canvas (diagnostics/attempts/attempt2_c1070389)"
+    }
+  ],
   "diverged": true,
   "reason": "regular-square-pyramid-w05 backend/app changes: segment_relation reads a chain of equal segments (SA = SB = SC = SD = 3) as one value for every segment of the chain (MAU_DO_DAI with the chain prefix, cac_doan_truoc replaces nhan_doan_truoc, _do_dai_doan reuses _moi_doan_co_do_dai); grounding_gate._bang_chung and quantity_annotations._do_dai_de_cho read the whole chain. CACHE_VERSION stays 115 (diagnostics/cache_proof/CACHE_DECISION_W05.json: every row served before and after has an identical scene; 37/37 family fixture envelopes byte-identical). frontend/src (outside measured_system, inside product_commit_sha): focused simulation mode without the global header, back button to the previous page, tools grouped into menus, optional fullscreen, solution card removed. No change to prompts, grammar card, schemas or the capability table (semantic environment b1714b56 unchanged).",
   "hieu_luc_len_ket_qua_da_do": {
     "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
-    "candidate_hien_tai": "Candidate 5e1c0639 (product commit 470adc3a) is the current product identity. It is not used to rescore the historical run.",
+    "candidate_hien_tai": "Candidate 5e1c0639 (product commit 82225a7b) is the current product identity. It is not used to rescore the historical run.",
     "live_requests": 0
   },
   "cache_version_hien_tai": 115

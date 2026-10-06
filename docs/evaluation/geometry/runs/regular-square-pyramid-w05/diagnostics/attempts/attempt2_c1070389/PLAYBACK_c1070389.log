@@ -1,0 +1,18 @@
+# cwd: <worktree '/d/tmp/rsp w05n'> @ c10703895fa6f7113105444e2abce3238e1ec0ef; timeout --signal=KILL 2400 node frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w05/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w05/images --bo-qua-build
+2026-10-06T17:00:25Z
+triangular_pyramid/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+triangular_pyramid/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+triangular_prism/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+triangular_prism/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+rectangular_pyramid/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+rectangular_pyramid/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cuboid/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cuboid/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cube/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cube/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cross_section/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+cross_section/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+regular_square_pyramid/desktop: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+regular_square_pyramid/mobile: FAIL solution_in_sync_with_geometry_step,final_result_shown_once
+Wrote D:\tmp\rsp w05n\docs\evaluation\geometry\runs\regular-square-pyramid-w05\images\PLAYBACK_EVIDENCE.json: FAIL c23750f8c8bc
+exit=1
