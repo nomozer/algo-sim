@@ -1,0 +1,169 @@
+{
+ "backend_head": "c15e6fab7e63ae4601162755f98fff07b20996d8",
+ "backend_app_dirty": false,
+ "rows": {
+  "N1_missing_height": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_DETERMINES_ANSWER"
+  },
+  "N2_not_regular": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "N3_contradiction": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "N4_wrong_centre_identity": {
+   "served": false,
+   "stage": "construction_binding",
+   "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+  },
+  "N5_apex_over_vertex": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "N6_goal_clause_regular": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "N7_model_only_height": {
+   "served": false,
+   "stage": "grounding",
+   "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+  },
+  "R2_L1_chained_equal_lateral_edges": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "9721389226e161f381836ad4a39c4b356ef6e268e078d2a5ff293b978c8ff8c4",
+   "outcome_sha256": "d11ceb8bec41b00d6c84eb4a9a0fab0c0f49f5816aaa866183dcb55b2e849f96"
+  },
+  "R2_N8_lateral_contradiction": {
+   "served": false,
+   "stage": "source_invariant",
+   "reason_code": null
+  },
+  "R2_N9_contradiction_program_fits_lengths": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "R2_S10_lateral_other_vertex": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "70c4a67977789cec5fe75adcfce46edd01d8f9044d133db405871d50adb94d72",
+   "outcome_sha256": "c95d9c28a764a9e17c655b7eecf274985578c7cc0a9a5d151e30d8c8b1c574bc"
+  },
+  "R2_S8_side_AB_lateral_SA": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "9721389226e161f381836ad4a39c4b356ef6e268e078d2a5ff293b978c8ff8c4",
+   "outcome_sha256": "7f07860eb2d480c5cb87861d77f0191f5f2487896ab215974f692e4e87c3a60c"
+  },
+  "R2_S9_side_lateral_named": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "a0704a7a4e37d5091cafe25c638004b5bb491e4827f5063fd2a05931065c9bc2",
+   "outcome_sha256": "f664ce0a3b7ac49a3fc29fea60b7d05c6604da130808c0a4e5f3f323c9a9f7ca"
+  },
+  "R2_U4_irrational_via_lateral": {
+   "served": false,
+   "stage": "source_invariant",
+   "reason_code": null
+  },
+  "S1_side_height_volume": {
+   "served": true,
+   "value": "16",
+   "scene_sha256": "f527da95da1766105fefbf54cc663001784341c1f436ad5955bbff3638488771",
+   "outcome_sha256": "0cc82038eeb010d4bf49f90ba4b9016c4a5f2595dfc3dd908fab3c0bd6b6e520"
+  },
+  "S2_side_apothem_volume": {
+   "served": true,
+   "value": "48",
+   "scene_sha256": "a609b7a6130626d0a6a34c6d20f7c9a39ce1f08b9f8d8ce94bac34267ad1f4b3",
+   "outcome_sha256": "4f3484cd4f2454e34f00b6acdc7a48374a9ab5a0a750ef9f5a30e68b6899a430"
+  },
+  "S3_apothem_phrasing": {
+   "served": true,
+   "value": "48",
+   "scene_sha256": "2b32fbc6ebf591806ccbdf79d2eece37310786b13953f059489b6c7b5042324d",
+   "outcome_sha256": "fbc6c388c1ddbb4bceb28aa9809936c52933303605b6a983751da9367eb5794b"
+  },
+  "S4_side_lateral_volume": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "de2c743ddd94243570dee820d0808f5d7af11a81fda30169dad6d904227d90e0",
+   "outcome_sha256": "79b11124657342d40ef0cb69871c65c2c830c25c94309104bc371b6beb96a66d"
+  },
+  "S5_lateral_edge_length": {
+   "served": true,
+   "value": "√17",
+   "scene_sha256": "8418fb7203f17a9e5f1134c85a40739b03f81df59dca31bbc00a297456ac2c89",
+   "outcome_sha256": "fa1745e90684f547cd0e8e0f035c7ef211b7249390f3e969c511e369b5b1e4ea"
+  },
+  "S6_renamed_vertices": {
+   "served": true,
+   "value": "16",
+   "scene_sha256": "243762edf1c0d513e02dcfa6bfdb6e73af3d381ae0e99a7de707e3cb4b3b0a53",
+   "outcome_sha256": "86f3d674de2b501e1f8f8b95116f810bc120755d0dcef7c7dd44b9ee062fbc42"
+  },
+  "S7_named_centre": {
+   "served": true,
+   "value": "16",
+   "scene_sha256": "37de9f53e8d8002b2670e0479af4865878c029f99a9c3e756ae672f9099bb008",
+   "outcome_sha256": "b81495edfa2086b38eb19c9d1efebe6cca3b8ae8a580d763fa9c25ec8e69587f"
+  },
+  "U1_irrational_height": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "U2_angle_data": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "U3_regular_triangular": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "W5_A_chain_cites_other_member": {
+   "served": true,
+   "value": "16/3",
+   "scene_sha256": "70c4a67977789cec5fe75adcfce46edd01d8f9044d133db405871d50adb94d72",
+   "outcome_sha256": "5f90ad2a626e40c30684629986ab52ea7793246f63bfc6596998ca6c08bc7688"
+  },
+  "W5_B_chain_mixed_values": {
+   "served": false,
+   "stage": "source_invariant",
+   "reason_code": null
+  },
+  "W5_C_chain_without_value": {
+   "served": false,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "W5_D_program_value_differs_from_chain": {
+   "served": false,
+   "stage": "grounding",
+   "reason_code": "SOURCE_EVIDENCE_CONFLICT"
+  },
+  "W5_E_program_segment_outside_chain": {
+   "served": false,
+   "stage": "grounding",
+   "reason_code": "SOURCE_EVIDENCE_CONFLICT"
+  },
+  "X_chain_cites_last_member": {
+   "served": true,
+   "value": "16",
+   "scene_sha256": "49d80c7dbad59c717226871ec4003ddbb22124746fbdff6a07914b7687b7b600",
+   "outcome_sha256": "3bf55a0fddd3511250dc37296c8ee65cbad78e480b8c7f865a67ce35570e1300"
+  }
+ }
+}

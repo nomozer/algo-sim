@@ -1,0 +1,21 @@
+{
+ "schema_version": "cache-decision/1",
+ "run_id": "regular-square-pyramid-w05",
+ "cache_version_before": "115",
+ "decision": "NO_BUMP",
+ "cache_version_after": "115",
+ "rule": "The cache stores only status == ok responses. A bump is required when a response the old code SERVED (and may have cached) would now be served with a different payload. A refused -> served change cannot leave a stale cached row (refusals are not cached).",
+ "evidence": [
+  {
+   "probe": "proof_cache_rows_w05.py — every row of the regular-square-pyramid corpus (W1 + R2 + W05 layers) plus one diagnostic chained-equality row that was served before the change (X_chain_cites_last_member: 'AB = BC = 4', program cites BC), through the real route on the pre-change backend (73bc404e) and on the post-change backend",
+   "files": ["ROWS_PRE_73bc404e.json", "ROWS_POST.json"],
+   "result": "11 rows served on both sides; every served row has an identical scene3d hash. Outcome objects differ only for the diagnostic row, and only in source_invariant_stats (checked 1 -> 2), a field emitted to the observer event (app/ai/pipeline.py _emit 'semantic_route'), not to the envelope. Flips: R2_L1 and W5_A refused -> served; W5_B and W5_D change refusal stage/code (refusals, not cached)."
+  },
+  {
+   "probe": "scripts/generate_generic_tier_a_fixtures.py regenerated after the change and compared with the W4 inputs (generated at product 53e4bec5, same backend as 73bc404e)",
+   "result": "37/37 fixture envelopes byte-identical (JSON of `envelope`)"
+  }
+ ],
+ "frontend": "The UI changes (focus mode, grouped tools, removed solution card) do not change any envelope; the frontend is not part of the cached payload.",
+ "model_surface_changed": false
+}
