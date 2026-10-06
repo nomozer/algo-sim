@@ -1,0 +1,4 @@
+# cwd: <worktree '/d/tmp/rsp w04c'> @ 103494c417058188e5340ec1b32fedbcc42eaa36; bash -c cd backend && /d/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe ../docs/evaluation/geometry/runs/regular-square-pyramid-w04/diagnostics/sm_overlap_fixture.py --out ../docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs/sm_overlap/w04_sm_on_edge_sa_103494c4.json
+2026-10-06T10:59:21Z
+ok [('canh_ben_S_A', ['S', 'A'], ['S.ABCD::edge:S-A'], 'segment'), ('canh_ben_S_B', ['S', 'B'], ['S.ABCD::edge:S-B'], 'segment'), ('canh_ben_S_C', ['S', 'C'], ['S.ABCD::edge:S-C'], 'segment'), ('canh_ben_S_D', ['S', 'D'], ['S.ABCD::edge:S-D'], 'segment'), ('doan_SM', ['S', 'M'], ['S.ABCD::edge:S-A'], 'segment')]
+exit=0

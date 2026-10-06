@@ -1,0 +1,18 @@
+# cwd: <worktree '/d/tmp/rsp w04c'> @ 103494c417058188e5340ec1b32fedbcc42eaa36; node frontend/scripts/w02-closure-probe.mjs --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w04/results --anh docs/evaluation/geometry/runs/regular-square-pyramid-w04/images --bo-qua-build
+2026-10-06T10:45:10Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/mobile: PASS []
+W02 probe: 14/14 PASS
+exit=0
