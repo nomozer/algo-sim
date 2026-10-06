@@ -773,7 +773,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       hỏi độ dài (khoảng cách giữa hai điểm chưa được nối, vd "độ dài đoạn SH") được dựng ngay trước đáp số
 #       (`formation._doan_duoc_hoi`, H-W2-2). 13 yêu cầu phục vụ dưới 113 lưu thành row vẫn HIT dù W3 dựng envelope
 #       khác; 34 row của W2 trùng byte (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
-CACHE_VERSION = "114"
+CACHE_VERSION = "115"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

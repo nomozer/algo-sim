@@ -195,7 +195,7 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    assert CACHE_VERSION == "114"
+    assert CACHE_VERSION == "115"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

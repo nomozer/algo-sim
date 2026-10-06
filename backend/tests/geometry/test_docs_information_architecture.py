@@ -201,7 +201,7 @@ def test_inv_20_candidate_and_cache_verify_only():
     #   dữ kiện (served -> rejected).
     # 112 -> 113 (regular-square-pyramid-w02): envelope phục vụ đổi (đoạn SO, chiều cao theo quan hệ).
     # 113 -> 114 (regular-square-pyramid-w03): envelope phục vụ đổi (đoạn mà đề hỏi độ dài được dựng).
-    assert str(CACHE_VERSION) == "114"
+    assert str(CACHE_VERSION) == "115"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
