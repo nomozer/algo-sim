@@ -24,7 +24,7 @@ CURRENT_WAVE = SHARED_SIMULATION_UI_CLOSURE (việc regular-square-pyramid, W4; 
 PRODUCT_STATE = candidate 8a27a58b… (product commit 53e4bec5; ba lần đóng băng cùng tree hash), CACHE_VERSION 115, LLM_ONLY
 MEASUREMENT = 103494c4 (lần đo 4; bằng chứng b4f924c1) (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = xem runs/regular-square-pyramid-w04/HANDOFF.md §2 (T3 + cổng danh tính tại commit tài liệu)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w04; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại d6e41d80)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-square-pyramid-w04/REVIEW.md R1–R10; gộp duyệt W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO

@@ -1061,7 +1061,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** ce44eb38 · 98b1ce8d · 270cae4e · a1c17714 · e41b0ab1 · aa754cb9 (CACHE_VERSION 115) · c8c49f3c · ecbe55c0 · 53e4bec5
 - **MEASUREMENT_COMMIT:** 103494c4 (local, clean detached CRLF worktree with a space in its path; browser suite, W2 probe, W4 panels probe, SM control, occlusion, playback, builder); attempts 1–3 at d7154ab8 and 643b7d7a kept (`diagnostics/attempts/`, `MEASUREMENT_ATTEMPTS.json`)
 - **EVIDENCE_COMMIT_ROLE:** evidence commit b4f924c1 after the measurement (results, images, inputs, logs)
-- **CLASSIFICATION:** see the run's HANDOFF.md §2
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + identity gates at d6e41d80)
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (5dec4572… → 8a27a58b…; three freezes, same tree hash, product commit 53e4bec5)

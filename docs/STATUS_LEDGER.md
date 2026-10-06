@@ -1003,8 +1003,8 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CODE_COMMIT_OR_NONE:** ce44eb38 (segment on a solid edge yields its stroke) · 98b1ce8d (one floating-panel mechanism) · 270cae4e (narration names) · a1c17714 (canvas height, step counter in the bar) · e41b0ab1 (tree by step) · aa754cb9 (CACHE_VERSION 114 → 115) · c8c49f3c (panels never lost, tree hoist, height settles; W4 probe) · ecbe55c0 (renderer follows its container) · 53e4bec5 (lit sub-segment span not faded)
 - **CANDIDATE:** 5dec4572… → 8a27a58b… (three freezes, same tree hash: d47488f6, 643b7d7a, 103494c4) · CACHE_VERSION 115 · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** measurement 103494c4 (attempt 4) · evidence b4f924c1; attempts 1–3 kept (`MEASUREMENT_ATTEMPTS.json`)
-- **CLASSIFICATION:** see the run's HANDOFF.md §2 (T3 + identity gates at the documentation commit)
-- **FULL_PRODUCT_SUITE:** see the run's HANDOFF.md §2
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at d6e41d80 from a path with a space (pytest 7174 passed / 1 skipped, vitest 1113/1113, build, demo, crash surface); identity gates green (`diagnostics/logs/GATES_d6e41d80.log`); T3 at 82e61f8b failed one test whose secret-witness window relied on raw-label narration (fixed in the test at d6e41d80)
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/regular-square-pyramid-w04/REPORT.md
@@ -1016,4 +1016,4 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE (W1–W3 artifacts unchanged)
 - **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md R1–R10, incl. R4 mobile canvas height); on approval merge into main, push, delete the branch
-- **FINAL_DECISION:** see the run's HANDOFF.md §2
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW

@@ -13,7 +13,7 @@ MODEL_SURFACE_CHANGED = NO · DEFAULT_MODE = LLM_ONLY · LIVE_GEMINI_REQUESTS = 
 HUMAN_VISUAL_REVIEW  = NOT_APPROVED
 MERGE / PUSH / PR    = NO / NO / NO
 FAVICON_TOUCHED      = NO
-FINAL_DECISION       = xem §2
+FINAL_DECISION       = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính tại d6e41d80 — §2)
 ```
 
 ## 1. Đã làm (theo yêu cầu)
@@ -33,7 +33,28 @@ FINAL_DECISION       = xem §2
 
 ## 2. Cổng tại commit cuối
 
-(điền sau khi chạy T3 và `diagnostics/w04_gates.sh` tại commit tài liệu, trong worktree tách rời sạch)
+Worktree tách rời sạch `D:/tmp/rsp w04c` (CRLF, có dấu cách), log ngoài worktree rồi chép vào `diagnostics/logs/`.
+
+- T3 lần 1 tại commit tài liệu `82e61f8b` (`T3_FULL_GATE_82e61f8b.log`): **FAIL** đúng 1 test —
+  `test_accepted_output_quality.py::test_L_bi_mat…`. Cửa sổ chứng của test đặt bí mật giả ở nhãn thiết diện T và dựa vào
+  lời kể chép nhãn thô; W4 thôi chép nhãn không-phải-ký-hiệu nên cảnh không còn chở nó. Sửa ở `d6e41d80`: bí mật đặt ở
+  nhãn câu lệnh mặt phẳng (cảnh chở làm tên vật); phép kiểm không lộ giữ nguyên. Test ngoài mã đo ⇒ không đóng băng lại.
+- Tại **`d6e41d80`** (`T3_FULL_GATE_d6e41d80.log`, `GATES_d6e41d80.log`; cây sạch trước và sau):
+
+| Cổng | Kết quả |
+|---|---|
+| T3 `full-gate.mjs` | **`FULL_PRODUCT_GATE_PASS`** — pytest 7174 passed, 1 skipped; vitest 1113/1113; tsc + build; demo; bề mặt sập |
+| candidate / cache verify | `8a27a58b…` khớp (110 file) / khoá 115 khớp, môi trường `b1714b56…` |
+| schema ×2 | trùng byte `d852b47c…`; git status không đổi |
+| `DEFAULT_MODE` | `LLM_ONLY`; routing.py không đổi từ `f3db0f6f`; compiler không được gọi từ `app/ai`/`main.py`; `FIXTURE_TIN_CAY` 0 |
+| bề mặt mô hình | 0 file đổi từ `f3db0f6f` |
+| bằng chứng lịch sử | ngoài run W4 chỉ hai sổ sống (candidate, khai lệch); "1 of 181" báo cáo catalog = `EVIDENCE_INDEX.md` — dương tính giả đã biết (tài liệu sống khớp regex catalog) |
+| `git diff --check f3db0f6f..d6e41d80` | 0 |
+| audit tài liệu | PASS |
+| node harness | 91: 89 pass, 0 fail, 2 skip |
+
+Mọi cổng bắt buộc đạt, mọi yêu cầu đối chiếu ở §1 ⇒ **`FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW`**. Không cổng nào
+bị hạ hay bỏ; các lần đo không dùng được ghi đủ ở `MEASUREMENT_ATTEMPTS.json`.
 
 ## 3. Chờ người dùng
 
