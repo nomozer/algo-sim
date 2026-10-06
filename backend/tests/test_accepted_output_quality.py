@@ -363,7 +363,11 @@ def test_L_bi_mat_gia_trong_ten_va_gia_tri__KHONG_lot_chan_doan_hay_artifact(AQ,
     hd = _hd(de)
     hd_x = hd.model_copy(update={"obligations": hd.obligations + (Obligation(kind="volume", container=BI_MAT, params={"witness": BI_MAT}),)})
     d = _chuong_trinh("A")
-    d["statements"][_vt(d, "T")]["label"] = BI_MAT
+    # regular-square-pyramid-w04: bí mật đặt ở nhãn câu lệnh MẶT PHẲNG — nhãn ấy là tên vật, cảnh chở nó ở
+    # `label`/`display_label`. Bản trước đặt ở nhãn thiết diện T và cảnh chở nó chỉ qua lời kể "Thiết diện <nhãn thô>…";
+    # W4 thôi chép nhãn không-phải-ký-hiệu vào lời kể (`geometry_exec.ten_trong_loi_ke`), nên cửa sổ chứng phải mở ở
+    # chỗ cảnh VẪN chở nhãn. Phép kiểm không lộ giữ nguyên.
+    d["statements"][_vt(d, "alpha_plane")]["label"] = BI_MAT
     spec, o, mem, canh = _chay_offline(hd_x, d)
     assert BI_MAT in json.dumps(canh, ensure_ascii=False)  # cửa sổ chứng: cảnh THẬT SỰ chở nó
     kq = AQ.chan_doan_chat_luong_dau_ra(hd_x, spec, mem, canh, route_served=o.servable)
