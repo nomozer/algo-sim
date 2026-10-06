@@ -388,13 +388,22 @@ export function semanticTree(scene: Scene3D): TreeNode[] {
 }
 
 /** W4 · yêu cầu 5: cây CỦA BƯỚC — chỉ vật đã có (`coMat`), nhóm rỗng bỏ. Vật chưa dựng không hiện kể cả ở dạng mờ:
- *  một tên mờ vẫn là lộ trước vật tương lai. */
+ *  một tên mờ vẫn là lộ trước vật tương lai. Vật cha CHƯA có (khối chưa khép) mà con đã có (đỉnh S…D có trước khối
+ *  S.ABCD): con lên một tầng, nhóm cùng tên gộp lại — không lộ tên khối, không mất đỉnh. */
 export function treeAt(cay: readonly TreeNode[], coMat: ReadonlySet<string>): TreeNode[] {
-  return cay.flatMap((n) => {
-    if (!n.isCategory && !coMat.has(n.id)) return [];
+  const ra: TreeNode[] = [];
+  const them = (n: TreeNode) => {
+    const cu = n.isCategory ? ra.find((x) => x.isCategory && x.id === n.id) : undefined;
+    if (cu) cu.children = [...cu.children, ...n.children];
+    else ra.push(n);
+  };
+  for (const n of cay) {
     const children = treeAt(n.children, coMat);
-    return n.isCategory && children.length === 0 ? [] : [{ ...n, children }];
-  });
+    if (n.isCategory) { if (children.length) them({ ...n, children }); }
+    else if (coMat.has(n.id)) ra.push({ ...n, children });
+    else children.forEach(them);
+  }
+  return ra;
 }
 
 /** Khoá các NHÓM trên đường từ gốc tới `id` (`/<id tổ tiên>/…/<id nhóm>`; `cat:Cạnh` lặp dưới mỗi khối nên khoá

@@ -146,6 +146,7 @@ function NutCay({
       <button
         type="button"
         className={lop}
+        data-tree-id={nut.id}
         onClick={() => onChon(nut.id)}
         aria-current={laChon ? "true" : undefined}
       >
@@ -261,9 +262,9 @@ export function Scene3DExplorer({
   const cayBuoc = useMemo(() => treeAt(cay, coMat), [cay, coMat]);
   // Chọn trên hình (hay ở bảng khác) ⇒ nhóm chứa vật ấy mở, mục của nó hiện ra trong cây.
   useEffect(() => {
-    const k = groupKeysOf(cay, tt.selected_id);
+    const k = groupKeysOf(cayBuoc, tt.selected_id);
     if (k.length) setMoNhom((s) => (k.every((x) => s.has(x)) ? s : new Set([...s, ...k])));
-  }, [cay, tt.selected_id]);
+  }, [cayBuoc, tt.selected_id]);
   /* Tra một id sang CÁCH GỌI NGẮN — dùng ở "Thuộc", ở chi tiết thiết diện,
    * tức những chỗ vật này bị nhắc TRONG câu của vật khác. `label` ở đó cho ra
    * câu lồng câu; `reference` do backend dựng riêng cho vai này. */

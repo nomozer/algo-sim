@@ -5603,6 +5603,26 @@ html {
   background: var(--surface);
 }
 
+/* `display: flex` trên `<summary>` xoá dấu tam giác mặc định ⇒ tự vẽ mũi tên: nhóm đóng chỉ phải, mở chỉ xuống. */
+.geo3d-tree-catname::-webkit-details-marker {
+  display: none;
+}
+
+.geo3d-tree-catname::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 120ms ease-out;
+}
+
+.geo3d-tree-cat[open] > .geo3d-tree-catname::before {
+  transform: rotate(45deg);
+}
+
 .geo3d-tree-dem {
   color: var(--ink-quiet);
   font-variant-numeric: tabular-nums;

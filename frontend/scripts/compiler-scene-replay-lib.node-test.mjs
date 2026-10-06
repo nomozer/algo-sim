@@ -1527,7 +1527,7 @@ test("W4 desktop panel gate: every injected fault has its code", () => {
     [(o) => { o.drag.after = o.drag.before; }, "PANEL_DRAG_IGNORED"],
     [(o) => { o.drag.camera_after = CAM2; }, "PANEL_DRAG_ORBITS"],
     [(o) => { o.resized.panels.soi = HOP(900, 110, 300, 200); }, "PANEL_OUTSIDE_CANVAS_AFTER_RESIZE:soi"],
-    [(o) => { o.resized.close_reachable.soi = false; }, "PANEL_CLOSE_UNREACHABLE_AFTER_RESIZE:soi"],
+    [(o) => { o.resized.close_reachable.soi = false; o.resized.header_reachable = { soi: false }; }, "PANEL_LOST_AFTER_RESIZE:soi"],
     [(o) => { o.reset.after = o.reset.dragged; }, "PANEL_RESET_FAILED"],
     [(o) => { o.reset.disabled_after = false; }, "PANEL_RESET_FAILED"],
     [(o) => { o.escape_closed = false; }, "PANEL_ESCAPE_FAILED"],
@@ -1562,4 +1562,81 @@ test("W4 mobile panel gate: every injected fault has its code", () => {
     [(o) => { o.collapse.collapsed_body = true; }, "SHEET_NOT_COLLAPSIBLE"],
     [(o) => { o.orbit.camera_after = CAM; }, "FIGURE_NOT_USABLE"],
   ]) assert.ok(bien(f).includes(ma), ma);
+});
+
+/* W4 · yêu cầu 4 — bố cục: thanh điều khiển sát đáy, «Bước n/N» trong thanh, không dòng lời kể dưới thanh,
+   không tràn ngang, đỉnh và nhãn điểm không bị cắt ở mép khung (trung tính · xoay · đổi cỡ). */
+const W4_LAYOUT = {
+  viewport: { w: 1440, h: 900 }, canvas: HOP(240, 120, 1180, 712), controls: HOP(240, 840, 1180, 48),
+  canvas_at_floor: false, scroll_width: 1440, client_width: 1440,
+  step_counter: "Bước 3/8", narration_line_present: false, narration_live: true,
+  frames: [{ name: "neutral", w: 1180, h: 712, vertices: [{ id: "A", x: 300, y: 500 }],
+    labels: [{ id: "A", x: 290, y: 470, w: 14, h: 20 }] }],
+};
+
+test("W4 layout gate: every injected fault has its code", () => {
+  assert.deepEqual(LIB.assessLayout(W4_LAYOUT).reason_codes, []);
+  const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_LAYOUT)); f(o); return LIB.assessLayout(o).reason_codes; };
+  for (const [f, ma] of [
+    [(o) => { o.controls = HOP(240, 700, 1180, 48); }, "CONTROLS_NOT_AT_BOTTOM"],
+    [(o) => { o.controls = HOP(240, 880, 1180, 48); }, "CONTROLS_NOT_AT_BOTTOM"],
+    [(o) => { o.scroll_width = 1500; }, "HORIZONTAL_OVERFLOW"],
+    [(o) => { o.step_counter = null; }, "STEP_COUNTER_MISSING"],
+    [(o) => { o.narration_line_present = true; }, "NARRATION_LINE_PRESENT"],
+    [(o) => { o.narration_live = false; }, "NARRATION_NOT_LIVE"],
+    [(o) => { o.frames[0].vertices[0].x = 1179; }, "VERTEX_CLIPPED:neutral"],
+    [(o) => { o.frames[0].labels[0].y = -5; }, "LABEL_CLIPPED:neutral"],
+  ]) assert.ok(bien(f).includes(ma), ma);
+  // màn thấp: canvas ở mức sàn ⇒ trang cuộn, thanh có thể dưới mép — không phải lỗi
+  const thap = { ...W4_LAYOUT, canvas_at_floor: true, controls: HOP(240, 1000, 1180, 48) };
+  assert.deepEqual(LIB.assessLayout(thap).reason_codes, []);
+});
+
+/* W4 · yêu cầu 5 — bấm thẳng lên hình là lối chính; kéo để xoay không phải chọn. */
+const W4_DIRECT = {
+  target_id: "A",
+  click: { selected: "A", inspector_open: true, tree_current: "A" },
+  drag: { selected_before: "A", selected_after: "A", camera_before: CAM, camera_after: CAM2 },
+};
+
+test("W4 direct-select gate: every injected fault has its code", () => {
+  assert.deepEqual(LIB.assessDirectSelect(W4_DIRECT).reason_codes, []);
+  const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_DIRECT)); f(o); return LIB.assessDirectSelect(o).reason_codes; };
+  for (const [f, ma] of [
+    [(o) => { o.click.selected = null; }, "CLICK_NOT_SELECTED"],
+    [(o) => { o.click.inspector_open = false; }, "INSPECTOR_NOT_OPEN"],
+    [(o) => { o.click.tree_current = "B"; }, "TREE_NOT_SYNCED"],
+    [(o) => { o.drag.selected_after = null; }, "DRAG_CHANGES_SELECTION"],
+    [(o) => { o.drag.camera_after = CAM; }, "DRAG_DID_NOT_ORBIT"],
+  ]) assert.ok(bien(f).includes(ma), ma);
+});
+
+/* W4 · yêu cầu 5 — cây: nhóm thu gọn mặc định, giữ trạng thái qua đóng/mở, nhóm của vật chọn mở, chọn bằng bàn phím,
+   không lộ vật tương lai. */
+const W4_TREE = {
+  groups_total: 4, groups_open_default: 0,
+  reopen: { open_before: ["/cat:Điểm"], open_after: ["/cat:Điểm"] },
+  selected_group_open: true, keyboard: { target: "B", selected: "B" },
+  future_listed: [], present_missing: [],
+};
+
+test("W4 tree gate: every injected fault has its code", () => {
+  assert.deepEqual(LIB.assessTreePanel(W4_TREE).reason_codes, []);
+  const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_TREE)); f(o); return LIB.assessTreePanel(o).reason_codes; };
+  for (const [f, ma] of [
+    [(o) => { o.groups_open_default = 1; }, "GROUPS_OPEN_BY_DEFAULT"],
+    [(o) => { o.groups_total = 0; }, "TREE_EMPTY"],
+    [(o) => { o.reopen.open_after = []; }, "GROUP_STATE_LOST"],
+    [(o) => { o.selected_group_open = false; }, "SELECTED_GROUP_CLOSED"],
+    [(o) => { o.keyboard.selected = null; }, "KEYBOARD_SELECT_FAILED"],
+    [(o) => { o.future_listed = ["M"]; }, "FUTURE_OBJECT_LISTED"],
+    [(o) => { o.present_missing = ["A"]; }, "PRESENT_OBJECT_MISSING"],
+  ]) assert.ok(bien(f).includes(ma), ma);
+});
+
+test("W4 desktop panel gate: after resize a panel is lost only when neither its close button nor its header is reachable", () => {
+  const o = JSON.parse(JSON.stringify(W4_DESKTOP));
+  o.resized.close_reachable.soi = false;
+  o.resized.header_reachable = { soi: true };   // bị che nút đóng nhưng còn bấm được tiêu đề ⇒ đưa lên trên được
+  assert.deepEqual(LIB.assessPanelsDesktop(o).reason_codes, []);
 });

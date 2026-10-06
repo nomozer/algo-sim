@@ -45,25 +45,39 @@ export function viTriMacDinh(co: { w: number; h: number }, khung: Khung): ViTriB
   return kepBang({ x: khung.x + khung.w - co.w - 2 * LE_BANG, y: khung.y + 2 * LE_BANG }, co, khung);
 }
 
+/** Dải tiêu đề của một bảng (nút thu gọn / về mặc định / đóng) — chỗ đặt tự động không bao giờ phủ lên nó. */
+export const DAI_TIEU_DE = 44;
+
 const giao = (a: Khung, b: Khung) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
 /**
  * Chỗ mặc định của một bảng vừa mở, tránh `vatCan` (nút nổi, bảng đang mở): thử cột PHẢI từ trên xuống (đỉnh khung,
- * rồi ngay dưới từng vật cản), rồi cột TRÁI như thế; chỗ đầu tiên bảng nằm trọn trong khung mà không giao vật cản nào
- * thắng. Hết chỗ ⇒ lệch bậc thang theo `thuTu` từ góc trên-phải, vẫn kẹp trong khung.
+ * rồi ngay dưới từng vật cản), rồi cột TRÁI, rồi sát hai bên từng vật cản (phải trước); chỗ đầu tiên bảng nằm trọn
+ * trong khung mà không giao vật cản nào thắng. Hết chỗ ⇒ lệch bậc thang theo `thuTu` từ góc trên-phải, bỏ qua nấc
+ * nào phủ DẢI TIÊU ĐỀ của bảng khác (nút đóng của nó phải còn bấm được), vẫn kẹp trong khung.
  */
 export function datViTriTuDong(co: { w: number; h: number }, khung: Khung, vatCan: Khung[], thuTu = 0): ViTriBang {
   const ys = [khung.y + 2 * LE_BANG, ...vatCan.map((v) => v.y + v.h + LE_BANG)].sort((a, b) => a - b);
-  for (const x of [khung.x + khung.w - co.w - 2 * LE_BANG, khung.x + 2 * LE_BANG]) {
+  const xs = [khung.x + khung.w - co.w - 2 * LE_BANG, khung.x + 2 * LE_BANG,
+    ...vatCan.flatMap((v) => [v.x - co.w - LE_BANG, v.x + v.w + LE_BANG]).sort((a, b) => b - a)];
+  for (const x of xs) {
     for (const y of ys) {
       const o = { x, y, w: co.w, h: co.h };
-      if (x >= khung.x + LE_BANG && y + co.h <= khung.y + khung.h - LE_BANG && !vatCan.some((v) => giao(o, v))) {
+      if (x >= khung.x + LE_BANG && x + co.w <= khung.x + khung.w - LE_BANG
+          && y + co.h <= khung.y + khung.h - LE_BANG && !vatCan.some((v) => giao(o, v))) {
         return { x, y };
       }
     }
   }
+  const dai = vatCan.map((v) => ({ ...v, h: Math.min(v.h, DAI_TIEU_DE) }));
   const p = viTriMacDinh(co, khung);
-  return kepBang({ x: p.x - thuTu * BAC_THANG, y: p.y + thuTu * BAC_THANG }, co, khung);
+  const nac = (k: number) => kepBang({ x: p.x - k * BAC_THANG, y: p.y + k * BAC_THANG }, co, khung);
+  // ponytail: dò tối đa 40 nấc; hết thì chấp nhận che — khung bé tới mức ấy thì kéo tay là đủ
+  for (let k = thuTu; k < thuTu + 40; k += 1) {
+    const q = nac(k);
+    if (!dai.some((v) => giao({ ...q, ...co }, v))) return q;
+  }
+  return nac(thuTu);
 }
 
 /** Phím mũi tên ⇒ vị trí mới (chưa kẹp); phím khác ⇒ `null`. */
@@ -115,6 +129,14 @@ export function BangNoiHost({ children }: { children: ReactNode }) {
 
 /** Bảng có đang NỔI không — do CSS quyết theo khổ màn hình (khổ hẹp thì trong dòng chảy). */
 const dangNoi = (el: HTMLElement | null) => !!el && getComputedStyle(el).position === "absolute";
+
+/** Không điểm nào trên dải tiêu đề bấm trúng chính bảng ⇒ không kéo, không đóng, không đưa lên được: bảng đã lạc. */
+const tieuDeBiPhuKin = (el: HTMLElement | null) => {
+  const r = el?.querySelector(".geo3d-bang-noi-dau")?.getBoundingClientRect();
+  if (!el || !r || typeof document.elementFromPoint !== "function") return false;
+  return [0.1, 0.3, 0.5, 0.7, 0.9].every((f) => !el.contains(document.elementFromPoint(r.left + r.width * f,
+    r.top + r.height / 2)));
+};
 
 /** Vùng mô phỏng (canvas) mà bảng kẹp vào: canvas của xưởng / trình phát chứa bảng. */
 const timKhung = (el: HTMLElement | null) =>
@@ -179,16 +201,36 @@ export function BangNoi({
     return () => { window.removeEventListener("resize", nhip); ro?.disconnect(); };
   }, []);
   // Mở ⇒ lên trên cùng; chưa có chỗ (lần đầu, hay vừa về mặc định) ⇒ đặt chỗ tự động MỘT lần, rồi giữ nguyên —
-  // bảng không nhảy khi bảng khác mở/đóng. Khổ hẹp (trong dòng chảy) ⇒ cuộn tới bảng vừa mở.
+  // bảng không nhảy khi bảng khác mở/đóng. Chỉ chỗ NGƯỜI DÙNG kéo tới mới nhớ qua đóng/mở; chỗ tự động thì mở lại
+  // là đặt lại theo các bảng đang mở lúc ấy (probe W4: nhớ chỗ tự động làm ba bảng chồng đúng một góc, nút đóng
+  // của bảng dưới không bấm được). Khổ hẹp (trong dòng chảy) ⇒ cuộn tới bảng vừa mở.
   useLayoutEffect(() => {
     host?.len(panel);
+    if (luu && !luu.nguoiDung) datLuu(null);
     if (!dangNoi(ref.current)) ref.current?.scrollIntoView?.({ block: "nearest" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const datTuDong = (k: Khung) =>
+    datLuu({ p: datViTriTuDong(co(), k, vatCan(), host ? host.thuTu.indexOf(panel) : 0), nguoiDung: false });
   useLayoutEffect(() => {
     if (luu || !dangNoi(ref.current)) return;
     const k = khung();
-    if (k) datLuu({ p: datViTriTuDong(co(), k, vatCan(), host ? host.thuTu.indexOf(panel) : 0), nguoiDung: false });
+    if (k) datTuDong(k);
+  });
+  // Khung đổi cỡ (sau khi các bảng đã kẹp lại) mà tiêu đề bảng này bị bảng khác phủ KÍN ⇒ bảng "lạc": đặt lại tự
+  // động theo các bảng đang mở và đưa lên trên (probe W4: thu cửa sổ còn 1100×700, bảng «Đại lượng» đã kéo phủ kín
+  // «Các bước dựng»). Chỉ chạy khi cỡ khung đổi, nên không giành chỗ người dùng vừa kéo.
+  const coKhungTruoc = useRef<string | null>(null);
+  useLayoutEffect(() => {
+    const k = khung();
+    if (!k || !luu || !dangNoi(ref.current)) return;
+    const coKhung = `${Math.round(k.w)}x${Math.round(k.h)}`;
+    const lanDau = coKhungTruoc.current === null;
+    if (coKhungTruoc.current === coKhung) return;
+    coKhungTruoc.current = coKhung;
+    if (lanDau || !tieuDeBiPhuKin(ref.current)) return;
+    host?.len(panel);
+    datTuDong(k);
   });
 
   const noi = dangNoi(ref.current);

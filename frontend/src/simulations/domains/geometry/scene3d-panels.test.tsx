@@ -14,7 +14,7 @@ import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
-import { batTatBang, datViTriTuDong, lenTren, LE_BANG } from "./scene3d-floating-panel";
+import { batTatBang, DAI_TIEU_DE, datViTriTuDong, lenTren, LE_BANG } from "./scene3d-floating-panel";
 import { CAO_KHUNG_MIN, caoKhungKhaDung, Scene3DPlayer } from "./scene3d-playback";
 import { anchorOfGeometryStep, geometryNarrationAt, geometryStepCount, objectsAt } from "./scene3d-model";
 import { groupKeysOf, selectableIds, semanticTree, treeAt, type TreeNode } from "./interaction-state";
@@ -38,6 +38,23 @@ describe("W4 · chỗ mặc định tự tránh vật cản", () => {
     const cotPhai = { x: 1000 - 300, y: 0, w: 300, h: 560 };
     const nutNoi = { x: 12, y: 12, w: 160, h: 80 };
     expect(datViTriTuDong(CO, KHUNG, [cotPhai, nutNoi])).toEqual({ x: 2 * LE_BANG, y: 12 + 80 + LE_BANG });
+  });
+
+  it("hai cột mép đầy ⇒ sát cạnh trái của vật cản phải, chưa vội chồng (probe W4: bảng thứ tư chồng lên bảng đầu)", () => {
+    const khung = { x: 0, y: 0, w: 1320, h: 628 };
+    const vatCan = [{ x: 1000, y: 16, w: 312, h: 416 }, { x: 1000, y: 440, w: 312, h: 100 },
+      { x: 16, y: 90, w: 320, h: 418 }, { x: 12, y: 12, w: 160, h: 70 }];
+    expect(datViTriTuDong({ w: 320, h: 293 }, khung, vatCan)).toEqual({ x: 1000 - 320 - LE_BANG, y: 2 * LE_BANG });
+  });
+
+  it("hết chỗ ⇒ bậc thang KHÔNG che dải tiêu đề (nút đóng) của bảng khác", () => {
+    const khung = { x: 0, y: 0, w: 600, h: 400 };
+    const vatCan = [{ x: 280, y: 16, w: 312, h: 380 }, { x: 16, y: 16, w: 250, h: 380 }];
+    const p = datViTriTuDong({ w: 272, h: 200 }, khung, vatCan, 0);
+    const dai = vatCan.map((v) => ({ ...v, h: DAI_TIEU_DE }));
+    const o = { ...p, w: 272, h: 200 };
+    expect(dai.some((v) => o.x < v.x + v.w && v.x < o.x + o.w && o.y < v.y + v.h && v.y < o.y + o.h)).toBe(false);
+    expect(o.y + o.h).toBeLessThanOrEqual(400 - LE_BANG);
   });
 
   it("không chỗ trống nào ⇒ vẫn nằm trọn trong khung (lệch bậc thang), không bao giờ ra ngoài", () => {
@@ -104,13 +121,18 @@ describe("W4 · cây thành phần theo bước", () => {
   const ids = (ns: readonly TreeNode[]): string[] => ns.flatMap((n) => [n.isCategory ? `#${n.label}` : n.id, ...ids(n.children)]);
 
   it("chỉ vật đã có ở bước; nhóm rỗng biến mất", () => {
-    const co = entitiesPresentAt(day, 0, objectsAt);
+    const co = entitiesPresentAt(day, anchorOfGeometryStep(day, 1), objectsAt);
     const loc = treeAt(cay, co);
     const thay = ids(loc).filter((x) => !x.startsWith("#"));
     expect(thay.length).toBeGreaterThan(0);
     expect(thay.every((x) => co.has(x))).toBe(true);
     const tatCa = selectableIds(cay);
     expect(tatCa.filter((x) => !co.has(x)).some((x) => thay.includes(x))).toBe(false);
+    // …và mọi vật đã có đều hiện — kể cả khi vật cha (khối chưa khép) chưa có: điểm S…D thuộc khối S.ABCD
+    // nhưng có trước nó (probe W4 trình duyệt bắt: cây bước 2 thiếu S, A, B, C, D, đáy).
+    expect(tatCa.filter((x) => co.has(x)).sort()).toEqual([...thay].sort());
+    expect(co.has("khoi_chop")).toBe(false);
+    expect(thay).toContain("S");
     const nhomRong = (ns: readonly TreeNode[]): boolean =>
       ns.some((n) => (n.isCategory && n.children.length === 0) || nhomRong(n.children));
     expect(nhomRong(loc)).toBe(false);
@@ -136,7 +158,8 @@ describe("W4 · cây thành phần theo bước", () => {
     expect(ex).toMatch(/<details[^>]*className="geo3d-tree-cat"/);
     expect(ex).not.toMatch(/disabled=\{chuaCo\}/);
     expect(ex).toMatch(/setMoNhom\(new Set\(\)\)/);
-    expect(ex).toMatch(/groupKeysOf\(cay, tt\.selected_id\)/);
+    // khoá tính trên cây ĐÃ LỌC — đúng đường đi của nút đang dựng (nhóm của khối chưa có được đưa lên một tầng)
+    expect(ex).toMatch(/groupKeysOf\(cayBuoc, tt\.selected_id\)/);
   });
 });
 

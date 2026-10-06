@@ -1699,7 +1699,8 @@ const giaoHop = (a, b) => !!a && !!b && a.x < b.x + b.w && b.x < a.x + a.w && a.
 /** Desktop. `o` = {panels: {[id]: {position, rect, close_reachable}}, canvas: {before, states[]}, camera: {before,
  *  states[]}, step: {before, states[]}, selected_before, quantity: {id, selected, drawer_open, inspector_open,
  *  label_shown}, drag: {before, after, camera_before, camera_after}, resized: {canvas, panels: {[id]: rect},
- *  close_reachable: {[id]: bool}}, reset: {dragged, after, auto}, escape_closed, reopen: {closed_at, reopened},
+ *  close_reachable: {[id]: bool}, header_reachable: {[id]: bool}}, reset: {dragged, after, auto}, escape_closed,
+ *  reopen: {closed_at, reopened},
  *  annotations: {pass}}. Mọi bảng phải nổi, không đổi cỡ canvas / camera / bước; nhiều bảng cùng mở, nút đóng của
  *  mỗi bảng bấm được; chọn đại lượng giữ bảng «Đại lượng», mở ô soi, hiện nhãn; kéo không xoay hình; đổi cỡ ⇒ kẹp;
  *  về mặc định; Escape đóng; mở lại giữ chỗ. */
@@ -1728,7 +1729,11 @@ export function assessPanelsDesktop(o) {
   if (!(cameraMotion(d.camera_before, d.camera_after) <= CAMERA_SETTLE_TOLERANCE)) r.push("PANEL_DRAG_ORBITS");
   for (const [id, p] of Object.entries(o.resized?.panels ?? {})) {
     if (!trongHop(p, o.resized.canvas)) r.push(`PANEL_OUTSIDE_CANVAS_AFTER_RESIZE:${id}`);
-    if (o.resized.close_reachable?.[id] !== true) r.push(`PANEL_CLOSE_UNREACHABLE_AFTER_RESIZE:${id}`);
+    // Khung co lại thì bảng kẹp vào có thể chồng nhau: "không lạc" = còn bấm được nút đóng HOẶC một chỗ trên tiêu
+    // đề (bấm vào ⇒ bảng lên trên cùng). Ở cỡ mặc định vẫn đòi nút đóng của MỌI bảng bấm được (`close_reachable`).
+    if (o.resized.close_reachable?.[id] !== true && o.resized.header_reachable?.[id] !== true) {
+      r.push(`PANEL_LOST_AFTER_RESIZE:${id}`);
+    }
   }
   // Chỗ mặc định phụ thuộc các bảng đang mở (tự tránh) ⇒ "về mặc định" = rời chỗ đã kéo, nút về mặc định tắt lại.
   if (!o.reset?.after || cungCho(o.reset.after, o.reset.dragged) || o.reset.disabled_after !== true) {
@@ -1759,6 +1764,55 @@ export function assessPanelsMobile(o) {
   if (o.quantity?.selected !== o.quantity?.id || o.quantity?.inspector_open !== true) r.push("QUANTITY_NOT_SELECTED");
   if (o.collapse?.collapsed_body !== false || o.collapse?.expanded_body !== true) r.push("SHEET_NOT_COLLAPSIBLE");
   if (!(cameraMotion(o.orbit?.camera_before, o.orbit?.camera_after) > CAMERA_SETTLE_TOLERANCE)) r.push("FIGURE_NOT_USABLE");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** W4 · yêu cầu 4 — bố cục. `o` = {viewport: {w, h}, canvas, controls (hộp theo khung nhìn, trang ở đỉnh),
+ *  canvas_at_floor (canvas ở mức sàn ⇒ trang cuộn, thanh được phép dưới mép), scroll_width, client_width,
+ *  step_counter (chữ «Bước n/N» trong `.geo3d-controls` hoặc null), narration_line_present, narration_live,
+ *  frames: [{name, w, h, vertices: [{id, x, y}], labels: [{id, x, y, w, h}]}] — toạ độ trong canvas}. */
+export function assessLayout(o) {
+  const r = [];
+  const day = o.controls ? o.controls.y + o.controls.h : null;
+  // lề đáy ~12 px; ≤ 40 px còn coi là "sát đáy" (làm tròn, khe lưới), quá mép là thanh bị đẩy khỏi vùng nhìn
+  if (!o.canvas_at_floor && (day === null || day > o.viewport.h + 0.5 || day < o.viewport.h - 40)) {
+    r.push("CONTROLS_NOT_AT_BOTTOM");
+  }
+  if (o.scroll_width > o.client_width + 1) r.push("HORIZONTAL_OVERFLOW");
+  if (!/^Bước \d+\/\d+$/.test(o.step_counter ?? "")) r.push("STEP_COUNTER_MISSING");
+  if (o.narration_line_present !== false) r.push("NARRATION_LINE_PRESENT");
+  if (o.narration_live !== true) r.push("NARRATION_NOT_LIVE");
+  const LE = 4;
+  for (const f of o.frames ?? []) {
+    if (f.vertices.some((v) => v.x < LE || v.y < LE || v.x > f.w - LE || v.y > f.h - LE)) r.push(`VERTEX_CLIPPED:${f.name}`);
+    if (f.labels.some((b) => b.x < 0 || b.y < 0 || b.x + b.w > f.w || b.y + b.h > f.h)) r.push(`LABEL_CLIPPED:${f.name}`);
+  }
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** W4 · yêu cầu 5 — bấm thẳng lên hình. `o` = {target_id, click: {selected, inspector_open, tree_current},
+ *  drag: {selected_before, selected_after, camera_before, camera_after}}. */
+export function assessDirectSelect(o) {
+  const r = [];
+  if (o.click?.selected !== o.target_id) r.push("CLICK_NOT_SELECTED");
+  if (o.click?.inspector_open !== true) r.push("INSPECTOR_NOT_OPEN");
+  if (o.click?.tree_current !== o.target_id) r.push("TREE_NOT_SYNCED");
+  if (o.drag?.selected_after !== o.drag?.selected_before) r.push("DRAG_CHANGES_SELECTION");
+  if (!(cameraMotion(o.drag?.camera_before, o.drag?.camera_after) > CAMERA_SETTLE_TOLERANCE)) r.push("DRAG_DID_NOT_ORBIT");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** W4 · yêu cầu 5 — cây «Thành phần». `o` = {groups_total, groups_open_default, reopen: {open_before, open_after},
+ *  selected_group_open, keyboard: {target, selected}, future_listed: [id], present_missing: [id]}. */
+export function assessTreePanel(o) {
+  const r = [];
+  if (!(o.groups_total > 0)) r.push("TREE_EMPTY");
+  if (o.groups_open_default !== 0) r.push("GROUPS_OPEN_BY_DEFAULT");
+  if (JSON.stringify(o.reopen?.open_before) !== JSON.stringify(o.reopen?.open_after)) r.push("GROUP_STATE_LOST");
+  if (o.selected_group_open !== true) r.push("SELECTED_GROUP_CLOSED");
+  if (!o.keyboard?.target || o.keyboard.selected !== o.keyboard.target) r.push("KEYBOARD_SELECT_FAILED");
+  if ((o.future_listed ?? []).length) r.push("FUTURE_OBJECT_LISTED");
+  if ((o.present_missing ?? []).length) r.push("PRESENT_OBJECT_MISSING");
   return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }
 

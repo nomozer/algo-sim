@@ -106,8 +106,10 @@ export function Scene3DPlayer({
   /* W2 · B → W4: bảng nổi trên vùng mô phỏng — vị trí người học kéo tới do HOST bảng nổi của xưởng giữ
      (`BangNoiHost`), nên đóng/mở không mất nó; bảng tự kẹp vào khung canvas của trình phát. */
   const nutBuocRef = useRef<HTMLButtonElement>(null);
-  /* W4 · yêu cầu 4: canvas lấy phần chiều cao khả dụng. Đo MỘT lần khi gắn và khi đổi cỡ cửa sổ — không bao giờ khi
-     mở/đóng bảng hay chọn vật, nên khung (và camera) không đổi theo thao tác trên bảng. */
+  /* W4 · yêu cầu 4: canvas lấy phần chiều cao khả dụng. Đo khi gắn, khi đổi cỡ cửa sổ và khi cỡ TRANG đổi (phần
+     phía trên canvas còn ổn định sau lần gắn — probe W4 đo lệch ~100 px nếu chỉ đo lúc gắn). Giá trị chỉ phụ thuộc
+     đỉnh canvas và thanh điều khiển: mở/đóng bảng hay chọn vật không dời chúng ⇒ đo lại ra cùng số, khung (và camera)
+     không đổi theo thao tác trên bảng. */
   const playerRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const goc = playerRef.current;
@@ -117,12 +119,15 @@ export function Scene3DPlayer({
       const thanh = goc.querySelector<HTMLElement>(".geo3d-controls");
       if (!khung || !thanh) return;
       const khe = parseFloat(getComputedStyle(goc).rowGap) || 0;
-      goc.style.setProperty("--geo3d-cao-khung", `${caoKhungKhaDung(window.innerHeight,
-        khung.getBoundingClientRect().top + window.scrollY, thanh.getBoundingClientRect().height, khe)}px`);
+      const moi = `${caoKhungKhaDung(window.innerHeight,
+        khung.getBoundingClientRect().top + window.scrollY, thanh.getBoundingClientRect().height, khe)}px`;
+      if (goc.style.getPropertyValue("--geo3d-cao-khung") !== moi) goc.style.setProperty("--geo3d-cao-khung", moi);
     };
     tinh();
     window.addEventListener("resize", tinh);
-    return () => window.removeEventListener("resize", tinh);
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(tinh) : null;
+    ro?.observe(document.body);
+    return () => { window.removeEventListener("resize", tinh); ro?.disconnect(); };
   }, []);
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
