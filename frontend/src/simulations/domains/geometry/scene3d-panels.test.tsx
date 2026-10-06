@@ -15,6 +15,8 @@ import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
 import { batTatBang, datViTriTuDong, lenTren, LE_BANG } from "./scene3d-floating-panel";
+import { CAO_KHUNG_MIN, caoKhungKhaDung, Scene3DPlayer } from "./scene3d-playback";
+import { anchorOfGeometryStep, geometryNarrationAt, geometryStepCount } from "./scene3d-model";
 
 const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const KHUNG = { x: 0, y: 0, w: 1000, h: 560 };
@@ -89,5 +91,38 @@ describe("W4 · mọi bảng thông tin đi qua MỘT cơ chế", () => {
       import.meta.url)), "utf8")).envelope.scene3d;
     const h = renderToString(<Scene3DExplorer scene={s} de="Đề" />);
     expect(h).not.toContain("geo3d-bang-noi");
+  });
+});
+
+/* Yêu cầu 4 — canvas lấy phần chiều cao còn lại, thanh phát sát đáy vùng mô phỏng; «Bước n/N» trong thanh; mô tả
+   đầy đủ của bước ở bảng «Các bước dựng», không thành dòng dài dưới thanh. */
+const RSP: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
+  "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs/fixtures/regular_square_pyramid_positive.json",
+  import.meta.url)), "utf8")).envelope.scene3d;
+
+describe("W4 · canvas theo chiều cao khả dụng", () => {
+  it("canvas = cửa sổ − phần trên canvas − thanh điều khiển − khe và lề đáy; không dưới mức sàn", () => {
+    // 1440×900: canvas bắt đầu ở 115 px (trang), thanh điều khiển cao 40, khe 8 ⇒ thanh kết thúc sát đáy (lề 12)
+    expect(caoKhungKhaDung(900, 115, 40, 8)).toBe(900 - 115 - 8 - 40 - 12);
+    // màn thấp: không co canvas xuống vô nghĩa — trang cuộn thay vì hình bé như con tem
+    expect(caoKhungKhaDung(500, 200, 40, 8)).toBe(CAO_KHUNG_MIN);
+  });
+});
+
+describe("W4 · bước dựng trong thanh điều khiển", () => {
+  it("«Bước n/N» nằm trong thanh điều khiển; xưởng không còn dòng lời kể dài dưới thanh", () => {
+    const h = renderToString(<Scene3DPlayer scene={RSP} />);
+    const thanh = h.slice(h.indexOf("geo3d-controls"));
+    expect(thanh).toContain(`Bước 1/${geometryStepCount(RSP)}`);
+    const xuong = renderToString(<Scene3DExplorer scene={RSP} />);
+    expect(xuong).not.toContain("geo3d-buoc-loi");
+  });
+
+  it("mô tả đầy đủ của bước đang xem ở bảng «Các bước dựng», ngay dưới mục của nó", () => {
+    const k = anchorOfGeometryStep(RSP, 2);
+    const h = renderToString(<Scene3DPlayer scene={RSP} initialStep={k} stepsOpen />);
+    const moTa = geometryNarrationAt(RSP, k);
+    const muc = h.slice(h.indexOf('aria-current="step"'));
+    expect(muc.slice(0, muc.indexOf("</li>"))).toContain(moTa);
   });
 });

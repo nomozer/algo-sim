@@ -55,7 +55,7 @@ rows:[...document.querySelectorAll('.geo3d-lg-dong[data-solution-id]')].map(e=>(
 sec:(e.closest('.geo3d-lg-muc')?.querySelector('.geo3d-lg-ten-muc')?.textContent||'').trim()})),
 collapsed:(()=>{const t=document.querySelector('.geo3d-lg-than');return !!t&&getComputedStyle(t).display==='none'})(),
 rendered:(window.__geo3d_rendered_object_ids||[]).slice().sort(),
-narration:(document.querySelector('.geo3d-buoc-loi')?.textContent||'').trim()}};
+narration:(document.querySelector('.geo3d-narration')?.textContent||'').trim()}};
 window.__w10_snap=snap;let prev='';
 window.__w10_timer=setInterval(()=>{const s=snap();const k=JSON.stringify({...s,t:0});
 if(k!==prev){window.__w10_log.push(s);prev=k}},30);return true})()`;

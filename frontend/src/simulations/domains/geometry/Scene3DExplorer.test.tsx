@@ -19,8 +19,9 @@ import { renderToString } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Scene3D } from "./scene3d-model";
-import { objectsAt } from "./scene3d-model";
+import { geometryStepCount, objectsAt } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
+import { Scene3DPlayer } from "./scene3d-playback";
 import { Scene3DSolution } from "./scene3d-solution";
 import { quantitySources } from "./scene3d-annotations";
 import {
@@ -418,9 +419,11 @@ describe("tích hợp · trạng thái không được rớt sang bài mới", (
     // W12: dòng chữ đếm bước DỰNG. Phép kẹp đi qua `geometryAnchor` (kẹp sự
     // kiện vào miền rồi về neo của bước dựng chứa nó), nên `current_step = 10`
     // trên một cảnh ngắn hơn vẫn in bước dựng CUỐI, không in "10/…".
+    // W4: dòng chữ ấy dời vào thanh điều khiển của trình phát — kiểm bằng HÀNH VI ở đó, không bằng mã nguồn.
     expect(src).toMatch(/const buocHien = geometryAnchor\(day, tt\.current_step\);/);
-    expect(src).toMatch(
-      /Bước \$\{geometryStepOf\(day, buocHien\) \+ 1\}\/\$\{geometryStepCount\(day\)\}/);
+    const n = geometryStepCount(CANH);
+    const h = renderToString(<Scene3DPlayer scene={CANH} initialStep={10_000} />);
+    expect(h.slice(h.indexOf("geo3d-controls"))).toContain(`Bước ${n}/${n}`);
   });
 });
 

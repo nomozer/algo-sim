@@ -1978,7 +1978,8 @@ export function Scene3DWorkspace({
       <p className="geo3d-progress geo3d-sr">
         {`Bước ${geometryStepOf(scene, buoc) + 1}/${geometryStepCount(scene)}`}
       </p>
-      <p className="geo3d-narration geo3d-sr">{geometryNarrationAt(scene, buoc)}</p>
+      {/* W4: dòng lời kể nhìn thấy dưới thanh đã gỡ — đây là nơi trình đọc màn hình NGHE bước mới. */}
+      <p className="geo3d-narration geo3d-sr" aria-live="polite">{geometryNarrationAt(scene, buoc)}</p>
     </div>
   );
 }

@@ -4889,7 +4889,9 @@ html {
      chiếm phần lớn tầm nhìn; `min()` giữ nó không tràn ở màn thấp. */
   position: relative;
   width: 100%;
-  height: min(62vh, 660px);
+  /* W4: `--geo3d-cao-khung` do trình phát đo (`caoKhungKhaDung`) — phần cửa sổ dưới đỉnh canvas trừ thanh điều
+     khiển, để thanh nằm sát đáy vùng nhìn. Giá trị `min()` chỉ là dự phòng trước lần đo đầu (SSR, test). */
+  height: var(--geo3d-cao-khung, min(62vh, 660px));
   min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
@@ -5227,30 +5229,23 @@ html {
   line-height: 1.6;
 }
 
-/* ĐÁY — một dòng: đang ở bước nào, bước ấy làm gì. */
-.geo3d-buoc {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--sp-sm);
-  margin: 0;
+/* W4: «Bước n/N» ở thanh điều khiển (dòng đáy xưởng đã gỡ) — số không nhảy bề rộng khi đổi bước. */
+.geo3d-buoc-so {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* W4: mô tả đầy đủ của bước đang xem, ngay dưới mục của nó trong bảng «Các bước dựng». */
+.geo3d-cac-buoc-mo-ta {
+  margin: var(--sp-xs) 0 0;
+  padding-left: var(--sp-sm);
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 
-.geo3d-buoc-so {
-  flex: 0 0 auto;
-  color: var(--ink-muted);
-  font-size: 0.875rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.geo3d-buoc-loi {
-  min-width: 0;
-  color: var(--ink);
-}
-
-/* Chỉ cho trình đọc màn hình: cùng thông tin dòng Bước ở đáy xưởng, nhưng nằm
-   trong khung nhìn nên người dùng bàn phím nghe được ngay tại đó. */
+/* Chỉ cho trình đọc màn hình: lời kể của bước, nằm trong khung nhìn (aria-live)
+   nên người dùng bàn phím nghe được ngay tại đó. */
 .geo3d-sr {
   position: absolute;
   width: 1px;
@@ -5264,7 +5259,7 @@ html {
 
 @media (max-width: 48rem) {
   .geo3d-canvas {
-    height: min(52vh, 420px);
+    height: var(--geo3d-cao-khung, min(52vh, 420px));
   }
 
   /* Khổ hẹp: ô soi và MỌI bảng thông tin CHẢY DƯỚI sân khấu (`.geo3d-bang-noi` tĩnh, khối «Các bước dựng» dưới).
@@ -5965,7 +5960,7 @@ html {
      `68vh` chỉ tính riêng canvas, nên cảnh có ba readout dài từng đẩy cả hai
      nút phát lại xuống dưới viewport 1440×900. 58vh vẫn giữ canvas là bề mặt
      chính nhưng đóng được toàn bộ vòng tương tác trong một màn hình. */
-  .geo3d-canvas { height: min(58vh, 620px); }
+  .geo3d-canvas { height: var(--geo3d-cao-khung, min(58vh, 620px)); }
 }
 
 /* ── BẢNG NỔI — MỌI BẢNG THÔNG TIN (W2 · B «Các bước dựng»; W4 · ô soi, Xem đề, Thành phần, Đại lượng) ─────────

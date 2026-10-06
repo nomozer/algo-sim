@@ -1,5 +1,6 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
+  geometryNarrationAt,
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
   geometryAnchor,
@@ -80,6 +81,19 @@ interface Props {
   gridShown?: boolean;
 }
 
+/** Sàn chiều cao canvas (px): màn thấp thì trang cuộn, không để hình bé như con tem. */
+export const CAO_KHUNG_MIN = 320;
+/** Lề dưới thanh điều khiển tới đáy khung nhìn (px). */
+const LE_DAY = 12;
+
+/**
+ * W4 · yêu cầu 4 — chiều cao canvas để thanh phát/bước nằm sát đáy vùng nhìn: phần cửa sổ còn lại dưới đỉnh canvas,
+ * trừ khe và thanh điều khiển và một lề nhỏ. `trenKhung` là toạ độ TRANG (đã cộng cuộn) của đỉnh canvas.
+ */
+export function caoKhungKhaDung(cuaSo: number, trenKhung: number, caoThanh: number, khe: number): number {
+  return Math.max(CAO_KHUNG_MIN, Math.round(cuaSo - trenKhung - khe - caoThanh - LE_DAY));
+}
+
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
   solutionOpen, onSolutionOpenChange, stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
@@ -92,6 +106,24 @@ export function Scene3DPlayer({
   /* W2 · B → W4: bảng nổi trên vùng mô phỏng — vị trí người học kéo tới do HOST bảng nổi của xưởng giữ
      (`BangNoiHost`), nên đóng/mở không mất nó; bảng tự kẹp vào khung canvas của trình phát. */
   const nutBuocRef = useRef<HTMLButtonElement>(null);
+  /* W4 · yêu cầu 4: canvas lấy phần chiều cao khả dụng. Đo MỘT lần khi gắn và khi đổi cỡ cửa sổ — không bao giờ khi
+     mở/đóng bảng hay chọn vật, nên khung (và camera) không đổi theo thao tác trên bảng. */
+  const playerRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const goc = playerRef.current;
+    if (!goc) return;
+    const tinh = () => {
+      const khung = goc.querySelector<HTMLElement>(".geo3d-canvas");
+      const thanh = goc.querySelector<HTMLElement>(".geo3d-controls");
+      if (!khung || !thanh) return;
+      const khe = parseFloat(getComputedStyle(goc).rowGap) || 0;
+      goc.style.setProperty("--geo3d-cao-khung", `${caoKhungKhaDung(window.innerHeight,
+        khung.getBoundingClientRect().top + window.scrollY, thanh.getBoundingClientRect().height, khe)}px`);
+    };
+    tinh();
+    window.addEventListener("resize", tinh);
+    return () => window.removeEventListener("resize", tinh);
+  }, []);
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
   // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
@@ -176,6 +208,13 @@ export function Scene3DPlayer({
       <span className="geo3d-cac-buoc-chu">{b.label}</span>
     </button>
   );
+  /* W4: mô tả đầy đủ của bước ĐANG XEM nằm ngay dưới mục của nó trong bảng — thay dòng lời kể dài dưới thanh. */
+  const mucBuoc = (b: (typeof dsBuoc)[number]) => (
+    <>
+      {nutBuoc(b)}
+      {b.index === buocHinh && <p className="geo3d-cac-buoc-mo-ta">{geometryNarrationAt(scene, step)}</p>}
+    </>
+  );
 
   const xemLai = () => {
     datTrangThai(0, true);
@@ -183,7 +222,7 @@ export function Scene3DPlayer({
   };
 
   return (
-    <div className="geo3d-player">
+    <div ref={playerRef} className="geo3d-player">
       <Scene3DWorkspace
         scene={scene}
         step={step}
@@ -238,7 +277,8 @@ export function Scene3DPlayer({
         </button>
 
         <label className="geo3d-scrub">
-          <span className="geo3d-scrub-label">Bước</span>
+          {/* W4: «Bước n/N» ở ngay thanh — dòng lời kể dài dưới thanh đã gỡ; mô tả bước ở bảng «Các bước dựng». */}
+          <span className="geo3d-scrub-label geo3d-buoc-so">{`Bước ${buocHinh + 1}/${tong}`}</span>
           <input
             type="range"
             min={0}
@@ -276,7 +316,7 @@ export function Scene3DPlayer({
             {/* W2 · D: dãy bước chỉ dựng hình phụ (AC, BD) cùng bước dùng chúng (O) thành MỘT mục có bước con —
                 `<details>` gốc của trình duyệt: thu gọn được mà không thêm state; mỗi bước con vẫn là một nút bước. */}
             {geometryStepGroups(scene).map((m) => (m.loai === "buoc" ? (
-              <li key={m.index}>{nutBuoc(dsBuoc[m.index])}</li>
+              <li key={m.index}>{mucBuoc(dsBuoc[m.index])}</li>
             ) : (
               <li key={`nhom-${m.chinh}`}>
                 <details open>
@@ -285,7 +325,7 @@ export function Scene3DPlayer({
                     <span className="geo3d-cac-buoc-so">{`${m.con.length} bước`}</span>
                   </summary>
                   <ol className="geo3d-cac-buoc-ds geo3d-cac-buoc-con">
-                    {m.con.map((g) => <li key={g}>{nutBuoc(dsBuoc[g])}</li>)}
+                    {m.con.map((g) => <li key={g}>{mucBuoc(dsBuoc[g])}</li>)}
                   </ol>
                 </details>
               </li>

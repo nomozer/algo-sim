@@ -38,9 +38,6 @@ import type { Scene3D } from "./scene3d-model";
 import {
   coherentFormula,
   geometryAnchor,
-  geometryNarrationAt,
-  geometryStepCount,
-  geometryStepOf,
   objectsAt,
   quantityChoices,
 } from "./scene3d-model";
@@ -633,17 +630,8 @@ export function Scene3DExplorer({
           </BangNoi>
         )}
       </div>
-
-      {/* ── ĐÁY: một dòng nói bước này đang làm gì ─────────────────────── */}
-      <p className="geo3d-buoc">
-        <span className="geo3d-buoc-so">
-          {/* Đếm BƯỚC DỰNG, không đếm sự kiện (W12): bước chỉ tính số nằm ở
-              bảng lời giải. `buocHien` đã kẹp — một dòng chữ nói sai về trạng
-              thái là thứ người dùng tin trước khi tin cái hình. */}
-          {`Bước ${geometryStepOf(day, buocHien) + 1}/${geometryStepCount(day)}`}
-        </span>
-        <span className="geo3d-buoc-loi">{geometryNarrationAt(day, buocHien)}</span>
-      </p>
+      {/* W4 · yêu cầu 4: dòng «Bước n/N — lời kể» dưới thanh ĐÃ GỠ. Số bước ở thanh điều khiển, mô tả đầy đủ ở bảng
+          «Các bước dựng», trình đọc màn hình nghe lời kể qua vùng `aria-live` trong khung nhìn. */}
     </div>
     </BangNoiHost>
   );

@@ -815,7 +815,7 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
       : null;
     const canvas = await canvasHash(session);
     const learnerText = await session.eval(
-      `document.querySelector('.geo3d-buoc-loi')?.textContent||''`,
+      `document.querySelector('.geo3d-narration')?.textContent||''`,
     );
     const observedVisibleIds = tree.objects
       .filter((item) => item.observed_present === true).map((item) => item.id).sort();
