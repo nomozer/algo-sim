@@ -1,0 +1,20 @@
+# cwd: <worktree '/d/tmp/rsp w03b'> @ 4794183200073cb5f023df9f932a88e1973ece27; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/regular-square-pyramid-w03 --browser ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/results/PLAYBACK_EVIDENCE.json
+2026-10-06T03:17:45Z
+Traceback (most recent call last):
+  File "D:\tmp\rsp w03b\backend\scripts\build_scene3d_visual_evidence.py", line 553, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\tmp\rsp w03b\backend\scripts\build_scene3d_visual_evidence.py", line 543, in main
+    index = build(args.run_dir, load(args.browser), load(args.measurement), args.fixture_root,
+                                ^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\rsp w03b\backend\scripts\build_scene3d_visual_evidence.py", line 542, in <lambda>
+    load = lambda p: json.loads(p.read_text(encoding="utf-8")) if p else None  # noqa: E731
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '..\\docs\\evaluation\\geometry\\runs\\regular-square-pyramid-w03\\results\\BROWSER_EVIDENCE.json'
+exit=1

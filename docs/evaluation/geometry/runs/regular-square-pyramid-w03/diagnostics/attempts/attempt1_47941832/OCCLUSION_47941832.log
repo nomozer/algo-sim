@@ -1,0 +1,20 @@
+# cwd: <worktree '/d/tmp/rsp w03b'> @ 4794183200073cb5f023df9f932a88e1973ece27; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/measure_scene3d_occlusion.py --fixture-root ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs --browser ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/results/BROWSER_EVIDENCE.json --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --camera-preimages ../docs/evaluation/geometry/runs/w09-verify-cleanup/inputs/REGISTERED_CAMERA_PREIMAGES.json --declared-camera-change W10_PEDAGOGICAL_CAMERA_CHOSEN_FROM_SCENE_METRICS --registered-fixture-root ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs --pending-human-review --output ../docs/evaluation/geometry/runs/regular-square-pyramid-w03/results/OCCLUSION_MEASUREMENT.json
+2026-10-06T03:15:42Z
+Traceback (most recent call last):
+  File "D:\tmp\rsp w03b\backend\scripts\measure_scene3d_occlusion.py", line 376, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\tmp\rsp w03b\backend\scripts\measure_scene3d_occlusion.py", line 368, in main
+    result = run(args.fixture_root, args.browser, args.expectations, args.camera_preimages,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\rsp w03b\backend\scripts\measure_scene3d_occlusion.py", line 226, in run
+    browser = json.loads(browser_path.read_text(encoding="utf-8"))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '..\\docs\\evaluation\\geometry\\runs\\regular-square-pyramid-w03\\results\\BROWSER_EVIDENCE.json'
+exit=1

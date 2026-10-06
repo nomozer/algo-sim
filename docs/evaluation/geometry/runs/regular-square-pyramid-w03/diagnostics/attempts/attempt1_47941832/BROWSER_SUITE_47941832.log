@@ -1,0 +1,12 @@
+# cwd: <worktree '/d/tmp/rsp w03b'> @ 4794183200073cb5f023df9f932a88e1973ece27; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w03/results --screenshots docs/evaluation/geometry/runs/regular-square-pyramid-w03/images
+2026-10-06T03:13:37Z
+file:///D:/tmp/rsp%20w03b/frontend/scripts/compiler-scene-suite.mjs:1698
+    throw new Error("PRODUCT_PROVENANCE_MISMATCH");
+          ^
+
+Error: PRODUCT_PROVENANCE_MISMATCH
+    at runSuite (file:///D:/tmp/rsp%20w03b/frontend/scripts/compiler-scene-suite.mjs:1698:11)
+    at file:///D:/tmp/rsp%20w03b/frontend/scripts/compiler-scene-replay.mjs:42:24
+
+Node.js v24.13.0
+exit=1
