@@ -25,8 +25,8 @@ from ..geometry import kernel as K
 from ..geometry.exact import Line3, Plane3, Vec3
 from ..geometry.predicates import collinear
 from .display_names import ky_hieu_dai_luong
-from .grounding_gate import _bang_chung_do_dai
-from .segment_relation import nhan_doan_truoc
+from .grounding_gate import _bang_chung_do_dai, _cung_doan
+from .segment_relation import cac_doan_truoc
 from .shape_constraint import che_muc_tieu
 from .source_entities import dinh_danh_thuc_the, ky_hieu_toan
 
@@ -157,7 +157,8 @@ def _do_dai_de_cho(q: str, loai: dict[str, str], mem: dict[str, Any], de: str) -
     ma, bc, _ = _bang_chung_do_dai(de, q, so, None) if de else ("NO_TEXT", None, "")
     if ma or not bc or not bc.get("span"):
         return "no GIVEN evidence span in the text"
-    doan = nhan_doan_truoc(de[:bc["span"][0]])
+    # Bằng chứng của `q` đứng sau đúng đoạn của nó (một thành viên của chuỗi `SA = SB = 3`), hoặc sau số trơn.
+    doan = next((d for d in cac_doan_truoc(de[:bc["span"][0]]) if _cung_doan(q, d)), None)
     if doan is None:
         return "the text gives the number without naming a segment"
     p, r = (dinh_danh_thuc_the(t)[0] for t in doan)

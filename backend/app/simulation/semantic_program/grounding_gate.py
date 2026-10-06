@@ -36,7 +36,7 @@ from .coverage_gate import _producers
 from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
-from .segment_relation import do_dai_trong_de, nhan_doan_truoc
+from .segment_relation import cac_doan_truoc, do_dai_trong_de
 from .shape_constraint import che_muc_tieu, khoang_muc_tieu
 from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
@@ -251,14 +251,15 @@ def _bang_chung(de: str, la_doan: Callable[[Any], bool], v: Fraction | str,
     if not ung:
         return ERR_GIVEN_KHONG_CO_TRONG_DE, None, f"đề không có con số {v}"
 
-    def nhan_doan(m) -> tuple[str, str] | None:
-        return nhan_doan_truoc(de[:m.start()])
+    def nhan_doan(m) -> tuple[tuple[str, str], ...]:
+        # W05: cả chuỗi bằng nhau (`SA = SB = 3`) gắn số cho mọi đoạn của nó.
+        return cac_doan_truoc(de[:m.start()])
 
-    hop = [m for m in ung if nhan_doan(m) is None or la_doan(nhan_doan(m))]
+    hop = [m for m in ung if not nhan_doan(m) or any(la_doan(d) for d in nhan_doan(m))]
     if not hop:
         return (ERR_BANG_CHUNG_MAU_THUAN, None,
                 f"con số {v} trong đề là độ dài của đoạn khác")
-    hop.sort(key=lambda m: nhan_doan(m) is None)  # nhãn đúng đoạn trước số trơn
+    hop.sort(key=lambda m: not nhan_doan(m))  # nhãn đúng đoạn trước số trơn
     c = hop[0]
     d = _DON_VI_SAU.match(de[c.end():])
     don_vi_de = d.group(1) if d else None

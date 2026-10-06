@@ -83,22 +83,32 @@ _HET_SO = r"(?![0-9/]|[.,]\d|\s*√)"
 _SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
 #: Từ nối NHÃN ĐOẠN → ĐỘ DÀI — TẬP ĐÓNG, MỘT thẩm quyền cho bộ đọc độ dài
 #: (`do_dai_trong_de`, `_do_dai_doan`, quan hệ ②) và nhãn bằng chứng GIVEN
-#: (`nhan_doan_truoc` ← `grounding_gate`). Hai từ vựng lệch nhau là gốc của
+#: (`cac_doan_truoc` ← `grounding_gate`). Hai từ vựng lệch nhau là gốc của
 #: W13 NA-57: "AB dài 5 cm" (và "cạnh AB có độ dài 5") không gắn đoạn nào ở
 #: phía nhãn, nên số 5 thành bằng chứng cho mọi đoạn. `bằng` thừa trên câu đã
 #: `_chuan`, cần trên câu gốc. Không so khớp mờ: giá trị phải đứng NGAY sau
 #: (`AB dài hơn 5`, `AB dài gấp 2 lần CD` không đọc).
 _NOI_DO_DAI = r"(?:=|bằng|dài|có\s+độ\s+dài)"
-_NHAN_TRUOC_SO = re.compile(rf"({_D})({_D})\s*{_NOI_DO_DAI}\s*$")
-#: Câu độ dài SỐ trên câu đã `_chuan` — mẫu của `_moi_doan_co_do_dai`; `shape_constraint.
+#: W05 — CHUỖI BẰNG NHAU đứng trước đoạn mang số: `SA = SB = SC = ` trong `SA = SB = SC = SD = 3`. Mọi đoạn của
+#: chuỗi cùng một độ dài (tiền đăng ký §4, hàng `AB = AC = 5`). Chỉ TÊN ĐOẠN nối bằng `=`/`bằng`: `2AC` (bội) cắt chuỗi.
+_LIEN = r"\s*(?:=|bằng)\s*"
+_CHUOI = rf"(?:{_D}{_D}{_LIEN})*"
+_NHAN_TRUOC_SO = re.compile(rf"(?<![A-Za-z0-9])(?P<chuoi>{_CHUOI})(?P<A>{_D})(?P<B>{_D})\s*{_NOI_DO_DAI}\s*$")
+#: Câu độ dài SỐ trên câu đã `_chuan` (cả chuỗi) — mẫu của `_moi_doan_co_do_dai`; `shape_constraint.
 #: phan_chua_doc` xoá đúng những câu này khỏi phần dữ kiện (cùng một mẫu, không chép).
-MAU_DO_DAI = re.compile(rf"(?<![A-Za-z0-9])({_D})({_D})\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}")
+MAU_DO_DAI = re.compile(
+    rf"(?<![A-Za-z0-9])(?P<chuoi>{_CHUOI})(?P<A>{_D})(?P<B>{_D})\s*{_NOI_DO_DAI}\s*(?P<so>{_SO}){_SAU_DO_DAI}")
 
 
-def nhan_doan_truoc(tien_to: str) -> tuple[str, str] | None:
-    """Đoạn mà câu đề gắn cho con số đứng NGAY sau `tien_to`, hoặc None."""
+def _cac_doan(m: re.Match) -> tuple[tuple[str, str], ...]:
+    """Mọi đoạn mà một khớp của `MAU_DO_DAI`/`_NHAN_TRUOC_SO` gắn số: các đoạn trong chuỗi, rồi đoạn cạnh số."""
+    return (*re.findall(rf"({_D})({_D}){_LIEN}", m.group("chuoi")), (m.group("A"), m.group("B")))
+
+
+def cac_doan_truoc(tien_to: str) -> tuple[tuple[str, str], ...]:
+    """Các đoạn mà câu đề gắn cho con số đứng NGAY sau `tien_to` (cả chuỗi bằng nhau), hoặc `()`."""
     m = _NHAN_TRUOC_SO.search(tien_to)
-    return (m.group(1), m.group(2)) if m else None
+    return _cac_doan(m) if m else ()
 
 #: `kind` của bất biến này. Một chuỗi, một chỗ khai, một checker.
 KIND = "segment_division"
@@ -209,18 +219,8 @@ def _van_ban(contract, problem_text: str | None, *,
 
 
 def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
-    """|AB| — mọi từ nối của `_NOI_DO_DAI` (`AB = L`, `AB dài L`, *"đoạn AB có độ
-    dài L"*), cả hai chiều viết."""
-    gt: set[Fraction] = set()
-    for van in manh:
-        for seg in (A + B, B + A):
-            for m in re.finditer(
-                    rf"(?<![A-Za-z0-9]){seg}\s*{_NOI_DO_DAI}\s*({_SO}){_SAU_DO_DAI}",
-                    van):
-                if (q := _phan(m.group(1))):
-                    gt.add(q)
-    # Hai độ dài KHÁC nhau cho cùng một đoạn ⇒ không ai phân xử được.
-    return gt.pop() if len(gt) == 1 else None
+    """|AB| — cùng bộ đọc `_moi_doan_co_do_dai` (mọi từ nối, cả hai chiều viết, chuỗi bằng nhau, hai giá trị ⇒ None)."""
+    return _moi_doan_co_do_dai(manh).get(frozenset({A, B}))
 
 
 def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
@@ -232,8 +232,9 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
     thay: dict[frozenset, set[Fraction]] = {}
     for van in manh:
         for m in MAU_DO_DAI.finditer(van):
-            if (q := _phan(m.group(3))) is not None:
-                thay.setdefault(frozenset({m.group(1), m.group(2)}), set()).add(q)
+            if (q := _phan(m.group("so"))) is not None:
+                for doan in _cac_doan(m):
+                    thay.setdefault(frozenset(doan), set()).add(q)
     return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
 
 
