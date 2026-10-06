@@ -38,7 +38,6 @@ const FRONTEND = fileURLToPath(new URL("..", import.meta.url));
 /** Nhịp phát của CHÍNH sản phẩm — đọc từ nguồn, không chép số. */
 const PLAYBACK_INTERVAL_MS = Number(/export const PLAYBACK_INTERVAL_MS = (\d+);/.exec(readFileSync(
   join(FRONTEND, "src/simulations/domains/geometry/scene3d-model.ts"), "utf-8"))[1]);
-const DIST = join(FRONTEND, "dist");
 const FAMILIES = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid",
   "cuboid", "cube", "cross_section", "regular_square_pyramid"];
 const VIEWPORTS = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
@@ -53,7 +52,7 @@ playing:!!pause,selected:window.__geo3d_selected_id||null,
 highlighted:(window.__geo3d_highlighted_ids||[]).slice(),panel_open:!!document.querySelector('.geo3d-soi'),
 rows:[...document.querySelectorAll('.geo3d-dai-luong [data-quantity-id]')].map(e=>({id:e.dataset.quantityId,
 sec:(e.closest('section')?.getAttribute('aria-label')||'')})),
-solution_card:!!document.querySelector('.geo3d-loi-giai'),
+solution_card:!!document.querySelector('.geo3d-loi-giai'),dl_open:!!document.querySelector('.geo3d-dai-luong'),
 rendered:(window.__geo3d_rendered_object_ids||[]).slice().sort(),
 narration:(document.querySelector('.geo3d-narration')?.textContent||'').trim()}};
 window.__w10_snap=snap;let prev='';
@@ -64,6 +63,21 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
   return a;
 }, []));
+// `--dist <thư mục>`: đo một bản build khác `frontend/dist` (W05: dist đang bị một dev server giữ khi thử cục bộ).
+const DIST = CO.dist ? resolve(String(CO.dist)) : join(FRONTEND, "dist");
+
+/* W05 · D/E: «Đại lượng» là mục của menu «Khám phá» và là nơi DUY NHẤT liệt kê đại lượng theo bước (thẻ lời giải đã
+   gỡ). Mở/đóng như người học — bấm nút menu rồi bấm mục; mục vắng (chưa có đại lượng ở bước này) ⇒ đóng menu, trả false. */
+const MENU_KP = "document.querySelector('[data-mo-nhom=\"kham-pha\"]')";
+const MUC_DL = "[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')].find((b)=>(b.textContent||'').includes('Đại lượng'))";
+async function doiNganDaiLuong(session) {
+  await trustedClick(session, MENU_KP);
+  await sleep(200);
+  const co = await session.eval(`!!(${MUC_DL})`);
+  await trustedClick(session, co ? MUC_DL : MENU_KP);
+  await sleep(250);
+  return co;
+}
 
 async function observe(session) {
   return jsonEval(session, "window.__w10_snap()");
@@ -151,6 +165,9 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
   try {
     await pollUntil(() => session.eval("!!document.querySelector('.geo3d-canvas canvas')"), Boolean);
     await pollUntil(() => session.eval("!!document.querySelector('[aria-label=\"Phát lại quá trình dựng\"]')"), Boolean);
+    // W05: mở «Đại lượng» TRƯỚC khi phát (nếu bước 0 đã có đại lượng) — bảng nổi, không đụng bước hay camera; nhờ
+    // nó mỗi mẫu của đoạn phát đọc được tập đại lượng của bước đang hiện.
+    await doiNganDaiLuong(session);
     await session.eval(RECORDER);
     const start = await observe(session);
     film.push({ step: start.step, ...await capture(session, join(outDir, `step-${String(start.step).padStart(2, "0")}.png`)) });
@@ -171,8 +188,12 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
       if (reachedFinal !== null && Date.now() - reachedFinal > 2.5 * PLAYBACK_INTERVAL_MS) break;
       await sleep(100);
     }
+    // Bước cuối phải quan sát được: bảng chưa mở (bước 0 chưa có đại lượng — thiết diện) thì mở ở đây, SAU đoạn phát.
+    if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNganDaiLuong(session);
     await session.eval("window.__w10_log.push(window.__w10_snap())");
     const samples = await jsonEval(session, "window.__w10_log");
+    // Đóng lại sau khi đã chụp mẫu: các phép đo xoay/causal phía sau đo trên khung không có bảng nổi (như W4).
+    if (await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNganDaiLuong(session);
     const states = {};
     const chup = async (ten) => {
       const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
@@ -228,16 +249,8 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     // W12: đích causal là đáp số. regular-square-pyramid-w01 (ROADMAP §0.1-1/2): card Kết quả ẩn khi lời giải
     // thu gọn — người học chọn đáp số qua ngăn «Đại lượng» (chip mở ngăn, chọn thì ngăn tự đóng).
     // W05 · D: «Đại lượng» là mục của menu «Khám phá» — mở menu rồi bấm mục (một cú bấm mỗi bước, như người học).
-    const MENU = "document.querySelector('[data-mo-nhom=\"kham-pha\"]')";
-    const CHIP = "[...document.querySelectorAll('.geo3d-menu-hop [role^=menuitem]')].find((b)=>(b.textContent||'').includes('Đại lượng'))";
     const KET_QUA = "[...document.querySelectorAll('.geo3d-dai-luong section[aria-label=\"Kết quả\"] [data-quantity-id]')].at(-1)";
-    const doiNgan = async () => {
-      await trustedClick(session, MENU);
-      await sleep(200);
-      if (await session.eval(`!!(${CHIP})`)) await trustedClick(session, CHIP);
-      else await trustedClick(session, MENU);
-      await sleep(200);
-    };
+    const doiNgan = () => doiNganDaiLuong(session);
     if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNgan();
     const rows = await session.eval(`(${KET_QUA}) ? 1 : 0`);
     if (rows === 0 && await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await doiNgan();

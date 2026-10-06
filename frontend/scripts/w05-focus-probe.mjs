@@ -222,7 +222,7 @@ async function chay(ho, fixture, kind) {
 const ket = [];
 for (const ho of HO) {
   const fixture = JSON.parse(readFileSync(join(ROOT, "fixtures", `${ho}_positive.json`), "utf8"));
-  for (const kind of ["desktop", "low", "mobile"]) {
+  for (const kind of (typeof CO.kho === "string" ? CO.kho.split(",") : ["desktop", "low", "mobile"])) {
     let r;
     try {
       r = await chay(ho, fixture, kind);

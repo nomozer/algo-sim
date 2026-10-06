@@ -385,7 +385,7 @@ const PLAY_SCENE = {
 const ROWS = [
   [{ id: "SA", sec: "Dữ kiện" }],
   [{ id: "SA", sec: "Dữ kiện" }],
-  [{ id: "the_tich", sec: "Kết quả" }, { id: "SA", sec: "Dữ kiện" }, { id: "dt", sec: "Các bước tính" }],
+  [{ id: "the_tich", sec: "Kết quả" }, { id: "SA", sec: "Dữ kiện" }, { id: "dt", sec: "Đại lượng trung gian" }],
 ];
 const frame = (t, step, extra = {}) => ({
   t, step, playing: true, selected: null, panel_open: false, highlighted: [],
@@ -605,7 +605,7 @@ test("learner playback: every known state-machine fault is caught by its own che
     g.map((f) => (f.step === 1 ? { ...f, rows: ROWS[2] } : f)));
   fault("final_result_shown_once", last((f) => ({ rows: [...f.rows, { id: "v", sec: "Kết quả" }] })));
   fault("final_result_shown_once", last((f) => ({
-    rows: f.rows.map((r) => (r.id === "the_tich" ? { ...r, sec: "Các bước tính" } : r)) })));
+    rows: f.rows.map((r) => (r.id === "the_tich" ? { ...r, sec: "Đại lượng trung gian" } : r)) })));
   fault("replay_resets_step_selection_highlight", g, { replay: { step: 2, selected: null, highlighted: [] } });
   fault("orbit_preserves_timeline", g,
     { orbit: { before: { step: 2, rows: ROWS[2] }, after: { step: 1, rows: ROWS[1] } } });
@@ -1343,16 +1343,17 @@ test("§0.1 evidence verdict: answer judged on the OPEN solution; leaked card, p
   }
 });
 
-test("§0.1-1 playback: collapsed solution hides the Results card at every step; a leaked card fails", () => {
-  const thu = (rows) => rows.filter((r) => r.sec !== "Kết quả");
-  const collapsed = () => genuine().map((s) => ({ ...s, collapsed: true, rows: thu(s.rows) }));
-  const ok = judge(collapsed());
+test("W05 playback: the Đại lượng panel closed shows nothing; the final step must be observed with it open", () => {
+  // Bảng đóng ở hai bước đầu (thiết diện: chưa có đại lượng lúc bắt đầu), mở ở bước cuối ⇒ đạt.
+  const motPhan = () => genuine().map((s) => (s.step < 2 ? { ...s, dl_open: false, rows: [] } : { ...s, dl_open: true }));
+  const ok = judge(motPhan());
   assert.equal(ok.checks.solution_in_sync_with_geometry_step.pass, true);
   assert.equal(ok.checks.final_result_shown_once.pass, true);
-  const leak = collapsed().map((s) => ({ ...s, rows: ROWS[s.step] ?? [] }));
-  const bad = judge(leak);
-  assert.equal(bad.checks.solution_in_sync_with_geometry_step.pass, false);
-  assert.equal(bad.checks.final_result_shown_once.pass, false);
+  // Bảng đóng mà màn hình vẫn có mục ⇒ đỏ; bước cuối không quan sát được ⇒ đáp số không kiểm được ⇒ đỏ.
+  assert.equal(judge(motPhan().map((s) => (s.step === 0 ? { ...s, rows: ROWS[0] } : s)))
+    .checks.solution_in_sync_with_geometry_step.pass, false);
+  assert.equal(judge(genuine().map((s) => ({ ...s, dl_open: false, rows: [] })))
+    .checks.final_result_shown_once.pass, false);
 });
 
 test("§0.1-1 structured references: a result hidden with the collapsed solution counts when the drawer lists it", () => {
@@ -1670,7 +1671,7 @@ const W5_FOCUS = {
   kind: "desktop", viewport: { w: 1440, h: 900 },
   layout: { nav_bar: false, focus_root: true, scroll_width: 1440, client_width: 1440, back_text: "Trang chủ",
     title_text: "Thể tích", top_row: HOP(16, 8, 1408, 44), canvas: HOP(16, 60, 1408, 760),
-    controls: HOP(16, 828, 1408, 52), solution_card: false },
+    controls: HOP(16, 828, 1408, 52), solution_card: false, page_height: 900 },
   has_faces: true, tach_khoi: true,
   menus: { "kham-pha": MENU5(["Thành phần", "Đại lượng"]), "hien-thi": MENU5(["Lưới nền"]),
     them: MENU5(["Cách máy dựng", "Toàn màn hình"]) },
@@ -1699,6 +1700,7 @@ test("W5 focus gate: each injected fault is named", () => {
   tiem((o) => { o.layout.controls = HOP(16, 870, 1408, 52); }, "CONTROLS_BELOW_FOLD");
   tiem((o) => { o.layout.controls = HOP(16, 700, 1408, 52); }, "GAP_BELOW_CONTROLS");
   tiem((o) => { o.layout.top_row = HOP(16, 8, 1408, 80); }, "TOP_ROW_OVERLAPS_CANVAS");
+  tiem((o) => { o.layout.page_height = 916; }, "PAGE_SCROLLS");
   tiem((o) => { o.tach_khoi = true; o.has_faces = false; }, "EXPLODE_BUTTON_MISMATCH");
   tiem((o) => { o.menus["hien-thi"].escape_closed = false; }, "MENU_ESCAPE:hien-thi");
   tiem((o) => { o.menus.them.focus_returned = false; }, "MENU_FOCUS_RETURN:them");
@@ -1713,5 +1715,6 @@ test("W5 focus gate: each injected fault is named", () => {
   const m = JSON.parse(JSON.stringify(W5_FOCUS));
   m.kind = "mobile";
   m.layout.controls = HOP(16, 1200, 358, 52);
+  m.layout.page_height = 1300;
   assert.deepEqual(LIB.assessFocusMode(m).reason_codes, []);
 });

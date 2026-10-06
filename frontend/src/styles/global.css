@@ -6015,6 +6015,11 @@ html {
   min-height: 100dvh;
   max-width: none;
   padding: var(--sp-sm) var(--sp-md);
+  /* Một hàng: khay 2D («controls») không dựng với cảnh 3D, nhưng hàng lưới rỗng của nó vẫn ăn một khoảng cách hàng
+     16 px — trang cao hơn khung nhìn đúng 16 px nên cuộn được và một cú bấm dời canvas (đầu dò W05 lượt 2). */
+  grid-template-areas: "center";
+  grid-template-rows: auto;
+  row-gap: 0;
 }
 
 /* Trang sở hữu cuộn (màn thấp/mobile cuộn được, desktop vừa đúng một màn vì canvas đo phần còn lại). Đệm đáy

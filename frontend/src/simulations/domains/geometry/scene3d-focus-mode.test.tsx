@@ -45,6 +45,8 @@ describe("C · vỏ: không thanh trên toàn cục khi cảnh 3D", () => {
   it("CSS chế độ tập trung: xưởng không còn trần 1320 px, không cuộn ngang", () => {
     const css = readFileSync(fileURLToPath(new URL("../../../styles/global.css", import.meta.url)), "utf8");
     expect(css).toMatch(/\.app-root\.la-tap-trung[^{]*\.geo3d-xuong\s*\{[^}]*max-width:\s*none/);
+    // Không hàng lưới rỗng của khay 2D (đo W05: trang dư 16 px ⇒ cuộn được, canvas dời khi bấm).
+    expect(css).toMatch(/\.app-root\.la-tap-trung \.app-layout\.la-canh-3d\s*\{[^}]*grid-template-areas:\s*"center";[^}]*row-gap:\s*0/);
   });
 });
 

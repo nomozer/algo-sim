@@ -1254,8 +1254,11 @@ export function cameraMotion(a, b) {
  *  tolerance for `stableSamples` consecutive samples spanning ≥ `minFrames`
  *  animation frames. Never settling is a failure with a diagnostic. */
 export async function settleCamera(read, {
+  // `timeoutMs` là NGÂN SÁCH CHỜ, không phải ngưỡng: dung sai, số mẫu ổn định và số khung giữ nguyên. W05: canvas
+  // rộng hơn (chế độ tập trung bỏ trần 1320 px) làm mỗi khung lâu hơn ~5–15 % ở mọi họ; chóp đều/desktop sau xoay đã cần
+  // 156 mẫu ở W4 (~10 s) và vượt 10 s ở W05 dù camera VẪN lắng (chuyển động cuối 2,2e-10 ≤ 1e-9) — 20 s.
   stableSamples = 5, minFrames = 30, tolerance = CAMERA_SETTLE_TOLERANCE,
-  timeoutMs = 10_000, intervalMs = 50,
+  timeoutMs = 20_000, intervalMs = 50,
   now = () => Date.now(),
   pause = (ms) => new Promise((resolvePause) => setTimeout(resolvePause, ms)),
 } = {}) {
@@ -1350,26 +1353,27 @@ export function assessPlayback({
   }
   add("every_geometry_step_changes_the_figure", doiHinh.every((c) => c.changed), doiHinh);
   // Bảng lời giải ĐỒNG BỘ với bước dựng đang hiện: đúng dữ kiện / bước tính /
-  // kết quả của khung ấy — đọc theo tên mục học sinh thấy.
+  // kết quả của khung ấy — đọc theo tên mục học sinh thấy. W05 · E: thẻ lời giải đã gỡ — đọc bảng «Đại lượng»
+  // (mục «Đại lượng trung gian»); mẫu chụp khi bảng ĐÓNG (`dl_open === false`) thì màn hình không được hiện mục nào.
   const theoMuc = (sample, muc) => (sample?.rows ?? []).filter((r) => r.sec === muc).map((r) => r.id);
   const dongBo = [];
   for (let g = 0; g <= last; g += 1) {
     const sample = settledAt(g);
     if (!sample || !t[g]) continue;
     const day = expectedSolutionRows(scene, t[g].anchor);
-    // §0.1-1 (regular-square-pyramid-w01): lời giải thu gọn ⇒ card Kết quả vắng.
-    const want = sample.collapsed === true ? { ...day, results: [] } : day;
-    const got = { givens: theoMuc(sample, "Dữ kiện"), steps: theoMuc(sample, "Các bước tính"),
+    const dong = sample.dl_open === false;
+    const want = dong ? { givens: [], steps: [], results: [] } : day;
+    const got = { givens: theoMuc(sample, "Dữ kiện"), steps: theoMuc(sample, "Đại lượng trung gian"),
       results: theoMuc(sample, "Kết quả") };
-    dongBo.push({ step: g, want, got, pass: JSON.stringify(want) === JSON.stringify(got) });
+    dongBo.push({ step: g, observable: !dong, want, got, pass: JSON.stringify(want) === JSON.stringify(got) });
   }
   add("solution_in_sync_with_geometry_step", dongBo.length === last + 1 && dongBo.every((d) => d.pass),
     dongBo);
   // Đáp số + mọi BÍ DANH của nó (`alias_of`) là MỘT kết luận ⇒ đúng MỘT dòng, ở
   // mục Kết quả. Không so giá trị: AB = AD = 4 ở hình lập phương là hai đại lượng.
   const finalRows = firstFinal >= 0 ? settledAt(last).rows ?? [] : [];
-  // §0.1-1: thu gọn ⇒ đáp số KHÔNG có dòng (đọc qua ngăn «Đại lượng», bộ đo suite kiểm); mở ⇒ đúng một dòng.
-  const thuGon = firstFinal >= 0 && settledAt(last).collapsed === true;
+  // W05: bước cuối PHẢI quan sát được (bộ chạy mở «Đại lượng» nếu chưa mở) — đáp số đúng một mục, ở «Kết quả».
+  const dongCuoi = firstFinal >= 0 && settledAt(last).dl_open === false;
   const objects = scene?.objects ?? [];
   const answers = (scene?.events ?? [])
     .filter((event) => event.semantic_kind === "FINAL_RESULT" && event.object)
@@ -1379,9 +1383,9 @@ export function assessPlayback({
       const rows = finalRows.filter((row) => ids.has(row.id));
       return { id, rows, in_results: rows.every((row) => row.sec === "Kết quả") };
     });
-  add("final_result_shown_once", answers.length > 0
-    && answers.every((a) => (thuGon ? a.rows.length === 0 : a.rows.length === 1 && a.in_results)),
-  { rows: finalRows, answers, collapsed: thuGon });
+  add("final_result_shown_once", answers.length > 0 && !dongCuoi
+    && answers.every((a) => a.rows.length === 1 && a.in_results),
+  { rows: finalRows, answers, final_panel_closed: dongCuoi });
   if (replay) {
     add("replay_resets_step_selection_highlight",
       replay.step === 0 && replay.selected === null && replay.highlighted.length === 0, replay);
@@ -1909,6 +1913,8 @@ export function assessFocusMode(o) {
     const day = L.controls.y + L.controls.h;
     if (day > o.viewport.h + 1) r.push("CONTROLS_BELOW_FOLD");
     else if (o.viewport.h - day > KHOANG_TRONG_DAY_TOI_DA) r.push("GAP_BELOW_CONTROLS");
+    // Vừa đúng một màn: trang không được cuộn (đo W05 lượt 2: hàng lưới rỗng thừa 16 px ⇒ cú bấm dời canvas).
+    if (L.page_height > o.viewport.h + 1) r.push("PAGE_SCROLLS");
   }
   if (Boolean(o.tach_khoi) !== Boolean(o.has_faces)) r.push("EXPLODE_BUTTON_MISMATCH");
   for (const khoa of ["kham-pha", "hien-thi", "them"]) {
