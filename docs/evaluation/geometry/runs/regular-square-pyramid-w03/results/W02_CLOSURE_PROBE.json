@@ -1,0 +1,5206 @@
+{
+  "schema_version": "w02-closure-probe/1",
+  "application_llm_calls": 0,
+  "commit": "a5d233ce4e635b0228f04af55aa04f3407d4a8d8",
+  "pass": true,
+  "runs": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            5.621850305817953,
+            5.491838289633369,
+            8.231122057822724
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865301,
+            -0.4924038765061058,
+            0.5868240888334734,
+            0,
+            0.7660444431189855,
+            -0.4131759111665264,
+            0.4924038765060994,
+            0,
+            -1.665334536937734e-16,
+            0.7660444431189813,
+            0.6427876096865354,
+            0,
+            -0.5933364841895034,
+            -1.2680891400088898,
+            -11.294102918815886,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            5.621850305817948,
+            5.4918382896332325,
+            8.231122057822597
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865175,
+            -0.49240387650610995,
+            0.5868240888334841,
+            0,
+            0.7660444431189963,
+            -0.4131759111665158,
+            0.4924038765060914,
+            0,
+            -8.326672684688674e-17,
+            0.7660444431189846,
+            0.6427876096865317,
+            0,
+            -0.5933364841895341,
+            -1.268089140008913,
+            -11.294102918815721,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 291,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            5.621850305817939,
+            5.491838289633126,
+            8.23112205782247
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865076,
+            -0.49240387650611134,
+            0.5868240888334932,
+            0,
+            0.7660444431190042,
+            -0.4131759111665065,
+            0.49240387650608647,
+            0,
+            5.55111512312578e-17,
+            0.7660444431189882,
+            0.6427876096865268,
+            0,
+            -0.5933364841895575,
+            -1.2680891400089385,
+            -11.294102918815566,
+            0.9999999999999998
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/steps_panel_floating.png",
+          "bytes": 144608,
+          "sha256": "f64e3b14e695b6dc718cb139e1895c7082a21b30b2ca5057087f6ddb63bda477",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/steps_panel_dragged.png",
+          "bytes": 157555,
+          "sha256": "c4750dead9122852db3619ea4eaff7879be0983fe4fc35f3e912a8fd8c2dc1ed",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/final_neutral.png",
+          "bytes": 153977,
+          "sha256": "5f63d36fab4fdf2c8bce5df1f3ccb783eb2050c5160fff14196e8a502023b653",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/grid_on.png",
+          "bytes": 189640,
+          "sha256": "917730c9a762021cf06e46158d2e55ca50d3224e7a522d26cbf82dab7ec492ef",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/labels_showall_step_0.png",
+            "bytes": 110842,
+            "sha256": "e0192c4c8c2b955dbc13453833f0eeb368bf777025d6d29f1684237ef1138139",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/labels_showall_step_1.png",
+            "bytes": 116918,
+            "sha256": "19e837abda89bc273ba4a555120ae29961574cb1e2314ea48f3cdbb2c9c849d9",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/labels_showall_step_2.png",
+            "bytes": 151045,
+            "sha256": "39dda9021a28d6005dcbf15313b36cea4715a3f919962ce0892eb7888fc91601",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/desktop/labels_showall_step_3.png",
+            "bytes": 162212,
+            "sha256": "b75ac9af23e3514c4180689be27fb61e4ad22a5a967e5e73142503008194be96",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length",
+            "dien_tich_day_ABC",
+            "the_tich_khoi_chop"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length",
+            "dien_tich_day_ABC",
+            "the_tich_khoi_chop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SA"
+        ],
+        "rendered": [
+          "chieu_cao_SA"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            5.621850305817703,
+            5.491838289629133,
+            8.23112205781848
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096861361,
+            -0.49240387650621503,
+            0.5868240888338135,
+            0,
+            0.7660444431193163,
+            -0.4131759111661863,
+            0.49240387650587003,
+            0,
+            -8.326672684688672e-17,
+            0.7660444431190945,
+            0.6427876096864004,
+            0,
+            -0.5933364841904525,
+            -1.268089140009698,
+            -11.294102918810468,
+            0.9999999999999998
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_chop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            5.621850305817707,
+            5.49183828962901,
+            8.231122057818373
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096861239,
+            -0.49240387650621925,
+            0.5868240888338234,
+            0,
+            0.7660444431193265,
+            -0.4131759111661767,
+            0.49240387650586226,
+            0,
+            1.3877787807814454e-16,
+            0.7660444431190969,
+            0.6427876096863975,
+            0,
+            -0.5933364841904826,
+            -1.268089140009714,
+            -11.29410291881033,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_chop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/mobile/steps_sheet_open.png",
+          "bytes": 112852,
+          "sha256": "ba29f996c1c3633ebfcc413867bbd06ac76154d1dcc1d810fdd678e2eb20e76f",
+          "scroll": {
+            "x": 0,
+            "y": 447
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-pyramid/mobile/steps_sheet_collapsed.png",
+          "bytes": 128324,
+          "sha256": "11ae86efcf29084d42ec3e3e0831bd2ecd27ab93eb132a8f461dcc1ec9a46c5d",
+          "scroll": {
+            "x": 0,
+            "y": 313
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            5.7717296945366465,
+            5.617602029427951,
+            8.395294960484344
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096864977,
+            -0.49240387650611345,
+            0.5868240888335029,
+            0,
+            0.766044443119013,
+            -0.41317591116649705,
+            0.49240387650608136,
+            0,
+            1.1102230246251565e-16,
+            0.7660444431189924,
+            0.6427876096865224,
+            0,
+            -0.5933364841895824,
+            -1.2680891400089656,
+            -11.549510615211531,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            5.7717296945366465,
+            5.617602029427951,
+            8.395294960484344
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096864977,
+            -0.49240387650611345,
+            0.5868240888335029,
+            0,
+            0.766044443119013,
+            -0.41317591116649705,
+            0.49240387650608136,
+            0,
+            1.1102230246251565e-16,
+            0.7660444431189924,
+            0.6427876096865224,
+            0,
+            -0.5933364841895824,
+            -1.2680891400089656,
+            -11.549510615211531,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 291,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/desktop/steps_panel_floating.png",
+          "bytes": 145911,
+          "sha256": "b7f82600d301f1dc11e0dbe1fbe89850e1b44139e5396e3500d7a93e924dd2f7",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/desktop/steps_panel_dragged.png",
+          "bytes": 157234,
+          "sha256": "18676dac504b8df3ed3f39149b70cce6a70240ac6e4fc1dc031687a48b053a93",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/desktop/final_neutral.png",
+          "bytes": 159761,
+          "sha256": "c61d62c2911485542823988bec2c5d349a07556b362f9fb77484caf9d2b82fc1",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/desktop/grid_on.png",
+          "bytes": 191167,
+          "sha256": "71f0d3b9b46412b595d6f5bdb955c9978f9f5a4e9087c0514a3a6039b68622ae",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_chop"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_chop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SA"
+        ],
+        "rendered": [
+          "chieu_cao_SA"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_chop",
+        "rendered_before": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_chop",
+        "rendered_on": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/mobile/steps_sheet_open.png",
+          "bytes": 116361,
+          "sha256": "98d20e710684a18cab47521a2ca84635d9c884be4ebd315ddb18174ab6dd8661",
+          "scroll": {
+            "x": 0,
+            "y": 447
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/rectangular-pyramid/mobile/steps_sheet_collapsed.png",
+          "bytes": 133391,
+          "sha256": "5348c5e4a94af5f8bec112a17a769b1b1c5cbe84e5bd12b097990cef60467989",
+          "scroll": {
+            "x": 0,
+            "y": 313
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 291,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/steps_panel_floating.png",
+          "bytes": 145707,
+          "sha256": "59cc2c9093eb11485b6b96a8285e44d7e7c9e0e2431b95473d5126b87afeb8fd",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/steps_panel_dragged.png",
+          "bytes": 161413,
+          "sha256": "16998adeb63cb887775b9001485c2d5db590f58110047647abf4c7d7b3d807d8",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/final_neutral.png",
+          "bytes": 164495,
+          "sha256": "6f2ce9295faff52557a907199fbfd22411bd2962f2cfb23c43b6e350142d7052",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/grid_on.png",
+          "bytes": 188533,
+          "sha256": "8affd84d3685937a8e141e17ac462b03793a0fada42ee7c50f5f3fef7670b392",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/labels_showall_step_0.png",
+            "bytes": 114814,
+            "sha256": "3780379b8c12647795cf4d450ecfadd15c57d50f737a04ddcfe6c6d121453133",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/labels_showall_step_1.png",
+            "bytes": 122773,
+            "sha256": "f93c0556c56b908fff3b63f547ad1f7b513be60eb43f69a0537cc53c554b3249",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/labels_showall_step_2.png",
+            "bytes": 123507,
+            "sha256": "d00c1346d5128e7f95991abe70746ecb255dd0cd5422ff7bda14b3449122f04a",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "AD_length"
+          ],
+          "unplaced": [],
+          "image": {
+            "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/desktop/labels_showall_step_3.png",
+            "bytes": 170686,
+            "sha256": "6ab030fb6ea3782e250d911f419a63ad3e6ef987c31838257389777947a18ae4",
+            "scroll": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "AD_length",
+            "dien_tich_day_ABC",
+            "the_tich_solid_ABCDEF"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "AD_length",
+            "dien_tich_day_ABC",
+            "the_tich_solid_ABCDEF"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_solid_ABCDEF",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_solid_ABCDEF",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/mobile/steps_sheet_open.png",
+          "bytes": 112579,
+          "sha256": "16349d0532b94b651ccfedac96c6fb741db8da5f453bca83057ead90d270954a",
+          "scroll": {
+            "x": 0,
+            "y": 447
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/triangular-prism/mobile/steps_sheet_collapsed.png",
+          "bytes": 127471,
+          "sha256": "764fd2a97b8ef7b57797fc25b52dad9b0db905b7aaf364fc265e5e90e637d23a",
+          "scroll": {
+            "x": 0,
+            "y": 313
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            9.462717744881076,
+            6.521360735124246,
+            8.395157067226481
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999917,
+            -0.433012701892219,
+            0.7500000000000003,
+            0,
+            0.8660254037844387,
+            -0.2499999999999993,
+            0.4330127018922189,
+            0,
+            2.7755575615628895e-17,
+            0.8660254037844387,
+            0.49999999999999956,
+            0,
+            -0.9163051914194295,
+            -1.542602127243141,
+            -14.118448874204026,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            9.462717744881076,
+            6.521360735124246,
+            8.395157067226481
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999917,
+            -0.433012701892219,
+            0.7500000000000003,
+            0,
+            0.8660254037844387,
+            -0.2499999999999993,
+            0.4330127018922189,
+            0,
+            2.7755575615628895e-17,
+            0.8660254037844387,
+            0.49999999999999956,
+            0,
+            -0.9163051914194295,
+            -1.542602127243141,
+            -14.118448874204026,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 291,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/desktop/steps_panel_floating.png",
+          "bytes": 148253,
+          "sha256": "736e56d5a62100f8773cca5f89c987c1ad1b648881113a965cf87ca24fc24335",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/desktop/steps_panel_dragged.png",
+          "bytes": 163780,
+          "sha256": "1a34c7b7d6a49108f78577c9b3e6079a98e25d0d23b7acbce9a7537995179f9f",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/desktop/final_neutral.png",
+          "bytes": 166102,
+          "sha256": "0771690cf324b47fb5b3d01b8156f939acdcecd34a0f01acb295a29bd3949d9b",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/desktop/grid_on.png",
+          "bytes": 191332,
+          "sha256": "2529c310ac37b7d0e0269ee009aab2bf18557161062bf9b44151872ec229aad9",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 8,
+          "dom": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "expected": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 8,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_hop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_hop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/mobile/steps_sheet_open.png",
+          "bytes": 118070,
+          "sha256": "1e7d143484ab9023c1c6120d115d595ded2d69b4a54cb386ae501b8ecc993e4a",
+          "scroll": {
+            "x": 0,
+            "y": 447
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cuboid/mobile/steps_sheet_collapsed.png",
+          "bytes": 133207,
+          "sha256": "dc18b9623b54a8ba2c05ed38c98d8375277da1e5b9dc1676605dced1092ca9a4",
+          "scroll": {
+            "x": 0,
+            "y": 313
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            8.833039702918093,
+            8.192632005518412,
+            7.73469920233485
+          ],
+          "view_matrix_column_major": [
+            -0.642787609686537,
+            -0.38302222155948884,
+            0.6634139481689402,
+            0,
+            0.7660444431189796,
+            -0.32139380484326774,
+            0.556670399226418,
+            0,
+            1.110223024625156e-16,
+            0.8660254037844392,
+            0.4999999999999989,
+            0,
+            -0.5981517454410815,
+            -0.6821343377840688,
+            -14.287907074040376,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            8.833039702918093,
+            8.192632005518412,
+            7.73469920233485
+          ],
+          "view_matrix_column_major": [
+            -0.642787609686537,
+            -0.38302222155948884,
+            0.6634139481689402,
+            0,
+            0.7660444431189796,
+            -0.32139380484326774,
+            0.556670399226418,
+            0,
+            1.110223024625156e-16,
+            0.8660254037844392,
+            0.4999999999999989,
+            0,
+            -0.5981517454410815,
+            -0.6821343377840688,
+            -14.287907074040376,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 219
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 291,
+          "w": 272,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 219
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 219
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 219
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 219
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 251,
+          "w": 272,
+          "h": 219
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/desktop/steps_panel_floating.png",
+          "bytes": 145256,
+          "sha256": "98699986c75d196802ffb52126871eb2ff3275a12b74aedd3bd129a623f573fa",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/desktop/steps_panel_dragged.png",
+          "bytes": 159818,
+          "sha256": "471573ba3504d081502ab41473cc8549e9be18cf9cd3d6b6426bb253680007b4",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/desktop/final_neutral.png",
+          "bytes": 167530,
+          "sha256": "9033f962d7475d4f57d2060a61379be862df0fe964562355d27ffd718dee5cd0",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/desktop/grid_on.png",
+          "bytes": 193002,
+          "sha256": "681c5b72690cc5242c291cccc09bd2d647ec52b1fb6940cb54a3d99ae56726c5",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 10,
+          "dom": [
+            "chieu_cao_AA_prime",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "expected": [
+            "chieu_cao_AA_prime",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 10,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_hop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_hop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/mobile/steps_sheet_open.png",
+          "bytes": 110052,
+          "sha256": "b59d6f23173a6af174a1bec2ad18758345f0a584f734d96926004b2d8e6b2ea0",
+          "scroll": {
+            "x": 0,
+            "y": 447
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cube/mobile/steps_sheet_collapsed.png",
+          "bytes": 148847,
+          "sha256": "4b351c4c7dfdb428c337402e0ea37b79c953919e8224d852bde1b351ed3f0634",
+          "scroll": {
+            "x": 0,
+            "y": 280
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            11.218825249845354,
+            7.125356154669673,
+            6.45112243865573
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.3659981507706668,
+            0.7848855672213962,
+            0,
+            0.866025403784439,
+            -0.2113091308703493,
+            0.45315389351832475,
+            0,
+            -2.220446049250313e-16,
+            0.9063077870366502,
+            0.42261826174069916,
+            0,
+            -0.5613268160330672,
+            -0.23498038983294672,
+            -14.76073905527702,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            11.218825249845354,
+            7.125356154669673,
+            6.45112243865573
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.3659981507706668,
+            0.7848855672213962,
+            0,
+            0.866025403784439,
+            -0.2113091308703493,
+            0.45315389351832475,
+            0,
+            -2.220446049250313e-16,
+            0.9063077870366502,
+            0.42261826174069916,
+            0,
+            -0.5613268160330672,
+            -0.23498038983294672,
+            -14.76073905527702,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/11",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 155.3125,
+          "w": 272,
+          "h": 418.078125
+        },
+        "camera_after_drag": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 418.078125
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 364
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 155.3125,
+          "w": 272,
+          "h": 418.078125
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 155.3125,
+          "w": 272,
+          "h": 418.078125
+        },
+        "step_after": "Bước 1/11",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/desktop/steps_panel_floating.png",
+          "bytes": 167473,
+          "sha256": "56e39c3cadf5ed22efa9f5a329e509d20bb9ea45de1c69873d7aa3d3c6e1c4c9",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/desktop/steps_panel_dragged.png",
+          "bytes": 182653,
+          "sha256": "823f1b34ed30302b7e29b92c0808246deca1324f380d67e23ba78ad8a4daf36d",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/desktop/final_neutral.png",
+          "bytes": 154119,
+          "sha256": "451043a12b633dd9198f99d7703edec155f429a211f7340a0d6f93ffba0f803f",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/desktop/grid_on.png",
+          "bytes": 180886,
+          "sha256": "39de75baf48facb9b2534975aabba7077118c4259858e7e5bb256f414fcfe0d6",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 5,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 6,
+          "anchor": 6,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 7,
+          "anchor": 7,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 8,
+          "anchor": 8,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 9,
+          "anchor": 11,
+          "dom": [
+            "area_T",
+            "the_volume_sabcd"
+          ],
+          "expected": [
+            "area_T",
+            "the_volume_sabcd"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 10,
+          "anchor": 13,
+          "dom": [
+            "area_T",
+            "dist_S_BD",
+            "the_volume_sabcd"
+          ],
+          "expected": [
+            "area_T",
+            "dist_S_BD",
+            "the_volume_sabcd"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 13,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 11/11",
+        "selected_before": "the_volume_sabcd",
+        "rendered_before": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 11/11",
+        "selected_on": "the_volume_sabcd",
+        "rendered_on": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/mobile/steps_sheet_open.png",
+          "bytes": 119194,
+          "sha256": "37b4dcb23657cf9fe3453cb6723a70a21acc49897d20fb6eb83049b07b5e905f",
+          "scroll": {
+            "x": 0,
+            "y": 506
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/cross-section/mobile/steps_sheet_collapsed.png",
+          "bytes": 158185,
+          "sha256": "b41eb0eb7be10867e7141ffbb5483870ac9f36135c3432855b9e78db75183340",
+          "scroll": {
+            "x": 0,
+            "y": 213
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            15.475152232627698,
+            9.899912410813437,
+            7.340399133110109
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999998,
+            -0.2961981327260234,
+            0.8137976813493738,
+            0,
+            0.8660254037844386,
+            -0.17101007166283408,
+            0.4698463103929541,
+            0,
+            2.77555756156289e-17,
+            0.9396926207859084,
+            0.3420201433256684,
+            0,
+            -0.8359995266914365,
+            -0.6210229732225861,
+            -19.75564468844905,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 231,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 663,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 337.59375
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 759,
+          "w": 342,
+          "h": 337.59375
+        },
+        "camera_after_drag": {
+          "position": [
+            15.475152232627698,
+            9.899912410813437,
+            7.340399133110109
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999998,
+            -0.2961981327260234,
+            0.8137976813493738,
+            0,
+            0.8660254037844386,
+            -0.17101007166283408,
+            0.4698463103929541,
+            0,
+            2.77555756156289e-17,
+            0.9396926207859084,
+            0.3420201433256684,
+            0,
+            -0.8359995266914365,
+            -0.6210229732225861,
+            -19.75564468844905,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/11",
+        "step_indicator": "Bước 3/11"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_before": {
+          "position": [
+            7.594348500772263,
+            3.3115281976885163,
+            5.387956521940062
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766692917,
+            -0.6330222215594787,
+            0.7544065067354977,
+            0,
+            0.9848077530122081,
+            -0.11161889704894706,
+            0.13302222155948965,
+            0,
+            6.938893903907227e-17,
+            0.7660444431189868,
+            0.6427876096865287,
+            0,
+            -1.9424738656755163,
+            1.0496063308293462,
+            -9.633044454845782,
+            0.9999999999999998
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/8",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 43.5,
+          "y": 115,
+          "w": 1320,
+          "h": 466.3125
+        },
+        "camera_open": {
+          "position": [
+            7.594348500772264,
+            3.3115281976885154,
+            5.387956521939925
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766692925,
+            -0.6330222215594672,
+            0.7544065067355075,
+            0,
+            0.9848077530122081,
+            -0.1116188970489451,
+            0.13302222155949128,
+            0,
+            3.1918911957973246e-16,
+            0.7660444431189966,
+            0.642787609686517,
+            0,
+            -1.9424738656755163,
+            1.0496063308293044,
+            -9.633044454845711,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 366.5
+        },
+        "panel_dragged": {
+          "x": 655.5,
+          "y": 206.3125,
+          "w": 272,
+          "h": 366.5
+        },
+        "camera_after_drag": {
+          "position": [
+            7.594348500772263,
+            3.3115281976885154,
+            5.387956521939795
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766692914,
+            -0.6330222215594566,
+            0.7544065067355165,
+            0,
+            0.9848077530122084,
+            -0.11161889704894314,
+            0.13302222155949298,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431190058,
+            0.6427876096865063,
+            0,
+            -1.9424738656755158,
+            1.0496063308292671,
+            -9.633044454845642,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 51.5,
+          "y": 123,
+          "w": 272,
+          "h": 366.5
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 24,
+          "y": 115,
+          "w": 1037,
+          "h": 406
+        },
+        "panel_resized": {
+          "x": 80,
+          "y": 123,
+          "w": 272,
+          "h": 364
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1075.5,
+          "y": 131,
+          "w": 272,
+          "h": 366.5
+        },
+        "panel_closed_at": {
+          "x": 775.5,
+          "y": 206.3125,
+          "w": 272,
+          "h": 366.5
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 775.5,
+          "y": 206.3125,
+          "w": 272,
+          "h": 366.5
+        },
+        "step_after": "Bước 1/8",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/desktop/steps_panel_floating.png",
+          "bytes": 163718,
+          "sha256": "0eff1b8f4844037f0fe2a43c08b6ce07749288163b4b9d67bd916ae963254cc4",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/desktop/steps_panel_dragged.png",
+          "bytes": 179259,
+          "sha256": "bc1a7dd1dd31f2ec6b4fbfc148c4abdcc98df54e812001b2e08c7ddd48736986",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "final_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/desktop/final_neutral.png",
+          "bytes": 158737,
+          "sha256": "1adbdf6e11db31009f2266413de9380ea43215803ec222155ef2ff9c93e5ebba",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "auxiliary_shown": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/desktop/auxiliary_shown.png",
+          "bytes": 164678,
+          "sha256": "cc000383eab1904c2e4d935d80cbdb93074d63ea2693131cc69e8b200219ea0b",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "grid_on": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/desktop/grid_on.png",
+          "bytes": 218368,
+          "sha256": "d2497de37f3f1275e68ba47d41fa58281118137b05e300ce29f871ba0b678b55",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 5,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 6,
+          "anchor": 6,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 7,
+          "anchor": 11,
+          "dom": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "expected": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SO_2"
+        ],
+        "rendered": [
+          "chieu_cao_SO_2"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": [
+          "AC",
+          "BD",
+          "mp_day"
+        ]
+      },
+      "auxiliary_observation": {
+        "step": 11,
+        "chip": true,
+        "hidden_default": [
+          "AC",
+          "BD",
+          "mp_day"
+        ],
+        "rendered_default": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "AC",
+          "BD",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            7.594348500772251,
+            3.311528197688504,
+            5.387956521936422
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766692842,
+            -0.6330222215591739,
+            0.7544065067357534,
+            0,
+            0.984807753012208,
+            -0.11161889704889352,
+            0.13302222155953392,
+            0,
+            8.187894806610524e-16,
+            0.7660444431192462,
+            0.6427876096862196,
+            0,
+            -1.9424738656755156,
+            1.0496063308282362,
+            -9.633044454843855,
+            1
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 8/8",
+        "selected_before": "V",
+        "rendered_before": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            7.59434850077225,
+            3.311528197688503,
+            5.387956521936347
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766692706,
+            -0.6330222215591687,
+            0.7544065067357587,
+            0,
+            0.9848077530122088,
+            -0.11161889704889091,
+            0.13302222155953392,
+            0,
+            -2.775557561562892e-17,
+            0.7660444431192516,
+            0.6427876096862136,
+            0,
+            -1.9424738656755227,
+            1.0496063308282169,
+            -9.633044454843814,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            0.7549705698910737,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1318,
+          "viewport_height": 464,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 8/8",
+        "selected_on": "V",
+        "rendered_on": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/mobile/steps_sheet_open.png",
+          "bytes": 114891,
+          "sha256": "fef15c9e54a2c7082e2f98c6f15358d75bb685b81fe89434ab9b2becf8eae0fe",
+          "scroll": {
+            "x": 0,
+            "y": 543
+          }
+        },
+        "sheet_collapsed": {
+          "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/images/regular-square-pyramid/mobile/steps_sheet_collapsed.png",
+          "bytes": 132958,
+          "sha256": "8dc8ad3ab39a6d7c863df4c3a6c888e9186f92a4326888e85b12fd9568dd1c52",
+          "scroll": {
+            "x": 0,
+            "y": 350
+          }
+        }
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 24,
+          "y": 268,
+          "w": 342,
+          "h": 420
+        },
+        "camera_before": {
+          "position": [
+            9.743548089297047,
+            3.4730735307191596,
+            7.172383522654995
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766691792,
+            -0.6330222215594398,
+            0.7544065067355332,
+            0,
+            0.9848077530122104,
+            -0.11161889704893276,
+            0.1330222215594872,
+            0,
+            -8.326672684688674e-17,
+            0.7660444431190213,
+            0.6427876096864878,
+            0,
+            -1.7283603701173063,
+            1.061178552778476,
+            -12.422911294234133,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 24,
+          "y": 268,
+          "w": 342,
+          "h": 420
+        },
+        "controls": {
+          "x": 24,
+          "y": 700,
+          "w": 342,
+          "h": 84
+        },
+        "panel": {
+          "x": 24,
+          "y": 796,
+          "w": 342,
+          "h": 337.59375
+        },
+        "panel_after_drag": {
+          "x": 24,
+          "y": 796,
+          "w": 342,
+          "h": 337.59375
+        },
+        "camera_after_drag": {
+          "position": [
+            9.743548089297033,
+            3.4730735307191516,
+            7.172383522654683
+          ],
+          "view_matrix_column_major": [
+            -0.173648177666918,
+            -0.6330222215594214,
+            0.7544065067355483,
+            0,
+            0.9848077530122101,
+            -0.11161889704892965,
+            0.13302222155948973,
+            0,
+            1.942890293094023e-16,
+            0.7660444431190366,
+            0.6427876096864695,
+            0,
+            -1.7283603701173014,
+            1.0611785527784068,
+            -12.422911294233947,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.636482037567634,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 340,
+          "viewport_height": 418,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/8",
+        "step_indicator": "Bước 3/8"
+      },
+      "exceptions": [],
+      "pass": true
+    }
+  ]
+}
