@@ -5094,36 +5094,25 @@ html {
   cursor: not-allowed;
 }
 
-/* Ô SOI — nổi góc phải, chỉ có mặt khi đang chọn một vật. */
-.geo3d-soi {
-  position: absolute;
-  top: var(--sp-sm);
-  right: var(--sp-sm);
-  z-index: 4;                 /* W2: trên bảng nổi, như ngăn */
-  width: min(19rem, calc(100% - 2 * var(--sp-sm)));
+/* Ô SOI — chỉ có mặt khi đang chọn một vật. W4: một `BangNoi` như mọi bảng thông tin (khung, nổi, kéo, kẹp ở
+   `.geo3d-bang-noi`); ở đây chỉ còn bề rộng và thân. */
+.geo3d-bang-noi.geo3d-soi {
+  width: min(19rem, calc(100% - 2 * var(--sp-md)));
+}
+
+.geo3d-soi-than {
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
-  padding: var(--sp-md);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-lg);
-  background: color-mix(in srgb, var(--canvas) 96%, transparent);
-  box-shadow: var(--shadow-elevated);
+  padding: var(--sp-sm) var(--sp-md) var(--sp-md);
 }
 
-.geo3d-soi-dau {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--sp-sm);
-}
-
-.geo3d-soi-ten {
-  margin: 0;
+/* Tên vật là tiêu đề bảng — nhấn hơn tiêu đề bảng thường một bậc, vẫn cùng chiều cao đầu bảng. */
+.geo3d-bang-noi-tieu.geo3d-soi-ten {
   color: var(--ink);
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .geo3d-soi-vai,
@@ -5222,38 +5211,14 @@ html {
   overflow-wrap: anywhere;
 }
 
-/* NGĂN KÉO — phủ lên khung từ mép phải, không đẩy khung co lại. */
-.geo3d-ngan {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  /* W2: trên bảng nổi «Các bước dựng» (z 3) — ngăn vừa mở là lớp người học đang dùng, nút "Đóng" của nó phải bấm
-     được (lượt đo W2 thứ 3: bảng nổi che nút này). */
-  z-index: 4;
-  width: min(20rem, 80%);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-  padding: var(--sp-md);
-  overflow-y: auto;
-  border-left: 1px solid var(--hairline);
-  border-radius: 0 var(--rounded-lg) var(--rounded-lg) 0;
-  background: var(--canvas);
-  box-shadow: var(--shadow-elevated);
+/* BẢNG THÔNG TIN Xem đề / Thành phần / Đại lượng — W4: mỗi bảng một `BangNoi` (khung, nổi, kéo, kẹp, thứ tự lớp ở
+   `.geo3d-bang-noi`); thay một ngăn phủ mép phải toàn chiều cao. Ở đây chỉ còn bề rộng và thân. */
+.geo3d-bang-noi.geo3d-ngan {
+  width: min(20rem, calc(100% - 2 * var(--sp-md)));
 }
 
-.geo3d-ngan-dau {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-sm);
-}
-
-.geo3d-ngan-tieu {
-  margin: 0;
-  font-size: 0.9375rem;
-  color: var(--ink);
+.geo3d-ngan-than {
+  padding: var(--sp-sm) var(--sp-md) var(--sp-md);
 }
 
 .geo3d-de {
@@ -5302,14 +5267,14 @@ html {
     height: min(52vh, 420px);
   }
 
-  /* Khổ hẹp: ô soi CHẢY DƯỚI sân khấu. Nổi góc phải thì nó che gần hết hình;
-     neo đáy sân khấu (bản trước) thì nó che đúng dòng đáp số đang chọn và nút
-     "Xem lại" — sân khấu chứa cả số đo lẫn điều khiển (ảnh w10, 390×844). */
-  .geo3d-soi {
+  /* Khổ hẹp: ô soi và MỌI bảng thông tin CHẢY DƯỚI sân khấu (`.geo3d-bang-noi` tĩnh, khối «Các bước dựng» dưới).
+     Nổi góc phải thì nó che gần hết hình; neo đáy sân khấu (bản trước) thì nó che đúng dòng đáp số đang chọn và nút
+     "Xem lại" — sân khấu chứa cả số đo lẫn điều khiển (ảnh w10, 390×844). W4: ngăn cũng thôi phủ lên hình. */
+  .geo3d-bang-noi.geo3d-soi,
+  .geo3d-bang-noi.geo3d-ngan {
     position: static;
     width: auto;
     margin-top: var(--sp-sm);
-    box-shadow: none;
   }
 
   /* Hai nút nổi vào dòng chảy PHÍA TRÊN khung: ở khổ hẹp, góc trên-trái nơi
@@ -5326,11 +5291,6 @@ html {
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: var(--sp-sm);
-  }
-
-  .geo3d-ngan {
-    width: 100%;
-    border-radius: var(--rounded-lg);
   }
 }
 
@@ -5996,30 +5956,11 @@ html {
   margin-inline: auto;
 }
 
-/* ── 2 · SÂN KHẤU HAI CỘT: HÌNH | Ô SOI ──────────────────────────────────
-   Ô soi trước đây là lớp phủ tuyệt đối, và ở bề rộng khung cũ nó che gần hết
-   khối. Ở desktop nó thành CỘT BÊN CẠNH: hình không bị che, và khung 3D co lại
-   đúng bằng phần còn lại nên camera cập nhật tỉ lệ khung thật.
-   Không dùng `position: absolute` nữa ⇒ không còn chồng lấn để phải né. */
+/* ── 2 · SÂN KHẤU MỘT KHUNG ─────────────────────────────────────────────
+   W4 (H-W2-3) gỡ lưới hai cột HÌNH | Ô SOI: chọn một vật dành một cột cho ô soi, khung 3D co lại và camera đổi tỉ
+   lệ giữa lúc người học đang nhìn. Ô soi nay là bảng nổi như mọi bảng thông tin (`BangNoi`): nó tự tránh nút nổi
+   và các bảng khác khi mở, kéo đi được, và hình bên dưới giữ nguyên cỡ. */
 @media (min-width: 1100px) {
-  .geo3d-san {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: var(--sp-md);
-  }
-  .geo3d-san:has(.geo3d-soi) {
-    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
-  }
-  .geo3d-san > .geo3d-player { min-width: 0; }
-  .geo3d-san > .geo3d-soi {
-    position: static;
-    width: auto;
-    max-height: min(62vh, 660px);
-    overflow-y: auto;
-    box-shadow: none;
-    background: var(--canvas);
-  }
   /* Chừa chỗ thật cho điều khiển bước (và bảng lời giải ngay dưới, W12).
      `68vh` chỉ tính riêng canvas, nên cảnh có ba readout dài từng đẩy cả hai
      nút phát lại xuống dưới viewport 1440×900. 58vh vẫn giữ canvas là bề mặt
@@ -6027,10 +5968,10 @@ html {
   .geo3d-canvas { height: min(58vh, 620px); }
 }
 
-/* ── «CÁC BƯỚC DỰNG» (regular-square-pyramid-w01, ROADMAP §0.1-3/4/5; W2 · B) ──────
-   W2 thay CỘT lưới của W1 bằng BẢNG NỔI (`scene3d-floating-panel.tsx`): desktop nổi trên vùng mô phỏng, phía phải,
-   kéo bằng tiêu đề — không chiếm cột, mở/đóng không đổi cỡ canvas. Khổ hẹp (≤ 48rem): trong dòng chảy ngay dưới
-   điều khiển, thu gọn được, không kéo (không tranh thao tác với orbit), không phủ lên khung hay nút phát. Danh sách
+/* ── BẢNG NỔI — MỌI BẢNG THÔNG TIN (W2 · B «Các bước dựng»; W4 · ô soi, Xem đề, Thành phần, Đại lượng) ─────────
+   `scene3d-floating-panel.tsx`: desktop nổi trên vùng mô phỏng, kéo bằng tiêu đề — không chiếm cột, mở/đóng/chọn
+   không đổi cỡ canvas; thứ tự lớp do host đặt (bảng vừa dùng lên trên). Khổ hẹp (≤ 48rem): trong dòng chảy dưới hình
+   và điều khiển, thu gọn được, không kéo (không tranh thao tác với orbit), không phủ lên khung hay nút phát. Nội dung
    cuộn bên trong (cuộn của người học ở đây, không kéo cả trang). */
 .geo3d-player {
   position: relative;
@@ -6112,6 +6053,16 @@ html {
   }
   .geo3d-bang-noi-ve {
     display: none;
+  }
+}
+
+/* W4: nút đầu bảng đủ lớn cho ngón tay (44 px) ở khổ hẹp và trên màn hình cảm ứng; trên chuột giữ gọn. */
+@media (max-width: 48rem), (pointer: coarse) {
+  .geo3d-bang-noi-dau .geo3d-soi-dong {
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
   }
 }
 

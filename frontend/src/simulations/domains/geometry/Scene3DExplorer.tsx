@@ -70,6 +70,7 @@ import {
 } from "./scene3d-subentities";
 import { Scene3DPlayer } from "./scene3d-playback";
 import { auxiliaryObjects } from "./scene3d-auxiliary";
+import { BangNoi, BangNoiHost, batTatBang } from "./scene3d-floating-panel";
 import {
   type AnnotationView,
   DEFAULT_ANNOTATION_VIEW,
@@ -77,7 +78,6 @@ import {
   quantitySources,
 } from "./scene3d-annotations";
 import {
-  IconClose,
   IconExperiment,
   IconInfo,
   IconPanel,
@@ -150,6 +150,12 @@ function NutCay({
   );
 }
 
+/** Bảng thông tin mở bằng chip trên thanh xưởng (ô soi mở theo lựa chọn, «Các bước dựng» ở trình phát). */
+type BangThongTin = "de" | "thanh-phan" | "dai-luong";
+/** Nút đã mở bảng — nơi trả tiêu điểm khi đóng bằng Escape. */
+const nutMoBang = (id: BangThongTin) =>
+  typeof document === "undefined" ? null : document.querySelector<HTMLElement>(`[data-mo-bang="${id}"]`);
+
 export function Scene3DExplorer({
   scene, de, phien, onFocus, daiLop,
 }: {
@@ -182,7 +188,11 @@ export function Scene3DExplorer({
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
-  const [ngan, setNgan] = useState<"thanh-phan" | "de" | "dai-luong" | null>(null);
+  /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
+     không giữ một bản chọn riêng. Vị trí và thứ tự lớp do `BangNoiHost` giữ. */
+  const [moBang, setMoBang] = useState<ReadonlySet<BangThongTin>>(new Set());
+  const doiBang = (id: BangThongTin) => setMoBang((s) => batTatBang(s, id));
+  const dongBang = (id: BangThongTin) => setMoBang((s) => (s.has(id) ? batTatBang(s, id) : s));
   /* ROADMAP §0.1-3: danh sách «Các bước dựng» — SỞ THÍCH trình bày như `chiTiet`, không gắn với cảnh; đóng/mở
      không đụng `tt` (bước, lựa chọn, tô sáng causal). */
   const [moBuoc, setMoBuoc] = useState(false);
@@ -221,7 +231,7 @@ export function Scene3DExplorer({
    * đã xem của lớp học), vốn không gắn với cảnh và không nên mất. */
   useEffect(() => {
     setTt(taoTrangThai());
-    setNgan(null);
+    setMoBang(new Set());
   }, [scene]);
 
   // Khung đang hiện = neo của bước DỰNG chứa `current_step` (W12) — cùng phép
@@ -293,6 +303,7 @@ export function Scene3DExplorer({
   }, [day, tt.selected_id]);
 
   return (
+    <BangNoiHost>
     <div className="geo3d-xuong">
       {/* ── THANH TRÊN: mảnh, chỉ những gì cần gọi ra ───────────────────── */}
       <div className="geo3d-thanh">
@@ -315,29 +326,33 @@ export function Scene3DExplorer({
           {de && (
             <button
               type="button"
-              className={`geo3d-chip${ngan === "de" ? " la-mo" : ""}`}
-              onClick={() => setNgan((x) => (x === "de" ? null : "de"))}
-              aria-expanded={ngan === "de"}
+              className={`geo3d-chip${moBang.has("de") ? " la-mo" : ""}`}
+              onClick={() => doiBang("de")}
+              aria-expanded={moBang.has("de")}
+              aria-controls={moBang.has("de") ? "geo3d-bang-de" : undefined}
+              data-mo-bang="de"
             >
               Xem đề
             </button>
           )}
           <button
             type="button"
-            className={`geo3d-chip${ngan === "thanh-phan" ? " la-mo" : ""}`}
-            onClick={() =>
-              setNgan((x) => (x === "thanh-phan" ? null : "thanh-phan"))
-            }
-            aria-expanded={ngan === "thanh-phan"}
+            className={`geo3d-chip${moBang.has("thanh-phan") ? " la-mo" : ""}`}
+            onClick={() => doiBang("thanh-phan")}
+            aria-expanded={moBang.has("thanh-phan")}
+            aria-controls={moBang.has("thanh-phan") ? "geo3d-bang-thanh-phan" : undefined}
+            data-mo-bang="thanh-phan"
           >
             <IconPanel side="right" /> Thành phần
           </button>
           {coDaiLuong && (
             <button
               type="button"
-              className={`geo3d-chip${ngan === "dai-luong" ? " la-mo" : ""}`}
-              onClick={() => setNgan((x) => (x === "dai-luong" ? null : "dai-luong"))}
-              aria-expanded={ngan === "dai-luong"}
+              className={`geo3d-chip${moBang.has("dai-luong") ? " la-mo" : ""}`}
+              onClick={() => doiBang("dai-luong")}
+              aria-expanded={moBang.has("dai-luong")}
+              aria-controls={moBang.has("dai-luong") ? "geo3d-bang-dai-luong" : undefined}
+              data-mo-bang="dai-luong"
               title="Chọn một đại lượng để xem giá trị, công thức và dữ kiện nó dựa vào"
             >
               Đại lượng
@@ -431,30 +446,20 @@ export function Scene3DExplorer({
           </button>
         </div>
 
-        {/* Ô SOI — chỉ khi có vật đang chọn. */}
+        {/* Ô SOI — chỉ khi có vật đang chọn. W4: bảng nổi như mọi bảng thông tin — chọn vật không dành cột, không
+            co canvas, không đổi camera; đóng ô soi là bỏ chọn. Thiết diện gọi bằng CHU TRÌNH khi mọi đỉnh có tên
+            ("Thiết diện MNPQ" là cách đề bài gọi nó); còn một đỉnh chưa tên thì giữ nhãn cũ. */}
         {dangChon && (
-          <aside className="geo3d-soi" aria-label="Thông tin đối tượng" data-che-khung="">
-            <div className="geo3d-soi-dau">
-              <div>
-                {/* Thiết diện gọi bằng CHU TRÌNH khi mọi đỉnh có tên —
-                    "Thiết diện MNPQ" là cách đề bài gọi nó. Còn một đỉnh
-                    chưa tên thì giữ nhãn cũ, không ghép nửa tên nửa số. */}
-                <p className="geo3d-soi-ten">
-                  {ctThietDien?.cycleLabel ?? dangChon.label}
-                </p>
-                <p className="geo3d-soi-vai">
-                  {dangChon.role ?? ""}
-                </p>
-              </div>
-              <button
-                type="button"
-                className="geo3d-soi-dong"
-                onClick={() => chon(null)}
-                aria-label="Bỏ chọn"
-              >
-                <IconClose />
-              </button>
-            </div>
+          <BangNoi
+            panel="soi"
+            className="geo3d-soi"
+            tieuDe={ctThietDien?.cycleLabel ?? dangChon.label}
+            tieuDeLop="geo3d-soi-ten"
+            nhanDong="Bỏ chọn"
+            onDong={() => chon(null)}
+          >
+           <div className="geo3d-soi-than">
+            {dangChon.role && <p className="geo3d-soi-vai">{dangChon.role}</p>}
 
             {dangChon.parent && (
               <p className="geo3d-soi-thuoc">
@@ -573,67 +578,59 @@ export function Scene3DExplorer({
                 )}
               </dl>
             )}
-          </aside>
+           </div>
+          </BangNoi>
         )}
 
-        {/* NGĂN KÉO — phủ lên khung, KHÔNG bóp khung lại. */}
-        {ngan && (
-          <aside
-            className="geo3d-ngan"
-            aria-label={ngan === "de" ? "Đề bài" : ngan === "dai-luong" ? "Các đại lượng" : "Các thành phần của hình"}
-            data-che-khung=""
-          >
-            <div className="geo3d-ngan-dau">
-              <h4 className="geo3d-ngan-tieu">
-                {ngan === "de" ? "Đề bài" : ngan === "dai-luong" ? "Các đại lượng" : "Các thành phần của hình"}
-              </h4>
-              <button
-                type="button"
-                className="geo3d-soi-dong"
-                onClick={() => setNgan(null)}
-                aria-label="Đóng"
-              >
-                <IconClose />
-              </button>
-            </div>
-            {ngan === "de" ? (
-              <p className="geo3d-de">{de}</p>
-            ) : ngan === "dai-luong" ? (
-              <div className="geo3d-dai-luong">
-                {([["Kết quả", daiLuong.results], ["Đại lượng trung gian", daiLuong.steps],
-                   ["Dữ kiện", daiLuong.givens]] as const).filter(([, ids]) => ids.length > 0).map(([muc, ids]) => (
-                  <section key={muc} aria-label={muc}>
-                    <h5 className="geo3d-dai-luong-muc">{muc}</h5>
-                    <ul className="geo3d-dai-luong-ds">
-                      {ids.map((id) => (
-                        <li key={id}>
-                          <button
-                            type="button"
-                            className={`geo3d-tree-item${tt.selected_id === id ? " la-chon" : ""}`}
-                            aria-pressed={tt.selected_id === id}
-                            data-quantity-id={id}
-                            onClick={() => {
-                              chon(id);
-                              setNgan(null);
-                            }}
-                          >
-                            {giaTri(id)}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
-              </div>
-            ) : (
+        {/* BẢNG THÔNG TIN — Xem đề, Thành phần, Đại lượng: mỗi bảng một `BangNoi`, mở độc lập, nổi TRÊN khung (không
+            bóp khung lại). W4 thay MỘT ngăn phủ mép phải (mở cái này đóng cái kia; trên mobile phủ lên hình). */}
+        {moBang.has("de") && (
+          <BangNoi panel="de" className="geo3d-ngan" tieuDe="Đề bài" onDong={() => dongBang("de")}
+                   traTieuDiem={() => nutMoBang("de")}>
+            <div className="geo3d-ngan-than"><p className="geo3d-de">{de}</p></div>
+          </BangNoi>
+        )}
+        {moBang.has("thanh-phan") && (
+          <BangNoi panel="thanh-phan" className="geo3d-ngan" tieuDe="Các thành phần của hình"
+                   onDong={() => dongBang("thanh-phan")} traTieuDiem={() => nutMoBang("thanh-phan")}>
+            <div className="geo3d-ngan-than">
               <ul className="geo3d-tree">
                 {cay.map((n) => (
                   <NutCay key={n.id} nut={n} chon={tt.selected_id}
                           onChon={chon} coMat={coMat} tapNguon={tapNguon} />
                 ))}
               </ul>
-            )}
-          </aside>
+            </div>
+          </BangNoi>
+        )}
+        {moBang.has("dai-luong") && (
+          <BangNoi panel="dai-luong" className="geo3d-ngan" tieuDe="Các đại lượng"
+                   onDong={() => dongBang("dai-luong")} traTieuDiem={() => nutMoBang("dai-luong")}>
+            <div className="geo3d-ngan-than geo3d-dai-luong">
+              {([["Kết quả", daiLuong.results], ["Đại lượng trung gian", daiLuong.steps],
+                 ["Dữ kiện", daiLuong.givens]] as const).filter(([, ids]) => ids.length > 0).map(([muc, ids]) => (
+                <section key={muc} aria-label={muc}>
+                  <h5 className="geo3d-dai-luong-muc">{muc}</h5>
+                  <ul className="geo3d-dai-luong-ds">
+                    {ids.map((id) => (
+                      <li key={id}>
+                        {/* W4: chọn GIỮ bảng mở — ô soi mở thành bảng riêng, không chiếm chỗ bảng này. */}
+                        <button
+                          type="button"
+                          className={`geo3d-tree-item${tt.selected_id === id ? " la-chon" : ""}`}
+                          aria-pressed={tt.selected_id === id}
+                          data-quantity-id={id}
+                          onClick={() => chon(id)}
+                        >
+                          {giaTri(id)}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </BangNoi>
         )}
       </div>
 
@@ -648,6 +645,7 @@ export function Scene3DExplorer({
         <span className="geo3d-buoc-loi">{geometryNarrationAt(day, buocHien)}</span>
       </p>
     </div>
+    </BangNoiHost>
   );
 }
 

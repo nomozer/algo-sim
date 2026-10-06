@@ -1492,3 +1492,74 @@ test("W3 H-W2-4: a measured-only helper plane opens no geometry step; every stat
     semantic_kind: "GEOMETRY_CONSTRUCTION" };
   assert.equal(LIB.expectedGeometryTimeline(sc).length, 3);
 });
+
+/* regular-square-pyramid-w04 (H-W2-3): one shared floating-panel mechanism for every information panel. */
+const HOP = (x, y, w, h) => ({ x, y, w, h });
+const BANG_W4 = (pos = "absolute") => ({ position: pos, rect: HOP(900, 100, 300, 200), close_reachable: true });
+const W4_DESKTOP = {
+  panels: { soi: BANG_W4(), de: BANG_W4(), "thanh-phan": BANG_W4(), "dai-luong": BANG_W4(), "cac-buoc": BANG_W4() },
+  canvas: { before: HOP(40, 100, 1320, 522), states: [HOP(40, 100, 1320, 522)] },
+  camera: { before: CAM, states: [CAM] },
+  step: { before: "Bước 8/8", states: ["Bước 8/8"] },
+  quantity: { id: "V", selected: "V", drawer_open: true, inspector_open: true, label_shown: true },
+  drag: { before: HOP(900, 100, 300, 200), after: HOP(600, 220, 300, 200), camera_before: CAM, camera_after: CAM },
+  resized: { canvas: HOP(40, 100, 1000, 400), panels: { soi: HOP(700, 110, 300, 200) }, close_reachable: { soi: true } },
+  reset: { dragged: HOP(600, 220, 300, 200), after: HOP(900, 100, 300, 200), disabled_after: true },
+  escape_closed: true,
+  reopen: { closed_at: HOP(500, 200, 300, 200), reopened: HOP(500, 200, 300, 200) },
+  annotations: { pass: true },
+};
+
+test("W4 desktop panel gate: every injected fault has its code", () => {
+  assert.deepEqual(LIB.assessPanelsDesktop(W4_DESKTOP).reason_codes, []);
+  const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_DESKTOP)); f(o); return LIB.assessPanelsDesktop(o).reason_codes; };
+  for (const [f, ma] of [
+    [(o) => { delete o.panels.soi; }, "PANEL_MISSING"],
+    [(o) => { o.panels.soi.position = "static"; }, "PANEL_NOT_FLOATING:soi"],
+    [(o) => { o.panels["dai-luong"].close_reachable = false; }, "PANEL_CLOSE_UNREACHABLE:dai-luong"],
+    [(o) => { o.canvas.states.push(HOP(40, 100, 1000, 522)); }, "PANEL_RESIZES_CANVAS"],
+    [(o) => { o.camera.states.push(CAM2); }, "PANEL_MOVES_CAMERA"],
+    [(o) => { o.step.states.push("Bước 1/8"); }, "PANEL_CHANGES_STEP"],
+    [(o) => { o.quantity.drawer_open = false; }, "QUANTITY_PANEL_CLOSED_ON_SELECT"],
+    [(o) => { o.quantity.inspector_open = false; }, "INSPECTOR_MISSING"],
+    [(o) => { o.quantity.label_shown = false; }, "SELECTED_LABEL_MISSING"],
+    [(o) => { o.quantity.selected = null; }, "QUANTITY_NOT_SELECTED"],
+    [(o) => { o.drag.after = o.drag.before; }, "PANEL_DRAG_IGNORED"],
+    [(o) => { o.drag.camera_after = CAM2; }, "PANEL_DRAG_ORBITS"],
+    [(o) => { o.resized.panels.soi = HOP(900, 110, 300, 200); }, "PANEL_OUTSIDE_CANVAS_AFTER_RESIZE:soi"],
+    [(o) => { o.resized.close_reachable.soi = false; }, "PANEL_CLOSE_UNREACHABLE_AFTER_RESIZE:soi"],
+    [(o) => { o.reset.after = o.reset.dragged; }, "PANEL_RESET_FAILED"],
+    [(o) => { o.reset.disabled_after = false; }, "PANEL_RESET_FAILED"],
+    [(o) => { o.escape_closed = false; }, "PANEL_ESCAPE_FAILED"],
+    [(o) => { o.reopen.reopened = HOP(900, 100, 300, 200); }, "PANEL_REOPEN_LOST_POSITION"],
+    [(o) => { o.annotations.pass = false; }, "ANNOTATIONS_DETACHED"],
+  ]) assert.ok(bien(f).includes(ma), ma);
+});
+
+const W4_MOBILE = {
+  panels: Object.fromEntries(["soi", "thanh-phan", "dai-luong", "cac-buoc"].map((id, i) => [id,
+    { position: "static", rect: HOP(16, 700 + i * 300, 358, 280), header_buttons: [{ w: 44, h: 44 }] }])),
+  canvas: { before: HOP(16, 160, 358, 420), states: [HOP(16, 160, 358, 420)] },
+  controls: HOP(16, 590, 358, 100),
+  step: { before: "Bước 8/8", states: ["Bước 8/8"] },
+  quantity: { id: "V", selected: "V", inspector_open: true },
+  collapse: { collapsed_body: false, expanded_body: true },
+  orbit: { camera_before: CAM, camera_after: CAM2 },
+};
+
+test("W4 mobile panel gate: every injected fault has its code", () => {
+  assert.deepEqual(LIB.assessPanelsMobile(W4_MOBILE).reason_codes, []);
+  const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_MOBILE)); f(o); return LIB.assessPanelsMobile(o).reason_codes; };
+  for (const [f, ma] of [
+    [(o) => { delete o.panels["cac-buoc"]; }, "PANEL_MISSING"],
+    [(o) => { o.panels.soi.position = "absolute"; }, "SHEET_FLOATS:soi"],
+    [(o) => { o.panels.soi.rect = HOP(16, 300, 358, 200); }, "SHEET_COVERS_CANVAS:soi"],
+    [(o) => { o.panels.soi.rect = HOP(16, 600, 358, 60); }, "SHEET_COVERS_CONTROLS:soi"],
+    [(o) => { o.panels.soi.header_buttons = [{ w: 20, h: 20 }]; }, "TOUCH_TARGET_SMALL:soi"],
+    [(o) => { o.canvas.states.push(HOP(16, 160, 358, 300)); }, "SHEET_RESIZES_CANVAS"],
+    [(o) => { o.step.states.push("Bước 1/8"); }, "PANEL_CHANGES_STEP"],
+    [(o) => { o.quantity.inspector_open = false; }, "QUANTITY_NOT_SELECTED"],
+    [(o) => { o.collapse.collapsed_body = true; }, "SHEET_NOT_COLLAPSIBLE"],
+    [(o) => { o.orbit.camera_after = CAM; }, "FIGURE_NOT_USABLE"],
+  ]) assert.ok(bien(f).includes(ma), ma);
+});

@@ -310,12 +310,13 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
     expect(html()).toContain("geo3d-canvas");
     // Ngăn kéo và ô soi neo tuyệt đối vào sân khấu ⇒ phủ LÊN khung, không
     // chen cạnh nó. Một bảng chen cạnh là một sidebar, và sidebar là thứ
-    // wave này gỡ đi.
+    // wave này gỡ đi. W4: cả hai là `BangNoi` — khung tuyệt đối chung `.geo3d-bang-noi`.
     const css = readFileSync(join(__dirname, "../../../styles/global.css"), "utf8");
-    for (const lop of [".geo3d-ngan {", ".geo3d-soi {"]) {
-      const i = css.indexOf(lop);
-      expect(i).toBeGreaterThan(-1);
-      expect(css.slice(i, i + 220)).toContain("position: absolute");
+    const i = css.indexOf("\n.geo3d-bang-noi {");
+    expect(i).toBeGreaterThan(-1);
+    expect(css.slice(i, i + 220)).toContain("position: absolute");
+    for (const lop of ['className="geo3d-ngan"', 'className="geo3d-soi"']) {
+      expect(src).toMatch(new RegExp(`<BangNoi[^>]*${lop}`));
     }
   });
 
@@ -323,7 +324,9 @@ describe("§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần", ()
     // `ngan` chỉ giữ *bảng nào đang mở*. Nếu nó giữ thêm một id được chọn thì
     // cây và khung nhìn sẽ chỉ về hai vật khác nhau.
     // regular-square-pyramid-w01 §0.1-2: thêm ngăn «Đại lượng» — vẫn chỉ là TÊN ngăn đang mở.
-    expect(ma).toContain('useState<"thanh-phan" | "de" | "dai-luong" | null>');
+    // W4: nhiều bảng cùng mở ⇒ một TẬP tên bảng; vẫn không giữ id nào được chọn.
+    expect(ma).toContain('type BangThongTin = "de" | "thanh-phan" | "dai-luong"');
+    expect(ma).toContain("useState<ReadonlySet<BangThongTin>>");
     for (const x of ["nganSelected", "treeSelected", "viewportSelected"]) {
       expect(ma, `ngăn kéo giữ chọn riêng: ${x}`).not.toContain(x);
     }
@@ -399,7 +402,8 @@ describe("tích hợp · trạng thái không được rớt sang bài mới", (
     new URL("./Scene3DExplorer.tsx", import.meta.url), "utf8");
 
   it("có hiệu ứng trả trạng thái gắn với cảnh về đầu khi `scene` đổi", () => {
-    expect(src).toMatch(/useEffect\(\(\) => \{\s*setTt\(taoTrangThai\(\)\);\s*setNgan\(null\);\s*\}, \[scene\]\)/);
+    // W4: các bảng thông tin đang mở (một TẬP, không còn một ngăn) gắn với cảnh ⇒ về rỗng khi đổi bài.
+    expect(src).toMatch(/useEffect\(\(\) => \{\s*setTt\(taoTrangThai\(\)\);\s*setMoBang\(new Set\(\)\);\s*\}, \[scene\]\)/);
   });
 
   it("KHÔNG reset thứ thuộc về sở thích người dùng", () => {

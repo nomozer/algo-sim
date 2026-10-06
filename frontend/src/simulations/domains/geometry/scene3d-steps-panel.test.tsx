@@ -50,11 +50,12 @@ describe("§0.1-2 · mọi kết quả qua nút chọn đại lượng + một �
     expect(quantityChoices(CANH, 0).results).toEqual([]);
   });
 
-  it("xưởng có nút «Đại lượng»; chọn một đại lượng đóng ngăn và mở ô soi của nó (một nơi chi tiết)", () => {
+  it("xưởng có nút «Đại lượng»; chọn một đại lượng mở ô soi của nó (một nơi chi tiết) và GIỮ bảng mở (W4)", () => {
     const src = nguon("./Scene3DExplorer.tsx");
     expect(src).toContain("Đại lượng");
-    expect(src).toMatch(/ngan === "dai-luong"/);
-    expect(src).toMatch(/chon\(id\);\s*setNgan\(null\)/);
+    expect(src).toMatch(/moBang\.has\("dai-luong"\)/);
+    // W1 đóng ngăn khi chọn vì ngăn và ô soi tranh nhau mép phải; W4 hai thứ là hai bảng nổi riêng ⇒ giữ bảng mở.
+    expect(src).toMatch(/onClick=\{\(\) => chon\(id\)\}/);
     // Bộ đo trình duyệt bấm đúng đại lượng qua id máy — thuộc tính dữ liệu, không phải chữ hiển thị.
     expect(src).toMatch(/data-quantity-id=\{id\}/);
   });
@@ -208,11 +209,20 @@ describe("W3 · H-W2-4 · mặt phẳng phụ chỉ để đo không mở bướ
   });
 });
 
-describe("W2 · B · thứ tự lớp: ngăn và ô soi nằm trên bảng nổi", () => {
-  it("nút Đóng của ngăn/ô soi không bị bảng nổi che", () => {
+/* W2 · B xếp ngăn và ô soi CỐ ĐỊNH trên bảng nổi (z 4 > 3) để nút Đóng của chúng không bị che. W4: mọi bảng là
+   `BangNoi` ⇒ thứ tự lớp do host đặt theo lần dùng gần nhất (`lenTren`): bảng vừa mở / vừa chạm luôn trên cùng, nên
+   nút Đóng của bảng người học đang dùng không bao giờ nằm dưới bảng khác. */
+describe("W4 · thứ tự lớp: bảng vừa dùng nằm trên cùng", () => {
+  it("lớp đặt theo host (mở, chạm, nhận tiêu điểm ⇒ lên trên), không còn z cố định riêng của ngăn/ô soi", () => {
     const css = nguon("../../../styles/global.css");
-    const z = (sel: string) => Number(/z-index:\s*(\d+)/.exec(css.slice(css.indexOf(sel), css.indexOf("}", css.indexOf(sel))))?.[1]);
-    expect(z(".geo3d-ngan {")).toBeGreaterThan(z(".geo3d-bang-noi {"));
-    expect(z(".geo3d-soi {")).toBeGreaterThan(z(".geo3d-bang-noi {"));
+    const bp = nguon("./scene3d-floating-panel.tsx");
+    for (const sel of [".geo3d-bang-noi.geo3d-ngan {", ".geo3d-bang-noi.geo3d-soi {"]) {
+      const i = css.indexOf(sel);
+      expect(i, sel).toBeGreaterThan(-1);
+      expect(css.slice(i, css.indexOf("}", i))).not.toMatch(/z-index/);
+    }
+    expect(bp).toMatch(/onPointerDownCapture=\{\(\) => host\?\.len\(panel\)\}/);
+    expect(bp).toMatch(/onFocusCapture=\{\(\) => host\?\.len\(panel\)\}/);
+    expect(bp).toMatch(/zIndex: lop/);
   });
 });

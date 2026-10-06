@@ -347,14 +347,14 @@ describe("(5E) playback chỉ đổi MỘT SỐ NGUYÊN", () => {
     ]);
   });
 
-  it("chỉ có ĐÚNG bốn `useState`: bước, trạng thái phát, panel các bước mở/đóng, vị trí panel", () => {
+  it("chỉ có ĐÚNG ba `useState`: bước, trạng thái phát, panel các bước mở/đóng", () => {
     // Thêm state là dấu hiệu playback bắt đầu sở hữu một thứ khác ngoài thời gian — và đó là lúc nó trượt
     // thành công cụ dựng hình. Cái thứ ba (regular-square-pyramid-w01, §0.1-3) là sở thích TRÌNH BÀY: panel
-    // «Các bước dựng» mở hay đóng, dự phòng khi xưởng không giữ; nó không chạm hình hay bước. Cái thứ tư
-    // (regular-square-pyramid-w02 · B) cũng là trình bày: chỗ người học kéo bảng nổi tới, giữ qua đóng/mở.
-    expect((src.match(/useState/g) ?? []).length).toBe(5); // 1 import + 4 dùng
+    // «Các bước dựng» mở hay đóng, dự phòng khi xưởng không giữ; nó không chạm hình hay bước. Cái thứ tư của W2 · B
+    // (chỗ người học kéo bảng nổi tới) chuyển sang host bảng nổi chung của xưởng ở W4 — trình phát không giữ nó nữa.
+    expect((src.match(/useState/g) ?? []).length).toBe(4); // 1 import + 3 dùng
     expect(src).toMatch(/const \[moBuocTrong, setMoBuocTrong\] = useState\(false\)/);
-    expect(src).toMatch(/const \[viTriBuoc, setViTriBuoc\] = useState<ViTriBang \| null>\(null\)/);
+    expect(src).not.toMatch(/viTriBuoc/);
   });
 
   it("`scene` đi vào và đi ra NGUYÊN VẸN cùng tham chiếu", () => {

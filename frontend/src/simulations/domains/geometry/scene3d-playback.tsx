@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
@@ -17,7 +17,7 @@ import type { InteractionState } from "./interaction-state";
 import type { AnnotationView } from "./scene3d-annotations";
 import { Scene3DWorkspace } from "./scene3d-view";
 import { Scene3DSolution } from "./scene3d-solution";
-import { BangNoi, type ViTriBang } from "./scene3d-floating-panel";
+import { BangNoi } from "./scene3d-floating-panel";
 import { geometryStepGroups } from "./scene3d-auxiliary";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
 
@@ -89,15 +89,9 @@ export function Scene3DPlayer({
   const datMoBuoc = (mo: boolean) => (onStepsOpenChange ? onStepsOpenChange(mo) : setMoBuocTrong(mo));
   const doiBuoc = () => datMoBuoc(!moBuoc);
   const idBuoc = useId();
-  /* W2 · B: bảng nổi trên vùng mô phỏng — vị trí người học kéo tới sống ở đây, nên đóng/mở không mất nó (`null` =
-     mặc định, phía phải khung). Vùng kẹp là khung canvas của renderer. */
-  const [viTriBuoc, setViTriBuoc] = useState<ViTriBang | null>(null);
-  const playerRef = useRef<HTMLDivElement>(null);
-  const khungRef = useRef<HTMLElement | null>(null);
+  /* W2 · B → W4: bảng nổi trên vùng mô phỏng — vị trí người học kéo tới do HOST bảng nổi của xưởng giữ
+     (`BangNoiHost`), nên đóng/mở không mất nó; bảng tự kẹp vào khung canvas của trình phát. */
   const nutBuocRef = useRef<HTMLButtonElement>(null);
-  useLayoutEffect(() => {
-    khungRef.current = playerRef.current?.querySelector<HTMLElement>(".geo3d-canvas") ?? null;
-  });
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
   // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
@@ -189,7 +183,7 @@ export function Scene3DPlayer({
   };
 
   return (
-    <div ref={playerRef} className="geo3d-player">
+    <div className="geo3d-player">
       <Scene3DWorkspace
         scene={scene}
         step={step}
@@ -275,7 +269,7 @@ export function Scene3DPlayer({
         /* ROADMAP §0.1-3/4/5: một mục mỗi bước DỰNG; chọn ⇒ dừng phát rồi đặt đúng neo của thanh bước. W2: bảng NỔI
            trên khung (desktop, kéo được) — không chiếm cột, không đổi cỡ canvas; khổ hẹp: trong dòng chảy dưới điều
            khiển, thu gọn được. */
-        <BangNoi id={idBuoc} tieuDe="Các bước dựng" viTri={viTriBuoc} onViTri={setViTriBuoc} khungRef={khungRef}
+        <BangNoi panel="cac-buoc" id={idBuoc} tieuDe="Các bước dựng"
                  onDong={() => { datMoBuoc(false); nutBuocRef.current?.focus(); }}>
         <nav className="geo3d-cac-buoc" aria-label="Các bước dựng">
           <ol className="geo3d-cac-buoc-ds">

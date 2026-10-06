@@ -300,13 +300,15 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     expect(css).toMatch(/\.app-layout\.la-canh-3d[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/s);
   });
 
-  it("ô soi là CỘT cạnh hình ở desktop, không phải lớp phủ đè lên khối", () => {
+  /* regular-square-pyramid-w04 (H-W2-3, quyết định của người dùng): CỘT ô soi của bản trước đúng là không đè khối,
+     nhưng chọn một vật làm khung 3D co lại và camera đổi tỉ lệ giữa lúc người học đang nhìn. Ô soi nay là bảng NỔI
+     như mọi bảng thông tin (`BangNoi`): tự tránh nút nổi và bảng khác khi mở, kéo đi được — không cột, không co khung. */
+  it("ô soi KHÔNG dành cột cạnh hình ở desktop: không lưới hai cột, ô soi là bảng nổi", () => {
     const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf8");
-    const khoi = css.slice(css.indexOf("@media (min-width: 1100px)"));
-    expect(khoi).toContain(".geo3d-san > .geo3d-soi");
-    // `position: static` là toàn bộ điểm của bản vá: hết tuyệt đối thì hết đè.
-    expect(khoi).toMatch(/\.geo3d-san > \.geo3d-soi \{[^}]*position:\s*static/s);
-    expect(khoi).toMatch(/\.geo3d-san:has\(\.geo3d-soi\)[^}]*grid-template-columns/s);
+    expect(css).not.toMatch(/\.geo3d-san:has\(\.geo3d-soi\)/);
+    expect(css).not.toMatch(/\.geo3d-san > \.geo3d-soi/);
+    const ex = readFileSync(new URL("../simulations/domains/geometry/Scene3DExplorer.tsx", import.meta.url), "utf8");
+    expect(ex).toMatch(/<BangNoi\s+panel="soi"/);
   });
 
   /* w10 — ảnh 390×844: ô soi neo đáy SÂN KHẤU, mà sân khấu chứa cả dòng số đo
@@ -318,7 +320,8 @@ describe("W-UI · xưởng 3D dùng bề rộng desktop và không tự che hìn
     // Cắt tới `@media` KẾ TIẾP — không tới "\n}\n": file CRLF làm mốc ấy trượt
     // sang khối 1100px (vốn cũng có `.geo3d-soi … static`) và test xanh oan.
     const khoi = css.slice(i, css.indexOf("@media", i + 1));
-    expect(khoi).toMatch(/\n\s*\.geo3d-soi \{[^}]*position:\s*static/s);
+    // W4: cùng luật cho mọi bảng thông tin (ô soi và ba bảng Xem đề / Thành phần / Đại lượng).
+    expect(khoi).toMatch(/\n\s*\.geo3d-bang-noi\.geo3d-soi,\s*\n\s*\.geo3d-bang-noi\.geo3d-ngan \{[^}]*position:\s*static/s);
   });
 
   /* w10 — ảnh 390×844 của suite: đỉnh S nằm DƯỚI nút nổi "Xem lại toàn hình".

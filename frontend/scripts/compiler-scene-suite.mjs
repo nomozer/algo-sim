@@ -656,7 +656,8 @@ async function observeTree(session, scene, expectedIds) {
       pass: matches.length > 0 && observedPresent === expected.has(object.id),
     });
   }
-  await clickAria(session, "Đóng");
+  // W4: mỗi bảng thông tin có nút đóng mang TÊN riêng (nhiều bảng có thể cùng mở).
+  await clickAria(session, "Đóng các thành phần của hình");
   await pollUntil(() => session.eval(`!document.querySelector('.geo3d-tree')`), Boolean,
     { timeoutMs: 5_000 });
   return { objects: checks, pass: checks.every((item) => item.pass) };
@@ -757,10 +758,15 @@ async function closeQuantityDrawer(session) {
   if (await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
 }
 
-/** Chọn một đại lượng như người học khi lời giải thu gọn: chip «Đại lượng» → nút của nó (ngăn tự đóng). */
+/** Chọn một đại lượng như người học khi lời giải thu gọn: chip «Đại lượng» → nút của nó. W4: bảng «Đại lượng» nay
+ *  GIỮ mở khi chọn (sản phẩm); luồng đo này đóng nó sau khi chọn, như người học dọn bàn, để phép đo nhãn và ô soi
+ *  phía sau không phụ thuộc bảng ấy đang che phần nào của hình. Bảng ở lại khi chọn: `w04-panels-probe.mjs`. */
 async function selectViaPicker(session, id) {
   if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
-  return trustedClick(session, `document.querySelector('.geo3d-dai-luong [data-quantity-id=${JSON.stringify(id)}]')`);
+  const ok = await trustedClick(session,
+    `document.querySelector('.geo3d-dai-luong [data-quantity-id=${JSON.stringify(id)}]')`);
+  await closeQuantityDrawer(session);
+  return ok;
 }
 
 async function deselect(session) {
@@ -1313,7 +1319,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // vốn đặt lại camera), cuộn về ĐÚNG vị trí trung tính, rồi so camera · lựa chọn · cuộn · khung.
     const causalSelected = { ...await jsonEval(session, CAMERA_CUON), canvas_sha256: causalAfterFrame.sha256,
       scroll_y_after_click: scrollAfterClick };
-    await trustedClick(session, "document.querySelector('.geo3d-soi-dong')");
+    // W4: ô soi là `BangNoi` — `.geo3d-soi-dong` nay là lớp chung của MỌI nút đầu bảng (thu gọn, về mặc định, đóng);
+    // nút bỏ chọn được gọi bằng tên.
+    await trustedClick(session, "document.querySelector('.geo3d-soi [aria-label=\"Bỏ chọn\"]')");
     await pollUntil(() => session.eval("window.__geo3d_selected_id||null"), (id) => id === null,
       { timeoutMs: 5_000 });
     await session.eval(`(()=>{window.scrollTo(0,${causalNeutral.scroll_y});return true})()`);

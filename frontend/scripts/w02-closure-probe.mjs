@@ -56,7 +56,7 @@ const coChip = (s, t) => j(s, `[...document.querySelectorAll('.geo3d-thanh-nut .
 const moBang = async (s, mo) => {
   const dang = await j(s, "document.querySelector('.geo3d-cac-buoc-mo')?.getAttribute('aria-expanded')==='true'");
   if (dang !== mo) await trustedClick(s, "document.querySelector('.geo3d-cac-buoc-mo')");
-  await pollUntil(() => j(s, "!!document.querySelector('.geo3d-bang-noi')"), (x) => x === mo, { timeoutMs: 5000 });
+  await pollUntil(() => j(s, "!!document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc]')"), (x) => x === mo, { timeoutMs: 5000 });
   await nghi();
 };
 const denBuoc = async (s, g) => {
@@ -74,10 +74,10 @@ async function keo(s, x, y, dx, dy) {
   await nghi();
 }
 const tamTieuDe = async (s) => {
-  const r = await hop(s, ".geo3d-bang-noi-tieu");
+  const r = await hop(s, "[data-panel=cac-buoc] .geo3d-bang-noi-tieu");
   return [r.x + Math.min(r.w / 2, 40), r.y + r.h / 2];
 };
-const thayNutDong = (s) => j(s, "(()=>{const b=document.querySelector('.geo3d-bang-noi-dong');"
+const thayNutDong = (s) => j(s, "(()=>{const b=document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-dong');"
   + "if(!b)return false;const r=b.getBoundingClientRect();const x=r.x+r.width/2,y=r.y+r.height/2;"
   + "return x>=0&&y>=0&&x<=innerWidth&&y<=innerHeight&&(document.elementFromPoint(x,y)===b||b.contains(document.elementFromPoint(x,y)))})()");
 
@@ -95,41 +95,41 @@ async function desktopPanel(s) {
   const selected_before = await chon(s);
   await moBang(s, true);
   const o = { canvas_before, camera_before, step_before, selected_before };
-  o.position = await j(s, "getComputedStyle(document.querySelector('.geo3d-bang-noi')).position");
+  o.position = await j(s, "getComputedStyle(document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc]')).position");
   o.canvas_open = await hop(s, ".geo3d-canvas");
   o.camera_open = await cam(s);
-  o.panel_open = await hop(s, ".geo3d-bang-noi");
+  o.panel_open = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   let [x, y] = await tamTieuDe(s);
   await keo(s, x, y, -420, 160);
-  o.panel_dragged = await hop(s, ".geo3d-bang-noi");
+  o.panel_dragged = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   o.camera_after_drag = await cam(s);
   [x, y] = await tamTieuDe(s);
   await keo(s, x, y, -3000, -3000);
-  o.panel_far = await hop(s, ".geo3d-bang-noi");
+  o.panel_far = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   o.close_visible_far = await thayNutDong(s);
-  await j(s, "(document.querySelector('.geo3d-bang-noi-dau').focus(),true)");
-  const truoc = await hop(s, ".geo3d-bang-noi");
+  await j(s, "(document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-dau').focus(),true)");
+  const truoc = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   for (let i = 0; i < 3; i += 1) await phim(s, "ArrowRight", 39);
-  o.key_dx = (await hop(s, ".geo3d-bang-noi")).x - truoc.x;
+  o.key_dx = (await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]")).x - truoc.x;
   await s.setViewport({ width: 1100, height: 700 });
   await nghi();
   o.canvas_resized = await hop(s, ".geo3d-canvas");
-  o.panel_resized = await hop(s, ".geo3d-bang-noi");
+  o.panel_resized = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   o.close_visible_resized = await thayNutDong(s);
   await s.setViewport(null);
   await nghi();
-  await trustedClick(s, "document.querySelector('.geo3d-bang-noi [aria-label=\"Về vị trí mặc định\"]')");
+  await trustedClick(s, "document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc] [aria-label=\"Về vị trí mặc định\"]')");
   await nghi();
-  o.panel_reset = await hop(s, ".geo3d-bang-noi");
+  o.panel_reset = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   [x, y] = await tamTieuDe(s);
   await keo(s, x, y, -300, 120);
-  o.panel_closed_at = await hop(s, ".geo3d-bang-noi");
-  await j(s, "(document.querySelector('.geo3d-bang-noi-dau').focus(),true)");
+  o.panel_closed_at = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
+  await j(s, "(document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-dau').focus(),true)");
   await phim(s, "Escape", 27);
-  await pollUntil(() => j(s, "!!document.querySelector('.geo3d-bang-noi')"), (v) => v === false, { timeoutMs: 5000 });
+  await pollUntil(() => j(s, "!!document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc]')"), (v) => v === false, { timeoutMs: 5000 });
   o.focus_after_close = await j(s, "document.activeElement?.classList.contains('geo3d-cac-buoc-mo')?'geo3d-cac-buoc-mo':(document.activeElement?.tagName||'')");
   await moBang(s, true);
-  o.panel_reopened = await hop(s, ".geo3d-bang-noi");
+  o.panel_reopened = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
   o.step_after = await buoc(s);
   o.selected_after = await chon(s);
   return o;
@@ -174,13 +174,13 @@ async function runDesktop(ho, fixture) {
     await nghi();
     kq.panel_observation = await desktopPanel(s);
     kq.panel = assessFloatingPanel(kq.panel_observation);
-    await trustedClick(s, "document.querySelector('.geo3d-bang-noi [aria-label=\"Về vị trí mặc định\"]')");
+    await trustedClick(s, "document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc] [aria-label=\"Về vị trí mặc định\"]')");
     await nghi();
     kq.images = { panel_open_default: await capture(s, join(anhDir, "steps_panel_floating.png")) };
     const [x, y] = await tamTieuDe(s);
     await keo(s, x, y, -480, 120);
     kq.images.panel_dragged = await capture(s, join(anhDir, "steps_panel_dragged.png"));
-    await trustedClick(s, "document.querySelector('.geo3d-bang-noi [aria-label=\"Về vị trí mặc định\"]')");
+    await trustedClick(s, "document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc] [aria-label=\"Về vị trí mặc định\"]')");
     // A: nhãn theo bước ở "Hiện tất cả" (chế độ rộng nhất); mặc định đã do bộ đo chính kiểm từng bước.
     if (await coChip(s, "Hiện tất cả")) await chip(s, "Hiện tất cả");
     kq.labels_by_step = await nhanTheoBuoc(s, scene, ho, anhDir);
@@ -265,26 +265,26 @@ async function runMobile(ho, fixture) {
     await nghi();
     const o = { canvas_before: await hop(s, ".geo3d-canvas"), camera_before: await cam(s) };
     await moBang(s, true);
-    o.position = await j(s, "getComputedStyle(document.querySelector('.geo3d-bang-noi')).position");
+    o.position = await j(s, "getComputedStyle(document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc]')).position");
     o.canvas_open = await hop(s, ".geo3d-canvas");
     o.controls = await hop(s, ".geo3d-controls");
-    o.panel = await hop(s, ".geo3d-bang-noi");
-    await j(s, "(document.querySelector('.geo3d-bang-noi').scrollIntoView({block:'center'}),true)");
+    o.panel = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
+    await j(s, "(document.querySelector('.geo3d-bang-noi[data-panel=cac-buoc]').scrollIntoView({block:'center'}),true)");
     await nghi();
-    const p = await hop(s, ".geo3d-bang-noi-tieu");
-    const truoc = await hop(s, ".geo3d-bang-noi");
+    const p = await hop(s, "[data-panel=cac-buoc] .geo3d-bang-noi-tieu");
+    const truoc = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
     o.camera_before = await cam(s);
     await keo(s, p.x + 20, p.y + p.h / 2, -120, -200);
-    const sau = await hop(s, ".geo3d-bang-noi");
+    const sau = await hop(s, ".geo3d-bang-noi[data-panel=cac-buoc]");
     o.panel_after_drag = { ...o.panel, x: o.panel.x + (sau.x - truoc.x), y: o.panel.y + (sau.y - truoc.y) };
     o.camera_after_drag = await cam(s);
     kq.images = { sheet_open: await capture(s, join(anhDir, "steps_sheet_open.png")) };
-    o.expanded_body_present = await j(s, "!!document.querySelector('.geo3d-bang-noi-than')");
-    await trustedClick(s, "document.querySelector('.geo3d-bang-noi-gon')");
+    o.expanded_body_present = await j(s, "!!document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-than')");
+    await trustedClick(s, "document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-gon')");
     await nghi();
-    o.collapsed_body_present = await j(s, "!!document.querySelector('.geo3d-bang-noi-than')");
+    o.collapsed_body_present = await j(s, "!!document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-than')");
     kq.images.sheet_collapsed = await capture(s, join(anhDir, "steps_sheet_collapsed.png"));
-    await trustedClick(s, "document.querySelector('.geo3d-bang-noi-gon')");
+    await trustedClick(s, "document.querySelector('[data-panel=cac-buoc] .geo3d-bang-noi-gon')");
     await nghi();
     const g = Math.min(2, expectedGeometryTimeline(fixture.envelope.scene3d).length - 1);
     await trustedClick(s, `document.querySelector('[data-geometry-step="${g}"]')`);

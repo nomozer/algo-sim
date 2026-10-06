@@ -1692,6 +1692,76 @@ export function assessFloatingPanel(o) {
   return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }
 
+/* regular-square-pyramid-w04 (H-W2-3) — MỘT cơ chế bảng nổi cho mọi bảng thông tin: ô soi `soi`, Xem đề `de`,
+ * Thành phần `thanh-phan`, Đại lượng `dai-luong`, Các bước dựng `cac-buoc`. Hộp {x, y, w, h} theo khung nhìn. */
+const giaoHop = (a, b) => !!a && !!b && a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+
+/** Desktop. `o` = {panels: {[id]: {position, rect, close_reachable}}, canvas: {before, states[]}, camera: {before,
+ *  states[]}, step: {before, states[]}, selected_before, quantity: {id, selected, drawer_open, inspector_open,
+ *  label_shown}, drag: {before, after, camera_before, camera_after}, resized: {canvas, panels: {[id]: rect},
+ *  close_reachable: {[id]: bool}}, reset: {dragged, after, auto}, escape_closed, reopen: {closed_at, reopened},
+ *  annotations: {pass}}. Mọi bảng phải nổi, không đổi cỡ canvas / camera / bước; nhiều bảng cùng mở, nút đóng của
+ *  mỗi bảng bấm được; chọn đại lượng giữ bảng «Đại lượng», mở ô soi, hiện nhãn; kéo không xoay hình; đổi cỡ ⇒ kẹp;
+ *  về mặc định; Escape đóng; mở lại giữ chỗ. */
+export function assessPanelsDesktop(o) {
+  const r = [];
+  const ids = Object.keys(o.panels ?? {});
+  if (!["soi", "thanh-phan", "dai-luong", "cac-buoc"].every((id) => ids.includes(id))) r.push("PANEL_MISSING");
+  for (const id of ids) {
+    if (o.panels[id].position !== "absolute") r.push(`PANEL_NOT_FLOATING:${id}`);
+    if (o.panels[id].close_reachable !== true) r.push(`PANEL_CLOSE_UNREACHABLE:${id}`);
+  }
+  if ((o.canvas?.states ?? []).some((c) => !cungCo(o.canvas.before, c) || !cungCho(o.canvas.before, c))) {
+    r.push("PANEL_RESIZES_CANVAS");
+  }
+  if ((o.camera?.states ?? []).some((c) => !(cameraMotion(o.camera.before, c) <= CAMERA_SETTLE_TOLERANCE))) {
+    r.push("PANEL_MOVES_CAMERA");
+  }
+  if ((o.step?.states ?? []).some((s) => s !== o.step.before)) r.push("PANEL_CHANGES_STEP");
+  const q = o.quantity ?? {};
+  if (q.selected !== q.id) r.push("QUANTITY_NOT_SELECTED");
+  if (q.drawer_open !== true) r.push("QUANTITY_PANEL_CLOSED_ON_SELECT");
+  if (q.inspector_open !== true) r.push("INSPECTOR_MISSING");
+  if (q.label_shown !== true) r.push("SELECTED_LABEL_MISSING");
+  const d = o.drag ?? {};
+  if (cungCho(d.before, d.after)) r.push("PANEL_DRAG_IGNORED");
+  if (!(cameraMotion(d.camera_before, d.camera_after) <= CAMERA_SETTLE_TOLERANCE)) r.push("PANEL_DRAG_ORBITS");
+  for (const [id, p] of Object.entries(o.resized?.panels ?? {})) {
+    if (!trongHop(p, o.resized.canvas)) r.push(`PANEL_OUTSIDE_CANVAS_AFTER_RESIZE:${id}`);
+    if (o.resized.close_reachable?.[id] !== true) r.push(`PANEL_CLOSE_UNREACHABLE_AFTER_RESIZE:${id}`);
+  }
+  // Chỗ mặc định phụ thuộc các bảng đang mở (tự tránh) ⇒ "về mặc định" = rời chỗ đã kéo, nút về mặc định tắt lại.
+  if (!o.reset?.after || cungCho(o.reset.after, o.reset.dragged) || o.reset.disabled_after !== true) {
+    r.push("PANEL_RESET_FAILED");
+  }
+  if (o.escape_closed !== true) r.push("PANEL_ESCAPE_FAILED");
+  if (!cungCho(o.reopen?.closed_at, o.reopen?.reopened)) r.push("PANEL_REOPEN_LOST_POSITION");
+  if (o.annotations?.pass !== true) r.push("ANNOTATIONS_DETACHED");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
+/** Khổ hẹp. `o` = {panels: {[id]: {position, rect, header_buttons: [{w, h}]}}, canvas: {before, states[]}, controls,
+ *  step: {before, states[]}, quantity: {id, selected, inspector_open}, collapse: {collapsed_body, expanded_body},
+ *  orbit: {camera_before, camera_after}}. Mọi bảng trong dòng chảy (không nổi), không phủ khung hay điều khiển, nút
+ *  đầu bảng ≥ 44 px, thu gọn được; khung giữ cỡ; hình vẫn xoay được. */
+export function assessPanelsMobile(o) {
+  const r = [];
+  const ids = Object.keys(o.panels ?? {});
+  if (!["soi", "thanh-phan", "dai-luong", "cac-buoc"].every((id) => ids.includes(id))) r.push("PANEL_MISSING");
+  for (const [id, p] of Object.entries(o.panels ?? {})) {
+    if (p.position === "absolute" || p.position === "fixed") r.push(`SHEET_FLOATS:${id}`);
+    if (giaoHop(p.rect, o.canvas?.before)) r.push(`SHEET_COVERS_CANVAS:${id}`);
+    if (giaoHop(p.rect, o.controls)) r.push(`SHEET_COVERS_CONTROLS:${id}`);
+    if ((p.header_buttons ?? []).some((b) => b.w < 44 - 0.5 || b.h < 44 - 0.5)) r.push(`TOUCH_TARGET_SMALL:${id}`);
+  }
+  if ((o.canvas?.states ?? []).some((c) => !cungCo(o.canvas.before, c))) r.push("SHEET_RESIZES_CANVAS");
+  if ((o.step?.states ?? []).some((s) => s !== o.step.before)) r.push("PANEL_CHANGES_STEP");
+  if (o.quantity?.selected !== o.quantity?.id || o.quantity?.inspector_open !== true) r.push("QUANTITY_NOT_SELECTED");
+  if (o.collapse?.collapsed_body !== false || o.collapse?.expanded_body !== true) r.push("SHEET_NOT_COLLAPSIBLE");
+  if (!(cameraMotion(o.orbit?.camera_before, o.orbit?.camera_after) > CAMERA_SETTLE_TOLERANCE)) r.push("FIGURE_NOT_USABLE");
+  return { pass: r.length === 0, reason_codes: sortedUnique(r) };
+}
+
 /** W2 · B khổ hẹp: bảng trong dòng chảy dưới điều khiển, không phủ khung hay điều khiển, không kéo, thu gọn được. */
 export function assessStepsSheet(o) {
   const r = [];
