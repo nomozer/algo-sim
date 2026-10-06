@@ -200,7 +200,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 108 -> 109 (w17): phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là
     #   dữ kiện (served -> rejected).
     # 112 -> 113 (regular-square-pyramid-w02): envelope phục vụ đổi (đoạn SO, chiều cao theo quan hệ).
-    assert str(CACHE_VERSION) == "113"
+    # 113 -> 114 (regular-square-pyramid-w03): envelope phục vụ đổi (đoạn mà đề hỏi độ dài được dựng).
+    assert str(CACHE_VERSION) == "114"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

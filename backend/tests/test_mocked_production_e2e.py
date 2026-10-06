@@ -156,7 +156,9 @@ def test_e2e_mock_llm_phat_ra_mo_phong_XEM_DUOC(client):
     assert [e["step_index"] for e in su_kien] == list(range(len(su_kien)))
     # Vật KHÔNG được có mặt hết ở bước 0 — chuỗi dựng phải trải ra theo thời gian.
     dung = [e for e in su_kien if e["action"] == "CREATE"]
-    assert {e["object"] for e in dung} == {"M", "BM", "SAD", OID_DONG}
+    # regular-square-pyramid-w03 · H-W2-2: "Tính độ dài đoạn AK" ⇒ đoạn AK được dựng trước đáp số, mang tên theo
+    # đúng thứ tự đề viết.
+    assert {e["object"] for e in dung} == {"M", "BM", "SAD", OID_DONG, "doan_AK"}
     assert min(e["step_index"] for e in dung) > 0, "không có bước khởi tạo?"
     # Và mỗi bước phải nói nó DỰA VÀO đâu — thứ phân biệt một chuỗi dựng với
     # một danh sách hình rời rạc.

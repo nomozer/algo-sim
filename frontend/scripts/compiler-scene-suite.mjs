@@ -1645,10 +1645,8 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
       (d) => d.some((x) => x.text.includes(expected.answer)), { timeoutMs: 8_000 });
     const ketQua = ngan.filter((x) => x.sec === "Kết quả").map((x) => x.text).join(" ");
     // W18 §16.5: nhãn đáp số hiện khi người học CHỌN nó (mặc định gọn) — chọn trong ngăn (tự đóng).
-    // W2 · A: đáp số là độ dài của một đoạn KHÔNG được dựng ⇒ không có nhãn trên hình; vẫn chọn được qua ngăn
-    // (ô soi mở trên nó) — `annotation_absent_id`.
-    const chonId = expected.annotation_id ?? expected.annotation_absent_id;
-    if (chonId) await selectViaPicker(session, chonId);
+    // W3 · H-W2-2: đoạn mà đề hỏi độ dài được dựng (formation) ⇒ kỳ vọng W18 `annotation_id` khôi phục cho mọi ca.
+    if (expected.annotation_id) await selectViaPicker(session, expected.annotation_id);
     else await closeQuantityDrawer(session);
     const ann = await pollUntil(() => annotationState(session),
       (s) => !expected.annotation_id || (s.dom.includes(expected.annotation_id)
@@ -1660,9 +1658,6 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
     const assertions = {
       answer_shown: assertion(String(ketQua).includes(expected.answer), { answer: expected.answer }),
       annotation_present: assertion(!expected.annotation_id || ann.dom.includes(expected.annotation_id), ann.dom),
-      annotation_absent_but_reachable: assertion(!expected.annotation_absent_id
-        || (!ann.dom.includes(expected.annotation_absent_id) && ann.selected === expected.annotation_absent_id),
-      { dom: ann.dom, selected: ann.selected }),
       witness_drawn: assertion(!expected.witness || ann.witness.includes(expected.annotation_id), ann.witness),
       single_analyze_call: assertion(analyzeCalls() === 1, analyzeCalls()),
       no_uncaught_exception: assertion(uncaught.length === 0, uncaught),

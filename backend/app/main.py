@@ -769,7 +769,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       của công thức thể tích chọn theo quan hệ ⊥ kiểm chính xác ("× SO"; không còn "× DF" cho một cạnh tình cờ
 #       bằng chiều cao). 13 yêu cầu phục vụ dưới 112 lưu thành row vẫn HIT dù W2 dựng envelope khác; sáu họ cũ trùng
 #       byte (`runs/regular-square-pyramid-w02/diagnostics/PROOF_CACHE_ROW_W02.json`).
-CACHE_VERSION = "113"
+#   114 (2026-10-06, regular-square-pyramid-w03): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope PHỤC VỤ đổi nội dung: đoạn mà đề
+#       hỏi độ dài (khoảng cách giữa hai điểm chưa được nối, vd "độ dài đoạn SH") được dựng ngay trước đáp số
+#       (`formation._doan_duoc_hoi`, H-W2-2). 13 yêu cầu phục vụ dưới 113 lưu thành row vẫn HIT dù W3 dựng envelope
+#       khác; 34 row của W2 trùng byte (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
+CACHE_VERSION = "114"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

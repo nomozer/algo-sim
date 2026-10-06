@@ -367,9 +367,53 @@ def _phat(thieu: list[tuple[str, str, tuple]], lop: str, dung: set[str]
     return cau, khai
 
 
+def _canh_da_dung(cau: list[dict[str, Any]]) -> set[frozenset]:
+    """Cặp đầu mút của mọi đoạn các câu lệnh cấp ngoài đưa lên hình: đoạn (kể cả mục nhóm), cạnh vòng của đa giác,
+    cạnh vòng của mặt khối."""
+    ra: set[frozenset] = set()
+    for s in cau:
+        if s.get("kind") == "construct_segment":
+            ra |= {frozenset((c.get("endpoint_a"), c.get("endpoint_b")))
+                   for c in [s, *(s.get("items") or ())] if c.get("endpoint_a")}
+        vong = ([s.get("vertices") or []] if s.get("kind") == "construct_polygon"
+                else s.get("faces") or [] if s.get("kind") == "construct_solid" else [])
+        for v in vong:
+            ra |= {frozenset((a, v[(i + 1) % len(v)])) for i, a in enumerate(v)}
+    return ra
+
+
+def _doan_duoc_hoi(cau: list[dict[str, Any]], khai: list[dict[str, Any]], contract: Any,
+                   dung: set[str]) -> bool:
+    """regular-square-pyramid-w03 · H-W2-2: witness của một nghĩa vụ là khoảng cách giữa HAI ĐIỂM mà chưa đoạn nào
+    nối chúng trước phép đo ⇒ dựng đoạn ấy ngay trước phép đo, để đáp số "độ dài đoạn SH" có chỗ bám trên hình (luật
+    nhãn W2 · A). Khoảng cách tới đường/mặt giữ nhân chứng W18, không thêm gì."""
+    diem = ({s["target_var"] for s in cau if s.get("kind") in ("declare_point", "construct_point")}
+            | {k["name"] for k in khai if k.get("type") == "point3"})
+    them = False
+    for w in [o.witness for o in getattr(contract, "obligations", None) or () if o.witness]:
+        j = next((i for i, s in enumerate(cau) if s.get("kind") == "assign" and s.get("target_var") == w), None)
+        e = (cau[j].get("expr") or {}) if j is not None else {}
+        p, q = e.get("of"), e.get("wrt")
+        if not (e.get("kind") == "measure" and e.get("quantity") == "distance" and p != q and {p, q} <= diem):
+            continue
+        if frozenset((p, q)) in _canh_da_dung(cau[:j]):
+            continue
+        # Tên theo thứ tự đề viết ("đoạn AK" ⇒ AK dù chương trình đo d(K, A)).
+        van = str(getattr(contract, "problem_text", "") or "").lower()
+        if ("đoạn " + _ky(q) + _ky(p)).lower() in van and ("đoạn " + _ky(p) + _ky(q)).lower() not in van:
+            p, q = q, p
+        ten = _ten_moi(f"doan_{p}{q}", dung)
+        cau.insert(j, {"kind": "construct_segment", "target_var": ten, "endpoint_a": p, "endpoint_b": q,
+                       "label": "Đoạn " + _ky(p) + _ky(q)})
+        khai.append({"name": ten, "type": "segment3"})
+        them = True
+    return them
+
+
 def hoan_thien_dung_hinh(spec: SemanticProgramSpec, contract: Any = None) -> KetQuaHoanThien:
     """Bổ sung các bước dựng mà lớp hình đòi (đáy, đường cao, đáy trên, cạnh bên)
-    ngay TRƯỚC mỗi `construct_solid` cấp ngoài phân loại được.
+    ngay TRƯỚC mỗi `construct_solid` cấp ngoài phân loại được; và đoạn mà đề hỏi độ
+    dài ngay trước phép đo của nó (`_doan_duoc_hoi`, W3).
 
     Bản gốc không bao giờ bị sửa; mọi câu lệnh và khai báo gốc giữ nguyên (chỉ phép
     dời an toàn đổi vị trí). Vật dựng SAU khối không bao giờ được tính là đã xong
@@ -414,6 +458,7 @@ def hoan_thien_dung_hinh(spec: SemanticProgramSpec, contract: Any = None) -> Ket
             khai += moi_khai
             doi = True
         trang_thai.append((khoi, tt))
+    doi = _doan_duoc_hoi(cau, khai, contract, dung) or doi
     if not doi or any(t == HONG for _k, t in trang_thai):
         return KetQuaHoanThien(spec, tuple(trang_thai), sha_goc, sha_goc)
     try:
