@@ -1,0 +1,13 @@
+# RED at 73bc404e + uncommitted W05 tests/labels, before any product change
+FAILED tests/geometry/test_source_length_chain_w05.py::test_chuoi_gan_cung_gia_tri_cho_moi_doan
+FAILED tests/geometry/test_source_length_chain_w05.py::test_chuoi_viet_bang_chu_bang
+FAILED tests/geometry/test_source_length_chain_w05.py::test_chuoi_tron_gia_tri_khac_nhau_giu_mau_thuan
+FAILED tests/geometry/test_source_length_chain_w05.py::test_cac_doan_truoc_tra_moi_doan_cua_chuoi
+FAILED tests/geometry/test_source_length_chain_w05.py::test_bang_chung_given_cho_moi_thanh_vien_chuoi
+FAILED tests/geometry/test_source_length_chain_w05.py::test_bat_bien_nguon_phat_cho_ca_chuoi
+FAILED tests/geometry/test_source_length_chain_w05.py::test_phan_chua_doc_xoa_ca_chuoi
+FAILED tests/geometry/test_regular_square_pyramid.py::test_ket_cuc_route_theo_nhan[R2_L1_chained_equal_lateral_edges]
+FAILED tests/geometry/test_regular_square_pyramid.py::test_ket_cuc_route_theo_nhan[W5_A_chain_cites_other_member]
+FAILED tests/geometry/test_regular_square_pyramid.py::test_ket_cuc_route_theo_nhan[W5_B_chain_mixed_values]
+FAILED tests/geometry/test_regular_square_pyramid.py::test_ket_cuc_route_theo_nhan[W5_D_program_value_differs_from_chain]
+11 failed, 57 passed in 1.60s

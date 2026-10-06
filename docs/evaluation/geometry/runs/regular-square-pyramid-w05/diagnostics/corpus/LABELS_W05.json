@@ -1,0 +1,45 @@
+{
+ "schema_version": "regular-square-pyramid-corpus-labels/1",
+ "run_id": "regular-square-pyramid-w05",
+ "layer": "W05 — written 2026-10-06 BEFORE any product change of the chained-equality reader (segment_relation.py). Layers LABELS.json and LABELS_R2.json of regular-square-pyramid-w01 are unchanged; a key present here supersedes the same key of an earlier layer for this run's tests.",
+ "rule": "Same rule as the W1 layers. `served:<value>` states what the text determines (V = s²h/3, h² = l² − s²/2 for a lateral edge l), derived by hand; the W1 oracle diagnostics/oracle_rsp_w01_r2.py already derives 16/3 for R2_L1. `refused:<stage>:<reason_code>` with `*` where the stage or code is not part of the claim.",
+ "rows": {
+  "R2_L1_chained_equal_lateral_edges": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SA_length = 3 (fact SA)",
+   "expect": "served:16/3",
+   "cause": "the chain states SA = SB = SC = SD = 3; SA is a lateral edge: h² = 9 − 8 = 1, V = 16/3",
+   "corrects": "LABELS_R2.json R2_L1 (`refused:grounding:SOURCE_EVIDENCE_CONFLICT`, product_limit: true). The text value was always 16/3; the W1 label recorded a refusal of a component W1 did not change. W5 changes that component (ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY)."
+  },
+  "W5_A_chain_cites_other_member": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SC_length = 3 (fact SC)",
+   "expect": "served:16/3",
+   "cause": "SC is a member of the chain, not the segment written next to the number; same derivation as R2_L1"
+  },
+  "W5_B_chain_mixed_values": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = 3, SC = SD = 5. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SA_length = 3 (fact SA)",
+   "expect": "refused:source_invariant:*",
+   "cause": "two chains state different lateral edges (3 and 5); a regular pyramid has equal lateral edges, so the text is contradictory; the program's figure breaks SC = 5. Refused before and after the change; the RED run (before any product change) refuses it earlier, at grounding, because SA was unread."
+  },
+  "W5_C_chain_without_value": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4 và SA = SB = SC = SD. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1 (apex height chosen by layout), GIVEN AB_length = 4 (fact AB)",
+   "expect": "refused:assumption:*",
+   "cause": "a chain with no value states no length; the height is fixed only by the layout coordinate, which is never a given — the answer depends on an unstated dimension"
+  },
+  "W5_D_program_value_differs_from_chain": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=1, GIVEN AB_length = 4 (fact AB), SA_length = 5 (fact SA)",
+   "expect": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "cause": "the text gives SA = 3 through the chain; a program citing SA = 5 contradicts it"
+  },
+  "W5_E_program_segment_outside_chain": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp S.ABCD.",
+   "program": "chop_deu s=4 h=3, GIVEN AB_length = 4 (fact AB), SO_length = 3 (fact SO)",
+   "expect": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "cause": "the number 3 belongs to the chain SA…SD; SO (the height) is not in the chain, so citing it as SO = 3 is a wrong identity. Guard row: refused before and after the change."
+  }
+ }
+}

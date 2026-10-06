@@ -24,8 +24,12 @@ from tests.geometry import w14_cases as W
 _CORPUS = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus"
 #: Lớp 1 (`LABELS.json`, trước sản phẩm) + lớp R2 (`LABELS_R2.json`, tự rà soát cuối — cạnh bên gọi bằng tên đoạn,
 #: ghi trước bản sửa). Hai lớp không trùng khoá; lớp 1 không đổi.
+#: Lớp W05 (`regular-square-pyramid-w05/.../LABELS_W05.json`, ghi trước bản sửa bộ đọc chuỗi bằng nhau) đè khoá trùng —
+#: chỉ `R2_L1` (đính chính `product_limit`) — và thêm ca chuỗi.
+_CORPUS_W05 = _CORPUS.parents[2] / "regular-square-pyramid-w05/diagnostics/corpus"
 NHAN = {**json.loads((_CORPUS / "LABELS.json").read_text(encoding="utf-8"))["rows"],
-        **json.loads((_CORPUS / "LABELS_R2.json").read_text(encoding="utf-8"))["rows"]}
+        **json.loads((_CORPUS / "LABELS_R2.json").read_text(encoding="utf-8"))["rows"],
+        **json.loads((_CORPUS_W05 / "LABELS_W05.json").read_text(encoding="utf-8"))["rows"]}
 
 THE_TICH = "V"
 CANH_BEN = "d_SA"
@@ -158,6 +162,16 @@ CA = {
         _do_dai("AB", "2"), _do_dai("SA", "2"))),
     "R2_L1_chained_equal_lateral_edges": lambda: _ca("R2_L1_chained_equal_lateral_edges", s=F(4), h=F(1), gf=_g(
         _do_dai("AB", "4"), _do_dai("SA", "3"))),
+    # ── lớp W05: chuỗi bằng nhau `SA = SB = SC = SD = 3` ──
+    "W5_A_chain_cites_other_member": lambda: _ca("W5_A_chain_cites_other_member", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SC", "3"))),
+    "W5_B_chain_mixed_values": lambda: _ca("W5_B_chain_mixed_values", s=F(4), h=F(1), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SA", "3"))),
+    "W5_C_chain_without_value": lambda: _ca("W5_C_chain_without_value", s=F(4), h=F(1), gf=_g(_do_dai("AB", "4"))),
+    "W5_D_program_value_differs_from_chain": lambda: _ca("W5_D_program_value_differs_from_chain", s=F(4), h=F(1),
+                                                         gf=_g(_do_dai("AB", "4"), _do_dai("SA", "5"))),
+    "W5_E_program_segment_outside_chain": lambda: _ca("W5_E_program_segment_outside_chain", s=F(4), h=F(3), gf=_g(
+        _do_dai("AB", "4"), _do_dai("SO", "3"))),
 }
 
 
