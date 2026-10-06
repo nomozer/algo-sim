@@ -643,7 +643,7 @@ async function observeTree(session, scene, expectedIds) {
     const matches = rows.filter((row) => row.text === object.label);
     // w10: bí danh đáp số KHÔNG có dòng riêng trong cây (`aliasTreeRowCheck`).
     if (isHiddenAlias(object)) {
-      checks.push(aliasTreeRowCheck(scene, object, rows));
+      checks.push(aliasTreeRowCheck(scene, object, rows, expected));
       continue;
     }
     // W4 · yêu cầu 5: vật chưa dựng KHÔNG có dòng (trước W4: dòng mờ `disabled`) — có dòng bấm được ⇔ có mặt.

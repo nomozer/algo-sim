@@ -141,7 +141,7 @@ async function boCuc(s, viewport, frames) {
   const canvas = await hop(s, ".geo3d-canvas");
   // khung nhìn THẬT của trang (innerWidth/innerHeight), không phải cỡ đã xin — hai số có thể lệch
   return { viewport: await j(s, "({w:innerWidth,h:innerHeight})"), requested_viewport: { w: viewport.width, h: viewport.height },
-    canvas, controls: await hop(s, ".geo3d-controls"),
+    canvas, canvas_element: await hop(s, ".geo3d-canvas canvas"), controls: await hop(s, ".geo3d-controls"),
     canvas_at_floor: canvas.h <= 320.5,
     scroll_width: await j(s, "document.documentElement.scrollWidth"),
     client_width: await j(s, "document.documentElement.clientWidth"),

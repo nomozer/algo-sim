@@ -1451,6 +1451,10 @@ export function Scene3DWorkspace({
     };
     chinhCo();
     window.addEventListener("resize", chinhCo);
+    // W4: khung đổi cỡ KHÔNG qua sự kiện cửa sổ (chiều cao canvas theo `--geo3d-cao-khung` đo lại khi trang ổn định)
+    // ⇒ theo dõi chính khung chứa, không thì <canvas> giữ cỡ cũ và tràn khỏi khung (đo mobile W4: 503 px trong 456).
+    const roKhung = typeof ResizeObserver !== "undefined" ? new ResizeObserver(chinhCo) : null;
+    roKhung?.observe(container);
 
     // ── CHỌN BẰNG CHUỘT ──────────────────────────────────────────────────
     //
@@ -1713,6 +1717,7 @@ export function Scene3DWorkspace({
       renderer.domElement.removeEventListener("pointerdown", xuongTay);
       renderer.domElement.removeEventListener("pointerup", nhacTay);
       window.removeEventListener("resize", chinhCo);
+      roKhung?.disconnect();
       dieuKhien.dispose();
       renderer.dispose();
       container.removeChild(renderer.domElement);

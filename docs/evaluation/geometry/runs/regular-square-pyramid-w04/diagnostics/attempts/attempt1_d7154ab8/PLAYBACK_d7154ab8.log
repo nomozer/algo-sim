@@ -1,0 +1,2 @@
+# cwd: <worktree '/d/tmp/rsp w04c'> @ d7154ab8b7379e2088ded5f2132602642ca1143c; timeout --signal=KILL 2400 node frontend/scripts/scene3d-playback-check.mjs --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w04/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w04/images --bo-qua-build
+2026-10-06T06:59:30Z

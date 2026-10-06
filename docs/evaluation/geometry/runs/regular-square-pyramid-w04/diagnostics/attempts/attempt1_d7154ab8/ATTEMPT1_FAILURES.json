@@ -1,0 +1,59 @@
+{
+ "attempt": 1,
+ "measurement_commit": "d7154ab8b7379e2088ded5f2132602642ca1143c",
+ "suite_pass": false,
+ "failures": {
+  "triangular_pyramid/desktop": [
+   "tree step 0: the_tich_khoi rows 0 expected 1",
+   "tree step 1: the_tich_khoi rows 0 expected 1",
+   "tree step 2: the_tich_khoi rows 0 expected 1",
+   "tree step 3: the_tich_khoi rows 0 expected 1"
+  ],
+  "triangular_pyramid/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT",
+   "tree step 0: the_tich_khoi rows 0 expected 1",
+   "tree step 1: the_tich_khoi rows 0 expected 1",
+   "tree step 2: the_tich_khoi rows 0 expected 1",
+   "tree step 3: the_tich_khoi rows 0 expected 1"
+  ],
+  "triangular_prism/desktop": [
+   "tree step 0: the_tich_lang_tru rows 0 expected 1",
+   "tree step 1: the_tich_lang_tru rows 0 expected 1",
+   "tree step 2: the_tich_lang_tru rows 0 expected 1",
+   "tree step 3: the_tich_lang_tru rows 0 expected 1"
+  ],
+  "triangular_prism/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT",
+   "tree step 0: the_tich_lang_tru rows 0 expected 1",
+   "tree step 1: the_tich_lang_tru rows 0 expected 1",
+   "tree step 2: the_tich_lang_tru rows 0 expected 1",
+   "tree step 3: the_tich_lang_tru rows 0 expected 1"
+  ],
+  "rectangular_pyramid/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT"
+  ],
+  "cuboid/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT"
+  ],
+  "cube/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT"
+  ],
+  "cross_section/mobile": [
+   "css_readiness: canvas element 503 px tall inside a 456 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT"
+  ],
+  "regular_square_pyramid/mobile": [
+   "css_readiness: canvas element 466 px tall inside a 419 px box",
+   "evidence_gates: BLANK_OR_PREMATURE_SCREENSHOT"
+  ]
+ },
+ "root_causes": {
+  "mobile css_readiness": "product: the renderer resized only on window resize; W4's canvas height variable can change after mount (page settling), so the WebGL canvas kept its old size (fixed: ResizeObserver on the container).",
+  "tree alias rows": "harness: aliasTreeRowCheck expected the answer-alias source row at every step; W4's tree lists only objects present at the step (fixed: count only present sources)."
+ }
+}

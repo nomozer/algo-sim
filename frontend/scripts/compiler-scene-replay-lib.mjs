@@ -913,10 +913,12 @@ export const isHiddenAlias = (o) => Boolean(o?.alias_of) && o.render === "non_vi
 
 /** Bí danh đáp số (w10) không có dòng riêng trong cây: số dòng mang nhãn của
  *  nó phải bằng số vật khác cùng nhãn (1 khi mượn nhãn nguồn, 0 khi có nhãn
- *  riêng). Cây nhận dạng theo nhãn nên đây là cách đếm duy nhất đúng. */
-export function aliasTreeRowCheck(scene, alias, rows) {
+ *  riêng). Cây nhận dạng theo nhãn nên đây là cách đếm duy nhất đúng. W4: cây chỉ liệt kê vật đã có ở bước —
+ *  `present` (id có mặt) cho thì chỉ đếm nguồn đã có. */
+export function aliasTreeRowCheck(scene, alias, rows, present = null) {
   const matches = rows.filter((row) => row.text === alias.label).length;
-  const owners = (scene?.objects ?? []).filter((o) => !isHiddenAlias(o) && o.label === alias.label).length;
+  const owners = (scene?.objects ?? []).filter((o) => !isHiddenAlias(o) && o.label === alias.label
+    && (!present || present.has(o.id))).length;
   return { id: alias.id, label: alias.label, alias_of: alias.alias_of, matches,
     expected_rows: owners, observed_present: null, pass: matches === owners };
 }
@@ -1768,7 +1770,8 @@ export function assessPanelsMobile(o) {
 }
 
 /** W4 · yêu cầu 4 — bố cục. `o` = {viewport: {w, h}, canvas, controls (hộp theo khung nhìn, trang ở đỉnh),
- *  canvas_at_floor (canvas ở mức sàn ⇒ trang cuộn, thanh được phép dưới mép), scroll_width, client_width,
+ *  canvas_at_floor (canvas ở mức sàn ⇒ trang cuộn, thanh được phép dưới mép), canvas_element (hộp phần tử <canvas>),
+ *  scroll_width, client_width,
  *  step_counter (chữ «Bước n/N» trong `.geo3d-controls` hoặc null), narration_line_present, narration_live,
  *  frames: [{name, w, h, vertices: [{id, x, y}], labels: [{id, x, y, w, h}]}] — toạ độ trong canvas}. */
 export function assessLayout(o) {
@@ -1782,6 +1785,9 @@ export function assessLayout(o) {
   if (!/^Bước \d+\/\d+$/.test(o.step_counter ?? "")) r.push("STEP_COUNTER_MISSING");
   if (o.narration_line_present !== false) r.push("NARRATION_LINE_PRESENT");
   if (o.narration_live !== true) r.push("NARRATION_NOT_LIVE");
+  // phần tử <canvas> phải theo khung chứa nó: khung đổi cỡ sau lúc gắn mà canvas giữ cỡ cũ ⇒ hình tràn/bị cắt
+  const ce = o.canvas_element;
+  if (ce && o.canvas && (ce.w > o.canvas.w + 2 || ce.h > o.canvas.h + 2)) r.push("CANVAS_ELEMENT_SIZE_STALE");
   const LE = 4;
   for (const f of o.frames ?? []) {
     if (f.vertices.some((v) => v.x < LE || v.y < LE || v.x > f.w - LE || v.y > f.h - LE)) r.push(`VERTEX_CLIPPED:${f.name}`);

@@ -208,6 +208,11 @@ test("alias tree rows: none of its own, whether or not it shares the source labe
   assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích")).pass, true);
   assert.equal(aliasTreeRowCheck(scene, scene.objects[1], rows("Thể tích", "v")).pass, false);
   assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích", "Thể tích")).pass, false);
+  // W4: cây chỉ liệt kê vật ĐÃ CÓ ở bước — nguồn chưa dựng ⇒ 0 dòng là đúng, 1 dòng là lộ trước
+  const chuaCo = new Set();
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows(), chuaCo).pass, true);
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích"), chuaCo).pass, false);
+  assert.equal(aliasTreeRowCheck(scene, scene.objects[2], rows("Thể tích"), new Set(["V"])).pass, true);
 });
 
 test("raw token leakage and formula references are payload-driven", () => {
@@ -1639,4 +1644,12 @@ test("W4 desktop panel gate: after resize a panel is lost only when neither its 
   o.resized.close_reachable.soi = false;
   o.resized.header_reachable = { soi: true };   // bị che nút đóng nhưng còn bấm được tiêu đề ⇒ đưa lên trên được
   assert.deepEqual(LIB.assessPanelsDesktop(o).reason_codes, []);
+});
+
+test("W4 layout gate: the WebGL canvas follows its container (no stale drawing-buffer size)", () => {
+  const o = JSON.parse(JSON.stringify(W4_LAYOUT));
+  o.canvas_element = HOP(241, 121, 1178, 710);
+  assert.deepEqual(LIB.assessLayout(o).reason_codes, []);
+  o.canvas_element = HOP(241, 121, 1178, 757);   // canvas giữ cỡ cũ sau khi khung co (đo mobile W4: 503 trong 456)
+  assert.ok(LIB.assessLayout(o).reason_codes.includes("CANVAS_ELEMENT_SIZE_STALE"));
 });
