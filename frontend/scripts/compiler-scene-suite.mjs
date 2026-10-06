@@ -646,14 +646,16 @@ async function observeTree(session, scene, expectedIds) {
       checks.push(aliasTreeRowCheck(scene, object, rows));
       continue;
     }
+    // W4 · yêu cầu 5: vật chưa dựng KHÔNG có dòng (trước W4: dòng mờ `disabled`) — có dòng bấm được ⇔ có mặt.
+    // Dòng trong nhóm `<details>` đang thu gọn vẫn ở DOM nên vẫn đếm được.
     const observedPresent = matches.some((row) => !row.disabled);
     checks.push({
       id: object.id,
       label: object.label,
       expected_present: expected.has(object.id),
       matches: matches.length,
-      observed_present: matches.length > 0 ? observedPresent : null,
-      pass: matches.length > 0 && observedPresent === expected.has(object.id),
+      observed_present: observedPresent,
+      pass: observedPresent === expected.has(object.id) && matches.every((row) => !row.disabled),
     });
   }
   // W4: mỗi bảng thông tin có nút đóng mang TÊN riêng (nhiều bảng có thể cùng mở).

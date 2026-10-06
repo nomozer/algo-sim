@@ -5586,9 +5586,26 @@ html {
   margin-top: var(--sp-xs);
 }
 
+/* W4: nhóm là `<details>` thu gọn mặc định — tiêu đề nhóm là đích bấm thật (bàn phím: Enter/Space). */
 .geo3d-tree-catname {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  min-height: 32px;
+  padding: 0 var(--sp-xs);
+  border-radius: var(--rounded-sm);
   color: var(--ink-muted);
   font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.geo3d-tree-catname:hover {
+  background: var(--surface);
+}
+
+.geo3d-tree-dem {
+  color: var(--ink-quiet);
+  font-variant-numeric: tabular-nums;
 }
 
 .geo3d-tree-item {
@@ -5619,12 +5636,6 @@ html {
 .geo3d-tree-item.la-nguon {
   border-color: var(--accent-orange);
   background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
-}
-
-.geo3d-tree-item:disabled {
-  /* Chưa dựng tới ở bước này. Mờ bằng MÀU CHỮ, cùng lý do với `.geo3d-btn`. */
-  color: var(--ink-quiet);
-  cursor: not-allowed;
 }
 
 /* Nhãn của vật, chiếm phần rộng của nút; chip `type` (chỉ ở chế độ Chi tiết)
@@ -6058,6 +6069,13 @@ html {
     min-height: 44px;
     align-items: center;
     justify-content: center;
+  }
+
+  /* cây «Thành phần»: tiêu đề nhóm và mục đều là đích chạm */
+  .geo3d-tree-catname,
+  .geo3d-tree-item {
+    min-height: 44px;
+    align-items: center;
   }
 }
 

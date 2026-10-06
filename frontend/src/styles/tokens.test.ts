@@ -46,8 +46,10 @@ describe("(M9-UX5) token CSS — var() hỏng là lỗi IM LẶNG, phải chặn
    * Biến được COMPONENT set inline lúc chạy (không phải token thiết kế) —
    * `--len`: độ dài đoạn thẳng, do `generic/ui.tsx` gán qua `style` để chạy
    * animation vẽ dần cạnh. Hợp lệ, không phải token ma.
+   * `--geo3d-cao-khung`: chiều cao canvas khả dụng, do `scene3d-playback.tsx` đo và gán (`caoKhungKhaDung`); mọi chỗ
+   * dùng đều có giá trị dự phòng `var(--geo3d-cao-khung, min(…))`.
    */
-  const RUNTIME_VARS = new Set(["--len"]);
+  const RUNTIME_VARS = new Set(["--len", "--geo3d-cao-khung"]);
 
   it("mọi var(--token) trong global.css đều được định nghĩa", () => {
     const defined = new Set([...definedTokens(tokensCss), ...definedTokens(globalCss)]);

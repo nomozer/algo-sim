@@ -387,6 +387,28 @@ export function semanticTree(scene: Scene3D): TreeNode[] {
   return cay;
 }
 
+/** W4 · yêu cầu 5: cây CỦA BƯỚC — chỉ vật đã có (`coMat`), nhóm rỗng bỏ. Vật chưa dựng không hiện kể cả ở dạng mờ:
+ *  một tên mờ vẫn là lộ trước vật tương lai. */
+export function treeAt(cay: readonly TreeNode[], coMat: ReadonlySet<string>): TreeNode[] {
+  return cay.flatMap((n) => {
+    if (!n.isCategory && !coMat.has(n.id)) return [];
+    const children = treeAt(n.children, coMat);
+    return n.isCategory && children.length === 0 ? [] : [{ ...n, children }];
+  });
+}
+
+/** Khoá các NHÓM trên đường từ gốc tới `id` (`/<id tổ tiên>/…/<id nhóm>`; `cat:Cạnh` lặp dưới mỗi khối nên khoá
+ *  theo đường đi). Xưởng mở chúng khi chọn vật — chọn trên hình thì mục của nó hiện ra trong cây. */
+export function groupKeysOf(cay: readonly TreeNode[], id: string | null, p = ""): string[] {
+  for (const n of cay) {
+    const k = `${p}/${n.id}`;
+    if (n.id === id) return [];
+    const duoi = groupKeysOf(n.children, id, k);
+    if (duoi.length > 0 || n.children.some((c) => c.id === id)) return n.isCategory ? [k, ...duoi] : duoi;
+  }
+  return [];
+}
+
 /** Mọi id CHỌN ĐƯỢC trong cây, theo thứ tự duyệt. Nút gộp không tính. */
 export function selectableIds(cay: TreeNode[]): string[] {
   const ra: string[] = [];

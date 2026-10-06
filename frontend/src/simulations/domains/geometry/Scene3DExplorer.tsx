@@ -49,6 +49,7 @@ import {
   dependencyClosure,
   directDependencies,
   explode,
+  groupKeysOf,
   hide,
   highlightSet,
   isolate,
@@ -56,6 +57,7 @@ import {
   semanticTree,
   showAll,
   taoTrangThai,
+  treeAt,
 } from "./interaction-state";
 import {
   entitiesPresentAt,
@@ -104,30 +106,38 @@ const NHOM_BUNG = "face";
  */
 
 function NutCay({
-  nut, chon, onChon, coMat, tapNguon,
+  nut, chon, onChon, tapNguon, duong, moNhom, onDoiNhom,
 }: {
+  /** Nút của cây ĐÃ LỌC theo bước (`treeAt`) — vật chưa dựng không có mặt ở đây. */
   nut: TreeNode;
   chon: string | null;
   onChon: (id: string) => void;
-  coMat: ReadonlySet<string>;
   tapNguon?: ReadonlySet<string>;
+  /** Đường tới nút cha (`/<id>/…`) — khoá nhóm, cùng quy ước `groupKeysOf`. */
+  duong: string;
+  moNhom: ReadonlySet<string>;
+  onDoiNhom: (khoa: string, mo: boolean) => void;
 }) {
+  const khoa = `${duong}/${nut.id}`;
   const con = nut.children.map((c) => (
-    <NutCay key={c.id} nut={c} chon={chon} onChon={onChon} coMat={coMat}
-            tapNguon={tapNguon} />
+    <NutCay key={c.id} nut={c} chon={chon} onChon={onChon} tapNguon={tapNguon}
+            duong={khoa} moNhom={moNhom} onDoiNhom={onDoiNhom} />
   ));
   if (nut.isCategory) {
+    // W4 · yêu cầu 5: nhóm THU GỌN mặc định (cây là lối phụ — lối chính là bấm lên hình); `<details>` cho bàn phím
+    // và trình đọc màn hình hành vi mở/đóng chuẩn. Trạng thái mở do xưởng giữ (gắn với bài), không do DOM.
     return (
-      <li className="geo3d-tree-cat">
-        <span className="geo3d-tree-catname">{nut.label}</span>
-        <ul>{con}</ul>
+      <li>
+        <details className="geo3d-tree-cat" open={moNhom.has(khoa)}
+                 onToggle={(e) => onDoiNhom(khoa, e.currentTarget.open)}>
+          <summary className="geo3d-tree-catname">
+            {nut.label} <span className="geo3d-tree-dem">{nut.children.length}</span>
+          </summary>
+          <ul>{con}</ul>
+        </details>
       </li>
     );
   }
-  // Vật CHƯA DỰNG TỚI ở bước hiện tại vẫn nằm trong cây nhưng mờ và không bấm
-  // được: giấu hẳn thì cây nhảy chỗ mỗi bước, còn cho bấm thì học sinh chọn
-  // được một vật chưa tồn tại — hai kiểu nói dối khác nhau về cùng một thứ.
-  const chuaCo = !coMat.has(nut.id);
   const laChon = chon === nut.id;
   const laNguon = !laChon && !!tapNguon?.has(nut.id);
   const lop = `geo3d-tree-item${laChon ? " la-chon" : laNguon ? " la-nguon" : ""}`;
@@ -137,7 +147,6 @@ function NutCay({
         type="button"
         className={lop}
         onClick={() => onChon(nut.id)}
-        disabled={chuaCo}
         aria-current={laChon ? "true" : undefined}
       >
         <span className="geo3d-tree-nhan">{nut.label}</span>
@@ -226,9 +235,20 @@ export function Scene3DExplorer({
    *
    * Dùng `useEffect` chứ không `key` để remount: remount cũng xoá `moc` (dấu
    * đã xem của lớp học), vốn không gắn với cảnh và không nên mất. */
+  /* W4 · yêu cầu 5: nhóm đang mở của cây «Thành phần» (khoá `groupKeysOf`) — GẮN VỚI BÀI: giữ qua đóng/mở bảng và
+     qua các bước, về rỗng khi đổi bài. */
+  const [moNhom, setMoNhom] = useState<ReadonlySet<string>>(new Set());
+  const doiNhom = (khoa: string, mo: boolean) => setMoNhom((s) => {
+    if (s.has(khoa) === mo) return s;
+    const n = new Set(s);
+    if (mo) n.add(khoa); else n.delete(khoa);
+    return n;
+  });
+
   useEffect(() => {
     setTt(taoTrangThai());
     setMoBang(new Set());
+    setMoNhom(new Set());
   }, [scene]);
 
   // Khung đang hiện = neo của bước DỰNG chứa `current_step` (W12) — cùng phép
@@ -238,6 +258,12 @@ export function Scene3DExplorer({
     () => entitiesPresentAt(day, buocHien, objectsAt),
     [day, buocHien],
   );
+  const cayBuoc = useMemo(() => treeAt(cay, coMat), [cay, coMat]);
+  // Chọn trên hình (hay ở bảng khác) ⇒ nhóm chứa vật ấy mở, mục của nó hiện ra trong cây.
+  useEffect(() => {
+    const k = groupKeysOf(cay, tt.selected_id);
+    if (k.length) setMoNhom((s) => (k.every((x) => s.has(x)) ? s : new Set([...s, ...k])));
+  }, [cay, tt.selected_id]);
   /* Tra một id sang CÁCH GỌI NGẮN — dùng ở "Thuộc", ở chi tiết thiết diện,
    * tức những chỗ vật này bị nhắc TRONG câu của vật khác. `label` ở đó cho ra
    * câu lồng câu; `reference` do backend dựng riêng cho vai này. */
@@ -592,9 +618,9 @@ export function Scene3DExplorer({
                    onDong={() => dongBang("thanh-phan")} traTieuDiem={() => nutMoBang("thanh-phan")}>
             <div className="geo3d-ngan-than">
               <ul className="geo3d-tree">
-                {cay.map((n) => (
-                  <NutCay key={n.id} nut={n} chon={tt.selected_id}
-                          onChon={chon} coMat={coMat} tapNguon={tapNguon} />
+                {cayBuoc.map((n) => (
+                  <NutCay key={n.id} nut={n} chon={tt.selected_id} onChon={chon} tapNguon={tapNguon}
+                          duong="" moNhom={moNhom} onDoiNhom={doiNhom} />
                 ))}
               </ul>
             </div>

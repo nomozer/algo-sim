@@ -16,7 +16,9 @@ import type { Scene3D } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
 import { batTatBang, datViTriTuDong, lenTren, LE_BANG } from "./scene3d-floating-panel";
 import { CAO_KHUNG_MIN, caoKhungKhaDung, Scene3DPlayer } from "./scene3d-playback";
-import { anchorOfGeometryStep, geometryNarrationAt, geometryStepCount } from "./scene3d-model";
+import { anchorOfGeometryStep, geometryNarrationAt, geometryStepCount, objectsAt } from "./scene3d-model";
+import { groupKeysOf, selectableIds, semanticTree, treeAt, type TreeNode } from "./interaction-state";
+import { entitiesPresentAt, withSubEntities } from "./scene3d-subentities";
 
 const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const KHUNG = { x: 0, y: 0, w: 1000, h: 560 };
@@ -91,6 +93,50 @@ describe("W4 · mọi bảng thông tin đi qua MỘT cơ chế", () => {
       import.meta.url)), "utf8")).envelope.scene3d;
     const h = renderToString(<Scene3DExplorer scene={s} de="Đề" />);
     expect(h).not.toContain("geo3d-bang-noi");
+  });
+});
+
+/* Yêu cầu 5 — «Thành phần» là lối phụ: nhóm thu gọn mặc định, giữ trong bài, nhóm chứa vật đang chọn tự mở; nội
+   dung theo bước dựng, KHÔNG lộ vật tương lai (bản trước hiện tên vật chưa dựng ở dạng mờ — vẫn là lộ trước). */
+describe("W4 · cây thành phần theo bước", () => {
+  const day = withSubEntities(RSP); // đúng cảnh xưởng dựng cây (mặt, cạnh sinh thêm)
+  const cay = semanticTree(day);
+  const ids = (ns: readonly TreeNode[]): string[] => ns.flatMap((n) => [n.isCategory ? `#${n.label}` : n.id, ...ids(n.children)]);
+
+  it("chỉ vật đã có ở bước; nhóm rỗng biến mất", () => {
+    const co = entitiesPresentAt(day, 0, objectsAt);
+    const loc = treeAt(cay, co);
+    const thay = ids(loc).filter((x) => !x.startsWith("#"));
+    expect(thay.length).toBeGreaterThan(0);
+    expect(thay.every((x) => co.has(x))).toBe(true);
+    const tatCa = selectableIds(cay);
+    expect(tatCa.filter((x) => !co.has(x)).some((x) => thay.includes(x))).toBe(false);
+    const nhomRong = (ns: readonly TreeNode[]): boolean =>
+      ns.some((n) => (n.isCategory && n.children.length === 0) || nhomRong(n.children));
+    expect(nhomRong(loc)).toBe(false);
+    // ở bước cuối mọi vật chọn được đều có mặt
+    const cuoi = entitiesPresentAt(day, day.events.length - 1, objectsAt);
+    expect(selectableIds(treeAt(cay, cuoi))).toEqual(tatCa.filter((x) => cuoi.has(x)));
+  });
+
+  it("khoá nhóm duy nhất theo đường đi; vật đang chọn ⇒ đúng các nhóm trên đường tới nó", () => {
+    const keys = (ns: readonly TreeNode[], p = ""): string[] =>
+      ns.flatMap((n) => [...(n.isCategory ? [`${p}/${n.id}`] : []), ...keys(n.children, `${p}/${n.id}`)]);
+    const k = keys(cay);
+    expect(new Set(k).size).toBe(k.length);
+    const mot = selectableIds(cay)[selectableIds(cay).length - 1];
+    const nhom = groupKeysOf(cay, mot);
+    expect(nhom.length).toBeGreaterThan(0);
+    expect(nhom.every((x) => k.includes(x))).toBe(true);
+    expect(groupKeysOf(cay, "khong-co")).toEqual([]);
+  });
+
+  it("nhóm là <details> thu gọn mặc định; trạng thái mở gắn với bài, nhóm của vật chọn tự mở", () => {
+    const ex = nguon("./Scene3DExplorer.tsx");
+    expect(ex).toMatch(/<details[^>]*className="geo3d-tree-cat"/);
+    expect(ex).not.toMatch(/disabled=\{chuaCo\}/);
+    expect(ex).toMatch(/setMoNhom\(new Set\(\)\)/);
+    expect(ex).toMatch(/groupKeysOf\(cay, tt\.selected_id\)/);
   });
 });
 

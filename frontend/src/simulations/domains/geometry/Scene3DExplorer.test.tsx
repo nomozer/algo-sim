@@ -404,7 +404,9 @@ describe("tích hợp · trạng thái không được rớt sang bài mới", (
 
   it("có hiệu ứng trả trạng thái gắn với cảnh về đầu khi `scene` đổi", () => {
     // W4: các bảng thông tin đang mở (một TẬP, không còn một ngăn) gắn với cảnh ⇒ về rỗng khi đổi bài.
-    expect(src).toMatch(/useEffect\(\(\) => \{\s*setTt\(taoTrangThai\(\)\);\s*setMoBang\(new Set\(\)\);\s*\}, \[scene\]\)/);
+    // W4 · yêu cầu 5: nhóm đang mở của cây «Thành phần» cũng gắn với bài.
+    expect(src).toMatch(
+      /useEffect\(\(\) => \{\s*setTt\(taoTrangThai\(\)\);\s*setMoBang\(new Set\(\)\);\s*setMoNhom\(new Set\(\)\);\s*\}, \[scene\]\)/);
   });
 
   it("KHÔNG reset thứ thuộc về sở thích người dùng", () => {
