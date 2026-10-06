@@ -1,0 +1,25 @@
+# cwd: <worktree '/d/tmp/rsp w05q'> @ f01df0e582584e747bec2dfe4fd4e4e7b5e97e6c; timeout --signal=KILL 3000 node frontend/scripts/w04-panels-probe.mjs --fixture-root docs/evaluation/geometry/runs/regular-square-pyramid-w05/inputs --ra docs/evaluation/geometry/runs/regular-square-pyramid-w05/results --anh docs/evaluation/geometry/runs/regular-square-pyramid-w05/images/review --bo-qua-build
+2026-10-06T18:38:55Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/low_1366x650: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/low_1366x650: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/low_1366x650: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/low_1366x650: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/low_1366x650: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/low_1366x650: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/low_1366x650: PASS []
+regular_square_pyramid/mobile: PASS []
+W04 probe: 21/21 PASS
+exit=0

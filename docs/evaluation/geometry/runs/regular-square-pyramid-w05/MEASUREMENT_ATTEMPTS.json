@@ -1,0 +1,42 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "run_id": "regular-square-pyramid-w05",
+  "script": "diagnostics/w05_measure.sh (clean detached CRLF worktree, path with a space, logs outside the worktree)",
+  "attempts": [
+    {
+      "attempt": 1,
+      "commit": "a588f8db",
+      "worktree": "D:/tmp/rsp w05m",
+      "used_for_acceptance": false,
+      "outcome": "STOPPED after BROWSER_SUITE (FAIL 7/7) and W02_PROBE; remaining steps killed",
+      "cause": "HARNESS — the new toolbar CSS-readiness check compared the title colour with the browser default and --ink is #000; premature = !css.pass also failed evidence_gates. regular_square_pyramid/desktop additionally failed camera_settled_rotated_neutral (see attempt 2).",
+      "fix": "c1070389 test(harness): title font, not colour; fault injection for a block toolbar and a default-font title",
+      "evidence": "diagnostics/attempts/attempt1_a588f8db/"
+    },
+    {
+      "attempt": 2,
+      "commit": "c1070389",
+      "worktree": "D:/tmp/rsp w05n",
+      "used_for_acceptance": false,
+      "outcome": "suite 6/7 (regular_square_pyramid desktop camera_settled_rotated_neutral); W04 probe 20/21 (cross_section desktop PANEL_RESIZES_CANVAS); W05 probe 20/21 (cross_section mobile RUN_ERROR POLL_TIMEOUT); playback 0/14 (solution_in_sync_with_geometry_step, final_result_shown_once); W02 probe, occlusion, evidence builder exit 0",
+      "causes": [
+        "PRODUCT — the focused page was 16 px taller than the viewport: the empty grid row of the 2D controls (not rendered for 3D scenes) kept its 16 px row gap, so a click could scroll the canvas by a few pixels (W04 PANEL_RESIZES_CANVAS: canvas y 44 -> 48, size unchanged). Reproduced directly (scrollHeight 820 in an 804 px viewport); the W05 probe gained PAGE_SCROLLS, red on desktop and the low screen before the fix.",
+        "HARNESS — playback read rows of the removed solution card; it now reads the Đại lượng panel (opened before Play when step 0 has quantities, at the final step otherwise) and samples taken with the panel closed must show nothing.",
+        "HARNESS BUDGET — camera settling after the orbit: every family needed 5-15 % more samples than W4 (wider canvas, slower frames); the regular pyramid already used 156 of ~166 samples in W4 and ran past the 10 s budget while still settling (last motion 2.2e-10 <= 1e-9, streak 11). Wait budget 10 s -> 20 s; tolerance, stable samples and frame count unchanged.",
+        "ENVIRONMENT — cross_section mobile W05 probe: a menu toggle timed out while a second browser probe (started by me, not part of the measurement) ran at the same time; the same case passed 3/3 alone. No concurrent job runs during attempt 3."
+      ],
+      "fix": "82225a7b (product CSS + harness), refreeze 74c91060",
+      "evidence": "diagnostics/attempts/attempt2_c1070389/"
+    },
+    {
+      "attempt": 3,
+      "commit": "74c91060",
+      "worktree": "D:/tmp/rsp w05p",
+      "used_for_acceptance": false,
+      "outcome": "suite 7/7 PASS; W02 probe 14/14; W05 focus probe 21/21; occlusion, playback 14/14, evidence builder exit 0; W04 probe 20/21 (regular_square_pyramid desktop VERTEX_CLIPPED:rotated)",
+      "cause": "HARNESS STIMULUS — the W04 probe's fixed 160x40 px orbit drag is a different rotation on the taller focused canvas (OrbitControls: angle = 2*pi*px/canvas height). That pose, never validated before, put vertex B 3 px from the bottom edge (681 px canvas), inside the 4 px clip margin. Product framing unchanged: the neutral figure fills 67.5 % of the canvas height in W5 and 67.6 % in W4.",
+      "fix": "f01df0e5 — the drag scales with the canvas height to W4's validated angles (B 22 px from the edge); clip margin unchanged. Recorded as a finding: a free orbit can bring a vertex to the canvas edge (no auto refit after orbit — 'Xem lại toàn hình' refits).",
+      "evidence": "diagnostics/attempts/attempt3_74c91060/"
+    }
+  ]
+}
