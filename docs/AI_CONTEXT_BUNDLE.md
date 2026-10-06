@@ -114,7 +114,7 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   shell). H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
 - **W3 chờ người dùng:** duyệt hình H-W2-1 (chặn merge) theo `REVIEW.md` của run regular-square-pyramid-w03; H-W2-3
   (`ISSUE-ARCH-INSPECTOR-COLUMN-RESIZES-CANVAS`) và H-W2-5 là lựa chọn trình bày, đề nghị giữ — **chưa** được chấp nhận;
-  H-W2-2, H-W2-4 đã sửa (lỗi). Worktree đo cũ `D:/tmp/rsp w03` chưa gỡ được (xoá đầu ra bị từ chối quyền).
+  H-W2-2, H-W2-4 đã sửa (lỗi). Hai worktree đo của W3 đã gỡ.
 - **W1 chờ người dùng:** H-W1-1 (duyệt hình — chặn merge), H-W1-2 (chiều cao hiện `d(S, (ABC))`, không vẽ SO),
   H-W1-3 (mặt phẳng phụ để đo), H-W1-4 (bước dựng phụ AC, BD, O), H-W1-5
   (`ISSUE-ARCH-DEFAULT-ROUTE-NON-POSITIVE-LENGTH-CAUSE`) — `HANDOFF.md` §1 của run regular-square-pyramid-w01.

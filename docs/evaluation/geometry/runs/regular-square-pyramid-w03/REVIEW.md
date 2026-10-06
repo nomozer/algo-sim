@@ -51,8 +51,8 @@ Trạng thái duyệt: **NOT_APPROVED** — chỉ người dùng ghi `APPROVED_B
 - Giới hạn của bản sửa H-W2-2: nếu đoạn được hỏi nằm trên một cạnh đã có (vd SM với M là trung điểm SA), đoạn mới vẽ
   chồng lên cạnh ấy. Corpus hiện không có ca này; ghi ở `OPEN_ISSUES.md` (`ISSUE-ARCH-ASKED-SEGMENT-OVER-EXISTING-EDGE`).
 - Nhãn khoảng cách hai điểm hiển thị "d(S, H) = 3√6", không phải "SH = 3√6" — ký hiệu vẫn đúng; đổi là lựa chọn trình bày.
-- Worktree đo cũ `D:/tmp/rsp w03` (tại `fe68b4ca`) chưa gỡ được: lệnh xoá đầu ra chưa commit trong đó bị từ chối quyền;
-  `git worktree remove` không ép buộc sẽ từ chối khi còn file chưa theo dõi. Cần anh/chị cho phép xoá hoặc tự gỡ.
+- Hai worktree đo (`D:/tmp/rsp w03`, `D:/tmp/rsp w03b`) đã gỡ bằng `git worktree remove` không ép buộc, sau khi dọn đầu
+  ra đã chép vào run bằng `git clean` giới hạn trong thư mục run của chính worktree ấy.
 
 ## 5. Sau khi duyệt
 

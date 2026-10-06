@@ -51,6 +51,5 @@ khôi phục (`REPORT.md` §3–4).
 | **H-W2-1 / R1–R10** (chặn merge) | Duyệt hình theo `REVIEW.md` §1 |
 | H-W2-3 | Ô soi là cột ở ≥ 1100 px (canvas co lại khi chọn). Đề nghị giữ trong nhánh này — chưa được chấp nhận |
 | H-W2-5 | Tên nhóm "Giao điểm của AC và BD". Đề nghị giữ — chưa được chấp nhận |
-| Worktree cũ | `D:/tmp/rsp w03` (tại `fe68b4ca`) còn đầu ra chưa theo dõi; xoá bị từ chối quyền — cần cho phép hoặc tự gỡ |
 
 Chỉ người dùng ghi `APPROVED_BY_USER`.
