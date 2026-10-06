@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "8a27a58b5a96311dd052a6cc981af558a50878876bef574ec71f8a1b666ed025",
+ "current_candidate_hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -210,6 +210,11 @@
    "hash": "8a27a58b5a96311dd052a6cc981af558a50878876bef574ec71f8a1b666ed025",
    "sau_wave": "SHARED_SIMULATION_UI_CLOSURE (run regular-square-pyramid-w04)",
    "ghi_chu": "Đoạn nằm trên cạnh khối (SM trên SA) nhường nét cho cạnh, tô sáng đúng khúc (quantity_annotations.doan_tren_canh → scene3d boundary_edge_ids + edge_span); lời kể gọi vật theo ký hiệu của đề (geometry_exec.ten_trong_loi_ke). Giao diện (ngoài measured_system): một cơ chế bảng nổi cho mọi bảng thông tin, canvas theo chiều cao khả dụng + «Bước n/N» trong thanh, cây thành phần theo bước. Ba lần đóng băng, cùng tree hash: c8c49f3c (D:/tmp/rsp w04b), ecbe55c0 (D:/tmp/rsp w04d) sau khi lượt đo 1 bắt canvas WebGL không theo khung trên mobile, rồi 53e4bec5 (D:/tmp/rsp w04e) sau khi soát lượt đo 3 thấy khúc tô sáng của đoạn con bị làm dịu theo khối (cả hai chỉ frontend/src). CACHE_VERSION 114 → 115 (runs/regular-square-pyramid-w04/diagnostics/PROOF_CACHE_ROW_W04.json)."
+  },
+  {
+   "hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
+   "sau_wave": "IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (run regular-square-pyramid-w05)",
+   "ghi_chu": "Bộ đọc độ dài nguồn đọc chuỗi bằng nhau (SA = SB = SC = SD = 3 ⇒ mọi đoạn của chuỗi cùng giá trị; segment_relation.MAU_DO_DAI/cac_doan_truoc, grounding_gate._bang_chung, quantity_annotations._do_dai_de_cho). Giao diện (ngoài measured_system): chế độ tập trung không thanh trên toàn cục, nút quay lại, công cụ nhóm trong menu, toàn màn hình tuỳ chọn, gỡ thẻ lời giải lặp. Một lần đóng băng tại 470adc3a (D:/tmp/rsp w05a). CACHE_VERSION giữ 115 (runs/regular-square-pyramid-w05/diagnostics/cache_proof/CACHE_DECISION_W05.json)."
   }
  ],
  "diverged": true,

@@ -1,0 +1,15 @@
+# cwd: <worktree 'D:/tmp/rsp w05a'/backend> @ 470adc3a1cfc292572d09f7865cc21d7383ef069; clean detached CRLF; bare freeze then --verify
+2026-10-06T15:55:55Z
+0
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            470adc3a  (cây sạch: True)
+  CACHE_VERSION     115
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       110 file · 5e1c0639393295df
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 5e1c0639393295df…).
+verify exit=0
