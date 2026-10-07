@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
+ "current_candidate_hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -215,6 +215,11 @@
    "hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
    "sau_wave": "IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (run regular-square-pyramid-w05)",
    "ghi_chu": "Bộ đọc độ dài nguồn đọc chuỗi bằng nhau (SA = SB = SC = SD = 3 ⇒ mọi đoạn của chuỗi cùng giá trị; segment_relation.MAU_DO_DAI/cac_doan_truoc, grounding_gate._bang_chung, quantity_annotations._do_dai_de_cho). Giao diện (ngoài measured_system): chế độ tập trung không thanh trên toàn cục, nút quay lại, công cụ nhóm trong menu, toàn màn hình tuỳ chọn, gỡ thẻ lời giải lặp. Hai lần đóng băng, cùng tree hash: 470adc3a (D:/tmp/rsp w05a) rồi 82225a7b (D:/tmp/rsp w05b) sau khi lượt đo 2 bắt trang chế độ tập trung cao hơn khung nhìn 16 px (chỉ frontend/src). CACHE_VERSION giữ 115 (runs/regular-square-pyramid-w05/diagnostics/cache_proof/CACHE_DECISION_W05.json)."
+  },
+  {
+   "hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
+   "sau_wave": "REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (run regular-triangular-pyramid-w01)",
+   "ghi_chu": "Họ chóp tam giác đều + tứ diện đều trong miền hẹp ℚ³ (cạnh đáy k√2 hoặc k√6, chiều cao hữu tỉ lần √3; cạnh hữu tỉ bị từ chối trung thực): bộ đọc độ dài nguồn đọc số hoặc căn thành ExactNumber (segment_relation._phan_do_dai, shape_constraint), khuôn chứng nhận giả thiết T8 (assumption_gate._khuon_chop_tam_giac_deu, thẩm quyền shape_constraint.la_chop_tam_giac_deu), chân đường cao là trọng tâm suy ra (formation.phep_trong_tam, construction_binding quan hệ centroid), so khớp chính xác cho căn ở grounding_gate/postconditions/quantity_annotations, nhãn giao tuyến theo mặt (scene3d), hàng năng lực foundation_only (product_capability). Giao diện (ngoài measured_system): bảng đại lượng không còn thân rỗng, tô sáng đoạn của đại lượng đang chọn, biểu tượng nút, lời kể không lặp tên bước, xoay hiển thị đáy nghiêng. Một lần đóng băng tại c6fd9996 (commit sản phẩm e7b92e49; worktree sạch D:/tmp/rtp diag). CACHE_VERSION 115 → 116 (runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json)."
   }
  ],
  "diverged": true,
@@ -237,6 +242,7 @@
   "backend/app/simulation/geometry_compiler/fact_graph.py",
   "backend/app/simulation/geometry_compiler/primitives.py",
   "backend/app/simulation/geometry_compiler/routing.py",
+  "backend/app/simulation/product_capability.py",
   "backend/app/simulation/semantic_program/analyze_contract.py",
   "backend/app/simulation/semantic_program/assumption_gate.py",
   "backend/app/simulation/semantic_program/construction_binding.py",
@@ -248,6 +254,7 @@
   "backend/app/simulation/semantic_program/grounding_gate.py",
   "backend/app/simulation/semantic_program/literal_extractor.py",
   "backend/app/simulation/semantic_program/plane_equation.py",
+  "backend/app/simulation/semantic_program/postconditions.py",
   "backend/app/simulation/semantic_program/quantity_annotations.py",
   "backend/app/simulation/semantic_program/refusal_cause.py",
   "backend/app/simulation/semantic_program/request_contract.py",
@@ -272,5 +279,5 @@
   "analyze_schema": "Thành phần `analyze_schema` ĐỔI (515001b5… → a1b9e20a…) ở wave (12) — `tests/structured_relation_identity.py` dựng lại đúng 515001b5… (= ANALYZE_SCHEMA_HASH của con dấu thesis-final/V3) chỉ bằng bỏ thuộc tính `geometric_relations` khỏi lược đồ hình học; lược đồ Tin học và mọi trường khác trùng từng byte. Đây là thay đổi bề mặt mô hình của tuyến ĐỌC ĐỀ: số của lượt đo cuối mô tả hợp đồng analyze TRƯỚC ô này."
  },
  "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
- "cache_version_hien_tai": 115
+ "cache_version_hien_tai": 116
 }

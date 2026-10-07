@@ -1,0 +1,15 @@
+# cwd: <worktree 'D:/tmp/rtp diag'/backend> @ c6fd99965d9a93d2148cc654020f9200c14eb194; clean detached CRLF; bare freeze then --verify
+2026-10-07T08:43:27Z
+0
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            c6fd9996  (cây sạch: True)
+  CACHE_VERSION     116
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       110 file · 92c9e198ff26e811
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 92c9e198ff26e811…).
+verify exit=0

@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (run regular-triangular-pyramid-w01)",
+  "corrects": "docs/evaluation/geometry/runs/regular-square-pyramid-w05/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
+  "current_candidate_source_commit": "e7b92e49ff0743ed84f615e87310231c50b6754d",
+  "current_candidate_frozen_at": "c6fd99965d9a93d2148cc654020f9200c14eb194",
+  "current_candidate_note": "Frozen ONCE in this run, in a clean detached worktree (core.autocrlf=true, path with a space, outside the repository): D:/tmp/rtp diag at c6fd9996 (docs-only commit on top of the last product commit e7b92e49). Bare freeze then --verify, both exit 0 (diagnostics/logs/FREEZE_c6fd9996.log); 110 files, CACHE_VERSION 116, cay_lam_viec_sach = true. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged.",
+  "previous_candidate_hash": "5e1c0639393295df1b37a33e25b18ed69da87160197524abd1dab0f78ac51b18",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "regular-triangular-pyramid-w01 backend/app changes: source lengths read as a number or a radical into ExactNumber (segment_relation._phan_do_dai/viet_do_dai, shape_constraint); certificate template T8 for the regular triangular pyramid and the regular tetrahedron in the declared Q^3 domain (assumption_gate._khuon_chop_tam_giac_deu; single authority shape_constraint.la_chop_tam_giac_deu); foot of the height derived as the centroid (formation.phep_trong_tam, construction_binding centroid relation); exact radical comparison in grounding_gate, postconditions and quantity_annotations; cross-section line labels name their face (scene3d); a foundation_only capability row (product_capability). CACHE_VERSION 115 -> 116 (diagnostics/cache_proof/CACHE_DECISION.json: 37 fixture envelopes compared, 2 cross-section envelopes changed). frontend/src (outside measured_system, inside product_commit_sha): quantity panel without an empty body, highlight of the selected quantity's segment, control icons, step narration without the repeated title, display rotation for a tilted base. No change to prompts, grammar card, schemas or the capability hash (semantic environment b1714b56 unchanged).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 92c9e198 (product commit e7b92e49) is the current product identity. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 116
+}
