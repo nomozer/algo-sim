@@ -166,8 +166,10 @@ export function lamDiu(obj: THREE.Object3D, k = HE_SO_LAM_DIU): void {
 }
 
 /** Toạ độ cảnh → khung THẾ GIỚI qua phép xoay hiển thị (đồng nhất thức khi đáy ngang — trả lại chính các số). */
+const DONG_NHAT = new THREE.Quaternion();
+
 function xoay(p: Vec3, q: THREE.Quaternion): Vec3 {
-  if (q.x === 0 && q.y === 0 && q.z === 0) return p;
+  if (q.equals(DONG_NHAT)) return p;
   const w = new THREE.Vector3(...p).applyQuaternion(q);
   return [w.x, w.y, w.z];
 }
@@ -1633,7 +1635,7 @@ export function Scene3DWorkspace({
         (window as any).__geo3d_edge_spans = edgeAudit.edge_spans;
         // Tâm quỹ đạo: bộ đo mô phỏng đúng camera SAU cử chỉ xoay/lùi (w11).
         (window as any).__geo3d_camera_target = dieuKhien.target.toArray();
-        const coXoay = !(qRef.current.x === 0 && qRef.current.y === 0 && qRef.current.z === 0);
+        const coXoay = !qRef.current.equals(DONG_NHAT);
         (window as any).__geo3d_camera_snapshot = {
           position: cam.position.toArray(),
           // Bộ đo chiếu TOẠ ĐỘ CẢNH: khi có phép xoay hiển thị (đáy nghiêng, §18.2), ma trận phát là view × model để

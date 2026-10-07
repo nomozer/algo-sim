@@ -28,7 +28,7 @@ from math import isqrt
 from typing import Any, Callable
 
 from ..geometry.exact import Vec3
-from ..geometry.radical import ExactNumber, display, is_exact_number, parse_exact, sqrt_rational, square
+from ..geometry.radical import ExactNumber, is_exact_number, parse_exact, sqrt_rational, square
 from .contract import SemanticProgramSpec
 from .domain_profile import geometry_symbol_key
 from .formation import _dinh_nghia, hoan_thien_dung_hinh
