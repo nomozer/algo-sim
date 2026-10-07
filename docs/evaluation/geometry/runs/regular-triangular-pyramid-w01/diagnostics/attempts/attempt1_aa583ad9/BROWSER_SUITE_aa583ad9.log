@@ -1,0 +1,12 @@
+# cwd: <worktree '/d/tmp/rtp diag'> @ aa583ad983db6ea36e7a35413f5f1be94df9a833; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs --ra docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/results --screenshots docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images --bo-qua-build
+2026-10-07T08:48:57Z
+triangular_pyramid: PASS
+triangular_prism: PASS
+rectangular_pyramid: PASS
+cuboid: PASS
+cube: PASS
+cross_section: PASS
+regular_square_pyramid: PASS
+regular_triangular_pyramid: PASS
+Wrote D:\tmp\rtp diag\docs\evaluation\geometry\runs\regular-triangular-pyramid-w01\results\BROWSER_EVIDENCE.json: PASS
+exit=0
