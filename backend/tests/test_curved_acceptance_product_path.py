@@ -73,7 +73,7 @@ BAM_NGUON = {
 #: mà đỏ ở mọi worktree mới, suốt từ 2026-09-05.
 #:
 #: Cách chuẩn hoá lấy đúng tiền lệ đã có trong kho:
-#: `tests/geometry/test_phase7b_baseline_immutable.py::_bam`.
+#: `tests/geometry/test_holdout_baseline_immutable.py::_bam`.
 BAM_NOI_DUNG = {
     "attribution.json":
         "7f84686a9d31b7c90f21f8a95bffe718f0d353a5ed10a66f9069d60154faf6ef",
@@ -91,7 +91,7 @@ CANDIDATE_V3 = ("a696200e8f8c668c82a1675eab09b4e1845e3c499edaf90c95790f108"
 def _bam(p: Path) -> str:
     """Băm NỘI DUNG, chuẩn hoá xuống dòng trước — xem ghi chú ở `BAM_NGUON`.
 
-    Cùng công thức với `tests/geometry/test_phase7b_baseline_immutable.py::_bam`;
+    Cùng công thức với `tests/geometry/test_holdout_baseline_immutable.py::_bam`;
     một cách chuẩn hoá cho mọi phép kiểm bất biến của bằng chứng, không hai.
     """
     return hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()

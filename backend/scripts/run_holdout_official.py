@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """PHASE 7B — LƯỢT ĐO CHÍNH THỨC. **TIÊU QUOTA THẬT.**
 
-    ALLOW_LIVE_AI=1 python scripts/run_phase7b_official.py          # chạy
-    python scripts/run_phase7b_official.py --tien-kiem              # 0 call
-    python scripts/run_phase7b_official.py --cham-lai               # 0 call
+    ALLOW_LIVE_AI=1 python scripts/run_holdout_official.py          # chạy
+    python scripts/run_holdout_official.py --tien-kiem              # 0 call
+    python scripts/run_holdout_official.py --cham-lai               # 0 call
 
 20 bài ĐÃ NIÊM PHONG × `k = 3` lượt độc lập. Trần 360 lượt logic / 480 HTTP.
 

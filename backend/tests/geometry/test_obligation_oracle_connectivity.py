@@ -6,7 +6,7 @@ Lượt chính thức để lộ 9 lượt `oracle = UNGRADED` ở tầng A: ngh
 nổi. Ba lượt A01 (`point_on_line`) và sáu lượt A09/A10 (`angle`).
 
 Sáu lượt góc là **hệ quả** của lỗi `scope` (không có hợp đồng nào để nối —
-xem `test_wave1_scope_goc`). Ba lượt A01 là chuyện khác: mô hình khai một
+xem `test_angle_scope_gate`). Ba lượt A01 là chuyện khác: mô hình khai một
 `kind` khác với `kind` mà đề đòi.
 
 ─── VÌ SAO FILE NÀY KIỂM CẤU TRÚC, KHÔNG KIỂM SỐ ─────────────────────────

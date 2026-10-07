@@ -199,7 +199,7 @@ def main() -> int:
     if not xong:
         print("Điền tiếp rồi chạy lại. Khối nào bỏ hẳn thì XOÁ NGUYÊN KHỐI.")
     else:
-        print("Chạy: python scripts/run_phase7b_data_pipeline.py <gói> --ghi")
+        print("Chạy: python scripts/run_holdout_data_pipeline.py <gói> --ghi")
     # ⚠️ Xanh ở đây KHÔNG nói đề đúng nguyên văn nguồn — máy không kiểm được
     # điều đó, và giả vờ kiểm được là bỏ đúng cái cổng vừa dựng.
     return 0 if xong else 1

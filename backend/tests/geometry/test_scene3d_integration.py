@@ -160,7 +160,7 @@ def test_free_object_KHONG_co_producer():
 
 # ══ TASK 4 — TOÀN PIPELINE ══════════════════════════════════════════════
 def test_pipeline_TRON_VEN_sinh_du_nam_thanh_phan():
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     spec = _spec()
     kq = verify_and_compile(_hop_dong_geo_09(), spec)
@@ -175,7 +175,7 @@ def test_pipeline_TRON_VEN_sinh_du_nam_thanh_phan():
 
 
 def test_envelope_MANG_scene3d_va_KHONG_thay_duong_2D():
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     spec = _spec()
     kq = verify_and_compile(_hop_dong_geo_09(), spec)
@@ -211,7 +211,7 @@ def test_khong_qua_tham_dinh_thi_KHONG_dung_canh(pha, sua):
     thành một bộ vẽ hình có thêm một con AI ở đầu vào — và toàn bộ chuỗi kiểm
     chứng phía trước trở thành trang trí.
     """
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     ct = _ct_hinh_hoc()
     sua(ct)
@@ -237,6 +237,6 @@ def test_o_TRONG_scene3d_KHONG_do_route_dien():
             if isinstance(n, ast.ImportFrom) and n.module]
     assert not any("scene3d" in m for m in nhap)
 
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     assert verify_and_compile(_hop_dong_geo_09(), _spec()).scene3d is None

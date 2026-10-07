@@ -40,7 +40,7 @@ def _chay_geo09(rn, monkeypatch, ct: dict):
     """Thả một IR qua đúng chuỗi cổng sản phẩm, không API."""
     from app.ai import pipeline
     from app.simulation.semantic_program.contract import SemanticProgramSpec
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     async def a(*x, **k):
         return _hop_dong_geo_09(), None
@@ -57,7 +57,7 @@ def _chay_geo09(rn, monkeypatch, ct: dict):
 def test_bon_truong_that_bai_deu_co_mat(rn, monkeypatch):
     """`{code, reason, details, layer}` — đặc tả TASK 5. Cộng `stage_reached`
     vì nó nói cổng NÀO chặn, thứ mà `layer` gộp lại."""
-    from test_geometry_wave2 import _chuong_trinh_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09
 
     ct = _chuong_trinh_geo_09()
     ct["memory_declarations"] = [
@@ -83,7 +83,7 @@ def test_details_PHAN_BIET_duoc_hai_benh_cung_ma_loi(rn, monkeypatch):
       · trích dẫn hỏng      → details nói tên id
       · khai đáp án         → details mở đầu bằng [MODEL_ASSUMPTION_IS_ANSWER]
     """
-    from test_geometry_wave2 import _chuong_trinh_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09
 
     ct1 = _chuong_trinh_geo_09()
     ct1["memory_declarations"] = [
@@ -121,9 +121,9 @@ def test_C1a_details_noi_ro_CAI_GI_lech(rn, monkeypatch):
     from app.simulation.semantic_program.contract import SemanticProgramSpec
     from app.simulation.semantic_program.obligations import Obligation
     from app.simulation.semantic_program.request_contract import RequestContract
-    from test_geometry_wave2 import _chuong_trinh_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09
 
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     # Mang đề của ca như mọi hợp đồng sản phẩm (W14 5a) ⇒ lời từ chối đến từ C₁a.
     hd = RequestContract(obligations=(
@@ -157,7 +157,7 @@ def test_BON_dang_hong_deu_co_du_hinh_dang(rn, monkeypatch):
     from app.simulation.semantic_program.contract import SemanticProgramSpec
     from app.simulation.semantic_program.obligations import Obligation
     from app.simulation.semantic_program.request_contract import RequestContract
-    from test_geometry_wave2 import _chuong_trinh_geo_09, _hop_dong_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09, _hop_dong_geo_09
 
     def _ir(bien_doi=None):
         ct = _chuong_trinh_geo_09()
@@ -234,7 +234,7 @@ def test_schema_fail_giu_VAT_CHUNG_thay_cho_details(rn, monkeypatch):
     chạy. Bù lại nó phải giữ `generated_raw` — nếu không, tầng schema là tầng
     DUY NHẤT không chẩn đoán được, và đó đúng là tầng lượt 1 hỏng nhiều nhất."""
     from app.ai import pipeline
-    from test_geometry_wave2 import _hop_dong_geo_09
+    from test_dev_failure_regressions import _hop_dong_geo_09
 
     async def a(*x, **k):
         return _hop_dong_geo_09(), None
@@ -260,7 +260,7 @@ def test_schema_fail_giu_VAT_CHUNG_thay_cho_details(rn, monkeypatch):
 def test_bai_DI_TRON_DUONG_van_ghi_quan_trac_grounding(rn, monkeypatch):
     """Chỉ gắn quan trắc vào nhánh hỏng thì bài chạy được — bài đáng đếm nhất —
     lại không đếm được nó dùng bao nhiêu giả thiết."""
-    from test_geometry_wave2 import _chuong_trinh_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09
 
     ra = _chay_geo09(rn, monkeypatch, _chuong_trinh_geo_09())
     assert ra["executable"] is True
@@ -271,7 +271,7 @@ def test_bai_DI_TRON_DUONG_van_ghi_quan_trac_grounding(rn, monkeypatch):
 def test_trich_dan_hong_duoc_DEM_chu_khong_bi_nuot(rn, monkeypatch):
     """Hạ cấp trích dẫn hỏng không được biến nó thành vô hình — nếu không, mức
     lệch danh xưng giữa hai lượt LLM lại không đo được, đúng như lượt 2."""
-    from test_geometry_wave2 import _chuong_trinh_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09
 
     ct = _chuong_trinh_geo_09()
     ct["memory_declarations"] = [

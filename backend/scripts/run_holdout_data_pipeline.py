@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """MỘT lệnh cho cả tuyến dữ liệu Phase 7B. **0 API call.**
 
-    python scripts/run_phase7b_data_pipeline.py <gói>.txt          # soi
-    python scripts/run_phase7b_data_pipeline.py <gói>.txt --ghi    # ghi thật
+    python scripts/run_holdout_data_pipeline.py <gói>.txt          # soi
+    python scripts/run_holdout_data_pipeline.py <gói>.txt --ghi    # ghi thật
 
 Chạy: `validate gói → ingest → capability → oracle → pool → trùng id →
 coverage → ngưỡng ≥40 → readiness`, rồi báo đang ở mốc M mấy.
 
 ─── VÌ SAO KHÔNG VIẾT LẠI SÁU CHẶNG ───────────────────────────────────────
 
-Sáu chặng giữa đã có ở `run_m1_pipeline`, đã có test, và đã chạy thật. Script
+Sáu chặng giữa đã có ở `run_holdout_ingest_chain`, đã có test, và đã chạy thật. Script
 này **gọi lại** chúng chứ không chép: hai bản sao của cùng một dây chuyền là
 hai bản sẽ trôi khỏi nhau, và cái trôi ở đây là *tập đo được niêm phong theo
 luật nào*. Phần riêng của nó là hai đầu — **soi gói** ở trước (gói phát dư
@@ -73,7 +73,7 @@ def main() -> int:
     SH = _nap("seal_geometry_holdout")
     IN = _nap("ingest_holdout_batch")
     VL = _nap("validate_human_copy_packet")
-    M1 = _nap("run_m1_pipeline")
+    M1 = _nap("run_holdout_ingest_chain")
     MT = _nap("holdout_coverage_matrix")
 
     goc = Path(a.goi)
@@ -106,7 +106,7 @@ def main() -> int:
         return 2
 
     # ── [1–6] mượn nguyên dây chuyền đã có ───────────────────────────────
-    # Ghi phần ĐÃ ĐIỀN ra file tạm cạnh gói: `run_m1_pipeline` nhận đường dẫn,
+    # Ghi phần ĐÃ ĐIỀN ra file tạm cạnh gói: `run_holdout_ingest_chain` nhận đường dẫn,
     # và phần đã điền mới là thứ nạp được (gói gốc còn khối trống).
     da_dien, _ = VL.go_khoi_trong(goc.read_text(encoding="utf-8"))
     tam = goc.with_suffix(".dadien.txt")
@@ -114,7 +114,7 @@ def main() -> int:
     print(f"\n    (phần đã điền → {tam.name})\n")
     try:
         ma = M1.main.__wrapped__ if hasattr(M1.main, "__wrapped__") else M1.main
-        sys.argv = ["run_m1_pipeline", str(tam)] + (["--ghi"] if a.ghi else [])
+        sys.argv = ["run_holdout_ingest_chain", str(tam)] + (["--ghi"] if a.ghi else [])
         rc = ma()
     finally:
         tam.unlink(missing_ok=True)

@@ -466,7 +466,7 @@ async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, An
         # Truyền THẲNG `hinh_hoc` chứ không gọi `detect_domain`: bộ nhận miền
         # là một SUY ĐOÁN, và một phép đo không được phụ thuộc vào suy đoán —
         # nếu nó đoán sai một bài thì số của bài đó nói về bộ nhận miền chứ
-        # không nói về hệ sinh. (`test_geometry_wave2` vẫn khoá riêng rằng bộ
+        # không nói về hệ sinh. (`test_dev_failure_regressions` vẫn khoá riêng rằng bộ
         # nhận miền bắt đúng cả 10 bài này.)
         contract, err = await pipeline.stage_semantic_analyze(
             de, api_key, domain=DOMAIN_HINH_HOC

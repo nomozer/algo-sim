@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WAVE 1 sau Phase 7B — ĐO ỔN ĐỊNH TRÊN DEV. **TIÊU QUOTA THẬT.**
 
-    ALLOW_LIVE_AI=1 python scripts/run_wave1_dev_stability.py --k 3
+    ALLOW_LIVE_AI=1 python scripts/run_dev_stability.py --k 3
 
 Ba đề DEV **mới**, viết cho đúng hai họ mà wave này vừa sửa, cộng năm đề
 pilot đã đăng ký để thấy phép sửa không làm hỏng thứ đang chạy được.
@@ -11,7 +11,7 @@ pilot đã đăng ký để thấy phép sửa không làm hỏng thứ đang ch
 Taxonomy của lượt chính thức chỉ **dẫn đường** (*"họ GÓC hỏng"*, *"grounding
 6 lượt"*). Ba đề dưới đây do wave này viết ra: khác số, khác cách hỏi, khác
 khối. Lấy chính 20 đề held-out làm ca sửa thì tập đo biến thành tập DEV
-không hoàn tác được — `test_phase7b_baseline_immutable` khoá điều đó.
+không hoàn tác được — `test_holdout_baseline_immutable` khoá điều đó.
 
 ─── VÌ SAO ĐÚNG BA ĐỀ NÀY ────────────────────────────────────────────────
 
@@ -57,7 +57,7 @@ def _nap(ten: str):
 
 
 M = _nap("measure_geometry_stability")
-PILOT = _nap("run_phase7a_pilot")
+PILOT = _nap("run_holdout_pilot")
 
 #: Hình lập phương cạnh 2, đặt `A(0,0,0) B(2,0,0) C(2,2,0) D(0,2,0)`, tầng
 #: trên `z = 2`. Ba đáp án tính tay:

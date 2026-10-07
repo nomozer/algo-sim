@@ -1,5 +1,5 @@
 /**
- * certify-construction-bridge-g4.mjs — PHÉP DỰNG MỚI tới được màn hình.
+ * certify-construction-through-point.mjs — PHÉP DỰNG MỚI tới được màn hình.
  * **0 mạng, 0 LLM** (bài mẫu chạy phía client).
  *
  * ─── ĐIỀU NÓ BẢO VỆ ───────────────────────────────────────────────────────

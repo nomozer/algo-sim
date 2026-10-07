@@ -145,7 +145,7 @@ def test_ky_vong_TU_KHAI_khong_sinh_tu_dau_ra_mo_hinh(GE, PILOT, tmp_path):
         GE.nap("pilot", thu_muc=tmp_path)
 
 
-@pytest.mark.parametrize("ten", ["measure_geometry_stability", "run_phase7a_pilot"])
+@pytest.mark.parametrize("ten", ["measure_geometry_stability", "run_holdout_pilot"])
 def test_runner_KHONG_con_giu_ky_vong_trong_ma_nguon(ten):
     """Hồi quy trực tiếp: kỳ vọng quay lại nằm cạnh đề là quay lại tình trạng
     người viết bộ đo sửa được thước ngay trong lượt đang đo."""
@@ -163,7 +163,7 @@ def test_MOI_de_cua_pilot_deu_co_ky_vong_TRUOC_khi_chay():
     Thiếu kỳ vọng thì `_ky_vong_cua` nổ — nhưng nó nổ **giữa lượt live**, sau
     khi đã tiêu call. Test này bắt cùng lỗi ấy với 0 call, ở chỗ rẻ.
     """
-    pilot = _nap("run_phase7a_pilot")
+    pilot = _nap("run_holdout_pilot")
     ge = _nap("geometry_expectations")
     co = {c["case_id"] for c in ge.nap("pilot")["cases"]}
     thieu = [b["id"] for b in pilot.BAI_PILOT if b["id"] not in co]

@@ -363,7 +363,7 @@ def test_F_artifact_ghi_du_ba_nhom_va_dung_ten(c7a_goc):
 # ══ D4 · ARTIFACT THẬT TỪ `main_async` ═══════════════════════════════════
 def test_D4_artifact_cuoi_mang_du_nam_truong_moi(tmp_path, monkeypatch):
     """Chạy chính `main_async` với provider stub, đọc artifact trên đĩa."""
-    import test_v3_live_entrypoint_wiring as W
+    import test_curved_acceptance_entrypoint as W
 
     W_fix = W  # dùng lại fixture pool/seal tổng hợp của bộ test entrypoint
     assert W_fix is not None

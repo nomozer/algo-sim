@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """MỘT lệnh chạy sau khi người chép xong gói. **0 API call.**
 
-    python scripts/finalize_phase7b_holdout.py <gói>.txt          # soi
-    python scripts/finalize_phase7b_holdout.py <gói>.txt --ghi    # ghi thật
+    python scripts/finalize_holdout_intake.py <gói>.txt          # soi
+    python scripts/finalize_holdout_intake.py <gói>.txt --ghi    # ghi thật
 
-─── VÌ SAO CÓ FILE NÀY KHI ĐÃ CÓ `run_phase7b_data_pipeline` ──────────────
+─── VÌ SAO CÓ FILE NÀY KHI ĐÃ CÓ `run_holdout_data_pipeline` ──────────────
 
 Nó **không** thêm chặng nào. Nó gọi lại đúng dây chuyền ấy rồi trả lời **một
 câu mà dây chuyền kia không trả lời**: *sau khi nạp, còn thiếu bao nhiêu bài
@@ -51,7 +51,7 @@ def main() -> int:
     SH = _nap("seal_geometry_holdout")
     IN = _nap("ingest_holdout_batch")
     VL = _nap("validate_human_copy_packet")
-    DP = _nap("run_phase7b_data_pipeline")
+    DP = _nap("run_holdout_data_pipeline")
 
     goc = Path(a.goi)
     r = VL.soi(goc.read_text(encoding="utf-8"), SH, IN)
@@ -66,7 +66,7 @@ def main() -> int:
     print("═" * 66 + "\n")
 
     # ── Dây chuyền: mượn nguyên, không chép lại nghiệp vụ ────────────────
-    sys.argv = ["run_phase7b_data_pipeline", str(goc)] + (
+    sys.argv = ["run_holdout_data_pipeline", str(goc)] + (
         ["--ghi"] if a.ghi else [])
     rc = DP.main()
     # `rc == 1` nghĩa là *chưa đủ ngưỡng* — đó CHÍNH LÀ lúc cần báo cáo

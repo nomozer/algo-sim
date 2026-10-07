@@ -4,7 +4,7 @@
 Cơ chế có từ Wave 2; file này khoá **ranh giới** của nó bằng đúng cặp ca mà đặc
 tả TASK 3 nêu, cộng những lối vòng mà Wave 3 vừa mở ra.
 
-Vì sao cần một file riêng dù `test_geometry_wave2.py` đã có test: Wave 3 nới
+Vì sao cần một file riêng dù `test_dev_failure_regressions.py` đã có test: Wave 3 nới
 grounding ở hai chỗ (chuẩn hoá id · hạ cấp trích dẫn hỏng). Mỗi lần nới một cổng
 an toàn thì tập ca ÂM phải được kiểm lại — nới đúng là nới mà mọi ca âm cũ vẫn
 âm. Không kiểm lại thì "nới một chút" là cách một cổng chết dần.

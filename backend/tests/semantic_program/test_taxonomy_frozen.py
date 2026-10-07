@@ -89,7 +89,7 @@ TAXONOMY_DA_DONG_BANG = {
     # HỆ QUẢ PHẢI KHAI: ô A13 của `BANG_O` (held-out ĐÃ NIÊM PHONG) vẫn gắn
     # `coplanar`. Không gắn lại — sửa dụng cụ đo sau khi niêm phong là đúng thứ
     # con dấu tồn tại để ngăn. Nên trên held-out, thiết diện vẫn chấm YẾU; chỗ
-    # ấy khai ở `test_wave1_oracle_connectivity.KHONG_CO_O_DO`.
+    # ấy khai ở `test_obligation_oracle_connectivity.KHONG_CO_O_DO`.
     "section_matches",
     # MỞ 2026-09-03 (`RADIUS_OBLIGATION_COVERAGE`). Câu hỏi bắt buộc của test
     # này — *thay đổi đến từ DEV hay từ một case SEALED?* — trả lời: **KHÔNG TỪ

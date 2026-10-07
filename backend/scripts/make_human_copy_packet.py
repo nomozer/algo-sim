@@ -803,7 +803,7 @@ _MO_DAU = """\n# ═════════════════════
 #
 #    cd backend
 #    python scripts/validate_human_copy_packet.py <gói>
-#    python scripts/finalize_phase7b_holdout.py <gói> --ghi
+#    python scripts/finalize_holdout_intake.py <gói> --ghi
 #
 # ═══════════════════════════════════════════════════════════════════════════
 #

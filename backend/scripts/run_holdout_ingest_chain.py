@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Chạy TRỌN chuỗi holdout bằng MỘT lệnh. **0 API call.**
 
-    python scripts/run_m1_pipeline.py <lô>.txt          # soi cả chuỗi, không ghi
-    python scripts/run_m1_pipeline.py <lô>.txt --ghi    # ghi thật
+    python scripts/run_holdout_ingest_chain.py <lô>.txt          # soi cả chuỗi, không ghi
+    python scripts/run_holdout_ingest_chain.py <lô>.txt --ghi    # ghi thật
 
     ingest ──▶ pool ──▶ scaffold expectation ──▶ freeze check ──▶ coverage ──▶ readiness
 

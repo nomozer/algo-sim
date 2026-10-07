@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """PHASE 7B — CHẤM lượt chính thức. **0 API call.**
 
-    python scripts/score_phase7b_official.py [--md docs/.../PHASE7B_OFFICIAL_RESULT.md]
+    python scripts/score_holdout_official.py [--md docs/.../PHASE7B_OFFICIAL_RESULT.md]
 
 Đọc artifact đã ghi, chấm bằng **kỳ vọng + hợp đồng metric đã đóng băng**.
 Không gọi model, không đọc lại đề, không đổi định nghĩa chỉ số.

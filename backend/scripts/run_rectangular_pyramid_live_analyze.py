@@ -74,7 +74,7 @@ def doc_khoa() -> str:
     return S_LIVE.doc_khoa()
 
 
-class Phase8LiveTransport(CongHttp):
+class LiveAnalyzeTransport(CongHttp):
     def __init__(self, inner, max_http, khu, raw_save_path: Path, **kw):
         super().__init__(inner, max_http, khu, **kw)
         self.raw_save_path = raw_save_path
@@ -181,7 +181,7 @@ def run_phase8(
 
     if not offline_eval:
         # 3. Thực hiện đúng một Analyze HTTP request
-        transport = Phase8LiveTransport(
+        transport = LiveAnalyzeTransport(
             inner=httpx.AsyncHTTPTransport(),
             max_http=MAX_HTTP,
             khu=khu,

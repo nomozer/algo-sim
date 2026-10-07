@@ -184,7 +184,7 @@ def test_di_tron_duong_voi_faces_bang_TEN():
     from fractions import Fraction
 
     from app.simulation.semantic_program.route import verify_and_compile
-    from test_geometry_wave2 import _chuong_trinh_geo_09, _hop_dong_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09, _hop_dong_geo_09
 
     ct = _chuong_trinh_geo_09()
     for s in ct["statements"]:

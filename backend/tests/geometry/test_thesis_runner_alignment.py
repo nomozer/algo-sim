@@ -827,7 +827,7 @@ def test_H6_ban_dinh_chinh_cua_luot_do_chinh_thuc_khop_artifact_tho():
     # CHECKOUT chứ không phụ thuộc nội dung, và cùng một commit cho hai giá trị
     # băm khác nhau ở hai cây làm việc. Ba băm trong `SCORING_CORRECTION.json`
     # vốn đã là băm blob (LF) nên KHÔNG phải sửa một giá trị nào; chỉ phép đo sai.
-    # Cùng công thức với `test_phase7b_baseline_immutable.py::_bam`.
+    # Cùng công thức với `test_holdout_baseline_immutable.py::_bam`.
     for ten, bam in d["artifact_da_dinh_chinh"].items():
         tho = (thu_muc / ten).read_bytes().replace(b"\r\n", b"\n")
         that = hashlib.sha256(tho).hexdigest()

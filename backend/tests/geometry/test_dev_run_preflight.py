@@ -459,9 +459,9 @@ def test_artifact_du_khoa_khi_NEM_NGOAI_LE(rn, monkeypatch):
 
 
 def test_artifact_du_khoa_khi_DI_TRON_DUONG(rn, monkeypatch):
-    """Dùng lại đúng chương trình `geo_09` viết tay của `test_geometry_wave2` —
+    """Dùng lại đúng chương trình `geo_09` viết tay của `test_dev_failure_regressions` —
     một nguồn sự thật cho "chương trình hình học đúng trông thế nào"."""
-    from test_geometry_wave2 import _chuong_trinh_geo_09, _hop_dong_geo_09
+    from test_dev_failure_regressions import _chuong_trinh_geo_09, _hop_dong_geo_09
 
     from app.simulation.semantic_program.contract import SemanticProgramSpec
 

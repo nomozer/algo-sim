@@ -11,7 +11,7 @@ Taxonomy của lượt chính thức được phép **dẫn đường** (*"họ 
 nhưng bằng chứng sửa phải độc lập: lấy chính 20 đề held-out làm ca hồi quy
 thì tập đo biến thành tập DEV **không hoàn tác được**, và mọi lượt đo sau
 trên chúng sẽ đo một hệ đã được vá theo chúng. Nên mọi đề dưới đây do wave
-này viết ra, và `test_phase7b_baseline_immutable` khoá điều đó.
+này viết ra, và `test_holdout_baseline_immutable` khoá điều đó.
 
 ─── NGUYÊN NHÂN GỐC ──────────────────────────────────────────────────────
 

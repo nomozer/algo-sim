@@ -99,7 +99,7 @@ const SHARED_OWNERS = [
   },
   {
     match: /^frontend\/src\/simulations\/transport-policy\.ts$/,
-    tests: ["src/components/transport-w7.test.tsx", "src/simulations/experience-manifest.test.ts"],
+    tests: ["src/components/transport-policy.test.tsx", "src/simulations/experience-manifest.test.ts"],
     why: "Chính sách transport quyết định bộ điều khiển của cả 23 target; manifest trải nghiệm đọc lại chính bảng này.",
   },
   {

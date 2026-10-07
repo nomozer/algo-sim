@@ -205,7 +205,7 @@ def chuong_trinh_mp_vuong_goc() -> dict[str, Any]:
     diễn đạt được bằng IR cũ, nên một bài mẫu cho chúng chỉ là trang trí.
 
     Bài dừng ở *dựng rồi đo*, không đi tiếp tới giao tuyến — chuỗi dài hơn đã
-    có ở `tests/geometry/test_construction_bridge_g4.py::test_D_chuoi_dai_*`.
+    có ở `tests/geometry/test_construction_through_point.py::test_D_chuoi_dai_*`.
     Lý do là NHÃN: một vật do `assign` sinh ra không có ô nhãn trong IR, nên tên
     của nó do formatter dựng; lồng câu ấy vào câu sau cho ra *"Giao tuyến của
     Mặt phẳng qua B và vuông góc với SC và (ABCD)"* — đúng ngữ nghĩa mà mơ hồ

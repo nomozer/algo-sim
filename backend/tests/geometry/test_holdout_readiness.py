@@ -1125,13 +1125,13 @@ def test_khung_KHONG_dung_duoc_khi_pool_rong(SC, SH):
 # ══ CHUỖI MỘT LỆNH ═══════════════════════════════════════════════════════
 @pytest.fixture(scope="module")
 def M1():
-    return _nap("run_m1_pipeline")
+    return _nap("run_holdout_ingest_chain")
 
 
 def test_chuoi_KHONG_gop_seal(M1):
     """`seal` tiêu seed của GVHD và chỉ chạy được MỘT LẦN. Để nó trong một
     lệnh chạy-hàng-ngày là mời một cú `--ghi` lỡ tay tiêu mất con dấu."""
-    src = (SCRIPTS / "run_m1_pipeline.py").read_text(encoding="utf-8")
+    src = (SCRIPTS / "run_holdout_ingest_chain.py").read_text(encoding="utf-8")
     assert "seal_geometry_holdout" not in src.replace("`seal`", "") \
         or "KHÔNG gộp `seal`" in src
     assert "KHÔNG gộp `seal`" in src
@@ -2131,7 +2131,7 @@ def test_de_MAT_ky_hieu_dac_trung_thi_canh_bao(SH, VL, GOI, o, thieu):
 
 
 def test_moc_M_doc_dung_theo_so_bai_va_so_o():
-    DP = _nap("run_phase7b_data_pipeline")
+    DP = _nap("run_holdout_data_pipeline")
     assert DP.moc_hien_tai(0, 0).startswith("M0")
     assert DP.moc_hien_tai(1, 1).startswith("M1")
     assert DP.moc_hien_tai(3, 1).startswith("M2")
@@ -2189,8 +2189,8 @@ def test_validator_KHONG_dem_khoi_reserve_thanh_viec_phai_lam(PK, VL, SH, GOI):
 
 def test_bo_hoan_tat_KHONG_lap_lai_nghiep_vu_cua_duong_ong(PK):
     """`finalize` chỉ được ORCHESTRATE — nghiệp vụ nằm ở script gốc."""
-    src = (SCRIPTS / "finalize_phase7b_holdout.py").read_text(encoding="utf-8")
-    assert "DP.main()" in src, "phải gọi lại run_phase7b_data_pipeline"
+    src = (SCRIPTS / "finalize_holdout_intake.py").read_text(encoding="utf-8")
+    assert "DP.main()" in src, "phải gọi lại run_holdout_data_pipeline"
     # Đo LỜI GỌI, không đo chữ: tên hàm nhắc trong docstring là giải thích,
     # không phải chép nghiệp vụ. Đo thô thì test đỏ vì một câu văn.
     for cam in ("check_capability_boundary", "kiem_pool", "eval_geometry_expr"):
@@ -2272,8 +2272,8 @@ def test_khong_co_con_dau_thi_TU_CHOI_chay_holdout():
 
 def test_chuoi_FINALIZE_khong_module_nao_cham_model():
     """Toàn bộ dây chuyền nạp gói phải TẤT ĐỊNH — 0 API call, kể cả gián tiếp."""
-    chuoi = ("finalize_phase7b_holdout", "run_phase7b_data_pipeline",
-             "run_m1_pipeline", "ingest_holdout_batch", "seal_geometry_holdout",
+    chuoi = ("finalize_holdout_intake", "run_holdout_data_pipeline",
+             "run_holdout_ingest_chain", "ingest_holdout_batch", "seal_geometry_holdout",
              "scaffold_expectation", "freeze_expectation_check",
              "holdout_coverage_matrix", "validate_human_copy_packet")
     for ten in chuoi:

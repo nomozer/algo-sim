@@ -21,7 +21,7 @@ sản phẩm ĐẦY ĐỦ có phục vụ được bài này không.* Đổi l�
 đóng góp của từng tầng — đó là cái giá, và nó được khai ở đây chứ không giấu.
 
 ⚠️ Gọi thẳng `run_pipeline`, **không qua HTTP** — cùng lý do
-`run_phase7a_pilot` và `measure_geometry_stability` làm vậy: không có cache nào
+`run_holdout_pilot` và `measure_geometry_stability` làm vậy: không có cache nào
 để một kết quả cũ lẻn về.
 
 ⚠️ Thẻ dùng cho lượt này là **thẻ SẢN PHẨM hiện hành**, không nạp từ file.

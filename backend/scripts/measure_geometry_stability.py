@@ -51,7 +51,7 @@ sys.path.insert(0, str(BACKEND))
 
 def _nap_anh_em(ten: str):
     """Nạp script anh em theo ĐƯỜNG DẪN — `scripts/` không phải package, và
-    `run_phase7a_pilot` cũng nạp file này bằng đúng cách ấy."""
+    `run_holdout_pilot` cũng nạp file này bằng đúng cách ấy."""
     dd = Path(__file__).resolve().parent / f"{ten}.py"
     spec = importlib.util.spec_from_file_location(f"_mgs_{ten}", dd)
     assert spec and spec.loader
@@ -109,7 +109,7 @@ BAI = [
     },
 ]
 
-#: Tên tập kỳ vọng. `run_phase7a_pilot` ghi đè khi nó thêm hai đề — cùng một
+#: Tên tập kỳ vọng. `run_holdout_pilot` ghi đè khi nó thêm hai đề — cùng một
 #: file phục vụ cả hai runner, vì ba đề đầu của pilot CHÍNH LÀ ba đề ở đây.
 TAP_KY_VONG = "pilot"
 

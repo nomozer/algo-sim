@@ -1,6 +1,6 @@
 """V3_LIVE_ENTRYPOINT_WIRING — đường chạy LIVE có dùng pool đã niêm phong không?
 
-Bộ test này khoá đúng khoảng hở mà `test_v3_runner_manifest_integration.py`
+Bộ test này khoá đúng khoảng hở mà `test_curved_acceptance_manifest.py`
 **không** bắt được: bộ ấy gọi thẳng `mo_luot_do_v3` và chứng minh **hàm** đúng;
 nó chưa bao giờ chạy `main_async`, nên nó xanh suốt quãng entrypoint chạy corpus
 phát triển. Ở đây mọi khẳng định đi qua **`main_async`** — đường mà lệnh

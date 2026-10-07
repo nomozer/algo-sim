@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """PHASE 7A — PILOT BENCHMARK. **TIÊU QUOTA THẬT.**
 
-    ALLOW_LIVE_AI=1 python scripts/run_phase7a_pilot.py --k 3
+    ALLOW_LIVE_AI=1 python scripts/run_holdout_pilot.py --k 3
 
 **MỤC TIÊU DUY NHẤT: kiểm BỘ ĐO, không đánh giá mô hình.** Năm đề × `k` lượt là
 mẫu quá nhỏ để nói bất cứ điều gì về chất lượng AI; nó đủ để trả lời một câu

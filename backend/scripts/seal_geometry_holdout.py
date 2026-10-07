@@ -94,8 +94,8 @@ O_TANG_B = tuple(k for k in BANG_O if k.startswith("B"))
 #: ngày niêm phong, cách trung thực là **khai chỗ trống**, không phải mở ô.
 #:
 #: Đặt ở đây chứ không ở từng file test, vì BA guard cùng hỏi câu này
-#: (`test_holdout_protocol`, `test_wave1_oracle_connectivity`,
-#: `test_geometry_wave2`). Ba bản chép tay sẽ trôi khỏi nhau, và wave
+#: (`test_holdout_protocol`, `test_obligation_oracle_connectivity`,
+#: `test_dev_failure_regressions`). Ba bản chép tay sẽ trôi khỏi nhau, và wave
 #: 2026-08-30 đã cho thấy đúng chuyện ấy xảy ra với ba bảng liệt kê kiểu.
 NGHIA_VU_KHONG_CO_O: dict[str, str] = {
     "section_matches": (
