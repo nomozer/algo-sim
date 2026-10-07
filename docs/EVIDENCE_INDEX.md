@@ -1103,7 +1103,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** 983cfc16 · 82beaf62 · df614b30 · 3487c0a7 · e7b92e49 · 1e90ca0e (harness 4e285690; cleanup 0d4c4f8b; labels/oracle/amendment §18 before the change dc0a804b)
 - **MEASUREMENT_COMMIT:** 1bb11018 (attempt 3; local, clean detached CRLF worktree with a space in its path; suite, W02, W04, W05, occlusion, playback, builder, prune; W02 and W04 cross_section rerun alone at the same commit); attempts 1 (aa583ad9) and 2 (1bb11018) kept (`MEASUREMENT_ATTEMPTS.json`, `diagnostics/attempts/`)
 - **EVIDENCE_COMMIT_ROLE:** evidence commit c08a1eed after the measurement (results, images, inputs, logs)
-- **CLASSIFICATION:** ⟨T3⟩
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + identity gates at aa845902; first T3 at d2e8a778 failed on a stale fixture-count lock, fixed)
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (5e1c0639… → 92c9e198…; two freezes, same tree hash, product commit 1e90ca0e)

@@ -24,7 +24,7 @@ CURRENT_WAVE = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (việc regular-
 PRODUCT_STATE = candidate 92c9e198… (product commit 1e90ca0e; hai lần đóng băng cùng tree hash), CACHE_VERSION 116, LLM_ONLY
 MEASUREMENT = 1bb11018 (lần đo 3; bằng chứng c08a1eed) (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = ⟨T3⟩
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-triangular-pyramid-w01; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại aa845902)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO

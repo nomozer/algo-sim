@@ -59,7 +59,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANDIDATE = 92c9e198… (was 5e1c0639…; hai lần đóng băng cùng tree hash), product commit 1e90ca0e
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (việc regular-triangular-pyramid, W1, run regular-triangular-pyramid-w01)
-> FINAL_DECISION = ⟨T3⟩ · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-triangular-pyramid-w01/REVIEW.md (R1–R12) cùng gói W5/W4 và chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại aa845902 — runs/regular-triangular-pyramid-w01/HANDOFF.md §2; D5 chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-triangular-pyramid-w01/REVIEW.md (R1–R12) cùng gói W5/W4 và chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```

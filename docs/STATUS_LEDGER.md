@@ -1052,8 +1052,8 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CODE_COMMIT_OR_NONE:** 0d4c4f8b (informatics cleanup) · 983cfc16 (T8 in the declared Q3 domain) · 82beaf62 (cross-section edge steps named by face; CACHE_VERSION 116) · df614b30 (display rotation, D1–D4) · 3487c0a7 (height marker, D2 segment, oracle world frame) · e7b92e49 (ponytail cleanup) · 1e90ca0e (camera fit fallback after the whole scene); harness 4e285690
 - **CANDIDATE:** 5e1c0639… → 92c9e198… (two freezes, same tree hash: aa583ad9 at c6fd9996, 1bb11018 at 1e90ca0e) · CACHE_VERSION 116 (bump, CACHE_DECISION.json) · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** measurement 1bb11018 (attempt 3) · evidence c08a1eed; attempts 1–2 kept (`MEASUREMENT_ATTEMPTS.json`)
-- **CLASSIFICATION:** ⟨T3⟩
-- **FULL_PRODUCT_SUITE:** ⟨T3 detail⟩
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at aa845902 from a path with a space (pytest 7251 passed / 1 skipped, vitest 1145/1145, build, demo 5/5, crash surface 6/6); identity gates green (`diagnostics/logs/GATES_aa845902.log`); a first T3 at d2e8a778 failed on a stale fixture-count lock (fixed in aa845902, log kept)
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/REPORT.md
@@ -1065,7 +1065,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** regular-square-pyramid-w05 record (attempt 4 missing from MEASUREMENT_ATTEMPTS.json; node harness 91 pass + 2 skip, not 93/93) — `corrections/W05_RECORD_CORRECTION.json`; W5 files unchanged
 - **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md R1–R12 with the W5/W4 packages) and a D5 option; on approval merge into main, push, delete the branch
-- **FINAL_DECISION:** ⟨T3⟩
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** regular triangular pyramid / regular tetrahedron in a declared exact domain; honest refusal outside it; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/corpus/LABELS.json` · `diagnostics/cache_proof/CACHE_DECISION.json` · `inputs/REVIEW_SET.json` · `results/IMAGE_POLICY.json`

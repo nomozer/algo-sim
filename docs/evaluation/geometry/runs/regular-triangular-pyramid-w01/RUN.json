@@ -23,6 +23,9 @@
     "camera_fit_fallback_after_whole_scene": "1e90ca0e",
     "freeze_2": "1bb11018",
     "evidence": "c08a1eed",
+    "docs_report_review_handoff": "658408ee",
+    "gate_script": "d2e8a778",
+    "fixture_count_lock_after_first_t3": "aa845902 (T3 + identity gates PASS here)",
     "docs_and_verification": "the commits that contain this file (not recorded here)"
   },
   "product_state": {
@@ -56,12 +59,25 @@
     "playback": "16/16",
     "hidden_edge_crops": "72, 0 oracle disagreement, 0 duplicate owner",
     "images": "492 kept, 358 pruned (W5: 767 kept for seven families)",
-    "real_canvas": {"desktop": "1373x683", "low": "1299x433", "mobile": "356x517"}
+    "real_canvas": {
+      "desktop": "1373x683",
+      "low": "1299x433",
+      "mobile": "356x517"
+    }
   },
   "backend_slice": {
     "name": "regular triangular pyramid and regular tetrahedron (template T8) in the declared Q3 domain",
     "amendment": "docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md §18 (+ dated §18.1 correction)",
-    "callers": ["kiem_gia_dinh (assumption gate)", "grounding_gate", "bat_bien_do_dai <- analyze_contract, assumption_gate", "formation (centroid foot)", "construction_binding (centroid relation)", "postconditions", "quantity_annotations", "scene3d events"],
+    "callers": [
+      "kiem_gia_dinh (assumption gate)",
+      "grounding_gate",
+      "bat_bien_do_dai <- analyze_contract, assumption_gate",
+      "formation (centroid foot)",
+      "construction_binding (centroid relation)",
+      "postconditions",
+      "quantity_annotations",
+      "scene3d events"
+    ],
     "labels": "diagnostics/corpus/LABELS.json (25 rows, written before the change; two dated amendments before any browser measurement)",
     "label_commit_message_error": "dc0a804b says 26 rows; there were 24 then, 25 after the amendment"
   },
@@ -71,5 +87,10 @@
     "ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION",
     "ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL"
   ],
-  "foreign_uncommitted_changes": "D frontend/public/favicon.svg (the user's; never staged)"
+  "foreign_uncommitted_changes": "D frontend/public/favicon.svg (the user's; never staged)",
+  "verification": {
+    "t3": "FULL_PRODUCT_GATE_PASS at aa845902 (pytest 7251 passed / 1 skipped, vitest 1145/1145, build, demo 5/5, crash surface 6/6); first T3 at d2e8a778 FAIL on a stale fixture-count lock",
+    "gates": "diagnostics/logs/GATES_aa845902.log (all green; model-surface list shows product_capability.py, semantic environment b1714b56 unchanged)",
+    "final_decision": "READY_FOR_HUMAN_VISUAL_REVIEW"
+  }
 }

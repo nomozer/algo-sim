@@ -13,7 +13,7 @@ MODEL_SURFACE_CHANGED = NO · DEFAULT_MODE = LLM_ONLY · LIVE_GEMINI_REQUESTS = 
 HUMAN_VISUAL_REVIEW   = NOT_APPROVED
 MERGE / PUSH / PR     = NO / NO / NO
 FAVICON_TOUCHED       = NO (deletion của người dùng giữ ngoài staging)
-FINAL_DECISION        = ⟨T3⟩
+FINAL_DECISION        = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính tại aa845902 — §2)
 ```
 
 ## 1. Đã làm
@@ -30,7 +30,24 @@ FINAL_DECISION        = ⟨T3⟩
 
 ## 2. Cổng tại commit cuối
 
-⟨T3 table⟩
+Worktree tách rời sạch `D:/tmp/rtp diag` (CRLF, có dấu cách) tại commit **`aa845902`**, log ngoài worktree rồi chép vào
+`diagnostics/logs/` (`T3_FULL_GATE_aa845902.log`, `GATES_aa845902.log`); cây sạch trước và sau.
+
+| Cổng | Kết quả |
+|---|---|
+| T3 `full-gate.mjs` | **`FULL_PRODUCT_GATE_PASS`** — pytest 7251 passed, 1 skipped; vitest 1145/1145; tsc + build; demo 5/5; bề mặt sập 6/6 |
+| T3 lần đầu tại `d2e8a778` | **FAIL** — khoá đếm fixture (`test_generic_tier_a_fixture_generator.py`: 37 ≠ 43) chưa cập nhật từ `4e285690`; sửa ở `aa845902` (log `T3_FULL_GATE_d2e8a778_FAIL.log`). Lời trước đây "pytest đầy đủ chỉ đỏ vì môi trường/candidate" là sai |
+| candidate / cache verify | `92c9e198…` khớp (110 file) / khoá 116 khớp, môi trường `b1714b56…` |
+| schema ×2 | trùng byte `d852b47c…`; git status không đổi |
+| `DEFAULT_MODE` | `LLM_ONLY`; routing.py không đổi từ `e9435d67`; compiler không được gọi từ `app/ai`/`main.py`; `FIXTURE_TIN_CAY` 0 |
+| bề mặt mô hình | 1 file trong danh sách đổi: `product_capability.py` (hàng `regular_triangular_pyramid`, `foundation_only`) — băm năng lực/môi trường ngữ nghĩa `b1714b56…` KHÔNG đổi (khoá cache khớp); prompt, thẻ văn phạm, lược đồ không đổi |
+| bằng chứng lịch sử | ngoài run chỉ hai sổ sống (candidate, khai lệch); "1 of 181" báo cáo catalog = `EVIDENCE_INDEX.md` — dương tính giả đã biết (như W4/W5) |
+| `git diff --check e9435d67..aa845902` | 0 |
+| audit tài liệu | PASS |
+| node harness | 94: 92 pass, 0 fail, 2 skip |
+
+Mọi cổng bắt buộc đạt, lượt đo 3 có kết quả hợp lệ cho mọi bước ⇒ **`FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW`**. Không cổng nào
+bị hạ ngưỡng. D5 chưa sửa (chờ chọn phương án); kiến trúc tổng thể KHÔNG được tuyên bố hoàn tất (`REPORT.md` §8).
 
 ## 3. Chờ người dùng
 

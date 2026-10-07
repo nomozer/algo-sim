@@ -63,8 +63,7 @@ tiêm lỗi `diagnostics/fault_injection_rtp_w01.py` 6/6 bắt được.
 | Hai bước chạy lại riêng trong lượt 3 | W02 treo trên `about:blank` (Chrome không điều hướng, ứng dụng chưa tải, không phép kiểm nào chạy) ⇒ chạy lại riêng 16/16; W04 `cross_section/desktop` hết giờ chờ trang khi máy 100 % CPU, 566 MB trống (ứng dụng của người dùng, không động tới) ⇒ chạy lại riêng `cross_section` 3/3. Không bước nào khác chạy lại |
 | Khung nhìn thật (canvas) | desktop 1373×683, màn thấp 1299×433, mobile 356×517 |
 | Lượt đo 1 `aa583ad9`, lượt 2 `1bb11018` | không dùng — `MEASUREMENT_ATTEMPTS.json` (1: khung nhìn, sản phẩm, đã sửa; 2: một trang mobile tải thiếu stylesheet, môi trường, 0/8 khi tái hiện riêng) |
-| vitest / build / node harness | 1145/1145 · `tsc -b` + build xanh · 94/94 |
-| T3 + cổng danh tính | `HANDOFF.md` §2 |
+| T3 + cổng danh tính | `FULL_PRODUCT_GATE_PASS` tại `aa845902` (pytest 7251 / 1 skip, vitest 1145/1145, build, demo, bề mặt sập; node harness 92 pass + 2 skip) — `HANDOFF.md` §2. T3 đầu tiên tại `d2e8a778` đỏ vì khoá đếm fixture chưa cập nhật (37 → 43), sửa ở `aa845902` |
 
 **Thay đổi bộ đo (không hạ ngưỡng):** họ thứ tám trong suite và các đầu dò; `cameraSauCuChi` đọc `model_matrix` khi cảnh có
 phép xoay hiển thị; oracle tầng nhân quả theo luật D2; bước tỉa ảnh sau bộ dựng bằng chứng (mục E).
