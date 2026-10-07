@@ -25,7 +25,7 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   LOP_DONG_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
   expectedCausalTiers, expectedGeometryTimeline, orbitPlanThuc, planOrbit, pollUntil,
-  settleCamera, sha256File,
+  settleCamera, sha256File, veTheGioi,
 } from "./compiler-scene-replay-lib.mjs";
 import {
   capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, trustedZoomOut,
@@ -89,8 +89,9 @@ async function observe(session) {
 /** Số đo góc nhìn của camera THẬT (hàng z của ma trận nhìn = hướng tâm→camera),
  *  bằng CHÍNH bộ đo của sản phẩm — không một định nghĩa thứ hai. */
 function chatLuongGocNhin(scene, snap, overlays = []) {
-  const { diem, canh, mat } = cauTrucGocNhin(scene.objects);
-  const m = snap.view_matrix_column_major;
+  const [canhTG, camTG] = veTheGioi(scene, snap);   // exact-dimensions: hướng và góc đo ở thế giới
+  const { diem, canh, mat } = cauTrucGocNhin(canhTG.objects);
+  const m = camTG.view_matrix_column_major;
   const huong = [m[2], m[6], m[10]];
   const q = danhGiaGocNhin(diem, canh, mat, huong);
   const { tran } = doLuoiGocNhin(diem, canh, mat);
@@ -137,8 +138,9 @@ async function orbitLap(session, scene, n) {
       ket.push({ lap: i, pass: false, transitions: chuyen });
       continue;
     }
-    const m = truoc.camera.view_matrix_column_major;
-    const plan = planOrbit(scene, [m[2], m[6], m[10]]);
+    const [canhTG, camTG] = veTheGioi(scene, truoc.camera);
+    const m = camTG.view_matrix_column_major;
+    const plan = planOrbit(canhTG, [m[2], m[6], m[10]]);
     moc("PLANNED", { offset_deg: plan?.offset_deg ?? null });
     if (!plan) { ket.push({ lap: i, pass: false, transitions: chuyen, reason: "NO_QUALIFYING_ORBIT" }); continue; }
     const cao = await session.eval("document.querySelector('.geo3d-canvas canvas').clientHeight");
@@ -200,7 +202,8 @@ async function runOne({ port, family, viewportId, fixture, outDir, lapOrbit = 0 
     const states = {};
     const chup = async (ten) => {
       const snap = await jsonEval(session, "window.__geo3d_camera_snapshot||null");
-      states[ten] = { ...await capture(session, join(outDir, `${ten}.png`)), ...await observe(session),
+      // exact-dimensions: trùng tên ảnh oracle nhưng bộ dựng không cắt từ playback ⇒ không phải ảnh oracle.
+      states[ten] = { ...await capture(session, join(outDir, `${ten}.png`), { oracle: false }), ...await observe(session),
         dimmed_labels: await session.eval("document.querySelectorAll('.geo3d-label.la-diu').length"),
         // W05 · E: vai trò đọc ở mục bảng «Đại lượng» (thẻ lời giải đã gỡ).
         dimmed_readout: await session.eval("document.querySelectorAll('.geo3d-dai-luong .geo3d-tree-item.la-diu').length"),

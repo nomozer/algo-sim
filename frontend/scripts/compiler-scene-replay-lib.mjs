@@ -300,6 +300,7 @@ export function chieuManHinh(snapshot, p) {
  *  Cộng: mọi đỉnh khối (và chỗ nhãn) trong khung, không dưới lớp phủ
  *  (`overlays`: hộp px CSS tương đối canvas — thanh số đo, nút nổi, ô soi). */
 export function danhGiaAnhXoayThuc(scene, snapshot, overlays = []) {
+  [scene, snapshot] = veTheGioi(scene, snapshot);
   const m = snapshot.view_matrix_column_major;
   const huong = danhGiaAnhXoay(scene, [m[2], m[6], m[10]]);
   const { diem, ten, canh, mat } = cauTrucKhoi(scene);
@@ -367,8 +368,9 @@ export function cameraSauCuChi(snapshot, target, doXoay, nac = 0) {
   // regular-triangular-pyramid-w01: khi sản phẩm xoay hiển thị (đáy nghiêng), ma trận phát là view × model (cảnh →
   // camera) kèm `model_matrix_column_major`. OrbitControls quay quanh trục Z THẾ GIỚI ⇒ tách view thế giới
   // (V · M⁻¹, M là phép quay thuần nên M⁻¹ = Mᵀ), quay, rồi ghép lại view × model.
+  // exact-dimensions: M = quay · T (T là bản đồ khung → thế giới, không trực giao) ⇒ nghịch đảo đầy đủ.
   const M = snapshot.model_matrix_column_major;
-  const m = M ? _nhanMaTran(snapshot.view_matrix_column_major, _chuyenViQuay(M)) : snapshot.view_matrix_column_major;
+  const m = M ? _nhanMaTran(snapshot.view_matrix_column_major, _nghichDaoTuyenTinh(M)) : snapshot.view_matrix_column_major;
   const mat = [0, 1, 2].map((j) => -(m[4 * j] * m[12] + m[4 * j + 1] * m[13] + m[4 * j + 2] * m[14]));
   const v = _xoayZ(_tru(mat, target), doXoay).map((x) => x / 0.95 ** nac);
   const moi = v.map((x, i) => x + target[i]);
@@ -391,9 +393,42 @@ function _nhanMaTran(a, b) {
   return ra;
 }
 
-/** Nghịch đảo của một phép QUAY thuần cột-trước (không tịnh tiến): chuyển vị khối 3×3. */
-function _chuyenViQuay(m) {
-  return [m[0], m[4], m[8], 0, m[1], m[5], m[9], 0, m[2], m[6], m[10], 0, 0, 0, 0, 1];
+/** Nghịch đảo của một phép TUYẾN TÍNH cột-trước (không tịnh tiến): nghịch đảo khối 3×3 bằng phần phụ đại số. */
+function _nghichDaoTuyenTinh(m) {
+  const [a, b, c, d, e, f, g, h, i] = [m[0], m[4], m[8], m[1], m[5], m[9], m[2], m[6], m[10]];   // hàng-trước
+  const det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+  const r = [e * i - f * h, c * h - b * i, b * f - c * e, f * g - d * i, a * i - c * g, c * d - a * f,
+    d * h - e * g, b * g - a * h, a * e - b * d].map((x) => x / det);
+  return [r[0], r[3], r[6], 0, r[1], r[4], r[7], 0, r[2], r[5], r[8], 0, 0, 0, 0, 1];
+}
+
+const _theGioi = new WeakMap();   // cảnh → { khoá M, cảnh thế giới } (giữ cache `danhGiaAnhXoay` theo cảnh)
+
+/** exact-dimensions: sản phẩm vẽ cảnh qua ma trận mô hình M (phép xoay hiển thị; với `chart_metric` còn có bản
+ *  đồ khung T — `scene3d-chart.ts`) và phát view × model kèm `model_matrix_column_major`. Phép chiếu vẫn đúng trên
+ *  toạ độ khung, nhưng góc, pháp tuyến và hướng nhìn thì chỉ đúng ở THẾ GIỚI: đỉnh khối nhân M, view = (V·M)·M⁻¹. */
+export function veTheGioi(scene, snapshot) {
+  const M = snapshot?.model_matrix_column_major;
+  if (!M) return [scene, snapshot];
+  const khoa = M.join(",");
+  let nho = _theGioi.get(scene);
+  if (nho?.khoa !== khoa) {
+    nho = { khoa, scene: { ...scene, objects: (scene?.objects ?? []).map((o) => (o.type === "solid" && o.vertices
+      ? { ...o, vertices: o.vertices.map((v) => _apTuyenTinh(M, v.map(num))) } : o)) } };
+    _theGioi.set(scene, nho);
+  }
+  return [nho.scene, cameraTheGioi(snapshot)];
+}
+
+/** Camera THẾ GIỚI của một snapshot view × model: view = (V·M)·M⁻¹, bỏ M. */
+export function cameraTheGioi(snapshot) {
+  const { model_matrix_column_major: M, ...rest } = snapshot;
+  return M ? { ...rest, view_matrix_column_major: _nhanMaTran(snapshot.view_matrix_column_major, _nghichDaoTuyenTinh(M)) }
+    : snapshot;
+}
+
+function _apTuyenTinh(M, v) {
+  return [0, 1, 2].map((r) => M[r] * v[0] + M[4 + r] * v[1] + M[8 + r] * v[2]);
 }
 
 /** Cử chỉ HOẠCH ĐỊNH cho ảnh xoay, chấm TRƯỚC bằng chính cổng phối cảnh trên
@@ -401,6 +436,7 @@ function _chuyenViQuay(m) {
  *  3 rồi 6 nấc; nhận khi đạt cổng VÀ đổi tập khuất dự đoán. Thứ tự tất định. */
 export function orbitPlanThuc(scene, snapshot, target, overlays = [],
   { offsets = ORBIT_OFFSETS_DEG, zooms = [3, 6] } = {}) {
+  [scene, snapshot] = veTheGioi(scene, snapshot);
   const m0 = snapshot.view_matrix_column_major;
   const before = predictedHidden(scene, [m0[2], m0[6], m0[10]]);
   const H = snapshot.viewport_height;
@@ -929,11 +965,15 @@ export function assessStructuredReferences(scene, observed) {
 /** Đường kính px CSS của từng chấm đỉnh, đo bằng ma trận camera — không đọc
  *  con số renderer tự báo. */
 export function doCoDauDinh(snapshot, markers) {
+  // exact-dimensions: tâm phát ở toạ độ cảnh, bán kính ở thế giới — chấm chỉ tròn ở thế giới (`veTheGioi`).
+  const M = snapshot.model_matrix_column_major;
+  snapshot = cameraTheGioi(snapshot);
   const m = snapshot.view_matrix_column_major;
   const phai = [m[0], m[4], m[8]];
   return markers.map((k) => {
-    const a = chieuManHinh(snapshot, k.center);
-    const b = chieuManHinh(snapshot, k.center.map((x, i) => x + phai[i] * k.radius_world));
+    const tam = M ? _apTuyenTinh(M, k.center) : k.center;
+    const a = chieuManHinh(snapshot, tam);
+    const b = chieuManHinh(snapshot, tam.map((x, i) => x + phai[i] * k.radius_world));
     return { id: k.id, state: k.state, diameter_px: 2 * Math.hypot(b.x - a.x, b.y - a.y) };
   });
 }

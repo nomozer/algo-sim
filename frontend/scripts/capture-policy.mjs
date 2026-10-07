@@ -39,11 +39,11 @@ export function datChinhSach({ mode, reviewSet } = {}) {
   }
 }
 
-/** Có lưu ảnh này không — quyết TRƯỚC khi chụp. */
-export function canChup(path, { loi = false } = {}) {
+/** Có lưu ảnh này không — quyết TRƯỚC khi chụp. `oracle: false` — bộ đo mà ảnh cùng tên không vào bộ dựng (playback). */
+export function canChup(path, { loi = false, oracle = true } = {}) {
   if (loi || cheDo === "day-du") return true;
   const ten = path.replaceAll("\\", "/").split("/").pop();
-  if (ORACLE.includes(ten)) return true;
+  if (oracle && ORACLE.includes(ten)) return true;
   if (!goc) return false;
   const tuongDoi = relative(goc, resolve(path)).replaceAll("\\", "/");
   return mau.some((re) => re.test(tuongDoi));

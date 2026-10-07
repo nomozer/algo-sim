@@ -287,10 +287,10 @@ export async function trustedZoomOut(session, nac) {
   }
 }
 
-export async function capture(session, path, { loi = false } = {}) {
+export async function capture(session, path, { loi = false, oracle = true } = {}) {
   // exact-dimensions: quyết lưu hay không TRƯỚC khi chụp (`capture-policy.mjs`); `null` = không chụp theo chính sách.
   demAnh.goi += 1;
-  if (!canChup(path, { loi })) {
+  if (!canChup(path, { loi, oracle })) {
     demAnh.bo_qua += 1;
     return null;
   }
@@ -560,6 +560,14 @@ async function captureElement(session, selector, path) {
   await new Promise((done) => setTimeout(done, 200));
   const clip = await pageClip(session, `document.querySelector(${JSON.stringify(selector)})`);
   if (!clip || clip.width <= 0 || clip.height <= 0) throw new Error(`NO_ELEMENT_CLIP:${selector}`);
+  // exact-dimensions: cùng chính sách với `capture` (lượt đo đầu chụp 8 ảnh ô soi/bảng ngoài tập duyệt qua lối này).
+  // Cuộn + kiểm hộp vẫn chạy như cũ — trạng thái trang của các bước sau không đổi theo chế độ chụp.
+  demAnh.goi += 1;
+  if (!canChup(path)) {
+    demAnh.bo_qua += 1;
+    return null;
+  }
+  demAnh.tao += 1;
   const response = await session._send("Page.captureScreenshot", {
     format: "png", captureBeyondViewport: false, clip,
   });

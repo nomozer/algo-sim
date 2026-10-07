@@ -19,6 +19,7 @@ test("tối thiểu: chỉ ảnh oracle, tập duyệt và ảnh lỗi được 
   assert.equal(canChup(anh("regular-triangular-pyramid/desktop/detail_volume.png")), true);   // tập duyệt
   assert.equal(canChup(anh("regular-triangular-pyramid/desktop/formation/formation_step_3.png")), false);
   assert.equal(canChup(anh("cube/desktop/show_all.png"), { loi: true }), true);  // trạng thái lỗi
+  assert.equal(canChup(anh("cube/playback/desktop/neutral_final.png"), { oracle: false }), false);   // trùng tên, không vào bộ dựng
   datChinhSach({ mode: "day-du" });
   assert.equal(canChup(anh("cube/desktop/show_all.png")), true);
   assert.throws(() => datChinhSach({ mode: "tat-ca" }), /CAPTURE_MODE_UNKNOWN/);

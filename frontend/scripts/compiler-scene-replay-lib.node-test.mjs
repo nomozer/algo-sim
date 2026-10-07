@@ -466,6 +466,38 @@ test("planned gesture camera with a display rotation (regular-triangular-pyramid
     .forEach((x, i) => assert.ok(Math.abs(x - co.view_matrix_column_major[i]) < 1e-9, "view × model"));
 });
 
+test("exact-dimensions: a sheared chart (model = T, not orthogonal) measures like the world scene", () => {
+  const tam = [0.5, 0.5, 0.5];
+  const snap = cameraSnapshot([6, -5, 4], tam, 800, 600);
+  // T: khung → thế giới, cột-trước, có trượt và co giãn (như bản đồ khung của `chart_metric`).
+  const T = [2, 0, 0, 0, 0.7, 1.3, 0, 0, 0.4, -0.2, 0.9, 0, 0, 0, 0, 1];
+  const nhan = (a, b) => Array.from({ length: 16 }, (_, i) => {
+    const c = Math.floor(i / 4), r = i % 4;
+    return [0, 1, 2, 3].reduce((s, k) => s + a[4 * k + r] * b[4 * c + k], 0);
+  });
+  const ap = (v) => [0, 1, 2].map((r) => T[r] * v[0] + T[4 + r] * v[1] + T[8 + r] * v[2]);
+  // Cảnh khung = T⁻¹ · khối thế giới: đỉnh thế giới là CUBE, khung đọc qua T.
+  const Ti = (w) => {   // nghịch đảo tam giác trên của T (cột-trước ⇒ hàng: [2 .7 .4; 0 1.3 -.2; 0 0 .9])
+    const z = w[2] / 0.9; const y = (w[1] + 0.2 * z) / 1.3; return [(w[0] - 0.7 * y - 0.4 * z) / 2, y, z];
+  };
+  const khung = { objects: CUBE.objects.map((o) => ({ ...o, vertices: o.vertices.map((v) => Ti(v.map(Number)).map(String)) })) };
+  const cat = { ...snap, view_matrix_column_major: nhan(snap.view_matrix_column_major, T), model_matrix_column_major: T };
+  khung.objects[0].vertices.forEach((v, i) => ap(v.map(Number)).forEach((x, k) =>
+    assert.ok(Math.abs(x - Number(CUBE.objects[0].vertices[i][k])) < 1e-12)));
+  const a = danhGiaAnhXoayThuc(CUBE, snap);
+  const b = danhGiaAnhXoayThuc(khung, cat);
+  assert.deepEqual(b.failures, a.failures);
+  for (const k of ["mat_nghieng_min_do", "ba_dinh_min", "dinh_canh_min"]) assert.ok(Math.abs(a.metrics[k] - b.metrics[k]) < 1e-9, k);
+  // Dự đoán cử chỉ: cùng camera thế giới, ghép lại view × T.
+  nhan(cameraSauCuChi(snap, tam, 60, 3).view_matrix_column_major, T)
+    .forEach((x, i) => assert.ok(Math.abs(x - cameraSauCuChi(cat, tam, 60, 3).view_matrix_column_major[i]) < 1e-9));
+  assert.deepEqual(orbitPlanThuc(khung, cat, tam).map((c) => c.offset_deg), orbitPlanThuc(CUBE, snap, tam).map((c) => c.offset_deg));
+  // Chấm đỉnh: tâm khung + bán kính thế giới ⇒ cùng đường kính px như chấm thế giới.
+  const [dw] = doCoDauDinh(snap, [{ id: "A", state: "thuong", center: [1, 1, 1], radius_world: 0.05 }]);
+  const [dk] = doCoDauDinh(cat, [{ id: "A", state: "thuong", center: Ti([1, 1, 1]), radius_world: 0.05 }]);
+  assert.ok(Math.abs(dw.diameter_px - dk.diameter_px) < 1e-9);
+});
+
 test("planned orbit: every candidate passes the perspective gate on its simulated camera", () => {
   const snap = cameraSnapshot([6, -5, 4], [0.5, 0.5, 0.5], 800, 600);
   const plan = orbitPlanThuc(CUBE, snap, [0.5, 0.5, 0.5]);
