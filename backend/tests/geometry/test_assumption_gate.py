@@ -23,7 +23,7 @@ from pathlib import Path
 import pytest
 
 from app.simulation.semantic_program.route import verify_and_compile
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 APP = Path(__file__).resolve().parents[2] / "app"
 MA_GIA_DINH = {"ASSUMPTION_DETERMINES_ANSWER", "ASSUMPTION_INVARIANCE_UNPROVEN"}

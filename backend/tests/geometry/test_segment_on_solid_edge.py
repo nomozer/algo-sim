@@ -16,7 +16,7 @@ import json
 
 from app.simulation.semantic_program.scene3d import _attach_topology
 from tests.geometry import test_construction_binding as CB
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 VAN_SM = "Gọi M là trung điểm của SA. Tính độ dài đoạn SM."
 

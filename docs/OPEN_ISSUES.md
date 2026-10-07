@@ -570,7 +570,7 @@
 - **evidence:** fixture `regular_square_pyramid_non_positive` (`docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures/`), first registered with the compiler-route code and corrected before any browser run (`diagnostics/PREREGISTRATION_CORRECTIONS.json` PC1).
 - **impact:** Fail-closed (no answer, no scene) but the refusal does not point at the text; the same holds for the six older families on the default route.
 - **scope:** a source-level non-positive length check on the default route (server-side reader of the text), shared by every family.
-- **status:** PARTIAL (regular-square-pyramid-w02, `c86cf53c`) — when execution fails on the default route and the premise text (goal clauses masked) states a length ≤ 0 that the server reader reads (a named segment, or a single solid's base edge, height, lateral edge, apothem, cube edge), the refusal is `NON_POSITIVE_LENGTH` with cause SOURCE and the learner's subject ("cạnh đáy"); otherwise UNKNOWN stays (a valid text whose program degenerates is not called wrong). Labelled red-then-green rows: `tests/geometry/test_regular_square_pyramid_w02.py` (`cạnh đáy bằng 0` ⇒ SOURCE; `cạnh đáy bằng 4` with a degenerate program ⇒ UNKNOWN); the regular-pyramid browser negative now expects SOURCE. **Not closed:** the six older families have no labelled rows on the default route (their browser negatives use the compiler route), and a text-stated ≤ 0 length refused at an EARLIER stage keeps that stage's cause.
+- **status:** PARTIAL (regular-square-pyramid-w02, `c86cf53c`) — when execution fails on the default route and the premise text (goal clauses masked) states a length ≤ 0 that the server reader reads (a named segment, or a single solid's base edge, height, lateral edge, apothem, cube edge), the refusal is `NON_POSITIVE_LENGTH` with cause SOURCE and the learner's subject ("cạnh đáy"); otherwise UNKNOWN stays (a valid text whose program degenerates is not called wrong). Labelled red-then-green rows: `tests/geometry/test_regular_square_pyramid_height.py` (`cạnh đáy bằng 0` ⇒ SOURCE; `cạnh đáy bằng 4` with a degenerate program ⇒ UNKNOWN); the regular-pyramid browser negative now expects SOURCE. **Not closed:** the six older families have no labelled rows on the default route (their browser negatives use the compiler route), and a text-stated ≤ 0 length refused at an EARLIER stage keeps that stage's cause.
 - **w01:** OPEN (regular-square-pyramid-w01) — outside the W1 scope (changes every family's refusal).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** next refusal-message wave
@@ -697,7 +697,7 @@
 - **suggested_wave:** next UI wave, after the user decides
 - **default_switch_blocker:** NO
 - **acceptance:** the decided layout, with the browser gates re-measured on desktop and mobile.
-- **verify:** `node frontend/scripts/w02-closure-probe.mjs …` (extend with the inspector) and the main suite's causal restore.
+- **verify:** `node frontend/scripts/check-scene-controls.mjs …` (extend with the inspector) and the main suite's causal restore.
 - **W3 note (regular-square-pyramid-w03):** re-assessed as a presentation choice (no wrong value, no lost operation); still a user decision — the W3 `REVIEW.md` §3 proposes keeping the column on this branch. Not accepted by the user yet.
 
 ### ISSUE-ARCH-ASKED-SEGMENT-OVER-EXISTING-EDGE
@@ -705,12 +705,12 @@
 - **evidence:** `backend/app/simulation/semantic_program/formation.py` (`_canh_da_dung`); no row of the construction-binding corpus or the W1/W2 corpora has this shape (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
 - **impact:** Presentation only — two coincident strokes; the value and the label are right.
 - **scope:** formation planner (IR level, no coordinates) or the renderer's visual-owner rule.
-- **status:** RESOLVED (regular-square-pyramid-w04, `ce44eb38`) — observed in the browser before the fix (`runs/regular-square-pyramid-w04/diagnostics/sm_overlap/before/`: SM drawn over SA). `quantity_annotations.doan_tren_canh` decides exactly (collinear + parameter in [0, 1]) that SM lies on edge SA; the scene only looks the edge id up (`boundary_edge_ids` + `edge_span`, no geometry in `scene3d.py`); the renderer lets the canonical edge own the stroke and highlights only the S–M span when SM is selected; selection, label and provenance kept. Verify: `pytest tests/geometry/test_regular_square_pyramid_w04.py -q`, `npx vitest run src/simulations/domains/geometry/scene3d-sub-edge.test.ts`, browser `runs/regular-square-pyramid-w04/results/SM_OVERLAP_AFTER_<sha>.json`.
+- **status:** RESOLVED (regular-square-pyramid-w04, `ce44eb38`) — observed in the browser before the fix (`runs/regular-square-pyramid-w04/diagnostics/sm_overlap/before/`: SM drawn over SA). `quantity_annotations.doan_tren_canh` decides exactly (collinear + parameter in [0, 1]) that SM lies on edge SA; the scene only looks the edge id up (`boundary_edge_ids` + `edge_span`, no geometry in `scene3d.py`); the renderer lets the canonical edge own the stroke and highlights only the S–M span when SM is selected; selection, label and provenance kept. Verify: `pytest tests/geometry/test_segment_on_solid_edge.py -q`, `npx vitest run src/simulations/domains/geometry/scene3d-sub-edge.test.ts`, browser `runs/regular-square-pyramid-w04/results/SM_OVERLAP_AFTER_<sha>.json`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** when a corpus row needs it
 - **default_switch_blocker:** NO
 - **acceptance:** a requested collinear sub-segment is not drawn twice, with a test on a real program.
-- **verify:** `pytest tests/geometry/test_regular_square_pyramid_w03.py -q`
+- **verify:** `pytest tests/geometry/test_asked_segment_construction.py -q`
 
 ### ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES
 - **description:** Points live in ℚ³. An equilateral triangle with rational vertices has side² = 2N·q² (N an Eisenstein norm; never a rational square) and the apex height over it is a rational multiple of √3, so a regular triangular pyramid or regular tetrahedron with a RATIONAL edge ("cạnh đáy bằng 3", "tứ diện đều cạnh a = 2") has no exact layout. Template T8 serves only b² ∈ {2k², 6k²}, h² = 3t² (ASSUMPTION_CERTIFICATE_AMENDMENT §18.2); other rational realisations (N = 7, …) have no canonical frame; the apothem of a regular triangular pyramid is not read.

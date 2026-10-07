@@ -5,7 +5,7 @@ Ca và kỳ vọng ghi TRƯỚC bản sửa ở
 `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/corpus/LABELS.json`; test đọc nhãn từ đó,
 không chép lại. Mỗi ca chạy một chương trình kiểu LLM (đáy tam giác đều đặt trên mặt nghiêng x+y+z=k bằng toạ độ bố
 cục `LAYOUT_DERIVED`, trọng tâm dựng bằng giao hai trung tuyến, khối, phép đo) qua `verify_and_compile`
-(`w14_cases.chay`). Luật: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §18. Builder ở đây cũng là nguồn
+(`route_cases.chay`). Luật: `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §18. Builder ở đây cũng là nguồn
 fixture trình duyệt (`scripts/generate_generic_tier_a_fixtures.py`).
 """
 from __future__ import annotations
@@ -18,7 +18,7 @@ from pathlib import Path
 import pytest
 
 from app.simulation.semantic_program.shape_constraint import doc_rang_buoc, phan_chua_doc
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 _CORPUS = (Path(__file__).resolve().parents[3]
            / "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/corpus")

@@ -5,7 +5,7 @@
  * tự mang đường ra (nút quay lại về đúng trang trước), tên bài, và công cụ đã NHÓM: «Đề bài» · «Khám phá» · «Hiển
  * thị» · «Thêm». Thẻ lời giải dưới thanh phát đã gỡ — mọi đại lượng chọn được ở «Đại lượng», công thức và nguồn ở ô
  * soi, chú giải màu ở «Hiển thị». Không có jsdom: hành vi bàn phím của menu là hàm thuần, cấu trúc qua SSR, thao
- * tác thật ở đầu dò trình duyệt `frontend/scripts/w05-focus-probe.mjs`.
+ * tác thật ở đầu dò trình duyệt `frontend/scripts/check-focus-mode.mjs`.
  */
 import { describe, expect, it, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";

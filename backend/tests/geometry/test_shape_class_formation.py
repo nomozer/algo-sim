@@ -20,7 +20,7 @@ from pathlib import Path
 import pytest
 
 from app.ai.pipeline import _dung_scene3d
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 SP = Path(__file__).resolve().parents[2] / "app" / "simulation" / "semantic_program"
 CHOP = ["CONSTRUCT_BASE", "CONSTRUCT_HEIGHT", "CONSTRUCT_LATERAL_BOUNDARY", "CLOSE_SOLID"]
@@ -696,7 +696,7 @@ def test_phan_loai_khoi_khong_doi_sau_khi_tach():
     """GUARD: `display_names._phan_loai_khoi` trả đúng như trước khi tách (đặc tả chụp trước)."""
     from app.simulation.semantic_program.display_names import _phan_loai_khoi
 
-    goc = json.loads((Path(__file__).parent / "fixtures" / "w14_phan_loai_khoi_truoc.json")
+    goc = json.loads((Path(__file__).parent / "fixtures" / "solid_classification_baseline.json")
                      .read_text(encoding="utf-8"))["rows"]
     nay = []
     for case_id, sp in W.nguon_khoi():

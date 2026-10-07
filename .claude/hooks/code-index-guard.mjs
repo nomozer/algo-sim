@@ -159,7 +159,7 @@ function main() {
 
   if (shared.length) {
     L.push(`⚠ ${shared.length} lớp DÙNG CHUNG bởi nhiều module: nêu rõ bán kính ảnh hưởng TRƯỚC khi sửa,`);
-    L.push("  và sau khi sửa phải chụp 4 mức (capture-phase-evidence.mjs) + chạy audit-composition.mjs.");
+    L.push("  và sau khi sửa phải chụp 4 mức (capture-before-after.mjs) + chạy audit-composition.mjs.");
   }
 
   L.push("Nhắc: audit-composition CHỈ soi .workspace-card và CHỈ chạy khi chưa đăng nhập — lỗi ở shell (sidebar, panel Giải thích, tràn trang) nằm NGOÀI tầm nó.");

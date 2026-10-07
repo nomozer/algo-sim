@@ -16,7 +16,7 @@ import pytest
 from app.simulation.geometry import metric as M
 from app.simulation.geometry.exact import Vec3
 from tests.geometry import test_regular_triangular_pyramid as T
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 _RUN = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/exact-dimensions"
 NHAN = json.loads((_RUN / "labels.json").read_text(encoding="utf-8"))["rows"]

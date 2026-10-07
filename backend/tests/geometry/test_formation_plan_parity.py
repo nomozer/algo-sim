@@ -19,9 +19,9 @@ from pathlib import Path
 
 import pytest
 
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
-GOLDEN = Path(__file__).resolve().parent / "fixtures" / "w14_parity"
+GOLDEN = Path(__file__).resolve().parent / "fixtures" / "formation_parity"
 HO_PARITY = {
     "rect_pyramid_rectangle": W.chop_chu_nhat,
     "rect_pyramid_square": W.chop_vuong,

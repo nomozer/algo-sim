@@ -274,7 +274,7 @@
       "oracle_source": {
         "kind": "w1_corpus_program_dependency_graph",
         "path": "backend/tests/geometry/test_regular_square_pyramid.py",
-        "sha256": "69120b2d0b2f9cf7948ecea9a723b737659036a47cd2e77234d4c010b5c4af8e",
+        "sha256": "fa7e6e1ad308c49b7cb95b2992de4e74c044cac3660b75c16e71f1f39927a879",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "chop_deu"
       },
@@ -311,7 +311,7 @@
       "oracle_source": {
         "kind": "rtp_w01_corpus_program_dependency_graph",
         "path": "backend/tests/geometry/test_regular_triangular_pyramid.py",
-        "sha256": "e6fe0661bb9132510c8acbe2b20961a758d772932168c980bbce2c90d93c25a8",
+        "sha256": "38fb017eadbf6a56be3074a02ee550fad3884da4f0150bab64e5f6190411aed7",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "chop_deu"
       },

@@ -20,7 +20,7 @@ from pathlib import Path
 import pytest
 
 from tests.geometry import test_construction_binding as T
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 _CORPUS = (Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/w20-cleanup-premerge"
            / "diagnostics/literal_target_corpus/LABELS.json")

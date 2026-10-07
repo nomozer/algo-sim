@@ -326,7 +326,7 @@ G3_TEXT = ("Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là h
 
 
 def _w14():
-    from tests.geometry import w14_cases as W
+    from tests.geometry import route_cases as W
 
     return W
 

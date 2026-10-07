@@ -803,7 +803,7 @@ async function closeQuantityDrawer(session) {
 
 /** Chọn một đại lượng như người học khi lời giải thu gọn: chip «Đại lượng» → nút của nó. W4: bảng «Đại lượng» nay
  *  GIỮ mở khi chọn (sản phẩm); luồng đo này đóng nó sau khi chọn, như người học dọn bàn, để phép đo nhãn và ô soi
- *  phía sau không phụ thuộc bảng ấy đang che phần nào của hình. Bảng ở lại khi chọn: `w04-panels-probe.mjs`. */
+ *  phía sau không phụ thuộc bảng ấy đang che phần nào của hình. Bảng ở lại khi chọn: `check-panels.mjs`. */
 async function selectViaPicker(session, id) {
   if (!await session.eval("!!document.querySelector('.geo3d-dai-luong')")) await clickChip(session, "Đại lượng");
   const ok = await trustedClick(session,

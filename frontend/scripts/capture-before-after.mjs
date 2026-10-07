@@ -1,5 +1,5 @@
 /**
- * capture-phase-evidence.mjs — ẢNH TRƯỚC/SAU CHO MỘT PHA SẢN PHẨM.
+ * capture-before-after.mjs — ẢNH TRƯỚC/SAU CHO MỘT THAY ĐỔI SẢN PHẨM.
  *
  * ─── VÌ SAO CÓ FILE NÀY ────────────────────────────────────────────────────
  *
@@ -13,7 +13,7 @@
  *
  * ─── DÙNG ──────────────────────────────────────────────────────────────────
  *
- *   node scripts/capture-phase-evidence.mjs \
+ *   node scripts/capture-before-after.mjs \
  *     --target logic.boolean_dag --name e-truoc --out ../docs/evaluation/m20/phase-evidence
  *
  * `--act` nhận một biểu thức JS chạy SAU khi nạp đề (để chụp trạng thái sau

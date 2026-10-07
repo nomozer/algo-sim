@@ -4,7 +4,7 @@
 Ca và kỳ vọng ghi TRƯỚC bản sửa ở
 `docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/construction_corpus_w18/LABELS.json`;
 test đọc nhãn từ đó, không chép lại. Mỗi ca dựng trên đề gold p1 (toạ độ đề cho, khối chóp S.ABCD)
-hoặc họ hình hộp chữ nhật (đỉnh A′), và chạy qua đúng route sản phẩm (`w14_cases.chay`).
+hoặc họ hình hộp chữ nhật (đỉnh A′), và chạy qua đúng route sản phẩm (`route_cases.chay`).
 
 Phép dò Phase 1 (trước bản sửa): hình chiếu lên sai đường/mặt phẳng, danh sách "lần lượt" bị tráo
 đích, đích đổi tên và hai thực thể trùng toạ độ đều được PHỤC VỤ; trung điểm sai đoạn khi tên khớp
@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 NHAN = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/w18-binding-focus"
                    / "diagnostics/construction_corpus_w18/LABELS.json").read_text(encoding="utf-8"))["rows"]

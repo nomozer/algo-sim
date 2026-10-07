@@ -6,7 +6,7 @@
  * ba ngăn dùng chung MỘT ngăn phủ mép phải (mở cái này đóng cái kia), trên mobile phủ lên hình.
  *
  * Hàm thuần ở đây giữ luật; component kiểm qua `renderToString` và cấu trúc mã nguồn; kéo, mở nhiều bảng, đổi cỡ, chọn
- * đại lượng và mobile kiểm bằng thao tác trình duyệt thật (`frontend/scripts/w04-panels-probe.mjs`).
+ * đại lượng và mobile kiểm bằng thao tác trình duyệt thật (`frontend/scripts/check-panels.mjs`).
  */
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

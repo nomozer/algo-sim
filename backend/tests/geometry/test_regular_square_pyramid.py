@@ -4,7 +4,7 @@
 Ca và kỳ vọng ghi TRƯỚC bản sửa ở
 `docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus/LABELS.json`; test đọc nhãn từ đó,
 không chép lại. Mỗi ca chạy một chương trình kiểu LLM (điểm khai bằng toạ độ bố cục `LAYOUT_DERIVED`, tâm đáy
-dựng bằng giao hai đường chéo, khối, phép đo) qua `verify_and_compile` (`w14_cases.chay`). Builder ở đây cũng là
+dựng bằng giao hai đường chéo, khối, phép đo) qua `verify_and_compile` (`route_cases.chay`). Builder ở đây cũng là
 nguồn fixture trình duyệt (`scripts/generate_generic_tier_a_fixtures.py`).
 
 Phase 1 (trước bản sửa): ca dương thực thi đúng `V = 16` nhưng bị từ chối ở chặng `assumption`
@@ -19,7 +19,7 @@ from pathlib import Path
 import pytest
 
 from app.simulation.semantic_program.shape_constraint import doc_rang_buoc, phan_chua_doc
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 _CORPUS = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus"
 #: Lớp 1 (`LABELS.json`, trước sản phẩm) + lớp R2 (`LABELS_R2.json`, tự rà soát cuối — cạnh bên gọi bằng tên đoạn,

@@ -16,7 +16,7 @@ import copy
 
 from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
 from tests.geometry import test_construction_binding as CB
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 
 
 def _cap_doan(spec) -> list[set]:

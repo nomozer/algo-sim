@@ -1696,7 +1696,7 @@ export function assessCausalRestore({ neutral, selected, restored, canvasDelta }
 }
 
 /* ══ regular-square-pyramid-w02 — cổng của bảng nổi, bảng khổ hẹp, hình phụ và lưới ══════════════════════════════
- * Hàm THUẦN trên quan sát do `w02-closure-probe.mjs` ghi trong trình duyệt thật (chuột/phím CDP). Mỗi mã lỗi có
+ * Hàm THUẦN trên quan sát do `check-scene-controls.mjs` ghi trong trình duyệt thật (chuột/phím CDP). Mỗi mã lỗi có
  * một ca tiêm lỗi ở `compiler-scene-replay-lib.node-test.mjs`. Oracle hình phụ ĐỘC LẬP: không nhập
  * `scene3d-auxiliary.ts`, đọc payload (vai trò, nhóm hiển thị, `depends`, `visible_ids`). */
 
@@ -1921,7 +1921,7 @@ export function assessGridToggle(o) {
   return { pass: r.length === 0, reason_codes: sortedUnique(r) };
 }
 
-/** regular-square-pyramid-w05 — CHẾ ĐỘ TẬP TRUNG (thao tác thật của `w05-focus-probe.mjs`). `o` =
+/** regular-square-pyramid-w05 — CHẾ ĐỘ TẬP TRUNG (thao tác thật của `check-focus-mode.mjs`). `o` =
  *  {kind: "desktop"|"low"|"mobile", viewport: {w, h}, layout: {nav_bar, focus_root, scroll_width, client_width,
  *  back_text, title_text, top_row, canvas, controls, solution_card}, has_faces, tach_khoi,
  *  menus: {[khoa]: {opened, items, focus_in_menu, arrow_moves, escape_closed, focus_returned, outside_closed,

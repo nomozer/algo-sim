@@ -15,7 +15,7 @@ from fractions import Fraction as F
 import pytest
 
 from app.simulation.semantic_program.formation import DUNG_CAO, hoan_thien_dung_hinh
-from tests.geometry import w14_cases as W
+from tests.geometry import route_cases as W
 from tests.geometry.test_regular_square_pyramid import CA, NHAN, THE_TICH, ket_qua, _nap
 
 
