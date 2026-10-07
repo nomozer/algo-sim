@@ -34,8 +34,9 @@ const GOC = resolve(FE, "..");
 const ROOT = resolve(String(CO["fixture-root"]));
 const RA = resolve(String(CO.ra));
 const ANH = resolve(String(CO.anh));
-const HO = ["triangular_pyramid", "rectangular_pyramid", "triangular_prism", "cuboid", "cube", "cross_section",
-  "regular_square_pyramid", "regular_triangular_pyramid"];
+// exact-dimensions: `--ho a,b` như các đầu dò khác — chỉ họ có mã/phạm vi bằng chứng đổi.
+const HO = typeof CO.ho === "string" ? CO.ho.split(",") : ["triangular_pyramid", "rectangular_pyramid",
+  "triangular_prism", "cuboid", "cube", "cross_section", "regular_square_pyramid", "regular_triangular_pyramid"];
 const DESKTOP = { width: 1440, height: 900 };
 const MOBILE = { width: 390, height: 844 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

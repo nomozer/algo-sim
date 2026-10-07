@@ -1,0 +1,17 @@
+{
+  "schema_version": "review-set/1",
+  "run_id": "exact-dimensions",
+  "layer": "chosen BEFORE the measurement (brief E/G): the smallest set a human needs to review THIS change; globs relative to the run directory. The capture policy (frontend/scripts/capture-policy.mjs, mode toi-thieu) saves only these, the oracle inputs (neutral_final, rotated_neutral) and failure states.",
+  "items": [
+    {"path": "images/regular-triangular-pyramid/desktop/neutral_final.png", "requirement": "C — base 6, height 4 on the model's axis chart is drawn as the true figure (equilateral base, apex over the centroid); oracle input"},
+    {"path": "images/regular-triangular-pyramid/desktop/rotated_neutral.png", "requirement": "G — hidden edges after the orbit on the mapped figure; oracle input"},
+    {"path": "images/regular-triangular-pyramid/mobile/neutral_final.png", "requirement": "G — mobile; oracle input"},
+    {"path": "images/regular-triangular-pyramid/desktop/detail_volume.png", "requirement": "C/D — formula: V = 1/3 · S(ABC) · SG with S(ABC) = 9√3, SG = 4, V = 12√3"},
+    {"path": "images/regular-triangular-pyramid/desktop/selected_area.png", "requirement": "G — selecting the base area highlights the base (D2 kept)"},
+    {"path": "images/regular-triangular-pyramid/desktop/formation/steps_panel_open.png", "requirement": "G — construction steps: medians, centroid G, height SG"},
+    {"path": "images/regular-triangular-pyramid/served/regular_tetrahedron/desktop/served.png", "requirement": "C — regular tetrahedron with edge 6 served V = 18√2"},
+    {"path": "images/regular-triangular-pyramid/negative/assumption/desktop/refusal.png", "requirement": "C — missing height refused (reason is 'unproven', see open issue)"},
+    {"path": "images/focus/regular-triangular-pyramid/low/focus_layout.png", "requirement": "G — low screen 1366×650, focused mode"},
+    {"path": "images/focus/regular-triangular-pyramid/mobile/focus_layout.png", "requirement": "G/D5 — mobile layout (D5 still open, not a fix)"}
+  ]
+}
