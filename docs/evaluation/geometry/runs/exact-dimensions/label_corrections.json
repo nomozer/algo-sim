@@ -1,0 +1,27 @@
+{
+  "schema_version": "label-corrections/1",
+  "run_id": "exact-dimensions",
+  "corrects": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/corpus/LABELS.json",
+  "date": "2026-10-07",
+  "rule": "The corrected file stays byte-identical (historical evidence). Tests read it and overlay these rows. Every change follows from the representation change planned in plan.md §3 BEFORE the product change (the layout became an affine chart with a metric derived from the text); none is made to turn a test green. Served values were checked against the text sizes by hand and agree with oracle.py's formulas.",
+  "rows": {
+    "N5_apex_over_vertex": {"was": "refused:assumption:*", "now": "served:9/2", "reason": "the apex position in the chart carries no metric meaning; the metric from the text (b² = 18, h² = 3) puts the apex over the centroid; 9/2 = (√3/4·18)·√3/3"},
+    "N5b_apex_off_normal": {"was": "refused:assumption:*", "now": "served:9/2", "reason": "same as N5: a chart apex off the Euclidean normal is a different chart of the same figure"},
+    "U1_rational_side": {"was": "refused:assumption:*", "now": "served:3√3/2", "reason": "rational base 3 and height 2 are inside the new domain; V = (√3/4·9)·2/3"},
+    "U2_rational_tetrahedron": {"was": "refused:assumption:*", "now": "served:9√2/4", "reason": "regular tetrahedron with rational edge 3; V = 27√2/12"},
+    "U3_height_outside_domain": {"was": "refused:assumption:*", "now": "served:3√3", "reason": "b² = 18, h² = 4 (not 3t²); V = (√3/4·18)·2/3"},
+    "U4_side_outside_frames": {"was": "refused:assumption:*", "now": "served:7/2", "reason": "the lattice triangle of side² 14 with h² = 3 was already a Euclidean layout; only the removed representability rule refused it; V = (√3/4·14)·√3/3"}
+  },
+  "regular_square_pyramid_w01_rows": {
+    "corrects": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/corpus/LABELS.json (kept byte-identical)",
+    "rows": {
+      "U3_regular_triangular": {"was": "refused:assumption:*", "now": "served:3√3", "reason": "regular triangular pyramid with rational base 3 and height 4 — the target domain of this run; the cause recorded then ('an equilateral base needs √3 in coordinates') no longer holds with the derived chart metric; V = (√3/4·9)·4/3"}
+    }
+  },
+  "this_run_rows": {
+    "corrects": "docs/evaluation/geometry/runs/exact-dimensions/labels.json (committed 1c91f90d before the change; kept byte-identical)",
+    "rows": {
+      "N08_laterals_base_not_stated": {"was": "refused:assumption", "now": "refused:source_invariant", "reason": "the outcome (refused) holds; the stage was written for a Euclidean-faithful chart. The text does not state a regular pyramid, so no metric is derived, and the axis chart's SA² = 24 ≠ 25 fails the source-length gate one stage before the assumption gate. Evidence: first route run, details [NORMALIZED_SOURCE_VIOLATED] AS = 5 … AS² = 24"}
+    }
+  }
+}

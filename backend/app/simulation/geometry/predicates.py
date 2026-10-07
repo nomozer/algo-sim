@@ -24,6 +24,7 @@ oracle đang kiểm chính cái nó vừa dựng.
 """
 from __future__ import annotations
 
+from . import metric as _m
 from .exact import Line3, Plane3, Point3, Vec3, det3
 
 
@@ -95,7 +96,7 @@ def skew_lines(a: Line3, b: Line3) -> bool:
 
 # ── vuông góc ─────────────────────────────────────────────────────────────
 def perpendicular_vectors(u: Vec3, v: Vec3) -> bool:
-    return u.dot(v) == 0
+    return _m.dot(u, v) == 0
 
 
 def perpendicular_lines(a: Line3, b: Line3) -> bool:
@@ -114,8 +115,8 @@ def line_perpendicular_plane(ln: Line3, pl: Plane3) -> bool:
     phải `dot == 0`", nhưng với đường-và-mặt thì ngược lại — vuông góc với mặt
     nghĩa là **song song với pháp tuyến**.
     """
-    return parallel_vectors(ln.direction, pl.normal)
+    return parallel_vectors(ln.direction, _m.normal_vector(pl.normal))
 
 
 def perpendicular_planes(p: Plane3, q: Plane3) -> bool:
-    return perpendicular_vectors(p.normal, q.normal)
+    return p.normal.dot(_m.normal_vector(q.normal)) == 0

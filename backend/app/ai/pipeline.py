@@ -559,12 +559,21 @@ def _dung_scene3d(spec, contract=None) -> dict | None:
         normalize_section_provenance,
     )
 
+    from app.simulation.geometry import metric as _metric
+    from app.simulation.semantic_program.assumption_gate import do_luong_cua
+
     try:
         # CÙNG bước bổ sung dựng hình mà `verify_and_compile` chạy, trên CÙNG đầu
         # vào ⇒ cùng chương trình đã bổ sung: số khung envelope = số bước cảnh (#31).
         spec = hoan_thien_dung_hinh(spec, contract).spec
-        ket = SemanticProgramInterpreter().execute(spec)
-        canh = build_scene3d(build_simulation_state(spec, ket, contract))
+        # exact-dimensions: CÙNG metric khung mà route đã chạy (cùng đề, cùng chương trình). Toạ độ cảnh vẫn là
+        # toạ độ KHUNG (chính xác); `chart_metric` cho renderer ánh xạ khung → không gian (Cholesky của G).
+        do_luong = do_luong_cua(getattr(contract, "problem_text", "") or "", spec)
+        with _metric.using(do_luong):
+            ket = SemanticProgramInterpreter().execute(spec)
+            canh = build_scene3d(build_simulation_state(spec, ket, contract))
+        if do_luong is not None:
+            canh = {**canh, "chart_metric": do_luong.as_json()}
         # ─── CHUẨN HOÁ XUẤT XỨ THIẾT DIỆN ───────────────────────────────
         #
         # `build_scene` phân loại theo LỚP RUNTIME và không nhận `contract`, nên

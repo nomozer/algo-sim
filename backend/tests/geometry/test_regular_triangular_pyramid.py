@@ -23,6 +23,10 @@ from tests.geometry import w14_cases as W
 _CORPUS = (Path(__file__).resolve().parents[3]
            / "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/corpus")
 NHAN = json.loads((_CORPUS / "LABELS.json").read_text(encoding="utf-8"))["rows"]
+#: exact-dimensions: lớp đính chính có ngày — tệp nhãn lịch sử giữ nguyên từng byte, đọc chồng ở đây.
+_DINH_CHINH = json.loads((_CORPUS.parents[2] / "exact-dimensions/label_corrections.json")
+                         .read_text(encoding="utf-8"))["rows"]
+NHAN = {k: ({**v, "expect": _DINH_CHINH[k]["now"]} if k in _DINH_CHINH else v) for k, v in NHAN.items()}
 
 THE_TICH = "V"
 CANH_BEN = "d_SA"
@@ -53,6 +57,8 @@ def chop_deu(ca: str, *, k: F = F(3), t: F = F(1), frame: str = "N1", dinh: tupl
     dinh_S = apex or tuple(g + t for g in G)
     khoi = ky_hieu_khoi or f"{S}.{a}{b}{c}"
     nghia_vu = ({"kind": "volume", "container": "khoi_chop", "witness": THE_TICH} if hoi == "volume"
+                else {"kind": "distance", "container": S, "witness": "chieu_cao_SG", "wrt": "mp_day"}
+                if hoi == "height"            # exact-dimensions: khoảng cách đỉnh → mặt đáy (đã đo sẵn ở chieu_cao_SG)
                 else {"kind": "distance", "container": a, "witness": CANH_BEN, "wrt": S})
     pay = {"input_facts": [{"id": "f_khoi", "kind": "str", "label": "Khối chóp", "value": [khoi]},
                            *[dict(f) for f in facts]],
@@ -65,8 +71,9 @@ def chop_deu(ca: str, *, k: F = F(3), t: F = F(1), frame: str = "N1", dinh: tupl
             {"name": f"{b}J", "type": "line3"}, {"name": "G", "type": "point3"},
             {"name": f"day_{a}{b}{c}", "type": "polygon3"}, {"name": "mp_day", "type": "plane3"},
             {"name": "khoi_chop", "type": "solid"}, {"name": f"dien_tich_day_{a}{b}{c}", "type": "float"},
-            {"name": "chieu_cao_SG", "type": "float"},
-            {"name": THE_TICH if hoi == "volume" else CANH_BEN, "type": "float"}]
+            {"name": "chieu_cao_SG", "type": "float"}]
+    if hoi != "height":
+        mem.append({"name": THE_TICH if hoi == "volume" else CANH_BEN, "type": "float"})
     st = [{"kind": "declare_point", "target_var": n, "at": [_so(x) for x in p]} for n, p in zip((a, b, c), P)]
     st += [{"kind": "construct_polygon", "target_var": f"day_{a}{b}{c}", "vertices": [a, b, c],
             "label": f"Đáy {a}{b}{c}"},
@@ -85,10 +92,11 @@ def chop_deu(ca: str, *, k: F = F(3), t: F = F(1), frame: str = "N1", dinh: tupl
             "expr": {"kind": "measure", "quantity": "area", "of": f"day_{a}{b}{c}"}},
            {"kind": "assign", "target_var": "chieu_cao_SG",
             "expr": {"kind": "measure", "quantity": "distance", "of": S, "wrt": "mp_day"}}]
-    st.append({"kind": "assign", "target_var": THE_TICH,
-               "expr": {"kind": "measure", "quantity": "volume", "of": "khoi_chop"}} if hoi == "volume" else
-              {"kind": "assign", "target_var": CANH_BEN, "expr": {"kind": "measure", "quantity": "distance", "of": S,
-                                                                   "wrt": a}})
+    if hoi != "height":
+        st.append({"kind": "assign", "target_var": THE_TICH,
+                   "expr": {"kind": "measure", "quantity": "volume", "of": "khoi_chop"}} if hoi == "volume" else
+                  {"kind": "assign", "target_var": CANH_BEN, "expr": {"kind": "measure", "quantity": "distance",
+                                                                       "of": S, "wrt": a}})
     prog = {"spec_version": "1.0", "title": f"Chóp tam giác đều {khoi}", "memory_declarations": mem, "statements": st}
     return W.hop_dong(van, pay), prog
 
@@ -187,23 +195,16 @@ def test_ket_cuc_route_theo_nhan(ca):
     _khop(ca, ket_qua(ca))
 
 
-@pytest.mark.parametrize("ca", sorted(c for c in NHAN if c.startswith("U")))
-def test_ngoai_mien_bieu_dien_tu_choi_dung_ly_do(ca):
-    """§18.2: ngoài miền ⇒ chứng chỉ nói đúng tên giới hạn (không làm tròn, không phải "thiếu chiều cao")."""
+@pytest.mark.parametrize("ca", sorted(c for c in NHAN if c.startswith("U") or c.startswith("N5")))
+def test_mien_cu_nay_duoc_chung_nhan_C1(ca):
+    """exact-dimensions (đính chính `label_corrections.json`): cạnh hữu tỉ, chiều cao ngoài 3t², đỉnh khung lệch pháp
+    tuyến — cùng một chứng chỉ C1/T8 như miền cũ; không còn mã TEMPLATE_NOT_REPRESENTABLE."""
     from app.simulation.semantic_program.assumption_gate import danh_gia_doc_lap
     contract, prog = CA[ca]()
     kq = danh_gia_doc_lap(contract, W.spec_cua(prog))
-    assert kq.certificate is None, kq.details
-    assert any("TEMPLATE_NOT_REPRESENTABLE T8" in d for d in kq.details), kq.details
-
-
-def test_dinh_lech_phap_tuyen_bi_chan_boi_rang_buoc_dinh_tren_trong_tam():
-    """N5b (amendment 1): |SG|² đúng nhưng đỉnh không trên trọng tâm — chính ràng buộc "apex above the centroid" từ
-    chối (đối chiếu chính tắc là lớp thứ hai: bỏ ràng buộc thì nó vẫn chặn, xem tiêm lỗi FL2)."""
-    from app.simulation.semantic_program.assumption_gate import danh_gia_doc_lap
-    contract, prog = CA["N5b_apex_off_normal"]()
-    kq = danh_gia_doc_lap(contract, W.spec_cua(prog))
-    assert any("T8 TEMPLATE_CONSTRAINT_VIOLATED apex above the centroid" in d for d in kq.details), kq.details
+    assert kq.certificate == "C1", kq.details
+    assert any(d == "C1 T8" for d in kq.details), kq.details
+    assert not any("NOT_REPRESENTABLE" in d for d in kq.details), kq.details
 
 
 @pytest.mark.parametrize("ca", sorted(c for c in NHAN if NHAN[c]["expect"].startswith("served:")))

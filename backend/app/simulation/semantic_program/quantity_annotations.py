@@ -22,6 +22,7 @@ from fractions import Fraction
 from typing import Any
 
 from ..geometry import kernel as K
+from ..geometry import metric as _m
 from ..geometry.exact import Line3, Plane3, Vec3
 from ..geometry.predicates import collinear
 from ..geometry.radical import square
@@ -167,7 +168,7 @@ def _do_dai_de_cho(q: str, loai: dict[str, str], mem: dict[str, Any], de: str) -
         return "the named segment's endpoints are not scene points"
     d = mem[r] - mem[p]
     try:                                       # §18.3: độ dài đề cho có thể là căn
-        bang = d.dot(d) == square(v)
+        bang = _m.norm_sq(d) == square(v)
     except (TypeError, ValueError):
         bang = False
     if not bang:
@@ -255,10 +256,10 @@ def chieu_cao_the_tich(objects: list[dict[str, Any]], memory: dict[str, Any],
             if cap and all(isinstance(memory.get(p), Vec3) for p in cap):
                 p, q = memory[cap[0]], memory[cap[1]]
                 try:                           # §18.3: giá trị có thể là căn (√3) — so bình phương chính xác
-                    nhat_quan = (p - q).dot(p - q) == square(gt)
+                    nhat_quan = _m.norm_sq(p - q) == square(gt)
                 except (TypeError, ValueError):
                     nhat_quan = False
-                if nhat_quan and (p - q).cross(n).is_zero() and tren_day(p) != tren_day(q):
+                if nhat_quan and (p - q).cross(_m.normal_vector(n)).is_zero() and tren_day(p) != tren_day(q):
                     cao.append(c)
             elif g.get("anchor") == "witness":
                 mat = memory.get((g.get("witness") or {}).get("on"))

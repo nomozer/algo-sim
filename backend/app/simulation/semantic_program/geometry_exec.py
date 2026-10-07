@@ -32,6 +32,7 @@ from ..geometry.radical import (
     ExactNumber,
     Radical,
     RadicalDomainError,
+    multiply,
     sqrt_rational,
 )
 from ..geometry import curved as CV
@@ -254,7 +255,7 @@ def chuan_hoa_dai_luong(kieu_khai: str | None, raw: Any, *,
     return raw if gt is None else gt
 
 
-def volume_polyhedron(sol: Polyhedron) -> Fraction:
+def volume_polyhedron(sol: Polyhedron) -> ExactNumber:
     """Thể tích một khối — phân rã quạt từ đỉnh đầu qua MỌI mặt.
 
     MỘT nguồn sự thật, dùng chung cho `measure` (phép đo của IR) và
@@ -278,10 +279,15 @@ def volume_polyhedron(sol: Polyhedron) -> Fraction:
     Nay uỷ quyền cho `section.the_tich_da_dien`: tổng có dấu trên mặt biên,
     `abs` đúng một lần ở cuối, và **tự định hướng lại** các mặt nên hợp đồng
     khai mặt không đổi một byte.
+
+    exact-dimensions: trong khung có metric dẫn xuất (`geometry.metric`), thể tích thật = thể tích khung · √det G
+    — một hệ số, ở đúng một thẩm quyền; khung đồng nhất giữ nguyên giá trị `Fraction` cũ.
     """
+    from ..geometry.metric import volume_det_factor_sq
     from ..geometry.section import the_tich_da_dien
 
-    return the_tich_da_dien(sol)
+    v, f = the_tich_da_dien(sol), volume_det_factor_sq()
+    return v if f == 1 else multiply(v, sqrt_rational(f))
 
 
 def volume_of(x: Any) -> ExactNumber:
@@ -862,6 +868,9 @@ def exec_construct_curved_solid(
     LOẠI**; tầng này chỉ đọc tên và chuyển tiếp. Nhân đôi chúng ra đây là dựng
     một bản luật thứ hai sẽ trôi.
     """
+    # exact-dimensions: khối cong định nghĩa bằng bán kính Euclid — trong khung có metric dẫn xuất thì từ chối.
+    from ..geometry.metric import require_euclidean
+    require_euclidean("a curved solid")
     kc = CV.KHOI_CONG.get(node.curved_kind)
     if kc is None:
         raise GeometryError(

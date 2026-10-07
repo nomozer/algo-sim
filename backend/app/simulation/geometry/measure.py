@@ -26,6 +26,7 @@ import math
 from fractions import Fraction
 from typing import Any, Sequence
 
+from . import metric as _m
 from .exact import GeometryError, Line3, Plane3, Point3, Vec3, det3
 from .kernel import project_point_onto_line, project_point_onto_plane
 from .radical import ExactNumber, negate, sqrt_rational
@@ -43,13 +44,13 @@ ERR_KHONG_DO_DUOC = "MEASURE_UNDEFINED"
 
 # ── khoảng cách: luôn trả BÌNH PHƯƠNG ─────────────────────────────────────
 def distance_sq(a: Point3, b: Point3) -> Fraction:
-    return (b - a).norm_sq()
+    return _m.norm_sq(b - a)
 
 
 def distance_sq_point_plane(p: Point3, pl: Plane3) -> Fraction:
     """`d² = (n·(p−P))² / |n|²` — hữu tỉ, chính xác."""
     s = pl.signed_eval(p)
-    return s * s / pl.normal.norm_sq()
+    return s * s / _m.conorm_sq(pl.normal)
 
 
 def distance_sq_point_line(p: Point3, ln: Line3) -> Fraction:
@@ -79,7 +80,7 @@ def distance_sq_skew_lines(a: Line3, b: Line3) -> Fraction:
         )
     n = a.direction.cross(b.direction)
     s = (b.point - a.point).dot(n)
-    return s * s / n.norm_sq()
+    return s * s / _m.conorm_sq(n)
 
 
 def distance_sq_lines(a: Line3, b: Line3) -> Fraction:
@@ -158,8 +159,8 @@ def cos_sq_between_vectors(u: Vec3, v: Vec3) -> Fraction:
     """
     if u.is_zero() or v.is_zero():
         raise GeometryError(ERR_KHONG_DO_DUOC, "không có góc với vector không")
-    d = u.dot(v)
-    return d * d / (u.norm_sq() * v.norm_sq())
+    d = _m.dot(u, v)
+    return d * d / (_m.norm_sq(u) * _m.norm_sq(v))
 
 
 def cos_sq_between_lines(a: Line3, b: Line3) -> Fraction:
@@ -188,7 +189,7 @@ def cos_between_vectors(u: Vec3, v: Vec3) -> ExactNumber:
     """
     if u.is_zero() or v.is_zero():
         raise GeometryError(ERR_KHONG_DO_DUOC, "không có góc với vector không")
-    d = u.dot(v)
+    d = _m.dot(u, v)
     do_lon = sqrt_rational(cos_sq_between_vectors(u, v))
     if d == 0:
         # Vuông góc: `cos = 0` là HỮU TỈ. Không để nó thành `0·√b`.
@@ -202,7 +203,7 @@ def sin_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
     Chỗ lộn dấu kinh điển — góc với mặt phẳng là **phần bù** của góc với pháp
     tuyến, nên trả `sin²` để tên hàm nói đúng thứ nó trả.
     """
-    return cos_sq_between_vectors(ln.direction, pl.normal)
+    return cos_sq_between_vectors(ln.direction, _m.normal_vector(pl.normal))
 
 
 def cos_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
@@ -217,7 +218,7 @@ def cos_sq_line_plane(ln: Line3, pl: Plane3) -> Fraction:
 
 
 def cos_sq_between_planes(p: Plane3, q: Plane3) -> Fraction:
-    return cos_sq_between_vectors(p.normal, q.normal)
+    return cos_sq_between_vectors(_m.normal_vector(p.normal), _m.normal_vector(q.normal))
 
 
 def cos_sq_giua(a: Any, b: Any) -> Fraction:
@@ -309,7 +310,7 @@ def area_polygon(dinh: Sequence[Point3]) -> ExactNumber:
     # `tong.dot(tong)` là `|Σ|²` hữu tỉ; chia 4 rồi lấy căn = `½|Σ|`. Chia
     # TRƯỚC khi lấy căn để phép căn nhận đúng một phân số — `sqrt_rational`
     # không có nhánh thất bại trên hữu tỉ không âm.
-    return sqrt_rational(Fraction(tong.dot(tong), 4))
+    return sqrt_rational(Fraction(_m.area_sq_from_cross_sum(tong), 4))
 
 
 def area_section(s: Any) -> ExactNumber:
@@ -333,6 +334,7 @@ def volume_tetrahedron(a: Point3, b: Point3, c: Point3, d: Point3) -> Fraction:
     Trả `Fraction`: thể tích của khối có đỉnh hữu tỉ luôn hữu tỉ. Trả `float`
     ở đây là vứt tính chính xác đi mà không được gì.
     """
+    _m.require_euclidean("volume_tetrahedron (off the product path)")
     v = det3(b - a, c - a, d - a)
     return abs(v) / 6
 
@@ -360,6 +362,7 @@ def volume_pyramid_fan(apex: Point3, base: Sequence[Point3]) -> Fraction:
     `geometry_exec.volume_polyhedron`); nó được sửa vì để lại một hàm công
     khai trả số sai là để lại đúng cái bẫy wave này đi dọn.
     """
+    _m.require_euclidean("volume_pyramid_fan (off the product path)")
     if len(base) < 3:
         raise GeometryError(ERR_KHONG_DO_DUOC, "đáy cần ít nhất 3 đỉnh")
     a0, a1, a2 = base[0], base[1], base[2]

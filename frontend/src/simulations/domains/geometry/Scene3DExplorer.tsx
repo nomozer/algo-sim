@@ -35,6 +35,7 @@ import {
   type SeenMarks,
 } from "../../../state/classroom-sync";
 import type { Scene3D } from "./scene3d-model";
+import { veKhongGian } from "./scene3d-chart";
 import {
   coherentFormula,
   geometryAnchor,
@@ -172,7 +173,7 @@ const nutMoBang = (id: BangThongTin) =>
     : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
 
 export function Scene3DExplorer({
-  scene, de, tieuDe, quayLai, phien, onFocus, daiLop,
+  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -200,6 +201,8 @@ export function Scene3DExplorer({
   /** Dải phụ trong thanh trên — nơi vỏ cắm chỉ báo lớp / dock giáo viên. */
   daiLop?: React.ReactNode;
 }) {
+  // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
+  const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
   // MẶT và CẠNH sinh MỘT LẦN cho mỗi cảnh. Bỏ bước này là bỏ luôn khả năng
   // bấm vào một mặt — cây mất hai hạng mục và raycast chỉ còn trúng khối.
   const day = useMemo(() => withSubEntities(scene), [scene]);

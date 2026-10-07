@@ -308,10 +308,11 @@ def _phan_loai_khoi(dinh: list, mat: list) -> Optional[tuple[str, list[int], lis
     day, tren = a, b
     canh_ben = [dinh[tren[k]] - dinh[day[k]] for k in range(len(day))]
     canh_day = [dinh[day[(k + 1) % len(day)]] - dinh[day[k]] for k in range(len(day))]
-    dung = all(c.dot(e) == 0 for c in canh_ben for e in canh_day)
+    from ..geometry import metric as _m        # exact-dimensions: ⊥ và độ dài theo metric của khung
+    dung = all(_m.dot(c, e) == 0 for c in canh_ben for e in canh_day)
     chu_nhat = dung and len(day) == 4 and all(
-        canh_day[k].dot(canh_day[(k + 1) % 4]) == 0 for k in range(4))
-    if chu_nhat and canh_ben[0].norm_sq() == canh_day[0].norm_sq() == canh_day[1].norm_sq():
+        _m.dot(canh_day[k], canh_day[(k + 1) % 4]) == 0 for k in range(4))
+    if chu_nhat and _m.norm_sq(canh_ben[0]) == _m.norm_sq(canh_day[0]) == _m.norm_sq(canh_day[1]):
         return "cube", list(day), tren
     if chu_nhat:
         return "cuboid", list(day), tren

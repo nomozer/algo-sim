@@ -34,7 +34,9 @@ from app.simulation.error_codes import SEMANTIC_FAILURE_CATEGORY, ErrorCode
 from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
-from .assumption_gate import MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, kiem_gia_dinh
+from ..geometry import metric as _metric
+from .assumption_gate import (MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, do_luong_cua,
+                              kiem_gia_dinh)
 from .construction_binding import MA_CHUA_DOI_CHIEU, MA_TOA_DO_THAY_DUNG, KetQuaDoiChieu, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
 from .coverage_gate import (
@@ -279,13 +281,15 @@ def verify_and_compile(
     # gắn tay ở nhánh nào chạy tới C₂.
     quan_trac: dict[str, Any] = {"checked": [], "verified": [], "ten": {},
                                  "nguon": {}}
-    kq = _sau_grounding(
-        contract, spec, ground,
-        execution_budget=execution_budget,
-        presentation_budget=presentation_budget,
-        quan_trac=quan_trac,
-        khong_kiem_nguon=khong_kiem_nguon,
-    )
+    # exact-dimensions: thực thi + mọi cổng trên CÙNG metric khung dẫn xuất từ đề (`do_luong_cua`; `None` = Euclid).
+    with _metric.using(do_luong_cua(contract.problem_text or "", spec)):
+        kq = _sau_grounding(
+            contract, spec, ground,
+            execution_budget=execution_budget,
+            presentation_budget=presentation_budget,
+            quan_trac=quan_trac,
+            khong_kiem_nguon=khong_kiem_nguon,
+        )
     return kq.model_copy(update={
         "grounding_assumptions": list(ground.assumptions),
         "grounding_unresolved_citations": list(ground.unresolved_citations),

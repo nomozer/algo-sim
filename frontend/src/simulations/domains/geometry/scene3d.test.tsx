@@ -278,13 +278,18 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // hình phụ (vai CONSTRUCT_AUXILIARY_GEOMETRY của backend) nào ẩn ở bước
       // nào. THUẦN, không three, không toạ độ: chỉ đọc vai trò, `depends` và
       // tập vật có mặt theo bước — quyết DỰNG hay KHÔNG, không tính hình.
+      //
+      // `./scene3d-chart` THÊM ở exact-dimensions, nói ra: BIÊN HIỂN THỊ của khung affine. Metric khung G do
+      // backend tính CHÍNH XÁC (`geometry/metric.py`) và phát ở `chart_metric`; module chỉ áp ánh xạ tuyến tính T
+      // (Tᵀ·T = G) cho toạ độ để vẽ hình Euclid — không suy quan hệ, không quyết một sự kiện hình học, không đáp số;
+      // cảnh không metric đi qua NGUYÊN VẸN. View chỉ nhập `maTranKhung4` cho ảnh chụp camera của bộ đo.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-edge-visibility",
               "./polygon-triangulate", "./scene3d-roles",
-              "./scene3d-annotations", "./scene3d-auxiliary"]).toContain(i);
+              "./scene3d-annotations", "./scene3d-auxiliary", "./scene3d-chart"]).toContain(i);
     }
   });
 

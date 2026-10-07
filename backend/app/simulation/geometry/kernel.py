@@ -29,6 +29,7 @@ from .exact import (
     Point3,
     Vec3,
 )
+from . import metric as _m
 from .predicates import line_in_plane, parallel_planes, point_on_line
 
 
@@ -154,20 +155,20 @@ def intersect_line_line(a: Line3, b: Line3) -> Point3:
 def project_point_onto_plane(p: Point3, pl: Plane3) -> Point3:
     """Hình chiếu vuông góc — chân đường cao. Chính là chỗ hình vẽ tay đặt sai."""
     n = pl.normal
-    t = pl.signed_eval(p) / n.norm_sq()
-    return p - n.scale(t)
+    t = pl.signed_eval(p) / _m.conorm_sq(n)
+    return p - _m.normal_vector(n).scale(t)
 
 
 def project_point_onto_line(p: Point3, ln: Line3) -> Point3:
     d = ln.direction
-    t = (p - ln.point).dot(d) / d.norm_sq()
+    t = _m.dot(p - ln.point, d) / _m.norm_sq(d)
     return ln.at(t)
 
 
 def plane_through_point_perpendicular_to(p: Point3, ln: Line3) -> Plane3:
     """Mặt phẳng qua `p` và vuông góc với `ln` — pháp tuyến CHÍNH LÀ phương của
     `ln`. Viết ra thành hàm riêng vì đây là chỗ trực giác hay lộn dấu."""
-    return Plane3(p, ln.direction)
+    return Plane3(p, _m.plane_covector(ln.direction))
 
 
 def plane_through_point_parallel_to(p: Point3, pl: Plane3) -> Plane3:

@@ -513,6 +513,8 @@ export interface Scene3D {
   formation?: SceneFormation;
   /** W17: chẩn đoán cho người phát triển (`ANNOTATION_UNBOUND …`) — không hiện cho học sinh. */
   diagnostics?: string[];
+  /** exact-dimensions: metric KHUNG G (3×3 phân số) khi bố cục là khung affine — vắng ⇒ Euclid. `scene3d-chart`. */
+  chart_metric?: Exact[][];
 }
 
 /**

@@ -30,6 +30,10 @@ _CORPUS_W05 = _CORPUS.parents[2] / "regular-square-pyramid-w05/diagnostics/corpu
 NHAN = {**json.loads((_CORPUS / "LABELS.json").read_text(encoding="utf-8"))["rows"],
         **json.loads((_CORPUS / "LABELS_R2.json").read_text(encoding="utf-8"))["rows"],
         **json.loads((_CORPUS_W05 / "LABELS_W05.json").read_text(encoding="utf-8"))["rows"]}
+#: exact-dimensions: đính chính có ngày (nhãn lịch sử giữ nguyên từng byte) — U3 nay thuộc miền kích thước hữu tỉ.
+_DINH_CHINH = json.loads((_CORPUS.parents[2] / "exact-dimensions/label_corrections.json").read_text(
+    encoding="utf-8"))["regular_square_pyramid_w01_rows"]["rows"]
+NHAN = {k: ({**v, "expect": _DINH_CHINH[k]["now"]} if k in _DINH_CHINH else v) for k, v in NHAN.items()}
 
 THE_TICH = "V"
 CANH_BEN = "d_SA"

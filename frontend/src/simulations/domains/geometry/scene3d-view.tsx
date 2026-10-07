@@ -73,6 +73,7 @@ import {
   witnessesShown,
 } from "./scene3d-annotations";
 import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
+import { maTranKhung4 } from "./scene3d-chart";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -1370,6 +1371,9 @@ export function Scene3DWorkspace({
   }, [scene]);
   const qRef = useRef(qHienThi);
   qRef.current = qHienThi;
+  // exact-dimensions: T khung (cột-chính 4×4) của cảnh có `chart_metric` — chỉ cho ảnh chụp camera của bộ đo.
+  const tRef = useRef<number[] | null>(null);
+  tRef.current = maTranKhung4(scene);
   const buoc = clampStep(scene, step);
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
   // vẹn: hiện mọi thứ, không bung, tô sáng theo bước.
@@ -1649,16 +1653,19 @@ export function Scene3DWorkspace({
         (window as any).__geo3d_edge_spans = edgeAudit.edge_spans;
         // Tâm quỹ đạo: bộ đo mô phỏng đúng camera SAU cử chỉ xoay/lùi (w11).
         (window as any).__geo3d_camera_target = dieuKhien.target.toArray();
-        const coXoay = !qRef.current.equals(DONG_NHAT);
+        // exact-dimensions: cảnh có metric khung ⇒ toạ độ PAYLOAD (khung) → thế giới = xoay hiển thị · T (`scene3d-chart`).
+        const khungT = tRef.current;
+        const coXoay = !qRef.current.equals(DONG_NHAT) || khungT !== null;
+        const model = khungT ? new THREE.Matrix4().fromArray(khungT).premultiply(goc.matrixWorld) : goc.matrixWorld;
         (window as any).__geo3d_camera_snapshot = {
           position: cam.position.toArray(),
-          // Bộ đo chiếu TOẠ ĐỘ CẢNH: khi có phép xoay hiển thị (đáy nghiêng, §18.2), ma trận phát là view × model để
-          // phép chiếu của bộ đo trùng hình trên khung. Đáy ngang ⇒ đúng ma trận view như trước (không nhân).
+          // Bộ đo chiếu TOẠ ĐỘ PAYLOAD: khi có xoay hiển thị (đáy nghiêng, §18.2) hay metric khung, ma trận phát là
+          // view × model để phép chiếu của bộ đo trùng hình trên khung. Không có cả hai ⇒ đúng ma trận view như trước.
           view_matrix_column_major: [...(coXoay
-            ? new THREE.Matrix4().multiplyMatrices(cam.matrixWorldInverse, goc.matrixWorld)
+            ? new THREE.Matrix4().multiplyMatrices(cam.matrixWorldInverse, model)
             : cam.matrixWorldInverse).elements],
-          // Cảnh → thế giới (chỉ khi có xoay): bộ đo mô phỏng cử chỉ quỹ đạo trong khung THẾ GIỚI (`cameraSauCuChi`).
-          ...(coXoay ? { model_matrix_column_major: [...goc.matrixWorld.elements] } : {}),
+          // Payload → thế giới: bộ đo mô phỏng cử chỉ quỹ đạo trong khung THẾ GIỚI (`cameraSauCuChi`).
+          ...(coXoay ? { model_matrix_column_major: [...model.elements] } : {}),
           projection_matrix_column_major: [...cam.projectionMatrix.elements],
           viewport_width: renderer.domElement.clientWidth,
           viewport_height: renderer.domElement.clientHeight,
@@ -1684,6 +1691,7 @@ export function Scene3DWorkspace({
           node.getWorldPosition(tam);
           // Toạ độ CẢNH như mọi đầu vào khác của bộ đo (ma trận phát ở trên là cảnh → camera khi có xoay).
           if (coXoay) goc.worldToLocal(tam);
+          if (khungT) tam.applyMatrix4(new THREE.Matrix4().fromArray(khungT).invert());   // → toạ độ khung
           node.getWorldScale(ti);
           cham.push({ id: pickSemanticId(node), state: node.userData.dauDinh, center: tam.toArray(),
             radius_world: ((node as THREE.Mesh).geometry as THREE.SphereGeometry).parameters.radius * ti.x });

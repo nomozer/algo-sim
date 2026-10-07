@@ -3589,6 +3589,23 @@ phép đo.
 
 Tests: `tests/geometry/test_curved_foundation.py` (63)
 
+### `backend/app/simulation/geometry/metric.py` · offline (exact-dimensions)
+
+**METRIC CỦA KHUNG** — bố cục chương trình là khung AFFINE ℚ³; độ dài theo ma trận Gram hữu tỉ G (`Metric`: `dot`,
+`vector` = G⁻¹n, `covector` = Gv, `det`, `as_json`). Một metric mỗi lượt chạy, giữ trong context (`using`);
+mặc định `None` = đồng nhất và mọi helper (`dot`, `norm_sq`, `normal_vector`, `plane_covector`, `conorm_sq`,
+`area_sq_from_cross_sum`, `volume_det_factor_sq`) trả ĐÚNG biểu thức cũ của kernel. `gram_from_lengths` — G duy nhất
+từ bốn điểm khung độc lập affine + sáu độ dài² (G = E⁻ᵀKE⁻¹, Sylvester, tự kiểm sáu cạnh); `require_euclidean` — khối
+cong và hai hàm thể tích ngoài đường sản phẩm từ chối dưới metric khác đồng nhất (`METRIC_REQUIRES_EUCLIDEAN_CHART`).
+Người gọi: `kernel` (chiếu, mặt ⊥ đường), `predicates` (⊥), `measure` (khoảng cách, góc, diện tích),
+`geometry_exec.volume_polyhedron` (× √det G), `quantity_annotations`, `display_names`, `assumption_gate` (T8,
+`_ap_do_dai`, `do_luong_cua`, `_chay`), `route.verify_and_compile`, `ai/pipeline._dung_scene3d` (+ `scene.chart_metric`).
+Tests: `tests/geometry/test_exact_dimensions.py`.
+
+`assumption_gate.py` (exact-dimensions): `kich_thuoc_t8` (b², h², l² do ĐỀ cố định — một thẩm quyền cho T8 và metric),
+`do_luong_cua(de, prog)` (metric khung dẫn xuất từ đề; `None` khi Euclid đồng nhất hoặc không thuộc họ), `_doc_de`.
+`segment_relation.py`: `_HET_DO_DAI` — terminator chung của mọi bộ đọc độ dài (không đọc vế đầu của `1 + √2`).
+
 ### `backend/app/simulation/geometry/radical.py` · offline
 
 **MIỀN SỐ CHÍNH XÁC MỞ RỘNG** — `he·π^mu·√can` với `he ∈ ℚ`, `can` nguyên dương
@@ -6985,6 +7002,7 @@ Run `docs/evaluation/geometry/runs/w11-pedagogical-polish/`. Trả lời review 
 | Đường phụ nhẹ | `scene3d-view.tsx` (`HE_SO_DUONG_PHU`, nhánh `render === "line"`) | Đường vô hạn không được nhấn: độ mờ ×0,45; rõ ở bước dựng nó (formation) hoặc khi được chọn | formation/selection → renderer | `scene3d-hidden-lines.test.tsx` |
 | Vật mới dựng (w11 cam → W12 xanh "đang xét") | `scene3d-view.tsx` (`MAU.highlight` = `MAU_VAI_TRO.moi_dung` `0x2563eb`; w11 là cam `0xea580c`, trước nữa `0xfbbf24`) | W12 (quyết định user): cam chỉ còn nghĩa dữ kiện số, nên vật vừa dựng dùng chung xanh với vật được chọn; bản `0xfbbf24` vàng nhạt từng gần biến mất trên nền sáng | formation → renderer | `scene3d-causal-colors.test.tsx` · `scene3d-hidden-lines.test.tsx` |
 | Khung nhìn bỏ vật vô hạn | `scene3d-view.tsx` (`diemKhungNhin`, `__geo3d_camera_target`) | Hỏi cờ `voHan`/`chieuSau` cả ở tổ tiên (đường vô hạn là NHÓM hai nét), bỏ chấm đỉnh; "Xem lại toàn hình" ở bước cuối bài thiết diện từng dời tâm nhìn theo đoạn BD | `vuaKhungRef` | `scene3d-hidden-lines.test.tsx` |
+| Khung affine → không gian (exact-dimensions) | `frontend/src/simulations/domains/geometry/scene3d-chart.ts` (`maTranKhung`, `maTranKhung4`, `veKhongGian`) + `Scene3DExplorer.tsx` (ánh xạ MỘT lần khi nhận cảnh) + `scene3d-view.tsx` (`tRef`; ảnh chụp camera model = xoay hiển thị · T, tâm chấm đỉnh trả về toạ độ khung) + `scene3d-model.ts` (`Scene3D.chart_metric`) | Cảnh có `chart_metric` (G ≠ I, backend `geometry/metric.py`): T = Cholesky (Tᵀ·T = G), điểm/phương ↦ T·p, pháp tuyến ↦ T⁻ᵀ·n, chuỗi phân số làm tròn 1e-9 ở BIÊN HIỂN THỊ; cảnh không metric trả CHÍNH nó. Không phép tính/đáp số nào đọc toạ độ thế giới | cảnh → renderer, bộ đo | `scene3d-chart.test.ts` |
 | Hộp bao dự phòng sau toàn cảnh | `scene3d-view.tsx` (`diemVuaKhung`) | Điểm khung nhìn = hình đang dựng + toàn cảnh (đã xoay hiển thị); hộp bao đầy đủ chỉ khi KHÔNG còn điểm hữu hạn nào (cảnh chỉ mặt phẳng/đường). Trước regular-triangular-pyramid-w01 hộp bao xét ở bước 0 (chỉ có điểm), hai góc nở theo vùng bấm lọt vào ⇒ hình lệch 65–100 px, tâm quỹ đạo lệch, chóp tam giác đều văng khỏi khung sau cú xoay W4 | `vuaKhungRef` | `scene3d-hidden-lines.test.tsx` |
 | Cổng ảnh xoay không suy biến | `frontend/scripts/compiler-scene-replay-lib.mjs` (`NGUONG_ANH_XOAY`, `cauTrucKhoi`, `baDinhGanThangHang`, `danhGiaAnhXoay`, `danhGiaAnhXoayThuc`, `chieuManHinh`) | Trên ẢNH PHỐI CẢNH: diện tích/độ sâu ≥ 60%/50% cực đại; mặt ≥ 12° theo tia từ mắt; hai cạnh chung đỉnh không sụp và đỉnh không sát cạnh khác (≥ ½ khối lập phương tham chiếu); đỉnh trong khung, không dưới lớp phủ | → suite, runner playback | `node --test frontend/scripts/compiler-scene-replay-lib.node-test.mjs` |
 | Cử chỉ xoay hoạch định | `compiler-scene-replay-lib.mjs` (`cameraSauCuChi`, `orbitPlanThuc`, `orbitCandidates`, `ORBIT_OFFSETS_DEG`) + `compiler-scene-suite.mjs` (`trustedZoomOut`, `overlayRects`) | Mô phỏng OrbitControls (xoay quanh Z qua tâm quỹ đạo, lùi 3/6 nấc ×1/0.95), chấm trước bằng cổng; chỉ gửi cử chỉ đạt; ghi sai số ma trận nhìn dự đoán ↔ thật. Nấc con lăn gửi `100 × DPR` (giả lập DPR 2 chia đôi `deltaY`) | → `BROWSER_EVIDENCE.json` | node test + chạy suite |

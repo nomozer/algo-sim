@@ -27,7 +27,8 @@ from fractions import Fraction
 from math import isqrt
 from typing import Any, Callable
 
-from ..geometry.exact import Vec3
+from ..geometry import metric as _metric
+from ..geometry.exact import GeometryError, Vec3
 from ..geometry.radical import ExactNumber, is_exact_number, parse_exact, sqrt_rational, square
 from .contract import SemanticProgramSpec
 from .domain_profile import geometry_symbol_key
@@ -670,12 +671,10 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
                   tien_de, chinh_tac)
 
 
-def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
-    """T8 (§18.2) — chóp đáy tam giác ĐỀU, chân đường cao ở TRỌNG TÂM; tứ diện đều là trường hợp cạnh bên = cạnh đáy.
-
-    Duy nhất sai khác đẳng cự khi biết cạnh đáy b và chiều cao h; h đến trực tiếp (`chiều cao`, `SG` với G là tâm đề
-    gọi tên) hoặc SUY từ cạnh bên l (h² = l² − b²/3) hay tứ diện đều (h² = 2b²/3). Mọi phép so trên BÌNH PHƯƠNG.
-    Miền toạ độ ℚ³: b² ∈ {2k², 6k²} và h² = 3t² — ngoài miền ⇒ TEMPLATE_NOT_REPRESENTABLE (không làm tròn)."""
+def kich_thuoc_t8(rb, S: str, day: tuple, ent: tuple, do_dai: dict) -> tuple | str:
+    """Cạnh đáy² b² và chiều cao² h² mà ĐỀ cố định cho chóp tam giác đều / tứ diện đều (`None` = đề không cho), hoặc lý
+    do từ chối (mâu thuẫn, chiều cao suy biến). h đến trực tiếp (`chiều cao`, `SG` với G là tâm đề gọi tên) hoặc SUY từ
+    cạnh bên l (h² = l² − b²/3) hay tứ diện đều (h² = 2b²/3). Một thẩm quyền: T8 và metric khung (`do_luong_cua`)."""
     a, b, c = day
     tu_dien = any(r.kind == "regular_tetrahedron" and r.entities == ent for r in rb)
     canh = {square(r.value) for r in rb if r.value is not None and (
@@ -701,40 +700,45 @@ def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
     h2 = ung[0][1] if ung else None
     if h2 is not None and h2 <= 0:
         return f"TEMPLATE_NOT_MATCHED T8: degenerate height (h² = {h2})"
-    if b2 is not None and _can_huu_ti(b2 / 2) is None and _can_huu_ti(b2 / 6) is None:
-        return f"TEMPLATE_NOT_REPRESENTABLE T8: base side² = {b2} is not 2k² or 6k² (no rational coordinates)"
-    if h2 is not None and _can_huu_ti(h2 / 3) is None:
-        return f"TEMPLATE_NOT_REPRESENTABLE T8: height² = {h2} is not 3t² (no rational apex over the base)"
+    return b2, h2, l2
+
+
+def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
+    """T8 (§18.2, exact-dimensions) — chóp đáy tam giác ĐỀU, chân đường cao ở TRỌNG TÂM; tứ diện đều là trường hợp
+    cạnh bên = cạnh đáy. Duy nhất sai khác đẳng cự khi biết b và h (`kich_thuoc_t8`); mọi phép so trên BÌNH PHƯƠNG.
+
+    Không còn miền "biểu diễn được": bố cục là KHUNG AFFINE, độ dài theo metric khung (`geometry.metric`) mà
+    `do_luong_cua` dẫn xuất từ chính b², h² của đề. Ràng buộc dưới đây đọc metric đang hiệu lực — khung Euclid cũ
+    (N1/N3) cho metric đồng nhất, khung khác chỉ thoả khi metric dẫn xuất từ đề đang chạy."""
+    kt = kich_thuoc_t8(rb, S, day, ent, do_dai)
+    if isinstance(kt, str):
+        return kt
+    b2, h2, l2 = kt
+    a, b, c = day
 
     def G(V):
         return (V[a] + V[b] + V[c]).scale(Fraction(1, 3))
 
     def d2(V, p, q):
-        return (V[p] - V[q]).dot(V[p] - V[q])
+        return _metric.norm_sq(V[p] - V[q])
 
     rbuoc: list = [
         ("base equilateral", lambda V: d2(V, a, b) == d2(V, b, c) == d2(V, c, a)),
-        ("apex above the centroid", lambda V: (V[S] - G(V)).dot(V[b] - V[a]) == 0
-         and (V[S] - G(V)).dot(V[c] - V[a]) == 0),
+        ("apex above the centroid", lambda V: _metric.dot(V[S] - G(V), V[b] - V[a]) == 0
+         and _metric.dot(V[S] - G(V), V[c] - V[a]) == 0),
         ("apex off the base", lambda V: V[S] != G(V))]
     if b2 is not None:
         rbuoc.append(("base side", lambda V: d2(V, a, b) == b2))
     if h2 is not None:
-        rbuoc.append(("height", lambda V: (V[S] - G(V)).dot(V[S] - G(V)) == h2))
+        rbuoc.append(("height", lambda V: _metric.norm_sq(V[S] - G(V)) == h2))
     if l2 is not None:
         rbuoc.append(("lateral edge", lambda V: all(d2(V, S, p) == l2 for p in day)))
     tien_de = [r for r in rb if (r.kind in ("base_equilateral", "base_centre") and set(r.entities) >= set(day))
                or (r.kind in ("height", "lateral_edge", "edge_all", "regular_tetrahedron") and r.entities == ent)]
 
-    def chinh_tac(L: list[ExactNumber]) -> dict[str, Vec3] | None:
-        cb, ch = square(L[0]), square(L[1])
-        k1, k3, t = _can_huu_ti(cb / 2), _can_huu_ti(cb / 6), _can_huu_ti(ch / 3)
-        if t is None or (k1 is None and k3 is None):
-            return None
-        P = ([_o(k1), _o(0, k1), _o(0, 0, k1)] if k1 is not None
-             else [_o(k3, -k3), _o(0, k3, -k3), _o(-k3, 0, k3)])
-        g = (P[0] + P[1] + P[2]).scale(Fraction(1, 3))
-        return {a: P[0], b: P[1], c: P[2], S: g + _o(t, t, t)}
+    def chinh_tac(L: list[ExactNumber]) -> dict[str, Vec3]:
+        """Khung đơn vị — kích thước KHÔNG nằm trong toạ độ; lượt chạy lại dẫn xuất metric riêng từ đề (`_chay`)."""
+        return {a: _o(), b: _o(1), c: _o(0, 1), S: _o(Fraction(1, 3), Fraction(1, 3), 1)}
 
     canh_day = sqrt_rational(b2) if b2 is not None else None
     cao = sqrt_rational(h2) if h2 is not None else None
@@ -939,7 +943,7 @@ def _ap_do_dai(khuon: _Khuon, do_dai: dict[frozenset, Fraction]) -> list:
     """Mọi độ dài đề cho trên một cặp đỉnh khuôn phải thoả chính xác."""
     dinh = set(khuon.dinh)
     return [(f"|{''.join(sorted(c))}| = {L}", lambda V, p=sorted(c)[0], q=sorted(c)[1], L=L:
-             (V[p] - V[q]).dot(V[p] - V[q]) == square(L))
+             _metric.norm_sq(V[p] - V[q]) == square(L))
             for c, L in do_dai.items() if c <= dinh and len(c) == 2]
 
 
@@ -968,7 +972,7 @@ def _hien_thuc_chinh_tac(khuon: _Khuon, do_dai: dict[frozenset, Fraction]) -> di
 
 
 def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_dai: dict, phu: list[str],
-                         exec_res, ngan: list[int], budget: int) -> tuple[bool, str]:
+                         exec_res, ngan: list[int], budget: int, de: str = "") -> tuple[bool, str]:
     vo_ti = [kt.nhan for kt in khuon.kich_thuoc if not khuon.can and not isinstance(
         kt.gia_tri if kt.gia_tri is not None else next(
             (do_dai[frozenset(c)] for c in kt.lop if frozenset(c) in do_dai), Fraction(0)), Fraction)]
@@ -997,7 +1001,7 @@ def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_d
         if s.get("kind") == "declare_point" and isinstance(s.get("at"), list) and (v := moi(s["target_var"])):
             s["at"] = v
     try:
-        res2 = _chay(SemanticProgramSpec.model_validate(d2), budget)
+        res2 = _chay(SemanticProgramSpec.model_validate(d2), budget, de)
     except Exception as e:  # noqa: BLE001
         return False, f"C1_CROSS_CHECK_REFERENCE_FAILED {type(e).__name__}"
     lech = [n for n in phu if res2.final_memory.get(n) != exec_res.final_memory.get(n)]
@@ -1006,8 +1010,11 @@ def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_d
     return True, f"C1_CROSS_CHECK_AGREES canonical re-run, {len(phu)} value(s)"
 
 
-def _chay(sp: SemanticProgramSpec, budget: int = DEFAULT_EXECUTION_BUDGET):
-    return SemanticProgramInterpreter(max_steps=budget).execute(sp)
+def _chay(sp: SemanticProgramSpec, budget: int = DEFAULT_EXECUTION_BUDGET, de: str = ""):
+    """Chạy MỘT chương trình trong metric khung của CHÍNH nó (exact-dimensions): khung chính tắc, khung kéo giãn của
+    phản ví dụ hay chương trình ứng viên đều dẫn xuất lại từ đề — không thừa hưởng metric của chương trình khác."""
+    with _metric.using(do_luong_cua(de, sp)):
+        return SemanticProgramInterpreter(max_steps=budget).execute(sp)
 
 
 # ── phản ví dụ (§7) ──────────────────────────────────────────────────────────
@@ -1056,7 +1063,7 @@ def _phan_vi_du(contract, prog: dict, exec_res, ten_da_hoa_giai, khuon: _Khuon, 
     ngan[0] += 1
     try:
         sp2 = SemanticProgramSpec.model_validate(d2)
-        res2 = _chay(sp2, budget)
+        res2 = _chay(sp2, budget, getattr(contract, "problem_text", "") or "")
         V2 = _gia_tri_dinh(khuon.dinh, anh_xa, _ChiMuc(d2, res2.trace))
     except Exception as e:  # noqa: BLE001 — ngoại lệ: không kết luận, không bao giờ là phản ví dụ
         return None, f"CE_INCONCLUSIVE {type(e).__name__}"
@@ -1195,6 +1202,59 @@ def _kiem_phep_dung(contract: Any, prog: dict, cm: _ChiMuc, lc: _LatCat, de: str
     return ra, (MA_LECH_PHEP_DUNG if sai else MA_CHUA_CHUNG_MINH if chua_ro else None), tuple(chu_the)
 
 
+def _doc_de(de: str) -> tuple:
+    """Đề → (đề che mệnh đề mục tiêu, ràng buộc, bất biến nguồn, độ dài đề cho CHÍNH XÁC theo cặp đỉnh)."""
+    de_gt = che_muc_tieu(de)
+    rb = doc_rang_buoc(de_gt)
+    inv = bat_bien_tu_de(de_gt)
+    # §18.3: độ dài nguồn có thể là căn (`display` của bộ đọc) — đọc lại CHÍNH XÁC, không ép `Fraction`.
+    do_dai = {frozenset(_id(p) for p in i.points): v for i in inv
+              if i.kind == "segment_length" and len(i.points) == 2 and i.expected
+              and (v := parse_exact(i.expected)) is not None}
+    return de_gt, rb, inv, do_dai
+
+
+def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
+    """exact-dimensions — metric của KHUNG chương trình, dẫn xuất từ ĐỀ; `None` = khung Euclid (đồng nhất).
+
+    Chỉ khi đề là chóp tam giác đều / tứ diện đều (`la_chop_tam_giac_deu`, thẩm quyền duy nhất) và CỐ ĐỊNH b², h²
+    (`kich_thuoc_t8`, cùng thẩm quyền với T8), và chương trình KHAI bốn đỉnh bằng toạ độ khung: sáu độ dài² (ba cạnh
+    đáy b², ba cạnh bên b²/3 + h²) xác định DUY NHẤT metric (`geometry.metric.gram_from_lengths`). Toạ độ khung
+    không mang độ dài nào — nên bố cục không thể thành giả thiết. Metric đồng nhất (khung Euclid sẵn đúng) ⇒ `None`,
+    giữ nguyên từng byte đường cũ. Mọi thứ khác (thiếu kích thước, mâu thuẫn, khung phẳng, đỉnh dựng chứ không khai)
+    ⇒ `None`, và các cổng phía sau quyết như trước."""
+    if not isinstance(prog, dict):
+        prog = prog.model_dump(mode="json", exclude_none=True)
+    _gt, rb, _inv, do_dai = _doc_de(de or "")
+    co_ten = {r.entities for r in rb if r.kind == "pyramid" and r.entities}
+    if len(co_ten) != 1:
+        return None
+    ent = next(iter(co_ten))
+    S, day = ent[0], ent[1:]
+    if len(day) != 3 or not la_chop_tam_giac_deu(rb, S, day, do_dai):
+        return None
+    kt = kich_thuoc_t8(rb, S, day, ent, do_dai)
+    if isinstance(kt, str) or kt[0] is None or kt[1] is None:
+        return None
+    b2, h2, _l2 = kt
+    toa: dict[str, Any] = {}
+    for m in prog.get("memory_declarations", []):
+        if m.get("type") == "point3" and isinstance(m.get("initial_value"), list):
+            toa.setdefault(m["name"], m["initial_value"])
+    for s in prog.get("statements", []):
+        if s.get("kind") == "declare_point" and isinstance(s.get("at"), list):
+            toa.setdefault(s["target_var"], s["at"])
+    dem = Counter(_khoa(n) for n in toa)
+    theo_khoa = {_khoa(n): n for n in toa if dem[_khoa(n)] == 1}
+    try:
+        P = tuple(Vec3.of(*[_F(c) for c in toa[theo_khoa[_khoa(e)]]]) for e in (S, *day))
+        l2 = b2 / 3 + h2
+        m = _metric.gram_from_lengths(P, {(1, 2): b2, (2, 3): b2, (1, 3): b2, (0, 1): l2, (0, 2): l2, (0, 3): l2})
+    except (KeyError, TypeError, ValueError, ZeroDivisionError, GeometryError):
+        return None
+    return None if _metric.is_identity(m) else m
+
+
 def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa_giai=None, *,
                   execution_budget: int = DEFAULT_EXECUTION_BUDGET) -> KetQuaGiaDinh:
     """Chứng chỉ cho chương trình ĐÃ bổ sung dựng hình và ĐÃ chạy (đầu vào của route)."""
@@ -1213,13 +1273,7 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     # §14.2: mọi TIỀN ĐỀ đọc từ đề đã che mệnh đề mục tiêu (cùng độ dài, span giữ nguyên);
     # đề gốc chỉ còn dùng để CHẶN phản ví dụ (phần chưa đọc, ràng buộc chưa kiểm).
     muc_tieu = khoang_muc_tieu(de)
-    de_gt = che_muc_tieu(de)
-    rb = doc_rang_buoc(de_gt)
-    inv = bat_bien_tu_de(de_gt)
-    # §18.3: độ dài nguồn có thể là căn (`display` của bộ đọc) — đọc lại CHÍNH XÁC, không ép `Fraction`.
-    do_dai = {frozenset(_id(p) for p in i.points): v for i in inv
-              if i.kind == "segment_length" and len(i.points) == 2 and i.expected
-              and (v := parse_exact(i.expected)) is not None}
+    de_gt, rb, inv, do_dai = _doc_de(de)
     details, bac = _trang_thai_quan_he(contract, rb)
     details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:
@@ -1298,7 +1352,7 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     loi += [f"UNCERTIFIED arithmetic '{op}' outside C1" for op in sorted(lc.phep_toan - _PHEP_TOAN_C1)]
     if loi:
         return _ket_qua(UNDETERMINED, details + tien_de + loi)
-    ok, ghi = _doi_chieu_chinh_tac(prog, khuon, anh_xa, do_dai, phu, exec_res, ngan, execution_budget)
+    ok, ghi = _doi_chieu_chinh_tac(prog, khuon, anh_xa, do_dai, phu, exec_res, ngan, execution_budget, de)
     if not ok:
         return _ket_qua(UNDETERMINED, details + tien_de + [ghi])
     return an_toan(details + tien_de + [f"C1 {khuon.loai}", ghi], "C1")
@@ -1311,9 +1365,11 @@ def danh_gia_doc_lap(contract: Any, spec: SemanticProgramSpec) -> KetQuaGiaDinh:
     dung = hoan_thien_dung_hinh(spec, contract)
     if dung.hong:
         return _ket_qua(UNDETERMINED, ["FORMATION_REJECTED"])
+    de = getattr(contract, "problem_text", "") or ""
     try:
-        res = _chay(dung.spec)
+        res = _chay(dung.spec, de=de)
     except Exception as e:  # noqa: BLE001
         return _ket_qua(UNDETERMINED, [f"EXECUTION_FAILED {type(e).__name__}"])
     ten = check_structural_coverage(contract, dung.spec).ten_da_hoa_giai
-    return kiem_gia_dinh(contract, dung.spec, res, ten)
+    with _metric.using(do_luong_cua(de, dung.spec)):
+        return kiem_gia_dinh(contract, dung.spec, res, ten)
