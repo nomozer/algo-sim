@@ -1,0 +1,36 @@
+{
+ "schema_version": "cache-decision/1",
+ "run_id": "exact-dimensions",
+ "cache_version_before": "116",
+ "decision": "BUMP",
+ "cache_version_after": "117",
+ "rule": "The cache stores only status == ok responses. A bump is required when a response the old code SERVED would now be served differently or refused: the old row would keep the old payload.",
+ "pre_tree": "1c91f90d (clean detached worktree D:/tmp/exact pre, product unchanged since 1e90ca0e)",
+ "post_tree": "6c89abcd + the bump",
+ "fixtures": {
+  "compared": 43,
+  "identical": 43,
+  "served_and_changed": [],
+  "new_programs": 6,
+  "note": "cache/fixture_diff.json; the six Euclidean-frame radical fixtures are matched to their renamed post copies and are byte-identical; the six new canonical fixtures are new programs whose texts were refused before (not cached)"
+ },
+ "reader_fix": {
+  "script": "cache/reader_fix_outcome.py",
+  "before": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 + 1, chiều cao bằng 3. Tính thể tích khối chóp S.ABCD.",
+   "servable": true,
+   "served_value": "16",
+   "stage": "served",
+   "reason_code": null
+  },
+  "after": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 + 1, chiều cao bằng 3. Tính thể tích khối chóp S.ABCD.",
+   "servable": false,
+   "served_value": null,
+   "stage": "assumption",
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+  },
+  "conclusion": "served (wrong V = 16; true 25) → refused"
+ },
+ "model_surface": "unchanged (backend/cache_identity.lock.json: only cache_version moves)"
+}

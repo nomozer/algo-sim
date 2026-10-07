@@ -779,7 +779,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       35/37 fixture trùng byte; hai envelope thiết diện chỉ khác bốn `display_label`
 #       (`runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json`). Chóp tam giác đều / độ dài
 #       căn: chiều refused → served (không bị cache).
-CACHE_VERSION = "116"
+#   117 (2026-10-07, exact-dimensions): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Bộ đọc độ dài nguồn không còn lấy vế đầu của một biểu
+#       thức ("cạnh đáy bằng 4 + 1" từng được đọc là 4 và PHỤC VỤ V = 16, đúng là 25) — chiều served → refused, nên hàng
+#       cache cũ giữ một đáp số SAI (`runs/exact-dimensions/cache/decision.json`). Khung affine + metric dẫn xuất: 43/43
+#       fixture cũ trùng byte; chóp tam giác đều cạnh hữu tỉ: refused → served (không bị cache).
+CACHE_VERSION = "117"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

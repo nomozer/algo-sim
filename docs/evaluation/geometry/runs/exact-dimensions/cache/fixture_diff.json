@@ -1,0 +1,274 @@
+{
+ "schema_version": "cache-fixture-diff/1",
+ "compared": 43,
+ "identical": 43,
+ "served_and_changed": [],
+ "new_post_only": [
+  "regular_tetrahedron_positive.json",
+  "regular_triangular_pyramid_assumption.json",
+  "regular_triangular_pyramid_non_positive.json",
+  "regular_triangular_pyramid_positive.json",
+  "regular_triangular_pyramid_ungrounded.json",
+  "regular_triangular_pyramid_wrong_centroid.json"
+ ],
+ "rows": {
+  "cross_section_assumption.json": {
+   "post_name": "cross_section_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_correct_plane.json": {
+   "post_name": "cross_section_correct_plane.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_negative.json": {
+   "post_name": "cross_section_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_positive.json": {
+   "post_name": "cross_section_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_ungrounded.json": {
+   "post_name": "cross_section_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_wrong_plane.json": {
+   "post_name": "cross_section_wrong_plane.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_assumption.json": {
+   "post_name": "cube_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_negative.json": {
+   "post_name": "cube_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_positive.json": {
+   "post_name": "cube_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "cube_system_cause.json": {
+   "post_name": "cube_system_cause.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_ungrounded.json": {
+   "post_name": "cube_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_assumption.json": {
+   "post_name": "cuboid_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_negative.json": {
+   "post_name": "cuboid_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_positive.json": {
+   "post_name": "cuboid_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_ungrounded.json": {
+   "post_name": "cuboid_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_assumption.json": {
+   "post_name": "rectangular_pyramid_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_negative.json": {
+   "post_name": "rectangular_pyramid_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_positive.json": {
+   "post_name": "rectangular_pyramid_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_ungrounded.json": {
+   "post_name": "rectangular_pyramid_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_assumption.json": {
+   "post_name": "regular_square_pyramid_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_non_positive.json": {
+   "post_name": "regular_square_pyramid_non_positive.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_positive.json": {
+   "post_name": "regular_square_pyramid_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_ungrounded.json": {
+   "post_name": "regular_square_pyramid_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_wrong_centre.json": {
+   "post_name": "regular_square_pyramid_wrong_centre.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_tetrahedron_positive.json": {
+   "post_name": "regular_tetrahedron_radical_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "regular_triangular_pyramid_assumption.json": {
+   "post_name": "regular_triangular_pyramid_radical_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_triangular_pyramid_non_positive.json": {
+   "post_name": "regular_triangular_pyramid_radical_non_positive.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_triangular_pyramid_positive.json": {
+   "post_name": "regular_triangular_pyramid_radical_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "regular_triangular_pyramid_ungrounded.json": {
+   "post_name": "regular_triangular_pyramid_radical_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_triangular_pyramid_wrong_centroid.json": {
+   "post_name": "regular_triangular_pyramid_radical_wrong_centroid.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_assumption.json": {
+   "post_name": "triangular_prism_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_negative.json": {
+   "post_name": "triangular_prism_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_positive.json": {
+   "post_name": "triangular_prism_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_ungrounded.json": {
+   "post_name": "triangular_prism_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_assumption.json": {
+   "post_name": "triangular_pyramid_assumption.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_negative.json": {
+   "post_name": "triangular_pyramid_negative.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_positive.json": {
+   "post_name": "triangular_pyramid_positive.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_ungrounded.json": {
+   "post_name": "triangular_pyramid_ungrounded.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_midpoint_mismatch.json": {
+   "post_name": "w18_midpoint_mismatch.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_midpoint_plane_distance.json": {
+   "post_name": "w18_midpoint_plane_distance.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "w18_projection_line.json": {
+   "post_name": "w18_projection_line.json",
+   "served_both": true,
+   "identical": true,
+   "diff": []
+  },
+  "w18_projection_mismatch.json": {
+   "post_name": "w18_projection_mismatch.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_unverified.json": {
+   "post_name": "w18_unverified.json",
+   "served_both": false,
+   "identical": true,
+   "diff": []
+  }
+ }
+}
