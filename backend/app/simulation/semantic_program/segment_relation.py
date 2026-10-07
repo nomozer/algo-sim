@@ -85,7 +85,12 @@ _HET_SO = r"(?![0-9/]|[.,]\d|\s*√)"
 #: đều cạnh hữu tỉ không có toạ độ ℚ³, nên miền hỗ trợ cần cạnh căn. Một con số độ dài, đọc bằng `parse_exact`; toạ độ
 #: điểm và tỉ số chia đoạn vẫn dùng `_SO` (chỉ hữu tỉ).
 _SO_DO_DAI = rf"(?:(?:\d+(?:[.,]\d+)?\s*)?√\s*\d+(?:\s*/\s*\d+)?|{_SO})"
-_SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
+#: exact-dimensions — con số độ dài KẾT THÚC thật: không bị cắt giữa chừng (`_HET_SO`) và KHÔNG là vế đầu của một biểu
+#: thức (`1 + √2`, `6 − 1`, `2·3`). Thiếu luật này bộ đọc lấy `1` của "cạnh đáy bằng 1 + √2" và route phục vụ một thể
+#: tích SAI (`√3/3`); nay số ấy không được đọc ⇒ phần dữ kiện còn câu chưa đọc ⇒ từ chối. MỘT terminator cho mọi
+#: bộ đọc độ dài (`MAU_DO_DAI` ở đây, các mẫu số đo của `shape_constraint`).
+_HET_DO_DAI = rf"{_HET_SO}(?!\s*[+\-−×*·]\s*[\d√(])"
+_SAU_DO_DAI = rf"{_HET_DO_DAI}(?!\s*[:*]|\s*{_D}{_D})"
 #: Từ nối NHÃN ĐOẠN → ĐỘ DÀI — TẬP ĐÓNG, MỘT thẩm quyền cho bộ đọc độ dài
 #: (`do_dai_trong_de`, `_do_dai_doan`, quan hệ ②) và nhãn bằng chứng GIVEN
 #: (`cac_doan_truoc` ← `grounding_gate`). Hai từ vựng lệch nhau là gốc của

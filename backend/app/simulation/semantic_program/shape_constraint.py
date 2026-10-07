@@ -28,7 +28,7 @@ from dataclasses import dataclass
 
 from ..geometry.radical import ExactNumber
 from .segment_relation import _D as _E
-from .segment_relation import _SO_DO_DAI as _SO
+from .segment_relation import _HET_DO_DAI, _SO_DO_DAI as _SO
 from .segment_relation import MAU_DO_DAI, _chuan
 from .segment_relation import _phan_do_dai as _phan
 from .source_entities import dinh_danh_thuc_the
@@ -55,13 +55,13 @@ _KHOI_LANG_TRU = re.compile(
     rf"(?:\s+đều)?)?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương)|[Ll]ăng\s+trụ(?:\s+(?:đứng|xiên))?)\s+"
     rf"(?P<day>(?:{_E}){{3,}})\.(?P<tren>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
 _CANH_LAP_PHUONG = re.compile(
-    rf"\s*,?\s*(?:có\s+)?(?:độ\s+dài\s+)?cạnh\s+(?:bằng\s+|=\s*|là\s+)?(?P<so>{_SO})(?![\d/])")
+    rf"\s*,?\s*(?:có\s+)?(?:độ\s+dài\s+)?cạnh\s+(?:bằng\s+|=\s*|là\s+)?(?P<so>{_SO}){_HET_DO_DAI}")
 #: §18.1 — tứ diện ABCD (đỉnh = ký hiệu đầu, đáy = ba ký hiệu sau); `đều` ⇒ mọi cạnh bằng nhau.
 _KHOI_TU_DIEN = re.compile(
     rf"(?:(?:[Hh]ình|[Kk]hối)\s+)?[Tt]ứ\s+diện(?P<deu>\s+đều)?\s+(?P<ten>(?:{_E}){{4}})(?![A-Za-z0-9'])")
 #: §18.1 — "có tất cả các cạnh (đều) bằng a" của khối chóp tam giác đều duy nhất ⇒ tứ diện đều.
 _TAT_CA_CANH = re.compile(
-    rf"(?:có\s+)?(?:tất\s+cả\s+các|mọi)\s+cạnh\s+(?:đều\s+)?(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+    rf"(?:có\s+)?(?:tất\s+cả\s+các|mọi)\s+cạnh\s+(?:đều\s+)?(?:bằng|=|là)?\s*(?P<so>{_SO}){_HET_DO_DAI}")
 #: §18.1 — tâm của đáy TAM GIÁC đề gọi tên: `G là trọng tâm (của) (tam giác (đều)) ABC` · `O là tâm (của) (mặt) đáy`
 #: · `O là tâm (của) tam giác (đều) ABC`.
 _TAM_TAM_GIAC = re.compile(
@@ -76,7 +76,7 @@ _TAI = r"(?:tại|ở\s+đỉnh|ở|đỉnh)"
 _DAY = re.compile(
     rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{3,}})\s+)?là\s+(?:một\s+)?(?P<loai>hình\s+chữ\s+nhật|hình\s+vuông"
     rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+đều|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
-    rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}))?(?![\d/])")
+    rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}){_HET_DO_DAI})?(?![\d/])")
 #: Tam giác CÓ TÊN vuông tại một đỉnh của nó — `tam giác ABC vuông tại A`, `đáy ABC vuông tại A`.
 _TAM_GIAC_VUONG = re.compile(
     rf"(?:[Tt]am\s+giác|[Đđ]áy)\s+(?P<t>(?:{_E}){{3}})\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E})")
@@ -89,13 +89,13 @@ _GOC_90 = re.compile(
     rf"[Gg]óc\s+(?P<y>{_E})(?P<x>{_E})(?P<z>{_E})\s*(?:=|bằng)\s*90\s*(?:°|º|độ)")
 _CHIEU_CAO = re.compile(
     rf"chiều\s+cao(?:\s+của\s+(?:hình|khối)\s+[^\s,.]+(?:\s+[^\s,.]+)?)?\s*(?:bằng|=|là)?\s*"
-    rf"(?P<so>{_SO})(?![\d/])")
+    rf"(?P<so>{_SO}){_HET_DO_DAI}")
 #: regular-square-pyramid-w01 — số đo của chóp tứ giác ĐỀU duy nhất: cạnh đáy, cạnh bên, trung đoạn (đường
 #: cao của mặt bên). Chỉ gắn khi đề nêu đúng một khối và khối ấy là chóp tứ giác đều.
-_CANH_DAY = re.compile(rf"cạnh\s+đáy\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
-_CANH_BEN = re.compile(rf"cạnh\s+bên\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+_CANH_DAY = re.compile(rf"cạnh\s+đáy\s*(?:bằng|=|là)?\s*(?P<so>{_SO}){_HET_DO_DAI}")
+_CANH_BEN = re.compile(rf"cạnh\s+bên\s*(?:bằng|=|là)?\s*(?P<so>{_SO}){_HET_DO_DAI}")
 _TRUNG_DOAN = re.compile(
-    rf"(?:trung\s+đoạn|đường\s+cao\s+(?:của\s+)?(?:mỗi\s+)?mặt\s+bên)\s*(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+    rf"(?:trung\s+đoạn|đường\s+cao\s+(?:của\s+)?(?:mỗi\s+)?mặt\s+bên)\s*(?:bằng|=|là)?\s*(?P<so>{_SO}){_HET_DO_DAI}")
 #: Tâm đáy được ĐỀ gọi tên: `O là tâm (của) (mặt) đáy` · `O là tâm (của) hình vuông ABCD` · `O là giao điểm
 #: (của) AC và BD` (hai đường chéo của đáy). Phát `base_centre(O, *đáy)` chỉ khi khớp đáy của chóp đều duy nhất.
 _TAM_DAY = re.compile(

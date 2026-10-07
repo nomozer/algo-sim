@@ -130,3 +130,24 @@ def test_w05_chuoi_bang_nhau_doi_dang_ky(row):
     assert do_dai == {"A-B": "5", "A-C": "5"}
     assert loi is None
     assert bang_chung["span_text"] == "5" and text[slice(*bang_chung["span"])] == "5"
+
+
+@pytest.mark.parametrize("de", [
+    "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 1 + √2, chiều cao bằng 4.",
+    "Cho hình chóp S.ABC có AB = 6 − 1 và SA = 5.",
+    "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2 + 1.",
+])
+def test_vế_đầu_của_biểu_thức_không_là_độ_dài(de):
+    """exact-dimensions: số đứng TRƯỚC một phép toán (`1 + √2`, `6 − 1`) là vế đầu của một biểu thức, không phải độ dài.
+    Bộ đọc cũ lấy `1` và route phục vụ thể tích SAI √3/3 (ca U02 của run exact-dimensions); nay không đọc — phần dữ
+    kiện còn câu chưa đọc ⇒ cổng giả định từ chối. Một terminator (`segment_relation._HET_DO_DAI`) cho cả hai bộ đọc."""
+    from app.simulation.semantic_program.shape_constraint import doc_rang_buoc
+    assert not any(str(v) in ("1", "6", "2") for v in do_dai_trong_de(de).values()), do_dai_trong_de(de)
+    assert not any(r.value is not None and str(r.value) in ("1", "6", "2") for r in doc_rang_buoc(de)), doc_rang_buoc(de)
+
+
+def test_so_tron_va_can_van_doc_duoc():
+    from app.simulation.semantic_program.shape_constraint import doc_rang_buoc
+    de = "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 3√2, chiều cao bằng 2,5. Tính thể tích khối chóp S.ABC."
+    gt = {r.kind: str(r.value) for r in doc_rang_buoc(de) if r.value is not None}
+    assert gt.get("height") == "5/2" and "base_equilateral" in gt, gt
