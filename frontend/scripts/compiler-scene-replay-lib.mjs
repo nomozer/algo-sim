@@ -422,6 +422,10 @@ export function expectedCausalTiers(scene, id) {
   const so = dong((o) => (o?.dependency_edges ?? []).filter((e) => e.relation === "numerical").map((e) => e.source_id));
   const ra = { [id]: "dich" };
   for (const x of tatCa) ra[x] = !so.has(x) ? "boi_canh" : byId.get(x)?.origin === "free" ? "du_kien_so" : "trung_gian";
+  // regular-triangular-pyramid-w01 · D2: chủ thể nhãn của đại lượng đang chọn (vật hình học backend gắn) là ĐÍCH.
+  for (const x of byId.get(id)?.annotation?.subject_ids ?? []) {
+    if (byId.has(x) && byId.get(x)?.type !== "quantity") ra[x] = "dich";
+  }
   return ra;
 }
 
@@ -1156,7 +1160,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   if (!Array.isArray(manifest?.viewports) || manifest.viewports.length !== 2) {
     errors.push("viewports");
   }
-  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 7) {
+  if (!Array.isArray(manifest?.scenarios) || manifest.scenarios.length !== 8) {
     errors.push("scenarios");
   }
   const names = new Set();
@@ -1205,7 +1209,7 @@ export function validateSuiteManifest(manifest, repoRoot) {
   }
   const requiredScenarios = [
     "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-    "cuboid", "cube", "cross_section", "regular_square_pyramid",
+    "cuboid", "cube", "cross_section", "regular_square_pyramid", "regular_triangular_pyramid",
   ];
   if (JSON.stringify([...names].sort()) !== JSON.stringify(requiredScenarios.sort())) {
     errors.push("cross_family_scenarios");

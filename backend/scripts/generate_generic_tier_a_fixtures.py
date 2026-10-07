@@ -551,6 +551,52 @@ def main() -> None:
             ensure_ascii=False, indent=2,
         ), encoding="utf-8")
 
+    # regular-triangular-pyramid-w01 — chóp tam giác đều + tứ diện đều (miền §18.2: cạnh đáy k√2, đáy trên mặt
+    # x+y+z=k): chương trình kiểu LLM của corpus (builder `tests/geometry/test_regular_triangular_pyramid.py`, trọng tâm
+    # = giao hai trung tuyến) qua route sản phẩm, 0 lượt gọi. Loại từ chối: thiếu chiều cao (assumption), trọng tâm sai
+    # danh tính (construction_binding), chiều cao chỉ có ở đầu ra mô hình (grounding), cạnh đáy bằng 0 (execution).
+    from tests.geometry import test_regular_triangular_pyramid as RTP
+
+    p1_text = RTP.NHAN["P1_side_height"]["text"]
+    rtp = (
+        ("regular_triangular_pyramid_positive", lambda: RTP.CA["P1_side_height"](), None, "9/2"),
+        ("regular_tetrahedron_positive", lambda: RTP.CA["P3_tetrahedron"](), None, "9"),
+        ("regular_triangular_pyramid_assumption", lambda: RTP.CA["N1_missing_height"](),
+         ("assumption", "ASSUMPTION_DETERMINES_ANSWER", "SOURCE"), None),
+        ("regular_triangular_pyramid_wrong_centroid", lambda: RTP.CA["N6_wrong_centroid_identity"](),
+         ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION"), None),
+        ("regular_triangular_pyramid_ungrounded", lambda: RTP.chop_deu(
+            "P1_side_height", van=p1_text.replace(", chiều cao bằng √3", ""), **RTP._g(RTP.DAY, RTP.CAO)),
+         ("grounding", "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE"), None),
+        ("regular_triangular_pyramid_non_positive", lambda: RTP.chop_deu(
+            "P1_side_height", k=Fraction(0), van=p1_text.replace("cạnh đáy bằng 3√2", "cạnh đáy bằng 0"),
+            **RTP._g(("canh_day", "cạnh đáy", "0"), RTP.CAO)),
+         ("execution", "NON_POSITIVE_LENGTH", "SOURCE"), None),
+    )
+    for name, dung, refusal, dap_so in rtp:
+        contract, program = dung()
+        validation = validate_semantic_program(program)
+        assert validation.ok and validation.spec is not None, validation.error
+        envelope = attach_learner_reason(asyncio.run(
+            _run_frozen_program(contract.problem_text, contract, validation.spec)))
+        if refusal is None:
+            v = next(o for o in envelope["scene3d"]["objects"] if o["id"] == RTP.THE_TICH)
+            assert envelope["status"] == "ok" and v.get("value") == dap_so, (name, envelope["status"], v.get("value"))
+        else:
+            assert (envelope["status"], envelope["stage_reached"], envelope.get("reason_code"),
+                    envelope["refusal_cause"]) == ("unsupported", *refusal), (name, envelope.get("stage_reached"),
+                                                   envelope.get("reason_code"), envelope.get("reason"))
+            assert "scene3d" not in envelope, name
+        bo = ", chiều cao bằng √3"
+        mat = ({"removed_from_text": bo.strip(" ,.")} if name.endswith(("_assumption", "_ungrounded"))
+               and bo in p1_text and bo not in contract.problem_text else {})
+        (fixtures / f"{name}.json").write_text(json.dumps(
+            _wrapper(name, contract.problem_text, envelope, "rtp_w01_corpus_frozen_program_through_production_route",
+                     **mat, **({} if refusal is None else {"refusal_cause": refusal[2],
+                                                          **({"source_reason_code": refusal[1]} if refusal[1] else {})})),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
     canonical_path = ROOT / "docs" / "evaluation" / "geometry" / \
         "product-ui-result-rendering" / "fixtures" / f"{P1}.json"
     canonical = json.loads(canonical_path.read_text(encoding="utf-8"))

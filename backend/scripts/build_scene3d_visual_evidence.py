@@ -29,8 +29,16 @@ from measure_scene3d_occlusion import _camera
 from scene3d_occlusion_oracle import _project
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+#: regular-triangular-pyramid-w01 · E — mọi ảnh bộ dựng ĐỌC (đầu vào của sheet, phim, crop cạnh khuất): đó là tập ảnh
+#: bắt buộc của oracle thị giác; `prune_evidence_images.py` không bao giờ bỏ chúng (`results/EVIDENCE_IMAGE_INPUTS.json`).
+DA_DOC: set[Path] = set()
+
+
+def _mo(path: Any) -> Image.Image:
+    DA_DOC.add(Path(path).resolve())
+    return Image.open(path)
 FAMILY_ORDER = ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
-                "cuboid", "cube", "cross_section", "regular_square_pyramid")
+                "cuboid", "cube", "cross_section", "regular_square_pyramid", "regular_triangular_pyramid")
 SHEET_STATES = (("desktop", "neutral_final"), ("desktop", "causal_selected"),
                 ("desktop", "rotated_neutral"), ("mobile", "neutral_final"))
 # W12: ảnh PHẦN TỬ của bảng lời giải — dùng nguyên, không cắt theo canvas. regular-square-pyramid-w05 · E: thẻ lời
@@ -75,11 +83,17 @@ TEN_TU_CHOI_W17 = {"construction_mismatch": "đề cắt bằng (β), hệ cắt
 #: regular-square-pyramid-w01 — chú thích từ chối RIÊNG của một họ khi ca của họ khác ca W18 cùng loại.
 TEN_TU_CHOI_THEO_HO = {"regular_square_pyramid": {
     "point_construction_mismatch": "đề: O là giao điểm của AC và BD, hệ dựng trung điểm AB — từ chối, "
+                                   "đề không cần sửa"},
+    # regular-triangular-pyramid-w01 (§18.4).
+    "regular_triangular_pyramid": {
+    "point_construction_mismatch": "đề: G là trọng tâm tam giác ABC, hệ dựng trung điểm BC — từ chối, "
                                    "đề không cần sửa"}}
 #: W17 — ca PHỤC VỤ thêm (`served[kind][viewport]`). Bảng đóng như `TEN_TU_CHOI`.
 TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — được phục vụ",
                "point_construction_witness": "trung điểm đúng; khoảng cách tới (ABCD) có nhân chứng — phục vụ",
-               "projection_correct": "chiếu S đúng lên BD — được phục vụ"}
+               "projection_correct": "chiếu S đúng lên BD — được phục vụ",
+               # regular-triangular-pyramid-w01 — tứ diện đều trong cùng họ (chóp tam giác đều mọi cạnh bằng nhau).
+               "regular_tetrahedron": "tứ diện đều cạnh 3√2 — được phục vụ (V = 9)"}
 #: Ảnh của trang dương chỉ có khi bộ chạy đã ĐO điều tương ứng: (khoá bản ghi, trạng thái). W18: công
 #: tắc "Hiện tất cả" thay hai công tắc W17.
 W17_STATES = (("show_all_toggle", "show_all"), ("causal_restore", "causal_restored"))
@@ -283,7 +297,7 @@ def _loi_tu_choi(record: dict[str, Any], path: Path | None, fam: str, kind: str,
     hop = record.get("refusal_message_box")
     if not hop:
         return "no refusal_message_box recorded"
-    image = Image.open(path).convert("L")
+    image = _mo(path).convert("L")
     s = image_scale(record, image.width)
     x0, y0, x1, y1 = (int(hop["x"] * s), int(hop["y"] * s), int((hop["x"] + hop["w"]) * s),
                       int((hop["y"] + hop["h"]) * s))
@@ -366,7 +380,7 @@ def family_sheet(family: str, scenario: dict[str, Any], images_root: Path) -> di
     band = LABEL_PX * 2
     images = []
     for c in cells:
-        image = Image.open(c["path"]).convert("RGB")
+        image = _mo(c["path"]).convert("RGB")
         c["crop_box_px"] = (list(page_box(c["record"], c["box_state"], image.size)) if c["crop"]
                             else [0, 0, image.width, image.height])
         images.append(image.crop(tuple(c["crop_box_px"])))
@@ -413,7 +427,7 @@ def filmstrip(family: str, scenario: dict[str, Any], images_root: Path) -> dict[
     if thieu:
         raise ThieuAnhBangChung(f"{family} filmstrip: image missing for " + ", ".join(thieu))
     for k, s in enumerate(steps):
-        image = Image.open(_path(s.get("screenshot"))).convert("RGB")
+        image = _mo(_path(s.get("screenshot"))).convert("RGB")
         box = stage_box(record, "neutral_final", image.size)
         image = image.crop(box) if box else image
         image.thumbnail((FILM_CELL_W, 10_000))
@@ -450,7 +464,7 @@ def overview_index(families: dict[str, dict[str, Any]], images_root: Path) -> di
         draw.text((x + 12, y + cell[1] - LABEL_PX - 12), f"→ {row['sheet']}", fill="black", font=font)
         thumb = families[row["family"]].get("thumbnail")
         if thumb and Path(thumb).exists():
-            image = Image.open(thumb).convert("RGB")
+            image = _mo(thumb).convert("RGB")
             image.thumbnail((cell[0] - 24, cell[1] - 3 * LABEL_PX - 24))
             sheet.paste(image, (x + 12, y + LABEL_PX + 20))
     _save_png(sheet, images_root / "overview" / "INDEX.png")
@@ -495,7 +509,7 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
                                     **{e: "HIDDEN" for e in item["expected_hidden_ids"]},
                                     **{e: "MIXED" for e in item["expected_mixed_ids"]}}
                         expected = {k: v for k, v in expected.items() if v != "VISIBLE"}
-                image = Image.open(shot).convert("RGB")
+                image = _mo(shot).convert("RGB")
                 dpr = float(snap.get("device_pixel_ratio", 1))
                 scale = image_scale(record, image.width)
                 for rec in edge_records(scene, snap, product, oracle, expected):
@@ -526,6 +540,13 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
     (run_dir / "results").mkdir(parents=True, exist_ok=True)
     (run_dir / "results" / "HIDDEN_EDGE_CROPS.json").write_text(
         json.dumps(index, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
+    (run_dir / "results" / "EVIDENCE_IMAGE_INPUTS.json").write_text(json.dumps({
+        "schema_version": "evidence-image-inputs/1",
+        "rule": "every image the visual-evidence builder opened (sheet cells, refusal cells, playback film, hidden-edge "
+                "crop sources): required by the visual oracle, never pruned",
+        "images": sorted(p.relative_to(run_dir.resolve()).as_posix() for p in DA_DOC
+                         if p.is_relative_to(run_dir.resolve())),
+    }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     return index
 
 

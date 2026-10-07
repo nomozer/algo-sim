@@ -30,7 +30,7 @@ const RA = resolve(String(CO.ra));
 const ANH = resolve(String(CO.anh));
 const DIST = CO.dist ? resolve(String(CO.dist)) : join(FE, "dist");
 const HO = typeof CO.ho === "string" ? CO.ho.split(",") : ["triangular_pyramid", "rectangular_pyramid",
-  "triangular_prism", "cuboid", "cube", "cross_section", "regular_square_pyramid"];
+  "triangular_prism", "cuboid", "cube", "cross_section", "regular_square_pyramid", "regular_triangular_pyramid"];
 const KHO = { desktop: { width: 1440, height: 900 }, low: { width: 1366, height: 650 },
   mobile: { width: 390, height: 844 } };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
