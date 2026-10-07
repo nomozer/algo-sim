@@ -711,3 +711,43 @@
 - **default_switch_blocker:** NO
 - **acceptance:** a requested collinear sub-segment is not drawn twice, with a test on a real program.
 - **verify:** `pytest tests/geometry/test_regular_square_pyramid_w03.py -q`
+
+### ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES
+- **description:** Points live in ℚ³. An equilateral triangle with rational vertices has side² = 2N·q² (N an Eisenstein norm; never a rational square) and the apex height over it is a rational multiple of √3, so a regular triangular pyramid or regular tetrahedron with a RATIONAL edge ("cạnh đáy bằng 3", "tứ diện đều cạnh a = 2") has no exact layout. Template T8 serves only b² ∈ {2k², 6k²}, h² = 3t² (ASSUMPTION_CERTIFICATE_AMENDMENT §18.2); other rational realisations (N = 7, …) have no canonical frame; the apothem of a regular triangular pyramid is not read.
+- **evidence:** `runs/regular-triangular-pyramid-w01/PLAN.md` §1 (brute force), `test_regular_triangular_pyramid.py::test_tam_giac_deu_nguyen_khong_bao_gio_co_canh_huu_ti`, corpus rows U1–U4 (refused with `TEMPLATE_NOT_REPRESENTABLE T8`).
+- **impact:** most textbook regular-triangular problems (rational or symbolic edges) are refused honestly, not served; the family is narrow (`product_capability.regular_triangular_pyramid` = `foundation_only`).
+- **scope:** a similarity frame (lay out a rational similar copy, scale every measured length by λ with λ² ∈ ℚ, area by λ², volume by λ³) — touches interpreter measures, postconditions, grounding and scene labels; decision of the user 2026-10-07: NOT in this task (risk of silently wrong answers).
+- **status:** OPEN (regular-triangular-pyramid-w01) — declared limit.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** a dedicated task if the user chooses the similarity frame
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED
+- **description:** The deterministic route serves a regular triangular pyramid only when the program lays the base on a tilted rational plane (x+y+z=k); prompts, grammar card and schema are unchanged, and no live measurement shows that the model chooses such a layout. Offline evidence uses LLM-style programs written in `test_regular_triangular_pyramid.py`.
+- **evidence:** `runs/regular-triangular-pyramid-w01/` (0 model calls; model surface fingerprint `b1714b56…` unchanged).
+- **impact:** product reach for this family is unknown; the honest product status is `foundation_only`.
+- **scope:** a model-surface change (layout hint) + a pre-registered live measurement with budget — needs the user's decision.
+- **status:** OPEN (regular-triangular-pyramid-w01)
+- **owner_class:** EVALUATION
+- **suggested_wave:** the next task with a live budget
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION
+- **description:** A plain "tứ diện ABCD" (not "đều") is not read as a solid, so its problems stay outside the polyhedral region where the assumption gate refuses (decision U3): they are served without a certificate. Before regular-triangular-pyramid-w01 the same held for "tứ diện đều": "Cho tứ diện đều ABCD có cạnh bằng 3" with a non-regular rational layout was SERVED with V = 5/2 (true value 9√2/4) — that case is now refused (row U2).
+- **evidence:** `runs/regular-triangular-pyramid-w01/diagnostics/logs/RED_BASELINE.log` (U2 before the change); attempt to read every "tứ diện" as a pyramid turned three served tetrahedron tests red (trirectangular OABC, circumsphere, scalar data) — dated correction to §18.1.
+- **impact:** a non-regular tetrahedron problem whose program realises another configuration can be served with a wrong value (no template certifies it).
+- **scope:** templates for the common tetrahedra (trirectangular, "AB, AC, AD đôi một vuông góc") before bringing plain "tứ diện" into the region.
+- **status:** OPEN (regular-triangular-pyramid-w01)
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** a tetrahedron template task
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL
+- **description:** On mobile (390×844) the canvas is 356×517 CSS px and the camera fits the figure to 68 % of its binding dimension: width-bound families fill 32–57 % of the canvas height (regular triangular pyramid 32 %, regular square pyramid 40 %), so the canvas shows blank bands above and below the figure, and an opened panel (steps, detail) lands below the fold — the learner scrolls between figure and panel.
+- **evidence:** `runs/regular-triangular-pyramid-w01` diagnostic browser run (label boxes per family, mobile): fill_w 0.68 for seven families, the rectangular pyramid is height-bound (figure aspect 1.77 > canvas 1.45, fill_h 0.68).
+- **impact:** usability on phones; no wrong value.
+- **scope / options (decision needed):** (a) canvas height tied to width (e.g. 1.25×) removes the blank band but shrinks the height-bound rectangular pyramid by ~14 % — excluded by the brief ("không áp trần … làm hình nhỏ") and by the W5 answer to W4 R4 ("không trần"); (b) a per-scene height from the figure's projected aspect (no shrink, more code, camera-coupled); (c) overlay the two floating buttons on the canvas again (+~50 px for panels) — reverses the w10 fix that moved them out of the apex's way; (d) a one-row tool bar on mobile (+~55 px) — touches W5 review item R3 (2 × 2 grid). Nothing applied in regular-triangular-pyramid-w01.
+- **status:** OPEN (regular-triangular-pyramid-w01) — reproduced, waiting for the user's choice.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after the user picks an option
+- **default_switch_blocker:** NO

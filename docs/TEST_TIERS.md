@@ -64,6 +64,13 @@ Không nguồn nào tự giải quyết hết; bộ chọn ghép cả ba và **i
   theo sở hữu.
 - **Live AI không bao giờ nằm trong T0/T1/T2.** Nó là tầng riêng, opt-in, có
   ngân sách (`docs/CORRECTNESS.md §7`).
+- **Ảnh của lượt đo trình duyệt: chụp để kiểm, LƯU có chọn** (yêu cầu người dùng, run
+  `regular-triangular-pyramid-w01`; W5 lưu 768 ảnh). Bộ đo vẫn chụp mọi trạng thái nó kiểm (nhiều phép kiểm
+  đọc điểm ảnh); sau bộ dựng bằng chứng, `backend/scripts/prune_evidence_images.py` chỉ giữ ảnh bộ dựng ĐỌC
+  (`results/EVIDENCE_IMAGE_INPUTS.json` — oracle thị giác, crop cạnh khuất, sheet), ảnh nó SINH, ảnh trong tập
+  duyệt chọn TRƯỚC khi đo (`inputs/REVIEW_SET.json`, mỗi mục một yêu cầu/lỗi) và MỌI ảnh của một họ có lượt
+  thất bại; ảnh bỏ vẫn ghi sha256 ở `results/IMAGE_POLICY.json`. Ngưỡng và mục tiêu kiểm không đổi. Không chụp
+  mặc định mọi họ × bước × lựa chọn × khổ để duyệt; ảnh trước/sau cùng fixture, khổ và góc nhìn.
 
 ## Chi phí đã đo và đã sửa
 
