@@ -1,0 +1,58 @@
+0
+# exact-dimensions verification gates at 4ef0a02e (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+4ef0a02e2f9ee6aea6418f339c3ede88ac484be0
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 111 file, e1927f84a9e18bd6…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 117 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2 (idempotence: the two mirrors byte-identical, git status unchanged)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git status after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since 4ceadd55: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since 4ceadd55
+model-surface files changed: 0
+## CACHE_VERSION
+786:CACHE_VERSION = "117"
+## historical evidence byte-identical since 4ceadd55 (tracked docs/evaluation outside this run folder)
+  M	docs/evaluation/RUN_NAMING.md
+  M	docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json
+  M	docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+changed outside this run: 3 (allowed: the living candidate registry and RUN_NAMING.md, the living naming policy)
+## historical reports at the docs root (catalogued in docs/evaluation/HISTORICAL_REPORTS.md) changed since 4ceadd55
+  changed: docs/EVIDENCE_INDEX.md
+catalogued reports changed: 1 of 181
+## git diff --check 4ceadd55..4ef0a02e (captured *.log excluded: verbatim tool output may carry trailing spaces)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (198 root docs, 180 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## node harness tests
+ℹ tests 97
+ℹ pass 95
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0

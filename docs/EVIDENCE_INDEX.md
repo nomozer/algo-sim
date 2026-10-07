@@ -1124,7 +1124,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** 1c8f3cb4 · de6d3e35 · 14892061 · 0ed6332f · 6c89abcd · ed3ae208 (harness d4834d92, 2d62f69c; plan/labels/oracle before the change 1c91f90d)
 - **MEASUREMENT_COMMIT:** 3bbb8052 (fixtures, build, scene controls, panels, focus) · fe83c46e (suite, occlusion) · d51db4e2 (playback, builder); local clean detached CRLF worktree with a space in its path; only failed steps rerun
 - **EVIDENCE_COMMIT_ROLE:** evidence commit c5cae8af (results, images, fixtures, logs)
-- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (gate at the final docs commit — `handoff.md` §2)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + identity gates at 4ef0a02e)
 - **PRODUCT_CHANGE:** YES
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (92c9e198… → e1927f84…; product commit ed3ae208)

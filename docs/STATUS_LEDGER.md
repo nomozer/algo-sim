@@ -1080,7 +1080,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CANDIDATE:** 92c9e198… → e1927f84… (one freeze at ed3ae208, 43d354f0) · CACHE_VERSION 117 (bump, `cache/decision.json`) · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** measurement 3bbb8052 (probes) / fe83c46e (suite, occlusion) / d51db4e2 (playback, builder) · evidence c5cae8af; attempts 1–2 failed on harness defects, kept (`diagnostics/attempt1–3/`)
 - **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
-- **FULL_PRODUCT_SUITE:** T3 + identity gates on a clean detached checkout of the final docs commit — `handoff.md` §2
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 4ef0a02e from a path with a space (pytest 7302 passed / 1 skipped, vitest 1148/1148, build, demo 5/5, crash surface 6/6); identity gates green (`diagnostics/gates_4ef0a02e.log`)
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/exact-dimensions/report.md
