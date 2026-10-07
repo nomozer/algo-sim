@@ -1,0 +1,20 @@
+# cwd: <worktree 'D:/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; rerun of W02 only (attempt 3 W02 hung on about:blank and was killed)
+2026-10-07T13:22:51Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/mobile: PASS []
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W02 probe: 16/16 PASS
+exit=0

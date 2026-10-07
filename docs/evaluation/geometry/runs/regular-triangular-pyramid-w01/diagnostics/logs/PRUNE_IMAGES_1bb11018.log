@@ -1,0 +1,4 @@
+# cwd: <worktree '/d/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/prune_evidence_images.py --run-dir ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01 --commit 1bb11018a4eb762b117a70d107a65a2a76968169 --candidate 92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9
+2026-10-07T13:21:48Z
+kept 492 · pruned 358 (67101 KiB) · failed families: ['cross_section']
+exit=0

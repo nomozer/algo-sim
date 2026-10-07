@@ -1,0 +1,6 @@
+# cwd: <worktree '/d/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/lock_cache_identity.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs
+2026-10-07T10:34:56Z
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 92c9e198ff26e811…).
+Khoá khớp · CACHE_VERSION 116 · môi trường b1714b566e25c912…
+Wrote 43 frozen fixtures to D:\tmp\rtp diag\docs\evaluation\geometry\runs\regular-triangular-pyramid-w01\inputs\fixtures
+exit=0

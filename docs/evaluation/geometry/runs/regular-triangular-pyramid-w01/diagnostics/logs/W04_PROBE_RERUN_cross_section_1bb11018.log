@@ -1,0 +1,7 @@
+# cwd: <worktree 'D:/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; rerun of W04 for cross_section only (attempt 3 cross_section/desktop POLL_TIMEOUT under 100% CPU)
+2026-10-07T13:29:19Z
+cross_section/desktop: PASS []
+cross_section/low_1366x650: PASS []
+cross_section/mobile: PASS []
+W04 probe: 3/3 PASS
+exit=0

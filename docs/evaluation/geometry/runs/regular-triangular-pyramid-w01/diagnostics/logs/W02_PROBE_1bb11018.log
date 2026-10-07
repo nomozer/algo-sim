@@ -1,0 +1,11 @@
+# cwd: <worktree '/d/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; node frontend/scripts/w02-closure-probe.mjs --fixture-root docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs --ra docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/results --anh docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images --bo-qua-build
+2026-10-07T12:19:19Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+exit=127

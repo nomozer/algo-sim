@@ -1,0 +1,16 @@
+# cwd: <worktree '/d/tmp/rtp diag'> @ 1bb11018a4eb762b117a70d107a65a2a76968169; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01 --browser ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/results/PLAYBACK_EVIDENCE.json
+2026-10-07T11:27:26Z
+Traceback (most recent call last):
+  File "D:\tmp\rtp diag\backend\scripts\build_scene3d_visual_evidence.py", line 573, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\tmp\rtp diag\backend\scripts\build_scene3d_visual_evidence.py", line 563, in main
+    index = build(args.run_dir, load(args.browser), load(args.measurement), args.fixture_root,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\rtp diag\backend\scripts\build_scene3d_visual_evidence.py", line 486, in build
+    meta = family_sheet(family, scenario, images)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\rtp diag\backend\scripts\build_scene3d_visual_evidence.py", line 378, in family_sheet
+    raise ThieuAnhBangChung(f"{family}: " + "; ".join(loi))
+ThieuAnhBangChung: triangular_prism: mobile/neutral_final: image missing
+exit=1

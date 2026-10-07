@@ -1,0 +1,47 @@
+{
+  "schema_version": "scene3d-evidence-overview/1",
+  "role": "INDEX_ONLY",
+  "families": [
+    {
+      "family": "triangular_pyramid",
+      "family_dir": "triangular-pyramid",
+      "sheet": "images/triangular-pyramid/SHEET.png"
+    },
+    {
+      "family": "triangular_prism",
+      "family_dir": "triangular-prism",
+      "sheet": "images/triangular-prism/SHEET.png"
+    },
+    {
+      "family": "rectangular_pyramid",
+      "family_dir": "rectangular-pyramid",
+      "sheet": "images/rectangular-pyramid/SHEET.png"
+    },
+    {
+      "family": "cuboid",
+      "family_dir": "cuboid",
+      "sheet": "images/cuboid/SHEET.png"
+    },
+    {
+      "family": "cube",
+      "family_dir": "cube",
+      "sheet": "images/cube/SHEET.png"
+    },
+    {
+      "family": "cross_section",
+      "family_dir": "cross-section",
+      "sheet": "images/cross-section/SHEET.png"
+    },
+    {
+      "family": "regular_square_pyramid",
+      "family_dir": "regular-square-pyramid",
+      "sheet": "images/regular-square-pyramid/SHEET.png"
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "family_dir": "regular-triangular-pyramid",
+      "sheet": "images/regular-triangular-pyramid/SHEET.png"
+    }
+  ],
+  "legend": "XANH = đang xét (vật vừa dựng ở bước đang phát, hoặc vật được chọn) · vật đã dựng giữ MÀU KIỂU: khối xám, mặt phẳng tím, thiết diện hổ phách, đường xanh két, điểm dựng đỏ · NÉT ĐỨT = cạnh khuất.\nCausal (chọn một mục của bảng «Đại lượng»): xanh = đích · cam đậm = dữ kiện số · cam nhạt = trung gian số · xám = mọi hình trong chuỗi (ngữ cảnh) · mờ = ngoài chuỗi."
+}

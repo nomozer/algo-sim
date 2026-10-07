@@ -1,0 +1,1809 @@
+{
+  "schema_version": "w04-panels-probe/1",
+  "application_llm_calls": 0,
+  "commit": "1bb11018a4eb762b117a70d107a65a2a76968169",
+  "pass": true,
+  "runs": [
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "images": {
+        "tree_step": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/tree_by_step.png",
+          "bytes": 191749,
+          "sha256": "80ebdafb968cdd8109ff92a6cf3e365a2b4b70d4e3bfb4eff484b2f52c1ad88c",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panels_all_open": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/panels_all_open.png",
+          "bytes": 221388,
+          "sha256": "3a224e14e27030a85b4392e2ed852ed6eb1ced025b4828d8704a0d18d545c5b6",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panel_dragged": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/panels_dragged.png",
+          "bytes": 224304,
+          "sha256": "d94f7a973e23fc80848152966bfe0f9d78ca44181113fa1120b99b5459da26b4",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "panels_resized": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/panels_resized_1100x700.png",
+          "bytes": 171839,
+          "sha256": "012c164c610437c1e3088418a7bd919fed9af26c5d1f213819d083a40981ee95",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "layout_neutral": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/layout_neutral.png",
+          "bytes": 194546,
+          "sha256": "b1286cf1468450ac26c692cdb91fa70ceae9037fc733e37591fbc792e0f26915",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "layout_resized": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/layout_resized_1100x760.png",
+          "bytes": 144914,
+          "sha256": "09277558d7622acd07f6c57e8d4e3a41c0452d435dbba9a015fee3f423333323",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "direct_select": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/desktop/direct_select_tree.png",
+          "bytes": 217544,
+          "sha256": "62a0ecfd7d14699ea0a27a9113d0d8a9b6d8442ecd4c77f7294ce264051e6ea1",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "panels_observation": {
+        "canvas": {
+          "before": {
+            "x": 16,
+            "y": 60,
+            "w": 1375,
+            "h": 685
+          },
+          "states": [
+            {
+              "x": 16,
+              "y": 60,
+              "w": 1375,
+              "h": 685
+            },
+            {
+              "x": 16,
+              "y": 60,
+              "w": 1375,
+              "h": 685
+            },
+            {
+              "x": 16,
+              "y": 60,
+              "w": 1375,
+              "h": 685
+            },
+            {
+              "x": 16,
+              "y": 60,
+              "w": 1375,
+              "h": 685
+            },
+            {
+              "x": 16,
+              "y": 60,
+              "w": 1375,
+              "h": 685
+            }
+          ]
+        },
+        "camera": {
+          "before": {
+            "position": [
+              14.290798418444478,
+              9.191934364485128,
+              6.756792331482668
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999992,
+              -0.2961981327260227,
+              0.8137976813493745,
+              0,
+              0.866025403784439,
+              -0.17101007166283322,
+              0.4698463103929538,
+              0,
+              -1.6653345369377343e-16,
+              0.9396926207859089,
+              0.3420201433256674,
+              0,
+              -0.8150494603410641,
+              -0.5444867329791654,
+              -18.259574145724436,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          },
+          "states": [
+            {
+              "position": [
+                14.290798418444478,
+                9.191934364485128,
+                6.756792331482668
+              ],
+              "view_matrix_column_major": [
+                -0.4999999999999992,
+                -0.2961981327260227,
+                0.8137976813493745,
+                0,
+                0.866025403784439,
+                -0.17101007166283322,
+                0.4698463103929538,
+                0,
+                -1.6653345369377343e-16,
+                0.9396926207859089,
+                0.3420201433256674,
+                0,
+                -0.8150494603410641,
+                -0.5444867329791654,
+                -18.259574145724436,
+                1
+              ],
+              "projection_matrix_column_major": [
+                1.066786763807741,
+                0,
+                0,
+                0,
+                0,
+                2.1445069205095586,
+                0,
+                0,
+                0,
+                0,
+                -1.001000500250125,
+                -1,
+                0,
+                0,
+                -0.2001000500250125,
+                0
+              ],
+              "viewport_width": 1373,
+              "viewport_height": 683,
+              "device_pixel_ratio": 1
+            },
+            {
+              "position": [
+                14.290798418444478,
+                9.191934364485128,
+                6.756792331482668
+              ],
+              "view_matrix_column_major": [
+                -0.4999999999999992,
+                -0.2961981327260227,
+                0.8137976813493745,
+                0,
+                0.866025403784439,
+                -0.17101007166283322,
+                0.4698463103929538,
+                0,
+                -1.6653345369377343e-16,
+                0.9396926207859089,
+                0.3420201433256674,
+                0,
+                -0.8150494603410641,
+                -0.5444867329791654,
+                -18.259574145724436,
+                1
+              ],
+              "projection_matrix_column_major": [
+                1.066786763807741,
+                0,
+                0,
+                0,
+                0,
+                2.1445069205095586,
+                0,
+                0,
+                0,
+                0,
+                -1.001000500250125,
+                -1,
+                0,
+                0,
+                -0.2001000500250125,
+                0
+              ],
+              "viewport_width": 1373,
+              "viewport_height": 683,
+              "device_pixel_ratio": 1
+            },
+            {
+              "position": [
+                14.290798418444478,
+                9.191934364485128,
+                6.756792331482668
+              ],
+              "view_matrix_column_major": [
+                -0.4999999999999992,
+                -0.2961981327260227,
+                0.8137976813493745,
+                0,
+                0.866025403784439,
+                -0.17101007166283322,
+                0.4698463103929538,
+                0,
+                -1.6653345369377343e-16,
+                0.9396926207859089,
+                0.3420201433256674,
+                0,
+                -0.8150494603410641,
+                -0.5444867329791654,
+                -18.259574145724436,
+                1
+              ],
+              "projection_matrix_column_major": [
+                1.066786763807741,
+                0,
+                0,
+                0,
+                0,
+                2.1445069205095586,
+                0,
+                0,
+                0,
+                0,
+                -1.001000500250125,
+                -1,
+                0,
+                0,
+                -0.2001000500250125,
+                0
+              ],
+              "viewport_width": 1373,
+              "viewport_height": 683,
+              "device_pixel_ratio": 1
+            },
+            {
+              "position": [
+                14.290798418444478,
+                9.191934364485128,
+                6.756792331482668
+              ],
+              "view_matrix_column_major": [
+                -0.4999999999999992,
+                -0.2961981327260227,
+                0.8137976813493745,
+                0,
+                0.866025403784439,
+                -0.17101007166283322,
+                0.4698463103929538,
+                0,
+                -1.6653345369377343e-16,
+                0.9396926207859089,
+                0.3420201433256674,
+                0,
+                -0.8150494603410641,
+                -0.5444867329791654,
+                -18.259574145724436,
+                1
+              ],
+              "projection_matrix_column_major": [
+                1.066786763807741,
+                0,
+                0,
+                0,
+                0,
+                2.1445069205095586,
+                0,
+                0,
+                0,
+                0,
+                -1.001000500250125,
+                -1,
+                0,
+                0,
+                -0.2001000500250125,
+                0
+              ],
+              "viewport_width": 1373,
+              "viewport_height": 683,
+              "device_pixel_ratio": 1
+            },
+            {
+              "position": [
+                14.290798418444478,
+                9.191934364485128,
+                6.756792331482668
+              ],
+              "view_matrix_column_major": [
+                -0.4999999999999992,
+                -0.2961981327260227,
+                0.8137976813493745,
+                0,
+                0.866025403784439,
+                -0.17101007166283322,
+                0.4698463103929538,
+                0,
+                -1.6653345369377343e-16,
+                0.9396926207859089,
+                0.3420201433256674,
+                0,
+                -0.8150494603410641,
+                -0.5444867329791654,
+                -18.259574145724436,
+                1
+              ],
+              "projection_matrix_column_major": [
+                1.066786763807741,
+                0,
+                0,
+                0,
+                0,
+                2.1445069205095586,
+                0,
+                0,
+                0,
+                0,
+                -1.001000500250125,
+                -1,
+                0,
+                0,
+                -0.2001000500250125,
+                0
+              ],
+              "viewport_width": 1373,
+              "viewport_height": 683,
+              "device_pixel_ratio": 1
+            }
+          ]
+        },
+        "step": {
+          "before": "Bước 11/11",
+          "states": [
+            "Bước 11/11",
+            "Bước 11/11",
+            "Bước 11/11",
+            "Bước 11/11",
+            "Bước 11/11"
+          ]
+        },
+        "quantity": {
+          "id": "the_volume_sabcd",
+          "selected": "the_volume_sabcd",
+          "drawer_open": true,
+          "inspector_open": true,
+          "label_shown": true
+        },
+        "panels": {
+          "soi": {
+            "position": "absolute",
+            "rect": {
+              "x": 743,
+              "y": 306.5,
+              "w": 304,
+              "h": 262.6875
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              }
+            ]
+          },
+          "thanh-phan": {
+            "position": "absolute",
+            "rect": {
+              "x": 32,
+              "y": 150,
+              "w": 320,
+              "h": 418.078125
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              }
+            ]
+          },
+          "dai-luong": {
+            "position": "absolute",
+            "rect": {
+              "x": 775,
+              "y": 76,
+              "w": 320,
+              "h": 222.5
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              }
+            ]
+          },
+          "cac-buoc": {
+            "position": "absolute",
+            "rect": {
+              "x": 1103,
+              "y": 76,
+              "w": 272,
+              "h": 418.078125
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              }
+            ]
+          },
+          "de": {
+            "position": "absolute",
+            "rect": {
+              "x": 1055,
+              "y": 502.078125,
+              "w": 320,
+              "h": 170.375
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              },
+              {
+                "w": 20,
+                "h": 20
+              }
+            ]
+          }
+        },
+        "annotations": {
+          "pass": true
+        },
+        "drag": {
+          "before": {
+            "x": 32,
+            "y": 150,
+            "w": 320,
+            "h": 418.078125
+          },
+          "camera_before": {
+            "position": [
+              14.290798418444478,
+              9.191934364485128,
+              6.756792331482668
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999992,
+              -0.2961981327260227,
+              0.8137976813493745,
+              0,
+              0.866025403784439,
+              -0.17101007166283322,
+              0.4698463103929538,
+              0,
+              -1.6653345369377343e-16,
+              0.9396926207859089,
+              0.3420201433256674,
+              0,
+              -0.8150494603410641,
+              -0.5444867329791654,
+              -18.259574145724436,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          },
+          "after": {
+            "x": 24,
+            "y": 240,
+            "w": 320,
+            "h": 418.078125
+          },
+          "camera_after": {
+            "position": [
+              14.290798418444478,
+              9.191934364485128,
+              6.756792331482668
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999992,
+              -0.2961981327260227,
+              0.8137976813493745,
+              0,
+              0.866025403784439,
+              -0.17101007166283322,
+              0.4698463103929538,
+              0,
+              -1.6653345369377343e-16,
+              0.9396926207859089,
+              0.3420201433256674,
+              0,
+              -0.8150494603410641,
+              -0.5444867329791654,
+              -18.259574145724436,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          }
+        },
+        "resized": {
+          "canvas": {
+            "x": 16,
+            "y": 60,
+            "w": 1053,
+            "h": 581
+          },
+          "panels": {
+            "soi": {
+              "x": 743,
+              "y": 306.5,
+              "w": 304,
+              "h": 262.6875
+            },
+            "thanh-phan": {
+              "x": 24,
+              "y": 240,
+              "w": 320,
+              "h": 364
+            },
+            "dai-luong": {
+              "x": 741,
+              "y": 76,
+              "w": 320,
+              "h": 222.5
+            },
+            "cac-buoc": {
+              "x": 781,
+              "y": 76,
+              "w": 272,
+              "h": 364
+            },
+            "de": {
+              "x": 415,
+              "y": 76,
+              "w": 320,
+              "h": 170.375
+            }
+          },
+          "close_reachable": {
+            "soi": false,
+            "thanh-phan": true,
+            "dai-luong": false,
+            "cac-buoc": true,
+            "de": true
+          },
+          "header_reachable": {
+            "soi": true,
+            "thanh-phan": true,
+            "dai-luong": true,
+            "cac-buoc": true,
+            "de": true
+          }
+        },
+        "reset": {
+          "dragged": {
+            "x": 521,
+            "y": 216,
+            "w": 272,
+            "h": 418.078125
+          },
+          "after": {
+            "x": 1103,
+            "y": 76,
+            "w": 272,
+            "h": 418.078125
+          },
+          "disabled_after": true
+        },
+        "escape_closed": true,
+        "reopen": {
+          "closed_at": {
+            "x": 575,
+            "y": 136,
+            "w": 320,
+            "h": 222.5
+          },
+          "reopened": {
+            "x": 575,
+            "y": 136,
+            "w": 320,
+            "h": 222.5
+          }
+        }
+      },
+      "panels": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "layout_observation": {
+        "viewport": {
+          "w": 1422,
+          "h": 804
+        },
+        "requested_viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "canvas_element": {
+          "x": 17,
+          "y": 61,
+          "w": 1373,
+          "h": 683
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "canvas_at_floor": false,
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "step_counter": "Bước 11/11",
+        "narration_line_present": false,
+        "narration_live": true,
+        "frames": [
+          {
+            "name": "neutral",
+            "w": 1373,
+            "h": 683,
+            "vertices": [
+              {
+                "id": "A",
+                "x": 653.8102589985532,
+                "y": 363.3380983558527,
+                "behind": false
+              },
+              {
+                "id": "B",
+                "x": 477.6346073776492,
+                "y": 468.6065227377081,
+                "behind": false
+              },
+              {
+                "id": "C",
+                "x": 782.3019789548807,
+                "y": 573.7200000000006,
+                "behind": false
+              },
+              {
+                "id": "D",
+                "x": 894.297522250462,
+                "y": 415.99170034195413,
+                "behind": false
+              },
+              {
+                "id": "S",
+                "x": 649.6712188771505,
+                "y": 111.33774661920413,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:0",
+                "x": 651.8639554030692,
+                "y": 244.83980496843515,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:1",
+                "x": 571.883275509968,
+                "y": 272.88012461267755,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:2",
+                "x": 701.9883709420354,
+                "y": 293.7277340402979,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:3",
+                "x": 769.0202313557601,
+                "y": 259.9732286712993,
+                "behind": false
+              }
+            ],
+            "labels": [
+              {
+                "id": "A",
+                "x": 644.3102589985532,
+                "y": 338.1380983558527,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "B",
+                "x": 468.6346073776492,
+                "y": 443.4065227377081,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "C",
+                "x": 773.3019789548807,
+                "y": 548.5200000000004,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "D",
+                "x": 884.797522250462,
+                "y": 390.79170034195414,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "S",
+                "x": 641.1712188771505,
+                "y": 86.13774661920412,
+                "w": 17,
+                "h": 18
+              }
+            ]
+          },
+          {
+            "name": "rotated",
+            "w": 1373,
+            "h": 683,
+            "vertices": [
+              {
+                "id": "A",
+                "x": 461.10842004378065,
+                "y": 443.5063452244195,
+                "behind": false
+              },
+              {
+                "id": "B",
+                "x": 722.6398379353883,
+                "y": 598.1813461440827,
+                "behind": false
+              },
+              {
+                "id": "C",
+                "x": 866.8665799518453,
+                "y": 380.7467900062849,
+                "behind": false
+              },
+              {
+                "id": "D",
+                "x": 639.8639661891115,
+                "y": 287.2265125837581,
+                "behind": false
+              },
+              {
+                "id": "S",
+                "x": 374.4147081796328,
+                "y": 168.17196669476607,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:0",
+                "x": 424.7533065209578,
+                "y": 328.04453867647555,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:1",
+                "x": 560.6690188458407,
+                "y": 398.17001596109014,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:2",
+                "x": 670.6442584102471,
+                "y": 296.04424804747305,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:3",
+                "x": 543.1390724496696,
+                "y": 243.84519599368102,
+                "behind": false
+              }
+            ],
+            "labels": [
+              {
+                "id": "A",
+                "x": 451.60842004378065,
+                "y": 418.3063452244195,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "B",
+                "x": 713.6398379353883,
+                "y": 572.9813461440826,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "C",
+                "x": 857.8665799518453,
+                "y": 355.54679000628494,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "D",
+                "x": 630.3639661891115,
+                "y": 262.0265125837581,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "S",
+                "x": 365.9147081796328,
+                "y": 142.97196669476608,
+                "w": 17,
+                "h": 18
+              }
+            ]
+          }
+        ]
+      },
+      "layout_resized_observation": {
+        "viewport": {
+          "w": 1100,
+          "h": 760
+        },
+        "requested_viewport": {
+          "w": 1100,
+          "h": 760
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 641
+        },
+        "canvas_element": {
+          "x": 17,
+          "y": 61,
+          "w": 1051,
+          "h": 639
+        },
+        "controls": {
+          "x": 16,
+          "y": 713,
+          "w": 1053,
+          "h": 35
+        },
+        "canvas_at_floor": false,
+        "scroll_width": 1085,
+        "client_width": 1100,
+        "step_counter": "Bước 11/11",
+        "narration_line_present": false,
+        "narration_live": true,
+        "frames": [
+          {
+            "name": "resized",
+            "w": 1051,
+            "h": 639,
+            "vertices": [
+              {
+                "id": "A",
+                "x": 314.374460484254,
+                "y": 428.78434121268606,
+                "behind": false
+              },
+              {
+                "id": "B",
+                "x": 578.6905076464925,
+                "y": 555.7759777625893,
+                "behind": false
+              },
+              {
+                "id": "C",
+                "x": 686.0701589353419,
+                "y": 343.04948284475444,
+                "behind": false
+              },
+              {
+                "id": "D",
+                "x": 466.2839251170797,
+                "y": 267.44976104190476,
+                "behind": false
+              },
+              {
+                "id": "S",
+                "x": 228.20264911199803,
+                "y": 175.2013651648969,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:0",
+                "x": 278.59111848608154,
+                "y": 323.48254689814877,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:1",
+                "x": 419.716192320686,
+                "y": 383.1549097430598,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:2",
+                "x": 509.245738569842,
+                "y": 278.22801051614977,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:3",
+                "x": 381.0376043108035,
+                "y": 234.4197114691365,
+                "behind": false
+              }
+            ],
+            "labels": [
+              {
+                "id": "A",
+                "x": 304.87529221792306,
+                "y": 403.59983746395613,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "B",
+                "x": 569.7111150215666,
+                "y": 530.5707609950313,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "C",
+                "x": 677.0607653536849,
+                "y": 317.8352896419263,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "D",
+                "x": 456.76701746221715,
+                "y": 242.248945967481,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "S",
+                "x": 219.69833296591,
+                "y": 150.02204701620667,
+                "w": 17,
+                "h": 18
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "layout_resized": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "direct_select_observation": {
+        "target_id": "A",
+        "click": {
+          "selected": "A",
+          "inspector_open": true,
+          "tree_current": "A"
+        },
+        "drag": {
+          "selected_before": "A",
+          "camera_before": {
+            "position": [
+              7.944478278608189,
+              -5.729679834587316,
+              11.339291286540535
+            ],
+            "view_matrix_column_major": [
+              0.8849073109522007,
+              -0.3187909735762453,
+              0.33957527323062653,
+              0,
+              0.4657671639600037,
+              0.6056684219315507,
+              -0.6451563466723395,
+              0,
+              2.7755575615628907e-17,
+              0.729066579841138,
+              0.6844427822387678,
+              0,
+              -4.361430183486784,
+              -2.26418420752016,
+              -14.155383768593298,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          },
+          "selected_after": "A",
+          "camera_after": {
+            "position": [
+              -2.4463555519803664,
+              -6.425120111633083,
+              9.787362486525645
+            ],
+            "view_matrix_column_major": [
+              0.8473596970712375,
+              0.3018719963739751,
+              -0.4368693644380796,
+              0,
+              -0.5310193440726438,
+              0.4817040400824804,
+              -0.697122423960724,
+              0,
+              -2.7755575615628914e-17,
+              0.8226995293382676,
+              0.5684764589906894,
+              0,
+              -1.3389199678127284,
+              -4.218565961021939,
+              -11.11171827084209,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          }
+        }
+      },
+      "direct_select": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "tree_observation": {
+        "groups_total": 2,
+        "groups_open_default": 0,
+        "future_listed": [],
+        "present_missing": [],
+        "reopen": {
+          "open_before": [
+            true,
+            false
+          ],
+          "open_after": [
+            true,
+            false
+          ]
+        },
+        "keyboard": {
+          "target": "A",
+          "selected": "A"
+        },
+        "selected_group_open": true
+      },
+      "tree": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "low_1366x650",
+      "images": {
+        "layout": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/low/layout_low.png",
+          "bytes": 137024,
+          "sha256": "72301da275e377708f34cb66914debec2c131857fcdda04ba2c1a085ec870909",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "layout_observation": {
+        "viewport": {
+          "w": 1348,
+          "h": 554
+        },
+        "requested_viewport": {
+          "w": 1366,
+          "h": 650
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "canvas_element": {
+          "x": 17,
+          "y": 61,
+          "w": 1299,
+          "h": 433
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "canvas_at_floor": false,
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "step_counter": "Bước 11/11",
+        "narration_line_present": false,
+        "narration_live": true,
+        "frames": [
+          {
+            "name": "neutral",
+            "w": 1299,
+            "h": 433,
+            "vertices": [
+              {
+                "id": "A",
+                "x": 628.7757571689217,
+                "y": 230.34465093423754,
+                "behind": false
+              },
+              {
+                "id": "B",
+                "x": 517.0860688060352,
+                "y": 297.08144120853234,
+                "behind": false
+              },
+              {
+                "id": "C",
+                "x": 710.2353687957004,
+                "y": 363.72000000000037,
+                "behind": false
+              },
+              {
+                "id": "D",
+                "x": 781.2369357751832,
+                "y": 263.7253385769636,
+                "behind": false
+              },
+              {
+                "id": "S",
+                "x": 626.151739053889,
+                "y": 70.58454507483951,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:0",
+                "x": 627.5418633814479,
+                "y": 155.22054985553794,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:1",
+                "x": 576.8366885736693,
+                "y": 172.99720930789073,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:2",
+                "x": 659.3191282838967,
+                "y": 186.21392216610394,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:3",
+                "x": 701.8151686340324,
+                "y": 164.8146530229467,
+                "behind": false
+              }
+            ],
+            "labels": [
+              {
+                "id": "A",
+                "x": 619.2757571689217,
+                "y": 205.14465093423755,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "B",
+                "x": 508.0860688060352,
+                "y": 271.88144120853235,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "C",
+                "x": 701.2353687957004,
+                "y": 338.5200000000003,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "D",
+                "x": 771.7369357751832,
+                "y": 238.52533857696363,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "S",
+                "x": 617.651739053889,
+                "y": 45.38454507483951,
+                "w": 17,
+                "h": 18
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "images": {
+        "layout": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/mobile/layout_mobile.png",
+          "bytes": 260870,
+          "sha256": "c5bb171917f65c4eb092f4ce15b8b2aaa68f5271709098a8b88940ab86b754d0",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "sheets": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/mobile/sheets_open.png",
+          "bytes": 79965,
+          "sha256": "d3f763939e0ab0d0c6dacc7170d5890617f220da8ed80649be8a42383a65753e",
+          "scroll": {
+            "x": 0,
+            "y": 1194
+          }
+        },
+        "after_orbit": {
+          "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/rerun/review/cross-section/mobile/figure_after_orbit.png",
+          "bytes": 274745,
+          "sha256": "aa237d6f04020e0ced2bbc9c9f1047745d7a92fd78d9f993772fd689d29bf427",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "layout_observation": {
+        "viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "requested_viewport": {
+          "w": 390,
+          "h": 844
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "canvas_element": {
+          "x": 17,
+          "y": 220,
+          "w": 356,
+          "h": 517
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "canvas_at_floor": false,
+        "scroll_width": 390,
+        "client_width": 390,
+        "step_counter": "Bước 11/11",
+        "narration_line_present": false,
+        "narration_live": true,
+        "frames": [
+          {
+            "name": "neutral",
+            "w": 356,
+            "h": 517,
+            "vertices": [
+              {
+                "id": "A",
+                "x": 156.5640337052365,
+                "y": 276.84346227333936,
+                "behind": false
+              },
+              {
+                "id": "B",
+                "x": 56.959999999998885,
+                "y": 337.4015594022847,
+                "behind": false
+              },
+              {
+                "id": "C",
+                "x": 227.05670492783588,
+                "y": 390.4028883236531,
+                "behind": false
+              },
+              {
+                "id": "D",
+                "x": 298.9112156970073,
+                "y": 308.16463863825146,
+                "behind": false
+              },
+              {
+                "id": "S",
+                "x": 154.42638034832555,
+                "y": 126.7872115432367,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:0",
+                "x": 155.54596912310146,
+                "y": 205.37866948904536,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:1",
+                "x": 109.29251820138826,
+                "y": 224.31662536229177,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:2",
+                "x": 184.96317250308783,
+                "y": 237.62214415830505,
+                "behind": false
+              },
+              {
+                "id": "T::vertex:3",
+                "x": 225.2969877086673,
+                "y": 215.75383830831385,
+                "behind": false
+              }
+            ],
+            "labels": [
+              {
+                "id": "A",
+                "x": 147.0640337052365,
+                "y": 251.6434622733393,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "B",
+                "x": 47.95999999999891,
+                "y": 312.2015594022847,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "C",
+                "x": 218.05670492783588,
+                "y": 365.2028883236531,
+                "w": 18,
+                "h": 18
+              },
+              {
+                "id": "D",
+                "x": 289.4112156970073,
+                "y": 282.9646386382515,
+                "w": 19,
+                "h": 18
+              },
+              {
+                "id": "S",
+                "x": 145.92638034832555,
+                "y": 101.58721154323669,
+                "w": 17,
+                "h": 18
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "panels_observation": {
+        "canvas": {
+          "before": {
+            "x": 16,
+            "y": 219,
+            "w": 358,
+            "h": 519
+          },
+          "states": [
+            {
+              "x": 16,
+              "y": 219,
+              "w": 358,
+              "h": 519
+            },
+            {
+              "x": 16,
+              "y": 219,
+              "w": 358,
+              "h": 519
+            },
+            {
+              "x": 16,
+              "y": 219,
+              "w": 358,
+              "h": 519
+            }
+          ]
+        },
+        "step": {
+          "before": "Bước 11/11",
+          "states": [
+            "Bước 11/11",
+            "Bước 11/11",
+            "Bước 11/11"
+          ]
+        },
+        "quantity": {
+          "id": "the_volume_sabcd",
+          "selected": "the_volume_sabcd",
+          "inspector_open": true
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels": {
+          "soi": {
+            "position": "static",
+            "rect": {
+              "x": 16,
+              "y": 1193.59375,
+              "w": 358,
+              "h": 247.6875
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 44,
+                "h": 44
+              },
+              {
+                "w": 44,
+                "h": 44
+              }
+            ]
+          },
+          "thanh-phan": {
+            "position": "static",
+            "rect": {
+              "x": 16,
+              "y": 1453.28125,
+              "w": 358,
+              "h": 337.59375
+            },
+            "close_reachable": true,
+            "header_buttons": [
+              {
+                "w": 44,
+                "h": 44
+              },
+              {
+                "w": 44,
+                "h": 44
+              }
+            ]
+          },
+          "dai-luong": {
+            "position": "static",
+            "rect": {
+              "x": 16,
+              "y": 1802.875,
+              "w": 358,
+              "h": 254.5
+            },
+            "close_reachable": false,
+            "header_buttons": [
+              {
+                "w": 44,
+                "h": 44
+              },
+              {
+                "w": 44,
+                "h": 44
+              }
+            ]
+          },
+          "cac-buoc": {
+            "position": "static",
+            "rect": {
+              "x": 16,
+              "y": 844,
+              "w": 358,
+              "h": 337.59375
+            },
+            "close_reachable": false,
+            "header_buttons": [
+              {
+                "w": 44,
+                "h": 44
+              },
+              {
+                "w": 44,
+                "h": 44
+              }
+            ]
+          }
+        },
+        "collapse": {
+          "expanded_body": true,
+          "collapsed_body": false
+        },
+        "orbit": {
+          "camera_before": {
+            "position": [
+              17.75721184523092,
+              11.262584603519716,
+              8.4437204977269
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999877,
+              -0.296198132726022,
+              0.8137976813493818,
+              0,
+              0.8660254037844457,
+              -0.17101007166282786,
+              0.4698463103929435,
+              0,
+              2.498001805406602e-16,
+              0.9396926207859101,
+              0.342020143325664,
+              0,
+              -0.875078456304404,
+              -0.7488334525583346,
+              -22.630384143165212,
+              1
+            ],
+            "projection_matrix_column_major": [
+              3.1143541514141626,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 517,
+            "device_pixel_ratio": 1
+          },
+          "start": {
+            "x": 195,
+            "y": 478.5
+          },
+          "camera_after": {
+            "position": [
+              14.820156282364497,
+              -4.1322570925100335,
+              13.901541192140984
+            ],
+            "view_matrix_column_major": [
+              0.5224858062729008,
+              -0.5537473343294886,
+              0.648361374517593,
+              0,
+              0.8526479826067479,
+              0.33932540550213547,
+              -0.3973030165219672,
+              0,
+              -2.7755575615628914e-17,
+              0.7604092049046993,
+              0.649444255572565,
+              0,
+              -4.219960630740504,
+              -0.962058035605044,
+              -20.278851176539263,
+              1
+            ],
+            "projection_matrix_column_major": [
+              3.1143541514141626,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 517,
+            "device_pixel_ratio": 1
+          }
+        }
+      },
+      "panels": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "exceptions": [],
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,2362 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_triangular_pyramid_positive",
+  "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính thể tích khối chóp S.ABC.",
+  "source": "rtp_w01_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "1e90ca0ec70552df38d17f7f0c2df13822cb93a0",
+  "product_tree_sha": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "geometry",
+    "visual_mode": "2d",
+    "title": "Chóp tam giác đều S.ABC",
+    "description": "Chóp tam giác đều S.ABC",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Chóp tam giác đều S.ABC",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Dựng Đáy ABC.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Dựng điểm I = (0, 3/2, 3/2).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Dựng đường thẳng AI qua hai điểm đã có.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 4,
+          "narration": "Dựng điểm J = (3/2, 0, 3/2).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Dựng đường thẳng BJ qua hai điểm đã có.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 6,
+          "narration": "Dựng điểm G = (1, 1, 1).",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 7,
+          "narration": "Dựng đoạn thẳng nối S và G.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 8,
+          "narration": "Dựng các cạnh bên SA, SB, SC.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 9,
+          "narration": "Dựng khối S.ABC từ 4 đỉnh và 4 mặt.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 10,
+          "narration": "Dựng mặt phẳng qua ba điểm A, B, C.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 11,
+          "narration": "Tính diện tích của hình đã dựng: 9√3/2.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 12,
+          "narration": "Xác định khoảng cách cần dùng: √3.",
+          "objects": [],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 13,
+          "narration": "Tính thể tích khối: 9/2.",
+          "objects": [],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Dựng Đáy ABC."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Dựng điểm I = (0, 3/2, 3/2)."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Dựng đường thẳng AI qua hai điểm đã có."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Dựng điểm J = (3/2, 0, 3/2)."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Dựng đường thẳng BJ qua hai điểm đã có."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Dựng điểm G = (1, 1, 1)."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Dựng đoạn thẳng nối S và G."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Dựng các cạnh bên SA, SB, SC."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Dựng khối S.ABC từ 4 đỉnh và 4 mặt."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Dựng mặt phẳng qua ba điểm A, B, C."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Tính diện tích của hình đã dựng: 9√3/2."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Xác định khoảng cách cần dùng: √3."
+        },
+        {
+          "view_index": 13,
+          "frame_lo": 13,
+          "frame_hi": 13,
+          "narration": "Tính thể tích khối: 9/2."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null,
+    "analysis": {},
+    "representation_plan": {},
+    "source": "semantic_program",
+    "scene3d": {
+      "objects": [
+        {
+          "id": "canh_day",
+          "label": "Cạnh đáy",
+          "notation": null,
+          "reference": "Cạnh đáy",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Cạnh đáy",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "f_canh_day",
+            "provenance": "GIVEN"
+          },
+          "formation_roles": [],
+          "value": "3√2",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "3",
+            "radicand": 2
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Cạnh đáy = 3√2",
+            "references": []
+          }
+        },
+        {
+          "id": "chieu_cao",
+          "label": "Chiều cao",
+          "notation": null,
+          "reference": "Chiều cao",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Chiều cao",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "fact_id": "f_chieu_cao",
+            "provenance": "GIVEN"
+          },
+          "formation_roles": [],
+          "value": "√3",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "1",
+            "radicand": 3
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Chiều cao = √3",
+            "references": []
+          }
+        },
+        {
+          "id": "S",
+          "label": "Điểm S",
+          "notation": "S",
+          "reference": "S",
+          "role": "Điểm",
+          "display_label": "Điểm S",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "formation_roles": [],
+          "xyz": [
+            "2",
+            "2",
+            "2"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "formation_roles": [],
+          "xyz": [
+            "3",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "B",
+          "label": "Điểm B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm",
+          "display_label": "Điểm B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "3",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "C",
+          "label": "Điểm C",
+          "notation": "C",
+          "reference": "C",
+          "role": "Điểm",
+          "display_label": "Điểm C",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": "khoi_chop",
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "provenance": "LAYOUT_DERIVED"
+          },
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "I",
+          "label": "Trung điểm của B và C",
+          "notation": "I",
+          "reference": "I",
+          "role": "Điểm",
+          "display_label": "Trung điểm của B và C",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_point.midpoint",
+          "depends": [
+            "B",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_point.midpoint",
+            "binding": "AUXILIARY"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "xyz": [
+            "0",
+            "3/2",
+            "3/2"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "J",
+          "label": "Trung điểm của C và A",
+          "notation": "J",
+          "reference": "J",
+          "role": "Điểm",
+          "display_label": "Trung điểm của C và A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_point.midpoint",
+          "depends": [
+            "A",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_point.midpoint",
+            "binding": "AUXILIARY"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "xyz": [
+            "3/2",
+            "0",
+            "3/2"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "AI",
+          "label": "Đường thẳng qua A và I",
+          "notation": "AI",
+          "reference": "AI",
+          "role": "Đường thẳng",
+          "display_label": "Đường thẳng qua A và I",
+          "type": "line3",
+          "render": "line",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_line",
+          "depends": [
+            "A",
+            "I"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "I",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_line"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "3",
+            "0",
+            "0"
+          ],
+          "direction": [
+            "-3",
+            "3/2",
+            "3/2"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "BJ",
+          "label": "Đường thẳng qua B và J",
+          "notation": "BJ",
+          "reference": "BJ",
+          "role": "Đường thẳng",
+          "display_label": "Đường thẳng qua B và J",
+          "type": "line3",
+          "render": "line",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_line",
+          "depends": [
+            "B",
+            "J"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "J",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_line"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "3",
+            "0"
+          ],
+          "direction": [
+            "3/2",
+            "-3",
+            "3/2"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "G",
+          "label": "Giao điểm của AI và BJ",
+          "notation": "G",
+          "reference": "G",
+          "role": "Điểm",
+          "display_label": "Giao điểm của AI và BJ",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_point.intersect_line_line",
+          "depends": [
+            "AI",
+            "BJ"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "AI",
+              "relation": "topological"
+            },
+            {
+              "source_id": "BJ",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_point.intersect_line_line",
+            "binding": "AUXILIARY"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "xyz": [
+            "1",
+            "1",
+            "1"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "day_ABC",
+          "label": "Đáy ABC",
+          "notation": "ABC",
+          "reference": "ABC",
+          "role": "Đa giác A, B, C",
+          "display_label": "Đáy ABC",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": "khoi_chop",
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "formation_roles": [
+            "CONSTRUCT_BASE"
+          ],
+          "vertices": [
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "3"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "C"
+          ],
+          "occludes_edges": false,
+          "surface_role": "BASE_REGION",
+          "boundary_edge_ids": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:A-C"
+          ]
+        },
+        {
+          "id": "mp_day",
+          "label": "Mặt phẳng qua A, B, C",
+          "notation": "(ABC)",
+          "reference": "(ABC)",
+          "role": "Mặt phẳng",
+          "display_label": "Mặt phẳng qua A, B, C",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "3",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "9",
+            "9",
+            "9"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "khoi_chop",
+          "label": "Hình chóp S.ABC",
+          "notation": "S.ABC",
+          "reference": "S.ABC",
+          "role": "Đỉnh S, đáy ABC",
+          "display_label": "Hình chóp S.ABC",
+          "type": "solid",
+          "render": "mesh",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_solid",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "solid",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_solid"
+          },
+          "formation_roles": [
+            "CLOSE_SOLID"
+          ],
+          "vertices": [
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "3",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "3"
+            ]
+          ],
+          "vertex_ids": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "faces": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              3,
+              1
+            ]
+          ],
+          "shape_class": "PYRAMID_LIKE",
+          "formation_requirements": [
+            "CONSTRUCT_BASE",
+            "CONSTRUCT_HEIGHT",
+            "CONSTRUCT_LATERAL_BOUNDARY",
+            "CLOSE_SOLID"
+          ],
+          "edge_ownership": [
+            {
+              "edge_id": "khoi_chop::edge:A-B",
+              "endpoint_ids": [
+                "A",
+                "B"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:0",
+                "khoi_chop::face:1"
+              ]
+            },
+            {
+              "edge_id": "khoi_chop::edge:B-C",
+              "endpoint_ids": [
+                "B",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:0",
+                "khoi_chop::face:2"
+              ]
+            },
+            {
+              "edge_id": "khoi_chop::edge:A-C",
+              "endpoint_ids": [
+                "A",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:0",
+                "khoi_chop::face:3"
+              ]
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-A",
+              "endpoint_ids": [
+                "S",
+                "A"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:1",
+                "khoi_chop::face:3"
+              ]
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-B",
+              "endpoint_ids": [
+                "S",
+                "B"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:1",
+                "khoi_chop::face:2"
+              ]
+            },
+            {
+              "edge_id": "khoi_chop::edge:S-C",
+              "endpoint_ids": [
+                "S",
+                "C"
+              ],
+              "adjacent_surface_ids": [
+                "khoi_chop::face:2",
+                "khoi_chop::face:3"
+              ]
+            }
+          ],
+          "surfaces": [
+            {
+              "surface_id": "khoi_chop::face:0",
+              "vertex_indices": [
+                1,
+                2,
+                3
+              ],
+              "boundary_edge_ids": [
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:A-C"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "khoi_chop::face:1",
+              "vertex_indices": [
+                0,
+                1,
+                2
+              ],
+              "boundary_edge_ids": [
+                "khoi_chop::edge:S-A",
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:S-B"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "khoi_chop::face:2",
+              "vertex_indices": [
+                0,
+                2,
+                3
+              ],
+              "boundary_edge_ids": [
+                "khoi_chop::edge:S-B",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:S-C"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            },
+            {
+              "surface_id": "khoi_chop::face:3",
+              "vertex_indices": [
+                0,
+                3,
+                1
+              ],
+              "boundary_edge_ids": [
+                "khoi_chop::edge:S-C",
+                "khoi_chop::edge:A-C",
+                "khoi_chop::edge:S-A"
+              ],
+              "surface_role": "SOLID_FACE",
+              "occludes_edges": true
+            }
+          ]
+        },
+        {
+          "id": "dien_tich_day_ABC",
+          "label": "Diện tích ABC",
+          "notation": "S(ABC)",
+          "reference": "S(ABC)",
+          "role": "Diện tích",
+          "display_label": "Diện tích ABC",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "day_ABC"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "day_ABC",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "formation_roles": [],
+          "value": "9√3/2",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "9/2",
+            "radicand": 3
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "S(ABC) = 9√3/2",
+            "references": []
+          },
+          "annotation": {
+            "kind": "area",
+            "subject_ids": [
+              "day_ABC"
+            ],
+            "anchor": "region",
+            "unit": null,
+            "category": "measurement",
+            "role": "intermediate"
+          }
+        },
+        {
+          "id": "chieu_cao_SG",
+          "label": "Khoảng cách giữa S và (ABC)",
+          "notation": "d(S, (ABC))",
+          "reference": "d(S, (ABC))",
+          "role": "Khoảng cách",
+          "display_label": "Khoảng cách giữa S và (ABC)",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.distance",
+          "depends": [
+            "S",
+            "mp_day"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "S",
+              "relation": "topological"
+            },
+            {
+              "source_id": "mp_day",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.distance"
+          },
+          "formation_roles": [],
+          "value": "√3",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "1",
+            "radicand": 3
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "SG = d(S, (ABC)) = √3",
+            "references": []
+          },
+          "annotation": {
+            "kind": "length",
+            "subject_ids": [
+              "S",
+              "G"
+            ],
+            "anchor": "segment",
+            "unit": null,
+            "category": "measurement",
+            "role": "intermediate"
+          }
+        },
+        {
+          "id": "V",
+          "label": "Thể tích S.ABC",
+          "notation": "V(S.ABC)",
+          "reference": "V(S.ABC)",
+          "role": "Thể tích khối",
+          "display_label": "Thể tích S.ABC",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "chieu_cao_SG",
+            "dien_tich_day_ABC",
+            "khoi_chop"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "chieu_cao_SG",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "dien_tich_day_ABC",
+              "relation": "numerical"
+            },
+            {
+              "source_id": "khoi_chop",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "formation_roles": [],
+          "value": "9/2",
+          "exact": {
+            "kind": "rational",
+            "value": "9/2"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "V = 1/3 × S(ABC) × SG = 9/2",
+            "references": [
+              {
+                "entity_id": "dien_tich_day_ABC",
+                "display_label": "S(ABC)",
+                "relation": "numerical"
+              },
+              {
+                "entity_id": "chieu_cao_SG",
+                "display_label": "SG",
+                "relation": "numerical"
+              }
+            ]
+          },
+          "annotation": {
+            "kind": "volume",
+            "subject_ids": [
+              "khoi_chop"
+            ],
+            "anchor": "solid",
+            "unit": null,
+            "category": "result",
+            "role": "result"
+          }
+        },
+        {
+          "id": "chieu_cao_SG_2",
+          "label": "Chiều cao SG",
+          "notation": "SG",
+          "reference": "SG",
+          "role": "Đoạn thẳng nối S và G",
+          "display_label": "Chiều cao SG",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "G",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "G",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_HEIGHT"
+          ],
+          "point_a": [
+            "2",
+            "2",
+            "2"
+          ],
+          "point_b": [
+            "1",
+            "1",
+            "1"
+          ],
+          "endpoints": [
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "1",
+              "1",
+              "1"
+            ]
+          ],
+          "endpoint_ids": [
+            "S",
+            "G"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "canh_ben_S_A",
+          "label": "Cạnh bên SA",
+          "notation": "SA",
+          "reference": "SA",
+          "role": "Đoạn thẳng nối S và A",
+          "display_label": "Cạnh bên SA",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ],
+          "point_a": [
+            "2",
+            "2",
+            "2"
+          ],
+          "point_b": [
+            "3",
+            "0",
+            "0"
+          ],
+          "endpoints": [
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "3",
+              "0",
+              "0"
+            ]
+          ],
+          "endpoint_ids": [
+            "S",
+            "A"
+          ],
+          "occludes_edges": false,
+          "boundary_edge_ids": [
+            "khoi_chop::edge:S-A"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "label": "Cạnh bên SB",
+          "notation": "SB",
+          "reference": "SB",
+          "role": "Đoạn thẳng nối S và B",
+          "display_label": "Cạnh bên SB",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "B",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ],
+          "point_a": [
+            "2",
+            "2",
+            "2"
+          ],
+          "point_b": [
+            "0",
+            "3",
+            "0"
+          ],
+          "endpoints": [
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "0",
+              "3",
+              "0"
+            ]
+          ],
+          "endpoint_ids": [
+            "S",
+            "B"
+          ],
+          "occludes_edges": false,
+          "boundary_edge_ids": [
+            "khoi_chop::edge:S-B"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "label": "Cạnh bên SC",
+          "notation": "SC",
+          "reference": "SC",
+          "role": "Đoạn thẳng nối S và C",
+          "display_label": "Cạnh bên SC",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "C",
+            "S"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "C",
+              "relation": "topological"
+            },
+            {
+              "source_id": "S",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_LATERAL_BOUNDARY"
+          ],
+          "point_a": [
+            "2",
+            "2",
+            "2"
+          ],
+          "point_b": [
+            "0",
+            "0",
+            "3"
+          ],
+          "endpoints": [
+            [
+              "2",
+              "2",
+              "2"
+            ],
+            [
+              "0",
+              "0",
+              "3"
+            ]
+          ],
+          "endpoint_ids": [
+            "S",
+            "C"
+          ],
+          "occludes_edges": false,
+          "boundary_edge_ids": [
+            "khoi_chop::edge:S-C"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+          "display_label": "Bước dựng hình",
+          "semantic_kind": "EXPLANATION",
+          "details": {},
+          "learner_text": "Dữ kiện đề cho: Cạnh đáy = 3√2, Chiều cao = √3."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "day_ABC",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng Đáy ABC.",
+          "display_label": "Đáy ABC",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Đáy ABC",
+            "dinh": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "learner_text": "Dựng đáy ABC."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "I",
+          "depends": [
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng điểm I = (0, 3/2, 3/2).",
+          "display_label": "Trung điểm của B và C",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "toa_do": [
+              "0",
+              "3/2",
+              "3/2"
+            ]
+          },
+          "learner_text": "Dựng trung điểm của B và C."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "AI",
+          "depends": [
+            "A",
+            "I"
+          ],
+          "explanation": "Dựng đường thẳng AI qua hai điểm đã có.",
+          "display_label": "Đường thẳng qua A và I",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "qua": [
+              "A",
+              "I"
+            ]
+          },
+          "learner_text": "Dựng đường thẳng qua A và I."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "object": "J",
+          "depends": [
+            "C",
+            "A"
+          ],
+          "explanation": "Dựng điểm J = (3/2, 0, 3/2).",
+          "display_label": "Trung điểm của C và A",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "toa_do": [
+              "3/2",
+              "0",
+              "3/2"
+            ]
+          },
+          "learner_text": "Dựng trung điểm của C và A."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "object": "BJ",
+          "depends": [
+            "B",
+            "J"
+          ],
+          "explanation": "Dựng đường thẳng BJ qua hai điểm đã có.",
+          "display_label": "Đường thẳng qua B và J",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "qua": [
+              "B",
+              "J"
+            ]
+          },
+          "learner_text": "Dựng đường thẳng qua B và J."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "object": "G",
+          "depends": [
+            "AI",
+            "BJ"
+          ],
+          "explanation": "Dựng điểm G = (1, 1, 1).",
+          "display_label": "Giao điểm của AI và BJ",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "toa_do": [
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "learner_text": "Dựng giao điểm của AI và BJ."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "object": "chieu_cao_SG_2",
+          "depends": [
+            "S",
+            "G"
+          ],
+          "explanation": "Dựng đoạn thẳng nối S và G.",
+          "display_label": "Chiều cao SG",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Chiều cao SG",
+            "objects": [
+              "chieu_cao_SG_2"
+            ],
+            "qua": [
+              "S",
+              "G"
+            ]
+          },
+          "learner_text": "Dựng chiều cao SG.",
+          "objects": [
+            "chieu_cao_SG_2"
+          ]
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "object": "canh_ben",
+          "depends": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C"
+          ],
+          "explanation": "Dựng các cạnh bên SA, SB, SC.",
+          "display_label": "Các cạnh bên SA, SB, SC",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Các cạnh bên SA, SB, SC",
+            "objects": [
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C"
+            ],
+            "qua": [
+              [
+                "S",
+                "A"
+              ],
+              [
+                "S",
+                "B"
+              ],
+              [
+                "S",
+                "C"
+              ]
+            ]
+          },
+          "learner_text": "Dựng các cạnh bên SA, SB, SC.",
+          "objects": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C"
+          ]
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "object": "khoi_chop",
+          "depends": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng khối S.ABC từ 4 đỉnh và 4 mặt.",
+          "display_label": "Hình chóp S.ABC",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "S.ABC",
+            "dinh": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ],
+            "so_mat": 4
+          },
+          "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "object": "mp_day",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ],
+          "explanation": "Dựng mặt phẳng qua ba điểm A, B, C.",
+          "display_label": "Mặt phẳng qua A, B, C",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": null,
+            "qua": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "learner_text": "Dựng mặt phẳng qua A, B, C."
+        },
+        {
+          "step_index": 11,
+          "action": "MEASURE",
+          "object": "dien_tich_day_ABC",
+          "depends": [
+            "day_ABC"
+          ],
+          "explanation": "Tính diện tích của hình đã dựng: 9√3/2.",
+          "display_label": "Diện tích ABC",
+          "semantic_kind": "MEASUREMENT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "9/2",
+              "radicand": 3
+            }
+          },
+          "learner_text": "Tính diện tích ABC: S(ABC) = 9√3/2."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "object": "chieu_cao_SG",
+          "depends": [
+            "S",
+            "mp_day"
+          ],
+          "explanation": "Xác định khoảng cách cần dùng: √3.",
+          "display_label": "Khoảng cách giữa S và (ABC)",
+          "semantic_kind": "MEASUREMENT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "1",
+              "radicand": 3
+            }
+          },
+          "learner_text": "Tính khoảng cách giữa S và (ABC): SG = d(S, (ABC)) = √3."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "object": "V",
+          "depends": [
+            "khoi_chop",
+            "dien_tich_day_ABC",
+            "chieu_cao_SG"
+          ],
+          "explanation": "Tính thể tích khối: 9/2.",
+          "display_label": "Thể tích S.ABC",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "9/2"
+          },
+          "learner_text": "Tính thể tích S.ABC: V = 1/3 × S(ABC) × SG = 9/2."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "canh_day",
+              "chieu_cao"
+            ],
+            "focus_ids": [],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dữ kiện đề cho: Cạnh đáy = 3√2, Chiều cao = √3.",
+            "semantic_kind": "EXPLANATION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "DECLARE_ENTITIES"
+            ]
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "day_ABC"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng đáy ABC.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_BASE"
+            ]
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "B",
+              "C",
+              "I",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "I"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng trung điểm của B và C.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "C",
+              "I",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "AI"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng đường thẳng qua A và I.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "C",
+              "I",
+              "J",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "J"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng trung điểm của C và A.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "I",
+              "J",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "BJ"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng đường thẳng qua B và J.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 6,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "G"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng giao điểm của AI và BJ.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 7,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG_2",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "chieu_cao_SG_2"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng chiều cao SG.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_HEIGHT"
+            ]
+          },
+          {
+            "step_index": 8,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG_2",
+              "day_ABC"
+            ],
+            "focus_ids": [
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng các cạnh bên SA, SB, SC.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_LATERAL_BOUNDARY"
+            ]
+          },
+          {
+            "step_index": 9,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG_2",
+              "day_ABC",
+              "khoi_chop"
+            ],
+            "focus_ids": [
+              "khoi_chop"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CLOSE_SOLID"
+            ]
+          },
+          {
+            "step_index": 10,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG_2",
+              "day_ABC",
+              "khoi_chop",
+              "mp_day"
+            ],
+            "focus_ids": [
+              "mp_day"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao"
+            ],
+            "learner_text": "Dựng mặt phẳng qua A, B, C.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 11,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG_2",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop",
+              "mp_day"
+            ],
+            "focus_ids": [
+              "dien_tich_day_ABC"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao",
+              "dien_tich_day_ABC"
+            ],
+            "learner_text": "Tính diện tích ABC: S(ABC) = 9√3/2.",
+            "semantic_kind": "MEASUREMENT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 12,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG",
+              "chieu_cao_SG_2",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop",
+              "mp_day"
+            ],
+            "focus_ids": [
+              "chieu_cao_SG"
+            ],
+            "readout_ids": [
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG",
+              "dien_tich_day_ABC"
+            ],
+            "learner_text": "Tính khoảng cách giữa S và (ABC): SG = d(S, (ABC)) = √3.",
+            "semantic_kind": "MEASUREMENT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 13,
+            "visible_ids": [
+              "A",
+              "AI",
+              "B",
+              "BJ",
+              "C",
+              "G",
+              "I",
+              "J",
+              "S",
+              "V",
+              "canh_ben_S_A",
+              "canh_ben_S_B",
+              "canh_ben_S_C",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG",
+              "chieu_cao_SG_2",
+              "day_ABC",
+              "dien_tich_day_ABC",
+              "khoi_chop",
+              "mp_day"
+            ],
+            "focus_ids": [
+              "V"
+            ],
+            "readout_ids": [
+              "V",
+              "canh_day",
+              "chieu_cao",
+              "chieu_cao_SG",
+              "dien_tich_day_ABC"
+            ],
+            "learner_text": "Tính thể tích S.ABC: V = 1/3 × S(ABC) × SG = 9/2.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "B",
+        "C",
+        "S",
+        "canh_day",
+        "chieu_cao"
+      ],
+      "diagnostics": [
+        "ANNOTATION_UNBOUND canh_day: the text gives the number without naming a segment",
+        "ANNOTATION_UNBOUND chieu_cao: the text gives the number without naming a segment"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`."
+    }
+  }
+}

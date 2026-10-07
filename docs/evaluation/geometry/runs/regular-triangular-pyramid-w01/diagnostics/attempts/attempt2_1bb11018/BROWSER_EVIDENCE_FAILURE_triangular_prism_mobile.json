@@ -1,0 +1,348 @@
+{
+ "source": "results/BROWSER_EVIDENCE.json of attempt 2 (not committed whole; this is the failing page)",
+ "commit": null,
+ "pass": false,
+ "family": "triangular_prism",
+ "viewport": "mobile",
+ "page": {
+  "viewport": {
+   "id": "mobile",
+   "width": 390,
+   "height": 844,
+   "formation": "representative",
+   "orbit": true
+  },
+  "assertions": {
+   "quantity_picker": {
+    "pass": false,
+    "details": {
+     "pass": false,
+     "reason_codes": [
+      "PICKER_NO_ANSWER",
+      "PICKER_RESULTS_MISMATCH",
+      "PICKER_STEPS_MISMATCH"
+     ],
+     "expected": {
+      "givens": [
+       "AB_length",
+       "AC_length",
+       "AD_length"
+      ],
+      "steps": [
+       "dien_tich_day_ABC"
+      ],
+      "results": [
+       "the_tich_solid_ABCDEF"
+      ]
+     },
+     "observed": {
+      "results": [],
+      "steps": [],
+      "givens": [
+       "AB_length",
+       "AC_length",
+       "AD_length"
+      ]
+     }
+    }
+   },
+   "topology": {
+    "pass": true,
+    "details": {
+     "expected": {
+      "vertices": 6,
+      "edges": 9,
+      "faces": 5,
+      "euler": 2
+     },
+     "actual": {
+      "vertices": 6,
+      "edges": 9,
+      "faces": 5,
+      "euler": 2
+     }
+    }
+   },
+   "labels": {
+    "pass": true,
+    "details": {
+     "expected": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "actual": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ]
+    }
+   },
+   "css_readiness": {
+    "pass": false,
+    "details": {
+     "scene_layout": false,
+     "canvas_layout": false,
+     "canvas_size": true,
+     "controls_styled": false,
+     "toolbar_styled": false,
+     "no_document_overflow": true
+    }
+   },
+   "run_completed": {
+    "pass": false,
+    "details": "POLL_TIMEOUT:{\"visible_edge_ids\":[],\"hidden_edge_ids\":[],\"mixed_edge_ids\":[],\"edge_spans\":[],\"duplicate_visual_owner_ids\":[],\"highlighted_render_owner_ids\":[],\"selected_id\":null,\"dash_signature\":{}}"
+   }
+  },
+  "screenshots": {
+   "quantity_picker": {
+    "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/images/triangular-prism/mobile/quantity_picker.png",
+    "bytes": 7078,
+    "sha256": "10601c9c4d775496fe9ae0c957515adc629f8aad09cb51c27401b71a841dec24",
+    "scroll": {
+     "x": 0,
+     "y": 1102
+    }
+   }
+  },
+  "capture_order": [
+   "quantity_picker"
+  ],
+  "quantity_picker": {
+   "pass": false,
+   "reason_codes": [
+    "PICKER_NO_ANSWER",
+    "PICKER_RESULTS_MISMATCH",
+    "PICKER_STEPS_MISMATCH"
+   ],
+   "expected": {
+    "givens": [
+     "AB_length",
+     "AC_length",
+     "AD_length"
+    ],
+    "steps": [
+     "dien_tich_day_ABC"
+    ],
+    "results": [
+     "the_tich_solid_ABCDEF"
+    ]
+   },
+   "observed": {
+    "results": [],
+    "steps": [],
+    "givens": [
+     "AB_length",
+     "AC_length",
+     "AD_length"
+    ]
+   }
+  },
+  "topology": {
+   "vertices": 6,
+   "edges": 9,
+   "faces": 5,
+   "euler": 2
+  },
+  "labels": {
+   "A": {
+    "x": 14,
+    "y": 285,
+    "text": "A"
+   },
+   "B": {
+    "x": 25,
+    "y": 285,
+    "text": "B"
+   },
+   "C": {
+    "x": 36,
+    "y": 285,
+    "text": "C"
+   },
+   "D": {
+    "x": 47,
+    "y": 285,
+    "text": "D"
+   },
+   "E": {
+    "x": 57,
+    "y": 285,
+    "text": "E"
+   },
+   "F": {
+    "x": 67,
+    "y": 285,
+    "text": "F"
+   }
+  },
+  "css_readiness": {
+   "actual": {
+    "scene": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 10802,
+     "left": 8,
+     "right": 382
+    },
+    "box": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 10734,
+     "left": 8,
+     "right": 382
+    },
+    "canvas": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 10716,
+     "left": 8,
+     "right": 382
+    },
+    "controls": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 49,
+     "left": 8,
+     "right": 382
+    },
+    "controlButton": {
+     "display": "inline-block",
+     "position": "static",
+     "fontFamily": "Arial",
+     "fontSize": "13.3333px",
+     "color": "rgba(16, 16, 16, 0.3)",
+     "width": 101.40625,
+     "height": 25,
+     "left": 8,
+     "right": 109.40625
+    },
+    "controlText": {
+     "display": "inline",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 59.359375,
+     "height": 17,
+     "left": 259.25,
+     "right": 318.609375
+    },
+    "toolbar": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 268.875,
+     "left": 8,
+     "right": 382
+    },
+    "toolbarTitle": {
+     "display": "block",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "32px",
+     "color": "rgb(0, 0, 0)",
+     "width": 374,
+     "height": 111,
+     "left": 8,
+     "right": 382
+    }
+   },
+   "baseline": {
+    "div": {
+     "display": "inline",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 49.765625,
+     "height": 17,
+     "left": 8,
+     "right": 57.765625
+    },
+    "button": {
+     "display": "inline",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 49.765625,
+     "height": 18,
+     "left": 8,
+     "right": 57.765625
+    },
+    "ul": {
+     "display": "inline",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 49.765625,
+     "height": 17,
+     "left": 8,
+     "right": 57.765625
+    },
+    "span": {
+     "display": "inline",
+     "position": "static",
+     "fontFamily": "\"Times New Roman\"",
+     "fontSize": "16px",
+     "color": "rgb(0, 0, 0)",
+     "width": 49.765625,
+     "height": 17,
+     "left": 8,
+     "right": 57.765625
+    }
+   },
+   "stylesheets_auxiliary": {
+    "count": 1,
+    "readableRules": 0,
+    "unreadable": 1
+   },
+   "scrollWidth": 390,
+   "viewportWidth": 390,
+   "checks": {
+    "scene_layout": false,
+    "canvas_layout": false,
+    "canvas_size": true,
+    "controls_styled": false,
+    "toolbar_styled": false,
+    "no_document_overflow": true
+   },
+   "pass": false
+  },
+  "canvas_box": {
+   "x": 8,
+   "y": 294.875,
+   "w": 374,
+   "h": 10752
+  },
+  "run_error": "Error: POLL_TIMEOUT:{\"visible_edge_ids\":[],\"hidden_edge_ids\":[],\"mixed_edge_ids\":[],\"edge_spans\":[],\"duplicate_visual_owner_ids\":[],\"highlighted_render_owner_ids\":[],\"selected_id\":null,\"dash_signature\":{}}\n    at pollUntil (file:///D:/tmp/rtp%20diag/frontend/scripts/compiler-scene-replay-lib.mjs:1261:9)\n    at async runPositive (file:///D:/tmp/rtp%20diag/frontend/scripts/compiler-scene-suite.mjs:1014:5)\n    at async runSuite (file:///D:/tmp/rtp%20diag/frontend/scripts/compiler-scene-suite.mjs:1740:40)\n    at async file:///D:/tmp/rtp%20diag/frontend/scripts/compiler-scene-replay.mjs:42:18",
+  "pass": false
+ }
+}

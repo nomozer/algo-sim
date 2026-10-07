@@ -1,0 +1,53 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "run_id": "regular-triangular-pyramid-w01",
+  "script": "diagnostics/rtp_w01_measure.sh (clean detached CRLF worktree D:/tmp/rtp diag, path with a space, logs outside the worktree; run through `tr -d '\\r' | bash -s` because the CRLF checkout breaks bash)",
+  "attempts": [
+    {
+      "attempt": 1,
+      "commit": "aa583ad9",
+      "worktree": "D:/tmp/rtp diag",
+      "used_for_acceptance": false,
+      "outcome": "suite 8/8 families PASS; W02 probe 16/16; W05 focus probe 24/24; occlusion exit 0; playback PASS; evidence builder and prune exit 0 (kept 504, pruned 379); W04 probe 23/24 — regular_triangular_pyramid desktop LABEL_CLIPPED + VERTEX_CLIPPED on the rotated and the resized frames",
+      "cause": "PRODUCT — the camera fit's 'planes/lines only' fallback (Box3 of the root group) ran BEFORE the whole-scene points were merged. At step 0 only vertices are drawn and their dot markers and pick spheres are excluded from the fit, so the fallback always fired and added two corners of a box padded by the pick radius. Every family's neutral figure sat 65-100 px left of the canvas centre and the orbit pivot sat ~0.9 units off the figure; under the W4 probe orbit (~92 deg azimuth, ~23 deg elevation) the flatter regular triangular pyramid's vertex C left the 683 px canvas by 17 px (the regular square pyramid kept 16 px). Diagnosed with a throwaway instrumented build (fit points dumped: 2 box corners, 0 drawn points); reverted, never committed.",
+      "user_decision": "2026-10-07 — move the orbit centre to the figure's centre (option chosen over 'record the limit' and 'shrink the initial frame'). The first proposal (slide the target along the view ray) was withdrawn after checking: the target was already the ray point closest to the box centre; the root cause was the fallback order.",
+      "fix": "1e90ca0e fix(scene3d): diemVuaKhung merges first and falls back to the box only when nothing finite remains (red baseline: the old order returned the two padded corners); refreeze 1bb11018",
+      "trial_before_attempt_2": "W04 probe on a build with the fix (not a measurement): a full eight-family run passed every case it reached but showed cross_section/mobile RUN_ERROR POLL_TIMEOUT and then hung inside regular_square_pyramid/mobile (no log line for 20 min; probe and its headless Chrome stopped by hand). Rerun alone on the same build for cross_section, regular_square_pyramid, regular_triangular_pyramid: 9/9 PASS (neutral frames centred, rotated margins 85-92 px, resized new family 32 px). The two mobile faults did not reproduce on the same build and are recorded as an intermittent harness/environment finding, not as product evidence either way.",
+      "evidence": "diagnostics/attempts/attempt1_aa583ad9/"
+    },
+    {
+      "attempt": 2,
+      "commit": "1bb11018",
+      "worktree": "D:/tmp/rtp diag",
+      "used_for_acceptance": false,
+      "outcome": "suite 7/8 families (triangular_prism FAIL on one page: mobile); W02 probe exit 0; W04 probe 24/24 (the attempt-1 failure is gone); W05 focus probe 24/24; occlusion, playback exit 0; evidence builder exit 1 (triangular_prism mobile/neutral_final image missing — consequence of the failed page)",
+      "cause": "ENVIRONMENT/HARNESS (intermittent) — the triangular_prism mobile page loaded WITHOUT its stylesheet: every style check of css_readiness false (scene not flex, canvas box static, controls and toolbar in the browser default font), screenshot blank, and the canvas grew to 374x10752 px. Without the stylesheet the canvas is displayed at its drawing-buffer size (2x on mobile), its auto-height box grows, the ResizeObserver resizes again — a runaway that also explains the 20-minute hang of the trial run. The fix in this run only changes which points the camera fit uses; it cannot change stylesheet application. Isolated reproduction on the same build: 0/8 (stylesheet 802 rules applied, canvas 517 px each time); the same build loaded the other mobile pages of attempt 2 normally (W04 8, W05 8, playback, suite 7).",
+      "product_fragility_noted": "the runaway needs a missing stylesheet; recorded as a finding (renderer.setSize(w, h, false) leaves CSS sizing to the stylesheet), not fixed in this run",
+      "next": "attempt 3 at the same commit, no code or harness change, pre-registered stop rule (diagnostics/attempts/attempt2_1bb11018/ATTEMPT3_PREREGISTRATION.txt)",
+      "evidence": "diagnostics/attempts/attempt2_1bb11018/"
+    },
+    {
+      "attempt": 3,
+      "commit": "1bb11018",
+      "worktree": "D:/tmp/rtp diag",
+      "preregistration": "diagnostics/logs/ATTEMPT3_PREREGISTRATION.txt (same commit, no code/harness change, stop on the unstyled-load signature) — the signature did not recur",
+      "used_for_acceptance": true,
+      "outcome": "suite 8/8 families, 16/16 positive runs, 31/31 negative cases; W05 focus probe 24/24; occlusion pass (scenes HUMAN_REVIEW_PENDING as in W5); playback 16/16; evidence builder exit 0 (72 hidden-edge crops, endpoints inside, 0 oracle disagreements, 0 duplicate owners); prune kept 492, pruned 358 (67101 KiB). Two steps lacked a valid result and were rerun ALONE at the same commit after the pipeline (nothing else rerun): W02 probe (hung, see below) -> rerun 16/16; W04 probe 23/24 (cross_section desktop POLL_TIMEOUT:false) -> cross_section rerun 3/3. The new family's desktop W04 frames keep 109 px (neutral), 95 px (rotated), 34 px (resized) of margin.",
+      "steps_without_valid_result": [
+        {
+          "step": "W02_PROBE",
+          "what": "blocked after cuboid/mobile: the headless Chrome for the next family (cube) stayed on about:blank from 19:22 local with <9 s CPU in 28 min (BrowserSession.open waits on the WebSocket/CDP replies without a timeout; the app never loaded, no assertion ran). Killed by hand; the step logged exit=127; its JSON was never written.",
+          "rerun": "W02 alone, all families (the probe has no per-family flag): 16/16 PASS — results/rerun/W02_CLOSURE_PROBE.json, diagnostics/logs/W02_PROBE_RERUN_1bb11018.log"
+        },
+        {
+          "step": "W04_PROBE",
+          "what": "cross_section/desktop RUN_ERROR POLL_TIMEOUT:false (page never ready) while the machine ran at 100 % CPU with 566 MB free of 16 GB (user applications: browser, IDE, chat client — not touched). The other 23 cases passed.",
+          "rerun": "cross_section only (--ho), 3/3 PASS — results/rerun/W04_PANELS_PROBE.json, diagnostics/logs/W04_PROBE_RERUN_cross_section_1bb11018.log; the 23 original results stay in results/W04_PANELS_PROBE.json"
+        }
+      ],
+      "environment": "attempt 2's unstyled page, the trial hangs and attempt 3's two faults are page-never-ready signatures under machine load (CPU 100 %, 566 MB free measured during attempt 3; CPU 9 %, 2.6 GB free during the reruns, which passed). None of them is a product assertion.",
+      "images": "rerun images are not published except the four review-set images the hung W02 never captured (images/rerun/...: cross-section, regular square and regular triangular pyramid steps panel, regular square pyramid mobile steps sheet); every rerun image has its sha256 in the rerun probe JSON",
+      "evidence": "results/, images/, diagnostics/logs/*_1bb11018.*"
+    }
+  ]
+}
