@@ -1043,3 +1043,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE — focused simulation workspace + one source-grounding reader slice; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/TOOL_INVENTORY.md` · `diagnostics/corpus/LABELS_W05.json` · `diagnostics/cache_proof/CACHE_DECISION_W05.json` · `results/` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+
+### WAVE_ID = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE
+- **RUN_ID:** regular-triangular-pyramid-w01 (task regular-triangular-pyramid, wave W1; local; kept on feat/regular-square-pyramid by user instruction)
+- **DATE:** 2026-10-07
+- **START_BASE:** e9435d67 (W5 head)
+- **CODE_COMMIT_OR_NONE:** 0d4c4f8b (informatics cleanup) · 983cfc16 (T8 in the declared Q3 domain) · 82beaf62 (cross-section edge steps named by face; CACHE_VERSION 116) · df614b30 (display rotation, D1–D4) · 3487c0a7 (height marker, D2 segment, oracle world frame) · e7b92e49 (ponytail cleanup) · 1e90ca0e (camera fit fallback after the whole scene); harness 4e285690
+- **CANDIDATE:** 5e1c0639… → 92c9e198… (two freezes, same tree hash: aa583ad9 at c6fd9996, 1bb11018 at 1e90ca0e) · CACHE_VERSION 116 (bump, CACHE_DECISION.json) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** measurement 1bb11018 (attempt 3) · evidence c08a1eed; attempts 1–2 kept (`MEASUREMENT_ATTEMPTS.json`)
+- **CLASSIFICATION:** ⟨T3⟩
+- **FULL_PRODUCT_SUITE:** ⟨T3 detail⟩
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/REPORT.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/
+- **PASS:** at 1bb11018 — suite 8/8, 16/16 positives, 31/31 negatives; W02 16/16 (rerun alone after a harness hang); W04 24/24 (cross_section rerun alone after a page timeout at 100 % CPU); W05 24/24; occlusion pass; playback 16/16; 72 crops, 0 oracle disagreements, 0 duplicate owners; 492 images kept / 358 pruned
+- **CLOSED:** —
+- **OPENED:** ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES · ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED · ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION · ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-square-pyramid-w05 record (attempt 4 missing from MEASUREMENT_ATTEMPTS.json; node harness 91 pass + 2 skip, not 93/93) — `corrections/W05_RECORD_CORRECTION.json`; W5 files unchanged
+- **NEXT_ACTION_AT_TIME:** human visual review (REVIEW.md R1–R12 with the W5/W4 packages) and a D5 option; on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** ⟨T3⟩
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** regular triangular pyramid / regular tetrahedron in a declared exact domain; honest refusal outside it; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/corpus/LABELS.json` · `diagnostics/cache_proof/CACHE_DECISION.json` · `inputs/REVIEW_SET.json` · `results/IMAGE_POLICY.json`
+- **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

@@ -1093,3 +1093,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** focused simulation workspace (presentation) + chained-equality source reader; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/TOOL_INVENTORY.md` · `diagnostics/SKILL_NOTES.md` · `diagnostics/corpus/LABELS_W05.json` · `diagnostics/cache_proof/` · `results/BROWSER_EVIDENCE.json` · `results/W05_FOCUS_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W02_CLOSURE_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+## WAVE_ID = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE
+- **RUN_ID:** regular-triangular-pyramid-w01 (task regular-triangular-pyramid, wave W1; `docs/evaluation/RUN_NAMING.md`; kept on `feat/regular-square-pyramid` by user instruction — `RUN.json`)
+- **DATE:** 2026-10-07
+- **REPORT:** docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/REPORT.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/
+- **START_BASE:** e9435d67 (W5 head)
+- **CODE_COMMIT:** 983cfc16 · 82beaf62 · df614b30 · 3487c0a7 · e7b92e49 · 1e90ca0e (harness 4e285690; cleanup 0d4c4f8b; labels/oracle/amendment §18 before the change dc0a804b)
+- **MEASUREMENT_COMMIT:** 1bb11018 (attempt 3; local, clean detached CRLF worktree with a space in its path; suite, W02, W04, W05, occlusion, playback, builder, prune; W02 and W04 cross_section rerun alone at the same commit); attempts 1 (aa583ad9) and 2 (1bb11018) kept (`MEASUREMENT_ATTEMPTS.json`, `diagnostics/attempts/`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit c08a1eed after the measurement (results, images, inputs, logs)
+- **CLASSIFICATION:** ⟨T3⟩
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (5e1c0639… → 92c9e198…; two freezes, same tree hash, product commit 1e90ca0e)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 115 -> 116 in 82beaf62; `diagnostics/cache_proof/CACHE_DECISION.json`; semantic environment b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-square-pyramid-w05 record (`corrections/W05_RECORD_CORRECTION.json`; W5 files untouched)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** regular triangular pyramid / regular tetrahedron in a declared exact (ℚ³) domain with honest refusal outside it; selective image retention; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/corpus/LABELS.json` · `diagnostics/oracle_rtp_w01.py` · `diagnostics/fault_injection_rtp_w01.py` · `diagnostics/cache_proof/CACHE_DECISION.json` · `inputs/REVIEW_SET.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json` · `results/IMAGE_POLICY.json`
+- **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)

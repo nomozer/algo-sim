@@ -9,9 +9,17 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
+
+- **Việc `regular-triangular-pyramid` W1 (2026-10-07, run
+  [`regular-triangular-pyramid-w01`](evaluation/geometry/runs/regular-triangular-pyramid-w01/), máy local, cùng nhánh
+  theo lệnh người dùng):** REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE — chóp tam giác đều + tứ diện đều trên route
+  sản phẩm trong miền hẹp ℚ³ người dùng chọn (cạnh đáy `k√2`/`k√6`, chiều cao bội √3; cạnh hữu tỉ từ chối trung thực,
+  `foundation_only`); D1–D4 sửa, D6 giữ, D5 chờ chọn phương án; khung nhìn ban đầu ở giữa mọi họ; `CACHE_VERSION` 116,
+  candidate `92c9e198…`. Việc duy nhất: người dùng duyệt hình theo `REVIEW.md` của run này (R1–R12) cùng gói W5/W4 và chọn
+  phương án D5 (chặn merge); duyệt thì merge, push, xoá nhánh ở một lượt riêng có lệnh. Gạch đầu dòng W5 trở xuống là bối cảnh.
 
 - **W5 của việc `regular-square-pyramid` (2026-10-06/07, run
   [`regular-square-pyramid-w05`](evaluation/geometry/runs/regular-square-pyramid-w05/), máy local):**

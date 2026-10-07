@@ -11,24 +11,24 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 115` (regular-square-pyramid-w04: envelope phục vụ đổi nội dung — đoạn nằm trên cạnh khối nhường
-  nét cho cạnh, lời kể gọi vật theo ký hiệu của đề; regular-square-pyramid-w05 giữ nguyên — bằng chứng row); provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 116` (regular-triangular-pyramid-w01: hai envelope thiết diện đã phục vụ đổi nhãn bước — mỗi bước nối
+  cạnh mang tên theo mặt; 35/37 fixture trùng byte — `runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json`); provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 chỉ ở local; chưa merge)
-CURRENT_WAVE = IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE (việc regular-square-pyramid, W5; run regular-square-pyramid-w05; máy local)
-PRODUCT_STATE = candidate 5e1c0639… (product commit 82225a7b; hai lần đóng băng cùng tree hash), CACHE_VERSION 115, LLM_ONLY
-MEASUREMENT = f01df0e5 (lần đo 4; bằng chứng 3b31aa18) (local, worktree tách rời sạch CRLF, có dấu cách)
+CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
+CURRENT_WAVE = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (việc regular-triangular-pyramid, W1; run regular-triangular-pyramid-w01; máy local; giữ nhánh theo lệnh người dùng)
+PRODUCT_STATE = candidate 92c9e198… (product commit 1e90ca0e; hai lần đóng băng cùng tree hash), CACHE_VERSION 116, LLM_ONLY
+MEASUREMENT = 1bb11018 (lần đo 3; bằng chứng c08a1eed) (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-square-pyramid-w05; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại 4123fb4f)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-square-pyramid-w05/REVIEW.md R1–R10 + gói W4 R1–R10, gộp W1–W3)
-USER_DIRTY_STATE = D frontend/public/favicon.svg + thay đổi chưa commit không thuộc W5 (xoá script/fixture Tin học cũ, sửa vài tài liệu) ở máy local (giữ nguyên)
+FINAL_DECISION = ⟨T3⟩
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
+USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng duyệt hình theo runs/regular-square-pyramid-w05/REVIEW.md cùng gói W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng duyệt hình theo runs/regular-triangular-pyramid-w01/REVIEW.md cùng gói W5/W4 và chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -122,6 +122,10 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.
 - **Câu hỏi còn mở từ w20:** H-W20-4 (tàn dư Tin học trong mã — run `cuboid-acceptance` liệt kê thêm phần ở
   shell). H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
+- **regular-triangular-pyramid-w01 chờ người dùng:** duyệt hình `REVIEW.md` R1–R12 của run; chọn phương án D5
+  (`ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL`). Mở mới: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES` (miền ℚ³),
+  `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED`, `ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION`. Khung nhìn ban đầu
+  đã sửa cho mọi họ (hình nay ở giữa) — ảnh trung tính khác W5 (dịch ngang).
 - **W5 (IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE) chờ người dùng:** duyệt hình theo `REVIEW.md` của run
   regular-square-pyramid-w05 cùng gói W4. R4 của W4 (trần chiều cao canvas mobile) đã được brief W5 trả lời: không trần.
 - **W4 (SHARED_SIMULATION_UI_CLOSURE):** gói duyệt R1–R10 của run regular-square-pyramid-w04. Người dùng không chấp nhận hoãn H-W2-3 ⇒ W4 đưa mọi bảng thông tin lên một
@@ -146,11 +150,13 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 ## 6. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_SQUARE_PYRAMID_EVIDENCE
+CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-W5 của việc `regular-square-pyramid` (máy local) đã làm chế độ tập trung (không thanh trên toàn cục, quay lại, công cụ
+Việc `regular-triangular-pyramid` W1 (máy local, cùng nhánh) đã thêm chóp tam giác đều + tứ diện đều trong miền ℚ³ trên route
+sản phẩm, sửa D1–D4, xoay hiển thị đáy nghiêng và khung nhìn ban đầu; việc kế tiếp: người dùng duyệt `REVIEW.md` của run
+`regular-triangular-pyramid-w01` (R1–R12) cùng gói W5/W4 và chọn phương án D5. Bối cảnh trước đó: W5 của việc `regular-square-pyramid` (máy local) đã làm chế độ tập trung (không thanh trên toàn cục, quay lại, công cụ
 nhóm, toàn màn hình tuỳ chọn, bỏ thẻ lời giải lặp) và lát cắt backend "chuỗi bằng nhau" trên route thật. Việc kế tiếp:
 người dùng duyệt hình theo `docs/evaluation/geometry/runs/regular-square-pyramid-w05/REVIEW.md` cùng gói W4
 (gộp duyệt W1–W3); khi có phê duyệt
@@ -167,6 +173,9 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `regular-triangular-pyramid-w01` (REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE):
+  `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/` (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`, `RUN.json`,
+  `MEASUREMENT_ATTEMPTS.json`, `results/`, `images/`, `diagnostics/`, `corrections/W05_RECORD_CORRECTION.json`).
 - Run `regular-square-pyramid-w05` (IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE):
   `docs/evaluation/geometry/runs/regular-square-pyramid-w05/` (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`, `RUN.json`,
   `MEASUREMENT_ATTEMPTS.json`, `results/`, `images/`, `diagnostics/`).
