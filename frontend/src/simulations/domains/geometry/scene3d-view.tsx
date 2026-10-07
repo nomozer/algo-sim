@@ -612,6 +612,20 @@ export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
 }
 
 /**
+ * Điểm khung nhìn ôm: hình đang dựng (`diemKhungNhin`) + toàn cảnh (`diemCanh`, đã xoay hiển thị). Hộp bao đầy đủ
+ * chỉ là dự phòng cho cảnh CHỈ có mặt phẳng/đường — xét nó sau khi gộp toàn cảnh (regular-triangular-pyramid-w01:
+ * ở bước 0 chỉ có điểm, vùng bấm lọt vào hai góc hộp bao ⇒ hình lệch 65–100 px, tâm quỹ đạo lệch khỏi hình).
+ */
+export function diemVuaKhung(goc: THREE.Object3D, diemCanh: Vec3[]): Vec3[] {
+  const diem: Vec3[] = [...diemKhungNhin(goc), ...diemCanh];
+  if (diem.length === 0) {
+    const hop = new THREE.Box3().setFromObject(goc);
+    if (!hop.isEmpty()) diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
+  }
+  return diem;
+}
+
+/**
  * Cỡ chấm đỉnh và vùng bấm theo ĐIỂM ẢNH CSS — gọi mỗi khung (w11, W10-H5).
  *
  * Lưới giữ bán kính gốc; ở đây chỉ co giãn cho hình chiếu bằng đúng token
@@ -1716,13 +1730,6 @@ export function Scene3DWorkspace({
     // Đọc hộp bao của những gì ĐANG dựng trong nhóm gốc, không đọc `scene` —
     // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
     vuaKhungRef.current = () => {
-      const diem = diemKhungNhin(goc);
-      // Cảnh CHỈ có mặt phẳng/đường thẳng: thà lấy hộp bao đầy đủ còn hơn
-      // không đặt được khung nhìn nào.
-      if (diem.length === 0) {
-        const hop = new THREE.Box3().setFromObject(goc);
-        if (!hop.isEmpty()) diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
-      }
       /* ⚠️ VÀ CẢ VẬT CHƯA XUẤT HIỆN — đây là bản sửa của một lỗi đo được.
        *
        * Khung nhìn cố ý **đứng yên** giữa các bước (nếu không, tua bước biến
@@ -1734,7 +1741,7 @@ export function Scene3DWorkspace({
        * Sửa bằng cách khung nhìn ôm **toàn cảnh** ngay từ đầu: camera vẫn đứng
        * yên (bất biến giữ nguyên), nhưng nó đứng ở chỗ nhìn được hình CUỐI.
        * Hợp với hộp bao đang dựng để phép tách khối vẫn đúng. */
-      for (const p of diemHuuHan(scene.objects)) diem.push(xoay(p, qRef.current));
+      const diem = diemVuaKhung(goc, diemHuuHan(scene.objects).map((p) => xoay(p, qRef.current)));
       if (diem.length === 0) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;

@@ -7,6 +7,7 @@ import {
   datCoDauDinh,
   datKhungNhin,
   diemKhungNhin,
+  diemVuaKhung,
   doanNhuongCanh,
   lamDiu,
   updateCanonicalEdgeVisibility,
@@ -414,6 +415,19 @@ describe("w11 · chấm đỉnh và đường phụ", () => {
     for (const p of diemKhungNhin(goc)) {
       expect(Math.hypot(...p)).toBeLessThan(1e-9);   // chỉ còn đúng điểm A ở gốc
     }
+  });
+
+  /* regular-triangular-pyramid-w01 — bước 0 chỉ có điểm (chấm đỉnh và vùng bấm không vào khung), nên hộp bao
+     dự phòng "cảnh chỉ có mặt phẳng/đường" từng chạy TRƯỚC khi gộp toàn cảnh: hai góc hộp bao nở theo vùng bấm
+     lọt vào ⇒ hình lệch 65–100 px khỏi tâm, tâm quỹ đạo lệch, chóp tam giác đều văng khỏi khung sau cú xoay W4. */
+  it("khung nhìn chỉ dùng hộp bao dự phòng khi toàn cảnh không có điểm hữu hạn nào", () => {
+    const goc = new THREE.Group();
+    goc.add(buildObject3D(DIEM, false)!);
+    const canh: [number, number, number][] = [[0, 0, 0], [3, 0, 0]];
+    expect(diemVuaKhung(goc, canh)).toEqual(canh);
+    const chiDuong = new THREE.Group();
+    chiDuong.add(buildObject3D(DUONG, false)!);
+    expect(diemVuaKhung(chiDuong, [])).toHaveLength(2);   // dự phòng: hai góc hộp bao
   });
 
   it("đường vô hạn không được nhấn thì nhạt; đang dựng/được chọn thì rõ", () => {
