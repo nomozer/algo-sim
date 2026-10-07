@@ -26,7 +26,10 @@ PROBE_W13 = (ROOT / "docs" / "evaluation" / "geometry" / "runs" / "w13-geometry-
 #: "chuỗi bằng nhau = cùng một giá trị cho mọi đoạn"), `ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY`. Hành vi mới khoá ở
 #: `test_w05_chuoi_bang_nhau_doi_dang_ky`; artifact W13 không sửa.
 DOI_DANG_KY_W05 = {"chain_equal", "chain_equal_first"}
-DOI_DANG_KY = {"dai_cm", "standalone_wrong_segment"} | DOI_DANG_KY_W05
+#: regular-triangular-pyramid-w01 (§18.3): độ dài căn của đề là MỘT con số — ba hàng căn nay đọc được độ dài; lỗi và
+#: bằng chứng GIVEN không đổi. Hành vi mới khoá ở `test_rtp_do_dai_can_doi_dang_ky`; artifact W13 không sửa.
+DOI_DANG_KY_RTP = {"radical", "radical_fraction", "radical_wrong_segment"}
+DOI_DANG_KY = {"dai_cm", "standalone_wrong_segment"} | DOI_DANG_KY_W05 | DOI_DANG_KY_RTP
 DAI_CM = "Cho hình chóp S.ABC có AB dài 5 cm."
 MAU_THUAN = "SOURCE_EVIDENCE_CONFLICT"
 
@@ -97,13 +100,24 @@ def test_mau_tru_truc_xien_neu_du_ban_kinh():
 @pytest.mark.parametrize("row", [r for r in _hang_w13() if r["id"] not in DOI_DANG_KY],
                          ids=lambda r: r["id"])
 def test_cach_viet_cu_khong_doi(row):
-    """GUARD: 21 hàng W13 ngoài bốn hàng đăng ký giữ nguyên (độ dài đọc được, lỗi, bằng chứng)."""
+    """GUARD: mọi hàng W13 ngoài các hàng đăng ký đổi (`DOI_DANG_KY`) giữ nguyên (độ dài đọc được, lỗi, bằng chứng)."""
     text = row["text"]
     loi, bang_chung, _ly_do = G._bang_chung_do_dai(
         text, row["declared"]["name"], _gia_tri(row["declared"]["value"]), None)
     do_dai = {"-".join(sorted(k)): str(v) for k, v in do_dai_trong_de(text).items()}
     assert (do_dai, loi, bang_chung) == (
         row["do_dai_trong_de"], row["given_evidence_error"], row["given_evidence"])
+
+
+@pytest.mark.parametrize("row", [r for r in _hang_w13() if r["id"] in DOI_DANG_KY_RTP], ids=lambda r: r["id"])
+def test_rtp_do_dai_can_doi_dang_ky(row):
+    """§18.3: `AB = 2√3` gắn AB ↦ 2√3 (W13: không đọc); lỗi + bằng chứng GIVEN như probe W13."""
+    text = row["text"]
+    loi, bang_chung, _ly_do = G._bang_chung_do_dai(
+        text, row["declared"]["name"], _gia_tri(row["declared"]["value"]), None)
+    do_dai = {"-".join(sorted(k)): str(v) for k, v in do_dai_trong_de(text).items()}
+    assert do_dai == {"A-B": text.split("AB = ")[1].rstrip(".")}
+    assert (loi, bang_chung) == (row["given_evidence_error"], row["given_evidence"])
 
 
 @pytest.mark.parametrize("row", [r for r in _hang_w13() if r["id"] in DOI_DANG_KY_W05], ids=lambda r: r["id"])

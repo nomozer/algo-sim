@@ -242,9 +242,11 @@ def test_an_unstated_non_integer_height_is_refused(value):
     ("AB = 1,5 cm", {"AB": "3/2"}),
     ("DE = 3/2, DF = 8/3", {"DE": "3/2", "DF": "8/3"}),
     ("AB = 3, AC = 4", {"AB": "3", "AC": "4"}),
-    ("SA = 2√3", {}),
-    ("AB = 3√2/2", {}),
-    ("đoạn AB có độ dài 2√3", {}),
+    # regular-triangular-pyramid-w01 (§18.3): a radical length is read WHOLE (before: not read at all — `{}`); it is
+    # still never truncated to its coefficient.
+    ("SA = 2√3", {"AS": "2√3"}),
+    ("AB = 3√2/2", {"AB": "3√2/2"}),
+    ("đoạn AB có độ dài 2√3", {"AB": "2√3"}),
 ])
 def test_the_source_length_reader_never_truncates_a_number(text, expected):
     from app.simulation.semantic_program.segment_relation import do_dai_trong_de

@@ -24,6 +24,7 @@ from typing import Any
 from ..geometry import kernel as K
 from ..geometry.exact import Line3, Plane3, Vec3
 from ..geometry.predicates import collinear
+from ..geometry.radical import square
 from .display_names import ky_hieu_dai_luong
 from .grounding_gate import _bang_chung_do_dai, _cung_doan
 from .segment_relation import cac_doan_truoc
@@ -165,9 +166,9 @@ def _do_dai_de_cho(q: str, loai: dict[str, str], mem: dict[str, Any], de: str) -
     if loai.get(p) != "point3" or loai.get(r) != "point3":
         return "the named segment's endpoints are not scene points"
     d = mem[r] - mem[p]
-    try:
-        bang = d.dot(d) == v * v
-    except TypeError:
+    try:                                       # §18.3: độ dài đề cho có thể là căn
+        bang = d.dot(d) == square(v)
+    except (TypeError, ValueError):
         bang = False
     if not bang:
         return f"the figure's {p}{r} is not {v}"
@@ -253,9 +254,9 @@ def chieu_cao_the_tich(objects: list[dict[str, Any]], memory: dict[str, Any],
             gt = memory.get(c["id"])
             if cap and all(isinstance(memory.get(p), Vec3) for p in cap):
                 p, q = memory[cap[0]], memory[cap[1]]
-                try:
-                    nhat_quan = (p - q).dot(p - q) == gt * gt
-                except TypeError:
+                try:                           # §18.3: giá trị có thể là căn (√3) — so bình phương chính xác
+                    nhat_quan = (p - q).dot(p - q) == square(gt)
+                except (TypeError, ValueError):
                     nhat_quan = False
                 if nhat_quan and (p - q).cross(n).is_zero() and tren_day(p) != tren_day(q):
                     cao.append(c)

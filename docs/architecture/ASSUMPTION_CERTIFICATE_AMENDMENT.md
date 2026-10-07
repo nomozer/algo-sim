@@ -1130,11 +1130,13 @@ Nhãn ghi trước: `docs/evaluation/geometry/runs/regular-triangular-pyramid-w0
 | `regular_triangular_pyramid` | `hình/khối chóp tam giác đều S.ABC` | (đỉnh, *đáy) |
 | `base_equilateral` | phát kèm dòng trên; `đáy ABC là tam giác đều (cạnh b)?` (đáy của khối đã nêu) | (*đáy); value = cạnh khi đề viết |
 | `regular_tetrahedron` | `(hình/khối)? tứ diện đều ABCD`; `chóp tam giác đều … có tất cả các cạnh (đều)? bằng a` | như `pyramid` |
-| `pyramid` (thêm) | `(hình/khối)? tứ diện ABCD` — đỉnh là ký hiệu ĐẦU, đáy ba ký hiệu sau | (A, B, C, D) |
+| `pyramid` (thêm) | `(hình/khối)? tứ diện đều ABCD` — đỉnh là ký hiệu ĐẦU, đáy ba ký hiệu sau (xem đính chính dưới) | (A, B, C, D) |
 | `edge_all` | `tứ diện đều ABCD (có)? cạnh (bằng)? a`, `tất cả các cạnh bằng a` | như khối; value = cạnh |
 | `lateral_edge` · `height` | như T7, gắn khối chóp tam giác đều duy nhất | như khối |
 | `base_equilateral` có value | `cạnh đáy bằng b` của khối chóp tam giác đều duy nhất | (*đáy) |
 | `base_centre` (mở cho đáy tam giác) | `G là trọng tâm (của)? (tam giác)? ABC`; `O là tâm (của)? (mặt)? đáy`; `O là tâm (của)? tam giác (đều)? ABC` | (tâm, *đáy) |
+
+> **Đính chính 2026-10-07 (trước mọi phép đo, sau lượt test hồi quy đầu).** Dòng `pyramid` (thêm) ghi lúc đăng ký là `tứ diện ABCD` (không cần "đều"). Thử trên bộ test: mọi đề tứ diện vào vùng đa diện, và ba đề tứ diện đang phục vụ (tứ diện vuông OABC, mặt cầu ngoại tiếp tứ diện, dữ kiện vô hướng) bị từ chối ở `assumption` — trái quyết định U3 (cổng chỉ từ chối trong vùng có chứng chỉ). Nay chỉ `tứ diện đều` phát `pyramid`; "tứ diện ABCD" trơn không phát gì (như trước). Hệ quả đã khai: đề tứ diện KHÔNG đều vẫn ngoài vùng đa diện, được phục vụ không cần chứng chỉ (`ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION`).
 
 Chữ "đều" của ba mẫu đầu ĐÃ ĐỌC (luật đọc trọn §7). `tam giác đều` KHÔNG BAO GIỜ thành `regular_tetrahedron`; ba cạnh
 bên bằng nhau KHÔNG làm đáy đều; "tứ diện" không có "đều" chỉ là `pyramid`.

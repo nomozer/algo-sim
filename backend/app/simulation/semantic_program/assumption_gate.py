@@ -28,7 +28,7 @@ from math import isqrt
 from typing import Any, Callable
 
 from ..geometry.exact import Vec3
-from ..geometry.radical import is_exact_number
+from ..geometry.radical import ExactNumber, display, is_exact_number, parse_exact, sqrt_rational, square
 from .contract import SemanticProgramSpec
 from .domain_profile import geometry_symbol_key
 from .formation import _dinh_nghia, hoan_thien_dung_hinh
@@ -41,7 +41,7 @@ from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
 from .segment_relation import _D, bat_bien_chia_doan, bat_bien_do_dai
 from .shape_constraint import (QuanHeCat, RangBuoc, che_muc_tieu, doc_quan_he_cat, doc_rang_buoc, khoang_muc_tieu,
-                               phan_chua_doc)
+                               la_chop_tam_giac_deu, phan_chua_doc)
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -522,7 +522,7 @@ def _la_canh_ben(ent: tuple[str, ...], L: frozenset) -> bool:
 class _KichThuoc:
     nhan: str
     lop: list[tuple[str, str]]
-    gia_tri: Fraction | None
+    gia_tri: ExactNumber | None      # §18.3: kích thước có thể là căn (T8)
     keo: tuple            # ("phap_tuyen", X, (p, q, r)) | ("canh", X, Y) | ("vi_tu", X) | ("vi_tu_mat", X, (p, q, r))
 
 
@@ -533,8 +533,11 @@ class _Khuon:
     rang_buoc: list[tuple[str, Callable[[dict], bool]]]
     kich_thuoc: list[_KichThuoc]
     tien_de: list[RangBuoc]
-    #: Hiện thực CHÍNH TẮC của khuôn từ các kích thước bắt buộc (cùng thứ tự `kich_thuoc`).
-    chinh_tac: Callable[[list[Fraction]], dict[str, Vec3]]
+    #: Hiện thực CHÍNH TẮC của khuôn từ các kích thước bắt buộc (cùng thứ tự `kich_thuoc`); `None` ⇔ không có.
+    chinh_tac: Callable[[list[ExactNumber]], dict[str, Vec3] | None]
+    #: §18.2: khung chính tắc nhận kích thước CĂN (T8). Khuôn khác dựng khung trục toạ độ: kích thước vô tỉ ⇒
+    #: `TEMPLATE_NOT_REPRESENTABLE`, không bao giờ một toạ độ vô tỉ.
+    can: bool = False
 
 
 def _o(x=0, y=0, z=0) -> Vec3:
@@ -606,21 +609,23 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
     # Cạnh bên: cụm "cạnh bên bằng l" HOẶC độ dài server tự đọc từ đề cho đoạn nối đỉnh với một đỉnh đáy (`SA = 3`,
     # "cạnh bên SA = 3") — cùng hạng bằng chứng nguồn với cạnh đáy `AB = s`. Mọi cạnh bên của chóp đều bằng nhau:
     # hai giá trị khác nhau là mâu thuẫn của chính đề (tự rà soát cuối của W1).
-    ben = {do_dai[frozenset({S, v})] for v in day if frozenset({S, v}) in do_dai}
+    # §18.3: số đo có thể là căn — mọi so sánh/suy luận ở đây đi trên BÌNH PHƯƠNG (hữu tỉ).
+    ben = {square(do_dai[frozenset({S, v})]) for v in day if frozenset({S, v}) in do_dai}
     if doc["lateral_edge"] is not None:
-        ben.add(doc["lateral_edge"].value)
+        ben.add(square(doc["lateral_edge"].value))
     if len(ben) > 1:
-        return "TEMPLATE_CONTRADICTION T7: lateral edges " + ", ".join(str(x) for x in sorted(ben))
-    l = next(iter(ben), None)
+        return "TEMPLATE_CONTRADICTION T7: lateral edges² " + ", ".join(str(x) for x in sorted(ben))
+    l2 = next(iter(ben), None)
+    s2 = square(s) if s is not None else None
     ung: list[tuple[str, Fraction]] = []
     if doc["height"] is not None:
-        ung.append(("height", doc["height"].value ** 2))
+        ung.append(("height", square(doc["height"].value)))
     if so is not None:
-        ung.append(("apex to centre", so ** 2))
-    if s is not None and doc["apothem"] is not None:
-        ung.append(("apothem", doc["apothem"].value ** 2 - (s / 2) ** 2))
-    if s is not None and l is not None:
-        ung.append(("lateral edge", l ** 2 - s * s / 2))
+        ung.append(("apex to centre", square(so)))
+    if s2 is not None and doc["apothem"] is not None:
+        ung.append(("apothem", square(doc["apothem"].value) - s2 / 4))
+    if s2 is not None and l2 is not None:
+        ung.append(("lateral edge", l2 - s2 / 2))
     if len({v for _, v in ung}) > 1:
         return "TEMPLATE_CONTRADICTION T7: " + ", ".join(f"{k} ⇒ h² = {v}" for k, v in ung)
     h = None
@@ -642,16 +647,16 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
         ("apex above the base centre", lambda V: (V[S] - tam_day(V)).dot(V[b] - V[a]) == 0
          and (V[S] - tam_day(V)).dot(V[d] - V[a]) == 0),
         ("apex off the base", lambda V: V[S] != tam_day(V))]
-    if s is not None:
-        rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == s * s))
+    if s2 is not None:
+        rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == s2))
     if h is not None:
         rbuoc.append(("height", lambda V: (V[S] - tam_day(V)).dot(V[S] - tam_day(V)) == h * h))
     if doc["apothem"] is not None:
-        m = doc["apothem"].value
+        m2 = square(doc["apothem"].value)
         rbuoc.append(("apothem", lambda V: (V[S] - V[a] - (V[b] - V[a]).scale(Fraction(1, 2))).dot(
-            V[S] - V[a] - (V[b] - V[a]).scale(Fraction(1, 2))) == m * m))
-    if l is not None:
-        rbuoc.append(("lateral edge", lambda V: all((V[S] - V[p]).dot(V[S] - V[p]) == l * l for p in day)))
+            V[S] - V[a] - (V[b] - V[a]).scale(Fraction(1, 2))) == m2))
+    if l2 is not None:
+        rbuoc.append(("lateral edge", lambda V: all((V[S] - V[p]).dot(V[S] - V[p]) == l2 for p in day)))
     tien_de = [r for r in rb if r.kind in ("base_square", "base_centre") and set(r.entities) >= set(day)]
     tien_de += [r for r in doc.values() if r is not None]
 
@@ -665,7 +670,83 @@ def _khuon_chop_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
                   tien_de, chinh_tac)
 
 
+def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
+    """T8 (§18.2) — chóp đáy tam giác ĐỀU, chân đường cao ở TRỌNG TÂM; tứ diện đều là trường hợp cạnh bên = cạnh đáy.
+
+    Duy nhất sai khác đẳng cự khi biết cạnh đáy b và chiều cao h; h đến trực tiếp (`chiều cao`, `SG` với G là tâm đề
+    gọi tên) hoặc SUY từ cạnh bên l (h² = l² − b²/3) hay tứ diện đều (h² = 2b²/3). Mọi phép so trên BÌNH PHƯƠNG.
+    Miền toạ độ ℚ³: b² ∈ {2k², 6k²} và h² = 3t² — ngoài miền ⇒ TEMPLATE_NOT_REPRESENTABLE (không làm tròn)."""
+    a, b, c = day
+    tu_dien = any(r.kind == "regular_tetrahedron" and r.entities == ent for r in rb)
+    canh = {square(r.value) for r in rb if r.value is not None and (
+        (r.kind == "base_equilateral" and set(r.entities) == set(day)) or (r.kind == "edge_all" and r.entities == ent))}
+    canh |= {square(do_dai[frozenset(p)]) for p in ((a, b), (b, c), (c, a)) if frozenset(p) in do_dai}
+    ben = {square(do_dai[frozenset({S, v})]) for v in day if frozenset({S, v}) in do_dai}
+    ben |= {square(r.value) for r in rb if r.value is not None and (
+        (r.kind == "lateral_edge" and r.entities == ent) or (r.kind == "edge_all" and r.entities == ent))}
+    if tu_dien:                                # mọi cạnh bằng nhau: cạnh bên và cạnh đáy là MỘT lớp
+        canh = ben = canh | ben
+    if len(canh) > 1:
+        return "TEMPLATE_CONTRADICTION T8: base sides² " + ", ".join(str(x) for x in sorted(canh))
+    if len(ben) > 1:
+        return "TEMPLATE_CONTRADICTION T8: lateral edges² " + ", ".join(str(x) for x in sorted(ben))
+    b2, l2 = next(iter(canh), None), next(iter(ben), None)
+    tam = {r.entities[0] for r in rb if r.kind == "base_centre" and set(r.entities[1:]) == set(day)}
+    ung = [("height", square(r.value)) for r in rb if r.kind == "height" and r.entities == ent and r.value is not None]
+    ung += [("apex to centre", square(do_dai[frozenset({S, o})])) for o in tam if frozenset({S, o}) in do_dai]
+    if b2 is not None and l2 is not None:
+        ung.append(("lateral edge", l2 - b2 / 3))
+    if len({v for _, v in ung}) > 1:
+        return "TEMPLATE_CONTRADICTION T8: " + ", ".join(f"{k} ⇒ h² = {v}" for k, v in ung)
+    h2 = ung[0][1] if ung else None
+    if h2 is not None and h2 <= 0:
+        return f"TEMPLATE_NOT_MATCHED T8: degenerate height (h² = {h2})"
+    if b2 is not None and _can_huu_ti(b2 / 2) is None and _can_huu_ti(b2 / 6) is None:
+        return f"TEMPLATE_NOT_REPRESENTABLE T8: base side² = {b2} is not 2k² or 6k² (no rational coordinates)"
+    if h2 is not None and _can_huu_ti(h2 / 3) is None:
+        return f"TEMPLATE_NOT_REPRESENTABLE T8: height² = {h2} is not 3t² (no rational apex over the base)"
+
+    def G(V):
+        return (V[a] + V[b] + V[c]).scale(Fraction(1, 3))
+
+    def d2(V, p, q):
+        return (V[p] - V[q]).dot(V[p] - V[q])
+
+    rbuoc: list = [
+        ("base equilateral", lambda V: d2(V, a, b) == d2(V, b, c) == d2(V, c, a)),
+        ("apex above the centroid", lambda V: (V[S] - G(V)).dot(V[b] - V[a]) == 0
+         and (V[S] - G(V)).dot(V[c] - V[a]) == 0),
+        ("apex off the base", lambda V: V[S] != G(V))]
+    if b2 is not None:
+        rbuoc.append(("base side", lambda V: d2(V, a, b) == b2))
+    if h2 is not None:
+        rbuoc.append(("height", lambda V: (V[S] - G(V)).dot(V[S] - G(V)) == h2))
+    if l2 is not None:
+        rbuoc.append(("lateral edge", lambda V: all(d2(V, S, p) == l2 for p in day)))
+    tien_de = [r for r in rb if (r.kind in ("base_equilateral", "base_centre") and set(r.entities) >= set(day))
+               or (r.kind in ("height", "lateral_edge", "edge_all", "regular_tetrahedron") and r.entities == ent)]
+
+    def chinh_tac(L: list[ExactNumber]) -> dict[str, Vec3] | None:
+        cb, ch = square(L[0]), square(L[1])
+        k1, k3, t = _can_huu_ti(cb / 2), _can_huu_ti(cb / 6), _can_huu_ti(ch / 3)
+        if t is None or (k1 is None and k3 is None):
+            return None
+        P = ([_o(k1), _o(0, k1), _o(0, 0, k1)] if k1 is not None
+             else [_o(k3, -k3), _o(0, k3, -k3), _o(-k3, 0, k3)])
+        g = (P[0] + P[1] + P[2]).scale(Fraction(1, 3))
+        return {a: P[0], b: P[1], c: P[2], S: g + _o(t, t, t)}
+
+    canh_day = sqrt_rational(b2) if b2 is not None else None
+    cao = sqrt_rational(h2) if h2 is not None else None
+    return _Khuon("T8", (S, *day), rbuoc,
+                  [_KichThuoc(_nhan(a, b), [(a, b), (b, c), (c, a)], canh_day, ("vi_tu_mat", a, day)),
+                   _KichThuoc("chiều cao", [], cao, ("phap_tuyen", a, day))],
+                  tien_de, chinh_tac, can=True)
+
+
 def _khuon_chop(rb, S: str, day: tuple, ent: tuple, do_dai: dict | None = None):
+    if la_chop_tam_giac_deu(rb, S, day, do_dai or {}):
+        return _khuon_chop_tam_giac_deu(rb, S, day, ent, do_dai or {})
     if len(day) == 4 and any(r.kind == "regular_square_pyramid" and r.entities == ent for r in rb):
         return _khuon_chop_deu(rb, S, day, ent, do_dai or {})
     chan = [(r, (set(r.entities[:2]) - {S}).pop()) for r in rb
@@ -681,7 +762,7 @@ def _khuon_chop(rb, S: str, day: tuple, ent: tuple, do_dai: dict | None = None):
     rbuoc: list = [("apex edge ⊥ base", lambda V: all((V[S] - V[X]).dot(V[p] - V[X]) == 0 for p in day if p != X)),
                    ("apex off the base", lambda V: V[S] != V[X])]
     if cao is not None:
-        rbuoc.append(("height", lambda V: (V[S] - V[X]).dot(V[S] - V[X]) == cao * cao))
+        rbuoc.append(("height", lambda V: (V[S] - V[X]).dot(V[S] - V[X]) == square(cao)))
     if len(day) == 3:
         gv = _goc_vuong_tai(rb, day, X)
         if gv is None:
@@ -713,7 +794,7 @@ def _khuon_chop(rb, S: str, day: tuple, ent: tuple, do_dai: dict | None = None):
         if vuong_day is not None:
             rbuoc.append(("base square", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == (V[d] - V[a]).dot(V[d] - V[a])))
             if canh_day is not None:
-                rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == canh_day * canh_day))
+                rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == square(canh_day)))
             lop = [_KichThuoc(_nhan(a, b), [(a, b), (b, c), (c, d), (d, a)], canh_day, ("vi_tu_mat", a, day[:3]))]
         else:
             lop = [_KichThuoc(_nhan(a, b), [(a, b), (d, c)], None, ("canh", a, b)),
@@ -740,7 +821,7 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
                                                for i in range(k))),
               ("lateral non-zero", lambda V: V[tren[0]] != V[day[0]])]
     if cao is not None:
-        rbuoc.append(("height", lambda V: (V[tren[0]] - V[day[0]]).dot(V[tren[0]] - V[day[0]]) == cao * cao))
+        rbuoc.append(("height", lambda V: (V[tren[0]] - V[day[0]]).dot(V[tren[0]] - V[day[0]]) == square(cao)))
     ben_kt = _KichThuoc(_nhan(day[0], tren[0]), ben, cao, ("phap_tuyen", b0, day[:3]))
     tien_de = [*rb_kieu, *rb_cao]
     canh_cua = lambda i, j: [(day[i], day[j]), (tren[i], tren[j])]  # noqa: E731
@@ -771,7 +852,7 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
         rbuoc.append(("cube edges equal", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == (V[d] - V[a]).dot(V[d] - V[a])
                       == (V[tren[0]] - V[a]).dot(V[tren[0]] - V[a])))
         if canh is not None:
-            rbuoc.append(("cube edge", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == canh * canh))
+            rbuoc.append(("cube edge", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == square(canh)))
         moi_canh = canh_cua(0, 1) + canh_cua(1, 2) + canh_cua(2, 3) + canh_cua(3, 0) + ben
         return _Khuon("T5", day + tren, rbuoc, [_KichThuoc(_nhan(a, b), moi_canh, canh, ("vi_tu", a))],
                       tien_de + rb_canh, lambda L: nap(_chu_nhat_chinh_tac(day, L[0], L[0]), L[0]))
@@ -784,7 +865,7 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
         s = vuong_day.value
         rbuoc.append(("base square", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == (V[d] - V[a]).dot(V[d] - V[a])))
         if s is not None:
-            rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == s * s))
+            rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == square(s)))
         canh_day = canh_cua(0, 1) + canh_cua(1, 2) + canh_cua(2, 3) + canh_cua(3, 0)
         return _Khuon("T6", day + tren, rbuoc,
                       [_KichThuoc(_nhan(a, b), canh_day, s, ("vi_tu_mat", a, day[:3])), ben_kt],
@@ -858,7 +939,7 @@ def _ap_do_dai(khuon: _Khuon, do_dai: dict[frozenset, Fraction]) -> list:
     """Mọi độ dài đề cho trên một cặp đỉnh khuôn phải thoả chính xác."""
     dinh = set(khuon.dinh)
     return [(f"|{''.join(sorted(c))}| = {L}", lambda V, p=sorted(c)[0], q=sorted(c)[1], L=L:
-             (V[p] - V[q]).dot(V[p] - V[q]) == L * L)
+             (V[p] - V[q]).dot(V[p] - V[q]) == square(L))
             for c, L in do_dai.items() if c <= dinh and len(c) == 2]
 
 
@@ -888,6 +969,11 @@ def _hien_thuc_chinh_tac(khuon: _Khuon, do_dai: dict[frozenset, Fraction]) -> di
 
 def _doi_chieu_chinh_tac(prog: dict, khuon: _Khuon, anh_xa: dict[str, str], do_dai: dict, phu: list[str],
                          exec_res, ngan: list[int], budget: int) -> tuple[bool, str]:
+    vo_ti = [kt.nhan for kt in khuon.kich_thuoc if not khuon.can and not isinstance(
+        kt.gia_tri if kt.gia_tri is not None else next(
+            (do_dai[frozenset(c)] for c in kt.lop if frozenset(c) in do_dai), Fraction(0)), Fraction)]
+    if vo_ti:                                  # §18.2: khung trục toạ độ không chở được kích thước căn
+        return False, f"TEMPLATE_NOT_REPRESENTABLE {khuon.loai}: irrational {vo_ti[0]} (axis-aligned canonical layout)"
     ct = _hien_thuc_chinh_tac(khuon, do_dai)
     if ct is None:
         return False, "C1_CROSS_CHECK_NO_CANONICAL_REALISATION"
@@ -1130,8 +1216,10 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     de_gt = che_muc_tieu(de)
     rb = doc_rang_buoc(de_gt)
     inv = bat_bien_tu_de(de_gt)
-    do_dai = {frozenset(_id(p) for p in i.points): _F(i.expected) for i in inv
-              if i.kind == "segment_length" and len(i.points) == 2 and i.expected}
+    # §18.3: độ dài nguồn có thể là căn (`display` của bộ đọc) — đọc lại CHÍNH XÁC, không ép `Fraction`.
+    do_dai = {frozenset(_id(p) for p in i.points): v for i in inv
+              if i.kind == "segment_length" and len(i.points) == 2 and i.expected
+              and (v := parse_exact(i.expected)) is not None}
     details, bac = _trang_thai_quan_he(contract, rb)
     details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:

@@ -69,6 +69,7 @@ import re
 from fractions import Fraction
 from typing import Optional
 
+from ..geometry.radical import ExactNumber, Radical, display, parse_exact
 from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .scale_normalization import SourceInvariant
 
@@ -80,6 +81,10 @@ _SO = r"\d+(?:[.,]\d+)?(?:\s*/\s*\d+)?"
 #: Con số KẾT THÚC ở đây. Thiếu vế `[.,]\d` / `√`, mẫu cắt `2.5` thành `2` và
 #: `2√3` thành `2` — một độ dài SAI của nguồn (W12, cổng bằng chứng đọc lại nó).
 _HET_SO = r"(?![0-9/]|[.,]\d|\s*√)"
+#: regular-triangular-pyramid-w01 (§18.3) — ĐỘ DÀI của đề có thể là căn `k√n` (`3√2`, `√3`, `3√2/2`): đáy tam giác
+#: đều cạnh hữu tỉ không có toạ độ ℚ³, nên miền hỗ trợ cần cạnh căn. Một con số độ dài, đọc bằng `parse_exact`; toạ độ
+#: điểm và tỉ số chia đoạn vẫn dùng `_SO` (chỉ hữu tỉ).
+_SO_DO_DAI = rf"(?:(?:\d+(?:[.,]\d+)?\s*)?√\s*\d+(?:\s*/\s*\d+)?|{_SO})"
 _SAU_DO_DAI = rf"{_HET_SO}(?!\s*[:*]|\s*{_D}{_D})"
 #: Từ nối NHÃN ĐOẠN → ĐỘ DÀI — TẬP ĐÓNG, MỘT thẩm quyền cho bộ đọc độ dài
 #: (`do_dai_trong_de`, `_do_dai_doan`, quan hệ ②) và nhãn bằng chứng GIVEN
@@ -97,7 +102,7 @@ _NHAN_TRUOC_SO = re.compile(rf"(?<![A-Za-z0-9])(?P<chuoi>{_CHUOI})(?P<A>{_D})(?P
 #: Câu độ dài SỐ trên câu đã `_chuan` (cả chuỗi) — mẫu của `_moi_doan_co_do_dai`; `shape_constraint.
 #: phan_chua_doc` xoá đúng những câu này khỏi phần dữ kiện (cùng một mẫu, không chép).
 MAU_DO_DAI = re.compile(
-    rf"(?<![A-Za-z0-9])(?P<chuoi>{_CHUOI})(?P<A>{_D})(?P<B>{_D})\s*{_NOI_DO_DAI}\s*(?P<so>{_SO}){_SAU_DO_DAI}")
+    rf"(?<![A-Za-z0-9])(?P<chuoi>{_CHUOI})(?P<A>{_D})(?P<B>{_D})\s*{_NOI_DO_DAI}\s*(?P<so>{_SO_DO_DAI}){_SAU_DO_DAI}")
 
 
 def _cac_doan(m: re.Match) -> tuple[tuple[str, str], ...]:
@@ -159,6 +164,16 @@ def _phan(s: str) -> Optional[Fraction]:
         return None
 
 
+def _phan_do_dai(s: str) -> Optional[ExactNumber]:
+    """Một con số ĐỘ DÀI của đề (`_SO_DO_DAI`): hữu tỉ hoặc `k√n` (§18.3)."""
+    return parse_exact(str(s).replace(" ", "").replace(",", "."))
+
+
+def viet_do_dai(v: ExactNumber) -> str:
+    """Chuỗi của một độ dài nguồn trong bất biến: hữu tỉ giữ `str` (byte cũ), căn viết `display` (đọc lại được)."""
+    return display(v) if isinstance(v, Radical) else str(v)
+
+
 def _tach(seg: str) -> Optional[tuple[str, str]]:
     m = re.fullmatch(rf"({_D})({_D})", seg)
     return (m.group(1), m.group(2)) if m else None
@@ -213,32 +228,34 @@ def _van_ban(contract, problem_text: str | None, *,
             # CHỈ với giá trị SỐ. Giá trị văn xuôi (*"P thuộc EF và FP = 4*PE"*)
             # đã tự là một câu; dán nhãn vào trước sẽ đẻ ra một quan hệ lai
             # không ai viết.
-            if nhan and re.fullmatch(rf"\s*{_SO}\s*", str(v)):
+            if nhan and re.fullmatch(rf"\s*{_SO_DO_DAI}\s*", str(v)):
                 ra.append(f"{nhan} = {_chuan(str(v))}")
     return [x for x in ra if x]
 
 
 def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
-    """|AB| — cùng bộ đọc `_moi_doan_co_do_dai` (mọi từ nối, cả hai chiều viết, chuỗi bằng nhau, hai giá trị ⇒ None)."""
-    return _moi_doan_co_do_dai(manh).get(frozenset({A, B}))
+    """|AB| — cùng bộ đọc `_moi_doan_co_do_dai` (mọi từ nối, cả hai chiều viết, chuỗi bằng nhau, hai giá trị ⇒ None).
+    Chỉ HỮU TỈ: tỉ số chia đoạn ② tính trên ℚ, độ dài căn ở đây ⇒ không tính được (như trước §18.3)."""
+    v = _moi_doan_co_do_dai(manh).get(frozenset({A, B}))
+    return v if isinstance(v, Fraction) else None
 
 
-def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, Fraction]:
+def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, ExactNumber]:
     """Mọi đoạn mà ĐỀ cho ĐỘ DÀI bằng số → `{frozenset({A,B}): L}`.
 
     Hai độ dài khác nhau cho cùng một đoạn ⇒ **bỏ đoạn ấy**: không ai phân xử
     được, và đoán ở đây là kết tội oan một chương trình đúng.
     """
-    thay: dict[frozenset, set[Fraction]] = {}
+    thay: dict[frozenset, set[ExactNumber]] = {}
     for van in manh:
         for m in MAU_DO_DAI.finditer(van):
-            if (q := _phan(m.group("so"))) is not None:
+            if (q := _phan_do_dai(m.group("so"))) is not None:
                 for doan in _cac_doan(m):
                     thay.setdefault(frozenset(doan), set()).add(q)
     return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
 
 
-def do_dai_trong_de(problem_text: str | None) -> dict[frozenset, Fraction]:
+def do_dai_trong_de(problem_text: str | None) -> dict[frozenset, ExactNumber]:
     """Mọi đoạn mà CHÍNH CÂU ĐỀ cho độ dài bằng số — không đọc `InputFact`.
 
     `bat_bien_do_dai` đọc thêm nhãn + giá trị của `InputFact` để bắt lối viết
@@ -291,9 +308,9 @@ def bat_bien_do_dai(contract, problem_text: str | None) -> tuple:
             continue
         A, B = sorted(cap)
         ra.append(SourceInvariant(
-            kind="segment_length", points=(A, B), expected=str(dai),
+            kind="segment_length", points=(A, B), expected=viet_do_dai(dai),
             source_fact_id=_nguon_do_dai(contract, A, B),
-            scale_symbol="", source_text=f"{A}{B} = {dai}"))
+            scale_symbol="", source_text=f"{A}{B} = {viet_do_dai(dai)}"))
     return tuple(ra)
 
 

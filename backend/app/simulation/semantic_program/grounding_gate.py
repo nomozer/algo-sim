@@ -28,6 +28,7 @@ from typing import Any, Callable
 
 from pydantic import BaseModel, Field
 
+from ..geometry.radical import parse_exact
 from .contract import SemanticProgramSpec
 # Tái dùng write-set của C₁a thay vì viết bản thứ hai: nó đã biết mọi dạng câu
 # lệnh tạo ra một biến (`assign`, `pop`, `push`, `map_set`, biến chạy vòng lặp…)
@@ -36,7 +37,7 @@ from .coverage_gate import _producers
 from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
 from .request_contract import RequestContract, norm_value
 from .scale_normalization import bang_huu_ti, la_so_huu_ti
-from .segment_relation import cac_doan_truoc, do_dai_trong_de
+from .segment_relation import cac_doan_truoc, do_dai_trong_de, viet_do_dai
 from .shape_constraint import che_muc_tieu, khoang_muc_tieu
 from .source_entities import chuan_hoa_ten, dinh_danh_thuc_the, la_ten_nguon, la_ten_suy_ra
 
@@ -237,11 +238,13 @@ def _bang_chung(de: str, la_doan: Callable[[Any], bool], v: Fraction | str,
     """Thân chung của `_bang_chung_do_dai` và `bang_chung_doan`; `la_doan(doan)`
     trả lời *"đoạn này của đề có phải đoạn đang xét không"*."""
     huu_ti = isinstance(v, Fraction)
-    if huu_ti:
+    # §18.3: độ dài của đề có thể là căn — ① so CHÍNH XÁC cả khi `v` là chuỗi căn (`"3√2"`).
+    chinh_xac = v if huu_ti else parse_exact(re.sub(r"\s+", "", str(v)))
+    if chinh_xac is not None:
         for doan, gt in do_dai_trong_de(de).items():
-            if la_doan(doan) and gt != v:
+            if la_doan(doan) and gt != chinh_xac:
                 return (ERR_BANG_CHUNG_MAU_THUAN, None,
-                        f"đề ghi {''.join(sorted(doan))} = {gt}, không phải {v}")
+                        f"đề ghi {''.join(sorted(doan))} = {viet_do_dai(gt)}, không phải {v}")
 
     def bang(chu: str) -> bool:
         gon = re.sub(r"\s+", "", chu)

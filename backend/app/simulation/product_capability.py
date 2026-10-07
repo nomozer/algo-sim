@@ -71,6 +71,16 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
         NangLucSanPham(
             "section", "Thiết diện", "supported",
             "SECTION_COPLANAR_EDGE_RUNTIME_FIX · certify-section-coplanar-edge 7/7"),
+        # ── CHÓP TAM GIÁC ĐỀU · TỨ DIỆN ĐỀU (regular-triangular-pyramid-w01) ──
+        #
+        # Tách khỏi "polyhedron" vì miền HẸP và đã khai (ASSUMPTION_CERTIFICATE_AMENDMENT §18.2): toạ độ ℚ³ chỉ có
+        # khi cạnh đáy² ∈ {2k², 6k²} và chiều cao² = 3t² — đề cạnh hữu tỉ ("cạnh đáy bằng 3") bị từ chối, không làm
+        # tròn. `foundation_only`: route tất định đi trọn trên chương trình kiểu LLM, nhưng prompt KHÔNG đổi và chưa
+        # đo mô hình có tự đặt đáy trên mặt nghiêng x+y+z=k hay không.
+        NangLucSanPham(
+            "regular_triangular_pyramid", "Chóp tam giác đều · tứ diện đều (cạnh dạng k√2, k√6)", "foundation_only",
+            "hệ: T8 + bộ đọc §18.1 + độ dài căn §18.3 + binding trọng tâm §18.4, corpus 24 hàng ghi trước "
+            "(regular-triangular-pyramid-w01) · MÔ HÌNH: chưa đo"),
         # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
         #
         # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).

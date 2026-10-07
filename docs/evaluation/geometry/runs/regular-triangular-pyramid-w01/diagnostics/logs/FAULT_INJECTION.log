@@ -1,0 +1,7 @@
+CAUGHT  FL1 T8 never matches: P1_side_height before=pass injected=FAIL
+CAUGHT  FL2 no apex-above-centroid constraint: N5b_apex_off_normal before=pass injected=FAIL
+CAUGHT  FL3 radical lengths unread: P5_equal_chains before=pass injected=FAIL
+CAUGHT  FL4 no centroid by medians: P9_named_centroid before=pass injected=FAIL
+CAUGHT  FL5 representability check skipped: U4_side_outside_frames before=pass injected=FAIL
+CAUGHT  FL6 base equilateral derived from three laterals alone: N8_equal_laterals_base_not_stated before=pass injected=FAIL
+fault_injection_rtp_w01: 6/6 caught

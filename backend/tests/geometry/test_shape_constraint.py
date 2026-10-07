@@ -196,13 +196,20 @@ def test_phan_chua_doc_rong_khi_moi_cau_duoc_doc(text):
     "Góc giữa SB và mặt phẳng đáy bằng 45°",
     "SA = AB",
     "Tam giác SAB vuông cân tại A",
-    "SB = 3√2",
     "Thể tích khối chóp bằng 6",
     "Chiều cao gấp đôi cạnh đáy",
 ])
 def test_cau_ngoai_tu_vung_de_lai_phan_chua_doc(cau):
     text = CHOP_KHONG_SA.replace("vuông góc với đáy.", f"vuông góc với đáy. {cau}.")
     assert _chua_doc(text) != (), text
+
+
+@pytest.mark.parametrize("cau", ["SB = 5", "SB = 3√2"])
+def test_do_dai_so_hoac_can_duoc_doc_tron(cau):
+    """§18.3 (regular-triangular-pyramid-w01): độ dài căn `SB = 3√2` là MỘT con số độ dài — đọc trọn như `SB = 5`
+    (trước đó là tham số của test trên: câu không đọc)."""
+    text = CHOP_KHONG_SA.replace("vuông góc với đáy.", f"vuông góc với đáy. {cau}.")
+    assert _chua_doc(text) == (), text
 
 
 @pytest.mark.parametrize("text", [

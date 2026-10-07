@@ -25,10 +25,12 @@ from __future__ import annotations
 import re
 import unicodedata
 from dataclasses import dataclass
-from fractions import Fraction
 
+from ..geometry.radical import ExactNumber
 from .segment_relation import _D as _E
-from .segment_relation import _SO, MAU_DO_DAI, _chuan, _phan
+from .segment_relation import _SO_DO_DAI as _SO
+from .segment_relation import MAU_DO_DAI, _chuan
+from .segment_relation import _phan_do_dai as _phan
 from .source_entities import dinh_danh_thuc_the
 
 
@@ -38,7 +40,7 @@ class RangBuoc:
 
     kind: str
     entities: tuple[str, ...]
-    value: Fraction | None
+    value: ExactNumber | None          # §18.3: số đo của đề có thể là căn `k√n`
     span: tuple[int, int]
 
 
@@ -54,6 +56,17 @@ _KHOI_LANG_TRU = re.compile(
     rf"(?P<day>(?:{_E}){{3,}})\.(?P<tren>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
 _CANH_LAP_PHUONG = re.compile(
     rf"\s*,?\s*(?:có\s+)?(?:độ\s+dài\s+)?cạnh\s+(?:bằng\s+|=\s*|là\s+)?(?P<so>{_SO})(?![\d/])")
+#: §18.1 — tứ diện ABCD (đỉnh = ký hiệu đầu, đáy = ba ký hiệu sau); `đều` ⇒ mọi cạnh bằng nhau.
+_KHOI_TU_DIEN = re.compile(
+    rf"(?:(?:[Hh]ình|[Kk]hối)\s+)?[Tt]ứ\s+diện(?P<deu>\s+đều)?\s+(?P<ten>(?:{_E}){{4}})(?![A-Za-z0-9'])")
+#: §18.1 — "có tất cả các cạnh (đều) bằng a" của khối chóp tam giác đều duy nhất ⇒ tứ diện đều.
+_TAT_CA_CANH = re.compile(
+    rf"(?:có\s+)?(?:tất\s+cả\s+các|mọi)\s+cạnh\s+(?:đều\s+)?(?:bằng|=|là)?\s*(?P<so>{_SO})(?![\d/])")
+#: §18.1 — tâm của đáy TAM GIÁC đề gọi tên: `G là trọng tâm (của) (tam giác (đều)) ABC` · `O là tâm (của) (mặt) đáy`
+#: · `O là tâm (của) tam giác (đều) ABC`.
+_TAM_TAM_GIAC = re.compile(
+    rf"(?<![A-Za-z0-9'])(?P<o>{_E})\s+là\s+(?:trọng\s+tâm|tâm)\s+(?:của\s+)?(?:(?:mặt\s+)?đáy(?![A-Za-zÀ-ỹ])"
+    rf"|(?:tam\s+giác(?:\s+đều)?\s+)?(?P<ten>(?:{_E}){{3}})(?![A-Za-z0-9']))")
 #: Danh từ khối, để đếm khối của PHẦN DỮ KIỆN (đề cắt tại chữ `Tính` đầu tiên).
 _DANH_TU_KHOI = re.compile(
     rf"(?:[Hh]ình|[Kk]hối)\s+(?:lăng\s+trụ(?:\s+(?:đứng|xiên))?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương"
@@ -62,7 +75,7 @@ _DANH_TU_KHOI = re.compile(
 _TAI = r"(?:tại|ở\s+đỉnh|ở|đỉnh)"
 _DAY = re.compile(
     rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{3,}})\s+)?là\s+(?:một\s+)?(?P<loai>hình\s+chữ\s+nhật|hình\s+vuông"
-    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
+    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+đều|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
     rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}))?(?![\d/])")
 #: Tam giác CÓ TÊN vuông tại một đỉnh của nó — `tam giác ABC vuông tại A`, `đáy ABC vuông tại A`.
 _TAM_GIAC_VUONG = re.compile(
@@ -96,7 +109,9 @@ _KY_HIEU_KHOI_LOI = re.compile(rf"\s+(?:{_E})+\.(?:{_E})+")
 _KIEU_LANG_TRU = (("lập phương", "cube"), ("hộp chữ nhật", "cuboid"), ("đứng", "right_prism"),
                   ("xiên", "oblique_prism"))
 _KIEU_DAY = {"hình chữ nhật": "base_rectangle", "hình vuông": "base_square",
-             "hình bình hành": "base_parallelogram", "hình thoi": "base_rhombus"}
+             "hình bình hành": "base_parallelogram", "hình thoi": "base_rhombus", "tam giác đều": "base_equilateral"}
+#: Số đo của đáy đọc được thành value (cạnh): đáy vuông, đáy tam giác đều (§18.1).
+_DAY_CO_CANH = frozenset({"base_square", "base_equilateral"})
 
 
 def _ten(chuoi: str) -> tuple[str, ...]:
@@ -126,6 +141,11 @@ def _khoi_cua_du_kien(du_kien: str):
         if len(day) == len(tren):
             co_ten.setdefault(day + tren, day)
             dau_ky_hieu.add(m.start())
+    for m in _KHOI_TU_DIEN.finditer(du_kien):
+        if m.group("deu"):                     # §18.1: chỉ tứ diện đều là khối của bộ đọc
+            ent = _ten(m.group("ten"))
+            co_ten.setdefault(ent, ent[1:])
+            dau_ky_hieu.add(m.start())
     khong_ten = [m for m in _DANH_TU_KHOI.finditer(du_kien) if m.start() not in dau_ky_hieu]
     if any(_KY_HIEU_KHOI_LOI.match(du_kien, m.end()) for m in khong_ten):
         return None                            # ký hiệu khối có mà không đọc được (vd `ABC.DE`)
@@ -153,10 +173,26 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
     for m in _KHOI_CHOP.finditer(de):
         ent = _ten(m.group("dinh")) + _ten(m.group("day"))
         phat("pyramid", ent, None, m.start(), m.end())
-        # Chóp tứ giác ĐỀU: đáy vuông và chân đường cao ở tâm đáy (khuôn T7). Tam/ngũ/lục giác đều chưa đọc.
+        # Chóp tứ giác ĐỀU: đáy vuông và chân đường cao ở tâm đáy (khuôn T7); chóp tam giác ĐỀU: đáy đều, chân ở
+        # trọng tâm (T8, §18). Ngũ/lục giác đều chưa đọc.
         if len(ent) == 5 and re.search(r"tứ\s+giác\s+đều", m.group(0)):
             phat("regular_square_pyramid", ent, None, m.start(), m.end())
             phat("base_square", ent[1:], None, m.start(), m.end())
+        if len(ent) == 4 and re.search(r"tam\s+giác\s+đều", m.group(0)):
+            phat("regular_triangular_pyramid", ent, None, m.start(), m.end())
+            phat("base_equilateral", ent[1:], None, m.start(), m.end())
+    for m in _KHOI_TU_DIEN.finditer(de):
+        # CHỈ tứ diện ĐỀU (đính chính §18.1 trước khi đo): "tứ diện ABCD" trơn vẫn không phát gì — đưa mọi tứ diện vào
+        # vùng đa diện sẽ từ chối các đề tứ diện vuông/ngoại tiếp đang phục vụ (quyết định U3: cổng chỉ từ chối trong
+        # vùng có chứng chỉ). Giới hạn ghi ở OPEN_ISSUES.
+        if not m.group("deu"):
+            continue
+        ent = _ten(m.group("ten"))             # mọi cạnh bằng nhau: chóp tam giác đều có cạnh bên = cạnh đáy
+        for kind in ("pyramid", "regular_tetrahedron", "regular_triangular_pyramid"):
+            phat(kind, ent, None, m.start(), m.end())
+        phat("base_equilateral", ent[1:], None, m.start(), m.end())
+        if c := _CANH_LAP_PHUONG.match(de, m.end()):
+            phat("edge_all", ent, _phan(c.group("so")), m.start(), c.end())
     for m in _KHOI_LANG_TRU.finditer(de):
         day, tren = _ten(m.group("day")), _ten(m.group("tren"))
         if len(day) != len(tren):
@@ -192,8 +228,10 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
                 phat("right_triangle", (tai, *[d for d in day if d != tai]), None, m.start(), m.end())
             continue
         kind = _KIEU_DAY[loai]
+        if kind == "base_equilateral" and len(day) != 3:
+            continue                           # "tam giác đều" chỉ gắn đáy ba đỉnh có tên
         if day or kind == "base_square":
-            canh = _phan(m.group("canh")) if (kind == "base_square" and m.group("canh")) else None
+            canh = _phan(m.group("canh")) if (kind in _DAY_CO_CANH and m.group("canh")) else None
             phat(kind, day, canh, m.start(), m.end())
     for m in _TAM_GIAC_VUONG.finditer(de):
         tg = _ten(m.group("t"))
@@ -235,6 +273,19 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
                 if {frozenset(_ten(m.group("p") + m.group("q"))), frozenset(_ten(m.group("r") + m.group("t")))} != cheo:
                     continue
             elif m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1]):
+                continue
+            phat("base_centre", _ten(m.group("o")) + khoi[1], None, m.start(), m.end())
+    # ── §18.1: số đo của chóp tam giác đều duy nhất (tứ diện đều là một trường hợp) ──
+    if khoi is not None and any(r.kind == "regular_triangular_pyramid" and r.entities == khoi[0] for r in ra):
+        for m in _CANH_DAY.finditer(du_kien):
+            phat("base_equilateral", khoi[1], _phan(m.group("so")), m.start(), m.end())
+        for m in _CANH_BEN.finditer(du_kien):
+            phat("lateral_edge", khoi[0], _phan(m.group("so")), m.start(), m.end())
+        for m in _TAT_CA_CANH.finditer(du_kien):
+            phat("regular_tetrahedron", khoi[0], None, m.start(), m.end())
+            phat("edge_all", khoi[0], _phan(m.group("so")), m.start(), m.end())
+        for m in _TAM_TAM_GIAC.finditer(du_kien):
+            if m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1]):
                 continue
             phat("base_centre", _ten(m.group("o")) + khoi[1], None, m.start(), m.end())
     return tuple(ra)
@@ -408,8 +459,37 @@ def phan_chua_doc(problem_text: str | None) -> tuple[str, ...]:
         con[r.span[0]:r.span[1]] = " " * len(con[r.span[0]:r.span[1]])
     sot = MAU_DO_DAI.sub(" ", _chuan("".join(con)))
     ra = [t for t in re.findall(r"[^\W\d_]+|\d+|[^\w\s]", sot) if t.lower() not in _TU_NOI and t not in ",.;:"]
-    # "đều" của chóp tứ giác đều ĐÃ được đọc (khuôn T7); mọi "đều"/"cân" khác vẫn là chữ bị nuốt.
-    deu = [r.span for r in rb if r.kind == "regular_square_pyramid"]
+    # "đều" của chóp tứ giác đều (T7), chóp tam giác đều / tứ diện đều / đáy tam giác đều / "tất cả các cạnh đều"
+    # (T8, §18.1) ĐÃ được đọc; mọi "đều"/"cân" khác vẫn là chữ bị nuốt.
+    deu = [r.span for r in rb if r.kind in _KIND_DOC_DEU]
     ra += [m.group(0) for m in _TU_BI_BO.finditer(du_kien) if not any(a <= m.start() < b for a, b in deu)]
-    ra += [m.group("canh") for m in _DAY.finditer(du_kien) if m.group("canh") and _gon(m.group("loai")) != "hình vuông"]
+    ra += [m.group("canh") for m in _DAY.finditer(du_kien)
+           if m.group("canh") and _KIEU_DAY.get(_gon(m.group("loai"))) not in _DAY_CO_CANH]
     return tuple(ra)
+
+
+def _bang_nhau(do_dai: dict, cap: list[tuple[str, str]]) -> bool:
+    """Mọi đoạn trong `cap` có độ dài nguồn và cùng một giá trị (`do_dai`: khoá frozenset định danh thực thể)."""
+    gt = [do_dai.get(frozenset(p)) for p in cap]
+    return None not in gt and len(set(gt)) == 1
+
+
+def la_chop_tam_giac_deu(rb: tuple[RangBuoc, ...], apex: str, day: tuple, do_dai: dict) -> bool:
+    """§18.2 — chóp tam giác đều: đề NÓI (`regular_triangular_pyramid`/`regular_tetrahedron`), hoặc SUY từ độ dài
+    nguồn: đáy đều (`base_equilateral` hay ba cạnh đáy bằng nhau) VÀ ba cạnh bên bằng nhau (chân cách đều ba đỉnh
+    đáy ⇒ tâm ngoại tiếp = trọng tâm của đáy đều). Ba cạnh bên bằng nhau MỘT MÌNH không đủ. Một thẩm quyền cho
+    chứng chỉ T8 (`assumption_gate`) và chân đường cao của bước dựng (`formation._tam_day_deu`)."""
+    if len(day) != 3:
+        return False
+    if any(r.kind in ("regular_triangular_pyramid", "regular_tetrahedron") and r.entities[:1] == (apex,)
+           and set(r.entities[1:]) == set(day) for r in rb):
+        return True
+    a, b, c = day
+    day_deu = (any(r.kind == "base_equilateral" and set(r.entities) == set(day) for r in rb)
+               or _bang_nhau(do_dai, [(a, b), (b, c), (c, a)]))
+    return day_deu and _bang_nhau(do_dai, [(apex, v) for v in day])
+
+
+#: Ràng buộc mà span của nó đã đọc chữ "đều" (luật đọc trọn §7).
+_KIND_DOC_DEU = frozenset({"regular_square_pyramid", "regular_triangular_pyramid", "regular_tetrahedron",
+                           "base_equilateral", "edge_all"})

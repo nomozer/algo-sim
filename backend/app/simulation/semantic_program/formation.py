@@ -16,13 +16,15 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Any
 
 from pydantic import ValidationError
 
 from .contract import SemanticProgramSpec
 from .ir_static_check import kiem_tinh
-from .shape_constraint import che_muc_tieu, doc_rang_buoc
+from .segment_relation import do_dai_trong_de
+from .shape_constraint import che_muc_tieu, doc_rang_buoc, la_chop_tam_giac_deu
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -162,10 +164,18 @@ def _tam_day_deu(cau: list[dict[str, Any]], contract: Any, apex: str, day: tuple
     điểm chương trình dựng bằng giao hai đường chéo đáy (`intersect_line_line` trên hai `construct_line` qua hai cặp
     đỉnh đối) hoặc trung điểm một đường chéo. Chỉ tổ hợp trên tên; đỉnh có thật ở trên tâm không là việc của chứng
     chỉ T7 và cổng gắn phép dựng trên route — sai thì bài bị từ chối, đoạn dựng thêm không bao giờ được phục vụ."""
+    de = che_muc_tieu(getattr(contract, "problem_text", None))
+    if len(day) == 3:
+        # §18.4 (regular-triangular-pyramid-w01): chóp tam giác đều ⇒ chân đường cao là TRỌNG TÂM đáy — điểm chương
+        # trình dựng bằng giao hai trung tuyến hoặc chia trung tuyến 2/3 (`phep_trong_tam`), theo tên.
+        do_dai = {frozenset(map(_id, k)): v for k, v in do_dai_trong_de(de).items()}
+        if not la_chop_tam_giac_deu(doc_rang_buoc(de), _id(apex), tuple(map(_id, day)), do_dai):
+            return []
+        return [p for p, tam_giac in phep_trong_tam(cau).items() if tam_giac == frozenset(day)]
     if len(day) != 4:
         return []
     deu = any(r.kind == "regular_square_pyramid" and r.entities[0] == apex and set(r.entities[1:]) == set(day)
-              for r in doc_rang_buoc(che_muc_tieu(getattr(contract, "problem_text", None))))
+              for r in doc_rang_buoc(de))
     if not deu:
         return []
     cheo = {frozenset((day[0], day[2])), frozenset((day[1], day[3]))}
@@ -180,6 +190,58 @@ def _tam_day_deu(cau: list[dict[str, Any]], contract: Any, apex: str, day: tuple
              and {duong.get(e.get("line_a")), duong.get(e.get("line_b"))} == cheo)
                 or (e.get("kind") == "midpoint" and frozenset((e.get("a"), e.get("b"))) in cheo)):
             ra.append(s["target_var"])
+    return ra
+
+
+def _ti_so(r: Any) -> Fraction | None:
+    try:
+        return Fraction(str(r).replace(" ", ""))
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
+def phep_trong_tam(cau: Any) -> dict[str, frozenset[str]]:
+    """§18.4 — điểm mà chương trình dựng thành TRỌNG TÂM của một tam giác, nhận theo TÊN phép dựng (không toạ độ):
+    `intersect_line_line` của hai TRUNG TUYẾN (đường qua một đỉnh và một điểm `midpoint` của hai đỉnh kia, hai đỉnh
+    khác nhau), hoặc `divide_segment(đỉnh, trung điểm cạnh đối, 2/3)` (`(trung điểm, đỉnh, 1/3)`). → tên điểm → ba đỉnh.
+    Một thẩm quyền cho chân đường cao (`_tam_day_deu`) và binding trọng tâm (`construction_binding`)."""
+    cau = list(cau)
+
+    def bieu_thuc(s: dict) -> dict | None:
+        e = s.get("expr") if s.get("kind") in ("construct_point", "assign") else None
+        return e if isinstance(e, dict) else None
+
+    trung = {s["target_var"]: frozenset((e.get("a"), e.get("b"))) for s in cau if (e := bieu_thuc(s))
+             and (e.get("kind") == "midpoint" or (e.get("kind") == "divide_segment"
+                                                  and _ti_so(e.get("ratio")) == Fraction(1, 2)))}
+
+    def tam_giac(dinh: Any, m: Any) -> frozenset[str] | None:
+        cap = trung.get(m)
+        return cap | {dinh} if cap is not None and len(cap) == 2 and dinh not in cap else None
+
+    trung_tuyen: dict[str, tuple[frozenset[str], str]] = {}
+    for s in cau:
+        if s.get("kind") == "construct_line":
+            a, b = s.get("through_a"), s.get("through_b")
+            if t := tam_giac(a, b):
+                trung_tuyen[s["target_var"]] = (t, a)
+            elif t := tam_giac(b, a):
+                trung_tuyen[s["target_var"]] = (t, b)
+    ra: dict[str, frozenset[str]] = {}
+    for s in cau:
+        e = bieu_thuc(s)
+        if e is None:
+            continue
+        if e.get("kind") == "intersect_line_line":
+            x, y = trung_tuyen.get(e.get("line_a")), trung_tuyen.get(e.get("line_b"))
+            if x and y and x[0] == y[0] and x[1] != y[1]:
+                ra[s["target_var"]] = x[0]
+        elif e.get("kind") == "divide_segment":
+            t = _ti_so(e.get("ratio"))
+            tg = (tam_giac(e.get("a"), e.get("b")) if t == Fraction(2, 3)
+                  else tam_giac(e.get("b"), e.get("a")) if t == Fraction(1, 3) else None)
+            if tg:
+                ra[s["target_var"]] = tg
     return ra
 
 

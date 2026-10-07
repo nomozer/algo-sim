@@ -27,6 +27,7 @@ from fractions import Fraction
 from typing import Any
 
 from .assumption_gate import _gia_tri_fact, _khoa
+from .formation import phep_trong_tam
 from .grounding_gate import _is_seed
 from .ir_static_check import _CHU_KY, DIEM
 from .segment_relation import _D as _E
@@ -168,6 +169,13 @@ def doc_quan_he_dung(problem_text: str | None) -> tuple[QuanHeDung, ...]:
         a, b, c, d = map(_khoa, day)
         ra.append(QuanHeDung("centre", _khoa(m["x"]), frozenset({frozenset({a, c}), frozenset({b, d})}),
                              f"{_hien(m['x'])} là tâm của đáy {''.join(map(_hien, day))}", m.span()))
+    # §18.4: tâm của đáy TAM GIÁC đề gọi tên (`base_centre` của bộ đọc §18.1, chỉ phát cho chóp tam giác đều duy nhất)
+    # là trọng tâm — một thẩm quyền đọc, không mẫu thứ hai ở đây.
+    for r in doc_rang_buoc(de):
+        if r.kind == "base_centre" and len(r.entities) == 4:
+            ra.append(QuanHeDung("centroid", _khoa(r.entities[0]), frozenset(map(_khoa, r.entities[1:])),
+                                 f"{_hien(r.entities[0])} là trọng tâm của tam giác "
+                                 f"{''.join(map(_hien, r.entities[1:]))}", r.span))
     loai: dict[str, set] = {}
     for q in ra:
         loai.setdefault(q.dich, set()).add((q.kind, q.toan_hang))
@@ -330,6 +338,13 @@ def _so(R: QuanHeDung, p: tuple[str, Any] | None) -> tuple[str, str]:
     if p is None:
         return UNVERIFIED, "the text relation is read, the program builds it with another operation"
     kind, th = p
+    if R.kind == "centroid" or kind == "centroid":                 # §18.4
+        if R.kind != kind:
+            return MISMATCHED, f"the text states a {R.kind}, the program builds a {kind}"
+        if _MO_HO in th or None in th:
+            return UNVERIFIED, "ambiguous identity of an operand"
+        return ((MATCHED, "intersection of two medians of the same triangle") if th == R.toan_hang
+                else (MISMATCHED, "centroid of another triangle"))
     if kind == "intersection":
         if th is None or any(_MO_HO in x or None in x for x in th):
             return UNVERIFIED, "lines of the intersection not pinned"
@@ -381,6 +396,9 @@ def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str
             and (s.get("expr") or {}).get("kind") in _SINH_DIEM]
     ten_diem = [m["name"] for m in prog["memory_declarations"] if m.get("type") == "point3"]
     co = {dt.diem(n) for n in ten_diem + [s["target_var"] for s in dung]}
+    # §18.4: điểm chương trình dựng thành trọng tâm (theo tên phép dựng), trong không gian khoá của đề.
+    trong_tam = {n: ("centroid", frozenset(dt.diem(v) for v in tg))
+                 for n, tg in phep_trong_tam(_cau_lenh(prog["statements"])).items()}
 
     tt: dict[str, str] = {}
     chi_tiet: list[str] = []
@@ -389,7 +407,7 @@ def doi_chieu_phep_dung(contract: Any, spec: Any, ten_da_hoa_giai: dict[str, str
     da_thay: set[str] = set()
     for s in dung:
         T, e = s["target_var"], s["expr"]
-        x, p = dt.diem(T), _quan_he_ct(e, dt)
+        x, p = dt.diem(T), trong_tam.get(T) or _quan_he_ct(e, dt)
         cau = None
         if x is _MO_HO:
             st, ly = UNVERIFIED, "ambiguous identity of the target"

@@ -175,7 +175,7 @@ def _chop_SA_qua_cau(cau: str, sa: int = 3):
 
 
 @pytest.mark.parametrize("cau", ["Góc giữa SB và mặt phẳng đáy bằng 45°", "SA = AB",
-                                 "Tam giác SAB vuông cân tại A", "SB = 3√2"])
+                                 "Tam giác SAB vuông cân tại A"])
 def test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc(cau):
     """Phép kéo SA giữ mọi ràng buộc ĐỌC ĐƯỢC nhưng phá câu không đọc — nó không phải phản
     ví dụ. Từ chối với lời "chưa chứng minh", không bao giờ "đề không cho SA"."""
@@ -184,11 +184,15 @@ def test_de_cho_kich_thuoc_bang_cau_khong_doc_duoc_khong_la_phu_thuoc(cau):
     assert any(d.startswith("CE_TEXT_NOT_FULLY_READ") for d in kq.details), kq.details
 
 
-def test_do_dai_doc_duoc_ngoai_lop_kich_thuoc_lam_phep_keo_khong_hop_le():
+@pytest.mark.parametrize("cau, sa", [("SB = 5", 4), ("SB = 3√2", 3)])
+def test_do_dai_doc_duoc_ngoai_lop_kich_thuoc_lam_phep_keo_khong_hop_le(cau, sa):
     """Đề ĐỌC ĐƯỢC `SB = 5` (cùng AB = 3 ⇒ SA = 4): câu độ dài số nên phần dữ kiện đọc trọn và
     nó không phải `RangBuoc` — chỉ luật hợp lệ của phép kéo (độ dài đề cho, bất biến đề) thấy
-    phép kéo SA phá |SB| = 5. Không bao giờ "đề không cho SA"."""
-    kq = _kq(*_chop_SA_qua_cau("SB = 5", sa=4))
+    phép kéo SA phá |SB| = 5. Không bao giờ "đề không cho SA".
+
+    `SB = 3√2` (AB = 3 ⇒ SA = 3): trước regular-triangular-pyramid-w01 là câu KHÔNG đọc (tham số của test trên);
+    §18.3 đọc độ dài căn thành một con số, nên nó đi đúng luật của `SB = 5`."""
+    kq = _kq(*_chop_SA_qua_cau(cau, sa=sa))
     assert kq.status == CHUA_RO, kq
     assert any("MISSING SA: CE_INVALID" in d for d in kq.details), kq.details
 

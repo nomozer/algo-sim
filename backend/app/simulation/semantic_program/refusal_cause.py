@@ -12,6 +12,7 @@ import re
 from fractions import Fraction
 from typing import Any
 
+from ..geometry.radical import sign
 from .plane_equation import doc_mat_phang_de, tuong_duong
 from .segment_relation import _D, do_dai_trong_de
 from .shape_constraint import che_muc_tieu, doc_rang_buoc
@@ -63,9 +64,9 @@ def do_dai_khong_duong(contract: Any) -> dict[str, Any]:
         if am and frozenset(map(_id, d)) not in {frozenset(map(_id, x)) for x in doan}:
             doan.append(d)
     doc = {frozenset(_id(t) for t in k): v for k, v in do_dai_trong_de(de).items()}
-    lap_phuong = any(r.kind == "cube_edge" and r.value is not None and r.value <= 0 for r in doc_rang_buoc(de))
+    lap_phuong = any(r.kind == "cube_edge" and r.value is not None and sign(r.value) <= 0 for r in doc_rang_buoc(de))
     de_ghi = bool(doan) and all(
-        lap_phuong or doc.get(frozenset(_id(t) for t in d), 1) <= 0 for d in doan)
+        lap_phuong or sign(doc.get(frozenset(_id(t) for t in d), 1)) <= 0 for d in doan)
     return {"reason_code": MA_DO_DAI_KHONG_DUONG,
             "reason_subjects": ["".join(dinh_danh_thuc_the(t)[1] for t in d) for d in doan],
             "refusal_cause": SOURCE if de_ghi else CONSTRUCTION}
@@ -73,7 +74,9 @@ def do_dai_khong_duong(contract: Any) -> dict[str, Any]:
 
 #: Số đo đề nêu không kèm tên đoạn (bộ đọc `shape_constraint`) → cách học sinh gọi nó.
 _TEN_SO_DO = {"base_square": "cạnh đáy", "height": "chiều cao", "lateral_edge": "cạnh bên", "apothem": "trung đoạn",
-              "cube_edge": "cạnh của hình lập phương"}
+              "cube_edge": "cạnh của hình lập phương",
+              # regular-triangular-pyramid-w01 (§18.1): số đo của chóp tam giác đều / tứ diện đều.
+              "base_equilateral": "cạnh đáy", "edge_all": "cạnh"}
 
 
 def do_dai_de_ghi_khong_duong(contract: Any) -> dict[str, Any] | None:
@@ -82,9 +85,9 @@ def do_dai_de_ghi_khong_duong(contract: Any) -> dict[str, Any] | None:
     độ dài như vậy, nên khi thực thi hỏng thì nguyên nhân chắc chắn là ĐỀ: `NON_POSITIVE_LENGTH` + `SOURCE`. Đề không
     ghi số nào như vậy ⇒ `None` — giữ `UNKNOWN`, không gọi đề sai khi hệ chỉ chưa kiểm chứng được."""
     de = che_muc_tieu(getattr(contract, "problem_text", "") or "")
-    chu = ["".join(dinh_danh_thuc_the(t)[1] for t in sorted(k)) for k, v in do_dai_trong_de(de).items() if v <= 0]
+    chu = ["".join(dinh_danh_thuc_the(t)[1] for t in sorted(k)) for k, v in do_dai_trong_de(de).items() if sign(v) <= 0]
     chu += [_TEN_SO_DO[r.kind] for r in doc_rang_buoc(de)
-            if r.kind in _TEN_SO_DO and r.value is not None and r.value <= 0]
+            if r.kind in _TEN_SO_DO and r.value is not None and sign(r.value) <= 0]
     chu = list(dict.fromkeys(chu))
     return ({"reason_code": MA_DO_DAI_KHONG_DUONG, "reason_subjects": chu, "refusal_cause": SOURCE}
             if chu else None)

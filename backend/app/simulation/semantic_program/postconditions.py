@@ -716,6 +716,7 @@ def check_source_invariants(
 
     from app.simulation.geometry.exact import Plane3, Vec3
     from app.simulation.geometry.measure import distance_sq
+    from app.simulation.geometry.radical import parse_exact, square
 
     from .plane_equation import KIND as PLANE_EQUATION
     from .plane_equation import KIND_CHUA_GIAI as PLANE_UNRESOLVED
@@ -951,18 +952,18 @@ def check_source_invariants(
                 f"{bt.source_text}: không tìm đủ hai điểm {list(bt.points)} "
                 "trong trạng thái cuối")
             continue
-        try:
-            q = Fraction(bt.expected)
-        except (ValueError, ZeroDivisionError):
-            khong_kiem.append(f"{bt.source_text}: '{bt.expected}' không hữu tỉ")
+        # §18.3: độ dài nguồn có thể là căn `k√n` — so BÌNH PHƯƠNG (hữu tỉ), không ép về `Fraction`.
+        q = parse_exact(bt.expected)
+        if q is None:
+            khong_kiem.append(f"{bt.source_text}: '{bt.expected}' không đọc được thành số chính xác")
             continue
-        that = distance_sq(diem[0], diem[1])
-        if that == q * q:
+        that, can = distance_sq(diem[0], diem[1]), square(q)
+        if that == can:
             dat += 1
         else:
             vi_pham.append(
                 f"{bt.source_text}: đề cho {bt.expected}, hình dựng có "
-                f"{bt.points[0]}{bt.points[1]}² = {that} (cần {q * q})")
+                f"{bt.points[0]}{bt.points[1]}² = {that} (cần {can})")
 
     n = dat + len(vi_pham) + len(khong_kiem) + len(chua_giai)
     return SourceInvariantResult(
