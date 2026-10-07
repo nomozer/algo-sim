@@ -46,7 +46,9 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     # `construction_binding` (midpoint and projection mismatch, unverified), two served (witness).
     # regular-square-pyramid-w01: + five regular-square-pyramid cases (served S1; refused at assumption,
     # grounding, construction_binding, and by the kernel for a zero base edge).
-    assert len(manifest["fixtures"]) == 37
+    # regular-triangular-pyramid-w01: + six cases (regular triangular pyramid served 9/2, regular tetrahedron
+    # served 9; refused at assumption, grounding, construction_binding for a wrong centroid, and a zero base edge).
+    assert len(manifest["fixtures"]) == 43
     assert {"w18_midpoint_mismatch.json", "w18_projection_mismatch.json", "w18_unverified.json",
             "w18_midpoint_plane_distance.json", "w18_projection_line.json"} <= set(manifest["fixtures"])
     system = json.loads((tmp_path / "fixtures" / "cube_system_cause.json").read_text(encoding="utf-8"))
@@ -59,11 +61,12 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         name.removesuffix("_non_positive.json").removesuffix("_positive.json").removesuffix("_negative.json")
         .removesuffix("_ungrounded.json").removesuffix("_assumption.json").removesuffix("_system_cause.json")
         .removesuffix("_wrong_plane.json").removesuffix("_correct_plane.json")
-        .removesuffix("_wrong_centre.json")
+        .removesuffix("_wrong_centre.json").removesuffix("_wrong_centroid.json")
         for name in manifest["fixtures"] if not name.startswith("w18_")  # wave cases, not a family
     } == {
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
         "cuboid", "cube", "cross_section", "regular_square_pyramid",
+        "regular_triangular_pyramid", "regular_tetrahedron",
     }
     for name in [n for n in manifest["fixtures"] if n.endswith("_ungrounded.json")]:
         negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))
