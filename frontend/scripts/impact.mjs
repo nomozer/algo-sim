@@ -61,7 +61,6 @@ function changedFiles() {
  */
 const DOMAIN_OF = [
   [/^frontend\/src\/simulations\/domains\/([a-z_]+)\//, (m) => m[1]],
-  [/^backend\/app\/simulation\/(dsl|families)\//, () => "backend-core"],
   [/^backend\/app\/accounts\//, () => "classroom"],
   [/^backend\/app\/persistence\/classroom/, () => "classroom"],
   [/^frontend\/src\/state\/classroom/, () => "classroom"],
@@ -72,14 +71,10 @@ const DOMAIN_OF = [
 ];
 
 const DOMAIN_TESTS = {
-  algorithm: ["src/simulations/domains/algorithm/"],
-  binary: ["src/simulations/domains/binary/"],
-  logic: ["src/simulations/domains/logic/"],
-  network: ["src/simulations/domains/network/"],
-  database: ["src/simulations/domains/database/"],
-  web: ["src/simulations/domains/web/"],
-  generic: ["src/simulations/domains/generic/"],
-  tree: ["src/simulations/domains/tree/"],
+  // repo-cleanup: tám miền Tin học (algorithm, binary, logic, network, database, web, generic, tree) đã gỡ khỏi
+  // `src/simulations/domains/`; còn hai miền sống.
+  geometry: ["src/simulations/domains/geometry/"],
+  semantic: ["src/simulations/domains/semantic/"],
   "shared-ui": ["src/components/"],
   classroom: ["src/state/"],
   harness: ["src/code-index-sync.test.ts"],
@@ -94,22 +89,22 @@ const DOMAIN_TESTS = {
 const SHARED_OWNERS = [
   {
     match: /^frontend\/src\/components\/SimulationControls\.tsx$/,
-    tests: ["src/components/", "src/simulations/experience-manifest.test.ts"],
+    tests: ["src/components/"],
     why: "Dải điều khiển là chủ sở hữu DUY NHẤT của lối vào Thử thách/Khám phá và của ba chế độ transport — đổi nó chạm mọi miền có dòng thời gian.",
   },
   {
     match: /^frontend\/src\/simulations\/transport-policy\.ts$/,
-    tests: ["src/components/transport-policy.test.tsx", "src/simulations/experience-manifest.test.ts"],
-    why: "Chính sách transport quyết định bộ điều khiển của cả 23 target; manifest trải nghiệm đọc lại chính bảng này.",
+    tests: ["src/components/transport-policy.test.tsx"],
+    why: "Chính sách transport quyết định bộ điều khiển của mọi module đã đăng ký.",
   },
   {
     match: /^frontend\/src\/state\/store\.ts$/,
-    tests: ["src/state/", "src/components/", "src/simulations/experience-manifest.test.ts"],
+    tests: ["src/state/", "src/components/"],
     why: "Store sở hữu `active`/`challengeOpen`/`exploreOpen` và điều phối mọi dispatch — mọi miền đọc state qua nó.",
   },
   {
     match: /^frontend\/src\/styles\/(global\.css|tokens\.css)$/,
-    tests: ["src/styles/", "src/components/", "src/simulations/experience-manifest.test.ts"],
+    tests: ["src/styles/", "src/components/"],
     why: "`var()` trỏ token không tồn tại là lỗi IM LẶNG (trình duyệt vứt cả dòng) — đã trôi 5 milestone; guard token phải chạy cùng mọi thay đổi CSS.",
   },
   {
@@ -118,20 +113,12 @@ const SHARED_OWNERS = [
     why: "Hợp đồng `SimulationModule` và registry là nền của mọi module — đổi nó là đổi luật chung của cả danh mục.",
   },
   {
-    match: /^frontend\/src\/data\/(offline-catalog|sim-samples|samples)\.ts$/,
+    match: /^frontend\/src\/data\/(offline-catalog|geometry-samples)\.ts$/,
     tests: ["src/simulations/", "src/data/"],
     why: "Danh mục mẫu là đầu vào của parity mẫu↔AI và của mọi phép đo trình duyệt.",
   },
-  {
-    match: /^backend\/app\/validation\//,
-    tests: ["PYTEST"],
-    why: "Validator là NGUỒN của hợp đồng hai tầng; frontend chỉ là bản chiếu, nên đổi nó phải chạy cả backend lẫn parity descriptor.",
-  },
-  {
-    match: /^backend\/app\/simulation\/(catalog|scope|scope_gate)\.py$/,
-    tests: ["PYTEST"],
-    why: "Catalog/cổng phạm vi quyết định target nào tồn tại và đề nào bị từ chối — chạm gần như mọi test backend.",
-  },
+  // repo-cleanup: hai dòng của `backend/app/validation/` và `backend/app/simulation/{catalog,scope,scope_gate}.py`
+  // đã gỡ — các đường ấy không còn tồn tại từ LEGACY_INFORMATICS_REMOVAL.
 ];
 
 /** File KHÔNG phải mã sản phẩm — được phép chạy gate nhẹ, và phải nói rõ vì sao. */

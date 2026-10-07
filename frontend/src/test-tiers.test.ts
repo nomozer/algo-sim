@@ -31,19 +31,21 @@ function planFor(files: string[]) {
 }
 
 describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
+  /* repo-cleanup: hai ca dưới từng dùng đường của miền Tin học (`domains/web`, `domains/binary`) — miền đã gỡ, nên
+     nay chạy trên hai miền sống; bất biến giữ nguyên: một file của MỘT miền chỉ kéo test của miền ấy. */
   it("renderer một miền ⇒ chỉ miền đó", () => {
-    const out = planFor(["frontend/src/simulations/domains/web/ui.tsx"]);
-    expect(out).toContain("miền web");
-    expect(out).toContain("src/simulations/domains/web/");
+    const out = planFor(["frontend/src/simulations/domains/geometry/scene3d-view.tsx"]);
+    expect(out).toContain("miền geometry");
+    expect(out).toContain("src/simulations/domains/geometry/");
     /* THỪA: một renderer lẻ KHÔNG được kéo cả kho. */
     expect(out, "chọn thừa: renderer lẻ kéo cả src/").not.toMatch(/Đã chọn:.*\n?.*\bsrc\/\b(?!simulations)/);
     expect(out).not.toContain("+ pytest");
   });
 
-  it("engine nhị phân ⇒ test miền binary", () => {
-    const out = planFor(["frontend/src/simulations/domains/binary/base-conversion.ts"]);
-    expect(out).toContain("miền binary");
-    expect(out).toContain("src/simulations/domains/binary/");
+  it("module của miền thứ hai ⇒ test của đúng miền ấy", () => {
+    const out = planFor(["frontend/src/simulations/domains/semantic/index.ts"]);
+    expect(out).toContain("miền semantic");
+    expect(out).toContain("src/simulations/domains/semantic/");
   });
 
   it("CHỦ SỞ HỮU DÙNG CHUNG mở rộng bán kính, không thu về một test hẹp", () => {
@@ -52,7 +54,8 @@ describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
     const out = planFor(["frontend/src/components/SimulationControls.tsx"]);
     expect(out).toContain("CHỦ SỞ HỮU DÙNG CHUNG");
     expect(out).toContain("src/components/");
-    expect(out).toContain("experience-manifest.test.ts");
+    /* repo-cleanup: bỏ đòi `experience-manifest.test.ts` — file ấy không còn trong kho (manifest trải nghiệm của danh
+       mục Tin học); khẳng định cũ xanh chỉ vì bộ chọn in lại tên đã khai, không vì test tồn tại. */
   });
 
   it("store ⇒ nhiều miền", () => {
@@ -72,11 +75,11 @@ describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
        guard không soi gì. */
     const chosen = out.slice(out.indexOf("Lý do chọn:"));
     expect(chosen, "guard token không nằm trong tập chọn").toContain("src/styles/");
-    expect(chosen).toContain("experience-manifest.test.ts");
   });
 
-  it("validator backend ⇒ chạy pytest", () => {
-    const out = planFor(["backend/app/validation/simulation.py"]);
+  it("mã backend ⇒ chạy pytest", () => {
+    /* repo-cleanup: `backend/app/validation/` (validator Tin học) đã gỡ — ca chạy trên route hình học. */
+    const out = planFor(["backend/app/simulation/semantic_program/route.py"]);
     expect(out).toContain("pytest");
   });
 
@@ -96,8 +99,8 @@ describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
 
   it("KHÔNG BAO GIỜ có tập chọn rỗng cho thay đổi mã sản phẩm", () => {
     for (const f of [
-      "frontend/src/simulations/domains/logic/index.ts",
-      "backend/app/simulation/catalog.py",
+      "frontend/src/simulations/domains/geometry/index.ts",
+      "backend/app/simulation/semantic_program/route.py",
       "frontend/src/khong-ai-so-huu.tsx",
     ]) {
       const out = planFor([f]);
