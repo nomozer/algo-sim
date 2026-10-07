@@ -1,0 +1,27 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "w18_midpoint_mismatch",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Gọi M là trung điểm của SA. Tính độ dài đoạn MC.",
+  "source": "w18_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "product_tree_sha": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "construction_binding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "reason_subjects": [
+      "M là trung điểm của SA",
+      "M là trung điểm của SB"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng phép dựng của AlgoSim lại dựng \"M là trung điểm của SB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+  },
+  "source_reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+  "refusal_cause": "CONSTRUCTION"
+}

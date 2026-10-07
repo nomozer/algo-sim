@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_prism_assumption",
+  "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.DEF.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "product_tree_sha": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+    "reason_subjects": [
+      "AD"
+    ],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Đề bài chưa cho độ dài AD, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+  },
+  "source_reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+  "removed_from_text": "Cạnh bên AD = 5"
+}

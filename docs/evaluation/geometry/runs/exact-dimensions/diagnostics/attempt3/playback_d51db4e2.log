@@ -1,0 +1,7 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ d51db4e20daa1a764659fa7304498008aeea303c; timeout --signal=KILL 1200 node frontend/scripts/scene3d-playback-check.mjs --families regular_triangular_pyramid --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/exact-dimensions/inputs --ra docs/evaluation/geometry/runs/exact-dimensions/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/exact-dimensions/inputs/REVIEW_SET.json
+2026-10-07T19:23:39Z
+regular_triangular_pyramid/desktop: PASS
+regular_triangular_pyramid/mobile: PASS
+Wrote D:\tmp\exact pre\docs\evaluation\geometry\runs\exact-dimensions\images\PLAYBACK_EVIDENCE.json: PASS 844d58736261
+exit=0
+2026-10-07T19:24:52Z

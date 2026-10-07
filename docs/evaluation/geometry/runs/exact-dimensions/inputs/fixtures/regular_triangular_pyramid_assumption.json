@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_triangular_pyramid_assumption",
+  "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6. Tính thể tích khối chóp S.ABC.",
+  "source": "exact_dimensions_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "product_tree_sha": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+    "reason_subjects": [],
+    "refusal_cause": "UNKNOWN",
+    "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+  },
+  "removed_from_text": "chiều cao bằng 4",
+  "refusal_cause": "UNKNOWN",
+  "source_reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+}

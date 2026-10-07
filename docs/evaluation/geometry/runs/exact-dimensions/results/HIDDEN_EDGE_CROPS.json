@@ -1,0 +1,179 @@
+{
+  "schema_version": "scene3d-hidden-edge-crops/2",
+  "rule": "each crop contains both endpoints projected by the independent oracle from the recorded camera",
+  "family_sheets": {
+    "regular_triangular_pyramid": {
+      "not_built": "capture policy toi-thieu — review images: inputs/REVIEW_SET.json"
+    }
+  },
+  "overview": null,
+  "playback_films": {
+    "regular_triangular_pyramid": [
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None",
+      "None"
+    ]
+  },
+  "crops": [
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "desktop",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          557.1525700342037,
+          286.78952267263503
+        ],
+        [
+          895.6119562442071,
+          396.0394242843916
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        543,
+        320,
+        924,
+        474
+      ],
+      "source": "docs/evaluation/geometry/runs/exact-dimensions/images/regular-triangular-pyramid/desktop/neutral_final.png",
+      "path": "images/regular-triangular-pyramid/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "sha256": "7ef14cd833f088f22deffe18c3477e8e8b30b6a094c42cd710e428bf7bfa268e"
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "desktop",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          817.293391628993,
+          297.7099053631495
+        ],
+        [
+          503.1783887969441,
+          360.68732867638926
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        490,
+        331,
+        847,
+        439
+      ],
+      "source": "docs/evaluation/geometry/runs/exact-dimensions/images/regular-triangular-pyramid/desktop/rotated_neutral.png",
+      "path": "images/regular-triangular-pyramid/hidden-edges/desktop/rotated_neutral__AB__hidden.png",
+      "sha256": "deb69cbd6a45d1a6ce7f3ee51de517228f357b2e01c63360323cfeba7ea062f8"
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "mobile",
+      "state": "neutral_final",
+      "machine_edge_id": "khoi_chop::edge:A-C",
+      "display_label": "AC",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          95.11005110413043,
+          224.67157458164408
+        ],
+        [
+          298.88306782770337,
+          290.95857273243575
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        176,
+        841,
+        680,
+        1070
+      ],
+      "source": "docs/evaluation/geometry/runs/exact-dimensions/images/regular-triangular-pyramid/mobile/neutral_final.png",
+      "path": "images/regular-triangular-pyramid/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "sha256": "e50a5a4bd7c13d0ff8e90c804903cdcafddaa3748f73c23e946f56cce7e38ac8"
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "mobile",
+      "state": "rotated_neutral",
+      "machine_edge_id": "khoi_chop::edge:A-B",
+      "display_label": "AB",
+      "expected_visibility": null,
+      "observed_visibility": "HIDDEN",
+      "oracle_visibility": "HIDDEN",
+      "oracle_agreement": true,
+      "visual_owner_count": 1,
+      "dash_signature": [
+        "HIDDEN_DASHED"
+      ],
+      "endpoints_px": [
+        [
+          238.15764842182207,
+          230.49391724706283
+        ],
+        [
+          77.1469126394564,
+          272.6594558285221
+        ]
+      ],
+      "endpoints_inside_image": true,
+      "crop_box_px": [
+        140,
+        847,
+        558,
+        1039
+      ],
+      "source": "docs/evaluation/geometry/runs/exact-dimensions/images/regular-triangular-pyramid/mobile/rotated_neutral.png",
+      "path": "images/regular-triangular-pyramid/hidden-edges/mobile/rotated_neutral__AB__hidden.png",
+      "sha256": "b0b297900f77b5e1dff1f65453bdcf943cc0baa3c533eeeec7327e3edf228982"
+    }
+  ],
+  "all_endpoints_inside": true,
+  "oracle_disagreements": [],
+  "duplicate_owner_edges": []
+}

@@ -1,0 +1,4593 @@
+{
+  "schema_version": "learner-playback-evidence/1",
+  "measured_at": "2026-10-07T19:23:39.380Z",
+  "measurement_commit_sha": "d51db4e20daa1a764659fa7304498008aeea303c",
+  "playback_interval_ms": 1400,
+  "orbit_repeat_per_run": 5,
+  "application_llm_calls": 0,
+  "runs": [
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "desktop",
+      "total": 10,
+      "samples": [
+        {
+          "t": 32,
+          "step": 0,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "narration": "Dữ kiện đề cho: Cạnh đáy = 6, Chiều cao = 4."
+        },
+        {
+          "t": 62,
+          "step": 0,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "narration": "Dữ kiện đề cho: Cạnh đáy = 6, Chiều cao = 4."
+        },
+        {
+          "t": 1570,
+          "step": 1,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "day_ABC"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đáy ABC."
+        },
+        {
+          "t": 3016,
+          "step": 2,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "I"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "I",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng trung điểm của B và C."
+        },
+        {
+          "t": 4410,
+          "step": 3,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "AI"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "C",
+            "I",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đường thẳng qua A và I."
+        },
+        {
+          "t": 5841,
+          "step": 4,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "J"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "C",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng trung điểm của C và A."
+        },
+        {
+          "t": 7300,
+          "step": 5,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "BJ"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "BJ",
+            "C",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đường thẳng qua B và J."
+        },
+        {
+          "t": 8600,
+          "step": 6,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "G"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "BJ",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng giao điểm của AI và BJ."
+        },
+        {
+          "t": 9974,
+          "step": 7,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "chieu_cao_SG_2"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "chieu_cao_SG_2",
+            "day_ABC"
+          ],
+          "narration": "Dựng chiều cao SG."
+        },
+        {
+          "t": 11381,
+          "step": 8,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC"
+          ],
+          "narration": "Dựng các cạnh bên SA, SB, SC."
+        },
+        {
+          "t": 12852,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "t": 16719,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        }
+      ],
+      "film": [
+        {
+          "step": 0
+        },
+        {
+          "step": 1
+        },
+        {
+          "step": 2
+        },
+        {
+          "step": 3
+        },
+        {
+          "step": 4
+        },
+        {
+          "step": 5
+        },
+        {
+          "step": 6
+        },
+        {
+          "step": 7
+        },
+        {
+          "step": 8
+        },
+        {
+          "step": 9
+        }
+      ],
+      "states": {
+        "neutral_final": {
+          "t": 17462,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.81915204428905,
+              0,
+              0.573576436350963
+            ],
+            "dienTichBao": 1.0927724005351507,
+            "khoangDinhMin": 0.33543004065122434,
+            "khoangDinhCanhMin": 0.29484131676160164,
+            "doSau": 1.350490275873422,
+            "matNghiengMin": 0.2279161647590727,
+            "pass": true,
+            "non_degenerate": {
+              "pass": false,
+              "failures": [
+                "FACE_NEAR_EDGE_ON",
+                "THREE_KEY_VERTICES_NEAR_COLLINEAR",
+                "VERTEX_ON_FOREIGN_EDGE"
+              ],
+              "metrics": {
+                "dien_tich_ti_le": 0.911865661588606,
+                "do_sau_ti_le": 0.8480485995866788,
+                "mat_nghieng_min_do": 3.1343971955357004,
+                "ba_dinh_min": 0.06647998942526517,
+                "ba_dinh_gan_thang_hang": [
+                  "A",
+                  "B",
+                  "S"
+                ],
+                "dinh_canh_min": 0.0664799894252652,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "orbit_plan": {
+          "candidates": [
+            [
+              70,
+              3
+            ],
+            [
+              75,
+              3
+            ],
+            [
+              80,
+              3
+            ],
+            [
+              85,
+              3
+            ],
+            [
+              30,
+              3
+            ],
+            [
+              90,
+              3
+            ],
+            [
+              95,
+              3
+            ],
+            [
+              100,
+              3
+            ],
+            [
+              105,
+              3
+            ],
+            [
+              110,
+              3
+            ],
+            [
+              115,
+              3
+            ],
+            [
+              -130,
+              3
+            ],
+            [
+              -135,
+              3
+            ],
+            [
+              -140,
+              3
+            ],
+            [
+              -145,
+              3
+            ],
+            [
+              -150,
+              3
+            ]
+          ],
+          "attempts": [
+            {
+              "offset_deg": 70,
+              "zoom_out_notches": 3,
+              "pass": true,
+              "failures": []
+            }
+          ]
+        },
+        "rotated_neutral": {
+          "t": 21114,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.28026901871672955,
+              0.7697138096789636,
+              0.5735764363509522
+            ],
+            "dienTichBao": 1.1474113988409387,
+            "khoangDinhMin": 0.3705316755675716,
+            "khoangDinhCanhMin": 0.2021615702090893,
+            "doSau": 1.3300045161911611,
+            "matNghiengMin": 0.35834985141077313,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.9574592603235729,
+                "do_sau_ti_le": 0.835184441939357,
+                "mat_nghieng_min_do": 13.467870958532588,
+                "ba_dinh_min": 0.3094509124979353,
+                "ba_dinh_gan_thang_hang": [
+                  "C",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.30945091249793544,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "causal_selected": {
+          "t": 22652,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": "V",
+          "highlighted": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "V",
+            "chieu_cao_SG",
+            "day_ABC",
+            "dien_tich_day_ABC",
+            "khoi_chop",
+            "mp_day"
+          ],
+          "panel_open": true,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "mp_day"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 3,
+          "dimmed_readout": 2,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": true
+            },
+            {
+              "id": "J",
+              "dimmed": true
+            },
+            {
+              "id": "G",
+              "dimmed": true
+            }
+          ],
+          "readout_tiers": [
+            {
+              "id": "V",
+              "classes": [
+                "la-chon"
+              ]
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "classes": [
+                "la-trung-gian"
+              ]
+            },
+            {
+              "id": "chieu_cao_SG",
+              "classes": [
+                "la-trung-gian"
+              ]
+            },
+            {
+              "id": "canh_day",
+              "classes": [
+                "la-diu"
+              ]
+            },
+            {
+              "id": "chieu_cao",
+              "classes": [
+                "la-diu"
+              ]
+            }
+          ],
+          "causal_tiers": {
+            "V": "dich",
+            "A": "boi_canh",
+            "B": "boi_canh",
+            "C": "boi_canh",
+            "S": "boi_canh",
+            "chieu_cao_SG": "trung_gian",
+            "day_ABC": "boi_canh",
+            "dien_tich_day_ABC": "trung_gian",
+            "khoi_chop": "dich",
+            "mp_day": "boi_canh"
+          },
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.2789893955878781,
+              0.7701785434640827,
+              0.5735764363509498
+            ],
+            "dienTichBao": 1.147832451946715,
+            "khoangDinhMin": 0.37086728102544164,
+            "khoangDinhCanhMin": 0.20124289772418108,
+            "doSau": 1.3296132264786413,
+            "matNghiengMin": 0.35958002723891463,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.9578106087550254,
+                "do_sau_ti_le": 0.8349387291795815,
+                "mat_nghieng_min_do": 13.53976153263544,
+                "ba_dinh_min": 0.3111997715942825,
+                "ba_dinh_gan_thang_hang": [
+                  "C",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.3111997715942825,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "neutral_restored": {
+          "t": 23535,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [
+            {
+              "id": "V",
+              "classes": []
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "classes": []
+            },
+            {
+              "id": "chieu_cao_SG",
+              "classes": []
+            },
+            {
+              "id": "canh_day",
+              "classes": []
+            },
+            {
+              "id": "chieu_cao",
+              "classes": []
+            }
+          ],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 5.999999999999773
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 5.999999999999886
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.2788919437925239,
+              0.7702138374182674,
+              0.5735764363509495
+            ],
+            "dienTichBao": 1.1478644285954986,
+            "khoangDinhMin": 0.3708928268367607,
+            "khoangDinhCanhMin": 0.20117293294288238,
+            "doSau": 1.3295832863797163,
+            "matNghiengMin": 0.35967366804943596,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.9578372917202835,
+                "do_sau_ti_le": 0.8349199281119852,
+                "mat_nghieng_min_do": 13.545235804103582,
+                "ba_dinh_min": 0.31133297357662676,
+                "ba_dinh_gan_thang_hang": [
+                  "C",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.3113329735766268,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        }
+      },
+      "replay": {
+        "control_present": true,
+        "selected_before": "V",
+        "step": 0,
+        "selected": null,
+        "highlighted": [],
+        "playing": true
+      },
+      "orbit": {
+        "before": {
+          "t": 17528,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        "after": {
+          "t": 21094,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        }
+      },
+      "pass": true,
+      "checks": {
+        "starts_at_step_zero": {
+          "pass": true,
+          "details": {
+            "first": 0
+          }
+        },
+        "no_causal_selection": {
+          "pass": true,
+          "details": []
+        },
+        "detail_panel_stays_closed": {
+          "pass": true
+        },
+        "advances_one_step_at_a_time": {
+          "pass": true,
+          "details": {
+            "jumps": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        "reaches_final_step": {
+          "pass": true,
+          "details": {
+            "last": 9,
+            "max": 9
+          }
+        },
+        "stops_at_final_step": {
+          "pass": true,
+          "details": {
+            "stopped_after_ms": 0,
+            "observed_after_final_ms": 3867
+          }
+        },
+        "step_count_is_geometry_steps": {
+          "pass": true,
+          "details": {
+            "total": 10,
+            "expected": 10
+          }
+        },
+        "every_geometry_step_changes_the_figure": {
+          "pass": true,
+          "details": [
+            {
+              "step": 1,
+              "changed": true
+            },
+            {
+              "step": 2,
+              "changed": true
+            },
+            {
+              "step": 3,
+              "changed": true
+            },
+            {
+              "step": 4,
+              "changed": true
+            },
+            {
+              "step": 5,
+              "changed": true
+            },
+            {
+              "step": 6,
+              "changed": true
+            },
+            {
+              "step": 7,
+              "changed": true
+            },
+            {
+              "step": 8,
+              "changed": true
+            },
+            {
+              "step": 9,
+              "changed": true
+            }
+          ]
+        },
+        "solution_in_sync_with_geometry_step": {
+          "pass": true,
+          "details": [
+            {
+              "step": 0,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 1,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 2,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 3,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 4,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 5,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 6,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 7,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 8,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 9,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [
+                  "dien_tich_day_ABC",
+                  "chieu_cao_SG"
+                ],
+                "results": [
+                  "V"
+                ]
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [
+                  "dien_tich_day_ABC",
+                  "chieu_cao_SG"
+                ],
+                "results": [
+                  "V"
+                ]
+              },
+              "pass": true
+            }
+          ]
+        },
+        "final_result_shown_once": {
+          "pass": true,
+          "details": {
+            "rows": [
+              {
+                "id": "V",
+                "sec": "Kết quả"
+              },
+              {
+                "id": "dien_tich_day_ABC",
+                "sec": "Đại lượng trung gian"
+              },
+              {
+                "id": "chieu_cao_SG",
+                "sec": "Đại lượng trung gian"
+              },
+              {
+                "id": "canh_day",
+                "sec": "Dữ kiện"
+              },
+              {
+                "id": "chieu_cao",
+                "sec": "Dữ kiện"
+              }
+            ],
+            "answers": [
+              {
+                "id": "V",
+                "rows": [
+                  {
+                    "id": "V",
+                    "sec": "Kết quả"
+                  }
+                ],
+                "in_results": true
+              }
+            ],
+            "final_panel_closed": false
+          }
+        },
+        "replay_resets_step_selection_highlight": {
+          "pass": true,
+          "details": {
+            "control_present": true,
+            "selected_before": "V",
+            "step": 0,
+            "selected": null,
+            "highlighted": [],
+            "playing": true
+          }
+        },
+        "orbit_preserves_timeline": {
+          "pass": true,
+          "details": {
+            "before": {
+              "t": 17528,
+              "step": 9,
+              "total": 10,
+              "playing": false,
+              "selected": null,
+              "highlighted": [],
+              "panel_open": false,
+              "rows": [],
+              "solution_card": false,
+              "dl_open": false,
+              "rendered": [
+                "A",
+                "B",
+                "C",
+                "G",
+                "I",
+                "J",
+                "S",
+                "canh_ben_S_A",
+                "canh_ben_S_B",
+                "canh_ben_S_C",
+                "chieu_cao_SG_2",
+                "day_ABC",
+                "khoi_chop",
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:A-C",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:S-A",
+                "khoi_chop::edge:S-B",
+                "khoi_chop::edge:S-C",
+                "khoi_chop::face:0",
+                "khoi_chop::face:1",
+                "khoi_chop::face:2",
+                "khoi_chop::face:3"
+              ],
+              "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+            },
+            "after": {
+              "t": 21094,
+              "step": 9,
+              "total": 10,
+              "playing": false,
+              "selected": null,
+              "highlighted": [],
+              "panel_open": false,
+              "rows": [],
+              "solution_card": false,
+              "dl_open": false,
+              "rendered": [
+                "A",
+                "B",
+                "C",
+                "G",
+                "I",
+                "J",
+                "S",
+                "canh_ben_S_A",
+                "canh_ben_S_B",
+                "canh_ben_S_C",
+                "chieu_cao_SG_2",
+                "day_ABC",
+                "khoi_chop",
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:A-C",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:S-A",
+                "khoi_chop::edge:S-B",
+                "khoi_chop::edge:S-C",
+                "khoi_chop::face:0",
+                "khoi_chop::face:1",
+                "khoi_chop::face:2",
+                "khoi_chop::face:3"
+              ],
+              "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+            }
+          }
+        },
+        "no_uncaught_exception": {
+          "pass": true,
+          "details": []
+        },
+        "causal_layers_dim_outside": {
+          "pass": true,
+          "details": {
+            "selected": "V",
+            "label_tiers": [
+              {
+                "id": "S",
+                "dimmed": false
+              },
+              {
+                "id": "A",
+                "dimmed": false
+              },
+              {
+                "id": "B",
+                "dimmed": false
+              },
+              {
+                "id": "C",
+                "dimmed": false
+              },
+              {
+                "id": "I",
+                "dimmed": true
+              },
+              {
+                "id": "J",
+                "dimmed": true
+              },
+              {
+                "id": "G",
+                "dimmed": true
+              }
+            ],
+            "readout_tiers": [
+              {
+                "id": "V",
+                "classes": [
+                  "la-chon"
+                ]
+              },
+              {
+                "id": "dien_tich_day_ABC",
+                "classes": [
+                  "la-trung-gian"
+                ]
+              },
+              {
+                "id": "chieu_cao_SG",
+                "classes": [
+                  "la-trung-gian"
+                ]
+              },
+              {
+                "id": "canh_day",
+                "classes": [
+                  "la-diu"
+                ]
+              },
+              {
+                "id": "chieu_cao",
+                "classes": [
+                  "la-diu"
+                ]
+              }
+            ],
+            "causal_tiers": {
+              "V": "dich",
+              "A": "boi_canh",
+              "B": "boi_canh",
+              "C": "boi_canh",
+              "S": "boi_canh",
+              "chieu_cao_SG": "trung_gian",
+              "day_ABC": "boi_canh",
+              "dien_tich_day_ABC": "trung_gian",
+              "khoi_chop": "dich",
+              "mp_day": "boi_canh"
+            },
+            "expected_tiers": {
+              "V": "dich",
+              "chieu_cao_SG": "trung_gian",
+              "dien_tich_day_ABC": "trung_gian",
+              "khoi_chop": "dich",
+              "S": "boi_canh",
+              "mp_day": "boi_canh",
+              "day_ABC": "boi_canh",
+              "A": "boi_canh",
+              "B": "boi_canh",
+              "C": "boi_canh"
+            }
+          }
+        },
+        "close_panel_restores_neutral": {
+          "pass": true,
+          "details": {
+            "restored": true
+          }
+        },
+        "neutral_final_view_quality": {
+          "pass": true,
+          "details": {
+            "direction": [
+              0.81915204428905,
+              0,
+              0.573576436350963
+            ],
+            "dienTichBao": 1.0927724005351507,
+            "khoangDinhMin": 0.33543004065122434,
+            "khoangDinhCanhMin": 0.29484131676160164,
+            "doSau": 1.350490275873422,
+            "matNghiengMin": 0.2279161647590727,
+            "pass": true,
+            "non_degenerate": {
+              "pass": false,
+              "failures": [
+                "FACE_NEAR_EDGE_ON",
+                "THREE_KEY_VERTICES_NEAR_COLLINEAR",
+                "VERTEX_ON_FOREIGN_EDGE"
+              ],
+              "metrics": {
+                "dien_tich_ti_le": 0.911865661588606,
+                "do_sau_ti_le": 0.8480485995866788,
+                "mat_nghieng_min_do": 3.1343971955357004,
+                "ba_dinh_min": 0.06647998942526517,
+                "ba_dinh_gan_thang_hang": [
+                  "A",
+                  "B",
+                  "S"
+                ],
+                "dinh_canh_min": 0.0664799894252652,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "rotated_neutral_non_degenerate": {
+          "pass": true,
+          "details": {
+            "view": {
+              "direction": [
+                0.28026901871672955,
+                0.7697138096789636,
+                0.5735764363509522
+              ],
+              "dienTichBao": 1.1474113988409387,
+              "khoangDinhMin": 0.3705316755675716,
+              "khoangDinhCanhMin": 0.2021615702090893,
+              "doSau": 1.3300045161911611,
+              "matNghiengMin": 0.35834985141077313,
+              "pass": true,
+              "non_degenerate": {
+                "pass": true,
+                "failures": [],
+                "metrics": {
+                  "dien_tich_ti_le": 0.9574592603235729,
+                  "do_sau_ti_le": 0.835184441939357,
+                  "mat_nghieng_min_do": 13.467870958532588,
+                  "ba_dinh_min": 0.3094509124979353,
+                  "ba_dinh_gan_thang_hang": [
+                    "C",
+                    "A",
+                    "S"
+                  ],
+                  "dinh_canh_min": 0.30945091249793544,
+                  "measured_on": "perspective_screen"
+                },
+                "unreadable_vertices": []
+              }
+            },
+            "plan": {
+              "candidates": [
+                [
+                  70,
+                  3
+                ],
+                [
+                  75,
+                  3
+                ],
+                [
+                  80,
+                  3
+                ],
+                [
+                  85,
+                  3
+                ],
+                [
+                  30,
+                  3
+                ],
+                [
+                  90,
+                  3
+                ],
+                [
+                  95,
+                  3
+                ],
+                [
+                  100,
+                  3
+                ],
+                [
+                  105,
+                  3
+                ],
+                [
+                  110,
+                  3
+                ],
+                [
+                  115,
+                  3
+                ],
+                [
+                  -130,
+                  3
+                ],
+                [
+                  -135,
+                  3
+                ],
+                [
+                  -140,
+                  3
+                ],
+                [
+                  -145,
+                  3
+                ],
+                [
+                  -150,
+                  3
+                ]
+              ],
+              "attempts": [
+                {
+                  "offset_deg": 70,
+                  "zoom_out_notches": 3,
+                  "pass": true,
+                  "failures": []
+                }
+              ]
+            }
+          }
+        },
+        "vertex_marker_px": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 6
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 6.000000000000227
+                }
+              ],
+              "mismatched": []
+            }
+          }
+        },
+        "orbit_repeatable": {
+          "pass": true,
+          "details": [
+            {
+              "lap": 0,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 1490,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 1490,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 1493,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 1988,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 1990,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 1,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 1333,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 1333,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 4.773959005888173e-15
+                },
+                {
+                  "t_ms": 1335,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 1906,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 1911,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 2,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 1537,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 1537,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 4.773959005888173e-15
+                },
+                {
+                  "t_ms": 1541,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 2202,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 2211,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 3,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 1544,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 1544,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 4.773959005888173e-15
+                },
+                {
+                  "t_ms": 1548,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 2191,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 2210,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 4,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 1683,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 1683,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 1.3322676295501878e-15
+                },
+                {
+                  "t_ms": 1687,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 2495,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 2501,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "mobile",
+      "total": 10,
+      "samples": [
+        {
+          "t": 32,
+          "step": 0,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "narration": "Dữ kiện đề cho: Cạnh đáy = 6, Chiều cao = 4."
+        },
+        {
+          "t": 61,
+          "step": 0,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ],
+          "narration": "Dữ kiện đề cho: Cạnh đáy = 6, Chiều cao = 4."
+        },
+        {
+          "t": 1516,
+          "step": 1,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "day_ABC"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đáy ABC."
+        },
+        {
+          "t": 3029,
+          "step": 2,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "I"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "I",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng trung điểm của B và C."
+        },
+        {
+          "t": 4342,
+          "step": 3,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "AI"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "C",
+            "I",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đường thẳng qua A và I."
+        },
+        {
+          "t": 5738,
+          "step": 4,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "J"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "C",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng trung điểm của C và A."
+        },
+        {
+          "t": 7153,
+          "step": 5,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "BJ"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "BJ",
+            "C",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng đường thẳng qua B và J."
+        },
+        {
+          "t": 8532,
+          "step": 6,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "G"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "AI",
+            "B",
+            "BJ",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "day_ABC"
+          ],
+          "narration": "Dựng giao điểm của AI và BJ."
+        },
+        {
+          "t": 9920,
+          "step": 7,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "chieu_cao_SG_2"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "chieu_cao_SG_2",
+            "day_ABC"
+          ],
+          "narration": "Dựng chiều cao SG."
+        },
+        {
+          "t": 11381,
+          "step": 8,
+          "total": 10,
+          "playing": true,
+          "selected": null,
+          "highlighted": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C"
+          ],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC"
+          ],
+          "narration": "Dựng các cạnh bên SA, SB, SC."
+        },
+        {
+          "t": 12777,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "t": 16595,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        }
+      ],
+      "film": [
+        {
+          "step": 0
+        },
+        {
+          "step": 1
+        },
+        {
+          "step": 2
+        },
+        {
+          "step": 3
+        },
+        {
+          "step": 4
+        },
+        {
+          "step": 5
+        },
+        {
+          "step": 6
+        },
+        {
+          "step": 7
+        },
+        {
+          "step": 8
+        },
+        {
+          "step": 9
+        }
+      ],
+      "states": {
+        "neutral_final": {
+          "t": 17304,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000014
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.8191520442889922,
+              -2.220446049250313e-16,
+              0.5735764363510454
+            ],
+            "dienTichBao": 1.0927724005351702,
+            "khoangDinhMin": 0.3354300406512482,
+            "khoangDinhCanhMin": 0.2948413167615799,
+            "doSau": 1.3504902758733268,
+            "matNghiengMin": 0.22791616475910562,
+            "pass": true,
+            "non_degenerate": {
+              "pass": false,
+              "failures": [
+                "FACE_NEAR_EDGE_ON",
+                "THREE_KEY_VERTICES_NEAR_COLLINEAR",
+                "VERTEX_ON_FOREIGN_EDGE"
+              ],
+              "metrics": {
+                "dien_tich_ti_le": 0.9118656615886223,
+                "do_sau_ti_le": 0.848048599586619,
+                "mat_nghieng_min_do": 5.070209236564514,
+                "ba_dinh_min": 0.11329240752789566,
+                "ba_dinh_gan_thang_hang": [
+                  "B",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.11329240752789571,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "orbit_plan": {
+          "candidates": [
+            [
+              65,
+              6
+            ],
+            [
+              70,
+              3
+            ],
+            [
+              75,
+              3
+            ],
+            [
+              80,
+              3
+            ],
+            [
+              85,
+              3
+            ],
+            [
+              30,
+              3
+            ],
+            [
+              90,
+              3
+            ],
+            [
+              95,
+              3
+            ],
+            [
+              100,
+              3
+            ],
+            [
+              105,
+              3
+            ],
+            [
+              110,
+              3
+            ],
+            [
+              115,
+              3
+            ],
+            [
+              -125,
+              3
+            ],
+            [
+              -130,
+              3
+            ],
+            [
+              -135,
+              3
+            ],
+            [
+              -140,
+              3
+            ],
+            [
+              -145,
+              3
+            ],
+            [
+              -150,
+              3
+            ]
+          ],
+          "attempts": [
+            {
+              "offset_deg": 65,
+              "zoom_out_notches": 6,
+              "pass": true,
+              "failures": []
+            }
+          ]
+        },
+        "rotated_neutral": {
+          "t": 20535,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000057
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000057
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.3493184340337946,
+              0.7409363692700095,
+              0.5735764363510357
+            ],
+            "dienTichBao": 1.1213387717832772,
+            "khoangDinhMin": 0.3520182712929471,
+            "khoangDinhCanhMin": 0.19736693746542294,
+            "doSau": 1.3458359737337178,
+            "matNghiengMin": 0.290270945295808,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.9357029153521546,
+                "do_sau_ti_le": 0.845125902191411,
+                "mat_nghieng_min_do": 12.088341118430938,
+                "ba_dinh_min": 0.29054593481429053,
+                "ba_dinh_gan_thang_hang": [
+                  "A",
+                  "C",
+                  "S"
+                ],
+                "dinh_canh_min": 0.2905459348142906,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "causal_selected": {
+          "t": 22289,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": "V",
+          "highlighted": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "V",
+            "chieu_cao_SG",
+            "day_ABC",
+            "dien_tich_day_ABC",
+            "khoi_chop",
+            "mp_day"
+          ],
+          "panel_open": true,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "mp_day"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 3,
+          "dimmed_readout": 2,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": true
+            },
+            {
+              "id": "J",
+              "dimmed": true
+            },
+            {
+              "id": "G",
+              "dimmed": true
+            }
+          ],
+          "readout_tiers": [
+            {
+              "id": "V",
+              "classes": [
+                "la-chon"
+              ]
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "classes": [
+                "la-trung-gian"
+              ]
+            },
+            {
+              "id": "chieu_cao_SG",
+              "classes": [
+                "la-trung-gian"
+              ]
+            },
+            {
+              "id": "canh_day",
+              "classes": [
+                "la-diu"
+              ]
+            },
+            {
+              "id": "chieu_cao",
+              "classes": [
+                "la-diu"
+              ]
+            }
+          ],
+          "causal_tiers": {
+            "V": "dich",
+            "A": "boi_canh",
+            "B": "boi_canh",
+            "C": "boi_canh",
+            "S": "boi_canh",
+            "chieu_cao_SG": "trung_gian",
+            "day_ABC": "boi_canh",
+            "dien_tich_day_ABC": "trung_gian",
+            "khoi_chop": "dich",
+            "mp_day": "boi_canh"
+          },
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000057
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.34931842191262,
+              0.7409363749846064,
+              0.5735764363510304
+            ],
+            "dienTichBao": 1.1213387769607506,
+            "khoangDinhMin": 0.35201827460124274,
+            "khoangDinhCanhMin": 0.19736694583617767,
+            "doSau": 1.3458359719010828,
+            "matNghiengMin": 0.2902709575507755,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.935702919672506,
+                "do_sau_ti_le": 0.8451259010405967,
+                "mat_nghieng_min_do": 12.088341824811978,
+                "ba_dinh_min": 0.29054595341966377,
+                "ba_dinh_gan_thang_hang": [
+                  "C",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.29054595341966377,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "neutral_restored": {
+          "t": 22936,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [
+            {
+              "id": "V",
+              "sec": "Kết quả"
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "chieu_cao_SG",
+              "sec": "Đại lượng trung gian"
+            },
+            {
+              "id": "canh_day",
+              "sec": "Dữ kiện"
+            },
+            {
+              "id": "chieu_cao",
+              "sec": "Dữ kiện"
+            }
+          ],
+          "solution_card": false,
+          "dl_open": true,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+          "dimmed_labels": 0,
+          "dimmed_readout": 0,
+          "label_tiers": [
+            {
+              "id": "S",
+              "dimmed": false
+            },
+            {
+              "id": "A",
+              "dimmed": false
+            },
+            {
+              "id": "B",
+              "dimmed": false
+            },
+            {
+              "id": "C",
+              "dimmed": false
+            },
+            {
+              "id": "I",
+              "dimmed": false
+            },
+            {
+              "id": "J",
+              "dimmed": false
+            },
+            {
+              "id": "G",
+              "dimmed": false
+            }
+          ],
+          "readout_tiers": [
+            {
+              "id": "V",
+              "classes": []
+            },
+            {
+              "id": "dien_tich_day_ABC",
+              "classes": []
+            },
+            {
+              "id": "chieu_cao_SG",
+              "classes": []
+            },
+            {
+              "id": "canh_day",
+              "classes": []
+            },
+            {
+              "id": "chieu_cao",
+              "classes": []
+            }
+          ],
+          "causal_tiers": null,
+          "vertex_marker_px": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000057
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000028
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000057
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                }
+              ],
+              "mismatched": []
+            }
+          },
+          "view": {
+            "direction": [
+              0.34931842188569,
+              0.7409363749973039,
+              0.573576436351029
+            ],
+            "dienTichBao": 1.1213387769722538,
+            "khoangDinhMin": 0.35201827460859275,
+            "khoangDinhCanhMin": 0.19736694585477532,
+            "doSau": 1.3458359718970128,
+            "matNghiengMin": 0.2902709575780027,
+            "pass": true,
+            "non_degenerate": {
+              "pass": true,
+              "failures": [],
+              "metrics": {
+                "dien_tich_ti_le": 0.9357029196821045,
+                "do_sau_ti_le": 0.8451259010380411,
+                "mat_nghieng_min_do": 12.088341826381297,
+                "ba_dinh_min": 0.2905459534609979,
+                "ba_dinh_gan_thang_hang": [
+                  "C",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.29054595346099793,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        }
+      },
+      "replay": {
+        "control_present": true,
+        "selected_before": "V",
+        "step": 0,
+        "selected": null,
+        "highlighted": [],
+        "playing": true
+      },
+      "orbit": {
+        "before": {
+          "t": 17337,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        "after": {
+          "t": 20519,
+          "step": 9,
+          "total": 10,
+          "playing": false,
+          "selected": null,
+          "highlighted": [],
+          "panel_open": false,
+          "rows": [],
+          "solution_card": false,
+          "dl_open": false,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "G",
+            "I",
+            "J",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "chieu_cao_SG_2",
+            "day_ABC",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3"
+          ],
+          "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        }
+      },
+      "pass": true,
+      "checks": {
+        "starts_at_step_zero": {
+          "pass": true,
+          "details": {
+            "first": 0
+          }
+        },
+        "no_causal_selection": {
+          "pass": true,
+          "details": []
+        },
+        "detail_panel_stays_closed": {
+          "pass": true
+        },
+        "advances_one_step_at_a_time": {
+          "pass": true,
+          "details": {
+            "jumps": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        "reaches_final_step": {
+          "pass": true,
+          "details": {
+            "last": 9,
+            "max": 9
+          }
+        },
+        "stops_at_final_step": {
+          "pass": true,
+          "details": {
+            "stopped_after_ms": 0,
+            "observed_after_final_ms": 3818
+          }
+        },
+        "step_count_is_geometry_steps": {
+          "pass": true,
+          "details": {
+            "total": 10,
+            "expected": 10
+          }
+        },
+        "every_geometry_step_changes_the_figure": {
+          "pass": true,
+          "details": [
+            {
+              "step": 1,
+              "changed": true
+            },
+            {
+              "step": 2,
+              "changed": true
+            },
+            {
+              "step": 3,
+              "changed": true
+            },
+            {
+              "step": 4,
+              "changed": true
+            },
+            {
+              "step": 5,
+              "changed": true
+            },
+            {
+              "step": 6,
+              "changed": true
+            },
+            {
+              "step": 7,
+              "changed": true
+            },
+            {
+              "step": 8,
+              "changed": true
+            },
+            {
+              "step": 9,
+              "changed": true
+            }
+          ]
+        },
+        "solution_in_sync_with_geometry_step": {
+          "pass": true,
+          "details": [
+            {
+              "step": 0,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 1,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 2,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 3,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 4,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 5,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 6,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 7,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 8,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [],
+                "results": []
+              },
+              "pass": true
+            },
+            {
+              "step": 9,
+              "observable": true,
+              "want": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [
+                  "dien_tich_day_ABC",
+                  "chieu_cao_SG"
+                ],
+                "results": [
+                  "V"
+                ]
+              },
+              "got": {
+                "givens": [
+                  "canh_day",
+                  "chieu_cao"
+                ],
+                "steps": [
+                  "dien_tich_day_ABC",
+                  "chieu_cao_SG"
+                ],
+                "results": [
+                  "V"
+                ]
+              },
+              "pass": true
+            }
+          ]
+        },
+        "final_result_shown_once": {
+          "pass": true,
+          "details": {
+            "rows": [
+              {
+                "id": "V",
+                "sec": "Kết quả"
+              },
+              {
+                "id": "dien_tich_day_ABC",
+                "sec": "Đại lượng trung gian"
+              },
+              {
+                "id": "chieu_cao_SG",
+                "sec": "Đại lượng trung gian"
+              },
+              {
+                "id": "canh_day",
+                "sec": "Dữ kiện"
+              },
+              {
+                "id": "chieu_cao",
+                "sec": "Dữ kiện"
+              }
+            ],
+            "answers": [
+              {
+                "id": "V",
+                "rows": [
+                  {
+                    "id": "V",
+                    "sec": "Kết quả"
+                  }
+                ],
+                "in_results": true
+              }
+            ],
+            "final_panel_closed": false
+          }
+        },
+        "replay_resets_step_selection_highlight": {
+          "pass": true,
+          "details": {
+            "control_present": true,
+            "selected_before": "V",
+            "step": 0,
+            "selected": null,
+            "highlighted": [],
+            "playing": true
+          }
+        },
+        "orbit_preserves_timeline": {
+          "pass": true,
+          "details": {
+            "before": {
+              "t": 17337,
+              "step": 9,
+              "total": 10,
+              "playing": false,
+              "selected": null,
+              "highlighted": [],
+              "panel_open": false,
+              "rows": [],
+              "solution_card": false,
+              "dl_open": false,
+              "rendered": [
+                "A",
+                "B",
+                "C",
+                "G",
+                "I",
+                "J",
+                "S",
+                "canh_ben_S_A",
+                "canh_ben_S_B",
+                "canh_ben_S_C",
+                "chieu_cao_SG_2",
+                "day_ABC",
+                "khoi_chop",
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:A-C",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:S-A",
+                "khoi_chop::edge:S-B",
+                "khoi_chop::edge:S-C",
+                "khoi_chop::face:0",
+                "khoi_chop::face:1",
+                "khoi_chop::face:2",
+                "khoi_chop::face:3"
+              ],
+              "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+            },
+            "after": {
+              "t": 20519,
+              "step": 9,
+              "total": 10,
+              "playing": false,
+              "selected": null,
+              "highlighted": [],
+              "panel_open": false,
+              "rows": [],
+              "solution_card": false,
+              "dl_open": false,
+              "rendered": [
+                "A",
+                "B",
+                "C",
+                "G",
+                "I",
+                "J",
+                "S",
+                "canh_ben_S_A",
+                "canh_ben_S_B",
+                "canh_ben_S_C",
+                "chieu_cao_SG_2",
+                "day_ABC",
+                "khoi_chop",
+                "khoi_chop::edge:A-B",
+                "khoi_chop::edge:A-C",
+                "khoi_chop::edge:B-C",
+                "khoi_chop::edge:S-A",
+                "khoi_chop::edge:S-B",
+                "khoi_chop::edge:S-C",
+                "khoi_chop::face:0",
+                "khoi_chop::face:1",
+                "khoi_chop::face:2",
+                "khoi_chop::face:3"
+              ],
+              "narration": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+            }
+          }
+        },
+        "no_uncaught_exception": {
+          "pass": true,
+          "details": []
+        },
+        "causal_layers_dim_outside": {
+          "pass": true,
+          "details": {
+            "selected": "V",
+            "label_tiers": [
+              {
+                "id": "S",
+                "dimmed": false
+              },
+              {
+                "id": "A",
+                "dimmed": false
+              },
+              {
+                "id": "B",
+                "dimmed": false
+              },
+              {
+                "id": "C",
+                "dimmed": false
+              },
+              {
+                "id": "I",
+                "dimmed": true
+              },
+              {
+                "id": "J",
+                "dimmed": true
+              },
+              {
+                "id": "G",
+                "dimmed": true
+              }
+            ],
+            "readout_tiers": [
+              {
+                "id": "V",
+                "classes": [
+                  "la-chon"
+                ]
+              },
+              {
+                "id": "dien_tich_day_ABC",
+                "classes": [
+                  "la-trung-gian"
+                ]
+              },
+              {
+                "id": "chieu_cao_SG",
+                "classes": [
+                  "la-trung-gian"
+                ]
+              },
+              {
+                "id": "canh_day",
+                "classes": [
+                  "la-diu"
+                ]
+              },
+              {
+                "id": "chieu_cao",
+                "classes": [
+                  "la-diu"
+                ]
+              }
+            ],
+            "causal_tiers": {
+              "V": "dich",
+              "A": "boi_canh",
+              "B": "boi_canh",
+              "C": "boi_canh",
+              "S": "boi_canh",
+              "chieu_cao_SG": "trung_gian",
+              "day_ABC": "boi_canh",
+              "dien_tich_day_ABC": "trung_gian",
+              "khoi_chop": "dich",
+              "mp_day": "boi_canh"
+            },
+            "expected_tiers": {
+              "V": "dich",
+              "chieu_cao_SG": "trung_gian",
+              "dien_tich_day_ABC": "trung_gian",
+              "khoi_chop": "dich",
+              "S": "boi_canh",
+              "mp_day": "boi_canh",
+              "day_ABC": "boi_canh",
+              "A": "boi_canh",
+              "B": "boi_canh",
+              "C": "boi_canh"
+            }
+          }
+        },
+        "close_panel_restores_neutral": {
+          "pass": true,
+          "details": {
+            "restored": true
+          }
+        },
+        "neutral_final_view_quality": {
+          "pass": true,
+          "details": {
+            "direction": [
+              0.8191520442889922,
+              -2.220446049250313e-16,
+              0.5735764363510454
+            ],
+            "dienTichBao": 1.0927724005351702,
+            "khoangDinhMin": 0.3354300406512482,
+            "khoangDinhCanhMin": 0.2948413167615799,
+            "doSau": 1.3504902758733268,
+            "matNghiengMin": 0.22791616475910562,
+            "pass": true,
+            "non_degenerate": {
+              "pass": false,
+              "failures": [
+                "FACE_NEAR_EDGE_ON",
+                "THREE_KEY_VERTICES_NEAR_COLLINEAR",
+                "VERTEX_ON_FOREIGN_EDGE"
+              ],
+              "metrics": {
+                "dien_tich_ti_le": 0.9118656615886223,
+                "do_sau_ti_le": 0.848048599586619,
+                "mat_nghieng_min_do": 5.070209236564514,
+                "ba_dinh_min": 0.11329240752789566,
+                "ba_dinh_gan_thang_hang": [
+                  "B",
+                  "A",
+                  "S"
+                ],
+                "dinh_canh_min": 0.11329240752789571,
+                "measured_on": "perspective_screen"
+              },
+              "unreadable_vertices": []
+            }
+          }
+        },
+        "rotated_neutral_non_degenerate": {
+          "pass": true,
+          "details": {
+            "view": {
+              "direction": [
+                0.3493184340337946,
+                0.7409363692700095,
+                0.5735764363510357
+              ],
+              "dienTichBao": 1.1213387717832772,
+              "khoangDinhMin": 0.3520182712929471,
+              "khoangDinhCanhMin": 0.19736693746542294,
+              "doSau": 1.3458359737337178,
+              "matNghiengMin": 0.290270945295808,
+              "pass": true,
+              "non_degenerate": {
+                "pass": true,
+                "failures": [],
+                "metrics": {
+                  "dien_tich_ti_le": 0.9357029153521546,
+                  "do_sau_ti_le": 0.845125902191411,
+                  "mat_nghieng_min_do": 12.088341118430938,
+                  "ba_dinh_min": 0.29054593481429053,
+                  "ba_dinh_gan_thang_hang": [
+                    "A",
+                    "C",
+                    "S"
+                  ],
+                  "dinh_canh_min": 0.2905459348142906,
+                  "measured_on": "perspective_screen"
+                },
+                "unreadable_vertices": []
+              }
+            },
+            "plan": {
+              "candidates": [
+                [
+                  65,
+                  6
+                ],
+                [
+                  70,
+                  3
+                ],
+                [
+                  75,
+                  3
+                ],
+                [
+                  80,
+                  3
+                ],
+                [
+                  85,
+                  3
+                ],
+                [
+                  30,
+                  3
+                ],
+                [
+                  90,
+                  3
+                ],
+                [
+                  95,
+                  3
+                ],
+                [
+                  100,
+                  3
+                ],
+                [
+                  105,
+                  3
+                ],
+                [
+                  110,
+                  3
+                ],
+                [
+                  115,
+                  3
+                ],
+                [
+                  -125,
+                  3
+                ],
+                [
+                  -130,
+                  3
+                ],
+                [
+                  -135,
+                  3
+                ],
+                [
+                  -140,
+                  3
+                ],
+                [
+                  -145,
+                  3
+                ],
+                [
+                  -150,
+                  3
+                ]
+              ],
+              "attempts": [
+                {
+                  "offset_deg": 65,
+                  "zoom_out_notches": 6,
+                  "pass": true,
+                  "failures": []
+                }
+              ]
+            }
+          }
+        },
+        "vertex_marker_px": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "details": {
+              "token": {
+                "thuong": 6,
+                "hep": 7.5,
+                "chon": 9
+              },
+              "markers": [
+                {
+                  "id": "S",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "A",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "B",
+                  "state": "thuong",
+                  "diameter_px": 7.500000000000014
+                },
+                {
+                  "id": "C",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "I",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                },
+                {
+                  "id": "J",
+                  "state": "thuong",
+                  "diameter_px": 7.5
+                },
+                {
+                  "id": "G",
+                  "state": "thuong",
+                  "diameter_px": 7.499999999999943
+                }
+              ],
+              "mismatched": []
+            }
+          }
+        },
+        "orbit_repeatable": {
+          "pass": true,
+          "details": [
+            {
+              "lap": 0,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 674,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 674,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 677,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 854,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 856,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 1,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 697,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 697,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 699,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 879,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 882,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 2,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 741,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 741,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 743,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 903,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 905,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 3,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 645,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 645,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 647,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 960,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 965,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            },
+            {
+              "lap": 4,
+              "pass": true,
+              "transitions": [
+                {
+                  "t_ms": 851,
+                  "state": "CAMERA_SETTLED"
+                },
+                {
+                  "t_ms": 851,
+                  "state": "RESET_VS_DEFAULT",
+                  "motion": 0
+                },
+                {
+                  "t_ms": 853,
+                  "state": "PLANNED",
+                  "offset_deg": 60
+                },
+                {
+                  "t_ms": 1064,
+                  "state": "GESTURE_SENT"
+                },
+                {
+                  "t_ms": 1069,
+                  "state": "VISIBILITY_CHANGED"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "pass": true,
+  "capture_policy": {
+    "mode": "toi-thieu",
+    "review_set_patterns": 10,
+    "oracle_states": [
+      "neutral_final.png",
+      "rotated_neutral.png"
+    ],
+    "goi": 28,
+    "tao": 0,
+    "bo_qua": 28,
+    "loi": 0
+  }
+}

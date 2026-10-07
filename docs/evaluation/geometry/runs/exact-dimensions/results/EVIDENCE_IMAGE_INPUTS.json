@@ -1,0 +1,10 @@
+{
+ "schema_version": "evidence-image-inputs/1",
+ "rule": "every image the visual-evidence builder opened (sheet cells, refusal cells, playback film, hidden-edge crop sources): required by the visual oracle, never pruned",
+ "images": [
+  "images/regular-triangular-pyramid/desktop/neutral_final.png",
+  "images/regular-triangular-pyramid/desktop/rotated_neutral.png",
+  "images/regular-triangular-pyramid/mobile/neutral_final.png",
+  "images/regular-triangular-pyramid/mobile/rotated_neutral.png"
+ ]
+}
