@@ -150,44 +150,5 @@ export async function extractImageViaServer(
   return postJson("/api/image/extract", req, signal);
 }
 
-/** Kết quả edit tăng dần (M7.14A) — status theo docs/CORRECTNESS.md §3. */
-export type EditResponse =
-  | { status: "ok"; config: unknown; patch: { operations: unknown[] }; note?: string }
-  | { status: "unsupported_to_verify"; reason: string };
-
-/**
- * Chỉnh sửa TĂNG DẦN mô phỏng generic hiện có — KHÔNG chạy full pipeline.
- * Server sinh patch (1 call LLM nhỏ) + validate; lỗi cấu trúc → throw (422).
- */
-export async function editViaServer(params: {
-  simulationId: string;
-  config: unknown;
-  instruction: string;
-}): Promise<EditResponse> {
-  return postJson("/api/edit", {
-    simulation_id: params.simulationId,
-    config: params.config,
-    instruction: params.instruction,
-  });
-}
-
-export interface ExplainTurn {
-  role: "user" | "assistant";
-  text: string;
-}
-
-/** Giải thích trạng thái thật của engine — context từ module.getExplainContext. */
-export async function explainViaServer(params: {
-  simulationId: string;
-  explainContext: Record<string, unknown>;
-  question: string;
-  recentHistory: ExplainTurn[];
-}): Promise<string> {
-  const body = await postJson<{ reply: string }>("/api/explain", {
-    simulation_id: params.simulationId,
-    explain_context: params.explainContext,
-    question: params.question,
-    recent_history: params.recentHistory.slice(-8),
-  });
-  return body.reply;
-}
+/* repo-cleanup: `editViaServer` (`/api/edit`, gỡ ở LEGACY_INFORMATICS_REMOVAL) và `explainViaServer` (`/api/explain`,
+ * người gọi duy nhất là `AIHelpPanel` không còn gắn vào giao diện) đã gỡ cùng route backend. */

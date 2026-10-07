@@ -25,7 +25,6 @@ function fakeThrowingModule(id: string): SimulationModule<unknown, unknown> {
       throw new Error("boom: runtime không evaluate được");
     },
     apply: (s) => s,
-    getExplainContext: () => ({}),
     Workspace: () => null,
   };
 }
@@ -40,7 +39,6 @@ function fakeOkModule(id: string): SimulationModule<unknown, unknown> {
     validateConfig: (raw) => ({ ok: true, config: raw }),
     init: (config) => ({ config }),
     apply: (s) => s,
-    getExplainContext: () => ({}),
     Workspace: () => null,
   };
 }

@@ -48,21 +48,12 @@ const INDEX = join(FRONTEND, "..", "docs", "CODE_INDEX.md");
  * Thêm dòng vào đây = thừa nhận vừa tạo nợ mới, và diff sẽ phơi ra điều đó.
  */
 const KNOWN_GAPS = [
-  "components/AIHelpPanel.tsx",
-  "components/AnalysisCard.tsx",
   // PredictionBar.tsx — xoá 2026-08-20: file đã biến mất khỏi kho mã cùng lượt
   // W13 gỡ quiz. Nợ chỉ đi xuống, và mục ma cũng làm guard ĐỎ.
-  "components/PseudocodeView.tsx",
+  // repo-cleanup: AIHelpPanel, AnalysisCard, PseudocodeView, StageLegend, TraversalFrontier, VarsView và năm script
+  // capture-* của miền Tin học đã gỡ khỏi kho mã (không còn người dùng) — mục của chúng rời danh sách.
   "components/SimulationInspector.tsx",
-  "components/StageLegend.tsx",
-  "components/TraversalFrontier.tsx",
-  "components/VarsView.tsx",
   // llm/input.ts — trả 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): có entry thật.
-  "capture-tree-visual.mjs",
-  "capture-w2b-patch.mjs",
-  "capture-w2c-program.mjs",
-  "capture-w3-encoding.mjs",
-  "capture-w3-live-e2e.mjs",
 ];
 
 function walk(dir: string, out: string[] = []): string[] {

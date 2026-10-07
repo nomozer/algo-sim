@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { analyzeViaServer, editViaServer } from "./client";
+import { analyzeViaServer } from "./client";
 import { BLOCK_MESSAGE } from "../test-setup";
 
 /**
@@ -12,12 +12,6 @@ describe("offline guard — vitest không gọi mạng", () => {
     await expect(
       analyzeViaServer({ type: "text", content: "Tìm max dãy 3 1 2" }),
     ).rejects.toThrow(); // client bọc lỗi mạng thành thông điệp hướng dẫn
-  });
-
-  it("editViaServer bị chặn ở fetch", async () => {
-    await expect(
-      editViaServer({ simulationId: "generic.rule_scene", config: {}, instruction: "Thêm D." }),
-    ).rejects.toThrow();
   });
 
   it("fetch thô ném đúng thông điệp guard", async () => {

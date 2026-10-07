@@ -220,13 +220,13 @@ export class BrowserSession {
      * `napModuleDev: false`; đường vào của nó là `window.__ALGO_SIM_STORE__`,
      * thứ `main.tsx` phơi ra ở CẢ hai chế độ.
      *
-     * Mặc định giữ `true` để mười script chứng nhận cũ không đổi hành vi. */
+     * Mặc định giữ `true` cho các script chứng nhận hình học nạp danh mục bài mẫu qua Vite dev (repo-cleanup: bỏ `action-probe.ts`, chỉ các script Tin học đã gỡ còn đọc nó). */
     if (!this.napModuleDev) { this.timings.startup = Date.now() - t0; return this; }
     this.mods = JSON.parse(await this.eval(`(()=>{const pick=(s)=>{
       const h=performance.getEntriesByType('resource').map(e=>e.name).filter(n=>n.includes(s));
       return h.length?h[h.length-1]:new URL(s,location.origin).href;};
       return JSON.stringify({store:pick('/src/state/store.ts'),catalog:pick('/src/data/offline-catalog.ts'),
-      registry:pick('/src/simulations/registry.ts'),sims:pick('/src/simulations/index.ts'),probe:pick('/src/simulations/action-probe.ts')});})()`));
+      registry:pick('/src/simulations/registry.ts'),sims:pick('/src/simulations/index.ts')});})()`));
     await this.eval(`(async()=>{${Object.values(this.mods)
       .map((x) => `await import(${JSON.stringify(x)});`).join("")}return 1})()`);
     this.timings.startup = Date.now() - t0;

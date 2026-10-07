@@ -1,6 +1,10 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import descriptorsJson from "./capability-descriptors.json";
+
+/* repo-cleanup: ảnh chụp danh mục rời `src/simulations/` (mã sản phẩm) sang thư mục run, NGUYÊN BYTE (sha256 ghi ở
+ * `docs/evaluation/geometry/runs/repo-cleanup/inventory.json`) — nó là bằng chứng, không phải dữ liệu sản phẩm. */
+const descriptorsJson: unknown = JSON.parse(readFileSync(new URL(
+  "../../../docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json", import.meta.url), "utf-8"));
 
 /**
  * W4B-2V §25 — GUARD TÍNH TOÀN VẸN CỦA BẢNG AUDIT.

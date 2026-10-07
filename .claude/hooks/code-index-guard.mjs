@@ -159,10 +159,11 @@ function main() {
 
   if (shared.length) {
     L.push(`⚠ ${shared.length} lớp DÙNG CHUNG bởi nhiều module: nêu rõ bán kính ảnh hưởng TRƯỚC khi sửa,`);
-    L.push("  và sau khi sửa phải chụp 4 mức (capture-before-after.mjs) + chạy audit-composition.mjs.");
+    L.push("  và sau khi sửa chạy `npx vitest related <file>` + cổng trình duyệt hình học trên `dist/` (CLAUDE.md §5:");
+    L.push("  `node scripts/scene3d-orbit-gate.mjs`, bộ suite `compiler-scene-replay.mjs`) — chụp theo `capture-policy.mjs`.");
   }
-
-  L.push("Nhắc: audit-composition CHỈ soi .workspace-card và CHỈ chạy khi chưa đăng nhập — lỗi ở shell (sidebar, panel Giải thích, tràn trang) nằm NGOÀI tầm nó.");
+  // repo-cleanup: lời nhắc cũ trỏ `capture-before-after.mjs` + `audit-composition.mjs` (đo `.workspace-card` của danh
+  // mục Tin học) — hai script ấy đã gỡ cùng miền Tin học.
 
   return L.join("\n");
 }

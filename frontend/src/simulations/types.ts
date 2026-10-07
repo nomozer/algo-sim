@@ -354,12 +354,6 @@ export interface SimulationModule<C = unknown, S = unknown> {
   currentConfig?(state: S): unknown;
 
   /**
-   * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật
-   * để gửi /api/explain. KHÔNG BAO GIỜ gửi Zustand/React/Three.js object.
-   */
-  getExplainContext(state: S, config: C): Record<string, unknown>;
-
-  /**
    * Sân khấu chính của mô phỏng — bắt buộc. Chỉ domain UI này được biết
    * ruột state của mình; core UI (SimulationWorkspace) render qua đây,
    * không được giả định mọi simulation là thuật toán/có trace/mảng.
