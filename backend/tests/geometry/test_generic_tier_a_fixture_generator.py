@@ -48,7 +48,10 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
     # grounding, construction_binding, and by the kernel for a zero base edge).
     # regular-triangular-pyramid-w01: + six cases (regular triangular pyramid served 9/2, regular tetrahedron
     # served 9; refused at assumption, grounding, construction_binding for a wrong centroid, and a zero base edge).
-    assert len(manifest["fixtures"]) == 43
+    # exact-dimensions: the family's canonical names now hold RATIONAL sizes on an affine chart (pyramid served 12√3,
+    # tetrahedron 18√2; refused at assumption, grounding, construction_binding, and by the kernel for a zero base);
+    # the six Euclidean-frame radical cases keep running under `regular_triangular_pyramid_radical_*`.
+    assert len(manifest["fixtures"]) == 49
     assert {"w18_midpoint_mismatch.json", "w18_projection_mismatch.json", "w18_unverified.json",
             "w18_midpoint_plane_distance.json", "w18_projection_line.json"} <= set(manifest["fixtures"])
     system = json.loads((tmp_path / "fixtures" / "cube_system_cause.json").read_text(encoding="utf-8"))
@@ -67,6 +70,7 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         "triangular_pyramid", "triangular_prism", "rectangular_pyramid",
         "cuboid", "cube", "cross_section", "regular_square_pyramid",
         "regular_triangular_pyramid", "regular_tetrahedron",
+        "regular_triangular_pyramid_radical", "regular_tetrahedron_radical",
     }
     for name in [n for n in manifest["fixtures"] if n.endswith("_ungrounded.json")]:
         negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))
@@ -80,7 +84,10 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))
         envelope = negative["envelope"]
         assert (envelope["status"], envelope["stage_reached"]) == ("unsupported", "assumption"), name
-        assert envelope["reason_code"] == ("ASSUMPTION_INVARIANCE_UNPROVEN" if name.startswith("cross_section")
+        # exact-dimensions: khung trục + thiếu chiều cao ⇒ không dẫn xuất được metric, ràng buộc khuôn không kiểm được ⇒
+        # "chưa chứng minh" (vẫn từ chối) — giới hạn đã ghi ở OPEN_ISSUES.
+        assert envelope["reason_code"] == ("ASSUMPTION_INVARIANCE_UNPROVEN"
+                                           if name.startswith(("cross_section", "regular_triangular_pyramid_assumption"))
                                            else "ASSUMPTION_DETERMINES_ANSWER"), name
         assert "scene3d" not in envelope and "final_memory" not in envelope, name
         assert negative["removed_from_text"] not in negative["problem_text"], name

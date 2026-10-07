@@ -559,16 +559,17 @@ def main() -> None:
 
     p1_text = RTP.NHAN["P1_side_height"]["text"]
     rtp = (
-        ("regular_triangular_pyramid_positive", lambda: RTP.CA["P1_side_height"](), None, "9/2"),
-        ("regular_tetrahedron_positive", lambda: RTP.CA["P3_tetrahedron"](), None, "9"),
-        ("regular_triangular_pyramid_assumption", lambda: RTP.CA["N1_missing_height"](),
+        # exact-dimensions: tên gốc của họ nay là khung hữu tỉ (khối dưới); khung Euclid căn cũ mang hậu tố `_radical`.
+        ("regular_triangular_pyramid_radical_positive", lambda: RTP.CA["P1_side_height"](), None, "9/2"),
+        ("regular_tetrahedron_radical_positive", lambda: RTP.CA["P3_tetrahedron"](), None, "9"),
+        ("regular_triangular_pyramid_radical_assumption", lambda: RTP.CA["N1_missing_height"](),
          ("assumption", "ASSUMPTION_DETERMINES_ANSWER", "SOURCE"), None),
-        ("regular_triangular_pyramid_wrong_centroid", lambda: RTP.CA["N6_wrong_centroid_identity"](),
+        ("regular_triangular_pyramid_radical_wrong_centroid", lambda: RTP.CA["N6_wrong_centroid_identity"](),
          ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION"), None),
-        ("regular_triangular_pyramid_ungrounded", lambda: RTP.chop_deu(
+        ("regular_triangular_pyramid_radical_ungrounded", lambda: RTP.chop_deu(
             "P1_side_height", van=p1_text.replace(", chiều cao bằng √3", ""), **RTP._g(RTP.DAY, RTP.CAO)),
          ("grounding", "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE"), None),
-        ("regular_triangular_pyramid_non_positive", lambda: RTP.chop_deu(
+        ("regular_triangular_pyramid_radical_non_positive", lambda: RTP.chop_deu(
             "P1_side_height", k=Fraction(0), van=p1_text.replace("cạnh đáy bằng 3√2", "cạnh đáy bằng 0"),
             **RTP._g(("canh_day", "cạnh đáy", "0"), RTP.CAO)),
          ("execution", "NON_POSITIVE_LENGTH", "SOURCE"), None),
@@ -592,6 +593,55 @@ def main() -> None:
                and bo in p1_text and bo not in contract.problem_text else {})
         (fixtures / f"{name}.json").write_text(json.dumps(
             _wrapper(name, contract.problem_text, envelope, "rtp_w01_corpus_frozen_program_through_production_route",
+                     **mat, **({} if refusal is None else {"refusal_cause": refusal[2],
+                                                          **({"source_reason_code": refusal[1]} if refusal[1] else {})})),
+            ensure_ascii=False, indent=2,
+        ), encoding="utf-8")
+
+    # exact-dimensions — cùng họ ở KÍCH THƯỚC HỮU TỈ (cạnh đáy 6, chiều cao 4; tứ diện đều cạnh 6) trên khung trục tự
+    # nhiên của mô hình (đáy không đều theo Euclid): metric khung dẫn xuất từ đề (`assumption_gate.do_luong_cua`).
+    # Chương trình: builder `tests/geometry/test_exact_dimensions.py` (nhãn ghi trước ở run `exact-dimensions`).
+    from tests.geometry import test_exact_dimensions as ED
+
+    p01 = ED.NHAN["P01_base_height"]["text"]
+    huu_ti = (
+        ("regular_triangular_pyramid_positive", lambda: ED.chuong_trinh("P01_base_height"), None, "12√3"),
+        ("regular_tetrahedron_positive", lambda: ED.chuong_trinh("P06_tetrahedron"), None, "18√2"),
+        ("regular_triangular_pyramid_assumption", lambda: ED.chuong_trinh("N01_missing_height"),
+         ("assumption", "ASSUMPTION_INVARIANCE_UNPROVEN", "UNKNOWN"), None),
+        ("regular_triangular_pyramid_wrong_centroid", lambda: ED.chuong_trinh("N07_wrong_centroid_identity"),
+         ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION"), None),
+        ("regular_triangular_pyramid_ungrounded", lambda: RTP.chop_deu(
+            "P1_side_height", van=p01.replace(", chiều cao bằng 4", ""), **ED._khung("axis", Fraction(6), Fraction(4)),
+            **RTP._g(("canh_day", "cạnh đáy", "6"), ("chieu_cao", "chiều cao", "4"))),
+         ("grounding", "GIVEN_VALUE_NOT_IN_SOURCE", "SOURCE"), None),
+        # Cạnh đáy 0: mô hình đặt ba đỉnh đáy trùng nhau ⇒ kernel từ chối (đúng loại `topology_kernel` của suite).
+        ("regular_triangular_pyramid_non_positive", lambda: RTP.chop_deu(
+            "P1_side_height", van=ED.NHAN["N06_zero_base"]["text"], **ED._khung("axis", Fraction(0), Fraction(4)),
+            **RTP._g(("canh_day", "cạnh đáy", "0"), ("chieu_cao", "chiều cao", "4"))),
+         ("execution", "NON_POSITIVE_LENGTH", "SOURCE"), None),
+    )
+    for name, dung, refusal, dap_so in huu_ti:
+        contract, program = dung()
+        validation = validate_semantic_program(program)
+        assert validation.ok and validation.spec is not None, validation.error
+        envelope = attach_learner_reason(asyncio.run(
+            _run_frozen_program(contract.problem_text, contract, validation.spec)))
+        if refusal is None:
+            dich = next(s["target_var"] for s in reversed(program["statements"]) if s.get("kind") == "assign")
+            v = next(o for o in envelope["scene3d"]["objects"] if o["id"] == dich)
+            assert envelope["status"] == "ok" and v.get("value") == dap_so, (name, envelope["status"], v.get("value"))
+            assert envelope["scene3d"].get("chart_metric"), name          # khung affine: metric phải đi kèm cảnh
+        else:
+            assert (envelope["status"], envelope["stage_reached"], envelope.get("reason_code"),
+                    envelope["refusal_cause"]) == ("unsupported", *refusal), (name, envelope.get("stage_reached"),
+                                                   envelope.get("reason_code"), envelope.get("refusal_cause"))
+            assert "scene3d" not in envelope, name
+        bo = ", chiều cao bằng 4"
+        mat = ({"removed_from_text": bo.strip(" ,.")} if name.endswith(("_assumption", "_ungrounded"))
+               and bo in p01 and bo not in contract.problem_text else {})
+        (fixtures / f"{name}.json").write_text(json.dumps(
+            _wrapper(name, contract.problem_text, envelope, "exact_dimensions_corpus_frozen_program_through_production_route",
                      **mat, **({} if refusal is None else {"refusal_cause": refusal[2],
                                                           **({"source_reason_code": refusal[1]} if refusal[1] else {})})),
             ensure_ascii=False, indent=2,

@@ -93,7 +93,7 @@ TEN_PHUC_VU = {"correct_plane": "cắt đúng mặt phẳng đề nói — đư�
                "point_construction_witness": "trung điểm đúng; khoảng cách tới (ABCD) có nhân chứng — phục vụ",
                "projection_correct": "chiếu S đúng lên BD — được phục vụ",
                # regular-triangular-pyramid-w01 — tứ diện đều trong cùng họ (chóp tam giác đều mọi cạnh bằng nhau).
-               "regular_tetrahedron": "tứ diện đều cạnh 3√2 — được phục vụ (V = 9)"}
+               "regular_tetrahedron": "tứ diện đều cạnh 6 — được phục vụ (V = 18√2)"}
 #: Ảnh của trang dương chỉ có khi bộ chạy đã ĐO điều tương ứng: (khoá bản ghi, trạng thái). W18: công
 #: tắc "Hiện tất cả" thay hai công tắc W17.
 W17_STATES = (("show_all_toggle", "show_all"), ("causal_restore", "causal_restored"))

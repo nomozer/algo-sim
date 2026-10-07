@@ -302,18 +302,18 @@
       "positive_fixture": "fixtures/regular_triangular_pyramid_positive.json",
       "topology": { "vertices": 4, "edges": 6, "faces": 4, "euler": 2 },
       "expected_labels": ["A", "B", "C", "S"],
-      "expected_answer": "9/2",
+      "expected_answer": "12√3",
       "causal_target_id": "V",
       "oracle_expected_closure": [
         "A", "B", "C", "S", "V", "chieu_cao_SG",
         "day_ABC", "dien_tich_day_ABC", "khoi_chop", "mp_day"
       ],
       "oracle_source": {
-        "kind": "rtp_w01_corpus_program_dependency_graph",
-        "path": "backend/tests/geometry/test_regular_triangular_pyramid.py",
-        "sha256": "38fb017eadbf6a56be3074a02ee550fad3884da4f0150bab64e5f6190411aed7",
+        "kind": "exact_dimensions_corpus_program_dependency_graph",
+        "path": "backend/tests/geometry/test_exact_dimensions.py",
+        "sha256": "c8feb496c97140ebe8e85ed6639b8ee1d04f0cd66e76d0708b5920b317b032c0",
         "hash_basis": "git_blob_at_measurement_commit",
-        "symbol": "chop_deu"
+        "symbol": "chuong_trinh"
       },
       "expected_formation": [
         { "class": "PYRAMID_LIKE", "role": "CONSTRUCT_BASE", "kind": "polygon3", "vertices": ["A", "B", "C"] },
@@ -326,12 +326,12 @@
       "formation_coverage": { "enforce": ["PYRAMID_LIKE"], "measure": [] },
       "negative_fixtures": [
         { "kind": "ungrounded_source", "fixture": "fixtures/regular_triangular_pyramid_ungrounded.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "grounding", "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE", "refusal_cause": "SOURCE"} },
-        { "kind": "assumption", "fixture": "fixtures/regular_triangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_DETERMINES_ANSWER", "refusal_cause": "SOURCE"} },
+        { "kind": "assumption", "fixture": "fixtures/regular_triangular_pyramid_assumption.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "assumption", "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN", "refusal_cause": "UNKNOWN"} },
         { "kind": "topology_kernel", "fixture": "fixtures/regular_triangular_pyramid_non_positive.json", "expected": {"product_error_code": "semantic_program_invalid", "stage_reached": "execution", "reason_code": "NON_POSITIVE_LENGTH", "refusal_cause": "SOURCE"} },
         { "kind": "point_construction_mismatch", "fixture": "fixtures/regular_triangular_pyramid_wrong_centroid.json", "expected": {"product_error_code": "input_not_grounded", "stage_reached": "construction_binding", "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND", "refusal_cause": "CONSTRUCTION"} }
       ],
       "served_fixtures": [
-        { "kind": "regular_tetrahedron", "fixture": "fixtures/regular_tetrahedron_positive.json", "expected": {"answer": "9", "annotation_id": "V"} }
+        { "kind": "regular_tetrahedron", "fixture": "fixtures/regular_tetrahedron_positive.json", "expected": {"answer": "18√2", "annotation_id": "V"} }
       ]
     }
   ]
