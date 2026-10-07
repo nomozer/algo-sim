@@ -1,0 +1,7 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ 3bbb80520d2c5870db59d9a702a982ef364872c9; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/lock_cache_identity.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/exact-dimensions/inputs
+2026-10-07T18:58:39Z
+Candidate khớp bản đã đóng băng (mã sản phẩm: 111 file, e1927f84a9e18bd6…).
+Khoá khớp · CACHE_VERSION 117 · môi trường b1714b566e25c912…
+Wrote 49 frozen fixtures to D:\tmp\exact pre\docs\evaluation\geometry\runs\exact-dimensions\inputs\fixtures
+exit=0
+2026-10-07T18:58:44Z

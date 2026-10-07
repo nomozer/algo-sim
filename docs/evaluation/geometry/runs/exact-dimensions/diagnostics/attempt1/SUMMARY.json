@@ -1,0 +1,255 @@
+{
+  "schema": "exact-dimensions/attempt-summary/1",
+  "attempt": 1,
+  "measurement_commit_sha": "3bbb80520d2c5870db59d9a702a982ef364872c9",
+  "product_commit_sha": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "verdict": "FAIL — HARNESS defect, not product: suite orbit + vertex_marker_px and playback view quality/vertex_marker_px/orbit_repeatable read a chart-coordinate scene through a non-orthogonal model matrix (model = display rotation · chart map T). The harness assumed M was a pure rotation (Mᵀ as inverse) and measured angles, normals and marker radii in chart coordinates. Fixed in compiler-scene-replay-lib.veTheGioi/cameraTheGioi (node test red on 3bbb8052 at mat_nghieng_min_do). The suite's per-scenario failure_class says PRODUCT_ASSERTION because the classifier sees a failed assertion; the root cause is the harness — recorded here, the classifier is not rewritten after the fact.",
+  "steps": [
+    "status_before=0",
+    "exit=0",
+    "exit=0",
+    "exit=1",
+    "exit=0",
+    "exit=0",
+    "exit=0",
+    "exit=0",
+    "exit=1",
+    "exit=0",
+    "images on disk: 28",
+    "status_after (run outputs only expected):",
+    "done exit=0"
+  ],
+  "scenarios": {
+    "positive/desktop": {
+      "pass": false,
+      "failure_class": "PRODUCT_ASSERTION",
+      "failed": [
+        "vertex_marker_px"
+      ],
+      "orbit_prediction_max_view_matrix_error": [
+        5.587,
+        4.252,
+        5.53,
+        3.408,
+        3.325,
+        3.257,
+        3.191,
+        4.72
+      ]
+    },
+    "positive/mobile": {
+      "pass": false,
+      "failure_class": "PRODUCT_ASSERTION",
+      "failed": [
+        "vertex_marker_px"
+      ],
+      "orbit_prediction_max_view_matrix_error": [
+        6.339,
+        4.293,
+        6.287,
+        4.21,
+        4.133,
+        4.064,
+        3.995
+      ]
+    }
+  },
+  "playback_checks_failed": {
+    "regular_triangular_pyramid/desktop": [],
+    "regular_triangular_pyramid/mobile": []
+  },
+  "passed_and_not_rerun": [
+    "scene_controls (W02 2/2)",
+    "panels (W04 3/3)",
+    "focus_mode (W05 3/3)"
+  ],
+  "capture_policy": {
+    "BROWSER_EVIDENCE.json": {
+      "mode": "toi-thieu",
+      "review_set_patterns": 10,
+      "goi": 46,
+      "tao": 10,
+      "bo_qua": 36,
+      "loi": 2
+    },
+    "PLAYBACK_EVIDENCE.json": {
+      "mode": "toi-thieu",
+      "review_set_patterns": 10,
+      "goi": 28,
+      "tao": 4,
+      "bo_qua": 24,
+      "loi": 0
+    },
+    "W02_CLOSURE_PROBE.json": {
+      "mode": "toi-thieu",
+      "review_set_patterns": 10,
+      "goi": 7,
+      "tao": 0,
+      "bo_qua": 7,
+      "loi": 0
+    },
+    "W04_PANELS_PROBE.json": {
+      "mode": "toi-thieu",
+      "review_set_patterns": 10,
+      "goi": 11,
+      "tao": 0,
+      "bo_qua": 11,
+      "loi": 0
+    },
+    "W05_FOCUS_PROBE.json": {
+      "mode": "toi-thieu",
+      "review_set_patterns": 10,
+      "goi": 12,
+      "tao": 2,
+      "bo_qua": 10,
+      "loi": 0
+    }
+  },
+  "capture_policy_leaks_found": [
+    "captureElement wrote detail_area/detail_length/solution_causal_selected outside the policy (8 images over 2 viewports, detail_volume desktop is in the review set)",
+    "playback neutral_final/rotated_neutral matched the oracle file names but are not cut by the builder (4 images)"
+  ],
+  "images_created": [
+    {
+      "path": "images/focus/regular-triangular-pyramid/low/focus_layout.png",
+      "bytes": 92206,
+      "sha256": "c40951c4c613cd2f5478126bfdf433112e42b1b5624f3648a64e9217784f5173"
+    },
+    {
+      "path": "images/focus/regular-triangular-pyramid/mobile/focus_layout.png",
+      "bytes": 179111,
+      "sha256": "95d8e98430d482177fbcdba1e8fbd13cb4f07c06d3b19c89df1bd7077c9d14de"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/detail_area.png",
+      "bytes": 9416,
+      "sha256": "45889e16f354d29dfb6d49bdef84e591a1d846878b66a4cb2bf4d7c944de5384"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/detail_length.png",
+      "bytes": 10931,
+      "sha256": "839ef1926535772addf4aada358db17c5d4e982f467f2fada695b1d83c21b572"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/detail_volume.png",
+      "bytes": 10872,
+      "sha256": "5134acf076533ccea5b8625b471fcc8d48c5cb3aa60a5419c37a1d3a1b1144b5"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/failure.png",
+      "bytes": 144232,
+      "sha256": "f4f9c503896c08f94f042c703aa418c34de08fcdd81f11c69445ce3858fc11fc"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/formation/steps_panel_open.png",
+      "bytes": 199295,
+      "sha256": "f4d51078849202a3d6df2c0e4a2b2cd5bdbae35d745d6dc705b7ae64eeeb4d4e"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/neutral_final.png",
+      "bytes": 215873,
+      "sha256": "054062d961058009d31d4c442f8fb084f9690b684a2790c8ffdaa3d406bdb63c"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/rotated_neutral.png",
+      "bytes": 210710,
+      "sha256": "73bea410f80cd1543322d40516ba16b6b64196301464cbb70bf6a93e13df6bf5"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/selected_area.png",
+      "bytes": 215559,
+      "sha256": "6eed6c31a7e6aba182665a46d27ad205f5886af84ebd79d624541dd6baafa788"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/desktop/solution_causal_selected.png",
+      "bytes": 16834,
+      "sha256": "8f71ca5bb50a845e532d82d9062da8833673f17c2ed53420937508dde2a73631"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/hidden-edges/desktop/neutral_final__AC__hidden.png",
+      "bytes": 14129,
+      "sha256": "7ef14cd833f088f22deffe18c3477e8e8b30b6a094c42cd710e428bf7bfa268e"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/hidden-edges/desktop/rotated_neutral__BC__hidden.png",
+      "bytes": 14538,
+      "sha256": "859f57a8b48155ce44bda2cfbd86c3872d4af169b11bb3fafab285d88a38c937"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/hidden-edges/mobile/neutral_final__AC__hidden.png",
+      "bytes": 39387,
+      "sha256": "e50a5a4bd7c13d0ff8e90c804903cdcafddaa3748f73c23e946f56cce7e38ac8"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/hidden-edges/mobile/rotated_neutral__AB__hidden.png",
+      "bytes": 31452,
+      "sha256": "813da41b4068407e8f8bdc69b4b698e4e8c6a976474b3c1a47dc5bd9a1262a17"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/detail_area.png",
+      "bytes": 26536,
+      "sha256": "cb1867369b2e41f3f224988bf91930f767880ddfb35d12552b7c503d66ac74f4"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/detail_length.png",
+      "bytes": 32491,
+      "sha256": "9eca7e1065cb137181dda24a87a207b7fe7ed9bbfa23428bc4924ed66aa4265e"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/detail_volume.png",
+      "bytes": 32980,
+      "sha256": "dccb9f16b140d0c60726e3a22b26832e387e7ea00bbaa88b5ee3a310c0d56dd8"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/failure.png",
+      "bytes": 233629,
+      "sha256": "baab7e5e2e9d268d52662a2c4386562d7f2455665f6e97779b52698284a63c68"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/neutral_final.png",
+      "bytes": 250845,
+      "sha256": "69b199700e6934c876538899d968521b2032da982cccf3b4ff8da2d6433fddba"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/rotated_neutral.png",
+      "bytes": 245792,
+      "sha256": "3a2c08687ccaa7f65fbaa24453cee55b2a158e6d83ea0c0159071f69434e4dd3"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/mobile/solution_causal_selected.png",
+      "bytes": 42548,
+      "sha256": "305dc4c3499c04dace76bece7ef38b9776e0aca627e4df0be03d44bc3bf84293"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/negative/assumption/desktop/refusal.png",
+      "bytes": 55703,
+      "sha256": "e97fb300ef523c0f14392d0b2584c0cee7f89126869e5549e206847d1befa1ad"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/playback/desktop/neutral_final.png",
+      "bytes": 216191,
+      "sha256": "e5c28a342fc029729b57ec25f90bf11c449c9ca7f16bcc2bf6c0d28dba907f5b"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/playback/desktop/rotated_neutral.png",
+      "bytes": 173963,
+      "sha256": "8258e2dd651a27fe3f90ea6cb649fc70b87a56da5489a61424dd25702807df3c"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/playback/mobile/neutral_final.png",
+      "bytes": 250845,
+      "sha256": "69b199700e6934c876538899d968521b2032da982cccf3b4ff8da2d6433fddba"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/playback/mobile/rotated_neutral.png",
+      "bytes": 244318,
+      "sha256": "9331c3d3823c56081695f70550ad7f65dcd771e499d54fe76ba9a4f4f6d2c634"
+    },
+    {
+      "path": "images/regular-triangular-pyramid/served/regular_tetrahedron/desktop/served.png",
+      "bytes": 220191,
+      "sha256": "624c121f5d7b8ac462254463bacbc5dfc2513da81fa3c8240ecb6042cec9085b"
+    }
+  ],
+  "images_kept": "none — attempt 1 outputs are discarded with the worktree; this list (path, bytes, sha256) is the record"
+}

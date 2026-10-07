@@ -1,0 +1,5 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ 3bbb80520d2c5870db59d9a702a982ef364872c9; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/exact-dimensions --browser ../docs/evaluation/geometry/runs/exact-dimensions/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/exact-dimensions/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/exact-dimensions/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/exact-dimensions/results/PLAYBACK_EVIDENCE.json
+2026-10-07T19:09:25Z
+4 crops · endpoints inside: True · oracle disagreements: 0 · duplicate owners: 0
+exit=0
+2026-10-07T19:09:25Z

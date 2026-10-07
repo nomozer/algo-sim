@@ -1,0 +1,8 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ 3bbb80520d2c5870db59d9a702a982ef364872c9; timeout --signal=KILL 1200 node frontend/scripts/check-focus-mode.mjs --ho regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/exact-dimensions/inputs --ra docs/evaluation/geometry/runs/exact-dimensions/results --anh docs/evaluation/geometry/runs/exact-dimensions/images/focus --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/exact-dimensions/inputs/REVIEW_SET.json
+2026-10-07T19:05:27Z
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/low: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W05 focus probe: 3/3 PASS
+exit=0
+2026-10-07T19:07:31Z

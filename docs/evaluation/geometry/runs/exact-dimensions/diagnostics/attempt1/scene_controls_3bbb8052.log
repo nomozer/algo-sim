@@ -1,0 +1,7 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ 3bbb80520d2c5870db59d9a702a982ef364872c9; timeout --signal=KILL 1200 node frontend/scripts/check-scene-controls.mjs --ho regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/exact-dimensions/inputs --ra docs/evaluation/geometry/runs/exact-dimensions/results --anh docs/evaluation/geometry/runs/exact-dimensions/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/exact-dimensions/inputs/REVIEW_SET.json
+2026-10-07T19:03:15Z
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W02 probe: 2/2 PASS
+exit=0
+2026-10-07T19:04:05Z
