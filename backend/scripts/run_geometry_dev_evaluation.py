@@ -4,8 +4,8 @@
     đề (văn xuôi) → analyze → RequestContract → sinh IR → validate
                   → interpreter → checker → ORACLE ĐỘC LẬP
 
-**KHÔNG sửa `run_sealed_evaluation.py`.** Cái đó thuộc miền Tin học và mang con
-dấu của lượt SEALED #1; đụng vào nó là làm bẩn một artifact đã đóng.
+Runner SEALED của miền Tin học (`run_sealed_evaluation.py`, mang con dấu lượt SEALED #1) đã gỡ ở repo-cleanup;
+bằng chứng của lượt ấy giữ nguyên trong `docs/evaluation/semantic-benchmark/`.
 
 ⚠️ ĐÂY LÀ TẬP DEV, KHÔNG phải benchmark. Nó **được nhìn**, và hệ **được sửa**
 theo nó. Số của nó không bao giờ là số held-out của luận văn — held-out phải do
@@ -17,8 +17,7 @@ custodian chọn bằng seed của GVHD.
 (`pipeline.py:483`) — prompt của miền Tin học. Không file nào trong `app/` tham
 chiếu `geometry_program_generator.md`.
 
-Nên runner **bọc `load_skill` từ ngoài**, cùng khuôn proxy đã dùng ở
-`run_sealed_evaluation`. Đây là quyết định có chủ đích, không phải mẹo:
+Nên runner **bọc `load_skill` từ ngoài**, cùng khuôn proxy runner SEALED (đã gỡ) từng dùng. Đây là quyết định có chủ đích, không phải mẹo:
 
 - Phase 5 chỉ đo **năng lực sinh**, không đo **định tuyến sản phẩm**.
 - Cho sản phẩm tự route sang hình học là một quyết định vận hành riêng, phải

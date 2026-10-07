@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Test API M3 bằng FastAPI TestClient — không cần mạng, không cần key.
 
-Khóa chặt: contract /api/analyze (InputPayload) + /api/explain,
-thông điệp khi thiếu key, ngân hàng bài (cache envelope),
-endpoint tutor-flow cũ ĐÃ BỊ XÓA, skill mới tồn tại.
+Khóa chặt: contract /api/analyze (InputPayload), thông điệp khi thiếu key,
+ngân hàng bài (cache envelope), endpoint đã gỡ (tutor-flow cũ, /api/explain) trả 404,
+skill còn trên đĩa.
 """
 
 import base64
@@ -870,49 +870,9 @@ def test_endpoint_tutor_flow_da_xoa():
     """M3 §8: decompose/chat không còn tồn tại — không giữ code chết."""
     assert client.post("/api/decompose", json={"problemText": "x" * 20}).status_code == 404
     assert client.post("/api/chat", json={"message": "hi"}).status_code == 404
-
-
-def test_explain_cau_hoi_trong():
-    res = client.post(
-        "/api/explain",
-        json={"simulation_id": "algorithm.find_max", "explain_context": {}, "question": "  "},
-    )
-    assert res.status_code == 400
-
-
-def test_explain_context_qua_lon():
-    res = client.post(
-        "/api/explain",
-        json={
-            "simulation_id": "algorithm.find_max",
-            "explain_context": {"blob": "x" * 20000},
-            "question": "Vì sao?",
-        },
-    )
-    assert res.status_code == 400
-    assert "quá lớn" in res.json()["error"]
-
-
-def test_explain_context_phai_la_object():
-    res = client.post(
-        "/api/explain",
-        json={"simulation_id": "a.b", "explain_context": [1, 2], "question": "Vì sao?"},
-    )
-    assert res.status_code == 422  # pydantic từ chối — không phải dict
-
-
-def test_explain_thieu_key():
-    res = client.post(
-        "/api/explain",
-        json={
-            "simulation_id": "algorithm.find_max",
-            "explain_context": {"current_step": 3, "array": [1, 2, 3]},
-            "question": "Vì sao max chưa đổi?",
-            "recent_history": [{"role": "user", "text": "chào"}],
-        },
-    )
-    assert res.status_code == 503
-    assert "GEMINI_API_KEY" in res.json()["error"]
+    # repo-cleanup: trợ giúp giải thích của miền Tin học (người gọi duy nhất `AIHelpPanel` không còn gắn vào giao diện).
+    assert client.post("/api/explain", json={"simulation_id": "x", "explain_context": {},
+                                             "question": "Vì sao?"}).status_code == 404
 
 
 def test_bo_skill_moi_ton_tai_skill_cu_da_xoa():
@@ -932,10 +892,3 @@ def test_bo_skill_moi_ton_tai_skill_cu_da_xoa():
     analyze = load_skill("analyze")
     assert "mô phỏng tương tác 2D/3D" in analyze
     assert "gia sư" not in analyze.lower()
-
-
-def test_explain_schema_khong_co_step_status():
-    from app.ai.explain import EXPLAIN_SCHEMA
-
-    assert "step_status" not in json.dumps(EXPLAIN_SCHEMA)
-    assert list(EXPLAIN_SCHEMA["properties"].keys()) == ["reply"]

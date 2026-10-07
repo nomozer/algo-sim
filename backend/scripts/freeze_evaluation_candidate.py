@@ -210,7 +210,8 @@ def build() -> dict:
             else "DA_NIEM_PHONG",
             "ghi_chu": (
                 "SEALED do nguồn ngoài cung cấp; agent viết hệ KHÔNG soạn nó. "
-                "Niêm phong bằng scripts/seal_benchmark.py."
+                "Tập của miền Tin học đã niêm phong và đã chạy; script niêm phong gỡ ở repo-cleanup, "
+                "con dấu khoá bởi tests/semantic_program/test_benchmark_seal.py."
             ),
         },
     }

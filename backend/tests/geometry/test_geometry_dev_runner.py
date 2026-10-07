@@ -63,26 +63,6 @@ def test_runner_ep_dung_skill_hinh_hoc(rn):
             / f"{rn.SKILL_HINH_HOC}.md").exists()
 
 
-def test_runner_KHONG_import_run_sealed_evaluation(rn):
-    """Cái đó mang con dấu lượt SEALED #1 — đụng vào là làm bẩn artifact đã đóng.
-
-    Soi bằng `ast`, KHÔNG quét chuỗi. Đây là lần thứ HAI cùng một sai lầm trong
-    kho này (lần đầu: `test_oracle_KHONG_import_ma_san_pham`): quét chuỗi đỏ
-    oan vì chính DOCSTRING nhắc tên module để **giải thích điều cấm**. Quét
-    chuỗi cũng bỏ sót `importlib` — vừa bắt oan vừa bỏ sót.
-    """
-    import ast
-
-    cay = ast.parse(_R.read_text(encoding="utf-8"))
-    goc: list[str] = []
-    for nut in ast.walk(cay):
-        if isinstance(nut, ast.Import):
-            goc += [a.name for a in nut.names]
-        elif isinstance(nut, ast.ImportFrom) and nut.module:
-            goc.append(nut.module)
-    assert not any("run_sealed_evaluation" in g for g in goc), goc
-
-
 def test_runner_KHONG_ghi_vao_thu_muc_cua_lUot_SEALED(rn):
     """Đường ra mặc định phải nằm trong `docs/evaluation/geometry/`, không đụng
     `semantic-benchmark/results/` — nơi giữ artifact held-out duy nhất.

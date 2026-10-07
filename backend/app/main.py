@@ -1,9 +1,7 @@
 """Backend AlgoSim — FastAPI (M3).
 
-Hai luồng:
-1. POST /api/analyze — pipeline analyze → classify → simulate → validate
-   → ValidatedSimulationEnvelope (cache PostgreSQL theo đề).
-2. POST /api/explain — giải thích trạng thái thật của engine (tùy chọn).
+Luồng chính: POST /api/analyze — đề → envelope đã kiểm (cache theo đề); POST /api/image/extract — chép đề từ ảnh.
+`/api/explain` và `/api/edit` của miền Tin học đã gỡ (xem chú thích ở cuối file).
 
 Chạy: docker compose up -d --build (key trong backend/.env: GEMINI_API_KEY=...)
 """
@@ -39,7 +37,6 @@ from app.persistence.db import (
 from app.simulation.semantic_program.contract import SPEC_VERSION as DSL_VERSION
 
 SUPPORTED_VERSIONS = frozenset({DSL_VERSION})
-from app.ai.explain import explain_state
 from app.ai.route_trace import (
     DiagnosticObserver,
     bat_telemetry,
@@ -85,8 +82,6 @@ MISSING_KEY_MSG = (
     "Máy chủ chưa cấu hình GEMINI_API_KEY. Tạo file algo-sim/backend/.env "
     "với nội dung: GEMINI_API_KEY=<key của bạn> rồi chạy lại: docker compose up -d"
 )
-
-MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 
 # Phiên bản chính sách định tuyến/DSL. Tăng số này khi thay đổi classify/manifest
 # để VÔ HIỆU HÓA cache cũ (đề từng lưu với sim_id cũ sẽ được phân tích lại) — M7.9 §7.
@@ -835,21 +830,6 @@ class ImageExtractBody(BaseModel):
     rotation: Literal[0, 90, 180, 270] = 0
 
 
-class ExplainBody(BaseModel):
-    simulation_id: str
-    explain_context: dict
-    question: str
-    recent_history: list[dict] = []
-
-
-class EditBody(BaseModel):
-    """M7.14A: chỉnh sửa TĂNG DẦN mô phỏng generic hiện có — không full pipeline."""
-
-    simulation_id: str
-    config: dict
-    instruction: str
-
-
 def _cache_key(text: str) -> str:
     """M7.13B: version KHÔNG nướng vào key nữa — lưu ở CỘT (dsl_version/
     policy_version) và lọc lúc lookup. Row version cũ nhìn thấy được để
@@ -1181,28 +1161,9 @@ async def image_extract(
 # compiler — nên nó thuộc một wave thiết kế, không phải một wave dọn dẹp.
 
 
-@app.post("/api/explain")
-async def explain(body: ExplainBody):
-    question = body.question.strip()
-    if not question:
-        return JSONResponse(status_code=400, content={"error": "Câu hỏi trống."})
-    if len(question) > 2000:
-        return JSONResponse(status_code=400, content={"error": "Câu hỏi quá dài (tối đa 2000 ký tự)."})
-    context_size = len(json.dumps(body.explain_context, ensure_ascii=False).encode("utf-8"))
-    if context_size > MAX_EXPLAIN_CONTEXT_BYTES:
-        return JSONResponse(
-            status_code=400,
-            content={"error": "explain_context quá lớn — chỉ gửi snapshot từ getExplainContext."},
-        )
-
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
-
-    try:
-        reply = await explain_state(
-            body.simulation_id, body.explain_context, question, body.recent_history, api_key
-        )
-    except Exception as err:
-        return JSONResponse(status_code=422, content={"error": str(err)})
-    return {"reply": reply}
+# ── `/api/explain` ĐÃ GỠ (repo-cleanup) ────────────────────────────────────
+#
+# Trợ giúp giải thích trạng thái engine của miền Tin học: người gọi duy nhất là `AIHelpPanel` (không còn gắn vào giao
+# diện từ khi gỡ Tin học, `ui-hygiene.test.ts` đã cấm nó hiện ra). Prompt `skills/explain.md` vẫn nằm trên đĩa vì
+# mọi `skills/*.md` đi vào băm môi trường ngữ nghĩa của khoá cache — xoá nó là một đổi bề mặt mô hình, thuộc lượt đổi
+# prompt kế tiếp. Khoá: `tests/test_api.py::test_endpoint_tutor_flow_da_xoa` (404).

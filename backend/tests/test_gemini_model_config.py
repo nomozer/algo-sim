@@ -101,21 +101,24 @@ def test_URL_goi_dung_model_dang_cau_hinh():
 
 
 def test_runner_ghi_model_vao_artifact():
-    """Artifact không ghi model thì hai lượt A/B đọc y hệt nhau."""
+    """Artifact không ghi model thì hai lượt A/B đọc y hệt nhau.
+
+    repo-cleanup: bất biến này từng khoá trên runner SEALED của miền Tin học (đã gỡ); nay khoá trên runner DEV hình
+    học — nơi gọi `tong_ket` phải truyền `gemini.MODEL` (không chuỗi viết cứng), và bản tổng kết ghi đúng model ấy.
+    """
+    import ast
     import importlib.util
+    import sys
     from pathlib import Path
 
-    runner_path = Path(__file__).resolve().parents[1] / "scripts" / "run_sealed_evaluation.py"
+    runner_path = Path(__file__).resolve().parents[1] / "scripts" / "run_geometry_dev_evaluation.py"
+    goi = [n for n in ast.walk(ast.parse(runner_path.read_text(encoding="utf-8")))
+           if isinstance(n, ast.Call) and getattr(n.func, "id", None) == "tong_ket"]
+    assert goi and all(ast.unparse(n.args[3]) == "gemini.MODEL" for n in goi), [ast.unparse(n) for n in goi]
+
     spec = importlib.util.spec_from_file_location("rn_model_check", runner_path)
     rn = importlib.util.module_from_spec(spec)
+    sys.modules["rn_model_check"] = rn
     spec.loader.exec_module(rn)
-
-    class _NganSachGia:
-        logical_calls = 0
-        http_requests = 0
-        retry_requests = 0
-
-    bao = rn._tong_ket([], 20, {"commit_ngan": "x", "cache_version": "37"},
-                       "van_tay", _NganSachGia(), None)
+    bao = rn.tong_ket([], 10, None, gemini.MODEL)
     assert bao["model"] == gemini.MODEL
-    assert bao["model"] != "KHONG_XAC_DINH"
