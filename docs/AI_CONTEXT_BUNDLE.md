@@ -138,7 +138,7 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   (180 báo cáo ở gốc, catalog đóng); `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212; 204 + 108 mục chờ quyết
   định); `ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS` (năm test ghi tạm vào tài liệu sống); mới:
   `ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` (8/10 script T1 trỏ miền đã gỡ); run `cuboid-acceptance`:
-  `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM` (hai script gọi live không cần opt-in, dò tĩnh; không chặn merge).
+  `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM` (smoke script Tin học đã retire, còn `run_rectangular_pyramid_live_analyze.py`; không chặn merge).
   Đã đóng: `ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE` (`cuboid-acceptance`),
   `ISSUE-OPS-TEST-SUITE-WRITES-FROZEN-EVIDENCE` (w20).
 - Các issue khác và trạng thái từng cái: `docs/OPEN_ISSUES.md` (thẩm quyền).

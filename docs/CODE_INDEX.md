@@ -260,6 +260,19 @@ trỏ sai chỗ còn tệ hơn không có. Tra bằng `grep` theo tên bên dư�
 > Câu "nằm rải trong file" / "ở phần sau của file này" bên dưới đọc theo vị trí mới ấy; tra bằng `grep` ở đó.
 > Chỉ mục ngắn dưới đây ở lại.
 
+### LEGACY_INFORMATICS_SCRIPT_RETIREMENT 2026-10-07
+
+⛔ Script và fixture của route 2D Tin học, không còn consumer hay cổng nghiệm thu nào (người dùng giao dọn; commit
+ở việc `regular-triangular-pyramid`). Mục mô tả cũ: `git show e9435d67:docs/CODE_INDEX.md` (mục "Trả nợ sync-lock
+2026-08-20" và mục L5a). Kết quả lịch sử đông cứng vẫn ở `docs/evaluation/semantic-l5a/`, `docs/evaluation/semantic-vnext/`.
+
+- `frontend/scripts/verify-semantic-e2e-render.mjs` · `verify-live-gemini-render.mjs` · `verify-real-browser-render.mjs`
+- `frontend/scripts/l5a-semantic-visual.mjs` + `frontend/tests/fixtures/semantic/semantic_l5a.json`
+- `frontend/tests/fixtures/semantic/e2e_semantic_candidates.json` · `frontend/tests/fixtures/live-ai/live_gemini_unseen_candidates.json`
+- `frontend/e2e/collision-classifier.ts`
+- `backend/scripts/export_e2e_simulation_envelopes.py` · `backend/scripts/run_live_gemini_semantic_smoke.py`
+  (gọi live không opt-in — `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM`)
+
 ### SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE 2026-09-12
 
 ⛔ **Mười hai file dưới đây KHÔNG còn tồn tại.** Người dùng yêu cầu đưa phần
@@ -2543,24 +2556,6 @@ chính (`m19/after.json`, `m18/classroom-acceptance.json`,
 
 Đã gắn vào: `audit-composition.mjs` · `accept-classroom-m18.mjs` ·
 `accept-experience-w4b4c.mjs`.
-
----
-
-## Trả nợ sync-lock 2026-08-20 (rơi lại từ `d4c1ef6`, `b06c0e9`, `09c0f49`)
-
-Năm file dưới đây đã landed mà không có entry — `code-index-sync.test.ts` ĐỎ ở
-HEAD trước khi wave sinh-ngữ-nghĩa bắt đầu. Ghi **cái chúng sở hữu**, không chỉ tên.
-
-### `frontend/scripts/verify-semantic-e2e-render.mjs` · `verify-live-gemini-render.mjs` · `verify-real-browser-render.mjs` · cần Chrome + `npm run dev`
-
-Ba runner Playwright chụp mô phỏng do đường `semantic_program` sinh, ở 4 viewport
-(1920 · 1536 · 1366 · 768), phục vụ các lượt chứng nhận `b06c0e9`/`09c0f49`.
-
-> ⚠️ **Cả ba đều hardcode `ARTIFACT_DIR` trỏ RA NGOÀI REPO**
-> (`C:/Users/Bunny/.gemini/antigravity-ide/brain/…`). Bằng chứng ghi ra đó
-> **không tái lập được** và theo luật dự án thì không được ghi DONE. Spec
-> 2026-08-20 (E13) mới chỉ bắt được **một** trong ba file — Task 13 của plan phải
-> sửa **cả ba**.
 
 ---
 
@@ -5993,19 +5988,6 @@ kiểm lại bất biến #32 ở phía nhận (envelope có thể đến từ l
 tròn TẤT ĐỊNH (không physics/camera/editor), và `visited`/`current` đến TỪ
 BACKEND — renderer không được tự chạy lại BFS. `index.ts` — đăng ký module,
 **shadow-only** cho tới hết Task 12.
-
-### `frontend/scripts/l5a-semantic-visual.mjs` (L5a) · cần Chrome + `npm run dev`
-
-Sở hữu **soát thị giác đại diện** của route semantic: 4 ca × 2 bề rộng, đo
-`getBoundingClientRect()` thay vì so ảnh pixel (repo không có `@playwright/test`).
-Năm phép đo: chữ đè chữ · tràn/clipping · con trỏ chui vào nhãn · **chữ lặp** ·
-khung ĐỔI sau 6 bước. Có `--faultcheck` để chứng minh guard đỏ được — bắt buộc
-chạy trước khi tin một bản soát "SẠCH" (`ARCHITECTURE_MAP §8` #14). Fixture
-`frontend/tests/fixtures/semantic/semantic_l5a.json` **sinh từ backend thật**,
-không viết tay. (Trước vNext nó nằm ở `public/` nên bị Vite chép thẳng vào
-`dist/` — script đọc nó bằng `fs`, chưa bao giờ qua HTTP. Khoá bởi
-`src/public-assets-hygiene.test.ts`.)
-Kết quả: `docs/evaluation/semantic-l5a/`.
 
 ### `frontend/scripts/capture-stack-vnext.mjs` · cần Chrome + `npm run dev`
 
