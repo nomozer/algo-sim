@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "exact-dimensions (run exact-dimensions)",
+  "corrects": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs/CANDIDATE_DIVERGENCE_CORRECTION.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+  "current_candidate_source_commit": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "current_candidate_frozen_at": "ed3ae2089e9005ec5e1474d7dff37bc9d4f74a28",
+  "current_candidate_note": "Frozen ONCE in this run in a clean detached worktree (core.autocrlf=true, path with a space, outside the repository): D:/tmp/exact pre at ed3ae208. Bare freeze then --verify, both exit 0 (diagnostics/freeze_ed3ae208.log); 111 files (geometry/metric.py is new), CACHE_VERSION 117, cay_lam_viec_sach = true. Taxonomy (478573817749800c), primitive set (9357dab18fe3bce1), schema (667758005778bf21) and DEV (8a3de7a3f9530942) fingerprints unchanged.",
+  "previous_candidate_hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "exact-dimensions backend/app changes: the program layout is an affine chart and lengths come from a rational Gram matrix derived from the text's six edge lengths (geometry/metric.py; kernel, predicates and measure read the active metric — identity reproduces the previous expressions byte for byte; geometry_exec.volume_polyhedron multiplies by sqrt(det G); assumption_gate.kich_thuoc_t8 and do_luong_cua; T8 drops the representability refusal; route.verify_and_compile and ai/pipeline._dung_scene3d run under the same metric and the scene carries chart_metric). The source-length reader no longer reads the first term of an expression (segment_relation._HET_DO_DAI). CACHE_VERSION 116 -> 117 (cache/decision.json: the reader fix turns a wrong served answer into a refusal; 43/43 previous fixtures byte-identical). frontend/src (outside measured_system, inside product_commit_sha): scene3d-chart maps chart -> world once. No change to prompts, grammar card, schemas or the capability hash (semantic environment b1714b56 unchanged).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate e1927f84 (product commit ed3ae208) is the current product identity. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 117
+}

@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
+ "current_candidate_hash": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -220,6 +220,11 @@
    "hash": "92c9e198ff26e81115ef8c9fdc069fc39c54b800518fff27a3865fd793a41ff9",
    "sau_wave": "REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (run regular-triangular-pyramid-w01)",
    "ghi_chu": "Họ chóp tam giác đều + tứ diện đều trong miền hẹp ℚ³ (cạnh đáy k√2 hoặc k√6, chiều cao hữu tỉ lần √3; cạnh hữu tỉ bị từ chối trung thực): bộ đọc độ dài nguồn đọc số hoặc căn thành ExactNumber (segment_relation._phan_do_dai, shape_constraint), khuôn chứng nhận giả thiết T8 (assumption_gate._khuon_chop_tam_giac_deu, thẩm quyền shape_constraint.la_chop_tam_giac_deu), chân đường cao là trọng tâm suy ra (formation.phep_trong_tam, construction_binding quan hệ centroid), so khớp chính xác cho căn ở grounding_gate/postconditions/quantity_annotations, nhãn giao tuyến theo mặt (scene3d), hàng năng lực foundation_only (product_capability). Giao diện (ngoài measured_system): bảng đại lượng không còn thân rỗng, tô sáng đoạn của đại lượng đang chọn, biểu tượng nút, lời kể không lặp tên bước, xoay hiển thị đáy nghiêng. Hai lần đóng băng, cùng tree hash (worktree sạch D:/tmp/rtp diag): c6fd9996 (commit sản phẩm e7b92e49), rồi 1e90ca0e sau khi lượt đo 1 bắt chóp tam giác đều văng khỏi khung sau cú xoay W4 — hộp bao dự phòng của khung nhìn xét trước khi gộp toàn cảnh (scene3d-view.diemVuaKhung, chỉ frontend/src). CACHE_VERSION 115 → 116 (runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json)."
+  },
+  {
+   "hash": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+   "sau_wave": "exact-dimensions (run exact-dimensions)",
+   "ghi_chu": "Kích thước chính xác: bố cục chương trình là KHUNG AFFINE ℚ³, độ dài theo metric khung hữu tỉ G dẫn xuất từ sáu độ dài² của đề (geometry/metric.py mới; kernel/predicates/measure dùng metric đang hiệu lực, đồng nhất ⇒ đúng biểu thức cũ; geometry_exec.volume_polyhedron × √det G; assumption_gate.kich_thuoc_t8/do_luong_cua, T8 bỏ miền 'biểu diễn được'; route.verify_and_compile và ai/pipeline._dung_scene3d chạy dưới cùng metric, cảnh mang chart_metric) ⇒ chóp tam giác đều/tứ diện đều cạnh HỮU TỈ được phục vụ. Bộ đọc độ dài không lấy vế đầu của biểu thức (segment_relation._HET_DO_DAI). Giao diện (ngoài measured_system): scene3d-chart ánh xạ khung → không gian. Một lần đóng băng tại ed3ae208 (worktree sạch D:/tmp/exact pre). CACHE_VERSION 116 → 117 (runs/exact-dimensions/cache/decision.json)."
   }
  ],
  "diverged": true,
@@ -236,6 +241,10 @@
   "backend/app/learner_messages.py",
   "backend/app/main.py",
   "backend/app/simulation/error_codes.py",
+  "backend/app/simulation/geometry/kernel.py",
+  "backend/app/simulation/geometry/measure.py",
+  "backend/app/simulation/geometry/metric.py",
+  "backend/app/simulation/geometry/predicates.py",
   "backend/app/simulation/geometry_compiler/__init__.py",
   "backend/app/simulation/geometry_compiler/compiler.py",
   "backend/app/simulation/geometry_compiler/contract_adapter.py",
@@ -279,5 +288,5 @@
   "analyze_schema": "Thành phần `analyze_schema` ĐỔI (515001b5… → a1b9e20a…) ở wave (12) — `tests/structured_relation_identity.py` dựng lại đúng 515001b5… (= ANALYZE_SCHEMA_HASH của con dấu thesis-final/V3) chỉ bằng bỏ thuộc tính `geometric_relations` khỏi lược đồ hình học; lược đồ Tin học và mọi trường khác trùng từng byte. Đây là thay đổi bề mặt mô hình của tuyến ĐỌC ĐỀ: số của lượt đo cuối mô tả hợp đồng analyze TRƯỚC ô này."
  },
  "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
- "cache_version_hien_tai": 116
+ "cache_version_hien_tai": 117
 }
