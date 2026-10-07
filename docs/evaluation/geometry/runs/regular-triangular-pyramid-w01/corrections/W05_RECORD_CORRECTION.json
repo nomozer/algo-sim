@@ -1,0 +1,30 @@
+{
+  "schema_version": "record-correction/1",
+  "run_id": "regular-triangular-pyramid-w01",
+  "corrects": "regular-square-pyramid-w05",
+  "rule": "AGENTS.md §4 — historical run files stay byte-identical; this layer adds what they miss. No measurement was re-run to write it: every value below is read from logs already committed in the W5 run at 4123fb4f/e9435d67.",
+  "corrections": [
+    {
+      "id": "C1_attempt_4_missing",
+      "target": "docs/evaluation/geometry/runs/regular-square-pyramid-w05/MEASUREMENT_ATTEMPTS.json",
+      "finding": "the file records attempts 1–3 (all `used_for_acceptance: false`) and no record of the attempt the run accepted; RUN.json says `attempts: 4, used: 4` and REPORT/HANDOFF cite attempt 4 at f01df0e5",
+      "missing_record": {
+        "attempt": 4,
+        "commit": "f01df0e5",
+        "worktree": "D:/tmp/rsp w05q (first line of diagnostics/logs/BROWSER_SUITE_f01df0e5.log)",
+        "used_for_acceptance": true,
+        "outcome": "suite 7/7 families, 14/14 positive runs; W02 probe 14/14; W04 probe 21/21; W05 focus probe 21/21; occlusion pass (4 scenes HUMAN_REVIEW_PENDING); playback 14/14; evidence builder exit 0",
+        "evidence": "diagnostics/logs/*_f01df0e5.log, diagnostics/logs/MEASURE_STEPS_f01df0e5.out (10 × exit=0), results/, images/ (evidence commit 3b31aa18)"
+      },
+      "source": ["regular-square-pyramid-w05/RUN.json measurement.attempts/used", "regular-square-pyramid-w05/diagnostics/logs/MEASURE_STEPS_f01df0e5.out", "regular-square-pyramid-w05/REPORT.md §4 row `Lần đo 4`"]
+    },
+    {
+      "id": "C2_node_harness_count",
+      "target": "docs/evaluation/geometry/runs/regular-square-pyramid-w05/REPORT.md §4 row `node harness`",
+      "finding": "REPORT says `93/93`; the gate log at the final commit says 93 tests, 91 pass, 0 fail, 2 skipped (HANDOFF §2 already says so)",
+      "corrected_value": "node harness: 93 tests — 91 pass, 2 skipped, 0 fail",
+      "source": ["regular-square-pyramid-w05/diagnostics/logs/GATES_4123fb4f.log `## node harness tests`"]
+    }
+  ],
+  "not_changed": "no acceptance threshold, verdict or measured product value of W5 changes: both corrections are bookkeeping; FINAL_DECISION of W5 stays READY_FOR_HUMAN_VISUAL_REVIEW, HUMAN_VISUAL_REVIEW stays NOT_APPROVED"
+}

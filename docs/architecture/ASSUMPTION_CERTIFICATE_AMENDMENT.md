@@ -1117,3 +1117,63 @@ phép khác (tịnh tiến, giao) đi theo §16.3 như trước.
 >   Câu đuôi "đề không cần sửa — em có thể gửi lại để hệ dựng lại" bị bỏ: chưa có cơ chế bảo đảm gửi lại sẽ sửa được.
 > - Nhãn "loại vấn đề" trên thẻ: "chưa kiểm chứng được phép dựng" (frontend đọc `reason_code`, không hiển thị nó), không
 >   phải "hệ dựng lệch với đề bài" — nhãn ấy chỉ dành cho ca lệch đã chứng minh (§16.4), và nhãn ấy giữ nguyên.
+
+## 18. regular-triangular-pyramid-w01 — chóp tam giác đều, tứ diện đều, độ dài căn (đăng ký 2026-10-07, TRƯỚC mọi bản sửa)
+
+Nhãn ghi trước: `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/corpus/LABELS.json` (oracle
+độc lập `oracle_rtp_w01.py`). Quyết định người dùng 2026-10-07: miền hẹp ℚ³ — không khung đồng dạng, không toạ độ vô tỉ.
+
+### 18.1 Từ vựng thêm vào §2.1
+
+| kind | Mẫu | entities |
+|---|---|---|
+| `regular_triangular_pyramid` | `hình/khối chóp tam giác đều S.ABC` | (đỉnh, *đáy) |
+| `base_equilateral` | phát kèm dòng trên; `đáy ABC là tam giác đều (cạnh b)?` (đáy của khối đã nêu) | (*đáy); value = cạnh khi đề viết |
+| `regular_tetrahedron` | `(hình/khối)? tứ diện đều ABCD`; `chóp tam giác đều … có tất cả các cạnh (đều)? bằng a` | như `pyramid` |
+| `pyramid` (thêm) | `(hình/khối)? tứ diện ABCD` — đỉnh là ký hiệu ĐẦU, đáy ba ký hiệu sau | (A, B, C, D) |
+| `edge_all` | `tứ diện đều ABCD (có)? cạnh (bằng)? a`, `tất cả các cạnh bằng a` | như khối; value = cạnh |
+| `lateral_edge` · `height` | như T7, gắn khối chóp tam giác đều duy nhất | như khối |
+| `base_equilateral` có value | `cạnh đáy bằng b` của khối chóp tam giác đều duy nhất | (*đáy) |
+| `base_centre` (mở cho đáy tam giác) | `G là trọng tâm (của)? (tam giác)? ABC`; `O là tâm (của)? (mặt)? đáy`; `O là tâm (của)? tam giác (đều)? ABC` | (tâm, *đáy) |
+
+Chữ "đều" của ba mẫu đầu ĐÃ ĐỌC (luật đọc trọn §7). `tam giác đều` KHÔNG BAO GIỜ thành `regular_tetrahedron`; ba cạnh
+bên bằng nhau KHÔNG làm đáy đều; "tứ diện" không có "đều" chỉ là `pyramid`.
+
+### 18.2 T8 — chóp đáy tam giác đều, chân đường cao ở trọng tâm
+
+Nhận khi khối là `pyramid S.XYZ` và: `regular_triangular_pyramid`/`regular_tetrahedron` cùng khối; **hoặc** đáy đều
+(`base_equilateral`, hoặc ba cạnh đáy có độ dài nguồn bằng nhau) **và** ba cạnh bên có độ dài nguồn bằng nhau (chân
+cách đều ba đỉnh đáy ⇒ tâm ngoại tiếp ⇒ trọng tâm của đáy đều). Nguồn chiều cao (bình phương, mọi nguồn phải trùng,
+khác ⇒ `TEMPLATE_CONTRADICTION T8`): `height`; độ dài nguồn S–tâm đề gọi tên; `l² − b²/3` (cạnh bên); `2b²/3` (tứ diện
+đều). Cạnh bên khác nhau ⇒ mâu thuẫn. h² ≤ 0 ⇒ `TEMPLATE_NOT_MATCHED T8: degenerate height`.
+
+Ràng buộc chính xác trên đỉnh: ba cạnh đáy bằng nhau; (S − G)·(Y − X) = (S − G)·(Z − X) = 0 với G = (X+Y+Z)/3; S ≠ G;
+cạnh đáy² = b²; |SG|² = h²; mọi cạnh bên² = l² (khi đề cho). Kích thước bắt buộc: cạnh đáy, chiều cao (phản ví dụ
+`vi_tu_mat`, `phap_tuyen` như T7).
+
+**Miền biểu diễn (khai, không làm tròn):** toạ độ ở ℚ³ ⇔ b² ∈ {2k², 6k²} và h² = 3t² (k, t hữu tỉ). Hiện thực chính
+tắc: N1 `X=(k,0,0), Y=(0,k,0), Z=(0,0,k)`, N3 `X=(k,−k,0), Y=(0,k,−k), Z=(−k,0,k)`; S = G + t(1,1,1). Ngoài miền ⇒
+`TEMPLATE_NOT_REPRESENTABLE T8: <lý do>` ⇒ UNDETERMINED (từ chối). Tam giác đều hữu tỉ khác (b² = 2N·q², N chuẩn
+Eisenstein khác 1, 3) có hiện thực nhưng không có khung chính tắc — giới hạn đã khai.
+
+Khuôn T1–T7 không có hiện thực cho độ dài căn (khung trục toạ độ): khối của chúng gặp độ dài căn của đề ⇒
+`TEMPLATE_NOT_REPRESENTABLE <khuôn>` trước mọi phép tính của khuôn (không ngoại lệ, không ép kiểu).
+
+### 18.3 Độ dài căn của nguồn (sửa W12 cho độ dài, không cho toạ độ/tỉ số)
+
+`k√n` (`3√2`, `√3`, `3√2/2`) là MỘT con số độ dài: bộ đọc độ dài nguồn (`MAU_DO_DAI`, các cụm `cạnh đáy/cạnh bên/
+chiều cao/cạnh` của §2.1) đọc nó bằng `radical.parse_exact`; bất biến `segment_length` mang `display(...)`; hậu điều kiện
+so `d² == square(giá trị)`; grounding ① so chính xác. Toạ độ điểm, hệ số mặt phẳng, tỉ số chia đoạn vẫn chỉ hữu tỉ.
+Chia đoạn ② không dùng độ dài căn (không kiểm được ⇒ như trước).
+
+### 18.4 Binding trọng tâm (mở §16.1)
+
+`centroid(G; X, Y, Z)` đọc từ `base_centre` của §18.1 với đáy tam giác của khối duy nhất. Chương trình khớp khi G là
+`intersect_line_line` của hai TRUNG TUYẾN (đường qua một đỉnh và một điểm dựng bằng `midpoint` hai đỉnh còn lại) hoặc
+`divide_segment(đỉnh, trung điểm cạnh đối, 2/3)`; phép khác ⇒ MISMATCHED; trung tuyến không ghim được ⇒ UNVERIFIED.
+Chân đường cao của bước dựng (`formation._tam_day_deu`) nhận đúng các phép này — theo tên, không theo toạ độ.
+
+### 18.5 Không được
+
+Toạ độ bố trí thành dữ kiện; nhận diện tâm bằng so toạ độ; đọc "đều" của mục tiêu chứng minh làm tiền đề (§14.2);
+phục vụ khi chiều cao không xác định; nâng `product_capability` lên `supported` (mô hình chưa đo — `foundation_only`).

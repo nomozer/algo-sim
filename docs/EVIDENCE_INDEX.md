@@ -1087,7 +1087,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (8a27a58b… → 5e1c0639…; two freezes, same tree hash, product commit 82225a7b)
 - **CACHE_CHANGE:** NO (CACHE_VERSION 115; `diagnostics/cache_proof/CACHE_DECISION_W05.json`)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** regular-triangular-pyramid-w01 `corrections/W05_RECORD_CORRECTION.json` (attempt-4 record missing from `MEASUREMENT_ATTEMPTS.json`; REPORT §4 node harness 93/93 → 91 pass, 2 skipped, 0 fail; W5 files untouched)
 - **CORRECTS:** regular-square-pyramid-w01 `LABELS_R2.json` row R2_L1 (by a new layer; W1 files untouched)
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** focused simulation workspace (presentation) + chained-equality source reader; human review NOT_APPROVED
