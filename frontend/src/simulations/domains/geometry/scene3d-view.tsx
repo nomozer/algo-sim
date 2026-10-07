@@ -58,7 +58,7 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungNhinSuPham, khungNhinVua,
+  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungGocVuong, khungNhinSuPham, khungNhinVua,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
 import {
@@ -793,15 +793,19 @@ export function buildObject3D(
       o.id.includes("cao") ||
       (o.label && /chiều cao/i.test(o.label)) ||
       (o.role && /chiều cao/i.test(o.role));
-    if (laChieuCao) {
-      const chan = a.z <= b.z ? a : b;
+    const chan = a.z <= b.z ? a : b;
+    const k = laChieuCao ? khungGocVuong(chan.toArray(), (chan === a ? b : a).toArray()) : null;
+    if (k) {
       const s = 0.35;
+      // Theo khung của chính đoạn (`khungGocVuong`): đoạn thẳng đứng ⇒ đúng các điểm trục cũ.
+      const diem = (...cac: [Vec3, number][]) => new THREE.Vector3(...[0, 1, 2].map((i) =>
+        chan.getComponent(i) + cac.reduce((t, [u, h]) => t + u[i] * h, 0)) as Vec3);
       const ptsMarker = [
-        new THREE.Vector3(chan.x + s, chan.y, chan.z),
-        new THREE.Vector3(chan.x + s, chan.y, chan.z + s),
-        new THREE.Vector3(chan.x, chan.y, chan.z + s),
-        new THREE.Vector3(chan.x, chan.y + s, chan.z + s),
-        new THREE.Vector3(chan.x, chan.y + s, chan.z),
+        diem([k.e1, s]),
+        diem([k.e1, s], [k.d, s]),
+        diem([k.d, s]),
+        diem([k.e2, s], [k.d, s]),
+        diem([k.e2, s]),
       ];
       const gMarker = new THREE.BufferGeometry().setFromPoints(ptsMarker);
       const lineMarker = new THREE.Line(
@@ -1629,13 +1633,16 @@ export function Scene3DWorkspace({
         (window as any).__geo3d_edge_spans = edgeAudit.edge_spans;
         // Tâm quỹ đạo: bộ đo mô phỏng đúng camera SAU cử chỉ xoay/lùi (w11).
         (window as any).__geo3d_camera_target = dieuKhien.target.toArray();
+        const coXoay = !(qRef.current.x === 0 && qRef.current.y === 0 && qRef.current.z === 0);
         (window as any).__geo3d_camera_snapshot = {
           position: cam.position.toArray(),
           // Bộ đo chiếu TOẠ ĐỘ CẢNH: khi có phép xoay hiển thị (đáy nghiêng, §18.2), ma trận phát là view × model để
           // phép chiếu của bộ đo trùng hình trên khung. Đáy ngang ⇒ đúng ma trận view như trước (không nhân).
-          view_matrix_column_major: [...(qRef.current.x === 0 && qRef.current.y === 0 && qRef.current.z === 0
-            ? cam.matrixWorldInverse
-            : new THREE.Matrix4().multiplyMatrices(cam.matrixWorldInverse, goc.matrixWorld)).elements],
+          view_matrix_column_major: [...(coXoay
+            ? new THREE.Matrix4().multiplyMatrices(cam.matrixWorldInverse, goc.matrixWorld)
+            : cam.matrixWorldInverse).elements],
+          // Cảnh → thế giới (chỉ khi có xoay): bộ đo mô phỏng cử chỉ quỹ đạo trong khung THẾ GIỚI (`cameraSauCuChi`).
+          ...(coXoay ? { model_matrix_column_major: [...goc.matrixWorld.elements] } : {}),
           projection_matrix_column_major: [...cam.projectionMatrix.elements],
           viewport_width: renderer.domElement.clientWidth,
           viewport_height: renderer.domElement.clientHeight,
@@ -1659,6 +1666,8 @@ export function Scene3DWorkspace({
         goc.traverse((node) => {
           if (!node.userData?.dauDinh) return;
           node.getWorldPosition(tam);
+          // Toạ độ CẢNH như mọi đầu vào khác của bộ đo (ma trận phát ở trên là cảnh → camera khi có xoay).
+          if (coXoay) goc.worldToLocal(tam);
           node.getWorldScale(ti);
           cham.push({ id: pickSemanticId(node), state: node.userData.dauDinh, center: tam.toArray(),
             radius_world: ((node as THREE.Mesh).geometry as THREE.SphereGeometry).parameters.radius * ti.x });

@@ -284,6 +284,20 @@ describe("H2 · tầng nhấn mạnh causal", () => {
     expect(tang.has("khong_co")).toBe(false);
     expect(tang.get("V")).toBeUndefined();
   });
+
+  it("D2: nhãn neo ĐOẠN gắn hai điểm đầu mút ⇒ chính đoạn có đúng hai đầu mút ấy lên tầng đích", () => {
+    const h = {
+      id: "h", label: "h", type: "quantity", render: "readout", origin: "derived", producer: "measure.distance",
+      depends: ["S", "A"], dependency_edges: [],
+      annotation: { kind: "length", subject_ids: ["S", "A"], anchor: "segment" },
+    } as unknown as Scene3D["objects"][number];
+    const doan = { id: "doan_SA", label: "SA", type: "segment3", render: "line", origin: "derived",
+      producer: "construct_segment", depends: ["S", "A"], endpoint_ids: ["A", "S"] } as unknown as Scene3D["objects"][number];
+    const khac = { ...doan, id: "doan_SB", endpoint_ids: ["S", "B"] } as Scene3D["objects"][number];
+    const tang = tangNhanManh({ ...CANH, objects: [...CANH.objects, doan, khac, h] }, "h");
+    expect(tang.get("doan_SA")).toBe("dich");
+    expect(tang.has("doan_SB")).toBe(false);
+  });
 });
 
 // ══ I · bao đóng không lặp vô hạn ══════════════════════════════════════

@@ -364,16 +364,36 @@ export function danhGiaAnhXoayThuc(scene, snapshot, overlays = []) {
  *  quanh trục Z qua tâm quỹ đạo `target`, rồi lùi `nac` nấc con lăn (mỗi nấc
  *  bán kính ×1/0.95). Chiếu và khung giữ nguyên. */
 export function cameraSauCuChi(snapshot, target, doXoay, nac = 0) {
-  const m = snapshot.view_matrix_column_major;
+  // regular-triangular-pyramid-w01: khi sản phẩm xoay hiển thị (đáy nghiêng), ma trận phát là view × model (cảnh →
+  // camera) kèm `model_matrix_column_major`. OrbitControls quay quanh trục Z THẾ GIỚI ⇒ tách view thế giới
+  // (V · M⁻¹, M là phép quay thuần nên M⁻¹ = Mᵀ), quay, rồi ghép lại view × model.
+  const M = snapshot.model_matrix_column_major;
+  const m = M ? _nhanMaTran(snapshot.view_matrix_column_major, _chuyenViQuay(M)) : snapshot.view_matrix_column_major;
   const mat = [0, 1, 2].map((j) => -(m[4 * j] * m[12] + m[4 * j + 1] * m[13] + m[4 * j + 2] * m[14]));
   const v = _xoayZ(_tru(mat, target), doXoay).map((x) => x / 0.95 ** nac);
   const moi = v.map((x, i) => x + target[i]);
   const z = _chuan(v);
   const x = _chuan(_cheo([0, 0, 1], z));
   const y = _cheo(z, x);
-  return { ...snapshot, position: moi,
-    view_matrix_column_major: [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
-      -_tich(x, moi), -_tich(y, moi), -_tich(z, moi), 1] };
+  const view = [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+    -_tich(x, moi), -_tich(y, moi), -_tich(z, moi), 1];
+  return { ...snapshot, position: moi, view_matrix_column_major: M ? _nhanMaTran(view, M) : view };
+}
+
+/** Tích hai ma trận 4×4 cột-trước (`a · b`). */
+function _nhanMaTran(a, b) {
+  const ra = new Array(16).fill(0);
+  for (let c = 0; c < 4; c += 1) {
+    for (let r = 0; r < 4; r += 1) {
+      for (let k = 0; k < 4; k += 1) ra[4 * c + r] += a[4 * k + r] * b[4 * c + k];
+    }
+  }
+  return ra;
+}
+
+/** Nghịch đảo của một phép QUAY thuần cột-trước (không tịnh tiến): chuyển vị khối 3×3. */
+function _chuyenViQuay(m) {
+  return [m[0], m[4], m[8], 0, m[1], m[5], m[9], 0, m[2], m[6], m[10], 0, 0, 0, 0, 1];
 }
 
 /** Cử chỉ HOẠCH ĐỊNH cho ảnh xoay, chấm TRƯỚC bằng chính cổng phối cảnh trên
@@ -423,8 +443,15 @@ export function expectedCausalTiers(scene, id) {
   const ra = { [id]: "dich" };
   for (const x of tatCa) ra[x] = !so.has(x) ? "boi_canh" : byId.get(x)?.origin === "free" ? "du_kien_so" : "trung_gian";
   // regular-triangular-pyramid-w01 · D2: chủ thể nhãn của đại lượng đang chọn (vật hình học backend gắn) là ĐÍCH.
-  for (const x of byId.get(id)?.annotation?.subject_ids ?? []) {
+  const nhan = byId.get(id)?.annotation;
+  for (const x of nhan?.subject_ids ?? []) {
     if (byId.has(x) && byId.get(x)?.type !== "quantity") ra[x] = "dich";
+  }
+  if (nhan?.anchor === "segment" && nhan.subject_ids?.length === 2) {
+    const cap = [...nhan.subject_ids].sort().join("|");
+    for (const o of scene?.objects ?? []) {
+      if (o.type === "segment3" && [...(o.endpoint_ids ?? [])].sort().join("|") === cap) ra[o.id] = "dich";
+    }
   }
   return ra;
 }

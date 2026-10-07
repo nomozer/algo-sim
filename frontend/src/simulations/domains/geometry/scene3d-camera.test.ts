@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import * as THREE from "three";
 import {
-  chonHuongNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, hopBaoCuaDiem, huongLenHienThi,
+  chonHuongNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, hopBaoCuaDiem, huongLenHienThi, khungGocVuong,
   khungNhinSuPham, khungNhinVua, type KhungNhin,
 } from "./scene3d-camera";
 import { cauTrucGocNhin, type Scene3D } from "./scene3d-model";
@@ -146,5 +146,14 @@ describe("hướng lên trình bày (regular-triangular-pyramid-w01)", () => {
 
   it("đáy suy biến ⇒ null", () => {
     expect(huongLenHienThi([[0, 0, 0], [1, 1, 1], [2, 2, 2]], [0, 0, 5])).toBeNull();
+  });
+
+  it("ký hiệu góc vuông: đoạn thẳng đứng ⇒ đúng x̂, ẑ, ŷ (ký hiệu cũ); đoạn nghiêng ⇒ khung trực chuẩn theo đoạn", () => {
+    expect(khungGocVuong([2, 2, 0], [2, 2, 3])).toEqual({ e1: [1, 0, 0], d: [0, 0, 1], e2: [0, 1, 0] });
+    const k = khungGocVuong([1, 1, 1], [2, 2, 2])!;
+    const tich = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    for (const [a, b] of [[k.e1, k.d], [k.e1, k.e2], [k.d, k.e2]]) expect(tich(a, b)).toBeCloseTo(0, 12);
+    for (const u of [k.e1, k.d, k.e2]) expect(tich(u, u)).toBeCloseTo(1, 12);
+    expect(khungGocVuong([1, 1, 1], [1, 1, 1])).toBeNull();
   });
 });

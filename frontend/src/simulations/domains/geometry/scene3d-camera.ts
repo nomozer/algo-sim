@@ -353,6 +353,22 @@ export function khungNhinSuPham(
  * đổi một toạ độ nào của cảnh, không đổi camera (z-up khoá ở `scene3d-zup-lifecycle.test.tsx`). Phép tính trình bày như
  * mọi hướng nhìn của module này; đáy và đỉnh do backend chỉ (`scene3d-model.dayVaDinhChop`).
  */
+/**
+ * KHUNG của ký hiệu góc vuông tại chân đường cao (regular-triangular-pyramid-w01): `d` dọc đoạn chân → đỉnh, `e1` là
+ * trục x chiếu lên mặt ⊥ d (rơi về trục y khi d gần trục x), `e2 = d × e1`. Đoạn THẲNG ĐỨNG (mọi họ trước) cho đúng
+ * x̂, ŷ, ẑ — ký hiệu không đổi một điểm ảnh; đáy nghiêng thì ký hiệu nằm theo đáy thay vì theo trục toạ độ.
+ * `null` khi hai đầu trùng nhau.
+ */
+export function khungGocVuong(chan: Diem3, dinh: Diem3): { e1: Diem3; d: Diem3; e2: Diem3 } | null {
+  const v = tru(dinh, chan);
+  if (!(Math.hypot(...v) > 0)) return null;
+  const d = chuan(v);
+  const truc: Diem3 = Math.abs(d[0]) > 0.9 ? [0, 1, 0] : [1, 0, 0];
+  const k = tich(truc, d);
+  const e1 = chuan([truc[0] - k * d[0], truc[1] - k * d[1], truc[2] - k * d[2]]);
+  return { e1, d, e2: cheo(d, e1) };
+}
+
 export function huongLenHienThi(day: Diem3[], dinh: Diem3): Diem3 | null {
   if (day.length < 3) return null;
   const n = cheo(tru(day[1], day[0]), tru(day[2], day[0]));

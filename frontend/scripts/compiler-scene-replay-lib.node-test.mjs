@@ -449,6 +449,23 @@ test("planned gesture camera: rotating about Z through the target keeps distance
   assert.ok(Math.abs(((az(r.position) - az([6, -5, 4]) + 540) % 360) - 180 - 60) < 1e-9);
 });
 
+test("planned gesture camera with a display rotation (regular-triangular-pyramid-w01): orbit in WORLD, recompose view × model", () => {
+  const tam = [0.5, 0.5, 0.5];
+  const snap = cameraSnapshot([6, -5, 4], tam, 800, 600);
+  // M: quay 90° quanh x (cột-trước), như phép xoay hiển thị của sản phẩm.
+  const M = [1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1];
+  const nhan = (a, b) => Array.from({ length: 16 }, (_, i) => {
+    const c = Math.floor(i / 4), r = i % 4;
+    return [0, 1, 2, 3].reduce((s, k) => s + a[4 * k + r] * b[4 * c + k], 0);
+  });
+  const xoay = { ...snap, view_matrix_column_major: nhan(snap.view_matrix_column_major, M), model_matrix_column_major: M };
+  const thuong = cameraSauCuChi(snap, tam, 60, 3);
+  const co = cameraSauCuChi(xoay, tam, 60, 3);
+  co.position.forEach((x, i) => assert.ok(Math.abs(x - thuong.position[i]) < 1e-9, "same world camera"));
+  nhan(thuong.view_matrix_column_major, M)
+    .forEach((x, i) => assert.ok(Math.abs(x - co.view_matrix_column_major[i]) < 1e-9, "view × model"));
+});
+
 test("planned orbit: every candidate passes the perspective gate on its simulated camera", () => {
   const snap = cameraSnapshot([6, -5, 4], [0.5, 0.5, 0.5], 800, 600);
   const plan = orbitPlanThuc(CUBE, snap, [0.5, 0.5, 0.5]);
