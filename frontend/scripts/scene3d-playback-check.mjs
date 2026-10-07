@@ -25,7 +25,7 @@ import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 import {
   LOP_DONG_THEO_TANG, assessPlayback, cameraMotion, danhGiaAnhXoayThuc,
   expectedCausalTiers, expectedGeometryTimeline, orbitPlanThuc, planOrbit, pollUntil,
-  settleCamera, sha256File, veTheGioi,
+  cameraTheGioi, diemTheGioi, settleCamera, sha256File, veTheGioi,
 } from "./compiler-scene-replay-lib.mjs";
 import {
   capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, trustedZoomOut,
@@ -89,9 +89,10 @@ async function observe(session) {
 /** Số đo góc nhìn của camera THẬT (hàng z của ma trận nhìn = hướng tâm→camera),
  *  bằng CHÍNH bộ đo của sản phẩm — không một định nghĩa thứ hai. */
 function chatLuongGocNhin(scene, snap, overlays = []) {
-  const [canhTG, camTG] = veTheGioi(scene, snap);   // exact-dimensions: hướng và góc đo ở thế giới
-  const { diem, canh, mat } = cauTrucGocNhin(canhTG.objects);
-  const m = camTG.view_matrix_column_major;
+  // exact-dimensions: hướng và góc đo ở thế giới — đọc cảnh khung (chuỗi phân số), rồi đưa từng điểm qua M.
+  const k = cauTrucGocNhin(scene.objects);
+  const [diem, canh, mat] = [k.diem.map((p) => diemTheGioi(snap, p)), k.canh, k.mat];
+  const m = cameraTheGioi(snap).view_matrix_column_major;
   const huong = [m[2], m[6], m[10]];
   const q = danhGiaGocNhin(diem, canh, mat, huong);
   const { tran } = doLuoiGocNhin(diem, canh, mat);

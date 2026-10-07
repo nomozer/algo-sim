@@ -427,6 +427,12 @@ export function cameraTheGioi(snapshot) {
     : snapshot;
 }
 
+/** Một điểm cảnh (số) → thế giới qua ma trận mô hình của snapshot; không có M thì giữ nguyên. */
+export function diemTheGioi(snapshot, p) {
+  const M = snapshot?.model_matrix_column_major;
+  return M ? _apTuyenTinh(M, p) : p;
+}
+
 function _apTuyenTinh(M, v) {
   return [0, 1, 2].map((r) => M[r] * v[0] + M[4 + r] * v[1] + M[8 + r] * v[2]);
 }
