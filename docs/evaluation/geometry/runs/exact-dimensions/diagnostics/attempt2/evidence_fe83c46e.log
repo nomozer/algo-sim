@@ -1,0 +1,21 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ fe83c46e107bb69a44aaf926c592e043ed0728b9; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/exact-dimensions --browser ../docs/evaluation/geometry/runs/exact-dimensions/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/exact-dimensions/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/exact-dimensions/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/exact-dimensions/results/PLAYBACK_EVIDENCE.json
+2026-10-07T19:19:31Z
+Traceback (most recent call last):
+  File "D:\tmp\exact pre\backend\scripts\build_scene3d_visual_evidence.py", line 579, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\tmp\exact pre\backend\scripts\build_scene3d_visual_evidence.py", line 570, in main
+    load(args.expectations), load(args.playback))
+                             ^^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\exact pre\backend\scripts\build_scene3d_visual_evidence.py", line 568, in <lambda>
+    load = lambda p: json.loads(p.read_text(encoding="utf-8")) if p else None  # noqa: E731
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '..\\docs\\evaluation\\geometry\\runs\\exact-dimensions\\results\\PLAYBACK_EVIDENCE.json'
+exit=1
+2026-10-07T19:19:32Z

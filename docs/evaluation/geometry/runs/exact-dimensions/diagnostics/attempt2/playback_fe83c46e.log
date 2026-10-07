@@ -1,0 +1,21 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ fe83c46e107bb69a44aaf926c592e043ed0728b9; timeout --signal=KILL 1200 node frontend/scripts/scene3d-playback-check.mjs --families regular_triangular_pyramid --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/exact-dimensions/inputs --ra docs/evaluation/geometry/runs/exact-dimensions/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/exact-dimensions/inputs/REVIEW_SET.json
+2026-10-07T19:19:11Z
+file:///D:/tmp/exact%20pre/frontend/src/simulations/domains/geometry/scene3d-model.ts:533
+  if (!m) throw new Error(`Toạ độ không phải phân số hợp lệ: ${JSON.stringify(s)}`);
+                ^
+
+Error: Toạ độ không phải phân số hợp lệ: 1.7320508075688772
+    at toNumber (file:///D:/tmp/exact%20pre/frontend/src/simulations/domains/geometry/scene3d-model.ts:533:17)
+    at toVec3 (file:///D:/tmp/exact%20pre/frontend/src/simulations/domains/geometry/scene3d-model.ts:541:27)
+    at dinh (file:///D:/tmp/exact%20pre/frontend/src/simulations/domains/geometry/scene3d-model.ts:811:15)
+    at Array.map (<anonymous>)
+    at cauTrucGocNhin (file:///D:/tmp/exact%20pre/frontend/src/simulations/domains/geometry/scene3d-model.ts:827:28)
+    at chatLuongGocNhin (file:///D:/tmp/exact%20pre/frontend/scripts/scene3d-playback-check.mjs:93:31)
+    at chup (file:///D:/tmp/exact%20pre/frontend/scripts/scene3d-playback-check.mjs:219:22)
+    at async runOne (file:///D:/tmp/exact%20pre/frontend/scripts/scene3d-playback-check.mjs:221:5)
+    at async runPlaybackCheck (file:///D:/tmp/exact%20pre/frontend/scripts/scene3d-playback-check.mjs:365:24)
+    at async file:///D:/tmp/exact%20pre/frontend/scripts/scene3d-playback-check.mjs:383:18
+
+Node.js v24.13.0
+exit=1
+2026-10-07T19:19:31Z

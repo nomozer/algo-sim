@@ -1,0 +1,8 @@
+# cwd: <worktree '/d/tmp/exact pre'> @ fe83c46e107bb69a44aaf926c592e043ed0728b9; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/exact-dimensions/inputs --ra docs/evaluation/geometry/runs/exact-dimensions/results --screenshots docs/evaluation/geometry/runs/exact-dimensions/images --bo-qua-build --ho regular_triangular_pyramid --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/exact-dimensions/inputs/REVIEW_SET.json
+2026-10-07T19:16:34Z
+▶ regular_triangular_pyramid/desktop 19:16:35
+▶ regular_triangular_pyramid/mobile 19:17:56
+regular_triangular_pyramid: PASS
+Wrote D:\tmp\exact pre\docs\evaluation\geometry\runs\exact-dimensions\results\BROWSER_EVIDENCE.json: PASS
+exit=0
+2026-10-07T19:19:10Z
