@@ -479,18 +479,24 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
           expectations: dict[str, Any] | None, playback: dict[str, Any] | None) -> dict[str, Any]:
     images = run_dir / "images"
     crops, sheets = [], {}
+    # exact-dimensions: bộ đo chụp theo `capture-policy.mjs`; ở chế độ tối thiểu chỉ ảnh oracle (crop cạnh khuất) + tập
+    # duyệt được chụp ⇒ không dựng sheet/phim/mục lục (công cụ duyệt cũ), crop oracle dựng y nguyên.
+    toi_thieu = (browser.get("capture_policy") or {}).get("mode") == "toi-thieu"
     for family, scenario in browser.get("scenarios", {}).items():
         scene = json.loads((fixture_root / "fixtures" / f"{family}_positive.json")
                            .read_text(encoding="utf-8"))["envelope"]["scene3d"]
         positive = scenario.get("positive", {})
-        meta = family_sheet(family, scenario, images)
-        meta["thumbnail"] = _path(positive.get("desktop", {}).get("screenshots", {}).get("neutral_final"))
-        meta["sheet"] = meta["sheet"].relative_to(run_dir).as_posix()
-        film = filmstrip(family, scenario, images)
-        if film is not None:
-            film["filmstrip"] = film["filmstrip"].relative_to(run_dir).as_posix()
-        meta["filmstrip"] = film
-        sheets[family] = meta
+        if toi_thieu:
+            sheets[family] = {"not_built": "capture policy toi-thieu — review images: inputs/REVIEW_SET.json"}
+        else:
+            meta = family_sheet(family, scenario, images)
+            meta["thumbnail"] = _path(positive.get("desktop", {}).get("screenshots", {}).get("neutral_final"))
+            meta["sheet"] = meta["sheet"].relative_to(run_dir).as_posix()
+            film = filmstrip(family, scenario, images)
+            if film is not None:
+                film["filmstrip"] = film["filmstrip"].relative_to(run_dir).as_posix()
+            meta["filmstrip"] = film
+            sheets[family] = meta
         for viewport, record in positive.items():
             for state in STATES:
                 # Hộp canvas lúc chụp CHÍNH ảnh ấy; `canvas_box` chung chỉ là dự phòng.
@@ -523,7 +529,7 @@ def build(run_dir: Path, browser: dict[str, Any], measurement: dict[str, Any], f
                     crops.append({"family": family, "viewport": viewport, "state": state, **rec,
                                   "crop_box_px": list(crop), "source": shot.relative_to(REPO_ROOT).as_posix(),
                                   "path": target.relative_to(run_dir).as_posix(), "sha256": _sha(target)})
-    overview = overview_index(sheets, images)
+    overview = None if toi_thieu else overview_index(sheets, images)
     for meta in sheets.values():
         meta.pop("thumbnail", None)
     # Phim playback người học: nguồn tham khảo cạnh sheet, không vào sheet.

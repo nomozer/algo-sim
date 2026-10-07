@@ -39,12 +39,16 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
  * frozen. */
 if (CO.suite && import.meta.filename === process.argv[1]) {
   const { runSuite } = await import("./compiler-scene-suite.mjs");
+  const { datChinhSach } = await import("./capture-policy.mjs");
+  // exact-dimensions: `--anh-che-do toi-thieu|day-du` · `--review-set <inputs/REVIEW_SET.json>` · `--ho a,b`.
+  datChinhSach({ mode: CO["anh-che-do"], reviewSet: CO["review-set"] });
   const result = await runSuite({
     suitePath: resolve(String(CO.suite)),
     fixtureRoot: resolve(String(CO["fixture-root"] ?? CO.ra)),
     outDir: resolve(String(CO.ra)),
     screenshotDir: CO.screenshots ? resolve(String(CO.screenshots)) : undefined,
     skipBuild: Boolean(CO["bo-qua-build"]),
+    only: typeof CO.ho === "string" ? CO.ho.split(",") : null,
   });
   process.exit(result.pass ? 0 : 1);
 }

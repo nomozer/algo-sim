@@ -22,6 +22,7 @@ import argparse
 import fnmatch
 import hashlib
 import json
+import re
 import struct
 from pathlib import Path
 
@@ -45,15 +46,26 @@ def _doc(p: Path) -> dict:
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
+#: exact-dimensions — lỗi MÔI TRƯỜNG (trang/CDP không sẵn sàng) không phải lỗi phép kiểm sản phẩm: nó không giữ trọn ảnh
+#: của cả họ. Cùng mẫu với `frontend/scripts/capture-policy.phanLoaiLoi`.
+_MOI_TRUONG = re.compile(r"POLL_TIMEOUT|CDP_TIMEOUT|WS_OPEN_TIMEOUT|TEXTAREA_NOT_READY|SUBMIT_NOT|net::ERR")
+
+
+def _hong_san_pham(r: dict) -> bool:
+    return r.get("pass") is not True and not _MOI_TRUONG.search(str(r.get("run_error") or ""))
+
+
 def ho_that_bai(results: Path) -> set[str]:
-    """Họ có ít nhất một lượt KHÔNG đạt ở suite hay ở một đầu dò (thiếu tệp kết quả ⇒ không kết luận được gì)."""
+    """Họ có ít nhất một lượt KHÔNG đạt vì PHÉP KIỂM (không vì môi trường) ở suite hay ở một đầu dò."""
     hong: set[str] = set()
     for ho, rec in (_doc(results / "BROWSER_EVIDENCE.json").get("scenarios") or {}).items():
-        if not rec.get("pass"):
+        lan = [*(rec.get("positive") or {}).values(),
+               *(v for k in ("negative", "served") for kieu in (rec.get(k) or {}).values() for v in kieu.values())]
+        if any(_hong_san_pham(r) for r in lan) or (not rec.get("pass") and not lan):
             hong.add(ho)
     for ten in ("W02_CLOSURE_PROBE.json", "W04_PANELS_PROBE.json", "W05_FOCUS_PROBE.json", "PLAYBACK_EVIDENCE.json"):
         for r in _doc(results / ten).get("runs") or []:
-            if r.get("pass") is not True and r.get("family"):
+            if r.get("family") and _hong_san_pham(r):
                 hong.add(r["family"])
     return hong
 

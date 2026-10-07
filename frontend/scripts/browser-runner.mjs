@@ -128,8 +128,13 @@ export class BrowserSession {
       } catch { /* chưa lên */ }
       if (!wsUrl) await sleep(250);
     }
+    // exact-dimensions: chờ CÓ HẠN — một trình duyệt kẹt `about:blank` từng giữ lượt đo 28 phút không một dòng log.
+    if (!wsUrl) throw new Error(`WS_OPEN_TIMEOUT: không có trang gỡ lỗi ở cổng ${port}`);
     this.ws = new WebSocket(wsUrl);
-    await new Promise((r) => (this.ws.onopen = r));
+    await new Promise((r, bad) => {
+      const t = setTimeout(() => bad(new Error("WS_OPEN_TIMEOUT: 20 s")), 20_000);
+      this.ws.onopen = () => { clearTimeout(t); r(); };
+    });
     this.ws.onmessage = (e) => {
       const m = JSON.parse(e.data);
       if (m.id && this._pending.has(m.id)) { this._pending.get(m.id)(m); this._pending.delete(m.id); }
@@ -229,9 +234,12 @@ export class BrowserSession {
   }
 
   _send(method, params = {}) {
-    return new Promise((res) => {
+    // exact-dimensions: mỗi lệnh CDP có hạn (90 s — trên mọi phép đo hợp lệ đã ghi, kể cả giải PNG trong trang); quá
+    // hạn ⇒ `CDP_TIMEOUT` (lớp ENVIRONMENT ở `capture-policy.phanLoaiLoi`), không treo im lặng.
+    return new Promise((res, bad) => {
       const id = ++this._id;
-      this._pending.set(id, res);
+      const t = setTimeout(() => { this._pending.delete(id); bad(new Error(`CDP_TIMEOUT: ${method}`)); }, 90_000);
+      this._pending.set(id, (m) => { clearTimeout(t); res(m); });
       this.ws.send(JSON.stringify({ id, method, params }));
     });
   }

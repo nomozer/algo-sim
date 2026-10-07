@@ -57,6 +57,23 @@ def test_giu_bon_ly_do_va_bo_phan_con_lai(tmp_path):
     assert not anh["bo"].exists() and all(anh[k].exists() for k in ("oracle", "sheet", "duyet", "hong"))
 
 
+def test_loi_moi_truong_khong_giu_ca_ho(tmp_path):
+    """exact-dimensions: một lượt hết giờ tải trang (POLL_TIMEOUT) là lỗi MÔI TRƯỜNG — không giữ trọn ảnh của cả họ;
+    một phép kiểm sản phẩm đỏ vẫn giữ."""
+    run = tmp_path / "run"
+    for p in ("cube/desktop/grid_on.png", "cuboid/desktop/grid_on.png"):
+        _png(run / "images" / p)
+    _json(run / "results" / "BROWSER_EVIDENCE.json", {"scenarios": {
+        "cube": {"pass": False, "positive": {"mobile": {"pass": False, "run_error": "Error: POLL_TIMEOUT:false"}}},
+        "cuboid": {"pass": False, "positive": {"desktop": {"pass": False}}}}})
+    kq = subprocess.run([sys.executable, str(SCRIPT), "--run-dir", str(run), "--commit", "c", "--candidate", "a"],
+                        capture_output=True, text=True)
+    assert kq.returncode == 0, kq.stderr
+    pol = json.loads((run / "results" / "IMAGE_POLICY.json").read_text(encoding="utf-8"))
+    assert pol["failed_families"] == ["cuboid"]
+    assert not (run / "images" / "cube" / "desktop" / "grid_on.png").exists()
+
+
 def test_dry_run_khong_xoa(tmp_path):
     run = tmp_path / "run"
     _png(run / "images" / "cube" / "desktop" / "grid_on.png")

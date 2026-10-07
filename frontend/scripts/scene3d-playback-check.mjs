@@ -31,6 +31,7 @@ import {
   capture, jsonEval, openFixture, overlayRects, trustedClick, trustedOrbit, trustedZoomOut,
   vertexMarkerCheck,
 } from "./compiler-scene-suite.mjs";
+import { datChinhSach, tomTatAnh } from "./capture-policy.mjs";
 // Node ≥ 22.18 bóc kiểu TS; hai module này không import gì nên nạp thẳng được.
 import { cauTrucGocNhin } from "../src/simulations/domains/geometry/scene3d-model.ts";
 import { danhGiaGocNhin, datNguong, doLuoiGocNhin } from "../src/simulations/domains/geometry/scene3d-camera.ts";
@@ -65,6 +66,8 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
 }, []));
 // `--dist <thư mục>`: đo một bản build khác `frontend/dist` (W05: dist đang bị một dev server giữ khi thử cục bộ).
 const DIST = CO.dist ? resolve(String(CO.dist)) : join(FRONTEND, "dist");
+// exact-dimensions: chính sách chụp chung (`capture-policy.mjs`) — phim bước chỉ lưu khi `--anh-che-do day-du` hoặc tập duyệt.
+datChinhSach({ mode: CO["anh-che-do"], reviewSet: CO["review-set"] });
 
 /* W05 · D/E: «Đại lượng» là mục của menu «Khám phá» và là nơi DUY NHẤT liệt kê đại lượng theo bước (thẻ lời giải đã
    gỡ). Mở/đóng như người học — bấm nút menu rồi bấm mục; mục vắng (chưa có đại lượng ở bước này) ⇒ đóng menu, trả false. */
@@ -357,7 +360,7 @@ export async function runPlaybackCheck({ fixtureRoot, outDir, families = FAMILIE
         const outDir = byFamily ? join(out, family.replaceAll("_", "-"), "playback", viewportId)
           : join(out, "filmstrip", family, viewportId);
         const result = await runOne({ port: cong, family, viewportId, fixture, lapOrbit, outDir });
-        for (const item of result.film) item.path = item.path.replaceAll("\\", "/");
+        for (const item of result.film) if (item.path) item.path = item.path.replaceAll("\\", "/");
         report.runs.push(result);
         const failed = Object.entries(result.checks).filter(([, c]) => !c.pass).map(([k]) => k);
         console.log(`${family}/${viewportId}: ${result.pass ? "PASS" : `FAIL ${failed.join(",")}`}`);
@@ -367,6 +370,7 @@ export async function runPlaybackCheck({ fixtureRoot, outDir, families = FAMILIE
     sv.close();
   }
   report.pass = report.runs.every((run) => run.pass);
+  report.capture_policy = tomTatAnh();
   writeFileSync(join(out, "PLAYBACK_EVIDENCE.json"), JSON.stringify(report, null, 2), "utf-8");
   console.log(`Wrote ${join(out, "PLAYBACK_EVIDENCE.json")}: ${report.pass ? "PASS" : "FAIL"} ${sha256File(join(out, "PLAYBACK_EVIDENCE.json")).slice(0, 12)}`);
   return report;

@@ -6,6 +6,7 @@ import {
 import { dirname, join, relative, resolve } from "node:path";
 
 import { BrowserSession } from "./browser-runner.mjs";
+import { canChup, demAnh, phanLoaiLoi, tomTatAnh } from "./capture-policy.mjs";
 import { kiemDistMoi, phucVu } from "./scene3d-orbit-gate.mjs";
 // Token chấm đỉnh của CHÍNH sản phẩm (module không import gì ⇒ Node nạp thẳng).
 import { DAU_DINH_PX, KHUNG_HEP_PX } from "../src/simulations/domains/geometry/pick-target.ts";
@@ -286,10 +287,18 @@ export async function trustedZoomOut(session, nac) {
   }
 }
 
-export async function capture(session, path) {
+export async function capture(session, path, { loi = false } = {}) {
+  // exact-dimensions: quyết lưu hay không TRƯỚC khi chụp (`capture-policy.mjs`); `null` = không chụp theo chính sách.
+  demAnh.goi += 1;
+  if (!canChup(path, { loi })) {
+    demAnh.bo_qua += 1;
+    return null;
+  }
   const absolute = resolve(path);
   mkdirSync(dirname(absolute), { recursive: true });
   const result = await session.screenshot(absolute);
+  demAnh.tao += 1;
+  if (loi) demAnh.loi += 1;
   if (result !== "ok" || statSync(absolute).size < 4_096) {
     throw new Error(`INVALID_SCREENSHOT:${absolute}`);
   }
@@ -1542,6 +1551,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       result.evidence_gates.pass, result.evidence_gates.reason_codes,
     );
     result.pass = Object.values(result.assertions).every((item) => item.pass);
+    if (!result.pass) {         // exact-dimensions: ảnh chẩn đoán tại trạng thái lỗi — kể cả khi chính sách không chụp ca đạt
+      result.failure_screenshot = await capture(session, join(outDir, "failure.png"), { loi: true }).catch(() => null);
+    }
+    result.failure_class = phanLoaiLoi(null, result.pass);
     return result;
   } catch (error) {
     // W18 (tiêm lỗi FW2 lượt 1 làm cả suite chết, không bằng chứng): một lượt ném lỗi là MỘT KẾT LUẬN —
@@ -1549,6 +1562,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     result.run_error = String(error?.stack ?? error).slice(0, 2000);
     result.assertions.run_completed = assertion(false, String(error?.message ?? error).slice(0, 300));
     result.pass = false;
+    result.failure_class = phanLoaiLoi(result.run_error, false);
+    result.failure_screenshot = await capture(session, join(outDir, "failure.png"), { loi: true }).catch(() => null);
     return result;
   } finally {
     await session.close();
@@ -1688,7 +1703,7 @@ function verifyContractGate(suite) {
 }
 
 export async function runSuite({
-  suitePath, fixtureRoot, outDir, screenshotDir = undefined, skipBuild = false,
+  suitePath, fixtureRoot, outDir, screenshotDir = undefined, skipBuild = false, only = null,
 }) {
   const suiteAbsolute = resolve(suitePath);
   const suite = JSON.parse(readFileSync(suiteAbsolute, "utf-8"));
@@ -1729,14 +1744,17 @@ export async function runSuite({
     application_llm_calls: 0,
     scenarios: {},
   };
+  // exact-dimensions: chỉ các họ có mã/phạm vi bằng chứng đổi (`--ho a,b`); họ khác giữ bằng chứng hợp lệ đã có.
+  if (only) report.families_measured = [...only];
   try {
-    for (const scenario of suite.scenarios) {
+    for (const scenario of suite.scenarios.filter((s) => !only || only.includes(s.id))) {
       const positive = JSON.parse(readFileSync(join(root, scenario.positive_fixture), "utf-8"));
       // w11: manifest có thể đặt thư mục ảnh của họ (`images/<họ>/`), để ảnh
       // nguồn nằm ngay cạnh contact sheet của họ; manifest cũ vẫn dùng `id`.
       const scenarioOut = join(screenshots, scenario.evidence_dir ?? scenario.id);
       const record = { positive: {}, negative: {} };
       for (const viewport of suite.viewports) {
+        console.log(`▶ ${scenario.id}/${viewport.id} ${new Date().toISOString().slice(11, 19)}`);
         record.positive[viewport.id] = await runPositive({
           port: cong,
           viewport,
@@ -1781,6 +1799,7 @@ export async function runSuite({
     sv.close();
   }
   report.pass = Object.values(report.scenarios).every((scenario) => scenario.pass);
+  report.capture_policy = tomTatAnh();
   const reportPath = join(output, "BROWSER_EVIDENCE.json");
   writeFileSync(reportPath, JSON.stringify(report, null, 2), "utf-8");
   console.log(`Wrote ${reportPath}: ${report.pass ? "PASS" : "FAIL"}`);

@@ -18,6 +18,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { phucVu } from "./scene3d-orbit-gate.mjs";
 import { capture, openFixture, trustedClick } from "./compiler-scene-suite.mjs";
+import { datChinhSach, tomTatAnh } from "./capture-policy.mjs";
 import {
   assessAuxiliary, assessFloatingPanel, assessGridToggle, assessStepsSheet, expectedAnnotationIds,
   expectedGeometryTimeline, pollUntil, sortedUnique,
@@ -27,6 +28,7 @@ const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
   return a;
 }, []));
+datChinhSach({ mode: CO["anh-che-do"], reviewSet: CO["review-set"] });   // exact-dimensions: `capture-policy.mjs`
 const FE = resolve(import.meta.dirname, "..");
 const GOC = resolve(FE, "..");
 const ROOT = resolve(String(CO["fixture-root"]));
@@ -339,7 +341,7 @@ for (const ho of HO) {
 }
 const out = { schema_version: "w02-closure-probe/1", application_llm_calls: 0,
   commit: execFileSync("git", ["rev-parse", "HEAD"], { cwd: GOC, encoding: "utf8" }).trim(),
-  pass: ket.every((r) => r.pass), runs: ket };
+  pass: ket.every((r) => r.pass), runs: ket, capture_policy: tomTatAnh() };
 writeFileSync(join(RA, "W02_CLOSURE_PROBE.json"), `${JSON.stringify(out, null, 2)}\n`);
 console.log(`W02 probe: ${ket.filter((r) => r.pass).length}/${ket.length} PASS`);
 process.exit(out.pass ? 0 : 1);
