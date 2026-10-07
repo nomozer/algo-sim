@@ -1114,3 +1114,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** regular triangular pyramid / regular tetrahedron in a declared exact (ℚ³) domain with honest refusal outside it; selective image retention; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/corpus/LABELS.json` · `diagnostics/oracle_rtp_w01.py` · `diagnostics/fault_injection_rtp_w01.py` · `diagnostics/cache_proof/CACHE_DECISION.json` · `inputs/REVIEW_SET.json` · `inputs/CANDIDATE_DIVERGENCE_CORRECTION.json` · `results/IMAGE_POLICY.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+## WAVE_ID = EXACT_DIMENSIONS_AND_CAPTURE_POLICY
+- **RUN_ID:** exact-dimensions (task exact-dimensions; `docs/evaluation/RUN_NAMING.md` naming policy 2026-10-07; same branch)
+- **DATE:** 2026-10-07/08
+- **REPORT:** docs/evaluation/geometry/runs/exact-dimensions/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/exact-dimensions/
+- **START_BASE:** 4ceadd55
+- **CODE_COMMIT:** 1c8f3cb4 · de6d3e35 · 14892061 · 0ed6332f · 6c89abcd · ed3ae208 (harness d4834d92, 2d62f69c; plan/labels/oracle before the change 1c91f90d)
+- **MEASUREMENT_COMMIT:** 3bbb8052 (fixtures, build, scene controls, panels, focus) · fe83c46e (suite, occlusion) · d51db4e2 (playback, builder); local clean detached CRLF worktree with a space in its path; only failed steps rerun
+- **EVIDENCE_COMMIT_ROLE:** evidence commit c5cae8af (results, images, fixtures, logs)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (gate at the final docs commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** YES
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (92c9e198… → e1927f84…; product commit ed3ae208)
+- **CACHE_CHANGE:** YES (CACHE_VERSION 116 -> 117 in ed3ae208; `cache/decision.json`; semantic environment b1714b56… unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-triangular-pyramid-w01 `diagnostics/corpus/LABELS.json` rows N5, N5b, U1–U4 and regular-square-pyramid-w01 row U3_regular_triangular (by `label_corrections.json`; earlier files untouched); candidate register by `inputs/candidate_divergence.json`
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** rational sizes via an affine chart + Gram metric derived from the text; source-side capture policy; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/BROWSER_EVIDENCE.json` · `results/PLAYBACK_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/attempt1–3/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

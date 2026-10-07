@@ -1070,3 +1070,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** regular triangular pyramid / regular tetrahedron in a declared exact domain; honest refusal outside it; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `REVIEW.md` · `REPORT.md` · `HANDOFF.md` · `RUN.json` · `MEASUREMENT_ATTEMPTS.json` · `PLAN.md` · `diagnostics/corpus/LABELS.json` · `diagnostics/cache_proof/CACHE_DECISION.json` · `inputs/REVIEW_SET.json` · `results/IMAGE_POLICY.json`
 - **RUN_ID_POLICY:** TASK_WAVE (`<task-slug>-wNN`)
+
+
+### WAVE_ID = EXACT_DIMENSIONS_AND_CAPTURE_POLICY
+- **RUN_ID:** exact-dimensions (task exact-dimensions; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-07/08
+- **START_BASE:** 4ceadd55
+- **CODE_COMMIT_OR_NONE:** 1c8f3cb4 (source-length reader: a number followed by an operator is not a length) · de6d3e35 (affine chart + Gram metric; T8 rational sizes) · 14892061 (capture policy, bounded browser waits, failure classes) · 0ed6332f (rename active files) · 6c89abcd (fixtures at rational sizes) · ed3ae208 (CACHE_VERSION 117); harness d4834d92, 2d62f69c (world-space measurement of chart scenes)
+- **CANDIDATE:** 92c9e198… → e1927f84… (one freeze at ed3ae208, 43d354f0) · CACHE_VERSION 117 (bump, `cache/decision.json`) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** measurement 3bbb8052 (probes) / fe83c46e (suite, occlusion) / d51db4e2 (playback, builder) · evidence c5cae8af; attempts 1–2 failed on harness defects, kept (`diagnostics/attempt1–3/`)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **FULL_PRODUCT_SUITE:** T3 + identity gates on a clean detached checkout of the final docs commit — `handoff.md` §2
+- **PRODUCT_CHANGED:** YES
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/exact-dimensions/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/exact-dimensions/
+- **PASS:** regular triangular pyramid family — suite 7/7 (2 positives, 4 refusals, tetrahedron 18√2 served), scene controls 2/2, panels 3/3, focus 3/3, occlusion pass, playback 2/2, 4 crops all endpoints inside; corpus 31 rows, oracle 18/18; images created 109 → 15 for the same case, 0 deleted after capture
+- **CLOSED:** ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES
+- **OPENED:** ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** regular-triangular-pyramid-w01 labels N5, N5b, U1–U4 and regular-square-pyramid-w01 row U3_regular_triangular (refused → served in the rational domain) — `label_corrections.json`; earlier files unchanged
+- **NEXT_ACTION_AT_TIME:** human visual review (`review.md` R1–R10 with the rtp-w01 and W5/W4 packages) and a D5 option; on approval merge into main, push, delete the branch
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** exact metric from the text on an affine chart (rational sizes for the regular triangular pyramid / tetrahedron) without changing the IR or the model surface; source-side screenshot policy; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/decision.json` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/`
+- **RUN_ID_POLICY:** TASK_NAME (`docs/evaluation/RUN_NAMING.md`, naming policy 2026-10-07)

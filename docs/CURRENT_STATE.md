@@ -25,7 +25,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 >
 > | | |
 > |---|---|
-> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung) + W5 (`regular-square-pyramid-w05`, 2026-10-06/07, chế độ tập trung + bộ đọc chuỗi bằng nhau) + việc `regular-triangular-pyramid` W1 (`regular-triangular-pyramid-w01`, 2026-10-07, chóp tam giác đều + tứ diện đều, giữ trên cùng nhánh theo lệnh người dùng; W3–W5 và việc này chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
+> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung) + W5 (`regular-square-pyramid-w05`, 2026-10-06/07, chế độ tập trung + bộ đọc chuỗi bằng nhau) + việc `regular-triangular-pyramid` W1 (`regular-triangular-pyramid-w01`, 2026-10-07, chóp tam giác đều + tứ diện đều, giữ trên cùng nhánh theo lệnh người dùng) + việc `exact-dimensions` (run `exact-dimensions`, 2026-10-07/08, kích thước hữu tỉ + chụp ảnh tại nguồn + chuẩn hoá tên; W3–W5 và hai việc sau chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
 > | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi; regular-square-pyramid-w01 (2026-10-05): `ls-remote` = `38d41588…` — không đổi (commit ghi kết quả tích hợp của cuboid-merge) |
 > | `CACHE_VERSION` | **117** (exact-dimensions, 2026-10-07: bộ đọc độ dài không còn lấy vế đầu của biểu thức — "cạnh đáy bằng 4 + 1" từng được PHỤC VỤ V = 16 (sai), nay từ chối; served → refused nên hàng cache cũ giữ đáp số sai — `runs/exact-dimensions/cache/decision.json`; khung affine + metric: 43/43 fixture cũ trùng byte; trước: 116 ở regular-triangular-pyramid-w01) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
@@ -52,17 +52,30 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 1bb11018 (lượt đo 3 có thẩm quyền của regular-triangular-pyramid-w01 ở máy local, worktree tách rời sạch CRLF, đường dẫn có dấu cách; bằng chứng c08a1eed)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = c5cae8af (bằng chứng trình duyệt của run exact-dimensions; đo 3bbb8052 / fe83c46e / d51db4e2 ở máy local, worktree tách rời sạch CRLF, đường dẫn có dấu cách)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 116
-> CANDIDATE = 92c9e198… (was 5e1c0639…; hai lần đóng băng cùng tree hash), product commit 1e90ca0e
+> CACHE_VERSION = 117
+> CANDIDATE = e1927f84… (was 92c9e198…; đóng băng một lần ở ed3ae208), product commit ed3ae208
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (việc regular-triangular-pyramid, W1, run regular-triangular-pyramid-w01)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại aa845902 — runs/regular-triangular-pyramid-w01/HANDOFF.md §2; D5 chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/regular-triangular-pyramid-w01/REVIEW.md (R1–R12) cùng gói W5/W4 và chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
+> CURRENT_WAVE = EXACT_DIMENSIONS_AND_CAPTURE_POLICY (việc exact-dimensions, run exact-dimensions)
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối — runs/exact-dimensions/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Kích thước chính xác + chụp ảnh tại nguồn + chuẩn hoá tên — run exact-dimensions (2026-10-07/08, máy local; chờ review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Miền mới | chóp tam giác đều với cạnh đáy + chiều cao hữu tỉ/phân số/thập phân, cạnh đáy + cạnh bên, tứ diện đều cạnh hữu tỉ — phục vụ trên route (b=6, h=4 → 12√3; tứ diện a=6 → 18√2); ca căn cũ trùng byte; vẫn từ chối: thiếu/mâu thuẫn/suy biến, kích thước chữ, tổng căn |
+> | Biểu diễn | toạ độ chương trình = khung affine ℚ³; độ dài từ ma trận Gram hữu tỉ G suy từ sáu cạnh của đề (`geometry/metric.py`, `assumption_gate.do_luong_cua`); G = I ⇒ biểu thức cũ nguyên byte; renderer ánh xạ khung → không gian một lần (`scene3d-chart.ts`) |
+> | Lỗi tìm ra | bộ đọc độ dài lấy vế đầu của biểu thức ("4 + 1" từng phục vụ V = 16) — sửa, `CACHE_VERSION` 117 |
+> | Trình duyệt | họ chóp tam giác đều: suite 7/7, điều khiển cảnh 2/2, bảng 3/3, tập trung 3/3, occlusion pass, phát lại 2/2; 3 lần đo — lần 1–2 đỏ vì lỗi BỘ ĐO (khung không trực giao), chỉ chạy lại bước đỏ |
+> | Ảnh (cùng họ, cùng bước) | tạo 109 → **15** (runner 103 → 11; xoá sau chụp 52 → 0), quyết trước khi chụp (`capture-policy.mjs`) — `runs/exact-dimensions/capture_counts.json` |
+> | Tên | 11 tệp/thư mục đổi tên ở commit riêng `0ed6332f`; một tài liệu sống `evaluation/RUN_NAMING.md` |
+> | Candidate · `CACHE_VERSION` | `92c9e198…` → **`e1927f84…`** (product `ed3ae208`) · 116 → **117** |
+> | Run | [`exact-dimensions`](evaluation/geometry/runs/exact-dimensions/) (`review.md`, `report.md`, `handoff.md`) |
 
 > **Chóp tam giác đều + tứ diện đều (miền ℚ³) — regular-triangular-pyramid-w01 (đo `1bb11018`, worktree tách rời sạch; chờ review người):**
 >

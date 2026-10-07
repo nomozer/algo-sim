@@ -13,6 +13,14 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `exact-dimensions` (2026-10-07/08, run
+  [`exact-dimensions`](evaluation/geometry/runs/exact-dimensions/), máy local, cùng nhánh):**
+  EXACT_DIMENSIONS_AND_CAPTURE_POLICY — chóp tam giác đều/tứ diện đều với kích thước hữu tỉ (phân số, thập phân, cạnh
+  bên) phục vụ trên route bằng khung affine + metric Gram suy từ đề (`ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES` khép);
+  ảnh trình duyệt quyết tại nguồn (cùng ca 109 → 15); 11 tệp đổi tên theo một luật; `CACHE_VERSION` 117, candidate
+  `e1927f84…`; D5 vẫn mở. Việc duy nhất không đổi: người dùng duyệt hình — `review.md` của run này (R1–R10) cùng gói
+  `regular-triangular-pyramid-w01` và W5/W4 — và chọn phương án D5; duyệt thì merge, push, xoá nhánh ở lượt riêng có lệnh.
+
 - **Việc `regular-triangular-pyramid` W1 (2026-10-07, run
   [`regular-triangular-pyramid-w01`](evaluation/geometry/runs/regular-triangular-pyramid-w01/), máy local, cùng nhánh
   theo lệnh người dùng):** REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE — chóp tam giác đều + tứ diện đều trên route

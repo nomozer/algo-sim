@@ -717,12 +717,13 @@
 - **evidence:** `runs/regular-triangular-pyramid-w01/PLAN.md` §1 (brute force), `test_regular_triangular_pyramid.py::test_tam_giac_deu_nguyen_khong_bao_gio_co_canh_huu_ti`, corpus rows U1–U4 (refused with `TEMPLATE_NOT_REPRESENTABLE T8`).
 - **impact:** most textbook regular-triangular problems (rational or symbolic edges) are refused honestly, not served; the family is narrow (`product_capability.regular_triangular_pyramid` = `foundation_only`).
 - **scope:** a similarity frame (lay out a rational similar copy, scale every measured length by λ with λ² ∈ ℚ, area by λ², volume by λ³) — touches interpreter measures, postconditions, grounding and scene labels; decision of the user 2026-10-07: NOT in this task (risk of silently wrong answers).
-- **status:** OPEN (regular-triangular-pyramid-w01) — declared limit.
+- **status:** RESOLVED (run `exact-dimensions`, `de6d3e35`, 2026-10-07) — not by a similarity frame (one λ cannot fix an independent base and height) but by an affine chart + rational Gram metric derived from the text's six edge lengths (`geometry/metric.py`, `assumption_gate.do_luong_cua`); rational, fractional and decimal base + height, base + lateral edge and rational tetrahedron edge are served on the route, radical cases byte-identical; corpus 31 rows, oracle 18/18 (`runs/exact-dimensions/labels.json`, `report.md` §1). Remaining limits, still refused: symbolic sizes, sums of radicals; the metric covers this family only. Verify: `pytest tests/geometry/test_exact_dimensions.py -q`.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** a dedicated task if the user chooses the similarity frame
+- **suggested_wave:** —
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED
+- **exact-dimensions update (2026-10-07):** the layout restriction is gone — any affinely independent chart is served (axis chart, rough chart, tilted frames); what stays unmeasured is whether the model extracts the sizes and declares the four vertices with literal coordinates. Still 0 model calls.
 - **description:** The deterministic route serves a regular triangular pyramid only when the program lays the base on a tilted rational plane (x+y+z=k); prompts, grammar card and schema are unchanged, and no live measurement shows that the model chooses such a layout. Offline evidence uses LLM-style programs written in `test_regular_triangular_pyramid.py`.
 - **evidence:** `runs/regular-triangular-pyramid-w01/` (0 model calls; model surface fingerprint `b1714b56…` unchanged).
 - **impact:** product reach for this family is unknown; the honest product status is `foundation_only`.
@@ -730,6 +731,16 @@
 - **status:** OPEN (regular-triangular-pyramid-w01)
 - **owner_class:** EVALUATION
 - **suggested_wave:** the next task with a live budget
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART
+- **description:** A regular triangular pyramid whose text lacks a size (no height, no lateral edge) cannot have a metric (`do_luong_cua` returns None), so a program on a non-Euclidean chart is checked in its chart's Euclidean metric: the template sees no regular figure and the gate refuses with `ASSUMPTION_INVARIANCE_UNPROVEN` (cause UNKNOWN) instead of the precise "the missing size determines the answer".
+- **evidence:** `runs/exact-dimensions/labels.json` rows N01/N09/N10; fixture `regular_triangular_pyramid_assumption` (expected INVARIANCE_UNPROVEN/UNKNOWN); browser refusal image `runs/exact-dimensions/images/regular-triangular-pyramid/negative/assumption/desktop/refusal.png`.
+- **impact:** refusal is correct; its reason is less informative for the learner.
+- **scope:** detect "regular family + missing size" before the chart check and report the determining size.
+- **status:** OPEN (run `exact-dimensions`)
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** with the next change to the assumption gate
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION

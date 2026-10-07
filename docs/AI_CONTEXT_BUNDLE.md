@@ -11,8 +11,8 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 116` (regular-triangular-pyramid-w01: hai envelope thiết diện đã phục vụ đổi nhãn bước — mỗi bước nối
-  cạnh mang tên theo mặt; 35/37 fixture trùng byte — `runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json`); provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 117` (run exact-dimensions: bộ đọc độ dài không còn lấy vế đầu của biểu thức — "cạnh đáy bằng 4 + 1"
+  từng phục vụ V = 16, nay từ chối; 43/43 fixture cũ trùng byte — `runs/exact-dimensions/cache/decision.json`); provider-facing fingerprint `b1714b566e25c912…` không đổi.
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -20,15 +20,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE (việc regular-triangular-pyramid, W1; run regular-triangular-pyramid-w01; máy local; giữ nhánh theo lệnh người dùng)
-PRODUCT_STATE = candidate 92c9e198… (product commit 1e90ca0e; hai lần đóng băng cùng tree hash), CACHE_VERSION 116, LLM_ONLY
-MEASUREMENT = 1bb11018 (lần đo 3; bằng chứng c08a1eed) (local, worktree tách rời sạch CRLF, có dấu cách)
+CURRENT_WAVE = EXACT_DIMENSIONS_AND_CAPTURE_POLICY (việc exact-dimensions; run exact-dimensions; máy local; cùng nhánh)
+PRODUCT_STATE = candidate e1927f84… (product commit ed3ae208; đóng băng một lần), CACHE_VERSION 117, LLM_ONLY
+MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (regular-triangular-pyramid-w01; T3 FULL_PRODUCT_GATE_PASS + cổng danh tính tại aa845902)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (exact-dimensions; T3 + cổng danh tính ở commit tài liệu cuối — runs/exact-dimensions/handoff.md §2)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng duyệt hình theo runs/regular-triangular-pyramid-w01/REVIEW.md cùng gói W5/W4 và chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md và runs/regular-triangular-pyramid-w01/REVIEW.md cùng gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -122,6 +122,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.
 - **Câu hỏi còn mở từ w20:** H-W20-4 (tàn dư Tin học trong mã — run `cuboid-acceptance` liệt kê thêm phần ở
   shell). H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
+- **exact-dimensions chờ người dùng:** duyệt `review.md` R1–R10 của run. Khép: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES`
+  (khung affine + metric Gram; kích thước chữ, tổng căn vẫn từ chối). Mở mới: `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART`.
+  `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED` vẫn mở (mọi khung nay phục vụ; mô hình chưa đo). D5 vẫn mở.
 - **regular-triangular-pyramid-w01 chờ người dùng:** duyệt hình `REVIEW.md` R1–R12 của run; chọn phương án D5
   (`ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL`). Mở mới: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES` (miền ℚ³),
   `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED`, `ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION`. Khung nhìn ban đầu
@@ -154,7 +157,9 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-Việc `regular-triangular-pyramid` W1 (máy local, cùng nhánh) đã thêm chóp tam giác đều + tứ diện đều trong miền ℚ³ trên route
+Việc `exact-dimensions` (máy local, cùng nhánh) phục vụ chóp tam giác đều/tứ diện đều với kích thước hữu tỉ bằng khung
+affine + metric Gram suy từ đề, chụp ảnh quyết tại nguồn (109 → 15 ảnh cùng ca) và chuẩn hoá tên; việc kế tiếp: người dùng
+duyệt `review.md` của run `exact-dimensions` cùng các gói dưới. Việc `regular-triangular-pyramid` W1 (máy local, cùng nhánh) đã thêm chóp tam giác đều + tứ diện đều trong miền ℚ³ trên route
 sản phẩm, sửa D1–D4, xoay hiển thị đáy nghiêng và khung nhìn ban đầu; việc kế tiếp: người dùng duyệt `REVIEW.md` của run
 `regular-triangular-pyramid-w01` (R1–R12) cùng gói W5/W4 và chọn phương án D5. Bối cảnh trước đó: W5 của việc `regular-square-pyramid` (máy local) đã làm chế độ tập trung (không thanh trên toàn cục, quay lại, công cụ
 nhóm, toàn màn hình tuỳ chọn, bỏ thẻ lời giải lặp) và lát cắt backend "chuỗi bằng nhau" trên route thật. Việc kế tiếp:
@@ -173,6 +178,9 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `exact-dimensions` (EXACT_DIMENSIONS_AND_CAPTURE_POLICY): `docs/evaluation/geometry/runs/exact-dimensions/`
+  (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `labels.json`, `capture_counts.json`, `results/`, `images/`,
+  `diagnostics/attempt1–3/`).
 - Run `regular-triangular-pyramid-w01` (REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE):
   `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/` (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`, `RUN.json`,
   `MEASUREMENT_ATTEMPTS.json`, `results/`, `images/`, `diagnostics/`, `corrections/W05_RECORD_CORRECTION.json`).
@@ -209,9 +217,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 - Frozen human sets (bất biến): `inputs/human_expected_visibility.json` của wave occlusion; preimage
   camera ở `inputs/REGISTERED_CAMERA_PREIMAGES.json` của w09.
 
-Historical run artifacts are immutable. Run mới phải theo `docs/evaluation/RUN_NAMING.md`: wave đánh số trong
-từng việc (việc mới bắt đầu ở W1), định danh đầy đủ `<task-slug>-wNN`; ngày, nhánh, commit, candidate nằm trong
-`RUN.json`.
+Historical run artifacts are immutable. Run mới theo `docs/evaluation/RUN_NAMING.md` (mục đầu, từ run `exact-dimensions`):
+tên theo việc, không mã lượt; lần thứ hai của cùng việc thêm ngày; ngày, nhánh, commit, candidate nằm trong `run.json`.
 
 ## 8. Thứ tự đọc
 

@@ -71,6 +71,14 @@ Không nguồn nào tự giải quyết hết; bộ chọn ghép cả ba và **i
   duyệt chọn TRƯỚC khi đo (`inputs/REVIEW_SET.json`, mỗi mục một yêu cầu/lỗi) và MỌI ảnh của một họ có lượt
   thất bại; ảnh bỏ vẫn ghi sha256 ở `results/IMAGE_POLICY.json`. Ngưỡng và mục tiêu kiểm không đổi. Không chụp
   mặc định mọi họ × bước × lựa chọn × khổ để duyệt; ảnh trước/sau cùng fixture, khổ và góc nhìn.
+- **Từ run `exact-dimensions`: quyết TRƯỚC khi chụp, không chụp rồi xoá.** Phép kiểm điểm ảnh đọc khung trong
+  bộ nhớ (`canvasFrame`), không đọc PNG — nên mọi bộ đo hỏi `frontend/scripts/capture-policy.mjs` trước mỗi lần ghi
+  tệp (`capture`, `captureElement`). Mặc định `--anh-che-do toi-thieu`: ảnh oracle (`neutral_final`,
+  `rotated_neutral` của suite), ảnh khớp `--review-set`, ảnh tại trạng thái lỗi; `day-du` khi cần tìm lỗi tiến trình
+  dựng. Mỗi JSON bằng chứng ghi `capture_policy` (lượt gọi · ảnh tạo · bỏ qua · ảnh lỗi); số ảnh không chụp không
+  bao giờ trình bày như số ảnh đã xoá. Lỗi tách ba lớp ENVIRONMENT / HARNESS / PRODUCT_ASSERTION; lỗi môi trường
+  không giữ cả họ. Bước trình duyệt chạy tuần tự, có `timeout` hữu hạn, in tiến độ; chỉ chạy lại bước đỏ. Tỉa sau đo
+  (`prune_evidence_images.py`) chỉ còn cho run cũ / chế độ đầy đủ.
 
 ## Chi phí đã đo và đã sửa
 

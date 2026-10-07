@@ -1,0 +1,55 @@
+{
+  "run_id": "exact-dimensions",
+  "task_slug": "exact-dimensions",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md — 'Naming policy — runs, files, folders' (no wave code in the name; a second run of the same task adds a date)",
+  "date": "2026-10-07/08",
+  "machine": "local (Windows), clean detached worktree D:/tmp/exact pre (CRLF, path with a space)",
+  "branch": "feat/regular-square-pyramid (kept by the user's instruction; not pushed in this run)",
+  "start_head": "4ceadd55",
+  "commits": {
+    "plan_labels_oracle_before_change": "1c91f90d",
+    "source_length_reader_fix": "1c8f3cb4",
+    "affine_chart_and_metric": "de6d3e35",
+    "capture_policy": "14892061",
+    "rename_active_files": "0ed6332f",
+    "fixtures_rational_sizes": "6c89abcd",
+    "cache_117": "ed3ae208",
+    "candidate_freeze": "43d354f0",
+    "measurement_inputs": "3bbb8052",
+    "harness_world_space_fix": "d4834d92",
+    "attempt_1_record": "fe83c46e",
+    "harness_playback_parse_fix": "2d62f69c",
+    "attempt_2_record": "d51db4e2",
+    "browser_evidence": "c5cae8af"
+  },
+  "product_commit": "ed3ae208",
+  "candidate": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029 (was 92c9e198…; frozen once at ed3ae208, diagnostics/freeze_ed3ae208.log)",
+  "cache_version": "117 (was 116; cache/decision.json)",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged — prompts, grammar card, schema, capability hash (semantic environment b1714b56…)",
+  "live_model_requests": 0,
+  "measurement": {
+    "attempts": [
+      {"n": 1, "commit": "3bbb8052", "result": "FAIL (harness): suite orbit + vertex_marker_px, playback view quality — chart scene read through a non-orthogonal model matrix", "record": "diagnostics/attempt1/SUMMARY.json"},
+      {"n": 2, "commit": "fe83c46e", "result": "suite 7/7 PASS, occlusion PASS; playback crashed (harness: numbers into the product's fraction parser)", "record": "diagnostics/attempt2/"},
+      {"n": 3, "commit": "d51db4e2", "result": "playback 2/2 PASS, evidence builder PASS", "record": "diagnostics/attempt3/"}
+    ],
+    "authoritative": {
+      "fixtures_build_scene_controls_panels_focus_mode": "3bbb8052 (attempt 1; passed, not rerun — their code does not call the fixed functions)",
+      "suite_occlusion": "fe83c46e (attempt 2)",
+      "playback_evidence_builder": "d51db4e2 (attempt 3)"
+    },
+    "families_measured": ["regular_triangular_pyramid"],
+    "families_not_remeasured": "the seven other families: payloads byte-identical (cache/fixture_diff.json 43/43) and the renderer leaves scenes without chart_metric unchanged (scene3d-chart.test.ts); the harness fix is the identity when no model matrix is reported, and mathematically equal for a rotation-only one"
+  },
+  "capture_counts": "capture_counts.json",
+  "user_decisions_this_run": "none new; the brief is the instruction",
+  "human_visual_review": "NOT_APPROVED (not written by the agent)",
+  "skills": {
+    "ponytail": "used — review of the metric diff (removed Metric.active, the inverse property) and lean harness fix",
+    "superpowers": "process only (skill check, verification before claims); no plan/brainstorm document",
+    "karpathy": "not invoked",
+    "graphify": "not invoked"
+  },
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

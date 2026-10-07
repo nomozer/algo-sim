@@ -1,0 +1,42 @@
+{
+  "schema": "exact-dimensions/capture-counts/1",
+  "case": "family regular_triangular_pyramid, desktop + low + mobile, the same steps: suite, scene controls, panels, focus mode, playback (lap-orbit 5), evidence builder",
+  "before": {
+    "run": "regular-triangular-pyramid-w01, attempt 3 (measurement 1bb11018)",
+    "source": "runs/regular-triangular-pyramid-w01/results/IMAGE_POLICY.json (kept + pruned entries whose path names this family); no capture policy then, so every screenshot call created a file",
+    "screenshot_calls": 103,
+    "images_created_by_runners": 103,
+    "by_step": {"suite + scene_controls": 52, "panels": 11, "focus_mode": 12, "playback": 28},
+    "images_created_by_builder": 6,
+    "builder": {"hidden-edge oracle crops": 4, "review sheet + filmstrip": 2},
+    "kept": 57,
+    "deleted_after_capture": 52
+  },
+  "after": {
+    "run": "exact-dimensions, final measurements (suite fe83c46e, playback d51db4e2, probes 3bbb8052), capture mode toi-thieu, review set chosen before the run (inputs/REVIEW_SET.json, 10 items)",
+    "source": "capture_policy blocks of results/BROWSER_EVIDENCE.json, PLAYBACK_EVIDENCE.json, W02_CLOSURE_PROBE.json, W04_PANELS_PROBE.json, W05_FOCUS_PROBE.json",
+    "screenshot_calls": 110,
+    "images_created_by_runners": 11,
+    "skipped_before_capture": 99,
+    "by_step": {
+      "suite": {"calls": 52, "created": 9, "purpose": "8 review-set items (desktop neutral_final/rotated_neutral and mobile neutral_final are also oracle inputs) + mobile rotated_neutral (oracle input only)"},
+      "scene_controls": {"calls": 7, "created": 0},
+      "panels": {"calls": 11, "created": 0},
+      "focus_mode": {"calls": 12, "created": 2, "purpose": "review set: low and mobile focus layout"},
+      "playback": {"calls": 28, "created": 0}
+    },
+    "images_created_by_builder": 4,
+    "builder": {"hidden-edge oracle crops": 4, "review sheet + filmstrip": "not built in toi-thieu mode"},
+    "failure_images": 0,
+    "kept": 15,
+    "deleted_after_capture": 0
+  },
+  "whole_run_including_failed_attempts": {
+    "attempt_1 (3bbb8052, harness failure)": {"created": 28, "kept": 2, "discarded": 26, "note": "10 suite (incl. 2 failure.png) + 4 playback (oracle-name leak) + 2 focus + 8 via captureElement (policy leak) + 4 builder crops; the 2 focus images are kept because the focus probe passed and is not rerun; the rest were removed by diagnostics/remeasure.sh and are listed with sha256 in diagnostics/attempt1/SUMMARY.json"},
+    "attempt_2 (fe83c46e)": {"created": 9, "kept": 9, "note": "suite; playback crashed before its first capture (harness bug), builder did not run"},
+    "attempt_3 (d51db4e2)": {"created": 4, "kept": 4, "note": "playback created 0 (no review item, not an oracle input); builder 4 crops"},
+    "total_created": 41,
+    "total_kept": 15
+  },
+  "reading": "Calls rose 103 -> 110 because the two element captures (detail and solution panels) are now counted through the same rule. Files created fell 109 -> 15 for the passing measurement, decided before the capture; nothing was deleted afterwards. Deletions are never counted as savings. The browser runs and checks are the same; only the PNG writes changed. Time is not compared: the runs used different commits and the machine load was not controlled."
+}
