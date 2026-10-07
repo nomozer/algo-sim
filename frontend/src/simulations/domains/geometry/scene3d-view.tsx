@@ -9,6 +9,7 @@ import {
   clampStep,
   SECTION_STROKE_RATIO,
   cauTrucGocNhin,
+  dayVaDinhChop,
   diemHuuHan,
   duongKinhCanh,
   geometryHighlightedAt,
@@ -57,7 +58,7 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, khungNhinSuPham, khungNhinVua,
+  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungNhinSuPham, khungNhinVua,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
 import {
@@ -162,6 +163,13 @@ export function lamDiu(obj: THREE.Object3D, k = HE_SO_LAM_DIU): void {
     const m = (x as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
     for (const vl of Array.isArray(m) ? m : m ? [m] : []) lamDiuVatLieu(vl, k);
   });
+}
+
+/** Toạ độ cảnh → khung THẾ GIỚI qua phép xoay hiển thị (đồng nhất thức khi đáy ngang — trả lại chính các số). */
+function xoay(p: Vec3, q: THREE.Quaternion): Vec3 {
+  if (q.x === 0 && q.y === 0 && q.z === 0) return p;
+  const w = new THREE.Vector3(...p).applyQuaternion(q);
+  return [w.x, w.y, w.z];
 }
 
 function v(o: THREE.Object3D, name: string): THREE.Object3D {
@@ -1330,6 +1338,18 @@ export function Scene3DWorkspace({
   //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
   const vuaKhungRef = useRef<(() => void) | null>(null);
   const [webglFailed, setWebglFailed] = useState(false);
+  /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
+     có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
+     của nhãn/khung nhìn/lưới đi qua cùng phép quay (`xoay`). Toạ độ cảnh không đổi. */
+  const qHienThi = useMemo(() => {
+    const dc = dayVaDinhChop(scene.objects);
+    const len = dc ? huongLenHienThi(dc.day, dc.dinh) : null;
+    return len
+      ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(...len), new THREE.Vector3(0, 0, 1))
+      : new THREE.Quaternion();
+  }, [scene]);
+  const qRef = useRef(qHienThi);
+  qRef.current = qHienThi;
   const buoc = clampStep(scene, step);
   // Vắng `interaction` ⇒ trạng thái đầu, tức hành vi TRƯỚC wave này nguyên
   // vẹn: hiện mọi thứ, không bung, tô sáng theo bước.
@@ -1529,7 +1549,7 @@ export function Scene3DWorkspace({
         const id = el.dataset.id;
         const v = id ? viTriNhan.current.get(id) : undefined;
         if (!v || !id) { el.style.opacity = "0"; continue; }
-        const p3 = v.clone().project(cam);
+        const p3 = v.clone().applyQuaternion(qRef.current).project(cam);
         // Sau lưng camera ⇒ giấu. Không có phép kiểm này thì nhãn của mặt
         // khuất lộn ngược lên trước hình.
         const hien = p3.z < 1 && p3.x > -1.1 && p3.x < 1.1 && p3.y > -1.1 && p3.y < 1.1;
@@ -1555,7 +1575,7 @@ export function Scene3DWorkspace({
       for (const el of Array.from(lopSo.children) as HTMLElement[]) {
         const id = el.dataset.annId;
         const v = id ? viTriSoDo.current.get(id) : undefined;
-        const p3 = v?.clone().project(cam);
+        const p3 = v?.clone().applyQuaternion(qRef.current).project(cam);
         if (!id || !p3 || !(p3.z < 1)) { el.style.opacity = "0"; continue; }
         canDat.push({ id, ax: ((p3.x + 1) / 2) * w, ay: ((1 - p3.y) / 2) * h,
           w: el.offsetWidth, h: el.offsetHeight, priority: Number(el.dataset.uuTien ?? "1") });
@@ -1611,7 +1631,11 @@ export function Scene3DWorkspace({
         (window as any).__geo3d_camera_target = dieuKhien.target.toArray();
         (window as any).__geo3d_camera_snapshot = {
           position: cam.position.toArray(),
-          view_matrix_column_major: [...cam.matrixWorldInverse.elements],
+          // Bộ đo chiếu TOẠ ĐỘ CẢNH: khi có phép xoay hiển thị (đáy nghiêng, §18.2), ma trận phát là view × model để
+          // phép chiếu của bộ đo trùng hình trên khung. Đáy ngang ⇒ đúng ma trận view như trước (không nhân).
+          view_matrix_column_major: [...(qRef.current.x === 0 && qRef.current.y === 0 && qRef.current.z === 0
+            ? cam.matrixWorldInverse
+            : new THREE.Matrix4().multiplyMatrices(cam.matrixWorldInverse, goc.matrixWorld)).elements],
           projection_matrix_column_major: [...cam.projectionMatrix.elements],
           viewport_width: renderer.domElement.clientWidth,
           viewport_height: renderer.domElement.clientHeight,
@@ -1699,13 +1723,15 @@ export function Scene3DWorkspace({
        * Sửa bằng cách khung nhìn ôm **toàn cảnh** ngay từ đầu: camera vẫn đứng
        * yên (bất biến giữ nguyên), nhưng nó đứng ở chỗ nhìn được hình CUỐI.
        * Hợp với hộp bao đang dựng để phép tách khối vẫn đúng. */
-      for (const p of diemHuuHan(scene.objects)) diem.push(p);
+      for (const p of diemHuuHan(scene.objects)) diem.push(xoay(p, qRef.current));
       if (diem.length === 0) return;
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
       // Hướng nhìn chọn theo số đo của TOÀN cảnh (cùng lẽ trên: hình cuối),
       // không theo tên bài — xem `chonHuongNhin`. Cảnh không cạnh ⇒ khung cũ.
-      const ct = cauTrucGocNhin(scene.objects);
+      // Cấu trúc đo trong khung THẾ GIỚI (sau phép xoay hiển thị): hướng nhìn chọn cho hình người học thấy.
+      const ct0 = cauTrucGocNhin(scene.objects);
+      const ct = { ...ct0, diem: ct0.diem.map((p) => xoay(p, qRef.current)) };
       const kn = ct.canh.length > 0
         ? khungNhinSuPham(diem, [], [], cam.fov, w / h, chonHuongNhin(ct.diem, ct.canh, ct.mat))
         : khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
@@ -1763,7 +1789,8 @@ export function Scene3DWorkspace({
       l.geometry?.dispose?.();
       (l.material as THREE.Material | undefined)?.dispose?.();
     }
-    const diem = diemHuuHan(scene.objects);
+    // Lưới nằm dưới hình NGƯỜI HỌC THẤY: lấy toạ độ sau phép xoay hiển thị (nhóm lưới không xoay).
+    const diem = diemHuuHan(scene.objects).map((p) => xoay(p, qHienThi));
     if (gridShown && diem.length > 0) {
       const lo = [0, 1, 2].map((i) => Math.min(...diem.map((p) => p[i])));
       const hi = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])));
@@ -1781,7 +1808,7 @@ export function Scene3DWorkspace({
     }
     if (typeof window !== "undefined") (window as any).__geo3d_grid_visible = nhom.children.length > 0;
     veRef.current?.();
-  }, [scene, gridShown]);
+  }, [scene, gridShown, qHienThi]);
 
   // §16.5 — nhãn số đo BẤM ĐƯỢC (chuột, Enter/Space): bấm là chọn đại lượng, bấm lại là bỏ chọn.
   // Listener gắn bằng lệnh (lớp này không dùng prop sự kiện trong JSX — khoá ở `scene3d.test.tsx`).
@@ -1809,6 +1836,8 @@ export function Scene3DWorkspace({
   useEffect(() => {
     const goc = rootRef.current;
     if (!goc) return;
+    goc.quaternion.copy(qHienThi);
+    nhanChungRef.current?.quaternion.copy(qHienThi);
     for (const con of [...goc.children]) {
       goc.remove(con);
       con.traverse((x) => {

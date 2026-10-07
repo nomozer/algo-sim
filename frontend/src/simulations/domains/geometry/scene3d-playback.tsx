@@ -210,10 +210,13 @@ export function Scene3DPlayer({
     </button>
   );
   /* W4: mô tả đầy đủ của bước ĐANG XEM nằm ngay dưới mục của nó trong bảng — thay dòng lời kể dài dưới thanh. */
+  /* D4 (regular-triangular-pyramid-w01): lời kể chỉ hiện khi nói THÊM điều tiêu đề chưa nói — bước dữ kiện lấy chính
+     lời kể làm tiêu đề, và hai dòng trùng chữ là một dòng đọc hai lần. */
+  const loiKe = geometryNarrationAt(scene, step);
   const mucBuoc = (b: (typeof dsBuoc)[number]) => (
     <>
       {nutBuoc(b)}
-      {b.index === buocHinh && <p className="geo3d-cac-buoc-mo-ta">{geometryNarrationAt(scene, step)}</p>}
+      {b.index === buocHinh && loiKe.trim() !== b.label.trim() && <p className="geo3d-cac-buoc-mo-ta">{loiKe}</p>}
     </>
   );
 
@@ -243,7 +246,7 @@ export function Scene3DPlayer({
           disabled={dau}
           aria-label="Bước trước"
         >
-          <IconPrev /> Bước trước
+          <IconPrev />Bước trước
         </button>
 
         {!giamChuyenDong && (cuoi && !dangPhat ? (
@@ -253,7 +256,7 @@ export function Scene3DPlayer({
             onClick={xemLai}
             aria-label="Xem lại quá trình dựng"
           >
-            <IconReset /> Xem lại
+            <IconReset />Xem lại
           </button>
         ) : (
           <button
@@ -263,7 +266,7 @@ export function Scene3DPlayer({
             aria-label={dangPhat ? "Tạm dừng" : "Phát lại quá trình dựng"}
           >
             {dangPhat ? <IconPause /> : <IconPlay />}
-            {dangPhat ? " Tạm dừng" : " Phát"}
+            {dangPhat ? "Tạm dừng" : "Phát"}
           </button>
         ))}
 
@@ -274,7 +277,7 @@ export function Scene3DPlayer({
           disabled={cuoi}
           aria-label="Bước sau"
         >
-          Bước sau <IconNext />
+          Bước sau<IconNext />
         </button>
 
         <label className="geo3d-scrub">

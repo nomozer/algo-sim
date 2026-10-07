@@ -224,3 +224,14 @@ describe("W4 · thứ tự lớp: bảng vừa dùng nằm trên cùng", () => {
     expect(bp).toMatch(/zIndex: lop/);
   });
 });
+
+describe("regular-triangular-pyramid-w01 · D4 — lời kể của bước đang xem không lặp tiêu đề", () => {
+  it("bước dữ kiện (tiêu đề CHÍNH LÀ lời kể) không in lời kể lần hai; bước dựng có lời kể khác tiêu đề thì giữ", () => {
+    const dau = sach(renderToString(<Scene3DPlayer scene={CANH} initialStep={0} stepsOpen />));
+    expect(dau).not.toContain("geo3d-cac-buoc-mo-ta");
+    const ds = geometryStepList(CANH);
+    const buoc = ds.find((b) => b.index > 0)!;
+    const sau = sach(renderToString(<Scene3DPlayer scene={CANH} initialStep={buoc.anchor} stepsOpen />));
+    expect(sau).toContain("geo3d-cac-buoc-mo-ta");
+  });
+});

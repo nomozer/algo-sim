@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import * as THREE from "three";
 import {
-  chonHuongNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, hopBaoCuaDiem,
+  chonHuongNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, hopBaoCuaDiem, huongLenHienThi,
   khungNhinSuPham, khungNhinVua, type KhungNhin,
 } from "./scene3d-camera";
 import { cauTrucGocNhin, type Scene3D } from "./scene3d-model";
@@ -125,5 +125,26 @@ describe("góc nhìn sư phạm — sáu family", () => {
     const moi = khungNhinSuPham(diem, [], [], FOV, 2)!;
     const huong = (k: KhungNhin) => new THREE.Vector3(...k.viTri).sub(new THREE.Vector3(...k.nhinVao)).normalize();
     expect(huong(moi).angleTo(huong(cu))).toBeLessThan(1e-9);
+  });
+});
+
+describe("hướng lên trình bày (regular-triangular-pyramid-w01)", () => {
+  it("đáy NGANG (mọi họ trước) ⇒ null: không xoay, hình không đổi một điểm ảnh", () => {
+    expect(huongLenHienThi([[0, 0, 0], [4, 0, 0], [4, 4, 0], [0, 4, 0]], [2, 2, 3])).toBeNull();
+    expect(huongLenHienThi([[0, 0, 0], [3, 0, 0], [0, 4, 0]], [0, 0, 5])).toBeNull();
+  });
+
+  it("đáy nghiêng x+y+z=3 ⇒ pháp tuyến đơn vị (1,1,1)/√3 quay về phía đỉnh, bất kể thứ tự đỉnh đáy", () => {
+    const day: [number, number, number][] = [[3, 0, 0], [0, 3, 0], [0, 0, 3]];
+    const k = 1 / Math.sqrt(3);
+    for (const d of [day, [...day].reverse()]) {
+      const n = huongLenHienThi(d, [2, 2, 2])!;
+      n.forEach((x) => expect(x).toBeCloseTo(k, 12));
+    }
+    huongLenHienThi(day, [0, 0, 0])!.forEach((x) => expect(x).toBeCloseTo(-k, 12));
+  });
+
+  it("đáy suy biến ⇒ null", () => {
+    expect(huongLenHienThi([[0, 0, 0], [1, 1, 1], [2, 2, 2]], [0, 0, 5])).toBeNull();
   });
 });

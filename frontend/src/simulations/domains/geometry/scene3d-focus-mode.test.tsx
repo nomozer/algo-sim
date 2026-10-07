@@ -166,6 +166,14 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () => 
     expect(ma).toMatch(/\{formula && \(\s*<p className="geo3d-soi-cong-thuc"/);
   });
 
+  it("regular-triangular-pyramid-w01 · D1: đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"
+    + " nó đo ('Đo trên', từ `depends` backend) — không bịa công thức", () => {
+    const ma = SRC("./Scene3DExplorer.tsx");
+    expect(ma).toMatch(/\{!formula && laDaiLuong && \(\s*<p className="geo3d-soi-cong-thuc" data-value-entity/);
+    expect(ma).toContain("<dt>Đo trên</dt>");
+    expect(ma).toMatch(/const doTren = laDaiLuong && nguon && nguon\.givens\.length \+ nguon\.inputs\.length === 0/);
+  });
+
   it("chú giải màu sống trong menu «Hiển thị» (cùng bốn vai, cùng lớp màu)", () => {
     const ma = SRC("./Scene3DExplorer.tsx");
     for (const chu of ["Đang xét", "Dữ kiện số", "Đại lượng trung gian", "Hình liên quan", "Vừa dựng ở bước này"]) {

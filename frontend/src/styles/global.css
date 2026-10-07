@@ -5527,6 +5527,12 @@ html {
 }
 
 .geo3d-btn {
+  /* regular-triangular-pyramid-w01 · D3: icon và chữ căn giữa theo trục dọc, cách nhau một khe cố định — cùng hệ
+     với nút nổi `.geo3d-noi-nut` (6 px). Trước đó icon SVG ngồi trên đường chuẩn chữ, khe tuỳ dấu cách trong JSX. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: var(--sp-xs) var(--sp-md);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);

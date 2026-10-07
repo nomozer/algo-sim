@@ -267,6 +267,23 @@ describe("H2 · tầng nhấn mạnh causal", () => {
     expect(tangNhanManh(CANH, "M").has("chop")).toBe(false);
     expect(tangNhanManh(CANH, "M").has("C")).toBe(false);
   });
+
+  it("regular-triangular-pyramid-w01 · D2: chủ thể NHÃN của đại lượng (đoạn chiều cao) lên tầng đích, dù không nằm"
+    + " trong phụ thuộc tính toán", () => {
+    const h = {
+      id: "h", label: "h", type: "quantity", render: "readout", origin: "derived", producer: "measure.distance",
+      depends: ["S", "A"], dependency_edges: [],
+      annotation: { kind: "length", subject_ids: ["SA_doan", "khong_co", "V"], anchor: "segment" },
+    } as unknown as Scene3D["objects"][number];
+    const doan = { id: "SA_doan", label: "SA", type: "segment3", render: "line", origin: "derived",
+      producer: "construct_segment", depends: ["S", "A"] } as unknown as Scene3D["objects"][number];
+    const canh: Scene3D = { ...CANH, objects: [...CANH.objects, doan, h] };
+    const tang = tangNhanManh(canh, "h");
+    expect(tang.get("SA_doan")).toBe("dich");
+    // Chủ thể vắng khỏi cảnh, hay là một đại lượng khác, không được thêm.
+    expect(tang.has("khong_co")).toBe(false);
+    expect(tang.get("V")).toBeUndefined();
+  });
 });
 
 // ══ I · bao đóng không lặp vô hạn ══════════════════════════════════════

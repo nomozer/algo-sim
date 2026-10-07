@@ -173,6 +173,8 @@ export interface SceneObject {
   edge_span?: { edge_id: string; t0: number; t1: number };
   /** Vai trò dựng hình của vật (formation W14, backend) — W2 · D đọc `CONSTRUCT_AUXILIARY_GEOMETRY`. */
   formation_roles?: string[];
+  /** Lớp hình của khối (backend `formation.lop_khoi`): `PYRAMID_LIKE` · `PRISM_LIKE` · `SECTION`. */
+  shape_class?: string;
   surface_role?: SurfaceRole;
   occludes_edges?: boolean;
   /**
@@ -829,6 +831,23 @@ export function cauTrucGocNhin(objects: SceneObject[]) {
     }
   }
   return { diem, canh, mat };
+}
+
+/**
+ * ĐÁY và ĐỈNH của khối CHÓP duy nhất (regular-triangular-pyramid-w01) — ĐỌC dữ liệu backend, không tính: đáy là đa giác
+ * mang vai `CONSTRUCT_BASE` (formation), đỉnh là đỉnh duy nhất của khối `PYRAMID_LIKE` ngoài đáy. `null` khi cảnh không
+ * có đúng một chóp có đáy. Dùng cho hướng lên TRÌNH BÀY (`scene3d-camera.huongLenHienThi`).
+ */
+export function dayVaDinhChop(objects: SceneObject[]): { day: Vec3[]; dinh: Vec3 } | null {
+  const chop = objects.filter((o) => o.type === "solid" && o.shape_class === "PYRAMID_LIKE"
+    && o.vertices && o.vertex_ids && o.vertices.length === o.vertex_ids.length);
+  if (chop.length !== 1) return null;
+  const toaDo = new Map(chop[0].vertex_ids!.map((id, i) => [id, toVec3(chop[0].vertices![i])]));
+  const day = objects.find((o) => o.type === "polygon3" && (o.formation_roles ?? []).includes("CONSTRUCT_BASE")
+    && (o.vertex_ids ?? []).length >= 3 && o.vertex_ids!.every((id) => toaDo.has(id)));
+  const dinh = day ? [...toaDo.keys()].filter((id) => !day.vertex_ids!.includes(id)) : [];
+  if (!day || dinh.length !== 1) return null;
+  return { day: day.vertex_ids!.map((id) => toaDo.get(id)!), dinh: toaDo.get(dinh[0])! };
 }
 
 /**

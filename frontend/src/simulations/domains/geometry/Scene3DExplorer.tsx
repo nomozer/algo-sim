@@ -337,6 +337,12 @@ export function Scene3DExplorer({
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
   // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
   const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
+  // Vật đang chọn là một ĐẠI LƯỢNG (mang giá trị backend phát) — ô soi luôn hiện giá trị của nó.
+  const laDaiLuong = dangChon?.value != null;
+  // Đại lượng không có nguồn số (thể tích đo thẳng trên khối): vật hình học nó đo, từ `depends` của backend.
+  const doTren = laDaiLuong && nguon && nguon.givens.length + nguon.inputs.length === 0
+    ? (dangChon?.depends ?? []).filter((id) => day.objects.some((o) => o.id === id && o.value == null))
+    : [];
   // `hienSo` đọc số CHÍNH XÁC (căn, π) — cùng cách hiện mà thẻ lời giải (đã gỡ ở W05) dùng; không `toNumber`.
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
@@ -506,14 +512,20 @@ export function Scene3DExplorer({
               </p>
             )}
 
-            {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). */}
+            {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). Đại lượng
+                không có công thức nhất quán (thể tích đo thẳng trên khối) vẫn mang GIÁ TRỊ — W05 để trống ô ấy. */}
             {formula && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>
             )}
+            {!formula && laDaiLuong && (
+              <p className="geo3d-soi-cong-thuc" data-value-entity={dangChon.id}>
+                {giaTri(dangChon.id)}
+              </p>
+            )}
 
-            {nguon && nguon.givens.length + nguon.inputs.length > 0 && (
+            {nguon && nguon.givens.length + nguon.inputs.length + doTren.length > 0 && (
               <dl className="geo3d-soi-nguon">
                 {nguon.givens.length > 0 && (
                   <>
@@ -525,6 +537,14 @@ export function Scene3DExplorer({
                   <>
                     <dt>Tính trực tiếp từ</dt>
                     <dd>{[...new Set(nguon.inputs.map(ten))].join(", ")}</dd>
+                  </>
+                )}
+                {/* Không nguồn SỐ nào: đại lượng đo thẳng trên vật hình học — nói vật ấy (phụ thuộc backend phát),
+                    không bịa công thức. */}
+                {doTren.length > 0 && (
+                  <>
+                    <dt>Đo trên</dt>
+                    <dd>{doTren.map(ten).join(", ")}</dd>
                   </>
                 )}
               </dl>

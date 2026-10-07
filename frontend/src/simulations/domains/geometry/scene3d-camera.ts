@@ -343,3 +343,20 @@ export function khungNhinSuPham(
   const k = khoangVua(tam);
   return { viTri: [tam[0] + d[0] * k, tam[1] + d[1] * k, tam[2] + d[2] * k], nhinVao: tam };
 }
+
+/**
+ * HƯỚNG LÊN TRÌNH BÀY (regular-triangular-pyramid-w01) — pháp tuyến đơn vị của ĐÁY chóp, quay về phía ĐỈNH; `null` khi
+ * đáy đã nằm ngang (|n_z| ≈ 1 — mọi họ đo trước: hình không đổi một điểm ảnh) hoặc đáy suy biến.
+ *
+ * Vì sao: đáy tam giác đều cạnh căn chỉ có toạ độ ℚ³ trên mặt NGHIÊNG x+y+z=k (amendment §18.2), nên hình chóp đúng
+ * toán nằm nghiêng so với trục lên z của camera. View XOAY HIỂN THỊ (float) nhóm hình để pháp tuyến này về +z — không
+ * đổi một toạ độ nào của cảnh, không đổi camera (z-up khoá ở `scene3d-zup-lifecycle.test.tsx`). Phép tính trình bày như
+ * mọi hướng nhìn của module này; đáy và đỉnh do backend chỉ (`scene3d-model.dayVaDinhChop`).
+ */
+export function huongLenHienThi(day: Diem3[], dinh: Diem3): Diem3 | null {
+  if (day.length < 3) return null;
+  const n = cheo(tru(day[1], day[0]), tru(day[2], day[0]));
+  if (!(Math.hypot(...n) > 0)) return null;
+  const len = chuan(tich(tru(dinh, day[0]), n) < 0 ? [-n[0], -n[1], -n[2]] : n);
+  return Math.abs(len[2]) > 1 - 1e-9 ? null : len;
+}
