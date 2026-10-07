@@ -763,3 +763,20 @@ def test_w17_loi_ke_canh_thiet_dien_khop_mat_va_canh_cua_payload():
         assert m and set(m[1]) == mat and set(m[2]) <= mat and set(m[3]) <= mat, (e["learner_text"], mat)
     khep = sc["events"][noi[-1]["step_index"] + 1]
     assert khep["learner_text"].startswith("Thiết diện khép lại thành tứ giác"), khep["learner_text"]
+
+
+def test_rtp_ten_buoc_canh_thiet_dien_phan_biet_theo_mat():
+    """regular-triangular-pyramid-w01 · D4: bốn bước nối cạnh thiết diện từng mang CÙNG tên "Thiết diện của S.ABCD cắt
+    bởi (α)". Mỗi bước nay gọi theo mặt của khối nó nằm trên — tên khác nhau, mặt đúng payload; bước khép giữ tên thiết
+    diện (không xoá hay gộp bước)."""
+    _t, ct, raw = W.gold("p1_chop_thiet_dien_khoang_cach")
+    _sp, _out, sc = W.chay(ct, raw)
+    khoi = next(o for o in sc["objects"] if o["type"] == "solid")
+    noi = [e for e in sc["events"] if e["action"] == "EXTEND"]
+    ten = [e["display_label"] for e in noi]
+    assert len(set(ten)) == len(noi) == 4, ten
+    for e in noi:
+        mat = "".join(khoi["vertex_ids"][i] for i in khoi["faces"][e["details"]["mat"]])
+        assert e["display_label"].startswith("Giao tuyến") and e["display_label"].endswith(f"với mặt {mat}"), e
+    khep = sc["events"][noi[-1]["step_index"] + 1]
+    assert khep["display_label"] == next(o for o in sc["objects"] if o["type"] == "section")["label"]

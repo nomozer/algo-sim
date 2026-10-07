@@ -722,7 +722,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # dung (doan nam tren canh khoi nhuong net cho canh: boundary_edge_ids + edge_span; loi ke goi vat theo ky hieu
     # cua de, khong ten bien IR). 36 row v114 van HIT du W4 dung envelope khac:
     # runs/regular-square-pyramid-w04/diagnostics/PROOF_CACHE_ROW_W04.json.
-    assert main_module.CACHE_VERSION == "115"
+    # 115 -> 116 (regular-triangular-pyramid-w01, 2026-10-07): be mat mo hinh KHONG doi; envelope phuc vu doi noi dung
+    # (buoc noi canh thiet dien mang ten rieng theo mat, "Giao tuyen cua (alpha) voi mat SAB"; truoc: cung ten thiet
+    # dien x4). 35/37 fixture trung byte, hai envelope thiet dien chi khac bon display_label:
+    # runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json.
+    assert main_module.CACHE_VERSION == "116"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

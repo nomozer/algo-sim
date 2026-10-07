@@ -749,6 +749,27 @@ def _ten_diem_khoi(solid: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> l
             for v in solid.get("vertex_ids") or []]
 
 
+def _nhan_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str | None:
+    """Tên BƯỚC của một cạnh thiết diện (regular-triangular-pyramid-w01, D4): mỗi bước nối một cạnh nằm trên một mặt
+    khác của khối, nên tên chung của thiết diện lặp lại cho mọi bước. Gọi theo MẶT của khối (đỉnh của chính khối) và
+    mặt phẳng cắt; không đọc được mặt ⇒ `None` (giữ tên cũ)."""
+    k = (e.get("details") or {}).get("canh")
+    buoc = sec.get("steps") or []
+    loai = {by_id.get(d, {}).get("type"): by_id.get(d) for d in sec.get("depends") or []}
+    solid, plane = loai.get("solid"), loai.get("plane3")
+    if not isinstance(k, int) or k >= len(buoc) or solid is None:
+        return None
+    mat = buoc[k].get("face_index")
+    if not isinstance(mat, int) or mat >= len(solid.get("faces") or []):
+        return None
+    ten = _ten_diem_khoi(solid, by_id)
+    mat_ten = "".join(ten[j] for j in solid["faces"][mat])
+    # Ký hiệu ngắn của mặt phẳng (`(α)`) khi đề đặt tên; mặt phẳng không tên ("Mặt phẳng cho bằng phương trình") thì
+    # không chen câu dài ấy vào tên bước.
+    mp = plane.get("notation") if plane else None
+    return f"Giao tuyến của {mp} với mặt {mat_ten}" if mp else f"Giao tuyến với mặt {mat_ten}"
+
+
 def _cau_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
                          by_id: dict[str, dict[str, Any]]) -> str:
     """Một cạnh thiết diện kể bằng ĐỈNH/CẠNH của khối, không bằng toạ độ."""
@@ -842,6 +863,8 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
         elif o is not None and o["type"] == "section":
             e["learner_text"] = (_cau_canh_thiet_dien(e, o, by_id) if e.get("action") == "EXTEND"
                                  else _cau_thiet_dien(o, by_id))
+            if e.get("action") == "EXTEND" and (ten_buoc := _nhan_canh_thiet_dien(e, o, by_id)):
+                e["display_label"] = ten_buoc
         elif o is not None and e.get("action") == "CREATE":
             e["learner_text"] = (
                 f"Dựng {_giua_cau(o['label'])} ({len(o.get('vertices') or [])} đỉnh, "

@@ -1,0 +1,3 @@
+now ae2c0df6287d2e5ff774cd99f9e427e92e9b017efb2a2b5276610002dc0e1094
+labels ['Giao tuyến của (α) với mặt SAB', 'Giao tuyến của (α) với mặt SBC', 'Giao tuyến của (α) với mặt SCD', 'Giao tuyến của (α) với mặt SDA']
+old-labels hash 8b7573053b6cbdea33ed3009fc46163ab27b3092a7eac62a1ffd5a49f96f2d3f expected ae2c0df6287d2e5ff774cd99f9e427e92e9b017efb2a2b5276610002dc0e1094

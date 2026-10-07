@@ -1,0 +1,254 @@
+{
+ "schema_version": "cache-decision/1",
+ "run_id": "regular-triangular-pyramid-w01",
+ "cache_version_before": "115",
+ "decision": "BUMP",
+ "cache_version_after": "116",
+ "rule": "The cache stores only status == ok responses. A bump is required when a response the old code SERVED would now be served with a different payload; refused -> served changes cannot leave a stale row.",
+ "pre": "fixtures generated at dc0a804b (product code unchanged since e9435d67) in a detached worktree",
+ "post": "fixtures generated from the run's working tree (product change of this run)",
+ "fixtures_compared": 37,
+ "identical": 35,
+ "served_and_changed": [
+  "cross_section_correct_plane.json",
+  "cross_section_positive.json"
+ ],
+ "new_fixtures_post_only": [
+  "regular_tetrahedron_positive.json",
+  "regular_triangular_pyramid_assumption.json",
+  "regular_triangular_pyramid_non_positive.json",
+  "regular_triangular_pyramid_positive.json",
+  "regular_triangular_pyramid_ungrounded.json",
+  "regular_triangular_pyramid_wrong_centroid.json"
+ ],
+ "rows": {
+  "cross_section_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_correct_plane.json": {
+   "served": true,
+   "identical": false,
+   "diff": [
+    {
+     "path": ".scene3d.events[6].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi «Mặt phẳng cho bằng phương trình»",
+     "post": "Giao tuyến với mặt SAB"
+    },
+    {
+     "path": ".scene3d.events[7].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi «Mặt phẳng cho bằng phương trình»",
+     "post": "Giao tuyến với mặt SBC"
+    },
+    {
+     "path": ".scene3d.events[8].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi «Mặt phẳng cho bằng phương trình»",
+     "post": "Giao tuyến với mặt SCD"
+    },
+    {
+     "path": ".scene3d.events[9].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi «Mặt phẳng cho bằng phương trình»",
+     "post": "Giao tuyến với mặt SDA"
+    }
+   ]
+  },
+  "cross_section_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_positive.json": {
+   "served": true,
+   "identical": false,
+   "diff": [
+    {
+     "path": ".scene3d.events[5].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi (α)",
+     "post": "Giao tuyến của (α) với mặt SAB"
+    },
+    {
+     "path": ".scene3d.events[6].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi (α)",
+     "post": "Giao tuyến của (α) với mặt SBC"
+    },
+    {
+     "path": ".scene3d.events[7].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi (α)",
+     "post": "Giao tuyến của (α) với mặt SCD"
+    },
+    {
+     "path": ".scene3d.events[8].display_label",
+     "pre": "Thiết diện của S.ABCD cắt bởi (α)",
+     "post": "Giao tuyến của (α) với mặt SDA"
+    }
+   ]
+  },
+  "cross_section_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cross_section_wrong_plane.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "cube_system_cause.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cube_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "cuboid_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "rectangular_pyramid_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_non_positive.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "regular_square_pyramid_wrong_centre.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_prism_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_assumption.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_negative.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_positive.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "triangular_pyramid_ungrounded.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_midpoint_mismatch.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_midpoint_plane_distance.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "w18_projection_line.json": {
+   "served": true,
+   "identical": true,
+   "diff": []
+  },
+  "w18_projection_mismatch.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  },
+  "w18_unverified.json": {
+   "served": false,
+   "identical": true,
+   "diff": []
+  }
+ },
+ "model_surface_changed": false
+}

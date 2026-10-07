@@ -98,7 +98,11 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # cạnh bên, mặt phẳng (α), câu khép thiết diện), P6 `explanation`/`learner_text` của hình trụ + mặt phẳng. 0 trường
 # thêm/xoá, 0 trường hình học/giá trị, số vật và final_memory giữ nguyên. Hằng trước W4 (f3db0f6f): P1 `c1ba6d59…`,
 # P6 `52ab72fb…`. Đối soát: `docs/evaluation/geometry/runs/regular-square-pyramid-w04/diagnostics/scene_hash/`.
-SCENE_START = {CA_P1: "8b7573053b6cbdea33ed3009fc46163ab27b3092a7eac62a1ffd5a49f96f2d3f",
+# regular-triangular-pyramid-w01 (D4, tên bước): CHỈ đổi `display_label` của bốn sự kiện EXTEND của thiết diện P1 —
+# "Thiết diện của S.ABCD cắt bởi (α)" ×4 → "Giao tuyến của (α) với mặt SAB|SBC|SCD|SDA". Trả bốn nhãn cũ thì cảnh băm
+# đúng hằng trước (`8b757305…`); 0 trường thêm/xoá, 0 trường hình học/giá trị, số vật và final_memory giữ nguyên; P6
+# không đổi. Đối soát: `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/scene_hash/`.
+SCENE_START = {CA_P1: "ae2c0df6287d2e5ff774cd99f9e427e92e9b017efb2a2b5276610002dc0e1094",
                CA_P6: "b582e45a72ec8ebc6683e9a9d07047395f60dee572d9acb1e128e8e6187dacac"}
 SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 

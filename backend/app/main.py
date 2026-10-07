@@ -773,7 +773,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       hỏi độ dài (khoảng cách giữa hai điểm chưa được nối, vd "độ dài đoạn SH") được dựng ngay trước đáp số
 #       (`formation._doan_duoc_hoi`, H-W2-2). 13 yêu cầu phục vụ dưới 113 lưu thành row vẫn HIT dù W3 dựng envelope
 #       khác; 34 row của W2 trùng byte (`runs/regular-square-pyramid-w03/diagnostics/PROOF_CACHE_ROW_W03.json`).
-CACHE_VERSION = "115"
+#   115 (2026-10-06, regular-square-pyramid-w04): xem `tests/test_api.py` (đoạn trên cạnh khối nhường nét, lời kể).
+#   116 (2026-10-07, regular-triangular-pyramid-w01): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope PHỤC VỤ đổi nội dung: bước nối
+#       cạnh thiết diện mang tên riêng theo mặt ("Giao tuyến của (α) với mặt SAB" — trước: cùng tên thiết diện ×4).
+#       35/37 fixture trùng byte; hai envelope thiết diện chỉ khác bốn `display_label`
+#       (`runs/regular-triangular-pyramid-w01/diagnostics/cache_proof/CACHE_DECISION.json`). Chóp tam giác đều / độ dài
+#       căn: chiều refused → served (không bị cache).
+CACHE_VERSION = "116"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
