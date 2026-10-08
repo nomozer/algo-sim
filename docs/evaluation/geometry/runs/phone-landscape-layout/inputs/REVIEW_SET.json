@@ -5,6 +5,8 @@
   "items": [
     {"path": "images/mobile/*/landscape/layout.png", "requirement": "phone landscape 844x390, every family: play bar, slider, steps button and view buttons in view; figure keeps its size"},
     {"path": "images/mobile/*/landscape_small/layout.png", "requirement": "narrow phone landscape 667x375, every family: one tool row, controls column in view"},
+    {"path": "images/mobile/cross-section/landscape_browser/layout.png", "requirement": "phone landscape with the browser bar (844x340): controls in view (added before the final run)"},
+    {"path": "images/mobile/cuboid/landscape_browser/layout.png", "requirement": "same, a wide figure (added before the final run)"},
     {"path": "images/mobile/cross-section/landscape/steps_last.png", "requirement": "long steps panel floating in landscape, current step visible"},
     {"path": "images/mobile/cross-section/landscape_small/steps_last.png", "requirement": "same on 667x375"},
     {"path": "images/mobile/*/portrait_small/layout.png", "requirement": "small phone 360x640, every family: play bar in view (two rows)"},
