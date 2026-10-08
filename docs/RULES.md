@@ -156,7 +156,7 @@ patch wave**, và báo đúng bốn mục:
 
 > Tiền lệ: W2B PATCH2/PATCH3 là DEEP_HARDENING đã bị loại khỏi tuyến chính —
 > Quyết định W2B thời Tin học đã được chắt lọc thành chính luật này; artifact gốc hết consumer và được gỡ ở
-> `docs-cleanup-2026-10-08` (khôi phục được từ Git trước commit cleanup).
+> `docs-cleanup` (manifest độc lập `run-artifact-cleanup.json`; khôi phục được từ Git trước commit cleanup).
 
 ## 4. Các luật cứng bền vững (tóm tắt — nơi thực thi ở ARCHITECTURE_MAP §5)
 

@@ -172,7 +172,7 @@ khoá luận: [`POST_THESIS_BACKLOG.md`](POST_THESIS_BACKLOG.md) — phụ lục
 - Loại bỏ xung đột sở hữu và các liên kết hỏng.
 - Đối soát toàn diện bằng chứng kiểm thử máy và số lượng test.
 - Đóng gói tài liệu bàn giao phiên (`AI_CONTEXT_BUNDLE.md`) và cổng điều hướng (`README.md`).
-- W19 (2026-10-04): `docs/` chia bốn vùng và có catalog đóng. Run `docs-organization` sau đó chuyển 156/167 báo cáo
+- W19 (2026-10-04): `docs/` chia bốn vùng và có catalog đóng. Lần report organization đã hợp nhất vào `docs-cleanup` sau đó chuyển 156/167 báo cáo
   khỏi gốc theo vai trò, giữ 11 ngoại lệ path-bound được ghi từng file; `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` đã đóng.
 
 ### P1 — Primitive Compiler Expansion (Mở Rộng Compiler Cơ Sở)

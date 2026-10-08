@@ -52,13 +52,13 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = a3448c71 (run docs-organization: chỉ di chuyển tài liệu và sửa consumer/test path; candidate metadata ở 9c176272; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions — dọn không đổi hành vi hình học)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 012cdcd1 lúc bắt đầu lượt khép docs-cleanup; product/verification commit cuối ghi sau khi gate sạch (bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 117
-> CANDIDATE = b4a33205… (băm không đổi; refreeze metadata ở 9c176272), product commit 23aff0ad
+> CACHE_VERSION = 118 (bump vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; prompt/model surface không đổi)
+> CANDIDATE = refreeze sau product commit của lượt này; candidate trước lượt là b4a33205…
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP)
+> CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (hồ sơ chung `docs-cleanup`; đã hợp nhất artifact cleanup + report organization và đóng một backend reason gap)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
@@ -72,10 +72,10 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | `docs/legacy/` | 42 → 15 file: xoá 26 (plan/spec Superpowers M9–M17, W13; tài liệu chuyển đề; REPOSITORY_MAP; RULES_v0.3), thiết kế + kế hoạch route Semantic Program → `legacy/architecture/`, `CUBOID_CUBE_CONTRACT_DECISION.md` về `architecture/` (mã còn cài đúng nó) |
 > | Hướng dẫn | kế hoạch/spec của skill: thiết kế ⇒ `docs/architecture/`, kế hoạch ⇒ `plan.md` của run (AGENTS §4, `docs/README.md` §8) |
 > | Tàn dư Tin học | 12 lớp `geo3d-*` chết gỡ; còn `SamplePreview`/`threeD`/`specDrift` và prompt + IR (sáu prompt không loader) — hai issue `ISSUE-ARCH-*-INFORMATICS-*` |
-> | Candidate · `CACHE_VERSION` | băm **`b4a33205…`** không đổi, product **`23aff0ad`** · **117** (không bump) |
-> | Run | [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (`report.md`, `handoff.md`, `inventory.md`) |
+> | Candidate · `CACHE_VERSION` | candidate mới đóng sau product commit · **118** (bump do refusal envelope đổi) |
+> | Run | [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (`plan.md`, `report.md`, `handoff.md`, `inventory.md`, hai manifest độc lập) |
 
-> **Tổ chức tài liệu cuối — run docs-organization (2026-10-08, không đổi nội dung bằng chứng):** 167/167 report
+> **Tổ chức tài liệu cuối — lần report organization đã hợp nhất vào docs-cleanup (2026-10-08, không đổi nội dung bằng chứng):** 167/167 report
 > có mapping từng file; 33 report về package artifact, 123 report vào `evaluation/reports/`, 11 ngoại lệ path-bound
 > ở gốc; 167/167 blob giữ nguyên, catalog/link/consumer được cập nhật. Duyệt hình vẫn NOT_APPROVED.
 

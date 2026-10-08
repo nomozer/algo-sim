@@ -55,8 +55,8 @@
   đường dẫn thật: report wave nằm cạnh package artifact, report chủ đề ở `evaluation/reports/`, 11 ngoại lệ gốc có
   ràng buộc theo file. Nội dung bằng chứng giữ nguyên byte.
 - [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
-- Run tổ chức tài liệu: [`docs-organization`](evaluation/geometry/runs/docs-organization/) (mapping 167 report,
-  byte verification, full-backend closure). Run sản phẩm gần nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
+- Run cleanup/tổ chức tài liệu hợp nhất: [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (inventory 180 report,
+  13.174 artifact; mapping 167 report, byte verification, full-backend closure). Run sản phẩm gần nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
   sang candidate hiện hành) · [`cuboid-acceptance`](evaluation/geometry/runs/cuboid-acceptance/) (đối chiếu 24 bất
   biến) · [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (lượt chốt của việc cuboid:
   rà soát trọn tài liệu, thẻ từ chối §17) · [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)

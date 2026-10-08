@@ -13,9 +13,9 @@
 > [`RUN_NAMING.md`](RUN_NAMING.md)). Chủ đề xếp bằng luật tên tất định — là chỗ bắt đầu tìm, không phải phân loại
 > học thuật.
 
-Tổng: **167** báo cáo còn giữ · đăng ký trong EVIDENCE_INDEX: **34**. Run `docs-organization` chuyển 33 report vào
+Tổng: **167** báo cáo còn giữ · đăng ký trong EVIDENCE_INDEX: **34**. Lần tổ chức trong run `docs-cleanup` chuyển 33 report vào
 package artifact đã đăng ký, 123 report theo chủ đề vào `reports/`, giữ 11 ngoại lệ root có ràng buộc theo file.
-Mười ba báo cáo thuần Tin học đã gỡ có kiểm ở run `docs-cleanup-2026-10-08`.
+Mười ba báo cáo thuần Tin học đã gỡ có kiểm ở run `docs-cleanup` (`run-artifact-cleanup.json`).
 
 ## Khoá luận: nghiệm thu, kết quả, phát hành (13)
 
@@ -212,7 +212,7 @@ Mười ba báo cáo thuần Tin học đã gỡ có kiểm ở run `docs-cleanu
 | Báo cáo | Tiêu đề | Thêm vào kho | Wave (EVIDENCE_INDEX) | Đính chính bởi |
 |---|---|---|---|---|
 | [`CLASSROOM_AUTH_CONTRACT`](../CLASSROOM_AUTH_CONTRACT.md) | CLASSROOM_AUTH_CONTRACT.md — LUẬT CÒN HIỆU LỰC | 2026-08-13 | — | — |
-| [`CURRENT_ARCHITECTURE_GAP_AUDIT`](reports/CURRENT_ARCHITECTURE_GAP_AUDIT.md) | CURRENT_ARCHITECTURE_GAP_AUDIT | 2026-09-03 | — | — |
+| [`CURRENT_ARCHITECTURE_GAP_AUDIT`](reports/architecture-gap-audit-2026-09.md) | CURRENT_ARCHITECTURE_GAP_AUDIT | 2026-09-03 | — | — |
 | [`DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING`](reports/DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING.md) | DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING | 2026-09-16 | — | — |
 | [`DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING`](geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md) | BÁO CÁO WAVE: DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING | 2026-09-22 | DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING | DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE |
 | [`DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE`](geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/report.md) | BÁO CÁO WAVE: DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE | 2026-09-22 | DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE | DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL |

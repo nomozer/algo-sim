@@ -1136,44 +1136,6 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/BROWSER_EVIDENCE.json` · `results/PLAYBACK_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/attempt1–3/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 
-## WAVE_ID = FINAL_DOCUMENTATION_ORGANIZATION
-- **RUN_ID:** docs-organization
-- **DATE:** 2026-10-08
-- **REPORT:** docs/evaluation/geometry/runs/docs-organization/report.md
-- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-organization/
-- **START_BASE:** 93977898
-- **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots)
-- **EVIDENCE_COMMIT_ROLE:** `23aff0ad` relocation/map · `9c176272` candidate metadata · `a3448c71` consumer/test path repair · final documentation/log commit
-- **CLASSIFICATION:** DOCUMENTATION_ORGANIZED_AND_OFFLINE_VERIFIED
-- **PRODUCT_CHANGE:** NO product behaviour; documentation locations and their live path consumers only
-- **CANDIDATE_CHANGE:** metadata-only refreeze to product commit `23aff0ad`; tree hash `b4a33205…` unchanged
-- **CACHE_CHANGE:** NO (117)
-- **CORRECTED_BY:** NONE
-- **CORRECTS:** physical placement limitation recorded by DOCUMENTATION_AND_NAMING_CLEANUP and closes ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
-- **SUPERSEDES:** NONE
-- **THESIS_USE:** navigation only; evidence conclusions and approval states unchanged
-- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `diagnostics/full-backend-authoritative.log` · `diagnostics/full-backend-authoritative.exit-code.txt`
-- **RUN_ID_POLICY:** TASK_NAME
-
-## WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
-- **RUN_ID:** docs-cleanup-2026-10-08 (second execution of task docs-cleanup; same branch)
-- **DATE:** 2026-10-08
-- **REPORT:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/report.md
-- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/
-- **START_BASE:** 4acd1f61
-- **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots)
-- **EVIDENCE_COMMIT_ROLE:** complete report/artifact inventory and deletion ledger
-- **CLASSIFICATION:** CLEANUP_COMPLETE (docs audit PASS; focused backend 70 passed; frontend 1.023 passed + build; full backend collection 7.237 tests; full execution timed out without a reported failure)
-- **PRODUCT_CHANGE:** NO behaviour change; documentation, tests of retired snapshots, output paths and artifacts only
-- **CANDIDATE_CHANGE:** NO
-- **CACHE_CHANGE:** NO
-- **CORRECTED_BY:** NONE
-- **CORRECTS:** `docs-cleanup` claim that 180 reports and evaluation artifact contents could be skipped; prior run files stay unchanged
-- **SUPERSEDES:** NONE
-- **THESIS_USE:** none; retained evidence is mapped to its actual thesis consumer in `inventory.md`
-- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json`
-- **RUN_ID_POLICY:** TASK_NAME_WITH_DATE_FOR_REPEAT
-
 ## WAVE_ID = REPO_CLEANUP
 - **RUN_ID:** repo-cleanup (task repo-cleanup; same branch)
 - **DATE:** 2026-10-08
@@ -1201,17 +1163,17 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **REPORT:** docs/evaluation/geometry/runs/docs-cleanup/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-cleanup/
 - **START_BASE:** 2a7179a9
-- **CODE_COMMIT:** a993aa8f (test renames) · c1a291ba (dead CSS) · 8c66249d (RULES_v0.3 + its test block) · 9efb8af6 (docs)
-- **MEASUREMENT_COMMIT:** NONE (no browser or live measurement; candidate refreeze 976e0eea)
-- **EVIDENCE_COMMIT_ROLE:** inventory in the run directory
-- **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (historical root reports not read one by one — AGENTS §4; T3 FULL_PRODUCT_GATE_PASS and identity gates green at 08dd841c)
-- **PRODUCT_CHANGE:** NO behaviour change (tests, dead CSS, docs)
+- **CODE_COMMIT:** a993aa8f · c1a291ba · 8c66249d · 9efb8af6 · artifact cleanup from `4acd1f61` · report organization `23aff0ad`/`a3448c71` · final consolidation/backend closure
+- **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots); independent manifests retained as `run-artifact-cleanup.json` and `run-report-organization.json`
+- **EVIDENCE_COMMIT_ROLE:** one consolidated inventory plus independent historical manifests/logs
+- **CLASSIFICATION:** CLEANUP_CONSOLIDATED_AND_OFFLINE_VERIFIED
+- **PRODUCT_CHANGE:** cleanup NO; same delivery closes one separately scoped assumption-reason gap without changing serve/refuse decision
 - **MODEL_REQUEST_COUNT:** 0
-- **CANDIDATE_CHANGE:** product commit only (be4b8287 → 8c66249d); measured hash b4a33205… unchanged
-- **CACHE_CHANGE:** NO (CACHE_VERSION 117; cache identity lock unchanged)
-- **CORRECTED_BY:** DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
-- **CORRECTS:** NONE
+- **CANDIDATE_CHANGE:** YES for the backend reason fix; final hash recorded after refreeze
+- **CACHE_CHANGE:** YES (117 → 118 because cached refusal envelope changes)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** first-run unread-scope limitation; continuation and organization are histories inside this run
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** none
-- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.md` · `diagnostics/freeze_8c66249d.log` · `diagnostics/gates.sh` · `diagnostics/t3_08dd841c.log` · `diagnostics/gates_08dd841c.log`
+- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `run-artifact-cleanup.json` · `run-report-organization.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

@@ -20,8 +20,8 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; máy local; cùng nhánh) — trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP
-PRODUCT_STATE = candidate b4a33205… (product commit 23aff0ad; băm không đổi, refreeze metadata ở 9c176272), CACHE_VERSION 117, LLM_ONLY
+CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (hồ sơ chung docs-cleanup; máy local; cùng nhánh)
+PRODUCT_STATE = candidate đang refreeze sau backend reason fix (trước lượt b4a33205…), CACHE_VERSION 118, LLM_ONLY
 MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2)
@@ -46,7 +46,8 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - `docs/legacy/`: hết hiệu lực — kế hoạch/spec skill, tài liệu giai đoạn chuyển đề, quyết định đã thực
   thi, `CURRENT_STATE_HISTORY.md` (nhật ký cũ của CURRENT_STATE), ba bảng tuyên bố cũ. Loại khỏi grep
   khi tìm luật/trạng thái hiện hành.
-- Đường cũ → mới: `docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json`.
+- Đường report cũ → mới: inventory hợp nhất `docs/evaluation/geometry/runs/docs-cleanup/inventory.md`; bản đồ máy W19
+  lịch sử vẫn ở `docs/evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json`.
 - Hub: `docs/README.md` (năm câu hỏi: hệ làm gì · kiến trúc và cách chạy · việc mở · khoá luận/bài
   báo · bằng chứng).
 
@@ -146,7 +147,7 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - **Quyết định chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị), W18-H3 đã giải quyết ở W1
   (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE` RESOLVED), W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`), W15-H2
   (vùng chặn ngoài đa diện), W15-H3 (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
-- **Sau `docs-organization`:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` = `RESOLVED` (156 report chuyển,
+- **Sau lần report organization trong `docs-cleanup`:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` = `RESOLVED` (156 report chuyển,
   11 ngoại lệ root); `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212; 204 + 108 mục chờ quyết
   định); `ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS` (năm test ghi tạm vào tài liệu sống); mới:
   `ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` (8/10 script T1 trỏ miền đã gỡ); run `cuboid-acceptance`:

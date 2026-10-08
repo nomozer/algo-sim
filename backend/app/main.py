@@ -778,7 +778,9 @@ MISSING_KEY_MSG = (
 #       thức ("cạnh đáy bằng 4 + 1" từng được đọc là 4 và PHỤC VỤ V = 16, đúng là 25) — chiều served → refused, nên hàng
 #       cache cũ giữ một đáp số SAI (`runs/exact-dimensions/cache/decision.json`). Khung affine + metric dẫn xuất: 43/43
 #       fixture cũ trùng byte; chóp tam giác đều cạnh hữu tỉ: refused → served (không bị cache).
-CACHE_VERSION = "117"
+# 118 — 2026-10-08: ca thể tích T8 đã bị từ chối vẫn bị từ chối, nhưng envelope nay nêu đúng kích thước nguồn còn
+#       thiếu (`ASSUMPTION_DETERMINES_ANSWER`/SOURCE) thay vì UNKNOWN; row 117 sẽ trả thẳng lời cũ nếu không bump.
+CACHE_VERSION = "118"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

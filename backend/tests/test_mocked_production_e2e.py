@@ -195,3 +195,33 @@ def test_khong_khung_nao_ro_dinh_danh_ky_thuat_len_UI(client):
     for f in body["config"]["frames"]:
         assert "generic." not in (f.get("narration") or "")
         assert "semantic_program" not in (f.get("narration") or "")
+
+
+def test_api_tra_dung_kich_thuoc_t8_con_thieu(client, monkeypatch):
+    """POST thật + pipeline thật; chỉ thay hai biên model, không inject envelope."""
+    from app.ai import pipeline
+    from tests.geometry import route_cases as W
+    from tests.geometry.test_exact_dimensions import chuong_trinh
+
+    contract, program = chuong_trinh("N01_missing_height")
+
+    async def analyze_stub(*_args, **_kwargs):
+        return contract, None
+
+    async def program_stub(*_args, **_kwargs):
+        return W.spec_cua(program), None
+
+    monkeypatch.setattr(pipeline, "stage_semantic_analyze", analyze_stub)
+    monkeypatch.setattr(pipeline, "stage_semantic_program", program_stub)
+    response = client.post(
+        "/api/analyze",
+        json={"input": {"type": "text", "content": contract.problem_text}},
+    )
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert (body["status"], body["stage_reached"], body["reason_code"]) == (
+        "unsupported", "assumption", "ASSUMPTION_DETERMINES_ANSWER")
+    assert body["reason_subjects"] == ["chiều cao"]
+    assert body["refusal_cause"] == "SOURCE"
+    assert "chiều cao" in body["learner_reason"]
+    assert "scene3d" not in body

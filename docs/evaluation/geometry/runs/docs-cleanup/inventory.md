@@ -86,3 +86,41 @@ luật thêm, mọi luật giữ lại trùng nguyên văn.
   tiêu đề mô tả). Đọc nội dung từng báo cáo không đổi được hành động nào.
 - **Không đọc nội dung**: artifact trong các thư mục `docs/evaluation/**` (bất biến); chỉ đọc bố cục để viết lớp tên hiển thị ở
   `docs/evaluation/README.md`.
+
+## G. Đính chính mức đọc và cleanup vật lý tiếp nối
+
+Hai dòng "không đọc" ở §F là giới hạn của lần đầu, **không còn là trạng thái cuối**. Lần kiểm độc lập có manifest
+`run-artifact-cleanup.json` đã đọc/phân loại **180/180 report**, **13.174/13.174 file** và **3.097/3.097 folder path**;
+chi tiết nhóm đồng nhất, consumer, claim và giá trị tái lập đã được nhập vào bảng dưới. Kết quả vật lý: giữ 167 report
+và 10.650 artifact; xoá 13 report + 2.523 artifact + 2 test pin snapshot Tin học; đổi `manual-demo` →
+`geometry-demo`, `manual-demo-5` → `point-projection-check` (22 file). Mọi deletion khôi phục từ `4acd1f61`.
+
+| nội dung/nhóm | consumer | kết luận/chương dùng | tái lập | hành động |
+|---|---|---|---|---|
+| 167 report hình học/sản phẩm/nghiên cứu | `EVIDENCE_INDEX`, claim map, report catalog và package tương ứng | kiến trúc, correctness, chương kết quả/giới hạn | lớp diễn giải của raw artifact | giữ; lần tổ chức sau chuyển 33 report cạnh package, 123 vào `evaluation/reports`, 11 ngoại lệ root |
+| 13 report + 2.523 artifact Tin học retire (`curriculum-ui-admission`, m16–m20, `semantic-l5a/vnext`, audit UI catalog, demo lặp) | không còn consumer sản phẩm/nghiên cứu; test pin tự thân đã gỡ | không còn claim luận văn hình học | producer/evaluator đã retire | xoá có ledger; Git là đường khôi phục |
+| `semantic-benchmark`, `integration`, evidence geometry | freeze/verify scripts, tests, thesis claims, report path-bound | SEALED/candidate, product integration và các claim C1–C8/B2/D5/D6 | bắt buộc | giữ nguyên byte; `integration` giữ tên vì consumer/path trong evidence |
+| `prompt-freeze` | chưa có caller sản phẩm | việc prompt/IR riêng | cần cho quyết định sau | giữ tạm, không nhập lượt này |
+
+Lần tổ chức độc lập có manifest `run-report-organization.json` bảo toàn **167/167 blob report**, thực hiện 156 move
+`R100`, rồi full backend sạch đạt 7.234 passed / 1 skipped / 2 deselected. Log nguyên byte ở
+`diagnostics/report-organization-backend.log` và exit code ở file cùng tên. Hai lần đo vẫn là hai manifest/log riêng;
+chỉ hồ sơ trách nhiệm được hợp nhất.
+
+## H. Audit tên và tài liệu kiến trúc
+
+| mục | phân loại/căn cứ | hành động |
+|---|---|---|
+| `CURRENT_ARCHITECTURE_GAP_AUDIT.md` | snapshot 2026-09-03; test/cache comments còn trích kết luận §12 nhưng chữ `CURRENT` gây hiểu nhầm | đổi path byte-identical → `evaluation/reports/architecture-gap-audit-2026-09.md`; giữ title trong blob lịch sử |
+| `n04-targeted-rejection-registry-v2-preregistration/` | package đang được scripts/tests đọc; `N04` là case preregistered, `V2` là version registry; 14 file tự ghim path | giữ tên: đổi sẽ buộc sửa manifest/evidence đang dùng, trái bảo toàn byte |
+| các package `second-family-*` | chuỗi chọn họ → preregistration → correction → live retry/reconciliation; scripts, test và research registry trỏ từng package | giữ: "second family" là danh tính thí nghiệm trong correction chain, không chỉ nhãn lịch sử |
+| tên report dài còn lại | report snapshot đã được catalog theo chức năng; phần lớn nằm cạnh package có run identity | giữ blob/tên khi đổi không cải thiện caller hoặc sẽ phá path-bound evidence; chỉ đổi tên sai nghĩa `CURRENT` ở trên |
+| `SEMANTIC_PROGRAM_ROUTE_DESIGN/PLAN` | thiết kế gốc đã thực thi; RULES §11 trích design §3.3, plan ghi giao thức SEALED mà test còn ghim | giữ trong `legacy/architecture`, không coi là contract hiện hành; authority hiện tại là code/test + `ARCHITECTURE_MAP` |
+| tag `SEMANTIC_PROGRAM_CONTRACT_V1` | lightweight tag → commit `8dbd5bc7`, thêm contract/validator + hai schema V1; contract đã tiến hoá qua nhiều commit | giữ tag như mốc lịch sử; runtime không resolve tag, contract hiện hành do Pydantic/schema-sync sở hữu |
+
+## I. Folder hợp nhất
+
+`docs-cleanup-2026-10-08` và `docs-organization` không còn là hai nơi trách nhiệm song song. Manifest độc lập được
+chuyển nguyên byte thành `run-artifact-cleanup.json` và `run-report-organization.json`; log full backend chuyển vào
+`diagnostics/`. `plan/inventory/report/handoff` duy nhất là các file tại run này. Reference đóng băng bên trong inventory
+run cũ không được viết lại; link/consumer sống đều trỏ về `docs-cleanup`.

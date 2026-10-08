@@ -1139,43 +1139,16 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 
-### WAVE_ID = FINAL_DOCUMENTATION_ORGANIZATION
-- **RUN_ID:** docs-organization
-- **DATE:** 2026-10-08
-- **START_BASE:** 93977898
-- **SCOPE:** move 156/167 retained reports out of docs root; preserve 167/167 report blobs; update live consumers and layout guards
-- **MODEL_REQUESTS / SCREENSHOTS:** 0 / 0
-- **REPORT_PATH:** docs/evaluation/geometry/runs/docs-organization/report.md
-- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-organization/
-- **CANDIDATE / CACHE / DEFAULT:** tree `b4a33205…` unchanged (metadata refreeze to `23aff0ad`) / 117 / LLM_ONLY
-- **HUMAN_VISUAL_REVIEW:** NOT_APPROVED
-- **VERIFICATION:** 167/167 report blobs preserved; docs audit PASS; candidate/cache verify PASS; backend clean worktree 7,234 passed + 1 skipped + 2 deselected (exit 0); frontend 1,023 passed; typecheck and Vite build PASS
-- **FINAL_DECISION:** DOCUMENTATION_ORGANIZED_AND_OFFLINE_VERIFIED
-
-### WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
-- **RUN_ID:** docs-cleanup-2026-10-08
-- **DATE:** 2026-10-08
-- **START_BASE:** 4acd1f61
-- **SCOPE:** đọc/phân loại 180 báo cáo + 13.174 artifact; gỡ phần Tin học hết consumer; đổi tên hai folder demo
-- **MODEL_REQUESTS / SCREENSHOTS:** 0 / 0
-- **REPORT_PATH:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/report.md
-- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/
-- **CORRECTS:** giới hạn đọc của run `docs-cleanup`; không sửa file run cũ
-- **CORRECTED_BY:** NONE
-- **THESIS_USE:** none (maintenance); evidence luận văn giữ nguyên byte
-- **VERIFICATION:** docs audit PASS; focused backend 70 passed; frontend 1.023/1.023 + build PASS; node syntax PASS; backend collection 7.237 tests; two full-backend executions exceeded the 120 s/300 s tool limits without printing a failure, therefore not reported as a full-suite pass
-- **FINAL_DECISION:** CLEANUP_COMPLETE
-
 ### WAVE_ID = DOCUMENTATION_AND_NAMING_CLEANUP
 - **RUN_ID:** docs-cleanup (task docs-cleanup; local; same branch feat/regular-square-pyramid)
 - **DATE:** 2026-10-08
 - **START_BASE:** 2a7179a9
-- **CODE_COMMIT_OR_NONE:** a993aa8f (test/title renames, `-k` selectors; no logic change) · c1a291ba (12 dead geo3d CSS classes, catalogue comment) · 8c66249d (RULES_v0.3.md + the test block that only preserved it) · 9efb8af6 (docs/legacy, guidance, indexes, issues)
-- **CANDIDATE:** b4a33205… unchanged hash; product commit be4b8287 → 8c66249d (one freeze at 8c66249d, 976e0eea) · CACHE_VERSION 117 (no bump) · LLM_ONLY
-- **EVIDENCE_COMMIT_ROLE:** no measurement; 0 screenshots; inventory `runs/docs-cleanup/inventory.md`
-- **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (branch stays READY_FOR_HUMAN_VISUAL_REVIEW)
+- **CODE_COMMIT_OR_NONE:** a993aa8f · c1a291ba · 8c66249d · 9efb8af6 · artifact cleanup from `4acd1f61` · report organization `23aff0ad`/`a3448c71` · final consolidation/backend closure
+- **CANDIDATE:** refreeze after backend closure · CACHE_VERSION 117 → 118 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** 0 model requests / 0 screenshots; consolidated inventory and two independent manifests under this run
+- **CLASSIFICATION:** CLEANUP_CONSOLIDATED_AND_OFFLINE_VERIFIED (visual review remains NOT_APPROVED)
 - **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 08dd841c (pytest 7241 passed / 1 skipped, vitest 1030/1030, build, demo 5/5, crash surface 6/6); identity gates green at 08dd841c (`diagnostics/gates_08dd841c.log`)
-- **PRODUCT_CHANGED:** NO behaviour change (test names, dead CSS that no element matched, docs)
+- **PRODUCT_CHANGED:** cleanup NO; backend reason code for an already-refused T8 volume case changes UNKNOWN → SOURCE
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/docs-cleanup/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-cleanup/
@@ -1183,11 +1156,11 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLOSED:** NONE (ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE → PARTIALLY RESOLVED)
 - **OPENED:** NONE
 - **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
-- **CORRECTED_BY:** DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
-- **CORRECTS:** NONE (ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY count corrected in place: six unloaded prompts, not four)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** first-run unread-scope limitation; six unloaded prompts count remains corrected, prompt/IR deletion deferred
 - **NEXT_ACTION_AT_TIME:** unchanged — human visual review and the D5 option
-- **FINAL_DECISION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS
+- **FINAL_DECISION:** CLEANUP_CONSOLIDATED_AND_BACKEND_GAP_CLOSED
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** none (maintenance)
-- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.md` · `diagnostics/`
+- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `run-artifact-cleanup.json` · `run-report-organization.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

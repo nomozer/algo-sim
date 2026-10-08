@@ -31,7 +31,7 @@ rebuild-backend:
 ## Cả bốn gọi script đo DANH MỤC 24 TARGET TIN HỌC. Danh mục ấy gỡ ở
 ## LEGACY_INFORMATICS_REMOVAL, nên bốn script đã CHẾT KHI IMPORT từ trước —
 ## `make catalog-matrix` trả ModuleNotFoundError chứ không phải một ma trận.
-## Artifact Tin học không còn consumer đã gỡ ở `docs-cleanup-2026-10-08`.
+## Artifact Tin học không còn consumer đã gỡ và ghi ledger ở run `docs-cleanup`.
 ## Đừng viết lại chúng sang hình học: bộ đo hình học
 ## là `scripts/run_geometry_dev_evaluation.py`, `run_sealed_evaluation.py`,
 ## `replay_demo_cases.py` — xem CLAUDE.md §4.

@@ -71,7 +71,7 @@
 | `frontend/scripts/certify-construction-bridge-g4.mjs` | `certify-construction-through-point.mjs` | browser check of the through-point constructions |
 | `frontend/src/components/transport-w7.test.tsx` | `transport-policy.test.tsx` | transport tray policy of registered simulations |
 | `frontend/src/components/control-layout-w4b3e.test.ts` | `control-layout.test.ts` | layout of the player control strip |
-| `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | đã gộp ở `repo-cleanup`, rồi gỡ cùng artifact Tin học hết consumer ở `docs-cleanup-2026-10-08` |
+| `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | đã gộp ở `repo-cleanup`, rồi gỡ cùng artifact Tin học hết consumer ở `docs-cleanup` |
 | `Phase8LiveTransport` (lớp trong `run_rectangular_pyramid_live_analyze.py`) | `LiveAnalyzeTransport` | transport của lượt live analyze một request |
 
 ### Đã đổi (run `docs-cleanup`, 2026-10-08)

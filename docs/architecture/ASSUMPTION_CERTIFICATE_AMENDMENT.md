@@ -1179,3 +1179,14 @@ Chân đường cao của bước dựng (`formation._tam_day_deu`) nhận đún
 
 Toạ độ bố trí thành dữ kiện; nhận diện tâm bằng so toạ độ; đọc "đều" của mục tiêu chứng minh làm tiền đề (§14.2);
 phục vụ khi chiều cao không xác định; nâng `product_capability` lên `supported` (mô hình chưa đo — `foundation_only`).
+
+### 18.6 Lý do thiếu kích thước trên affine chart (2026-10-08)
+
+Khi lát cắt định nghĩa thật của giá trị hiển thị chứa `measure(volume)`, bộ đọc nguồn xác nhận đúng T8 và đọc trọn
+mọi ràng buộc T8, `kich_thuoc_t8` là thẩm quyền cho biết `b²`/`h²` nào còn thiếu. Quan hệ
+`V = √3·b²·h/12` chứng minh trực tiếp rằng thay đổi dương một kích thước thiếu vẫn giữ các quan hệ nguồn đã đọc nhưng
+làm đổi thể tích. Cổng trả `ASSUMPTION_DETERMINES_ANSWER` **trước** phép kiểm hình dạng theo metric mặc định của chart.
+
+Nhánh này không chạy nếu dependency slice không đo thể tích, còn chữ/ràng buộc ngoài vocabulary T8, kích thước mâu
+thuẫn, danh tính khối không duy nhất hoặc đề là tứ diện đều (một scale chung chưa có hợp đồng nhãn riêng). Các ca đó
+giữ đường `ASSUMPTION_INVARIANCE_UNPROVEN`/mã nguồn hiện hành; không ca từ chối nào được chuyển thành phục vụ.

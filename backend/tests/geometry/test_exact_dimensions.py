@@ -124,6 +124,26 @@ def test_ket_cuc_route_theo_nhan(ca):
         assert kq["reason_code"] == phan[2], (ca, kq["stage"], kq["reason_code"], kq["details"])
 
 
+@pytest.mark.parametrize(
+    "ca,subjects",
+    [("N01_missing_height", ["chiều cao"]),
+     ("N09_regular_is_not_tetrahedron", ["chiều cao"]),
+     ("N10_no_size", ["AB", "chiều cao"])],
+)
+def test_the_tich_t8_thieu_kich_thuoc_tra_dung_phu_thuoc_nguon(ca, subjects):
+    """Chart affine không được che khuất quan hệ phụ thuộc thật V = √3·b²·h/12."""
+    kq = ket_qua(ca)["out"]
+    assert (kq.servable, kq.stage_reached, kq.reason_code) == (
+        False, "assumption", "ASSUMPTION_DETERMINES_ANSWER")
+    assert kq.reason_subjects == subjects
+    assert kq.refusal_cause == "SOURCE"
+
+
+def test_ca_mau_thuan_khong_bi_phan_loai_thanh_thieu_du_kien():
+    kq = ket_qua("N02_contradiction")["out"]
+    assert kq.reason_code != "ASSUMPTION_DETERMINES_ANSWER"
+
+
 # ── metric khung: tính nhất quán, không chỉ đáp số cuối ─────────────────────────────────────────
 
 def _phuc_vu(ca: str) -> dict:

@@ -18,7 +18,7 @@
 
 ### Thư mục bằng chứng ngoài `geometry/` — đọc gì ở đâu
 
-Run `docs-cleanup-2026-10-08` đã đọc lại nội dung và consumer. Các nhóm Tin học không còn phục vụ sản phẩm,
+Run `docs-cleanup` (manifest `run-artifact-cleanup.json`) đã đọc lại nội dung và consumer. Các nhóm Tin học không còn phục vụ sản phẩm,
 nghiên cứu hiện hành hoặc tái lập cần giữ đã bị gỡ; bảng dưới chỉ còn ngoại lệ có consumer cụ thể.
 
 | thư mục | nội dung | còn được trích bởi mã/test |
@@ -36,13 +36,13 @@ do hai báo cáo bằng chứng còn dùng đường dẫn tuyệt đối trong 
   `REPORT.md` / `HANDOFF.md`.
 - Trước đó: tra [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) hoặc `../EVIDENCE_INDEX.md`; report đã đăng ký
   nằm cạnh package artifact, report chủ đề ở `reports/`. Mười một ngoại lệ còn ở gốc vì contract được code trích
-  trực tiếp hoặc link tương đối byte-locked cần đúng độ sâu; danh sách ngoại lệ nằm trong run `docs-organization`.
+  trực tiếp hoặc link tương đối byte-locked cần đúng độ sâu; danh sách ngoại lệ nằm trong inventory của `docs-cleanup`.
 
 ## Run gần nhất
 
 | run | chủ đề |
 |---|---|
-| [`docs-organization`](geometry/runs/docs-organization/) | tổ chức cuối 167 báo cáo, mapping cũ → mới, kiểm byte/link/full backend; không đổi sản phẩm |
+| [`docs-cleanup`](geometry/runs/docs-cleanup/) | cleanup hợp nhất: phân loại 180 report/13.174 artifact, tổ chức 167 report, kiểm byte/link/full backend; manifest/log các lần đo giữ riêng |
 | [`cuboid-merge`](geometry/runs/cuboid-merge/) | gói duyệt hình A–F trước khi merge; ảnh W18 chứng minh chuyển tiếp sang candidate `b2d4187a` (fixture tái sinh offline chỉ khác hai trường danh tính); 0 thay đổi sản phẩm |
 | [`cuboid-acceptance`](geometry/runs/cuboid-acceptance/) | đối chiếu 24 bất biến có con trỏ chết của `ARCHITECTURE_MAP` §5 (9 đang khoá, 1 chưa đủ bằng chứng, 14 lịch sử, 0 vi phạm); 0 thay đổi sản phẩm |
 | [`cuboid-final-review`](geometry/runs/cuboid-final-review/) | lượt chốt của việc cuboid (không đánh số wave): rà soát trọn tài liệu (lịch sử Tin học tách nguyên văn sang `legacy/`), luật đánh số wave theo từng việc, thẻ từ chối §17 nói "chưa kiểm chứng được phép dựng" |

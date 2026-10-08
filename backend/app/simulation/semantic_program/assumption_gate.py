@@ -703,6 +703,43 @@ def kich_thuoc_t8(rb, S: str, day: tuple, ent: tuple, do_dai: dict) -> tuple | s
     return b2, h2, l2
 
 
+_RANG_BUOC_T8_THE_TICH = frozenset({
+    "pyramid", "regular_triangular_pyramid", "base_equilateral",
+    "base_centre", "height", "lateral_edge", "edge_all",
+})
+
+
+def _kich_thuoc_t8_quyet_dinh_the_tich(rb, do_dai: dict, lc: _LatCat, de: str) -> tuple[str, ...]:
+    """Các kích thước T8 còn thiếu mà lát cắt *thực tế* dùng để đo thể tích.
+
+    Đây là nhánh hẹp cho affine-chart gap: quyết định dựa trên dependency slice
+    (`measure(volume)`), quan hệ nguồn T8 đã đọc và `kich_thuoc_t8`; không suy từ
+    tên họ hình.  Bất kỳ chữ/ràng buộc ngoài vocabulary này hoặc mâu thuẫn kích
+    thước đều trả rỗng để đường fail-closed cũ xử lý.
+    """
+    if not any(phep_do == "volume" for _chu, phep_do in lc.phep_do):
+        return ()
+    if phan_chua_doc(de) or any(r.kind not in _RANG_BUOC_T8_THE_TICH for r in rb):
+        return ()
+    khoi = {r.entities for r in rb if r.kind == "pyramid" and len(r.entities) == 4}
+    if len(khoi) != 1:
+        return ()
+    ent = next(iter(khoi))
+    S, day = ent[0], ent[1:]
+    # Tứ diện đều chỉ thiếu một scale chung; không gộp nó vào lát cắt hai kích
+    # thước này khi chưa có hợp đồng nhãn riêng.
+    if any(r.kind == "regular_tetrahedron" and r.entities == ent for r in rb):
+        return ()
+    if not any(r.kind == "regular_triangular_pyramid" and r.entities == ent for r in rb):
+        return ()
+    kt = kich_thuoc_t8(rb, S, day, ent, do_dai)
+    if isinstance(kt, str):
+        return ()
+    b2, h2, _l2 = kt
+    return tuple(([_nhan(day[0], day[1])] if b2 is None else [])
+                 + (["chiều cao"] if h2 is None else []))
+
+
 def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
     """T8 (§18.2, exact-dimensions) — chóp đáy tam giác ĐỀU, chân đường cao ở TRỌNG TÂM; tứ diện đều là trường hợp
     cạnh bên = cạnh đáy. Duy nhất sai khác đẳng cự khi biết b và h (`kich_thuoc_t8`); mọi phép so trên BÌNH PHƯƠNG.
@@ -1278,6 +1315,23 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:
         return _ket_qua(UNDETERMINED, details + ["RELATION_REFUTED_BY_SOURCE"])
+    # exact-dimensions follow-up: nếu dependency slice thật sự đo THỂ TÍCH của
+    # T8 đã đọc trọn, V = sqrt(3) * b² * h / 12. Vì vậy b/h còn thiếu là một
+    # phụ thuộc nguồn có chứng minh giải tích, không phải lỗi chart. Làm trước
+    # phép kiểm toạ độ: khi thiếu metric, một affine chart hợp lệ không nhất
+    # thiết trông đều trong tích vô hướng Euclid mặc định.
+    thieu_t8 = _kich_thuoc_t8_quyet_dinh_the_tich(rb, do_dai, lc, de)
+    if thieu_t8:
+        return _ket_qua(
+            DEPENDENT,
+            details + ["T8 ANALYTIC_DEPENDENCY volume = sqrt(3) * base_side^2 * height / 12"]
+            + [f"T8 MISSING {nhan}" for nhan in thieu_t8],
+            subjects=thieu_t8,
+            witness={
+                "description": "positive scaling of a missing T8 dimension preserves the read source relations",
+                "changes": {nhan: ["t", "2t"] for nhan in thieu_t8},
+            },
+        )
     # §15.1 (W17): mặt phẳng ĐỀ của từng câu lệnh phương trình — theo nguồn, rồi luật W16 §14.1
     # (theo tên, hoặc duy nhất theo đếm).
     mp_de = doc_mat_phang_de(de_gt)

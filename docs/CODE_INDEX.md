@@ -260,7 +260,7 @@ trỏ sai chỗ còn tệ hơn không có. Tra bằng `grep` theo tên bên dư�
 
 ⛔ Script và fixture của route 2D Tin học, không còn consumer hay cổng nghiệm thu nào (người dùng giao dọn; commit
 ở việc `regular-triangular-pyramid`). Mục mô tả cũ: `git show e9435d67:docs/CODE_INDEX.md` (mục "Trả nợ sync-lock
-2026-08-20" và mục L5a). Artifact thị giác của route 2D Tin học đã gỡ ở `docs-cleanup-2026-10-08`; khôi phục được
+2026-08-20" và mục L5a). Artifact thị giác của route 2D Tin học đã gỡ ở `docs-cleanup`; khôi phục được
 từ Git tại commit trước cleanup.
 
 - `frontend/scripts/verify-semantic-e2e-render.mjs` · `verify-live-gemini-render.mjs` · `verify-real-browser-render.mjs`
@@ -706,7 +706,7 @@ chỉ được 4.34:1. Tập nền phải đến từ PHÉP ĐO, không từ tr�
 `--accent-green-deep` (#0f6622) là mắt xích còn thiếu của khuôn `-deep` đã có
 sẵn (`--accent-orange-deep`, `--accent-purple-deep`), không phải màu mới.
 Chứng nhận trình duyệt M20 từng đo 26 bề mặt, 884 phần tử có chữ, **0 cặp trượt** (lượt đầu: 11); artifact Tin học
-đã gỡ ở `docs-cleanup-2026-10-08`, còn khôi phục được từ Git nếu cần khảo cổ.
+đã gỡ ở `docs-cleanup`, còn khôi phục được từ Git nếu cần khảo cổ.
 
 ### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
 Khoá hợp đồng xuất xứ v2 và chứng minh vòng TỰ THAM CHIẾU đã bị phá.
@@ -5925,7 +5925,7 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   Issue ID, chuỗi đính chính không chu trình (Acyclic DAG), một next action duy nhất, kiểm tra độ dài handoff
   (<= 300 dòng), quét secret và đối soát bằng chứng kiểm thử máy.
   Test: `backend/tests/geometry/test_docs_information_architecture.py` (22 invariants, 14 fault injections F1–F14).
-  **W19 (2026-10-04), cập nhật ở `docs-organization`**: `audit_docs_layout(repo_root, catalog_text=None)` giữ gốc
+  **W19 (2026-10-04), cập nhật ở lần report organization nay thuộc `docs-cleanup`**: `audit_docs_layout(repo_root, catalog_text=None)` giữ gốc
   `docs/` là danh sách đóng, cho phép chỉ ngoại lệ root được catalog; mọi link bảng trong
   `HISTORICAL_REPORTS_CATALOG` (`docs/evaluation/HISTORICAL_REPORTS.md`) phải tồn tại và không trùng; thư mục con thuộc
   `DOCS_SUBDIRS`; catalog rỗng là FAIL. `NAVIGATION_DOCS` (README gốc + hub research/evaluation/legacy/architecture + bản đồ tuyên bố +

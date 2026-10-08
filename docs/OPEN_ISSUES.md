@@ -604,10 +604,10 @@
 
 ### ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
 - **description:** Historical reports formerly occupied the `docs/` root beside living documents.
-- **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md`; `docs/evaluation/geometry/runs/docs-organization/inventory.md`.
+- **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md`; `docs/evaluation/geometry/runs/docs-cleanup/inventory.md`.
 - **impact:** resolved: 156/167 retained reports moved; the root contains only 11 report/contract exceptions with file-level path constraints.
 - **scope:** complete; catalog paths, consumers and byte-identity guard updated without rewriting report content.
-- **status:** RESOLVED (`docs-organization`, 2026-10-08).
+- **status:** RESOLVED (`docs-cleanup`, lần tổ chức report 2026-10-08).
 - **owner_class:** DOCUMENTATION
 - **suggested_wave:** none
 - **default_switch_blocker:** NO
@@ -738,7 +738,12 @@
 - **evidence:** `runs/exact-dimensions/labels.json` rows N01/N09/N10; fixture `regular_triangular_pyramid_assumption` (expected INVARIANCE_UNPROVEN/UNKNOWN); browser refusal image `runs/exact-dimensions/images/regular-triangular-pyramid/negative/assumption/desktop/refusal.png`.
 - **impact:** refusal is correct; its reason is less informative for the learner.
 - **scope:** detect "regular family + missing size" before the chart check and report the determining size.
-- **status:** OPEN (run `exact-dimensions`)
+- **status:** RESOLVED (2026-10-08) — cổng chỉ kết luận khi dependency slice thực tế chứa `measure(volume)`, source
+  reader đọc trọn đúng quan hệ T8 và `kich_thuoc_t8` xác nhận kích thước thiếu mà không có mâu thuẫn. Quan hệ
+  `V = √3·b²·h/12` tạo chứng minh giải tích trước chart check; N01/N09 trả thiếu `chiều cao`, N10 trả thiếu `AB` và
+  `chiều cao`, đều giữ `unsupported` nhưng đổi sang `ASSUMPTION_DETERMINES_ANSWER`/`SOURCE`. Ca mâu thuẫn, target
+  khác, quan hệ ngoài vocabulary và tứ diện đều vẫn đi đường fail-closed cũ. Test route + API/pipeline:
+  `test_exact_dimensions.py`, `test_mocked_production_e2e.py`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with the next change to the assumption gate
 - **default_switch_blocker:** NO
@@ -777,7 +782,7 @@
 - **verify:** `git grep -n "ContainerType = Literal" backend/app/simulation/semantic_program/contract.py` · `ls backend/app/ai/skills`
 
 ### ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE
-- **description:** Live shell code still carries Informatics-era pieces that need a visual/contract pass: `components/SamplePreview.tsx` maps eleven Informatics `simulation_id`s to preview glyphs; the module-contract fields `threeD` and `specDrift`. Artifact M20 và các comment chỉ trỏ tới chúng đã được dọn ở `docs-cleanup-2026-10-08`.
+- **description:** Live shell code still carries Informatics-era pieces that need a visual/contract pass: `components/SamplePreview.tsx` maps eleven Informatics `simulation_id`s to preview glyphs; the module-contract fields `threeD` and `specDrift`. Artifact M20 và các comment chỉ trỏ tới chúng đã được dọn ở `docs-cleanup`.
 - **evidence:** inventory of run `repo-cleanup` (kept items); `frontend/src/components/SamplePreview.tsx` `KIND_BY_SIM_ID`.
 - **impact:** presentation/maintenance only; no wrong value.
 - **scope:** a UI pass with a before/after visual check (SamplePreview glyphs, dead geo3d CSS) and a shell-contract pass (`threeD`, `specDrift`); comment edits when those files are next touched.

@@ -45,6 +45,21 @@ Input text/image
   → Frontend Step Replay & Scene3D Explorer (diễn hoạt từng bước, tua, tương tác camera)
 ```
 
+### 2a.1 Đối chiếu tuyến sản phẩm thật với kiến trúc mục tiêu
+
+| Yêu cầu | Đã có | Còn thiếu / giới hạn | Caller thật | Bằng chứng |
+|---|---|---|---|---|
+| Nhận đề chữ hoặc ảnh | `/api/analyze` chuẩn hoá text/docx; `/api/image/extract` đọc ảnh rồi buộc người học xem, sửa và xác nhận văn bản trước khi phân tích | chưa có pipeline tự tách vùng/OCR camera tổng quát; ảnh chỉ đi tiếp sau checkpoint người dùng | `ProblemInput.tsx` → `main.py::extract_image` / `main.py::analyze` | `test_image_extract_api.py`, `test_photo_problem_vision_checkpoint.py` |
+| Trích dữ kiện và nghĩa vụ | `stage_semantic_analyze` tạo `RequestContract`; `structured_relations.py` chuẩn hoá quan hệ có `source_fact_id` và cờ giả định | vocabulary quan hệ đóng, chưa phải bộ hiểu mọi cách diễn đạt | `_semantic_route_attempt` | `test_structured_geometry_relations.py`, `test_analyze_definitional_normalization_prompt.py` |
+| Chọn lệnh dựng có sẵn | mặc định `LLM_ONLY`: `stage_semantic_program` sinh `SemanticProgramSpec`; compiler tất định chỉ chạy khi mode opt-in và contract eligible | compiler-first tự động chưa được bật; general layout solver chưa có | `_semantic_route_attempt` → `geometry_compiler.routing` hoặc `stage_semantic_program` | `test_semantic_route_wired_to_production.py`, `test_cuboid_cube_production_route.py` |
+| Backend thực thi/tính/kiểm | validator + static check → formation → interpreter/kernel exact → construction/source/postcondition/assumption/visual gates; R0 không gọi model sau IR | coverage phụ thuộc từ vựng đóng; các issue OPEN nêu từng miền chưa chứng minh | `route.verify_and_compile`; `_dung_scene3d` chỉ chạy khi `executable` | `test_mocked_production_e2e.py`, `test_assumption_certificate.py`, `test_frame_state_invariant.py` |
+| Trả JSON và hiển thị 3D | envelope `generic.semantic_program` mang trace/config và `scene3d`; store nạp envelope, `SimulationWorkspace` gắn `Scene3DExplorer` | D5 mobile và duyệt hình người vẫn mở; frontend không là authority hình học | `_envelope_tu_route_sinh` → `store.loadEnvelope` → `Scene3DExplorer` | `product-envelope-rendering.test.tsx`, `Scene3DExplorer.test.tsx` |
+
+`FactGraph`/primitive compiler là lát cắt thực nghiệm có caller khi opt-in, không phải đường mặc định đã hoàn tất. Tag Git
+`SEMANTIC_PROGRAM_CONTRACT_V1` là **mốc lịch sử** tại commit `8dbd5bc7`: nó thêm contract/validator/schema V1; contract hiện
+hành đã tiếp tục tiến hoá và được khoá bằng code Pydantic + hai schema sinh đồng bộ. Tag không được dùng làm version runtime,
+không có script nào resolve tag này, và không bị di chuyển/xoá trong cleanup.
+
 ### 2b. Phân định các chế độ kiến trúc
 
 1. **Kiến trúc đang chạy mặc định (`DEFAULT_MODE = LLM_ONLY`):**
