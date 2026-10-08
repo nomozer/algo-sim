@@ -1,0 +1,10 @@
+# cwd: <worktree 'D:/tmp/mobile fit'> @ a51c788be9a9bb6135ee6604af9e0d46797fd8cb; rerun of the red suite step only (RTP)
+2026-10-08T16:03:49Z
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 7f3f042309dd1c54…).
+verify exit=0
+▶ regular_triangular_pyramid/desktop 16:03:52
+▶ regular_triangular_pyramid/mobile 16:05:16
+regular_triangular_pyramid: PASS
+Wrote D:\tmp\mobile fit\docs\evaluation\geometry\runs\mobile-canvas-fit\results\rerun\BROWSER_EVIDENCE.json: PASS
+exit=0
+2026-10-08T16:06:29Z

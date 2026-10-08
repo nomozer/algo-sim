@@ -1,0 +1,21 @@
+# cwd: <worktree '/d/tmp/mobile fit'> @ 90921f534ce7cd4f201acf249fd95997d8b6a410; timeout --signal=KILL 2400 node frontend/scripts/check-scene-controls.mjs --ho triangular_pyramid,rectangular_pyramid,triangular_prism,cuboid,cube,cross_section,regular_square_pyramid,regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/mobile-canvas-fit/inputs --ra docs/evaluation/geometry/runs/mobile-canvas-fit/results --anh docs/evaluation/geometry/runs/mobile-canvas-fit/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/mobile-canvas-fit/inputs/REVIEW_SET.json
+2026-10-08T15:26:49Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/mobile: PASS []
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W02 probe: 16/16 PASS
+exit=0
+2026-10-08T15:32:26Z

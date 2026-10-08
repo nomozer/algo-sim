@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_triangular_pyramid_non_positive",
+  "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 0, chiều cao bằng 4. Tính thể tích khối chóp S.ABC.",
+  "source": "exact_dimensions_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "c9bcdcdb5c73e43005dd91d54c5e55c7ac7eaa64",
+  "product_tree_sha": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: đa giác 'Đáy ABC': đỉnh 'A' và 'B' TRÙNG NHAU",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "execution",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "NON_POSITIVE_LENGTH",
+    "reason_subjects": [
+      "cạnh đáy"
+    ],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Đề bài cho độ dài cạnh đáy bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+  },
+  "refusal_cause": "SOURCE",
+  "source_reason_code": "NON_POSITIVE_LENGTH"
+}

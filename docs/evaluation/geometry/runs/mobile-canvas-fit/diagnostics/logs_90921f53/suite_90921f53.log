@@ -1,0 +1,29 @@
+# cwd: <worktree '/d/tmp/mobile fit'> @ 90921f534ce7cd4f201acf249fd95997d8b6a410; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/mobile-canvas-fit/inputs --ra docs/evaluation/geometry/runs/mobile-canvas-fit/results --screenshots docs/evaluation/geometry/runs/mobile-canvas-fit/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/mobile-canvas-fit/inputs/REVIEW_SET.json
+2026-10-08T15:08:55Z
+▶ triangular_pyramid/desktop 15:08:55
+▶ triangular_pyramid/mobile 15:09:58
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 15:10:46
+▶ triangular_prism/mobile 15:12:02
+triangular_prism: PASS
+▶ rectangular_pyramid/desktop 15:12:50
+▶ rectangular_pyramid/mobile 15:14:04
+rectangular_pyramid: PASS
+▶ cuboid/desktop 15:14:53
+▶ cuboid/mobile 15:16:00
+cuboid: PASS
+▶ cube/desktop 15:16:54
+▶ cube/mobile 15:18:01
+cube: PASS
+▶ cross_section/desktop 15:18:49
+▶ cross_section/mobile 15:20:20
+cross_section: PASS
+▶ regular_square_pyramid/desktop 15:22:14
+▶ regular_square_pyramid/mobile 15:23:29
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 15:24:25
+▶ regular_triangular_pyramid/mobile 15:25:40
+regular_triangular_pyramid: FAIL
+Wrote D:\tmp\mobile fit\docs\evaluation\geometry\runs\mobile-canvas-fit\results\BROWSER_EVIDENCE.json: FAIL
+exit=1
+2026-10-08T15:26:49Z

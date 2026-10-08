@@ -1,0 +1,26 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cuboid_ungrounded_given",
+  "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+  "source": "fake_analyze_transport_through_production_refusal",
+  "product_commit_sha": "c9bcdcdb5c73e43005dd91d54c5e55c7ac7eaa64",
+  "product_tree_sha": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "grounding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+    "reason_subjects": [
+      "AA′"
+    ],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Để dựng hình, chương trình cần độ dài AA′ nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+  },
+  "source_reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+  "removed_from_text": "AA' = 5"
+}
