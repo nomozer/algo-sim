@@ -1858,8 +1858,11 @@ export function assessPanelsMobile(o) {
 export function assessLayout(o) {
   const r = [];
   const day = o.controls ? o.controls.y + o.controls.h : null;
-  // lề đáy ~12 px; ≤ 40 px còn coi là "sát đáy" (làm tròn, khe lưới), quá mép là thanh bị đẩy khỏi vùng nhìn
-  if (!o.canvas_at_floor && (day === null || day > o.viewport.h + 0.5 || day < o.viewport.h - 40)) {
+  // lề đáy ~12 px; ≤ 40 px còn coi là "sát đáy" (làm tròn, khe lưới), quá mép là thanh bị đẩy khỏi vùng nhìn.
+  // mobile-canvas-fit (D5): khổ hẹp (`narrow`) canvas cao VỪA HÌNH, nên thanh được phép nằm trên đáy — chỉ không được
+  // bị đẩy khỏi vùng nhìn (trừ khi canvas ở sàn).
+  const quaMep = day === null || day > o.viewport.h + 0.5;
+  if (!o.canvas_at_floor && (quaMep || (!o.narrow && day < o.viewport.h - 40))) {
     r.push("CONTROLS_NOT_AT_BOTTOM");
   }
   if (o.scroll_width > o.client_width + 1) r.push("HORIZONTAL_OVERFLOW");

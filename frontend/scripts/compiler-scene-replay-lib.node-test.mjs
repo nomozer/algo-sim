@@ -1651,6 +1651,10 @@ test("layout gate: every injected fault has its code", () => {
   // màn thấp: canvas ở mức sàn ⇒ trang cuộn, thanh có thể dưới mép — không phải lỗi
   const thap = { ...W4_LAYOUT, canvas_at_floor: true, controls: HOP(240, 1000, 1180, 48) };
   assert.deepEqual(LIB.assessLayout(thap).reason_codes, []);
+  // mobile-canvas-fit: khổ hẹp, canvas vừa hình ⇒ thanh nằm trên đáy là đúng; bị đẩy khỏi vùng nhìn vẫn là lỗi
+  assert.deepEqual(LIB.assessLayout({ ...W4_LAYOUT, narrow: true, controls: HOP(240, 700, 1180, 48) }).reason_codes, []);
+  assert.ok(LIB.assessLayout({ ...W4_LAYOUT, narrow: true, controls: HOP(240, 880, 1180, 48) }).reason_codes
+    .includes("CONTROLS_NOT_AT_BOTTOM"));
 });
 
 /* W4 · yêu cầu 5 — bấm thẳng lên hình là lối chính; kéo để xoay không phải chọn. */

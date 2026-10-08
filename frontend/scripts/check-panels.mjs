@@ -151,6 +151,8 @@ async function boCuc(s, viewport, frames) {
   return { viewport: await j(s, "({w:innerWidth,h:innerHeight})"), requested_viewport: { w: viewport.width, h: viewport.height },
     canvas, canvas_element: await hop(s, ".geo3d-canvas canvas"), controls: await hop(s, ".geo3d-controls"),
     canvas_at_floor: canvas.h <= 320.5,
+    // mobile-canvas-fit: khổ hẹp ⇒ canvas cao vừa hình (cùng điểm gãy với `scene3d-playback.KHO_HEP`)
+    narrow: await j(s, "matchMedia('(max-width: 48rem)').matches"),
     scroll_width: await j(s, "document.documentElement.scrollWidth"),
     client_width: await j(s, "document.documentElement.clientWidth"),
     step_counter: await j(s, "document.querySelector('.geo3d-controls .geo3d-buoc-so')?.textContent?.trim()||null"),

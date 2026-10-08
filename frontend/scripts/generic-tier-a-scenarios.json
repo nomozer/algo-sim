@@ -227,7 +227,7 @@
       "oracle_source": {
         "kind": "canonical_ground_truth_and_gold_program",
         "path": "backend/scripts/thesis_acceptance_corpus.py",
-        "sha256": "37d15f5d3bd2b03310ffce23b1afd70fe272f7d08b278c17738f269c7fbbeb64",
+        "sha256": "315954cacc48190c0c7dfb771725a701ec18e816a41342fd0205d38f241a51cf",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "p1_chop_thiet_dien_khoang_cach"
       },
@@ -311,7 +311,7 @@
       "oracle_source": {
         "kind": "exact_dimensions_corpus_program_dependency_graph",
         "path": "backend/tests/geometry/test_exact_dimensions.py",
-        "sha256": "c8feb496c97140ebe8e85ed6639b8ee1d04f0cd66e76d0708b5920b317b032c0",
+        "sha256": "ec807e1bb90157256b42501321781568ca28e9ffd88911457e05d3d8086fbe93",
         "hash_basis": "git_blob_at_measurement_commit",
         "symbol": "chuong_trinh"
       },
