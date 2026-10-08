@@ -1,65 +1,84 @@
-# docs-cleanup — báo cáo
+# docs-cleanup — báo cáo hợp nhất
 
-Việc `docs-cleanup` (task `DOCUMENTATION_AND_NAMING_CLEANUP`), máy local, cùng nhánh `feat/regular-square-pyramid`,
-bắt đầu ở `2a7179a9`. Metadata: `run.json`. Từng file đã xử lý, consumer và lý do: `inventory.md`. Bảng cũ → mới:
-`docs/evaluation/RUN_NAMING.md` mục *Đã đổi (run `docs-cleanup`)*. 0 lượt gọi model, 0 ảnh chụp.
+Run `docs-cleanup` hợp nhất ba trách nhiệm đã cùng phạm vi: cleanup tài liệu/tên, artifact cleanup và report
+organization. Metadata độc lập không bị ghi đè: `run.json`, `run-artifact-cleanup.json`,
+`run-report-organization.json`; log từng phép kiểm ở `diagnostics/`. Toàn lượt: 0 model call, 0 screenshot.
 
-## 1. Đã làm
+## 1. Inventory và xử lý vật lý
 
-| việc | kết quả | commit |
-|---|---|---|
-| Tên test theo hành vi | 123 hàm pytest bỏ tiền tố `test_wNN_`/`test_phase3_` (4 đặt tên tay); 74 tiêu đề vitest, 44 tiêu đề node:test bỏ thẻ đầu; bộ chọn `-k w16/w17/w18` trong tài liệu sống thành đường dẫn file | `a993aa8f` (chỉ đổi tên) |
-| CSS chết + chú thích | 12 lớp `geo3d-*` / 17 luật không module sản phẩm nào render; chú thích phạm vi danh mục của `offline-catalog.ts` | `c1a291ba` |
-| `RULES_v0.3.md` | gỡ cùng khối test (28) chỉ canh chính bản ấy; test (27) giữ | `8c66249d` |
-| `docs/legacy/` + Superpowers | 42 → 15 file: xoá 25 ở commit này (16 plan/spec M9–M17, W13; bảy tài liệu chuyển đề; quyết định lát cắt; REPOSITORY_MAP) + `RULES_v0.3.md` ở dòng trên, chuyển 2 (thiết kế + kế hoạch route Semantic Program → `legacy/architecture/`), đưa 1 về hiện hành (`CUBOID_CUBE_CONTRACT_DECISION.md` → `docs/architecture/`, mã còn cài đúng nó); danh sách ngoài phạm vi còn hiệu lực của roadmap chuyển đề chép sang `STATUS_LEDGER §0-2026-08-24` | `9efb8af6` |
-| Hướng dẫn cấu trúc tài liệu | AGENTS §4 + `docs/README.md` §8 + `architecture/README.md`: thiết kế do skill sinh ⇒ `docs/architecture/` nếu là contract hiện hành, kế hoạch ⇒ `plan.md` của run; không `docs/superpowers/` (đã có `test_inv_23` chặn thư mục lạ); `docs/README.md` §8, `evaluation/README.md` theo luật tên run hiện hành | `9efb8af6` |
-| Lớp tên hiển thị | bảng nội dung từng thư mục bằng chứng mang mã (`m16`…`m20`, `semantic-*`, `integration`, …) ở `evaluation/README.md` — tên giữ vì AGENTS §4 | `9efb8af6` |
-| Hai issue Tin học | SHELL-RESIDUE: CSS chết + chú thích xong, chú thích xuất xứ giữ có lý do, còn `SamplePreview`/`threeD`/`specDrift`; MODEL-SURFACE: đọc lại caller — **sáu** prompt không loader (không phải bốn), `pipeline._call_json` không còn người gọi | `9efb8af6` |
-| Candidate | đóng băng lại một lần ở `8c66249d` (worktree tách rời sạch, đường dẫn có dấu cách): product commit `be4b8287` → `8c66249d`, mã đo **không đổi** (102 file, `b4a33205…`) | `976e0eea` |
-| Thư mục rỗng local | `docs/legacy/superpowers/{plans,specs}`, `backend/app/{validation,evaluation}` (chỉ `.pyc` gitignore của gói đã gỡ) | — (Git không theo dõi) |
+| phạm vi | đã phân loại | giữ | xoá | đổi tên/chuyển |
+|---|---:|---:|---:|---:|
+| report | 180/180 | 167 | 13 | 156 move tổ chức; 1 report đổi sang tên chức năng |
+| artifact | 13.174/13.174 | 10.650 | 2.523 artifact + 2 test pin | 2 folder / 22 file ở artifact cleanup |
+| folder path | 3.097/3.097 | theo consumer/claim | folder rỗng sau kiểm | 2 hồ sơ cleanup dư được gộp rồi xoá |
 
-## 2. Kiểm trong lúc sửa
+Phần Tin học retire (`curriculum-ui-admission`, m16–m20 không còn consumer, `semantic-l5a/vnext`, audit UI catalog,
+demo trùng) được xoá sau khi kiểm code/test/tooling/docs/manifest; Git commit `4acd1f61` là đường khôi phục. Nhóm trộn
+được xử lý theo file: 167 report và 10.650 artifact còn phục vụ kiến trúc, correctness, luận văn hoặc tái lập được giữ.
 
-- pytest: thu thập 7242/7244 (2 deselected) trước và sau đổi tên, không trùng node id; 17 file đổi tên: 792 passed.
-- vitest 1032/1032 (68 file) sau đổi tên và sau gỡ CSS; node harness 97/97.
-- CSS: parser 528 → 511 luật, 0 thêm, mọi luật giữ lại trùng nguyên văn, mọi luật gỡ chứa một lớp chết.
-- Bộ kiểm tài liệu (`test_docs_information_architecture.py`) xanh sau khi viết `inventory.md`, trừ `test_inv_20` cho tới lần đóng
-  băng lại (product commit đã dời) — xanh sau `976e0eea`.
-- Cổng đầy đủ và cổng danh tính: `handoff.md` §2.
+167 report được bố trí: 33 cạnh package đo, 123 tại `docs/evaluation/reports/`, 11 ngoại lệ path-bound ở gốc; 167/167
+blob report giữ nguyên byte. `CURRENT_ARCHITECTURE_GAP_AUDIT.md` đổi R100 thành
+`architecture-gap-audit-2026-09.md`; tiêu đề lịch sử trong blob không sửa. Hai folder `docs-cleanup-2026-10-08` và
+`docs-organization` đã bị gỡ sau khi manifest/log độc lập được chuyển nguyên byte vào run này.
 
-## 3. Bề mặt mô hình và cache
+Các ngoại lệ giữ tên có căn cứ:
 
-Ở pha cleanup thuần, không đổi prompt, thẻ văn phạm, lược đồ analyze/synthesis, bảng năng lực, route hay cổng; khi đó
-`CACHE_VERSION` giữ **117** — không
-envelope nào đổi; khoá danh tính cache khớp nguyên (`diagnostics/freeze_8c66249d.log`). Candidate giữ băm `b4a33205…`;
-khai báo độ lệch của run `repo-cleanup` vẫn đúng.
+- `n04-targeted-rejection-registry-v2-preregistration`: scripts/tests đọc package; N04 là case preregistered, V2 là
+  schema registry; 14 artifact tự ghim path.
+- `second-family-*`: correction/preregistration/live-reconciliation chain còn được scripts, tests và research registry
+  dùng.
+- `SEMANTIC_PROGRAM_ROUTE_DESIGN/PLAN`: RULES §11 trích design §3.3; plan giữ giao thức SEALED mà test còn pin. Đây là
+  thiết kế legacy có consumer, không phải contract runtime hiện hành.
 
-## 4. Còn lại, có lý do
+## 2. Tên và hồ sơ cleanup trước đó
 
-| mục | vì sao còn | theo dõi |
-|---|---|---|
-| sáu prompt Tin học không loader, `_call_json`, nhánh `domain=None`, từ vựng container IR + renderer 2D | xoá = đổi bề mặt mô hình có băm + bump `CACHE_VERSION`; IR cấm đổi trong việc dọn | `ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY` (caller ghi từng file) |
-| `SamplePreview` (11 id Tin học), `threeD`, `specDrift` | đổi cái giao diện hiển thị (lịch sử cũ) / hợp đồng shell — cần kiểm trực quan | `ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE` |
-| hằng `TEN_TU_CHOI_W17`, `W17_STATES` (`build_scene3d_visual_evidence.py`) | định danh mã nội bộ, ngoài phạm vi tên file/test | `RUN_NAMING.md` (giữ có chủ đích) |
-| 180 báo cáo lịch sử ở gốc `docs/`, mọi `docs/evaluation/**` | bất biến (AGENTS §4); tên hiển thị ở catalog/README | `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` (INTENDED_LIMITATION) |
-| `frontend/scripts/demo-geometry-interaction.mjs` đọc `.geo3d-tree-type` | script tay; trường `loai` luôn rỗng từ khi chip bị gỡ | `ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE` |
+Các commit trước trong cùng run vẫn có hiệu lực: `a993aa8f` đổi tên 123 hàm pytest + 118 tiêu đề test theo hành vi;
+`c1a291ba` gỡ 17 luật CSS chết; `8c66249d` gỡ `RULES_v0.3.md` và guard chỉ canh bản đó; `9efb8af6` đưa contract còn
+hiệu lực về `docs/architecture/`, xoá plan/spec đã được thực thi hoặc hết consumer và cập nhật luật vị trí tài liệu.
+Chi tiết từng file/consumer nằm ở `inventory.md`; bảng tên cũ → mới ở `docs/evaluation/RUN_NAMING.md`.
 
-## 5. Không gọi là "dọn toàn kho hoàn tất"
+Tag `SEMANTIC_PROGRAM_CONTRACT_V1` là lightweight tag trỏ commit `8dbd5bc7`, nơi khởi tạo contract/validator/schema V1.
+Không runtime/script hiện hành nào resolve tag; contract đã tiến hoá. Tag được giữ như mốc lịch sử, còn authority hiện
+hành là model Pydantic + hai schema được đồng bộ.
 
-Đã đọc trọn nhóm được giao trừ: 180 báo cáo lịch sử ở gốc (không đọc từng file — bất biến, không hành động nào khả dĩ) và
-nội dung artifact `docs/evaluation/**` (chỉ đọc bố cục). Mã `backend/app`/`frontend/src` không đọc lại ngoài tên test và
-CSS (đã rà ở `repo-cleanup`). Chi tiết mức đọc: `inventory.md` §F.
+## 3. Kiến trúc thực tế
 
-## 6. Kết luận hợp nhất (thay thế giới hạn §4–§5)
+`docs/ARCHITECTURE_MAP.md` có bảng yêu cầu → đã có → còn thiếu → caller thật → bằng chứng. Tuyến sản phẩm là:
 
-Cleanup tiếp nối đã khép phần §5 từng để mở: 180/180 report và 13.174/13.174 artifact được phân loại; phần Tin học
-hết consumer đã xoá, 167 report còn dùng được bố trí vật lý và kiểm byte. Hai run phụ không còn tồn tại; manifest/log
-độc lập nằm trong run `docs-cleanup`. Tổng đã xoá ở lần artifact cleanup là 2.538 tracked file; tổng move tổ chức report
-là 156; lần khép này chỉ gộp hồ sơ, đổi một report snapshot sang tên chức năng và cập nhật consumer.
+`đề/ảnh + checkpoint` → `RequestContract` → mặc định `LLM_ONLY` sinh `SemanticProgram` → validator/interpreter/kernel +
+cổng grounding/assumption/construction/postcondition/visual → response envelope/store → frontend Scene3D.
 
-Audit kiến trúc xác nhận Semantic Program vẫn là đường sản phẩm mặc định `LLM_ONLY`; tag V1 chỉ là mốc khởi tạo,
-không phải contract runtime hiện hành. Chuẩn hoá quan hệ nguồn đã có caller thật, nên backend slice duy nhất của lượt
-này đóng `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART`: quyết định vẫn `unsupported`, nhưng ca thể tích T8 thiếu
-kích thước nay nêu đúng đại lượng nguồn thay vì UNKNOWN. Vì envelope cache đổi, `CACHE_VERSION` tăng 117 → 118;
-prompt/schema/model surface không đổi. Candidate đổi `b4a33205…` → `7f3f042309dd1c54…` (102 file), sinh từ
-detached clean checkout tại product commit `f967ba24`.
+AI đọc nghĩa và chọn primitive; backend sở hữu trạng thái, hình học, kiểm chứng và quyết định phục vụ. FactGraph/compiler
+hiện chỉ là route opt-in cho miền hẹp; OCR tổng quát, reflection và compiler-first chưa được tuyên bố hoàn tất.
+
+## 4. Lát cắt backend duy nhất
+
+Đóng `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART` cho dependency slice `measure(volume)` của chóp tam giác đều T8.
+`assumption_gate` tái sử dụng ràng buộc nguồn, phép đo độ dài và graph phụ thuộc hiện có để xác định cạnh đáy/chiều cao
+thiếu theo `V = sqrt(3)*b²*h/12`. Đầu ra vẫn `unsupported`; chỉ nguyên nhân đổi từ
+`ASSUMPTION_INVARIANCE_UNPROVEN / UNKNOWN` thành `ASSUMPTION_DETERMINES_ANSWER / SOURCE` với subject cụ thể.
+
+Caller thật: `POST /api/analyze` → pipeline → route → assumption gate. Miền giới hạn: một chóp tam giác đều có tên,
+văn bản nguồn đọc trọn, ràng buộc T8 được nhận diện, không mâu thuẫn; không áp dụng cho tứ diện, họ mới hoặc constraint
+ngoài từ vựng đóng. Vì cached refusal envelope đổi, `CACHE_VERSION` tăng 117 → 118. Prompt, grammar card, schema,
+capability và semantic environment không đổi; candidate mới `7f3f042309dd1c54…`, 102 file, product `f967ba24`.
+
+## 5. Kiểm chứng và Git
+
+- Focused backend/API trước commit: 46 passed; sync regression sau khi cập nhật fixture/guard: 413 passed.
+- Detached clean checkout `838237fe`: backend **7239 passed, 1 skipped, 2 deselected**; frontend **67 files / 1023
+  tests passed**; `tsc -b` + Vite build đạt.
+- Docs audit PASS: 0 link hỏng, 0 stale path, 167 report catalogued, không file gốc chưa phân lớp.
+- Candidate verify `7f3f042309dd1c54…` / 102 file; cache verify 118 / `b1714b566e25c912…`; `diff --check` sạch.
+- Lần thử backend đầu bị ACL basetemp rồi timeout được giữ riêng ở `final-backend-temp-acl-failed.log` và không tính là
+  kết quả. Gate hợp lệ dùng temp ngoài checkout, log `final-backend.log`, exit code 0.
+- Commit: `f967ba24` (product + consolidation), `267c195a` (candidate), `838237fe` (consumer/guard sync). Không push,
+  merge, PR hay sửa lịch sử. `frontend/public/favicon.svg` vẫn ngoài staging.
+
+Prompt/IR và `semantic_*` được hoãn đúng yêu cầu, theo issue có caller evidence riêng. Duyệt hình vẫn **NOT_APPROVED**;
+D5 mobile chưa được người dùng quyết định.
+
+## 6. Nhiệm vụ sản phẩm kế tiếp duy nhất
+
+Thực hiện human visual review trên các gói hiện có (`exact-dimensions`, `regular-triangular-pyramid-w01`, W5/W4) và
+chốt phương án D5 mobile; chưa mở họ hình hay cleanup mới trước quyết định đó.

@@ -1163,7 +1163,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **REPORT:** docs/evaluation/geometry/runs/docs-cleanup/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-cleanup/
 - **START_BASE:** 2a7179a9
-- **CODE_COMMIT:** a993aa8f · c1a291ba · 8c66249d · 9efb8af6 · artifact cleanup from `4acd1f61` · report organization `23aff0ad`/`a3448c71` · final consolidation/backend closure
+- **CODE_COMMIT:** a993aa8f · c1a291ba · 8c66249d · 9efb8af6 · artifact cleanup from `4acd1f61` · report organization `23aff0ad`/`a3448c71` · product/consolidation `f967ba24` · candidate `267c195a` · consumer/guard sync `838237fe`
 - **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots); independent manifests retained as `run-artifact-cleanup.json` and `run-report-organization.json`
 - **EVIDENCE_COMMIT_ROLE:** one consolidated inventory plus independent historical manifests/logs
 - **CLASSIFICATION:** CLEANUP_CONSOLIDATED_AND_OFFLINE_VERIFIED

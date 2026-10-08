@@ -52,7 +52,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = f967ba24 (cleanup consolidation + T8 missing-size reason; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = f967ba24 (cleanup consolidation + T8 missing-size reason); CLEAN_GATE_BASE = 838237fe (7239 backend + 1023 frontend; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 118 (bump vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; prompt/model surface không đổi)

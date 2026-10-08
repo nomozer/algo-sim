@@ -1,0 +1,12 @@
+
+> algo-sim-frontend@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.10 D:/w/final-gate/frontend
+
+
+ Test Files  67 passed (67)
+      Tests  1023 passed (1023)
+   Start at  20:03:38
+   Duration  7.31s (transform 11.82s, setup 2.56s, import 22.58s, tests 9.49s, environment 16ms)

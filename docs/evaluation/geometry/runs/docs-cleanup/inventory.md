@@ -74,17 +74,17 @@ luật thêm, mọi luật giữ lại trùng nguyên văn.
 | `.superpowers/` (108 mục theo `AI_CONTEXT_BUNDLE §5`) | người dùng đã quyết giữ (brief `cuboid-acceptance`); gitignore |
 | `.secrets/`, `data/` | dữ liệu người dùng / bí mật — không mở |
 
-## F. Khu vực đã đọc / chưa đọc
+## F. Mức đọc của lần cleanup đầu (đã được §G thay thế)
 
 - **Đã đọc**: toàn bộ `docs/legacy/` (mức đọc ở đầu file); tên mọi file/thư mục được theo dõi dưới `backend/`,
   `frontend/`, `.claude/`, cấu hình gốc (quét mã lượt `m*`/`w*`/`phase*`/`wave*`/`v*`); mọi tên test pytest, vitest, node:test;
   bố cục `docs/evaluation/` (từng thư mục ngoài `geometry/`, mở tệp đầu của mỗi thư mục); CSS `geo3d-*` so với mọi tham chiếu.
 - **Không đọc lại**: mã `backend/app`, `frontend/src` đã rà ở run `repo-cleanup` — không có dấu hiệu liên quan ngoài tên
   test và CSS ở trên.
-- **Không đọc từng file**: 180 báo cáo lịch sử ở gốc `docs/`. AGENTS §4 cấm sửa/chuyển/xoá chúng; tên hiển thị và chủ đề
+- **Chưa đọc từng file ở lần đầu**: 180 báo cáo lịch sử ở gốc `docs/`. Quy tắc khi đó được hiểu là cấm sửa/chuyển/xoá; tên hiển thị và chủ đề
   đã có ở `docs/evaluation/HISTORICAL_REPORTS.md` (kiểm mẫu các hàng mang mã `W12_REMAINING`, `G4_…`, `PHASE_2/3_…`: có
   tiêu đề mô tả). Đọc nội dung từng báo cáo không đổi được hành động nào.
-- **Không đọc nội dung**: artifact trong các thư mục `docs/evaluation/**` (bất biến); chỉ đọc bố cục để viết lớp tên hiển thị ở
+- **Chưa đọc nội dung ở lần đầu**: artifact trong các thư mục `docs/evaluation/**`; chỉ đọc bố cục để viết lớp tên hiển thị ở
   `docs/evaluation/README.md`.
 
 ## G. Đính chính mức đọc và cleanup vật lý tiếp nối
