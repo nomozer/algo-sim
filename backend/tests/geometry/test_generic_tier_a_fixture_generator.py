@@ -84,10 +84,10 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         negative = json.loads((tmp_path / "fixtures" / name).read_text(encoding="utf-8"))
         envelope = negative["envelope"]
         assert (envelope["status"], envelope["stage_reached"]) == ("unsupported", "assumption"), name
-        # exact-dimensions: khung trục + thiếu chiều cao ⇒ không dẫn xuất được metric, ràng buộc khuôn không kiểm được ⇒
-        # "chưa chứng minh" (vẫn từ chối) — giới hạn đã ghi ở OPEN_ISSUES.
+        # Thiếu kích thước quyết định thể tích phải nêu nguyên nhân SOURCE;
+        # chỉ ca thiết diện ngoài mặt phẳng còn là bất biến chưa chứng minh.
         assert envelope["reason_code"] == ("ASSUMPTION_INVARIANCE_UNPROVEN"
-                                           if name.startswith(("cross_section", "regular_triangular_pyramid_assumption"))
+                                           if name.startswith("cross_section")
                                            else "ASSUMPTION_DETERMINES_ANSWER"), name
         assert "scene3d" not in envelope and "final_memory" not in envelope, name
         assert negative["removed_from_text"] not in negative["problem_text"], name

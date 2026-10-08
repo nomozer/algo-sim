@@ -29,7 +29,8 @@ bắt đầu ở `2a7179a9`. Metadata: `run.json`. Từng file đã xử lý, co
 
 ## 3. Bề mặt mô hình và cache
 
-Không đổi: prompt, thẻ văn phạm, lược đồ analyze/synthesis, bảng năng lực, route, cổng. `CACHE_VERSION` giữ **117** — không
+Ở pha cleanup thuần, không đổi prompt, thẻ văn phạm, lược đồ analyze/synthesis, bảng năng lực, route hay cổng; khi đó
+`CACHE_VERSION` giữ **117** — không
 envelope nào đổi; khoá danh tính cache khớp nguyên (`diagnostics/freeze_8c66249d.log`). Candidate giữ băm `b4a33205…`;
 khai báo độ lệch của run `repo-cleanup` vẫn đúng.
 

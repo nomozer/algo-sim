@@ -729,7 +729,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 116 -> 117 (exact-dimensions, 2026-10-07): be mat mo hinh KHONG doi; bo doc do dai khong lay ve dau cua bieu thuc
     # ("canh day bang 4 + 1" tung duoc phuc vu V = 16, sai) -> served -> refused, hang cache cu giu dap so sai:
     # runs/exact-dimensions/cache/decision.json. 43/43 fixture cu trung byte sau khung affine + metric.
-    assert main_module.CACHE_VERSION == "117"
+    # 117 -> 118: T8 thiếu kích thước vẫn bị từ chối, nhưng nguyên nhân trong
+    # envelope đổi từ UNKNOWN sang SOURCE dựa trên phụ thuộc thể tích thực.
+    assert main_module.CACHE_VERSION == "118"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

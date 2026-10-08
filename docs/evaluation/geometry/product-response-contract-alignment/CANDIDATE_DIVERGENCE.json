@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "b4a33205a3d0e6d2cb1a78510a7c4fb4bf08ab33a0121f2d9dfe4715c63d1276",
+ "current_candidate_hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -230,6 +230,11 @@
    "hash": "b4a33205a3d0e6d2cb1a78510a7c4fb4bf08ab33a0121f2d9dfe4715c63d1276",
    "sau_wave": "repo-cleanup (run repo-cleanup)",
    "ghi_chu": "Dọn kho: gỡ app/evaluation/ (bộ đánh giá Tin học, không tới được từ app.main) và POST /api/explain (app/ai/explain.py; người gọi duy nhất AIHelpPanel không gắn); module semantic bỏ getExplainContext. Không đổi route, cổng, prompt, thẻ văn phạm, schema, năng lực. Một lần đóng băng tại be4b8287 (worktree sạch D:/tmp/cleanup freeze). CACHE_VERSION giữ 117 — khoá danh tính cache khớp nguyên."
+  },
+  {
+   "hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+   "sau_wave": "docs-cleanup (missing T8 size reason)",
+   "ghi_chu": "Cổng giả định dùng phụ thuộc thể tích thực của chóp tam giác đều để nêu chính xác cạnh đáy/chiều cao còn thiếu. Phán quyết vẫn unsupported; nguyên nhân đổi UNKNOWN → SOURCE nên CACHE_VERSION 117 → 118. Prompt, schema, grammar card, capability và semantic environment fingerprint giữ nguyên. Đóng băng tại product commit f967ba24 trong detached worktree sạch."
   }
  ],
  "diverged": true,
@@ -303,5 +308,5 @@
   "analyze_schema": "Thành phần `analyze_schema` ĐỔI (515001b5… → a1b9e20a…) ở wave (12) — `tests/structured_relation_identity.py` dựng lại đúng 515001b5… (= ANALYZE_SCHEMA_HASH của con dấu thesis-final/V3) chỉ bằng bỏ thuộc tính `geometric_relations` khỏi lược đồ hình học; lược đồ Tin học và mọi trường khác trùng từng byte. Đây là thay đổi bề mặt mô hình của tuyến ĐỌC ĐỀ: số của lượt đo cuối mô tả hợp đồng analyze TRƯỚC ô này."
  },
  "khong_duoc_lam": "Không sửa `scripts/policies/thesis_final_acceptance_policy.json` cho khớp băm mới. Toàn bộ giá trị của nó nằm ở chỗ được khoá TRƯỚC kết quả; sửa bây giờ là hồi tố đúng thứ nó tồn tại để chặn. Lượt đo sau cần một chính sách MỚI của riêng nó.",
- "cache_version_hien_tai": 117
+ "cache_version_hien_tai": 118
 }

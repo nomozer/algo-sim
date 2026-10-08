@@ -608,7 +608,7 @@ def main() -> None:
         ("regular_triangular_pyramid_positive", lambda: ED.chuong_trinh("P01_base_height"), None, "12√3"),
         ("regular_tetrahedron_positive", lambda: ED.chuong_trinh("P06_tetrahedron"), None, "18√2"),
         ("regular_triangular_pyramid_assumption", lambda: ED.chuong_trinh("N01_missing_height"),
-         ("assumption", "ASSUMPTION_INVARIANCE_UNPROVEN", "UNKNOWN"), None),
+         ("assumption", "ASSUMPTION_DETERMINES_ANSWER", "SOURCE"), None),
         ("regular_triangular_pyramid_wrong_centroid", lambda: ED.chuong_trinh("N07_wrong_centroid_identity"),
          ("construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND", "CONSTRUCTION"), None),
         ("regular_triangular_pyramid_ungrounded", lambda: RTP.chop_deu(
