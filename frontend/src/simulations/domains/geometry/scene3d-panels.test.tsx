@@ -15,7 +15,8 @@ import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
 import { Scene3DExplorer } from "./Scene3DExplorer";
 import { batTatBang, DAI_TIEU_DE, datViTriTuDong, lenTren, LE_BANG } from "./scene3d-floating-panel";
-import { CAO_KHUNG_MIN, caoKhungKhaDung, Scene3DPlayer } from "./scene3d-playback";
+import { CAO_KHUNG_MIN, caoKhungKhaDung, caoKhungVuaHinh, Scene3DPlayer } from "./scene3d-playback";
+import { tiLeKhungHinh } from "./scene3d-view";
 import { anchorOfGeometryStep, geometryNarrationAt, geometryStepCount, objectsAt } from "./scene3d-model";
 import { groupKeysOf, selectableIds, semanticTree, treeAt, type TreeNode } from "./interaction-state";
 import { entitiesPresentAt, withSubEntities } from "./scene3d-subentities";
@@ -175,6 +176,45 @@ describe("canvas theo chiều cao khả dụng", () => {
     expect(caoKhungKhaDung(900, 115, 40, 8)).toBe(900 - 115 - 8 - 40 - 12);
     // màn thấp: không co canvas xuống vô nghĩa — trang cuộn thay vì hình bé như con tem
     expect(caoKhungKhaDung(500, 200, 40, 8)).toBe(CAO_KHUNG_MIN);
+  });
+});
+
+/* mobile-canvas-fit (D5): khổ hẹp — canvas cao vừa hình. Đo trước sửa (390×844): canvas 519 px, hình lấp 53 % chiều
+   cao, dải trắng 107 + 137 px; mở «Các bước dựng» cuộn trang 338 px và hình rời khỏi khung nhìn. */
+describe("D5 · khổ hẹp: canvas cao vừa hình", () => {
+  it("hình ràng theo bề ngang: canvas = rộng × tỉ lệ hình — phần dư chỉ là dải trắng, cắt đi; hình giữ nguyên cỡ", () => {
+    expect(caoKhungVuaHinh(519, 358, 1.06)).toBe(Math.round(358 * 1.06));
+  });
+
+  it("hình ràng theo chiều cao: giữ TRỌN phần khả dụng — không trần, không thu nhỏ hình (brief W5, đề D5 (a) bị loại)", () => {
+    expect(caoKhungVuaHinh(519, 358, 1.77)).toBe(519);
+  });
+
+  it("không dưới sàn `CAO_KHUNG_MIN` — còn chỗ để xoay hình", () => {
+    expect(caoKhungVuaHinh(519, 358, 0.4)).toBe(CAO_KHUNG_MIN);
+  });
+
+  it("tỉ lệ hình chỉ theo CẢNH (cùng hướng nhìn + phép xoay hiển thị với khung nhìn): bước, lựa chọn, bảng không đổi nó", () => {
+    const r = tiLeKhungHinh(RSP.objects);
+    expect(r).not.toBeNull();
+    expect(r!).toBeGreaterThan(0);
+    expect(tiLeKhungHinh(RSP.objects)).toBe(r);
+    // Cảnh không cạnh (khung cũ ôm mặt cầu bao) ⇒ không tỉ lệ ⇒ trình phát giữ chiều cao khả dụng.
+    expect(tiLeKhungHinh(RSP.objects.filter((o) => o.type === "point3"))).toBeNull();
+  });
+
+  it("chỉ áp ở khổ hẹp — cùng điểm gãy với bảng trong dòng chảy; desktop giữ canvas lấp phần còn lại (W5 R1)", () => {
+    const src = nguon("./scene3d-playback.tsx");
+    expect(src).toContain('const KHO_HEP = "(max-width: 48rem)"');
+    expect(src).toMatch(/hep \? caoKhungVuaHinh\(khaDung, r\.width, tiLeHinh!\) : khaDung/);
+    expect(nguon("../../../styles/global.css")).toMatch(/@media \(max-width: 48rem\) \{\n {2}\.geo3d-bang-noi \{\n {4}position: static;/);
+  });
+
+  it("bảng bước dài: giữ bước đang xem trong thân bảng bằng cuộn THÂN BẢNG, không `scrollIntoView` (cuộn cả trang)", () => {
+    const src = nguon("./scene3d-playback.tsx");
+    expect(src).toMatch(/than\.scrollTop \+= r\.top - c\.top/);
+    expect(src).toMatch(/\}, \[buocHinh, moBuoc\]\);/);
+    expect(src).not.toMatch(/\.scrollIntoView\(/);
   });
 });
 

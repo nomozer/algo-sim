@@ -307,6 +307,19 @@ export function chonHuongNhin(diem: Diem3[], canh: [number, number][], mat: numb
   return tot ? tot.huong : quen;
 }
 
+/**
+ * TỈ LỆ HÌNH CHIẾU cao/rộng của các điểm theo hướng `huong` (mobile-canvas-fit, D5) — cùng cơ sở phải/lên với
+ * `khungNhinSuPham`. Phép chiếu song song: bỏ qua phối cảnh vài phần trăm, nằm trong lề của `TI_LE_LAP_KHUNG`.
+ * `null` khi hình chiếu suy biến (ít hơn hai điểm, bề ngang 0).
+ */
+export function tiLeHinhChieu(diem: Diem3[], huong: Diem3): number | null {
+  if (diem.length < 2) return null;
+  const { uv } = chieu(diem, huong);
+  const rong = Math.max(...uv.map((p) => p[0])) - Math.min(...uv.map((p) => p[0]));
+  const cao = Math.max(...uv.map((p) => p[1])) - Math.min(...uv.map((p) => p[1]));
+  return rong > 1e-9 && Number.isFinite(cao) ? cao / rong : null;
+}
+
 /** Khung nhìn: hướng sư phạm + khoảng cách vừa khít theo HÌNH CHIẾU THẬT của
  *  các điểm (không theo mặt cầu bao, vốn làm hình cao/hẹp chỉ choán một dải). */
 export function khungNhinSuPham(

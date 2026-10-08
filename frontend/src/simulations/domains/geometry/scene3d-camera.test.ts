@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import * as THREE from "three";
 import {
   chonHuongNhin, danhGiaGocNhin, datNguong, doLuoiGocNhin, hopBaoCuaDiem, huongLenHienThi, khungGocVuong,
-  khungNhinSuPham, khungNhinVua, type KhungNhin,
+  khungNhinSuPham, khungNhinVua, type KhungNhin, tiLeHinhChieu,
 } from "./scene3d-camera";
 import { cauTrucGocNhin, type Scene3D } from "./scene3d-model";
 
@@ -155,5 +155,27 @@ describe("hướng lên trình bày (regular-triangular-pyramid-w01)", () => {
     for (const [a, b] of [[k.e1, k.d], [k.e1, k.e2], [k.d, k.e2]]) expect(tich(a, b)).toBeCloseTo(0, 12);
     for (const u of [k.e1, k.d, k.e2]) expect(tich(u, u)).toBeCloseTo(1, 12);
     expect(khungGocVuong([1, 1, 1], [1, 1, 1])).toBeNull();
+  });
+});
+
+describe("tỉ lệ hình chiếu cao/rộng (mobile-canvas-fit, D5)", () => {
+  // Hình chữ nhật trong mặt Oxz: rộng 2 theo x, cao 1 theo z (z-up như camera).
+  const chuNhat: [number, number, number][] = [[0, 0, 0], [2, 0, 0], [2, 0, 1], [0, 0, 1]];
+
+  it("nhìn thẳng góc mặt phẳng hình: cao/rộng đúng bằng tỉ lệ thật, không phụ thuộc chiều nhìn", () => {
+    expect(tiLeHinhChieu(chuNhat, [0, 1, 0])).toBeCloseTo(0.5, 12);
+    expect(tiLeHinhChieu(chuNhat, [0, -1, 0])).toBeCloseTo(0.5, 12);
+    expect(tiLeHinhChieu(chuNhat.map(([x, y, z]) => [z, y, x]), [0, 1, 0])).toBeCloseTo(2, 12);
+  });
+
+  it("cùng cơ sở phải/lên với khung nhìn: phép tịnh tiến và co giãn đều không đổi tỉ lệ", () => {
+    const d: [number, number, number] = [8, 3, 6];
+    const goc = tiLeHinhChieu(chuNhat, d)!;
+    expect(tiLeHinhChieu(chuNhat.map(([x, y, z]) => [3 * x + 5, 3 * y - 1, 3 * z + 2]), d)).toBeCloseTo(goc, 12);
+  });
+
+  it("hình chiếu suy biến ⇒ null (nơi gọi giữ chiều cao khả dụng cũ)", () => {
+    expect(tiLeHinhChieu([[0, 0, 0]], [0, 1, 0])).toBeNull();
+    expect(tiLeHinhChieu([[0, 0, 0], [0, 0, 1]], [0, 1, 0])).toBeNull();
   });
 });

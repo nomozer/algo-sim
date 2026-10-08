@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   geometryNarrationAt,
   PLAYBACK_INTERVAL_MS,
@@ -16,7 +16,7 @@ import {
 } from "./scene3d-model";
 import type { InteractionState } from "./interaction-state";
 import type { AnnotationView } from "./scene3d-annotations";
-import { Scene3DWorkspace } from "./scene3d-view";
+import { Scene3DWorkspace, tiLeKhungHinh } from "./scene3d-view";
 import { BangNoi } from "./scene3d-floating-panel";
 import { geometryStepGroups } from "./scene3d-auxiliary";
 import { IconNext, IconPause, IconPlay, IconPrev, IconReset } from "../../../components/icons";
@@ -90,6 +90,19 @@ export function caoKhungKhaDung(cuaSo: number, trenKhung: number, caoThanh: numb
   return Math.max(CAO_KHUNG_MIN, Math.round(cuaSo - trenKhung - khe - caoThanh - LE_DAY));
 }
 
+/**
+ * mobile-canvas-fit (D5) — KHỔ HẸP: canvas cao VỪA HÌNH. Camera đặt hình lấp cùng một phần (`TI_LE_LAP_KHUNG`) của
+ * chiều ràng buộc; trên điện thoại dọc chiều ấy là BỀ NGANG, nên phần chiều cao khả dụng vượt `rong × tiLeHinh` chỉ là
+ * dải trắng trên/dưới hình và đẩy bảng xuống dưới nếp gấp. Cắt đúng phần ấy: hình giữ nguyên cỡ (bề ngang không đổi),
+ * hình ràng theo chiều cao giữ trọn phần khả dụng (không trần, không thu nhỏ), sàn `CAO_KHUNG_MIN` giữ chỗ để xoay.
+ */
+export function caoKhungVuaHinh(khaDung: number, rong: number, tiLeHinh: number): number {
+  return Math.max(CAO_KHUNG_MIN, Math.min(khaDung, Math.round(rong * tiLeHinh)));
+}
+
+/** Cùng điểm gãy với CSS (bảng thông tin trong dòng chảy dưới hình, `.geo3d-bang-noi`). */
+const KHO_HEP = "(max-width: 48rem)";
+
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
   stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
@@ -107,6 +120,9 @@ export function Scene3DPlayer({
      đỉnh canvas và thanh điều khiển: mở/đóng bảng hay chọn vật không dời chúng ⇒ đo lại ra cùng số, khung (và camera)
      không đổi theo thao tác trên bảng. */
   const playerRef = useRef<HTMLDivElement>(null);
+  /* mobile-canvas-fit: tỉ lệ hình ở góc nhìn mặc định — chỉ theo cảnh (không theo bước, lựa chọn, bảng), nên đổi bài
+     mới đổi chiều cao; hiệu ứng bố cục này chạy TRƯỚC lần vừa khung của khung nhìn (hiệu ứng thụ động của con). */
+  const tiLeHinh = useMemo(() => tiLeKhungHinh(scene.objects), [scene]);
   useLayoutEffect(() => {
     const goc = playerRef.current;
     if (!goc) return;
@@ -115,8 +131,10 @@ export function Scene3DPlayer({
       const thanh = goc.querySelector<HTMLElement>(".geo3d-controls");
       if (!khung || !thanh) return;
       const khe = parseFloat(getComputedStyle(goc).rowGap) || 0;
-      const moi = `${caoKhungKhaDung(window.innerHeight,
-        khung.getBoundingClientRect().top + window.scrollY, thanh.getBoundingClientRect().height, khe)}px`;
+      const r = khung.getBoundingClientRect();
+      const khaDung = caoKhungKhaDung(window.innerHeight, r.top + window.scrollY, thanh.getBoundingClientRect().height, khe);
+      const hep = tiLeHinh !== null && typeof window.matchMedia === "function" && window.matchMedia(KHO_HEP).matches;
+      const moi = `${hep ? caoKhungVuaHinh(khaDung, r.width, tiLeHinh!) : khaDung}px`;
       if (goc.style.getPropertyValue("--geo3d-cao-khung") !== moi) goc.style.setProperty("--geo3d-cao-khung", moi);
     };
     tinh();
@@ -124,7 +142,7 @@ export function Scene3DPlayer({
     const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(tinh) : null;
     ro?.observe(document.body);
     return () => { window.removeEventListener("resize", tinh); ro?.disconnect(); };
-  }, []);
+  }, [tiLeHinh]);
   const [stepTrong, setStepTrong] = useState(() => geometryAnchor(scene, initialStep));
   const beNgoai = interaction !== undefined;
   // Khung hiện luôn là neo của một bước dựng — kể cả khi bước đến từ trạng
@@ -225,6 +243,20 @@ export function Scene3DPlayer({
     setDangPhat(true);
   };
 
+  /* mobile-canvas-fit: bảng bước dài cuộn BÊN TRONG — khi tua/phát, mục bước đang xem (kèm mô tả của nó) luôn nằm trong
+     vùng nhìn của thân bảng (đo: bài 10–11 bước giấu 1–7 bước cuối ở mọi khổ). Chỉ cuộn thân bảng, không
+     `scrollIntoView` — nó cuộn cả trang và dời canvas trên điện thoại. */
+  const dsBuocRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const muc = dsBuocRef.current?.querySelector<HTMLElement>('[aria-current="step"]')?.parentElement;
+    const than = muc?.closest<HTMLElement>(".geo3d-bang-noi-than");
+    if (!muc || !than) return;
+    const r = muc.getBoundingClientRect();
+    const c = than.getBoundingClientRect();
+    if (r.top < c.top || r.height > c.height) than.scrollTop += r.top - c.top;
+    else if (r.bottom > c.bottom) than.scrollTop += r.bottom - c.bottom;
+  }, [buocHinh, moBuoc]);
+
   return (
     <div ref={playerRef} className="geo3d-player">
       <Scene3DWorkspace
@@ -315,7 +347,7 @@ export function Scene3DPlayer({
            khiển, thu gọn được. */
         <BangNoi panel="cac-buoc" id={idBuoc} tieuDe="Các bước dựng"
                  onDong={() => { datMoBuoc(false); nutBuocRef.current?.focus(); }}>
-        <nav className="geo3d-cac-buoc" aria-label="Các bước dựng">
+        <nav ref={dsBuocRef} className="geo3d-cac-buoc" aria-label="Các bước dựng">
           <ol className="geo3d-cac-buoc-ds">
             {/* W2 · D: dãy bước chỉ dựng hình phụ (AC, BD) cùng bước dùng chúng (O) thành MỘT mục có bước con —
                 `<details>` gốc của trình duyệt: thu gọn được mà không thêm state; mỗi bước con vẫn là một nút bước. */}

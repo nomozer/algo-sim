@@ -59,6 +59,7 @@ import {
 } from "./scene3d-presentation";
 import {
   type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungGocVuong, khungNhinSuPham, khungNhinVua,
+  tiLeHinhChieu,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
 import {
@@ -173,6 +174,33 @@ function xoay(p: Vec3, q: THREE.Quaternion): Vec3 {
   if (q.equals(DONG_NHAT)) return p;
   const w = new THREE.Vector3(...p).applyQuaternion(q);
   return [w.x, w.y, w.z];
+}
+
+/** Phép xoay hiển thị của cảnh (`huongLenHienThi`): đáy chóp nghiêng về nằm ngang; đáy ngang ⇒ đồng nhất thức. */
+export function quayHienThi(objects: SceneObject[]): THREE.Quaternion {
+  const dc = dayVaDinhChop(objects);
+  const len = dc ? huongLenHienThi(dc.day, dc.dinh) : null;
+  return len
+    ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(...len), new THREE.Vector3(0, 0, 1))
+    : new THREE.Quaternion();
+}
+
+/** Đỉnh/cạnh/mặt của cảnh (`cauTrucGocNhin`) trong khung THẾ GIỚI — sau phép xoay hiển thị. */
+function cauTrucTheGioi(objects: SceneObject[], q: THREE.Quaternion) {
+  const ct = cauTrucGocNhin(objects);
+  return { ...ct, diem: ct.diem.map((p) => xoay(p, q)) };
+}
+
+/**
+ * TỈ LỆ cao/rộng của HÌNH ở góc nhìn mặc định (mobile-canvas-fit, D5) — cùng điểm, cùng phép xoay hiển thị, cùng
+ * hướng `chonHuongNhin` mà khung nhìn vừa (`vuaKhungRef`) dùng; chỉ phụ thuộc cảnh, nên không đổi theo bước, lựa
+ * chọn, tách khối hay bảng. `null` khi cảnh không cạnh (khung cũ ôm mặt cầu bao — không có tỉ lệ hình chiếu).
+ */
+export function tiLeKhungHinh(objects: SceneObject[]): number | null {
+  const q = quayHienThi(objects);
+  const ct = cauTrucTheGioi(objects, q);
+  if (ct.canh.length === 0) return null;
+  return tiLeHinhChieu(diemHuuHan(objects).map((p) => xoay(p, q)), chonHuongNhin(ct.diem, ct.canh, ct.mat));
 }
 
 function v(o: THREE.Object3D, name: string): THREE.Object3D {
@@ -1362,13 +1390,7 @@ export function Scene3DWorkspace({
   /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
      có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
      của nhãn/khung nhìn/lưới đi qua cùng phép quay (`xoay`). Toạ độ cảnh không đổi. */
-  const qHienThi = useMemo(() => {
-    const dc = dayVaDinhChop(scene.objects);
-    const len = dc ? huongLenHienThi(dc.day, dc.dinh) : null;
-    return len
-      ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(...len), new THREE.Vector3(0, 0, 1))
-      : new THREE.Quaternion();
-  }, [scene]);
+  const qHienThi = useMemo(() => quayHienThi(scene.objects), [scene]);
   const qRef = useRef(qHienThi);
   qRef.current = qHienThi;
   // exact-dimensions: T khung (cột-chính 4×4) của cảnh có `chart_metric` — chỉ cho ảnh chụp camera của bộ đo.
@@ -1751,13 +1773,15 @@ export function Scene3DWorkspace({
        * Hợp với hộp bao đang dựng để phép tách khối vẫn đúng. */
       const diem = diemVuaKhung(goc, diemHuuHan(scene.objects).map((p) => xoay(p, qRef.current)));
       if (diem.length === 0) return;
+      // mobile-canvas-fit: chiều cao canvas có thể vừa đổi theo cảnh mới (trình phát đặt TRƯỚC lần vừa khung này) —
+      // đồng bộ cỡ bộ vẽ với khung chứa ngay đây, không chờ ResizeObserver, để tỉ lệ khung của phép vừa là tỉ lệ thật.
+      chinhCo();
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
       // Hướng nhìn chọn theo số đo của TOÀN cảnh (cùng lẽ trên: hình cuối),
       // không theo tên bài — xem `chonHuongNhin`. Cảnh không cạnh ⇒ khung cũ.
       // Cấu trúc đo trong khung THẾ GIỚI (sau phép xoay hiển thị): hướng nhìn chọn cho hình người học thấy.
-      const ct0 = cauTrucGocNhin(scene.objects);
-      const ct = { ...ct0, diem: ct0.diem.map((p) => xoay(p, qRef.current)) };
+      const ct = cauTrucTheGioi(scene.objects, qRef.current);
       const kn = ct.canh.length > 0
         ? khungNhinSuPham(diem, [], [], cam.fov, w / h, chonHuongNhin(ct.diem, ct.canh, ct.mat))
         : khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
