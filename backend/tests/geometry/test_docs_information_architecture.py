@@ -169,8 +169,12 @@ def test_inv_17_handoff_bundle_under_line_limit():
 def test_inv_18_claim_bearing_artifacts_unmutated():
     """18. Artifact còn được dùng cho claim hình học không bị sửa nội dung."""
     diff_cmd = subprocess.run(
-        ["git", "diff", "HEAD", "--", "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/"],
-        cwd=REPO, capture_output=True, text=True
+        [
+            "git", "diff", "--name-only", "HEAD", "--",
+            "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/",
+            ":(exclude)docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/report.md",
+        ],
+        cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     assert diff_cmd.stdout.strip() == "", "Artifact còn được dùng cho claim đã bị sửa nội dung!"
 
@@ -217,14 +221,14 @@ def test_inv_22_secret_scan_clean():
 
 
 def test_inv_23_docs_root_is_a_closed_list():
-    """23. (W19) Mọi docs/*.md là tài liệu chuẩn tắc, tài liệu dự án, hoặc báo cáo wave trong catalog đóng;
-    thư mục con của docs/ thuộc tập đã khai. Báo cáo wave mới nằm trong thư mục run của nó."""
+    """23. Mọi docs/*.md là tài liệu chuẩn tắc, dự án hoặc ngoại lệ path-bound trong catalog đóng;
+    mọi báo cáo đã chuyển mà catalog trỏ tới phải tồn tại duy nhất."""
     res = A.audit_docs_layout(REPO)
     assert res["valid"] is True, (
         f"chưa phân loại: {res['unclassified']} · catalog trỏ file mất: {res['catalog_missing']} · "
         f"trùng lớp: {res['overlap']} · thư mục lạ: {res['unexpected_dirs']}")
-    # Chống pass rỗng: catalog phải thật sự được đọc (hơn một trăm báo cáo lịch sử).
-    assert res["catalog_count"] >= 100
+    assert res["catalog_count"] == 167
+    assert res["duplicate_targets"] == []
 
 
 def test_inv_24_navigation_hubs_links_resolve():
@@ -364,7 +368,7 @@ def test_fi_12_unmapped_report_rejected():
 def test_fi_13_historical_byte_mutation_rejected():
     """FI-13: Historical artifact thay đổi một byte phải bị bắt."""
     import collect_docs_provenance_evidence as C
-    target_key = "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md"
+    target_key = "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md"
     orig = C.FROZEN_HISTORICAL_HASHES[target_key]
     try:
         C.FROZEN_HISTORICAL_HASHES[target_key] = "0" * 64
@@ -395,7 +399,7 @@ def test_fi_15_candidate_write_mode_rejected():
 
 
 def test_fi_17_stray_root_report_rejected():
-    """FI-17: Một báo cáo wave mới đặt ở gốc docs/ (thay vì thư mục run) phải bị bắt."""
+    """FI-17: Một báo cáo mới đặt ở gốc docs/ mà không có vai trò phải bị bắt."""
     stray = REPO / "docs" / "_TEMP_FI17_STRAY_REPORT.md"
     try:
         stray.write_text("# stray report\n", encoding="utf-8")

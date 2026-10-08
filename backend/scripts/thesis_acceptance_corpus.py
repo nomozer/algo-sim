@@ -648,7 +648,7 @@ CA_AM: list[dict[str, Any]] = [
         # "đo đúng lượng, đúng kiểu chủ thể" và kết luận chỉ hụt TÊN. Ở ca âm
         # nhánh ấy không chạy (`la_ca_am=True` trả sớm), nên nó không sai số
         # đo; nhưng nó là một GIỚI HẠN THẬT của scorer và được ghi vào
-        # `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md §9`.
+        # `docs/evaluation/reports/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md §9`.
         "gioi_han_scorer_da_do": "SCORER_CONTAINER_NAME_ONLY_HEURISTIC",
     },
 ]

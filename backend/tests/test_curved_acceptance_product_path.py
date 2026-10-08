@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """V3_PRODUCT_PATH_PARITY — runner V3 chấm ở SAI TẦNG. **0 lượt gọi model.**
 
-    `docs/V3_PRODUCT_PATH_PARITY_CORRECTION.md`, 2026-09-05.
+    `docs/evaluation/reports/V3_PRODUCT_PATH_PARITY_CORRECTION.md`, 2026-09-05.
 
 Runner V3 đọc đại lượng từ `outcome.envelope["scene3d"]` sau khi gọi
 `verify_and_compile`. Nhưng `route` **cố ý** không dựng `scene3d` — hướng phụ
@@ -39,7 +39,7 @@ DINH_CHINH = CV3 / "V3_PRODUCT_PATH_PARITY_CORRECTION.json"
 #: (`V3_THESIS_EVIDENCE_ALIGNMENT_REPAIR`, 2026-09-20).
 #:
 #: Đây đúng là những con số `V3_PRODUCT_PATH_PARITY_CORRECTION.json` và
-#: `docs/CURVED_V3_LIVE_ACCEPTANCE.md` đã công bố 2026-09-05. Chúng **không được
+#: `docs/evaluation/reports/CURVED_V3_LIVE_ACCEPTANCE.md` đã công bố 2026-09-05. Chúng **không được
 #: sửa** — sửa là viết lại bằng chứng đã xuất bản. `test_02` đối chiếu bảng này
 #: với artifact đính chính, và đó là vai trò duy nhất của nó.
 #:

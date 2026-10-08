@@ -30,7 +30,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | `CACHE_VERSION` | **117** (exact-dimensions, 2026-10-07: bộ đọc độ dài không còn lấy vế đầu của biểu thức — "cạnh đáy bằng 4 + 1" từng được PHỤC VỤ V = 16 (sai), nay từ chối; served → refused nên hàng cache cũ giữ đáp số sai — `runs/exact-dimensions/cache/decision.json`; khung affine + metric: 43/43 fixture cũ trùng byte; trước: 116 ở regular-triangular-pyramid-w01) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Năng lực hình học | **11 phép dựng · 9 câu lệnh · 7 phép đo** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/audit_named_operand_ergonomics.py` |
-> | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/SCOPE_ALIGNMENT_AUDIT.md` |
+> | `simulation_id` sản phẩm | **`generic.semantic_program`** — duy nhất. Danh mục 24 target Tin học đã gỡ (`LEGACY_INFORMATICS_REMOVAL`, 2026-09-02); xem `docs/evaluation/reports/SCOPE_ALIGNMENT_AUDIT.md` |
 > | Archive (read-only) | tag **`m17-w2b-deep-hardening-archive`** → `feb12d8` — kiểm: `git rev-parse m17-w2b-deep-hardening-archive` (nhánh cùng tên đã xoá 2026-08-24) |
 >
 > ### Mười một tài liệu CANONICAL theo 11 Information Domain
@@ -58,7 +58,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CACHE_VERSION = 117
 > CANDIDATE = b4a33205… (băm không đổi; đóng băng lại một lần ở 8c66249d — trước đó be4b8287), product commit 8c66249d
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (việc docs-cleanup, run docs-cleanup; trước đó REPO_CLEANUP, EXACT_DIMENSIONS_AND_CAPTURE_POLICY)
+> CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
@@ -74,6 +74,10 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | Tàn dư Tin học | 12 lớp `geo3d-*` chết gỡ; còn `SamplePreview`/`threeD`/`specDrift` và prompt + IR (sáu prompt không loader) — hai issue `ISSUE-ARCH-*-INFORMATICS-*` |
 > | Candidate · `CACHE_VERSION` | băm **`b4a33205…`** không đổi, product `be4b8287` → **`8c66249d`** · **117** (không bump) |
 > | Run | [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (`report.md`, `handoff.md`, `inventory.md`) |
+
+> **Tổ chức tài liệu cuối — run docs-organization (2026-10-08, không đổi nội dung bằng chứng):** 167/167 report
+> có mapping từng file; 33 report về package artifact, 123 report vào `evaluation/reports/`, 11 ngoại lệ path-bound
+> ở gốc; 167/167 blob giữ nguyên, catalog/link/consumer được cập nhật. Duyệt hình vẫn NOT_APPROVED.
 
 > **Dọn kho: gỡ phần Tin học hết vai trò + chuẩn hoá tên — run repo-cleanup (2026-10-08, máy local; chỉ tài liệu/mã chết, không đổi hành vi):**
 >

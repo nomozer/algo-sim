@@ -685,8 +685,8 @@ def audit_minimal_vertical_slice_allowlist() -> dict[str, Any]:
         "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_SELECTION_MATRIX.json",
         "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_MANIFEST.json",
         "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/SECOND_FAMILY_GROUND_TRUTH.json",
-        "docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md",
-        "docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md",
+        "docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/report.md",
+        "docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md",
     ]
 
     optional_future_files = [

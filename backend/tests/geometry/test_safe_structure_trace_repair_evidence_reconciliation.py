@@ -62,12 +62,12 @@ def test_01_phan_biet_code_commit_va_evidence_commit():
     assert "backend/scripts/run_preregistered_failure_reproduction.py" in code_files
     assert "backend/tests/geometry/test_safe_structure_trace_repair_offline.py" in code_files
     assert "docs/CODE_INDEX.md" in code_files
-    assert "docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md" not in code_files
+    assert "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/report.md" not in code_files
 
     r_evi = subprocess.run(["git", "diff-tree", "--no-commit-id", "--name-only", "-r", evidence_commit], capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=REPO_ROOT)
     assert r_evi.returncode == 0
     evi_files = [f.replace("\\", "/") for f in r_evi.stdout.strip().splitlines()]
-    assert "docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md" in evi_files
+    assert "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/report.md" in evi_files
     assert "backend/scripts/run_preregistered_failure_reproduction.py" not in evi_files
 
 
@@ -291,7 +291,7 @@ def test_FI_06_khai_collected_bang_selected():
 
 def test_FI_07_sua_historical_report():
     """FI-07: Sửa nội dung báo cáo lịch sử bị phát hiện qua git status / diff."""
-    r = subprocess.run(["git", "diff", "--name-only", "docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md"], capture_output=True, text=True, cwd=REPO_ROOT)
+    r = subprocess.run(["git", "diff", "--name-only", "docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/report.md"], capture_output=True, text=True, cwd=REPO_ROOT)
     assert r.stdout.strip() == ""  # File lịch sử không bị sửa
 
 

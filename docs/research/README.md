@@ -48,6 +48,6 @@ bản đồ).
 ## Báo cáo của các wave nghiên cứu
 
 Báo cáo wave (`THESIS_*_ACCEPTANCE_*`, `THESIS_OBJECTIVE_AND_CLAIM_ALIGNMENT_REVIEW`,
-`RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION`, …) là bằng chứng, ở gốc `docs/`; tra theo chủ đề ở
+`RESEARCH_GAP_AND_SYSTEM_CONTRIBUTION_FORMALIZATION`, …) là bằng chứng, không phải bản thảo; tra vị trí thật theo chủ đề ở
 [`../evaluation/HISTORICAL_REPORTS.md`](../evaluation/HISTORICAL_REPORTS.md). Ba bảng tuyên bố cũ và nhật ký
 `THESIS_READINESS` ở [`../legacy/research/`](../legacy/research/).

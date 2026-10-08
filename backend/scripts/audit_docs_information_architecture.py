@@ -138,8 +138,8 @@ ALLOWED_CANONICAL_ACTIONS = [
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 
-# W19: gốc docs/ là danh sách ĐÓNG = 11 tài liệu chuẩn tắc + tài liệu dự án dưới đây + báo cáo wave lịch sử đã vào
-# catalog. Báo cáo của wave mới nằm trong thư mục run (docs/evaluation/geometry/runs/<run>/).
+# Gốc docs/ là danh sách ĐÓNG = tài liệu chuẩn tắc + tài liệu dự án + các ngoại lệ path-bound được catalog.
+# Báo cáo lịch sử còn lại nằm ở evaluation; báo cáo của wave mới nằm trong thư mục run.
 PROJECT_DOCS = (
     "CORRECTNESS.md", "COVERAGE.md", "DESIGN_BRIEF.md", "OPERATIONS.md", "DEMO_RUNBOOK.md", "TEST_TIERS.md",
     "POST_THESIS_BACKLOG.md",
@@ -575,32 +575,50 @@ def audit_secret_scan(repo_root: Path, target_paths: list[Path] | None = None) -
 
 
 def audit_docs_layout(repo_root: Path, catalog_text: str | None = None) -> dict[str, Any]:
-    """Gốc docs/ là danh sách đóng; thư mục con của docs/ thuộc DOCS_SUBDIRS.
+    """Kiểm gốc docs đóng và mọi đích trong catalog báo cáo tồn tại, không trùng.
 
-    Mỗi docs/*.md phải thuộc đúng một lớp: chuẩn tắc (CANONICAL_DOMAINS), dự án (PROJECT_DOCS), hoặc báo cáo
-    lịch sử có DÒNG BẢNG `| [`TEN`](../TEN.md) | …` trong catalog (link ở phần dẫn nhập không tính). Catalog
-    đọc được nhưng rỗng là FAIL (không pass rỗng).
+    Catalog được phép trỏ tới báo cáo đã chuyển dưới ``evaluation/`` hoặc ngoại lệ path-bound còn ở gốc. Chỉ
+    dòng bảng được tính; link dẫn nhập không làm một file trở thành báo cáo được phân lớp. Catalog đọc được
+    nhưng rỗng là FAIL.
     """
     if catalog_text is None:
         p = repo_root / HISTORICAL_REPORTS_CATALOG
         catalog_text = p.read_text(encoding="utf-8", errors="ignore") if p.is_file() else ""
-    catalog = set(re.findall(r"^\| \[`[^`]+`\]\(\.\./([A-Za-z0-9_\-]+\.md)\) \|", catalog_text, re.MULTILINE))
+    catalog_targets = re.findall(
+        r"^\| \[`[^`]+`\]\(([^)#]+\.md)\) \|", catalog_text, re.MULTILINE
+    )
+    catalog_dir = (repo_root / HISTORICAL_REPORTS_CATALOG).parent
+    resolved_catalog = [(catalog_dir / target).resolve() for target in catalog_targets]
+    relative_catalog = [
+        str(path.relative_to(repo_root)).replace("\\", "/")
+        if path.is_relative_to(repo_root) else str(path)
+        for path in resolved_catalog
+    ]
     canonical = {Path(spec["canonical_path"]).name for spec in CANONICAL_DOMAINS.values()}
     project = set(PROJECT_DOCS)
     docs_dir = repo_root / "docs"
     root_docs = {p.name for p in docs_dir.glob("*.md")}
-    unclassified = sorted(root_docs - canonical - project - catalog)
-    catalog_missing = sorted(catalog - root_docs)
-    overlap = sorted(catalog & (canonical | project))
+    catalog_root = {path.name for path in resolved_catalog if path.parent == docs_dir.resolve()}
+    unclassified = sorted(root_docs - canonical - project - catalog_root)
+    catalog_missing = sorted(
+        target for target, path in zip(catalog_targets, resolved_catalog) if not path.is_file()
+    )
+    overlap = sorted(catalog_root & (canonical | project))
+    duplicate_targets = sorted(
+        target for target in set(relative_catalog) if relative_catalog.count(target) > 1
+    )
     unexpected_dirs = sorted(p.name for p in docs_dir.iterdir() if p.is_dir() and p.name not in DOCS_SUBDIRS)
     return {
         "root_doc_count": len(root_docs),
-        "catalog_count": len(catalog),
+        "catalog_count": len(catalog_targets),
         "unclassified": unclassified,
         "catalog_missing": catalog_missing,
         "overlap": overlap,
+        "duplicate_targets": duplicate_targets,
         "unexpected_dirs": unexpected_dirs,
-        "valid": bool(catalog) and not (unclassified or catalog_missing or overlap or unexpected_dirs),
+        "valid": bool(catalog_targets) and not (
+            unclassified or catalog_missing or overlap or duplicate_targets or unexpected_dirs
+        ),
     }
 
 

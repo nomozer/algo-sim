@@ -12,8 +12,8 @@
  * trung bình‖ = 0,60–0,66 (lộn nhào) so với 1,000 (bàn xoay). Toàn bộ suite
  * khi ấy vẫn xanh, build vẫn xanh, cổng trình duyệt vẫn PASS — vì không test
  * nào canh thứ tự khởi tạo. Bằng chứng:
- * `docs/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md` và
- * `docs/SCENE3D_ORBIT_GATE_AXIS_AUDIT.md`.
+ * `docs/evaluation/reports/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md` và
+ * `docs/evaluation/reports/SCENE3D_ORBIT_GATE_AXIS_AUDIT.md`.
  *
  * ─── HAI TẦNG, CỐ Ý ───────────────────────────────────────────────────────
  *

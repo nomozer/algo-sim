@@ -10,13 +10,13 @@
 
 ### GATE-01: Structured Analyze
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `docs/STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md`, Analyze trích xuất `structured_relations` chính xác cho các bài chóp cơ sở.
+- **EVIDENCE:** `docs/evaluation/reports/STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md`, Analyze trích xuất `structured_relations` chính xác cho các bài chóp cơ sở.
 - **BLOCKER:** Chưa đánh giá độ ổn định trên các họ bài toán phức tạp hơn (hình lăng trụ, khối tròn xoay).
 - **NEXT_TEST:** Benchmark Analyze trên 20 bài toán thuộc họ hình học thứ hai.
 
 ### GATE-02: Contract Validation
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/app/simulation/semantic_program/request_contract.py` (`RequestContract`; đường dẫn cũ `backend/app/simulation/contract.py` không tồn tại — sửa 2026-10-05, `cuboid-final-review`), Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology đa diện tổng quát dạng 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema), giải quyết bế tắc kỹ thuật SSOT.
+- **EVIDENCE:** `backend/app/simulation/semantic_program/request_contract.py` (`RequestContract`; đường dẫn cũ `backend/app/simulation/contract.py` không tồn tại — sửa 2026-10-05, `cuboid-final-review`), Pydantic schema validation bắt các quan hệ lỗi và đóng băng `RequestContract`. `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md` đã hoàn thành thiết kế và tiền đăng ký hợp đồng topology đa diện tổng quát dạng 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema), giải quyết bế tắc kỹ thuật SSOT.
 - **BLOCKER:** Chưa triển khai vertical slice mã sản phẩm (cần triển khai trên `RequestContract` và `contract_adapter`).
 - **NEXT_TEST:** Triển khai và kiểm thử vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
@@ -28,19 +28,19 @@
 
 ### GATE-04: Primitive Coverage
 - **STATUS:** PARTIAL
-- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md`), đính chính bằng chứng lựa chọn (`docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`), đối soát danh tính mã nguồn (`docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`), và tiền đăng ký hợp đồng topology (`docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`).
+- **EVIDENCE:** `backend/app/simulation/geometry_compiler/`, hỗ trợ `right_triangle_base_pyramid_volume`. Đã tiền đăng ký họ thứ hai `right_triangle_base_right_prism_volume` (`docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/report.md`), đính chính bằng chứng lựa chọn (`docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md`), đối soát danh tính mã nguồn (`docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/report.md`), và tiền đăng ký hợp đồng topology (`docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md`).
 - **BLOCKER:** Chưa triển khai vertical slice trong mã nguồn sản phẩm cho họ lăng trụ đứng đáy tam giác vuông.
 - **NEXT_TEST:** Triển khai vertical slice trong wave `PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE`.
 
 ### GATE-05: Compiler Correctness
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `docs/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`, compiler sinh `SemanticProgramSpec` tất định không lỗi.
+- **EVIDENCE:** `docs/evaluation/reports/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`, compiler sinh `SemanticProgramSpec` tất định không lỗi.
 - **BLOCKER:** Chưa có cơ chế giải phương trình tham số cho các bài toán định lượng biến thiên.
 - **NEXT_TEST:** Unit test tính đúng đắn cho bộ tham số tổng quát.
 
 ### GATE-06: Topology Verification
 - **STATUS:** PROVED_ON_PILOT
-- **EVIDENCE:** `backend/tests/geometry/test_model_variance_evidence_review.py` (chóp cơ sở); `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` xác lập phạm vi `SUPPORTED_TOPOLOGY_CLASS` là closed polygonal 2-manifold genus-0 (Euler $V - E + F = 2$), bảo toàn chu kỳ $D_n$, và bộ 16 fixtures kiểm chứng không phụ thuộc tọa độ.
+- **EVIDENCE:** `backend/tests/geometry/test_model_variance_evidence_review.py` (chóp cơ sở); `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md` xác lập phạm vi `SUPPORTED_TOPOLOGY_CLASS` là closed polygonal 2-manifold genus-0 (Euler $V - E + F = 2$), bảo toàn chu kỳ $D_n$, và bộ 16 fixtures kiểm chứng không phụ thuộc tọa độ.
 - **BLOCKER:** Chưa triển khai bộ validator độc lập vào runtime compiler pipeline của sản phẩm.
 - **NEXT_TEST:** Tích hợp validator topology vào `contract_adapter` và `compiler` trong vertical slice.
 
@@ -64,7 +64,7 @@
 
 ### GATE-10: Hidden Lines Detection
 - **STATUS:** NOT_STARTED
-- **EVIDENCE:** `docs/SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY.md`, renderer hiện chưa tính toán nét đứt động theo góc nhìn.
+- **EVIDENCE:** `docs/evaluation/reports/SCENE3D_DYNAMIC_HIDDEN_LINES_AND_READABILITY.md`, renderer hiện chưa tính toán nét đứt động theo góc nhìn.
 - **BLOCKER:** Thuật toán Raycasting hoặc Depth-buffer pass cho nét khuất chưa được cài đặt trong Three.js renderer.
 - **NEXT_TEST:** Viết prototype phân tách nét khuất trong `frontend/src/simulations/domains/geometry/`.
 

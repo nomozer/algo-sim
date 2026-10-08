@@ -77,7 +77,7 @@ def test_01_full_commit_sha_from_git_rev_parse_only():
     ev_diff2 = P.CommandEvidence(
         argv=["git", "diff", "--name-status", "3ba5afbb..63eb0640"],
         cwd=str(REPO), exit_code=0,
-        stdout="A docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md\nA docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/PRECHECK.json",
+        stdout="A docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/report.md\nA docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/PRECHECK.json",
         stderr="", duration_seconds=0.01, stdout_sha256="", stderr_sha256="", start_utc="", end_utc="",
     )
 

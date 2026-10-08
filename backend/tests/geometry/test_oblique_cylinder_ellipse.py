@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """THIẾT DIỆN ELIP CỦA HÌNH TRỤ — nền tất định. **0 lượt gọi model.**
 
-    `docs/CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION.md`
+    `docs/evaluation/reports/CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_CYLINDER_ELLIPSE_FOUNDATION.md`
     2026-09-07.
 
 Bộ test này chứng minh **hai** mức, và **chỉ** hai:

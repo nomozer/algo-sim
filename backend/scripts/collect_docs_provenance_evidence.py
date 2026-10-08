@@ -29,7 +29,7 @@ REPO = Path(__file__).resolve().parents[2]
 BACKEND = REPO / "backend"
 
 FROZEN_HISTORICAL_HASHES: dict[str, str] = {
-    "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/CODE_INDEX_AUDIT.json": "2f719e201b43171a2bbf37daaac32a82f86fa30a496109ad0442dc9a90c84a05",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json": "792ab169001ebffbb412ca95e4de86f14e94e275cda15d4b1c4cdf834e8d639a",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json": "f34fa5b208fd927b4bf3f7773a8843ec1a559aad3c7b09d9d93c80d2a35459e1",

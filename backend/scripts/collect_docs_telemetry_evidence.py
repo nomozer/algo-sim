@@ -34,7 +34,7 @@ OUT_DIR = (
 
 FROZEN_HISTORICAL_HASHES: dict[str, str] = {
     # Wave 13: DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING (18 files)
-    "docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md": "b173f0e8b4e71b8b656cd05e5cf2665731ddcec8e93c5ad144578b8ab4a298c0",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/CODE_INDEX_AUDIT.json": "2f719e201b43171a2bbf37daaac32a82f86fa30a496109ad0442dc9a90c84a05",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOCUMENTATION_OWNERSHIP_AND_REFERENCE_AUDIT.json": "f34fa5b208fd927b4bf3f7773a8843ec1a559aad3c7b09d9d93c80d2a35459e1",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/DOC_INVENTORY.json": "792ab169001ebffbb412ca95e4de86f14e94e275cda15d4b1c4cdf834e8d639a",
@@ -53,7 +53,7 @@ FROZEN_HISTORICAL_HASHES: dict[str, str] = {
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/TEST_RESULTS.json": "8bda5843ee64ba46c7a5fda4a8bb877e5a6372fcdadf1ba559968614b84f2e10",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/WAVE_LEDGER_BACKFILL.json": "21a9a662bd0a31308c40f8b479c55eeb48f1fc04d41dd793af0126b70307b812",
     # Wave 14: DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE (18 files)
-    "docs/DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md": "5b2f4a169b4bb7d4182dc57e8653f7135de5ed51d9ab331923f403260198876f",
+    "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/report.md": "5b2f4a169b4bb7d4182dc57e8653f7135de5ed51d9ab331923f403260198876f",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/CANDIDATE_CACHE_PROOF.json": "1a377d1419f71e84af51f1949b3e49a1d2ef987dbdee37aab1e4c1f23b32f15b",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/CLAIM_PROVENANCE_MATRIX.json": "25ca710676d03638a0660c696126ab8850a0a294b52f3c786385ae5416a892ff",
     "docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/FAULT_INJECTION_MACHINE_PROOF.json": "df00bf9e0bbc02b33c91873eb4548e89fdf47cf1bb5c121423853f5b95bd72a3",

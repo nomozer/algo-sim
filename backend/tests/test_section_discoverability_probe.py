@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Tính toàn vẹn của probe discoverability — **0 lượt gọi model**.
 
-    `docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md`, 2026-09-05.
+    `docs/evaluation/reports/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md`, 2026-09-05.
 
 Bộ test này trả lời một câu duy nhất: **bộ đo có đo được không?** Nó chạy
 scorer trên các chương trình mà ta ĐÃ BIẾT đáp án — gold (đúng) và các bản tiêm
@@ -245,7 +245,7 @@ def test_TIEM_8_ngan_sach_VUOT_thi_NEM():
 # hazard có thật. Bộ kiểm đầy đủ của bản vá nằm ở
 # `tests/geometry/test_curved_scalar_axis_intersection.py`.
 #
-#     docs/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md §3b   (phát hiện)
+#     docs/evaluation/reports/CURVED_SECTION_MODEL_DISCOVERABILITY_PROBE.md §3b   (phát hiện)
 #     docs/CURVED_SCALAR_AXIS_INTERSECTION_FIX.md              (bản vá)
 def test_LOI_HE_DA_DONG__khoi_cong_khai_bang_VO_HUONG_nay_cat_duoc():
     """Nguyên nhân vẫn còn nguyên (`truc` rỗng), nhưng nó không còn được đọc."""

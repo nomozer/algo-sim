@@ -189,7 +189,7 @@
 
 ### ISSUE-ARCH-COMPILER-COVERAGE-NARROW
 - **description:** Primitive compiler hiện tại chỉ hỗ trợ một họ bài toán đơn lẻ là tính thể tích khối chóp có đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
-- **evidence:** `backend/app/simulation/compiler/primitive_compiler.py`, báo cáo `docs/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`.
+- **evidence:** `backend/app/simulation/compiler/primitive_compiler.py`, báo cáo `docs/evaluation/reports/GEOMETRY_FACT_GRAPH_AND_PRIMITIVE_COMPILER_VERTICAL_SLICE.md`.
 - **impact:** Hệ thống chưa thể biên dịch tất định các họ hình học không gian phổ biến khác trong chương trình THPT.
 - **scope:** `backend/app/simulation/compiler/`
 - **status:** OPEN
@@ -263,7 +263,7 @@
 
 ### ISSUE-EVAL-TOKEN-OPTIMIZATION-NOT-ESTABLISHED
 - **description:** Việc giảm token tiêu thụ của compiler so với LLM synthesis mới chỉ là quan sát thực nghiệm trên một lát cắt nhỏ, chưa được xác lập như một đặc tính đo lường tin cậy ở quy mô production.
-- **evidence:** `docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md`, `FINAL_DECISION.json`.
+- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/report.md`, `FINAL_DECISION.json`.
 - **impact:** Không được tuyên bố trong luận văn rằng compiler đã tối ưu hóa token ở mức độ hệ thống hoàn chỉnh.
 - **scope:** `docs/evaluation/`
 - **status:** OPEN
@@ -283,7 +283,7 @@
 
 ### ISSUE-EVAL-P03-P05-HISTORICAL-CAUSE-NOT-ESTABLISHED
 - **description:** Nguyên nhân gốc rễ của cụm lỗi lịch sử Analyze P03/P05 (`MODEL_MALFORMED_RELATION`) chưa được xác lập chắc chắn vì hai ca live retry đều trả về kết quả hợp lệ mà không tái hiện lỗi.
-- **evidence:** `docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md`, `FINAL_DECISION.json` (`HISTORICAL_ROOT_CAUSE = NOT_ESTABLISHED`).
+- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/report.md`, `FINAL_DECISION.json` (`HISTORICAL_ROOT_CAUSE = NOT_ESTABLISHED`).
 - **impact:** Cần duy trì giả thuyết về tính biến thiên tự nhiên của mô hình (model variance) và tiếp tục theo dõi qua các lần đo sau.
 - **scope:** `docs/evaluation/`
 - **status:** OPEN
@@ -323,7 +323,7 @@
 
 ### ISSUE-ARCH-PRISM-COMPILER-GAP
 - **description:** Primitive compiler thiếu primitive construct_prism(name, base_cycle, top_cycle, correspondence), FactGraph thiếu loại nút prism, và 10 tầng phối hợp khác (RequestContract, relations, adapter, eligibility, IR, gates, topology, measurement, routing, frontend renderer) chưa hỗ trợ họ lăng trụ đứng đáy tam giác vuông đã tiền đăng ký (right_triangle_base_right_prism_volume).
-- **evidence:** `docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md`, `docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/VERTICAL_SLICE_SCOPE_MAP.json`.
+- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md`, `docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/VERTICAL_SLICE_SCOPE_MAP.json`.
 - **impact:** Họ bài `right_triangle_base_right_prism_volume` chưa thể biên dịch tất định cho đến khi hoàn thành vertical slice qua đủ 12 tầng kỹ thuật.
 - **scope:** `backend/app/simulation/geometry_compiler/`
 - **status:** RESOLVED — verified by the W13 audit at `bf5a7907`: `geometry_compiler/primitives.py` has `construct_prism`, `fact_graph.py::LOAI_NUT` has `prism`, `compiler.py` supports `right_triangle_base_right_prism_volume` (vertical slice `5a5534fe`, 2026-09-22, `docs/EVIDENCE_INDEX.md`).
@@ -332,8 +332,8 @@
 - **default_switch_blocker:** YES
 
 ### ISSUE-ARCH-REQUEST-CONTRACT-PRISM-GAP
-- **description:** `RequestContract` tại baseline thiếu trường chở `prism identity`, `base_cycle`, `top_cycle`, hay `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`). Bế tắc kiến trúc giữa Direction A và Direction B đã được giải quyết về mặt thiết kế tại `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md` thông qua kiến trúc 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema). Vấn đề hiện tại là triển khai mã nguồn sản phẩm trong vertical slice.
-- **evidence:** `docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md`, `docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md`.
+- **description:** `RequestContract` tại baseline thiếu trường chở `prism identity`, `base_cycle`, `top_cycle`, hay `correspondence` (`REQUEST_CONTRACT = CHANGE_REQUIRED`). Bế tắc kiến trúc giữa Direction A và Direction B đã được giải quyết về mặt thiết kế tại `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md` thông qua kiến trúc 2 lớp (Internal Discriminated Union vs Model Transport Flattened Schema). Vấn đề hiện tại là triển khai mã nguồn sản phẩm trong vertical slice.
+- **evidence:** `docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/report.md`, `docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md`.
 - **impact:** Cần áp dụng hợp đồng đã thiết kế vào `request_contract.py` và `contract_adapter.py` trong vertical slice tiếp theo.
 - **scope:** `backend/app/simulation/semantic_program/request_contract.py`, `backend/app/simulation/geometry_compiler/contract_adapter.py`
 - **status:** RESOLVED — verified by the W13 audit at `bf5a7907`: `request_contract.py` carries `solid_topology: PrismTopologySpec | PyramidTopologySpec | None` (base cycle, top cycle, correspondence). The remaining contract gaps (one solid only, no regularity, no curved topology) are tracked by layer in `docs/architecture/geometry_capability_matrix_v2.json`.
@@ -603,13 +603,13 @@
 - **verify:** `cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/w20-cleanup-premerge/diagnostics/probe_literal_target.py --tag <tag>` (writes a new artifact, refuses to overwrite) + `.venv/Scripts/python.exe -m pytest tests/geometry/test_construction_binding_literal.py tests/geometry/test_construction_binding.py -q`
 
 ### ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
-- **description:** 180 historical wave reports stay physically at the `docs/` root, next to the 11 canonical and 7 project documents. W19 kept their paths because they are frozen evidence (`AGENTS.md` §4; W19 brief: frozen evidence keeps content and path) and 190 of 208 root documents are named by frozen artifacts.
-- **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md` (closed catalog); `docs/evaluation/geometry/runs/w19-docs-organization/inventory/INVENTORY.json`.
-- **impact:** navigation only. The catalog groups them by theme and `audit_docs_layout` stops the list from growing; a reader browsing the folder still sees about 200 files.
-- **scope:** relocation (for example into a reports folder under docs/evaluation) needs the user to amend `AGENTS.md` §4; the move is mechanical from the catalog, frozen artifacts' old paths resolve through a migration map as in W19.
-- **status:** INTENDED_LIMITATION (`cuboid-final-review`, 2026-10-05) — was OPEN (w19), user decision. The brief of the closing run of the cuboid work keeps historical reports at their bytes and paths and asks to record the 180 reports at the root as an intended limitation; they stay catalogued in `docs/evaluation/HISTORICAL_REPORTS.md`, and `audit_docs_layout` keeps the list closed.
+- **description:** Historical reports formerly occupied the `docs/` root beside living documents.
+- **evidence:** `docs/evaluation/HISTORICAL_REPORTS.md`; `docs/evaluation/geometry/runs/docs-organization/inventory.md`.
+- **impact:** resolved: 156/167 retained reports moved; the root contains only 11 report/contract exceptions with file-level path constraints.
+- **scope:** complete; catalog paths, consumers and byte-identity guard updated without rewriting report content.
+- **status:** RESOLVED (`docs-organization`, 2026-10-08).
 - **owner_class:** DOCUMENTATION
-- **suggested_wave:** only after the user amends `AGENTS.md` §4
+- **suggested_wave:** none
 - **default_switch_blocker:** NO
 - **acceptance:** every catalogued report moved byte-identical; migration map; 0 broken links in living documents; frozen artifacts unchanged.
 - **verify:** `cd backend && .venv/Scripts/python.exe scripts/audit_docs_information_architecture.py`

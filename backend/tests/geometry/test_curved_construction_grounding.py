@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """CURVED_CONSTRUCTION_GROUNDING — khối cong khai bằng VÔ HƯỚNG. 0 lượt gọi.
 
-    Nguồn: lượt V3 held-out 2026-09-05 (`docs/CURVED_V3_LIVE_ACCEPTANCE.md`),
+    Nguồn: lượt V3 held-out 2026-09-05 (`docs/evaluation/reports/CURVED_V3_LIVE_ACCEPTANCE.md`),
     0/9 ca dương servable.
 
 Lượt ấy chứng minh một mâu thuẫn ở tầng dựng, không phải ở mô hình:

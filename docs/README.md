@@ -51,10 +51,12 @@
 - [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) — **thẩm quyền**: wave → báo cáo → artifact → chuỗi đính chính
   (`CORRECTED_BY`).
 - [`evaluation/README.md`](evaluation/README.md) — cách tổ chức run, đặt tên, run mới nhất.
-- [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ còn được giữ ở gốc `docs/`
-  theo chủ đề; nội dung dùng làm bằng chứng được giữ nguyên, mục đã hết vai trò được gỡ qua inventory có kiểm.
+- [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — catalog 167 báo cáo cũ theo chủ đề và
+  đường dẫn thật: report wave nằm cạnh package artifact, report chủ đề ở `evaluation/reports/`, 11 ngoại lệ gốc có
+  ràng buộc theo file. Nội dung bằng chứng giữ nguyên byte.
 - [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
-- Run mới nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
+- Run tổ chức tài liệu: [`docs-organization`](evaluation/geometry/runs/docs-organization/) (mapping 167 report,
+  byte verification, full-backend closure). Run sản phẩm gần nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
   sang candidate hiện hành) · [`cuboid-acceptance`](evaluation/geometry/runs/cuboid-acceptance/) (đối chiếu 24 bất
   biến) · [`cuboid-final-review`](evaluation/geometry/runs/cuboid-final-review/) (lượt chốt của việc cuboid:
   rà soát trọn tài liệu, thẻ từ chối §17) · [`w20-cleanup-premerge`](evaluation/geometry/runs/w20-cleanup-premerge/)
@@ -75,6 +77,7 @@
 | nguyên tắc, contract | `ARCHITECTURE_MAP.md`, `architecture/` | bảng test |
 | tuyên bố khoá luận/bài báo | `research/CLAIM_EVIDENCE_MAP.md` | README, bản thảo |
 | báo cáo của một wave | thư mục run của wave đó | gốc `docs/` |
+| báo cáo lịch sử trước quy ước run | cạnh package artifact hoặc `evaluation/reports/` | gốc `docs/`, trừ ngoại lệ path-bound trong catalog |
 
 ## 7. Lưu trữ
 

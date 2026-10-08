@@ -5,7 +5,7 @@
 
 Wave này KHÔNG mở năng lực toán học nào: mặt cầu ngoại tiếp vốn đã diễn đạt
 được bằng IR hiện có. Nó đóng hai lỗ HỢP ĐỒNG mà một lượt đo thật đã phơi ra
-(`docs/SMALL_DEVELOPMENT_PROBE.md`):
+(`docs/evaluation/reports/SMALL_DEVELOPMENT_PROBE.md`):
 
   ① cổng phủ đọc `memory_declarations` rồi coi đó là toàn bộ chương trình, nên
     mọi vật dựng bằng `construct_*` mà mô hình không khai đều VÔ HÌNH với nó —

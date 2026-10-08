@@ -1,0 +1,14 @@
+{
+  "run_id": "docs-organization",
+  "task_slug": "docs-organization",
+  "date": "2026-10-08",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "939778983b7dfbce806b12ccdca76add14670d2a",
+  "classification": "SUPPORTING",
+  "default_mode": "LLM_ONLY",
+  "cache_version": 117,
+  "model_requests": 0,
+  "screenshots": 0,
+  "human_visual_review": "NOT_APPROVED",
+  "scope": "final documentation organization and offline verification"
+}

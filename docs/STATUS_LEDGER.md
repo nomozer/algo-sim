@@ -187,7 +187,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** RUNNER_REPAIR_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/COMPLETION_RUNNER_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** STRUCTURED_RELATION_SAFETY_REPAIR
@@ -200,7 +200,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** COMPILER_SAFETY_REPAIR
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/STRUCTURED_RELATION_SAFETY_REPAIR.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION
@@ -213,7 +213,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** EVALUATION_PREREGISTRATION
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY
@@ -226,7 +226,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** RUNNER_MEASUREMENT_REPAIR
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR
@@ -239,7 +239,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** LIVE_EVALUATION
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 12
-- **REPORT_PATH:** docs/RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark-completion-live-post-measurement-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** ANALYZE_FAILURE_CLUSTER_DIAGNOSIS
@@ -252,7 +252,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** DIAGNOSIS_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/ANALYZE_FAILURE_CLUSTER_DIAGNOSIS.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION
@@ -265,7 +265,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** REPRODUCTION_PREREGISTRATION
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 1
-- **REPORT_PATH:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
@@ -278,7 +278,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** RUNNER_PERSISTENCE_REPAIR
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/
 - **CORRECTED_BY:** SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
 - **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
@@ -291,7 +291,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** RECONCILIATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
@@ -304,7 +304,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** LIVE_RETRY_EVALUATION
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 2
-- **REPORT_PATH:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/
 - **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_REVIEW
 - **NEXT_ACTION_AT_TIME:** MODEL_VARIANCE_EVIDENCE_REVIEW
@@ -317,7 +317,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** EVIDENCE_REVIEW_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/
 - **CORRECTED_BY:** MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
 - **NEXT_ACTION_AT_TIME:** MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
@@ -330,7 +330,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** PROVENANCE_REPAIR_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING
@@ -343,7 +343,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** DOCS_HARDENING_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/
 - **CORRECTED_BY:** DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
 - **NEXT_ACTION_AT_TIME:** DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
@@ -356,7 +356,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** PROVENANCE_REPAIR_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/
 - **CORRECTED_BY:** DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
 - **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
@@ -369,7 +369,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** TELEMETRY_RECONCILIATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-test-telemetry-reconciliation-final/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/docs-test-telemetry-reconciliation-final/
 - **CORRECTED_BY:** NONE
 - **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
@@ -382,7 +382,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** PREREGISTRATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/
 - **CORRECTED_BY:** SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
 - **NEXT_ACTION_AT_TIME:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE
@@ -395,7 +395,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** EVIDENCE_REPAIR_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/
 - **CORRECTED_BY:** SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
 - **CORRECTS:** PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
@@ -409,7 +409,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** SOURCE_SCOPE_RECONCILIATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
@@ -424,7 +424,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE
@@ -439,7 +439,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** VERTICAL_SLICE_IMPLEMENTATION_AND_VERIFICATION_OFFLINE
 - **PRODUCT_CHANGED:** YES
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-vertical-slice/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-vertical-slice/
 - **CORRECTED_BY:** SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE
 - **CORRECTS:** NONE
@@ -454,7 +454,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** REPORTING_AND_TEST_ASSERTION_EVIDENCE_MISMATCH
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-frozen-benchmark-alignment-repair/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-frozen-benchmark-alignment-repair/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE
@@ -469,7 +469,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** REGRESSION_REPAIR_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2.md
+- **REPORT_PATH:** docs/evaluation/reports/SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2.md
 - **ARTIFACT_PATH:** NONE
 - **CORRECTED_BY:** SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE
 - **CORRECTS:** NONE
@@ -484,7 +484,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/semantic-benchmark/report.md
 - **ARTIFACT_PATH:** docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2
@@ -499,7 +499,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** PREREGISTRATION_OFFLINE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation-preregistration/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation-preregistration/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE
@@ -514,7 +514,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** SCHEMA_ACCEPTED_MODEL_SEMANTIC_FAILURE
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 1
-- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/
 - **CORRECTED_BY:** SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE
 - **CORRECTS:** NONE
@@ -529,7 +529,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** HISTORICAL_EVIDENCE_INSUFFICIENT
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
@@ -544,7 +544,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** PREREGISTRATION_PASS
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 0
-- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry-preregistration/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry-preregistration/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** NONE
@@ -559,7 +559,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLASSIFICATION:** SCHEMA_ACCEPTED_PIPELINE_PASS
 - **PRODUCT_CHANGED:** NO
 - **MODEL_REQUESTS:** 1
-- **REPORT_PATH:** docs/SECOND_FAMILY_LIVE_RETRY.md
+- **REPORT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry/
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
@@ -1138,6 +1138,18 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** none (maintenance); the thesis draft's HTTP table follows the code
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = FINAL_DOCUMENTATION_ORGANIZATION
+- **RUN_ID:** docs-organization
+- **DATE:** 2026-10-08
+- **START_BASE:** 93977898
+- **SCOPE:** move 156/167 retained reports out of docs root; preserve 167/167 report blobs; update live consumers and layout guards
+- **MODEL_REQUESTS / SCREENSHOTS:** 0 / 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/docs-organization/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-organization/
+- **CANDIDATE / CACHE / DEFAULT:** unchanged / 117 / LLM_ONLY
+- **HUMAN_VISUAL_REVIEW:** NOT_APPROVED
+- **FINAL_DECISION:** verification pending
 
 ### WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
 - **RUN_ID:** docs-cleanup-2026-10-08

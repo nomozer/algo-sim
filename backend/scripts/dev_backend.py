@@ -27,7 +27,7 @@ Cổng migration đứng TRƯỚC build/start/recreate. `CMD` của image chạy
 nên chỉ cần start một container trên image có revision mới là schema bị đổi ÂM THẦM. Launcher không bao giờ
 đi đường đó: DB khác head nguồn · revision lạ · nhiều head · không đọc được revision ⇒ dừng, không build,
 không start. Duyệt migration là việc của NGƯỜI (sao lưu trước — xem
-`docs/DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING.md`).
+`docs/evaluation/reports/DOCKER_BACKEND_DEV_AUTO_REFRESH_HARDENING.md`).
 
 Launcher KHÔNG BAO GIỜ: `down` · `-v` · `prune` · xoá volume · `--force-recreate` · đụng service `db` ·
 build lần hai sau khi build hỏng · in biến môi trường · chuyển `ALLOW_LIVE_AI` xuống lệnh con.

@@ -297,7 +297,7 @@ cả hai đọc `scene3d-tokens.ts`, và chủ thể chúng đo đã không còn
 được. Trên bản đã phục hồi nó báo `TRUC_TROI` ở cả ba ca (vòng 71–104°, trục
 0,545–0,549) — đó là **phán quyết đúng về sản phẩm**, không phải cổng hỏng.
 
-Báo cáo: `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
+Báo cáo: `docs/evaluation/reports/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
 
 ### FINAL_DEAD_EVALUATION_CLEANUP 2026-09-02
 
@@ -624,7 +624,7 @@ model-view). Mỗi ca ba cửa sổ: đứng yên 1 s (CHỨNG) → kéo 300 px/
 `ROTATION_AXIS_INSTABILITY` không làm chậm khung nào cả — nó làm **trục quay
 đổi mỗi khung**. Đọc bằng chuẩn của trục trung bình: `1,000` = bàn xoay quanh
 một trục cố định; `< 1` = lộn nhào. Đo được `0,608–0,680` trước bản vá vòng đời
-`camera.up`, `1,000` sau. Xem `docs/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md`.
+`camera.up`, `1,000` sau. Xem `docs/evaluation/reports/SCENE3D_INTERACTION_SMOOTHNESS_REGRESSION_DIAGNOSIS.md`.
 
 ⚠ **Cửa sổ đứng yên ở `1440×900` bị nhiễu, ở `390×844` thì sạch.** Ma trận đại
 diện mỗi khung là model-view ĐẦU TIÊN, nên thứ tự vẽ đổi giữa hai khung cho ra
@@ -1482,7 +1482,7 @@ sinh, **chưa tới `served`**. Cả ba ứng viên đúng mọi chiều trừ m
 `BLOCKER = PLANE_FROM_EQUATION_REPRESENTATION`. Gold vẫn `served` với `16π√5`:
 hệ diễn đạt được **qua đường gold**, nhưng đường ấy đòi gắn `source_fact_id`
 vào toạ độ đề không nêu. Xem
-`docs/SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION.md`.
+`docs/evaluation/reports/SCOPE_GATE_QUANTITY_OBLIGATION_CLUE_REPAIR_AND_ELLIPSE_CONFIRMATION.md`.
 
 ### `backend/scripts/score_oblique_ellipse_fresh.py` · offline
 
@@ -2060,7 +2060,7 @@ checker — `_LECH` (*"giá trị không khớp"*) nghĩa là nó ĐÃ tính l�
 rồi thấy lệch. Cùng tiêu chí `test_measure_checker_subject_drift` dùng.
 
 **`REQUESTED_OPERATION_UNCOVERED` KHÔNG tự nó là lỗi hệ** (đính chính
-2026-09-04, `docs/SMALL_DEVELOPMENT_PROBE.md`). Cùng mã, hai nguyên nhân ngược
+2026-09-04, `docs/evaluation/reports/SMALL_DEVELOPMENT_PROBE.md`). Cùng mã, hai nguyên nhân ngược
 nhau, và nhãn cũ sai ở cả hai chiều. Hai hàm trả lời hai câu riêng:
 `_cong_phu_hep_hon_bo_kiem` so `OBLIGATION_KINDS` với `kieu_kiem_chung_duoc`
 (bắt lại vết `CURVED_MODEL_ACCEPTANCE_V1`); **`nghia_vu_du_noi_dung_hut_ten`**
@@ -4012,7 +4012,7 @@ Hai tầng, cố ý:
   đứng trước mọi `new OrbitControls`, và controls chỉ tạo một lần.
 
 Ba phép tiêm đã chứng ĐỎ: bỏ hẳn dòng · chuyển xuống sau controls · đổi
-`(0,1,0)`. Báo cáo: `docs/SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION.md`.
+`(0,1,0)`. Báo cáo: `docs/evaluation/reports/SCENE3D_MINIMAL_Z_UP_CAMERA_IMPLEMENTATION.md`.
 
 ### `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · offline
 
@@ -5925,10 +5925,10 @@ biệt được hai endpoint. Nay so bằng regex có biên (`(?![\w/])`).
   Issue ID, chuỗi đính chính không chu trình (Acyclic DAG), một next action duy nhất, kiểm tra độ dài handoff
   (<= 300 dòng), quét secret và đối soát bằng chứng kiểm thử máy.
   Test: `backend/tests/geometry/test_docs_information_architecture.py` (22 invariants, 14 fault injections F1–F14).
-  **W19 (2026-10-04)** thêm `audit_docs_layout(repo_root, catalog_text=None)` — gốc `docs/` là danh sách ĐÓNG:
-  mỗi `docs/*.md` thuộc `CANONICAL_DOMAINS`, `PROJECT_DOCS`, hoặc có dòng bảng trong
-  `HISTORICAL_REPORTS_CATALOG` (`docs/evaluation/HISTORICAL_REPORTS.md`); thư mục con thuộc `DOCS_SUBDIRS`; catalog
-  rỗng là FAIL. `NAVIGATION_DOCS` (README gốc + hub research/evaluation/legacy/architecture + bản đồ tuyên bố +
+  **W19 (2026-10-04), cập nhật ở `docs-organization`**: `audit_docs_layout(repo_root, catalog_text=None)` giữ gốc
+  `docs/` là danh sách đóng, cho phép chỉ ngoại lệ root được catalog; mọi link bảng trong
+  `HISTORICAL_REPORTS_CATALOG` (`docs/evaluation/HISTORICAL_REPORTS.md`) phải tồn tại và không trùng; thư mục con thuộc
+  `DOCS_SUBDIRS`; catalog rỗng là FAIL. `NAVIGATION_DOCS` (README gốc + hub research/evaluation/legacy/architecture + bản đồ tuyên bố +
   catalog) vào phạm vi mặc định của `audit_internal_links`. Producer của catalog:
   `docs/evaluation/geometry/runs/w19-docs-organization/diagnostics/build_report_catalog.py`; consumer:
   `audit_docs_layout`. Test thêm: `test_inv_23_docs_root_is_a_closed_list`, `test_inv_24_navigation_hubs_links_resolve`,

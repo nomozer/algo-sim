@@ -9,10 +9,11 @@
 | vùng | nội dung |
 |---|---|
 | [`geometry/runs/`](geometry/runs/) | một thư mục / run từ w09 (`wNN-short-slug` tới w20, rồi `<task-slug>-wNN`; từ 2026-10-07 tên theo việc — `exact-dimensions`, `repo-cleanup`, `docs-cleanup`; luật hiện hành ở [`RUN_NAMING.md`](RUN_NAMING.md), run cũ giữ tên); run mới có `report.md`, `handoff.md`, `run.json`, `inputs/`, `diagnostics/` (run cũ viết hoa: `REPORT.md`, `RUN.json`, `MANIFEST.json`) |
-| [`geometry/photo-problem-to-scene/`](geometry/photo-problem-to-scene/) | artifact các wave đề-từ-ảnh và đo live 2026-09-13 … 09-24 (báo cáo ở gốc `docs/`) |
+| [`geometry/photo-problem-to-scene/`](geometry/photo-problem-to-scene/) | package các wave đề-từ-ảnh và đo live 2026-09-13 … 09-24; report đăng ký nằm trong package tương ứng |
 | `geometry/<tên-wave>/` khác | artifact các wave hình học 2026-08-24 … 09-27 (`thesis-final-acceptance/`, `curved-acceptance-v3/`, `holdout/`, …) |
+| [`reports/`](reports/) | báo cáo đánh giá lịch sử theo chủ đề không có package run riêng; tên rõ chức năng được giữ |
 | `semantic-benchmark/` | benchmark SEALED thời Tin học vẫn được `CORRECTNESS.md` dùng, đồng thời chứa candidate register sống; giữ vì consumer cụ thể |
-| [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) | catalog **đóng** các báo cáo wave cũ nằm ở gốc `docs/`, theo chủ đề |
+| [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) | catalog **đóng** 167 báo cáo cũ theo chủ đề và đường dẫn vật lý hiện hành |
 | [`AUDIT_ARTIFACT_MANIFEST.md`](AUDIT_ARTIFACT_MANIFEST.md) | nguồn gốc bảy bộ artifact audit W4B-0 |
 
 ### Thư mục bằng chứng ngoài `geometry/` — đọc gì ở đâu
@@ -33,13 +34,15 @@ do hai báo cáo bằng chứng còn dùng đường dẫn tuyệt đối trong 
 
 - Run mới (luật 2026-10-07): `report.md` / `handoff.md` trong thư mục run; w09 … w20 và các run `<task-slug>-wNN`:
   `REPORT.md` / `HANDOFF.md`.
-- Trước đó: một file `docs/<TÊN_WAVE>.md` ở gốc — tra [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) hoặc
-  `../EVIDENCE_INDEX.md`. Danh sách ấy đóng: wave mới **không** thêm báo cáo vào gốc `docs/`.
+- Trước đó: tra [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) hoặc `../EVIDENCE_INDEX.md`; report đã đăng ký
+  nằm cạnh package artifact, report chủ đề ở `reports/`. Mười một ngoại lệ còn ở gốc vì contract được code trích
+  trực tiếp hoặc link tương đối byte-locked cần đúng độ sâu; danh sách ngoại lệ nằm trong run `docs-organization`.
 
 ## Run gần nhất
 
 | run | chủ đề |
 |---|---|
+| [`docs-organization`](geometry/runs/docs-organization/) | tổ chức cuối 167 báo cáo, mapping cũ → mới, kiểm byte/link/full backend; không đổi sản phẩm |
 | [`cuboid-merge`](geometry/runs/cuboid-merge/) | gói duyệt hình A–F trước khi merge; ảnh W18 chứng minh chuyển tiếp sang candidate `b2d4187a` (fixture tái sinh offline chỉ khác hai trường danh tính); 0 thay đổi sản phẩm |
 | [`cuboid-acceptance`](geometry/runs/cuboid-acceptance/) | đối chiếu 24 bất biến có con trỏ chết của `ARCHITECTURE_MAP` §5 (9 đang khoá, 1 chưa đủ bằng chứng, 14 lịch sử, 0 vi phạm); 0 thay đổi sản phẩm |
 | [`cuboid-final-review`](geometry/runs/cuboid-final-review/) | lượt chốt của việc cuboid (không đánh số wave): rà soát trọn tài liệu (lịch sử Tin học tách nguyên văn sang `legacy/`), luật đánh số wave theo từng việc, thẻ từ chối §17 nói "chưa kiểm chứng được phép dựng" |

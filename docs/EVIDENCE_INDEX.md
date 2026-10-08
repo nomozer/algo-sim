@@ -85,7 +85,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = COMPLETION_RUNNER_REPAIR_OFFLINE
 - **DATE:** 2026-09-17
-- **REPORT:** docs/COMPLETION_RUNNER_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/completion-runner-repair-offline/
 - **START_BASE:** bd370157
 - **CODE_COMMIT:** 25c3f5b8
@@ -101,7 +101,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = STRUCTURED_RELATION_SAFETY_REPAIR
 - **DATE:** 2026-09-17
-- **REPORT:** docs/STRUCTURED_RELATION_SAFETY_REPAIR.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/structured-relation-safety-repair/
 - **START_BASE:** 35d84da0
 - **CODE_COMMIT:** 8dd5f8b6
@@ -117,7 +117,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION
 - **DATE:** 2026-09-17
-- **REPORT:** docs/N04_TARGETED_REJECTION_REGISTRY_V2_PREREGISTRATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/n04-targeted-rejection-registry-v2-preregistration/
 - **START_BASE:** cac49a09
 - **CODE_COMMIT:** 330334a0
@@ -133,7 +133,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY
 - **DATE:** 2026-09-18
-- **REPORT:** docs/COMPLETION_MEASUREMENT_REPAIR_OFFLINE_POST_SAFETY.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/completion-measurement-repair-offline-post-safety/
 - **START_BASE:** d01254c2
 - **CODE_COMMIT:** e0fbbb22
@@ -149,7 +149,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR
 - **DATE:** 2026-09-18
-- **REPORT:** docs/RETRY_REMAINING_PREREGISTERED_CASES_POST_MEASUREMENT_REPAIR.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark-completion-live-post-measurement-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/multicase-benchmark-completion-live-post-measurement-repair/
 - **START_BASE:** e76419f4
 - **CODE_COMMIT:** NONE
@@ -165,7 +165,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = ANALYZE_FAILURE_CLUSTER_DIAGNOSIS
 - **DATE:** 2026-09-19
-- **REPORT:** docs/ANALYZE_FAILURE_CLUSTER_DIAGNOSIS.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/analyze-failure-cluster-diagnosis/
 - **START_BASE:** 12df583a
 - **CODE_COMMIT:** 5806fec9
@@ -181,7 +181,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION
 - **DATE:** 2026-09-19
-- **REPORT:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction/
 - **START_BASE:** 0ff69cbb
 - **CODE_COMMIT:** 2dbf23c7
@@ -197,7 +197,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE
 - **DATE:** 2026-09-20
-- **REPORT:** docs/SAFE_STRUCTURE_TRACE_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-offline/
 - **START_BASE:** 45702b36
 - **CODE_COMMIT:** 866a1257
@@ -213,7 +213,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION
 - **DATE:** 2026-09-20
-- **REPORT:** docs/SAFE_STRUCTURE_TRACE_REPAIR_EVIDENCE_RECONCILIATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/safe-structure-trace-repair-evidence-reconciliation/
 - **START_BASE:** efee245c
 - **CODE_COMMIT:** NONE
@@ -229,7 +229,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY
 - **DATE:** 2026-09-21
-- **REPORT:** docs/FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/fresh-preregistered-failure-reproduction-retry/
 - **START_BASE:** c6c6448e
 - **CODE_COMMIT:** 934b4aeb
@@ -245,7 +245,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = MODEL_VARIANCE_EVIDENCE_REVIEW
 - **DATE:** 2026-09-21
-- **REPORT:** docs/MODEL_VARIANCE_EVIDENCE_REVIEW.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-review/
 - **START_BASE:** d09331ea
 - **CODE_COMMIT:** 3ba5afbb
@@ -261,7 +261,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/MODEL_VARIANCE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/
 - **START_BASE:** 63eb0640
 - **CODE_COMMIT:** 18704f14
@@ -277,7 +277,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING
 - **DATE:** 2026-09-22
-- **REPORT:** docs/DOCS_INFORMATION_ARCHITECTURE_AND_HANDOFF_HARDENING.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-handoff-hardening/
 - **START_BASE:** 2678cc65
 - **CODE_COMMIT:** 34c36872
@@ -293,7 +293,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/DOCS_INFORMATION_ARCHITECTURE_EVIDENCE_PROVENANCE_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/docs-information-architecture-evidence-provenance-repair/
 - **START_BASE:** c36f2042
 - **CODE_COMMIT:** 27ed66aa
@@ -309,7 +309,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL
 - **DATE:** 2026-09-22
-- **REPORT:** docs/DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/docs-test-telemetry-reconciliation-final/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/docs-test-telemetry-reconciliation-final/
 - **START_BASE:** 02a7a860
 - **CODE_COMMIT:** dbb1ef1c
@@ -325,7 +325,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION
 - **DATE:** 2026-09-22
-- **REPORT:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_SELECTION_AND_PREREGISTRATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-selection/
 - **START_BASE:** 6ec2e0d3
 - **CODE_COMMIT:** abb377b8
@@ -341,7 +341,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/SECOND_FAMILY_PREREGISTRATION_EVIDENCE_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-preregistration-evidence-repair/
 - **START_BASE:** 2a5b28eb
 - **CODE_COMMIT:** 4a218d2d
@@ -357,7 +357,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/SECOND_FAMILY_SOURCE_SCOPE_RECONCILIATION_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-source-scope-reconciliation/
 - **START_BASE:** dc444acd
 - **CODE_COMMIT:** 4630f24d
@@ -373,7 +373,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/GENERIC_SOLID_TOPOLOGY_CONTRACT_DESIGN_AND_PREREGISTRATION_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/generic-solid-topology-contract-design/
 - **START_BASE:** 65d09a89
 - **CODE_COMMIT:** d0ba8bb7
@@ -389,7 +389,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/PRIMITIVE_COMPILER_SECOND_FAMILY_VERTICAL_SLICE_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-vertical-slice/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/primitive-compiler-second-family-vertical-slice/
 - **START_BASE:** f4a547ab
 - **CODE_COMMIT:** 5a5534fe
@@ -404,7 +404,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE
 - **DATE:** 2026-09-22
-- **REPORT:** docs/SECOND_FAMILY_FROZEN_BENCHMARK_ALIGNMENT_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-frozen-benchmark-alignment-repair/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-frozen-benchmark-alignment-repair/
 - **START_BASE:** b4521d28
 - **CODE_COMMIT:** 0714e929
@@ -420,7 +420,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2
 - **DATE:** 2026-09-23
-- **REPORT:** docs/SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2.md
+- **REPORT:** docs/evaluation/reports/SECOND_FAMILY_POST_VERTICAL_SLICE_FULL_REGRESSION_REPAIR_OFFLINE_GATE_2.md
 - **ARTIFACT_DIRECTORY:** NONE
 - **START_BASE:** 8703fb50
 - **CODE_COMMIT:** SELF
@@ -436,7 +436,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE
 - **DATE:** 2026-09-23
-- **REPORT:** docs/SCHEMA_SYNC_AND_CANDIDATE_REFREEZE_REPAIR_OFFLINE.md
+- **REPORT:** docs/evaluation/semantic-benchmark/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/semantic-benchmark/
 - **START_BASE:** c69eef96
 - **CODE_COMMIT:** 6eb23e8d
@@ -452,7 +452,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION
 - **DATE:** 2026-09-24
-- **REPORT:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION_PREREGISTRATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation-preregistration/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation-preregistration/
 - **START_BASE:** 002b8da5
 - **CODE_COMMIT:** NONE
@@ -468,7 +468,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION
 - **DATE:** 2026-09-24
-- **REPORT:** docs/SECOND_FAMILY_LIVE_SCHEMA_REVALIDATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-schema-revalidation/
 - **START_BASE:** ef8af771
 - **CODE_COMMIT:** NONE
@@ -484,7 +484,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE
 - **DATE:** 2026-09-24
-- **REPORT:** docs/SECOND_FAMILY_LIVE_MEASUREMENT_RECONCILIATION_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-measurement-reconciliation/
 - **START_BASE:** 532f447e
 - **CODE_COMMIT:** NONE
@@ -500,7 +500,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION
 - **DATE:** 2026-09-24
-- **REPORT:** docs/SECOND_FAMILY_LIVE_RETRY_PREREGISTRATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry-preregistration/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry-preregistration/
 - **START_BASE:** 462645ec
 - **CODE_COMMIT:** ab7d94eb
@@ -516,7 +516,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = SECOND_FAMILY_LIVE_RETRY
 - **DATE:** 2026-09-24
-- **REPORT:** docs/SECOND_FAMILY_LIVE_RETRY.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/second-family-live-retry/
 - **START_BASE:** 5d92afa2
 - **CODE_COMMIT:** NONE
@@ -532,7 +532,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW
 - **DATE:** 2026-09-24
-- **REPORT:** docs/PRISM_VERTICAL_SLICE_MERGE_READINESS_REVIEW.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/prism-vertical-slice-merge-readiness/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/prism-vertical-slice-merge-readiness/
 - **START_BASE:** d3fc1c72
 - **CODE_COMMIT:** NONE
@@ -548,7 +548,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE
 - **DATE:** 2026-09-24
-- **REPORT:** docs/PRISM_MERGE_READINESS_EVIDENCE_IDENTITY_RECONCILIATION_OFFLINE.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/prism-merge-readiness-evidence-identity-reconciliation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/prism-merge-readiness-evidence-identity-reconciliation/
 - **START_BASE:** f0d040f6
 - **CODE_COMMIT:** NONE
@@ -564,7 +564,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = REFRESH_REMOTE_MAIN_AND_REVALIDATE_MERGE_BASE
 - **DATE:** 2026-09-24
-- **REPORT:** docs/REMOTE_MAIN_REFRESH_AND_MERGE_BASE_REVALIDATION.md
+- **REPORT:** docs/evaluation/geometry/photo-problem-to-scene/remote-main-refresh-revalidation/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/photo-problem-to-scene/remote-main-refresh-revalidation/
 - **START_BASE:** f0d8f4b2
 - **CODE_COMMIT:** NONE
@@ -596,7 +596,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = CUBOID_VISUAL_SEMANTIC_CLOSURE_AND_CROSS_FAMILY_REGRESSION_AUDIT
 - **DATE:** 2026-09-27
-- **REPORT:** docs/CUBOID_VISUAL_SEMANTIC_CLOSURE_AND_CROSS_FAMILY_REGRESSION_AUDIT.md
+- **REPORT:** docs/evaluation/geometry/cuboid-cube-semantic-closure-20260927/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/cuboid-cube-semantic-closure-20260927/; docs/evaluation/geometry/cross-family-regression-20260927/
 - **START_BASE:** d9e79a00
 - **CODE_COMMIT:** 2822beb3
@@ -612,7 +612,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = CLOSE_GENERIC_TIER_A_BROWSER_EVIDENCE_BEFORE_CUBOID_MERGE
 - **DATE:** 2026-09-27
-- **REPORT:** docs/GENERIC_TIER_A_BROWSER_EVIDENCE_CLOSURE.md
+- **REPORT:** docs/evaluation/geometry/generic-tier-a-browser-closure-20260927/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/generic-tier-a-browser-closure-20260927/
 - **START_BASE:** 1c83418a
 - **CODE_COMMIT:** 2747f4b926511bd526e2eab541099f01e4b8acb5
@@ -629,7 +629,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 
 ## WAVE_ID = GENERIC_TIER_A_BROWSER_EVIDENCE_SEMANTIC_CORRECTION
 - **DATE:** 2026-09-27
-- **REPORT:** docs/GENERIC_TIER_A_BROWSER_EVIDENCE_SEMANTIC_CORRECTION.md
+- **REPORT:** docs/evaluation/geometry/generic-tier-a-browser-semantic-correction-20260927/report.md
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/generic-tier-a-browser-semantic-correction-20260927/
 - **START_BASE:** 26479cc7
 - **CODE_COMMIT:** NONE
@@ -1135,6 +1135,25 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** rational sizes via an affine chart + Gram metric derived from the text; source-side capture policy; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/BROWSER_EVIDENCE.json` · `results/PLAYBACK_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/attempt1–3/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = FINAL_DOCUMENTATION_ORGANIZATION
+- **RUN_ID:** docs-organization
+- **DATE:** 2026-10-08
+- **REPORT:** docs/evaluation/geometry/runs/docs-organization/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-organization/
+- **START_BASE:** 93977898
+- **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots)
+- **EVIDENCE_COMMIT_ROLE:** per-report migration map, byte-identity and offline verification logs
+- **CLASSIFICATION:** CLEANUP_VERIFICATION_PENDING
+- **PRODUCT_CHANGE:** NO product behaviour; documentation locations and their live path consumers only
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO (117)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** physical placement limitation recorded by DOCUMENTATION_AND_NAMING_CLEANUP and closes ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** navigation only; evidence conclusions and approval states unchanged
+- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json`
+- **RUN_ID_POLICY:** TASK_NAME
 
 ## WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
 - **RUN_ID:** docs-cleanup-2026-10-08 (second execution of task docs-cleanup; same branch)

@@ -20,7 +20,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (việc docs-cleanup; run docs-cleanup; máy local; cùng nhánh) — trước đó REPO_CLEANUP, EXACT_DIMENSIONS_AND_CAPTURE_POLICY
+CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; máy local; cùng nhánh) — trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP
 PRODUCT_STATE = candidate b4a33205… (product commit 8c66249d; băm không đổi, đóng băng lại một lần ở 976e0eea), CACHE_VERSION 117, LLM_ONLY
 MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
@@ -34,12 +34,11 @@ NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
 commit. Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
 
-## 3. Tài liệu nằm ở đâu (từ W19)
+## 3. Tài liệu nằm ở đâu
 
-- Gốc `docs/`: 11 tài liệu chuẩn tắc + 7 tài liệu dự án (`CORRECTNESS`, `COVERAGE`, `DESIGN_BRIEF`,
-  `OPERATIONS`, `DEMO_RUNBOOK`, `TEST_TIERS`, `POST_THESIS_BACKLOG`) + 180 báo cáo wave cũ (bất biến;
-  catalog `docs/evaluation/HISTORICAL_REPORTS.md`). Gốc là danh sách ĐÓNG: `audit_docs_layout` đỏ khi
-  thêm file chưa phân lớp — báo cáo wave mới chỉ nằm trong thư mục run.
+- Gốc `docs/`: tài liệu chuẩn tắc/dự án và 11 contract/report ngoại lệ có ràng buộc đường dẫn cụ thể. Catalog
+  `docs/evaluation/HISTORICAL_REPORTS.md` trỏ 167 báo cáo: 33 report nằm cạnh package artifact, 123 report ở
+  `docs/evaluation/reports/`, 11 ngoại lệ ở gốc. `audit_docs_layout` kiểm cả root đóng và đích catalog.
 - `docs/research/`: `CLAIM_EVIDENCE_MAP.md` (thẩm quyền duy nhất tuyên bố ↔ bằng chứng ↔ giới hạn),
   `thesis/` (bản thảo, chương, tài liệu tham khảo, hình), `paper/`, phương pháp và tài liệu tham khảo.
 - `docs/evaluation/`: run (`geometry/runs/wNN-slug/`), `README.md`, catalog báo cáo cũ.
@@ -147,8 +146,8 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - **Quyết định chờ người dùng:** W18-H2 (ô soi lặp dòng giá trị), W18-H3 đã giải quyết ở W1
   (`ISSUE-ARCH-SCOPE-GATE-LENGTH-CLUE` RESOLVED), W17-H2 (`ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL`), W15-H2
   (vùng chặn ngoài đa diện), W15-H3 (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`).
-- **Từ w19 tới run `cuboid-final-review`:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` = `INTENDED_LIMITATION`
-  (180 báo cáo ở gốc, catalog đóng); `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212; 204 + 108 mục chờ quyết
+- **Sau `docs-organization`:** `ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT` = `RESOLVED` (156 report chuyển,
+  11 ngoại lệ root); `ISSUE-OPS-TMP-LEFTOVERS-UNVERIFIED` (w20 xoá 8/212; 204 + 108 mục chờ quyết
   định); `ISSUE-OPS-DOCS-FAULT-INJECTION-TESTS-WRITE-LIVING-DOCS` (năm test ghi tạm vào tài liệu sống); mới:
   `ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` (8/10 script T1 trỏ miền đã gỡ); run `cuboid-acceptance`:
   `ISSUE-OPS-LIVE-OPT-IN-NOT-UNIFORM` (smoke script Tin học đã retire, còn `run_rectangular_pyramid_live_analyze.py`; không chặn merge).

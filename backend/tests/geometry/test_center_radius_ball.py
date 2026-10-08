@@ -223,7 +223,7 @@ def test_D2_tru_va_non_NAY_NHAN_radius_va_van_doi_dung_mot_truc():
     một quyết định PHẠM VI: *"trụ/nón đã có đường diễn đạt chạy được, nới thêm
     là mở một bề mặt chưa ai đo"*.
 
-    Lượt V3 held-out đo và chứng minh câu ấy SAI (`docs/CURVED_V3_LIVE_ACCEPTANCE.md`
+    Lượt V3 held-out đo và chứng minh câu ấy SAI (`docs/evaluation/reports/CURVED_V3_LIVE_ACCEPTANCE.md`
     §8b): đường duy nhất cho trụ/nón là `rim_point` — một điểm trên vành đáy —
     mà đề SGK **không bao giờ đặt tên** cho điểm ấy, nên grounding gate chặn
     mọi cách khai nó, kể cả cách DỰNG bằng `translate`. 0/6 ca trụ+nón đi qua.

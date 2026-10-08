@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """NGHĨA VỤ `area` CỦA MẶT CẦU ≡ `lateral_area`. **0 lượt gọi model.**
 
-    `docs/CURVED_OBLIGATION_SURFACE_ALIGNMENT.md`, 2026-09-05.
+    `docs/evaluation/reports/CURVED_OBLIGATION_SURFACE_ALIGNMENT.md`, 2026-09-05.
     Nguồn: `CURVED_CONSTRUCTION_GROUNDING_FOUNDATION` §10① — khoảng trống chắn
     trước mọi thứ hai wave trước vừa mở.
 

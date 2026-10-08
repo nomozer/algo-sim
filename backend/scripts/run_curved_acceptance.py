@@ -4,7 +4,7 @@
     cd backend && ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \\
         .venv/Scripts/python.exe scripts/run_curved_acceptance.py --out-dir <thư mục>
 
-⚠️ **TIÊU QUOTA THẬT.** Xem `docs/PHASE_3_CURVED_PRODUCT_INTEGRATION.md`.
+⚠️ **TIÊU QUOTA THẬT.** Xem `docs/evaluation/reports/PHASE_3_CURVED_PRODUCT_INTEGRATION.md`.
 
 ─── CHÍNH SÁCH TIẾT KIỆM, VÀ VÌ SAO NÓ TÁCH LÀM HAI CHẶNG ─────────────────
 
@@ -574,7 +574,7 @@ async def _chay_mot(c: dict, api_key: str) -> dict[str, Any]:
     #
     # Bản trước đọc đại lượng từ `outcome.envelope["scene3d"]` — một phép
     # chiếu LUÔN RỖNG, vì `route` cố ý không dựng cảnh. Xem
-    # `cham_ca_theo_duong_san_pham` và `docs/V3_PRODUCT_PATH_PARITY_CORRECTION.md`.
+    # `cham_ca_theo_duong_san_pham` và `docs/evaluation/reports/V3_PRODUCT_PATH_PARITY_CORRECTION.md`.
     cham = cham_ca_theo_duong_san_pham(c, contract, spec, outcome,
                                        schema_ok=True)
     ra["cham"] = cham

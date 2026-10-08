@@ -30,7 +30,7 @@ hoặc văn phòng khoa trước khi định dạng.
 | B4 | Dựng bảng ánh xạ 21 ↔ 15 thành **hình** nếu bảng quá dài cho khổ giấy | ngắn | quyết sau khi biết bề rộng trang của mẫu trường |
 | B5 | Rút gọn tóm tắt tiếng Việt nếu trường quy định giới hạn từ | ngắn | hiện **459 âm tiết** (tiếng Anh 317 từ). Nếu phải cắt, đoạn cắt được là đoạn phạm vi ở cuối — nhưng **không được bỏ** ý *tác động lên người học chưa được đánh giá* |
 | ~~B6~~ | ~~Ghép Hình 4.3 thành một tấm~~ | **XONG** 2026-09-02 | `fig_4_3_playback.png` |
-| ~~B7~~ | ~~Cân nhắc cắt dòng nhãn sai ở Hình 4.4~~ | **KHÔNG CÒN CẦN** | nhãn đã sửa thành *“CHƯA DỰNG ĐƯỢC MÔ PHỎNG”*; xem `docs/PRESENTATION_UI_POLISH.md` |
+| ~~B7~~ | ~~Cân nhắc cắt dòng nhãn sai ở Hình 4.4~~ | **KHÔNG CÒN CẦN** | nhãn đã sửa thành *“CHƯA DỰNG ĐƯỢC MÔ PHỎNG”*; xem `docs/evaluation/reports/PRESENTATION_UI_POLISH.md` |
 
 ### Ghi chú độ dài
 

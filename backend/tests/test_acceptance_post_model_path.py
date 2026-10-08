@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """RUNNER PHẢI CHẤM Ở ĐÚNG TẦNG SẢN PHẨM. **0 lượt gọi model.**
 
-    `docs/ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT.md`, 2026-09-05.
+    `docs/evaluation/reports/ACCEPTANCE_POST_MODEL_PATH_ALIGNMENT.md`, 2026-09-05.
     Nguồn: `V3_PRODUCT_PATH_PARITY_CORRECTION` — `c7a` đúng cả ba đáp số mà bị
     chấm là lỗi mô hình.
 

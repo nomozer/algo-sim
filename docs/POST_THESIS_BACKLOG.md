@@ -24,7 +24,7 @@
 
 Hai mục dưới đây **không phải ý tưởng**, chúng là khiếm khuyết đã đo được. Ghi ở
 đây vì cả hai đòi chạm vùng đang đóng băng; bằng chứng và phân tích đầy đủ ở
-`docs/PRODUCT_INTEGRATION_HARDENING.md`.
+`docs/evaluation/reports/PRODUCT_INTEGRATION_HARDENING.md`.
 
 - ~~**Tên biến IR lọt lên bề mặt học sinh** (§4.1)~~ — ✅ **ĐÓNG 2026-09-02**
   (`SEMANTIC_PRESENTATION_METADATA_AUTHORITY`, G1+G2). Giữ mô tả gốc bên dưới

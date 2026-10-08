@@ -117,7 +117,7 @@ def live_evidence_integrity() -> dict[str, Any]:
             "git_blob_worktree": blob_now or None,
             "blob_matches_head": bool(blob_head) and blob_head == blob_now,
         })
-    rel_bc = "docs/STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md"
+    rel_bc = "docs/evaluation/reports/STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md"
     bh, bn = _git("rev-parse", f"HEAD:{rel_bc}"), _git("hash-object", "--", str(LIVE_REPORT))
     muc.append({
         "file": rel_bc, "exists": LIVE_REPORT.exists(),

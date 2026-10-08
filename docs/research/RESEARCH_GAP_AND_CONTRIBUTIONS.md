@@ -250,7 +250,7 @@ Nhập nhằng năm chữ này là cách nhanh nhất để một phát biểu k
 
 ## 4. Rà soát năm câu hỏi nghiên cứu
 
-Nguồn RQ: `docs/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md` Bảng 2 +
+Nguồn RQ: `docs/evaluation/reports/THESIS_ACCEPTANCE_MATRIX_AND_DOCUMENTATION.md` Bảng 2 +
 `CLAIMS_MATRIX.json` (`created_before_live_run = true`).
 **Không sửa văn bản đăng ký lịch sử** — cột *đề nghị* chỉ áp cho bản thảo hiện hành.
 

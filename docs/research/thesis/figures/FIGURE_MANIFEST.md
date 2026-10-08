@@ -96,7 +96,7 @@ nổi. **0 lỗi bảng điều khiển** trong toàn bộ lượt chụp.
 | Chú thích | *Hình 4.2. Giao diện xưởng hình ba chiều ở chế độ chi tiết. Ô soi hiển thị phép dựng đã tạo ra đối tượng đang chọn và danh sách đối tượng mà nó phụ thuộc; cấu trúc phụ thuộc này được dẫn xuất từ chương trình, chứ không phải một danh sách toạ độ được khai trực tiếp.* |
 
 ✅ **Caveat cũ đã hết.** Bản chụp trước ghi *"ô soi che phần lớn khối chóp"*.
-Sau lượt hoàn thiện trình bày (`docs/PRESENTATION_UI_POLISH.md`), ô soi là **cột
+Sau lượt hoàn thiện trình bày (`docs/evaluation/reports/PRESENTATION_UI_POLISH.md`), ô soi là **cột
 bên phải** chứ không còn là lớp phủ, và ảnh mới thấy đồng thời: khối chóp trọn
 vẹn · mặt phẳng cắt · điểm đang chọn tô sáng · ba trường xuất xứ. Đo trong
 trình duyệt: ô soi **không** giao với khung 3D ở cả ba bề rộng đã kiểm.

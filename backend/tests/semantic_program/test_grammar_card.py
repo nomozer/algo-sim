@@ -183,7 +183,7 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     #   · gợi ý "bỏ trống" ở `anchor` — không có nó thì mô hình không có cách
     #     nào biết đường pose canonical tồn tại.
     # Lượt V3 held-out đo được cái giá của việc THIẾU hai thứ này: 0/9 ca dương
-    # servable (`docs/CURVED_V3_LIVE_ACCEPTANCE.md` §8). Không phải văn xuôi:
+    # servable (`docs/evaluation/reports/CURVED_V3_LIVE_ACCEPTANCE.md` §8). Không phải văn xuôi:
     # mọi luật tổ hợp vẫn do validator giữ.
     # 5660 → 5850 (2026-09-07, CURVED_MISSING_FAMILY_ROADMAP_AND_OBLIQUE_
     # CYLINDER_ELLIPSE_FOUNDATION): 5648 → 5775 byte, **+127**, do ĐÚNG MỘT từ
@@ -269,7 +269,7 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # 5320 → 5410 byte. Cùng phân loại với trần bản đầy đủ ở trên: **từ vựng
     # mới thật**, sinh từ lược đồ — ô `radius` mở lớp bài *"mặt cầu tâm O bán
     # kính r"* mà ba-điểm KHÔNG diễn đạt nổi (chứng minh ở
-    # `docs/CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION.md`). Đây là thẻ mô
+    # `docs/evaluation/reports/CENTER_RADIUS_CURVED_CONSTRUCTION_FOUNDATION.md`). Đây là thẻ mô
     # hình THẬT SỰ nhận, nên 90 byte ấy là thứ duy nhất mở được đường đi.
     m = len(grammar_card("hinh_hoc").encode("utf-8"))
     # 5450 → 5510 (2026-09-05, CURVED_CONSTRUCTION_GROUNDING_FOUNDATION):

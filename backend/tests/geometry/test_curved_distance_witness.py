@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """NGHĨA VỤ CÓ WITNESS ĐƯỢC KIỂM QUA CHÍNH CÂU LỆNH SINH RA NÓ. 0 lượt gọi.
 
-    `docs/CURVED_DISTANCE_WITNESS_VERIFICATION.md`, 2026-09-05.
+    `docs/evaluation/reports/CURVED_DISTANCE_WITNESS_VERIFICATION.md`, 2026-09-05.
     Fixture `c7a` — POST_V3_DEVELOPMENT_FIXTURE (V3 đã tiêu; đây là replay
     tất định trên dữ liệu đã công bố, KHÔNG phải một lượt acceptance mới).
 
