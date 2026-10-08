@@ -1143,16 +1143,16 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-organization/
 - **START_BASE:** 93977898
 - **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots)
-- **EVIDENCE_COMMIT_ROLE:** per-report migration map, byte-identity and offline verification logs
-- **CLASSIFICATION:** CLEANUP_VERIFICATION_PENDING
+- **EVIDENCE_COMMIT_ROLE:** `23aff0ad` relocation/map · `9c176272` candidate metadata · `a3448c71` consumer/test path repair · final documentation/log commit
+- **CLASSIFICATION:** DOCUMENTATION_ORGANIZED_AND_OFFLINE_VERIFIED
 - **PRODUCT_CHANGE:** NO product behaviour; documentation locations and their live path consumers only
-- **CANDIDATE_CHANGE:** NO
+- **CANDIDATE_CHANGE:** metadata-only refreeze to product commit `23aff0ad`; tree hash `b4a33205…` unchanged
 - **CACHE_CHANGE:** NO (117)
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** physical placement limitation recorded by DOCUMENTATION_AND_NAMING_CLEANUP and closes ISSUE-DOCS-HISTORICAL-REPORTS-AT-DOCS-ROOT
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** navigation only; evidence conclusions and approval states unchanged
-- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json`
+- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `diagnostics/full-backend-authoritative.log` · `diagnostics/full-backend-authoritative.exit-code.txt`
 - **RUN_ID_POLICY:** TASK_NAME
 
 ## WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION

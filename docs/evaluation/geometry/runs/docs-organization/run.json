@@ -4,11 +4,34 @@
   "date": "2026-10-08",
   "branch": "feat/regular-square-pyramid",
   "start_head": "939778983b7dfbce806b12ccdca76add14670d2a",
+  "organization_commit": "23aff0ad5239102be82eb113e346e97c4c7926c4",
+  "candidate_metadata_commit": "9c1762725144b9b2fd9fabbe552bc7cd35eafb5e",
+  "verification_head": "a3448c71f9ba245cdff94c6ec62c6b605175baa9",
   "classification": "SUPPORTING",
+  "final_decision": "DOCUMENTATION_ORGANIZED_AND_OFFLINE_VERIFIED",
   "default_mode": "LLM_ONLY",
   "cache_version": 117,
+  "candidate_tree_hash": "b4a33205a3d0e6d2",
   "model_requests": 0,
   "screenshots": 0,
   "human_visual_review": "NOT_APPROVED",
-  "scope": "final documentation organization and offline verification"
+  "scope": "final documentation organization and offline verification",
+  "reports_classified": 167,
+  "reports_moved": 156,
+  "root_exceptions": 11,
+  "report_blobs_preserved": "167/167",
+  "backend": {
+    "passed": 7234,
+    "skipped": 1,
+    "deselected": 2,
+    "exit_code": 0,
+    "duration_seconds": 339.42,
+    "log": "diagnostics/full-backend-authoritative.log"
+  },
+  "frontend": {
+    "test_files_passed": 67,
+    "tests_passed": 1023,
+    "typecheck": "PASS",
+    "vite_build": "PASS_WITH_ALTERNATE_OUTDIR_DUE_TO_STALE_DIST_ACL"
+  }
 }

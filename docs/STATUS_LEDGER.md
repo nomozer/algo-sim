@@ -1147,9 +1147,10 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **MODEL_REQUESTS / SCREENSHOTS:** 0 / 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/docs-organization/report.md
 - **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-organization/
-- **CANDIDATE / CACHE / DEFAULT:** unchanged / 117 / LLM_ONLY
+- **CANDIDATE / CACHE / DEFAULT:** tree `b4a33205…` unchanged (metadata refreeze to `23aff0ad`) / 117 / LLM_ONLY
 - **HUMAN_VISUAL_REVIEW:** NOT_APPROVED
-- **FINAL_DECISION:** verification pending
+- **VERIFICATION:** 167/167 report blobs preserved; docs audit PASS; candidate/cache verify PASS; backend clean worktree 7,234 passed + 1 skipped + 2 deselected (exit 0); frontend 1,023 passed; typecheck and Vite build PASS
+- **FINAL_DECISION:** DOCUMENTATION_ORGANIZED_AND_OFFLINE_VERIFIED
 
 ### WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
 - **RUN_ID:** docs-cleanup-2026-10-08

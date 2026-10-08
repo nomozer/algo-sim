@@ -52,11 +52,11 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 8c66249d (run docs-cleanup: đổi tên test/tiêu đề, CSS chết, gỡ RULES_v0.3 — chỉ test/CSS/tài liệu, mã đo không đổi; candidate đóng băng lại ở 976e0eea; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions — dọn không đổi hành vi hình học)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = a3448c71 (run docs-organization: chỉ di chuyển tài liệu và sửa consumer/test path; candidate metadata ở 9c176272; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions — dọn không đổi hành vi hình học)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 117
-> CANDIDATE = b4a33205… (băm không đổi; đóng băng lại một lần ở 8c66249d — trước đó be4b8287), product commit 8c66249d
+> CANDIDATE = b4a33205… (băm không đổi; refreeze metadata ở 9c176272), product commit 23aff0ad
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP)
 > FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
@@ -72,7 +72,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | `docs/legacy/` | 42 → 15 file: xoá 26 (plan/spec Superpowers M9–M17, W13; tài liệu chuyển đề; REPOSITORY_MAP; RULES_v0.3), thiết kế + kế hoạch route Semantic Program → `legacy/architecture/`, `CUBOID_CUBE_CONTRACT_DECISION.md` về `architecture/` (mã còn cài đúng nó) |
 > | Hướng dẫn | kế hoạch/spec của skill: thiết kế ⇒ `docs/architecture/`, kế hoạch ⇒ `plan.md` của run (AGENTS §4, `docs/README.md` §8) |
 > | Tàn dư Tin học | 12 lớp `geo3d-*` chết gỡ; còn `SamplePreview`/`threeD`/`specDrift` và prompt + IR (sáu prompt không loader) — hai issue `ISSUE-ARCH-*-INFORMATICS-*` |
-> | Candidate · `CACHE_VERSION` | băm **`b4a33205…`** không đổi, product `be4b8287` → **`8c66249d`** · **117** (không bump) |
+> | Candidate · `CACHE_VERSION` | băm **`b4a33205…`** không đổi, product **`23aff0ad`** · **117** (không bump) |
 > | Run | [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (`report.md`, `handoff.md`, `inventory.md`) |
 
 > **Tổ chức tài liệu cuối — run docs-organization (2026-10-08, không đổi nội dung bằng chứng):** 167/167 report

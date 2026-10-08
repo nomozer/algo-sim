@@ -21,7 +21,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
 CURRENT_WAVE = FINAL_DOCUMENTATION_ORGANIZATION (việc docs-organization; máy local; cùng nhánh) — trước đó DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION, DOCUMENTATION_AND_NAMING_CLEANUP
-PRODUCT_STATE = candidate b4a33205… (product commit 8c66249d; băm không đổi, đóng băng lại một lần ở 976e0eea), CACHE_VERSION 117, LLM_ONLY
+PRODUCT_STATE = candidate b4a33205… (product commit 23aff0ad; băm không đổi, refreeze metadata ở 9c176272), CACHE_VERSION 117, LLM_ONLY
 MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
 FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2)
