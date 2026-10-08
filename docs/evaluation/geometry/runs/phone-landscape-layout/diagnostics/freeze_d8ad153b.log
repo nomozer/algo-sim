@@ -1,0 +1,15 @@
+# cwd: <worktree 'D:/tmp/landscape fit'/backend> @ d8ad153b2248dd7710953df4ac36a67351afa457; clean detached CRLF; bare freeze then --verify
+2026-10-08T17:26:37Z
+0
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            d8ad153b  (cây sạch: True)
+  CACHE_VERSION     118
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       102 file · 7f3f042309dd1c54
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 7f3f042309dd1c54…).
+verify exit=0
