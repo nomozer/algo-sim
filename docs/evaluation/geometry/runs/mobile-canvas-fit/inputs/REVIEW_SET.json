@@ -1,0 +1,18 @@
+{
+  "schema_version": "review-set/1",
+  "run_id": "mobile-canvas-fit",
+  "layer": "chosen BEFORE the measurement: the smallest set a human needs to review THIS change (D5) and to carry the earlier review items whose images belonged to an older candidate (A-R8, B-R5, C-R1-R3, C-R9) onto the final candidate; globs relative to the run directory. The capture policy (frontend/scripts/capture-policy.mjs, mode toi-thieu) also keeps the oracle inputs (neutral_final, rotated_neutral) and failure states.",
+  "items": [
+    {"path": "images/mobile/*/portrait/layout.png", "requirement": "D5 — phone 390x844, every family: canvas fits the figure, no blank band above/below; height-bound family keeps its height"},
+    {"path": "images/mobile/*/portrait/steps_open.png", "requirement": "D5 — «Các bước dựng» opened on the phone: figure and panel visible together"},
+    {"path": "images/mobile/*/portrait/quantity_open.png", "requirement": "D5 — «Đại lượng» opened on the phone: figure and panel visible together"},
+    {"path": "images/mobile/regular-triangular-pyramid/portrait_small/layout.png", "requirement": "D5 — small phone 360x640: canvas at its 320 px floor"},
+    {"path": "images/mobile/regular-triangular-pyramid/landscape/layout.png", "requirement": "D5 — phone landscape 844x390 (desktop layout, canvas at floor): controls below the fold, unchanged by D5"},
+    {"path": "images/mobile/cross-section/*/steps_last.png", "requirement": "long steps panel: the current (last) step is visible inside the panel on every viewport"},
+    {"path": "images/focus/*/desktop/focus_layout.png", "requirement": "C-R1 on the final candidate (initial view now centred)"},
+    {"path": "images/focus/*/low/focus_layout.png", "requirement": "C-R2 on the final candidate"},
+    {"path": "images/focus/*/mobile/focus_layout.png", "requirement": "C-R3 on the final candidate (now with the D5 canvas)"},
+    {"path": "images/focus/regular-square-pyramid/mobile/menu_hien_thi.png", "requirement": "C-R3 menu on the phone"},
+    {"path": "images/regular-triangular-pyramid/negative/*/desktop/refusal.png", "requirement": "A-R8 / B-R5 on the final candidate: missing-dimension refusal wording after f967ba24"}
+  ]
+}

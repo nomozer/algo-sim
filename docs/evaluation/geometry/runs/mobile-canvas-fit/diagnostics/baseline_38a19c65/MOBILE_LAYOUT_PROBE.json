@@ -1,0 +1,8256 @@
+{
+  "schema_version": "mobile-layout-probe/1",
+  "application_llm_calls": 0,
+  "commit": "38a19c6546dec34c048295fb5f7bd3329dabd463",
+  "dist": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\d--Documents-projects-algo-sim\\5d59cf9c-a8b1-4c0d-acc9-b013ec9e1752\\scratchpad\\dist-before",
+  "thresholds": {
+    "lapDocMin": 0.55,
+    "sanCanvas": 320,
+    "thanBangThayMin": 120
+  },
+  "viewports": {
+    "portrait": {
+      "width": 390,
+      "height": 844,
+      "mobile": true
+    },
+    "portrait_small": {
+      "width": 360,
+      "height": 640,
+      "mobile": true
+    },
+    "landscape": {
+      "width": 844,
+      "height": 390,
+      "mobile": true
+    },
+    "low": {
+      "width": 1366,
+      "height": 650,
+      "mobile": false
+    },
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "mobile": false
+    }
+  },
+  "reason_codes": [
+    "CURRENT_STEP_HIDDEN_IN_PANEL",
+    "D5_VERTICAL_BLANK_BAND",
+    "FIGURE_LEFT_CANVAS_AFTER_ORBIT"
+  ],
+  "pass": false,
+  "runs": [
+    {
+      "family": "triangular_pyramid",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.09307861328125,
+        "y": 311.6087646484375,
+        "w": 259.9859924316406,
+        "h": 301.4571533203125,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.5808422992684249,
+        "w": 0.7262178559543034,
+        "blank_top": 92.6087646484375,
+        "blank_bottom": 124.93408203125,
+        "blank_left": 49.09307861328125,
+        "blank_right": 48.920928955078125
+      },
+      "camera0": {
+        "position": [
+          6.814498411479903,
+          6.48834659987315,
+          9.500785040749593
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865384,
+          -0.49240387650610434,
+          0.5868240888334652,
+          0,
+          0.7660444431189782,
+          -0.41317591116653407,
+          0.4924038765061033,
+          0,
+          -2.775557561562889e-17,
+          0.7660444431189777,
+          0.6427876096865396,
+          0,
+          -0.5900867127348639,
+          -1.2417096331098676,
+          -13.300785745555586,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 242
+        },
+        "figure": {
+          "x": 65.09307861328125,
+          "y": 69.60874938964844,
+          "w": 259.9859924316406,
+          "h": 301.45716857910156,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 602,
+          "bottom": 844,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.09307861328125,
+          "y": -26.391250610351562,
+          "w": 259.9859924316406,
+          "h": 301.45716857910156,
+          "n": 4
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 53.7502326965332,
+          "y": 413.18804931640625,
+          "w": 190.12731552124023,
+          "h": 225.45831298828125,
+          "n": 4
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "triangular_pyramid",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 80.88007354736328,
+        "y": 246.24874877929688,
+        "w": 198.51238250732422,
+        "h": 232.52090454101562,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266278266906738,
+        "w": 0.6052206783759885,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 60.2303466796875,
+        "blank_left": 64.88007354736328,
+        "blank_right": 64.6075439453125
+      },
+      "camera0": {
+        "position": [
+          5.621850305817867,
+          5.491838289631993,
+          8.231122057821363
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096864026,
+          -0.4924038765061423,
+          0.5868240888335826,
+          0,
+          0.7660444431190925,
+          -0.41317591116641716,
+          0.4924038765060242,
+          0,
+          -1.3877787807814454e-16,
+          0.7660444431190165,
+          0.6427876096864932,
+          0,
+          -0.59333648418981,
+          -1.2680891400091439,
+          -11.294102918814138,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 294
+        },
+        "figure": {
+          "x": 80.88007354736328,
+          "y": -47.751251220703125,
+          "w": 198.51238250732422,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -75,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 398,
+          "bottom": 640,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 80.88007354736328,
+          "y": -61.751251220703125,
+          "w": 198.51238250732422,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 121.71235656738281,
+          "y": 294.34552001953125,
+          "w": 133.7196502685547,
+          "h": 169.2904052734375,
+          "n": 4
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "triangular_pyramid",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 322.88006591796875,
+        "y": 87.24874877929688,
+        "w": 198.51239013671875,
+        "h": 232.52090454101562,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266278266906738,
+        "w": 0.24447338686788023,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 60.2303466796875,
+        "blank_left": 306.88006591796875,
+        "blank_right": 306.6075439453125
+      },
+      "camera0": {
+        "position": [
+          5.621850305817867,
+          5.4918382896319855,
+          8.231122057821358
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096864017,
+          -0.4924038765061425,
+          0.5868240888335832,
+          0,
+          0.766044443119093,
+          -0.41317591116641655,
+          0.49240387650602374,
+          0,
+          -2.77555756156289e-17,
+          0.7660444431190168,
+          0.6427876096864928,
+          0,
+          -0.5933364841898128,
+          -1.2680891400091467,
+          -11.294102918814128,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 322.88006591796875,
+          "y": 38.248748779296875,
+          "w": 198.51239013671875,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [
+          4
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 322.88006591796875,
+          "y": 87.24874877929688,
+          "w": 198.51239013671875,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 363.71240234375,
+          "y": 135.3455352783203,
+          "w": 133.7196044921875,
+          "h": 169.29039001464844,
+          "n": 4
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "triangular_pyramid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 534.7640991210938,
+        "y": 105.64875030517578,
+        "w": 263.8033447265625,
+        "h": 310.2461166381836,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7132094635360542,
+        "w": 0.2027696731180342,
+        "blank_top": 45.64875030517578,
+        "blank_bottom": 79.10513305664062,
+        "blank_left": 518.7640991210938,
+        "blank_right": 518.4325561523438
+      },
+      "camera0": {
+        "position": [
+          5.621850305817915,
+          5.49183828963254,
+          8.231122057821882
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096864525,
+          -0.4924038765061265,
+          0.5868240888335412,
+          0,
+          0.7660444431190507,
+          -0.41317591116645874,
+          0.49240387650605455,
+          0,
+          2.775557561562891e-16,
+          0.7660444431190045,
+          0.6427876096865078,
+          0,
+          -0.5933364841896918,
+          -1.2680891400090526,
+          -11.294102918814824,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 534.7640991210938,
+          "y": 105.64875030517578,
+          "w": 263.8033447265625,
+          "h": 310.2461166381836,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 534.7640991210938,
+          "y": 105.64875030517578,
+          "w": 263.8033447265625,
+          "h": 310.2461166381836,
+          "n": 4
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 521.5093383789062,
+          "y": 191.88938903808594,
+          "w": 193.75775146484375,
+          "h": 225.60829162597656,
+          "n": 4
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "triangular_pyramid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 500.8598327636719,
+        "y": 145.64874267578125,
+        "w": 405.7401428222656,
+        "h": 479.21405029296875,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.6995825551722171,
+        "w": 0.295083740234375,
+        "blank_top": 85.64874267578125,
+        "blank_bottom": 120.13720703125,
+        "blank_left": 484.8598327636719,
+        "blank_right": 484.4000244140625
+      },
+      "camera0": {
+        "position": [
+          5.6218503058179286,
+          5.491838289632826,
+          8.231122057822162
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096864793,
+          -0.492403876506119,
+          0.5868240888335184,
+          0,
+          0.7660444431190285,
+          -0.41317591116648156,
+          0.49240387650607037,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189971,
+          0.6427876096865166,
+          0,
+          -0.5933364841896264,
+          -1.268089140008998,
+          -11.294102918815184,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 500.8598327636719,
+          "y": 145.64874267578125,
+          "w": 405.7401428222656,
+          "h": 479.21405029296875,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 500.8598327636719,
+          "y": 145.64874267578125,
+          "w": 405.7401428222656,
+          "h": 479.21405029296875,
+          "n": 4
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 405.5,
+          "h": 329.5,
+          "visible": 329.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 475.7267761230469,
+          "y": 248.24949645996094,
+          "w": 348.6138000488281,
+          "h": 434.19874572753906,
+          "n": 4
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 86.59295654296875,
+        "y": 278.0887451171875,
+        "w": 217.48028564453125,
+        "h": 369.15283203125,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7112771330081888,
+        "w": 0.6074868314093052,
+        "blank_top": 59.0887451171875,
+        "blank_bottom": 90.7584228515625,
+        "blank_left": 70.59295654296875,
+        "blank_right": 69.9267578125
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 242
+        },
+        "figure": {
+          "x": 86.59295654296875,
+          "y": 36.08875274658203,
+          "w": 217.48028564453125,
+          "h": 369.15282440185547,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 602,
+          "bottom": 844,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 86.59295654296875,
+          "y": -59.91124725341797,
+          "w": 217.48028564453125,
+          "h": 369.15282440185547,
+          "n": 5
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 39.858097076416016,
+          "y": 411.3486328125,
+          "w": 254.04772567749023,
+          "h": 197.872802734375,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 109.8830795288086,
+        "y": 246.24874877929688,
+        "w": 140.9262924194336,
+        "h": 233.83319091796875,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7307287216186523,
+        "w": 0.4296533305470536,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 58.918060302734375,
+        "blank_left": 93.8830795288086,
+        "blank_right": 93.19062805175781
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 294
+        },
+        "figure": {
+          "x": 109.8830795288086,
+          "y": -47.751251220703125,
+          "w": 140.9262924194336,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -75,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 398,
+          "bottom": 640,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 109.8830795288086,
+          "y": -61.751251220703125,
+          "w": 140.9262924194336,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 125.20378875732422,
+          "y": 306.42633056640625,
+          "w": 109.37999725341797,
+          "h": 144.45416259765625,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 351.8830871582031,
+        "y": 87.24874877929688,
+        "w": 140.92626953125,
+        "h": 233.83319091796875,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7307287216186523,
+        "w": 0.17355451912715517,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 58.918060302734375,
+        "blank_left": 335.8830871582031,
+        "blank_right": 335.1906433105469
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 351.8830871582031,
+          "y": 38.248748779296875,
+          "w": 140.92626953125,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [
+          4
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 351.8830871582031,
+          "y": 87.24874877929688,
+          "w": 140.92626953125,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 367.2037658691406,
+          "y": 147.42633056640625,
+          "w": 109.38003540039062,
+          "h": 144.45416259765625,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 574.255615234375,
+        "y": 105.64875030517578,
+        "w": 185.166015625,
+        "h": 312.0329818725586,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7173171997070312,
+        "w": 0.1423259151614143,
+        "blank_top": 45.64875030517578,
+        "blank_bottom": 77.31826782226562,
+        "blank_left": 558.255615234375,
+        "blank_right": 557.578369140625
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 574.255615234375,
+          "y": 105.64875030517578,
+          "w": 185.166015625,
+          "h": 312.0329818725586,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 574.255615234375,
+          "y": 105.64875030517578,
+          "w": 185.166015625,
+          "h": 312.0329818725586,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 547.3193969726562,
+          "y": 209.16151428222656,
+          "w": 193.05023193359375,
+          "h": 163.9296112060547,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 563.1524658203125,
+        "y": 145.64874267578125,
+        "w": 281.33941650390625,
+        "h": 482.0325927734375,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.703697215727646,
+        "w": 0.20461048473011365,
+        "blank_top": 85.64874267578125,
+        "blank_bottom": 117.31866455078125,
+        "blank_left": 547.1524658203125,
+        "blank_right": 546.5081176757812
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 563.1524658203125,
+          "y": 145.64874267578125,
+          "w": 281.33941650390625,
+          "h": 482.0325927734375,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 563.1524658203125,
+          "y": 145.64874267578125,
+          "w": 281.33941650390625,
+          "h": 482.0325927734375,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 405.5,
+          "h": 329.5,
+          "visible": 329.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 504.4377136230469,
+          "y": 254.2666015625,
+          "w": 336.5389709472656,
+          "h": 332.4232177734375,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.59281158447266,
+        "y": 338.08697509765625,
+        "w": 258.6596908569336,
+        "h": 248.97772216796875,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.4797258615953155,
+        "w": 0.7225131029523285,
+        "blank_top": 119.08697509765625,
+        "blank_bottom": 150.935302734375,
+        "blank_left": 49.592811584472656,
+        "blank_right": 49.74749755859375
+      },
+      "camera0": {
+        "position": [
+          10.766511003363576,
+          7.285467588166833,
+          9.263990016890949
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.4330127018922176,
+          0.7500000000000016,
+          0,
+          0.8660254037844392,
+          -0.24999999999999853,
+          0.43301270189221913,
+          0,
+          2.220446049250313e-16,
+          0.8660254037844399,
+          0.4999999999999978,
+          0,
+          -0.9261445081188484,
+          -1.5394477784725544,
+          -15.861578265868461,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 242
+        },
+        "figure": {
+          "x": 65.59281158447266,
+          "y": 96.08698272705078,
+          "w": 258.6596908569336,
+          "h": 248.97774505615234,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 602,
+          "bottom": 844,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.59281158447266,
+          "y": 0.08698272705078125,
+          "w": 258.6596908569336,
+          "h": 248.97774505615234,
+          "n": 6
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 73.19269561767578,
+          "y": 307.5938720703125,
+          "w": 146.69695281982422,
+          "h": 311.08538818359375,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "D5_VERTICAL_BLANK_BAND"
+        ],
+        "info_codes": [],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 60.79281234741211,
+        "y": 255.82598876953125,
+        "w": 238.26630020141602,
+        "h": 214.39007568359375,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.6699689865112305,
+        "w": 0.7264216469555367,
+        "blank_top": 36.82598876953125,
+        "blank_bottom": 68.783935546875,
+        "blank_left": 44.79281234741211,
+        "blank_right": 44.940887451171875
+      },
+      "camera0": {
+        "position": [
+          7.9770350794574565,
+          5.6430371057737645,
+          7.404398787243382
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999994,
+          -0.43301270189221924,
+          0.7500000000000002,
+          0,
+          0.8660254037844387,
+          -0.2499999999999999,
+          0.43301270189221946,
+          0,
+          -8.326672684688677e-17,
+          0.8660254037844388,
+          0.49999999999999983,
+          0,
+          -0.8984959483695666,
+          -1.5474806602151316,
+          -12.12848244726393,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 294
+        },
+        "figure": {
+          "x": 60.79281234741211,
+          "y": -38.17401885986328,
+          "w": 238.26630020141602,
+          "h": 214.39008331298828,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": -75,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 398,
+          "bottom": 640,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 60.79281234741211,
+          "y": -52.17401885986328,
+          "w": 238.26630020141602,
+          "h": 214.39008331298828,
+          "n": 6
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 85.4115219116211,
+          "y": 251.39608764648438,
+          "w": 212.30310821533203,
+          "h": 204.6859130859375,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 288.71075439453125,
+        "y": 87.24874877929688,
+        "w": 266.39447021484375,
+        "h": 233.4249267578125,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.7294528961181641,
+        "w": 0.32807200765374844,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 59.326324462890625,
+        "blank_left": 272.71075439453125,
+        "blank_right": 272.894775390625
+      },
+      "camera0": {
+        "position": [
+          7.336148198247782,
+          5.26101971478884,
+          6.97632467217055
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999956,
+          -0.43301270189221813,
+          0.750000000000001,
+          0,
+          0.8660254037844388,
+          -0.249999999999999,
+          0.43301270189221935,
+          0,
+          5.551115123125783e-17,
+          0.8660254037844396,
+          0.49999999999999856,
+          0,
+          -0.8881026236940113,
+          -1.5497741096456437,
+          -11.268361846180058,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 288.71075439453125,
+          "y": 38.248748779296875,
+          "w": 266.39447021484375,
+          "h": 233.4249267578125,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [
+          4
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 288.71075439453125,
+          "y": 87.24874877929688,
+          "w": 266.39447021484375,
+          "h": 233.4249267578125,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 315.70550537109375,
+          "y": 78.46509552001953,
+          "w": 239.93048095703125,
+          "h": 226.43248748779297,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 488.0345458984375,
+        "y": 105.64875030517578,
+        "w": 356.71429443359375,
+        "h": 311.4770736694336,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.7160392498147898,
+        "w": 0.27418469979522964,
+        "blank_top": 45.64875030517578,
+        "blank_bottom": 77.87417602539062,
+        "blank_left": 472.0345458984375,
+        "blank_right": 472.25115966796875
+      },
+      "camera0": {
+        "position": [
+          7.336148198247782,
+          5.26101971478884,
+          6.97632467217055
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999956,
+          -0.43301270189221813,
+          0.750000000000001,
+          0,
+          0.8660254037844388,
+          -0.249999999999999,
+          0.43301270189221935,
+          0,
+          5.551115123125783e-17,
+          0.8660254037844396,
+          0.49999999999999856,
+          0,
+          -0.8881026236940113,
+          -1.5497741096456437,
+          -11.268361846180058,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 488.0345458984375,
+          "y": 105.64875030517578,
+          "w": 356.71429443359375,
+          "h": 311.4770736694336,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 488.0345458984375,
+          "y": 105.64875030517578,
+          "w": 356.71429443359375,
+          "h": 311.4770736694336,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 504.9079895019531,
+          "y": 51.99618911743164,
+          "w": 256.0856628417969,
+          "h": 379.4804039001465,
+          "n": 6
+        },
+        "inside": false
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "FIGURE_LEFT_CANVAS_AFTER_ORBIT"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 426.8254089355469,
+        "y": 145.64874267578125,
+        "w": 553.0616149902344,
+        "h": 481.15570068359375,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.7024170812899179,
+        "w": 0.4022266290838068,
+        "blank_top": 85.64874267578125,
+        "blank_bottom": 118.195556640625,
+        "blank_left": 410.8254089355469,
+        "blank_right": 411.11297607421875
+      },
+      "camera0": {
+        "position": [
+          7.336148198247782,
+          5.26101971478884,
+          6.97632467217055
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999956,
+          -0.43301270189221813,
+          0.750000000000001,
+          0,
+          0.8660254037844388,
+          -0.249999999999999,
+          0.43301270189221935,
+          0,
+          5.551115123125783e-17,
+          0.8660254037844396,
+          0.49999999999999856,
+          0,
+          -0.8881026236940113,
+          -1.5497741096456437,
+          -11.268361846180058,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 426.8254089355469,
+          "y": 145.64874267578125,
+          "w": 553.0616149902344,
+          "h": 481.15570068359375,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 426.8254089355469,
+          "y": 145.64874267578125,
+          "w": 553.0616149902344,
+          "h": 481.15570068359375,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 405.5,
+          "h": 329.5,
+          "visible": 329.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 445.07135009765625,
+          "y": 92.1338119506836,
+          "w": 371.5924072265625,
+          "h": 611.6494522094727,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 63.3796501159668,
+        "y": 306.0502624511719,
+        "w": 264.0041084289551,
+        "h": 313.2463684082031,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.6035575499194665,
+        "w": 0.737441643656299,
+        "blank_top": 87.05026245117188,
+        "blank_bottom": 118.703369140625,
+        "blank_left": 47.3796501159668,
+        "blank_right": 46.616241455078125
+      },
+      "camera0": {
+        "position": [
+          9.986047574478256,
+          9.15394051897174,
+          8.643971100417918
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865391,
+          -0.3830222215594885,
+          0.6634139481689384,
+          0,
+          0.7660444431189778,
+          -0.321393804843269,
+          0.5566703992264196,
+          0,
+          0,
+          0.8660254037844389,
+          0.49999999999999944,
+          0,
+          -0.5934176165850125,
+          -0.7190006632637482,
+          -16.042596521387324,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 242
+        },
+        "figure": {
+          "x": 63.3796501159668,
+          "y": 64.0502700805664,
+          "w": 264.0041084289551,
+          "h": 313.24633026123047,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 602,
+          "bottom": 844,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 63.3796501159668,
+          "y": -31.949729919433594,
+          "w": 264.0041084289551,
+          "h": 313.24633026123047,
+          "n": 8
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 43.2000617980957,
+          "y": 287.5213317871094,
+          "w": 286.8899040222168,
+          "h": 322.2796936035156,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 79.05783081054688,
+        "y": 246.33145141601562,
+        "w": 202.64218139648438,
+        "h": 233.75103759765625,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7304719924926758,
+        "w": 0.6178115286478182,
+        "blank_top": 27.331451416015625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 63.057830810546875,
+        "blank_right": 62.29998779296875
+      },
+      "camera0": {
+        "position": [
+          8.663350010909554,
+          8.051230592393997,
+          7.601166279412936
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865389,
+          -0.38302222155948834,
+          0.6634139481689391,
+          0,
+          0.7660444431189781,
+          -0.32139380484326874,
+          0.5566703992264194,
+          0,
+          -2.7755575615628907e-17,
+          0.866025403784439,
+          0.49999999999999906,
+          0,
+          -0.5989064101825375,
+          -0.6769318952752243,
+          -14.029852122945314,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 294
+        },
+        "figure": {
+          "x": 79.05783081054688,
+          "y": -47.668548583984375,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -75,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 398,
+          "bottom": 640,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 79.05783081054688,
+          "y": -61.668548583984375,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 97.419921875,
+          "y": 248.49073791503906,
+          "w": 166.72698974609375,
+          "h": 200.12828063964844,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 321.0578308105469,
+        "y": 87.33145141601562,
+        "w": 202.64218139648438,
+        "h": 233.75103759765625,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7304719924926758,
+        "w": 0.2495593366951778,
+        "blank_top": 27.331451416015625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 305.0578308105469,
+        "blank_right": 304.29998779296875
+      },
+      "camera0": {
+        "position": [
+          8.663350010909554,
+          8.051230592393997,
+          7.601166279412936
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865389,
+          -0.38302222155948834,
+          0.6634139481689391,
+          0,
+          0.7660444431189781,
+          -0.32139380484326874,
+          0.5566703992264194,
+          0,
+          -2.7755575615628907e-17,
+          0.866025403784439,
+          0.49999999999999906,
+          0,
+          -0.5989064101825375,
+          -0.6769318952752243,
+          -14.029852122945314,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 321.0578308105469,
+          "y": 38.331451416015625,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [
+          4
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 321.0578308105469,
+          "y": 87.33145141601562,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 339.4198913574219,
+          "y": 89.49072265625,
+          "w": 166.72702026367188,
+          "h": 200.1282958984375,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "cuboid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 532.8903198242188,
+        "y": 105.76136016845703,
+        "w": 267.9857177734375,
+        "h": 311.92113494873047,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7170600803419092,
+        "w": 0.2059844102793524,
+        "blank_top": 45.76136016845703,
+        "blank_bottom": 77.3175048828125,
+        "blank_left": 516.8903198242188,
+        "blank_right": 516.1239624023438
+      },
+      "camera0": {
+        "position": [
+          8.663350010909554,
+          8.051230592393997,
+          7.601166279412936
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865389,
+          -0.38302222155948834,
+          0.6634139481689391,
+          0,
+          0.7660444431189781,
+          -0.32139380484326874,
+          0.5566703992264194,
+          0,
+          -2.7755575615628907e-17,
+          0.866025403784439,
+          0.49999999999999906,
+          0,
+          -0.5989064101825375,
+          -0.6769318952752243,
+          -14.029852122945314,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 532.8903198242188,
+          "y": 105.76136016845703,
+          "w": 267.9857177734375,
+          "h": 311.92113494873047,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 532.8903198242188,
+          "y": 105.76136016845703,
+          "w": 267.9857177734375,
+          "h": 311.92113494873047,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 510.1365051269531,
+          "y": 83.52713775634766,
+          "w": 283.9076843261719,
+          "h": 318.9458236694336,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 498.87396240234375,
+        "y": 145.82638549804688,
+        "w": 410.036865234375,
+        "h": 481.8561096191406,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7034395760863367,
+        "w": 0.29820862926136366,
+        "blank_top": 85.82638549804688,
+        "blank_bottom": 117.3175048828125,
+        "blank_left": 482.87396240234375,
+        "blank_right": 482.08917236328125
+      },
+      "camera0": {
+        "position": [
+          8.663350010909554,
+          8.051230592393997,
+          7.601166279412936
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865389,
+          -0.38302222155948834,
+          0.6634139481689391,
+          0,
+          0.7660444431189781,
+          -0.32139380484326874,
+          0.5566703992264194,
+          0,
+          -2.7755575615628907e-17,
+          0.866025403784439,
+          0.49999999999999906,
+          0,
+          -0.5989064101825375,
+          -0.6769318952752243,
+          -14.029852122945314,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 498.87396240234375,
+          "y": 145.82638549804688,
+          "w": 410.036865234375,
+          "h": 481.8561096191406,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 312,
+          "h": 236,
+          "visible": 236
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 498.87396240234375,
+          "y": 145.82638549804688,
+          "w": 410.036865234375,
+          "h": 481.8561096191406,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 405.5,
+          "h": 329.5,
+          "visible": 329.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 482.2379150390625,
+          "y": 124.78977966308594,
+          "w": 437.0633544921875,
+          "h": 474.2609405517578,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 63.350624084472656,
+        "y": 330.7387390136719,
+        "w": 264.0127487182617,
+        "h": 263.8556213378906,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.508392333984375,
+        "w": 0.7374657785426305,
+        "blank_top": 111.73873901367188,
+        "blank_bottom": 143.4056396484375,
+        "blank_left": 47.350624084472656,
+        "blank_right": 46.636627197265625
+      },
+      "camera0": {
+        "position": [
+          12.690129841350208,
+          8.00495534493566,
+          7.317461215774363
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999917,
+          -0.365998150770666,
+          0.7848855672213967,
+          0,
+          0.8660254037844392,
+          -0.2113091308703487,
+          0.4531538935183244,
+          0,
+          -8.326672684688674e-17,
+          0.9063077870366506,
+          0.4226182617406984,
+          0,
+          -0.5874297641992152,
+          -0.2957878696268525,
+          -16.680269180004785,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 242
+        },
+        "figure": {
+          "x": 63.350624084472656,
+          "y": 88.7387466430664,
+          "w": 264.0127487182617,
+          "h": 263.8556137084961,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 602,
+          "bottom": 844,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 63.350624084472656,
+          "y": -7.261253356933594,
+          "w": 264.0127487182617,
+          "h": 263.8556137084961,
+          "n": 8
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 40.65930938720703,
+          "y": 296.87176513671875,
+          "w": 289.49877166748047,
+          "h": 306.228271484375,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "D5_VERTICAL_BLANK_BAND"
+        ],
+        "info_codes": [],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cube",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 60.21870040893555,
+        "y": 246.85101318359375,
+        "w": 240.05611038208008,
+        "h": 233.23147583007812,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7288483619689942,
+        "w": 0.7318783853112197,
+        "blank_top": 27.85101318359375,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 44.21870040893555,
+        "blank_right": 43.725189208984375
+      },
+      "camera0": {
+        "position": [
+          9.659113607978085,
+          6.180459944535208,
+          5.507858991217869
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999906,
+          -0.36599815077066655,
+          0.7848855672213966,
+          0,
+          0.866025403784439,
+          -0.21130913087034908,
+          0.45315389351832425,
+          0,
+          1.6653345369377348e-16,
+          0.9063077870366504,
+          0.42261826174069894,
+          0,
+          -0.522878515050623,
+          -0.150610155778084,
+          -12.70972014343534,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 294
+        },
+        "figure": {
+          "x": 60.21870040893555,
+          "y": -47.14897918701172,
+          "w": 240.05611038208008,
+          "h": 233.2314682006836,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -75,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 398,
+          "bottom": 640,
+          "h": 242,
+          "visible": 242
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 60.21870040893555,
+          "y": -61.14897918701172,
+          "w": 240.05611038208008,
+          "h": 233.2314682006836,
+          "n": 8
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 43.32162857055664,
+          "y": 218.5732421875,
+          "w": 259.34621810913086,
+          "h": 250.63681030273438,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 302.21868896484375,
+        "y": 87.85102081298828,
+        "w": 240.05615234375,
+        "h": 233.2314682006836,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7288483381271362,
+        "w": 0.2956356555957512,
+        "blank_top": 27.85102081298828,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 286.21868896484375,
+        "blank_right": 285.72515869140625
+      },
+      "camera0": {
+        "position": [
+          9.659113607978085,
+          6.180459944535208,
+          5.507858991217869
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999906,
+          -0.36599815077066655,
+          0.7848855672213966,
+          0,
+          0.866025403784439,
+          -0.21130913087034908,
+          0.45315389351832425,
+          0,
+          1.6653345369377348e-16,
+          0.9063077870366504,
+          0.42261826174069894,
+          0,
+          -0.522878515050623,
+          -0.150610155778084,
+          -12.70972014343534,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 302.21868896484375,
+          "y": 38.85102081298828,
+          "w": 240.05615234375,
+          "h": 233.2314682006836,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [
+          4
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 302.21868896484375,
+          "y": 87.85102081298828,
+          "w": 240.05615234375,
+          "h": 233.2314682006836,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 285.32159423828125,
+          "y": 59.57323455810547,
+          "w": 259.34625244140625,
+          "h": 250.63684844970703,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "cube",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 507.23828125,
+        "y": 106.46881866455078,
+        "w": 318.92987060546875,
+        "h": 311.2136764526367,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7154337389715787,
+        "w": 0.24514209885124424,
+        "blank_top": 46.46881866455078,
+        "blank_bottom": 77.3175048828125,
+        "blank_left": 491.23828125,
+        "blank_right": 490.83184814453125
+      },
+      "camera0": {
+        "position": [
+          9.659113607978085,
+          6.180459944535208,
+          5.507858991217869
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999906,
+          -0.36599815077066655,
+          0.7848855672213966,
+          0,
+          0.866025403784439,
+          -0.21130913087034908,
+          0.45315389351832425,
+          0,
+          1.6653345369377348e-16,
+          0.9063077870366504,
+          0.42261826174069894,
+          0,
+          -0.522878515050623,
+          -0.150610155778084,
+          -12.70972014343534,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 507.23828125,
+          "y": 106.46881866455078,
+          "w": 318.92987060546875,
+          "h": 311.2136764526367,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 295,
+          "h": 219,
+          "visible": 219
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 507.23828125,
+          "y": 106.46881866455078,
+          "w": 318.92987060546875,
+          "h": 311.2136764526367,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 462.18060302734375,
+          "y": 60.36463165283203,
+          "w": 349.6065673828125,
+          "h": 350.32335662841797,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 458.41131591796875,
+        "y": 146.94229125976562,
+        "w": 490.39447021484375,
+        "h": 480.7402038574219,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7018105165801779,
+        "w": 0.35665052379261364,
+        "blank_top": 86.94229125976562,
+        "blank_bottom": 117.3175048828125,
+        "blank_left": 442.41131591796875,
+        "blank_right": 442.1942138671875
+      },
+      "camera0": {
+        "position": [
+          9.659113607978085,
+          6.180459944535208,
+          5.507858991217869
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999906,
+          -0.36599815077066655,
+          0.7848855672213966,
+          0,
+          0.866025403784439,
+          -0.21130913087034908,
+          0.45315389351832425,
+          0,
+          1.6653345369377348e-16,
+          0.9063077870366504,
+          0.42261826174069894,
+          0,
+          -0.522878515050623,
+          -0.150610155778084,
+          -12.70972014343534,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 458.41131591796875,
+          "y": 146.94229125976562,
+          "w": 490.39447021484375,
+          "h": 480.7402038574219,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 295,
+          "h": 219,
+          "visible": 219
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 458.41131591796875,
+          "y": 146.94229125976562,
+          "w": 490.39447021484375,
+          "h": 480.7402038574219,
+          "n": 8
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 448.5,
+          "h": 372.5,
+          "visible": 372.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 436.83160400390625,
+          "y": 84.05968475341797,
+          "w": 541.3274536132812,
+          "h": 550.0441970825195,
+          "n": 8
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.03031158447266,
+        "y": 322.15594482421875,
+        "w": 260.5449752807617,
+        "h": 281.20941162109375,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.5418293094818762,
+        "w": 0.7277792605607869,
+        "blank_top": 103.15594482421875,
+        "blank_bottom": 134.6346435546875,
+        "blank_left": 49.030311584472656,
+        "blank_right": 48.424713134765625
+      },
+      "camera0": {
+        "position": [
+          17.75721184523092,
+          11.262584603519716,
+          8.4437204977269
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999877,
+          -0.296198132726022,
+          0.8137976813493818,
+          0,
+          0.8660254037844457,
+          -0.17101007166282786,
+          0.4698463103929435,
+          0,
+          2.498001805406602e-16,
+          0.9396926207859101,
+          0.342020143325664,
+          0,
+          -0.875078456304404,
+          -0.7488334525583346,
+          -22.630384143165212,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": -15.844039916992188,
+          "w": 260.5449752807617,
+          "h": 281.2094268798828,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -119,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [
+          8,
+          9,
+          10
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 255
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": 67.15596008300781,
+          "w": 260.5449752807617,
+          "h": 281.2094268798828,
+          "n": 5
+        },
+        "panel": {
+          "top": 589,
+          "bottom": 843.5,
+          "h": 254.5,
+          "visible": 254.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 21.803077697753906,
+          "y": 373.3719482421875,
+          "w": 292.3590621948242,
+          "h": 246.644775390625,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL",
+          "D5_VERTICAL_BLANK_BAND"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cross_section",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 73.82405090332031,
+        "y": 247.20681762695312,
+        "w": 212.5890655517578,
+        "h": 232.87567138671875,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7277364730834961,
+        "w": 0.6481373949748713,
+        "blank_top": 28.206817626953125,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 57.82405090332031,
+        "blank_right": 57.586883544921875
+      },
+      "camera0": {
+        "position": [
+          14.290798418444478,
+          9.191934364485128,
+          6.756792331482668
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.2961981327260227,
+          0.8137976813493745,
+          0,
+          0.866025403784439,
+          -0.17101007166283322,
+          0.4698463103929538,
+          0,
+          -1.6653345369377343e-16,
+          0.9396926207859089,
+          0.3420201433256674,
+          0,
+          -0.8150494603410641,
+          -0.5444867329791654,
+          -18.259574145724436,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 73.82405090332031,
+          "y": -60.793174743652344,
+          "w": 212.5890655517578,
+          "h": 232.87566375732422,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -89,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 307
+        },
+        "figure": {
+          "x": 73.82405090332031,
+          "y": -59.793174743652344,
+          "w": 212.5890655517578,
+          "h": 232.87566375732422,
+          "n": 5
+        },
+        "panel": {
+          "top": 385,
+          "bottom": 639.5,
+          "h": 254.5,
+          "visible": 254.5
+        },
+        "figure_in_viewport": false,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 70.35368347167969,
+          "y": 305.1753234863281,
+          "w": 196.08824157714844,
+          "h": 172.80679321289062,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cross_section",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 315.8240661621094,
+        "y": 88.20682525634766,
+        "w": 212.58901977539062,
+        "h": 232.87566375732422,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7277364492416382,
+        "w": 0.26180913765442193,
+        "blank_top": 28.206825256347656,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 299.8240661621094,
+        "blank_right": 299.5869140625
+      },
+      "camera0": {
+        "position": [
+          14.290798418444478,
+          9.191934364485128,
+          6.756792331482668
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.2961981327260227,
+          0.8137976813493745,
+          0,
+          0.866025403784439,
+          -0.17101007166283322,
+          0.4698463103929538,
+          0,
+          -1.6653345369377343e-16,
+          0.9396926207859089,
+          0.3420201433256674,
+          0,
+          -0.8150494603410641,
+          -0.5444867329791654,
+          -18.259574145724436,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 315.8240661621094,
+          "y": 39.206825256347656,
+          "w": 212.58901977539062,
+          "h": 232.87566375732422,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 315.8240661621094,
+          "y": 88.20682525634766,
+          "w": 212.58901977539062,
+          "h": 232.87566375732422,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 312.3537292480469,
+          "y": 146.17532348632812,
+          "w": 196.08822631835938,
+          "h": 172.80682373046875,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "cross_section",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 525.1563720703125,
+        "y": 106.95329284667969,
+        "w": 282.74462890625,
+        "h": 310.7292022705078,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7143200052195582,
+        "w": 0.21732869247213682,
+        "blank_top": 46.95329284667969,
+        "blank_bottom": 77.3175048828125,
+        "blank_left": 509.1563720703125,
+        "blank_right": 509.0989990234375
+      },
+      "camera0": {
+        "position": [
+          14.290798418444478,
+          9.191934364485128,
+          6.756792331482668
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.2961981327260227,
+          0.8137976813493745,
+          0,
+          0.866025403784439,
+          -0.17101007166283322,
+          0.4698463103929538,
+          0,
+          -1.6653345369377343e-16,
+          0.9396926207859089,
+          0.3420201433256674,
+          0,
+          -0.8150494603410641,
+          -0.5444867329791654,
+          -18.259574145724436,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 525.1563720703125,
+          "y": 106.95329284667969,
+          "w": 282.74462890625,
+          "h": 310.7292022705078,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 525.1563720703125,
+          "y": 106.95329284667969,
+          "w": 282.74462890625,
+          "h": 310.7292022705078,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 298.5,
+          "h": 222.5,
+          "visible": 222.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 450.6588439941406,
+          "y": 200.92103576660156,
+          "w": 324.6820373535156,
+          "h": 220.2778778076172,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "cross_section",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 485.7049255371094,
+        "y": 147.7064971923828,
+        "w": 435.2566833496094,
+        "h": 479.9759979248047,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7006948874814667,
+        "w": 0.31655031516335225,
+        "blank_top": 87.70649719238281,
+        "blank_bottom": 117.3175048828125,
+        "blank_left": 469.7049255371094,
+        "blank_right": 470.03839111328125
+      },
+      "camera0": {
+        "position": [
+          14.290798418444478,
+          9.191934364485128,
+          6.756792331482668
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.2961981327260227,
+          0.8137976813493745,
+          0,
+          0.866025403784439,
+          -0.17101007166283322,
+          0.4698463103929538,
+          0,
+          -1.6653345369377343e-16,
+          0.9396926207859089,
+          0.3420201433256674,
+          0,
+          -0.8150494603410641,
+          -0.5444867329791654,
+          -18.259574145724436,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 485.7049255371094,
+          "y": 147.7064971923828,
+          "w": 435.2566833496094,
+          "h": 479.9759979248047,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 494.078125,
+          "h": 418.078125,
+          "visible": 418.078125
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [
+          10
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 485.7049255371094,
+          "y": 147.7064971923828,
+          "w": 435.2566833496094,
+          "h": 479.9759979248047,
+          "n": 5
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 298.5,
+          "h": 222.5,
+          "visible": 222.5
+        },
+        "figure_in_viewport": true,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 428.9364318847656,
+          "y": 148.36898803710938,
+          "w": 486.9975891113281,
+          "h": 498.9070129394531,
+          "n": 5
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.03031158447266,
+        "y": 334.9462585449219,
+        "w": 259.89388275146484,
+        "h": 256.2288513183594,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.49369720870589473,
+        "w": 0.7259605663448738,
+        "blank_top": 115.94625854492188,
+        "blank_bottom": 146.82489013671875,
+        "blank_left": 49.030311584472656,
+        "blank_right": 49.0758056640625
+      },
+      "camera0": {
+        "position": [
+          9.809366741809342,
+          3.1099594472388787,
+          7.172704920193002
+        ],
+        "view_matrix_column_major": [
+          -0.17364817766693075,
+          -0.6330222215594884,
+          0.7544065067354895,
+          0,
+          0.984807753012208,
+          -0.11161889704894994,
+          0.1330222215594893,
+          0,
+          2.636779683484747e-16,
+          0.7660444431189786,
+          0.6427876096865388,
+          0,
+          -1.3593335164126206,
+          1.0620666241136683,
+          -12.424469662245048,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": -3.0537338256835938,
+          "w": 259.89388275146484,
+          "h": 256.22884368896484,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -119,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [
+          7
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": -3.0537338256835938,
+          "w": 259.89388275146484,
+          "h": 256.22884368896484,
+          "n": 6
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 26.708744049072266,
+          "y": 347.25531005859375,
+          "w": 279.017879486084,
+          "h": 258.9102783203125,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL",
+          "D5_VERTICAL_BLANK_BAND"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.47334289550781,
+        "y": 247.5037841796875,
+        "w": 229.53028869628906,
+        "h": 232.57870483398438,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7268084526062012,
+        "w": 0.6997874655374666,
+        "blank_top": 28.5037841796875,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 49.47334289550781,
+        "blank_right": 48.996368408203125
+      },
+      "camera0": {
+        "position": [
+          7.696512490671955,
+          2.7321274191506415,
+          5.387956521938715
+        ],
+        "view_matrix_column_major": [
+          -0.17364817766693028,
+          -0.6330222215593674,
+          0.7544065067355908,
+          0,
+          0.9848077530122079,
+          -0.11161889704892818,
+          0.13302222155950694,
+          0,
+          4.163336342344336e-17,
+          0.7660444431190814,
+          0.6427876096864159,
+          0,
+          -1.3541348962008344,
+          1.0496063308289443,
+          -9.633044454845054,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 65.47334289550781,
+          "y": -60.49622344970703,
+          "w": 229.53028869628906,
+          "h": 232.5787124633789,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -89,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 65.47334289550781,
+          "y": -60.49622344970703,
+          "w": 229.53028869628906,
+          "h": 232.5787124633789,
+          "n": 6
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 27.303308486938477,
+          "y": 245.95481872558594,
+          "w": 261.416051864624,
+          "h": 260.56312561035156,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 307.47332763671875,
+        "y": 88.50377655029297,
+        "w": 229.53033447265625,
+        "h": 232.5787124633789,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7268084764480591,
+        "w": 0.2826728257052417,
+        "blank_top": 28.50377655029297,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 291.47332763671875,
+        "blank_right": 290.996337890625
+      },
+      "camera0": {
+        "position": [
+          7.696512490671953,
+          2.7321274191506406,
+          5.387956521938696
+        ],
+        "view_matrix_column_major": [
+          -0.17364817766692975,
+          -0.6330222215593664,
+          0.754406506735592,
+          0,
+          0.9848077530122081,
+          -0.11161889704892733,
+          0.13302222155950683,
+          0,
+          -3.608224830031759e-16,
+          0.7660444431190825,
+          0.6427876096864146,
+          0,
+          -1.3541348962008364,
+          1.0496063308289425,
+          -9.633044454845042,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 307.47332763671875,
+          "y": 39.50377655029297,
+          "w": 229.53033447265625,
+          "h": 232.5787124633789,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 307.47332763671875,
+          "y": 88.50377655029297,
+          "w": 229.53033447265625,
+          "h": 232.5787124633789,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 269.3033142089844,
+          "y": 86.9548110961914,
+          "w": 261.4160461425781,
+          "h": 260.5631637573242,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 513.7857666015625,
+        "y": 107.3576431274414,
+        "w": 306.03839111328125,
+        "h": 310.3248519897461,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7133904643442439,
+        "w": 0.23523319839606552,
+        "blank_top": 47.357643127441406,
+        "blank_bottom": 77.3175048828125,
+        "blank_left": 497.7857666015625,
+        "blank_right": 497.17584228515625
+      },
+      "camera0": {
+        "position": [
+          7.696512490671983,
+          2.732127419150646,
+          5.387956521939287
+        ],
+        "view_matrix_column_major": [
+          -0.1736481776669304,
+          -0.633022221559413,
+          0.7544065067355524,
+          0,
+          0.9848077530122078,
+          -0.11161889704893645,
+          0.13302222155950025,
+          0,
+          1.3877787807814452e-16,
+          0.7660444431190424,
+          0.6427876096864622,
+          0,
+          -1.3541348962008335,
+          1.049606330829108,
+          -9.633044454845379,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 513.7857666015625,
+          "y": 107.3576431274414,
+          "w": 306.03839111328125,
+          "h": 310.3248519897461,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [
+          5,
+          6,
+          7
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 513.7857666015625,
+          "y": 107.3576431274414,
+          "w": 306.03839111328125,
+          "h": 310.3248519897461,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 497.7268981933594,
+          "y": 152.43026733398438,
+          "w": 273.1069030761719,
+          "h": 246.73123168945312,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 467.7692565917969,
+        "y": 148.34429931640625,
+        "w": 472.3603820800781,
+        "h": 479.33819580078125,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.6997637894901916,
+        "w": 0.3435348233309659,
+        "blank_top": 88.34429931640625,
+        "blank_bottom": 117.3175048828125,
+        "blank_left": 451.7692565917969,
+        "blank_right": 450.870361328125
+      },
+      "camera0": {
+        "position": [
+          7.6965124906719815,
+          2.732127419150646,
+          5.387956521939632
+        ],
+        "view_matrix_column_major": [
+          -0.17364817766693044,
+          -0.6330222215594425,
+          0.7544065067355278,
+          0,
+          0.9848077530122081,
+          -0.11161889704894164,
+          0.13302222155949592,
+          0,
+          2.9143354396410354e-16,
+          0.7660444431190174,
+          0.6427876096864924,
+          0,
+          -1.3541348962008346,
+          1.0496063308292183,
+          -9.633044454845562,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 467.7692565917969,
+          "y": 148.34429931640625,
+          "w": 472.3603820800781,
+          "h": 479.33819580078125,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 442.5,
+          "h": 366.5,
+          "visible": 366.5
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "panel_scrollable": false
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 467.7692565917969,
+          "y": 148.34429931640625,
+          "w": 472.3603820800781,
+          "h": 479.33819580078125,
+          "n": 6
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 459.5,
+          "h": 383.5,
+          "visible": 383.5
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 402.554443359375,
+          "y": 188.2779541015625,
+          "w": 535.9752197265625,
+          "h": 487.4925537109375,
+          "n": 6
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": [],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": true
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "portrait",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 358,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 358,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 750,
+          "w": 358,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 65.03031158447266,
+        "y": 325.66119384765625,
+        "w": 259.89180755615234,
+        "h": 275.055419921875,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.529971907363921,
+        "w": 0.7259547697099228,
+        "blank_top": 106.66119384765625,
+        "blank_bottom": 137.28338623046875,
+        "blank_left": 49.030311584472656,
+        "blank_right": 49.077880859375
+      },
+      "camera0": {
+        "position": [
+          13.319423987144349,
+          2.331650393866474,
+          8.164701642044797
+        ],
+        "view_matrix_column_major": [
+          2.1830369922771577e-16,
+          -0.5735764363510454,
+          0.8191520442889922,
+          0,
+          0.8660254037844387,
+          -0.2867882181755226,
+          0.40957602214449595,
+          0,
+          -1.182085154457434e-16,
+          0.8191520442889922,
+          0.5735764363510454,
+          0,
+          -2.3316503938664757,
+          0.9515757037042004,
+          -15.593713859534716,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          3.1143541514141626,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 356,
+        "viewport_height": 517,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": -12.338798522949219,
+          "w": 259.89180755615234,
+          "h": 275.05541229248047,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -119,
+          "w": 358,
+          "h": 519
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [
+          7,
+          8,
+          9
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 390,
+          "h": 844,
+          "sy": 338
+        },
+        "figure": {
+          "x": 65.03031158447266,
+          "y": -12.338798522949219,
+          "w": 259.89180755615234,
+          "h": 275.05541229248047,
+          "n": 7
+        },
+        "panel": {
+          "top": 506,
+          "bottom": 843.59375,
+          "h": 337.59375,
+          "visible": 337.59375
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 519,
+        "canvas_h_after": 519,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "figure": {
+          "x": 16.57387924194336,
+          "y": 377.3865661621094,
+          "w": 290.53134536743164,
+          "h": 228.56314086914062,
+          "n": 7
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL",
+          "D5_VERTICAL_BLANK_BAND"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "portrait_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 360,
+        "h": 640,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 360,
+        "client_width": 360,
+        "page_height": 692,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 328,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 328,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 328,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 328,
+          "h": 129
+        },
+        "panels_float": false
+      },
+      "figure": {
+        "x": 73.1251220703125,
+        "y": 247.551025390625,
+        "w": 213.27499389648438,
+        "h": 232.53146362304688,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266608238220215,
+        "w": 0.650228639928306,
+        "blank_top": 28.551025390625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 57.1251220703125,
+        "blank_right": 57.599884033203125
+      },
+      "camera0": {
+        "position": [
+          11.000510581988696,
+          2.2539514040166835,
+          6.538801909524381
+        ],
+        "view_matrix_column_major": [
+          0,
+          -0.5735764363509515,
+          0.8191520442890581,
+          0,
+          0.8660254037844386,
+          -0.28678821817547573,
+          0.40957602214452904,
+          0,
+          0,
+          0.8191520442890581,
+          0.5735764363509515,
+          0,
+          -2.2539514040166835,
+          0.9533607062699136,
+          -12.761593428729247,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.0918809838099377,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 326,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 73.1251220703125,
+          "y": -60.448974609375,
+          "w": 213.27499389648438,
+          "h": 232.53146362304688,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -89,
+          "w": 328,
+          "h": 320
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 360,
+          "h": 640,
+          "sy": 308
+        },
+        "figure": {
+          "x": 73.1251220703125,
+          "y": -60.448974609375,
+          "w": 213.27499389648438,
+          "h": 232.53146362304688,
+          "n": 7
+        },
+        "panel": {
+          "top": 384,
+          "bottom": 640,
+          "h": 256,
+          "visible": 256
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 328,
+          "h": 320
+        },
+        "figure": {
+          "x": 92.67654418945312,
+          "y": 308.2210998535156,
+          "w": 205.71710205078125,
+          "h": 212.21505737304688,
+          "n": 7
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "landscape",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 844,
+        "h": 390,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 844,
+        "client_width": 844,
+        "page_height": 439,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 812,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 449.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 392,
+          "w": 812,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 315.1251220703125,
+        "y": 88.551025390625,
+        "w": 213.2750244140625,
+        "h": 232.53146362304688,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266608238220215,
+        "w": 0.2626539709532789,
+        "blank_top": 28.551025390625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 299.1251220703125,
+        "blank_right": 299.599853515625
+      },
+      "camera0": {
+        "position": [
+          11.000510581988696,
+          2.2539514040166835,
+          6.538801909524382
+        ],
+        "view_matrix_column_major": [
+          0,
+          -0.5735764363509515,
+          0.8191520442890581,
+          0,
+          0.8660254037844386,
+          -0.28678821817547573,
+          0.40957602214452904,
+          0,
+          0,
+          0.8191520442890581,
+          0.5735764363509515,
+          0,
+          -2.2539514040166835,
+          0.9533607062699128,
+          -12.761593428729247,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.8419175317556045,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 810,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 49
+        },
+        "figure": {
+          "x": 315.1251220703125,
+          "y": 39.551025390625,
+          "w": 213.2750244140625,
+          "h": 232.53146362304688,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 11,
+          "w": 812,
+          "h": 320
+        },
+        "panel": {
+          "top": 27,
+          "bottom": 229.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 844,
+          "h": 390,
+          "sy": 0
+        },
+        "figure": {
+          "x": 315.1251220703125,
+          "y": 88.551025390625,
+          "w": 213.2750244140625,
+          "h": 232.53146362304688,
+          "n": 7
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 278.796875,
+          "h": 202.796875,
+          "visible": 202.796875
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 812,
+          "h": 320
+        },
+        "figure": {
+          "x": 334.676513671875,
+          "y": 149.2211151123047,
+          "w": 205.71710205078125,
+          "h": 212.21507263183594,
+          "n": 7
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 938.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 524.2047119140625,
+        "y": 107.4219741821289,
+        "w": 283.90460205078125,
+        "h": 310.2605209350586,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7132425768622037,
+        "w": 0.21822029365932455,
+        "blank_top": 47.421974182128906,
+        "blank_bottom": 77.3175048828125,
+        "blank_left": 508.2047119140625,
+        "blank_right": 508.89068603515625
+      },
+      "camera0": {
+        "position": [
+          11.000510581988818,
+          2.2539514040166835,
+          6.5388019095249295
+        ],
+        "view_matrix_column_major": [
+          2.183036992277071e-16,
+          -0.5735764363509852,
+          0.8191520442890344,
+          0,
+          0.8660254037844387,
+          -0.28678821817549244,
+          0.4095760221445171,
+          0,
+          -1.1820851544575946e-16,
+          0.8191520442890344,
+          0.5735764363509852,
+          0,
+          -2.2539514040166853,
+          0.9533607062700596,
+          -12.761593428729622,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.7148356401698529,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1299,
+        "viewport_height": 433,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 524.2047119140625,
+          "y": 107.4219741821289,
+          "w": 283.90460205078125,
+          "h": 310.2605209350586,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1348,
+          "h": 554,
+          "sy": 0
+        },
+        "figure": {
+          "x": 524.2047119140625,
+          "y": 107.4219741821289,
+          "w": 283.90460205078125,
+          "h": 310.2605209350586,
+          "n": 7
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 364.078125,
+          "h": 288.078125,
+          "visible": 288.078125
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 435,
+        "canvas_h_after": 435,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "figure": {
+          "x": 504.2010498046875,
+          "y": 165.75924682617188,
+          "w": 307.6741943359375,
+          "h": 258.88330078125,
+          "n": 7
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "tool_row": {
+          "x": 1012.265625,
+          "y": 12,
+          "w": 378.734375,
+          "h": 36
+        },
+        "float_row": {
+          "x": 28,
+          "y": 72,
+          "w": 156.203125,
+          "h": 70
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "panels_float": true
+      },
+      "figure": {
+        "x": 484.2037658691406,
+        "y": 148.44577026367188,
+        "w": 437.4472351074219,
+        "h": 479.2367248535156,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.6996156567204608,
+        "w": 0.31814344371448866,
+        "blank_top": 88.44577026367188,
+        "blank_bottom": 117.3175048828125,
+        "blank_left": 468.2037658691406,
+        "blank_right": 469.3489990234375
+      },
+      "camera0": {
+        "position": [
+          11.00051058198892,
+          2.2539514040166835,
+          6.538801909525308
+        ],
+        "view_matrix_column_major": [
+          1.3641621903576518e-16,
+          -0.5735764363510076,
+          0.8191520442890186,
+          0,
+          0.8660254037844387,
+          -0.28678821817550376,
+          0.4095760221445092,
+          0,
+          9.551966490290015e-17,
+          0.8191520442890184,
+          0.5735764363510077,
+          0,
+          -2.2539514040166853,
+          0.9533607062701593,
+          -12.761593428729896,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.066786763807741,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1373,
+        "viewport_height": 683,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 484.2037658691406,
+          "y": 148.44577026367188,
+          "w": 437.4472351074219,
+          "h": 479.2367248535156,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 494.078125,
+          "h": 418.078125,
+          "visible": 418.078125
+        },
+        "figure_in_viewport": true
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [
+          9
+        ],
+        "missing": 0,
+        "panel_scrollable": true
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 1422,
+          "h": 804,
+          "sy": 0
+        },
+        "figure": {
+          "x": 484.2037658691406,
+          "y": 148.44577026367188,
+          "w": 437.4472351074219,
+          "h": 479.2367248535156,
+          "n": 7
+        },
+        "panel": {
+          "top": 76,
+          "bottom": 459.5,
+          "h": 383.5,
+          "visible": 383.5
+        },
+        "figure_in_viewport": true,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 685,
+        "canvas_h_after": 685,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "figure": {
+          "x": 390.3820495605469,
+          "y": 235.75177001953125,
+          "w": 427.3479309082031,
+          "h": 446.8309326171875,
+          "n": 7
+        },
+        "inside": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CURRENT_STEP_HIDDEN_IN_PANEL"
+        ],
+        "info_codes": [],
+        "narrow_layout": false
+      },
+      "pass": false
+    }
+  ],
+  "capture_policy": {
+    "mode": "toi-thieu",
+    "review_set_patterns": 0,
+    "oracle_states": [
+      "neutral_final.png",
+      "rotated_neutral.png"
+    ],
+    "goi": 200,
+    "tao": 0,
+    "bo_qua": 200,
+    "loi": 0
+  }
+}
