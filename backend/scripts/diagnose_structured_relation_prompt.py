@@ -66,7 +66,10 @@ LIVE_ARTIFACTS = (
     "PROVENANCE_RESOLUTION_PROOF.json", "FACT_GRAPH_RESULT_REDACTED.json",
     "COMPILER_DOWNSTREAM_RESULT.json", "TOKEN_USAGE.json", "SECRET_SCAN.json",
 )
-LIVE_REPORT = REPO / "docs" / "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md"
+LIVE_REPORT = (
+    REPO / "docs" / "evaluation" / "reports"
+    / "STRUCTURED_GEOMETRY_RELATION_ANALYZE_LIVE_VALIDATION.md"
+)
 
 #: Nhãn điểm của ca live. Luật đề xuất KHÔNG được nhắc tới chúng — nếu có, nó
 #: đã vá một ca chứ không vá một lớp.

@@ -29,7 +29,7 @@ import kind_aware_trace_evaluator as K  # noqa: E402
 import run_preregistered_failure_reproduction as R  # noqa: E402
 
 HIST_DIR = REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene" / "fresh-preregistered-failure-reproduction-retry"
-HIST_REPORT = REPO / "docs" / "FRESH_PREREGISTERED_FAILURE_REPRODUCTION_RETRY.md"
+HIST_REPORT = HIST_DIR / "report.md"
 
 
 # ══════════════════════════════════════════════════════════════════════════

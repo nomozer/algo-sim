@@ -537,7 +537,8 @@ def collect_secret_scan() -> dict[str, Any]:
         REPO / "docs" / "AI_CONTEXT_BUNDLE.md",
         REPO / "docs" / "EVIDENCE_INDEX.md",
         REPO / "docs" / "README.md",
-        REPO / "docs" / "DOCS_TEST_TELEMETRY_RECONCILIATION_FINAL.md",
+        REPO / "docs" / "evaluation" / "geometry" / "photo-problem-to-scene"
+        / "docs-test-telemetry-reconciliation-final" / "report.md",
     ]
     # Add evaluation JSON artifacts
     if OUT_DIR.exists():

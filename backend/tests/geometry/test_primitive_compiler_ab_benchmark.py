@@ -352,7 +352,10 @@ def test_KHONG_suy_end_to_end_tu_token_tang_synthesis():
 
 
 def test_bao_cao_KHONG_chua_tuyen_bo_bi_cam():
-    bc = R.REPO / "docs" / "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK.md"
+    bc = (
+        R.REPO / "docs" / "evaluation" / "reports"
+        / "PRIMITIVE_COMPILER_AB_TOKEN_LATENCY_BENCHMARK.md"
+    )
     if not bc.exists():
         pytest.skip("chưa có báo cáo")
     tho = bc.read_text(encoding="utf-8")
