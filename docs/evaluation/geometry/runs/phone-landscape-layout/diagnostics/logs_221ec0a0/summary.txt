@@ -1,0 +1,13 @@
+status_before=0
+exit=0
+exit=0
+exit=1
+exit=0
+exit=0
+exit=0
+exit=0
+exit=0
+exit=0
+exit=0
+images on disk: 137
+status_after (run outputs only expected):

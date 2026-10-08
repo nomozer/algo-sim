@@ -1,0 +1,472 @@
+[
+  {
+    "i": 0,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 1,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 2,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 3,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 4,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 5,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 6,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 7,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 8,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 9,
+    "before": {
+      "rect": [
+        258.625,
+        622,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 344,
+      "sy": 163,
+      "ih": 844,
+      "expanded": "true"
+    }
+  }
+]

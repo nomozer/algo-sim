@@ -1,0 +1,29 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 221ec0a0144f6045cfc3ac82fdb425581074acca; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/phone-landscape-layout/inputs --ra docs/evaluation/geometry/runs/phone-landscape-layout/results --screenshots docs/evaluation/geometry/runs/phone-landscape-layout/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/phone-landscape-layout/inputs/REVIEW_SET.json
+2026-10-08T19:52:25Z
+▶ triangular_pyramid/desktop 19:52:26
+▶ triangular_pyramid/mobile 19:53:24
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 19:54:13
+▶ triangular_prism/mobile 19:55:20
+triangular_prism: PASS
+▶ rectangular_pyramid/desktop 19:56:05
+▶ rectangular_pyramid/mobile 19:56:59
+rectangular_pyramid: PASS
+▶ cuboid/desktop 19:57:46
+▶ cuboid/mobile 19:58:48
+cuboid: PASS
+▶ cube/desktop 19:59:42
+▶ cube/mobile 20:00:57
+cube: PASS
+▶ cross_section/desktop 20:01:51
+▶ cross_section/mobile 20:03:19
+cross_section: PASS
+▶ regular_square_pyramid/desktop 20:05:05
+▶ regular_square_pyramid/mobile 20:06:22
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 20:07:14
+▶ regular_triangular_pyramid/mobile 20:08:31
+regular_triangular_pyramid: PASS
+Wrote D:\tmp\landscape fit\docs\evaluation\geometry\runs\phone-landscape-layout\results\BROWSER_EVIDENCE.json: PASS
+exit=0
+2026-10-08T20:09:41Z

@@ -1,0 +1,27 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "cross_section_wrong_plane",
+  "problem_text": "Trong không gian Oxyz, cho khối chóp S.ABCD có đáy ABCD là hình vuông với A(0;0;0), B(6;0;0), C(6;6;0), D(0;6;0) và đỉnh S(0;0;6). Cho hai mặt phẳng (α): z = 3 và (β): z = 2. Mặt phẳng (β) cắt khối chóp theo thiết diện (T). Tính diện tích thiết diện (T).",
+  "source": "w17_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "95a56a17d51330d9f2d3c6ba314f783170a028f8",
+  "product_tree_sha": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Phép dựng thiết diện không dùng đúng thực thể đề nêu.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "assumption",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "reason_subjects": [
+      "(β)",
+      "(α)"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+  },
+  "source_reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+  "refusal_cause": "CONSTRUCTION"
+}

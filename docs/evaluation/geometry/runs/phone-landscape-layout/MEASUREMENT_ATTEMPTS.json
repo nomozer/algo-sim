@@ -18,6 +18,30 @@
       },
       "other_steps": "scene controls 16/16, panels 24/24, focus mode 24/24, occlusion PASS, playback PASS, builder 68 crops / 0 disagreements",
       "classification_reruns": "diagnostics/attempts/attempt1_9af3e8a3/classification/ (same dist and fixtures): prism PASS, RTP PASS, cuboid/portrait PASS"
+    },
+    {
+      "n": 2,
+      "commit": "221ec0a0144f6045cfc3ac82fdb425581074acca",
+      "product_commit": "95a56a17",
+      "record": "diagnostics/attempts/attempt2_221ec0a0/",
+      "result": "not used for acceptance — environment failures; rerun in full as attempt 3 (same commit, same product)",
+      "findings": {
+        "ENVIRONMENT": [
+          "mobile probe regular_triangular_pyramid/portrait and W02 regular_square_pyramid/mobile: POLL_TIMEOUT on the first open of «Các bước dựng» after load; the unhandled error ended the W02 step (no JSON) and left its Chrome running (port 9414)",
+          "W05: WS_OPEN_TIMEOUT on four runs (ports 9393/9254/9287/9356) after the leaked Chrome"
+        ],
+        "investigation": "repro/ — 35/35 first taps opened the panel on the identical build (RTP and RSP, 390x844, at the probes' timing and after 2 s), no layout shift of the button in 3 s after load (repro2.json); the leaked headless Chrome (port 9414, harness profile) was stopped before attempt 3",
+        "PRE_EXISTING": "FIGURE_LEFT_CANVAS_AFTER_ORBIT triangular_prism/low",
+        "passed": "suite 8/8 in one run, W04 24/24, occlusion PASS, playback PASS, builder 72 crops / 0 disagreements"
+      }
+    },
+    {
+      "n": 3,
+      "commit": "221ec0a0144f6045cfc3ac82fdb425581074acca",
+      "product_commit": "95a56a17",
+      "record": "results/, images/, diagnostics/logs_221ec0a0/",
+      "result": "AUTHORITATIVE — every step complete in one run",
+      "summary": "mobile/landscape probe 55/56 (only FIGURE_LEFT_CANVAS_AFTER_ORBIT triangular_prism/low, pre-existing), Tier-A suite 8/8 in one run, W02 16/16, W04 24/24, W05 24/24, occlusion PASS (0 failures, 4 W14 scenes pending human review), playback PASS, builder 72 crops / 0 oracle disagreements, 137 images"
     }
   ]
 }

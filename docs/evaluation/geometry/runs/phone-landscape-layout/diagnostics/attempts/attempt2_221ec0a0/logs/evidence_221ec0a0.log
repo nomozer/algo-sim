@@ -1,0 +1,5 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 221ec0a0144f6045cfc3ac82fdb425581074acca; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/build_scene3d_visual_evidence.py --run-dir ../docs/evaluation/geometry/runs/phone-landscape-layout --browser ../docs/evaluation/geometry/runs/phone-landscape-layout/results/BROWSER_EVIDENCE.json --measurement ../docs/evaluation/geometry/runs/phone-landscape-layout/results/OCCLUSION_MEASUREMENT.json --fixture-root ../docs/evaluation/geometry/runs/phone-landscape-layout/inputs --expectations ../docs/evaluation/geometry/runs/20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair/inputs/human_expected_visibility.json --playback ../docs/evaluation/geometry/runs/phone-landscape-layout/results/PLAYBACK_EVIDENCE.json
+2026-10-08T20:41:01Z
+72 crops · endpoints inside: True · oracle disagreements: 0 · duplicate owners: 0
+exit=0
+2026-10-08T20:41:03Z

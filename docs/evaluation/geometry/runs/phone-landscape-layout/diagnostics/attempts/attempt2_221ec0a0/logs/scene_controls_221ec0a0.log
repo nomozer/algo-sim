@@ -1,0 +1,28 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 221ec0a0144f6045cfc3ac82fdb425581074acca; timeout --signal=KILL 2400 node frontend/scripts/check-scene-controls.mjs --ho triangular_pyramid,rectangular_pyramid,triangular_prism,cuboid,cube,cross_section,regular_square_pyramid,regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/phone-landscape-layout/inputs --ra docs/evaluation/geometry/runs/phone-landscape-layout/results --anh docs/evaluation/geometry/runs/phone-landscape-layout/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/phone-landscape-layout/inputs/REVIEW_SET.json
+2026-10-08T20:09:41Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+file:///D:/tmp/landscape%20fit/frontend/scripts/compiler-scene-replay-lib.mjs:1307
+  throw new Error(`POLL_TIMEOUT:${JSON.stringify(last)}`);
+        ^
+
+Error: POLL_TIMEOUT:false
+    at pollUntil (file:///D:/tmp/landscape%20fit/frontend/scripts/compiler-scene-replay-lib.mjs:1307:9)
+    at async moBang (file:///D:/tmp/landscape%20fit/frontend/scripts/check-scene-controls.mjs:81:3)
+    at async runMobile (file:///D:/tmp/landscape%20fit/frontend/scripts/check-scene-controls.mjs:289:5)
+    at async file:///D:/tmp/landscape%20fit/frontend/scripts/check-scene-controls.mjs:330:15
+
+Node.js v24.13.0
+exit=1
+2026-10-08T20:14:37Z

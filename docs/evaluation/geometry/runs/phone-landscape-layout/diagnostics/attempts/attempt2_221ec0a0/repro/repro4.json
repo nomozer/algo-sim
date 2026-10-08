@@ -1,0 +1,802 @@
+[
+  {
+    "i": 0,
+    "samples": [
+      [
+        793,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        906,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1018,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1128,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1231,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 1,
+    "samples": [
+      [
+        880,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        986,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1090,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1193,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1299,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 2,
+    "samples": [
+      [
+        856,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        968,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1078,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1188,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1297,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 3,
+    "samples": [
+      [
+        852,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        961,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1064,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1168,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1272,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 4,
+    "samples": [
+      [
+        883,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        993,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1102,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1212,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1317,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 5,
+    "samples": [
+      [
+        851,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        956,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1059,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1165,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1269,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 6,
+    "samples": [
+      [
+        829,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        935,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1037,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1143,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1252,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 7,
+    "samples": [
+      [
+        910,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1013,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1116,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1220,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1323,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 8,
+    "samples": [
+      [
+        869,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        971,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1077,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1180,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1283,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  },
+  {
+    "i": 9,
+    "samples": [
+      [
+        851,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        955,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1059,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1165,
+        598,
+        320,
+        "loaded"
+      ],
+      [
+        1269,
+        598,
+        320,
+        "loaded"
+      ]
+    ],
+    "shift": [],
+    "before": {
+      "rect": [
+        258.625,
+        598,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 0,
+      "ih": 844,
+      "expanded": "false"
+    },
+    "click": true,
+    "after_click": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    },
+    "opened": true,
+    "final": {
+      "rect": [
+        258.625,
+        459,
+        115.375,
+        35
+      ],
+      "hit": "geo3d-btn geo3d-cac-buoc-mo la-mo",
+      "hit_is_button": true,
+      "canvas_h": 320,
+      "sy": 139,
+      "ih": 844,
+      "expanded": "true"
+    }
+  }
+]
