@@ -8,7 +8,9 @@ import { describe, expect, it } from "vitest";
  * docs/RULES.md v0.3 mô tả kiến trúc KHÔNG còn đúng (ba nguồn trace, tầng code
  * Pyodide, vẽ tự do llm_script) — một coding agent tương lai đọc nó có thể xây
  * theo kiến trúc cũ. Khoá bằng test: RULES.md hiện hành phải là tài liệu con
- * trỏ ngắn (thứ tự đọc + luật cứng), nội dung cũ nằm ở docs/legacy có cảnh báo.
+ * trỏ ngắn (thứ tự đọc + luật cứng). Bản v0.3 từng giữ ở docs/legacy kèm cảnh báo
+ * (test 28) đã gỡ ở run `docs-cleanup` — hệ Tin học đã retire, không ai đọc nó; lấy
+ * lại từ git history nếu cần tra.
  */
 
 const DOCS = join(__dirname, "..", "..", "docs");
@@ -40,20 +42,5 @@ describe("docs/RULES.md — con trỏ hiện hành, không phải kiến trúc c
     expect(rules).toContain("LLM");
     expect(rules).toContain("tất định");
     expect(rules).toContain("cơ chế");
-  });
-});
-
-describe("docs/legacy/RULES_v0.3.md — bản cũ được bảo tồn kèm cảnh báo", () => {
-  const legacy = readFileSync(join(DOCS, "legacy", "RULES_v0.3.md"), "utf-8");
-
-  it("(28) mở đầu bằng cảnh báo LEGACY rõ ràng", () => {
-    const head = legacy.slice(0, 500).toUpperCase();
-    expect(head).toContain("LEGACY");
-    expect(head).toContain("KHÔNG");
-  });
-
-  it("nội dung lịch sử còn nguyên (v0.3, ba lớp trace)", () => {
-    expect(legacy).toContain("v0.3");
-    expect(legacy).toContain("Pyodide");
   });
 });

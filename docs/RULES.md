@@ -5,9 +5,9 @@ bootstrap* (§1–§2), *scope guard* (§3), và *luật cứng* (§4). Tài li�
 quản lý — nó là **nguồn có thẩm quyền**; `CLAUDE.md` (bị gitignore) chỉ là con
 trỏ local.
 
-Bản thiết kế gốc v0.3 đã được lưu trữ tại `docs/legacy/RULES_v0.3.md` (tài liệu
-lịch sử — mô tả các kiến trúc chưa/không xây như tầng sandbox chạy code hay
-kịch bản vẽ do AI sinh; **không dùng cho quyết định implementation**).
+Bản thiết kế gốc v0.3 của hệ Tin học (tầng sandbox chạy code, kịch bản vẽ do AI
+sinh — chưa/không xây) đã gỡ khỏi kho ở run `docs-cleanup`; chỉ còn trong git
+history, **không dùng cho quyết định implementation**.
 
 ## 1. Thứ tự đọc bắt buộc trước mọi thay đổi không tầm thường
 
