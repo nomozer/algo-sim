@@ -11,8 +11,17 @@
 
 ## 2. Gate
 
-Pending — recorded by the commit that follows this one (T3 and identity gates in a clean detached worktree at the
-documentation commit of this run).
+Clean detached worktree `D:/tmp/docs cleanup gate` (CRLF, path with a space; `frontend/node_modules` a junction to the main
+checkout, removed afterwards), 0 model calls:
+
+- **T3 `FULL_PRODUCT_GATE_PASS` at `08dd841c`** (`diagnostics/t3_08dd841c.log`): pytest 7241 passed / 1 skipped / 2
+  deselected · vitest 1030/1030 (68 files; 1032 before minus the two tests of the removed RULES_v0.3 block) · typecheck +
+  build · demo 5/5 · crash surface 6/6.
+- **Identity gates at `08dd841c`** (`diagnostics/gates_08dd841c.log`): candidate verify `b4a33205…` (102 files) · cache lock
+  117 / `b1714b56…` · schema export ×2 idempotent · `LLM_ONLY`, routing unchanged · model-surface files changed since
+  `2a7179a9`: 0 · evidence outside this run: `EVALUATION_CANDIDATE.json`, `RUN_NAMING.md`, `evaluation/README.md` (all
+  living) · the one "catalogued report" changed is the living `EVIDENCE_INDEX.md` · `diff --check` clean · docs audit PASS
+  · node harness 95 pass / 2 skipped / 0 fail (97/97 in the main checkout) · tree clean before and after.
 
 ## 3. Next decisions for the user
 

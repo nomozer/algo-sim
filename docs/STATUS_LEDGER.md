@@ -1147,7 +1147,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CANDIDATE:** b4a33205… unchanged hash; product commit be4b8287 → 8c66249d (one freeze at 8c66249d, 976e0eea) · CACHE_VERSION 117 (no bump) · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** no measurement; 0 screenshots; inventory `runs/docs-cleanup/inventory.md`
 - **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (branch stays READY_FOR_HUMAN_VISUAL_REVIEW)
-- **FULL_PRODUCT_SUITE:** `runs/docs-cleanup/handoff.md` §2
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 08dd841c (pytest 7241 passed / 1 skipped, vitest 1030/1030, build, demo 5/5, crash surface 6/6); identity gates green at 08dd841c (`diagnostics/gates_08dd841c.log`)
 - **PRODUCT_CHANGED:** NO behaviour change (test names, dead CSS that no element matched, docs)
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/docs-cleanup/report.md

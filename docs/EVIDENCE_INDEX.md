@@ -1166,7 +1166,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** a993aa8f (test renames) · c1a291ba (dead CSS) · 8c66249d (RULES_v0.3 + its test block) · 9efb8af6 (docs)
 - **MEASUREMENT_COMMIT:** NONE (no browser or live measurement; candidate refreeze 976e0eea)
 - **EVIDENCE_COMMIT_ROLE:** inventory in the run directory
-- **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (historical root reports not read one by one — AGENTS §4; gates: `handoff.md` §2)
+- **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (historical root reports not read one by one — AGENTS §4; T3 FULL_PRODUCT_GATE_PASS and identity gates green at 08dd841c)
 - **PRODUCT_CHANGE:** NO behaviour change (tests, dead CSS, docs)
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** product commit only (be4b8287 → 8c66249d); measured hash b4a33205… unchanged
@@ -1175,5 +1175,5 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CORRECTS:** NONE
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** none
-- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.md` · `diagnostics/freeze_8c66249d.log` · `diagnostics/gates.sh`
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.md` · `diagnostics/freeze_8c66249d.log` · `diagnostics/gates.sh` · `diagnostics/t3_08dd841c.log` · `diagnostics/gates_08dd841c.log`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
