@@ -1,0 +1,35 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "repo-cleanup (run repo-cleanup)",
+  "corrects": "docs/evaluation/geometry/runs/exact-dimensions/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "b4a33205a3d0e6d2cb1a78510a7c4fb4bf08ab33a0121f2d9dfe4715c63d1276",
+  "current_candidate_source_commit": "be4b8287090305601e04c09eab33bc8840a192ae",
+  "current_candidate_frozen_at": "be4b8287090305601e04c09eab33bc8840a192ae",
+  "current_candidate_note": "Frozen ONCE in a clean detached worktree (D:/tmp/cleanup freeze, path with a space): bare freeze then --verify, both exit 0 (diagnostics/freeze_be4b8287.log); 102 files (was 111: app/evaluation/* and app/ai/explain.py removed); CACHE_VERSION 117, cache identity lock verifies unchanged (semantic environment b1714b56…). Taxonomy, primitive set, schema and DEV fingerprints unchanged.",
+  "previous_candidate_hash": "e1927f84a9e18bd6732fd735223e6130f18f4f71081a6faa7a278e2b4c975029",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "repo-cleanup backend/app changes: app/evaluation/ (Informatics benchmark harness, unreachable from app.main) removed; app/ai/explain.py and POST /api/explain removed (Informatics help panel, its only caller unmounted) with the dead ExplainBody/EditBody models of main.py. frontend semantic module drops getExplainContext (module contract method only the removed panel used). No route, gate, prompt, grammar card, schema or capability change; the analyze path is byte-for-byte the same.",
+  "changed_paths": [
+    "backend/app/ai/explain.py",
+    "backend/app/evaluation/__init__.py",
+    "backend/app/evaluation/dataset.py",
+    "backend/app/evaluation/metamorphic.py",
+    "backend/app/evaluation/metrics.py",
+    "backend/app/evaluation/observer.py",
+    "backend/app/evaluation/product_scope.py",
+    "backend/app/evaluation/provenance.py",
+    "backend/app/evaluation/wave_snapshots.py",
+    "backend/app/main.py",
+    "frontend/src/simulations/domains/semantic/index.ts"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate b4a33205 (product commit be4b8287) is the current product identity. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 117
+}
