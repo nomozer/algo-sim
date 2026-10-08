@@ -1,0 +1,33 @@
+{
+  "run_id": "docs-cleanup",
+  "task_slug": "docs-cleanup",
+  "task": "DOCUMENTATION_AND_NAMING_CLEANUP",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-08",
+  "machine": "local (Windows); candidate frozen in a clean detached worktree D:/tmp/docs cleanup freeze (path with a space)",
+  "branch": "feat/regular-square-pyramid (not pushed, not merged)",
+  "start_head": "2a7179a9",
+  "commits": {
+    "rename_tests_titles_selectors": "a993aa8f",
+    "dead_css_catalogue_comment": "c1a291ba",
+    "rules_v0_3_removal": "8c66249d",
+    "legacy_docs_guidance_indexes": "9efb8af6",
+    "candidate_refreeze": "976e0eea"
+  },
+  "product_commit": "8c66249d",
+  "candidate": "b4a33205a3d0e6d2cb1a78510a7c4fb4bf08ab33a0121f2d9dfe4715c63d1276 (unchanged hash; 102 files; product commit be4b8287 -> 8c66249d; diagnostics/freeze_8c66249d.log)",
+  "cache_version": "117 — unchanged: no prompt, grammar card, schema, capability, route or gate change; cache identity lock verifies",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged",
+  "live_model_requests": 0,
+  "screenshots": 0,
+  "inventory": "inventory.md (legacy 42 -> 15 files: 26 deleted (25 + RULES_v0.3.md), 2 moved, 1 returned to docs/architecture; tests and titles renamed; 12 dead CSS classes; local empty folders; areas read / not read)",
+  "human_visual_review": "NOT_APPROVED (unchanged; not written by the agent)",
+  "skills": {
+    "karpathy-guidelines": "invoked at start (scope of edits)",
+    "superpowers": "process only (skill check, verification before claims); no plan file written",
+    "ponytail": "final diff review",
+    "graphify": "not invoked (grep/git grep sufficed for consumers)"
+  },
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

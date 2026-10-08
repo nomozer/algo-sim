@@ -52,17 +52,28 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = be4b8287 (run repo-cleanup: dọn mã chết Tin học + đổi tên, candidate đóng băng lại ở 372f78c2; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions — dọn kho không đổi hành vi hình học)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 8c66249d (run docs-cleanup: đổi tên test/tiêu đề, CSS chết, gỡ RULES_v0.3 — chỉ test/CSS/tài liệu, mã đo không đổi; candidate đóng băng lại ở 976e0eea; bằng chứng trình duyệt gần nhất vẫn là c5cae8af của run exact-dimensions — dọn không đổi hành vi hình học)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 117
-> CANDIDATE = b4a33205… (was e1927f84…; đóng băng một lần ở be4b8287), product commit be4b8287
+> CANDIDATE = b4a33205… (băm không đổi; đóng băng lại một lần ở 8c66249d — trước đó be4b8287), product commit 8c66249d
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = REPO_CLEANUP (việc repo-cleanup, run repo-cleanup; trước đó EXACT_DIMENSIONS_AND_CAPTURE_POLICY)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run repo-cleanup — runs/repo-cleanup/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
+> CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (việc docs-cleanup, run docs-cleanup; trước đó REPO_CLEANUP, EXACT_DIMENSIONS_AND_CAPTURE_POLICY)
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2; D5 vẫn chờ người dùng chọn phương án) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md (R1–R10) cùng runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Dọn tài liệu + tên — run docs-cleanup (2026-10-08, máy local; chỉ test/CSS chết/tài liệu, không đổi hành vi):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Tên test | 123 hàm pytest bỏ mã lượt (`test_w17_…` → `test_…`), 74 tiêu đề vitest + 44 node:test bỏ thẻ; bộ chọn `-k wNN` trong tài liệu sống → đường dẫn file; commit riêng `a993aa8f`; bảng ở `evaluation/RUN_NAMING.md` |
+> | `docs/legacy/` | 42 → 15 file: xoá 26 (plan/spec Superpowers M9–M17, W13; tài liệu chuyển đề; REPOSITORY_MAP; RULES_v0.3), thiết kế + kế hoạch route Semantic Program → `legacy/architecture/`, `CUBOID_CUBE_CONTRACT_DECISION.md` về `architecture/` (mã còn cài đúng nó) |
+> | Hướng dẫn | kế hoạch/spec của skill: thiết kế ⇒ `docs/architecture/`, kế hoạch ⇒ `plan.md` của run (AGENTS §4, `docs/README.md` §8) |
+> | Tàn dư Tin học | 12 lớp `geo3d-*` chết gỡ; còn `SamplePreview`/`threeD`/`specDrift` và prompt + IR (sáu prompt không loader) — hai issue `ISSUE-ARCH-*-INFORMATICS-*` |
+> | Candidate · `CACHE_VERSION` | băm **`b4a33205…`** không đổi, product `be4b8287` → **`8c66249d`** · **117** (không bump) |
+> | Run | [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/) (`report.md`, `handoff.md`, `inventory.md`) |
 
 > **Dọn kho: gỡ phần Tin học hết vai trò + chuẩn hoá tên — run repo-cleanup (2026-10-08, máy local; chỉ tài liệu/mã chết, không đổi hành vi):**
 >

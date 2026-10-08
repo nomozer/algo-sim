@@ -1138,3 +1138,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** none (maintenance); the thesis draft's HTTP table follows the code
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = DOCUMENTATION_AND_NAMING_CLEANUP
+- **RUN_ID:** docs-cleanup (task docs-cleanup; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-08
+- **START_BASE:** 2a7179a9
+- **CODE_COMMIT_OR_NONE:** a993aa8f (test/title renames, `-k` selectors; no logic change) · c1a291ba (12 dead geo3d CSS classes, catalogue comment) · 8c66249d (RULES_v0.3.md + the test block that only preserved it) · 9efb8af6 (docs/legacy, guidance, indexes, issues)
+- **CANDIDATE:** b4a33205… unchanged hash; product commit be4b8287 → 8c66249d (one freeze at 8c66249d, 976e0eea) · CACHE_VERSION 117 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** no measurement; 0 screenshots; inventory `runs/docs-cleanup/inventory.md`
+- **CLASSIFICATION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS (branch stays READY_FOR_HUMAN_VISUAL_REVIEW)
+- **FULL_PRODUCT_SUITE:** `runs/docs-cleanup/handoff.md` §2
+- **PRODUCT_CHANGED:** NO behaviour change (test names, dead CSS that no element matched, docs)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/docs-cleanup/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-cleanup/
+- **PASS:** pytest collection 7242 before/after; renamed files 792 passed; vitest 1032/1032; node harness 97/97; CSS parser check; docs audit PASS after refreeze
+- **CLOSED:** NONE (ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE → PARTIALLY RESOLVED)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY count corrected in place: six unloaded prompts, not four)
+- **NEXT_ACTION_AT_TIME:** unchanged — human visual review and the D5 option
+- **FINAL_DECISION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none (maintenance)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.md` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

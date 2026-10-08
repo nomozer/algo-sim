@@ -13,6 +13,10 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `docs-cleanup` (2026-10-08, run [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/), máy local):**
+  DOCUMENTATION_AND_NAMING_CLEANUP — tên test theo hành vi, `docs/legacy/` + kế hoạch Superpowers đọc và xử lý (42 → 15 file),
+  12 lớp CSS chết; candidate băm `b4a33205…` (product `8c66249d`), `CACHE_VERSION` 117. Việc duy nhất không đổi: người
+  dùng duyệt hình và chọn D5.
 - **Việc `repo-cleanup` (2026-10-08, run [`repo-cleanup`](evaluation/geometry/runs/repo-cleanup/), máy local):** REPO_CLEANUP —
   gỡ 132 file Tin học hết vai trò (bộ đánh giá, `/api/explain`, fixture thuật toán, engine/view, runner trình duyệt), 325
   selector CSS chết, đổi tên 29 file theo chức năng; prompt và từ vựng IR Tin học giữ có lý do (bề mặt mô hình có băm);
