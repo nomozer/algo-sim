@@ -7,7 +7,8 @@ import type { Domain, SimulationEnvelope } from "../simulations/types";
  * sẵn envelope đã chuẩn — click = loadEnvelope, không cần AI.
  *
  * M9-UX2 — LUẬT PHẠM VI: kiến trúc được phép tổng quát, nhưng danh mục CÔNG
- * KHAI khoanh trong Tin học THPT. `visibility` là metadata TƯỜNG MINH khai tại
+ * KHAI khoanh trong phạm vi sản phẩm — nay là bài mẫu hình học không gian
+ * (`geometry-samples`). `visibility` là metadata TƯỜNG MINH khai tại
  * định nghĩa mẫu (CẤM lọc theo chuỗi tiêu đề). Gỡ một mẫu khỏi danh mục công
  * khai KHÔNG gỡ năng lực đã nuôi nó — fixture nội bộ vẫn sống cho test/dev,
  * và lịch sử học mở lại bằng envelope nên không phụ thuộc danh mục.

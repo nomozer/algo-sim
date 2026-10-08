@@ -3452,44 +3452,7 @@ html {
   min-width: 0;
 }
 
-/* ── KHỐI THĂM DÒ 3D (Scene3DExplorer) ─────────────────────────────────────
-   Cây phân rã đứng CẠNH khung nhìn ở màn rộng và XUỐNG DƯỚI ở màn hẹp. Không
-   dùng chiều cao cố định cho panel: danh sách thành phần dài ngắn theo bài, và
-   một khung cuộn cao 200px làm hình chóp bốn mặt trông như đang thiếu chỗ. */
-.geo3d-explorer {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
-  gap: var(--sp-md);
-  align-items: start;
-}
-
-.geo3d-explorer-main {
-  min-width: 0;
-}
-
-@media (max-width: 60rem) {
-  .geo3d-explorer {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.geo3d-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-  min-width: 0;
-  padding: var(--sp-md);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  background: var(--canvas-soft);
-}
-
-.geo3d-panel-title {
-  margin: 0;
-  font-size: 0.9375rem;
-  color: var(--ink-secondary);
-}
-
+/* ── CÂY THÀNH PHẦN (Scene3DExplorer, bảng nổi «Thành phần») ─────────────── */
 .geo3d-tree,
 .geo3d-tree ul {
   margin: 0;
@@ -3573,96 +3536,10 @@ html {
   background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
 }
 
-/* Nhãn của vật, chiếm phần rộng của nút; chip `type` (chỉ ở chế độ Chi tiết)
-   bị đẩy về cuối dòng bằng `margin-left: auto` của chính nó. */
+/* Nhãn của vật, chiếm phần rộng của nút. */
 .geo3d-tree-nhan {
   min-width: 0;
   overflow-wrap: anywhere;
-}
-
-.geo3d-tree-type {
-  margin-left: auto;
-  color: var(--ink-quiet);
-  font-size: 0.75rem;
-}
-
-.geo3d-inspect {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-  padding-top: var(--sp-sm);
-  border-top: 1px solid var(--hairline);
-}
-
-.geo3d-inspect-list {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--sp-xs) var(--sp-sm);
-  margin: 0;
-  font-size: 0.875rem;
-}
-
-.geo3d-inspect-list dt {
-  color: var(--ink-muted);
-}
-
-.geo3d-inspect-list dd {
-  margin: 0;
-  min-width: 0;
-  color: var(--ink-secondary);
-  overflow-wrap: anywhere;
-}
-
-.geo3d-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-xs);
-}
-
-.geo3d-focus {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--sp-xs) var(--sp-md);
-  margin: 0;
-  color: var(--ink-secondary);
-}
-
-.geo3d-focus dt {
-  color: var(--ink-muted);
-}
-
-.geo3d-focus dd {
-  margin: 0;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-/* ── Vùng "Quá trình dựng hình 3D" (Phase 5F) ─────────────────────────────
- *
- * Vùng THÊM VÀO dưới thân thẻ mô phỏng, chỉ hiện khi envelope mang `scene3d`.
- * Không tranh chỗ với renderer 2D và không đụng `VisualModeToggle`: bài Tin học
- * không có khoá ấy nên không thấy gì đổi.
- */
-.geo3d-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-  margin-top: var(--sp-lg);
-  padding-top: var(--sp-lg);
-  /* Đường kẻ trên thay cho một khung viền kín: vùng này THUỘC thẻ mô phỏng,
-     đóng khung nó lại sẽ đọc như một thẻ thứ hai chen vào. */
-  border-top: 1px solid var(--hairline);
-}
-
-.geo3d-heading {
-  margin: 0;
-  color: var(--ink);
-}
-
-.geo3d-lead {
-  margin: 0;
-  color: var(--ink-secondary);
-  line-height: 1.55;
 }
 
 /* ══ LỚP HỌC TRỰC TIẾP ═════════════════════════════════════════════════════
