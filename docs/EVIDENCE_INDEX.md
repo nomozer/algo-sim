@@ -1145,7 +1145,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CODE_COMMIT:** 88769dc5 · 8ff42b58 · 67e11671 · 11bea4a7 · be4b8287
 - **MEASUREMENT_COMMIT:** NONE (no browser or live measurement; candidate refreeze 372f78c2)
 - **EVIDENCE_COMMIT_ROLE:** inventory and relocated snapshot in the run directory
-- **CLASSIFICATION:** CLEANUP_COMPLETE (gate at the final docs commit — `handoff.md` §2)
+- **CLASSIFICATION:** CLEANUP_COMPLETE (T3 FULL_PRODUCT_GATE_PASS at 645705ae; identity gates green at 2da4cdeb)
 - **PRODUCT_CHANGE:** YES (dead code, unused /api/explain)
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** YES (e1927f84… → b4a33205…; product commit be4b8287)

@@ -1107,7 +1107,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CANDIDATE:** e1927f84… → b4a33205… (one freeze at be4b8287, 372f78c2; 102 files) · CACHE_VERSION 117 (no bump — cache identity lock verifies) · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** no measurement; 0 screenshots; inventory `runs/repo-cleanup/inventory.json`
 - **CLASSIFICATION:** CLEANUP_COMPLETE (branch stays READY_FOR_HUMAN_VISUAL_REVIEW)
-- **FULL_PRODUCT_SUITE:** T3 + identity gates on a clean detached checkout of the final docs commit — `handoff.md` §2
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 645705ae (pytest 7241 passed / 1 skipped, vitest 1032/1032, build, demo 5/5, crash surface 6/6); identity gates green at 2da4cdeb (`diagnostics/gates_2da4cdeb.log`)
 - **PRODUCT_CHANGED:** YES (dead code and an unused route removed; no behaviour change on the geometry route)
 - **MODEL_REQUESTS:** 0
 - **REPORT_PATH:** docs/evaluation/geometry/runs/repo-cleanup/report.md

@@ -10,7 +10,19 @@
 
 ## 2. Gate
 
-Recorded after T3 and the identity gates on a clean detached checkout of the final docs commit.
+Clean detached worktree `D:/tmp/cleanup gate` (CRLF, path with a space), 0 model calls:
+
+- **T3 `FULL_PRODUCT_GATE_PASS` at `645705ae`** (`diagnostics/t3_645705ae.log`): pytest 7241 passed / 1 skipped / 2
+  deselected · vitest 1032/1032 (68 files) · typecheck + build · demo 5/5 · crash surface 6/6.
+- **Identity gates** at `645705ae` (`diagnostics/gates_645705ae.log`): all green except `git diff --check` — a trailing
+  blank line in `code_index_removed_entries.md` written by the split script. Fixed in `2da4cdeb` (docs only, one line);
+  gates rerun at `2da4cdeb` (`diagnostics/gates_2da4cdeb.log`): candidate verify `b4a33205…` (102 files) · cache lock 117 /
+  `b1714b56…` · schema export ×2 idempotent · `LLM_ONLY`, routing unchanged · model-surface files changed since `2c2dfbbf`:
+  0 · evidence outside this run: only the candidate registry, `EVALUATION_CANDIDATE.json`, `RUN_NAMING.md` · `diff --check`
+  clean · docs audit PASS · node harness 95 pass / 2 skipped / 0 fail · tree clean before and after. T3 is not rerun for a
+  one-line docs change. The "catalogued reports changed: 1" line is the living `EVIDENCE_INDEX.md`.
+- Before deleting, the full pytest at the working tree showed 15 reds, all of three known kinds: dirty-tree prechecks (cleared
+  once committed), candidate not yet refrozen (cleared by `372f78c2`), CODE_INDEX stale paths (cleared by `be4b8287`).
 
 ## 3. Next decisions for the user
 
