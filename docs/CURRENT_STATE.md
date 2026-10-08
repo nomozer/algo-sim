@@ -25,7 +25,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 >
 > | | |
 > |---|---|
-> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung) + W5 (`regular-square-pyramid-w05`, 2026-10-06/07, chế độ tập trung + bộ đọc chuỗi bằng nhau) + việc `regular-triangular-pyramid` W1 (`regular-triangular-pyramid-w01`, 2026-10-07, chóp tam giác đều + tứ diện đều, giữ trên cùng nhánh theo lệnh người dùng) + việc `exact-dimensions` (run `exact-dimensions`, 2026-10-07/08, kích thước hữu tỉ + chụp ảnh tại nguồn + chuẩn hoá tên) + việc `mobile-canvas-fit` (run `mobile-canvas-fit`, 2026-10-08, D5: canvas vừa hình trên điện thoại; W3–W5 và các việc sau chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
+> | Active development branch | **`feat/regular-square-pyramid`** — việc `regular-square-pyramid`: W1 (run `regular-square-pyramid-w01`) + W2 (run `regular-square-pyramid-w02`, 2026-10-05, cloud) + W3 (`regular-square-pyramid-w03`, nghiệm thu local) + W4 (`regular-square-pyramid-w04`, 2026-10-06, giao diện chung) + W5 (`regular-square-pyramid-w05`, 2026-10-06/07, chế độ tập trung + bộ đọc chuỗi bằng nhau) + việc `regular-triangular-pyramid` W1 (`regular-triangular-pyramid-w01`, 2026-10-07, chóp tam giác đều + tứ diện đều, giữ trên cùng nhánh theo lệnh người dùng) + việc `exact-dimensions` (run `exact-dimensions`, 2026-10-07/08, kích thước hữu tỉ + chụp ảnh tại nguồn + chuẩn hoá tên) + việc `mobile-canvas-fit` (run `mobile-canvas-fit`, 2026-10-08, D5: canvas vừa hình trên điện thoại) + việc `phone-landscape-layout` (run `phone-landscape-layout`, 2026-10-08/09, điện thoại ngang + 360 px + nghiệm thu cuối; W3–W5 và các việc sau chỉ ở local), rẽ từ `main` = `38d41588`; nhánh đã push lên origin để local tiếp nhận; chưa merge, chờ người duyệt hình. Trước đó: nhánh `fix/cuboid-visual-semantic-closure` đã fast-forward vào `main`, push và xoá (run `cuboid-merge`) |
 > | Remote baseline | **`origin/main` = `c282a5f398ea5ed19e311dec10a8c5c2bc4d02ec`** sau push của run `cuboid-merge` (2026-10-05, fast-forward từ `a9492ee9`; commit ghi kết quả tích hợp đi sau, tra `git log -1 origin/main`). Lịch sử trước đó: `origin/main` = `a9492ee98ff9dc3302d1ff64465f1c06e9001bce` tại repository gate 2026-09-28; w11 (2026-09-29) và w12 (2026-10-01): ref cục bộ không đổi, là tổ tiên của HEAD; w13 (2026-10-01), w14 (2026-10-01), w15 (2026-10-02), w16 (2026-10-03), w17 (2026-10-03), w18 (2026-10-04) và w19 (2026-10-04): `git fetch --prune origin` + `ls-remote` — không đổi; w20 và run `cuboid-final-review` (2026-10-05): `ls-remote` — không đổi; run `cuboid-acceptance` và run `cuboid-merge` (2026-10-05): `git fetch --prune origin` + `ls-remote` — không đổi; regular-square-pyramid-w01 (2026-10-05): `ls-remote` = `38d41588…` — không đổi (commit ghi kết quả tích hợp của cuboid-merge) |
 > | `CACHE_VERSION` | **118** (docs-cleanup, 2026-10-08: envelope từ chối T8 thiếu kích thước đổi nguyên nhân `UNKNOWN` → `SOURCE`, phán quyết vẫn `unsupported`; trước: 117 ở exact-dimensions) — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
@@ -52,17 +52,27 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = c9bcdcdb (D5: canvas vừa hình ở khổ hẹp + bước đang xem trong bảng); bằng chứng trình duyệt 3f874fed (đo 90921f53, tám họ, run mobile-canvas-fit); cổng T3 ở commit tài liệu cuối của run (runs/mobile-canvas-fit/handoff.md §2)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 95a56a17 (điện thoại ngang: cột điều khiển cạnh canvas; 360 px; trên nền D5 c9bcdcdb); bằng chứng trình duyệt b1ba2575 (đo 221ec0a0 lần 3, tám họ × bảy khổ, Tier-A 8/8 một lượt, run phone-landscape-layout); cổng T3 ở commit tài liệu cuối của run (runs/phone-landscape-layout/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit không bump — chỉ frontend)
-> CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 002185a8 tại product commit c9bcdcdb — chỉ product_commit_sha dời)
+> CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit và phone-landscape-layout không bump — chỉ frontend)
+> CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 5892fefd tại product commit 95a56a17 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = MOBILE_CANVAS_FIT (run `mobile-canvas-fit`; D5 theo phương án (b) thu hẹp ở khổ hẹp; tám họ đo lại trên candidate cuối)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run mobile-canvas-fit — runs/mobile-canvas-fit/handoff.md §2; D5 đã triển khai, chờ duyệt) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/mobile-canvas-fit/review.md (E-R1–E-R6) cùng runs/exact-dimensions/review.md, runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
+> CURRENT_WAVE = PHONE_LANDSCAPE_LAYOUT (run `phone-landscape-layout`; điện thoại ngang + 360 px; nghiệm thu cuối trên candidate cuối)
+> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run phone-landscape-layout — runs/phone-landscape-layout/handoff.md §2; D5 + điện thoại ngang đã triển khai, chờ duyệt) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/phone-landscape-layout/review.md (F-R1–F-R7), runs/mobile-canvas-fit/review.md (E-R1–E-R6) cùng runs/exact-dimensions/review.md, runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Điện thoại ngang + 360 px + nghiệm thu cuối — run phone-landscape-layout (2026-10-08/09, máy local; đo `221ec0a0` lần 3, worktree tách rời sạch; chờ review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Nguyên nhân | 844×390: canvas ở sàn 320 px + thanh phát dưới canvas tràn khung 37 px; 667×375 dùng bố cục khổ hẹp khi nằm ngang; 360×640: ba nút phát xuống ba hàng |
+> | Sửa | ngang thấp: thanh điều khiển thành cột 10rem cạnh canvas (canvas giữ chiều cao ⇒ hình giữ cỡ; sàn 320 px giữ), ≤ 48rem dùng bố cục rộng; 360 px: ba nút một hàng |
+> | Trình duyệt (8 họ × 7 khổ) | điện thoại/ngang 55/56 (trước 15/40 + 0/8; còn ca xoay màn thấp có từ trước); Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 24/24, occlusion pass, phát lại pass |
+> | Candidate · `CACHE_VERSION` | **`7f3f0423…`** (cây đo không đổi; product `95a56a17`) · **118** (không bump) |
+> | Run | [`phone-landscape-layout`](evaluation/geometry/runs/phone-landscape-layout/) (`review.md`, `report.md`, `handoff.md`) |
 
 > **D5 — canvas vừa hình trên điện thoại — run mobile-canvas-fit (2026-10-08, máy local; đo `90921f53`, worktree tách rời sạch; chờ review người):**
 >

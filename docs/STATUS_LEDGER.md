@@ -1190,3 +1190,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** learner-facing simulation on phones
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `inputs/REVIEW_SET.json` · `results/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = PHONE_LANDSCAPE_LAYOUT
+- **RUN_ID:** phone-landscape-layout (task phone-landscape-layout; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-08/09
+- **START_BASE:** f6ebe946
+- **CODE_COMMIT_OR_NONE:** product `d8ad153b`, `95a56a17` · candidate refreeze `f884aa67`, `5892fefd` · evidence `b1ba2575`
+- **CANDIDATE:** `7f3f042309dd1c54…` (102 file; tree unchanged, product `95a56a17`) · CACHE_VERSION 118 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** browser measurement attempt 3 at `221ec0a0` (every step in one run), 0 model requests, 137 images (policy toi-thieu)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (visual review remains NOT_APPROVED)
+- **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/phone-landscape-layout/handoff.md` §2
+- **PRODUCT_CHANGED:** YES — short landscape: control column beside the canvas (figure keeps its size, 320 px floor kept); 360 px: play buttons on one row
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/phone-landscape-layout/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/phone-landscape-layout/
+- **PASS:** landscape/mobile probe 55/56 over 7 viewports (baseline 15/40 + 0/8; one pre-existing orbit case), Tier-A 8/8 in one run, W02 16/16, W04 24/24, W05 24/24, occlusion PASS, playback PASS, builder 72 crops / 0 disagreements
+- **CLOSED:** ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD (RESOLVED, human review pending)
+- **OPENED:** ISSUE-ARCH-LANDSCAPE-FLOATING-PANEL-COVERS-CANVAS (decision)
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** human visual review (`runs/phone-landscape-layout/review.md` with the earlier packages), then merge on explicit approval
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** learner-facing simulation on phones (landscape, small screens)
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `inputs/REVIEW_SET.json` · `results/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

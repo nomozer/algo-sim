@@ -1198,3 +1198,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** learner-facing simulation on phones (D5); human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `inputs/REVIEW_SET.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/rerun/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = PHONE_LANDSCAPE_LAYOUT
+- **RUN_ID:** phone-landscape-layout (task phone-landscape-layout; same branch)
+- **DATE:** 2026-10-08/09
+- **REPORT:** docs/evaluation/geometry/runs/phone-landscape-layout/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/phone-landscape-layout/
+- **START_BASE:** f6ebe946
+- **CODE_COMMIT:** d8ad153b · 95a56a17 (product); candidate refreeze f884aa67, 5892fefd; plan/review set/baseline 9af3e8a3, 221ec0a0
+- **MEASUREMENT_COMMIT:** 221ec0a0 attempt 3 (local, clean detached CRLF worktree with a space in its path; every step in one run: landscape/mobile probe over 7 viewports, full Tier-A suite, W02, W04, W05, occlusion, playback, builder); attempts 1 (9af3e8a3) and 2 (221ec0a0) kept (`MEASUREMENT_ATTEMPTS.json`, `diagnostics/attempts/`); baseline on a scratch build of f6ebe946 (`diagnostics/baseline_f6ebe946/`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit b1ba2575 after the measurement (results, images, fixtures, logs, attempt records)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 + identity gates at the run's final documentation commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** YES (frontend only: short-landscape control column, 360 px play buttons)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** product_commit_sha only (c9bcdcdb -> d8ad153b -> 95a56a17); measured-system tree 7f3f0423... unchanged
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (earlier runs untouched; ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD resolved in OPEN_ISSUES)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** learner-facing simulation on phones in landscape and on small screens; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `inputs/REVIEW_SET.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

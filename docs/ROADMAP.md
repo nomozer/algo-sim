@@ -13,6 +13,11 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `phone-landscape-layout` (2026-10-08/09, run [`phone-landscape-layout`](evaluation/geometry/runs/phone-landscape-layout/), máy local):**
+  PHONE_LANDSCAPE_LAYOUT — điện thoại ngang: thanh điều khiển thành cột cạnh canvas (hình giữ cỡ, sàn 320 px giữ); 360 px: ba nút
+  phát một hàng; nghiệm thu cuối trên candidate `7f3f0423…` (product `95a56a17`), Tier-A 8/8 một lượt, `CACHE_VERSION` 118. Việc duy
+  nhất: người dùng duyệt `review.md` của run này cùng các gói dưới; duyệt thì merge, push, xoá nhánh ở lượt riêng có lệnh.
+
 - **Việc `mobile-canvas-fit` (2026-10-08, run [`mobile-canvas-fit`](evaluation/geometry/runs/mobile-canvas-fit/), máy local):**
   MOBILE_CANVAS_FIT — D5 khép theo phương án (b) thu hẹp: khổ hẹp ≤ 48rem canvas cao vừa hình (≤ phần khả dụng, ≥ 320 px,
   hình ràng theo chiều cao giữ nguyên; desktop không đổi); bảng bước giữ bước đang xem; tám họ đo lại trên candidate cuối

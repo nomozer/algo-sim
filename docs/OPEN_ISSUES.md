@@ -773,9 +773,19 @@
 - **evidence:** `runs/mobile-canvas-fit/results/MOBILE_LAYOUT_PROBE.json` (`landscape` runs: canvas 320 px at y = 60, controls at y ≈ 392 in a 390 px viewport); unchanged before the D5 change (`diagnostics/baseline_38a19c65/`).
 - **impact:** usability in landscape on phones; no wrong value.
 - **scope / options (decision needed):** lower the floor only for short landscape viewports (the figure there is height-bound, so this shrinks it — the user's rule against shrinking applies), or keep the floor and pin the play bar to the viewport bottom in that layout (overlaps the canvas bottom band).
-- **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched; waiting for the user's choice.
+- **status:** RESOLVED (run `phone-landscape-layout`, product `d8ad153b` + `95a56a17`) — waiting for the user's visual review (`runs/phone-landscape-layout/review.md` F-R1–F-R7). The user asked for neither option above (no lower floor everywhere, no bar pinned over the figure). Short landscape (`(orientation: landscape) and (max-height: 30rem)`): the controls become a 10rem column beside the canvas (width is the spare dimension); the canvas keeps its height, so the figure keeps its size; the view buttons sit at the top of the column; on widths ≤ 48rem the wide layout is used there (floating panels, one-line top row). 360×640 portrait: narrower button padding keeps the play buttons on one row. Measured at `221ec0a0`: 844×390, 667×375, 844×340 8/8 each, last control at y ≤ 334 px; rotation keeps step/selection/camera 40/40. The 320 px floor is kept: at 667×375 and 844×340 only the blank band under the figure falls below the fold.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** after the user picks an option
+- **suggested_wave:** — (resolved; human review pending)
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-LANDSCAPE-FLOATING-PANEL-COVERS-CANVAS
+- **description:** In short landscape the information panels float over the canvas, as on desktop (W4). The canvas there is narrow (640 px at 844×390, 463 px at 667×375), so an opened panel (17–20rem wide) covers part of the figure — about half of the canvas at 667×375.
+- **evidence:** `runs/phone-landscape-layout/images/mobile/cross-section/{landscape,landscape_small}/steps_last.png`; the probe keeps the figure in the viewport (`panels.*.figure_visible` = 1) but does not measure overlap by a floating panel.
+- **impact:** the learner collapses (one tap) or drags the panel; canvas and camera do not change when it opens (W4 invariant). No wrong value.
+- **scope / options (decision needed):** keep (W4 floating design); narrower panels in short landscape (less text per line); or give the panel its own column when open — the canvas would resize and the camera re-aspect on open, breaking the approved W4 invariant "opening a panel does not resize the canvas".
+- **status:** OPEN (run `phone-landscape-layout`)
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN
@@ -783,7 +793,7 @@
 - **evidence:** `runs/mobile-canvas-fit/results/MOBILE_LAYOUT_PROBE.json` row `triangular_prism/low` `FIGURE_LEFT_CANVAS_AFTER_ORBIT`; identical before the change (`diagnostics/baseline_38a19c65/`); the other 39 family × viewport runs keep the labels inside after the same drag.
 - **impact:** the learner may need «Xem lại toàn hình» or a zoom after rotating; no wrong value.
 - **scope / options (decision needed):** accept (the reset button exists), or fit by the bounding sphere instead of the default projection (smaller figure on every screen).
-- **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched.
+- **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched. Evaluated in run `phone-landscape-layout`: one family, one viewport, one 120 × 40 px drag (55/56 other runs keep the labels inside); «Xem lại toàn hình» restores the exact initial camera in 56/56 runs over seven viewports and is always in view. The only shared fix (fit over the orbit sweep / bounding sphere) makes the figure smaller on every screen — an approved invariant — so it waits for the user.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO

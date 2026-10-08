@@ -21,15 +21,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = MOBILE_CANVAS_FIT (run mobile-canvas-fit: D5 — canvas vừa hình ở khổ hẹp + bước đang xem trong bảng; máy local; cùng nhánh)
-PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit c9bcdcdb — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 002185a8), CACHE_VERSION 118, LLM_ONLY
-MEASUREMENT = 90921f53 (8 họ: D5 39/40, W02 16/16, W04 24/24, W05 24/24, occlusion pass, phát lại 16/16; suite 7/8 + chạy lại bước đỏ ở a51c788b PASS); bằng chứng 3f874fed (worktree tách rời sạch CRLF, có dấu cách)
+CURRENT_WAVE = PHONE_LANDSCAPE_LAYOUT (run phone-landscape-layout: điện thoại ngang — cột điều khiển cạnh canvas; 360 px; nghiệm thu cuối; máy local; cùng nhánh)
+PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 95a56a17 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 5892fefd), CACHE_VERSION 118, LLM_ONLY
+MEASUREMENT = 221ec0a0 lần 3, trọn một lượt (8 họ × 7 khổ: điện thoại/ngang 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 24/24, occlusion pass, phát lại pass); bằng chứng b1ba2575 (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run mobile-canvas-fit — runs/mobile-canvas-fit/handoff.md §2)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run phone-landscape-layout — runs/phone-landscape-layout/handoff.md §2)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng duyệt hình theo runs/mobile-canvas-fit/review.md (D5 đã triển khai) cùng các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng duyệt hình theo runs/phone-landscape-layout/review.md và runs/mobile-canvas-fit/review.md cùng các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -98,6 +98,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   `scene3d-view.tiLeKhungHinh` cùng điểm/phép xoay/hướng với phép vừa khung; ≤ phần khả dụng, ≥ 320 px; hình ràng theo
   chiều cao giữ nguyên); bảng bước giữ bước đang xem trong thân bảng. 390×844: canvas 519 → 320–485 px, bảng mở thấy
   cùng hình. Đầu dò `frontend/scripts/check-mobile-layout.mjs`.
+- Điện thoại ngang (phone-landscape-layout): ngang thấp (`(orientation: landscape) and (max-height: 30rem)`) ⇒ thanh điều khiển
+  thành cột 10rem cạnh canvas (canvas giữ chiều cao, hình giữ cỡ; hai nút xem ở đầu cột; ≤ 48rem dùng bố cục rộng, bảng nổi);
+  360 px: ba nút phát một hàng. 844×390 · 667×375 · 844×340 · 360×640 điều khiển trong khung; xoay máy giữ bước/lựa chọn/camera.
 - Bảy họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
   `cuboid`, `cube`, `cross_section`, `regular_square_pyramid`.
 - Đo mới nhất (regular-square-pyramid-w01, `ed37f9fa`): bảy họ 14/14 dương, 54/54 âm, 6/6 phục vụ, chọn đại lượng
@@ -119,6 +122,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
+- **phone-landscape-layout chờ người dùng:** duyệt `review.md` F-R1–F-R7 (F-R7 + E-R6 cần thao tác tay). Quyết: bảng nổi phủ
+  canvas hẹp khi ngang (`ISSUE-ARCH-LANDSCAPE-FLOATING-PANEL-COVERS-CANVAS`), ca xoay màn thấp (`ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN`,
+  khôi phục bằng «Xem lại toàn hình» 56/56). `ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD` RESOLVED (chờ duyệt).
 - **mobile-canvas-fit chờ người dùng:** duyệt `review.md` E-R1–E-R6 của run (D5 RESOLVED, chờ duyệt). Mở mới (có từ trước, chờ
   quyết): `ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD`, `ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN`. Sửa ở bộ đo: băm
   oracle_source lệch (node 96/97 tại 38a19c65) và kỳ vọng cũ của suite cho ca T8 thiếu chiều cao.
@@ -171,7 +177,8 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-Việc `mobile-canvas-fit` (máy local, cùng nhánh) khép D5 theo phương án (b) thu hẹp ở khổ hẹp và đo lại tám họ trên candidate
+Việc `phone-landscape-layout` (máy local, cùng nhánh) đưa điều khiển vào khung khi ngang và ở 360 px, chạy nghiệm thu cuối (Tier-A
+8/8 một lượt, T3); việc kế tiếp: người dùng duyệt `review.md` của run này cùng các gói dưới. Việc `mobile-canvas-fit` (máy local, cùng nhánh) khép D5 theo phương án (b) thu hẹp ở khổ hẹp và đo lại tám họ trên candidate
 cuối; việc kế tiếp: người dùng duyệt `review.md` của run này cùng các gói dưới. Việc `docs-cleanup` (máy local, cùng nhánh) khép đổi tên test, xử lý `docs/legacy/` + kế hoạch Superpowers và CSS chết, không
 đổi hành vi; việc kế tiếp không đổi. Việc `repo-cleanup` (máy local, cùng nhánh) gỡ phần Tin học hết vai trò và chuẩn hoá tên, không đổi hành vi; việc kế tiếp
 không đổi. Việc `exact-dimensions` (máy local, cùng nhánh) phục vụ chóp tam giác đều/tứ diện đều với kích thước hữu tỉ bằng khung
@@ -195,6 +202,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `phone-landscape-layout` (PHONE_LANDSCAPE_LAYOUT): `docs/evaluation/geometry/runs/phone-landscape-layout/` (`review.md`, `report.md`,
+  `handoff.md`, `run.json`, `plan.md`, `MEASUREMENT_ATTEMPTS.json`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
 - Run `mobile-canvas-fit` (MOBILE_CANVAS_FIT): `docs/evaluation/geometry/runs/mobile-canvas-fit/` (`review.md`, `report.md`,
   `handoff.md`, `run.json`, `plan.md`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
 - Run `docs-cleanup` (DOCUMENTATION_AND_NAMING_CLEANUP): `docs/evaluation/geometry/runs/docs-cleanup/` (`report.md`,
