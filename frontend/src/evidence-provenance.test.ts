@@ -30,7 +30,7 @@ const fresh = (over: Record<string, unknown> = {}) => ({
   ...over,
 });
 
-describe("W8 §3 — năm trạng thái, không cái nào mặc định thành FRESH", () => {
+describe("năm trạng thái, không cái nào mặc định thành FRESH", () => {
   it("E. nguồn sạch + đúng công cụ ⇒ FRESH (kiểm soát dương tính)", () => {
     expect(provenanceVerdict(fresh()).state).toBe("FRESH");
   });
@@ -60,7 +60,7 @@ describe("W8 §3 — năm trạng thái, không cái nào mặc định thành F
   });
 });
 
-describe("W8 §2 — vòng TỰ THAM CHIẾU đã bị phá", () => {
+describe("vòng TỰ THAM CHIẾU đã bị phá", () => {
   it("C. thêm/sửa file BẰNG CHỨNG không đổi dấu vân tay nguồn", () => {
     /* Đây là tính chất khiến bằng chứng commit được. Nếu `docs/` lọt vào
        `SOURCE_PATHS` thì mỗi lần commit artifact lại làm chính nó STALE. */

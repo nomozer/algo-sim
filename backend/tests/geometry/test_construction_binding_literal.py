@@ -115,12 +115,12 @@ def _doi_chieu(ca: str):
     return doi_chieu_phep_dung(contract, v.spec)
 
 
-def test_w20_moi_hang_nhan_co_mot_ca_va_nguoc_lai():
+def test_moi_hang_nhan_co_mot_ca_va_nguoc_lai():
     assert set(CA) == set(NHAN)
 
 
 @pytest.mark.parametrize("ca", sorted(CA))
-def test_w20_tuyen_san_pham_theo_nhan(ca):
+def test_tuyen_san_pham_theo_nhan(ca):
     """Nhãn: phục vụ, hay từ chối với nguyên nhân KHÁC `SOURCE` (đề không sai). C7 ở biên pipeline bị cổng
     miền chặn vì lý do khác (LABELS amendment_1); ở route nó được phục vụ như nhãn."""
     _sp, out, _sc = W.chay(*CA[ca]())
@@ -132,7 +132,7 @@ def test_w20_tuyen_san_pham_theo_nhan(ca):
 
 
 @pytest.mark.parametrize("ca", QUA_GROUNDING)
-def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
+def test_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
     _sp, out, _sc = W.chay(*CA[ca]())
     assert (out.servable, out.stage_reached, out.reason_code, out.refusal_cause) == (
         False, "construction_binding", MA_TOA_DO, "CONSTRUCTION"), (ca, out.stage_reached, out.reason_code,
@@ -141,21 +141,21 @@ def test_w20_dich_dat_bang_toa_do_bi_tu_choi_o_doi_chieu_moi_vung(ca):
 
 
 @pytest.mark.parametrize("ca", sorted(DICH))
-def test_w20_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
+def test_doi_chieu_mot_minh_van_bat_moi_dich_dat_bang_toa_do(ca):
     """Phòng thủ nhiều lớp: không nhờ grounding chạy trước — chính bước đối chiếu ghi và từ chối."""
     dc = _doi_chieu(ca)
     assert (dc.trang_thai.get(DICH[ca]), dc.reason_code) == (TOA_DO, MA_TOA_DO), (ca, dc.trang_thai, dc.details)
 
 
 @pytest.mark.parametrize("ca", sorted(c for c in CA if c.startswith("C")))
-def test_w20_doi_chung_khong_bi_ghi_toa_do(ca):
+def test_doi_chung_khong_bi_ghi_toa_do(ca):
     """Toạ độ bố cục (năm điểm đề cho), phép dựng tương đương (`divide_segment` 1/2, bí danh của một điểm
     ĐƯỢC DỰNG) và quan hệ chương trình không dùng tới: không trạng thái mới, không mã từ chối."""
     dc = _doi_chieu(ca)
     assert TOA_DO not in dc.trang_thai.values() and dc.reason_code is None, (ca, dc.trang_thai, dc.reason_code)
 
 
-def test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung():
+def test_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung():
     """H đặt đúng toạ độ (3; 3; 0), K = hình chiếu của S lên BD dựng thật, ngoài vùng đa diện: K trùng toạ
     độ với H nhưng không phải H của đề."""
     _sp, out, _sc = W.chay(*out_h([lit("H", H_OK, fid="H_def"), T._proj("K", "S", "BD")], facts=(H_DEF,)))
@@ -164,14 +164,14 @@ def test_w20_trung_toa_do_khac_danh_tinh_khong_phai_bang_chung():
         out.construction_binding)
 
 
-def test_w20_khai_bao_khong_toa_do_roi_dung_van_khop():
+def test_khai_bao_khong_toa_do_roi_dung_van_khop():
     """Khai đích KHÔNG kèm toạ độ rồi dựng đúng: không phải lời khẳng định toạ độ."""
     _sp, out, _sc = W.chay(*u3_m([T._mid("M", "S", "A")], khai=({"name": "M", "type": "point3"},)))
     assert out.servable and out.construction_binding.get("M") == "MATCHED", (
         out.stage_reached, out.reason_code, out.construction_binding)
 
 
-def test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
+def test_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
     """Cặp [quan hệ đề nêu, cách chương trình đã đặt điểm ấy]. Từ run `cuboid-final-review` vế sau viết ở thể bị
     động, không kèm tên điểm (W20 ghi `đặt H bằng toạ độ cho sẵn`), để lời học sinh nói "vì điểm này được đặt bằng
     toạ độ" mà không ghép chuỗi theo ký hiệu."""
@@ -181,7 +181,7 @@ def test_w20_chu_the_neu_quan_he_de_va_viec_chuong_trinh_da_lam():
     assert out.reason_subjects == ["H là hình chiếu của S lên BD", "được lấy trùng với điểm A"], out.reason_subjects
 
 
-def test_w20_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua():
+def test_ma_moi_co_nguyen_nhan_dung_hinh_va_khong_gui_di_sua():
     from app.ai.pipeline import KHONG_SUA_NGUON
     from app.simulation.semantic_program.refusal_cause import theo_ma
 
@@ -211,7 +211,7 @@ _DUNG_LAI = " Hệ tạm dừng để tránh đưa ra kết quả chưa kiểm c
     ("L16_mid_U3_literal_then_constructed", "Hệ chưa kiểm chứng được M là trung điểm của SA, vì điểm này được đặt "
                                             "bằng toạ độ thay vì dựng từ quan hệ trong đề."),
 ])
-def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca, cau):
+def test_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca, cau):
     """L14 phục vụ đáp số SAI và L17 đo SA thay cho SH trước bản sửa W20. Lời (cuboid-final-review): nêu quan hệ
     của đề và cách điểm bị đặt, nói hệ CHƯA KIỂM CHỨNG được — không nói hình khác, không bảo sửa đề, không hứa gửi
     lại sẽ được (chưa có cơ chế bảo đảm điều đó). L16 là cùng lời với tên và quan hệ khác: không ghép cứng."""
@@ -225,7 +225,7 @@ def test_w20_bien_pipeline_khong_dua_dap_so_va_noi_dung_gioi_han_kiem_chung(ca, 
         assert cam not in msg, (cam, msg)
 
 
-def test_w20_loi_ghep_tu_chu_the_co_cau_truc():
+def test_loi_ghep_tu_chu_the_co_cau_truc():
     """Tên, quan hệ và cách đặt đều đọc từ `reason_subjects` — không ký hiệu nào viết cứng; nhiều cặp gộp
     lại; tên máy (có `_`) không bao giờ lên lời; không có chủ thể thì vẫn nói đúng giới hạn."""
     from app.learner_messages import learner_reason

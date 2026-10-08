@@ -27,7 +27,7 @@ const sach = (h: string) => h.replace(/<!--.*?-->/g, "");
 const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 
 describe("§0.1-1 · không có card Kết quả dưới hình", () => {
-  it("W05 · E: trình phát không dựng thẻ lời giải nào — đáp số đọc ở «Đại lượng» và ô soi", () => {
+  it("trình phát không dựng thẻ lời giải nào — đáp số đọc ở «Đại lượng» và ô soi", () => {
     // §0.1-1 ẩn card Kết quả khi lời giải thu gọn; W05 gỡ hẳn thẻ lời giải (nó lặp tập đại lượng của «Đại lượng»).
     const h = sach(renderToString(<Scene3DPlayer scene={CANH} initialStep={CUOI} />));
     expect(h).not.toContain("geo3d-lg-ket-qua");
@@ -111,7 +111,7 @@ describe("§0.1-8 · bớt dòng mô tả lặp", () => {
   });
 });
 
-describe("W2 · B · bảng nổi «Các bước dựng»", () => {
+describe("bảng nổi «Các bước dựng»", () => {
   it("kẹp trong vùng mô phỏng: kéo ra ngoài mọi phía vẫn để nguyên bảng (và nút đóng) trong khung", async () => {
     const { kepBang, LE_BANG } = await import("./scene3d-floating-panel");
     const khung = { x: 0, y: 0, w: 800, h: 500 };
@@ -171,7 +171,7 @@ describe("W2 · B · bảng nổi «Các bước dựng»", () => {
 /* regular-square-pyramid-w03 · H-W2-4. W2 mở một bước dựng cho «Mặt phẳng qua A, B, C» — mặt phẳng chỉ làm toán hạng
  * của chiều cao, ẩn mặc định — nên bước ấy KHÔNG đổi hình khi hình phụ tắt (bất biến W12), và W2 nới ba cổng để nó
  * qua. Thay chú thích «hình phụ, đang ẩn» bằng gốc: mặt phẳng chỉ để đo không mở bước dựng. */
-describe("W3 · H-W2-4 · mặt phẳng phụ chỉ để đo không mở bước dựng", () => {
+describe("mặt phẳng phụ chỉ để đo không mở bước dựng", () => {
   const RSP: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
     "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w02/inputs/fixtures/regular_square_pyramid_positive.json",
     import.meta.url)), "utf8")).envelope.scene3d;
@@ -210,7 +210,7 @@ describe("W3 · H-W2-4 · mặt phẳng phụ chỉ để đo không mở bướ
 /* W2 · B xếp ngăn và ô soi CỐ ĐỊNH trên bảng nổi (z 4 > 3) để nút Đóng của chúng không bị che. W4: mọi bảng là
    `BangNoi` ⇒ thứ tự lớp do host đặt theo lần dùng gần nhất (`lenTren`): bảng vừa mở / vừa chạm luôn trên cùng, nên
    nút Đóng của bảng người học đang dùng không bao giờ nằm dưới bảng khác. */
-describe("W4 · thứ tự lớp: bảng vừa dùng nằm trên cùng", () => {
+describe("thứ tự lớp: bảng vừa dùng nằm trên cùng", () => {
   it("lớp đặt theo host (mở, chạm, nhận tiêu điểm ⇒ lên trên), không còn z cố định riêng của ngăn/ô soi", () => {
     const css = nguon("../../../styles/global.css");
     const bp = nguon("./scene3d-floating-panel.tsx");
@@ -225,7 +225,7 @@ describe("W4 · thứ tự lớp: bảng vừa dùng nằm trên cùng", () => {
   });
 });
 
-describe("regular-triangular-pyramid-w01 · D4 — lời kể của bước đang xem không lặp tiêu đề", () => {
+describe("lời kể của bước đang xem không lặp tiêu đề", () => {
   it("bước dữ kiện (tiêu đề CHÍNH LÀ lời kể) không in lời kể lần hai; bước dựng có lời kể khác tiêu đề thì giữ", () => {
     const dau = sach(renderToString(<Scene3DPlayer scene={CANH} initialStep={0} stepsOpen />));
     expect(dau).not.toContain("geo3d-cac-buoc-mo-ta");

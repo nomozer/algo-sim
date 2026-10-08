@@ -667,7 +667,7 @@ def test_volume_narration_is_independent_from_localized_title():
 
 # ─── PHASE 3 ACCEPTANCE: DEDICATED FACT_GRAPH TESTS ────────────────────────
 
-def test_phase3_build_fact_graph_cuboid_p01():
+def test_build_fact_graph_cuboid_p01():
     """Phase 3 Gate: build_fact_graph cho CUBOID_P01 sinh graph hợp lệ với 8 nút điểm và stable IDs."""
     contract = _build_cuboid_prism_contract(
         base_shape="rectangle",
@@ -707,7 +707,7 @@ def test_phase3_build_fact_graph_cuboid_p01():
     assert f_aa is not None and f_aa.value == "5" and f_aa.status == "GIVEN"
 
 
-def test_phase3_build_fact_graph_cube_p01():
+def test_build_fact_graph_cube_p01():
     """Phase 3 Gate: build_fact_graph cho CUBE_P01 sinh graph hợp lệ với 1 cạnh nguồn và subkind=cube."""
     contract = _build_cuboid_prism_contract(
         base_shape="square",
@@ -732,7 +732,7 @@ def test_phase3_build_fact_graph_cube_p01():
     assert ka.graph.do_dai("A", "A_prime") is None
 
 
-def test_phase3_build_fact_graph_square_prism_control():
+def test_build_fact_graph_square_prism_control():
     """Phase 3 Gate: build_fact_graph cho SQUARE_PRISM_CONTROL với cạnh đáy=3, chiều cao=7."""
     contract = _build_cuboid_prism_contract(
         base_shape="square",
@@ -757,7 +757,7 @@ def test_phase3_build_fact_graph_square_prism_control():
     assert f_aa is not None and f_aa.value == "7"
 
 
-def test_phase3_build_fact_graph_fail_closed_contradiction():
+def test_build_fact_graph_fail_closed_contradiction():
     """Phase 3 Gate: build_fact_graph bác bỏ trực tiếp mâu thuẫn độ dài đoạn thẳng trên cùng 1 đoạn."""
     contract = _build_cuboid_prism_contract(
         base_shape="rectangle",

@@ -69,7 +69,7 @@ const KNOWN_GAPS: Record<string, string> = {
   muted: "chữ mờ ở miền web",
 };
 
-describe("W12 — mọi className hằng phải có luật CSS", () => {
+describe("mọi className hằng phải có luật CSS", () => {
   const files = walk(SRC);
   const used = new Map<string, string>();
   for (const f of files) {

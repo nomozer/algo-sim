@@ -38,7 +38,7 @@ const FORBIDDEN_ICON_CHARS = [
   "📎", "🧪", "🔎", "💬", "🤖",
 ];
 
-describe("(M9-UX5) luật icon — không ký tự Unicode/emoji trên UI", () => {
+describe("luật icon — không ký tự Unicode/emoji trên UI", () => {
   beforeEach(() => {
     __resetHistoryForTest();
     useAppStore.getState().reset();
@@ -61,7 +61,7 @@ describe("(M9-UX5) luật icon — không ký tự Unicode/emoji trên UI", () =
   });
 });
 
-describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
+describe("Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => {
   beforeEach(() => {
     __resetHistoryForTest();
     useAppStore.getState().reset();
@@ -134,7 +134,7 @@ describe("(M9-UX5) Trang chủ KHÔNG BAO GIỜ phình theo dữ liệu", () => 
   });
 });
 
-describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", () => {
+describe("Thư viện — nhà riêng của danh mục đầy đủ", () => {
   it("hiện TOÀN BỘ mẫu công khai, gom nhóm theo domain", () => {
     const html = renderToString(<LibraryView />);
     const pub = publicCatalog();
@@ -202,7 +202,7 @@ describe("Panel Giải thích không còn control AI nào", () => {
   });
 });
 
-describe("(M9-UX5) AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", () => {
+describe("AI thôi ngang hàng với mô phỏng (R0 phản chiếu lên UI)", () => {
   it("store: aiOpen mặc định ĐÓNG — không còn tab [Quan sát][Hỏi AI]", () => {
     useAppStore.getState().reset();
     expect(useAppStore.getState().aiOpen).toBe(false);

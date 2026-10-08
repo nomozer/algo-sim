@@ -167,7 +167,7 @@ def test_canh_ben_xien_cua_chop_deu_khong_thanh_chieu_cao():
     assert "× SA" not in V["formula"]["text"]
 
 
-def test_nhan_cua_ca_dung_trong_ho_so_w02():
+def test_ca_canh_ben_the_tich_mang_nhan_phuc_vu_16():
     assert NHAN["S1_side_height_volume"]["expect"] == "served:16"
 
 

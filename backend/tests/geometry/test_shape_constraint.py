@@ -298,7 +298,7 @@ def _sc():
     ("Hỏi SA có vuông góc với đáy không? Tính thể tích.", ["Hỏi SA có vuông góc với đáy không"]),
     ("Chứng tỏ rằng S.ABC là hình chóp đều; tính thể tích.", ["Chứng tỏ rằng S.ABC là hình chóp đều"]),
 ])
-def test_w16_khoang_muc_tieu(text, manh):
+def test_khoang_muc_tieu(text, manh):
     assert [text[a:b] for a, b in _sc().khoang_muc_tieu(text)] == manh
 
 
@@ -308,11 +308,11 @@ def test_w16_khoang_muc_tieu(text, manh):
     "Lấy điểm M thuộc SA sao cho M không rời khỏi cạnh SA.",                  # `hỏi` nằm TRONG `khỏi`
     "",
 ])
-def test_w16_khong_co_muc_tieu(text):
+def test_khong_co_muc_tieu(text):
     assert _sc().khoang_muc_tieu(text) == ()
 
 
-def test_w16_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc():
+def test_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc():
     """Câu ghép: giả thiết đứng TRƯỚC yêu cầu vẫn đọc được; quan hệ phải chứng minh thì không."""
     text = ("Cho hình chóp S.ABC có AB = 3, AC = 4, SA = 5. Biết SA vuông góc với đáy, chứng minh rằng tam "
             "giác ABC vuông tại A. Tính thể tích khối chóp S.ABC.")
@@ -323,7 +323,7 @@ def test_w16_che_muc_tieu_giu_do_dai_va_giu_gia_thiet_dung_truoc():
     assert "right_triangle" in _kinds(text)          # bộ đọc trên đề GỐC vẫn thấy nó (dùng để chặn CE)
 
 
-def test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
+def test_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
     """Đề gõ ở dạng tổ hợp (NFD): từ khoá vẫn khớp, span cắt đúng đề GỐC — nếu không, `SA ⊥
     (ABC)` (không có chữ Việt nào) vẫn đọc được trong khi `chứng minh` thì không, và lỗ mở lại."""
     import unicodedata
@@ -337,7 +337,7 @@ def test_w16_muc_tieu_nhan_ca_de_go_dang_to_hop_NFD():
     assert len(che) == len(nfd) and "⊥" not in che
 
 
-def test_w17_menh_de_biet_sau_yeu_cau_chung_minh_la_gia_thiet():
+def test_menh_de_biet_sau_yeu_cau_chung_minh_la_gia_thiet():
     """§15.2 (đính chính Task 3): `Chứng minh X, biết Y` — Y là dữ kiện, mục tiêu dừng ở `, biết`."""
     de = "Cho hình chóp S.ABC. Chứng minh rằng SA ⊥ (ABC), biết SA = 5 và AB = 3. Tính thể tích khối chóp S.ABC."
     [(a, b)] = _sc().khoang_muc_tieu(de)
@@ -367,11 +367,11 @@ def _cat(de: str) -> list[tuple]:
     ("Mặt phẳng (P) qua M, N, P cắt khối chóp S.ABCD theo thiết diện (T).",
      [("MNP", ("S", "A", "B", "C", "D"), "T")]),
 ])
-def test_w17_doc_quan_he_cat(de, ky_vong):
+def test_doc_quan_he_cat(de, ky_vong):
     assert _cat(de) == ky_vong
 
 
-def test_w17_mat_phang_khong_ten_mang_span_cua_phuong_trinh():
+def test_mat_phang_khong_ten_mang_span_cua_phuong_trinh():
     """Mặt phẳng không tên: danh tính là phương trình viết TRONG câu cắt — span trỏ vào đúng nó."""
     de = "Cho mặt phẳng z = 5. Mặt phẳng z = 3 cắt khối chóp theo thiết diện (T)."
     [q] = _sc().doc_quan_he_cat(de)
@@ -384,7 +384,7 @@ def test_w17_mat_phang_khong_ten_mang_span_cua_phuong_trinh():
     "Chứng minh rằng mặt phẳng (β) cắt khối chóp theo thiết diện (T).",
     "",
 ])
-def test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat(de):
+def test_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat(de):
     """Ngoài từ vựng ⇒ không có quan hệ; quan hệ nằm trong yêu cầu chứng minh không là tiền đề (§14.2)."""
     assert _cat(de) == []
 
@@ -393,7 +393,7 @@ def test_w17_ngoai_tu_vung_hoac_trong_muc_tieu_khong_cho_quan_he_cat(de):
     "Gọi M là trung điểm SA. Mặt phẳng (Q) qua M và song song với (ABCD) cắt hình chóp S.ABCD theo thiết diện (T).",
     "Mặt phẳng (P) đi qua A và vuông góc với (SBC) cắt khối chóp theo thiết diện (T).",
 ])
-def test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat(de):
+def test_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat(de):
     """Tự rà soát cuối W17: "(X)" đứng sau "song song/vuông góc với" là TÂN NGỮ của quan hệ — trước
     bản sửa bộ đọc lấy "(ABCD) cắt hình chóp …" làm câu cắt, và một chương trình ĐÚNG bị từ chối
     với lời "Đề bài nêu mặt phẳng (ABCD)" (sai)."""
@@ -406,7 +406,7 @@ def test_w17_mat_phang_sau_voi_la_tan_ngu_khong_phai_mat_phang_cat(de):
     "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy. "
     "Hỏi thể tích khối chóp S.ABC bằng bao nhiêu, biết SA = 5?",
 ])
-def test_w17_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet(de):
+def test_cau_hoi_ket_bang_biet_menh_de_biet_la_gia_thiet(de):
     """Tự rà soát cuối W17: luật câu hỏi lấy ranh giới cuối trước "?" — dấu phẩy của ", biết" — nên
     che chính GIẢ THIẾT "biết SA = 5" và để lộ câu hỏi. Mệnh đề "biết" là giả thiết dù câu kết bằng
     "?"; mục tiêu là mệnh đề hỏi đứng trước nó."""

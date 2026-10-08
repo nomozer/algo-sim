@@ -47,7 +47,7 @@ def _gan(kind: str, category: str, subject_ids: list[str], anchor: str) -> dict:
     return {"kind": kind, "category": category, "subject_ids": subject_ids, "anchor": anchor, "unit": KHONG_DON_VI}
 
 
-def test_w17_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the():
+def test_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the():
     a = _ann(_canh_ho("lang_tru_tam_giac"))
     assert a["AB_length"] == _gan("length", "measurement", ["A", "B"], "segment")
     assert a["AC_length"] == _gan("length", "measurement", ["A", "C"], "segment")
@@ -58,13 +58,13 @@ def test_w17_lang_tru_du_kien_so_do_va_ket_qua_gan_dung_chu_the():
     assert a["the_tich_lang_tru"] is None
 
 
-def test_w17_hinh_hop_do_dai_co_phay_gan_dung_dinh():
+def test_hinh_hop_do_dai_co_phay_gan_dung_dinh():
     a = _ann(_canh_ho("hop_chu_nhat"))
     assert a["AA_prime_length"] == _gan("length", "measurement", ["A", "A_prime"], "segment")
     assert a["V"] is None and a["the_tich_khoi_hop"]["category"] == "result"
 
 
-def test_w17_mot_chu_the_mot_nhan_du_kien_truoc():
+def test_mot_chu_the_mot_nhan_du_kien_truoc():
     """Hình hộp: độ dài đề cho AA′ và chiều cao đo được AA′ là CÙNG một số trên CÙNG một đoạn —
     một nhãn (của dữ kiện), không hai nhãn chồng tại một điểm neo.
 
@@ -78,7 +78,7 @@ def test_w17_mot_chu_the_mot_nhan_du_kien_truoc():
     assert "ANNOTATION_SAME_AS chieu_cao_AA_prime: AA_prime_length" in sc["diagnostics"]
 
 
-def test_w17_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac():
+def test_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac():
     """Đề nói AB = 3; chương trình đặt B cách A một khoảng 4 ⇒ nhãn "AB = 3" KHÔNG được gắn lên đoạn AB
     (khoảng cách chính xác trong bộ nhớ cuối là điều kiện gắn, không phải tên biến)."""
     from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
@@ -97,7 +97,7 @@ def test_w17_do_dai_de_cho_kiem_bang_khoang_cach_chinh_xac():
     assert st["annotations"]["AC_length"]["subject_ids"] == ["A", "C"]
 
 
-def test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap():
+def test_thiet_dien_va_khoang_cach_gan_mien_va_cap():
     a = _ann(_canh_gold("p1_chop_thiet_dien_khoang_cach"))
     assert a["area_T"] == _gan("area", "result", ["T"], "region")
     assert a["the_volume_sabcd"] == _gan("volume", "result", ["S.ABCD"], "solid")
@@ -105,7 +105,7 @@ def test_w17_thiet_dien_va_khoang_cach_gan_mien_va_cap():
     assert a["dist_S_BD"] == _gan("distance", "result", ["S", "BD"], "witness")
 
 
-def test_w17_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan():
+def test_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan():
     """Lập phương "có cạnh bằng 4": đề không gắn con số với một ĐOẠN có tên — không đoán đoạn."""
     sc = _canh_ho("lap_phuong")
     a = _ann(sc)
@@ -115,7 +115,7 @@ def test_w17_so_tron_khong_nhan_doan_thi_khong_gan_va_co_chan_doan():
 
 
 @pytest.mark.parametrize("ho", sorted(W.HO))
-def test_w17_moi_annotation_tro_toi_vat_co_trong_canh(ho):
+def test_moi_annotation_tro_toi_vat_co_trong_canh(ho):
     sc = _canh_ho(ho)
     co = {o["id"] for o in sc["objects"]}
     for qid, an in _ann(sc).items():
@@ -127,7 +127,7 @@ def test_w17_moi_annotation_tro_toi_vat_co_trong_canh(ho):
 
 # ══ W18 · §16.5–16.7 — vai trò, gộp trình bày, nhân chứng khoảng cách ══════════════════════════
 
-def test_w18_vai_tro_du_kien_trung_gian_ket_qua():
+def test_vai_tro_du_kien_trung_gian_ket_qua():
     a = _ann18(_canh_ho("lang_tru_tam_giac"))
     assert (a["AB_length"]["role"], a["dien_tich_day_ABC"]["role"], a["the_tich_solid_ABCDEF"]["role"]) == (
         "given", "intermediate", "result")
@@ -142,7 +142,7 @@ def _p1(van: str, them: list, of: str, wrt: str, **kw):
     return sc
 
 
-def test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan():
+def test_hai_vai_tro_cung_chu_the_giu_hai_nhan():
     """Đề cho SA = 6 VÀ hỏi độ dài SA: dữ kiện và đáp số cùng chủ thể nhưng hai vai trò đề nêu —
     đáp số giữ nhãn riêng (không `same_as`). Trước W18 nhãn đáp số bị bỏ."""
     sc = _p1("Biết SA = 6. Tính độ dài đoạn SA.", [], "S", "A",
@@ -153,7 +153,7 @@ def test_w18_hai_vai_tro_cung_chu_the_giu_hai_nhan():
     assert a["d_kq"]["role"] == "result" and "same_as" not in a["d_kq"], a["d_kq"]
 
 
-def test_w18_cung_gia_tri_khac_chu_the_khong_gop():
+def test_cung_gia_tri_khac_chu_the_khong_gop():
     """§16.6: giá trị bằng nhau KHÔNG BAO GIỜ là tiêu chí gộp — SA = 6 (đề cho) và AB = 6 (đo, trung gian,
     KHÔNG phải đáp số) là hai đoạn khác nhau, hai nhãn. Lượt tiêm lỗi đầu (FA4, gộp theo giá trị) lọt vì
     ca cũ dùng ĐÁP SỐ — luật "đáp số không gộp vào dữ kiện" che mất; ca này dùng đại lượng trung gian."""
@@ -175,7 +175,7 @@ def _vuong_goc_dung_chan(w: dict) -> None:
     assert any(u) and any(v) and sum(x * y for x, y in zip(u, v)) == 0, w
 
 
-def test_w18_nhan_chung_khoang_cach_diem_duong_thang():
+def test_nhan_chung_khoang_cach_diem_duong_thang():
     sc = _canh_gold("p1_chop_thiet_dien_khoang_cach")
     w = _ann18(sc)["dist_S_BD"]["witness"]
     assert (w["from"], w["on"], w["foot"]) == ("S", "BD", ["3", "3", "0"]), w
@@ -183,7 +183,7 @@ def test_w18_nhan_chung_khoang_cach_diem_duong_thang():
     _vuong_goc_dung_chan(w)
 
 
-def test_w18_nhan_chung_khoang_cach_diem_mat_phang():
+def test_nhan_chung_khoang_cach_diem_mat_phang():
     from tests.geometry import test_construction_binding as B
 
     sc = _p1("Gọi M là trung điểm của SA. Tính khoảng cách từ M đến mặt phẳng (ABCD).",
@@ -194,7 +194,7 @@ def test_w18_nhan_chung_khoang_cach_diem_mat_phang():
     _vuong_goc_dung_chan(an["witness"])
 
 
-def test_w18_dien_tich_thiet_dien_co_ky_hieu_ngan_theo_ten_de_dat():
+def test_dien_tich_thiet_dien_co_ky_hieu_ngan_theo_ten_de_dat():
     """Đề gọi thiết diện là (T) ⇒ nhãn ngắn trên hình là `S(T) = …`, không phải câu dài."""
     sc = _canh_gold("p1_chop_thiet_dien_khoang_cach")
     q = next(o for o in sc["objects"] if o["id"] == "area_T")

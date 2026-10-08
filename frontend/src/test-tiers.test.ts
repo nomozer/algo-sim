@@ -30,7 +30,7 @@ function planFor(files: string[]) {
   return out;
 }
 
-describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
+describe("bộ chọn chọn đúng theo chủ sở hữu", () => {
   /* repo-cleanup: hai ca dưới từng dùng đường của miền Tin học (`domains/web`, `domains/binary`) — miền đã gỡ, nên
      nay chạy trên hai miền sống; bất biến giữ nguyên: một file của MỘT miền chỉ kéo test của miền ấy. */
   it("renderer một miền ⇒ chỉ miền đó", () => {
@@ -111,7 +111,7 @@ describe("W8 §10 — bộ chọn chọn đúng theo chủ sở hữu", () => {
 
 // ── NGỮ NGHĨA NHÃN (§29) ────────────────────────────────────────────────────
 
-describe("W8 §29 — tầng nhỏ không được nói giọng tầng lớn", () => {
+describe("tầng nhỏ không được nói giọng tầng lớn", () => {
   const src = readFileSync(new URL("../scripts/impact.mjs", import.meta.url), "utf-8");
 
   it("T0 phát IMPACT_GATE_PASS, tuyệt đối không phát FULL_PRODUCT_GATE_PASS", () => {

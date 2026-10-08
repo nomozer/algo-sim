@@ -24,7 +24,7 @@ const SAU = nap("w04_sm_on_edge_sa_after");
 const cuoi = (s: Scene3D) => objectsAt(s, stepCount(s) - 1);
 const cungCho = () => "0,0,0";
 
-describe("W4 · đoạn con trên cạnh khối", () => {
+describe("đoạn con trên cạnh khối", () => {
   it("trước bản sửa SM vẽ nét riêng; sau bản sửa nó nhường nét cho cạnh S-A như đoạn trùng cạnh", () => {
     expect(doanNhuongCanh(cuoi(TRUOC), cungCho).has("doan_SM")).toBe(false);
     const nhuong = doanNhuongCanh(cuoi(SAU), cungCho);

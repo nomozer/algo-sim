@@ -633,7 +633,7 @@ def _pe():
     ("Cho hai mặt phẳng (P): z = 3 và (P′): z = 2.", [("P", (0, 0, 1, -3), "z = 3"), ("P'", (0, 0, 1, -2), "z = 2")]),
     ("Cho mặt phẳng (α’): x = 1.", [("α'", (1, 0, 0, -1), "x = 1")]),
 ])
-def test_w16_doc_mat_phang_de_mang_ten_he_so_va_span(de, ky_vong):
+def test_doc_mat_phang_de_mang_ten_he_so_va_span(de, ky_vong):
     ra = _pe().doc_mat_phang_de(de)
     assert [(m.ten, tuple(int(x) for x in m.he_so), de[m.span[0]:m.span[1]]) for m in ra] == ky_vong
 
@@ -643,7 +643,7 @@ def test_w16_doc_mat_phang_de_mang_ten_he_so_va_span(de, ky_vong):
     "Mặt phẳng (α): 2x + my − z + 10 = 0.",                    # tham số: chưa giải được ⇒ không bản ghi
     "Diện tích mặt phẳng đáy = 12.",                           # không biến độc lập
 ])
-def test_w16_khong_doc_tron_thi_khong_co_ban_ghi(de):
+def test_khong_doc_tron_thi_khong_co_ban_ghi(de):
     assert _pe().doc_mat_phang_de(de) == ()
 
 
@@ -654,7 +654,7 @@ def test_w16_khong_doc_tron_thi_khong_co_ban_ghi(de):
     # dấu phẩy: (P′) KHÁC (P) — đánh giá cuối W16 (`mp_P_prime` từng đọc thành {P})
     ("mp_P_prime", {"P'"}), ("P_phay", {"P'"}), ("P'", {"P'"}), ("P′", {"P'"}), ("alpha_prime", {"α'"}),
 ])
-def test_w16_ten_mat_phang_cua_bien(bien, ten):
+def test_ten_mat_phang_cua_bien(bien, ten):
     assert _pe().ten_mat_phang_cua_bien(bien) == frozenset(ten)
 
 
@@ -667,5 +667,5 @@ def test_w16_ten_mat_phang_cua_bien(bien, ten):
     ("Cho mp (P): x = 1.", 1),
     ("Cho hình chóp S.ABC có SA ⊥ (ABC).", 0),
 ])
-def test_w16_so_lan_nhac_mat_phang(de, so):
+def test_so_lan_nhac_mat_phang(de, so):
     assert _pe().so_lan_nhac_mat_phang(de) == so

@@ -63,7 +63,7 @@ const canh = (): Scene3D => ({
 const ids = (xs: { id: string }[]) => xs.map((x) => x.id).sort();
 const CUOI = 5;
 
-describe("W17 · số đo trên hình (§15.4)", () => {
+describe("số đo trên hình (§15.4)", () => {
   it("chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến", () => {
     const a = annotationsAt(canh(), CUOI, TAT_CA, null);
     expect(ids(a)).toEqual(["AB_length", "dien_tich", "the_tich"]);
@@ -174,7 +174,7 @@ const canh18 = (): Scene3D => {
 };
 const CUOI18 = 8;
 
-describe("W18 · nhãn tập trung (§16.5–16.7)", () => {
+describe("nhãn tập trung (§16.5–16.7)", () => {
   it("mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian", () => {
     expect(DEFAULT_ANNOTATION_VIEW).toEqual({ showAll: false });
     expect(ids(annotationsAt(canh18(), CUOI18, DEFAULT_ANNOTATION_VIEW, null))).toEqual(["AB_length"]);
@@ -229,7 +229,7 @@ describe("W18 · nhãn tập trung (§16.5–16.7)", () => {
 
 /* §15.5 — luật HỘP NHÃN mà bộ đo trình duyệt kiểm: trong khung, không đè nhãn điểm/nút điều khiển,
  * điểm gần nhất của hộp cách điểm neo chiếu ≤ 24 px. Hàm thuần: vị trí px vào, hộp ra. */
-describe("W17 · đặt nhãn số đo (§15.5)", () => {
+describe("đặt nhãn số đo (§15.5)", () => {
   const KHUNG = { w: 400, h: 300 };
   const n = (id: string, ax: number, ay: number, priority = 1) => ({ id, ax, ay, w: 60, h: 18, priority });
   const gan = (r: { x: number; y: number; w: number; h: number }, ax: number, ay: number) =>

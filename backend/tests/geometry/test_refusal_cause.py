@@ -28,7 +28,7 @@ def _frozen(text: str, contract, program: dict) -> dict:
     return attach_learner_reason(asyncio.run(GEN._run_frozen_program(text, contract, v.spec)))
 
 
-def test_w17_do_dai_khong_duong_DE_GHI_la_nguyen_nhan_nguon():
+def test_do_dai_khong_duong_DE_GHI_la_nguyen_nhan_nguon():
     """Đề ghi `AB = 0`: chính dữ kiện của đề làm đáy suy biến."""
     text, contract = GEN._zero_ab(*GEN._pyramid_control_contract())
     assert "AB = 0" in text
@@ -37,7 +37,7 @@ def test_w17_do_dai_khong_duong_DE_GHI_la_nguyen_nhan_nguon():
         "unsupported", "SOURCE", "NON_POSITIVE_LENGTH", ["AB"]), env
 
 
-def test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung():
+def test_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung():
     """Ảnh lập phương W16: đề "cạnh bằng 4" hợp lệ (V = 64), hợp đồng bị tiêm AB = 0 ⇒ khâu dựng sai.
     Bộ tiêm riêng `_tiem_ab_bang_0` (Task 3 ruling): `_zero_ab` nay luôn GHI số 0 vào chính đề."""
     text, contract = GEN._tiem_ab_bang_0(*GEN._cube_contract())
@@ -47,7 +47,7 @@ def test_w17_do_dai_khong_duong_DE_KHONG_GHI_la_nguyen_nhan_dung():
         "CONSTRUCTION", "NON_POSITIVE_LENGTH", ["AB"]), env
 
 
-def test_w17_mat_phang_de_cho_khong_cat_khoi_la_nguyen_nhan_nguon():
+def test_mat_phang_de_cho_khong_cat_khoi_la_nguyen_nhan_nguon():
     """Đề ghi (α): z = 9 — mặt phẳng của đề nằm ngoài khối, thiết diện rỗng."""
     _text, env, _gate = GEN._cross_section_negative()
     env = attach_learner_reason(env)
@@ -55,7 +55,7 @@ def test_w17_mat_phang_de_cho_khong_cat_khoi_la_nguyen_nhan_nguon():
         "SOURCE", "PLANE_DOES_NOT_CUT", ["(α)"]), env
 
 
-def test_w17_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung():
+def test_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung():
     """Đề ghi z = 3; chương trình cắt bằng z = 9 ⇒ đề hợp lệ, khâu dựng sai."""
     raw = RNB.doc_raw_theo_thu_tu(GEN.P1)
     text = RNB.doc_de_bai()[GEN.P1]
@@ -69,7 +69,7 @@ def test_w17_mat_phang_chuong_trinh_tu_dat_khong_cat_khoi_la_nguyen_nhan_dung():
         "unsupported", "CONSTRUCTION", "PLANE_DOES_NOT_CUT"), env
 
 
-def test_w17_lech_phep_dung_la_nguyen_nhan_dung():
+def test_lech_phep_dung_la_nguyen_nhan_dung():
     """A′: đề cắt bằng (β), chương trình cắt bằng (α)."""
     from tests.geometry import test_assumption_certificate as AC
 
@@ -79,7 +79,7 @@ def test_w17_lech_phep_dung_la_nguyen_nhan_dung():
         "unsupported", "CONSTRUCTION", "CONSTRUCTION_NOT_TEXT_BOUND"), env
 
 
-def test_w17_bang_nguyen_nhan_theo_ma_da_dang_ky():
+def test_bang_nguyen_nhan_theo_ma_da_dang_ky():
     """§15.3 (đính chính Task 1): mã có cấu trúc → nguyên nhân, một bảng duy nhất."""
     from app.simulation.semantic_program import refusal_cause as RC
 

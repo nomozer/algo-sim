@@ -24,7 +24,7 @@ PROBE_W13 = (ROOT / "docs" / "evaluation" / "geometry" / "runs" / "w13-geometry-
 #: Hai hàng W13 mà W14 ĐĂNG KÝ là sẽ đổi (Task 6 Step 4); mọi hàng khác giữ nguyên.
 #: regular-square-pyramid-w05: thêm hai hàng chuỗi bằng nhau — đúng hàng backlog §4 của tiền đăng ký (`AB = AC = 5`:
 #: "chuỗi bằng nhau = cùng một giá trị cho mọi đoạn"), `ISSUE-ARCH-SOURCE-LENGTH-CHAINED-EQUALITY`. Hành vi mới khoá ở
-#: `test_w05_chuoi_bang_nhau_doi_dang_ky`; artifact W13 không sửa.
+#: `test_chuoi_bang_nhau_doi_dang_ky`; artifact W13 không sửa.
 DOI_DANG_KY_W05 = {"chain_equal", "chain_equal_first"}
 #: regular-triangular-pyramid-w01 (§18.3): độ dài căn của đề là MỘT con số — ba hàng căn nay đọc được độ dài; lỗi và
 #: bằng chứng GIVEN không đổi. Hành vi mới khoá ở `test_rtp_do_dai_can_doi_dang_ky`; artifact W13 không sửa.
@@ -121,7 +121,7 @@ def test_rtp_do_dai_can_doi_dang_ky(row):
 
 
 @pytest.mark.parametrize("row", [r for r in _hang_w13() if r["id"] in DOI_DANG_KY_W05], ids=lambda r: r["id"])
-def test_w05_chuoi_bang_nhau_doi_dang_ky(row):
+def test_chuoi_bang_nhau_doi_dang_ky(row):
     """`AB = AC = 5`: CẢ HAI đoạn đọc được độ dài 5; khai AB = 5 hay AC = 5 đều có bằng chứng ở chính con số 5."""
     text = row["text"]
     loi, bang_chung, _ly_do = G._bang_chung_do_dai(

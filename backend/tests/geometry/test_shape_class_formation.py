@@ -735,7 +735,7 @@ def test_vai_tro_harness_dong_bo():
 
 @pytest.mark.parametrize("ho, nhan", [("lang_tru_tam_giac", "Các cạnh bên AD, BE, CF"),
                                        ("hop_chu_nhat", "Các cạnh bên AA′, BB′, CC′, DD′")])
-def test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom(ho, nhan):
+def test_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom(ho, nhan):
     """W17 · nhãn nhóm cạnh: biến đích của câu lệnh nhóm (`canh_ben`) không phải vật của cảnh,
     nên `display_label` từng rơi về "Bước dựng hình" và frontend in "— (dữ kiện đề cho)". Nhãn
     hành động là nhãn của CHÍNH câu lệnh nhóm do bước bổ sung dựng hình đặt."""
@@ -746,7 +746,7 @@ def test_w17_buoc_dung_nhom_canh_mang_nhan_cua_cau_lenh_nhom(ho, nhan):
     assert [e["display_label"] for e in nhom] == [nhan], [(e["object"], e["display_label"]) for e in nhom]
 
 
-def test_w17_loi_ke_canh_thiet_dien_khop_mat_va_canh_cua_payload():
+def test_loi_ke_canh_thiet_dien_khop_mat_va_canh_cua_payload():
     """W17 Phase 3: mỗi bước nối cạnh thiết diện kể ĐÚNG mặt `mat` của khối trong payload ("mặt SAB"),
     và hai cạnh nó nêu đều là cạnh của mặt ấy; bước khép nói đúng số cạnh."""
     import re

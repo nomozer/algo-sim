@@ -209,7 +209,7 @@ def _look_from(base: dict, position: list[float], target: list[float]) -> dict:
 
 
 @pytest.mark.parametrize("scenario_id", FAMILIES)
-def test_registered_scene_is_the_reviewed_one_and_w10_keeps_its_geometry(scenario_id):
+def test_registered_scene_is_the_reviewed_one_and_the_playback_fixture_keeps_its_geometry(scenario_id):
     assert M.scene_sha256(_scene(scenario_id)) == _registered(scenario_id)["scene3d_envelope_sha256"]
     assert M.scene_sha256(_w10_scene(scenario_id)) != _registered(scenario_id)["scene3d_envelope_sha256"]
     assert M.geometry_signature(_w10_scene(scenario_id)) == M.geometry_signature(_scene(scenario_id))
@@ -261,7 +261,7 @@ W11_FIXTURES = (ROOT / "docs/evaluation/geometry/runs/w11-pedagogical-polish"
 
 
 @pytest.mark.parametrize("scenario_id", FAMILIES)
-def test_w11_given_length_quantities_keep_the_reviewed_geometry(scenario_id):
+def test_given_length_quantities_keep_the_reviewed_geometry(scenario_id):
     # w11: the right-triangle-base pyramid/prism declare AB, AC, SA|AD as
     # `quantity` objects (readouts, nothing drawn). The figure is the reviewed one.
     fixture = W11_FIXTURES / f"{scenario_id}_positive.json"

@@ -24,7 +24,7 @@ const nguon = (f: string) => readFileSync(new URL(f, import.meta.url), "utf8").r
 const KHUNG = { x: 0, y: 0, w: 1000, h: 560 };
 const CO = { w: 272, h: 200 };
 
-describe("W4 · chỗ mặc định tự tránh vật cản", () => {
+describe("chỗ mặc định tự tránh vật cản", () => {
   it("không vật cản ⇒ góc trên-phải", () => {
     expect(datViTriTuDong(CO, KHUNG, [])).toEqual({ x: 1000 - 272 - 2 * LE_BANG, y: 2 * LE_BANG });
   });
@@ -68,7 +68,7 @@ describe("W4 · chỗ mặc định tự tránh vật cản", () => {
   });
 });
 
-describe("W4 · nhiều bảng cùng mở", () => {
+describe("nhiều bảng cùng mở", () => {
   it("bật/tắt một bảng không đụng bảng khác", () => {
     const a = batTatBang(new Set(), "thanh-phan");
     const b = batTatBang(a, "dai-luong");
@@ -82,7 +82,7 @@ describe("W4 · nhiều bảng cùng mở", () => {
   });
 });
 
-describe("W4 · mọi bảng thông tin đi qua MỘT cơ chế", () => {
+describe("mọi bảng thông tin đi qua MỘT cơ chế", () => {
   const ex = nguon("./Scene3DExplorer.tsx");
   const pb = nguon("./scene3d-playback.tsx");
   const css = nguon("../../../styles/global.css");
@@ -115,7 +115,7 @@ describe("W4 · mọi bảng thông tin đi qua MỘT cơ chế", () => {
 
 /* Yêu cầu 5 — «Thành phần» là lối phụ: nhóm thu gọn mặc định, giữ trong bài, nhóm chứa vật đang chọn tự mở; nội
    dung theo bước dựng, KHÔNG lộ vật tương lai (bản trước hiện tên vật chưa dựng ở dạng mờ — vẫn là lộ trước). */
-describe("W4 · cây thành phần theo bước", () => {
+describe("cây thành phần theo bước", () => {
   const day = withSubEntities(RSP); // đúng cảnh xưởng dựng cây (mặt, cạnh sinh thêm)
   const cay = semanticTree(day);
   const ids = (ns: readonly TreeNode[]): string[] => ns.flatMap((n) => [n.isCategory ? `#${n.label}` : n.id, ...ids(n.children)]);
@@ -169,7 +169,7 @@ const RSP: Scene3D = JSON.parse(readFileSync(fileURLToPath(new URL(
   "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w03/inputs/fixtures/regular_square_pyramid_positive.json",
   import.meta.url)), "utf8")).envelope.scene3d;
 
-describe("W4 · canvas theo chiều cao khả dụng", () => {
+describe("canvas theo chiều cao khả dụng", () => {
   it("canvas = cửa sổ − phần trên canvas − thanh điều khiển − khe và lề đáy; không dưới mức sàn", () => {
     // 1440×900: canvas bắt đầu ở 115 px (trang), thanh điều khiển cao 40, khe 8 ⇒ thanh kết thúc sát đáy (lề 12)
     expect(caoKhungKhaDung(900, 115, 40, 8)).toBe(900 - 115 - 8 - 40 - 12);
@@ -178,7 +178,7 @@ describe("W4 · canvas theo chiều cao khả dụng", () => {
   });
 });
 
-describe("W4 · bước dựng trong thanh điều khiển", () => {
+describe("bước dựng trong thanh điều khiển", () => {
   it("«Bước n/N» nằm trong thanh điều khiển; xưởng không còn dòng lời kể dài dưới thanh", () => {
     const h = renderToString(<Scene3DPlayer scene={RSP} />);
     const thanh = h.slice(h.indexOf("geo3d-controls"));

@@ -41,7 +41,7 @@ function usedTokens(css: string): Set<string> {
   return out;
 }
 
-describe("(M9-UX5) token CSS — var() hỏng là lỗi IM LẶNG, phải chặn bằng test", () => {
+describe("token CSS — var() hỏng là lỗi IM LẶNG, phải chặn bằng test", () => {
   /**
    * Biến được COMPONENT set inline lúc chạy (không phải token thiết kế) —
    * `--len`: độ dài đoạn thẳng, do `generic/ui.tsx` gán qua `style` để chạy
@@ -218,7 +218,7 @@ function balancedBlock(css: string, from: number): string | null {
  * `!important` đặt NGOÀI khối reduce — nó sẽ thắng cả bộ chọn phổ quát. Nên
  * guard cấm đúng đường đó.
  */
-describe("(W13-A11Y) prefers-reduced-motion — hoạt cảnh phải xin phép", () => {
+describe("prefers-reduced-motion — hoạt cảnh phải xin phép", () => {
   const at = globalCss.indexOf("@media (prefers-reduced-motion: reduce)");
   const block = at < 0 ? null : balancedBlock(globalCss, at);
 
@@ -303,7 +303,7 @@ describe("(W13-A11Y) prefers-reduced-motion — hoạt cảnh phải xin phép",
  * này chỉ được NGẮN ĐI. Thêm token trượt mới ⇒ ĐỎ. Sửa xong mà quên xoá dòng
  * ⇒ cũng ĐỎ. Cùng khuôn với `KNOWN_GAPS` của code-index-guard.
  */
-describe("(W13-A11Y) tương phản chữ — WCAG AA 4.5:1", () => {
+describe("tương phản chữ — WCAG AA 4.5:1", () => {
   const AA_TEXT = 4.5;
 
   /** Giá trị hex của một token, đọc từ tokens.css (không hard-code màu). */

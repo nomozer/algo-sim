@@ -118,7 +118,7 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
      mục chỉ được dựng dưới điều kiện ấy và mang trạng thái `xem.showAll` (mặc định tắt). */
   const ma = () => readFileSync(join(__dirname, "Scene3DExplorer.tsx"), "utf8");
 
-  it("W18 · một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả", () => {
+  it("một công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả", () => {
     expect(hasHiddenByDefault(withSubEntities(CANH_CO_SO_DO))).toBe(true);
     expect(ma()).toMatch(/\.\.\.\(coAn \? \[\{ nhan: "Hiện tất cả số đo", chon: xem\.showAll/);
     expect(ma()).toContain("useState<AnnotationView>(DEFAULT_ANNOTATION_VIEW)");
@@ -128,7 +128,7 @@ describe("cây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện", () =
     expect(thanh).not.toContain("Kết quả");
   });
 
-  it("W18 · chỉ có dữ kiện (mặc định đã hiện hết) hoặc không có nhãn ⇒ không có công tắc", () => {
+  it("chỉ có dữ kiện (mặc định đã hiện hết) hoặc không có nhãn ⇒ không có công tắc", () => {
     const chiDuKien: Scene3D = { ...CANH_CO_SO_DO,
       objects: CANH_CO_SO_DO.objects.map((o) => (o.id === "V" ? { ...o, annotation: undefined } : o)) };
     expect(hasHiddenByDefault(withSubEntities(chiDuKien))).toBe(false);
@@ -475,7 +475,7 @@ const CANH_LG = {
   free_objects: ["A", "B", "C", "D", "AB_length"],
 } as unknown as Scene3D;
 
-describe("W18 · một nơi giải thích (§16.6)", () => {
+describe("một nơi giải thích (§16.6)", () => {
   /* W05 · E: thẻ lời giải dưới mô phỏng ĐÃ GỠ — hai ca "thu gọn mặc định" / "mở ⇒ công thức về lời giải" nói về nó
      và đi cùng nó. Bất biến còn lại: ô soi là nơi DUY NHẤT mang công thức (`scene3d-focus-mode.test.tsx`), và
      `same_as` không đẻ mục thứ hai ở bảng «Đại lượng». */

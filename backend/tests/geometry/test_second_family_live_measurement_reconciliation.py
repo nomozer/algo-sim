@@ -187,7 +187,7 @@ def _git_status(path: Path) -> str:
                           capture_output=True, text=True, check=True).stdout
 
 
-def test_w20_reconciliation_writes_only_to_its_explicit_output_folder(tmp_path: Path):
+def test_reconciliation_writes_only_to_its_explicit_output_folder(tmp_path: Path):
     frozen = R.RECONCILIATION_DIR
     before, status_before = _hashes(frozen), _git_status(R.EVAL_DIR)
     R.run_reconciliation(tmp_path / "out")
@@ -196,7 +196,7 @@ def test_w20_reconciliation_writes_only_to_its_explicit_output_folder(tmp_path: 
     assert sorted(p.name for p in (tmp_path / "out").iterdir()) == _OUTPUTS
 
 
-def test_w20_reconciliation_refuses_the_frozen_folder():
+def test_reconciliation_refuses_the_frozen_folder():
     frozen = R.RECONCILIATION_DIR
     before = _hashes(frozen)
     with pytest.raises(ValueError, match="frozen"):
@@ -204,7 +204,7 @@ def test_w20_reconciliation_refuses_the_frozen_folder():
     assert _hashes(frozen) == before
 
 
-def test_w20_reconciliation_refuses_a_folder_inside_the_frozen_folder(tmp_path: Path, monkeypatch):
+def test_reconciliation_refuses_a_folder_inside_the_frozen_folder(tmp_path: Path, monkeypatch):
     """A new subfolder would still add files to frozen evidence. The frozen folder is a temporary stand-in here."""
     frozen = tmp_path / "frozen"
     frozen.mkdir()

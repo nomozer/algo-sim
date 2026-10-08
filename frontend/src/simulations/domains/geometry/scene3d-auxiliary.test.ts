@@ -15,7 +15,7 @@ const canh = (ten: string): Scene3D =>
 const buocCuaVat = (s: Scene3D, id: string) =>
   s.formation!.steps.findIndex((st) => st.visible_ids.includes(id));
 
-describe("W2 · D · hình phụ", () => {
+describe("hình phụ", () => {
   const s = canh("regular_square_pyramid_positive");
 
   it("AC, BD là hình phụ DỰNG (xong khi có O); mặt phẳng qua A, B, C là hình phụ ĐO", () => {

@@ -46,7 +46,7 @@ function declOf(source: string, selector: string, prop: string): string | null {
   return null;
 }
 
-describe("W12 §4 — thanh cuộn không được tàng hình", () => {
+describe("thanh cuộn không được tàng hình", () => {
   /**
    * W6B — HỢP ĐỒNG ĐỔI: thanh cuộn nay dùng MẶC ĐỊNH của trình duyệt.
    *

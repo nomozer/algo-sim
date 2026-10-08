@@ -62,7 +62,7 @@ beforeEach(() => {
   useAppStore.getState().reset();
 });
 
-describe("M13: loadEnvelope fail-closed khi module.init() ném lỗi", () => {
+describe("loadEnvelope fail-closed khi module.init() ném lỗi", () => {
   it("init ném lỗi → analysisError thân thiện, active===null, không crash, không ghi lịch sử", () => {
     registerSimulation(fakeThrowingModule("generic.semantic_program"));
 

@@ -87,7 +87,7 @@ function tableRows(md: string): Row[] {
   return out;
 }
 
-describe("W4B-2V §25 · bảng audit thị giác phải phủ đủ 22 target", () => {
+describe("bảng audit thị giác phải phủ đủ 22 target", () => {
   const md = (() => {
     try {
       return readFileSync(AUDIT_PATH, "utf-8");

@@ -892,41 +892,41 @@ const cham = (trangThai, mau) => {
   return LIB.assessSectionFill(trangThai, mau);
 };
 
-test("W15 section fill: deltaE76 is CIE76 on sRGB D65", () => {
+test("section fill: deltaE76 is CIE76 on sRGB D65", () => {
   assert.equal(typeof LIB.deltaE76, "function", "deltaE76 chưa có (W15 Task 8)");
   assert.equal(LIB.deltaE76([10, 20, 30], [10, 20, 30]), 0);
   assert.ok(Math.abs(LIB.deltaE76([255, 255, 255], [0, 0, 0]) - 100) < 1e-6);
 });
 
-test("W15 section fill: a genuine fill passes on the closed step", () => {
+test("section fill: a genuine fill passes on the closed step", () => {
   const kq = cham("closed", toMoi());
   assert.equal(kq.pass, true, JSON.stringify(kq));
 });
 
-test("W15 section fill: a missing fill fails on the closed step", () => {
+test("section fill: a missing fill fails on the closed step", () => {
   assert.equal(cham("closed", khongTo()).pass, false);
 });
 
-test("W15 section fill: a fill present before closing fails", () => {
+test("section fill: a fill present before closing fails", () => {
   assert.equal(cham("pre_close", toMoi()).pass, false);
   assert.equal(cham("pre_close", khongTo()).pass, true);
 });
 
-test("W15 section fill: a fill not removed after stepping back fails", () => {
+test("section fill: a fill not removed after stepping back fails", () => {
   assert.equal(cham("rewound", toMoi()).pass, false);
   assert.equal(cham("rewound", khongTo()).pass, true);
 });
 
-test("W15 section fill: the old 0.16 coplanar composite fails the registered threshold", () => {
+test("section fill: the old 0.16 coplanar composite fails the registered threshold", () => {
   const kq = cham("closed", toCu());
   assert.equal(kq.pass, false, JSON.stringify(kq));
 });
 
-test("W15 section fill: no samples never passes", () => {
+test("section fill: no samples never passes", () => {
   for (const s of ["closed", "pre_close", "rewound"]) assert.equal(cham(s, []).pass, false, s);
 });
 
-test("W15 section fill: interior samples keep the registered margin from every projected edge", () => {
+test("section fill: interior samples keep the registered margin from every projected edge", () => {
   assert.equal(typeof LIB.diemMauThietDien, "function", "diemMauThietDien chưa có (W15 Task 8)");
   const snap = cameraSnapshot([6, -8, 6], [0, 0, 0], 800, 600);
   const vuong = [["-2", "-2", "0"], ["2", "-2", "0"], ["2", "2", "0"], ["-2", "2", "0"]];
@@ -941,20 +941,20 @@ test("W15 section fill: interior samples keep the registered margin from every p
   assert.ok(mau.every((q) => cachCanh(q) >= LIB.NGUONG_TO_THIET_DIEN.margin_px));
 });
 
-test("W15 section fill: a polygon behind the camera gives no samples (the gate fails safe)", () => {
+test("section fill: a polygon behind the camera gives no samples (the gate fails safe)", () => {
   assert.equal(typeof LIB.diemMauThietDien, "function", "diemMauThietDien chưa có (W15 Task 8)");
   const snap = cameraSnapshot([1, 0, 10], [0, 0, 0], 800, 600);
   assert.deepEqual(LIB.diemMauThietDien([["0", "0", "20"], ["1", "0", "20"], ["0", "1", "20"]], snap), []);
 });
 
-test("W15 manifest requires three distinct negative kinds per scenario", () => {
+test("manifest requires three distinct negative kinds per scenario", () => {
   const m = JSON.parse(readFileSync(resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8"));
   const sai = structuredClone(m);
   sai.scenarios[0].negative_fixtures = (sai.scenarios[0].negative_fixtures ?? []).slice(0, 1);
   assert.throws(() => validateSuiteManifest(sai), /INVALID_SUITE_MANIFEST:.*negatives:triangular_pyramid/);
 });
 
-test("W17 manifest: extra refusal kinds come from a closed set and always declare their cause", () => {
+test("manifest: extra refusal kinds come from a closed set and always declare their cause", () => {
   const m = JSON.parse(readFileSync(resolve(import.meta.dirname, "generic-tier-a-scenarios.json"), "utf-8"));
   const them = (n) => { const x = structuredClone(m); x.scenarios[0].negative_fixtures.push(n); return x; };
   const am = { fixture: "fixtures/x.json", expected: { product_error_code: "e", stage_reached: "s" } };
@@ -966,7 +966,7 @@ test("W17 manifest: extra refusal kinds come from a closed set and always declar
   assert.throws(() => validateSuiteManifest(sai), /served:triangular_pyramid/);
 });
 
-test("W15 section fill: thresholds in code equal the pre-registered ones", () => {
+test("section fill: thresholds in code equal the pre-registered ones", () => {
   const doc = readFileSync(resolve(import.meta.dirname, "..", "..", "docs", "architecture",
     "ASSUMPTION_CERTIFICATE_AMENDMENT.md"), "utf-8");
   const m = doc.match(/SECTION_FILL_THRESHOLDS = (\{[^}]*\})/);
@@ -984,7 +984,7 @@ const cachDoan = ([x, y], a, b) => {
   return Math.hypot(x - (a.x + t * dx), y - (a.y + t * dy));
 };
 
-test("W16 section fill sampler: margin around EVERY projected solid edge and vertex marker (§11)", () => {
+test("section fill sampler: margin around EVERY projected solid edge and vertex marker (§11)", () => {
   const canh = [{ id: "khoi::edge:P-Q", a: [-3, 0, 0], b: [3, 0, 0] }];
   const cham = [{ id: "M", center: [1, 1, 0], radius_world: 0.15 }];
   const mau = LIB.diemMauThietDien(VUONG_TD, SNAP_TD, { canh, cham });
@@ -998,7 +998,7 @@ test("W16 section fill sampler: margin around EVERY projected solid edge and ver
   assert.ok(LIB.diemMauThietDien(VUONG_TD, SNAP_TD).length > mau.length, "không vật cản thì nhiều mẫu hơn");
 });
 
-test("W17 section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill)", () => {
+test("section fill sampler: no sample under a DOM label box over the canvas (§11 measures the fill)", () => {
   // Lượt trình duyệt T7: nhãn "Diện tích thiết diện = 9" (nền 90 % giấy) nằm trên đúng vùng mẫu —
   // mẫu dưới nó đọc nền nhãn, ΔE bật/tắt tô ≈ 10 % (min 2.8 < T_ON_MIN) dù phần tô vẫn rõ.
   const tat = LIB.diemMauThietDien(VUONG_TD, SNAP_TD);
@@ -1011,7 +1011,7 @@ test("W17 section fill sampler: no sample under a DOM label box over the canvas 
     || y < hop[0].y - m || y > hop[0].y + hop[0].h + m), "mẫu nằm dưới nhãn");
 });
 
-test("W16 under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside", () => {
+test("under-edges sampling: core band within 1 CSS px of a crossing edge, references 4 px aside", () => {
   assert.equal(typeof LIB.diemCanhQuaThietDien, "function", "diemCanhQuaThietDien chưa có (W16)");
   const canh = [{ id: "qua", a: [-3, 0, 0], b: [3, 0, 0] }, { id: "ngoai", a: [5, 5, 0], b: [6, 6, 0] }];
   const ra = LIB.diemCanhQuaThietDien(VUONG_TD, SNAP_TD, canh, []);
@@ -1037,7 +1037,7 @@ const toTrenCanh = (c, alpha) => ({ id: "e", ref: thamChieu(), core: [
   { on: tron(tron(NEN_TD, NET_TD, c * alpha), TO_TD, 0.45), off: tron(NEN_TD, NET_TD, c * alpha) },
   { on: NEN_BAT, off: NEN_TD }] });
 
-test("W16 SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed", () => {
+test("SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even half-covered and dashed", () => {
   assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
   for (const [c, alpha] of [[1, 1], [0.5, 1], [0.5, 0.9], [1, 0.9]]) {
     const kq = LIB.assessSectionFillUnderEdges([canhTrenTo(c, alpha)]);
@@ -1045,7 +1045,7 @@ test("W16 SECTION_FILL_UNDER_EDGES: an edge drawn above the fill passes, even ha
   }
 });
 
-test("W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails", () => {
+test("SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails", () => {
   assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
   for (const [c, alpha] of [[1, 1], [0.5, 1], [1, 0.9]]) {
     const kq = LIB.assessSectionFillUnderEdges([toTrenCanh(c, alpha)]);
@@ -1054,7 +1054,7 @@ test("W16 SECTION_FILL_UNDER_EDGES: the fill drawn over the edge fails", () => {
   }
 });
 
-test("W16 section-fill page code compiles (no identifier clash with the shared PNG prelude)", async () => {
+test("section-fill page code compiles (no identifier clash with the shared PNG prelude)", async () => {
   // Lượt trình duyệt 55cde06e: mã trong trang khai `const doc` trùng tên hàm giải ảnh của
   // `giaiMaHaiKhung` ⇒ SyntaxError trong trang ⇒ 0 mẫu ở mọi trạng thái. Test node của thư viện
   // không chạy mã ấy; ở đây BIÊN DỊCH đúng chuỗi mà bộ chạy gửi vào trang.
@@ -1066,7 +1066,7 @@ test("W16 section-fill page code compiles (no identifier clash with the shared P
   assert.doesNotThrow(() => new Script(ma), "mã trong trang không biên dịch được");
 });
 
-test("W16 SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass", () => {
+test("SECTION_FILL_UNDER_EDGES: an edge that is not drawn fails; no crossing edge is not a pass", () => {
   assert.equal(typeof LIB.assessSectionFillUnderEdges, "function", "assessSectionFillUnderEdges chưa có (W16)");
   const khongVe = { id: "e", ref: thamChieu(), core: [{ on: NEN_BAT, off: NEN_TD }] };
   assert.equal(LIB.assessSectionFillUnderEdges([khongVe]).pass, false);
@@ -1096,14 +1096,14 @@ const CANH_W17 = {
     semantic_kind: "MEASUREMENT" }, { step_index: 2, action: "MEASURE", object: "V", semantic_kind: "FINAL_RESULT" }],
 };
 
-test("W17 annotation oracle: a result label only from its concluding event", () => {
+test("annotation oracle: a result label only from its concluding event", () => {
   const tatCa = { showAll: true };
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 0, tatCa), ["AB"]);
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 1, tatCa), ["AB"]);
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W17, 2, tatCa), ["AB", "V"]);
 });
 
-test("W2 annotation oracle: a segment label waits for its segment to be built, in every mode", () => {
+test("annotation oracle: a segment label waits for its segment to be built, in every mode", () => {
   const khongDoan = { ...CANH_W17, free_objects: ["A", "B", "AB"], objects: CANH_W17.objects.filter((o) => o !== SEG_AB) };
   for (const opt of [{}, { showAll: true }, { selectedId: "AB" }]) {
     assert.deepEqual(LIB.expectedAnnotationIds(khongDoan, 2, opt), [], JSON.stringify(opt));
@@ -1144,7 +1144,7 @@ const CANH_W18 = {
     { step_index: 4, action: "MEASURE", object: "V", semantic_kind: "FINAL_RESULT" }],
 };
 
-test("W18 annotation oracle: compact default, selection focus, same_as, show-all", () => {
+test("annotation oracle: compact default, selection focus, same_as, show-all", () => {
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4), ["AB"]);
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { showAll: true }), ["AB", "V", "d"]);
   assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "V" }), ["AB", "V", "d"]);
@@ -1155,14 +1155,14 @@ test("W18 annotation oracle: compact default, selection focus, same_as, show-all
     [0, 0.5, 0]);
 });
 
-test("W18 solution oracle merges a same_as measurement into the row it points to", () => {
+test("solution oracle merges a same_as measurement into the row it points to", () => {
   const rows = LIB.expectedSolutionRows(CANH_W18, 4);
   assert.deepEqual([rows.givens, rows.steps, rows.results], [["AB"], ["d"], ["V"]]);   // h merged into AB
   assert.equal(LIB.solutionRowOf(CANH_W18, "h", new Set(["AB", "d", "V"])), "AB");
   assert.equal(LIB.solutionRowOf(CANH_W18, "h", new Set(["d"])), "h");                // owner absent ⇒ itself
 });
 
-test("W18 one detail region and witness drawn exactly for shown distance labels", () => {
+test("one detail region and witness drawn exactly for shown distance labels", () => {
   assert.equal(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector"] }).pass, true);
   assert.deepEqual(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector", "solution:V"] })
     .reason_codes, ["DETAIL_REGIONS_2"]);
@@ -1174,7 +1174,7 @@ test("W18 one detail region and witness drawn exactly for shown distance labels"
     ["WITNESS_NOT_SHOWN_LABEL:d"]);
 });
 
-test("W17 annotation boxes: inside, near the independently projected anchor, no overlaps", () => {
+test("annotation boxes: inside, near the independently projected anchor, no overlaps", () => {
   // AB's anchor (0.5, 0, 0) projects to (250, 150): view x = 0.5·0.5 = 0.25 ⇒ (1.25 / 2)·400.
   const tot = { id: "AB", box: { x: 205, y: 126, w: 40, h: 18 } };
   const ok = LIB.assessAnnotationBoxes({ scene: CANH_W17, step: 0, boxes: [tot], points: [], camera: CAM_W17,
@@ -1205,7 +1205,7 @@ const camLech = (d) => ({ ...CAM_W17, view_matrix_column_major: CAM_W17.view_mat
 const CAM_ULP = camLech(1e-14);
 const CAM_KHAC = camLech(0.01);
 
-test("W18 show-all isolation and W17 causal restore record each state separately", () => {
+test("show-all isolation and causal restore record each state separately", () => {
   const on = { annotation_ids: ["AB", "V"], dash_signature: { e: ["VISIBLE_SOLID"] },
     rendered_object_ids: ["A"], camera: CAM_W17, selected_id: null, step: 4 };
   const off = { ...on, annotation_ids: ["AB"] };
@@ -1232,7 +1232,7 @@ test("W18 show-all isolation and W17 causal restore record each state separately
     .reason_codes, ["SELECTION_MOVED_CAMERA"]);
 });
 
-test("W18 show-all isolation is measured against the state BEFORE the first toggle", () => {
+test("show-all isolation is measured against the state BEFORE the first toggle", () => {
   // Tiêm lỗi FW2 (lượt 1): công tắc tua về bước 0 ở MỌI lần bấm — bật/tắt/bật cùng bước 0 nên so với
   // trạng thái sau lần bấm đầu thì không thấy gì. Mốc phải là trạng thái trước lần bấm đầu.
   const before = { annotation_ids: ["AB"], dash_signature: { e: ["VISIBLE_SOLID"] },
@@ -1248,7 +1248,7 @@ test("W18 show-all isolation is measured against the state BEFORE the first togg
     "SHOW_ALL_BACK_CHANGED_RENDERED_OBJECT_IDS", "SHOW_ALL_BACK_CHANGED_STEP"]);
 });
 
-test("W18 every span the product classifies HIDDEN is drawn dashed, highlighted or not", () => {
+test("every span the product classifies HIDDEN is drawn dashed, highlighted or not", () => {
   const spans = [{ edge_id: "S-A", t0: 0, t1: 1, visibility: "HIDDEN" },
     { edge_id: "S-B", t0: 0, t1: 0.4, visibility: "VISIBLE" }, { edge_id: "S-B", t0: 0.4, t1: 1, visibility: "HIDDEN" },
     { edge_id: "B-C", t0: 0, t1: 1, visibility: "VISIBLE" }];
@@ -1267,7 +1267,7 @@ test("W18 every span the product classifies HIDDEN is drawn dashed, highlighted 
     dash_signature: { ...dung, "S-B": ["VISIBLE_SOLID", "VISIBLE_SOLID"] } }).mismatched_owner_ids, ["S-B"]);
 });
 
-test("W17 causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is", () => {
+test("causal restore: capture noise (≤ 1 per channel) is not a change; anything larger is", () => {
   const n = { camera: CAM_W17, selected_id: null, scroll_y: 120, canvas_sha256: "x" };
   const s = { ...n, selected_id: "V", scroll_y: 300 };
   const r = { ...n, canvas_sha256: "y" };
@@ -1392,7 +1392,7 @@ test("§0.1 evidence verdict: answer judged on the OPEN solution; leaked card, p
   }
 });
 
-test("W05 playback: the Đại lượng panel closed shows nothing; the final step must be observed with it open", () => {
+test("playback: the Đại lượng panel closed shows nothing; the final step must be observed with it open", () => {
   // Bảng đóng ở hai bước đầu (thiết diện: chưa có đại lượng lúc bắt đầu), mở ở bước cuối ⇒ đạt.
   const motPhan = () => genuine().map((s) => (s.step < 2 ? { ...s, dl_open: false, rows: [] } : { ...s, dl_open: true }));
   const ok = judge(motPhan());
@@ -1435,7 +1435,7 @@ const PANEL_OK = {
   focus_after_close: "geo3d-cac-buoc-mo", step_before: 3, step_after: 3, selected_before: null, selected_after: null,
 };
 
-test("W2 floating panel gate: passes the measured shape; each injected fault has its code", () => {
+test("floating panel gate: passes the measured shape; each injected fault has its code", () => {
   assert.deepEqual(LIB.assessFloatingPanel(PANEL_OK).reason_codes, []);
   const loi = [
     [{ position: "static" }, "PANEL_NOT_FLOATING"],
@@ -1465,7 +1465,7 @@ const SHEET_OK = {
   collapsed_body_present: false, expanded_body_present: true, step_clicked: 2, step_indicator: 2,
 };
 
-test("W2 narrow steps sheet gate: each injected fault has its code", () => {
+test("narrow steps sheet gate: each injected fault has its code", () => {
   assert.deepEqual(LIB.assessStepsSheet(SHEET_OK).reason_codes, []);
   for (const [d, ma] of [
     [{ position: "absolute" }, "SHEET_FLOATS"],
@@ -1499,7 +1499,7 @@ const CANH_PHU = {
   ] },
 };
 
-test("W2 auxiliary oracle and gate: helper lines leave after their task, a measured-only plane is hidden", () => {
+test("auxiliary oracle and gate: helper lines leave after their task, a measured-only plane is hidden", () => {
   assert.deepEqual(LIB.expectedAuxiliaryHidden(CANH_PHU, 3), ["mp"]);
   assert.deepEqual(LIB.expectedAuxiliaryHidden(CANH_PHU, 4), ["AC", "BD", "mp"]);
   const ok = { scene: CANH_PHU, step: 4, hidden_default: ["AC", "BD", "mp"], rendered_default: ["A", "C", "O", "BD2", "alpha"],
@@ -1514,7 +1514,7 @@ test("W2 auxiliary oracle and gate: helper lines leave after their task, a measu
   ]) assert.ok(LIB.assessAuxiliary({ ...ok, ...d }).reason_codes.includes(ma), ma);
 });
 
-test("W2 grid gate: default off, toggles without touching camera, step, selection, figure or occlusion", () => {
+test("grid gate: default off, toggles without touching camera, step, selection, figure or occlusion", () => {
   const ok = { initial: false, on: true, off: false, camera_before: CAM, camera_on: CAM, step_before: 4, step_on: 4,
     selected_before: "V", selected_on: "V", rendered_before: ["A"], rendered_on: ["A"], recompute_idle_delta: 0 };
   assert.deepEqual(LIB.assessGridToggle(ok).reason_codes, []);
@@ -1526,7 +1526,7 @@ test("W2 grid gate: default off, toggles without touching camera, step, selectio
   ]) assert.ok(LIB.assessGridToggle({ ...ok, ...d }).reason_codes.includes(ma), ma);
 });
 
-test("W3 H-W2-4: a measured-only helper plane opens no geometry step; every static step stays red", () => {
+test("a measured-only helper plane opens no geometry step; every static step stays red", () => {
   // CANH_PHU: event 2 builds ONLY mp (a plane that is only an operand of the quantity d, hidden by default).
   const sc = JSON.parse(JSON.stringify(CANH_PHU));
   sc.formation.steps = [
@@ -1571,7 +1571,7 @@ const W4_DESKTOP = {
   annotations: { pass: true },
 };
 
-test("W4 desktop panel gate: every injected fault has its code", () => {
+test("desktop panel gate: every injected fault has its code", () => {
   assert.deepEqual(LIB.assessPanelsDesktop(W4_DESKTOP).reason_codes, []);
   const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_DESKTOP)); f(o); return LIB.assessPanelsDesktop(o).reason_codes; };
   for (const [f, ma] of [
@@ -1608,7 +1608,7 @@ const W4_MOBILE = {
   orbit: { camera_before: CAM, camera_after: CAM2 },
 };
 
-test("W4 mobile panel gate: every injected fault has its code", () => {
+test("mobile panel gate: every injected fault has its code", () => {
   assert.deepEqual(LIB.assessPanelsMobile(W4_MOBILE).reason_codes, []);
   const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_MOBILE)); f(o); return LIB.assessPanelsMobile(o).reason_codes; };
   for (const [f, ma] of [
@@ -1635,7 +1635,7 @@ const W4_LAYOUT = {
     labels: [{ id: "A", x: 290, y: 470, w: 14, h: 20 }] }],
 };
 
-test("W4 layout gate: every injected fault has its code", () => {
+test("layout gate: every injected fault has its code", () => {
   assert.deepEqual(LIB.assessLayout(W4_LAYOUT).reason_codes, []);
   const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_LAYOUT)); f(o); return LIB.assessLayout(o).reason_codes; };
   for (const [f, ma] of [
@@ -1660,7 +1660,7 @@ const W4_DIRECT = {
   drag: { selected_before: "A", selected_after: "A", camera_before: CAM, camera_after: CAM2 },
 };
 
-test("W4 direct-select gate: every injected fault has its code", () => {
+test("direct-select gate: every injected fault has its code", () => {
   assert.deepEqual(LIB.assessDirectSelect(W4_DIRECT).reason_codes, []);
   const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_DIRECT)); f(o); return LIB.assessDirectSelect(o).reason_codes; };
   for (const [f, ma] of [
@@ -1681,7 +1681,7 @@ const W4_TREE = {
   future_listed: [], present_missing: [],
 };
 
-test("W4 tree gate: every injected fault has its code", () => {
+test("tree gate: every injected fault has its code", () => {
   assert.deepEqual(LIB.assessTreePanel(W4_TREE).reason_codes, []);
   const bien = (f) => { const o = JSON.parse(JSON.stringify(W4_TREE)); f(o); return LIB.assessTreePanel(o).reason_codes; };
   for (const [f, ma] of [
@@ -1695,14 +1695,14 @@ test("W4 tree gate: every injected fault has its code", () => {
   ]) assert.ok(bien(f).includes(ma), ma);
 });
 
-test("W4 desktop panel gate: after resize a panel is lost only when neither its close button nor its header is reachable", () => {
+test("desktop panel gate: after resize a panel is lost only when neither its close button nor its header is reachable", () => {
   const o = JSON.parse(JSON.stringify(W4_DESKTOP));
   o.resized.close_reachable.soi = false;
   o.resized.header_reachable = { soi: true };   // bị che nút đóng nhưng còn bấm được tiêu đề ⇒ đưa lên trên được
   assert.deepEqual(LIB.assessPanelsDesktop(o).reason_codes, []);
 });
 
-test("W4 layout gate: the WebGL canvas follows its container (no stale drawing-buffer size)", () => {
+test("layout gate: the WebGL canvas follows its container (no stale drawing-buffer size)", () => {
   const o = JSON.parse(JSON.stringify(W4_LAYOUT));
   o.canvas_element = HOP(241, 121, 1178, 710);
   assert.deepEqual(LIB.assessLayout(o).reason_codes, []);
@@ -1732,11 +1732,11 @@ const W5_FOCUS = {
   back: { left_workspace: true, nav_bar_after: true },
 };
 
-test("W5 focus gate: a clean focused workspace passes", () => {
+test("focus gate: a clean focused workspace passes", () => {
   assert.deepEqual(LIB.assessFocusMode(W5_FOCUS).reason_codes, []);
 });
 
-test("W5 focus gate: each injected fault is named", () => {
+test("focus gate: each injected fault is named", () => {
   const tiem = (f, ma) => {
     const o = JSON.parse(JSON.stringify(W5_FOCUS));
     f(o);

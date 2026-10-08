@@ -54,7 +54,7 @@ const ENV_A = () => pick("thiet-dien-chop");
 const ENV_B = () => pick("vuong-goc-chop");
 const s = () => useAppStore.getState();
 
-describe("M18-UI · một mô phỏng tại một thời điểm", () => {
+describe("một mô phỏng tại một thời điểm", () => {
   it("nạp bài thứ hai THAY bài đang xem, không đẻ thêm bàn làm việc", () => {
     s().loadEnvelope(ENV_A());
     const first = s().active;
@@ -110,7 +110,7 @@ describe("M18-UI · một mô phỏng tại một thời điểm", () => {
   });
 });
 
-describe("M18-UI · đổi bài = 0 gọi AI", () => {
+describe("đổi bài = 0 gọi AI", () => {
   it("nạp bài, về Home, mở lại từ Lịch sử — không một request nào", () => {
     /* Đếm `fetch` THẬT chứ không đọc mã: một đường gọi mới thêm vào sau này sẽ
        bị bắt, còn phép quét mã thì không.

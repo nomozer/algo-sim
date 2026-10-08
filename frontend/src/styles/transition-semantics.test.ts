@@ -79,7 +79,7 @@ function enclosingTag(body: string, index: number): string | null {
   return opens.length ? opens[opens.length - 1][1] : null;
 }
 
-describe("W10 §5 — hình học SVG được phép chạy, bố cục HTML thì không", () => {
+describe("hình học SVG được phép chạy, bố cục HTML thì không", () => {
   it("CONTROL A: chuyển động hình học trên phần tử SVG được CHẤP NHẬN", () => {
     /* ─── CA MẪU NAY NỘI TUYẾN, KHÔNG ĐỌC MỘT TỆP ─────────────────────────
      *

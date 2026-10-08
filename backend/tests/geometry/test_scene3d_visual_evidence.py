@@ -118,7 +118,7 @@ def _kich_ban_du(tmp: Path, family_dir: str = "triangular-pyramid", steps: int =
                          for kind in ("ungrounded_source", "assumption", "topology_kernel")}}
 
 
-def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
+def test_family_sheet_keeps_every_required_state_at_native_resolution(tmp_path):
     """Review W10-H8: phụ lục formation quá nhỏ để đọc. Sheet của MỘT họ giữ
     trung tính, causal, xoay, mobile, BẢNG LỜI GIẢI, lời TỪ CHỐI (W12) và MỌI
     bước dựng ở độ phân giải gốc (không thu nhỏ), có dải chú giải và nhãn lớn.
@@ -154,7 +154,7 @@ def test_w12_family_sheet_keeps_every_required_state_at_native_resolution(tmp_pa
 
 # ── W16 · §14.5 — ô từ chối: đúng loại × viewport, đọc được; thiếu ảnh ⇒ THẤT BẠI ──────
 
-def test_w16_moi_loai_tu_choi_moi_viewport_mot_o_dung_nguon_dung_chu_thich(tmp_path):
+def test_moi_loai_tu_choi_moi_viewport_mot_o_dung_nguon_dung_chu_thich(tmp_path):
     meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     am = [c for c in meta["cells"] if c["state"].startswith("negative/")]
     assert len(am) == 6
@@ -168,7 +168,7 @@ def test_w16_moi_loai_tu_choi_moi_viewport_mot_o_dung_nguon_dung_chu_thich(tmp_p
     assert not any(k in c["label"] for c in am for k in ("ungrounded_source", "topology_kernel", "_"))
 
 
-def test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang(tmp_path):
+def test_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang(tmp_path):
     import pytest
     kb = _kich_ban_du(tmp_path)
     Path(kb["positive"]["mobile"]["screenshots"]["neutral_final"]).unlink()
@@ -178,7 +178,7 @@ def test_w16_thieu_anh_bat_ky_thi_that_bai_khong_thay_o_trang(tmp_path):
     assert "mobile/neutral_final" in str(e.value) and "negative/assumption/desktop" in str(e.value)
 
 
-def test_w16_thieu_ca_mot_loai_tu_choi_thi_that_bai(tmp_path):
+def test_thieu_ca_mot_loai_tu_choi_thi_that_bai(tmp_path):
     import pytest
     kb = _kich_ban_du(tmp_path)
     del kb["negative"]["topology_kernel"]
@@ -186,7 +186,7 @@ def test_w16_thieu_ca_mot_loai_tu_choi_thi_that_bai(tmp_path):
         B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
 
 
-def test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai(tmp_path):
+def test_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai(tmp_path):
     import pytest
     kb = _kich_ban_du(tmp_path)
     kb["negative"]["ungrounded_source"]["mobile"] = _tu_choi(tmp_path / "images", "triangular-pyramid",
@@ -195,7 +195,7 @@ def test_w16_anh_tu_choi_trang_khong_doc_duoc_thi_that_bai(tmp_path):
         B.family_sheet("triangular_pyramid", kb, tmp_path / "images")
 
 
-def test_w16_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai(tmp_path):
+def test_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai(tmp_path):
     import pytest
     kb = _kich_ban_du(tmp_path)
     kb["negative"]["assumption"]["mobile"] = _tu_choi(tmp_path / "images", "triangular-pyramid", "assumption",
@@ -208,7 +208,7 @@ def test_w16_ban_ghi_tu_choi_tro_sai_loai_hoac_co_canvas_thi_that_bai(tmp_path):
         B.family_sheet("triangular_pyramid", kb, tmp_path / "b" / "images")
 
 
-def test_w16_loai_tu_choi_la_bi_bao_loi(tmp_path):
+def test_loai_tu_choi_la_bi_bao_loi(tmp_path):
     import pytest
     kb = _kich_ban_du(tmp_path)
     kb["negative"]["mystery_kind"] = kb["negative"]["assumption"]
@@ -235,7 +235,7 @@ def _them_w17(kb: dict, tmp: Path, family_dir: str = "cross-section") -> dict:
     return kb
 
 
-def test_w17_o_do_W17_co_mat_khi_bo_chay_da_do(tmp_path):
+def test_o_tu_choi_them_ca_phuc_vu_va_cong_tac_co_mat_khi_bo_chay_da_do(tmp_path):
     meta = B.family_sheet("cross_section", _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path),
                           tmp_path / "images")
     trang = [c["state"] for c in meta["cells"]]
@@ -250,13 +250,13 @@ def test_w17_o_do_W17_co_mat_khi_bo_chay_da_do(tmp_path):
     assert not any("_" in nhan_xem for nhan_xem in nhan.values()), nhan
 
 
-def test_w17_ho_khong_khai_loai_W17_khong_can_o_ay(tmp_path):
+def test_ho_khong_khai_tu_choi_them_khong_can_o_ay(tmp_path):
     meta = B.family_sheet("triangular_pyramid", _kich_ban_du(tmp_path), tmp_path / "images")
     assert not any(c["state"].startswith(("served/", "negative/construction_mismatch", "negative/system_cause"))
                    or c["state"].endswith(("show_all", "causal_restored")) for c in meta["cells"])
 
 
-def test_w18_o_chon_tung_loai_do_va_ca_phep_dung_diem(tmp_path):
+def test_o_chon_tung_loai_do_va_ca_phep_dung_diem(tmp_path):
     """W18 §16.5–16.7: ảnh chọn từng loại đo có mặt khi bộ chạy đã chụp; ca từ chối/phục vụ của phép
     dựng ĐIỂM có tên người xem (không token máy)."""
     kb = _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path)
@@ -279,7 +279,7 @@ def test_w18_o_chon_tung_loai_do_va_ca_phep_dung_diem(tmp_path):
     assert not any("_" in nhan_xem for nhan_xem in nhan.values()), nhan
 
 
-def test_w17_da_do_ma_thieu_anh_thi_that_bai(tmp_path):
+def test_da_do_ma_thieu_anh_thi_that_bai(tmp_path):
     import pytest
     kb = _them_w17(_kich_ban_du(tmp_path, "cross-section"), tmp_path)
     Path(kb["positive"]["mobile"]["screenshots"]["causal_restored"]).unlink()
@@ -293,7 +293,7 @@ def test_w17_da_do_ma_thieu_anh_thi_that_bai(tmp_path):
         B.family_sheet("cross_section", kb, tmp_path / "b" / "images")
 
 
-def test_w16_dai_phim_thieu_anh_buoc_dung_thi_that_bai(tmp_path):
+def test_dai_phim_thieu_anh_buoc_dung_thi_that_bai(tmp_path):
     import pytest
     rec = _ban_ghi_w14(tmp_path)
     Path(rec["formation"]["steps"][2]["screenshot"]).unlink()
@@ -314,7 +314,7 @@ def _ban_ghi_w14(tmp: Path) -> dict:
     return rec
 
 
-def test_w14_filmstrip_names_roles_in_vietnamese_and_every_line_fits(tmp_path):
+def test_filmstrip_names_roles_in_vietnamese_and_every_line_fits(tmp_path):
     """W12-H1/H2 nhìn được bằng mắt: dải phim desktop trái → phải, chú thích là tên
     vai trò TIẾNG VIỆT + lời kể, không token máy, mỗi dòng nằm trọn trong ô của nó."""
     film = B.filmstrip("triangular_pyramid", {"positive": {"desktop": _ban_ghi_w14(tmp_path)}},
@@ -332,7 +332,7 @@ def test_w14_filmstrip_names_roles_in_vietnamese_and_every_line_fits(tmp_path):
         assert len(dong) > 1 and all(12 + phong.getlength(d) <= B.FILM_CELL_W - 12 for d in dong), dong
 
 
-def test_w14_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused(tmp_path):
+def test_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused(tmp_path):
     rec = _ban_ghi_w14(tmp_path)
     # W16: sheet đòi ĐỦ mọi ô (thiếu ⇒ thất bại), nên kịch bản mang đủ mobile + ba loại âm.
     kb = _kich_ban_du(tmp_path / "du")
@@ -347,7 +347,7 @@ def test_w14_sheet_step_labels_carry_role_names_and_unknown_roles_are_refused(tm
         B.filmstrip("triangular_pyramid", {"positive": {"desktop": rec}}, tmp_path / "images2")
 
 
-def test_w11_overview_is_only_an_index_of_the_six_families(tmp_path):
+def test_overview_is_only_an_index_of_the_six_families(tmp_path):
     meta = {f: {"sheet": f"images/{B.family_dir(f)}/SHEET.png", "thumbnail": None}
             for f in ("triangular_pyramid", "triangular_prism", "rectangular_pyramid",
                       "cuboid", "cube", "cross_section")}
@@ -370,7 +370,7 @@ def test_oracle_disagreement_is_recorded_not_hidden():
     assert rec["expected_visibility"] is None
 
 
-def test_w01_o_ngan_dai_luong_panel_buoc_va_tu_choi_tam_O(tmp_path):
+def test_o_ngan_dai_luong_panel_buoc_va_tu_choi_tam_O(tmp_path):
     """regular-square-pyramid-w01 (ROADMAP §0.1): sheet có ảnh ngăn «Đại lượng» và panel «Các bước dựng» mở/đóng
     khi bộ chạy đã chụp; ca từ chối phép dựng điểm của chóp đều nói ĐÚNG ca của họ (O là giao AC và BD), không
     mượn chú thích trung điểm SA của W18."""

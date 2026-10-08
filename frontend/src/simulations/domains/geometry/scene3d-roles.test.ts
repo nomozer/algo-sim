@@ -16,7 +16,7 @@ const hsl = (hex: number) => {
   return { h: x.h * 360, s: x.s, l: x.l };
 };
 
-describe("W12 · mỗi màu một nghĩa", () => {
+describe("mỗi màu một nghĩa", () => {
   it("vật được chọn là XANH, dữ kiện số là CAM ĐẬM — hai màu khác nhau", () => {
     expect(MAU_VAI_TRO.dich).not.toBe(MAU_VAI_TRO.du_kien_so);
     expect(hsl(MAU_VAI_TRO.dich).h).toBeGreaterThan(200);

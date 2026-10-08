@@ -361,7 +361,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
 });
 
 // ══ w11 · CHẤM ĐỈNH THEO ĐIỂM ẢNH · ĐƯỜNG PHỤ NHẸ Ở TRẠNG THÁI CUỐI ═════════
-describe("w11 · chấm đỉnh và đường phụ", () => {
+describe("chấm đỉnh và đường phụ", () => {
   const DIEM: SceneObject = {
     id: "A", label: "A", type: "point3", render: "point_marker",
     origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"],

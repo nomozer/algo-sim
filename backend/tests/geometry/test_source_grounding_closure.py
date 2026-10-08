@@ -368,14 +368,14 @@ def _g_p4():
     ("G3_toa_do_chi_trong_yeu_cau_chung_minh", _g_p1, "S"),
     ("G4_ngoai_vung_da_dien_toa_do_chi_trong_yeu_cau", _g_p4, "A"),
 ])
-def test_w17_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN(ca, dung, chu_the):
+def test_gia_tri_chi_trong_yeu_cau_chung_minh_khong_thanh_GIVEN(ca, dung, chu_the):
     _sp, out, sc = _w14().chay(*dung())
     assert (out.servable, out.stage_reached, out.reason_code) == (
         False, "grounding", "GIVEN_ONLY_IN_GOAL_CLAUSE"), (ca, out.stage_reached, out.reason_code, out.details[:3])
     assert out.reason_subjects == [chu_the] and sc is None, (ca, out.reason_subjects)
 
 
-def test_w17_tinh_biet_van_la_du_kien():
+def test_tinh_biet_van_la_du_kien():
     """`Tính …, biết SA = 5`: dữ kiện đứng sau `Tính` vẫn là dữ kiện (Tính không phải từ khoá mục tiêu)."""
     _sp, out, sc = _w14().chay(*_g_chop(G2_TEXT))
     assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
@@ -389,7 +389,7 @@ G7_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB
 
 
 @pytest.mark.parametrize("text", [G6_TEXT, G7_TEXT], ids=["G6_bao_nhieu_biet", "G7_hoi_bao_nhieu_biet"])
-def test_w17_cau_hoi_bao_nhieu_biet_van_la_du_kien(text):
+def test_cau_hoi_bao_nhieu_biet_van_la_du_kien(text):
     """Trước bản sửa: luật câu hỏi che "biết SA = 5" ⇒ grounding từ chối GIVEN_ONLY_IN_GOAL_CLAUSE
     ("chỉ nêu SA trong yêu cầu chứng minh" — sai)."""
     _sp, out, sc = _w14().chay(*_g_chop(text))
@@ -400,12 +400,12 @@ G5_TEXT = ("Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB
            "SAB vuông, biết cạnh bên SA vuông góc với đáy và SA = 5. Tính thể tích khối chóp S.ABC.")
 
 
-def test_w17_chung_minh_biet_du_kien_sau_biet_van_la_du_kien():
+def test_chung_minh_biet_du_kien_sau_biet_van_la_du_kien():
     """`Chứng minh X, biết Y`: Y là dữ kiện — không bị đọc thành giá trị chỉ có trong mục tiêu."""
     _sp, out, sc = _w14().chay(*_g_chop(G5_TEXT))
     assert out.servable and sc is not None, (out.stage_reached, out.reason_code, out.details[:3])
 
 
-def test_w17_ma_chi_trong_muc_tieu_la_ma_nguon_khong_gui_sua():
+def test_ma_chi_trong_muc_tieu_la_ma_nguon_khong_gui_sua():
     assert "GIVEN_ONLY_IN_GOAL_CLAUSE" in G.MA_LOI_NGUON
     assert G.MA_LOI_NGUON <= PL.KHONG_SUA_NGUON

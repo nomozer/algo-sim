@@ -50,7 +50,7 @@ function buocDungDocLap(scene: Scene3D): number {
     e.semantic_kind === "GEOMETRY_CONSTRUCTION" && hinh(scene, i + 1) !== hinh(scene, i)).length;
 }
 
-describe("W12 · bước dựng CHỈ là bước hình học", () => {
+describe("bước dựng CHỈ là bước hình học", () => {
   it.each(FAMILIES)("%s: phân hoạch liên tiếp, đủ, không chồng lấn", (f) => {
     const s = canh(f);
     const t = geometryTimeline(s);
@@ -90,7 +90,7 @@ describe("W12 · bước dựng CHỈ là bước hình học", () => {
   });
 });
 
-describe("W12 · tua tiến/lùi và dừng ở bước hình học cuối", () => {
+describe("tua tiến/lùi và dừng ở bước hình học cuối", () => {
   it.each(FAMILIES)("%s: tới rồi lùi trả ĐÚNG snapshot của mỗi bước", (f) => {
     const s = canh(f);
     const t = geometryTimeline(s);
@@ -125,7 +125,7 @@ describe("W12 · tua tiến/lùi và dừng ở bước hình học cuối", () 
   });
 });
 
-describe("W12 · lớp lời giải giữ công thức và nguồn", () => {
+describe("lớp lời giải giữ công thức và nguồn", () => {
   it("chóp tam giác ở bước cuối: dữ kiện, bước tính có nguồn số, kết quả có công thức", () => {
     const s = canh("triangular_pyramid");
     const lg = solutionAt(s, geometryAnchor(s, s.events.length - 1));
@@ -152,7 +152,7 @@ describe("W12 · lớp lời giải giữ công thức và nguồn", () => {
     expect(solutionAt(s, geometryAnchor(s, 0)).results).toEqual([]);
   });
 
-  it("W05 · E: không còn bảng lời giải dưới thanh bước — đáp số MỘT mục ở «Đại lượng», công thức ở ô soi", () => {
+  it("không còn bảng lời giải dưới thanh bước — đáp số MỘT mục ở «Đại lượng», công thức ở ô soi", () => {
     // W18 §16.6 thu gọn lời giải; W05 gỡ hẳn thẻ ấy: nó lặp tập `quantityChoices` mà bảng «Đại lượng» liệt kê.
     const s = canh("triangular_pyramid");
     const html = renderToString(<Scene3DPlayer scene={s} initialStep={s.events.length - 1} />);

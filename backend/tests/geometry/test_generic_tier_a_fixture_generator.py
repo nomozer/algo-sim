@@ -94,7 +94,7 @@ def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_p
         assert "_" not in envelope["learner_reason"], name
 
 
-def test_w17_de_am_do_dai_khong_duong_phai_ghi_so_ay_trong_chinh_de():
+def test_de_am_do_dai_khong_duong_phai_ghi_so_ay_trong_chinh_de():
     """W17 · ảnh lập phương "cạnh 4" bị từ chối: `_zero_ab` chỉ thay chuỗi "AB = 3", mà đề lập
     phương ghi "cạnh bằng 4" — đề không đổi (V = 64 hợp lệ) trong khi hợp đồng mang AB = 0. Fixture
     âm "độ dài không dương" phải GHI số ≤ 0 trong chính đề, đọc được bằng bộ đọc của server."""

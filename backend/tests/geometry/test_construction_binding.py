@@ -164,7 +164,7 @@ def _doc(van: str):
     return {(q.kind, q.dich, q.toan_hang) for q in doc_quan_he_dung(NEN_P1 + van)}
 
 
-def test_w18_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu():
+def test_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu():
     S = frozenset
     assert _doc("Gọi M, N lần lượt là trung điểm của SA, SB. Gọi P là trung điểm cạnh SC.") == {
         ("midpoint", "M", S({"S", "A"})), ("midpoint", "N", S({"S", "B"})), ("midpoint", "P", S({"S", "C"}))}
@@ -172,11 +172,11 @@ def test_w18_doc_trung_diem_mot_dich_va_danh_sach_lan_luot_theo_thu_tu():
         ("midpoint", "M", S({"S", "A"})), ("midpoint", "N", S({"S", "B"})), ("midpoint", "P", S({"S", "C"}))}
 
 
-def test_w18_danh_sach_lech_so_luong_khong_cho_quan_he():
+def test_danh_sach_lech_so_luong_khong_cho_quan_he():
     assert _doc("Gọi M, N lần lượt là trung điểm của SA, SB, SC.") == set()
 
 
-def test_w18_doc_hinh_chieu_hai_vai_tro_va_dich_nhan():
+def test_doc_hinh_chieu_hai_vai_tro_va_dich_nhan():
     assert _doc("Gọi H là hình chiếu vuông góc của S lên đường thẳng BD.") == {
         ("projection", "H", ("S", ("line", frozenset({"B", "D"}))))}
     assert _doc("Gọi H là hình chiếu của A trên mặt phẳng (SBD).") == {
@@ -187,19 +187,19 @@ def test_w18_doc_hinh_chieu_hai_vai_tro_va_dich_nhan():
         ("projection", "H", ("S", ("plane", frozenset({"A", "B", "C", "D"}))))}
 
 
-def test_w18_cach_noi_ngoai_tu_vung_va_menh_de_muc_tieu_khong_cho_quan_he():
+def test_cach_noi_ngoai_tu_vung_va_menh_de_muc_tieu_khong_cho_quan_he():
     assert _doc("Gọi M là điểm chính giữa của đoạn SA.") == set()
     assert _doc("Chứng minh rằng M là trung điểm của SA.") == set()
 
 
-def test_w18_hai_cau_noi_khac_nhau_ve_mot_dich_thi_bo_ca_hai():
+def test_hai_cau_noi_khac_nhau_ve_mot_dich_thi_bo_ca_hai():
     assert _doc("Gọi M là trung điểm của SA. Gọi M là trung điểm của SB.") == set()
 
 
 # ── route sản phẩm theo nhãn đăng ký (§16.3, §16.4) ──────────────────────────────────────────
 
 @pytest.mark.parametrize("ca", sorted(CA))
-def test_w18_tuyen_san_pham_theo_nhan(ca):
+def test_tuyen_san_pham_theo_nhan(ca):
     _sp, out, _sc = W.chay(*CA[ca]())
     e = NHAN[ca]["expect"]
     if e == "served":
@@ -211,13 +211,13 @@ def test_w18_tuyen_san_pham_theo_nhan(ca):
 
 
 @pytest.mark.parametrize("ca", sorted(c for c in CA if NHAN[c]["binding"]))
-def test_w18_trang_thai_doi_chieu_cua_phep_dung(ca):
+def test_trang_thai_doi_chieu_cua_phep_dung(ca):
     _sp, out, _sc = W.chay(*CA[ca]())
     for dich, trang_thai in NHAN[ca]["binding"].items():
         assert out.construction_binding.get(dich) == trang_thai, (ca, dich, out.construction_binding)
 
 
-def test_w18_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh():
+def test_tu_choi_neu_hai_quan_he_bang_ky_hieu_hoc_sinh():
     _sp, out, _sc = W.chay(*CA["B2_mid_wrong_SB"]())
     assert out.reason_subjects == ["M là trung điểm của SA", "M là trung điểm của SB"], out.reason_subjects
     _sp, out, _sc = W.chay(*CA["B11_proj_line_wrong_BC"]())
@@ -242,13 +242,13 @@ NGOAI = {
 }
 
 
-def test_w18_lech_ngoai_vung_da_dien_van_bi_tu_choi():
+def test_lech_ngoai_vung_da_dien_van_bi_tu_choi():
     _sp, out, _sc = W.chay(*NGOAI["X1_outside_scope_mismatch"]())
     assert (out.servable, out.stage_reached, out.reason_code) == (
         False, "construction_binding", "CONSTRUCTION_NOT_TEXT_BOUND"), (out.stage_reached, out.details[:3])
 
 
-def test_w18_chua_doi_chieu_ngoai_vung_da_dien_chi_ghi_lai():
+def test_chua_doi_chieu_ngoai_vung_da_dien_chi_ghi_lai():
     _sp, out, _sc = W.chay(*NGOAI["X2_outside_scope_out_of_vocab"]())
     assert out.servable and out.construction_binding.get("M") == "UNVERIFIED", (
         out.stage_reached, out.reason_code, out.construction_binding)
@@ -260,7 +260,7 @@ def _vat(sc: dict, oid: str) -> dict:
     return next(o for o in sc["objects"] if o["id"] == oid)
 
 
-def test_w18_diem_phu_tro_mang_xuat_xu_phu_tro_diem_cua_de_mang_quan_he():
+def test_diem_phu_tro_mang_xuat_xu_phu_tro_diem_cua_de_mang_quan_he():
     _sp, out, sc = W.chay(*CA["B17_auxiliary_foot"]())
     assert out.servable and sc is not None
     k = _vat(sc, "K")
@@ -271,7 +271,7 @@ def test_w18_diem_phu_tro_mang_xuat_xu_phu_tro_diem_cua_de_mang_quan_he():
 
 # ── nguyên nhân và lời cho người học (§16.4) ─────────────────────────────────────────────────
 
-def test_w18_ma_chua_doi_chieu_co_nguyen_nhan_chua_ro_va_khong_gui_di_sua():
+def test_ma_chua_doi_chieu_co_nguyen_nhan_chua_ro_va_khong_gui_di_sua():
     from app.ai.pipeline import KHONG_SUA_NGUON
     from app.simulation.semantic_program.refusal_cause import theo_ma
 
@@ -287,14 +287,14 @@ def _loi(**env) -> str:
                            "stage_reached": "construction_binding", **env})
 
 
-def test_w18_loi_lech_phep_dung_neu_hai_quan_he_va_khong_bao_sua_de():
+def test_loi_lech_phep_dung_neu_hai_quan_he_va_khong_bao_sua_de():
     msg = _loi(reason_code="CONSTRUCTION_NOT_TEXT_BOUND", refusal_cause="CONSTRUCTION",
                reason_subjects=["M là trung điểm của SA", "M là trung điểm của SB"])
     assert "M là trung điểm của SA" in msg and "M là trung điểm của SB" in msg, msg
     assert "đề không cần sửa" in msg and "thiết diện" not in msg, msg
 
 
-def test_w18_loi_chua_doi_chieu_khong_noi_de_sai():
+def test_loi_chua_doi_chieu_khong_noi_de_sai():
     msg = _loi(reason_code="CONSTRUCTION_BINDING_UNVERIFIED", refusal_cause="UNKNOWN", reason_subjects=["M"])
     assert "chưa đối chiếu" in msg and "M" in msg, msg
     for cam in ("sửa đề", "kiểm tra lại đề", "đề sai", "đề bài sai"):

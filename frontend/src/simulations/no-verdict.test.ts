@@ -34,7 +34,7 @@ const SRC = join(__dirname, "..");
 /** Năng lực đã bị gỡ — module nào khai lại là quay về hỏi-đáp có chấm điểm. */
 const CAPABILITY_DA_GO = ["predict", "prediction", "submitPrediction"] as const;
 
-describe("W13 §1 — không module nào khai lại năng lực chấm điểm", () => {
+describe("không module nào khai lại năng lực chấm điểm", () => {
   it("không module nào còn khai `predict`", () => {
     const pham = listSimulations()
       .filter((m) => (m as unknown as Record<string, unknown>).predict !== undefined)
@@ -50,7 +50,7 @@ describe("W13 §1 — không module nào khai lại năng lực chấm điểm",
   });
 });
 
-describe("W13 §2 — store không giữ trạng thái hỏi-đáp", () => {
+describe("store không giữ trạng thái hỏi-đáp", () => {
   const store = readFileSync(join(SRC, "state/store.ts"), "utf-8");
 
   it.each(CAPABILITY_DA_GO)("`%s` không còn là trường của AppState", (ten) => {
@@ -63,7 +63,7 @@ describe("W13 §2 — store không giữ trạng thái hỏi-đáp", () => {
   });
 });
 
-describe("W13 §3 — thành phần chở phán quyết đã bị gỡ khỏi kho mã", () => {
+describe("thành phần chở phán quyết đã bị gỡ khỏi kho mã", () => {
   it.each(["components/PredictionBar.tsx", "components/SearchActionZone.tsx"])(
     "%s không còn tồn tại",
     (rel) => {

@@ -23,7 +23,7 @@ import {
 } from "./pick-target";
 
 // ══ W11 · CHẤM ĐỈNH THEO ĐIỂM ẢNH MÀN HÌNH (review W10-H5) ══════════════
-describe("W11 · chấm đỉnh là token điểm ảnh, không phải bán kính thế giới", () => {
+describe("chấm đỉnh là token điểm ảnh, không phải bán kính thế giới", () => {
   it("một token cho mọi họ: desktop ≈ 6, hẹp 7–8, đang chọn 8–10 (đường kính px CSS)", () => {
     expect(coDauDinhPx(false, KHUNG_HEP_PX + 200)).toBe(DAU_DINH_PX.thuong);
     expect(DAU_DINH_PX.thuong).toBe(6);

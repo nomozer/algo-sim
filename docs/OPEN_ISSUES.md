@@ -462,7 +462,7 @@
 
 ### ISSUE-ARCH-ASSUMPTION-CONSTRUCTION-RELATION-NOT-SOURCE-BOUND
 - **description:** C0 binds every literal on a shown value's slice to its own text entity. It does not check that each construction uses the entity the text names. Example: the text says the section (T) is cut by (β), and the program cuts (T) with (α). Both planes' equations are bound correctly, yet the served area is that of the wrong section (9 instead of 16). This is the same class as a midpoint built on the wrong segment: a reading error of the model, not a literal without a source.
-- **evidence:** `backend/tests/geometry/test_assumption_certificate.py::test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi` (strict xfail). The declared-limit row `A2b_cat_bang_alpha_khi_de_noi_beta` (PROVEN_SAFE C0, served) is in `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`. Registered as limit A′ in ASSUMPTION_CERTIFICATE_AMENDMENT §14.1.
+- **evidence:** `backend/tests/geometry/test_assumption_certificate.py::test_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi` (strict xfail). The declared-limit row `A2b_cat_bang_alpha_khi_de_noi_beta` (PROVEN_SAFE C0, served) is in `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/ASSUMPTION_MECHANISM_DECISION_W16_R2.json`. Registered as limit A′ in ASSUMPTION_CERTIFICATE_AMENDMENT §14.1.
 - **impact:** A program that substitutes a determined entity for the one the text names can still be certified. If the text's entity is undetermined (an unnamed or unpinned plane), the served value hides a free parameter. With planes, the strict unnamed-binding rule refuses the common forms (A6b, A8); the named form (A2b) is served.
 - **scope:** a closed reader for construction relations in `shape_constraint.py`, for example `(X) cắt <khối> theo thiết diện (T)` and `M là trung điểm của XY`, plus a C0 rule that matches each slice construction against it.
 - **status:** RESOLVED for section cuts (w17, `2678b363` + the final-review fix `d3817d5f`; `CACHE_VERSION` 108 → 109 in `fadfd10e`, served → rejected).
@@ -478,10 +478,10 @@
 
 ### ISSUE-ARCH-GROUNDING-GOAL-CLAUSE-AS-DATUM
 - **description:** The goal-clause masking of W16 (§14.2) applies to the assumption certificate only. The product grounding gate (`grounding_gate.bang_chung_doan` and the source-length reader) still reads lengths and coordinates on the whole text. A value written only inside a proof request, as in `Chứng minh rằng SA = 5`, can therefore back a GIVEN.
-- **evidence:** `test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]`: the certificate refuses, while grounding alone would accept the length (W16 Phase 1 probe, `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/PROBE_W16_PHASE1_6d01511.json`).
+- **evidence:** `test_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de[B7_chung_minh_do_dai]`: the certificate refuses, while grounding alone would accept the length (W16 Phase 1 probe, `docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/PROBE_W16_PHASE1_6d01511.json`).
 - **impact:** Inside the polyhedral scope (U3) the certificate refuses such a request. Outside it, the gate only records, so a request whose only data sits in a proof request can be served.
 - **scope:** `backend/app/simulation/semantic_program/grounding_gate.py`, `segment_relation.py` (read on `che_muc_tieu(text)`).
-- **status:** RESOLVED (w17, `0b71502b` + the final-review fix `d3817d5f`). `check_grounding` reads GIVEN evidence on `che_muc_tieu(text)` in every route (the grounding stage is not limited to the polyhedral scope); a second pass on the unmasked text only classifies the refusal as `GIVEN_ONLY_IN_GOAL_CLAUSE`. `, biết` ends a goal clause, and in "…, biết Y?" the biết clause is a premise. Measured: G1, G3 and G4 (cylinder, outside the polyhedral scope) refused at `grounding`; G2, G5, G6, G7 served (`test_source_grounding_closure.py -k w17`, census W17/W17C rows).
+- **status:** RESOLVED (w17, `0b71502b` + the final-review fix `d3817d5f`). `check_grounding` reads GIVEN evidence on `che_muc_tieu(text)` in every route (the grounding stage is not limited to the polyhedral scope); a second pass on the unmasked text only classifies the refusal as `GIVEN_ONLY_IN_GOAL_CLAUSE`. `, biết` ends a goal clause, and in "…, biết Y?" the biết clause is a premise. Measured: G1, G3 and G4 (cylinder, outside the polyhedral scope) refused at `grounding`; G2, G5, G6, G7 served (`test_source_grounding_closure.py`, census W17/W17C rows).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** with W15-H2 (enforcement outside the polyhedral scope)
 - **default_switch_blocker:** NO
@@ -517,7 +517,7 @@
 
 ### ISSUE-ARCH-CUT-PLANE-BY-POINT-AND-PARALLEL
 - **description:** A cutting plane defined by a point and a parallel or perpendicular plane ("(Q) qua M và song song với (ABCD) cắt hình chóp theo thiết diện (T)") cannot be pinned by the closed vocabulary. Since W17 such a request is refused with `ASSUMPTION_INVARIANCE_UNPROVEN` even when the program is right. W16 served it, because the certificate had no operation check. A plane named by four or more points binds only to a `construct_plane` through exactly that point set.
-- **evidence:** W17C rows Q1/Q2 (`docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`); `test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung`.
+- **evidence:** W17C rows Q1/Q2 (`docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/ASSUMPTION_MECHANISM_DECISION_W17_R2.json`); `test_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung`.
 - **impact:** An over-refusal on a common textbook phrasing, with a truthful learner message ("chưa chứng minh được … quan hệ theo cách hệ chưa đọc được"). It is never a wrong answer.
 - **scope:** `shape_constraint.doc_quan_he_cat` (read "qua <điểm> và song song/vuông góc với (X)"), and a pinning rule in `assumption_gate` that checks, on the executed memory, that the program's plane contains the point and is parallel or perpendicular to (X).
 - **status:** OPEN (w17) — needs the user's vocabulary decision W15-H3.
@@ -525,7 +525,7 @@
 - **suggested_wave:** with W15-H3
 - **default_switch_blocker:** NO
 - **acceptance:** Q1 served with the right section; a program through another point or not parallel is refused CONSTRUCTION_NOT_TEXT_BOUND; census rows labelled before the run.
-- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py -q -k w17`
+- **verify:** `cd backend && .venv/Scripts/python.exe -m pytest tests/geometry/test_assumption_certificate.py tests/geometry/test_shape_constraint.py -q`
 
 ### ISSUE-ARCH-ANNOTATION-UNANCHORED-QUANTITIES
 - **description:** On-figure labels (W17 §15.4) exist only for quantities with a registered anchor: areas of polygons and sections, volumes of polyhedra, distances with a point operand, and given lengths whose segment the text names. Curved objects, angles, distances between two non-point objects and bare-number data ("hình lập phương cạnh bằng 4") have no label; their values stay in the details panel with an `ANNOTATION_UNBOUND` diagnostic. The served correct-plane caption calls an equation plane "Mặt phẳng cho bằng phương trình", not by its name in the text.

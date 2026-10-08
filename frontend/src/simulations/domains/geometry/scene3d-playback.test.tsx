@@ -234,7 +234,7 @@ describe("(5E) vỏ điều khiển", () => {
     ],
   });
 
-  it("W17 · bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho", () => {
+  it("bước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho", () => {
     const ds = geometryStepList(canhNhom());
     expect(ds.at(-1)?.label).toBe("Các cạnh bên AD");
     expect(ds.at(-1)?.label.toLowerCase()).not.toContain("dữ kiện đề cho");
@@ -242,7 +242,7 @@ describe("(5E) vỏ điều khiển", () => {
     expect(html).toContain("Các cạnh bên AD");
   });
 
-  it("W17 · bước INIT vẫn nói đúng là dữ kiện đề cho", () => {
+  it("bước INIT vẫn nói đúng là dữ kiện đề cho", () => {
     expect(geometryStepList(canhNhom())[0].label.toLowerCase()).toContain("dữ kiện đề cho");
   });
 

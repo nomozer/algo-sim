@@ -268,7 +268,7 @@ describe("H2 · tầng nhấn mạnh causal", () => {
     expect(tangNhanManh(CANH, "M").has("C")).toBe(false);
   });
 
-  it("regular-triangular-pyramid-w01 · D2: chủ thể NHÃN của đại lượng (đoạn chiều cao) lên tầng đích, dù không nằm"
+  it("chủ thể NHÃN của đại lượng (đoạn chiều cao) lên tầng đích, dù không nằm"
     + " trong phụ thuộc tính toán", () => {
     const h = {
       id: "h", label: "h", type: "quantity", render: "readout", origin: "derived", producer: "measure.distance",

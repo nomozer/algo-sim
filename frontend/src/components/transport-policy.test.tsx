@@ -27,7 +27,7 @@ import { listSimulations } from "../simulations/registry";
 
 // ── 1. CHÍNH SÁCH, KHÔNG PHẢI SUY DIỄN KĨ THUẬT (§9) ────────────────────────
 
-describe("W7 §9 — chế độ transport là chính sách sư phạm", () => {
+describe("chế độ transport là chính sách sư phạm", () => {
   it("mọi target công khai đều được KHAI chế độ", () => {
     if (listSimulations().length === 0) registerAllSimulations();
     const missing = listSimulations().map((m) => m.id).filter((id) => !transportModeOf(id));
@@ -81,7 +81,7 @@ describe("W7 §9 — chế độ transport là chính sách sư phạm", () => {
 
 // ── 2. QUYỀN SỞ HỮU BỀ RỘNG (§1/§4/§10) ─────────────────────────────────────
 
-describe("W7 §10 — bề rộng khay tách khỏi bề rộng cơ chế", () => {
+describe("bề rộng khay tách khỏi bề rộng cơ chế", () => {
   const css = () => readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
 
   it("khay có bề rộng RIÊNG theo chính sách workspace", () => {
@@ -115,7 +115,7 @@ describe("W7 §10 — bề rộng khay tách khỏi bề rộng cơ chế", () =
 
 // ── 3. DÒNG THỜI GIAN TUỲ CHỌN: MỞ ĐƯỢC THÌ ĐÓNG ĐƯỢC (§7/§16) ──────────────
 
-describe("W7 §7 — dòng thời gian tuỳ chọn gập mặc định", () => {
+describe("dòng thời gian tuỳ chọn gập mặc định", () => {
   const src = () => readFileSync(new URL("./SimulationControls.tsx", import.meta.url), "utf-8");
 
   it("có lối VÀO và lối RA, và chỉ dựng cho chế độ tuỳ chọn", () => {

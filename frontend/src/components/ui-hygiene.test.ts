@@ -39,7 +39,7 @@ function code(text: string): string {
     .replace(/^import .*$/gm, "");
 }
 
-describe("(M9-UX6) UI hygiene — quét MÃ NGUỒN, không phụ thuộc route nào được test", () => {
+describe("UI hygiene — quét MÃ NGUỒN, không phụ thuộc route nào được test", () => {
   /**
    * Emoji + ký tự hình khối làm icon. `◧` (U+25E7) từng thành Ô VUÔNG RỖNG trên
    * Windows; emoji thì mỗi OS vẽ một kiểu, không ăn theo màu chữ. Icon = SVG.
@@ -174,7 +174,7 @@ describe("AI không có control learner-facing trong workspace", () => {
  * "Kiểm tra", tô nền thẻ dự đoán, viền trái tím — tức là biến màu TRANG TRÍ thành
  * ACCENT CẤU TRÚC THỨ HAI. DESIGN.md cấm cả hai điều đó.
  */
-describe("(M9-UX6) DESIGN.md — sticker palette là TRANG TRÍ, không sơn hành động", () => {
+describe("DESIGN.md — sticker palette là TRANG TRÍ, không sơn hành động", () => {
   const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8").replace(
     /\/\*[\s\S]*?\*\//g,
     "",
@@ -295,7 +295,7 @@ describe("(FIX-1) màn hẹp: thanh điều khiển dán đáy, drawer không đ
  * khẳng định luôn rằng file đó vẫn còn nhãn — nếu không, allowlist đã thành xác
  * và guard sẽ âm thầm mất hiệu lực.
  */
-describe("(W4B-2B §7) nhãn panel phải — đổi tên có ranh giới, không thay chuỗi mù", () => {
+describe("nhãn panel phải — đổi tên có ranh giới, không thay chuỗi mù", () => {
   /** Nơi DUY NHẤT "Quan sát" còn hợp lệ: chế độ xem của renderer generic. */
   const MODE_SWITCH_OWNER = join("simulations", "domains", "generic", "ui.tsx");
 

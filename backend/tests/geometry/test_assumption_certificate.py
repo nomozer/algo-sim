@@ -787,7 +787,7 @@ def test_GUARD_w16_gia_tri_hien_thi_doi_theo_mat_phang_duoc_dung():
 
 
 @pytest.mark.parametrize("ca", sorted(MP_SAI_THUC_THE))
-def test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0(ca):
+def test_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0(ca):
     """Trùng bộ số KHÔNG là trùng thực thể (§14.1)."""
     kq = _kq(*MP_SAI_THUC_THE[ca]())
     assert kq.status != AN_TOAN, (ca, kq)
@@ -795,18 +795,18 @@ def test_w16_he_so_mat_phang_khong_gan_duoc_dung_thuc_the_khong_duoc_C0(ca):
 
 
 @pytest.mark.parametrize("ca", sorted(MP_DUNG_THUC_THE))
-def test_w16_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0(ca):
+def test_he_so_mat_phang_gan_dung_thuc_the_van_duoc_C0(ca):
     kq = _kq(*MP_DUNG_THUC_THE[ca]())
     assert (kq.status, kq.certificate) == (AN_TOAN, "C0"), (ca, kq)
 
 
 @pytest.mark.parametrize("ca", ["A1_beta_chua_xac_dinh_mang_he_so_alpha", "A2_hai_mat_phang_doi_cheo_he_so"])
-def test_w16_tuyen_tu_choi_mat_phang_sai_thuc_the(ca):
+def test_tuyen_tu_choi_mat_phang_sai_thuc_the(ca):
     _sp, out, _sc = W.chay(*MP_SAI_THUC_THE[ca]())
     assert (out.servable, out.stage_reached) == (False, "assumption"), (ca, out.stage_reached, out.details[:3])
 
 
-def test_w16_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi():
+def test_gioi_han_A_phay_cat_bang_mat_phang_khac_mat_phang_de_noi():
     """(T) do (β) cắt; chương trình cắt bằng (α) — cả hai literal đều ghim đúng mặt phẳng của nó.
     Giới hạn A′ của W16 (strict xfail) — đóng ở W17 §15.1 (kiểm phép dựng)."""
     kq = _kq(*_p1_mat_phang(HAI_MP, [("alpha_plane", (0, 0, 1, -3)), ("beta_plane", (0, 0, 1, -2))],
@@ -853,27 +853,27 @@ KHONG_KHAI_THAC_DUOC = {
 
 
 @pytest.mark.parametrize("ca", sorted(MUC_TIEU_THANH_TIEN_DE))
-def test_w16_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de(ca):
+def test_quan_he_trong_yeu_cau_chung_minh_khong_la_tien_de(ca):
     kq = _kq(*_t1_cau(MUC_TIEU_THANH_TIEN_DE[ca]))
     assert kq.status != AN_TOAN, (ca, kq)
     assert any(d.startswith("GOAL_CLAUSE") for d in kq.details), (ca, kq.details)
 
 
 @pytest.mark.parametrize("ca", sorted(GIA_THIET_GIU_NGUYEN))
-def test_w16_gia_thiet_hop_le_van_la_tien_de(ca):
+def test_gia_thiet_hop_le_van_la_tien_de(ca):
     """Giả thiết đứng trước yêu cầu (kể cả cùng câu), và `Tính …, biết <giả thiết>`, giữ nguyên."""
     kq = _kq(*_t1_cau(GIA_THIET_GIU_NGUYEN[ca]))
     assert (kq.status, kq.certificate) == (AN_TOAN, "C1"), (ca, kq)
 
 
 @pytest.mark.parametrize("ca", sorted(KHONG_KHAI_THAC_DUOC))
-def test_w16_cau_hoi_co_khong_va_phu_dinh_khong_doc_thanh_tien_de(ca):
+def test_cau_hoi_co_khong_va_phu_dinh_khong_doc_thanh_tien_de(ca):
     """Không khai thác được hôm nay (bộ đọc không khớp khi có chữ chen giữa) — giữ như vậy."""
     kq = _kq(*_t1_cau(KHONG_KHAI_THAC_DUOC[ca]))
     assert kq.status != AN_TOAN, (ca, kq)
 
 
-def test_w16_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc():
+def test_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc():
     """`Tính …, biết chiều cao bằng 5`: bộ đọc chiều cao chỉ đọc phần dữ kiện ⇒ từ chối thừa,
     nhưng không bao giờ nói "đề không cho SA" (§14.2, ngoài W16)."""
     kq = _kq(*_t1_cau(NEN_T1 + DAY_T1 + ", cạnh bên SA vuông góc với đáy. Tính thể tích khối chóp S.ABC, "
@@ -881,7 +881,7 @@ def test_w16_chieu_cao_sau_tinh_bi_tu_choi_thua_khong_bao_gio_phu_thuoc():
     assert kq.status == CHUA_RO, kq
 
 
-def test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du():
+def test_muc_tieu_sau_tinh_khong_tao_phan_vi_du():
     """Ruling T3: đề có mệnh đề mục tiêu thì không thử phản ví dụ. Ở đây `SA = 5` chỉ nằm trong
     yêu cầu chứng minh ĐỨNG SAU `Tính` — ngoài phần dữ kiện `phan_chua_doc` soi — nên không có
     luật này cổng sẽ nói "đề không cho SA" với một đề có viết SA = 5."""
@@ -892,7 +892,7 @@ def test_w16_muc_tieu_sau_tinh_khong_tao_phan_vi_du():
     assert "CE_GOAL_CLAUSE_PRESENT" in kq.details, kq.details
 
 
-def test_w16_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de():
+def test_tuyen_tu_choi_yeu_cau_chung_minh_lam_tien_de():
     _sp, out, _sc = W.chay(*_t1_cau(MUC_TIEU_THANH_TIEN_DE["B1_chung_minh_SA_vuong_day"]))
     assert (out.servable, out.stage_reached) == (False, "assumption"), (out.stage_reached, out.details[:3])
 
@@ -948,24 +948,24 @@ BON_NHANH = {"CLOSURE_UNSUPPORTED_KIND": _guard_if, "TEMPLATE_CONSTRAINT_VIOLATE
              "FRAME_DEPENDENT": _guard_khung, "FORMATION_REJECTED": _guard_bang_mat}
 
 
-def test_w16_doi_chung_bon_nhanh_la_C1():
+def test_doi_chung_bon_nhanh_la_C1():
     kq = _kq(*_t1())
     assert (kq.status, kq.certificate) == (AN_TOAN, "C1"), kq
 
 
-def test_w16_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND():
+def test_nhanh_luong_dieu_khien_CLOSURE_UNSUPPORTED_KIND():
     kq = _kq(*_guard_if())
     assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
     assert kq.details == ("CLOSURE_UNSUPPORTED_KIND control flow",), kq.details
 
 
-def test_w16_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED():
+def test_nhanh_dinh_khuon_pha_rang_buoc_TEMPLATE_CONSTRAINT_VIOLATED():
     kq = _kq(*_guard_dinh_khuon())
     assert (kq.status, kq.reason_code) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN"), kq
     assert kq.details[-1] == "T1 TEMPLATE_CONSTRAINT_VIOLATED apex edge ⊥ base", kq.details
 
 
-def test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT():
+def test_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT():
     """Mặt phẳng từ phương trình trên lát cắt C1 là lý do trượt DUY NHẤT (hệ số tự nó có
     nguồn: đề cho đúng (P): z = 2)."""
     kq = _kq(*_guard_khung())
@@ -974,7 +974,7 @@ def test_w16_nhanh_phep_dung_phu_thuoc_khung_FRAME_DEPENDENT():
     assert loi == ["FRAME_DEPENDENT construct_plane_from_equation"], kq.details
 
 
-def test_w16_nhanh_bang_mat_hong_FORMATION_REJECTED():
+def test_nhanh_bang_mat_hong_FORMATION_REJECTED():
     kq = _kq(*_guard_bang_mat())
     assert (kq.status, kq.reason_code, kq.details) == (
         CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN", ("FORMATION_REJECTED",)), kq
@@ -1067,7 +1067,7 @@ def test_GUARD_w17_phep_dung_sai_doi_gia_tri_nguoi_hoc_thay():
 
 
 @pytest.mark.parametrize("ca", sorted(PHEP_DUNG_SAI))
-def test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan(ca):
+def test_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan(ca):
     """§15.1: quan hệ cắt đọc được mà phép dựng lệch nó ⇒ UNDETERMINED + CONSTRUCTION_NOT_TEXT_BOUND."""
     kq = _kq(*PHEP_DUNG_SAI[ca]())
     assert (kq.status, kq.reason_code) == (CHUA_RO, "CONSTRUCTION_NOT_TEXT_BOUND"), (ca, kq)
@@ -1075,12 +1075,12 @@ def test_w17_phep_dung_lech_quan_he_cua_de_khong_duoc_chung_nhan(ca):
 
 
 @pytest.mark.parametrize("ca", sorted(PHEP_DUNG_DUNG))
-def test_w17_phep_dung_dung_quan_he_van_duoc_C0(ca):
+def test_phep_dung_dung_quan_he_van_duoc_C0(ca):
     kq = _kq(*PHEP_DUNG_DUNG[ca]())
     assert (kq.status, kq.certificate) == (AN_TOAN, "C0"), (ca, kq)
 
 
-def test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep_dung():
+def test_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep_dung():
     """Câu nằm ngoài từ vựng §15.1 ⇒ không chứng nhận, nhưng lý do là INVARIANCE_UNPROVEN."""
     kq = _kq(*_p1_w17("Cho mặt phẳng (α): z = 3. Gọi (T) là giao của (α) với khối chóp.",
                       [("alpha_plane", (0, 0, 1, -3))], "alpha_plane"))
@@ -1088,7 +1088,7 @@ def test_w17_quan_he_cat_khong_doc_duoc_la_gioi_han_tu_vung_khong_phai_lech_phep
     assert any(d.startswith("OPERATION_BINDING") for d in kq.details), kq.details
 
 
-def test_w17_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh():
+def test_ten_bien_va_nguon_chi_hai_mat_phang_khac_nhau_thi_khong_co_danh_tinh():
     """§15.1 (3): `alpha_plane` mà nguồn khai báo của nó là (β) — không chọn hộ bên nào, kể cả khi
     hai mặt phẳng trùng phương trình (đáp số giống nhau)."""
     kq = _kq(*_p1_w17(HAI_MP_TRUNG, [("alpha_plane", (0, 0, 1, -3))], "alpha_plane",
@@ -1110,7 +1110,7 @@ def _p1_qua_diem(qua: list[str], cau: str = DIEM_CAT):
     return ct, raw
 
 
-def test_w17_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem():
+def test_mat_phang_goi_qua_diem_co_danh_tinh_la_tap_diem():
     """Ruling Task 2: `(MNP)` của đề và `construct_plane` qua M, N, P là một thực thể; mặt phẳng qua
     M, N, Q trùng hình học (cùng z = 3) nhưng KHÁC thực thể đề nói."""
     assert (lambda k: (k.status, k.certificate))(_kq(*_p1_qua_diem(["M", "N", "P"]))) == (AN_TOAN, "C0")
@@ -1131,12 +1131,12 @@ MAT_PHANG_KHONG_GHIM = {
 
 
 @pytest.mark.parametrize("ca", sorted(MAT_PHANG_KHONG_GHIM))
-def test_w17_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung(ca):
+def test_mat_phang_cat_khong_ghim_duoc_la_chua_chung_minh_khong_phai_lech_phep_dung(ca):
     kq = _kq(*_p1_qua_diem(["M", "N", "P"], cau=MAT_PHANG_KHONG_GHIM[ca]))
     assert (kq.status, kq.reason_code, kq.subjects) == (CHUA_RO, "ASSUMPTION_INVARIANCE_UNPROVEN", ()), (ca, kq)
 
 
-def test_w17_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung():
+def test_tuyen_tu_choi_phep_dung_lech_va_phuc_vu_phep_dung_dung():
     _sp, sai, _ = W.chay(*PHEP_DUNG_SAI["O1_cat_bang_alpha_khi_de_noi_beta"]())
     assert (sai.servable, sai.stage_reached, sai.reason_code) == (
         False, "assumption", "CONSTRUCTION_NOT_TEXT_BOUND"), (sai.stage_reached, sai.reason_code, sai.details[:4])

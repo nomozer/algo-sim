@@ -166,7 +166,7 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () => 
     expect(ma).toMatch(/\{formula && \(\s*<p className="geo3d-soi-cong-thuc"/);
   });
 
-  it("regular-triangular-pyramid-w01 · D1: đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"
+  it("đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"
     + " nó đo ('Đo trên', từ `depends` backend) — không bịa công thức", () => {
     const ma = SRC("./Scene3DExplorer.tsx");
     expect(ma).toMatch(/\{!formula && laDaiLuong && \(\s*<p className="geo3d-soi-cong-thuc" data-value-entity/);

@@ -50,7 +50,7 @@ const rows = (() => {
   return out;
 })();
 
-describe("W5Z · nhãn miền", () => {
+describe("nhãn miền", () => {
   it("phép đo phủ cả danh mục — thiếu target là quét mù", () => {
     // Danh mục nay có ĐÚNG MỘT target: tuyến ngữ nghĩa. Con số 25 là tàn dư
     // của 24 target Tin học + nó; ghim lại con số ấy là ghim một danh mục
@@ -84,7 +84,7 @@ describe("W5Z · nhãn miền", () => {
   });
 });
 
-describe("W5Z · phụ đề cơ chế", () => {
+describe("phụ đề cơ chế", () => {
   it("KHÔNG target nào để phụ đề lặp lại nguyên văn tiêu đề", () => {
     const dup = rows.filter((r) => headerSubtitle(r.mod.title, r.title) === null);
     /* Sau bản vá, hai ca lặp (`logic.and_gate`, `color.rgb_model`) vẫn LẶP ở dữ
@@ -148,7 +148,7 @@ describe("W5Z · phụ đề cơ chế", () => {
   });
 });
 
-describe("W5Z · hàm thuần headerSubtitle", () => {
+describe("hàm thuần headerSubtitle", () => {
   it("ẩn khi chỉ khác hoa/thường hoặc khoảng trắng thừa", () => {
     expect(headerSubtitle("Cổng logic AND", "cổng  logic and")).toBeNull();
     expect(headerSubtitle("  Mô hình màu RGB ", "Mô hình màu RGB")).toBeNull();

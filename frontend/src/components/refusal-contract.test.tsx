@@ -183,7 +183,7 @@ describe("frontend KHÔNG suy phân loại từ chuỗi", () => {
 
 /* W17 §15.3 — câu gợi ý đọc `refusal_cause` (backend sở hữu). Đề hợp lệ (CONSTRUCTION) hay chưa rõ
    (UNKNOWN) thì KHÔNG bảo học sinh viết lại đề; chỉ SOURCE mới mời sửa dữ kiện trong đề. */
-describe("W17 · gợi ý theo nguyên nhân từ chối", () => {
+describe("gợi ý theo nguyên nhân từ chối", () => {
   const BAO_SUA_DE = ["diễn đạt lại", "kiểm tra lại đề", "đối chiếu lại các số liệu trong đề", "sửa đề", "nêu rõ hình"];
   const the = (refusal_cause?: Envelope["refusal_cause"]) => html({
     reason: "NON_POSITIVE_LENGTH", learner_reason: "…", failure_category: "geometry_generation_failed",
@@ -220,7 +220,7 @@ describe("W17 · gợi ý theo nguyên nhân từ chối", () => {
 /* W18 §16.4 — chặng `construction_binding` (phép dựng điểm ↔ quan hệ của đề). CHƯA ĐỐI CHIẾU được
    (nguyên nhân UNKNOWN) là giới hạn của hệ: loại vấn đề không được nói "dữ kiện không truy được về đề
    bài" — câu ấy quy lỗi cho đề. Phân nhánh bằng `stage_reached` (trường có cấu trúc), không dò chữ. */
-describe("W18 · đối chiếu phép dựng điểm với đề", () => {
+describe("đối chiếu phép dựng điểm với đề", () => {
   const the = (refusal_cause: Envelope["refusal_cause"]) => html({
     reason: "…", learner_reason: "…", failure_category: "geometry_generation_failed",
     error_code: "input_not_grounded", stage_reached: "construction_binding", refusal_cause,
@@ -246,7 +246,7 @@ describe("W18 · đối chiếu phép dựng điểm với đề", () => {
    ĐỘ: toạ độ có thể đúng, hệ chỉ CHƯA KIỂM CHỨNG được, nên nhãn không được nói "hệ dựng lệch với đề bài"
    (câu ấy chỉ dành cho ca lệch đã chứng minh). Phân nhánh bằng `reason_code` (trường có cấu trúc), không
    dò chữ, và mã máy không bao giờ lên màn hình. */
-describe("W20 §17 · điểm đặt bằng toạ độ thay vì dựng từ quan hệ", () => {
+describe("điểm đặt bằng toạ độ thay vì dựng từ quan hệ", () => {
   const the = (reason_code: string, refusal_cause: Envelope["refusal_cause"]) => html({
     reason: "…", learner_reason: "…", failure_category: "geometry_generation_failed",
     error_code: "input_not_grounded", stage_reached: "construction_binding", refusal_cause, reason_code,

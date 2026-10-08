@@ -54,7 +54,7 @@ function ruleBody(selector: string): string {
   return css.slice(i, css.indexOf("}", i));
 }
 
-describe("W4B-3E · lệnh đẩy thuộc về VÙNG, không thuộc về thành viên", () => {
+describe("lệnh đẩy thuộc về VÙNG, không thuộc về thành viên", () => {
   it("`.speed-control` KHÔNG được tự đẩy — nó là thành viên, không phải bố cục", () => {
     /* Đây là nguyên nhân gốc của khoảng hở 633px. Đặt lại `margin-left:auto`
        vào đây là tái tạo đúng lỗi cũ. */
@@ -109,7 +109,7 @@ describe("W4B-3E · lệnh đẩy thuộc về VÙNG, không thuộc về thành
   });
 });
 
-describe("W4B-3E · không có văn xuôi dài thường trực trong dải điều khiển", () => {
+describe("không có văn xuôi dài thường trực trong dải điều khiển", () => {
   it("gợi ý phím tắt không còn là một phần tử hiển thị trong hàng", () => {
     expect(tsx, "chuỗi phím tắt quay lại thành nội dung hiển thị")
       .not.toMatch(/>\s*←\s*→/);

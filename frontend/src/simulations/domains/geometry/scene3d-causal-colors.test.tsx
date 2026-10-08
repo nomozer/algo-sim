@@ -62,7 +62,7 @@ const mauNen = (vai: Parameters<typeof buildObject3D>[1]) => {
   return hsl(m.color);
 };
 
-describe("W12 · khung 3D: mỗi màu một nghĩa", () => {
+describe("khung 3D: mỗi màu một nghĩa", () => {
   it("vật ĐANG CHỌN (đích causal) là xanh", () => {
     const c = mauCanh("dich");
     expect(c.h).toBeGreaterThan(200);

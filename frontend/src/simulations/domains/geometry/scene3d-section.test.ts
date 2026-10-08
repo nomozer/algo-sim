@@ -367,8 +367,8 @@ function toTaiBuoc(scene: Scene3D, k: number): THREE.Mesh[] {
   return obj ? vatTo(obj) : [];
 }
 
-describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt và khối", () => {
-  it("các export W15 tồn tại", () => {
+describe("tô thiết diện khép kín đọc tách khỏi mặt cắt và khối", () => {
+  it("các export tô thiết diện khép kín tồn tại", () => {
     expect(typeof W15.THU_TU_VE_THIET_DIEN).toBe("number");
     expect(typeof W15.DO_DUC_TO_THIET_DIEN).toBe("number");
     expect(typeof W15.vatThietDienTaiBuoc).toBe("function");
@@ -463,7 +463,7 @@ describe("W15 — tô thiết diện khép kín đọc tách khỏi mặt cắt 
 // three.js vẽ hết hàng đợi ĐỤC trước hàng đợi TRONG SUỐT; `renderOrder` chỉ xếp TRONG mỗi
 // hàng đợi — nên phép so có nghĩa là so trong hàng đợi trong suốt, nơi cả phần tô lẫn cạnh
 // khối chuẩn (`canonicalEdgeMaterial`, `transparent: true`) cùng nằm.
-describe("W16 — phần tô thiết diện nằm DƯỚI các cạnh khối, TRÊN các mặt", () => {
+describe("phần tô thiết diện nằm DƯỚI các cạnh khối, TRÊN các mặt", () => {
   it("trong hàng đợi trong suốt: mọi mặt < phần tô < mọi nét; cạnh khối chuẩn thuộc hàng đợi ấy", () => {
     const goc = new THREE.Group();
     for (const o of W14_CAT.objects) {

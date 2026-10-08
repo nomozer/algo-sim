@@ -25,7 +25,7 @@ function html(unsupported: {
   );
 }
 
-describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", () => {
+describe("UnsupportedNotice hiển thị thông điệp học sinh", () => {
   it("có learner_reason → hiển thị NÓ, KHÔNG hiển thị reason kỹ thuật", () => {
     const out = html({
       reason:
@@ -43,7 +43,7 @@ describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", 
     expect(out).toContain("chưa có mô phỏng phù hợp");
   });
 
-  it("(M17-VR1) thiếu dữ kiện → tiêu đề 'CHƯA ĐỦ DỮ KIỆN', KHÔNG nói ngoài danh mục", () => {
+  it("thiếu dữ kiện → tiêu đề 'CHƯA ĐỦ DỮ KIỆN', KHÔNG nói ngoài danh mục", () => {
     const out = html({
       reason: "kỹ thuật",
       learner_reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể.",
@@ -54,12 +54,12 @@ describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", 
     expect(out).toContain("dạng bài này hệ có mô phỏng");
   });
 
-  it("(M17-VR1) gap thật vẫn giữ tiêu đề ngoài danh mục", () => {
+  it("gap thật vẫn giữ tiêu đề ngoài danh mục", () => {
     const out = html({ reason: "x", learner_reason: "y", failure_category: "capability_gap" });
     expect(out).toContain("NGOÀI DANH MỤC MÔ PHỎNG");
   });
 
-  it("(M20 W3) đề môn khác → 'THUỘC MÔN HỌC KHÁC', KHÔNG hứa mở rộng danh mục", () => {
+  it("đề môn khác → 'THUỘC MÔN HỌC KHÁC', KHÔNG hứa mở rộng danh mục", () => {
     const out = html({
       reason: "kỹ thuật",
       learner_reason: "Bài này thuộc môn học khác.",
@@ -71,7 +71,7 @@ describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", 
     expect(out).not.toContain("mở rộng dần");
   });
 
-  it("(M20 W3) chủ đề có trong chương trình nhưng không có cơ chế → tiêu đề riêng", () => {
+  it("chủ đề có trong chương trình nhưng không có cơ chế → tiêu đề riêng", () => {
     const out = html({
       reason: "kỹ thuật",
       learner_reason: "Nội dung này đọc hiểu là đủ.",
