@@ -1,0 +1,54 @@
+{
+  "run_id": "mobile-canvas-fit",
+  "task_slug": "mobile-canvas-fit",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-08",
+  "machine": "local Windows",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "38a19c6546dec34c048295fb5f7bd3329dabd463",
+  "commits": {
+    "product": "c9bcdcdb5c73e43005dd91d54c5e55c7ac7eaa64",
+    "candidate_refreeze": "002185a8",
+    "harness_layout_rule_and_oracle_pins": "b8615356",
+    "plan_review_set_baseline": "2d169347",
+    "baseline_note_correction": "90921f53",
+    "harness_t8_refusal_expectation": "a51c788b",
+    "evidence": "3f874fed"
+  },
+  "product_commit": "c9bcdcdb5c73e43005dd91d54c5e55c7ac7eaa64",
+  "candidate": {
+    "tree_hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+    "files": 102,
+    "changed": "product_commit_sha only (f967ba24 -> c9bcdcdb); the fix is in frontend/src/simulations/domains/geometry, outside MEASURED_SYSTEM_PATHS",
+    "freeze_log": "diagnostics/freeze_c9bcdcdb.log"
+  },
+  "cache_version": "118 (unchanged: no envelope changes)",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged (prompts, grammar card, schema, capability)",
+  "live_model_requests": 0,
+  "measurement": {
+    "commit": "90921f534ce7cd4f201acf249fd95997d8b6a410",
+    "worktree": "D:/tmp/mobile fit (clean, detached, CRLF, path with a space); frontend/node_modules is a directory junction to the main checkout's install (gitignored, no network)",
+    "script": "diagnostics/measure.sh",
+    "logs": "diagnostics/logs_90921f53/",
+    "families": 8,
+    "results": {
+      "mobile_layout": "39/40 (baseline 18/40); one pre-existing FIGURE_LEFT_CANVAS_AFTER_ORBIT (triangular_prism/low), identical in the baseline",
+      "suite": "7/8 at 90921f53 (stale suite expectation for the T8 missing-height refusal); RTP step rerun at a51c788b: PASS (results/rerun/, diagnostics/logs_a51c788b/)",
+      "scene_controls_w02": "16/16",
+      "panels_w04": "24/24",
+      "focus_mode_w05": "24/24",
+      "occlusion": "PASS, 0 failures, 4 W14 scenes human_review_pending",
+      "playback": "PASS 16/16",
+      "evidence_builder": "72 crops, 0 oracle disagreements, 0 duplicate owners"
+    },
+    "images": "164 + 4 (rerun), capture policy toi-thieu, review set inputs/REVIEW_SET.json chosen before the run",
+    "baseline": "diagnostics/baseline_38a19c65/ (scratch build of 38a19c65 outside the repo; diagnostic witness)"
+  },
+  "user_decisions_this_run": [
+    "user asked to reproduce D5, choose among the recorded options and implement (option b, narrowed to the narrow layout)"
+  ],
+  "human_visual_review": "NOT_APPROVED",
+  "skills": "none invoked for the product change",
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

@@ -13,10 +13,16 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `mobile-canvas-fit` (2026-10-08, run [`mobile-canvas-fit`](evaluation/geometry/runs/mobile-canvas-fit/), máy local):**
+  MOBILE_CANVAS_FIT — D5 khép theo phương án (b) thu hẹp: khổ hẹp ≤ 48rem canvas cao vừa hình (≤ phần khả dụng, ≥ 320 px,
+  hình ràng theo chiều cao giữ nguyên; desktop không đổi); bảng bước giữ bước đang xem; tám họ đo lại trên candidate cuối
+  `7f3f0423…` (product `c9bcdcdb`), `CACHE_VERSION` 118. Việc duy nhất: người dùng duyệt `review.md` của run này cùng các gói
+  dưới; duyệt thì merge, push, xoá nhánh ở lượt riêng có lệnh.
+
 - **Việc `docs-cleanup` (2026-10-08, run [`docs-cleanup`](evaluation/geometry/runs/docs-cleanup/), máy local):**
   DOCUMENTATION_AND_NAMING_CLEANUP — tên test theo hành vi, `docs/legacy/` + kế hoạch Superpowers đọc và xử lý (42 → 15 file),
-  12 lớp CSS chết; candidate băm `b4a33205…` (product `8c66249d`), `CACHE_VERSION` 117. Việc duy nhất không đổi: người
-  dùng duyệt hình và chọn D5.
+  12 lớp CSS chết; danh tính cuối của run: candidate `7f3f0423…` (product `f967ba24`, sau lát cắt lý do từ chối T8),
+  `CACHE_VERSION` 118 (ghi `b4a33205…`/117 ở đây trước đó là trạng thái giữa run — đính chính ở run `mobile-canvas-fit`).
 - **Việc `repo-cleanup` (2026-10-08, run [`repo-cleanup`](evaluation/geometry/runs/repo-cleanup/), máy local):** REPO_CLEANUP —
   gỡ 132 file Tin học hết vai trò (bộ đánh giá, `/api/explain`, fixture thuật toán, engine/view, runner trình duyệt), 325
   selector CSS chết, đổi tên 29 file theo chức năng; prompt và từ vựng IR Tin học giữ có lý do (bề mặt mô hình có băm);

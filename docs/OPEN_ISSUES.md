@@ -763,9 +763,29 @@
 - **evidence:** `runs/regular-triangular-pyramid-w01` diagnostic browser run (label boxes per family, mobile): fill_w 0.68 for seven families, the rectangular pyramid is height-bound (figure aspect 1.77 > canvas 1.45, fill_h 0.68).
 - **impact:** usability on phones; no wrong value.
 - **scope / options (decision needed):** (a) canvas height tied to width (e.g. 1.25×) removes the blank band but shrinks the height-bound rectangular pyramid by ~14 % — excluded by the brief ("không áp trần … làm hình nhỏ") and by the W5 answer to W4 R4 ("không trần"); (b) a per-scene height from the figure's projected aspect (no shrink, more code, camera-coupled); (c) overlay the two floating buttons on the canvas again (+~50 px for panels) — reverses the w10 fix that moved them out of the apex's way; (d) a one-row tool bar on mobile (+~55 px) — touches W5 review item R3 (2 × 2 grid). Nothing applied in regular-triangular-pyramid-w01.
-- **status:** OPEN (regular-triangular-pyramid-w01) — reproduced, waiting for the user's choice.
+- **status:** RESOLVED (run `mobile-canvas-fit`, product `c9bcdcdb`) — waiting for the user's visual review (`runs/mobile-canvas-fit/review.md` E-R1–E-R6). The user asked to choose and implement; option (b) kept, narrowed: on the narrow layout only (≤ 48rem, where panels flow below) the canvas is width × projected figure aspect (same points, display rotation and view direction as the camera fit — `scene3d-view.tiLeKhungHinh`), capped by the available height, floored at 320 px (`scene3d-playback.caoKhungVuaHinh`). Height-bound figures keep the full height (no cap, no shrink); desktop/low screens unchanged; the aspect depends on the scene only, so steps, selection and panels never move the canvas or camera. Measured (`results/MOBILE_LAYOUT_PROBE.json`, 8 families × 5 viewports): portrait canvas 519 → 320–485 px for the seven width-bound families (rectangular pyramid, height-bound, stays 519), figure 0.59–0.73 of the canvas height (before: 0.48–0.60). Found on the way and fixed in the same commit: the current step of a long steps panel left the panel's view while stepping (19/40 runs, desktop too). Residuals: `ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD`, `ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN`.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** — (resolved; human review pending)
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD
+- **description:** A phone held in landscape (844×390) is wider than 48rem, so it gets the desktop layout: floating panels, canvas at the 320 px floor (`CAO_KHUNG_MIN`) because less than that is available, and the play bar (Bước trước · Phát · Bước sau · «Bước n/N») sits below the fold — the learner scrolls ~40 px to reach it, and the top row scrolls away when they do.
+- **evidence:** `runs/mobile-canvas-fit/results/MOBILE_LAYOUT_PROBE.json` (`landscape` runs: canvas 320 px at y = 60, controls at y ≈ 392 in a 390 px viewport); unchanged before the D5 change (`diagnostics/baseline_38a19c65/`).
+- **impact:** usability in landscape on phones; no wrong value.
+- **scope / options (decision needed):** lower the floor only for short landscape viewports (the figure there is height-bound, so this shrinks it — the user's rule against shrinking applies), or keep the floor and pin the play bar to the viewport bottom in that layout (overlaps the canvas bottom band).
+- **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched; waiting for the user's choice.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user picks an option
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN
+- **description:** On the low screen (1366×650, canvas 435 px) a 120 × 40 px drag on the triangular prism moves point labels past the canvas edge. The default view fills 68 % of the binding dimension, and an orbit can enlarge the projection beyond the remaining margin (known since w11: the playback evidence zooms out before its rotated images).
+- **evidence:** `runs/mobile-canvas-fit/results/MOBILE_LAYOUT_PROBE.json` row `triangular_prism/low` `FIGURE_LEFT_CANVAS_AFTER_ORBIT`; identical before the change (`diagnostics/baseline_38a19c65/`); the other 39 family × viewport runs keep the labels inside after the same drag.
+- **impact:** the learner may need «Xem lại toàn hình» or a zoom after rotating; no wrong value.
+- **scope / options (decision needed):** accept (the reset button exists), or fit by the bounding sphere instead of the default projection (smaller figure on every screen).
+- **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY

@@ -1164,3 +1164,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** none (maintenance)
 - **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `run-artifact-cleanup.json` · `run-report-organization.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = MOBILE_CANVAS_FIT
+- **RUN_ID:** mobile-canvas-fit (task mobile-canvas-fit; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-08
+- **START_BASE:** 38a19c65
+- **CODE_COMMIT_OR_NONE:** product `c9bcdcdb` · candidate refreeze `002185a8` · harness `b8615356`, `a51c788b` · evidence `3f874fed`
+- **CANDIDATE:** `7f3f042309dd1c54…` (102 file; tree unchanged, product `c9bcdcdb`) · CACHE_VERSION 118 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** browser measurement at `90921f53` (+ suite rerun of one family at `a51c788b`), 0 model requests, 168 images (policy toi-thieu)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (D5 implemented; visual review remains NOT_APPROVED)
+- **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/mobile-canvas-fit/handoff.md` §2
+- **PRODUCT_CHANGED:** YES — narrow layout canvas height fits the figure; long steps panel keeps the current step in view
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/mobile-canvas-fit/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/mobile-canvas-fit/
+- **PASS:** D5 probe 39/40 (baseline 18/40), W02 16/16, W04 24/24, W05 24/24, occlusion PASS, playback 16/16, suite 8/8 after the one-step rerun
+- **CLOSED:** ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL (RESOLVED, human review pending)
+- **OPENED:** ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD · ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN (both pre-existing, measured)
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** stale suite manifest pins/expectation; AI_CONTEXT_BUNDLE §1 cache line; ROADMAP §0 docs-cleanup identity
+- **NEXT_ACTION_AT_TIME:** human visual review (`runs/mobile-canvas-fit/review.md` with the earlier packages), then merge on explicit approval
+- **FINAL_DECISION:** READY_FOR_HUMAN_VISUAL_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** learner-facing simulation on phones
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `inputs/REVIEW_SET.json` · `results/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

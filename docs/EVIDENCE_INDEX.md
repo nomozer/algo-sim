@@ -1177,3 +1177,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** none
 - **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json` · `run-artifact-cleanup.json` · `run-report-organization.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = MOBILE_CANVAS_FIT
+- **RUN_ID:** mobile-canvas-fit (task mobile-canvas-fit; same branch)
+- **DATE:** 2026-10-08
+- **REPORT:** docs/evaluation/geometry/runs/mobile-canvas-fit/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/mobile-canvas-fit/
+- **START_BASE:** 38a19c65
+- **CODE_COMMIT:** c9bcdcdb (product) · harness b8615356 · a51c788b (candidate refreeze 002185a8; plan/review set/baseline 2d169347, 90921f53)
+- **MEASUREMENT_COMMIT:** 90921f53 (local, clean detached CRLF worktree with a space in its path; D5 probe, suite, W02, W04, W05, occlusion, playback, builder; eight families); suite step for regular_triangular_pyramid rerun alone at a51c788b (stale suite expectation); baseline probe on a scratch build of 38a19c65 (`diagnostics/baseline_38a19c65/`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit 3f874fed after the measurement (results, images, fixtures, logs)
+- **CLASSIFICATION:** READY_FOR_HUMAN_VISUAL_REVIEW (T3 + identity gates at the run's final documentation commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** YES (frontend only: narrow-layout canvas height, steps panel scroll)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** product_commit_sha only (f967ba24 -> c9bcdcdb); measured-system tree 7f3f0423... unchanged
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118; no envelope changes)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** suite manifest `frontend/scripts/generic-tier-a-scenarios.json` (two oracle_source pins stale since 23aff0ad/f967ba24; T8 missing-height refusal expectation stale since f967ba24); living docs `AI_CONTEXT_BUNDLE.md` §1 (CACHE_VERSION 117) and `ROADMAP.md` §0 (docs-cleanup identity) — earlier run files untouched
+- **SUPERSEDES:** NONE (earlier review packages stay; images of A-R8, B-R5, C-R1-R3, C-R9 now also exist on the final candidate)
+- **THESIS_USE:** learner-facing simulation on phones (D5); human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `inputs/REVIEW_SET.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/rerun/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

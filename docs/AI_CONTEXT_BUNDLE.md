@@ -11,8 +11,9 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 117` (run exact-dimensions: bộ đọc độ dài không còn lấy vế đầu của biểu thức — "cạnh đáy bằng 4 + 1"
-  từng phục vụ V = 16, nay từ chối; 43/43 fixture cũ trùng byte — `runs/exact-dimensions/cache/decision.json`); provider-facing fingerprint `b1714b566e25c912…` không đổi.
+- `CACHE_VERSION = 118` (run docs-cleanup: envelope từ chối T8 thiếu kích thước đổi nguyên nhân `UNKNOWN` → `SOURCE`;
+  117 ở exact-dimensions — bộ đọc độ dài không lấy vế đầu của biểu thức); provider-facing fingerprint `b1714b566e25c912…`
+  không đổi. Run mobile-canvas-fit không bump (chỉ frontend).
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
 - Không hardcode case/label/answer vào product; mâu thuẫn phải fail-closed.
 
@@ -20,15 +21,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = DOCUMENTATION_AND_NAMING_CLEANUP (hồ sơ chung docs-cleanup; máy local; cùng nhánh)
-PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit f967ba24; clean refreeze), CACHE_VERSION 118, LLM_ONLY; clean full-gate base 838237fe (7239 backend, 1023 frontend)
-MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
+CURRENT_WAVE = MOBILE_CANVAS_FIT (run mobile-canvas-fit: D5 — canvas vừa hình ở khổ hẹp + bước đang xem trong bảng; máy local; cùng nhánh)
+PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit c9bcdcdb — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 002185a8), CACHE_VERSION 118, LLM_ONLY
+MEASUREMENT = 90921f53 (8 họ: D5 39/40, W02 16/16, W04 24/24, W05 24/24, occlusion pass, phát lại 16/16; suite 7/8 + chạy lại bước đỏ ở a51c788b PASS); bằng chứng 3f874fed (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run docs-cleanup — runs/docs-cleanup/handoff.md §2)
-HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run mobile-canvas-fit — runs/mobile-canvas-fit/handoff.md §2)
+HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng duyệt hình theo runs/exact-dimensions/review.md và runs/regular-triangular-pyramid-w01/REVIEW.md cùng gói W5/W4, chọn phương án D5; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng duyệt hình theo runs/mobile-canvas-fit/review.md (D5 đã triển khai) cùng các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -93,6 +94,10 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   màn hình tuỳ chọn; thẻ lời giải `scene3d-solution.tsx` đã gỡ (đại lượng ở «Đại lượng», công thức ở ô soi, chú giải trong
   «Hiển thị»); bộ đọc độ dài nguồn đọc chuỗi bằng nhau (`segment_relation.cac_doan_truoc`). Đo `f01df0e5`: suite 7/7,
   W2 14/14, W4 21/21, W05 21/21, occlusion 0 lỗi, phát lại 14/14.
+- Điện thoại (mobile-canvas-fit, D5): khổ hẹp ≤ 48rem canvas cao vừa hình (`scene3d-playback.caoKhungVuaHinh`, tỉ lệ
+  `scene3d-view.tiLeKhungHinh` cùng điểm/phép xoay/hướng với phép vừa khung; ≤ phần khả dụng, ≥ 320 px; hình ràng theo
+  chiều cao giữ nguyên); bảng bước giữ bước đang xem trong thân bảng. 390×844: canvas 519 → 320–485 px, bảng mở thấy
+  cùng hình. Đầu dò `frontend/scripts/check-mobile-layout.mjs`.
 - Bảy họ đo trong trình duyệt: `triangular_pyramid`, `rectangular_pyramid`, `triangular_prism`,
   `cuboid`, `cube`, `cross_section`, `regular_square_pyramid`.
 - Đo mới nhất (regular-square-pyramid-w01, `ed37f9fa`): bảy họ 14/14 dương, 54/54 âm, 6/6 phục vụ, chọn đại lượng
@@ -114,6 +119,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
+- **mobile-canvas-fit chờ người dùng:** duyệt `review.md` E-R1–E-R6 của run (D5 RESOLVED, chờ duyệt). Mở mới (có từ trước, chờ
+  quyết): `ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD`, `ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN`. Sửa ở bộ đo: băm
+  oracle_source lệch (node 96/97 tại 38a19c65) và kỳ vọng cũ của suite cho ca T8 thiếu chiều cao.
 - **Đã tích hợp:** người dùng ACCEPTED A–F của `REVIEW.md` (run `cuboid-merge`, `APPROVAL.md`); `main` fast-forward
   tới `c282a5f3` và push. Giới hạn F1–F5 được **hoãn, vẫn mở** (`ISSUE-ARCH-CONSTRUCTION-BINDING-VOCABULARY`, vùng đa
   diện của #37, `ISSUE-ARCH-CONSTRUCTION-RELATION-BEYOND-SECTION-CUT`, `ROADMAP.md` §0.4,
@@ -130,9 +138,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   `ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` khép; inventory + lý do giữ: `runs/repo-cleanup/report.md`.
 - **exact-dimensions chờ người dùng:** duyệt `review.md` R1–R10 của run. Khép: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES`
   (khung affine + metric Gram; kích thước chữ, tổng căn vẫn từ chối). Mở mới: `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART`.
-  `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED` vẫn mở (mọi khung nay phục vụ; mô hình chưa đo). D5 vẫn mở.
-- **regular-triangular-pyramid-w01 chờ người dùng:** duyệt hình `REVIEW.md` R1–R12 của run; chọn phương án D5
-  (`ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL`). Mở mới: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES` (miền ℚ³),
+  `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED` vẫn mở (mọi khung nay phục vụ; mô hình chưa đo). D5 đã triển khai ở run mobile-canvas-fit (chờ duyệt).
+- **regular-triangular-pyramid-w01 chờ người dùng:** duyệt hình `REVIEW.md` R1–R12 của run; D5
+  (`ISSUE-ARCH-MOBILE-CANVAS-WHITESPACE-AND-PANEL-SCROLL`) đã triển khai ở run mobile-canvas-fit. Mở mới: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES` (miền ℚ³),
   `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED`, `ISSUE-ARCH-TETRAHEDRON-OUTSIDE-POLYHEDRAL-REGION`. Khung nhìn ban đầu
   đã sửa cho mọi họ (hình nay ở giữa) — ảnh trung tính khác W5 (dịch ngang).
 - **W5 (IMMERSIVE_SIMULATION_AND_ARCHITECTURE_SLICE) chờ người dùng:** duyệt hình theo `REVIEW.md` của run
@@ -163,7 +171,8 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-Việc `docs-cleanup` (máy local, cùng nhánh) khép đổi tên test, xử lý `docs/legacy/` + kế hoạch Superpowers và CSS chết, không
+Việc `mobile-canvas-fit` (máy local, cùng nhánh) khép D5 theo phương án (b) thu hẹp ở khổ hẹp và đo lại tám họ trên candidate
+cuối; việc kế tiếp: người dùng duyệt `review.md` của run này cùng các gói dưới. Việc `docs-cleanup` (máy local, cùng nhánh) khép đổi tên test, xử lý `docs/legacy/` + kế hoạch Superpowers và CSS chết, không
 đổi hành vi; việc kế tiếp không đổi. Việc `repo-cleanup` (máy local, cùng nhánh) gỡ phần Tin học hết vai trò và chuẩn hoá tên, không đổi hành vi; việc kế tiếp
 không đổi. Việc `exact-dimensions` (máy local, cùng nhánh) phục vụ chóp tam giác đều/tứ diện đều với kích thước hữu tỉ bằng khung
 affine + metric Gram suy từ đề, chụp ảnh quyết tại nguồn (109 → 15 ảnh cùng ca) và chuẩn hoá tên; việc kế tiếp: người dùng
@@ -186,6 +195,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `mobile-canvas-fit` (MOBILE_CANVAS_FIT): `docs/evaluation/geometry/runs/mobile-canvas-fit/` (`review.md`, `report.md`,
+  `handoff.md`, `run.json`, `plan.md`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
 - Run `docs-cleanup` (DOCUMENTATION_AND_NAMING_CLEANUP): `docs/evaluation/geometry/runs/docs-cleanup/` (`report.md`,
   `handoff.md`, `run.json`, `inventory.md`, `diagnostics/`).
 - Run `repo-cleanup` (REPO_CLEANUP): `docs/evaluation/geometry/runs/repo-cleanup/` (`report.md`, `handoff.md`, `run.json`,
