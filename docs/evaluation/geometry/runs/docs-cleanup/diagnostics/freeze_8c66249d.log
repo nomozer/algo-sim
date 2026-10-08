@@ -1,0 +1,16 @@
+status before: 0
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            8c66249d  (cây sạch: True)
+  CACHE_VERSION     117
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       102 file · b4a33205a3d0e6d2
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, b4a33205a3d0e6d2…).
+verify exit=0
+Khoá khớp · CACHE_VERSION 117 · môi trường b1714b566e25c912…
+cache exit=0
+status after:  M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
