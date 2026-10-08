@@ -13,6 +13,11 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `repo-cleanup` (2026-10-08, run [`repo-cleanup`](evaluation/geometry/runs/repo-cleanup/), máy local):** REPO_CLEANUP —
+  gỡ 132 file Tin học hết vai trò (bộ đánh giá, `/api/explain`, fixture thuật toán, engine/view, runner trình duyệt), 325
+  selector CSS chết, đổi tên 29 file theo chức năng; prompt và từ vựng IR Tin học giữ có lý do (bề mặt mô hình có băm);
+  candidate `b4a33205…`, `CACHE_VERSION` 117. Việc duy nhất không đổi: người dùng duyệt hình và chọn D5.
+
 - **Việc `exact-dimensions` (2026-10-07/08, run
   [`exact-dimensions`](evaluation/geometry/runs/exact-dimensions/), máy local, cùng nhánh):**
   EXACT_DIMENSIONS_AND_CAPTURE_POLICY — chóp tam giác đều/tứ diện đều với kích thước hữu tỉ (phân số, thập phân, cạnh

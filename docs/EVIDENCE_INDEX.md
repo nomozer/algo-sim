@@ -1135,3 +1135,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** rational sizes via an affine chart + Gram metric derived from the text; source-side capture policy; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/BROWSER_EVIDENCE.json` · `results/PLAYBACK_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/attempt1–3/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = REPO_CLEANUP
+- **RUN_ID:** repo-cleanup (task repo-cleanup; same branch)
+- **DATE:** 2026-10-08
+- **REPORT:** docs/evaluation/geometry/runs/repo-cleanup/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/repo-cleanup/
+- **START_BASE:** 2c2dfbbf
+- **CODE_COMMIT:** 88769dc5 · 8ff42b58 · 67e11671 · 11bea4a7 · be4b8287
+- **MEASUREMENT_COMMIT:** NONE (no browser or live measurement; candidate refreeze 372f78c2)
+- **EVIDENCE_COMMIT_ROLE:** inventory and relocated snapshot in the run directory
+- **CLASSIFICATION:** CLEANUP_COMPLETE (gate at the final docs commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** YES (dead code, unused /api/explain)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** YES (e1927f84… → b4a33205…; product commit be4b8287)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 117; cache identity lock unchanged)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** exact-dimensions `inputs/candidate_divergence.json` (current candidate) by `runs/repo-cleanup/inputs/candidate_divergence.json`
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/freeze_be4b8287.log`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

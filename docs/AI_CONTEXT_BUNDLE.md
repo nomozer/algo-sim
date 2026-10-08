@@ -20,11 +20,11 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = EXACT_DIMENSIONS_AND_CAPTURE_POLICY (việc exact-dimensions; run exact-dimensions; máy local; cùng nhánh)
-PRODUCT_STATE = candidate e1927f84… (product commit ed3ae208; đóng băng một lần), CACHE_VERSION 117, LLM_ONLY
+CURRENT_WAVE = REPO_CLEANUP (việc repo-cleanup; run repo-cleanup; máy local; cùng nhánh) — trước đó EXACT_DIMENSIONS_AND_CAPTURE_POLICY
+PRODUCT_STATE = candidate b4a33205… (product commit be4b8287; đóng băng một lần ở 372f78c2), CACHE_VERSION 117, LLM_ONLY
 MEASUREMENT = 3bbb8052 (probe) / fe83c46e (suite, occlusion) / d51db4e2 (phát lại); bằng chứng c5cae8af (local, worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (exact-dimensions; T3 + cổng danh tính ở commit tài liệu cuối — runs/exact-dimensions/handoff.md §2)
+FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (T3 + cổng danh tính ở commit tài liệu cuối của run repo-cleanup — runs/repo-cleanup/handoff.md §2)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
@@ -107,8 +107,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
   `legacy/CODE_INDEX_REMOVED_ENTRIES.md`; wave đánh số theo từng việc (`docs/evaluation/RUN_NAMING.md`).
 - Bất biến (run `cuboid-acceptance`): 24 hàng §5 của ARCHITECTURE_MAP có con trỏ chết đã đối chiếu tới assertion —
   9 đang khoá, 1 chưa đủ bằng chứng (#14), 14 **LỊCH SỬ**, 0 vi phạm; cột con trỏ chỉ còn file sống
-  (`results/INVARIANT_RECONCILIATION.json` của run). Mã thời Tin học còn ngủ trong shell (Khám phá, `specDrift`,
-  chính sách `threeD`, `editViaServer`, `AIHelpPanel` + `/api/explain`, `AttemptObserver`) — bằng chứng cho H-W20-4.
+  (`results/INVARIANT_RECONCILIATION.json` của run). Run `repo-cleanup` gỡ `editViaServer`, `AIHelpPanel` + `/api/explain`,
+  `AttemptObserver` và mọi mã chết Tin học khác; còn lại có lý do: `specDrift`, chính sách `threeD`, `SamplePreview`, prompt
+  và từ vựng IR (`ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE`, `ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY`).
 - Tuyên bố được phép: `docs/research/CLAIM_EVIDENCE_MAP.md` — 0 hàng `HUMAN_REVIEWED`; năm ranh giới ở §0.
 
 ## 5. Còn mở — không được che
@@ -120,8 +121,10 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 - **Đã quyết (người dùng, brief `cuboid-acceptance`):** H-CFR-2 giữ chữ thường và "toạ độ"; H-CFR-1 = backlog giao
   diện, không sửa sản phẩm lúc này; H-CFR-3 `THESIS_DRAFT` §1.8 là bản chính đề xuất, chưa xoá `RELATED_WORK_DRAFT`
   khi chưa đối chiếu nội dung riêng; 204 mục `D:/tmp` + 108 mục `.superpowers` giữ nguyên, không chặn merge.
-- **Câu hỏi còn mở từ w20:** H-W20-4 (tàn dư Tin học trong mã — run `cuboid-acceptance` liệt kê thêm phần ở
-  shell). H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
+- **Câu hỏi còn mở từ w20:** H-W20-4 (tàn dư Tin học trong mã) — xử lý ở run `repo-cleanup`; phần còn lại có lý do ở hai
+  issue `ISSUE-ARCH-*-INFORMATICS-*`. H-W20-1/H-W20-2 đã sửa, chờ xem ảnh.
+- **repo-cleanup (2026-10-08):** gỡ 132 file Tin học hết vai trò, 325 selector CSS chết, đổi tên 29 file theo chức năng;
+  `ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` khép; inventory + lý do giữ: `runs/repo-cleanup/report.md`.
 - **exact-dimensions chờ người dùng:** duyệt `review.md` R1–R10 của run. Khép: `ISSUE-ARCH-REGULAR-TRIANGULAR-RATIONAL-EDGES`
   (khung affine + metric Gram; kích thước chữ, tổng căn vẫn từ chối). Mở mới: `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART`.
   `ISSUE-ARCH-REGULAR-TRIANGULAR-MODEL-LAYOUT-UNMEASURED` vẫn mở (mọi khung nay phục vụ; mô hình chưa đo). D5 vẫn mở.
@@ -157,7 +160,8 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
-Việc `exact-dimensions` (máy local, cùng nhánh) phục vụ chóp tam giác đều/tứ diện đều với kích thước hữu tỉ bằng khung
+Việc `repo-cleanup` (máy local, cùng nhánh) gỡ phần Tin học hết vai trò và chuẩn hoá tên, không đổi hành vi; việc kế tiếp
+không đổi. Việc `exact-dimensions` (máy local, cùng nhánh) phục vụ chóp tam giác đều/tứ diện đều với kích thước hữu tỉ bằng khung
 affine + metric Gram suy từ đề, chụp ảnh quyết tại nguồn (109 → 15 ảnh cùng ca) và chuẩn hoá tên; việc kế tiếp: người dùng
 duyệt `review.md` của run `exact-dimensions` cùng các gói dưới. Việc `regular-triangular-pyramid` W1 (máy local, cùng nhánh) đã thêm chóp tam giác đều + tứ diện đều trong miền ℚ³ trên route
 sản phẩm, sửa D1–D4, xoay hiển thị đáy nghiêng và khung nhìn ban đầu; việc kế tiếp: người dùng duyệt `REVIEW.md` của run
@@ -178,6 +182,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
+- Run `repo-cleanup` (REPO_CLEANUP): `docs/evaluation/geometry/runs/repo-cleanup/` (`report.md`, `handoff.md`, `run.json`,
+  `inventory.json`, `code_index_removed_entries.md`, `relocated/`, `inputs/candidate_divergence.json`, `diagnostics/`).
 - Run `exact-dimensions` (EXACT_DIMENSIONS_AND_CAPTURE_POLICY): `docs/evaluation/geometry/runs/exact-dimensions/`
   (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `labels.json`, `capture_counts.json`, `results/`, `images/`,
   `diagnostics/attempt1–3/`).

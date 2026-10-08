@@ -1,13 +1,13 @@
 {
  "schema": "repo-cleanup/inventory/1",
  "base": "2c2dfbbf",
- "head": "11bea4a7e5d93df57609ab9731bc58fcc60d430a",
+ "head": "372f78c24a91d87679b31018e1d5a2edbb981b28",
  "counts": {
   "delete": 132,
   "rename": 29,
   "relocate": 1,
-  "edit": 38,
-  "add": 1
+  "edit": 49,
+  "add": 5
  },
  "areas": {
   "reviewed": [
@@ -40,6 +40,10 @@
  "items": [
   {
    "path": ".claude/hooks/code-index-guard.mjs",
+   "action": "edit"
+  },
+  {
+   "path": "AGENTS.md",
    "action": "edit"
   },
   {
@@ -715,6 +719,10 @@
    "similarity": "100"
   },
   {
+   "path": "backend/tests/geometry/test_thesis_acceptance_matrix.py",
+   "action": "edit"
+  },
+  {
    "path": "backend/tests/geometry/test_thesis_runner_alignment.py",
    "action": "edit"
   },
@@ -811,10 +819,62 @@
    "action": "edit"
   },
   {
+   "path": "docs/ARCHITECTURE_MAP.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/CODE_INDEX.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/CORRECTNESS.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/OPEN_ISSUES.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/TEST_TIERS.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/evaluation/RUN_NAMING.md",
+   "action": "edit"
+  },
+  {
+   "path": "docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json",
+   "action": "edit"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/repo-cleanup/code_index_removed_entries.md",
+   "action": "add"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/repo-cleanup/diagnostics/freeze_be4b8287.log",
+   "action": "add"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/repo-cleanup/inputs/candidate_divergence.json",
+   "action": "add"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/repo-cleanup/inventory.json",
+   "action": "add"
+  },
+  {
    "path": "frontend/src/simulations/capability-descriptors.json",
    "new_path": "docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json",
    "action": "relocate",
    "similarity": "100"
+  },
+  {
+   "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+   "action": "edit"
+  },
+  {
+   "path": "docs/research/thesis/THESIS_DRAFT.md",
+   "action": "edit"
   },
   {
    "path": "frontend/package.json",

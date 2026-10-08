@@ -1097,3 +1097,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** exact metric from the text on an affine chart (rational sizes for the regular triangular pyramid / tetrahedron) without changing the IR or the model surface; source-side screenshot policy; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/decision.json` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/`
 - **RUN_ID_POLICY:** TASK_NAME (`docs/evaluation/RUN_NAMING.md`, naming policy 2026-10-07)
+
+
+### WAVE_ID = REPO_CLEANUP
+- **RUN_ID:** repo-cleanup (task repo-cleanup; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-08
+- **START_BASE:** 2c2dfbbf
+- **CODE_COMMIT_OR_NONE:** 88769dc5 (backend removal) · 8ff42b58 (frontend modules, scripts, dead CSS) · 67e11671 (rename, no logic change) · 11bea4a7 (T0 selector tests on live domains) · be4b8287 (living docs, inventory)
+- **CANDIDATE:** e1927f84… → b4a33205… (one freeze at be4b8287, 372f78c2; 102 files) · CACHE_VERSION 117 (no bump — cache identity lock verifies) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** no measurement; 0 screenshots; inventory `runs/repo-cleanup/inventory.json`
+- **CLASSIFICATION:** CLEANUP_COMPLETE (branch stays READY_FOR_HUMAN_VISUAL_REVIEW)
+- **FULL_PRODUCT_SUITE:** T3 + identity gates on a clean detached checkout of the final docs commit — `handoff.md` §2
+- **PRODUCT_CHANGED:** YES (dead code and an unused route removed; no behaviour change on the geometry route)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/repo-cleanup/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/repo-cleanup/
+- **PASS:** 132 files removed with consumer evidence, 29 renamed, 1 relocated byte-identical; generic invariants moved to geometry cases; CODE_INDEX 0 stale paths; docs audit PASS
+- **CLOSED:** ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE
+- **OPENED:** ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY · ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** exact-dimensions candidate declaration (`inputs/candidate_divergence.json`) by a new layer; exact-dimensions files untouched
+- **NEXT_ACTION_AT_TIME:** unchanged — human visual review and the D5 option
+- **FINAL_DECISION:** CLEANUP_COMPLETE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none (maintenance); the thesis draft's HTTP table follows the code
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

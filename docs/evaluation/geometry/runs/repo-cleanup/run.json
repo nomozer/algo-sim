@@ -1,0 +1,33 @@
+{
+  "run_id": "repo-cleanup",
+  "task_slug": "repo-cleanup",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-08",
+  "machine": "local (Windows); candidate frozen in a clean detached worktree D:/tmp/cleanup freeze (path with a space)",
+  "branch": "feat/regular-square-pyramid (not pushed, not merged)",
+  "start_head": "2c2dfbbf",
+  "commits": {
+    "backend_removal": "88769dc5",
+    "frontend_removal_scripts_css": "8ff42b58",
+    "rename": "67e11671",
+    "t0_selector_tests_migrated": "11bea4a7",
+    "living_docs_inventory": "be4b8287",
+    "candidate_refreeze": "372f78c2"
+  },
+  "product_commit": "be4b8287",
+  "candidate": "b4a33205a3d0e6d2cb1a78510a7c4fb4bf08ab33a0121f2d9dfe4715c63d1276 (was e1927f84…; 102 files, was 111; diagnostics/freeze_be4b8287.log)",
+  "cache_version": "117 — unchanged: prompts, grammar card, IR schema, analyze schema and capability hash unchanged; the cache identity lock verifies; /api/explain is not cached",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged (semantic environment b1714b56…)",
+  "live_model_requests": 0,
+  "screenshots": 0,
+  "inventory": "inventory.json (2c2dfbbf..372f78c2: 132 deleted, 29 renamed, 1 relocated, 49 edited, 5 added; kept-with-reason list; areas reviewed / not reviewed)",
+  "human_visual_review": "NOT_APPROVED (unchanged; not written by the agent)",
+  "skills": {
+    "ponytail": "applied (deletion over addition, smallest change in the right place)",
+    "superpowers": "process only (skill check, verification before claims)",
+    "karpathy": "not invoked",
+    "graphify": "not invoked"
+  },
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}
