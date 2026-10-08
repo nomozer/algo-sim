@@ -32,3 +32,11 @@ approved invariant — so it is presented to the user.
 Pre-registered checks: the probe verdict above (`assessMobileLayout`); `VIEW_BUTTONS_OFFSCREEN` added after the baseline
 (noted as such). Review set: `inputs/REVIEW_SET.json`. Measurement: `diagnostics/measure.sh` at the final candidate, the
 whole Tier-A suite in one run. Gates: T3 + identity gates at the documentation commit.
+
+## Addendum (before the final measurement)
+
+Attempt 1 at `9af3e8a3` (product `d8ad153b`): a 360×640 phone turned to landscape (640×360) left the control column
+under the viewport — fixed in `95a56a17` (one-line top row in short landscape, column gaps 4 px, reserve = two view
+buttons). Three other failures reran green on the identical build and are classified environment/timing
+(`MEASUREMENT_ATTEMPTS.json`). Added to the probe before the final run: 844×340 (phone landscape with the browser bar
+shown) and the rotated control positions. The final, authoritative measurement runs at the commit that records this.

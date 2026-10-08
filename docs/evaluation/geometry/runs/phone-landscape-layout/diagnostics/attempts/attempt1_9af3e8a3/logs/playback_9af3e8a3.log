@@ -1,0 +1,21 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 9af3e8a36c861006ff886bbc8391b45916624bb5; timeout --signal=KILL 2400 node frontend/scripts/scene3d-playback-check.mjs --families triangular_pyramid,rectangular_pyramid,triangular_prism,cuboid,cube,cross_section,regular_square_pyramid,regular_triangular_pyramid --theo-ho --lap-orbit 5 --fixture-root docs/evaluation/geometry/runs/phone-landscape-layout/inputs --ra docs/evaluation/geometry/runs/phone-landscape-layout/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/phone-landscape-layout/inputs/REVIEW_SET.json
+2026-10-08T18:45:20Z
+triangular_pyramid/desktop: PASS
+triangular_pyramid/mobile: PASS
+rectangular_pyramid/desktop: PASS
+rectangular_pyramid/mobile: PASS
+triangular_prism/desktop: PASS
+triangular_prism/mobile: PASS
+cuboid/desktop: PASS
+cuboid/mobile: PASS
+cube/desktop: PASS
+cube/mobile: PASS
+cross_section/desktop: PASS
+cross_section/mobile: PASS
+regular_square_pyramid/desktop: PASS
+regular_square_pyramid/mobile: PASS
+regular_triangular_pyramid/desktop: PASS
+regular_triangular_pyramid/mobile: PASS
+Wrote D:\tmp\landscape fit\docs\evaluation\geometry\runs\phone-landscape-layout\images\PLAYBACK_EVIDENCE.json: PASS 0fce24ca1daf
+exit=0
+2026-10-08T18:53:00Z

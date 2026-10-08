@@ -1,0 +1,5626 @@
+{
+  "schema_version": "w02-closure-probe/1",
+  "application_llm_calls": 0,
+  "commit": "9af3e8a36c861006ff886bbc8391b45916624bb5",
+  "pass": true,
+  "runs": [
+    {
+      "family": "triangular_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            5.621850305817968,
+            5.491838289633433,
+            8.231122057822809
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865356,
+            -0.49240387650610545,
+            0.5868240888334681,
+            0,
+            0.7660444431189812,
+            -0.4131759111665319,
+            0.49240387650610173,
+            0,
+            0,
+            0.7660444431189789,
+            0.6427876096865386,
+            0,
+            -0.5933364841894908,
+            -1.268089140008873,
+            -11.294102918815991,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            5.621850305817953,
+            5.491838289633357,
+            8.231122057822715
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865295,
+            -0.4924038765061064,
+            0.586824088833474,
+            0,
+            0.7660444431189863,
+            -0.4131759111665261,
+            0.49240387650609857,
+            0,
+            1.6653345369377348e-16,
+            0.7660444431189813,
+            0.6427876096865355,
+            0,
+            -0.5933364841895056,
+            -1.2680891400088878,
+            -11.294102918815874,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            5.621850305817953,
+            5.49183828963325,
+            8.23112205782263
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865188,
+            -0.4924038765061103,
+            0.5868240888334824,
+            0,
+            0.7660444431189952,
+            -0.41317591116651753,
+            0.4924038765060917,
+            0,
+            -5.551115123125783e-17,
+            0.7660444431189833,
+            0.642787609686533,
+            0,
+            -0.5933364841895308,
+            -1.268089140008907,
+            -11.294102918815756,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "SA_length",
+            "dien_tich_day_ABC",
+            "the_tich_khoi_chop"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "SA_length",
+            "dien_tich_day_ABC",
+            "the_tich_khoi_chop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SA"
+        ],
+        "rendered": [
+          "chieu_cao_SA"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            5.621850305817766,
+            5.491838289630277,
+            8.231122057819581
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096862427,
+            -0.4924038765061829,
+            0.5868240888337235,
+            0,
+            0.7660444431192265,
+            -0.41317591116627633,
+            0.49240387650593387,
+            0,
+            -1.110223024625156e-16,
+            0.7660444431190664,
+            0.6427876096864337,
+            0,
+            -0.5933364841901947,
+            -1.2680891400094927,
+            -11.294102918811893,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_chop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            5.621850305817765,
+            5.491838289630174,
+            8.2311220578195
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096862329,
+            -0.4924038765061866,
+            0.586824088833731,
+            0,
+            0.7660444431192348,
+            -0.41317591116626884,
+            0.49240387650592743,
+            0,
+            1.110223024625156e-16,
+            0.7660444431190682,
+            0.6427876096864317,
+            0,
+            -0.5933364841902197,
+            -1.2680891400095078,
+            -11.294102918811781,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_chop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 393
+        },
+        "camera_before": {
+          "position": [
+            5.62185030581794,
+            5.491838289632907,
+            8.231122057822272
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096864863,
+            -0.4924038765061184,
+            0.5868240888335109,
+            0,
+            0.7660444431190222,
+            -0.4131759111664889,
+            0.49240387650607315,
+            0,
+            8.32667268468867e-17,
+            0.7660444431189932,
+            0.6427876096865209,
+            0,
+            -0.5933364841896085,
+            -1.2680891400089747,
+            -11.29410291881531,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.3553432750540377,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 391,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 103,
+          "w": 358,
+          "h": 393
+        },
+        "controls": {
+          "x": 16,
+          "y": 508,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "camera_after_drag": {
+          "position": [
+            5.621850305817931,
+            5.491838289632712,
+            8.231122057822073
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096864683,
+            -0.49240387650612333,
+            0.586824088833527,
+            0,
+            0.7660444431190377,
+            -0.4131759111664731,
+            0.49240387650606304,
+            0,
+            1.3877787807814457e-16,
+            0.766044443118999,
+            0.6427876096865145,
+            0,
+            -0.593336484189652,
+            -1.2680891400090148,
+            -11.294102918815062,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            2.3553432750540377,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 391,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AD_length",
+            "SA_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_chop"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length",
+            "SA_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_chop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SA"
+        ],
+        "rendered": [
+          "chieu_cao_SA"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_chop",
+        "rendered_before": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_chop",
+        "rendered_on": [
+          "A",
+          "B",
+          "D",
+          "C",
+          "S",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SA",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "rectangular_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 519
+        },
+        "camera_before": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            3.1143541514141626,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 517,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": -23,
+          "w": 358,
+          "h": 519
+        },
+        "controls": {
+          "x": 16,
+          "y": 508,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "camera_after_drag": {
+          "position": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999999,
+            -0.556670399226419,
+            0.6634139481689387,
+            0,
+            0.8660254037844388,
+            -0.3213938048432694,
+            0.38302222155948923,
+            0,
+            -2.7755575615628914e-17,
+            0.7660444431189785,
+            0.642787609686539,
+            0,
+            -0.9418085019258465,
+            -0.8733466085485334,
+            -15.597648911182988,
+            1
+          ],
+          "projection_matrix_column_major": [
+            3.1143541514141626,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 517,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AC_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "AD_length"
+          ],
+          "unplaced": [],
+          "image": null
+        },
+        {
+          "step": 4,
+          "anchor": 7,
+          "dom": [
+            "AB_length",
+            "AC_length",
+            "AD_length",
+            "dien_tich_day_ABC",
+            "the_tich_solid_ABCDEF"
+          ],
+          "expected": [
+            "AB_length",
+            "AC_length",
+            "AD_length",
+            "dien_tich_day_ABC",
+            "the_tich_solid_ABCDEF"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 7,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_solid_ABCDEF",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999956,
+            -0.43301270189221813,
+            0.750000000000001,
+            0,
+            0.8660254037844388,
+            -0.249999999999999,
+            0.43301270189221935,
+            0,
+            5.551115123125783e-17,
+            0.8660254037844396,
+            0.49999999999999856,
+            0,
+            -0.8881026236940113,
+            -1.5497741096456437,
+            -11.268361846180058,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_solid_ABCDEF",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "day_ABC",
+          "solid_ABCDEF",
+          "day_DEF",
+          "canh_ben_A_D",
+          "canh_ben_B_E",
+          "canh_ben_C_F",
+          "solid_ABCDEF::face:0",
+          "solid_ABCDEF::edge:A-B",
+          "solid_ABCDEF::edge:B-C",
+          "solid_ABCDEF::edge:A-C",
+          "solid_ABCDEF::face:1",
+          "solid_ABCDEF::edge:D-E",
+          "solid_ABCDEF::edge:E-F",
+          "solid_ABCDEF::edge:D-F",
+          "solid_ABCDEF::face:2",
+          "solid_ABCDEF::edge:B-E",
+          "solid_ABCDEF::edge:A-D",
+          "solid_ABCDEF::face:3",
+          "solid_ABCDEF::edge:C-F",
+          "solid_ABCDEF::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "triangular_prism",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 406
+        },
+        "camera_before": {
+          "position": [
+            8.909936082622266,
+            6.196109126634321,
+            8.026719594071537
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999933,
+            -0.43301270189221813,
+            0.7500000000000009,
+            0,
+            0.8660254037844389,
+            -0.2499999999999988,
+            0.4330127018922193,
+            0,
+            2.77555756156289e-17,
+            0.8660254037844395,
+            0.49999999999999867,
+            0,
+            -0.9110198669748066,
+            -1.544200299038469,
+            -13.378805813145432,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.4336539210277013,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 404,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 90,
+          "w": 358,
+          "h": 406
+        },
+        "controls": {
+          "x": 16,
+          "y": 508,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "camera_after_drag": {
+          "position": [
+            8.909936082622266,
+            6.196109126634321,
+            8.026719594071537
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999933,
+            -0.43301270189221813,
+            0.7500000000000009,
+            0,
+            0.8660254037844389,
+            -0.2499999999999988,
+            0.4330127018922193,
+            0,
+            2.77555756156289e-17,
+            0.8660254037844395,
+            0.49999999999999867,
+            0,
+            -0.9110198669748066,
+            -1.544200299038469,
+            -13.378805813145432,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.4336539210277013,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 404,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 236
+        },
+        "camera_after_drag": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 236
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 236
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 236
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length"
+          ],
+          "expected": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 8,
+          "dom": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "expected": [
+            "AA_prime_length",
+            "AB_length",
+            "AD_length",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 8,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_hop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865389,
+            -0.38302222155948834,
+            0.6634139481689391,
+            0,
+            0.7660444431189781,
+            -0.32139380484326874,
+            0.5566703992264194,
+            0,
+            -2.7755575615628907e-17,
+            0.866025403784439,
+            0.49999999999999906,
+            0,
+            -0.5989064101825375,
+            -0.6769318952752243,
+            -14.029852122945314,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_hop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 485
+        },
+        "camera_before": {
+          "position": [
+            9.491769585620487,
+            8.741475034946086,
+            8.255681437649235
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865393,
+            -0.3830222215594889,
+            0.6634139481689384,
+            0,
+            0.7660444431189779,
+            -0.32139380484326957,
+            0.5566703992264195,
+            0,
+            2.7755575615628907e-17,
+            0.8660254037844386,
+            0.4999999999999999,
+            0,
+            -0.5951664915473386,
+            -0.70461525591695,
+            -15.29093345226217,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.909541692713811,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 483,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 11,
+          "w": 358,
+          "h": 485
+        },
+        "controls": {
+          "x": 16,
+          "y": 508,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "camera_after_drag": {
+          "position": [
+            9.491769585620487,
+            8.741475034946086,
+            8.255681437649235
+          ],
+          "view_matrix_column_major": [
+            -0.6427876096865393,
+            -0.3830222215594889,
+            0.6634139481689384,
+            0,
+            0.7660444431189779,
+            -0.32139380484326957,
+            0.5566703992264195,
+            0,
+            2.7755575615628907e-17,
+            0.8660254037844386,
+            0.4999999999999999,
+            0,
+            -0.5951664915473386,
+            -0.70461525591695,
+            -15.29093345226217,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.909541692713811,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 483,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/5",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 219
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 219
+        },
+        "camera_after_drag": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 219
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 219
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 219
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 219
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 219
+        },
+        "step_after": "Bước 1/5",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 10,
+          "dom": [
+            "chieu_cao_AA_prime",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "expected": [
+            "chieu_cao_AA_prime",
+            "dien_tich_day_ABCD",
+            "the_tich_khoi_hop"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 10,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 5/5",
+        "selected_before": "the_tich_khoi_hop",
+        "rendered_before": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ],
+          "view_matrix_column_major": [
+            -0.49999999999999906,
+            -0.36599815077066655,
+            0.7848855672213966,
+            0,
+            0.866025403784439,
+            -0.21130913087034908,
+            0.45315389351832425,
+            0,
+            1.6653345369377348e-16,
+            0.9063077870366504,
+            0.42261826174069894,
+            0,
+            -0.522878515050623,
+            -0.150610155778084,
+            -12.70972014343534,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 5/5",
+        "selected_on": "the_tich_khoi_hop",
+        "rendered_on": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "A_prime",
+          "B_prime",
+          "C_prime",
+          "D_prime",
+          "day_ABCD",
+          "khoi_hop",
+          "day_A_primeB_primeC_primeD_prime",
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime",
+          "khoi_hop::face:0",
+          "khoi_hop::edge:A-B",
+          "khoi_hop::edge:B-C",
+          "khoi_hop::edge:C-D",
+          "khoi_hop::edge:A-D",
+          "khoi_hop::face:1",
+          "khoi_hop::edge:A_prime-B_prime",
+          "khoi_hop::edge:B_prime-C_prime",
+          "khoi_hop::edge:C_prime-D_prime",
+          "khoi_hop::edge:A_prime-D_prime",
+          "khoi_hop::face:2",
+          "khoi_hop::edge:B-B_prime",
+          "khoi_hop::edge:A-A_prime",
+          "khoi_hop::face:3",
+          "khoi_hop::edge:C-C_prime",
+          "khoi_hop::face:4",
+          "khoi_hop::edge:D-D_prime",
+          "khoi_hop::face:5"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cube",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 389
+        },
+        "camera_before": {
+          "position": [
+            10.28560762273936,
+            6.560413895602917,
+            5.885898192028622
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999963,
+            -0.36599815077066566,
+            0.7848855672213984,
+            0,
+            0.8660254037844407,
+            -0.211309130870347,
+            0.4531538935183221,
+            0,
+            2.77555756156289e-17,
+            0.9063077870366508,
+            0.42261826174069733,
+            0,
+            -0.53868128156293,
+            -0.18364663723561697,
+            -13.533390135772533,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.3312476916775258,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 387,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 107,
+          "w": 358,
+          "h": 389
+        },
+        "controls": {
+          "x": 16,
+          "y": 508,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 602,
+          "w": 358,
+          "h": 242
+        },
+        "camera_after_drag": {
+          "position": [
+            10.28560762273936,
+            6.560413895602917,
+            5.885898192028622
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999963,
+            -0.36599815077066566,
+            0.7848855672213984,
+            0,
+            0.8660254037844407,
+            -0.211309130870347,
+            0.4531538935183221,
+            0,
+            2.77555756156289e-17,
+            0.9063077870366508,
+            0.42261826174069733,
+            0,
+            -0.53868128156293,
+            -0.18364663723561697,
+            -13.533390135772533,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.3312476916775258,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 387,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/5",
+        "step_indicator": "Bước 3/5"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/11",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 418.078125
+        },
+        "camera_after_drag": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 418.078125
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 364
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 418.078125
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 418.078125
+        },
+        "step_after": "Bước 1/11",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 5,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 6,
+          "anchor": 6,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 7,
+          "anchor": 7,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 8,
+          "anchor": 8,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 9,
+          "anchor": 11,
+          "dom": [
+            "area_T",
+            "the_volume_sabcd"
+          ],
+          "expected": [
+            "area_T",
+            "the_volume_sabcd"
+          ],
+          "unplaced": []
+        },
+        {
+          "step": 10,
+          "anchor": 13,
+          "dom": [
+            "area_T",
+            "dist_S_BD",
+            "the_volume_sabcd"
+          ],
+          "expected": [
+            "area_T",
+            "dist_S_BD",
+            "the_volume_sabcd"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [],
+        "rendered": []
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": []
+      },
+      "auxiliary_observation": {
+        "step": 13,
+        "chip": false,
+        "hidden_default": [],
+        "rendered_default": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 11/11",
+        "selected_before": "the_volume_sabcd",
+        "rendered_before": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 11/11",
+        "selected_on": "the_volume_sabcd",
+        "rendered_on": [
+          "S.ABCD",
+          "T#4cf",
+          "BD",
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "ABCD_base",
+          "alpha_plane",
+          "S.ABCD::face:0",
+          "S.ABCD::edge:A-B",
+          "S.ABCD::edge:B-C",
+          "S.ABCD::edge:C-D",
+          "S.ABCD::edge:A-D",
+          "S.ABCD::face:1",
+          "S.ABCD::edge:S-A",
+          "S.ABCD::edge:S-B",
+          "S.ABCD::face:2",
+          "S.ABCD::edge:S-C",
+          "S.ABCD::face:3",
+          "S.ABCD::edge:S-D",
+          "S.ABCD::face:4",
+          "T::vertex:0",
+          "T::vertex:1",
+          "T::vertex:2",
+          "T::vertex:3",
+          "T::face:0"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 369
+        },
+        "camera_before": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.2107697747949664,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 367,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 31,
+          "w": 358,
+          "h": 369
+        },
+        "controls": {
+          "x": 16,
+          "y": 412,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "camera_after_drag": {
+          "position": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ],
+          "view_matrix_column_major": [
+            -0.4999999999999992,
+            -0.2961981327260227,
+            0.8137976813493745,
+            0,
+            0.866025403784439,
+            -0.17101007166283322,
+            0.4698463103929538,
+            0,
+            -1.6653345369377343e-16,
+            0.9396926207859089,
+            0.3420201433256674,
+            0,
+            -0.8150494603410641,
+            -0.5444867329791654,
+            -18.259574145724436,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.2107697747949664,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 367,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/11",
+        "step_indicator": "Bước 3/11"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            7.6965124906719815,
+            2.732127419150646,
+            5.38795652194009
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766693028,
+            -0.6330222215594807,
+            0.7544065067354955,
+            0,
+            0.9848077530122078,
+            -0.11161889704894833,
+            0.13302222155949026,
+            0,
+            2.359223927328456e-16,
+            0.7660444431189848,
+            0.6427876096865311,
+            0,
+            -1.354134896200835,
+            1.049606330829356,
+            -9.6330444548458,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/8",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            7.6965124906719815,
+            2.732127419150646,
+            5.387956521940007
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766693122,
+            -0.6330222215594734,
+            0.7544065067355017,
+            0,
+            0.9848077530122077,
+            -0.11161889704894776,
+            0.13302222155949195,
+            0,
+            3.3306690738754686e-16,
+            0.7660444431189911,
+            0.6427876096865237,
+            0,
+            -1.3541348962008284,
+            1.049606330829327,
+            -9.63304445484576,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 366.5
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 366.5
+        },
+        "camera_after_drag": {
+          "position": [
+            7.6965124906719815,
+            2.732127419150646,
+            5.387956521939907
+          ],
+          "view_matrix_column_major": [
+            -0.1736481776669305,
+            -0.6330222215594653,
+            0.7544065067355086,
+            0,
+            0.9848077530122079,
+            -0.11161889704894574,
+            0.13302222155949245,
+            0,
+            4.163336342344335e-16,
+            0.7660444431189979,
+            0.6427876096865156,
+            0,
+            -1.3541348962008344,
+            1.0496063308293004,
+            -9.633044454845706,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 366.5
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 364
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 366.5
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 366.5
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 366.5
+        },
+        "step_after": "Bước 1/8",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "auxiliary_shown": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 5,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 6,
+          "anchor": 6,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 7,
+          "anchor": 11,
+          "dom": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "expected": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SO_2"
+        ],
+        "rendered": [
+          "chieu_cao_SO_2"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": [
+          "AC",
+          "BD",
+          "mp_day"
+        ]
+      },
+      "auxiliary_observation": {
+        "step": 11,
+        "chip": true,
+        "hidden_default": [
+          "AC",
+          "BD",
+          "mp_day"
+        ],
+        "rendered_default": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "AC",
+          "BD",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            7.696512490671942,
+            2.732127419150639,
+            5.387956521937065
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766693036,
+            -0.6330222215592302,
+            0.7544065067357062,
+            0,
+            0.9848077530122081,
+            -0.11161889704890413,
+            0.13302222155952745,
+            0,
+            2.7755575615628914e-17,
+            0.7660444431191986,
+            0.6427876096862765,
+            0,
+            -1.354134896200834,
+            1.0496063308284458,
+            -9.633044454844176,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 8/8",
+        "selected_before": "V",
+        "rendered_before": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            7.696512490671942,
+            2.732127419150639,
+            5.387956521937008
+          ],
+          "view_matrix_column_major": [
+            -0.1736481776669305,
+            -0.6330222215592252,
+            0.7544065067357102,
+            0,
+            0.9848077530122081,
+            -0.11161889704890328,
+            0.13302222155952814,
+            0,
+            1.2490009027033009e-16,
+            0.7660444431192027,
+            0.6427876096862717,
+            0,
+            -1.3541348962008333,
+            1.0496063308284265,
+            -9.633044454844146,
+            1.0000000000000002
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 8/8",
+        "selected_on": "V",
+        "rendered_on": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D",
+          "O",
+          "day_ABCD",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SO_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3",
+          "khoi_chop::edge:S-D",
+          "khoi_chop::face:4"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 320
+        },
+        "camera_before": {
+          "position": [
+            7.6965124906719815,
+            2.732127419150646,
+            5.387956521939678
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766693,
+            -0.6330222215594464,
+            0.7544065067355246,
+            0,
+            0.984807753012208,
+            -0.11161889704894185,
+            0.1330222215594952,
+            0,
+            -1.9428902930940235e-16,
+            0.7660444431190142,
+            0.642787609686496,
+            0,
+            -1.3541348962008357,
+            1.0496063308292318,
+            -9.633044454845583,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.9155988784326958,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 318,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 80,
+          "w": 358,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 412,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "camera_after_drag": {
+          "position": [
+            7.69651249067198,
+            2.732127419150645,
+            5.387956521939481
+          ],
+          "view_matrix_column_major": [
+            -0.17364817766693028,
+            -0.63302222155943,
+            0.7544065067355386,
+            0,
+            0.9848077530122079,
+            -0.11161889704893921,
+            0.13302222155949772,
+            0,
+            -9.71445146547012e-17,
+            0.7660444431190284,
+            0.6427876096864794,
+            0,
+            -1.3541348962008333,
+            1.0496063308291705,
+            -9.633044454845479,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.9155988784326958,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 318,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/8",
+        "step_indicator": "Bước 3/8"
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "desktop",
+      "panel_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_before": {
+          "position": [
+            11.00051058198908,
+            2.2539514040166835,
+            6.538801909525844
+          ],
+          "view_matrix_column_major": [
+            0,
+            -0.5735764363510389,
+            0.8191520442889968,
+            0,
+            0.8660254037844386,
+            -0.28678821817551947,
+            0.4095760221444984,
+            0,
+            0,
+            0.8191520442889968,
+            0.5735764363510389,
+            0,
+            -2.2539514040166835,
+            0.9533607062702982,
+            -12.761593428730299,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 1/10",
+        "selected_before": null,
+        "position": "absolute",
+        "canvas_open": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "camera_open": {
+          "position": [
+            11.000510581989051,
+            2.2539514040166835,
+            6.538801909525743
+          ],
+          "view_matrix_column_major": [
+            -3.9113532544350695e-16,
+            -0.5735764363510327,
+            0.8191520442890009,
+            0,
+            0.8660254037844382,
+            -0.2867882181755167,
+            0.4095760221445007,
+            0,
+            2.6825691919246144e-16,
+            0.8191520442890009,
+            0.573576436351033,
+            0,
+            -2.253951404016681,
+            0.9533607062702703,
+            -12.761593428730222,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_open": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_dragged": {
+          "x": 683,
+          "y": 236,
+          "w": 272,
+          "h": 418.078125
+        },
+        "camera_after_drag": {
+          "position": [
+            11.000510581989005,
+            2.2539514040166835,
+            6.538801909525629
+          ],
+          "view_matrix_column_major": [
+            0,
+            -0.5735764363510268,
+            0.819152044289005,
+            0,
+            0.8660254037844386,
+            -0.2867882181755134,
+            0.4095760221445025,
+            0,
+            0,
+            0.819152044289005,
+            0.573576436351027,
+            0,
+            -2.2539514040166835,
+            0.9533607062702447,
+            -12.761593428730125,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "panel_far": {
+          "x": 24,
+          "y": 68,
+          "w": 272,
+          "h": 418.078125
+        },
+        "close_visible_far": true,
+        "key_dx": 48,
+        "canvas_resized": {
+          "x": 16,
+          "y": 60,
+          "w": 1053,
+          "h": 581
+        },
+        "panel_resized": {
+          "x": 72,
+          "y": 68,
+          "w": 272,
+          "h": 364
+        },
+        "close_visible_resized": true,
+        "panel_reset": {
+          "x": 1103,
+          "y": 76,
+          "w": 272,
+          "h": 418.078125
+        },
+        "panel_closed_at": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 418.078125
+        },
+        "focus_after_close": "geo3d-cac-buoc-mo",
+        "panel_reopened": {
+          "x": 803,
+          "y": 196,
+          "w": 272,
+          "h": 418.078125
+        },
+        "step_after": "Bước 1/10",
+        "selected_after": null
+      },
+      "panel": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "images": {
+        "panel_open_default": null,
+        "panel_dragged": null,
+        "final_neutral": null,
+        "auxiliary_shown": null,
+        "grid_on": null
+      },
+      "labels_by_step": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 1,
+          "anchor": 1,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 2,
+          "anchor": 2,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 3,
+          "anchor": 3,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 4,
+          "anchor": 4,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 5,
+          "anchor": 5,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 6,
+          "anchor": 6,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 7,
+          "anchor": 7,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 8,
+          "anchor": 8,
+          "dom": [],
+          "expected": [],
+          "unplaced": []
+        },
+        {
+          "step": 9,
+          "anchor": 13,
+          "dom": [
+            "V",
+            "chieu_cao_SG",
+            "dien_tich_day_ABC"
+          ],
+          "expected": [
+            "V",
+            "chieu_cao_SG",
+            "dien_tich_day_ABC"
+          ],
+          "unplaced": []
+        }
+      ],
+      "labels_pass": true,
+      "unplaced_reachable": true,
+      "height_segments": {
+        "expected": [
+          "chieu_cao_SG_2"
+        ],
+        "rendered": [
+          "chieu_cao_SG_2"
+        ]
+      },
+      "height_pass": true,
+      "auxiliary": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": [
+          "AI",
+          "BJ",
+          "mp_day"
+        ]
+      },
+      "auxiliary_observation": {
+        "step": 13,
+        "chip": true,
+        "hidden_default": [
+          "AI",
+          "BJ",
+          "mp_day"
+        ],
+        "rendered_default": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "I",
+          "J",
+          "G",
+          "day_ABC",
+          "khoi_chop",
+          "chieu_cao_SG_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "hidden_shown": [],
+        "rendered_shown": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "I",
+          "J",
+          "AI",
+          "BJ",
+          "G",
+          "day_ABC",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SG_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ]
+      },
+      "grid": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "grid_observation": {
+        "initial": false,
+        "camera_before": {
+          "position": [
+            11.0005105819881,
+            2.2539514040166835,
+            6.538801909522249
+          ],
+          "view_matrix_column_major": [
+            -1.7283162621575525e-16,
+            -0.5735764363508256,
+            0.8191520442891462,
+            0,
+            0.8660254037844385,
+            -0.28678821817541295,
+            0.4095760221445732,
+            0,
+            1.500484037467586e-16,
+            0.8191520442891462,
+            0.5735764363508257,
+            0,
+            -2.2539514040166826,
+            0.9533607062693572,
+            -12.761593428727686,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_before": "Bước 10/10",
+        "selected_before": "V",
+        "rendered_before": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "I",
+          "J",
+          "G",
+          "day_ABC",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SG_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "on": true,
+        "camera_on": {
+          "position": [
+            11.000510581988085,
+            2.2539514040166835,
+            6.538801909522181
+          ],
+          "view_matrix_column_major": [
+            0,
+            -0.5735764363508216,
+            0.819152044289149,
+            0,
+            0.8660254037844386,
+            -0.2867882181754108,
+            0.4095760221445745,
+            0,
+            0,
+            0.819152044289149,
+            0.5735764363508216,
+            0,
+            -2.253951404016683,
+            0.9533607062693417,
+            -12.761593428727636,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            1.066786763807741,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 1373,
+          "viewport_height": 683,
+          "device_pixel_ratio": 1
+        },
+        "step_on": "Bước 10/10",
+        "selected_on": "V",
+        "rendered_on": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "I",
+          "J",
+          "G",
+          "day_ABC",
+          "mp_day",
+          "khoi_chop",
+          "chieu_cao_SG_2",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "khoi_chop::face:0",
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:A-C",
+          "khoi_chop::face:1",
+          "khoi_chop::edge:S-A",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::face:2",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::face:3"
+        ],
+        "recompute_idle_delta": 0,
+        "off": false
+      },
+      "exceptions": [],
+      "pass": true
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "viewport": "mobile",
+      "images": {
+        "sheet_open": null,
+        "sheet_collapsed": null
+      },
+      "sheet": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "sheet_observation": {
+        "canvas_before": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 344
+        },
+        "camera_before": {
+          "position": [
+            11.000510581988959,
+            2.2539514040166835,
+            6.538801909525478
+          ],
+          "view_matrix_column_major": [
+            -3.547199182634758e-16,
+            -0.5735764363510181,
+            0.8191520442890114,
+            0,
+            0.8660254037844384,
+            -0.28678821817550926,
+            0.40957602214450606,
+            0,
+            2.2688850542848804e-17,
+            0.8191520442890114,
+            0.5735764363510182,
+            0,
+            -2.25395140401668,
+            0.9533607062702038,
+            -12.761593428730016,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.060172378691767,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 342,
+          "device_pixel_ratio": 1
+        },
+        "position": "static",
+        "canvas_open": {
+          "x": 16,
+          "y": 56,
+          "w": 358,
+          "h": 344
+        },
+        "controls": {
+          "x": 16,
+          "y": 412,
+          "w": 358,
+          "h": 82
+        },
+        "panel": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "panel_after_drag": {
+          "x": 16,
+          "y": 506,
+          "w": 358,
+          "h": 337.59375
+        },
+        "camera_after_drag": {
+          "position": [
+            11.000510581988904,
+            2.2539514040166835,
+            6.53880190952526
+          ],
+          "view_matrix_column_major": [
+            4.093430290335097e-16,
+            -0.5735764363510055,
+            0.8191520442890204,
+            0,
+            0.866025403784439,
+            -0.28678821817550226,
+            0.40957602214451,
+            0,
+            -3.910409535172851e-16,
+            0.8191520442890204,
+            0.5735764363510054,
+            0,
+            -2.253951404016686,
+            0.9533607062701533,
+            -12.761593428729862,
+            1
+          ],
+          "model_matrix_column_major": [
+            1,
+            0,
+            0,
+            0,
+            0.5,
+            0.8660254037844386,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "projection_matrix_column_major": [
+            2.060172378691767,
+            0,
+            0,
+            0,
+            0,
+            2.1445069205095586,
+            0,
+            0,
+            0,
+            0,
+            -1.001000500250125,
+            -1,
+            0,
+            0,
+            -0.2001000500250125,
+            0
+          ],
+          "viewport_width": 356,
+          "viewport_height": 342,
+          "device_pixel_ratio": 1
+        },
+        "expanded_body_present": true,
+        "collapsed_body_present": false,
+        "step_clicked": "Bước 3/10",
+        "step_indicator": "Bước 3/10"
+      },
+      "exceptions": [],
+      "pass": true
+    }
+  ],
+  "capture_policy": {
+    "mode": "toi-thieu",
+    "review_set_patterns": 10,
+    "oracle_states": [
+      "neutral_final.png",
+      "rotated_neutral.png"
+    ],
+    "goi": 58,
+    "tao": 0,
+    "bo_qua": 58,
+    "loi": 0
+  }
+}

@@ -1,0 +1,29 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 9af3e8a36c861006ff886bbc8391b45916624bb5; timeout --signal=KILL 2400 node frontend/scripts/check-focus-mode.mjs --ho triangular_pyramid,rectangular_pyramid,triangular_prism,cuboid,cube,cross_section,regular_square_pyramid,regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/phone-landscape-layout/inputs --ra docs/evaluation/geometry/runs/phone-landscape-layout/results --anh docs/evaluation/geometry/runs/phone-landscape-layout/images/focus --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/phone-landscape-layout/inputs/REVIEW_SET.json
+2026-10-08T18:32:57Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/low: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/low: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/low: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/low: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/low: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/low: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/low: PASS []
+regular_square_pyramid/mobile: PASS []
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/low: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W05 focus probe: 24/24 PASS
+exit=0
+2026-10-08T18:45:16Z

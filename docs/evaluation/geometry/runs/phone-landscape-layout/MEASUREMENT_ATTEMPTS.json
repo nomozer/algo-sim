@@ -1,0 +1,23 @@
+{
+  "run_id": "phone-landscape-layout",
+  "attempts": [
+    {
+      "n": 1,
+      "commit": "9af3e8a36c861006ff886bbc8391b45916624bb5",
+      "product_commit": "d8ad153b",
+      "record": "diagnostics/attempts/attempt1_9af3e8a3/",
+      "result": "not used for acceptance — product changed after it (95a56a17)",
+      "findings": {
+        "PRODUCT": "ROTATED_CONTROLS_OFFSCREEN on all eight 360x640 phones turned to landscape (640x360): the control column ended under the viewport — fixed in 95a56a17 (one-line top row, compact column) and 844x340 added to the probe",
+        "ENVIRONMENT_OR_TIMING (rerun of the identical build: PASS)": [
+          "suite triangular_prism desktop: page rendered without its stylesheet (css_readiness all false, font Times New Roman) -> POLL_TIMEOUT",
+          "suite regular_triangular_pyramid desktop causal_restore: restored frame differs from neutral by max 4 channel levels on 4462 pixels (neutral frame byte-identical to the previous run)",
+          "mobile probe cuboid/portrait: POLL_TIMEOUT opening the steps panel"
+        ],
+        "PRE_EXISTING": "FIGURE_LEFT_CANVAS_AFTER_ORBIT triangular_prism/low (identical in the baseline)"
+      },
+      "other_steps": "scene controls 16/16, panels 24/24, focus mode 24/24, occlusion PASS, playback PASS, builder 68 crops / 0 disagreements",
+      "classification_reruns": "diagnostics/attempts/attempt1_9af3e8a3/classification/ (same dist and fixtures): prism PASS, RTP PASS, cuboid/portrait PASS"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# cwd: <worktree '/d/tmp/landscape fit'> @ 9af3e8a36c861006ff886bbc8391b45916624bb5; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/phone-landscape-layout/inputs --ra docs/evaluation/geometry/runs/phone-landscape-layout/results --screenshots docs/evaluation/geometry/runs/phone-landscape-layout/images --bo-qua-build --anh-che-do toi-thieu --review-set docs/evaluation/geometry/runs/phone-landscape-layout/inputs/REVIEW_SET.json
+2026-10-08T18:00:30Z
+▶ triangular_pyramid/desktop 18:00:31
+▶ triangular_pyramid/mobile 18:01:32
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 18:02:20
+▶ triangular_prism/mobile 18:02:42
+triangular_prism: FAIL
+▶ rectangular_pyramid/desktop 18:03:32
+▶ rectangular_pyramid/mobile 18:04:29
+rectangular_pyramid: PASS
+▶ cuboid/desktop 18:05:15
+▶ cuboid/mobile 18:06:21
+cuboid: PASS
+▶ cube/desktop 18:07:11
+▶ cube/mobile 18:08:21
+cube: PASS
+▶ cross_section/desktop 18:09:13
+▶ cross_section/mobile 18:10:43
+cross_section: PASS
+▶ regular_square_pyramid/desktop 18:12:31
+▶ regular_square_pyramid/mobile 18:13:55
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 18:14:50
+▶ regular_triangular_pyramid/mobile 18:16:12
+regular_triangular_pyramid: FAIL
+Wrote D:\tmp\landscape fit\docs\evaluation\geometry\runs\phone-landscape-layout\results\BROWSER_EVIDENCE.json: FAIL
+exit=1
+2026-10-08T18:17:26Z
