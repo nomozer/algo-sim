@@ -76,6 +76,20 @@ nhiên. Hai ngả dẫn tới hai luận văn khác hẳn:
 
 Chưa trả lời được câu này thì **cấm đẻ wave**, cấm viết primitive hình học.
 
+#### Ngoài phạm vi — ghi cùng đợt đổi đề
+
+Nguồn: `GEOMETRY_ROADMAP.md §2` (kế hoạch giai đoạn chuyển đề, `a5c2e6f2`; gỡ ở run `docs-cleanup`, nội dung còn
+hiệu lực chép nguyên ý vào đây):
+
+- tự động chứng minh — LLM tổng hợp **các bước dựng**, không sinh chứng minh hình thức;
+- chấm bài, sinh đề, luyện tập — ngoài "mô phỏng";
+- dựng hình bằng thước–compa — hình phẳng, khác miền;
+- Oxyz như một chuyên đề riêng — Oxyz là nền tính toán bên trong, không phải chủ đề dạy;
+- kéo cập nhật theo từng pixel — phá song ánh `frame k ⇔ trace[k]` (`ARCHITECTURE_MAP §5` #31); tương tác là chọn và tua.
+
+Mặt tròn xoay (nón, trụ, cầu) từng nằm trong danh sách này; sau đó được mở một phần (`geometry/curved.py`) — năng
+lực hiện hành đọc ở `backend/app/simulation/product_capability.py`, không đọc dòng cũ.
+
 #### Kỷ luật giữ nguyên
 
 `CURRICULUM_SUPPORT_PARTIAL` và `LEARNER_IMPACT_NOT_EVALUATED` **vẫn giữ** —
@@ -91,8 +105,8 @@ kết quả thật của hệ Tin học, và **vẫn trích được** nếu lu�
 
 Khoá phạm vi 2026-08 (24 target, không sinh tự động) **được thay thế ở ĐÚNG
 phần sinh mô phỏng** bởi
-`docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`
-(APPROVED DESIGN, `0c53882`). Kế hoạch thực thi: `docs/legacy/superpowers/plans/2026-08-20-semantic-program-generative-route.md`.
+`docs/legacy/architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md`
+(APPROVED DESIGN, `0c53882`). Kế hoạch thực thi: `docs/legacy/architecture/SEMANTIC_PROGRAM_ROUTE_PLAN.md`.
 
 **Lõi đề tài được bổ sung một nhánh**, không thay nhánh cũ: yêu cầu học bằng
 ngôn ngữ tự nhiên → **LLM tổng hợp bounded Semantic IR** → validate tất định →

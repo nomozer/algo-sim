@@ -74,7 +74,20 @@
 | `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | pin SHA-256 bằng chứng catalog Tin học `m17/wave0`, `m17/wave1` (gộp, khẳng định giữ nguyên) |
 | `Phase8LiveTransport` (lớp trong `run_rectangular_pyramid_live_analyze.py`) | `LiveAnalyzeTransport` | transport của lượt live analyze một request |
 
-### Giữ tên có chủ đích (tra cứu, cập nhật ở run `repo-cleanup`)
+### Đã đổi (run `docs-cleanup`, 2026-10-08)
+
+| cũ | mới | chức năng |
+|---|---|---|
+| 123 hàm `test_w16_…`/`test_w17_…`/`test_w18_…`/`test_w20_…`/`test_w01_…`/`test_w05_…`/`test_w11_…`/`test_w12_…`/`test_w14_…`/`test_phase3_…` trong 17 file pytest | bỏ tiền tố mã (`test_w17_doc_quan_he_cat` → `test_doc_quan_he_cat`) | phần còn lại vốn đã là mô tả hành vi; không va tên, thu thập 7242 trước/sau |
+| `test_nhan_cua_ca_dung_trong_ho_so_w02` | `test_ca_canh_ben_the_tich_mang_nhan_phuc_vu_16` | nhãn ca S1 (cạnh bên → thể tích) là `served:16` |
+| `test_registered_scene_is_the_reviewed_one_and_w10_keeps_its_geometry` | `…_and_the_playback_fixture_keeps_its_geometry` | fixture `w10-pedagogical-playback` giữ hình học của cảnh đã duyệt |
+| `test_w17_o_do_W17_co_mat_khi_bo_chay_da_do` · `test_w17_ho_khong_khai_loai_W17_khong_can_o_ay` | `test_o_tu_choi_them_ca_phuc_vu_va_cong_tac_co_mat_khi_bo_chay_da_do` · `test_ho_khong_khai_tu_choi_them_khong_can_o_ay` | ô từ chối thêm / ca phục vụ / công tắc của sheet bằng chứng |
+| tiêu đề vitest (74) và node:test (44) mở đầu bằng thẻ (`W4 · `, `(M9-UX5) `, `W8 §10 — `, `regular-triangular-pyramid-w01 · D2: `, `W15 `) | bỏ thẻ; ghi chú xuất xứ nằm giữa tiêu đề giữ nguyên | tiêu đề nói hành vi |
+| bộ chọn `-k w16`/`-k w17`/`-k w18` trong `CODE_INDEX`, `ARCHITECTURE_MAP`, `OPEN_ISSUES` | đường dẫn file test (tập lớn hơn, vẫn chứa các test ấy) | lệnh kiểm |
+| `docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md` · `…/plans/2026-08-20-semantic-program-generative-route.md` | `docs/legacy/architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md` · `…/SEMANTIC_PROGRAM_ROUTE_PLAN.md` | thiết kế gốc + kế hoạch đã thực thi của route Semantic Program; thư mục mang tên công cụ (`superpowers/`) hết lý do tồn tại |
+| `docs/legacy/architecture/CUBOID_CUBE_CONTRACT_DECISION.md` | `docs/architecture/CUBOID_CUBE_CONTRACT_DECISION.md` | contract hình hộp/lập phương/lăng trụ đáy vuông còn hiệu lực |
+
+### Giữ tên có chủ đích (tra cứu, cập nhật ở run `repo-cleanup`, `docs-cleanup`)
 
 - **Phiên bản của dữ liệu / chính sách / chỉ số** — danh tính của thứ được đo, không phải mã lượt: `clean_baseline_v2_cases.py`,
   `run_clean_baseline_v2.py`, `verify_baseline_v2_expressibility.py`, `spot-check-baseline-v2.mjs` (bộ đề V2), `seal_curved_v3.py`,
@@ -83,8 +96,11 @@
   `c03_vision_extraction_replay_redacted.json` / `photo-c03-diagram-only.fixture.json` (ca c03 của bộ ảnh), `fixtures_coverage_18.py`.
 - **Tên khái niệm trong mã**: `test_coverage_gate_c1a.py`, `test_coverage_gate_c1b.py`, `test_c2_fail_closed.py` (các vế C₁a/C₁b/C₂ của
   `coverage_gate`), `run_stability_k3.py` (`k = 3`), `wave_counters.py` ("wave" = một lượt đo, khái niệm của bộ đo).
-- **Tên test có mã lượt THEO SAU là mô tả** (`test_w17_chu_the_…`, `-k w16`): mã ấy là bộ chọn mà `CODE_INDEX`/tài liệu dùng
-  (`pytest … -k w17`); tên vẫn nói điều được kiểm. Không có test nào chỉ mang mã.
+- ~~Tên test có mã lượt theo sau là mô tả (`-k w17`)~~ — **hết hiệu lực ở run `docs-cleanup`**: bộ chọn không phải lý do
+  giữ tên khó hiểu; các tên ấy đã đổi (bảng trên). Còn lại có lý do: `test_wave0_*`/`test_wave1_*` trong
+  `test_informatics_evidence_pins.py` (gọi tên thư mục bằng chứng `m17/wave0`, `m17/wave1` mà chúng đọc), `test_gm10_*`
+  (`GM10` là mã một đề, không phải mã lượt). Hằng nội bộ có mã lượt trong script (`TEN_TU_CHOI_W17`, `W17_STATES` của
+  `build_scene3d_visual_evidence.py`) là định danh mã, chưa đổi — đổi thì cùng lượt chạm script ấy.
 - **Revision Alembic** `backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py`: chuỗi migration là lịch sử
   của schema; tên file do Alembic sinh lúc tạo, DB ghi revision id chứ không ghi tên — đổi không lợi gì, giữ.
 - **Bằng chứng đã phát hành**: mọi thư mục `docs/evaluation/**` cũ (gồm `m17/wave0`, `m17/wave1`, `semantic-benchmark/sealed/`), báo

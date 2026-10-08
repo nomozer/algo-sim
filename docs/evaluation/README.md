@@ -8,16 +8,37 @@
 
 | vùng | nội dung |
 |---|---|
-| [`geometry/runs/`](geometry/runs/) | một thư mục / run từ w09 (`wNN-short-slug` tới w20; từ 2026-10-05 wave đánh số theo từng việc, `<task-slug>-wNN` — luật ở [`RUN_NAMING.md`](RUN_NAMING.md)); mỗi run có `README.md`, `REPORT.md`, `HANDOFF.md`, `RUN.json`, `MANIFEST.json`, `inputs/`, `results/`, `diagnostics/` |
+| [`geometry/runs/`](geometry/runs/) | một thư mục / run từ w09 (`wNN-short-slug` tới w20, rồi `<task-slug>-wNN`; từ 2026-10-07 tên theo việc — `exact-dimensions`, `repo-cleanup`, `docs-cleanup`; luật hiện hành ở [`RUN_NAMING.md`](RUN_NAMING.md), run cũ giữ tên); run mới có `report.md`, `handoff.md`, `run.json`, `inputs/`, `diagnostics/` (run cũ viết hoa: `REPORT.md`, `RUN.json`, `MANIFEST.json`) |
 | [`geometry/photo-problem-to-scene/`](geometry/photo-problem-to-scene/) | artifact các wave đề-từ-ảnh và đo live 2026-09-13 … 09-24 (báo cáo ở gốc `docs/`) |
 | `geometry/<tên-wave>/` khác | artifact các wave hình học 2026-08-24 … 09-27 (`thesis-final-acceptance/`, `curved-acceptance-v3/`, `holdout/`, …) |
-| `m16/` … `m20/`, `semantic-*/`, `tier2-live-pilot/`, … | artifact giai đoạn Tin học (trước đổi đề 2026-08-24) |
+| `m16/` … `m20/`, `semantic-*/`, `tier2-live-pilot/`, … | artifact giai đoạn Tin học (trước đổi đề 2026-08-24) — tên mang mã milestone nhưng là danh tính bằng chứng (bất biến); nội dung từng thư mục: bảng dưới |
 | [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) | catalog **đóng** các báo cáo wave cũ nằm ở gốc `docs/`, theo chủ đề |
 | [`AUDIT_ARTIFACT_MANIFEST.md`](AUDIT_ARTIFACT_MANIFEST.md) | nguồn gốc bảy bộ artifact audit W4B-0 |
 
+### Thư mục bằng chứng ngoài `geometry/` — đọc gì ở đâu
+
+Tên giữ nguyên (AGENTS §4: không sửa, chuyển, xoá); bảng này là lớp tên hiển thị (run `docs-cleanup`, đọc thư mục).
+
+| thư mục | nội dung | còn được trích bởi mã/test |
+|---|---|---|
+| `curriculum-ui-admission/` | ma trận nhận 22 target Tin học theo chương trình, độ phức tạp UI, quyết định chế độ xem, pilot | không |
+| `frontier-fix/` · `mechanism-fix/` | nghiệm thu trình duyệt (`acceptance.json` + ảnh) của hai lượt sửa mô phỏng thời Tin học | không |
+| `integration/` | **hình học**: hành trình tích hợp sản phẩm khối cong (`journey.json`, `curved-product.json`, ảnh cầu/trụ/nón) | có (9 file) |
+| `m16/` | đánh giá LLM toàn diện M16 trên catalog Tin học: ma trận ca, metric, sổ thất bại, baseline live | không |
+| `m17/` | M17-Lite: quyết định phạm vi W2B, phê bình thiết kế, căn chỉnh sư phạm, RC1, authenticity, `wave0`/`wave1` | có (`test_informatics_evidence_pins.py`) |
+| `m18/` | ảnh + JSON nghiệm thu lớp học (đăng nhập, lớp, quan sát, luyện tập) | không |
+| `m19/` · `m20/` | số đo bố cục trước/sau; composition W5–W7, curriculum benchmark, experience manifest, generation parity | không (chú thích CSS/TS trích số của `m20/`) |
+| `prompt-freeze/` | bản đóng băng prompt `analyze.md`/`simulate.md` của hệ Tin học | không |
+| `semantic-benchmark/` | hồ sơ SEALED 40 (custodian) và **`EVALUATION_CANDIDATE.json` — sổ candidate SỐNG** do `freeze_evaluation_candidate.py` ghi | có (10 file) |
+| `semantic-l5a/` · `semantic-vnext/` | soát thị giác route `generic.semantic_program` (2D, 2026-08-21); chuỗi probe `serve` của route sinh | không |
+| `simulation-mechanism-audit/` · `viewmode-design-audit/` | ma trận chất lượng mô phỏng 11 family / 22 target; độ rõ thiết kế và chế độ xem | không |
+| `tier2-live-pilot/` | báo cáo pilot live nội bộ — không phải số chính thức | không |
+| `ui-baseline/` | khung giao diện chung (`UI_INTERACTION_BASELINE.md`) + ảnh chụp | có (1 file) |
+
 ## Báo cáo của một wave nằm ở đâu
 
-- Từ w09: `REPORT.md` / `HANDOFF.md` trong thư mục run.
+- Run mới (luật 2026-10-07): `report.md` / `handoff.md` trong thư mục run; w09 … w20 và các run `<task-slug>-wNN`:
+  `REPORT.md` / `HANDOFF.md`.
 - Trước đó: một file `docs/<TÊN_WAVE>.md` ở gốc — tra [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) hoặc
   `../EVIDENCE_INDEX.md`. Danh sách ấy đóng: wave mới **không** thêm báo cáo vào gốc `docs/`.
 

@@ -7,15 +7,19 @@
 
 | file / thư mục | vị trí cũ | vì sao hết hiệu lực | thẩm quyền hiện hành |
 |---|---|---|---|
-| [`RULES_v0.3.md`](RULES_v0.3.md) | (ở đây từ M9) | luật kiến trúc hệ Tin học v0.3; `frontend/src/rules-hygiene.test.ts` ghim đường dẫn | [`../RULES.md`](../RULES.md) |
 | [`CURRENT_STATE_HISTORY.md`](CURRENT_STATE_HISTORY.md) | `docs/CURRENT_STATE.md` dòng 88–5475 tại `6d0e6321` | nhật ký phát triển: bảng w17 trở về trước, khối W4B, §1–§7 cũ | [`../CURRENT_STATE.md`](../CURRENT_STATE.md) (trạng thái), [`../STATUS_LEDGER.md`](../STATUS_LEDGER.md) (lịch sử) |
 | [`research/THESIS_READINESS.md`](research/THESIS_READINESS.md) | `docs/` | bảng tuyên bố cũ + nhật ký "được nói / không được nói" và đính chính tới W18 | [`../research/CLAIM_EVIDENCE_MAP.md`](../research/CLAIM_EVIDENCE_MAP.md) |
 | [`research/CLAIM_EVIDENCE_MATRIX.md`](research/CLAIM_EVIDENCE_MATRIX.md) | `docs/thesis/` | 29 tuyên bố 2026-09-09; định nghĩa đính chính D-1 … D-4 | như trên |
 | [`research/CLAIM_TO_EVIDENCE_MAP.md`](research/CLAIM_TO_EVIDENCE_MAP.md) | `docs/research/` | lớp bằng chứng 2026-09-10; điều kiện bài báo A1–A6 | như trên |
-| [`superpowers/`](superpowers/) (`plans/`, `specs/`) | `docs/superpowers/` | kế hoạch/spec của skill cho M9–M17, W13 cũ (hỏi đáp), semantic route — milestone đã đóng; nhiều link trỏ mã Tin học đã gỡ | `../ROADMAP.md`, thư mục run |
-| [`geometry/`](geometry/) | `docs/geometry/` | kế hoạch, thiết kế, soát của giai đoạn chuyển đề 2026-08-24 … 09-02 | `../ARCHITECTURE_MAP.md`, `../architecture/` |
-| [`architecture/`](architecture/) | `docs/architecture/` | quyết định đã thực thi (2026-09-25/26), không ai tham chiếu | `../architecture/README.md` |
-| [`REPOSITORY_MAP.md`](REPOSITORY_MAP.md) | `docs/` | bản đồ vị trí viết trước khi đổi đề | `../README.md`, `../CODE_INDEX.md` |
+| [`architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md`](architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md) + [`…_PLAN.md`](architecture/SEMANTIC_PROGRAM_ROUTE_PLAN.md) | `docs/superpowers/specs/` + `plans/` `2026-08-20-semantic-program-generative-route*` | thiết kế gốc và kế hoạch đã thực thi của route Semantic Program, viết khi sản phẩm còn là Tin học (IR thuật toán, 2D); `RULES.md` luật 11 trích §3.3; kế hoạch giữ giao thức niêm phong bộ SEALED mà `test_benchmark_seal.py` còn ghim | `../ARCHITECTURE_MAP.md` §5 (#31–#34), `../RULES.md` §4 |
+| [`geometry/CAPABILITY_GAP_AUDIT.md`](geometry/CAPABILITY_GAP_AUDIT.md) | `docs/geometry/` | cách đọc + bảng (2026-08-30) của `backend/scripts/audit_geometry_capability.py` — script còn chạy; bảng là ảnh chụp | chạy lại script (`--md`); năng lực sản phẩm: `product_capability.py` |
+
+**Đã gỡ ở run `docs-cleanup` (2026-10-08)**, sau khi đọc và kiểm consumer — danh sách, lý do và consumer từng file:
+[`../evaluation/geometry/runs/docs-cleanup/inventory.md`](../evaluation/geometry/runs/docs-cleanup/inventory.md): 16
+plan/spec của skill cho M9–M17 và W13 (miền Tin học đã retire), bảy tài liệu giai đoạn chuyển đề trong `geometry/` và
+`architecture/NEXT_VERTICAL_SLICE_DECISION.md` (đã thực thi, có bản thay), `REPOSITORY_MAP.md`, `RULES_v0.3.md`.
+`architecture/CUBOID_CUBE_CONTRACT_DECISION.md` đưa về [`../architecture/`](../architecture/) vì mã vẫn cài đúng nó.
+Mọi bản gỡ còn trong git history.
 
 ## Phần tách nguyên văn khỏi tài liệu sống (2026-10-05, `cuboid-final-review`)
 

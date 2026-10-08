@@ -78,8 +78,10 @@
 
 ## 7. Lưu trữ
 
-[`legacy/README.md`](legacy/README.md) — tài liệu hết hiệu lực nhưng đáng giữ: kế hoạch/spec của skill, tài liệu giai
-đoạn chuyển đề, quyết định đã thực thi, nhật ký phát triển cũ của CURRENT_STATE, ba bảng tuyên bố cũ. **Không** dùng
+[`legacy/README.md`](legacy/README.md) — tài liệu hết hiệu lực nhưng còn người trích: thiết kế gốc của route Semantic
+Program, bảng soát năng lực 2026-08-30, nhật ký phát triển cũ của CURRENT_STATE, ba bảng tuyên bố cũ, phần thời Tin
+học tách khỏi tài liệu sống. Bản đã gỡ ở run `docs-cleanup`:
+[`inventory.md`](evaluation/geometry/runs/docs-cleanup/inventory.md). **Không** dùng
 làm căn cứ hiện hành. Khi tìm luật hay trạng thái hiện hành, loại `docs/legacy/` và `docs/evaluation/` khỏi grep.
 Đường dẫn cũ của file đã di chuyển ở W19: [`MIGRATION_MAP.json`](evaluation/geometry/runs/w19-docs-organization/inventory/MIGRATION_MAP.json).
 Mục đã xoá ở W20 (bản trùng hoặc tái tạo được, kèm cách khôi phục): [`DELETION_LOG.json`](evaluation/geometry/runs/w20-cleanup-premerge/inventory/DELETION_LOG.json).
@@ -90,7 +92,10 @@ DESIGN_BRIEF, POST_THESIS_BACKLOG) đã tách **nguyên văn** sang `legacy/*_IN
 
 ## 8. Thêm tài liệu mới
 
-- Báo cáo wave: `REPORT.md`/`HANDOFF.md` trong thư mục run ([`evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md):
-  wave đánh số theo từng việc, định danh đầy đủ `<task-slug>-wNN`), **không** ở gốc `docs/`.
+- Báo cáo wave: `report.md`/`handoff.md`/`run.json` trong thư mục run `evaluation/geometry/runs/<run>/`, tên run theo
+  việc ([`evaluation/RUN_NAMING.md`](evaluation/RUN_NAMING.md) — luật hiện hành; run cũ giữ tên cũ), **không** ở gốc `docs/`.
+- Kế hoạch/spec do skill sinh (Superpowers, …): thiết kế là contract đang hiệu lực ⇒ [`architecture/`](architecture/);
+  kế hoạch triển khai ⇒ `plan.md` trong thư mục run của việc. Không tạo `docs/superpowers/` hay thư mục con mới của
+  `docs/` — bộ kiểm tài liệu đỏ với thư mục lạ (`test_inv_23`).
 - Tài liệu dự án mới ở gốc: thêm tên vào `PROJECT_DOCS` của bộ kiểm, kèm lý do.
 - Báo cáo và artifact đã commit là bất biến: đính chính bằng wave mới và `CORRECTED_BY`.

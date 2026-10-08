@@ -1835,9 +1835,9 @@ Từng gắn vào ba script thời Tin học (`audit-composition`, `accept-class
 
 ## Miền HÌNH HỌC KHÔNG GIAN (2026-08-24 → nay)
 
-> Đổi đề tài: `STATUS_LEDGER §0-2026-08-24`. Kế hoạch (lưu trữ từ W19): `docs/legacy/geometry/`
-> (`GEOMETRY_ROADMAP` · `MIGRATION_PLAN` · `CURRENT_SYSTEM_MAPPING` ·
-> `GEOMETRY_ARCHITECTURE_GAP_REPORT`).
+> Đổi đề tài: `STATUS_LEDGER §0-2026-08-24`. Kế hoạch giai đoạn chuyển đề (`GEOMETRY_ROADMAP`, `MIGRATION_PLAN`,
+> `CURRENT_SYSTEM_MAPPING`, `GEOMETRY_ARCHITECTURE_GAP_REPORT`) đã thực thi và gỡ ở run `docs-cleanup` (git history);
+> phần ngoài phạm vi còn hiệu lực chép sang `STATUS_LEDGER §0-2026-08-24`.
 
 ### `backend/app/simulation/geometry/` — nhân hình học · offline · **0 API call**
 
@@ -2728,7 +2728,7 @@ cái sau thì một ca lệch tên (hợp đồng gọi `(ABCD)`, chương trìn
 
 ## Đường sinh ngữ nghĩa `generic.semantic_program` (2026-08-20 → 21)
 
-Spec: `docs/legacy/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.
+Spec: `docs/legacy/architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md`.
 Bất biến #31–#34 ở `ARCHITECTURE_MAP §5`.
 
 ### `backend/app/simulation/semantic_program/pacer.py` · Change impact: offline

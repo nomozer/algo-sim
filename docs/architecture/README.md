@@ -10,6 +10,7 @@
 |---|---|
 | [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](ASSUMPTION_CERTIFICATE_AMENDMENT.md) | chứng chỉ giả định (W15), ràng buộc phép dựng với đề (W17 §15, W18 §16); mã sản phẩm trích đường dẫn này |
 | [`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) | edge identity, visual owner, occlusion span, oracle độc lập |
+| [`CUBOID_CUBE_CONTRACT_DECISION.md`](CUBOID_CUBE_CONTRACT_DECISION.md) | hình hộp chữ nhật / lập phương / lăng trụ đứng đáy vuông: trường topo, luật nhất quán, fail-closed (đưa về từ `legacy/` ở run `docs-cleanup`) |
 
 ## Tiền đăng ký và snapshot (bất biến)
 
@@ -34,4 +35,6 @@ candidate): [`../CORRECTNESS.md`](../CORRECTNESS.md), [`../DESIGN_BRIEF.md`](../
 
 - Năng lực sản phẩm: `backend/app/simulation/product_capability.py`.
 - Đổi chế độ mặc định: [`../MIGRATION_CHECKLIST.md`](../MIGRATION_CHECKLIST.md) (20 cổng).
-- Quyết định kiến trúc đã thực thi: [`../legacy/architecture/`](../legacy/architecture/).
+- Thiết kế gốc đã thực thi của route Semantic Program (2026-08-20): [`../legacy/architecture/`](../legacy/architecture/).
+- Thiết kế mới do skill/agent sinh đặt ở đây khi nó là contract đang hiệu lực; kế hoạch triển khai nằm trong thư mục run
+  của việc (`../evaluation/geometry/runs/<run>/plan.md`) — không mở thư mục tài liệu mới.

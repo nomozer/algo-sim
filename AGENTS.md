@@ -42,7 +42,8 @@
 ## 4. Evidence & Documentation Safety
 
 - **Tính bất biến của lịch sử:** Báo cáo lịch sử, input/output của lượt đo, manifest và artifact đã đông cứng của các wave trước (trong `docs/evaluation/**`, và các báo cáo liệt kê ở `HISTORICAL_REPORTS.md`) là bất biến. Không được sửa, di chuyển hoặc xóa.
-- **Nháp của công cụ agent không tự động là bằng chứng bất biến:** plan, brief, report, ledger và gói review do skill/agent sinh (`.superpowers/`, `docs/legacy/superpowers/`).
+- **Nháp của công cụ agent không tự động là bằng chứng bất biến:** plan, brief, report, ledger và gói review do skill/agent sinh (`.superpowers/` — nháp local, gitignore).
+- **Kế hoạch/spec của skill theo cấu trúc dự án:** thiết kế là contract đang hiệu lực ⇒ `docs/architecture/`; kế hoạch triển khai ⇒ `plan.md` trong thư mục run của việc. Không tạo `docs/superpowers/` hay thư mục tài liệu mới; không nhân bản một kế hoạch ở nhiều nơi. Chi tiết: [`docs/README.md`](docs/README.md) §8.
 - **Dọn có kiểm:** bản trùng, plan bỏ dở và tài liệu ngoài phạm vi được xoá sau khi đọc nội dung, kiểm mọi tham chiếu (code, test, tooling, docs, manifest) và chuyển thông tin duy nhất sang tài liệu có thẩm quyền kèm nguồn; xoá theo đường dẫn chính xác, ghi nhật ký xoá.
 - **Test không ghi vào bằng chứng đông cứng:** output tái sinh đi vào thư mục tạm hoặc một run mới.
 - **Phê duyệt là của người:** tự động hoá (script, test, agent) không bao giờ ghi `APPROVED_BY_USER`.

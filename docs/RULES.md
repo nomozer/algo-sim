@@ -182,7 +182,7 @@ patch wave**, và báo đúng bốn mục:
     `provided` → OK · `rule_derivable` → cần rule authority · `algorithmic` →
     cần program/interpreter authority · không có authority → `capability_gap`.
     `SemanticProgramInterpreter` là **một** authority; LLM thì **không bao giờ**.
-    Chi tiết: spec `2026-08-20-semantic-program-generative-route-design.md` §3.3.
+    Chi tiết: `docs/legacy/architecture/SEMANTIC_PROGRAM_ROUTE_DESIGN.md` §3.3 (thiết kế gốc đã thực thi).
 12. **Cấm cắt câm** — chạm trần ngân sách phải **BÁO**, không được lặng lẽ giao
     một phần. Sinh ra từ sự cố `MAX_REVEAL_STEPS` cắt `steps[:20]` không báo lỗi.
     Ngân sách **thực thi** và ngân sách **trình bày** là hai thứ khác nhau (§4.3).

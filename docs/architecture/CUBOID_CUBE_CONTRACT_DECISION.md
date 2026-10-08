@@ -1,5 +1,13 @@
 # CUBOID_CUBE_CONTRACT_DECISION.md — Quyết Định Thiết Kế Hợp Đồng Cho Hình Hộp Chữ Nhật, Hình Lập Phương & Lăng Trụ Đứng Đáy Vuông
 
+> **Trạng thái hiện hành (đối chiếu mã ở run `docs-cleanup`, 2026-10-08):** contract đang hiệu lực, đưa về từ
+> `docs/legacy/architecture/` vì mã vẫn cài đúng nó. §4.1 = `request_contract.py::PrismTopologySpec`; §4.2 =
+> `analyze_contract.py` (`base_shape`/`lateral_structure`/`solid_subkind` của lược đồ topo); luật cube/cuboid §4.3 =
+> `analyze_contract.py` (đọc topo, sai ⇒ lỗi thẩm định) + `geometry_compiler/compiler.py`
+> (`_danh_gia_eligibility_cuboid_prism`, `OBLIQUE_LATERAL_EDGE_FOR_CUBOID`). Khác văn bản: cạnh lập phương lệch nhau
+> báo `SQUARE_SIDES_UNEQUAL`, không phải `CUBE_EDGES_UNEQUAL`. Phần compiler chỉ chạy khi bật `DETERMINISTIC_FIRST`
+> (sản phẩm mặc định `LLM_ONLY`). Bảng §5 là kết quả nghiệm thu Phase 1 tại thời điểm ghi, không phải số hiện hành.
+
 > **Mã định danh:** `DECISION-ARCH-CUBOID-CUBE-CONTRACT-01`  
 > **Trạng thái:** `APPROVED`  
 > **Quyết định chốt:** `CONTRACT_SEMANTICS_READY`  
