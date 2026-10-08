@@ -12,8 +12,15 @@
 
 ## 2. Cổng
 
-T3 và cổng danh tính chạy ở commit tài liệu cuối của run trong worktree tách rời sạch: log `diagnostics/t3_<sha>.log`,
-`diagnostics/gates_<sha>.log` (commit ghi log đi sau commit tài liệu).
+Tại commit tài liệu `76600a5d`, worktree tách rời sạch CRLF có dấu cách (`D:/tmp/mobile fit`), 0 model call; commit ghi log đi
+sau (chỉ thêm log và mục này):
+
+- T3 `FULL_PRODUCT_GATE_PASS` (`diagnostics/t3_76600a5d.log`): pytest **7239 passed, 1 skipped, 2 deselected**; vitest
+  **67 files / 1032 tests**; typecheck + build; tập demo; bề mặt sập 6/6.
+- Cổng danh tính (`diagnostics/gates_76600a5d.log`): candidate `7f3f0423…` khớp; cache 118 / `b1714b566e25c912…` khớp; xuất
+  lược đồ ×2 trùng byte; `LLM_ONLY`; bề mặt mô hình 0 file đổi; ngoài thư mục run chỉ `EVALUATION_CANDIDATE.json`
+  (product_commit_sha) và `EVIDENCE_INDEX.md` (mục mới); `git diff --check` sạch; docs audit PASS; node harness 95 pass,
+  2 skipped, 0 fail; worktree sạch trước/sau.
 
 ## 3. Việc của người dùng
 
