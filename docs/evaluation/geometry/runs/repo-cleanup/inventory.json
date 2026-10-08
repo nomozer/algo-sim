@@ -1,0 +1,1502 @@
+{
+ "schema": "repo-cleanup/inventory/1",
+ "base": "2c2dfbbf",
+ "head": "11bea4a7e5d93df57609ab9731bc58fcc60d430a",
+ "counts": {
+  "delete": 132,
+  "rename": 29,
+  "relocate": 1,
+  "edit": 38,
+  "add": 1
+ },
+ "areas": {
+  "reviewed": [
+   "backend/app (import graph from app.main)",
+   "backend/scripts (178: docstrings, imports incl. importlib, consumers)",
+   "backend/tests incl. fixtures (consumers incl. dynamic paths)",
+   "backend/alembic",
+   "frontend/src (import graph from main.tsx, CSS)",
+   "frontend/scripts (95: data opened, catalogue ids, gates)",
+   "frontend/package.json, index.html, public/",
+   "root files, .claude hooks/settings",
+   "living docs (18 root docs, docs/architecture, docs/research, AGENTS.md, README.md, RUN_NAMING.md)"
+  ],
+  "not_reviewed": [
+   [
+    "docs/evaluation/** run directories and the 180 historical reports at docs root",
+    "frozen evidence (AGENTS §4) — classified, not rewritten"
+   ],
+   [
+    "docs/legacy/**",
+    "dead by definition (CLAUDE.md §1)"
+   ],
+   [
+    "node_modules, .venv, dist, __pycache__, *.db, data/ (gitignored)",
+    "dependencies or regenerable / not project-managed"
+   ]
+  ],
+  "no_ci": "no CI configuration is tracked (.github absent); gates are full-gate.mjs, impact.mjs, package.json scripts"
+ },
+ "items": [
+  {
+   "path": ".claude/hooks/code-index-guard.mjs",
+   "action": "edit"
+  },
+  {
+   "path": "backend/app/ai/explain.py",
+   "action": "delete",
+   "blob_at_base": "dfc1a5d411dcce915498ee45d552e965be4b2391",
+   "function": "POST /api/explain — LLM explanation of the Informatics engine state",
+   "consumers": "main.py route; frontend caller AIHelpPanel not mounted (ui-hygiene forbids it on screen)",
+   "reason": "dead feature of the removed domain; route now 404 (test_endpoint_tutor_flow_da_xoa); prompt kept (hashed model surface)"
+  },
+  {
+   "path": "backend/app/evaluation/__init__.py",
+   "action": "delete",
+   "blob_at_base": "dbbc488a67e818b6c795062f216ff5961de2dca2",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/dataset.py",
+   "action": "delete",
+   "blob_at_base": "3d9d3fb91c4714c0ec155fa39e494da731715564",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/metamorphic.py",
+   "action": "delete",
+   "blob_at_base": "ab643cb97eed56ebc33103e9ea91be76ff126931",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/metrics.py",
+   "action": "delete",
+   "blob_at_base": "8f6fd562346d34a109514d4a1a69c152f1b3583c",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/observer.py",
+   "action": "delete",
+   "blob_at_base": "db6b8dedf4aa5ec7f7757c2149756f29d757836b",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/product_scope.py",
+   "action": "delete",
+   "blob_at_base": "a24b13097025e950d89bbe6cfddad7f96332ece7",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/provenance.py",
+   "action": "delete",
+   "blob_at_base": "df7a015f9b2260af4ec64c93ff75bf6631a2869f",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/evaluation/wave_snapshots.py",
+   "action": "delete",
+   "blob_at_base": "f093a17ba7643589ab60e6f4a4961612f96ce7af",
+   "function": "Informatics benchmark harness (M7 dataset, Wave 2B metamorphic, metrics, observer, product scope, provenance logger, wave snapshots)",
+   "consumers": "none in app/ (not reachable from app.main); wave_snapshots only by scripts/historical_reproduction.py and it imported the removed app.simulation.catalog",
+   "reason": "serves the removed Informatics benchmark only"
+  },
+  {
+   "path": "backend/app/main.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/build_geometry_samples.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/classify_run1_failures.py",
+   "action": "delete",
+   "blob_at_base": "c6fce6838fc4fe512995e839dbdf346503bfca8b",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/database_visual_artifacts.py",
+   "action": "delete",
+   "blob_at_base": "9328850347ffcb3772a22c0e3f3d417fca0a9c24",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/finalize_phase7b_holdout.py",
+   "new_path": "backend/scripts/finalize_holdout_intake.py",
+   "action": "rename",
+   "similarity": "095"
+  },
+  {
+   "path": "backend/scripts/freeze_evaluation_candidate.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/historical_reproduction.py",
+   "action": "delete",
+   "blob_at_base": "5afabd8e86d2ee2c297f35e04819dae2b4818301",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/make_human_copy_packet.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/measure_geometry_stability.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/ocr_sgk_ingest.py",
+   "action": "delete",
+   "blob_at_base": "e5a1531c7dbd17c205115ffc49370aa766d8ea2a",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/replay_harness.py",
+   "action": "delete",
+   "blob_at_base": "96106b9a91a05cecd59c7e1c0ffdf62233db0810",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/run_curved_end_to_end.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/run_wave1_dev_stability.py",
+   "new_path": "backend/scripts/run_dev_stability.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/scripts/run_geometry_dev_evaluation.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/run_phase7b_data_pipeline.py",
+   "new_path": "backend/scripts/run_holdout_data_pipeline.py",
+   "action": "rename",
+   "similarity": "093"
+  },
+  {
+   "path": "backend/scripts/run_m1_pipeline.py",
+   "new_path": "backend/scripts/run_holdout_ingest_chain.py",
+   "action": "rename",
+   "similarity": "098"
+  },
+  {
+   "path": "backend/scripts/run_phase7b_official.py",
+   "new_path": "backend/scripts/run_holdout_official.py",
+   "action": "rename",
+   "similarity": "098"
+  },
+  {
+   "path": "backend/scripts/run_phase7a_pilot.py",
+   "new_path": "backend/scripts/run_holdout_pilot.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/scripts/run_rectangular_pyramid_live_analyze.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/run_sealed_evaluation.py",
+   "action": "delete",
+   "blob_at_base": "adec6d686c6e991d9185e9e92926f3a4ff9b4787",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/score_phase7b_official.py",
+   "new_path": "backend/scripts/score_holdout_official.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/scripts/seal_benchmark.py",
+   "action": "delete",
+   "blob_at_base": "bccbeacf83d4174343e7d9a1707d8708c1bd18de",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/seal_geometry_holdout.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/validate_human_copy_packet.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/scripts/validate_sealed_submission.py",
+   "action": "delete",
+   "blob_at_base": "58294e46a4df76d3405655f058b12902305a426f",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/scripts/verify_v2_expressibility.py",
+   "new_path": "backend/scripts/verify_baseline_v2_expressibility.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/scripts/w2b_patch_artifacts.py",
+   "action": "delete",
+   "blob_at_base": "3ae6c2c598a99cc3a5ef975da6a256102b359404",
+   "function": "one-off Informatics apparatus (M17 reproduction, SGK Tin học OCR, M17 visual review, SEALED Informatics benchmark run/seal/validation, SEALED #1 failure classification, container multi-input replay)",
+   "consumers": "their own tests only (test_sealed_validator, test_replay_harness, part of test_benchmark_seal), test_gemini_model_config (model-in-artifact, migrated)",
+   "reason": "the measured runs are done and frozen in docs/evaluation; generic invariants migrated (see migrated)"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c01_temperature_scan.json",
+   "action": "delete",
+   "blob_at_base": "c7131ce1440347ed60c86c37edadb534f5224396",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c02_bracket_stack.json",
+   "action": "delete",
+   "blob_at_base": "8e8fce1c5f13698e41161768c6ba9d04e6ff1040",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c03_order_count_range.json",
+   "action": "delete",
+   "blob_at_base": "043d4c8e32648663eee88dfb3c80d15c813452c4",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c04_athlete_sorting.json",
+   "action": "delete",
+   "blob_at_base": "5281cf2a354a27901b472d69ea0171d569857189",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c05_last_occurrence.json",
+   "action": "delete",
+   "blob_at_base": "2ddebca1d0ad879ec9047bc89337c76c63b854ae",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/certified/c06_table_filter.json",
+   "action": "delete",
+   "blob_at_base": "fa44d4d820f4ef0ab5111ca41bc869763b309668",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/d_test_holdout.json",
+   "action": "delete",
+   "blob_at_base": "82238a008c177217cb9584d086e1dab69f5c3fab",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/d_test_holdout_2.json",
+   "action": "delete",
+   "blob_at_base": "97d7ea175a899477755e564100689d00e1b871ed",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/faults/f01_pointer_oob.json",
+   "action": "delete",
+   "blob_at_base": "dab74bf9c78d6666e994533cea5f9f2272e932ca",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/faults/f02_stack_underflow.json",
+   "action": "delete",
+   "blob_at_base": "1882c7b21ed674a2ce72f32ac542a9e4b14826c5",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/faults/f03_dangling_binding.json",
+   "action": "delete",
+   "blob_at_base": "caeba999de8594695d50ef52679f502dc00adef6",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/faults/f04_type_incoherent.json",
+   "action": "delete",
+   "blob_at_base": "ddc55513c5767b84c69b6cfd925abca4f59fbcad",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/m13_dijkstra_pseudo_algorithm.json",
+   "action": "delete",
+   "blob_at_base": "0db7d690fdb939d5b32d8169c1e2cd5726e7cc00",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h01_max_score_scan.json",
+   "action": "delete",
+   "blob_at_base": "7457e1c27a8836f4dfa46bd7d4f678920ad287b8",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h02_nested_bracket_stack.json",
+   "action": "delete",
+   "blob_at_base": "393c30de20863959f9d68857b547b55a7770d3de",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h03_price_range_counter.json",
+   "action": "delete",
+   "blob_at_base": "b5176194f284833b1895f4c4d1665e20942c379d",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h04_running_time_sort.json",
+   "action": "delete",
+   "blob_at_base": "fabfe5be2826ea9a0a3e05db0b2dd886151625c8",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h05_search_last_occurrence.json",
+   "action": "delete",
+   "blob_at_base": "c68257f6bd78db6bbf75af08c33f2fe362b86d8e",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h06_grade_table_filter.json",
+   "action": "delete",
+   "blob_at_base": "5cd15d052ebf606aced4c37506d81327906bf215",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h07_temperature_scan_avg.json",
+   "action": "delete",
+   "blob_at_base": "558fb86a11e7fcff0d48596d88fc9810c0242283",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h08_even_numbers_counter.json",
+   "action": "delete",
+   "blob_at_base": "1958cc953a0b5f650478c1aff744e168777b65a3",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h09_refusal_missing_tree.json",
+   "action": "delete",
+   "blob_at_base": "1a1788ba8ce896b31da900a07dff78436cca8a27",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/h10_refusal_continuous_physics.json",
+   "action": "delete",
+   "blob_at_base": "4c5bfdbc138fa7d9fc7084e880a532b2084dc2a5",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_001_1787076057/run_manifest.json",
+   "action": "delete",
+   "blob_at_base": "3366d1fb2618390b83ecf8a4c8f512fb8a4e2bdd",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/run_manifest.json",
+   "action": "delete",
+   "blob_at_base": "b8eb0834634f9398db37647e586881ab71a5c253",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t01_min_power_scan.json",
+   "action": "delete",
+   "blob_at_base": "b7d05c28091de61228955bc86a56117c9939d9f4",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t02_mixed_bracket_stack.json",
+   "action": "delete",
+   "blob_at_base": "fc32fe71f27c154d503585211cf2d59e988e279d",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t03_print_queue_fifo.json",
+   "action": "delete",
+   "blob_at_base": "b990b13e59111cda0b3ccac9b3a676a0cb9ce769",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t04_height_selection_sort.json",
+   "action": "delete",
+   "blob_at_base": "3d0377696d58d362b4d1ce3ad93fd65ca044e9a1",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t05_frequency_counter.json",
+   "action": "delete",
+   "blob_at_base": "811b880d1d35df274ab794c2e987023118eb4b15",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t06_excellent_student_filter.json",
+   "action": "delete",
+   "blob_at_base": "1d9dab9d8fc4bd69491cfc57b1423c57175c9984",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t07_exam_score_avg_scan.json",
+   "action": "delete",
+   "blob_at_base": "9c1e9e352a71706a46bde19bce26501e8820744e",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t08_odd_numbers_counter.json",
+   "action": "delete",
+   "blob_at_base": "c79955338216f93565e4d24251e9da8503b6ab47",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t09_refusal_missing_preorder_tree.json",
+   "action": "delete",
+   "blob_at_base": "9051ca7aee22bc8a173cb3d56599ce93461064ab",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/FINAL_EVALUATION_RUN_002_1787132341/t10_refusal_3d_cube_rotation.json",
+   "action": "delete",
+   "blob_at_base": "cff2359c933182b597d46391b7ac9cfb43ab9e47",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/pilot_verification_run/p01_find_max.json",
+   "action": "delete",
+   "blob_at_base": "f82ef9b0ce8788efb8500832cf7fac17f94dc5c9",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/pilot_verification_run/p02_bracket_stack.json",
+   "action": "delete",
+   "blob_at_base": "89d50586c5a53746c7e0471b7f5e77570dd2f5a7",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/pilot_verification_run/p03_count_even.json",
+   "action": "delete",
+   "blob_at_base": "b120bb536a24be24516b3993251874c07fa57454",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/recorded/pilot_verification_run/run_manifest.json",
+   "action": "delete",
+   "blob_at_base": "f0d728e88ae10581c4dd17e8bca651ce69544b75",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/refusals/r01_insufficient_input.json",
+   "action": "delete",
+   "blob_at_base": "bb824a9541b5fd4034d484d98c258c96228550c5",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/refusals/r02_continuous_physics.json",
+   "action": "delete",
+   "blob_at_base": "1f658f8e02a4f02904b038c5d7a278c1b7f94311",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/fixtures/seal_manifest.json",
+   "action": "delete",
+   "blob_at_base": "4397980499df6a3cdf25658a3951c172aaad0532",
+   "function": "Informatics benchmark inputs and recorded runs (array scans, bracket stack, sorting, queue, Dijkstra pseudo-algorithm)",
+   "consumers": "only self-references; ProvenanceLogger (removed) wrote recorded/; oracles.py (removed) evaluated certified/",
+   "reason": "no consumer; domain removed"
+  },
+  {
+   "path": "backend/tests/geometry/test_wave1_scope_goc.py",
+   "new_path": "backend/tests/geometry/test_angle_scope_gate.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/geometry/test_construction_bridge_g4.py",
+   "new_path": "backend/tests/geometry/test_construction_through_point.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_geometry_wave2.py",
+   "new_path": "backend/tests/geometry/test_dev_failure_regressions.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_phase5_harness.py",
+   "new_path": "backend/tests/geometry/test_dev_run_preflight.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/geometry/test_evaluation_integrity_7a1.py",
+   "new_path": "backend/tests/geometry/test_evaluation_integrity.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_expectation_contract_7a2.py",
+   "new_path": "backend/tests/geometry/test_expectation_contract.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/geometry/test_face_vertex_resolver.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/geometry/test_failure_details.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/geometry/test_geometry_dev_runner.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/geometry/test_phase7b_baseline_immutable.py",
+   "new_path": "backend/tests/geometry/test_holdout_baseline_immutable.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_holdout_readiness_7b.py",
+   "new_path": "backend/tests/geometry/test_holdout_readiness.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/geometry/test_model_assumption_boundary.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/geometry/test_wave1_oracle_connectivity.py",
+   "new_path": "backend/tests/geometry/test_obligation_oracle_connectivity.py",
+   "action": "rename",
+   "similarity": "098"
+  },
+  {
+   "path": "backend/tests/geometry/test_phase66_stabilization.py",
+   "new_path": "backend/tests/geometry/test_polygon_and_topology_names.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_wave1_grounding_ky_hieu.py",
+   "new_path": "backend/tests/geometry/test_prime_notation_grounding.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_scene3d_integration.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/geometry/test_wave3_cue_va_thang_do.py",
+   "new_path": "backend/tests/geometry/test_scope_cues_and_scale_invariance.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_wave2_simulatability_va_scorer.py",
+   "new_path": "backend/tests/geometry/test_scope_gate_and_claim_scorer.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_n04_targeted_registry_v2.py",
+   "new_path": "backend/tests/geometry/test_targeted_rejection_registry.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/geometry/test_thesis_runner_alignment.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/oracles.py",
+   "action": "delete",
+   "blob_at_base": "8626197533d43fba08814e112748deef0e114470",
+   "function": "reference oracles for the Informatics fixtures (temperature scan, bracket stack, …)",
+   "consumers": "referenced by name from the removed fixtures only",
+   "reason": "no consumer"
+  },
+  {
+   "path": "backend/tests/semantic_program/test_benchmark_seal.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/semantic_program/test_replay_harness.py",
+   "action": "delete",
+   "blob_at_base": "52a880bca978afdbc3dcc0129aa2da3cd129bcca",
+   "function": "tests of removed harness scripts",
+   "consumers": "pytest collection",
+   "reason": "test the removed tool itself, not the product"
+  },
+  {
+   "path": "backend/tests/semantic_program/test_sealed_validator.py",
+   "action": "delete",
+   "blob_at_base": "3a366f970389de4e3f2d957b4b9a87a03079c2ce",
+   "function": "tests of removed harness scripts",
+   "consumers": "pytest collection",
+   "reason": "test the removed tool itself, not the product"
+  },
+  {
+   "path": "backend/tests/semantic_program/test_taxonomy_frozen.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/test_acceptance_post_model_path.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/test_api.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/test_v3_live_entrypoint_wiring.py",
+   "new_path": "backend/tests/test_curved_acceptance_entrypoint.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/test_v3_runner_manifest_integration.py",
+   "new_path": "backend/tests/test_curved_acceptance_manifest.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/test_v3_product_path_parity.py",
+   "new_path": "backend/tests/test_curved_acceptance_product_path.py",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "backend/tests/test_v3_threshold_and_run_identity.py",
+   "new_path": "backend/tests/test_curved_acceptance_threshold.py",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "backend/tests/test_gemini_model_config.py",
+   "action": "edit"
+  },
+  {
+   "path": "backend/tests/test_informatics_evidence_pins.py",
+   "action": "add"
+  },
+  {
+   "path": "backend/tests/test_m17_wave0_artifacts.py",
+   "action": "delete",
+   "blob_at_base": "654458c01aad6bea730a13f0a7193c6b0ae5e969",
+   "function": "SHA-256 pins of the m17/wave0 and m17/wave1 evidence",
+   "consumers": "pytest collection",
+   "reason": "merged into test_informatics_evidence_pins.py (same pins and assertions)"
+  },
+  {
+   "path": "backend/tests/test_m17_wave1_artifacts.py",
+   "action": "delete",
+   "blob_at_base": "c57dd5f79b6cdbdf3b9e2607b70b3462d0dfc69b",
+   "function": "SHA-256 pins of the m17/wave0 and m17/wave1 evidence",
+   "consumers": "pytest collection",
+   "reason": "merged into test_informatics_evidence_pins.py (same pins and assertions)"
+  },
+  {
+   "path": "backend/tests/test_offline_guard.py",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/simulations/capability-descriptors.json",
+   "new_path": "docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json",
+   "action": "relocate",
+   "similarity": "100"
+  },
+  {
+   "path": "frontend/package.json",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/scripts/accept-classroom-m18.mjs",
+   "action": "delete",
+   "blob_at_base": "85dafbeab0d20895d08f3fd80e5fe2734832f6a3",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/accept-experience-w4b4c.mjs",
+   "action": "delete",
+   "blob_at_base": "aaf913c0291730aeeea637bf51b087dcefa5c265",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/accept-w4b3a.mjs",
+   "action": "delete",
+   "blob_at_base": "762df03cd2d4b4e4b3ab2855efdbbe8c071dcd4a",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/accept-workspace-w4b3b.mjs",
+   "action": "delete",
+   "blob_at_base": "d76deac08d01da0a7836a74e8e16f025e5d0ad59",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/after-matrix-w4b3a.mjs",
+   "action": "delete",
+   "blob_at_base": "d61cec773b7736303ca2b27f7e3fa5e6e66f7910",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/audit-composition.mjs",
+   "action": "delete",
+   "blob_at_base": "22afd462ec5f47007faf73a41824d3baecae1999",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/audit-search-position.mjs",
+   "action": "delete",
+   "blob_at_base": "48cbe97c48269f7480ba69c546d05ca2c892c961",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/browser-runner.mjs",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/scripts/capture-before-after.mjs",
+   "action": "delete",
+   "blob_at_base": "038cb84eb89aa1316e787ac5b1dce2181a14ad63",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-stack-vnext.mjs",
+   "action": "delete",
+   "blob_at_base": "4c90cd571ffc5305f3533841def7dda0773dd667",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-tree-visual.mjs",
+   "action": "delete",
+   "blob_at_base": "6209596380df0639803c9f91209619a8a88d7ec7",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w2b-patch.mjs",
+   "action": "delete",
+   "blob_at_base": "1147acedecec094a2eef7aa653d6fb64b09818fd",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w2c-program.mjs",
+   "action": "delete",
+   "blob_at_base": "76201859e71200dda9a75a65d93cc6498cfb1787",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w3-encoding.mjs",
+   "action": "delete",
+   "blob_at_base": "27aa2f84281a825f775d869ec6274bddc21582f4",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w3-live-e2e.mjs",
+   "action": "delete",
+   "blob_at_base": "afcf9d740e691bdcbf2259e9ff19c12085435d03",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w4b2b-experiment.mjs",
+   "action": "delete",
+   "blob_at_base": "6b227f87ccc16429fb588eedc8d49d0800c7edd9",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w4b2i-interaction.mjs",
+   "action": "delete",
+   "blob_at_base": "6ad4d8c2f77e380a146c5dff9877edbe0fa04b43",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/capture-w4b2r-representation.mjs",
+   "action": "delete",
+   "blob_at_base": "4619abde5e67c7548157a7ab199aeaf775a127ef",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-a11y-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "be58b2d7aac7221594c60de4d2026a420680aca0",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-a11y-w13.mjs",
+   "action": "delete",
+   "blob_at_base": "de1a1a333e42a7d1d420314e9332a13bda693bf5",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-classroom-continuation-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "baa0157b3a9b01311e9fb8838eb0132b81b2576d",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-construction-bridge-g4.mjs",
+   "new_path": "frontend/scripts/certify-construction-through-point.mjs",
+   "action": "rename",
+   "similarity": "099"
+  },
+  {
+   "path": "frontend/scripts/certify-experience-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "00ef0ea04c05ce695b7305d643e475b136eff5a2",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-representation-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "28334e6633e1b091a7fede8a411e76d4ad9c50e6",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-scroll-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "ceec8e71dec8e61d8c268240b274ce3b68a01943",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-sweep-w12.d.mts",
+   "action": "delete",
+   "blob_at_base": "bcfcbfb4e9aca2b5888ede826334d80e9e03f4c3",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-sweep-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "57e33a009e4d59b0ceaf023239284067bcad3fe8",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-teaching-walkthrough-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "91d8d6ac1fe026194ae2bc33fdc30311d293568e",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-transport-vnext.mjs",
+   "action": "delete",
+   "blob_at_base": "85c75b367959d6621f5e649786da774fe91e0065",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-viewports-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "54660949bf064afd99d8d75037f5d9c4998db5ab",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-visual-weight-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "9d1828569548c7453ad90f684812a10c100994ea",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/certify-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "a8165d962f5c4635772dfa4d58e23bfd648b1367",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/diagnose-responsive.mjs",
+   "action": "delete",
+   "blob_at_base": "728aa9a2a9cd52389ad8f65ac9265fd76c93c4e9",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/e2e-stack-production.mjs",
+   "action": "delete",
+   "blob_at_base": "784fc8336299935c5afdc5325f721387a078bf2e",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/evidence.d.mts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/scripts/evidence.mjs",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/scripts/faultcheck-visual-weight-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "00e443a5dd57309b3ca9e65046049863ae068d06",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/fixtures.mjs",
+   "action": "delete",
+   "blob_at_base": "57ef942becc9df9700659a3565acc3b325a217fa",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/impact.mjs",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/scripts/measure-composition.mjs",
+   "action": "delete",
+   "blob_at_base": "32e13ed4b7079b5ee897ad7a6a90a29b8df69a1f",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/measure-dag-composition.mjs",
+   "action": "delete",
+   "blob_at_base": "bba94226cdf1c2db04c76e0b0cf7525967d762ef",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/measure-stage-composition.mjs",
+   "action": "delete",
+   "blob_at_base": "b380ce0361b856cc312e2f22581f0fbe3401c893",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/measure-tool-first-w5.mjs",
+   "action": "delete",
+   "blob_at_base": "45d195edda8c3c1326b54451bee1820be8791f9a",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/measure-transport-w7.mjs",
+   "action": "delete",
+   "blob_at_base": "0393346f043e5b78a29415eedaee38c908ece65b",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/quiz-dominance-w12.mjs",
+   "action": "delete",
+   "blob_at_base": "4f064499c8a41f8e066d4ca69319f68dbe0c17b6",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/runtime-zero-ai-w7.mjs",
+   "action": "delete",
+   "blob_at_base": "457845d4927cd48a2873ad369b2719c0d3c585df",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/scripts/visual-stress-audit.mjs",
+   "action": "delete",
+   "blob_at_base": "5af8e6d64f2f174de9c7e191292f027b23c3cf06",
+   "function": "browser runners of the Informatics catalogue (M17–M20, W4B, W12 sweep, vNext stack, classroom assignment with logic.and_gate, before/after captures of .workspace-card targets)",
+   "consumers": "each other, docs, frozen run .sh in docs/evaluation; no gate (full-gate, impact, package.json) and no geometry runner",
+   "reason": "measure the removed domain; frozen evidence they produced stays in docs/evaluation/m17..m20"
+  },
+  {
+   "path": "frontend/src/certification-sweep.test.ts",
+   "action": "delete",
+   "blob_at_base": "86b21ee7e1b16599f30d8a5ec6982285e0f7a44c",
+   "function": "tests of the removed engine / dead CSS / W12 certification sweep",
+   "consumers": "vitest collection",
+   "reason": "test removed code; the evidence.mjs sweep functions they tested had no other caller"
+  },
+  {
+   "path": "frontend/src/code-index-sync.test.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/components/AIHelpPanel.tsx",
+   "action": "delete",
+   "blob_at_base": "f87a8f4156f8e11501c0ce37095ffcbc65f51df5",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/AnalysisCard.tsx",
+   "action": "delete",
+   "blob_at_base": "c4f0603bc35246f57c7b898f8a8e2df6ef23c6be",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/PseudocodeView.tsx",
+   "action": "delete",
+   "blob_at_base": "1bc8bc770045f4caf4baef3eac618b232e9aa035",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/StageLegend.tsx",
+   "action": "delete",
+   "blob_at_base": "02310bc756072a38407aab6b46ee7f1d77c044bc",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/TraversalFrontier.test.tsx",
+   "action": "delete",
+   "blob_at_base": "99fd3536dae8269313ee2464b2e4aa3d26971c57",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/TraversalFrontier.tsx",
+   "action": "delete",
+   "blob_at_base": "f3e14f97ad8e7e853f8de56ab9d4b09f1f7e9695",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/VarsView.tsx",
+   "action": "delete",
+   "blob_at_base": "2431808d6bb07917543a7daa6ef33998403c0341",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/components/control-layout-w4b3e.test.ts",
+   "new_path": "frontend/src/components/control-layout.test.ts",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "frontend/src/components/transport-w7.test.tsx",
+   "new_path": "frontend/src/components/transport-policy.test.tsx",
+   "action": "rename",
+   "similarity": "100"
+  },
+  {
+   "path": "frontend/src/core/algorithms.ts",
+   "action": "delete",
+   "blob_at_base": "c97ad9f17c9a12953eb5aa008c9454ea2081fb62",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/predicate-family-w5c.test.ts",
+   "action": "delete",
+   "blob_at_base": "f3939123e708c79c67980ec5377619aadd1643c1",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/predicate.ts",
+   "action": "delete",
+   "blob_at_base": "d6829e008727ec370d585fd75e42f2c4028e5408",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/program.test.ts",
+   "action": "delete",
+   "blob_at_base": "ee01c20bb9b78eeae018ddfbac74d0600d82cd6a",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/program.ts",
+   "action": "delete",
+   "blob_at_base": "c91d21d930623c65db2ed24d09da5952411a808a",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/pseudocode.ts",
+   "action": "delete",
+   "blob_at_base": "b64a392c61f29b05bf7479f4e06f07de89529933",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/scan.test.ts",
+   "action": "delete",
+   "blob_at_base": "e2bb1aaaa0e260305e3a5eca29edb6ab2a62c2bf",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/scan.ts",
+   "action": "delete",
+   "blob_at_base": "578de35fad656e4af25d869709992fc18e9df165",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/trace-builder.ts",
+   "action": "delete",
+   "blob_at_base": "0428e389e83536f9e3eecd48a6b792ebaba9bba3",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/types.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/core/var-label.test.ts",
+   "action": "delete",
+   "blob_at_base": "eac3346209ffc3548349dd002fd9c9fa43dd350e",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/core/var-label.ts",
+   "action": "delete",
+   "blob_at_base": "a1d0719b78065eb6f9f7a75324c7249b6a4a0929",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/llm/client.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/llm/offline-guard.test.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/simulations/action-probe.ts",
+   "action": "delete",
+   "blob_at_base": "078a98d2debc4a229db881232ade3d2d17cf4248",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/simulations/color-channels.ts",
+   "action": "delete",
+   "blob_at_base": "f9b9544967ac4a2d669bfc80bce5a6683a5c224b",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/simulations/domains/semantic/index.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/simulations/result-caption-w4b2y.test.ts",
+   "action": "delete",
+   "blob_at_base": "7da0c7ac4ebf7337ceef9b87a412260f9e18d4ec",
+   "function": "tests of the removed engine / dead CSS / W12 certification sweep",
+   "consumers": "vitest collection",
+   "reason": "test removed code; the evidence.mjs sweep functions they tested had no other caller"
+  },
+  {
+   "path": "frontend/src/simulations/stage-size.ts",
+   "action": "delete",
+   "blob_at_base": "658ff8f29992ce7d5765948a38d6297e3e6edb1f",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/simulations/svg-affordance.ts",
+   "action": "delete",
+   "blob_at_base": "47eb6293354986912a2389f9f3350772494b2fc6",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/simulations/tool-affordance.ts",
+   "action": "delete",
+   "blob_at_base": "2e0ab479d76bc306555d70a88fb13e4c68b801e3",
+   "function": "Informatics algorithm engine, its views and 2D renderer helpers",
+   "consumers": "not reachable from main.tsx (import graph); text references only in code-index-sync KNOWN_GAPS, browser-runner preload of action-probe (only Informatics scripts read it)",
+   "reason": "dead code of the removed domain; tests go with it"
+  },
+  {
+   "path": "frontend/src/simulations/types.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/simulations/visual-audit-completeness.test.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/state/store.test.ts",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/styles/global.css",
+   "action": "edit"
+  },
+  {
+   "path": "frontend/src/test-tiers.test.ts",
+   "action": "edit"
+  }
+ ],
+ "kept_with_reason": [
+  {
+   "item": "backend/app/ai/skills/{adapt,analyze,classify,edit,explain,simulate,semantic_analyze,semantic_program}.md",
+   "what": "Informatics prompts",
+   "why": "every skills/*.md feeds the semantic-environment hash of the cache lock; removing one = model-surface change + CACHE_VERSION bump",
+   "tracked_by": "ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY"
+  },
+  {
+   "item": "backend/app/simulation/semantic_program (ContainerType, container ops, visual bindings), frontend/src/simulations/domains/semantic",
+   "what": "IR container vocabulary + 2D renderer",
+   "why": "live IR; schema hashed (synthesis_schema) and exported; the brief forbids IR change",
+   "tracked_by": "same issue"
+  },
+  {
+   "item": "backend/tests/semantic_program/* with Informatics programs, fixtures_coverage_18.py, execution_oracles.py, test_cross_domain_matrix.py + scripts/cross_domain_matrix.py",
+   "what": "IR tests whose input data are algorithm programs",
+   "why": "they test live interpreter/validator/gate code; a test is not removed because its input names an algorithm",
+   "tracked_by": "same issue"
+  },
+  {
+   "item": "backend/app/ai/pipeline.py domain=None branch",
+   "what": "Informatics prompt selection",
+   "why": "part of the live route code; removing is a route change tied to the prompts",
+   "tracked_by": "same issue"
+  },
+  {
+   "item": "backend/tests/test_informatics_evidence_pins.py, tests/semantic_program/test_benchmark_seal.py, frontend/src/simulations/visual-audit-completeness.test.ts",
+   "what": "pins of retained historical evidence",
+   "why": "the evidence stays in the repo (immutable); the pins keep it from being edited",
+   "tracked_by": "—"
+  },
+  {
+   "item": "docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json",
+   "what": "24 Informatics targets (snapshot)",
+   "why": "referent of the historical audit SIMULATION_VISUAL_LANGUAGE_AUDIT.md; moved out of frontend/src byte-identical",
+   "tracked_by": "—"
+  },
+  {
+   "item": "frontend/src/components/SamplePreview.tsx, simulations/renderer.ts threeD, SimulationWorkspace specDrift, offline-catalog.ts comment, 9 dead geo3d-* CSS classes, historical comments citing removed scripts",
+   "what": "shell residue",
+   "why": "changing them changes what the UI shows (preview glyphs for old history entries) or is geometry UI work",
+   "tracked_by": "ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE"
+  },
+  {
+   "item": "backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py",
+   "what": "migration",
+   "why": "Alembic chain history; DB records revision ids",
+   "tracked_by": "—"
+  },
+  {
+   "item": "names with dataset/pool/metric versions and concept ids (clean_baseline_v2, curved_v3, reliability_v2, c1a/c1b/c2, k3, test_w17_* selectors)",
+   "what": "names",
+   "why": "data identity or concept, not wave codes",
+   "tracked_by": "docs/evaluation/RUN_NAMING.md"
+  },
+  {
+   "item": "frontend/scripts geometry runners using URL.pathname (18 files)",
+   "what": "space-path defect",
+   "why": "geometry tooling, not Informatics",
+   "tracked_by": "ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH"
+  }
+ ],
+ "relocated_git_blob": {
+  "capability-descriptors.json": {
+   "before": "258d8da3ba4e0bbb4d00a43a8cfaa8c2c2176987",
+   "after": "258d8da3ba4e0bbb4d00a43a8cfaa8c2c2176987"
+  }
+ }
+}

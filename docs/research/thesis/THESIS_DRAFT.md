@@ -1354,7 +1354,7 @@ Hệ thống gồm hai phần triển khai độc lập, giao tiếp qua HTTP.
 
 | thành phần | vị trí | trách nhiệm |
 |---|---|---|
-| Biên HTTP | `backend/app/main.py` | `/api/analyze`, `/api/explain`, `/api/health`, chẩn đoán runtime |
+| Biên HTTP | `backend/app/main.py` | `/api/analyze`, `/api/image/extract`, `/api/health`, chẩn đoán runtime |
 | Điều phối | `backend/app/ai/pipeline.py` | dò miền, hai giai đoạn LLM, gọi cửa thẩm định |
 | Cầu nối mô hình | `backend/app/ai/gemini.py` + `skills/*.md` | prompt, cache prompt trong tiến trình |
 | Hợp đồng IR | `…/semantic_program/contract.py` | mô hình Pydantic — **nguồn** của lược đồ |

@@ -1,6 +1,6 @@
 # Naming policy — runs, files, folders
 
-> **Một tài liệu sống duy nhất cho mọi quy ước tên** (mở rộng 2026-10-07, run `exact-dimensions`; giữ đường dẫn cũ vì
+> **Một tài liệu sống duy nhất cho mọi quy ước tên** (mở rộng 2026-10-07, run `exact-dimensions`; bảng thứ hai và danh sách giữ tên cập nhật 2026-10-08, run `repo-cleanup`; giữ đường dẫn cũ vì
 > báo cáo lịch sử trỏ tới nó). Mục *Tên file và thư mục* ngay dưới là luật HIỆN HÀNH; các mục sau là luật run cũ, còn
 > hiệu lực cho run đã đặt tên theo chúng.
 
@@ -29,7 +29,7 @@
 | `frontend/scripts/w02-closure-probe.mjs` | `frontend/scripts/check-scene-controls.mjs` | đầu dò nhãn theo bước, hình phụ, lưới, bảng bước |
 | `frontend/scripts/w04-panels-probe.mjs` | `frontend/scripts/check-panels.mjs` | đầu dò bảng nổi, bố cục, chọn trên hình |
 | `frontend/scripts/w05-focus-probe.mjs` | `frontend/scripts/check-focus-mode.mjs` | đầu dò chế độ tập trung |
-| `frontend/scripts/capture-phase-evidence.mjs` | `frontend/scripts/capture-before-after.mjs` | ảnh trước/sau một thay đổi |
+| `frontend/scripts/capture-phase-evidence.mjs` | `frontend/scripts/capture-before-after.mjs` | ảnh trước/sau một thay đổi — *gỡ ở `repo-cleanup`: nó chụp `.workspace-card` của target Tin học* |
 | `backend/tests/geometry/w14_cases.py` | `backend/tests/geometry/route_cases.py` | ca dùng chung qua route sản phẩm |
 | `backend/tests/geometry/test_regular_square_pyramid_w02.py` | `…/test_regular_square_pyramid_height.py` | đường cao SO, nguồn chiều cao |
 | `backend/tests/geometry/test_regular_square_pyramid_w03.py` | `…/test_asked_segment_construction.py` | đoạn đề hỏi được dựng |
@@ -38,12 +38,62 @@
 | `backend/tests/geometry/fixtures/w14_parity/` | `…/fixtures/formation_parity/` | đặc tả dựng hình năm cấu hình |
 | `backend/tests/geometry/fixtures/w14_phan_loai_khoi_truoc.json` | `…/fixtures/solid_classification_baseline.json` | phân loại khối trước đổi |
 
-### Giữ tên có chủ đích (tra cứu)
+### Đã đổi (run `repo-cleanup`, 2026-10-08, commit `67e11671`)
 
-- Bằng chứng khoá luận cũ trích theo đường dẫn — **giữ**: `backend/scripts/{run_phase7a_pilot,run_phase7b_*,score_phase7b_official,finalize_phase7b_holdout,run_wave1_dev_stability,run_m1_pipeline,wave_counters}.py`, các test khoá chúng (`test_phase*`, `test_wave*`, `test_m17_wave*`, `test_geometry_wave2.py`), `backend/app/evaluation/wave_snapshots.py` ("wave" là khái niệm của miền đánh giá).
-- Script chứng nhận thời Tin học (`frontend/scripts/certify-*-w12.mjs`, `*-w7.mjs`, `accept-classroom-m18.mjs`,
-  `capture-w3-*.mjs`, `quiz-dominance-w12.mjs`, `measure-tool-first-w5.mjs`) và `frontend/src/components/transport-w7.test.tsx`: không thuộc luồng hình học đang chạy; gỡ hay đổi tên là một quyết định dọn kho riêng, chưa làm.
-- Báo cáo lịch sử ở gốc `docs/` (`PHASE_*`, `W12_REMAINING.md`, …) và mọi thư mục `runs/` cũ: bất biến.
+| cũ | mới | chức năng |
+|---|---|---|
+| `backend/scripts/run_phase7a_pilot.py` | `run_holdout_pilot.py` | pilot run that checks the measurement apparatus before the held-out run |
+| `backend/scripts/run_phase7b_data_pipeline.py` | `run_holdout_data_pipeline.py` | one command for the held-out data line: validate packet → ingest → … → readiness |
+| `backend/scripts/run_phase7b_official.py` | `run_holdout_official.py` | the official held-out run (20 sealed problems × k=3) |
+| `backend/scripts/score_phase7b_official.py` | `score_holdout_official.py` | scores the official held-out run from its artifacts |
+| `backend/scripts/finalize_phase7b_holdout.py` | `finalize_holdout_intake.py` | after the human copy packet: candidates / accepted / rejected and what is missing |
+| `backend/scripts/run_m1_pipeline.py` | `run_holdout_ingest_chain.py` | ingest → pool → scaffold expectation → freeze check → coverage → readiness |
+| `backend/scripts/run_wave1_dev_stability.py` | `run_dev_stability.py` | live stability run on DEV problems after the held-out run |
+| `backend/scripts/verify_v2_expressibility.py` | `verify_baseline_v2_expressibility.py` | CANONICAL_EXECUTABLE for the clean baseline V2 set (pairs with verify_baseline_expressibility) |
+| `backend/tests/geometry/test_construction_bridge_g4.py` | `test_construction_through_point.py` | the four kernel constructions "through a point, parallel/perpendicular to …" |
+| `backend/tests/geometry/test_geometry_wave2.py` | `test_dev_failure_regressions.py` | one lock per failure cause of the first DEV run |
+| `backend/tests/geometry/test_n04_targeted_registry_v2.py` | `test_targeted_rejection_registry.py` | targeted rejection registry v2 (case N04 scored after the safety repair) |
+| `backend/tests/geometry/test_phase5_harness.py` | `test_dev_run_preflight.py` | gate before spending quota on a DEV run (prompt leaks, report axes) |
+| `backend/tests/geometry/test_phase66_stabilization.py` | `test_polygon_and_topology_names.py` | construct_polygon contract + vertex-name resolver by topology |
+| `backend/tests/geometry/test_phase7b_baseline_immutable.py` | `test_holdout_baseline_immutable.py` | the official held-out evidence is immutable and not DEV data |
+| `backend/tests/geometry/test_wave1_grounding_ky_hieu.py` | `test_prime_notation_grounding.py` | prime notation (A′) and grounding agree |
+| `backend/tests/geometry/test_wave1_oracle_connectivity.py` | `test_obligation_oracle_connectivity.py` | every obligation kind connects to an oracle key |
+| `backend/tests/geometry/test_wave1_scope_goc.py` | `test_angle_scope_gate.py` | angle problems pass the scope gate |
+| `backend/tests/geometry/test_wave2_simulatability_va_scorer.py` | `test_scope_gate_and_claim_scorer.py` | both halves of the scope gate + claim scorer asks the checker |
+| `backend/tests/geometry/test_wave3_cue_va_thang_do.py` | `test_scope_cues_and_scale_invariance.py` | scope cue table covers the set; oracle is scale-invariant |
+| `backend/tests/geometry/test_evaluation_integrity_7a1.py` | `test_evaluation_integrity.py` | evaluation integrity of the held-out apparatus |
+| `backend/tests/geometry/test_expectation_contract_7a2.py` | `test_expectation_contract.py` | obligation expectations separate from the measuring code |
+| `backend/tests/geometry/test_holdout_readiness_7b.py` | `test_holdout_readiness.py` | held-out pool readiness report and data line |
+| `backend/tests/test_v3_live_entrypoint_wiring.py` | `test_curved_acceptance_entrypoint.py` | the live curved acceptance entry point uses the sealed pool |
+| `backend/tests/test_v3_product_path_parity.py` | `test_curved_acceptance_product_path.py` | curved acceptance scores on the product layer |
+| `backend/tests/test_v3_runner_manifest_integration.py` | `test_curved_acceptance_manifest.py` | curved acceptance runner goes through the integrity layer |
+| `backend/tests/test_v3_threshold_and_run_identity.py` | `test_curved_acceptance_threshold.py` | thresholds and run identity locked before results |
+| `frontend/scripts/certify-construction-bridge-g4.mjs` | `certify-construction-through-point.mjs` | browser check of the through-point constructions |
+| `frontend/src/components/transport-w7.test.tsx` | `transport-policy.test.tsx` | transport tray policy of registered simulations |
+| `frontend/src/components/control-layout-w4b3e.test.ts` | `control-layout.test.ts` | layout of the player control strip |
+| `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | pin SHA-256 bằng chứng catalog Tin học `m17/wave0`, `m17/wave1` (gộp, khẳng định giữ nguyên) |
+| `Phase8LiveTransport` (lớp trong `run_rectangular_pyramid_live_analyze.py`) | `LiveAnalyzeTransport` | transport của lượt live analyze một request |
+
+### Giữ tên có chủ đích (tra cứu, cập nhật ở run `repo-cleanup`)
+
+- **Phiên bản của dữ liệu / chính sách / chỉ số** — danh tính của thứ được đo, không phải mã lượt: `clean_baseline_v2_cases.py`,
+  `run_clean_baseline_v2.py`, `verify_baseline_v2_expressibility.py`, `spot-check-baseline-v2.mjs` (bộ đề V2), `seal_curved_v3.py`,
+  `policies/curved_v3_*.json` (pool V3 hình cong), `run_curved_ergonomics_v2.py` (lượt V2 của probe), `reliability_v2.py` +
+  `test_reliability_v2.py` (chỉ số Reliability V2), `synthesis_repair_trace_v1_c02_redacted.json` (lược đồ vết v1, ca c02),
+  `c03_vision_extraction_replay_redacted.json` / `photo-c03-diagram-only.fixture.json` (ca c03 của bộ ảnh), `fixtures_coverage_18.py`.
+- **Tên khái niệm trong mã**: `test_coverage_gate_c1a.py`, `test_coverage_gate_c1b.py`, `test_c2_fail_closed.py` (các vế C₁a/C₁b/C₂ của
+  `coverage_gate`), `run_stability_k3.py` (`k = 3`), `wave_counters.py` ("wave" = một lượt đo, khái niệm của bộ đo).
+- **Tên test có mã lượt THEO SAU là mô tả** (`test_w17_chu_the_…`, `-k w16`): mã ấy là bộ chọn mà `CODE_INDEX`/tài liệu dùng
+  (`pytest … -k w17`); tên vẫn nói điều được kiểm. Không có test nào chỉ mang mã.
+- **Revision Alembic** `backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py`: chuỗi migration là lịch sử
+  của schema; tên file do Alembic sinh lúc tạo, DB ghi revision id chứ không ghi tên — đổi không lợi gì, giữ.
+- **Bằng chứng đã phát hành**: mọi thư mục `docs/evaluation/**` cũ (gồm `m17/wave0`, `m17/wave1`, `semantic-benchmark/sealed/`), báo
+  cáo lịch sử ở gốc `docs/` (`PHASE_*`, `W12_REMAINING.md`, …), tên artifact (`W02_CLOSURE_PROBE.json`, …) và schema id
+  (`"w04-panels-probe/1"`): bất biến. Bằng chứng cũ trích đường dẫn script/test **tại commit của nó** — đổi tên ở HEAD không
+  phá liên kết ấy (git giữ bản cũ).
+- Script chứng nhận thời Tin học từng ghi ở đây (`certify-*-w12.mjs`, `*-w7.mjs`, `accept-classroom-m18.mjs`, `capture-w3-*.mjs`,
+  `quiz-dominance-w12.mjs`, `measure-tool-first-w5.mjs`, `transport-w7.test.tsx`) — **đã xử lý ở `repo-cleanup`**: gỡ (miền đã
+  bỏ) hoặc đổi tên (`transport-policy.test.tsx`); danh sách gỡ: `docs/evaluation/geometry/runs/repo-cleanup/inventory.json`.
 
 ## Run (luật trước 2026-10-07, giữ cho run đã đặt tên theo nó)
 

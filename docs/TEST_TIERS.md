@@ -21,6 +21,10 @@ nhau ở **phạm vi được bảo vệ**, và mỗi tầng chỉ được phá
 | **T2** WAVE | trước khi đóng một wave | `npm run test:wave` | `WAVE_GATE_PASS` |
 | **T3** FULL | mốc/phát hành | `npm run test:full` | `FULL_PRODUCT_GATE_PASS` |
 
+> **Đã sửa (2026-10-08, run `repo-cleanup`):** script T1 nay là `test:domain:geometry`, `test:domain:semantic`,
+> `test:domain:shared-ui`, `test:domain:classroom`; `impact.mjs` sở hữu miền hình học theo thư mục
+> (`ISSUE-OPS-T1-DOMAIN-SCRIPTS-STALE` RESOLVED). Ghi chú cũ giữ dưới đây làm lịch sử.
+>
 > **Thực trạng (2026-10-05, `cuboid-final-review`).** 8/10 script `test:domain:*` của `frontend/package.json`
 > (`algorithm`, `binary`, `logic`, `network`, `database`, `web`, `generic`, `tree`) trỏ vào thư mục miền Tin học đã
 > gỡ; chỉ `shared-ui` và `classroom` còn chọn được test. Miền hình học chưa có script T1 và chưa có chủ sở hữu trong

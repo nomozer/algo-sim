@@ -211,9 +211,8 @@ Ba điều lượt đo này xác nhận, và một điều nó **không** xác n
 2. **Feedback là field của state, không phải lượt hội thoại.** Render trong
    workspace/inspector; không turn-taking, không lịch sử chat, không "AI nhận
    xét bài làm".
-3. **`/api/explain` là bề mặt Q&A LLM duy nhất** — đọc snapshot state thật để
-   giải thích, không phán xét, không điều khiển mô phỏng. Không thêm endpoint
-   hội thoại.
+3. **Không có bề mặt Q&A LLM nào** — `/api/explain` (giải thích trạng thái engine của miền Tin học, người gọi duy
+   nhất là panel không còn gắn) đã gỡ ở run `repo-cleanup`. Không thêm endpoint hội thoại.
 
 ## 5–6. (giai đoạn Tin học)
 

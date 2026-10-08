@@ -26,7 +26,7 @@
 - **Staging Allowlist:** Luôn dùng `git add <từng file cụ thể>`. Tuyệt đối không dùng `git add .` hoặc `git add -A`. Trước khi commit, kiểm tra `git diff --cached --name-only`.
 - **Nhánh & Lịch sử:** Làm việc trên nhánh được chỉ định. Mặc định **không merge vào `main`** và **không push**. Chỉ khi user cho phép rõ ràng **và** mọi điều kiện nghiệm thu của task đã đạt mới merge thẳng vào `main`, push `main` và xoá nhánh đã merge. Không bao giờ **rewrite lịch sử** (`git commit --amend` trên commit đã công bố, `git rebase`, force-push).
 - **Kiểm chứng độc lập:** Khi cần xác minh có thẩm quyền (authoritative verification), tạo git worktree detached sạch tại commit tương ứng.
-- **Việc mới, nhánh mới, wave từ W1:** việc mới chỉ rẽ nhánh từ `main` đã tích hợp và cập nhật; wave đánh số trong từng việc và được ghi bằng định danh đầy đủ `<task-slug>-wNN`, không bao giờ `W1`/`W2` trần trong manifest hay chỉ mục. Luật đầy đủ: [`docs/evaluation/RUN_NAMING.md`](docs/evaluation/RUN_NAMING.md).
+- **Việc mới, nhánh mới, wave từ W1:** việc mới chỉ rẽ nhánh từ `main` đã tích hợp và cập nhật; run mới đặt tên theo việc, không mã lượt (`exact-dimensions`, `repo-cleanup`; lần thực hiện thứ hai của cùng việc thêm ngày), mã việc/lượt, ngày, commit nằm trong `run.json`; run cũ `<task-slug>-wNN` giữ tên. Không bao giờ `W1`/`W2` trần trong manifest hay chỉ mục. Luật đầy đủ (gồm tên file/thư mục): [`docs/evaluation/RUN_NAMING.md`](docs/evaluation/RUN_NAMING.md).
 
 ---
 

@@ -88,8 +88,8 @@ một khoảng lệch — "đã chạy generator" ≠ "đã đúng"; bản này 
 để quên sinh lại. Chỉ đi qua các `register…Domain()` **được gọi thật**: một
 module tồn tại mà không ai gọi thì không phải năng lực đang chạy.
 
-⚠️ `frontend/src/simulations/capability-descriptors.json` **ở lại nguyên byte
-nhưng đã ĐÔNG CỨNG** — 24 target Tin học, không generator, không sync-lock. Nó
+⚠️ `docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json` (rời `frontend/src/simulations/`
+ở run `repo-cleanup`, **nguyên byte**) **đã ĐÔNG CỨNG** — 24 target Tin học, không generator, không sync-lock. Nó
 là referent của `docs/SIMULATION_VISUAL_LANGUAGE_AUDIT.md` (một `*_AUDIT.md` =
 bằng chứng wave đã qua, khoá bởi `visual-audit-completeness.test.ts`). Sinh lại
 nó theo năng lực hình học sẽ biến bảng audit ấy thành 22 dòng nói về target
@@ -99,7 +99,7 @@ không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đ�
 
 | Vai trò | Vị trí |
 |---|---|
-| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/explain`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic` |
+| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/image/extract`, `/api/health`, `/api/diagnostics/runtime`, `/api/diagnostics/semantic` |
 | Router gắn thêm | `accounts/router.py` · `accounts/classroom_router.py` · `accounts/session_router.py` (`include_router` ở `main.py`) |
 | Production pipeline | `ai/pipeline.py::run_pipeline(text, api_key, pattern_store=None, observer=None)` |
 | Hai stage LLM (tất cả) | `ai/pipeline.py::stage_semantic_analyze` (đề → `RequestContract`) · `stage_semantic_program` (contract → IR ứng viên, ≤`TRAN_SUA` lượt sửa) |
@@ -144,7 +144,7 @@ nhiệm ở đây, mở đúng module đó — bản thứ hai là cách kho nà
 | Transport / envelope | `semantic_program/transport.py` + `pipeline_adapter.py` | `check_envelope_transport`; `SIMULATION_ID = "generic.semantic_program"` — id DUY NHẤT sản phẩm phát ra |
 | Trace → cảnh 3D | `semantic_program/scene3d.py` + `visual_adapter.py` + `simulation_state.py` | `RENDER_HINT` khoá đồng bộ với `scene3d-model.ts::RENDER_KINDS` (`test_scene3d_ts_sync.py`) |
 | Danh tính runtime | `app/runtime_identity.py` + `scripts/runtime_doctor.py` | `stable_capability_hash()` dẫn từ bốn bảng thẩm quyền — thêm một phép dựng là hash đổi, không sửa tay |
-| Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22). *2026-10-05 (`cuboid-acceptance`):* tham số thụ động là `run_pipeline(observer=…)` (khoá: `test_synthesis_repair_trace.py::test_F2_…`); lớp `AttemptObserver` không còn nơi nào dùng |
+| Observer đánh giá | `ai/pipeline.py::run_pipeline(observer=…)` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22). *2026-10-05 (`cuboid-acceptance`):* tham số thụ động là `run_pipeline(observer=…)` (khoá: `test_synthesis_repair_trace.py::test_F2_…`); lớp `AttemptObserver` (`evaluation/observer.py`) đã gỡ ở `repo-cleanup` cùng cả gói `app/evaluation/` |
 
 > **Lịch sử:** bảng này trước đây liệt kê `sufficiency_gate`, `completeness_gate`,
 > `pipeline_stages`, `mechanism_gate`, `computation_gate`, `structure_gate`,
@@ -412,32 +412,10 @@ bằng ngăn xếp" đạt `stage_reached=served` rồi envelope trả `unsuppor
 mismatch bảo vệ đường module — chương trình ngữ nghĩa không đi qua target nào.
 Envelope dựng ở MỘT chỗ: `_envelope_tu_route_sinh`.
 
-### `ai/explain.py` · Change impact: targeted live
-Q&A Socratic trên snapshot state THẬT. Exports: `EXPLAIN_SCHEMA`, `explain_state`.
-Notes: **bề mặt hội thoại LLM duy nhất**; không phán đúng/sai, không điều khiển
-mô phỏng.
-
 ### `ai/skills/*.md` · Change impact: targeted live
 `analyze` `classify` `simulate` `explain` `transcribe` `edit`. Prompt là **file
 markdown**, nạp qua `load_skill` (cache theo process → **restart backend** sau khi
 sửa). Không bao giờ ship xuống trình duyệt.
-
-### `frontend/scripts/after-matrix-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
-W4B-3A — MA TRẬN AFTER cho **toàn bộ** danh mục: ghép ba nguồn (descriptor sinh
-từ registry + module frontend đang chạy qua CDP + `measure-1920.json`). Phân loại
-trải nghiệm bằng luật KHAI TRƯỚC ở đầu file; **đếm tổng chỉ sau khi có bảng từng
-target**. Tách bạch ĐO ĐƯỢC ↔ CHỈ KHAI BÁO (9/23 target chưa có bài mẫu offline
-nên không dựng được state để đo) — cộng hai cột lại là tự cho điểm cao hơn bằng
-chứng. Ba phép suy BỊ CẤM ghi ngay trong file: `predict` ⇒ thao tác trực tiếp ·
-`timeline` ⇒ mô hình tương tác · có trong catalog ⇒ có phủ chương trình.
-Artifact: `docs/evaluation/m17/w4b3a-after/after-matrix.{json,md}`.
-Notes (M15 Task 16): `sorting` tốt nghiệp `PILOT` → `SUPPORTED` sau formalize
-thành family selector (M14) + conformance proof (M15) — note tự giới hạn claim
-(live n=4 M14 + n=2 M15 W1 — đếm case live chạm sorting gồm cả near-miss từ
-chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thống kê**, không
-được nói mạnh hơn). `binary_system` note bổ sung control cơ
-số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
-`mechanism_gate.py`).
 
 ### `frontend/src/simulations/transport-policy.ts` (M20 W7) · Change impact: offline
 NGUỒN DUY NHẤT của chế độ transport: `FULL_TRACE` · `OPTIONAL_TRACE` ·
@@ -447,239 +425,6 @@ nó; `experience-manifest.test.ts` import lại từ đây thay vì giữ bản 
 W7, dải điều khiển phân loại bằng `timeline.stepCount(state) > 1`, đúng kiểu suy
 diễn kĩ thuật §9 cấm: `base_conversion` có 12 bước nên được dòng thời gian đầy
 đủ, dù sau W5 kết quả của nó đọc được ngay. Số hiện tại: **13 / 7 / 3**.
-
-### `frontend/scripts/certify-experience-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
-Hỏi: **ĐÓNG thử thách rồi, học sinh làm được gì có nghĩa trên màn này?** — tầng
-thứ ba, khác hai tầng đã có: `interaction-semantics.test.ts` hỏi *module nhận
-action gì* (hợp đồng), `certify-viewports-w12.mjs` hỏi *affordance có thấy được
-không* (bề mặt).
-Phân loại: đổi được đầu vào ⇒ `TOOL_PASS` · không đổi được nhưng tua THAY THẾ ⇒
-`TRACE_PASS` · không đổi được và tua chỉ THÊM DỒN ⇒ **`EXPERIENCE_FAIL`**.
-⚠️ "Tua thì màn hình đổi" KHÔNG phân biệt được gì — trình chiếu cũng đổi. Nên
-phép đo tách **thêm dồn** (bước sau chứa trọn bước trước = bảng in dần từng
-dòng, đáp án có sẵn) khỏi **thay thế** (giá trị bị đổi, vùng xét co lại = cơ chế
-đang chạy).
-⚠️ Ứng viên action sinh từ config, và hình dạng phải ĐỌC `simulations/types.ts`:
-đoán `whatif_swap {from,to}` / `toggle {id}` thì action bị **nuốt lặng lẽ** và
-`find_max` đọc ra TRACE_PASS trong khi nó là công cụ — đoán sai ở đây luôn đánh
-giá THẤP sản phẩm. Hợp đồng thật: `{i,j}` · `{target}` · `{a,b}`.
-⚠️ PHÉP ĐO NÀY ĐÃ SAI BỐN LẦN, và **cả bốn lần đều đánh giá THẤP sản phẩm** —
-ghi lại để lần sau không lặp:
-1. So `st.cursor` (không tồn tại ở tầng store) ⇒ mọi vòng lặp thoát ngay bước
-   đầu, báo "1 bước" cho cả 23 target.
-2. Đoán hình dạng action (`whatif_swap {from,to}`, `toggle {id}`) ⇒ action bị
-   **nuốt lặng lẽ**. Hợp đồng thật ở `simulations/types.ts`: `{i,j}`, `{target}`.
-3. Đoán TÊN action theo TÊN field config: `decimal_to_binary` khai
-   `decimalValue` nhưng `apply` nhận `set_param {name:'decimal'}` — đọc ra
-   `STATIC_ILLUSTRATION` cho một bài mà `narrate` nói thẳng "bấm từng bit".
-4. Chỉ đo CHỮ trong `.sim-stage` ⇒ mất hai thứ: dải quan sát
-   (`.search-observe` là ANH EM của `.sim-stage`, và chính nó đổi theo bước) và
-   MÀU (`ScanWorkspace` chỉ vẽ `ArrayView` — cột nào đang xét mã bằng `fill`).
-   Cho ra "13 bước engine, 1 bước màn", một kết luận sai về sản phẩm.
-Nay dấu vân = chữ CẢ THẺ (trừ đồ đạc) + `fill`/`class` của mọi phần tử SVG.
-Vẫn KHÔNG bắt được vị trí/kích thước — giới hạn, không phải đã phủ.
-Số hiện tại: **20 TOOL_PASS · 3 TRACE_PASS · 0 EXPERIENCE_FAIL**. Chênh
-engine/màn còn lại (40→14, 33→14…) là trần 14 bước của vòng lặp, không phải lỗi.
-
-### `frontend/scripts/faultcheck-visual-weight-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
-Chứng minh `certify-visual-weight-w12.mjs` **còn đỏ được**. Phép đo ấy đã bị NỚI
-ba lần để nhìn thấy `<canvas>`, DOM thật, rồi `.encap-layer` — mỗi lần nới là
-một lần dễ xanh hơn, nên con số 23/23 chưa đáng tin cho tới khi có đối chứng.
-Ba nhánh: giấu khối cơ chế thật ⇒ **ĐỎ** · phình vỏ rỗng `.encap-2d` ⇒
-**KHÔNG được xanh** · nguyên trạng ⇒ **XANH**. Mỗi nhánh chứng minh
-`MUTATION_OBSERVED` trước khi phán — phép tiêm không chạm đối tượng thì kết quả
-của nó vô nghĩa.
-Số hiện tại: **3/3 đúng kì vọng** (nguyên trạng ink 0,39 · 8 chủ sở hữu).
-
-### `frontend/scripts/certify-visual-weight-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
-Hỏi câu mà MỌI tiêu chí W12 khác bỏ sót: **trên sân khấu, HÌNH chiếm bao nhiêu
-so với CHỮ?** Các tiêu chí trước chỉ hỏi "đổi đầu vào thì kết quả có tính lại
-không" — nên `network.packet_routing` (4 biểu tượng đứng yên + 4 bước chữ) đạt
-hết, trong khi mở ra nhìn thì nó là hình minh hoạ có chú thích.
-Đo `inkShare` (diện tích svg/canvas/`.web-page` trên diện tích thẻ) và
-`proseChars` (chỉ khối văn xuôi; KHÔNG tính nhãn trong hình, KHÔNG tính ô bảng
-— bảng LÀ kết quả engine, phạt nó là phạt nhầm). Bài có bảng được miễn ngưỡng
-`inkShare`, và điều đó ghi rõ chứ không miễn lặng lẽ.
-⚠️ Ngưỡng `MIN_GLYPHS` của bản đầu ĐÃ GỠ vì nó SAI hai đường: đo kích thước dữ
-liệu (dãy 3 phần tử có 5 hình chữ nhật) và không nhìn được vào `<canvas>` — nó
-vừa gán "tranh tĩnh" cho cảnh 3D thật. `glyphs` còn trong artifact để đọc.
-⚠️ Đo BỀ MẶT, không đo hiểu biết — `LEARNER_IMPACT_NOT_EVALUATED` giữ nguyên.
-⚠️ Hai ngoại lệ, cả hai đều KIỂM NGƯỢC được nên không nuốt được luật: bài có
-`<table>` (bảng là kết quả engine) và `CODE_IS_THE_MECHANISM`
-(`bounded_control_flow` — sân khấu là mã giả có con trỏ dòng, như trình gỡ lỗi;
-vẽ thêm hình ở đó là trang trí). Khai "mã là cơ chế" mà lại nhiều hình ⇒ ĐỎ.
-Số hiện tại: **23/23 lấy HÌNH làm chính**.
-
-### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
-Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
-5 màn × 4 bề rộng trên `browser-runner.mjs`: home · library · history ·
-workspace gọn · workspace rất dài — cố ý phủ cả trang KHÔNG cuộn lẫn trang cuộn.
-Khẳng định: header trải hết bề rộng vỏ · máng đúng bằng bề rộng thanh cuộn đã
-khai (10px) · không tràn ngang · **máng giống nhau giữa trang ngắn và trang
-dài** (không nhảy ngang — phép so này mới là câu hỏi thật; đo một màn thì không
-bao giờ phát hiện được nhảy).
-⚠️ KHÔNG đo được thumb có nhìn thấy hay không: CDP không đọc computed style của
-`::-webkit-scrollbar-thumb`. Việc đó do `styles/scrollbar-ownership.test.ts`
-khoá ở mức mã nguồn — ranh giới này ghi thẳng vào artifact, không để một con số
-trông-như-đã-phủ.
-⚠️ KHÔNG đảo quyết định W4B-1A (cuộn thuộc về TÀI LIỆU, không phải panel): vùng
-cuộn nội bộ từng giấu 170px nội dung học mà không có tín hiệu ở mức trang.
-
-### `frontend/src/simulations/action-probe.ts` (M20 W12) · Change impact: offline
-NGUỒN DUY NHẤT của câu "học sinh có đường nào đổi đầu vào bài này không".
-`candidateActions(config)` dẫn ứng viên từ config đã validate; dùng bởi CẢ
-`experience-gate.test.ts` (offline, <1s) lẫn `scripts/certify-experience-w12.mjs`
-(trình duyệt, qua `session.mods.probe`).
-⚠️ TÊN ACTION KHÔNG SUY ĐƯỢC TỪ TÊN FIELD CONFIG — nó nằm trong `module.apply`.
-Đã sai ba lần trong W12 và **cả ba đều đánh giá THẤP sản phẩm**, vì action sai
-hình dạng không ném lỗi mà bị `apply` trả về state cũ, đọc y hệt "bài này không
-tương tác được": `whatif_swap {from,to}`→`{i,j}` · `toggle {id}`→`{target}` ·
-`set_param 'decimalValue'`→`'decimal'`. Thêm target mới thì MỞ MODULE RA ĐỌC.
-
-### `frontend/src/simulations/tool-affordance.ts` (M20 W12) · Change impact: offline
-NGUỒN DUY NHẤT của câu hỏi "công cụ thao tác của học sinh có được hiện ra
-không". `toolAffordanceOpen({exploreOpen, challengeOpen, busy})` — hàm THUẦN,
-kiểm được không cần Chrome. Cả `domains/algorithm/ui.tsx` (kéo cột) và
-`domains/network/ui.tsx` (ngắt/nối liên kết) đọc nó.
-⚠️ Trước W12 hai miền chép tay CÙNG một luật (`exploreOpen && !busy`), nên công
-cụ nằm sau một nút học sinh phải tự biết bấm: đo trên trình duyệt được **52/92**
-dòng ma trận bề rộng "không có affordance". Luật nay là W12 §6 Policy B — thử
-thách ĐÓNG thì công cụ dùng được; MỞ thì có thể siết để câu hỏi đang chờ không
-bị chính học sinh vô hiệu hoá. `mode: "hidden"` của `interaction-policy.ts` vẫn
-thắng tuyệt đối (kéo ở `sum_if`/`count_if` là trang trí).
-⚠️ Bật affordance KHÔNG nâng hạng ngữ nghĩa: `whatif_swap` vẫn là
-INPUT_MANIPULATION (W12 §8) — phân loại thuộc `interaction-semantics.test.ts`.
-
-### `frontend/scripts/e2e-stack-production.mjs` (vNext) · **TIÊU QUOTA THẬT**
-
-E2E đường NGƯỜI DÙNG: gõ đề vào `.composer-text`, bấm `.composer-send`, chờ HTTP
-`/api/analyze` thật, rồi bấm `button[title="Tiến một bước"]`. **Không**
-`loadEnvelope`, không fixture, không sample offline — đó là ranh giới với
-`capture-stack-vnext.mjs` bên dưới, thứ chỉ là bằng chứng COMPONENT.
-
-Chộp response `/api/analyze` qua `page.on("response")` làm nguồn sự thật cho
-"route nào đã phục vụ" (`simulation_id` / `source`), vì UI không hiển thị điều
-đó. Kết quả: `docs/evaluation/semantic-vnext/e2e/`.
-
-⚠️ Mỗi lượt là một request phân tích thật (nhiều lượt LLM phía backend) và tiêu
-một lượt dùng thử của khách. Cần `SEMANTIC_ROUTE_MODE=serve` ở container thì
-route sinh mới chạy. Backend chạy uvicorn KHÔNG reload dù `app/` được bind-mount
-⇒ sửa mã Python xong phải `docker compose restart backend`, nếu không đo phải
-bản cũ trong bộ nhớ.
-
-### `frontend/scripts/certify-transport-vnext.mjs` (vNext) · cần dev server + Playwright
-
-Sở hữu tầng bằng chứng **transport qua CONTROL THẬT**: bấm đúng nút "Sau"/"Trước"
-trên trang rồi hỏi *màn hình có đổi không*. Ranh giới với `learner-gate.test.ts`:
-test đó gọi `mod.timeline` TRỰC TIẾP nên chứng minh hợp đồng ở tầng engine, không
-chứng minh nút bấm nối được vào engine — đúng khoảng trống mà sự cố `main.py`
-quên `semantic_route` đã phơi ra (mảnh nào cũng xanh mà chưa mảnh nào được ghép).
-
-Dùng **bài mẫu offline** (`data/samples.ts`) nên **0 gọi `/api`, 0 quota, không
-inject store** — người dùng chọn bài, bấm nút, trạng thái đổi thật.
-
-Hai điều kiện của anti-pattern #14 đều có: **dấu vân tay trang** (đúng bài + >1
-bước, sai thì thoát != 0) và **`--faultcheck`** (chặn sự kiện nút "Sau" ⇒ bản
-soát phải TỤT ĐIỂM). Chạy: `node scripts/certify-transport-vnext.mjs --port 3177
-[--faultcheck]`.
-
-### `frontend/scripts/certify-transport-vnext.mjs` (vNext) · cần dev server + Playwright
-
-Sở hữu HAI bản soát trên UI THẬT, **không inject store**: §6 transport (Tiến ·
-Lùi · Về đầu · Dựng lại · Tự chạy/Dừng) và §5 rõ ràng thị giác ở ba bề rộng.
-Dùng **bài mẫu offline** (`data/samples.ts`) nên 0 API call — người dùng chọn
-bài, bấm nút, trạng thái đổi thật. Ba miền: array/quét · tree/duyệt · graph/BFS.
-
-Hai cái bẫy đã cắn và nay ghi lại trong code: nút bước là nút ICON chỉ có
-`title` (tìm theo chữ trượt IM LẶNG), và `Tự chạy` **đổi nhãn thành `Dừng`** sau
-khi bấm. Nhịp tự chạy đo được ~1 bước/giây, tick đầu ~1,2s — chờ 900ms thì bản
-soát vu oan cho sản phẩm.
-
-Đo HÌNH HỌC chứ không so pixel (repo không có `@playwright/test`): chữ SVG nằm
-trong khung vẽ · không tràn ngang · không chữ kích thước 0 · nút bước còn bấm
-được. `--faultcheck` chặn nút Tiến ở tầng capture để chứng minh guard đỏ được.
-
-**`SUPPORTED_MIN_WIDTH = 320px`**, khoá bằng hai viewport `min-320`/`min-344`
-trong chính runner. Trước vNext bố cục tràn ngang dưới ~354px và trang mất dữ
-liệu ở mép phải; truy được chuỗi `.control-zone` (nowrap, 252/304px) →
-`.player` (229px) → `.panel-controls` → `.app-layout` → `html`. Sửa bằng
-`flex-wrap` trên `.control-zone` ở `global.css` — một luật ở tầng dùng chung,
-không vá theo ảnh chụp, và không breakpoint nào phải nhớ vì wrap chỉ kích hoạt
-khi hết chỗ (màn rộng không đổi một pixel).
-
-### `frontend/scripts/capture-stack-vnext.mjs` (vNext) · cần dev server + Playwright
-
-Bằng chứng trình duyệt cho case Stack `{[()]}`: tiêm envelope thẳng qua
-`useAppStore.loadEnvelope`, đặt cursor tới 6 khung mốc, chụp ảnh và trích **phép
-chiếu ngữ nghĩa từ DOM** (nội dung `<text>` trong SVG) — không so pixel. Kết quả:
-`docs/evaluation/semantic-vnext/browser-evidence/` (`stack-visual-acceptance.json`
-· 6 ảnh); báo cáo đi kèm ở `semantic-vnext/reports/STACK_VISUAL_ACCEPTANCE.md`.
-
-Hai điều kiện của anti-pattern #14 đều CÓ THẬT trong script: **dấu vân tay trang**
-(khẳng định đúng tiêu đề + 7 bước, sai thì thoát `3`) và **`--faultcheck`** (thay
-`push`/`pop` bằng `highlight` ⇒ bản soát phải tụt khỏi 6/6, không tụt thì thoát
-`4`). Chế độ tiêm lỗi tái hiện đúng triệu chứng gốc — ngăn xếp rỗng ở mọi khung
-trong khi narration vẫn kể push/pop.
-
-⚠️ Bộ trích phải LOẠI chú giải trình bày khỏi danh sách phần tử: lượt chạy đầu
-nuốt nhãn `← TOP` vào `stack` và báo FAIL nhầm 4 khung. Chú giải không phải dữ
-liệu. ⚠️ Cổng 3000 hay bị chiếm bởi dev server khác đang chạy mã CŨ; dùng
-`--port` để dựng server riêng, đừng chụp vào cổng lạ (tiền lệ `0a71268`).
-
-### `frontend/scripts/capture-before-after.mjs` (W6) · cần `npm run dev` + Chrome
-Chụp CLIP theo `.workspace-card` ở MỘT trạng thái xác định (`--target`,
-`--viewport`, `--act`). Ghép với `git checkout <ref> -- <file>` (Vite HMR nạp lại
-ngay, không cần dựng lại) thì có cặp TRƯỚC/SAU trên cùng máy, cùng bề rộng, cùng
-đề — khác biệt duy nhất là bản vá. Dùng để chứng minh một pha có HẬU QUẢ HỌC SINH
-NHÌN THẤY, chứ không chỉ có hợp đồng/test đã đổi.
-⚠️ URL module lấy từ `performance.getEntriesByType('resource')`, KHÔNG `import()`
-đường trần: Vite băm URL theo phiên nên import trần tạo instance THỨ HAI với store
-rỗng. ⚠️ Phải nạp trước bốn module rồi mới dùng — lượt `import()` đầu của module
-nặng có thể chưa trả kịp qua CDP, và khi ấy `Runtime.evaluate` trả `undefined`
-CHỨ KHÔNG ném. Cả hai đều từng làm script im lặng hỏng.
-
-### `frontend/src/core/predicate.ts` (W5C) · Change impact: offline
-CHỦ SỞ HỮU DUY NHẤT của "sáu phép so sánh `> >= < <= == !=` nghĩa là gì".
-`compareNumbers(x, op, y)` + `includesBoundary(op)` — hàm THUẦN trên hai SỐ.
-⚠️ Trước W5C cùng sáu toán tử được cài BA LẦN: `algorithms.ts::testCondition`
-(sum_if/count_if), `scan.ts::opHolds` (algorithm.scan), và nhánh `compare` của
-`program.ts` (bounded_control_flow). Ba bản đồng ý nhau vì MAY, không vì có gì
-bắt chúng thế — và một lần đổi `>=` thành `>` ở một bản chỉ chấm sai đúng những
-học sinh ở NGƯỠNG, tức chỗ bài học nằm ("từ 8,0 trở lên" ≠ "trên 8,0"). Cả ba
-nay uỷ quyền xuống đây.
-⚠️ `switch` cố ý KHÔNG có `default` — vét cạn để tsc đỏ khi thêm toán tử thứ
-bảy. Đó chính là bẫy `program.ts` từng mắc: `default` cũ trả `l >= r`, nên mọi
-op không khớp lặng lẽ thành `>=`. Nay op lạ thì NÉM.
-⚠️ `program.ts` giữ riêng `==`/`!=`: ở đó hai vế có thể là bool/chuỗi, nên đó là
-so sánh đồng nhất chứ không phải so sánh SỐ. Chỉ so sánh THỨ TỰ uỷ quyền xuống.
-Khoá bởi `core/predicate-family-w5c.test.ts`: bảng chân trị 6 op × 3 quan hệ
-VIẾT TAY (sinh từ code sẽ là test tự xác nhận) + đối chiếu đáp số engine + guard
-chống mọc bản cài thứ tư.
-
-### `frontend/src/simulations/color-channels.ts` (W5A) · Change impact: offline
-CHỦ SỞ HỮU DUY NHẤT của phép toán BA KÊNH ↔ MỘT MÀU, dùng chung cho
-`web.style_model` và `color.rgb_model`. Giữ `Channel`/`CHANNELS`/`CHANNEL_LABEL`/
-`CHANNEL_MAX`, mẫu `HEX_COLOR`, `rgbOf`/`hexOf`/`rgbTextOf`/`cssColorOf`,
-`isChannelValue`/`clampChannel`, `channelRamp` (vệt màu của thanh trượt) và
-`readableInkOn` (chọn màu CHỮ đặt trên ô màu theo luma BT.601).
-⚠️ Nâng từ `domains/web/props.ts` trong W5A — trước đó phép toán thuộc sở hữu
-của MỘT miền, nên miền thứ hai chỉ có hai lối: import chéo miền (đảo hướng phụ
-thuộc) hoặc chép lại (hai bản `hexOf`, và ngày chúng lệch thì hai màn hình nói
-hai giá trị khác nhau về cùng một màu).
-⚠️ `channelRamp` giữ HAI kênh kia cố định — đó là điều kiện để vệt màu nói thật
-về màu sắp nhận được; một vệt đỏ-thuần cố định sẽ nói dối.
-⚠️ `clampChannel` dùng ở BIÊN NHẬN (thanh trượt/ô số), KHÔNG dùng để chữa config
-sai — kẹp im lặng ở đó biến một đề hỏng thành mô phỏng trông như đúng.
-
-### `frontend/scripts/measure-transport-w7.mjs` (M20 W7) · offline (cần `npm run dev`)
-Hỏi: cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không? Đo
-độ LỆCH bề rộng qua nhiều target thay vì so với một con số ma. Đo ở HEAD
-104c752: cơ chế lệch 849px, khay lệch **đúng 849px** — bám 1:1; sau W7 khay lệch
-**0px**.
-⚠️ Đếm HÀNG bằng TÂM DỌC có dung sai, không bằng mép trên: `align-items: center`
-khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng một hàng, và bản
-đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
-`docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
 ### `frontend/scripts/verify-point-projection.mjs` · offline (cần `npm run dev`)
 
@@ -916,37 +661,6 @@ nhắm tới — đỏ vì lý do khác là guard vẫn chưa được chứng m
 được, vì đề bài nằm sau nút «Xem đề» nên không lên `innerText`. Guard soi thứ
 NGƯỜI HỌC THẤY, nên phép tiêm phải đặt vào chỗ người học thấy.
 
-### `frontend/scripts/certify-viewports-w12.mjs` (M20 W12-C) · offline (cần `npm run dev`)
-23 target × 4 bề rộng = 92 dòng, dùng lại `browser-runner.mjs`. Hỏi câu KHÁC với
-`audit-composition.mjs`: **ở bề rộng này học sinh có DÙNG ĐƯỢC target không** —
-sân khấu hiện · affordance chính thấy được · thử thách đóng sẵn · tràn/cắt/chồng.
-⚠️ Đếm affordance phải gồm CUE CON TRỎ trên SVG: cột `ArrayView` là một `rect`
-gắn pointer handler và React gắn listener ở gốc nên không lộ ra DOM. Bản đầu chỉ
-tìm `input/button/[tabindex]` và đọc ra 0 affordance cho mọi target thuật toán —
-một kết luận sai vì thước đo hẹp.
-Artifact: `docs/evaluation/m20/w12-viewport-matrix.json`.
-
-### `frontend/scripts/quiz-dominance-w12.mjs` (M20 W12-A) · offline (cần `npm run dev`)
-Hỏi: khi mở thử thách, CƠ CHẾ còn là khối lớn nhất trên màn hình không? Đo tỉ lệ
-`chiều cao khối thử thách / chiều cao sân khấu` — không đo bề rộng, vì cả hai
-nằm cùng cột nên bề rộng luôn bằng nhau và phép so sẽ không bao giờ phân biệt
-được gì (lỗi "luật không thể sai" đã gặp ở M19).
-⚠️ Bản đầu đo ngay ở cursor 0 và chỉ chạm được 2/23 target — `predict.challenge`
-trả null ở phần lớn các bước, nên 21 target còn lại bị đọc nhầm thành "không có
-thử thách". Nay tiến từng bước tới khi lối vào hiện ra.
-Đo được ở HEAD daf9b28: `network.packet_routing` 111px/180px = **0,62** (FAIL).
-Sau bản sửa chủ sở hữu chung: 61px/180px = **0,34**, 0 FAIL.
-Artifact: `docs/evaluation/m20/w12-quiz-dominance.json`.
-
-### `frontend/scripts/certify-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
-Chứng nhận tương tác trong trình duyệt THẬT theo luật: hành động → SimAction →
-`module.apply` → **state tất định đổi** → hệ quả nhìn thấy trong DOM. Một cú bấm
-không đủ, một hoạt hình không đủ, trả lời thử thách không đủ.
-⚠️ Phân biệt `CERTIFIED` với `PROBE_UNVERIFIED`: state không đổi có thể là target
-không nhận action ấy HOẶC probe chưa đúng từ vựng miền. Gộp hai ca thành "hỏng"
-là đổ lỗi cho sản phẩm vì phép đo hẹp — Wave 1 đã ghi rằng bộ thăm dò chung chỉ
-là CẬN DƯỚI. Artifact: `docs/evaluation/m20/w12-interaction.json`.
-
 ### `frontend/src/styles/transition-semantics.test.ts` (M20 W10) · offline
 Phân biệt HÌNH HỌC DỮ LIỆU (SVG) với CHUYỂN ĐỘNG BỐ CỤC (HTML). `height` trên
 `<rect>` encode giá trị mảng — cho chạy là cách kể "giá trị vừa đổi bao nhiêu";
@@ -994,7 +708,7 @@ mặt tìm ra nền thứ ba có thật — `.pseudo-no` trên dải `#e8f2fd` �
 chỉ được 4.34:1. Tập nền phải đến từ PHÉP ĐO, không từ trí nhớ về bảng token.
 `--accent-green-deep` (#0f6622) là mắt xích còn thiếu của khuôn `-deep` đã có
 sẵn (`--accent-orange-deep`, `--accent-purple-deep`), không phải màu mới.
-Chứng nhận trình duyệt: `scripts/certify-a11y-w13.mjs` — 26 bề mặt, 884 phần tử
+Chứng nhận trình duyệt (script M20 W13, đã gỡ ở `repo-cleanup` — bằng chứng `docs/evaluation/m20/w13-a11y.json`) — 26 bề mặt, 884 phần tử
 có chữ, **0 cặp trượt** (lượt đầu: 11).
 
 ### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
@@ -1021,86 +735,6 @@ Chủ sở hữu DUY NHẤT của nhãn `FULL_PRODUCT_GATE_PASS`. Danh sách c�
 trong mảng `GATES` và bị `test-tiers.test.ts` khoá — bỏ một cổng mà vẫn phát
 nhãn là chứng nhận một HEAD chưa được kiểm.
 
-### `frontend/scripts/certify-sweep-w12.mjs` (M20 W12) · LƯỢT CHỨNG NHẬN · cần Chrome
-Chủ sở hữu của bất biến **source-freeze**: chụp `HEAD`/`sourceFingerprint`/cây
-bẩn ở HAI đầu lượt, chạy toàn bộ cổng con W12 (`GATES` — 1 DERIVED + 7 BROWSER),
-rồi đòi nguồn y nguyên và `uniqueFingerprints === 1`. Vi phạm ⇒
-`CERTIFICATION_SWEEP_INVALID`, thoát != 0.
-
-Vì sao cần dù mọi cổng con đã có `provenance()`: `provenanceVerdict` phán MỘT
-artifact tại MỘT thời điểm, nên bảy artifact đo trên bảy trạng thái nguồn khác
-nhau vẫn qua được từng cổng rồi được cộng thành một tuyên bố COMPLETE về một sản
-phẩm chưa từng tồn tại. Đo được điều đó phải nhìn cả LƯỢT. Khoá bởi
-`src/certification-sweep.test.ts` (tiêm lỗi từng ca + chặn cổng con rụng im lặng).
-
-Primitive nằm ở `evidence.mjs`: `sweepBegin/sweepEnd/sweepVerdict`,
-`crossCheckFreshness`, `SWEEP_FAULTS`.
-
-### `frontend/src/core/var-label.ts` (M20 · Product Experience) · offline
-`varLabel(name)` / `varPhrase(name, fallback)` — đổi TÊN BIẾN ENGINE sang cụm
-tiếng Việt đọc lên được. Bảng chỉ phủ biến do chính engine đặt (`tong`, `dem`,
-`max`, `min`, `can_tim`, `gia_tri_chen`, `giua`, `vi_tri_cuc_tri`, `vt`); tên do
-ĐẶC TẢ cấp (`seed.varName`, LLM sinh) trả `null` ⇒ bên gọi phải nói bằng khái
-niệm, không đoán cách viết có dấu (bỏ dấu là ánh xạ mất thông tin: `tong` có thể
-là tổng/tông/tống).
-
-Đóng lỗi thật quét được toàn danh mục: `core/scan.ts` và `core/algorithms.ts`
-nội suy thẳng tên biến vào câu thuyết minh, nên `algorithm.scan` đọc ra
-**"Khởi tạo nguong = 4."** trên màn học sinh. `ui-hygiene` không bắt được vì nó
-soi chuỗi TĨNH trong mã, còn đây là chuỗi nội suy LÚC CHẠY.
-
-### `frontend/src/simulations/svg-affordance.ts` (M20 W12) · offline
-`svgAffordance({label,onAct,pressed})` trả PROPS cho một hình SVG bấm được:
-`role="button"` + `tabIndex` + `aria-label` + `aria-pressed` + Enter/Space (có
-`stopPropagation` vì Space là phím tắt Tự chạy toàn cục) + lớp `.sim-affordance`
-(vòng tiêu điểm ở `global.css`).
-
-Vì sao trả props chứ không phải component: chỗ gọi trải vào `<g>`/`<line>`/`<rect>`
-có hình học riêng, và bọc thêm một `<g>` sẽ làm lệch phép đo hình học đã chứng
-nhận (`audit-composition.mjs`, `certify-visual-weight-w12.mjs`).
-
-Đóng lỗi thật: idiom "`<g>` có `cursor:pointer` + `onClick`" dựng ở 5 chỗ, đúng
-ở 2. `logic.and_gate` có 13 phần tử focus được, không cái nào là công tắc A/B.
-`network/ui.tsx::LinkHandle` và `logic/dag-module.tsx` là nguồn gốc của khuôn và
-KHÔNG bị viết lại (đổi mã đã chứng nhận để cho đối xứng = đánh đổi rủi ro hồi
-quy lấy cái đẹp). Khoá bởi `scripts/certify-a11y-w12.mjs`.
-
-### `frontend/scripts/certify-a11y-w13.mjs` (M20 W13) · cần Chrome
-Giảm chuyển động + tương phản, đo bằng GIÁ TRỊ TÍNH TOÁN sau khi mọi tầng CSS đã
-phân giải. Không lặp phép đo của `styles/tokens.test.ts` — vitest dừng ở "luật CÓ
-được viết ra", script này đo "trình duyệt CÓ làm theo". Bật/tắt giả lập qua CDP
-`Emulation.setEmulatedMedia` (đúng thứ hệ điều hành gửi), đo trước/sau.
-⚠️ Tương phản chấm theo CẶP THẬT, không theo bảng màu: leo cây tổ tiên tìm nền
-ĐỤC đầu tiên, vì nền thật là kết quả của DOM (thẻ lồng thẻ, nền trong suốt xuyên
-xuống) — guard tĩnh chỉ GIẢ ĐỊNH được `--canvas`/`--canvas-soft`. Ngưỡng theo cỡ
-chữ đúng WCAG 1.4.3 (≥24px, hoặc ≥18.66px và đậm → 3:1; còn lại 4.5:1); chấm mọi
-thứ bằng 4.5 là tự sinh phát hiện giả trên tiêu đề.
-⚠️ QUÉT TOÀN DANH MỤC **VÀ ĐI QUA CÁC BƯỚC** — 26 bề mặt (home · library · mọi
-target `offlineCatalog()`) × tới 6 bước, 104 bước, 5431 phần tử có chữ. Phạm vi
-này lớn dần theo ba lần bị lừa, mỗi lần đều báo CERTIFIED trước khi bị mở rộng:
-ba bề mặt bỏ sót 8 lỗi · một-khung-mỗi-target bỏ sót 5 lỗi nữa, vì
-`.frontier-tag.is-done`, `.loop-cond-verdict`, `.hold-label`, `.loop-back.is-active`
-và nhãn nút mạng **chỉ tồn tại ở TRẠNG THÁI** chứ không ở khung đầu. Bước tới
-bằng `nextStep()` (đúng hàm học sinh bấm) và nhận biết hết bước bằng cách so
-TRẠNG THÁI ENGINE trước/sau — không đoán tên trường con trỏ, vì con trỏ nằm
-trong state của module chứ không ở store.
-Bản đầu đo ba bề mặt rồi báo CERTIFIED trong khi **8 lỗi nữa đang tồn tại** ở
-những target nó không đi qua
-(`.frontier-tag`, `.loop-cond-verdict`, nhãn SVG program-module, huy hiệu bảng):
-đúng anti-pattern #13 — guard đặt ở chỗ phụ thuộc route nào tình cờ được ghé.
-Một target không nạp được ⇒ `boQua`, và `boQua` khác rỗng thì verdict là RED,
-KHÔNG phải "sạch".
-⚠️ CHỮ SVG lấy màu từ `fill` chứ không phải `color`, và nền của nó là hình ANH
-EM chứ không phải tổ tiên — nên nền dò bằng `elementsFromPoint` tại tâm chữ.
-Hai bẫy đã cắn trong lúc dựng: (1) leo cây DOM cho chữ SVG đẻ ra "trắng trên
-trắng 1:1"; (2) `elementsFromPoint` trả về CẢ TỔ TIÊN, mà `g`/`svg` có `fill`
-mặc định đen ⇒ 8 "nền đen" giả. Nay bỏ tổ tiên và chỉ nhận
-rect/circle/ellipse/polygon/path. Phát hiện giả sinh từ chính công cụ đo là
-loại nguy hiểm nhất: nó trông y hệt phát hiện thật.
-Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng hình dạng lỗi mà
-guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
-bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
-
 ### `frontend/scripts/certify-error-boundary.mjs` (2026-09-03) · cần Chrome + `npm run dev`
 LƯỚI CHẶN NGOẠI LỆ — 9 ca, và là **cách duy nhất** đo được hành vi thật:
 `renderToString` KHÔNG chạy error boundary (SSR không có pha commit), còn kho thì
@@ -1126,7 +760,7 @@ là chu trình (`ACS`) chứ không phải chuỗi tên dài · **chế độ ch
 ⚠️ Thứ tự đo có ý nghĩa: quét định danh máy **trước** khi bật chế độ chi tiết —
 bật rồi thì `construct_section` hiện ra hợp lệ, và quét sau sẽ đỏ oan.
 
-### `frontend/scripts/certify-construction-bridge-g4.mjs` (2026-09-03) · cần Chrome + `npm run dev`
+### `frontend/scripts/certify-construction-through-point.mjs` (2026-09-03) · cần Chrome + `npm run dev`
 PHÉP DỰNG MỚI của G4 tới được màn hình — 7 ca, bài mẫu `mp-vuong-goc-duong`.
 Khoá bốn điều cùng lúc: cảnh dựng được · mặt phẳng đi qua **tuyến vẽ CŨ**
 (`surface`, không loại vẽ mới) · tên hiển thị là câu tiếng Việt chứ không phải
@@ -1227,40 +861,6 @@ Catalog bài mẫu chạy hoàn toàn phía client (`src/data/offline-catalog.ts
 `docs/evaluation/integration/offline-journey.json`.
 
 
-### `frontend/scripts/certify-a11y-w12.mjs` (M20 W12) · cần Chrome
-Khả năng tiếp cận đo bằng PHÍM THẬT qua CDP `Input.dispatchKeyEvent` — sự kiện
-tự dựng (`isTrusted:false`) không chứng minh được người dùng bàn phím đi được.
-Sáu bề mặt đại diện; mỗi ca đòi đủ chuỗi focus → Enter thật → STATE ĐỔI, cộng
-`ACCESSIBLE_NAME` · `VISIBLE_FOCUS` (`outline-style !== none`) ·
-`STATE_NOT_COLOR_ONLY` · Escape đóng thử thách + trả tiêu điểm · 768px.
-Tiêm lỗi: `A11Y_NAME_REMOVED` · `A11Y_KEYBOARD_PATH_REMOVED` ·
-`CHALLENGE_ESCAPE_BROKEN` (thay khối bằng bản sao rời fiber) + CONTROL.
-
-### `frontend/scripts/certify-representation-w12.mjs` (M20 W12) · cần Chrome
-Hai câu hỏi một chủ đề: mỗi target bày ĐÚNG MỘT cách xem cho học sinh, và target
-còn renderer nội bộ thì hai renderer đọc cùng một sự thật. Sinh bảng 23 dòng
-(mode công khai · mode khả dụng · bày cho học sinh · bản nội bộ · vi phạm) +
-parity 2D↔3D. Tiêm lỗi `PUBLIC_DUAL_MODE_WITHOUT_POLICY` ·
-`RENDERER_PARITY_STATE_DIVERGENCE`.
-⚠️ Renderer 3D là chunk NẠP LƯỜI ⇒ nó là object, không phải function.
-
-### `frontend/scripts/certify-teaching-walkthrough-w12.mjs` (M20 W12) · cần Chrome
-Câu hỏi nghiệm thu duy nhất: bỏ thử thách đi, giáo viên còn phơi bày được cơ chế
-không? 11 kịch bản, từ vựng action lấy NGUYÊN từ `certify-w12.mjs::PLAN`.
-⚠️ Phạm vi đo là `.workspace-card`, KHÔNG phải `.sim-stage` — cơ chế của
-`web.style_model` là DOM thật, của ba target cơ số/bảng là `<table>`, của
-`protocol_encapsulation` là `.encap-layer`. Tiêm lỗi
-`TEACHING_WALKTHROUGH_CHALLENGE_ONLY`.
-⚠️ KHÔNG dùng để nói bất cứ điều gì về kết quả học tập.
-
-### `frontend/scripts/certify-classroom-continuation-w12.mjs` (M20 W12) · cần Chrome + backend
-Rời đi rồi quay lại: đăng nhập → mở bài đã giao → thao tác THẬT → ghi tiến độ →
-ĐĂNG XUẤT + xoá sạch `localStorage` → đăng nhập lại → tiến độ trở lại. Xoá lưu
-trữ là bắt buộc, nếu không phép đo sẽ xanh nhờ LỊCH SỬ CỤC BỘ — cơ chế khác hẳn.
-⚠️ `/api/auth/me` trả 200 kèm `user: null` cho khách, KHÔNG trả 401.
-⚠️ Cần container backend MỚI (bản cũ không phục vụ `/api/auth/*`) + seed fixture.
-Tiêm lỗi `CLASSROOM_PERSISTENCE_REMOVED` · `CLASSROOM_RESTORE_MISMATCH`.
-
 ### `frontend/src/test-tiers.test.ts` (M20 W8) · offline
 Kiểm chính bộ chọn theo HAI CHIỀU (thiếu: chủ sở hữu dùng chung thu về một test
 hẹp ⇒ đỏ · thừa: renderer lẻ kéo cả kho ⇒ đỏ) và khoá ngữ nghĩa nhãn: chỉ T3
@@ -1270,48 +870,11 @@ mảng cổng, mẫu thiếu `
 ` nên match rỗng, soi phần "Đã đổi" thay vì phần chọn.
 Mỗi guard nay tự kiểm rằng nó tìm thấy thứ cần soi trước khi khẳng định.
 
-### `frontend/scripts/runtime-zero-ai-w7.mjs` (M20 W7 closure) · offline (cần `npm run dev`)
-ĐẾM request thật thay vì suy từ cấu trúc mã. Bọc `window.fetch` và `module.init`
-của mọi module trong registry, chụp số đếm trước/sau từng hành động. Có PHÉP THỬ
-DƯƠNG TÍNH mỗi lượt chạy (gọi fetch một lần có chủ đích) để "delta 0" nghĩa là
-"không có gọi", không phải "bộ đếm không gắn được".
-Phủ: mở/đóng dòng thời gian · trace theo tham số hiện tại · Đặt lại — mỗi cái
-kiểm cả fetch, `init`, và ảnh chụp state.
-⚠️ Khẳng định "trace theo tham số mới" phải NỐI với giá trị hiện tại (bước chia
-đầu = `decimalValue`, chia cho `targetBase`), không so với hằng số: bản đầu tìm
-dấu vết "cơ số 2" nhưng mẫu offline vốn đã là cơ số 16 nên phép tiêm giữ
-`state.steps` đi qua sạch 23/23. Artifact: `docs/evaluation/m20/w7-runtime.json`.
-
-### `frontend/src/components/transport-w7.test.tsx` (M20 W7) · offline
+### `frontend/src/components/transport-policy.test.tsx` (M20 W7) · offline
 Khoá ba nhóm: chế độ đến từ chính sách (gồm phép gán `declaredMode ??` — lỗ do
 tiêm lỗi tìm ra) · bề rộng khay tách khỏi cơ chế (đòi SÀN ở **cả hai** biến thể
 lưới — lỗ thứ hai do tiêm lỗi tìm ra) · dòng thời gian tuỳ chọn mở được thì đóng
 được và không đụng store.
-
-### `frontend/scripts/measure-tool-first-w5.mjs` (M20 W5) · offline (cần `npm run dev`)
-Trả lời câu §7: **ở cursor 0, DOM có hiện đúng đáp án mà engine đang giữ không?**
-Đọc đáp án THẲNG từ store rồi tìm nó trong DOM — kiểm renderer có nói đúng thứ
-engine giữ (ranh giới R0); tính đúng của bản thân đáp án do oracle độc lập bên
-vitest lo.
-⚠️ Ba lần phải sửa chính phép đo trước khi tin được, ghi trong file: (1) hàm tua
-gọi `st.next()` — API không tồn tại — nên trả 'ok' mà không tua, mọi target đọc
-ra "không bị khoá"; (2) chỉ đếm `table td` nên không thấy bề mặt dựng bằng lưới
-div — đo THẺ chứ không đo THÔNG TIN; (3) phán bằng hiệu số nội dung khi tua, sai
-tiêu chí vì §1 nói diễn giải NÊN hiện dần. Artifact:
-`docs/evaluation/m20/tool-first-{before,after-*}.json`.
-
-### `evaluation/metamorphic.py` (M20 W2B) · Change impact: offline
-7 phép biến hình TẤT ĐỊNH giữ nguyên ngữ nghĩa (đổi tên người/thiết bị, cách nói
-tương đương, đổi số, đảo dãy, hai phép khoảng trắng) để đo hệ có đọc CƠ CHẾ hay
-chỉ khớp mẫu chữ. Hai ràng buộc dễ phá: `shift_numbers` **giữ nguyên 0 và 1** (ở
-đề logic/nhị phân chúng là giá trị bit) và `reverse_sequence` chỉ đụng dãy ≥3 số.
-`variants()` loại biến thể trùng bản gốc — giữ lại chỉ làm con số phủ to giả.
-
-### `evaluation/product_scope.py` (M20 W2C) · Change impact: offline
-`ProductScope` + `SCOPE_OVERRIDES` tách ba loại case bị trộn số: nội dung Tin học
-CÔNG KHAI (tính vào phủ) · fixture ENGINE nội bộ (chứng minh DSL, KHÔNG tính) ·
-case NGOÀI PHẠM VI (chứng minh từ chối trung thực, KHÔNG tính). Mỗi override phải
-nói VÌ SAO theo NỘI DUNG; test từ chối lý do kiểu "nó vốn nằm trong pool khác".
 
 ### `persistence/db.py` · Change impact: offline (drift gate) + targeted (Postgres smoke)
 SQLAlchemy (SQLite mặc định / Postgres qua `DATABASE_URL`).
@@ -1415,11 +978,6 @@ Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
 không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
 request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
-### `evaluation/dataset.py` · Change impact: offline
-**Chỉ định nghĩa benchmark** (30 đề, không gọi API). Exports: `EvalItem`, `DATASET`.
-`tags`: `smoke` (8 đề), `boundary` (4 đề). Đổi group/expect = đổi ngữ nghĩa
-benchmark → cân nhắc kỹ.
-
 ### `docs/evaluation/m16/` — artifact M16 (committed, machine-readable)
 **Offline (sync-locked, tái sinh được):** `m16-case-matrix.json` ·
 `m16-coverage-report.json` · `m16-offline-results.json` · `m16-metrics.json` ·
@@ -1429,9 +987,10 @@ benchmark → cân nhắc kỹ.
 `m16-live-coverage-baseline.json`. Đọc số liệu M16 → lấy từ đây, KHÔNG chép tay.
 
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
-FastAPI: `POST /api/analyze`, `POST /api/edit`, `POST /api/explain`,
-`GET /api/manifest`, `GET /api/health`. Exports: `app`, `CACHE_VERSION`,
-`_cache_key`, `_cache_lookup`. Tests: `test_api.py`, `test_edit.py`.
+FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
+(*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
+`test_api.py::test_endpoint_tutor_flow_da_xoa`; `/api/manifest` không còn). Exports: `app`, `CACHE_VERSION`,
+`_cache_key`, `_cache_lookup`. Tests: `test_api.py` (`test_edit.py` gỡ cùng `/api/edit`).
 Notes: **bump `CACHE_VERSION`** khi đổi policy classify/manifest/prompt.
 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): thêm `POST /api/image/extract`
 (`ImageExtractBody`: `content` base64, `mime_type`, `filename` — KHÔNG vào khoá
@@ -1617,50 +1176,6 @@ khung cha · khoảng cách ngoài thang 4px. Có **dấu vân tay trang** (đo 
 thoát mã 2) và đã được **chứng minh bằng tiêm lỗi giả**. Đây là thứ DUY NHẤT bắt
 được lớp lỗi CSS im lặng (vd `var(--sp-2xl)` không tồn tại) — vitest không chạy CSS.
 
-### `scripts/diagnose-responsive.mjs` · Change impact: offline (cần `npm run dev`)
-**Chủ sở hữu phép đo responsive** — trục chiều rộng **và chiều cao**, before/after.
-W4B-1A mở rộng: viewport tham số hoá (`--viewports 1366x768,1536x864`), checkpoint
-timeline (`--checkpoints initial,mid,final`), chế độ quét danh mục
-(`--fixture catalog|stress|all`), dấu vân tay trang (sai route → **thoát 2**),
-và **acceptance chấm máy có mã thoát** (vi phạm → **thoát 1**): `HORIZONTAL_OVERFLOW`
-· `CONTENT_HIDDEN_IN_PANEL` · `CONTROL_OCCLUDED` (elementFromPoint) ·
-`CONTROL_OFFSCREEN` · `TEXT_CLIPPED`.
-
-**Bất biến bố cục nó khoá** (hai cái, hai trục):
-1. **Chiều cao** — trang phải cuộn được khi nội dung cao hơn viewport; nội dung
-   **không** được biến mất vào thanh cuộn nội bộ của `.panel-center`. Lớp lỗi mà
-   mọi breakpoint theo chiều RỘNG không bao giờ bắt được (`global.css` khối
-   `@media (min-width: 1101px) and (max-height: 900px)`).
-2. **Chiều rộng** (W4B-1A.1) — `LAYOUT_NOT_USING_VIEWPORT`: `.app-layout` phải
-   dùng gần trọn khung cha, hoặc đạt đúng `max-width` đã khai khi màn rộng hơn.
-   Bề rộng mong đợi **dẫn xuất từ `css_max_width` đo được**, không hard-code.
-   Lớp lỗi này guard đầu tiên không thấy: năm điều kiện cũ đều hỏi "có tràn / có
-   bị giấu", không cái nào hỏi "app có DÙNG màn hình không".
-
-**Cô lập phiên (W4B-1A.1)** — mỗi lượt chạy sở hữu Chrome riêng:
-`--remote-debugging-port=0` rồi đọc cổng thật từ `DevToolsActivePort` trong
-profile của chính nó; PID/cổng/profile ghi vào `session` của artifact. Dấu vân
-tay kiểm **danh tính** (`store.active.moduleId` so với target đang yêu cầu), không
-chỉ hình dạng DOM → lệch thì `WRONG_SIMULATION_OR_FIXTURE` + thoát 2. Mọi lối ra
-(thành công · exit != 0 · throw · unhandled rejection · SIGINT/SIGTERM) đi qua
-`shutdown()`. Cờ `--self-test-throw` tiêm lỗi tái lập được để chứng minh đường
-dọn dẹp. **Lý do tồn tại**: cổng cố định 9337 + thiếu teardown từng khiến hai
-lượt chạy song song bám chéo và sinh artifact gắn nhãn sai fixture.
-
-Lệnh hồi quy (0 API call, cần dev server):
-```bash
-cd frontend && node scripts/diagnose-responsive.mjs --port 3000 --fixture all \
-  --routes workspace --checkpoints initial,mid,final --viewports 1366x768,1536x864 --out <dir>
-```
-Bằng chứng + injected-fault proof: `docs/evaluation/m17/w4b1a-responsive/`.
-
-### `scripts/fixtures.mjs` · Change impact: offline
-**Bộ fixture DÙNG CHUNG** cho runner Chrome/CDP (dữ liệu thuần, 0 side effect).
-Tách khỏi `visual-stress-audit.mjs` ở W4B-1A — script đó nay `import`, dữ liệu
-không đổi. Lý do tồn tại: `offlineCatalog()` của app chỉ phủ **13/22** target,
-nên bản soát bố cục cần nguồn bù. Thêm fixture ở ĐÂY, không chép sang runner
-khác. Cùng `offlineCatalog()` phủ đủ **22/22** target.
-
 ### `components/SessionCard.tsx` · Change impact: offline
 M9-UX4 — MỘT thẻ cho phiên đã học, dùng chung `HomeView` ("Tiếp tục học") +
 `HistoryView`. Exports: `SessionCard`, `progressOf(item)`.
@@ -1673,112 +1188,6 @@ dẫn xuất từ capability, không bịa "1 bước"). Envelope lạ/hỏng �
 **KHÔNG BAO GIỜ render `simulationId`** ra UI (rò rỉ cũ của `HistoryView`).
 Tests: `catalog.test.tsx`.
 
-### `core/` (`algorithms.ts`, `trace-builder.ts`, `pseudocode.ts`, `types.ts`) · offline
-Engine của domain `algorithm` (ngoài `simulations/` vì có trước registry).
-**Không** dùng làm hạ tầng chung cho domain khác. M9-S1: narration ở BƯỚC QUYẾT
-ĐỊNH là câu hỏi (không lộ đáp án sớm — hệ quả thuộc bước kế tiếp); phần tử đã
-duyệt/không thỏa được mark `eliminated`; export thêm `OP_TEXT`.
-`TraceBuilder` (M12) = **substrate thực thi tái dụng** cho MỌI engine trace
-(cùng union `TraceEvent`); 8 engine specialized là 8 driver mệnh lệnh ~15 dòng
-trên cùng substrate, KHÔNG phải 8 module rời.
-
-### `core/program.ts` (M17 W2C) · offline
-**Interpreter luồng điều khiển hữu hạn**, engine-owned — MIRROR của
-`program_spec.py` + `validation/program.py`. Exports: `PROGRAM_VERSION`,
-`PROGRAM_LIMITS`, kiểu `ProgramSpec`/`ProgramStatement`/`ProgramExpression`/
-`ProgramVariable`/`CompletionState`, `validateProgramSpec(raw)`,
-`programLines(spec) → {lines, lineOf}`, `renderExpression(spec, id)`,
-`runProgram(spec) → {trace, completion, outputs}`.
-Interpreter sở hữu TOÀN BỘ: môi trường biến, thứ tự chạy, kết quả điều kiện,
-nhánh được chọn, số lượt lặp, biên dừng. **MỘT NGUỒN cho mã giả**: `programLines`
-vừa sinh dòng hiển thị vừa trả `lineOf` mà interpreter dùng để gắn `Step.line`
-⇒ highlight không thể trôi khỏi câu lệnh đang chạy.
-Dùng lại `TraceBuilder`/`Step`/`Snapshot.vars` (không có trace builder thứ hai).
-Chạm biên → `completion="limit_reached"` + câu "chưa kết thúc", KHÔNG treo.
-Tests: `program.test.ts`. Consumer: `domains/algorithm/program-module.tsx`.
-
-### `core/scan.ts` (M12) · offline
-**Declarative Bounded Scan** — MỘT interpreter tất định, engine-owned, cho họ
-bài single-pass trên mảng. Exports: `ScanSpec` (+ `ScanSeed/ScanCompare/
-ScanUpdate/ScanMarking/ScanStop`), `runScan(spec, whatIf?) → Trace`,
-`validateScanSpec(raw) → {ok, spec|error}`, `SCAN_VERSION`.
-Interpreter sở hữu **toàn bộ** vòng lặp/tiến chỉ số/biên dừng (≤ n, non-Turing)/
-sinh event/gọi `TraceBuilder`; spec chỉ chọn **enum ĐÓNG** (seed/compare/update/
-marking/stop) + hằng đầu vào — **KHÔNG** while/guard/mutation/đệ quy/code. Chứng
-minh (`scan.test.ts`): parity NGỮ NGHĨA (decisions + finalMarks + stepCount) với
-`runAlgorithm` cho find_max/count_if/sum_if/linear_search — cùng interpreter,
-spec khác, **0 primitive theo-thuật-toán**. `validateScanSpec` allowlist mọi
-trường + coherence "quét trên GIÁ TRỊ phần tử". (M12-AI-SCAN) `scanPseudocode(spec)` — mã giả
-5 dòng DẪN XUẤT từ spec; `runScan` gắn `Step.line`/narration từ CÙNG layout
-(một nguồn, chống highlight trôi). Đã wire: module `algorithm.scan`
-(`domains/algorithm/scan-module.tsx` — module thứ 9 của domain, adapter mỏng,
-prediction/what-if HOÃN) + route NL backend (catalog `algorithm.scan`).
-Specialized giữ nguyên làm oracle — KHÔNG thay thế. Mirror Python:
-`simulation/scan_engine.py`.
-
-### `scripts/capture-w4b2b-experiment.mjs` · offline (cần Chrome + Vite)
-Runner LUỒNG HỌC SINH qua CDP — khác `diagnose-responsive.mjs` (runner ĐO hình
-học, không bấm nút). Chứng minh chuỗi: Quan sát không vùng cam kết → mở cổng
-BẰNG BÀN PHÍM → cam kết sai/đúng qua `predict.check` → đóng cổng → timeline vẫn
-chạy; cộng `JSON.stringify(active.state)` không đổi qua mọi lần bật/tắt trình
-bày, và 0 rò rỉ đáp án trong DOM. Cờ: `--port --targets --out`. ⚠️ Chỉ tin kết
-quả trên tiến trình Vite MỚI: server đã qua nhiều lượt HMR cho phán quyết sai
-(đo được: store `view:"workspace"` mà React vẫn vẽ Home).
-
-### `scripts/capture-w4b2i-interaction.mjs` · offline (cần Chrome + Vite)
-Runner CDP của W4B-2I, hai chuỗi hành vi trong một lượt: (A) `binary_search` —
-Quan sát 0 vùng bấm → mở Thí nghiệm → **3 vùng bấm trên chính các cột** (nửa
-trái / phần tử giữa / nửa phải) → `svg` đổi `role` `img`→`group` → focus bàn
-phím → bấm sai: `JSON.stringify(active.state)` KHÔNG đổi; (B) `packet_routing` —
-tuyến gốc → ngắt chặng → **không tới được** → nối lại → **Về mạng ban đầu**.
-Cờ: `--port --window --out`. Có **dấu vân tay trang** (`active.moduleId`, sai thì
-thoát != 0).
-⚠️ Hai cái bẫy đã dính trong chính wave này, đừng lặp lại:
-(1) `evaluate` phải **thử lại** khi CDP báo `Promise was collected` — lần import
-đầu làm Vite pre-bundle rồi RELOAD trang, huỷ execution context; coi đó là lỗi
-sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị module nặng.
-(2) Dừng bước theo nút "Thí nghiệm" là **SAI** — nút đó hiện ở mọi bước chưa
-phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
-Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
-
-### `frontend/scripts/accept-workspace-w4b3b.mjs` — xem mục ở phần script bên dưới.
-
-### `core/trace-builder.ts` — bổ sung W4B-3C
-`clearVar(name)` — GỠ một biến TẠM khi thứ nó mô tả hết tồn tại. Không có nó thì
-biến mô tả thao tác ĐANG DỞ sống tới hết trace và bước `done` tự mâu thuẫn:
-`insertion_sort` tuyên bố đã sắp xong trong khi snapshot vẫn khai đang giữ một
-phần tử, và renderer vẽ trung thành cái nó được kể (quân bài ngoài dãy + ô trống).
-Chủ sở hữu là ENGINE — **đừng vá bằng `if (bước cuối) ẩn quân bài`**, đó là dạy
-renderer nói dối hộ engine và để nguyên mâu thuẫn trong state gửi cho AI giải
-thích. Tests: `core/terminal-truth-w4b3c.test.ts` (cả họ sắp xếp × 2 chiều +
-quét toàn danh mục + bất biến "hold luôn có bước chèn phía sau").
-
-### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
-**ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo
-trong Chrome: hộp bao **sân khấu** vs hộp bao **nội dung có nghĩa** (hợp của mọi
-`svg`/`table` bên trong), mức dùng bề ngang/bề dọc, số **dải thông tin** quanh mô
-phỏng (chú giải · thuyết minh · dải nhân quả · trạng thái tìm kiếm · kết quả ·
-teaser · công cụ · khay giữ), và **TRÙNG NGHĨA ở bước cuối** (so tập từ ≥ 60%,
-không so chuỗi — hai câu diễn đạt khác nhau vẫn là trùng). Cờ:
-`--out --shots --window --port`.
-⚠️ **Tỉ lệ dùng KHÔNG phải điểm chất lượng.** Cây cần khoảng thở, bit gom cụm là
-đúng, `decimal_to_binary` 17% là ca DISCONFIRMING hợp lệ. Con số là dữ kiện để
-phân loại, đừng biến thành mục tiêu tối ưu.
-⚠️ Biết trước: encap 2D dựng bằng `div` nên không có `svg/table` ⇒ hộp bao trả
-`null`. Đó là giới hạn của phép đo, không phải lỗi sản phẩm.
-
-### `scripts/capture-w4b2r-representation.mjs` · offline (cần Chrome + Vite)
-Runner CDP của W4B-2R — chứng minh CHÍNH SÁCH BIỂU DIỄN + vòng đời Quan sát trên
-**7 bài làm chứng chọn theo CƠ CHẾ** (§31: tìm kiếm · sắp xếp · logic · hệ cơ số
-· cảnh DSL · mạng đổi chính sách · mạng 3D sư phạm), không chọn theo ảnh ai gửi.
-Mỗi bài kiểm ba việc: **READY/PAUSED** sau khi nạp (không tự chạy) · **toggle
-2D/3D chỉ xuất hiện khi `representationPolicyOf` = `2d_and_3d_justified`** ·
-chạy **trọn** canonical bằng nút Tiến với `prediction` vẫn `null`. Sidecar ghi
-policy/renderer owner/timeline/capability đọc THẲNG từ store + `renderer.ts`,
-không suy từ DOM. Cờ: `--port --window --out`.
-⚠️ Dùng lại `warmup()` + thử lại `Promise was collected` của
-`capture-w4b2i-interaction.mjs` (Vite pre-bundle làm reload trang giữa lượt đo).
-
 ### `docs/SIMULATION_VS_ILLUSTRATION_CONTRACT.md` · tài liệu hợp đồng
 Định nghĩa ba mức AlgoSim công nhận — ILLUSTRATION (**cấm admit**) ·
 STEP_VISUALIZATION · INTERACTIVE_SIMULATION — phân biệt bằng **ai sở hữu diễn
@@ -1787,77 +1196,6 @@ vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu rendere
 đứng của LLM, hợp đồng **ngữ cảnh đổi NHÃN / cơ chế đổi HÀNH VI**, và phân mức
 hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
 renderer "tự tính" thứ gì.
-
-### `scripts/audit-search-position.mjs` · offline (cần Chrome + Vite)
-Runner ĐO HỆ ĐẾM VỊ TRÍ của họ tìm kiếm (W4B-2D §4) — chỉ ĐỌC, không bấm cam
-kết, không mở Thí nghiệm. Ở một bước cam kết của `linear_search`/`binary_search`
-nó thu hoạch MỌI bề mặt nói vị trí (nhãn cột `ArrayView` · `SearchActionZone` ·
-chip `VarsView` · dải nhân quả · thuyết minh · mã giả) rồi đối chiếu bằng SỐ LẤY
-TỪ ENGINE, không bằng chuỗi. Kết luận `SAME_SCREEN_CONTRADICTION` khi cùng một
-vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (`active.moduleId` +
-sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
-`docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
-
-### `frontend/scripts/measure-dag-composition.mjs` · offline (cần `npm run dev`)
-W4B-4D — ĐO KHOẢNG TRỐNG CHẾT của sân khấu `logic.boolean_dag` ở bốn bề rộng.
-Hai phép đo KHÁC NHAU, đừng lẫn: `fillPct` đo MỰC (rect trong SVG) so với thẻ —
-sơ đồ to hay nhỏ; `gutterLeft/gutterRight/skew` đo CỤM nội dung so với thẻ —
-hình có bị dồn về một bên không. Khiếu nại "dồn sang trái" là phép đo thứ hai,
-nên một bản vá chỉ kéo `fillPct` lên vẫn hỏng đúng chỗ bị kêu.
-
-Chính nó bắt được hai lỗi mà SSR không thấy: SVG rơi về bề rộng mặc định 300px
-khi cha là `fit-content`, và khung nét đứt của cổng đầu ra bị viewBox cắt mất
-7px. Có dấu vân tay trang (không thấy sân khấu DAG ⇒ thoát != 0).
-Artifact: `docs/evaluation/m17/w4b4d-composition/`.
-
-### `frontend/scripts/accept-experience-w4b4c.mjs` · offline (cần `npm run dev`)
-W4B-4C — NGHIỆM THU TRẢI NGHIỆM: hỏi CÂU HỎI NGHIỆM THU bằng Chrome thật ở bốn
-bề rộng. Với mỗi target đã chuyển sang tương tác, nó nạp bài, phát ĐÚNG action
-mà bộ điều khiển trên màn hình phát, rồi khẳng định (a) trường kết quả ĐỔI,
-(b) `state` đổi tham chiếu, (c) **không** phải bật Play. Vế (c) là vế chính:
-một bài chỉ đổi khi chạy timeline thì vẫn là animation-first.
-Artifact: `docs/evaluation/m17/w4b4c-experience/acceptance.json`.
-
-### `frontend/scripts/accept-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
-W4B-3A — NGHIỆM THU TRÌNH DUYỆT ở BỐN bề rộng (1920/1536/1366/768) cho 7 target
-đại diện: 0 dải `experiment-trigger`; mọi `.sim-secondary-action` phải nằm TRONG
-`.player-controls`; không tràn ngang; mở Thử thách ⇒ ≤1 bề mặt cam kết; parity
-2D↔3D của `protocol_encapsulation` (cursor/stepCount/`getExplainContext` phải
-KHỚP khi đổi cách xem); phiên A→Khám phá→B→A giữ nguyên object state, 0 `fetch`.
-Có dấu vân tay trang + `--self-test` (tiêm lỗi giả, exit 1). Cờ:
-`--port --out --self-test`. Artifact: `docs/evaluation/m17/w4b3a-after/`.
-
-### `frontend/scripts/accept-workspace-w4b3b.mjs` · Change impact: offline (cần `npm run dev`)
-W4B-3B — NGHIỆM THU BỐ CỤC KHÔNG-GIAN-LÀM-VIỆC ở 4 bề rộng, ở các trạng thái
-unit test không với tới: **1 phiên · 2 phiên TRÙNG TIÊU ĐỀ · 6 phiên (quá sức
-chứa) · chuyển phiên**. Khẳng định: 0 cột phiên thường trực · sân khấu KHÔNG hẹp
-đi và KHÔNG bị đẩy sang phải khi số phiên tăng · 0 tràn ngang · tiêu đề 1 dòng ·
-đúng 1 tab đang-xem · nhãn không trùng khi tiêu đề trùng · `Mô phỏng mới` tới
-được **kể cả khi chỉ có 1 phiên** · dải điều khiển không xuống dòng trên desktop ·
-chuyển phiên giữ đúng object state, 0 `fetch`. Có `--self-test` + `--label`.
-Artifact: `docs/evaluation/m17/w4b3b-workspace/{before,acceptance}.json`.
-
-**BA BẪY ĐÃ CẮN KHI VIẾT SCRIPT NÀY** (đọc trước khi viết script CDP mới):
-1. **Đếm dòng bằng `top` là SAI.** Trong flex row có `align-items:center`, con
-   cao thấp khác nhau thì `top` khác nhau — phép đếm đó báo 5–7 dòng cho một
-   hàng phẳng. Đếm bằng CHỒNG LẤN DỌC theo thứ tự DOM.
-2. **WARMUP PHẢI DÙNG URL ĐÃ GIẢI**, không dùng đường dẫn trần. Warmup bằng
-   `import('/src/state/store.ts')` ĐĂNG KÝ chính URL trần vào
-   `performance.getEntriesByType('resource')`, nên `pick()` sau đó chọn nó thay
-   vì URL `?t=…` app đang chạy ⇒ lại lái store thứ hai. Bẫy hai-instance cắn
-   LẦN THỨ HAI, do chính lớp chống nó gây ra vì thêm sai thứ tự.
-3. **`Promise was collected`** = Vite tối ưu deps rồi reload GIỮA lúc await.
-   Phải có `warmup()` + retry trên lỗi CDP (cùng khuôn `measure-composition.mjs`).
-   Và **chú thích bên trong template literal KHÔNG được chứa dấu backtick**.
-4. **Đếm dòng bằng `top` là SAI** (xem 1).
-
-**BẪY ĐÃ CẮN MỘT LẦN — đọc trước khi viết script CDP mới.** Vite gắn
-`?t=<timestamp>` vào URL module sau HMR, nên `import('/src/state/store.ts')` từ
-console có thể trả về **instance THỨ HAI**: script lái một store, trang vẽ theo
-store kia, và mọi khẳng định "không thấy X" đều XANH vì lý do sai. Script này
-giải URL từ chính trang (`performance.getEntriesByType('resource')`).
-`measure-composition.mjs` KHÔNG có lớp bảo vệ đó — nó thất bại ồn ào (null
-`querySelectorAll`), nên gặp lỗi đó thì **restart `npm run dev`**, đừng sửa số.
 
 ### `components/header-identity.ts` · offline
 **Chủ sở hữu DẢI NHẬN DIỆN đầu thẻ mô phỏng** — hai trong ba dòng đầu tiên học
@@ -1911,8 +1249,8 @@ Tests: `explore-ownership-w4b3a.test.ts`, `secondary-actions-w4b2w.test.ts`,
 2D — bất biến #24/#25/#26 **LỊCH SỬ**; các test nêu trên đã gỡ. Mã còn sót chờ quyết định H-W20-4.
 
 ### `llm/client.ts` · Change impact: offline
-Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,
-`EditResponse`. Notes: trình duyệt không bao giờ giữ API key.
+Exports: `analyzeViaServer`, `fetchHealth`, `extractImageViaServer` (dưới). *repo-cleanup:* `editViaServer`,
+`explainViaServer`, `EditResponse` đã gỡ cùng route backend. Notes: trình duyệt không bao giờ giữ API key.
 *2026-10-05 (`cuboid-acceptance`):* `editViaServer` không còn nơi gọi (backend `/api/edit` đã gỡ — bất biến #15
 **LỊCH SỬ**); `explainViaServer` chỉ do panel trợ giúp AI gọi, và panel ấy không được gắn ở đâu (#12; panel vẫn
 nằm trong `KNOWN_GAPS` của `code-index-sync.test.ts`).
@@ -2015,14 +1353,6 @@ hình. Không có bài đang làm ⇒ không gửi gì (tự luyện không đ�
 chứ không từ một trang riêng: giáo viên phải XEM được thứ mình giao, và một
 danh sách tên tách quyết định khỏi thứ nó nói về. Gửi envelope của phiên; máy
 chủ vẫn kiểm lại qua `SimSpec.validate` vì client không phải nơi luật sống.
-
-### `frontend/scripts/accept-classroom-m18.mjs` · offline (cần dev + uvicorn)
-Nghiệm thu tầng lớp học ở bốn bề rộng × ba vai. Kiểm DANH TÍNH BACKEND trước
-tiên: container Docker cũ chiếm cổng 8000 sẽ trả 404 cho mọi endpoint mới và
-làm mọi kết quả sau đó vô nghĩa (đã cắn một lần). Khẳng định: khách không có
-thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, bị 403 khi tạo lớp và
-khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
-chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 
 ### `frontend/scripts/spot-check-demo.mjs` · offline (cần `npm run dev`)
 
@@ -2487,62 +1817,6 @@ Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1
 đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
 nhầm trên máy thật cũng không đẻ ra tài khoản ai cũng biết mật khẩu. Idempotent.
 
-### `frontend/scripts/measure-stage-composition.mjs` · offline (cần `npm run dev`)
-Đo bố cục sân khấu cho **mọi** target (khác `measure-dag-composition.mjs` chỉ đo
-được `logic.boolean_dag`). Ba số mỗi target: `fillPct` (bề rộng MỰC / bề rộng
-trong thẻ) · `skew` (lệch lề trái–phải của mực) · `railSpan` (mép trái của chữ
-cách mép trái của mực bao xa — lớn = hai hệ căn lề trong cùng một thẻ).
-
-⚠️ HAI LẦN ĐO SAI TRƯỚC KHI RA SỐ ĐÚNG, ghi lại vì cả hai đều "xanh mà vô nghĩa":
-1. bản đầu lấy hộp bao của `querySelectorAll('*')` — div BỌC rộng bằng thẻ nên
-   **mọi** target ra "lấp 99.9%, lệch 0", tức báo SẠCH cho đúng bố cục đang bị
-   kêu. Nay chỉ đếm `<svg>` và phần tử LÁ thật sự có sơn.
-2. bản thứ hai đếm cả bảng `details` gập được nên `boolean_dag` báo lệch 558px
-   trong khi sơ đồ của nó đã căn giữa 0px — phép đo tự bịa ra một lỗi không có.
-
-Và một lần nữa dính bẫy **backtick trong template literal** (đã cắn hai lần ở
-`capture-*.mjs`): chú thích tiếng Việt trong khối `MEASURE` có \`...\` làm Node
-báo `SyntaxError`. Trong khối đó không được có backtick nào.
-
-Artifact: `docs/evaluation/m18/stage-composition.json`.
-
-### `frontend/scripts/audit-composition.mjs` · offline (cần `npm run dev`)
-M19 — SOÁT BỐ CỤC DÙNG CHUNG toàn danh mục. Thay `measure-stage-composition.mjs`
-(bản đó chỉ đo mực/thẻ, không đo KHUNG và không đo bốn rail).
-
-Mỗi dòng: sân khấu · khung cơ chế · mực có nghĩa · `frameFill` · bốn rail +
-`maxRailDelta` · tràn ngang · cắt hình · PHÁN QUYẾT. Hai lỗi tách bạch, không
-gộp thành một điểm: **A** = mực < 70% KHUNG mà khung lại chiếm > 90% sân khấu
-(cơ chế nhỏ trôi trong khung quá khổ) · **B** = rail lệch > 24px (hình và chữ
-hai hệ căn lề).
-
-⚠️ KHÔNG chấm bằng tỉ lệ lấp một mình: 17% là ĐÚNG nếu khung cũng ôm sát 17% ấy.
-Lỗi là 17% mực trong khung rộng 100%, nên mẫu số là KHUNG chứ không phải thẻ.
-
-Cách chọn "mực có nghĩa" khai ngay trong file (bắt buộc — ba lần đo trước đều
-trả về số mà vẫn sai): tính `<svg>` + phần tử LÁ có sơn; bỏ div BỌC (rộng bằng
-thẻ nên nuốt mọi phép đo) và bỏ đồ đạc của thẻ (tiêu đề, chú giải, thuyết minh,
-bảng gập, thanh tham số).
-
-Hai hiện vật đã sửa trong chính script: lỗi trong trang bị nuốt thành
-"(không trả lời)" nên bốn target hỏng đọc ra như thiếu mẫu — nay lỗi nổi lên; và
-lượt nạp nặng thỉnh thoảng không trả kịp nên có THỬ LẠI một lần, vẫn hỏng thì
-ghi dòng `KHÔNG ĐO ĐƯỢC` chứ không im lặng bỏ.
-
-### `simulations/stage-size.ts`
-M19 — MỘT LUẬT KÍCH THƯỚC SVG SÂN KHẤU, một chủ sở hữu. `stageSvgSize(w)` trả
-`width={w}` + `max-width: 100%` (co được, KHÔNG phóng được).
-
-Vì sao gom: sáu renderer cùng viết `width="100%"` + `maxWidth: w`, dạng đó KHÔNG
-khai bề rộng riêng nên khi cha là `fit-content` thì `100%` không có gì quy chiếu
-và Chrome rơi về 300px mặc định (`boolean_dag` đã dính: sơ đồ 662px vẽ ở 300px).
-Nó cũng buộc phải kèm `margin: 0 auto` để trông cân, và chính cú căn giữa đó tạo
-RAIL THỨ HAI — đo được `and_gate` lệch 581px, `decimal_to_binary` 673px.
-
-Áp cho `binary/ui` · `logic/ui` · `network/ui` · `algorithm/program-module`.
-`ArrayView` giữ bề rộng tự đo từ khung chứa (nó vốn co giãn theo cột) nhưng đã
-BỎ `margin: 0 auto` cùng lý do.
-
 ### `frontend/scripts/evidence.mjs`
 W0 — XUẤT XỨ CỦA BẰNG CHỨNG. `provenance(tool, env)` gắn `head` (git SHA) +
 `dirty` (cây có thay đổi chưa commit) + môi trường vào MỌI artifact sinh ra;
@@ -2554,8 +1828,8 @@ sinh từ một commit khác hẳn commit đang xét mà vẫn trông "mới". B
 chính (`m19/after.json`, `m18/classroom-acceptance.json`,
 `m17/w4b4a-experience/probe.json`) đều KHÔNG có dấu HEAD lúc kiểm.
 
-Đã gắn vào: `audit-composition.mjs` · `accept-classroom-m18.mjs` ·
-`accept-experience-w4b4c.mjs`.
+Từng gắn vào ba script thời Tin học (`audit-composition`, `accept-classroom-m18`, `accept-experience-w4b4c` — đã gỡ
+ở `repo-cleanup`); nay mọi bộ đo trình duyệt hình học gắn qua `evidence.mjs`.
 
 ---
 
@@ -2631,7 +1905,7 @@ và `curved.the_tich` theo LỚP runtime, và **không** kiểm kiểu — ngư�
 vì hai bên từ chối bằng hai thứ tiếng khác nhau. Trước nó, phép điều phối ấy chỉ
 nằm ở `_do`, còn checker thì `isinstance(Polyhedron)` — nên hệ tính đúng
 `V = 288π` rồi tự từ chối phục vụ (`ball_1`, probe §18). Khoá bởi
-`test_geometry_wave2.py::test_MOT_nguon_su_that_cho_the_tich` (đòi CẢ HAI đường
+`test_dev_failure_regressions.py::test_MOT_nguon_su_that_cho_the_tich` (đòi CẢ HAI đường
 đi qua đúng cửa này và **chỉ** cửa này chạm hai thẩm quyền toán học).
 
 **LUẬT CỐT LÕI**: hàm ở đây nhận **TÊN** đối tượng, đọc từ bộ nhớ, gọi kernel.
@@ -2838,7 +2112,7 @@ V3 cho ra một con số trông như nghiệm thu held-out mà thật ra là ch�
 đều **không** nằm trên đường chạy thật, và không `manifest.json` nào được ghi.
 Sửa ở `V3_LIVE_ENTRYPOINT_WIRING_REPAIR` — từ đó `CA` **không với tới được** từ
 live path (khoá bởi hai test quét AST trong
-`tests/test_v3_live_entrypoint_wiring.py`), và nó chỉ còn hai vai: dữ liệu
+`tests/test_curved_acceptance_entrypoint.py`), và nó chỉ còn hai vai: dữ liệu
 phát triển, và tham chiếu cho chính `kiem_bo_ca_la_pool_v3`.
 
 **`nap_ca_v3()` trả BA thứ** kể từ wave đó: `(ca_chuẩn, ca_thô, case_set_hash)`.
@@ -2907,7 +2181,7 @@ thì đổi. Hình thức tự do, nội dung bất biến.
 `"repair_attempts": "mặc định sản phẩm"` — một chuỗi văn xuôi lọt qua, đọc như
 đã khai, không nói con số nào. Đo bằng máy: guard trước khi cứng trả `PINNED`,
 sau khi cứng trả `DECODING_INCOMPLETE`. Loại cả `bool` (`True` là `int` trong
-Python). Khoá bởi `tests/test_v3_threshold_and_run_identity.py` (46).
+Python). Khoá bởi `tests/test_curved_acceptance_threshold.py` (46).
 
 ### `backend/scripts/certify_acceptance_runner.py` · offline · **0 API call**
 
@@ -2943,7 +2217,7 @@ triển. Hàm này chạy **chính `main_async`** với pool/seal tổng hợp �
 đầu · mỗi lượt gọi có guard đi trước · trần **78** · `mong` đã chuẩn hoá ·
 băm bộ ca V3 ở mọi artifact và **không** có `CA_HASH`. `READY_FOR_INDEPENDENT_
 V3_LIVE = YES` chỉ phát khi nhãn này PASS. Khoá bởi
-`tests/test_v3_live_entrypoint_wiring.py` (34 test, 7 phép tiêm).
+`tests/test_curved_acceptance_entrypoint.py` (34 test, 7 phép tiêm).
 
 **`chung_nhan_duong_hau_model`** (thêm 2026-09-05) — nhãn
 **`ACCEPTANCE_POST_MODEL_PATH_INTEGRATION`**. Chạy trọn đường hậu-model trên
@@ -3019,7 +2293,7 @@ mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai c
 không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
 Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).
 
-### `backend/scripts/run_phase7b_official.py` · **TIÊU QUOTA THẬT**
+### `backend/scripts/run_holdout_official.py` · **TIÊU QUOTA THẬT**
 
 Lượt đo CHÍNH THỨC Phase 7B: 20 bài đã niêm phong × `k = 3`, trần 360 logic /
 480 HTTP. Export: `_kiem_truoc_khi_chay` · `cham_oracle` · `_manifest` · `RA`.
@@ -3040,7 +2314,7 @@ ghi một lần; manifest cũ khai tập khác ⇒ từ chối.
 `"pilot"` và cache lại ở cấp module. Quên đổi thì may ra `KeyError`, tệ hơn là
 chấm ③a/③b bằng kỳ vọng CỦA BÀI KHÁC mà không cổng nào kêu.
 
-### `backend/scripts/score_phase7b_official.py` · offline · **0 API call**
+### `backend/scripts/score_holdout_official.py` · offline · **0 API call**
 
 Chấm lượt chính thức từ artifact đã ghi. Export: `cham` · `hoan_chinh` ·
 `_tap` · `_on_dinh` · `_taxonomy`. Mỗi chỉ số báo **bốn số trước tỉ lệ** (tử ·
@@ -3069,7 +2343,7 @@ Cố ý KHÔNG kèm `responseSchema`, KHÔNG nạp skill: nó kiểm ĐƯỜNG T
 kiểm khả năng. Trộn hai thứ thì một lỗi schema đọc ra như lỗi credential.
 Ghi `wave1-canary/PROVIDER_HEALTH.json`.
 
-### `backend/scripts/run_wave1_dev_stability.py` · **TIÊU QUOTA THẬT**
+### `backend/scripts/run_dev_stability.py` · **TIÊU QUOTA THẬT**
 
 Bộ đo DEV của wave sửa lỗi sau Phase 7B. Ba chế độ: `--canary` (3 đề × 1
 lượt, chứng minh end-to-end trước) · `--mini` (4 đề × k, chỉ chạy SAU canary
@@ -3108,7 +2382,7 @@ bản ghi — suýt mất 15 artifact của Phase 6.7 vì quên đổi `--out-di
 ⚠️ Kỳ vọng nghĩa vụ **KHÔNG** còn ở đây từ Phase 7A.2 → `geometry_expectations`.
 Thiếu kỳ vọng cho một đề ⇒ `_ky_vong_cua` **dừng**, không chấm bằng tập rỗng.
 
-### `backend/scripts/run_phase7a_pilot.py` · **TIÊU QUOTA THẬT**
+### `backend/scripts/run_holdout_pilot.py` · **TIÊU QUOTA THẬT**
 
 PILOT: **kiểm bộ đo, không đánh giá mô hình** — 5 đề × `k`. Không viết máy đo
 thứ hai: nạp `measure_geometry_stability` rồi **thay dữ liệu + thêm hai oracle**
@@ -3146,7 +2420,7 @@ hai của bộ đo).
 `pilot`); `sinh_tu_model_output` không phải `false` ⇒ từ chối; nghĩa vụ thiếu
 `ly_do` ⇒ từ chối. Dữ liệu: `docs/evaluation/geometry/expectations/pilot.json` +
 `holdout.template.json`. Khoá bởi
-`tests/geometry/test_expectation_contract_7a2.py` (32) — file test ấy cũng khoá
+`tests/geometry/test_expectation_contract.py` (32) — file test ấy cũng khoá
 **mốc đóng băng** bốn chỉ số còn lại trong `PHASE7_METRIC_CONTRACT §6`.
 
 **Thêm ở 7B-prep — nối tới ORACLE bằng CON TRỎ.** Tập ngoài `pilot` còn phải có
@@ -3156,9 +2430,9 @@ mang nó (chấm bằng *từ chối trung thực*, không bằng đáp án) và
 `dap_an_chinh_thuc`/`phep_chuyen`/`oracle_result` và là thứ được niêm phong —
 chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracle(d, pool_cases)`
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
-`problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
+`problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness.py` (29).
 
-### `backend/scripts/run_m1_pipeline.py` · offline · **0 API call**
+### `backend/scripts/run_holdout_ingest_chain.py` · offline · **0 API call**
 
 Chạy **trọn** chuỗi holdout bằng MỘT lệnh: `ingest → pool → scaffold →
 freeze check → coverage → readiness`. `--ghi` để ghi thật, không có thì chỉ soi
@@ -3226,12 +2500,12 @@ nay **bắt giá trị rồi kiểm** thay vì lookahead.
 ⚠️ `PACKET_READY: YES` **không** nói đề đúng nguyên văn nguồn — máy không kiểm
 được điều đó, và giả vờ kiểm được là bỏ đúng cái cổng `NGƯỜI CHÉP:` vừa dựng.
 
-### `backend/scripts/run_phase7b_data_pipeline.py` · offline · **0 API call**
+### `backend/scripts/run_holdout_data_pipeline.py` · offline · **0 API call**
 
-MỘT lệnh cho cả tuyến: `soi gói → [sáu chặng của run_m1_pipeline] → ngưỡng ≥40
+MỘT lệnh cho cả tuyến: `soi gói → [sáu chặng của run_holdout_ingest_chain] → ngưỡng ≥40
 → mốc M`. Export: `MOC` · `moc_hien_tai`.
 
-**Gọi lại `run_m1_pipeline`, không chép nó**: hai bản sao của cùng dây chuyền
+**Gọi lại `run_holdout_ingest_chain`, không chép nó**: hai bản sao của cùng dây chuyền
 là hai bản sẽ trôi khỏi nhau, và cái trôi ở đây là *tập đo được niêm phong theo
 luật nào*. Phần riêng là hai đầu — soi gói ở trước, ngưỡng + mốc ở sau.
 
@@ -3245,10 +2519,10 @@ Chế độ soi cộng thêm phần *sẽ* ghi trước khi tính ngưỡng — 
 đĩa thì ngưỡng báo `0` ngay dưới dòng coverage vừa báo `2`, hai con số cùng màn
 hình cãi nhau.
 
-### `backend/scripts/finalize_phase7b_holdout.py` · offline · **0 API call**
+### `backend/scripts/finalize_holdout_intake.py` · offline · **0 API call**
 
 MỘT lệnh chạy **sau khi người chép xong gói**. Export: `main`. Nó **không thêm
-chặng nào** — gọi lại `run_phase7b_data_pipeline` rồi trả lời một câu mà dây
+chặng nào** — gọi lại `run_holdout_data_pipeline` rồi trả lời một câu mà dây
 chuyền ấy không trả lời: *sau khi nạp, còn thiếu bao nhiêu và vì sao bài nào bị
 loại*. Khoá bởi `test_bo_hoan_tat_KHONG_lap_lai_nghiep_vu_cua_duong_ong` (đo
 **lời gọi**, không đo chữ — tên hàm trong docstring là giải thích).
@@ -3359,7 +2633,7 @@ trong khi `seal` chỉ kiểm trường CÓ MẶT.
 đòi *tên sách + trang*; `KHONG_TRA_NGUOC` là trạng thái ĐỎ.
 
 **`_nhan_trang_thai`** dựng lại `pool.__trang_thai__` TỪ `cases`. Có **hai** bộ
-ghi pool song song (`ingest.main` và `run_m1_pipeline`), nên sửa một bộ thì bộ
+ghi pool song song (`ingest.main` và `run_holdout_ingest_chain`), nên sửa một bộ thì bộ
 kia đè lại — sau lượt nạp 41 bài nhãn vẫn đọc *"0 accepted · 0/20 ô"*, tức mời
 người sau đi thu thập thêm rồi nạp trùng.
 
@@ -3376,7 +2650,7 @@ số nêu **hai lần** — 20/20 ô và **19/20 ô (held-out thật)**.
 phương án · căn thức · tham chiếu hình vẽ không có trong văn bản · mặt cong ·
 Oxyz cho sẵn toạ độ. Chặn cứng thì có: thiếu `NGUỒN`, ô A thiếu `ĐÁP ÁN`, ô B
 **có** `ĐÁP ÁN` (trộn hai thang chấm), ô ứng nhiều thẻ. Khoá bởi
-`test_holdout_readiness_7b.py`.
+`test_holdout_readiness.py`.
 
 ### `backend/scripts/harvest_holdout_candidates.py` · **0 API call của hệ**
 
@@ -3399,7 +2673,7 @@ nhất — phần lớn nội dung toán web tiếng Việt là **ảnh chụp**
 
 Sản lượng đo được (mathvn, 2026-08-27): `3883 url → 60 ứng viên → 11 có khối đề
 → 2 sạch → 0 trong ranh giới`. **Kênh đúng, nguồn cạn.** Khoá bởi
-`test_holdout_readiness_7b.py`.
+`test_holdout_readiness.py`.
 
 ### `backend/scripts/holdout_coverage_matrix.py` · offline · **0 API call**
 
@@ -3415,7 +2689,7 @@ tiếp), dẫn thẳng từ `BANG_O` + `NANG_LUC`. Nó thay một bảng **gõ t
 `CANDIDATE_REVIEW §3` đã sai thật: bảng ấy khai hạn ngạch **cứng** từng ô trong
 khi kế hoạch cố ý để **mềm** (`≥1` mỗi ô, `≥40` tổng). Sai kiểu ấy không cổng
 nào bắt — không test nào đọc markdown — nên nguồn gõ tay bị gỡ hẳn thay vì sửa
-con số. Khoá bởi 8 test ở `test_holdout_readiness_7b.py`, gồm cả bẫy `sin²` ô
+con số. Khoá bởi 8 test ở `test_holdout_readiness.py`, gồm cả bẫy `sin²` ô
 A10 và luật *"ô B không được mang chỉ số của tầng A"*.
 
 `--md` **từ chối đường dẫn ra ngoài kho**: đường tương đối ghép vào **gốc kho**,
@@ -5226,7 +4500,7 @@ _bien_chuan_hoa_trong_contract` đếm bằng cách soi chính `contract.py`, kh
 tay danh sách — nó đã bắt được drift thật ngay lần chạy đầu (`canonical_const_int`
 có trong mã mà `CODE_INDEX` vẫn ghi "ba biên").
 
-Runner đọc nó ở `run_sealed_evaluation.py`: `reset_coercion()` đầu mỗi case,
+Runner SEALED (đã gỡ ở `repo-cleanup`) từng đọc nó: `reset_coercion()` đầu mỗi case,
 `coercion_report()` vào `sealed_cases.json`, tổng hợp thành khối `coercion_rate`
 trong `sealed_summary.json`.
 
@@ -5284,60 +4558,6 @@ cho một case chưa bao giờ tới bước sinh.
 `tong_hop()` **không tính phần trăm**, chỉ phát tử số + mẫu số: §3.3 cấm chia khi
 mẫu số < 20, mà mẫu số của `R`/`O`/`V` là *số ca đã qua tầng trước* (ở lượt #1 là
 3 và 1). Khoá bởi `test_reliability_v2.py` (23 test).
-
-### `backend/scripts/replay_harness.py` · offline · **0 API call**
-
-Chạy MỘT `SemanticProgramSpec` trên **nhiều đầu vào** rồi so chuỗi hành động.
-Export: `replay()` · `KetQuaReplay` · `TIM_MAX` / `GAN_CUNG` (hai chương trình
-đối chứng) · `SO_BIEN_THE`.
-
-VÌ SAO: tới 2026-08-24 một chương trình chỉ chạy đúng **một** lần, trên đúng
-`initial_value` mà LLM viết cùng nó. Với một mẫu, *"tính ra đáp án"* và *"biết
-trước đáp án"* cho cùng kết quả.
-
-**RANH GIỚI VỚI C₁b — đọc trước khi thêm detector.** `coverage_gate` (`3e0d67c`)
-đã bịt "gán thẳng đáp án" bằng kiểm **TĨNH** (witness phải có đường phụ thuộc,
-kể cả qua nhánh, về container đầu vào). File này **không làm lại**. Nó phủ chỗ
-tĩnh không với tới: chương trình *có* đọc container mà vẫn không tính đúng —
-`GAN_CUNG` cố ý đọc `a` qua `length` nên **qua được C₁b**, và chỉ replay mới lộ.
-Cũng khác `evaluation/metamorphic.py` (cái đó biến đổi **văn bản đề** cho
-classifier; đây giữ chương trình, đổi **dữ liệu**).
-
-Ba detector, **không cần oracle** — chạy được trên bất kỳ chương trình sinh nào:
-`INPUT_IGNORED` (mọi đầu vào cho cùng một chuỗi hành động) · `DEAD_STATE`
-(container khai ra mà không lượt nào đụng) · `HARD_CODED?` (witness hằng qua mọi
-biến thể). Truyền `oracle=` thì so thêm.
-
-⚠️ **`HARD_CODED?` là NGHI VẤN, KHÔNG vào `ok`** — một nghĩa vụ có thể hằng
-chính đáng, biến nó thành phán quyết là đẻ false rejection ở chỗ khó cãi nhất.
-Chỉ `INPUT_IGNORED` và `DEAD_STATE` quyết PASS/FAIL.
-
-Chữ ký hành động cố ý **bỏ giá trị**, chỉ giữ `(action, target)`: giữ giá trị
-thì hai lượt luôn khác nhau và `INPUT_IGNORED` xanh vĩnh viễn. Khoá bởi
-`test_replay_harness.py` (9 test, nửa là ca ÂM TÍNH — chương trình thật không
-được gắn cờ).
-
-### `backend/scripts/classify_run1_failures.py` · offline · **0 API call**
-
-Soi lại các ca trượt thẩm định của SEALED #1 bằng hợp đồng HIỆN TẠI, phân loại
-**từng lỗi Pydantic** thành `GOP:<biên đã gộp>` hoặc `TRUOT:<lý do>`. Export:
-`chay()` · `tach_loi()` · `phan_loai()` · `BOOL_KINDS`.
-
-Nó trả lời *"bốn biên chuẩn hoá đáng giá bao nhiêu"* mà **không tiêu một lượt
-LLM nào** — làm được vì `sealed_cases.json` giữ nguyên văn khối lỗi Pydantic, và
-khối ấy liệt kê ĐỦ mọi lỗi của một chương trình. Kết quả 2026-08-24: **22/27 ca
-nay qua tầng Pydantic**, 3 vẫn trượt (`kind` bịa ra · `field` ngoài
-`{left,right,val,data}`), 2 không kết luận được (JSON cụt).
-
-HAI RANH GIỚI, đừng trích sai: (1) qua Pydantic mới là **chạm cổng kế**, sau đó
-còn `validate_semantic_program` → interpreter → C₁a → C₁b → C₂ — ở lượt #1, 9
-chương trình qua cú pháp rụng còn 3 chạy được và 1 phát được; (2) nó chạy trên
-**40 ca ĐÃ LỘ** nên là **chẩn đoán**, không phải số held-out.
-
-`tach_loi()` phân biệt `None` (không phải lỗi schema — JSON hỏng) với `[]` (có
-khối lỗi nhưng rỗng): hai thứ dẫn tới hai kết luận khác nhau, gộp là mất một
-nhóm ca. Ba lớp `TRUOT` được ghi thành **dự đoán tiền đăng ký** ở
-`RUN2_PREFLIGHT.md §3c` để lượt #2 bác bỏ được.
 
 ### `backend/scripts/cross_domain_matrix.py` · offline · 0 API call
 
@@ -5867,107 +5087,6 @@ CON SỐ); và luật **hệ toạ độ KHÔNG phải dữ kiện** — không 
 Ra đời sau Phase 5, nơi 3/6 chương trình hợp lệ khai nghĩa vụ Tin học cho bài
 hình học vì enum cũ liệt kê cả 19.
 
-### `backend/scripts/ocr_sgk_ingest.py` · **live** (Cloud Vision), có CACHE
-
-Đọc SGK bản QUÉT thành text. Năm cuốn trong `data/knowledge/sources/` không có
-lớp chữ — `pdftotext` trả 60 ký tự cho 60 trang, đúng bằng số dấu ngắt trang.
-Repo **không có** RAG/index/cache nào để tái dùng, và `app/ingestion/input.py`
-là lớp chuẩn hoá input của **sản phẩm** (text/docx/ảnh), không đọc PDF.
-
-Đường đọc: PyMuPDF dựng ảnh trang → Cloud Vision `document_text_detection`.
-Credential lấy từ `.secrets/` qua `GOOGLE_APPLICATION_CREDENTIALS`; **không in
-và không ghi** giá trị secret vào artifact.
-
-**Cache là điểm chính**: mỗi trang OCR đúng một lần rồi ghi vào
-`data/knowledge/ocr-cache/<sách>.json`. `data/` bị gitignore nên text SGK không
-vào kho mã. `--stats` báo trạng thái cache mà **không tốn call nào**.
-
-### `backend/scripts/validate_sealed_submission.py` · offline, CUSTODIAN chạy
-
-Kiểm **hình dạng** tập SEALED trước khi niêm phong: trường thiếu, `case_id`
-trùng, `obligation_kind` sai chính tả, 4 metadata guard, và dạng `expected` cũ
-`{tên_biến: giá_trị}` (bị bỏ vì tên biến do LLM đặt). Tách khỏi runner có chủ
-đích — runner chạy một lần, còn cái này chạy bao nhiêu lần cũng được vì không
-gọi API.
-
-**Cố ý KHÔNG kiểm** phạm vi đề và tính đúng của ground truth: ground truth mà
-máy kiểm được thì không còn độc lập. Khoá bởi `test_sealed_validator.py`, gồm cả
-một test chống chính nó tự nhận là bộ chấm.
-
-### `backend/scripts/run_sealed_evaluation.py` · **live**, chạy ĐÚNG MỘT LẦN
-
-Runner Task 12. Kiểm candidate + vân tay con dấu **trước** khi mở SEALED, chạy
-`run_pipeline(semantic_route="shadow")` nên MỘT lượt đo được cả hai route. Ngân
-sách 440 logic / 520 HTTP cưỡng chế qua `gemini.ApiBudget` (dùng lại, không viết
-bộ đếm mới). Viết **trước** khi thấy SEALED có chủ đích; phần chấm/tổng kết được
-khoá offline bởi `tests/semantic_program/test_sealed_runner.py` vì chạy lại là
-mất tính held-out.
-
-Bốn thứ trong đây dễ bị viết sai vào luận văn, nên mỗi thứ có một test khoá:
-**A−B phải phân rã** (chỉ một nhánh là `verification_gap`) · **B là
-STRONG-assurance nội bộ, không phải "đúng"** (oracle độc lập báo riêng, và case
-`servable` mà oracle nói sai được nêu đích danh) · **D1 là claim CẤU TRÚC**
-(số lượt LLM đứng yên khi số bước trải rộng; token/case chỉ là telemetry hỗ trợ)
-· **N=40 khoá**, chạy thiếu thì `evaluation_complete: false` và A/B không được
-công bố như kết quả chính.
-
-**`--dataset dev` (2026-08-24) — đường đo KHÔNG cần seed của GVHD.** 20 case ở
-`dev/cases.json`, tập tự khai *"DEV **được nhìn**; SEALED thì không"*. Chạy nó
-**không đốt** pool 49 bài held-out và **không cần** seed, nên nó là cách duy
-nhất biết A/B của hệ hiện tại trước lượt #2. Ba khác biệt so với đường sealed,
-đều cố ý: bỏ `_kiem_seal()` (DEV không có con dấu — giả vờ có là nói dối xuất
-xứ) · **vẫn** `_kiem_candidate()` (chạy trên cây đã trôi thì số không gắn với
-bản nào) · trần riêng `TRAN_LOGIC_DEV`/`TRAN_HTTP_DEV` = 260/310, **dẫn từ cùng
-call graph** với N=20 nên đổi một trần không kéo trần kia theo.
-
-⚠️ **Số của DEV không bao giờ là số của luận văn**: hệ đã được chỉnh trên chính
-20 case này. Nó trả lời đúng một câu — *bốn biên chuẩn hoá + vòng sửa có làm
-phễu thông hơn không*. Oracle sẽ **UNGRADED toàn bộ**: ground truth của DEV còn
-ở định dạng cũ (khoá theo TÊN BIẾN), không phải hợp đồng nghĩa-vụ + giá-trị mà
-`_cham` đòi — và **không được tự chuyển đổi**, viết lại ground truth là việc của
-custodian. Báo cáo tự đeo `dataset` + `canh_bao_dataset`; đầu ra mặc định vào
-`dev-results/`, và có **chặn cứng** không cho DEV ghi vào `results/`. Khoá bởi
-ba test mới ở `test_sealed_runner.py` §7.
-
-**ĐÃ CHẠY 2026-08-23 — lượt duy nhất, không được gọi lại.** Artifact ở
-`docs/evaluation/semantic-benchmark/results/`:
-
-- `sealed_summary.json` — số tổng hợp (A/B/A−B/oracle/D1/D2/ngân sách).
-  **Hai khối thêm 2026-08-24, đọc được từ LƯỢT #2 trở đi**:
-  `token_dau_ra_theo_route` (token ĐẦU RA = `candidates` **+** `thoughts`, tách
-  route sinh ↔ route module — bỏ `thoughts` là báo thấp đi gần ba lần, nó lớn
-  hơn `candidates` 2,6× ở stage `semantic_program`; vẫn là telemetry HỖ TRỢ,
-  **không** phải D2 vì hai route chạy trên hai population khác nhau) và
-  `coercion_rate` (bốn biên chuẩn hoá nổ bao nhiêu lần — xem `coercion_stats.py`).
-  Lượt #1 **không có** hai khối này, nhưng token đầu ra của nó vẫn tính lại được
-  từ `sealed_cases.json[].token` vì `record_usage` đã ghi đủ năm trường ngay từ
-  đầu.
-  **Khối thứ ba, 2026-08-24**: `reliability_v2` (8 tầng thất bại + G1/G2/A/R/B/
-  V/O) — xem `reliability_v2.py`. Đặt CẠNH `A_generative_executability` và
-  `B_internal_servable`, **không thay** chúng: hai cái ấy là chỉ số duy nhất so
-  trực tiếp được với lượt #1. Khoá bởi `test_sealed_runner.py §8`
-  (`_KHOA_CU` — mất một khoá cũ là ĐỎ).
-
-**Runner BỌC `stage_semantic_program` từ phía harness** để bắt
-`SemanticProgramSpec` cho replay. Observer không mang spec, mà phát thêm spec ra
-observer là sửa `pipeline.py` — tức sửa engine. Proxy đi qua nguyên vẹn, chỉ ghi
-lại, và **khôi phục trong `finally`**: một case ném lỗi mà để lại proxy thì case
-sau chạy qua hàm đã bọc chồng nhiều lớp, mỗi lớp thêm một lượt LLM. Khoá bởi
-`test_proxy_bat_spec_KHONG_ro_ri_sang_case_sau`.
-
-**Tầng ⑦ (renderer) KHÔNG chạy ở đây** — `renderer_V` luôn `None` ở pha A. Nó
-thuộc pha B (trình duyệt, 0 call LLM), chạy lại được mà không phải tiêu quota
-lần nữa.
-- `sealed_cases.json` — 40 bản ghi case-level: `semantic` (stage_reached,
-  executable, servable, error_code, reason), `legacy` (route module để so),
-  `contract` (nghĩa vụ khai), `cham` (verdict oracle), `token` theo stage.
-- `OFFICIAL_RESULT.md` — **bản diễn giải chính thức, nguồn trích cho luận văn**.
-  Chứa cảnh báo bắt buộc: 17/40 case chết ở `spec_version` float vs
-  `Literal["1.0"]`, nên A = 3/40 là cận dưới của cận dưới.
-
-Gọi lại runner sẽ ghi đè artifact và **phá tính held-out** — muốn đo lại phải
-niêm phong SEALED MỚI, không phải chạy lại tập cũ.
-
 ### `backend/app/ai/telemetry.py` · offline
 
 Sở hữu **bộ đếm token theo stage**. Dùng `ContextVar` (`stage_scope`) chứ không
@@ -5993,10 +5112,6 @@ mà bộ nhớ cuối của interpreter hình học chứa `Fraction`/`Vec3`/`Li
 đoán trả 500 **đúng vào lượt hình học CHẠY ĐƯỢC**, còn lượt hỏng thì đọc bình
 thường. Khoá bởi `tests/test_route_trace_json_safe.py`.
 
-### `backend/scripts/seal_benchmark.py` · offline
-
-Khoá/kiểm fingerprint của SEALED benchmark. Thoát != 0 khi seal vỡ.
-
 ### `frontend/src/simulations/domains/semantic/` · offline
 
 `model.ts` — đọc frame timeline, **không** tính lại bước; `validateSemanticConfig`
@@ -6005,13 +5120,6 @@ kiểm lại bất biến #32 ở phía nhận (envelope có thể đến từ l
 tròn TẤT ĐỊNH (không physics/camera/editor), và `visited`/`current` đến TỪ
 BACKEND — renderer không được tự chạy lại BFS. `index.ts` — đăng ký module,
 **shadow-only** cho tới hết Task 12.
-
-### `frontend/scripts/capture-stack-vnext.mjs` · cần Chrome + `npm run dev`
-
-Bằng chứng trình duyệt thật cho kịch bản Stack vNext: kiểm tra trạng thái tương tác
-thay đổi thật sự khi bấm chuyển bước (khắc phục điểm mù của SSR renderToString).
-Đo đạc dấu vân tay trang, kiểm tra render ngăn xếp qua Playwright và hỗ trợ `--faultcheck`.
-
 
 ### `backend/scripts/thesis_acceptance_corpus.py` · offline · **0 API call**
 
@@ -6687,7 +5795,7 @@ Synthesis: trần tầng `{vision: 0, synthesis: 0}` chặn ở transport.
   `TARGETED_REGISTRY_RESOLVED_SHA256`. Thân request, thứ tự ca, ngân sách 6 **không đổi**.
   Test: `tests/geometry/test_multicase_benchmark.py` +
   `tests/geometry/test_completion_runner_repair.py` (G1–G9, kịch bản A–E chạy
-  `main()` thật qua transport giả) + `tests/geometry/test_n04_targeted_registry_v2.py`
+  `main()` thật qua transport giả) + `tests/geometry/test_targeted_rejection_registry.py`
   (36 ca: khoá v1, bộ nạp fail closed, N04 A–G, N01–N03 parity, ràng buộc runner).
   ⚠️ Mọi test gọi `main()` thật **đỏ trên cây có overlay chưa commit** — đúng thiết
   kế; kiểm chúng ở worktree sạch.

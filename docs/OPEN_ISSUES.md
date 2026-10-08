@@ -92,7 +92,7 @@
 - **verify:** `git worktree add --detach "<tmp with space>" HEAD` then `cd "<tmp with space>/frontend" && npm ci --offline && npm run test:full`
 
 ### ISSUE-OPS-BROWSER-SCRIPTS-SPACE-PATH
-- **description:** About twenty hand-run browser scripts in `frontend/scripts/` (`accept-*.mjs`, `certify-*.mjs`, `audit-composition.mjs`, …) still build paths from `new URL(...).pathname`, which keeps `%20`.
+- **description:** Hand-run browser scripts in `frontend/scripts/` still build paths from `new URL(...).pathname`, which keeps `%20`. After `repo-cleanup` (Informatics scripts removed) the remaining ones are geometry tools: `accept-live-classroom`, `accept-product-scope`, `certify-product-ui-rendering`, `certify-scene3d-hidden-lines`, `certify-scene3d-visual-fidelity`, `replay-cuboid-cube-browser`, `replay-rectangular-pyramid-browser`, five `spot-check-*`.
 - **evidence:** `grep -n "\.pathname" frontend/scripts/*.mjs` (w10); the test graph itself is clean (`src/test-tiers.test.ts` guard).
 - **impact:** Those scripts fail when run by hand from a checkout whose path contains a space; no gate or test depends on them.
 - **scope:** Hand-run browser tooling only.
@@ -656,12 +656,12 @@
 - **evidence:** `frontend/package.json` lines 13–22; `node frontend/scripts/impact.mjs --dry --files src/simulations/domains/geometry/scene3d-view.tsx` (2026-10-05, `cuboid-final-review`); `docs/TEST_TIERS.md` (dated note under the tier table).
 - **impact:** T1 cannot be run for the only product domain; T0 is slow for geometry edits (it still never selects 0 tests, so no false green).
 - **scope:** `frontend/package.json` (drop the eight dead scripts, add `test:domain:geometry`) and the owner tables of `frontend/scripts/impact.mjs`; tooling only, no product code, no candidate change.
-- **status:** OPEN (`cuboid-final-review`) — registered with a dated note in `TEST_TIERS.md`; not fixed (tooling, outside this task).
+- **status:** RESOLVED (run `repo-cleanup`, 2026-10-08) — the eight dead scripts are gone, `test:domain:geometry` (33 files) and `test:domain:semantic` exist; `impact.mjs` lists geometry and semantic in `DOMAIN_TESTS` and maps `frontend/src/simulations/domains/geometry/**` by folder (no `IMPACT_MAPPING_MISSING`). The old verify command passed a frontend-relative path, which the selector never matched; the path is repo-relative.
 - **owner_class:** OPERATIONS
 - **suggested_wave:** the next wave that touches the test tooling
 - **default_switch_blocker:** NO
 - **acceptance:** every `test:domain:*` script selects at least one test file, a geometry script exists, and `impact.mjs --dry` maps a geometry file without `IMPACT_MAPPING_MISSING`.
-- **verify:** `cd frontend && npm run test:domain:geometry && node scripts/impact.mjs --dry --files src/simulations/domains/geometry/scene3d-view.tsx`
+- **verify:** `cd frontend && npm run test:domain:geometry && node scripts/impact.mjs --dry --files frontend/src/simulations/domains/geometry/scene3d-view.tsx`
 
 ### ISSUE-DOCS-INVARIANT-ENFORCEMENT-POINTERS-STALE
 - **description:** In the numbered invariant table of `docs/ARCHITECTURE_MAP.md` §5, the *enforced at* and *test* cells were written when each row was added. In 22 rows (#1–#8, #10, #11, #14–#16, #18, #20–#26, #29) at least one named file no longer exists, mostly removed with the informatics domain; in #1–#8, #11, #14 and #15 none of the named files exists. The principle of such a row may still hold, but its current lock is not recorded.
@@ -761,4 +761,26 @@
 - **status:** OPEN (regular-triangular-pyramid-w01) — reproduced, waiting for the user's choice.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user picks an option
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY
+- **description:** After `repo-cleanup` the remaining Informatics content sits on the measured model surface and in the live IR, both outside what a cleanup may change. (1) Prompts `app/ai/skills/{adapt,analyze,classify,edit,explain,simulate,semantic_analyze,semantic_program}.md` still describe the Informatics product; `adapt`, `edit`, `explain`, `simulate` have no loader in `app/` or `scripts/`, `semantic_analyze`/`semantic_program` serve only the `domain=None` branch of `pipeline.stage_semantic_{analyze,program}` that the product never takes (out-of-domain text fails closed first). (2) The Semantic Program IR keeps the container vocabulary (`ContainerType` array/stack/queue/matrix/map/set/tree_node/graph, container operations, visual bindings) with its interpreter, gates, the 2D `domains/semantic` renderer and their tests (`tests/semantic_program/*`, `test_cross_domain_matrix.py` + `scripts/cross_domain_matrix.py`).
+- **evidence:** `backend/cache_identity.lock.json` `components.prompts` = hash of every `skills/*.md` (`runtime_identity.skill_fingerprint`); `image_extraction.SEMANTIC_PROMPT_SKILLS` keys the image cache on `semantic_analyze`/`semantic_program`; `components.synthesis_schema` hashes the IR schema; inventory of run `repo-cleanup`.
+- **impact:** no wrong value; dead prompt text and IR vocabulary the geometry product never uses.
+- **scope:** a model-surface wave: delete the four unloaded prompts and the `domain=None` branch, prune the IR vocabulary (contract, static check, interpreter, schema export, frontend schema copy, semantic renderer), re-lock the cache identity with a `CACHE_VERSION` bump and re-measure — not a cleanup (brief of `repo-cleanup`: no DSL/IR change, no live calls).
+- **status:** OPEN (run `repo-cleanup`)
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** the next wave that changes prompts or the IR anyway
+- **default_switch_blocker:** NO
+- **acceptance:** no `skills/*.md` without a loader; `ContainerType` holds only what the geometry route emits; cache identity re-locked; model surface measured.
+- **verify:** `git grep -n "ContainerType = Literal" backend/app/simulation/semantic_program/contract.py` · `ls backend/app/ai/skills`
+
+### ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE
+- **description:** Live shell code still carries Informatics-era pieces that a cleanup cannot remove without changing what the UI shows: `components/SamplePreview.tsx` maps eleven Informatics `simulation_id`s to preview glyphs (Home, Library and session cards — old history entries in a learner's browser still render with them); the module-contract fields `threeD` policy (`simulations/renderer.ts`, `types.ts`) and `specDrift` (`SimulationWorkspace.tsx`); the comment of `data/offline-catalog.ts` that still says the public catalogue is "Tin học THPT"; nine dead `geo3d-*` CSS classes (old panels before `BangNoi`) left out of the dead-CSS pass because they belong to the geometry UI; historical comments that cite removed measurement scripts (`tokens.css`, `global.css`, `SimulationControls.tsx`, `transport-policy.test.tsx`, `test-tiers.test.ts`, `evidence.mjs`) — the measured evidence they name stays under `docs/evaluation/m20/`.
+- **evidence:** inventory of run `repo-cleanup` (kept items); `frontend/src/components/SamplePreview.tsx` `KIND_BY_SIM_ID`.
+- **impact:** presentation/maintenance only; no wrong value.
+- **scope:** a UI pass with a before/after visual check (SamplePreview glyphs, dead geo3d CSS) and a shell-contract pass (`threeD`, `specDrift`); comment edits when those files are next touched.
+- **status:** OPEN (run `repo-cleanup`) — H-W20-4 (Informatics residue in code) is otherwise closed by that run.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** the next UI wave
 - **default_switch_blocker:** NO
