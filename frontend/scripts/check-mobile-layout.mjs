@@ -46,6 +46,8 @@ const KHO = {
   portrait_small: { width: 360, height: 640, mobile: true },
   landscape: { width: 844, height: 390, mobile: true },
   landscape_small: { width: 667, height: 375, mobile: true },
+  // Điện thoại ngang khi thanh địa chỉ của trình duyệt còn hiện (844×390 mất ~50 px) — thêm TRƯỚC lượt đo cuối.
+  landscape_browser: { width: 844, height: 340, mobile: true },
   low: { width: 1366, height: 650, mobile: false },
   desktop: { width: 1440, height: 900, mobile: false },
 };
@@ -318,6 +320,7 @@ async function chay(ho, fixture, kind) {
       await xoayKho(kho.width, kho.height);
       const sau = await trangThaiChon(s);
       o.rotation = { before: truoc, rotated: giua, after: sau, rotated_controls_inside: giuaDk?.all_inside ?? false,
+        rotated_controls: giuaDk?.items ?? null, rotated_viewport: { w: kho.height, h: kho.width },
         rotated_horizontal_scroll: giuaNgang,
         state_kept: truoc.step === giua.step && giua.step === sau.step && truoc.selected === giua.selected
           && giua.selected === sau.selected && cungCam(truoc.camera, giua.camera) && cungCam(giua.camera, sau.camera) };

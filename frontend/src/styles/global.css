@@ -3940,10 +3940,12 @@ html {
     align-items: start;
   }
 
+  /* Khe 4 px trong cột: cột ~260 px kể cả hai nút xem — vừa cả khi thanh trình duyệt ăn bớt chiều cao (844×340). */
   .geo3d-controls {
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
+    gap: var(--sp-xs);
   }
 
   .geo3d-controls .geo3d-scrub {
@@ -3965,8 +3967,14 @@ html {
     width: auto;
   }
 
+  /* Hàng trên MỘT dòng: xuống dòng ở 640 px (máy 360×640 xoay ngang) đẩy cột điều khiển dưới mép 360 px. Tên bài co
+     lại và cắt bằng dấu ba chấm (đủ chữ ở `title`). */
+  .geo3d-thanh {
+    flex-wrap: nowrap;
+  }
+
   .geo3d-ten-bai {
-    flex-basis: 6rem;
+    flex: 1 1 0;
   }
 
   .geo3d-san {
@@ -3975,7 +3983,7 @@ html {
 
   /* Hai nút nổi ở ĐẦU cột điều khiển, không phủ lên canvas — trên canvas ngang hẹp (467 px ở 667×375) góc trên-trái
      là chỗ hình rộng chạm tới (cùng lẽ bản sửa w10 cho khổ hẹp). Đầu cột, không đáy: ở 667×375 canvas ở sàn 320 px
-     dài hơn phần khả dụng, đáy cột rơi dưới mép. Thanh điều khiển chừa đúng chỗ của hai nút (hai nút cao ~31 px). */
+     dài hơn phần khả dụng, đáy cột rơi dưới mép. Thanh điều khiển chừa đúng chỗ của hai nút: 2 × 31 px + hai khe 4 px. */
   .geo3d-noi {
     position: absolute;
     inset: 0 0 auto auto;
@@ -3986,7 +3994,7 @@ html {
   }
 
   .geo3d-player .geo3d-controls {
-    margin-top: 4.75rem;
+    margin-top: 4.375rem;
   }
 
   .geo3d-bang-noi {
