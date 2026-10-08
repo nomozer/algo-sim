@@ -41,10 +41,10 @@
 
 ## 4. Evidence & Documentation Safety
 
-- **Tính bất biến của lịch sử:** Báo cáo lịch sử, input/output của lượt đo, manifest và artifact đã đông cứng của các wave trước (trong `docs/evaluation/**`, và các báo cáo liệt kê ở `HISTORICAL_REPORTS.md`) là bất biến. Không được sửa, di chuyển hoặc xóa.
+- **Bằng chứng còn được sử dụng phải giữ nguyên nội dung:** Không sửa byte của kết quả đo, input/output, manifest hoặc báo cáo đang làm căn cứ cho sản phẩm, nghiên cứu hiện hành hay khả năng tái lập đã cam kết. Được đổi tên/chuyển file hoặc folder khi cập nhật đồng bộ consumer, manifest và index; run ID giữ trong metadata khi cần. Được xoá tài liệu/artifact đã đọc và xác minh không còn phục vụ ba mục đích trên. Nhãn `historical`/`frozen` hoặc một test pin, tự nó, không phải lý do giữ; việc xoá phải có inventory, kiểm tham chiếu và đường khôi phục bằng commit Git.
 - **Nháp của công cụ agent không tự động là bằng chứng bất biến:** plan, brief, report, ledger và gói review do skill/agent sinh (`.superpowers/` — nháp local, gitignore).
 - **Kế hoạch/spec của skill theo cấu trúc dự án:** thiết kế là contract đang hiệu lực ⇒ `docs/architecture/`; kế hoạch triển khai ⇒ `plan.md` trong thư mục run của việc. Không tạo `docs/superpowers/` hay thư mục tài liệu mới; không nhân bản một kế hoạch ở nhiều nơi. Chi tiết: [`docs/README.md`](docs/README.md) §8.
-- **Dọn có kiểm:** bản trùng, plan bỏ dở và tài liệu ngoài phạm vi được xoá sau khi đọc nội dung, kiểm mọi tham chiếu (code, test, tooling, docs, manifest) và chuyển thông tin duy nhất sang tài liệu có thẩm quyền kèm nguồn; xoá theo đường dẫn chính xác, ghi nhật ký xoá.
+- **Dọn có kiểm:** bản trùng, plan bỏ dở, bằng chứng hết consumer và tài liệu ngoài phạm vi được xoá sau khi đọc nội dung, kiểm mọi tham chiếu (code, test, tooling, docs, manifest) và chuyển thông tin duy nhất sang tài liệu có thẩm quyền kèm nguồn; nhóm trộn phải xử lý từng phần; xoá theo đường dẫn chính xác, ghi nhật ký xoá.
 - **Test không ghi vào bằng chứng đông cứng:** output tái sinh đi vào thư mục tạm hoặc một run mới.
 - **Phê duyệt là của người:** tự động hoá (script, test, agent) không bao giờ ghi `APPROVED_BY_USER`.
 - **Báo cáo wave mới nằm trong thư mục run** (`docs/evaluation/geometry/runs/<run>/`), không ở gốc `docs/`. Gốc `docs/` là danh sách đóng: tài liệu chuẩn tắc, tài liệu dự án, và các báo cáo cũ trong [`docs/evaluation/HISTORICAL_REPORTS.md`](docs/evaluation/HISTORICAL_REPORTS.md) — bộ kiểm tài liệu đỏ với file chưa phân lớp. Cổng điều hướng: [`docs/README.md`](docs/README.md).

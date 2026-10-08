@@ -26,7 +26,7 @@ import type { Domain, SimulationModule } from "../simulations/types";
  *
  * KHÔNG cấm mọi chữ tiếng Anh: "HTML/CSS", "TCP/IP", "RGB" là thuật ngữ chương
  * trình học, và "(AI tự dựng)" ở miền `generic` là DẤU TRUNG THỰC có chủ đích
- * (`docs/evaluation/m17/rc1/visual_stress_review.md`) — nói cho học sinh biết mô
+ * (quyết định minh bạch nguồn dựng đã được giữ trong hành vi/test hiện hành) — nói cho học sinh biết mô
  * phỏng này do AI dựng chứ không phải bản chuyên biệt đã kiểm. San phẳng nó là
  * xoá một quyết định đúng. Cổng này chỉ cấm thứ ĐÃ CÓ tên tiếng Việt ngay trên
  * cùng màn hình.

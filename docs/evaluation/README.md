@@ -1,6 +1,6 @@
 # evaluation/ — bằng chứng thực thi
 
-> Artifact đo (JSON, log, ảnh, báo cáo của run) — **bất biến sau khi commit** (`../../AGENTS.md` §4). Thẩm quyền tra
+> Artifact đo (JSON, log, ảnh, báo cáo của run) — nội dung **bất biến khi còn được dùng làm bằng chứng** (`../../AGENTS.md` §4). Thẩm quyền tra
 > cứu là [`../EVIDENCE_INDEX.md`](../EVIDENCE_INDEX.md) (wave → báo cáo → artifact → `CORRECTED_BY`); file này chỉ chỉ
 > đường. Tuyên bố được phép rút từ các artifact này: [`../research/CLAIM_EVIDENCE_MAP.md`](../research/CLAIM_EVIDENCE_MAP.md).
 
@@ -11,29 +11,23 @@
 | [`geometry/runs/`](geometry/runs/) | một thư mục / run từ w09 (`wNN-short-slug` tới w20, rồi `<task-slug>-wNN`; từ 2026-10-07 tên theo việc — `exact-dimensions`, `repo-cleanup`, `docs-cleanup`; luật hiện hành ở [`RUN_NAMING.md`](RUN_NAMING.md), run cũ giữ tên); run mới có `report.md`, `handoff.md`, `run.json`, `inputs/`, `diagnostics/` (run cũ viết hoa: `REPORT.md`, `RUN.json`, `MANIFEST.json`) |
 | [`geometry/photo-problem-to-scene/`](geometry/photo-problem-to-scene/) | artifact các wave đề-từ-ảnh và đo live 2026-09-13 … 09-24 (báo cáo ở gốc `docs/`) |
 | `geometry/<tên-wave>/` khác | artifact các wave hình học 2026-08-24 … 09-27 (`thesis-final-acceptance/`, `curved-acceptance-v3/`, `holdout/`, …) |
-| `m16/` … `m20/`, `semantic-*/`, `tier2-live-pilot/`, … | artifact giai đoạn Tin học (trước đổi đề 2026-08-24) — tên mang mã milestone nhưng là danh tính bằng chứng (bất biến); nội dung từng thư mục: bảng dưới |
+| `semantic-benchmark/` | benchmark SEALED thời Tin học vẫn được `CORRECTNESS.md` dùng, đồng thời chứa candidate register sống; giữ vì consumer cụ thể |
 | [`HISTORICAL_REPORTS.md`](HISTORICAL_REPORTS.md) | catalog **đóng** các báo cáo wave cũ nằm ở gốc `docs/`, theo chủ đề |
 | [`AUDIT_ARTIFACT_MANIFEST.md`](AUDIT_ARTIFACT_MANIFEST.md) | nguồn gốc bảy bộ artifact audit W4B-0 |
 
 ### Thư mục bằng chứng ngoài `geometry/` — đọc gì ở đâu
 
-Tên giữ nguyên (AGENTS §4: không sửa, chuyển, xoá); bảng này là lớp tên hiển thị (run `docs-cleanup`, đọc thư mục).
+Run `docs-cleanup-2026-10-08` đã đọc lại nội dung và consumer. Các nhóm Tin học không còn phục vụ sản phẩm,
+nghiên cứu hiện hành hoặc tái lập cần giữ đã bị gỡ; bảng dưới chỉ còn ngoại lệ có consumer cụ thể.
 
 | thư mục | nội dung | còn được trích bởi mã/test |
 |---|---|---|
-| `curriculum-ui-admission/` | ma trận nhận 22 target Tin học theo chương trình, độ phức tạp UI, quyết định chế độ xem, pilot | không |
-| `frontier-fix/` · `mechanism-fix/` | nghiệm thu trình duyệt (`acceptance.json` + ảnh) của hai lượt sửa mô phỏng thời Tin học | không |
 | `integration/` | **hình học**: hành trình tích hợp sản phẩm khối cong (`journey.json`, `curved-product.json`, ảnh cầu/trụ/nón) | có (9 file) |
-| `m16/` | đánh giá LLM toàn diện M16 trên catalog Tin học: ma trận ca, metric, sổ thất bại, baseline live | không |
-| `m17/` | M17-Lite: quyết định phạm vi W2B, phê bình thiết kế, căn chỉnh sư phạm, RC1, authenticity, `wave0`/`wave1` | có (`test_informatics_evidence_pins.py`) |
-| `m18/` | ảnh + JSON nghiệm thu lớp học (đăng nhập, lớp, quan sát, luyện tập) | không |
-| `m19/` · `m20/` | số đo bố cục trước/sau; composition W5–W7, curriculum benchmark, experience manifest, generation parity | không (chú thích CSS/TS trích số của `m20/`) |
 | `prompt-freeze/` | bản đóng băng prompt `analyze.md`/`simulate.md` của hệ Tin học | không |
 | `semantic-benchmark/` | hồ sơ SEALED 40 (custodian) và **`EVALUATION_CANDIDATE.json` — sổ candidate SỐNG** do `freeze_evaluation_candidate.py` ghi | có (10 file) |
-| `semantic-l5a/` · `semantic-vnext/` | soát thị giác route `generic.semantic_program` (2D, 2026-08-21); chuỗi probe `serve` của route sinh | không |
-| `simulation-mechanism-audit/` · `viewmode-design-audit/` | ma trận chất lượng mô phỏng 11 family / 22 target; độ rõ thiết kế và chế độ xem | không |
-| `tier2-live-pilot/` | báo cáo pilot live nội bộ — không phải số chính thức | không |
-| `ui-baseline/` | khung giao diện chung (`UI_INTERACTION_BASELINE.md`) + ảnh chụp | có (1 file) |
+
+`prompt-freeze/` chưa xử lý trong lượt này vì người dùng tách việc gỡ prompt/IR sang lượt sau. `integration/` giữ tên
+do hai báo cáo bằng chứng còn dùng đường dẫn tuyệt đối trong nội dung; đổi tên sẽ phá liên kết hoặc buộc sửa byte.
 
 ## Báo cáo của một wave nằm ở đâu
 

@@ -166,13 +166,13 @@ def test_inv_17_handoff_bundle_under_line_limit():
     assert len(lines) <= 300, f"AI_CONTEXT_BUNDLE có {len(lines)} dòng (giới hạn <= 300)"
 
 
-def test_inv_18_historical_reports_and_artifacts_unmutated():
-    """18. Historical reports và artifacts không bị sửa đổi."""
+def test_inv_18_claim_bearing_artifacts_unmutated():
+    """18. Artifact còn được dùng cho claim hình học không bị sửa nội dung."""
     diff_cmd = subprocess.run(
         ["git", "diff", "HEAD", "--", "docs/evaluation/geometry/photo-problem-to-scene/model-variance-evidence-provenance-repair/"],
         cwd=REPO, capture_output=True, text=True
     )
-    assert diff_cmd.stdout.strip() == "", "Artifacts của wave trước bị sửa đổi!"
+    assert diff_cmd.stdout.strip() == "", "Artifact còn được dùng cho claim đã bị sửa nội dung!"
 
 
 def test_inv_19_test_evidence_reconciliation_balanced():

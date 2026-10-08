@@ -15,9 +15,9 @@ import * as THREE from "three";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
 
 const GOC = join(import.meta.dirname, "..", "..");
-const RA = join(GOC, "docs", "evaluation", "geometry", "manual-demo-5");
+const RA = join(GOC, "docs", "evaluation", "geometry", "point-projection-check");
 const env = JSON.parse(readFileSync(
-  join(GOC, "docs", "evaluation", "geometry", "manual-demo", "envelope.json"), "utf8"));
+  join(GOC, "docs", "evaluation", "geometry", "geometry-demo", "envelope.json"), "utf8"));
 
 const so = (s) => {
   const [a, b] = String(s).split("/");

@@ -51,8 +51,8 @@
 - [`EVIDENCE_INDEX.md`](EVIDENCE_INDEX.md) — **thẩm quyền**: wave → báo cáo → artifact → chuỗi đính chính
   (`CORRECTED_BY`).
 - [`evaluation/README.md`](evaluation/README.md) — cách tổ chức run, đặt tên, run mới nhất.
-- [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ ở gốc `docs/` theo chủ đề
-  (danh sách đóng; bất biến, đọc như bằng chứng tại thời điểm đo).
+- [`evaluation/HISTORICAL_REPORTS.md`](evaluation/HISTORICAL_REPORTS.md) — báo cáo wave cũ còn được giữ ở gốc `docs/`
+  theo chủ đề; nội dung dùng làm bằng chứng được giữ nguyên, mục đã hết vai trò được gỡ qua inventory có kiểm.
 - [`STATUS_LEDGER.md`](STATUS_LEDGER.md) — lịch sử các wave theo thời gian.
 - Run mới nhất: [`cuboid-merge`](evaluation/geometry/runs/cuboid-merge/) (gói duyệt hình A–F, ảnh W18 chuyển tiếp
   sang candidate hiện hành) · [`cuboid-acceptance`](evaluation/geometry/runs/cuboid-acceptance/) (đối chiếu 24 bất
@@ -98,4 +98,5 @@ DESIGN_BRIEF, POST_THESIS_BACKLOG) đã tách **nguyên văn** sang `legacy/*_IN
   kế hoạch triển khai ⇒ `plan.md` trong thư mục run của việc. Không tạo `docs/superpowers/` hay thư mục con mới của
   `docs/` — bộ kiểm tài liệu đỏ với thư mục lạ (`test_inv_23`).
 - Tài liệu dự án mới ở gốc: thêm tên vào `PROJECT_DOCS` của bộ kiểm, kèm lý do.
-- Báo cáo và artifact đã commit là bất biến: đính chính bằng wave mới và `CORRECTED_BY`.
+- Báo cáo/artifact còn được dùng làm bằng chứng: giữ nguyên byte và đính chính bằng wave mới + `CORRECTED_BY`;
+  đổi đường dẫn phải cập nhật mọi consumer. Mục đã xác minh hết vai trò có thể xoá theo AGENTS §4.

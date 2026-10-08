@@ -1773,8 +1773,7 @@ html {
    cuộn NỘI BỘ của panel. Học sinh không có tín hiệu nào ở mức trang, nên cách
    duy nhất để thấy hết là THU NHỎ BROWSER (zoom < 100% ⇒ nhiều CSS px hơn).
 
-   Đo được (probe trực giao W4B-1A, zoom 100%, `network.graph_traversal` bước
-   giữa — `docs/evaluation/m17/w4b1a-responsive/`):
+   Probe lịch sử (zoom 100%) đo được:
 
      1920×1080  center 885/885   giấu   0px      ← cao, không lỗi
      1366×1024  center 829/829   giấu   0px      ← HẸP mà vẫn không lỗi

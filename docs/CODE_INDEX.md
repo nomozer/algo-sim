@@ -88,12 +88,8 @@ một khoảng lệch — "đã chạy generator" ≠ "đã đúng"; bản này 
 để quên sinh lại. Chỉ đi qua các `register…Domain()` **được gọi thật**: một
 module tồn tại mà không ai gọi thì không phải năng lực đang chạy.
 
-⚠️ `docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json` (rời `frontend/src/simulations/`
-ở run `repo-cleanup`, **nguyên byte**) **đã ĐÔNG CỨNG** — 24 target Tin học, không generator, không sync-lock. Nó
-là referent của `docs/SIMULATION_VISUAL_LANGUAGE_AUDIT.md` (một `*_AUDIT.md` =
-bằng chứng wave đã qua, khoá bởi `visual-audit-completeness.test.ts`). Sinh lại
-nó theo năng lực hình học sẽ biến bảng audit ấy thành 22 dòng nói về target
-không còn tồn tại — tức viết lại bằng chứng lịch sử. **Đừng regenerate.**
+`docs/evaluation/geometry/runs/repo-cleanup/relocated/capability-descriptors.json` là snapshot nguyên byte nằm trong
+inventory của chính run `repo-cleanup`; không còn consumer/test sống và không được regenerate thành dữ liệu hình học.
 
 ## 0b. Điểm vào (entry point) — đã xác minh tồn tại ở baseline này
 
@@ -264,7 +260,8 @@ trỏ sai chỗ còn tệ hơn không có. Tra bằng `grep` theo tên bên dư�
 
 ⛔ Script và fixture của route 2D Tin học, không còn consumer hay cổng nghiệm thu nào (người dùng giao dọn; commit
 ở việc `regular-triangular-pyramid`). Mục mô tả cũ: `git show e9435d67:docs/CODE_INDEX.md` (mục "Trả nợ sync-lock
-2026-08-20" và mục L5a). Kết quả lịch sử đông cứng vẫn ở `docs/evaluation/semantic-l5a/`, `docs/evaluation/semantic-vnext/`.
+2026-08-20" và mục L5a). Artifact thị giác của route 2D Tin học đã gỡ ở `docs-cleanup-2026-10-08`; khôi phục được
+từ Git tại commit trước cleanup.
 
 - `frontend/scripts/verify-semantic-e2e-render.mjs` · `verify-live-gemini-render.mjs` · `verify-real-browser-render.mjs`
 - `frontend/scripts/l5a-semantic-visual.mjs` + `frontend/tests/fixtures/semantic/semantic_l5a.json`
@@ -315,8 +312,8 @@ Báo cáo: `docs/SCENE3D_RETURN_TO_PRE_MOCKUP_PRODUCT_STATE.md`.
 - `evaluation/m16_offline_scripts.py`
 - `evaluation/m16_artifacts.py`
 - `evaluation/datasets/m16_catalog.py`
-- `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.json` (M16)
-- `scripts/generate_m16_live_artifacts.py` → `docs/evaluation/m16/*-baseline.json` (M16 live)
+- `scripts/generate_m16_artifacts.py` + `scripts/generate_m16_live_artifacts.py` và artifact M16: đã gỡ; toàn bộ thuộc
+  catalog Tin học đã retire, không có consumer nghiên cứu hiện hành
 - `evaluation/live.py`
 
 ### FRONTEND_LEGACY_FIXTURE_CUTOVER 2026-09-02
@@ -441,14 +438,14 @@ gốc toạ độ. `camera.project` ở đây là CHẨN ĐOÁN TRÌNH BÀY, kh�
 
 ⚠️ Ô soi hiện **NHÃN**, không hiện id (`M` có nhãn *"Trung điểm M của SA"*).
 So id với nhãn là phép so sai — nó đã báo `M` trượt oan một lượt.
-Kết quả: `docs/evaluation/geometry/manual-demo-5/POINT_PROJECTION.json`.
+Kết quả: `docs/evaluation/geometry/point-projection-check/POINT_PROJECTION.json`.
 
 ### `frontend/scripts/demo-geometry-interaction.mjs` · offline (cần `npm run dev`)
 
 DEMO TAY giao diện 3D tương tác trong Chrome **thật** — WebGL thật
 (SwiftShader qua cờ `webgl` của `browser-runner`), chuột thật qua
 `Input.dispatchMouseEvent`. **0 API call, 0 LLM.** Ghi 8 ảnh +
-`DEMO_RESULT.json` vào `docs/evaluation/geometry/manual-demo/`.
+`DEMO_RESULT.json` vào `docs/evaluation/geometry/geometry-demo/`.
 
 Bài demo là **phát lại tất định** của `phase7a-pilot-sau-71/1-trung-diem-lan3`
 — một lượt LIVE thật, `served`, oracle đúng — không phải fixture viết tay.
@@ -708,8 +705,8 @@ mặt tìm ra nền thứ ba có thật — `.pseudo-no` trên dải `#e8f2fd` �
 chỉ được 4.34:1. Tập nền phải đến từ PHÉP ĐO, không từ trí nhớ về bảng token.
 `--accent-green-deep` (#0f6622) là mắt xích còn thiếu của khuôn `-deep` đã có
 sẵn (`--accent-orange-deep`, `--accent-purple-deep`), không phải màu mới.
-Chứng nhận trình duyệt (script M20 W13, đã gỡ ở `repo-cleanup` — bằng chứng `docs/evaluation/m20/w13-a11y.json`) — 26 bề mặt, 884 phần tử
-có chữ, **0 cặp trượt** (lượt đầu: 11).
+Chứng nhận trình duyệt M20 từng đo 26 bề mặt, 884 phần tử có chữ, **0 cặp trượt** (lượt đầu: 11); artifact Tin học
+đã gỡ ở `docs-cleanup-2026-10-08`, còn khôi phục được từ Git nếu cần khảo cổ.
 
 ### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
 Khoá hợp đồng xuất xứ v2 và chứng minh vòng TỰ THAM CHIẾU đã bị phá.
@@ -978,14 +975,6 @@ Tests: `test_image_extraction.py`, `test_image_extract_api.py`,
 không còn giới hạn · lược đồ đầy đủ và Pydantic giữ nguyên · không sửa tại chỗ · xác định ·
 request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 không phải từ chối đề bài).
 
-### `docs/evaluation/m16/` — artifact M16 (committed, machine-readable)
-**Offline (sync-locked, tái sinh được):** `m16-case-matrix.json` ·
-`m16-coverage-report.json` · `m16-offline-results.json` · `m16-metrics.json` ·
-`m16-failure-ledger.json`. **Live baseline (pre-fix, run-output một lần):**
-`trace-baseline.json` (24 case + budget 66 HTTP) · `m16-live-results-baseline.json`
-· `m16-live-metrics-baseline.json` · `m16-live-failure-ledger-baseline.json` ·
-`m16-live-coverage-baseline.json`. Đọc số liệu M16 → lấy từ đây, KHÔNG chép tay.
-
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
 FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
 (*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
@@ -1188,14 +1177,14 @@ dẫn xuất từ capability, không bịa "1 bước"). Envelope lạ/hỏng �
 **KHÔNG BAO GIỜ render `simulationId`** ra UI (rò rỉ cũ của `HistoryView`).
 Tests: `catalog.test.tsx`.
 
-### `docs/SIMULATION_VS_ILLUSTRATION_CONTRACT.md` · tài liệu hợp đồng
+### Hợp đồng simulation vs illustration · `ARCHITECTURE_MAP.md` §5
 Định nghĩa ba mức AlgoSim công nhận — ILLUSTRATION (**cấm admit**) ·
 STEP_VISUALIZATION · INTERACTIVE_SIMULATION — phân biệt bằng **ai sở hữu diễn
 biến**, không bằng độ đẹp. Chứa PHÉP THỬ BỎ RENDERER (xoá renderer thì engine
 vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu renderer-vs-engine, chỗ
 đứng của LLM, hợp đồng **ngữ cảnh đổi NHÃN / cơ chế đổi HÀNH VI**, và phân mức
-hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
-renderer "tự tính" thứ gì.
+hiện tại của engine/renderer. Báo cáo phân mức 22 target Tin học đã retire; luật còn hiệu lực nằm ở bất biến #1–#9
+của `ARCHITECTURE_MAP.md`. Đọc trước khi thêm capability hoặc khi định cho renderer "tự tính" thứ gì.
 
 ### `components/header-identity.ts` · offline
 **Chủ sở hữu DẢI NHẬN DIỆN đầu thẻ mô phỏng** — hai trong ba dòng đầu tiên học
@@ -4566,7 +4555,7 @@ graph) đi qua **một** bộ 11 cổng, không nhánh riêng miền nào. Đáp
 **kiểm tay** (21=10101₂ · max=89 · "radar" · `{[()]}` · prefix [2,6,7,14,17] ·
 preorder A,B,C · BFS 1→5), không chép từ đầu ra của hệ — nếu không
 `EXPECTED_RESULT` là tautology. `--json/--md` ghi artifact vào
-`docs/evaluation/semantic-vnext/reports/`.
+thư mục output tạm do người chạy chọn; bộ artifact `semantic-vnext` thời Tin học đã retire.
 
 Khoá bởi `tests/semantic_program/test_cross_domain_matrix.py`, và nửa quan trọng
 hơn của bộ test ấy là phần TIÊM LỖI: bản đầu của ma trận **rỗng** — gỡ binding

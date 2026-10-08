@@ -229,7 +229,8 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 - Frozen human sets (bất biến): `inputs/human_expected_visibility.json` của wave occlusion; preimage
   camera ở `inputs/REGISTERED_CAMERA_PREIMAGES.json` của w09.
 
-Historical run artifacts are immutable. Run mới theo `docs/evaluation/RUN_NAMING.md` (mục đầu, từ run `exact-dimensions`):
+Artifact còn làm căn cứ cho claim/repro giữ nguyên byte; artifact hết consumer có thể xoá qua inventory có kiểm theo
+AGENTS §4. Run mới theo `docs/evaluation/RUN_NAMING.md` (mục đầu, từ run `exact-dimensions`):
 tên theo việc, không mã lượt; lần thứ hai của cùng việc thêm ngày; ngày, nhánh, commit, candidate nằm trong `run.json`.
 
 ## 8. Thứ tự đọc
@@ -250,5 +251,5 @@ tên theo việc, không mã lượt; lần thứ hai của cùng việc thêm n
 - Không push/merge/rewrite history khi chưa được chỉ định.
 - Authoritative measurement chạy từ detached clean worktree tại candidate.
 - Product output và oracle output không tự sửa frozen human expectations.
-- Historical report/artifact không sửa; sai lệch đi qua correction layer.
+- Evidence còn dùng không sửa byte; sai lệch đi qua correction layer. Mục hết vai trò được xoá qua inventory + kiểm consumer.
 - Báo cáo wave mới nằm trong thư mục run, không ở gốc `docs/`.

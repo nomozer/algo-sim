@@ -71,7 +71,7 @@
 | `frontend/scripts/certify-construction-bridge-g4.mjs` | `certify-construction-through-point.mjs` | browser check of the through-point constructions |
 | `frontend/src/components/transport-w7.test.tsx` | `transport-policy.test.tsx` | transport tray policy of registered simulations |
 | `frontend/src/components/control-layout-w4b3e.test.ts` | `control-layout.test.ts` | layout of the player control strip |
-| `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | pin SHA-256 bằng chứng catalog Tin học `m17/wave0`, `m17/wave1` (gộp, khẳng định giữ nguyên) |
+| `backend/tests/test_m17_wave0_artifacts.py` + `test_m17_wave1_artifacts.py` | `test_informatics_evidence_pins.py` | đã gộp ở `repo-cleanup`, rồi gỡ cùng artifact Tin học hết consumer ở `docs-cleanup-2026-10-08` |
 | `Phase8LiveTransport` (lớp trong `run_rectangular_pyramid_live_analyze.py`) | `LiveAnalyzeTransport` | transport của lượt live analyze một request |
 
 ### Đã đổi (run `docs-cleanup`, 2026-10-08)
@@ -97,16 +97,14 @@
 - **Tên khái niệm trong mã**: `test_coverage_gate_c1a.py`, `test_coverage_gate_c1b.py`, `test_c2_fail_closed.py` (các vế C₁a/C₁b/C₂ của
   `coverage_gate`), `run_stability_k3.py` (`k = 3`), `wave_counters.py` ("wave" = một lượt đo, khái niệm của bộ đo).
 - ~~Tên test có mã lượt theo sau là mô tả (`-k w17`)~~ — **hết hiệu lực ở run `docs-cleanup`**: bộ chọn không phải lý do
-  giữ tên khó hiểu; các tên ấy đã đổi (bảng trên). Còn lại có lý do: `test_wave0_*`/`test_wave1_*` trong
-  `test_informatics_evidence_pins.py` (gọi tên thư mục bằng chứng `m17/wave0`, `m17/wave1` mà chúng đọc), `test_gm10_*`
+  giữ tên khó hiểu; các tên ấy đã đổi (bảng trên). Còn lại có lý do: `test_gm10_*`
   (`GM10` là mã một đề, không phải mã lượt). Hằng nội bộ có mã lượt trong script (`TEN_TU_CHOI_W17`, `W17_STATES` của
   `build_scene3d_visual_evidence.py`) là định danh mã, chưa đổi — đổi thì cùng lượt chạm script ấy.
 - **Revision Alembic** `backend/alembic/versions/f32f9b107b77_m18_accounts_and_classroom.py`: chuỗi migration là lịch sử
   của schema; tên file do Alembic sinh lúc tạo, DB ghi revision id chứ không ghi tên — đổi không lợi gì, giữ.
-- **Bằng chứng đã phát hành**: mọi thư mục `docs/evaluation/**` cũ (gồm `m17/wave0`, `m17/wave1`, `semantic-benchmark/sealed/`), báo
-  cáo lịch sử ở gốc `docs/` (`PHASE_*`, `W12_REMAINING.md`, …), tên artifact (`W02_CLOSURE_PROBE.json`, …) và schema id
-  (`"w04-panels-probe/1"`): bất biến. Bằng chứng cũ trích đường dẫn script/test **tại commit của nó** — đổi tên ở HEAD không
-  phá liên kết ấy (git giữ bản cũ).
+- **Bằng chứng còn được sử dụng**: nội dung giữ nguyên byte; đường dẫn có thể đổi khi mọi consumer được cập nhật và run ID
+  vẫn nằm trong metadata. Mục đã hết vai trò có thể xoá theo AGENTS §4; Git giữ bản tại commit cũ. Schema ID đã phát hành
+  (`"w04-panels-probe/1"`) vẫn là giao diện công khai và không đổi.
 - Script chứng nhận thời Tin học từng ghi ở đây (`certify-*-w12.mjs`, `*-w7.mjs`, `accept-classroom-m18.mjs`, `capture-w3-*.mjs`,
   `quiz-dominance-w12.mjs`, `measure-tool-first-w5.mjs`, `transport-w7.test.tsx`) — **đã xử lý ở `repo-cleanup`**: gỡ (miền đã
   bỏ) hoặc đổi tên (`transport-policy.test.tsx`); danh sách gỡ: `docs/evaluation/geometry/runs/repo-cleanup/inventory.json`.

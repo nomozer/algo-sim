@@ -1,0 +1,20 @@
+{
+  "run_id": "docs-cleanup-2026-10-08",
+  "task_slug": "docs-cleanup",
+  "date": "2026-10-08",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "4acd1f61486d06d60552c7233d62b977e1a5d7a2",
+  "classification": "SUPPORTING",
+  "model_requests": 0,
+  "screenshots": 0,
+  "scope": "documentation and committed artifact cleanup only; prompt/IR removal excluded",
+  "recovery": "all tracked deletions are recoverable with git show from start_head",
+  "verification": {
+    "docs_audit": "PASS",
+    "focused_backend": "70 passed",
+    "frontend": "1023 passed; build PASS",
+    "node_syntax": "PASS",
+    "backend_collection": "7237 tests",
+    "full_backend": "INCONCLUSIVE_TIMEOUT at 120s and 300s; no failure printed"
+  }
+}

@@ -1,9 +1,9 @@
-# M17-RC1 — lệnh kiểm tra tái lập được.
+# Lệnh kiểm tra tái lập được; output chẩn đoán đi vào thư mục tạm, không ghi vào evidence.
 # Windows không có `make` sẵn: mọi target đều gọi thẳng script, có thể chạy tay
 # đúng dòng lệnh bên dưới nếu không có make.
 
 PY := backend/.venv/Scripts/python.exe
-ARTIFACTS := docs/evaluation/m17/rc1
+ARTIFACTS := .tmp/runtime-doctor
 
 .PHONY: runtime-doctor rebuild-backend rc1-tier1 help
 
@@ -31,8 +31,8 @@ rebuild-backend:
 ## Cả bốn gọi script đo DANH MỤC 24 TARGET TIN HỌC. Danh mục ấy gỡ ở
 ## LEGACY_INFORMATICS_REMOVAL, nên bốn script đã CHẾT KHI IMPORT từ trước —
 ## `make catalog-matrix` trả ModuleNotFoundError chứ không phải một ma trận.
-## Artifact chúng từng sinh vẫn còn nguyên trong `docs/evaluation/` như bằng
-## chứng của thời điểm đo. Đừng viết lại chúng sang hình học: bộ đo hình học
+## Artifact Tin học không còn consumer đã gỡ ở `docs-cleanup-2026-10-08`.
+## Đừng viết lại chúng sang hình học: bộ đo hình học
 ## là `scripts/run_geometry_dev_evaluation.py`, `run_sealed_evaluation.py`,
 ## `replay_demo_cases.py` — xem CLAUDE.md §4.
 

@@ -6,7 +6,7 @@
  *
  * ─── BÀI DÙNG ĐỂ DEMO ĐẾN TỪ ĐÂU ────────────────────────────────────────
  *
- * `docs/evaluation/geometry/manual-demo/envelope.json` là **phát lại tất định**
+ * `docs/evaluation/geometry/geometry-demo/envelope.json` là **phát lại tất định**
  * của `phase7a-pilot-sau-71/1-trung-diem-lan3` — một lượt LIVE thật, `served`,
  * oracle ĐÚNG, chương trình do model sinh. Backend chạy lại đúng interpreter +
  * `build_scene3d`, không gọi API nào.
@@ -26,11 +26,11 @@ import { join } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
 
 const GOC = join(import.meta.dirname, "..", "..");
-const ENV = join(GOC, "docs", "evaluation", "geometry", "manual-demo", "envelope.json");
+const ENV = join(GOC, "docs", "evaluation", "geometry", "geometry-demo", "envelope.json");
 // Thư mục bằng chứng nhận từ dòng lệnh: lượt sau KHÔNG được ghi đè ảnh của
 // lượt trước. Một lượt ĐỎ là bằng chứng, không phải rác.
 const RA = join(GOC, "docs", "evaluation", "geometry",
-                process.argv[2] || "manual-demo");
+                process.argv[2] || "geometry-demo");
 
 const ket = [];
 const ghi = (ma, pass, note = "") => {

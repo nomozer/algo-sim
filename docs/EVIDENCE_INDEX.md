@@ -1,7 +1,7 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
 > **Tài liệu Canonical cho việc tra cứu toàn bộ bằng chứng thực nghiệm, báo cáo và chuỗi đính chính.**
-> Quy tắc bất biến: Báo cáo và artifact lịch sử không bị sửa đổi. Sai lệch được đính chính thông qua chuỗi `CORRECTED_BY`.
+> Quy tắc bảo toàn: Báo cáo và artifact còn làm bằng chứng cho sản phẩm, nghiên cứu hiện hành hoặc khả năng tái lập phải giữ nguyên byte. Có thể đổi đường dẫn nếu mọi consumer/index/manifest được cập nhật; có thể xoá sau inventory khi đã xác minh không còn các vai trò ấy. Sai lệch của bằng chứng còn dùng được đính chính thông qua chuỗi `CORRECTED_BY`, không sửa kết quả lịch sử.
 > Không có chu trình trong chuỗi đính chính (Acyclic DAG).
 
 ---
@@ -1136,6 +1136,25 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `labels.json` · `label_corrections.json` · `oracle.py` · `capture_counts.json` · `cache/` · `inputs/REVIEW_SET.json` · `inputs/candidate_divergence.json` · `results/BROWSER_EVIDENCE.json` · `results/PLAYBACK_EVIDENCE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/attempt1–3/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 
+## WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
+- **RUN_ID:** docs-cleanup-2026-10-08 (second execution of task docs-cleanup; same branch)
+- **DATE:** 2026-10-08
+- **REPORT:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/
+- **START_BASE:** 4acd1f61
+- **MEASUREMENT_COMMIT:** NONE (0 model requests, 0 screenshots)
+- **EVIDENCE_COMMIT_ROLE:** complete report/artifact inventory and deletion ledger
+- **CLASSIFICATION:** CLEANUP_COMPLETE (docs audit PASS; focused backend 70 passed; frontend 1.023 passed + build; full backend collection 7.237 tests; full execution timed out without a reported failure)
+- **PRODUCT_CHANGE:** NO behaviour change; documentation, tests of retired snapshots, output paths and artifacts only
+- **CANDIDATE_CHANGE:** NO
+- **CACHE_CHANGE:** NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** `docs-cleanup` claim that 180 reports and evaluation artifact contents could be skipped; prior run files stay unchanged
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none; retained evidence is mapped to its actual thesis consumer in `inventory.md`
+- **AUTHORITATIVE_FILES:** `plan.md` · `inventory.md` · `report.md` · `handoff.md` · `run.json`
+- **RUN_ID_POLICY:** TASK_NAME_WITH_DATE_FOR_REPEAT
+
 ## WAVE_ID = REPO_CLEANUP
 - **RUN_ID:** repo-cleanup (task repo-cleanup; same branch)
 - **DATE:** 2026-10-08
@@ -1171,7 +1190,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **MODEL_REQUEST_COUNT:** 0
 - **CANDIDATE_CHANGE:** product commit only (be4b8287 → 8c66249d); measured hash b4a33205… unchanged
 - **CACHE_CHANGE:** NO (CACHE_VERSION 117; cache identity lock unchanged)
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
 - **CORRECTS:** NONE
 - **SUPERSEDES:** NONE
 - **THESIS_USE:** none

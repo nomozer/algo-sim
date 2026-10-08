@@ -1139,6 +1139,20 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `inventory.json` · `code_index_removed_entries.md` · `relocated/capability-descriptors.json` · `inputs/candidate_divergence.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 
+### WAVE_ID = DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
+- **RUN_ID:** docs-cleanup-2026-10-08
+- **DATE:** 2026-10-08
+- **START_BASE:** 4acd1f61
+- **SCOPE:** đọc/phân loại 180 báo cáo + 13.174 artifact; gỡ phần Tin học hết consumer; đổi tên hai folder demo
+- **MODEL_REQUESTS / SCREENSHOTS:** 0 / 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/docs-cleanup-2026-10-08/
+- **CORRECTS:** giới hạn đọc của run `docs-cleanup`; không sửa file run cũ
+- **CORRECTED_BY:** NONE
+- **THESIS_USE:** none (maintenance); evidence luận văn giữ nguyên byte
+- **VERIFICATION:** docs audit PASS; focused backend 70 passed; frontend 1.023/1.023 + build PASS; node syntax PASS; backend collection 7.237 tests; two full-backend executions exceeded the 120 s/300 s tool limits without printing a failure, therefore not reported as a full-suite pass
+- **FINAL_DECISION:** CLEANUP_COMPLETE
+
 ### WAVE_ID = DOCUMENTATION_AND_NAMING_CLEANUP
 - **RUN_ID:** docs-cleanup (task docs-cleanup; local; same branch feat/regular-square-pyramid)
 - **DATE:** 2026-10-08
@@ -1156,7 +1170,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **CLOSED:** NONE (ISSUE-ARCH-SHELL-INFORMATICS-RESIDUE → PARTIALLY RESOLVED)
 - **OPENED:** NONE
 - **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
-- **CORRECTED_BY:** NONE
+- **CORRECTED_BY:** DOCUMENTATION_AND_ARTIFACT_CLEANUP_CONTINUATION
 - **CORRECTS:** NONE (ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY count corrected in place: six unloaded prompts, not four)
 - **NEXT_ACTION_AT_TIME:** unchanged — human visual review and the D5 option
 - **FINAL_DECISION:** CLEANUP_DONE_FOR_LEGACY_NAMES_AND_DEAD_CSS

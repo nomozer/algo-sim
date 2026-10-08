@@ -21,7 +21,7 @@ import { useAppStore } from "../state/store";
  * AI nay chỉ xuất hiện ở BỐN chỗ, tất cả đều ở giai đoạn HIỂU ĐỀ, không có chỗ
  * nào trong workspace: ô nhập đề · trạng thái đang phân tích · tóm tắt "hệ
  * thống đã hiểu" · phản hồi thiếu dữ kiện / ngoài phạm vi.
- * Danh sách ĐÓNG — xem `docs/evaluation/ui-baseline/UI_INTERACTION_BASELINE.md §5`.
+ * Danh sách ĐÓNG này được kiểm ngay tại các entrypoint UI; bộ ảnh baseline Tin học cũ đã retire.
  */
 export function SimulationInspector() {
   const active = useAppStore((s) => s.active);
