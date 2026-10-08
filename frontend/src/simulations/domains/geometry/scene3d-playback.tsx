@@ -102,6 +102,9 @@ export function caoKhungVuaHinh(khaDung: number, rong: number, tiLeHinh: number)
 
 /** Cùng điểm gãy với CSS (bảng thông tin trong dòng chảy dưới hình, `.geo3d-bang-noi`). */
 const KHO_HEP = "(max-width: 48rem)";
+/** phone-landscape-layout — cùng điều kiện với khối CSS "điện thoại ngang": thanh điều khiển thành cột bên canvas, bảng
+ *  nổi như desktop. Ở đó canvas vẫn lấy phần khả dụng (hình ràng theo chiều cao), không theo `caoKhungVuaHinh`. */
+const NGANG_THAP = "(orientation: landscape) and (max-height: 30rem)";
 
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
@@ -132,8 +135,13 @@ export function Scene3DPlayer({
       if (!khung || !thanh) return;
       const khe = parseFloat(getComputedStyle(goc).rowGap) || 0;
       const r = khung.getBoundingClientRect();
-      const khaDung = caoKhungKhaDung(window.innerHeight, r.top + window.scrollY, thanh.getBoundingClientRect().height, khe);
-      const hep = tiLeHinh !== null && typeof window.matchMedia === "function" && window.matchMedia(KHO_HEP).matches;
+      // phone-landscape-layout: thanh ở CỘT cạnh canvas (điện thoại ngang) không chiếm chiều cao dưới canvas.
+      const tr = thanh.getBoundingClientRect();
+      const duoiKhung = tr.top >= r.bottom - 1;
+      const khaDung = caoKhungKhaDung(window.innerHeight, r.top + window.scrollY, duoiKhung ? tr.height : 0,
+        duoiKhung ? khe : 0);
+      const mq = (q: string) => typeof window.matchMedia === "function" && window.matchMedia(q).matches;
+      const hep = tiLeHinh !== null && mq(KHO_HEP) && !mq(NGANG_THAP);
       const moi = `${hep ? caoKhungVuaHinh(khaDung, r.width, tiLeHinh!) : khaDung}px`;
       if (goc.style.getPropertyValue("--geo3d-cao-khung") !== moi) goc.style.setProperty("--geo3d-cao-khung", moi);
     };

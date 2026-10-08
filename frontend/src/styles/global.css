@@ -3918,6 +3918,106 @@ html {
   }
 }
 
+/* phone-landscape-layout · khổ hẹp: khe ngang của ba nút phát hẹp lại để chúng chung MỘT hàng ở 360 px (trước: ba hàng
+   điều khiển, thanh phát rơi dưới nếp gấp ở 360×640). Đặt sau luật gốc `.geo3d-btn` để thắng thứ tự. */
+@media (max-width: 48rem) {
+  .geo3d-btn {
+    padding-inline: var(--sp-sm);
+  }
+}
+
+/* ── phone-landscape-layout: ĐIỆN THOẠI NGANG / MÀN RẤT THẤP (ngang, cao ≤ 30rem) ───────────────────────────────
+   Ở đây CHIỀU CAO khan, BỀ NGANG thừa: 844×390 — hàng trên + canvas ở sàn 320 px + thanh phát dưới canvas tràn khung
+   nhìn 37 px, trong khi hình (ràng theo chiều cao) chỉ lấp ~¼ bề ngang canvas. Thanh điều khiển thành CỘT bên phải
+   canvas (`scene3d-playback` không trừ nó khỏi chiều cao khả dụng): canvas giữ cùng chiều cao ⇒ hình giữ cỡ, điều khiển
+   luôn trong khung, không phủ lên hình. Máy ngang hẹp hơn 48rem (667×375) cũng thuộc đây: bố cục rộng thay bố cục khổ
+   hẹp — bảng nổi (xếp dưới hình là dưới nếp gấp), nút nhóm một hàng cạnh tên bài, nút nổi ở góc canvas (hình nằm giữa
+   một khung rộng). Cùng điều kiện với `scene3d-playback.NGANG_THAP`. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .geo3d-player {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 10rem;
+    align-items: start;
+  }
+
+  .geo3d-controls {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .geo3d-controls .geo3d-scrub {
+    flex: none;
+    min-width: 0;
+  }
+
+  .geo3d-cac-buoc-mo {
+    margin-left: 0;
+  }
+
+  .geo3d-thanh-nut {
+    display: flex;
+    width: auto;
+  }
+
+  .geo3d-thanh-nut > button,
+  .geo3d-menu-nut {
+    width: auto;
+  }
+
+  .geo3d-ten-bai {
+    flex-basis: 6rem;
+  }
+
+  .geo3d-san {
+    display: block;
+  }
+
+  /* Hai nút nổi ở ĐẦU cột điều khiển, không phủ lên canvas — trên canvas ngang hẹp (467 px ở 667×375) góc trên-trái
+     là chỗ hình rộng chạm tới (cùng lẽ bản sửa w10 cho khổ hẹp). Đầu cột, không đáy: ở 667×375 canvas ở sàn 320 px
+     dài hơn phần khả dụng, đáy cột rơi dưới mép. Thanh điều khiển chừa đúng chỗ của hai nút (hai nút cao ~31 px). */
+  .geo3d-noi {
+    position: absolute;
+    inset: 0 0 auto auto;
+    width: 10rem;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 0;
+  }
+
+  .geo3d-player .geo3d-controls {
+    margin-top: 4.75rem;
+  }
+
+  .geo3d-bang-noi {
+    position: absolute;
+    width: min(17rem, calc(100% - 2 * var(--sp-md)));
+    max-height: min(52vh, 560px);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .geo3d-bang-noi.geo3d-soi {
+    position: absolute;
+    width: min(19rem, calc(100% - 2 * var(--sp-md)));
+    margin-top: 0;
+  }
+
+  .geo3d-bang-noi.geo3d-ngan {
+    position: absolute;
+    width: min(20rem, calc(100% - 2 * var(--sp-md)));
+    margin-top: 0;
+  }
+
+  .geo3d-bang-noi-dau {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .geo3d-bang-noi-ve {
+    display: inline-flex;
+  }
+}
+
 .geo3d-cac-buoc-ds {
   display: grid;
   gap: 2px;

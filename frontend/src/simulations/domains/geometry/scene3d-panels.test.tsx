@@ -210,6 +210,30 @@ describe("D5 · khổ hẹp: canvas cao vừa hình", () => {
     expect(nguon("../../../styles/global.css")).toMatch(/@media \(max-width: 48rem\) \{\n {2}\.geo3d-bang-noi \{\n {4}position: static;/);
   });
 
+  it("điện thoại ngang (phone-landscape-layout): JS và CSS cùng MỘT điều kiện; ở đó thanh là cột cạnh canvas, không vừa hình D5", () => {
+    const src = nguon("./scene3d-playback.tsx");
+    const css = nguon("../../../styles/global.css");
+    const dk = src.match(/const NGANG_THAP = "([^"]+)"/)?.[1];
+    expect(dk).toBe("(orientation: landscape) and (max-height: 30rem)");
+    const khoi = css.slice(css.indexOf(`@media ${dk} {`));
+    expect(khoi.length).toBeLessThan(css.length);
+    // thanh điều khiển thành cột bên phải canvas; bảng nổi như desktop (khổ hẹp xếp chúng dưới nếp gấp)
+    expect(khoi).toMatch(/\.geo3d-player \{\n {4}display: grid;\n {4}grid-template-columns: minmax\(0, 1fr\) 10rem;/);
+    expect(khoi).toMatch(/\.geo3d-bang-noi \{\n {4}position: absolute;/);
+    // D5 (vừa hình) chỉ ở khổ hẹp KHÔNG ngang thấp; thanh nằm cạnh canvas thì không trừ khỏi chiều cao khả dụng
+    expect(src).toMatch(/const hep = tiLeHinh !== null && mq\(KHO_HEP\) && !mq\(NGANG_THAP\);/);
+    expect(src).toMatch(/const duoiKhung = tr\.top >= r\.bottom - 1;/);
+    expect(src).toMatch(/duoiKhung \? tr\.height : 0,\n\s+duoiKhung \? khe : 0\)/);
+  });
+
+  it("khổ hẹp: khe ngang của nút phát hẹp lại SAU luật gốc `.geo3d-btn` (thứ tự CSS quyết thắng thua)", () => {
+    const css = nguon("../../../styles/global.css");
+    const goc = css.indexOf("\n.geo3d-btn {");
+    const hep = css.indexOf("@media (max-width: 48rem) {\n  .geo3d-btn {\n    padding-inline: var(--sp-sm);");
+    expect(goc).toBeGreaterThan(0);
+    expect(hep).toBeGreaterThan(goc);
+  });
+
   it("bảng bước dài: giữ bước đang xem trong thân bảng bằng cuộn THÂN BẢNG, không `scrollIntoView` (cuộn cả trang)", () => {
     const src = nguon("./scene3d-playback.tsx");
     expect(src).toMatch(/than\.scrollTop \+= r\.top - c\.top/);
