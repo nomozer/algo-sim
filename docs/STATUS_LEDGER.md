@@ -1144,7 +1144,7 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **DATE:** 2026-10-08
 - **START_BASE:** 2a7179a9
 - **CODE_COMMIT_OR_NONE:** a993aa8f · c1a291ba · 8c66249d · 9efb8af6 · artifact cleanup from `4acd1f61` · report organization `23aff0ad`/`a3448c71` · final consolidation/backend closure
-- **CANDIDATE:** refreeze after backend closure · CACHE_VERSION 117 → 118 · LLM_ONLY
+- **CANDIDATE:** `7f3f042309dd1c54…` (102 file; product `f967ba24`, clean refreeze) · CACHE_VERSION 117 → 118 · LLM_ONLY
 - **EVIDENCE_COMMIT_ROLE:** 0 model requests / 0 screenshots; consolidated inventory and two independent manifests under this run
 - **CLASSIFICATION:** CLEANUP_CONSOLIDATED_AND_OFFLINE_VERIFIED (visual review remains NOT_APPROVED)
 - **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 08dd841c (pytest 7241 passed / 1 skipped, vitest 1030/1030, build, demo 5/5, crash surface 6/6); identity gates green at 08dd841c (`diagnostics/gates_08dd841c.log`)

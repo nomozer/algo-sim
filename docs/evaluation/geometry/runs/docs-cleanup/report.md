@@ -60,4 +60,5 @@ Audit kiến trúc xác nhận Semantic Program vẫn là đường sản phẩm
 không phải contract runtime hiện hành. Chuẩn hoá quan hệ nguồn đã có caller thật, nên backend slice duy nhất của lượt
 này đóng `ISSUE-ARCH-MISSING-SIZE-REASON-ON-AFFINE-CHART`: quyết định vẫn `unsupported`, nhưng ca thể tích T8 thiếu
 kích thước nay nêu đúng đại lượng nguồn thay vì UNKNOWN. Vì envelope cache đổi, `CACHE_VERSION` tăng 117 → 118;
-prompt/schema/model surface không đổi.
+prompt/schema/model surface không đổi. Candidate đổi `b4a33205…` → `7f3f042309dd1c54…` (102 file), sinh từ
+detached clean checkout tại product commit `f967ba24`.

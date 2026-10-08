@@ -1169,7 +1169,7 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **CLASSIFICATION:** CLEANUP_CONSOLIDATED_AND_OFFLINE_VERIFIED
 - **PRODUCT_CHANGE:** cleanup NO; same delivery closes one separately scoped assumption-reason gap without changing serve/refuse decision
 - **MODEL_REQUEST_COUNT:** 0
-- **CANDIDATE_CHANGE:** YES for the backend reason fix; final hash recorded after refreeze
+- **CANDIDATE_CHANGE:** YES (`b4a33205…` → `7f3f042309dd1c54…`; 102 file; clean refreeze at product commit `f967ba24`)
 - **CACHE_CHANGE:** YES (117 → 118 because cached refusal envelope changes)
 - **CORRECTED_BY:** NONE
 - **CORRECTS:** first-run unread-scope limitation; continuation and organization are histories inside this run
