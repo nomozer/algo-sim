@@ -1,0 +1,9 @@
+triangular_pyramid/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+rectangular_pyramid/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+triangular_prism/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+cuboid/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+cube/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+cross_section/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+regular_square_pyramid/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+regular_triangular_pyramid/landscape_small: FAIL ["CONTROLS_OFFSCREEN","PANEL_LOSES_FIGURE:cac-buoc","PANEL_LOSES_FIGURE:dai-luong","PANEL_LOSES_FIGURE:de"] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+mobile layout probe: 0/8 PASS

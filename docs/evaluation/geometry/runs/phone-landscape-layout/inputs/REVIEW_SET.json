@@ -1,0 +1,17 @@
+{
+  "schema_version": "review-set/1",
+  "run_id": "phone-landscape-layout",
+  "layer": "chosen BEFORE the measurement: only the evidence for THIS change (phone landscape, 360 px phones, rotation, overview recovery) on the final candidate; globs relative to the run directory. The capture policy (mode toi-thieu) also keeps the oracle inputs (neutral_final, rotated_neutral) and failure states.",
+  "items": [
+    {"path": "images/mobile/*/landscape/layout.png", "requirement": "phone landscape 844x390, every family: play bar, slider, steps button and view buttons in view; figure keeps its size"},
+    {"path": "images/mobile/*/landscape_small/layout.png", "requirement": "narrow phone landscape 667x375, every family: one tool row, controls column in view"},
+    {"path": "images/mobile/cross-section/landscape/steps_last.png", "requirement": "long steps panel floating in landscape, current step visible"},
+    {"path": "images/mobile/cross-section/landscape_small/steps_last.png", "requirement": "same on 667x375"},
+    {"path": "images/mobile/*/portrait_small/layout.png", "requirement": "small phone 360x640, every family: play bar in view (two rows)"},
+    {"path": "images/mobile/regular-triangular-pyramid/portrait_small/steps_open.png", "requirement": "360x640 with «Các bước dựng» open: figure, controls and panel"},
+    {"path": "images/mobile/regular-triangular-pyramid/portrait/rotated.png", "requirement": "390x844 turned to landscape mid-lesson: same step, selection, camera; controls in view"},
+    {"path": "images/mobile/regular-triangular-pyramid/portrait_small/rotated.png", "requirement": "360x640 turned to landscape (640x360)"},
+    {"path": "images/mobile/triangular-prism/low/after_orbit.png", "requirement": "pre-existing: labels leave the canvas after an orbit on the low screen"},
+    {"path": "images/mobile/triangular-prism/low/after_overview.png", "requirement": "«Xem lại toàn hình» restores the initial view"}
+  ]
+}

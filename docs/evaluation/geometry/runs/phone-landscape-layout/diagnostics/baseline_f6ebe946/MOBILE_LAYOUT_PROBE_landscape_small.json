@@ -1,0 +1,3953 @@
+{
+  "schema_version": "mobile-layout-probe/1",
+  "application_llm_calls": 0,
+  "commit": "f6ebe94625082c724f95243cda999f7ce8760491",
+  "dist": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\d--Documents-projects-algo-sim\\5d59cf9c-a8b1-4c0d-acc9-b013ec9e1752\\scratchpad\\dist-f6ebe946",
+  "thresholds": {
+    "lapDocMin": 0.55,
+    "sanCanvas": 320,
+    "thanBangThayMin": 120
+  },
+  "viewports": {
+    "landscape_small": {
+      "width": 667,
+      "height": 375,
+      "mobile": true
+    }
+  },
+  "reason_codes": [
+    "CONTROLS_OFFSCREEN",
+    "PANEL_LOSES_FIGURE:cac-buoc",
+    "PANEL_LOSES_FIGURE:dai-luong",
+    "PANEL_LOSES_FIGURE:de"
+  ],
+  "pass": false,
+  "runs": [
+    {
+      "family": "triangular_pyramid",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 5",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 234.38006591796875,
+        "y": 246.24874877929688,
+        "w": 198.51239013671875,
+        "h": 232.52090454101562,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266278266906738,
+        "w": 0.31261793722317915,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 60.2303466796875,
+        "blank_left": 218.38006591796875,
+        "blank_right": 218.1075439453125
+      },
+      "camera0": {
+        "position": [
+          5.621850305817867,
+          5.491838289631973,
+          8.231122057821345
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096864009,
+          -0.49240387650614287,
+          0.5868240888335841,
+          0,
+          0.766044443119094,
+          -0.4131759111664159,
+          0.49240387650602324,
+          0,
+          0,
+          0.7660444431190172,
+          0.6427876096864927,
+          0,
+          -0.5933364841898141,
+          -1.2680891400091479,
+          -11.294102918814117,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 234.38006591796875,
+          "y": -173.75125122070312,
+          "w": 198.51239013671875,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 4,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 4,
+        "annotations": 3,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 234.38006591796875,
+          "y": -173.75125122070312,
+          "w": 198.51239013671875,
+          "h": 232.52090454101562,
+          "n": 4
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 275.21240234375,
+          "y": 294.34552001953125,
+          "w": 133.7196044921875,
+          "h": 169.2904052734375,
+          "n": 4
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25274997719590325,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8978532723538657,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25274997719590325,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8978532723538657,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.3946727005103524,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8978532723538657,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            5.621850305817701,
+            5.491838289628873,
+            8.231122057818235
+          ]
+        },
+        "rotated": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            5.6218503058176,
+            5.49183828962717,
+            8.231122057816508
+          ]
+        },
+        "after": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            5.621850305817517,
+            5.491838289625592,
+            8.23112205781489
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "rectangular_pyramid",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 5",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 263.3830871582031,
+        "y": 246.24874877929688,
+        "w": 140.92626953125,
+        "h": 233.83319091796875,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7307287216186523,
+        "w": 0.22193113312007873,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 58.918060302734375,
+        "blank_left": 247.38308715820312,
+        "blank_right": 246.69064331054688
+      },
+      "camera0": {
+        "position": [
+          9.39062739011418,
+          6.509188035765824,
+          10.694997776744568
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.556670399226419,
+          0.6634139481689387,
+          0,
+          0.8660254037844388,
+          -0.3213938048432694,
+          0.38302222155948923,
+          0,
+          -2.7755575615628914e-17,
+          0.7660444431189785,
+          0.642787609686539,
+          0,
+          -0.9418085019258465,
+          -0.8733466085485334,
+          -15.597648911182988,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 263.3830871582031,
+          "y": -173.75125122070312,
+          "w": 140.92626953125,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 4,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 5,
+        "annotations": 3,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 263.3830871582031,
+          "y": -173.75125122070312,
+          "w": 140.92626953125,
+          "h": 233.83319091796875,
+          "n": 5
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_chop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 278.7037658691406,
+          "y": 306.42633056640625,
+          "w": 109.38003540039062,
+          "h": 144.45416259765625,
+          "n": 5
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2569435906912934,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8984265261323714,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2569435906912934,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8984265261323714,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.3980698348760925,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8984265261323714,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ]
+        },
+        "rotated": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ]
+        },
+        "after": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            9.39062739011418,
+            6.509188035765824,
+            10.694997776744568
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "triangular_prism",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 5",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 200.2107696533203,
+        "y": 246.24874877929688,
+        "w": 266.3944549560547,
+        "h": 233.4249267578125,
+        "n": 6
+      },
+      "fill": {
+        "h": 0.7294528961181641,
+        "w": 0.41951882670244833,
+        "blank_top": 27.248748779296875,
+        "blank_bottom": 59.326324462890625,
+        "blank_left": 184.2107696533203,
+        "blank_right": 184.394775390625
+      },
+      "camera0": {
+        "position": [
+          7.336148198247782,
+          5.26101971478884,
+          6.97632467217055
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999956,
+          -0.43301270189221813,
+          0.750000000000001,
+          0,
+          0.8660254037844388,
+          -0.249999999999999,
+          0.43301270189221935,
+          0,
+          5.551115123125783e-17,
+          0.8660254037844396,
+          0.49999999999999856,
+          0,
+          -0.8881026236940113,
+          -1.5497741096456437,
+          -11.268361846180058,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 200.2107696533203,
+          "y": -173.75125122070312,
+          "w": 266.3944549560547,
+          "h": 233.4249267578125,
+          "n": 6
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 4,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 6,
+        "annotations": 3,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 200.2107696533203,
+          "y": -173.75125122070312,
+          "w": 266.3944549560547,
+          "h": 233.4249267578125,
+          "n": 6
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_solid_ABCDEF",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 227.2054901123047,
+          "y": 237.46510314941406,
+          "w": 239.9304656982422,
+          "h": 226.43247985839844,
+          "n": 6
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2556439724152646,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8982488724005375,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2556439724152646,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8982488724005375,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.3970170487972861,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8982488724005375,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ]
+        },
+        "rotated": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ]
+        },
+        "after": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            7.336148198247782,
+            5.26101971478884,
+            6.97632467217055
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cuboid",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 5",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 232.55783081054688,
+        "y": 246.33145141601562,
+        "w": 202.64218139648438,
+        "h": 233.75103759765625,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7304719924926758,
+        "w": 0.3191215455062746,
+        "blank_top": 27.331451416015625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 216.55783081054688,
+        "blank_right": 215.79998779296875
+      },
+      "camera0": {
+        "position": [
+          8.663350010909554,
+          8.051230592393997,
+          7.601166279412936
+        ],
+        "view_matrix_column_major": [
+          -0.6427876096865389,
+          -0.38302222155948834,
+          0.6634139481689391,
+          0,
+          0.7660444431189781,
+          -0.32139380484326874,
+          0.5566703992264194,
+          0,
+          -2.7755575615628907e-17,
+          0.866025403784439,
+          0.49999999999999906,
+          0,
+          -0.5989064101825375,
+          -0.6769318952752243,
+          -14.029852122945314,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 232.55783081054688,
+          "y": -173.66854858398438,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 4,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 8,
+        "annotations": 3,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 232.55783081054688,
+          "y": -173.66854858398438,
+          "w": 202.64218139648438,
+          "h": 233.75103759765625,
+          "n": 8
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 250.91990661621094,
+          "y": 248.49072265625,
+          "w": 166.7270050048828,
+          "h": 200.1282958984375,
+          "n": 8
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25703624519129964,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8987446339788896,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25703624519129964,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8987446339788896,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.39821208911119366,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.8987446339788896,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ]
+        },
+        "rotated": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ]
+        },
+        "after": {
+          "step": "Bước 4/5",
+          "selected": "AB_length",
+          "camera": [
+            8.663350010909554,
+            8.051230592393997,
+            7.601166279412936
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cube",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 5",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 213.7187042236328,
+        "y": 246.85101318359375,
+        "w": 240.0561065673828,
+        "h": 233.23147583007812,
+        "n": 8
+      },
+      "fill": {
+        "h": 0.7288483619689942,
+        "w": 0.3780411127045399,
+        "blank_top": 27.85101318359375,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 197.7187042236328,
+        "blank_right": 197.22518920898438
+      },
+      "camera0": {
+        "position": [
+          9.659113607978085,
+          6.180459944535208,
+          5.507858991217869
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999906,
+          -0.36599815077066655,
+          0.7848855672213966,
+          0,
+          0.866025403784439,
+          -0.21130913087034908,
+          0.45315389351832425,
+          0,
+          1.6653345369377348e-16,
+          0.9063077870366504,
+          0.42261826174069894,
+          0,
+          -0.522878515050623,
+          -0.150610155778084,
+          -12.70972014343534,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 213.7187042236328,
+          "y": -173.14898681640625,
+          "w": 240.0561065673828,
+          "h": 233.23147583007812,
+          "n": 8
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 5,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 4,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 8,
+        "annotations": 0,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 213.7187042236328,
+          "y": -173.14898681640625,
+          "w": 240.0561065673828,
+          "h": 233.23147583007812,
+          "n": 8
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_tich_khoi_hop",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 196.8216094970703,
+          "y": 218.5732421875,
+          "w": 259.3462371826172,
+          "h": 250.6368408203125,
+          "n": 8
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2576088360279693,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9007467513554762,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2576088360279693,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9007467513554762,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.39909917253830507,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 4 trên 5",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9007467513554762,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 4/5",
+          "selected": "AD_length",
+          "camera": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ]
+        },
+        "rotated": {
+          "step": "Bước 4/5",
+          "selected": "AD_length",
+          "camera": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ]
+        },
+        "after": {
+          "step": "Bước 4/5",
+          "selected": "AD_length",
+          "camera": [
+            9.659113607978085,
+            6.180459944535208,
+            5.507858991217869
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "cross_section",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 11",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 443.921875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 227.3240509033203,
+        "y": 247.20681762695312,
+        "w": 212.5890655517578,
+        "h": 232.87567138671875,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7277364730834961,
+        "w": 0.3347859300027682,
+        "blank_top": 28.206817626953125,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 211.3240509033203,
+        "blank_right": 211.08688354492188
+      },
+      "camera0": {
+        "position": [
+          14.290798418444478,
+          9.191934364485128,
+          6.756792331482668
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999992,
+          -0.2961981327260227,
+          0.8137976813493745,
+          0,
+          0.866025403784439,
+          -0.17101007166283322,
+          0.4698463103929538,
+          0,
+          -1.6653345369377343e-16,
+          0.9396926207859089,
+          0.3420201433256674,
+          0,
+          -0.8150494603410641,
+          -0.5444867329791654,
+          -18.259574145724436,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 227.3240509033203,
+          "y": -172.79318237304688,
+          "w": 212.5890655517578,
+          "h": 232.87567138671875,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 11,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 10,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 5,
+        "annotations": 0,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 227.3240509033203,
+          "y": -172.79318237304688,
+          "w": 212.5890655517578,
+          "h": 232.87567138671875,
+          "n": 5
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "the_volume_sabcd",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 223.85372924804688,
+          "y": 305.1753234863281,
+          "w": 196.08822631835938,
+          "h": 172.80682373046875,
+          "n": 5
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2580024296050123,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 10 trên 11",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 452.546875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9021229780022538,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.2580024296050123,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 10 trên 11",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 452.546875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9021229780022538,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 412
+          },
+          "figure_visible": 0.2923555243373298,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 139,
+                "bottom": 174,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 139,
+                "bottom": 174,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 139,
+                "bottom": 174,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 186,
+                "bottom": 221,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 10 trên 11",
+                "top": 148.5,
+                "bottom": 164.5,
+                "left": 452.546875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 233,
+            "bottom": 375.1875,
+            "h": 142.1875,
+            "visible": 142
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9021229780022538,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 10/11",
+          "selected": "the_volume_sabcd",
+          "camera": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ]
+        },
+        "rotated": {
+          "step": "Bước 10/11",
+          "selected": "the_volume_sabcd",
+          "camera": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ]
+        },
+        "after": {
+          "step": "Bước 10/11",
+          "selected": "the_volume_sabcd",
+          "camera": [
+            14.290798418444478,
+            9.191934364485128,
+            6.756792331482668
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_square_pyramid",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 8",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 435.296875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 218.9733428955078,
+        "y": 247.5037841796875,
+        "w": 229.53028869628906,
+        "h": 232.57870483398438,
+        "n": 5
+      },
+      "fill": {
+        "h": 0.7268084526062012,
+        "w": 0.36146502156895916,
+        "blank_top": 28.5037841796875,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 202.9733428955078,
+        "blank_right": 202.49636840820312
+      },
+      "camera0": {
+        "position": [
+          7.696512490671953,
+          2.7321274191506406,
+          5.387956521938726
+        ],
+        "view_matrix_column_major": [
+          -0.17364817766693025,
+          -0.6330222215593685,
+          0.75440650673559,
+          0,
+          0.9848077530122079,
+          -0.11161889704892841,
+          0.13302222155950677,
+          0,
+          1.1102230246251563e-16,
+          0.7660444431190805,
+          0.642787609686417,
+          0,
+          -1.3541348962008346,
+          1.0496063308289483,
+          -9.633044454845058,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 218.9733428955078,
+          "y": -172.4962158203125,
+          "w": 229.53028869628906,
+          "h": 232.57870483398438,
+          "n": 5
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 8,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 7,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 6,
+        "annotations": 0,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 218.9733428955078,
+          "y": -172.4962158203125,
+          "w": 229.53028869628906,
+          "h": 232.57870483398438,
+          "n": 6
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 180.8032989501953,
+          "y": 245.95481872558594,
+          "w": 261.4160614013672,
+          "h": 260.5631561279297,
+          "n": 6
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25833185826947913,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 7 trên 8",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9032748032329517,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25833185826947913,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 7 trên 8",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9032748032329517,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.40021931105048736,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 7 trên 8",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 435.296875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9032748032329517,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 7/8",
+          "selected": "canh_day",
+          "camera": [
+            7.696512490671939,
+            2.732127419150638,
+            5.387956521935585
+          ]
+        },
+        "rotated": {
+          "step": "Bước 7/8",
+          "selected": "canh_day",
+          "camera": [
+            7.696512490671942,
+            2.732127419150639,
+            5.387956521933862
+          ]
+        },
+        "after": {
+          "step": "Bước 7/8",
+          "selected": "canh_day",
+          "camera": [
+            7.696512490671942,
+            2.732127419150639,
+            5.387956521932271
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    },
+    {
+      "family": "regular_triangular_pyramid",
+      "kind": "landscape_small",
+      "images": {
+        "layout": null,
+        "steps_open": null,
+        "steps_last": null,
+        "quantity_open": null,
+        "after_orbit": null,
+        "rotated": null
+      },
+      "viewport": {
+        "w": 667,
+        "h": 375,
+        "sy": 0
+      },
+      "layout": {
+        "scroll_width": 667,
+        "client_width": 667,
+        "page_height": 645,
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 635,
+          "h": 152
+        },
+        "tool_row": {
+          "x": 16,
+          "y": 68,
+          "w": 635,
+          "h": 96
+        },
+        "float_row": {
+          "x": 16,
+          "y": 176,
+          "w": 635,
+          "h": 31
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "controls": {
+          "x": 16,
+          "y": 551,
+          "w": 635,
+          "h": 82
+        },
+        "panels_float": false
+      },
+      "controls_access": {
+        "all_inside": false,
+        "items": [
+          {
+            "name": "Bước trước",
+            "top": 551,
+            "bottom": 586,
+            "left": 16,
+            "right": 136.359375,
+            "inside": false
+          },
+          {
+            "name": "Phát lại quá trình dựng",
+            "top": 551,
+            "bottom": 586,
+            "left": 148.359375,
+            "right": 230.671875,
+            "inside": false
+          },
+          {
+            "name": "Bước sau",
+            "top": 551,
+            "bottom": 586,
+            "left": 242.671875,
+            "right": 351.90625,
+            "inside": false
+          },
+          {
+            "name": "Các bước dựng",
+            "top": 598,
+            "bottom": 633,
+            "left": 527.625,
+            "right": 651,
+            "inside": false
+          },
+          {
+            "name": "Chọn bước dựng, hiện ở bước 1 trên 10",
+            "top": 560.5,
+            "bottom": 576.5,
+            "left": 443.921875,
+            "right": 651,
+            "inside": false
+          }
+        ]
+      },
+      "figure": {
+        "x": 226.6251220703125,
+        "y": 247.551025390625,
+        "w": 213.27499389648438,
+        "h": 232.53146362304688,
+        "n": 4
+      },
+      "fill": {
+        "h": 0.7266608238220215,
+        "w": 0.33586613212044786,
+        "blank_top": 28.551025390625,
+        "blank_bottom": 58.917510986328125,
+        "blank_left": 210.6251220703125,
+        "blank_right": 211.09988403320312
+      },
+      "camera0": {
+        "position": [
+          11.000510581988694,
+          2.2539514040166835,
+          6.538801909524393
+        ],
+        "view_matrix_column_major": [
+          1.7283162621577847e-16,
+          -0.5735764363509523,
+          0.8191520442890574,
+          0,
+          0.8660254037844387,
+          -0.286788218175476,
+          0.4095760221445286,
+          0,
+          -1.5004840374673186e-16,
+          0.8191520442890574,
+          0.5735764363509523,
+          0,
+          -2.2539514040166844,
+          0.9533607062699168,
+          -12.76159342872925,
+          1
+        ],
+        "model_matrix_column_major": [
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.8660254037844386,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.0773352302085937,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 633,
+        "viewport_height": 318,
+        "device_pixel_ratio": 1
+      },
+      "steps_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 226.6251220703125,
+          "y": -172.448974609375,
+          "w": 213.27499389648438,
+          "h": 232.53146362304688,
+          "n": 4
+        },
+        "canvas": {
+          "x": 16,
+          "y": -201,
+          "w": 635,
+          "h": 320
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false
+      },
+      "step_visibility": {
+        "checked": 10,
+        "hidden_in_panel": [],
+        "missing": 0,
+        "page_scroll_max_px": 0,
+        "page_scroll_samples": 9,
+        "panel_scrollable": true
+      },
+      "labels_last_step": {
+        "points": 7,
+        "annotations": 0,
+        "points_out": 0,
+        "annotations_out": 0
+      },
+      "quantity_open": {
+        "viewport": {
+          "w": 667,
+          "h": 375,
+          "sy": 420
+        },
+        "figure": {
+          "x": 226.6251220703125,
+          "y": -172.448974609375,
+          "w": 213.27499389648438,
+          "h": 232.53146362304688,
+          "n": 7
+        },
+        "panel": {
+          "top": 225,
+          "bottom": 375,
+          "h": 150,
+          "visible": 150
+        },
+        "figure_in_viewport": false,
+        "selected": "V",
+        "detail_open": true
+      },
+      "invariance": {
+        "canvas_h_before": 320,
+        "canvas_h_after": 320,
+        "canvas_same": true,
+        "camera_same": true
+      },
+      "after_orbit": {
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 635,
+          "h": 320
+        },
+        "figure": {
+          "x": 246.17652893066406,
+          "y": 308.22113037109375,
+          "w": 205.7171173095703,
+          "h": 212.21502685546875,
+          "n": 7
+        },
+        "inside": true
+      },
+      "overview": {
+        "restored_camera": true,
+        "inside": true
+      },
+      "panels": {
+        "cac-buoc": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25838434110177305,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 9 trên 10",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 443.921875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9034583278202012,
+          "after_close_controls_inside": true
+        },
+        "dai-luong": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 420
+          },
+          "figure_visible": 0.25838434110177305,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 131,
+                "bottom": 166,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 131,
+                "bottom": 166,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 131,
+                "bottom": 166,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 178,
+                "bottom": 213,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 9 trên 10",
+                "top": 140.5,
+                "bottom": 156.5,
+                "left": 443.921875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 225,
+            "bottom": 375,
+            "h": 150,
+            "visible": 150
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9034583278202012,
+          "after_close_controls_inside": true
+        },
+        "de": {
+          "viewport": {
+            "w": 667,
+            "h": 375,
+            "sy": 387
+          },
+          "figure_visible": 0.4003006198101709,
+          "controls": {
+            "all_inside": true,
+            "items": [
+              {
+                "name": "Bước trước",
+                "top": 164,
+                "bottom": 199,
+                "left": 16,
+                "right": 136.359375,
+                "inside": true
+              },
+              {
+                "name": "Phát lại quá trình dựng",
+                "top": 164,
+                "bottom": 199,
+                "left": 148.359375,
+                "right": 230.671875,
+                "inside": true
+              },
+              {
+                "name": "Bước sau",
+                "top": 164,
+                "bottom": 199,
+                "left": 242.671875,
+                "right": 351.90625,
+                "inside": true
+              },
+              {
+                "name": "Các bước dựng",
+                "top": 211,
+                "bottom": 246,
+                "left": 527.625,
+                "right": 651,
+                "inside": true
+              },
+              {
+                "name": "Chọn bước dựng, hiện ở bước 9 trên 10",
+                "top": 173.5,
+                "bottom": 189.5,
+                "left": 443.921875,
+                "right": 651,
+                "inside": true
+              }
+            ]
+          },
+          "header_visible": true,
+          "panel": {
+            "top": 258,
+            "bottom": 374.59375,
+            "h": 116.59375,
+            "visible": 116.59375
+          },
+          "horizontal_scroll": false,
+          "after_close_figure_visible": 0.9034583278202012,
+          "after_close_controls_inside": true
+        }
+      },
+      "rotation": {
+        "before": {
+          "step": "Bước 9/10",
+          "selected": "canh_day",
+          "camera": [
+            11.000510581987776,
+            2.2539514040166835,
+            6.538801909520961
+          ]
+        },
+        "rotated": {
+          "step": "Bước 9/10",
+          "selected": "canh_day",
+          "camera": [
+            11.000510581987285,
+            2.2539514040166835,
+            6.538801909519119
+          ]
+        },
+        "after": {
+          "step": "Bước 9/10",
+          "selected": "canh_day",
+          "camera": [
+            11.00051058198682,
+            2.2539514040166835,
+            6.538801909517403
+          ]
+        },
+        "rotated_controls_inside": true,
+        "rotated_horizontal_scroll": false,
+        "state_kept": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": false,
+        "reason_codes": [
+          "CONTROLS_OFFSCREEN",
+          "PANEL_LOSES_FIGURE:cac-buoc",
+          "PANEL_LOSES_FIGURE:dai-luong",
+          "PANEL_LOSES_FIGURE:de"
+        ],
+        "info_codes": [
+          "PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"
+        ],
+        "narrow_layout": true
+      },
+      "pass": false
+    }
+  ],
+  "capture_policy": {
+    "mode": "toi-thieu",
+    "review_set_patterns": 0,
+    "oracle_states": [
+      "neutral_final.png",
+      "rotated_neutral.png"
+    ],
+    "goi": 48,
+    "tao": 0,
+    "bo_qua": 48,
+    "loi": 0
+  }
+}

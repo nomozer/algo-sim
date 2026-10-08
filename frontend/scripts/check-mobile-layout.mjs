@@ -286,6 +286,7 @@ async function chay(ho, fixture, kind) {
     const camVe = capCam(await camDung(s));
     const crv = await hop(s, ".geo3d-canvas");
     const frv = await hinh(s);
+    o.images.after_overview = await capture(s, join(anh, "after_overview.png"));
     o.overview = { restored_camera: cungCam(capCam(o.camera0), camVe), inside: !!crv && !!frv && frv.x >= crv.x - 1
       && frv.y >= crv.y - 1 && frv.x + frv.w <= crv.x + crv.w + 1 && frv.y + frv.h <= crv.y + crv.h + 1 };
 
