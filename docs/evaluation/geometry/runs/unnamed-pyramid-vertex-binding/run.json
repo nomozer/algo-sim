@@ -35,5 +35,17 @@
     "t3": "FULL_PRODUCT_GATE_PASS at 39b0fb4a (pytest 7627 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_39b0fb4a.log)",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "a7c56942673c4e024d154f93219a53e907d71408",
+    "to": "327058826911085d3ca22ab0706946e58a0ee0af",
+    "method": "git merge --ff-only fix/unnamed-pyramid-vertex-binding, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 32705882 = main = origin/main",
+    "integration_gate": "diagnostics/gates_32705882.log (candidate b13a3ef1, cache 123, LLM_ONLY, routing unchanged, 0 model-surface files, schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at 39b0fb4a, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "fix/unnamed-pyramid-vertex-binding (32705882) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "safety mitigation (policy A) implemented and verified for the 21 rows; capability limitation OPEN: 5 text-determined problems (S5 SA = √17, S7 V = 16, R2_S9 V = 16/3, P9 V = 9/2, P11 SA = 3) refused, not mathematically wrong; option B deferred (labels.json + oracle.py kept); no live Gemini; no token-reduction claim; C0 not claimed safe for every problem class; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

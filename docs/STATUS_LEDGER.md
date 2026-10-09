@@ -1509,3 +1509,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (unnamed-regular-pyramid-grounding, 2026-10-09):** user approval `runs/unnamed-regular-pyramid-grounding/APPROVAL.md`; integration gate `diagnostics/gates_2d3c510c.log` PASS; `main` fast-forwarded `ede8d329` → `2d3c510c` and pushed (no force; first attempt failed on a network error before reaching the remote, retried; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = UNNAMED_PYRAMID_VERTEX_BINDING
+- **RUN_ID:** unnamed-pyramid-vertex-binding (task unnamed-pyramid-vertex-binding; Cloud option (b) study + policy A implementation, LOCAL verification; branch fix/unnamed-pyramid-vertex-binding, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** a7c56942
+- **CODE_COMMIT_OR_NONE:** 56692926 (policy A, amendment §25: every unnamed regular-pyramid claim in the refusal zone; unbound claim ⇒ ASSUMPTION_INVARIANCE_UNPROVEN; CACHE_VERSION 123)
+- **CANDIDATE:** `b13a3ef1c34cd41d…` (product `56692926`, 102 files; frozen LOCAL 39b0fb4a) · CACHE_VERSION 123 (bump: served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** option (b) study 9f9e66d1 + 07afbd44; policy labels 1bb5c02e; fix 56692926; docs 5d5b955a + 1258bbcd; candidate refreeze 39b0fb4a; LOCAL record 32705882
+- **CLASSIFICATION:** safety mitigation (policy A); capability limitation kept OPEN; option B deferred
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 39b0fb4a (pytest 7627 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/unnamed-pyramid-vertex-binding/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/unnamed-pyramid-vertex-binding/
+- **PASS:** 21/21 policy rows refused (12 served → refused, 9 refused → refused with unchanged stage/reason); new + updated tests 97/97; oracle 21/21 (math labels unchanged)
+- **CLOSED:** NONE (safety hole of ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE mitigated; capability part OPEN)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward a7c56942 → 32705882) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user choice; product priority after this run: Geometry Compiler G05 expansion (not started)
+- **FINAL_DECISION:** MERGED_AND_PUSHED (capability limitation OPEN: S5 SA = √17, S7 V = 16, R2_S9 V = 16/3, P9 V = 9/2, P11 SA = 3 refused — not mathematically wrong; option B deferred; no live Gemini; no token-reduction claim; C0 not claimed safe for every problem class)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** soundness evidence (fail-closed policy for vertex-unfixed unnamed pyramids; registered scope only)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `policy_a_labels.json` · `labels.json`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (unnamed-pyramid-vertex-binding, 2026-10-09):** user approval `runs/unnamed-pyramid-vertex-binding/APPROVAL.md`; integration gate `diagnostics/gates_32705882.log` PASS; `main` fast-forwarded `a7c56942` → `32705882` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)

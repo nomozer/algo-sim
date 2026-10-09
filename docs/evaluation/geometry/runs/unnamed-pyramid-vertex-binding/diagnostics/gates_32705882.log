@@ -1,0 +1,55 @@
+# unnamed-pyramid-vertex-binding integration gates (tree that main fast-forwards to) at 327058826911085d3ca22ab0706946e58a0ee0af (clean detached worktree, path with a space), 0 model calls
+## git status (before)
+0
+## HEAD
+327058826911085d3ca22ab0706946e58a0ee0af
+## candidate verify
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, b13a3ef1c34cd41d…).
+exit=0
+## cache identity verify
+Khoá khớp · CACHE_VERSION 123 · môi trường b1714b566e25c912…
+exit=0
+## schema export x2 (idempotence: the two mirrors byte-identical, git status unchanged)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 1)
+export_exit=0
+d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7 d852b47c08b7ac0e2a41155366ac1ff88e7d08875cb1cfe718326c543b2951e7  (run 2)
+git status after export: 0 changed
+## DEFAULT_MODE
+30:CHE_DO_MAC_DINH = "LLM_ONLY"
+routing.py changed since a7c56942673c4e024d154f93219a53e907d71408: 0
+geometry_compiler referenced from app/ai or main.py (non-comment): 0
+FIXTURE_TIN_CAY referenced from app/ai, app/main.py, app/api: 0
+## model surface: prompts, grammar card, schemas, capability changed since a7c56942673c4e024d154f93219a53e907d71408
+model-surface files changed: 0
+## CACHE_VERSION
+802:CACHE_VERSION = "123"
+## historical evidence byte-identical since a7c56942673c4e024d154f93219a53e907d71408 (tracked docs/evaluation outside this run folder)
+  M	docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json
+  M	docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+changed outside this run: 2 (allowed: EVALUATION_CANDIDATE.json — product_commit_sha only)
+## historical reports at the docs root (catalogued in docs/evaluation/HISTORICAL_REPORTS.md) changed since a7c56942673c4e024d154f93219a53e907d71408
+catalogued reports changed: 0 of 12
+## git diff --check a7c56942673c4e024d154f93219a53e907d71408..327058826911085d3ca22ab0706946e58a0ee0af (captured *.log excluded: verbatim tool output may carry trailing spaces)
+exit=0
+## docs audit
+=== DOCS INFORMATION ARCHITECTURE AUDIT: PASS ===
+- Ownership domains valid: True
+- Internal links broken: 0
+- CODE_INDEX stale paths: 0
+- STATUS_LEDGER duplicate waves: 0
+- EVIDENCE_INDEX valid: True
+- OPEN_ISSUES valid: True
+- Next action canonical: True
+- Stable/mutable separation: True
+- Secret leaks: 0
+- Docs root closed list: True (29 root docs, 167 catalogued, unclassified [])
+- Test reconciliation balanced: True
+exit=0
+## node harness tests
+ℹ tests 102
+ℹ pass 100
+ℹ fail 0
+ℹ skipped 2
+## git status (after)
+0
