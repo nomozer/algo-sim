@@ -35,5 +35,17 @@
     "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ (unnamed regular pyramid), ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "a1350da3f32b434d87bcef056495304b2f827e58",
+    "to": "81ff88998bb3ca5c4c8d7fffc565a6b3141f0e75",
+    "method": "git merge --ff-only fix/c0-whole-solid-reader, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 81ff8899 = main = origin/main",
+    "integration_gate": "diagnostics/gates_81ff8899.log (candidate c3f83399, cache 121, LLM_ONLY, routing unchanged, 0 model-surface files, schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at 1396878e, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "fix/c0-whole-solid-reader (81ff8899) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ (unnamed regular pyramid) and ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE OPEN (37 unnamed served: 22 correct, 4 wrong value, 11 should refuse — same on main and branch); no live Gemini; no token-reduction claim; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

@@ -1455,3 +1455,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (c0-whole-solid-grounding, 2026-10-09):** user approval `runs/c0-whole-solid-grounding/APPROVAL.md`; integration gate `diagnostics/gates_11be6092.log` PASS; `main` fast-forwarded `9762f441` → `11be6092` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = C0_WHOLE_SOLID_READER
+- **RUN_ID:** c0-whole-solid-reader (task c0-whole-solid-reader; Cloud fix + LOCAL verification; branch fix/c0-whole-solid-reader, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** a1350da3
+- **CODE_COMMIT_OR_NONE:** 7d551535 (reader reads 'hình chóp tứ/tam giác đều có đỉnh S và đáy ABCD' and 'hình chóp đều S.ABCD' as the canonical notation; negated claim not a premise; amendment §23; CACHE_VERSION 121)
+- **CANDIDATE:** `c3f8339927bfe272…` (product `7d551535`, 102 files; frozen LOCAL 1396878e) · CACHE_VERSION 121 (bump: served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration 36605231; fix 7d551535; docs a1bedef4 + b47945e8; candidate refreeze 1396878e; LOCAL record 81ff8899
+- **CLASSIFICATION:** correctness fix (reader phrasings feeding C0 and C1); not a family expansion
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 1396878e (pytest 7530 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app reader + cache constant only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/c0-whole-solid-reader/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/c0-whole-solid-reader/
+- **PASS:** test_c0_whole_solid_reader.py 129/129; C0 27 labels + oracle (10 served → refused, 1 refused → served); C1 141/141 against independent corpus labels (per new phrasing 24 refused → served, 1 served → refused N5, 20 refused → refused, 2 served → served; canonical rows unchanged)
+- **CLOSED:** NONE
+- **OPENED:** ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE (ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ narrowed, still OPEN)
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward a1350da3 → 81ff8899) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user choice of the next task (two unnamed-regular-pyramid issues open; next family per ROADMAP §0.2, G06 not started)
+- **FINAL_DECISION:** MERGED_AND_PUSHED (unnamed regular pyramids: 37 served on main and branch alike — 22 correct, 4 wrong value, 11 should refuse; C0 whole-solid safety incomplete; no live Gemini; no token-reduction claim)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** soundness evidence (reader phrasings equal the canonical notation; registered scope only)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (c0-whole-solid-reader, 2026-10-09):** user approval `runs/c0-whole-solid-reader/APPROVAL.md`; integration gate `diagnostics/gates_81ff8899.log` PASS; `main` fast-forwarded `a1350da3` → `81ff8899` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
