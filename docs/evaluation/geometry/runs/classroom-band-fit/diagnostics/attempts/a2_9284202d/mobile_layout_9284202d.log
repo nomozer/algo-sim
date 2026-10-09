@@ -1,0 +1,61 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 9284202d5356e0f37201deffee156b0818191f92; timeout --signal=KILL 2400 node frontend/scripts/check-mobile-layout.mjs --fixture-root docs/evaluation/geometry/runs/classroom-band-fit/inputs --ra docs/evaluation/geometry/runs/classroom-band-fit/results --anh D:/tmp/classband-logs-9284202d-a2/images/mobile --bo-qua-build --anh-che-do toi-thieu
+2026-10-09T04:10:55Z
+triangular_pyramid/portrait: PASS [] [] fill_h=0.72 canvas_h=393
+triangular_pyramid/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+triangular_pyramid/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_pyramid/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_pyramid/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_pyramid/low: PASS [] [] fill_h=0.71 canvas_h=435
+triangular_pyramid/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+rectangular_pyramid/portrait: PASS [] [] fill_h=0.71 canvas_h=519
+rectangular_pyramid/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+rectangular_pyramid/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+rectangular_pyramid/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+rectangular_pyramid/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+rectangular_pyramid/low: PASS [] [] fill_h=0.72 canvas_h=435
+rectangular_pyramid/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+triangular_prism/portrait: PASS [] [] fill_h=0.59 canvas_h=406
+triangular_prism/portrait_small: PASS [] [] fill_h=0.67 canvas_h=320
+triangular_prism/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_prism/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_prism/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+triangular_prism/low: FAIL ["FIGURE_LEFT_CANVAS_AFTER_ORBIT"] [] fill_h=0.72 canvas_h=435
+triangular_prism/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+cuboid/portrait: PASS [] [] fill_h=0.64 canvas_h=485
+cuboid/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+cuboid/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+cuboid/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+cuboid/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+cuboid/low: FAIL [] [] RUN_ERROR Error: POLL_TIMEOUT:false
+cuboid/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+cube/portrait: PASS [] [] fill_h=0.67 canvas_h=389
+cube/portrait_small: PASS [] [] fill_h=0.73 canvas_h=320
+cube/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+cube/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+cube/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+cube/low: PASS [] [] fill_h=0.72 canvas_h=435
+cube/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+cross_section/portrait: PASS [] [] fill_h=0.72 canvas_h=369
+cross_section/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+cross_section/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+cross_section/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+cross_section/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+cross_section/low: PASS [] [] fill_h=0.71 canvas_h=435
+cross_section/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+regular_square_pyramid/portrait: PASS [] [] fill_h=0.73 canvas_h=320
+regular_square_pyramid/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+regular_square_pyramid/landscape: PASS [] [] fill_h=0.73 canvas_h=320
+regular_square_pyramid/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+regular_square_pyramid/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+regular_square_pyramid/low: PASS [] [] fill_h=0.71 canvas_h=435
+regular_square_pyramid/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+regular_triangular_pyramid/portrait: PASS [] [] fill_h=0.72 canvas_h=344
+regular_triangular_pyramid/portrait_small: PASS [] ["PANEL_BELOW_FOLD_FIGURE_FILLS_CANVAS"] fill_h=0.73 canvas_h=320
+regular_triangular_pyramid/landscape: FAIL [] [] RUN_ERROR Error: WS_OPEN_TIMEOUT: 20 s
+regular_triangular_pyramid/landscape_small: PASS [] [] fill_h=0.73 canvas_h=320
+regular_triangular_pyramid/landscape_browser: PASS [] [] fill_h=0.73 canvas_h=320
+regular_triangular_pyramid/low: PASS [] [] fill_h=0.71 canvas_h=435
+regular_triangular_pyramid/desktop: PASS [] [] fill_h=0.70 canvas_h=685
+mobile layout probe: 53/56 PASS
+exit=1
+2026-10-09T04:47:55Z

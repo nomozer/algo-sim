@@ -1,0 +1,46 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 9284202d5356e0f37201deffee156b0818191f92; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/lock_cache_identity.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/classroom-band-fit/inputs
+2026-10-09T04:02:36Z
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 7f3f042309dd1c54…).
+Khoá khớp · CACHE_VERSION 118 · môi trường b1714b566e25c912…
+Traceback (most recent call last):
+  File "D:\tmp\class band fit\backend\scripts\generate_generic_tier_a_fixtures.py", line 705, in <module>
+    main()
+  File "D:\tmp\class band fit\backend\scripts\generate_generic_tier_a_fixtures.py", line 408, in main
+    positive_text, positive = _compiler_fixture(factory, negative=False)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\tmp\class band fit\backend\scripts\generate_generic_tier_a_fixtures.py", line 149, in _compiler_fixture
+    envelope = asyncio.run(_run_compiler(text, contract))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 58, in __enter__
+    self._lazy_init()
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 137, in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 823, in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 720, in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 316, in __init__
+    super().__init__(proactor)
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 640, in __init__
+    self._make_self_pipe()
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 787, in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 615, in _fallback_socketpair
+    lsock.bind((host, 0))
+PermissionError: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions
+sys:1: RuntimeWarning: coroutine '_run_compiler' was never awaited
+Exception ignored in: <function BaseEventLoop.__del__ at 0x0000026078B98720>
+Traceback (most recent call last):
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 732, in __del__
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 697, in close
+  File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 779, in _close_self_pipe
+AttributeError: 'ProactorEventLoop' object has no attribute '_ssock'
+exit=1
+2026-10-09T04:02:40Z

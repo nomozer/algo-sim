@@ -5,7 +5,7 @@
 // usage: node probe-class-band-v2.mjs <repo> <dist> <out.json> [--fixture f.json] [--only role:vp,..] [--shots dir [--shot-cases role:vp,..]]
 //        [--css file] [--collapse-dock]   (last two: prototype CSS injection / existing collapse click — not used for evidence)
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const argv = process.argv.slice(2);
@@ -213,6 +213,10 @@ try {
     }
   }
 } finally { sv.close(); }
+// A clean worktree has no empty results/ directory (attempt 2 measured 24/24, then failed here to write it).
+mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify({ schema: "class-band-probe/2", application_llm_calls: 0, css_injected: !!CSS,
-  collapse_dock_click: COLLAPSE_DOCK, title_min_px: TITLE_MIN_PX, fixture: fixture.case_id, rows }, null, 2));
+  collapse_dock_click: COLLAPSE_DOCK, title_min_px: TITLE_MIN_PX, fixture: fixture.case_id,
+  product_commit_sha: fixture.product_commit_sha ?? null, dist: DIST, rows }, null, 2));
 console.log(`${rows.filter((r) => r.pass).length}/${rows.length} pass`);
+process.exitCode = rows.every((r) => r.pass) ? 0 : 1;

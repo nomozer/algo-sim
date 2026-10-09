@@ -1,0 +1,42 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 9284202d5356e0f37201deffee156b0818191f92; timeout --signal=KILL 2400 node docs/evaluation/geometry/runs/classroom-band-fit/diagnostics/probe-class-band-v2.mjs /d/tmp/class band fit frontend/dist docs/evaluation/geometry/runs/classroom-band-fit/results/CLASS_BAND_PROBE.json --fixture docs/evaluation/geometry/runs/classroom-band-fit/inputs/fixtures/regular_square_pyramid_positive.json --shots docs/evaluation/geometry/runs/classroom-band-fit/images/class-band --shot-cases student_live:landscape_640,teacher_live:landscape_640,student_live:portrait_small
+2026-10-09T04:03:23Z
+✓ teacher_idle landscape_640      top=44 title=71 ctl=334/360 status=34px chip
+✓ teacher_idle landscape_small    top=44 title=89 ctl=334/375 status=43px chip
+✓ teacher_idle landscape          top=36 title=131 ctl=326/390 status=85px chip
+✓ teacher_idle landscape_browser  top=36 title=131 ctl=326/340 status=85px chip
+✓ teacher_idle portrait_small     top=152 title=131 ctl=633/640 status=85px chip
+✓ teacher_idle portrait           top=270 title=211 ctl=751/844 status=296px
+✓ teacher_idle low                top=84 title=445 ctl=542/650 status=296px
+✓ teacher_idle desktop            top=84 title=519 ctl=792/900 status=296px
+✓ teacher_live landscape_640      top=44 title=71 ctl=334/360 status=34px chip
+✓ teacher_live landscape_small    top=44 title=89 ctl=334/375 status=43px chip
+✓ teacher_live landscape          top=36 title=131 ctl=326/390 status=85px chip
+✓ teacher_live landscape_browser  top=36 title=131 ctl=326/340 status=85px chip
+✓ teacher_live portrait_small     top=152 title=131 ctl=633/640 status=85px chip
+✓ teacher_live portrait           top=350 title=211 ctl=831/844 status=358px
+✓ teacher_live low                top=84 title=753 ctl=542/650 status=740px
+✓ teacher_live desktop            top=84 title=827 ctl=792/900 status=740px
+✓ student_live landscape_640      top=44 title=71 ctl=334/360 status=34px chip
+✓ student_live landscape_small    top=44 title=89 ctl=334/375 status=43px chip
+✓ student_live landscape          top=36 title=131 ctl=326/390 status=85px chip
+✓ student_live landscape_browser  top=36 title=131 ctl=326/340 status=85px chip
+✓ student_live portrait_small     top=152 title=131 ctl=633/640 status=85px chip
+✓ student_live portrait           top=228 title=211 ctl=709/844 status=125px
+✓ student_live low                top=36 title=238 ctl=542/650 status=125px
+✓ student_live desktop            top=36 title=312 ctl=792/900 status=125px
+node:fs:2427
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open 'D:\tmp\class band fit\docs\evaluation\geometry\runs\classroom-band-fit\results\CLASS_BAND_PROBE.json'
+    at writeFileSync (node:fs:2427:20)
+    at file:///D:/tmp/class%20band%20fit/docs/evaluation/geometry/runs/classroom-band-fit/diagnostics/probe-class-band-v2.mjs:216:1 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\tmp\\class band fit\\docs\\evaluation\\geometry\\runs\\classroom-band-fit\\results\\CLASS_BAND_PROBE.json'
+}
+
+Node.js v24.13.0
+exit=1
+2026-10-09T04:10:55Z

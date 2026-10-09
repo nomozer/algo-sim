@@ -1,0 +1,16 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 9284202d5356e0f37201deffee156b0818191f92; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/classroom-band-fit/inputs --ra docs/evaluation/geometry/runs/classroom-band-fit/results --screenshots D:/tmp/classband-logs-9284202d-a2/images --bo-qua-build --anh-che-do toi-thieu
+2026-10-09T04:47:55Z
+▶ triangular_pyramid/desktop 04:47:56
+▶ triangular_pyramid/mobile 04:49:04
+file:///D:/tmp/class%20band%20fit/frontend/scripts/browser-runner.mjs:135
+      const t = setTimeout(() => bad(new Error("WS_OPEN_TIMEOUT: 20 s")), 20_000);
+                                     ^
+
+Error: WS_OPEN_TIMEOUT: 20 s
+    at Timeout._onTimeout (file:///D:/tmp/class%20band%20fit/frontend/scripts/browser-runner.mjs:135:38)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+
+Node.js v24.13.0
+exit=1
+2026-10-09T04:49:24Z

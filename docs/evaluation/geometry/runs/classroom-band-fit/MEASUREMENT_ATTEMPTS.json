@@ -1,0 +1,21 @@
+{
+  "schema_version": "measurement-attempts/1",
+  "run_id": "classroom-band-fit",
+  "rule": "Only a complete run of diagnostics/measure.sh on one commit is evidence; results of different attempts are never merged. Failed attempts are kept as records.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "commit": "9284202d",
+      "logs": "diagnostics/attempts/a1_9284202d/",
+      "outcome": "ENVIRONMENT",
+      "detail": "candidate verify (7f3f0423..., 102 files) and cache lock (118) passed; fixture generation died with WinError 10013 (asyncio socketpair bind refused by the background shell's sandbox). Nothing measured. Rerun with localhost sockets allowed."
+    },
+    {
+      "attempt": 2,
+      "commit": "9284202d",
+      "logs": "diagnostics/attempts/a2_9284202d/",
+      "outcome": "INCOMPLETE",
+      "detail": "fixtures + build ok; class band probe measured 24/24 (log) then crashed writing results/CLASS_BAND_PROBE.json (results/ does not exist in a clean worktree — probe bug, fixed: mkdir of the output directory); phone/landscape probe 53/56 = the pre-existing triangular_prism/low FIGURE_LEFT_CANVAS_AFTER_ORBIT + 2 environment errors (cuboid/low POLL_TIMEOUT, regular_triangular_pyramid/landscape WS_OPEN_TIMEOUT); Tier-A suite crashed at start with WS_OPEN_TIMEOUT (Chrome did not open its DevTools socket within 20 s under load: software WebGL renderer ~5 cores); W02 16/16, W04 24/24, W05 24/24. Not evidence: Tier-A did not run and the class band JSON was not written."
+    }
+  ]
+}
