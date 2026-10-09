@@ -1,0 +1,31 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "geometry-grounding-safety (run geometry-grounding-safety — C0 shape-vs-coordinates check, compiler rectangle rule)",
+  "corrects": "docs/evaluation/geometry/runs/general-polygon-base/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "bbfa5b0da3a5353af80e8777c19b0ec11bc042cc441a658095350569e23dd214",
+  "current_candidate_source_commit": "765291ab8e6682466165fef479fef92700a3815c",
+  "current_candidate_frozen_at": "765291ab8e6682466165fef479fef92700a3815c",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/grounding freeze) at 765291ab; product commit 765291ab (Cloud fbade460 + LOCAL fix: absent program points take the text's own coordinate in the C0 shape check); 102 files; --verify match (diagnostics/freeze_765291ab.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 118 → 119: a statement served under 118 is refused now (C0 shape contradiction); cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "72d6070acf6ced35dcf4f09588bf1352125b245f2f8590bf5c7691fab9c67a7e",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "geometry-grounding-safety backend/app changes: assumption_gate C0 checks eight read shape-relation kinds on the given coordinates and refuses SOURCE_SHAPE_CONTRADICTS_COORDINATES (cause SOURCE, no repair, learner message, refusal text in route.py); compiler eligibility refuses a quadrilateral base with fewer than three stated right angles as a rectangle (BASE_RECTANGLE_NOT_PROVEN, opt-in route only); CACHE_VERSION 118 → 119 in main.py. No prompt, grammar card, schema or capability-hash change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/ai/pipeline.py",
+    "backend/app/learner_messages.py",
+    "backend/app/main.py",
+    "backend/app/simulation/geometry_compiler/compiler.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/refusal_cause.py",
+    "backend/app/simulation/semantic_program/route.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate bbfa5b0d (product commit 765291ab) is the current product identity on fix/geometry-grounding-safety. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 119
+}
