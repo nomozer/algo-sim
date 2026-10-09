@@ -1,0 +1,129 @@
+{
+ "served_matching_label": [
+  22,
+  [
+   "square/R2_L1_chained_equal_lateral_edges",
+   "square/R2_S10_lateral_other_vertex",
+   "square/R2_S8_side_AB_lateral_SA",
+   "square/R2_S9_side_lateral_named",
+   "square/S1_side_height_volume",
+   "square/S2_side_apothem_volume",
+   "square/S3_apothem_phrasing",
+   "square/S4_side_lateral_volume",
+   "square/S5_lateral_edge_length",
+   "square/S6_renamed_vertices",
+   "square/S7_named_centre",
+   "square/W5_A_chain_cites_other_member",
+   "triangular/N5_apex_over_vertex",
+   "triangular/P10_frame_six",
+   "triangular/P11_lateral_length",
+   "triangular/P1_side_height",
+   "triangular/P2_side_lateral",
+   "triangular/P4_all_edges_equal",
+   "triangular/P7_renamed_vertices",
+   "triangular/P8_phrasing_variant",
+   "triangular/P9_named_centroid",
+   "triangular/U4_side_outside_frames"
+  ]
+ ],
+ "served_other_value": [
+  4,
+  [
+   {
+    "row": "square/U3_regular_triangular",
+    "label": "served:3√3",
+    "served": "5"
+   },
+   {
+    "row": "triangular/N5b_apex_off_normal",
+    "label": "served:9/2",
+    "served": "3/2"
+   },
+   {
+    "row": "triangular/U1_rational_side",
+    "label": "served:3√3/2",
+    "served": "5/2"
+   },
+   {
+    "row": "triangular/U3_height_outside_domain",
+    "label": "served:3√3",
+    "served": "9/2"
+   }
+  ]
+ ],
+ "served_label_refused": [
+  11,
+  [
+   {
+    "row": "square/N1_missing_height",
+    "label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+    "served": "16"
+   },
+   {
+    "row": "square/N3_contradiction",
+    "label": "refused:assumption:*",
+    "served": "48"
+   },
+   {
+    "row": "square/N5_apex_over_vertex",
+    "label": "refused:assumption:*",
+    "served": "3"
+   },
+   {
+    "row": "square/R2_N9_contradiction_program_fits_lengths",
+    "label": "refused:assumption:*",
+    "served": "16"
+   },
+   {
+    "row": "square/U1_irrational_height",
+    "label": "refused:assumption:*",
+    "served": "4/3"
+   },
+   {
+    "row": "square/U2_angle_data",
+    "label": "refused:assumption:*",
+    "served": "16"
+   },
+   {
+    "row": "square/W5_C_chain_without_value",
+    "label": "refused:assumption:*",
+    "served": "16/3"
+   },
+   {
+    "row": "triangular/N1_missing_height",
+    "label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+    "served": "9/2"
+   },
+   {
+    "row": "triangular/N2_contradiction",
+    "label": "refused:assumption:*",
+    "served": "9/2"
+   },
+   {
+    "row": "triangular/N7_layout_as_data",
+    "label": "refused:assumption:*",
+    "served": "9/2"
+   },
+   {
+    "row": "triangular/N9_regular_is_not_tetrahedron",
+    "label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+    "served": "9"
+   }
+  ]
+ ],
+ "refused": [
+  10,
+  [
+   "square/N4_wrong_centre_identity",
+   "square/N7_model_only_height",
+   "square/R2_N8_lateral_contradiction",
+   "square/R2_U4_irrational_via_lateral",
+   "square/W5_B_chain_mixed_values",
+   "square/W5_D_program_value_differs_from_chain",
+   "square/W5_E_program_segment_outside_chain",
+   "triangular/N3_lateral_mixed",
+   "triangular/N4_declared_value_conflict",
+   "triangular/N6_wrong_centroid_identity"
+  ]
+ ]
+}

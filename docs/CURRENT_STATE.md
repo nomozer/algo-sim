@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 120 (c0-whole-solid-grounding: C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ, 15 hàng nhãn served → refused; runs/c0-whole-solid-grounding/cache/decision.json + đính chính LOCAL 16 → 15 trong handoff.md)
+> CACHE_VERSION = 121 trên nhánh `fix/c0-whole-solid-reader` (bộ đọc chóp đều: served → refused; runs/c0-whole-solid-reader/cache/decision.json) · `main`: 120 (c0-whole-solid-grounding: C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ, 15 hàng nhãn served → refused; runs/c0-whole-solid-grounding/cache/decision.json + đính chính LOCAL 16 → 15 trong handoff.md)
 > CANDIDATE = 8c4c01284232121b… (102 file; product commit c11e8c9d; cache 120; đóng băng LOCAL d838cc5b, T3 PASS — runs/c0-whole-solid-grounding/handoff.md; trên `main` từ 11be6092)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = C0_WHOLE_SOLID_GROUNDING (run `c0-whole-solid-grounding` — Cloud thêm kiểm khẳng định toàn khối vào C0, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
@@ -63,6 +63,17 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
+
+> **Bộ đọc chóp đều — run c0-whole-solid-reader (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-reader`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước (`a1350da3`) | "có đỉnh S và đáy ABCD" và "chóp đều S.ABCD" không phát khẳng định chóp đều ⇒ 10 đề C0 mâu thuẫn được phục vụ; C1 viết lại: từ chối thay vì như ký hiệu chuẩn, 2 đề phục vụ đáp số sai; phủ định ký hiệu chuẩn bị đọc thành tiền đề |
+> | Sửa | chỉ bộ đọc (`shape_constraint`): hai lối viết phát đúng tập ràng buộc của ký hiệu chuẩn; không đọc sau "không phải (là)" |
+> | Nhãn | 27 hàng C0 ghi trước + oracle độc lập, 27/27; C1 tương đương 94/94 trên hai corpus chóp đều; ký hiệu chuẩn không đổi |
+> | `CACHE_VERSION` · candidate | **121** (served → refused, probe trước/sau; bề mặt mô hình không đổi) · candidate `8c4c0128…` CHƯA đóng băng lại (LOCAL) |
+> | Còn mở | chóp đều không tên (`ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ` thu hẹp) · `ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE` (15/37 đề C1 không tên phục vụ sai/không đủ dữ kiện) |
+> | Run | [`c0-whole-solid-reader`](evaluation/geometry/runs/c0-whole-solid-reader/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **C0 kiểm khẳng định toàn khối — run c0-whole-solid-grounding (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-grounding`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `11be6092` theo `APPROVAL.md`):**
 >

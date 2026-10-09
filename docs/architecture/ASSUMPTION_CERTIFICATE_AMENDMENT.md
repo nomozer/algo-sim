@@ -1298,3 +1298,12 @@ tại tâm đáy, ngoài đáy), `regular_triangular_pyramid` (đáy đều + đ
 `height` (chóp: khoảng cách² đỉnh → mặt đáy; lăng trụ: khoảng cách² đỉnh đáy trên → mặt đáy; = value² — KHÔNG phải cạnh
 bên). Khối không tên (`entities = ()`) và `prism` trơn không kiểm ở đây. Mã, nguyên nhân, đường từ chối: như §21.
 Nhãn: `docs/evaluation/geometry/runs/c0-whole-solid-grounding/labels.json`.
+
+## 23. c0-whole-solid-reader — hai lối viết chóp đều trong từ vựng đóng (2026-10-09)
+
+Bộ đọc (`shape_constraint`) nhận thêm, như ký hiệu `hình chóp tứ/tam giác đều X.Y` (§2.1, §18.1) — cùng tập ràng buộc
+`pyramid`, `regular_*_pyramid`, `base_*`, cùng thứ tự `entities`, cùng vai trò khối duy nhất của phần dữ kiện:
+`hình/khối chóp tứ|tam giác đều có đỉnh (là) X (và|,) (mặt) đáy (là) Y` và `hình/khối chóp đều X.Y` (số đỉnh đáy 4 ⇒ chóp
+tứ giác đều, 3 ⇒ chóp tam giác đều; số khác: chỉ `pyramid`, như ngũ/lục giác). Khẳng định chóp đều đứng ngay sau
+"không phải (là)" không phát (phủ định không phải tiền đề) — áp cho cả ký hiệu chuẩn. Chóp đều KHÔNG tên đỉnh/đáy vẫn
+không phát gì (không gắn khi không có căn cứ duy nhất). Nhãn: `docs/evaluation/geometry/runs/c0-whole-solid-reader/`.

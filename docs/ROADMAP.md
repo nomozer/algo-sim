@@ -13,6 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Việc `c0-whole-solid-reader` (2026-10-09, run [`c0-whole-solid-reader`](evaluation/geometry/runs/c0-whole-solid-reader/),
+  Cloud, nhánh `fix/c0-whole-solid-reader`, CHƯA tích hợp):** bộ đọc nhận "có đỉnh S và đáy ABCD" và "chóp đều S.ABCD"
+  như ký hiệu chuẩn; phủ định không là tiền đề; `CACHE_VERSION` 121; chờ LOCAL kiểm + đóng băng candidate.
+  `ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ` thu hẹp (còn chóp đều không tên); mở
+  `ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE`.
+
 - **Việc `c0-whole-solid-grounding` (2026-10-09, run [`c0-whole-solid-grounding`](evaluation/geometry/runs/c0-whole-solid-grounding/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `11be6092`):** đóng `ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED` (amendment
   §22; 15 hàng nhãn served → refused); `CACHE_VERSION` 120; candidate `8c4c0128…`, T3 PASS; phê duyệt: `APPROVAL.md` của
