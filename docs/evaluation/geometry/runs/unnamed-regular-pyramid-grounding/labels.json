@@ -1,0 +1,981 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "unnamed-regular-pyramid-grounding",
+ "written": "2026-10-09, after the inventory and the baseline probe on ede8d329, before any product change",
+ "binding_rule": "An unnamed regular-pyramid claim ('hình chóp tứ/tam giác đều' with no apex/base named in the givens) is bound to the program's single solid ONLY when every point the text names has coordinates in the text (no point named at all included). Then the labelling of vertices carries no meaning the text did not fix, and every bound claim is VERIFIED (C1 template on the program values / C0 predicate), never trusted. C0: a contradiction needs that NO pyramid reading of the solid satisfies the claim. Texts that name points without coordinates ('AB = 4, SA = 3', 'cạnh bên SA') are left unchanged: the text does not say which point is the apex (scope 'unchanged').",
+ "c1_rows_rule": "47 rows = the `unnamed_everywhere` variant of ../c0-whole-solid-reader/diagnostics/probe_c1_equivalence.py (both regular-pyramid corpora, same LLM-style program as the canonical row). corpus_label = the corpus's preregistered label for the canonical text; class from baseline_ede8d329 vs corpus_label; scope bind ⇒ expect = corpus_label (re-derived from the stated dimensions by oracle.py); scope unchanged ⇒ expect = baseline outcome.",
+ "c1_rows": {
+  "square/N1_missing_height": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+   "baseline_ede8d329": "served:16",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+  },
+  "square/N3_contradiction": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 6, chiều cao bằng 4, trung đoạn bằng 6. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:48",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:*"
+  },
+  "square/N4_wrong_centre_identity": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "baseline_ede8d329": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "B",
+    "O",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/N5_apex_over_vertex": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:3",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/N7_model_only_height": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4. Tính thể tích khối chóp.",
+   "corpus_label": "refused:*:*",
+   "baseline_ede8d329": "refused:grounding:GIVEN_VALUE_NOT_IN_SOURCE",
+   "class": "refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:*:*"
+  },
+  "square/R2_L1_chained_equal_lateral_edges": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_N8_lateral_contradiction": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_ede8d329": "refused:source_invariant:None",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_N9_contradiction_program_fits_lengths": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:16",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_S10_lateral_other_vertex": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SC = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_S8_side_AB_lateral_SA": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_S9_side_lateral_named": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, cạnh bên SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/R2_U4_irrational_via_lateral": {
+   "text": "Cho hình chóp tứ giác đều có AB = 2, SA = 2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_ede8d329": "refused:source_invariant:None",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/S1_side_height_volume": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16",
+   "baseline_ede8d329": "served:16",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:16"
+  },
+  "square/S2_side_apothem_volume": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 6, trung đoạn bằng 5. Tính thể tích khối chóp.",
+   "corpus_label": "served:48",
+   "baseline_ede8d329": "served:48",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:48"
+  },
+  "square/S3_apothem_phrasing": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 6, đường cao của mặt bên bằng 5. Tính thể tích khối chóp.",
+   "corpus_label": "served:48",
+   "baseline_ede8d329": "served:48",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:48"
+  },
+  "square/S4_side_lateral_volume": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, cạnh bên bằng 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:16/3"
+  },
+  "square/S5_lateral_edge_length": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "served:√17",
+   "baseline_ede8d329": "served:√17",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/S6_renamed_vertices": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16",
+   "baseline_ede8d329": "served:16",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:16"
+  },
+  "square/S7_named_centre": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16",
+   "baseline_ede8d329": "served:16",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "B",
+    "O",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/U1_irrational_height": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 2, cạnh bên bằng 2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:4/3",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:*"
+  },
+  "square/U2_angle_data": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, góc giữa cạnh bên và mặt đáy bằng 60°. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:16",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:*"
+  },
+  "square/U3_regular_triangular": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3, chiều cao bằng 4. Tính thể tích khối chóp.",
+   "corpus_label": "served:3√3",
+   "baseline_ede8d329": "served:5",
+   "class": "wrong_value",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:3√3"
+  },
+  "square/W5_A_chain_cites_other_member": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_ede8d329": "served:16/3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/W5_B_chain_mixed_values": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = 3, SC = SD = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_ede8d329": "refused:source_invariant:None",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/W5_C_chain_without_value": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4 và SA = SB = SC = SD. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:16/3",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/W5_D_program_value_differs_from_chain": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_ede8d329": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "square/W5_E_program_segment_outside_chain": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_ede8d329": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/N1_missing_height": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+   "baseline_ede8d329": "served:9/2",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+  },
+  "triangular/N2_contradiction": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, cạnh bên bằng 3, chiều cao bằng 2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:9/2",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:*"
+  },
+  "triangular/N3_lateral_mixed": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, SA = 3 và SB = 4. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_ede8d329": "refused:source_invariant:None",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/N4_declared_value_conflict": {
+   "text": "Cho hình chóp tam giác đều có AB = 3√2, SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_ede8d329": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/N5_apex_over_vertex": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/N5b_apex_off_normal": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:3/2",
+   "class": "wrong_value",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/N6_wrong_centroid_identity": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Gọi G là trọng tâm tam giác ABC, biết SG = √3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "baseline_ede8d329": "refused:source_invariant:None",
+   "class": "refused",
+   "point_names_without_coordinates": [
+    "A",
+    "G",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/N7_layout_as_data": {
+   "text": "Cho hình chóp tam giác đều. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_ede8d329": "served:9/2",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:*"
+  },
+  "triangular/N9_regular_is_not_tetrahedron": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER",
+   "baseline_ede8d329": "served:9",
+   "class": "served_label_refused",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+  },
+  "triangular/P10_frame_six": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 2√6, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:6",
+   "baseline_ede8d329": "served:6",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:6"
+  },
+  "triangular/P11_lateral_length": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "served:3",
+   "baseline_ede8d329": "served:3",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/P1_side_height": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/P2_side_lateral": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, cạnh bên bằng 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/P4_all_edges_equal": {
+   "text": "Cho hình chóp tam giác đều có tất cả các cạnh bằng 3√2. Tính thể tích khối chóp.",
+   "corpus_label": "served:9",
+   "baseline_ede8d329": "served:9",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9"
+  },
+  "triangular/P7_renamed_vertices": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/P8_phrasing_variant": {
+   "text": "Cho khối chóp tam giác đều có cạnh đáy 3√2 và chiều cao √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:9/2"
+  },
+  "triangular/P9_named_centroid": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Gọi G là trọng tâm tam giác ABC, biết SG = √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_ede8d329": "served:9/2",
+   "class": "correct",
+   "point_names_without_coordinates": [
+    "A",
+    "G",
+    "S"
+   ],
+   "scope": "unchanged",
+   "expect": "unchanged"
+  },
+  "triangular/U1_rational_side": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3, chiều cao bằng 2. Tính thể tích khối chóp.",
+   "corpus_label": "served:3√3/2",
+   "baseline_ede8d329": "served:5/2",
+   "class": "wrong_value",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:3√3/2"
+  },
+  "triangular/U3_height_outside_domain": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng 2. Tính thể tích khối chóp.",
+   "corpus_label": "served:3√3",
+   "baseline_ede8d329": "served:9/2",
+   "class": "wrong_value",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:3√3"
+  },
+  "triangular/U4_side_outside_frames": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng √14, chiều cao bằng √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:7/2",
+   "baseline_ede8d329": "served:7/2",
+   "class": "correct",
+   "point_names_without_coordinates": [],
+   "scope": "bind",
+   "expect": "served:7/2"
+  }
+ },
+ "c0_rows": {
+  "U_C_square": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "refused"
+  },
+  "U_K_square": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "served:4"
+  },
+  "U_C_square_question_names_solid": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "refused"
+  },
+  "U_K_renamed_fractions": {
+   "text": "Cho khối chóp tứ giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     "3/2",
+     0,
+     0
+    ],
+    "Q": [
+     "3/2",
+     "3/2",
+     0
+    ],
+    "R": [
+     0,
+     "3/2",
+     0
+    ],
+    "P": [
+     "3/4",
+     "3/4",
+     2
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "P",
+    "base": [
+     "M",
+     "N",
+     "Q",
+     "R"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "served:3/2"
+  },
+  "U_C_triangular": {
+   "text": "Cho hình chóp tam giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     2,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "refused"
+  },
+  "U_K_triangular": {
+   "text": "Cho hình chóp tam giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     "4/3",
+     "4/3",
+     "4/3"
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "served:1/2"
+  },
+  "U_K_triangular_program_other_base_first": {
+   "text": "Cho hình chóp tam giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     "4/3",
+     "4/3",
+     "4/3"
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "A",
+    "base": [
+     "B",
+     "C",
+     "S"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "served:1/2",
+   "note": "the program lists face BCS as the base (apex A); the text's coordinates are regular with apex S — some reading of the same solid satisfies the claim ⇒ consistent"
+  },
+  "U_K_negated": {
+   "text": "Cho {coords}; đây không phải là hình chóp tứ giác đều. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "expect": "served:4"
+  },
+  "U_K_goal_clause": {
+   "text": "Cho hình chóp với {coords}. Chứng minh đó là hình chóp tứ giác đều. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "expect": "served:4"
+  },
+  "U_X_extra_point_without_coordinates": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Gọi M là trung điểm của SA. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "unchanged",
+   "note": "M is named without coordinates: the binding is not fixed by the text ⇒ out of scope, outcome as on main"
+  },
+  "U_X_two_solids": {
+   "text": "Cho hình chóp tứ giác đều và hình lập phương, với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "expect": "unchanged",
+   "note": "two solids in the givens: the claim has no unique solid ⇒ not bound, outcome as on main"
+  }
+ }
+}
