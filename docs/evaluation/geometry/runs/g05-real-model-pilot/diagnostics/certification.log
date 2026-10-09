@@ -1,0 +1,2 @@
+{"dem": {"SERVED_CORRECT": 10, "REFUSED_CORRECT": 6}, "scene_replay": {"checked": 10, "ok": 10}, "fault_injection": {"provider_error_on_negative": "PROVIDER_ERROR", "schema_invalid_on_negative": "PARSER_SCHEMA_ERROR", "resume_provider_calls": 0, "leak_in_artifacts": false}}
+CERTIFIED

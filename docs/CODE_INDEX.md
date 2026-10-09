@@ -2390,6 +2390,39 @@ cấp module. Hai đề mới chọn số có chủ đích: `12/5` không trùng
 đề, và góc **đường–đường** phân biệt được `cos_sq_between_lines` với
 `sin_sq_line_plane` (một đề đường–mặt 45° thì không).
 
+### `backend/scripts/run_g05_real_model_pilot.py` · `--live` **TIÊU QUOTA THẬT**
+
+Runner pilot G05 với Gemini thật (run `g05-real-model-pilot`, `DEVELOPMENT_G05_REAL_MODEL_PILOT`). Cùng khuôn
+`run_holdout_pilot.py`: mỗi đề chạy `measure_geometry_stability.mot_luot` (`run_pipeline` thật), chỉ thay
+`RA`/`RUN_ID`/`TRAN_*`/`_ky_vong_cua`/`cham_oracle` cấp module. Export: `nap_corpus` (băm ghim `CORPUS_SHA256`) ·
+`Caps`/`CAPS_APPROVED` (64 logic · 96 HTTP · 400k token) · `GacCong` (bọc `pipeline.call_gemini`: chặn token TRƯỚC mỗi
+lượt gọi với `TOKEN_RESERVE_PER_CALL`, phản hồi thiếu usage ⇒ dừng, hai lỗi provider liên tiếp ⇒ dừng, che khoá trong
+thông điệp lỗi) · `chay_pilot` (tiếp tục ≠ chạy lại: có `{id}-lan1.pilot.json` thì bỏ qua và cộng lại ngân sách đã dùng) ·
+`kiem_truoc_live` (ALLOW_LIVE_AI, model `gemini-2.5-flash`, candidate, cache, corpus — trước lượt gọi đầu) · `quet_khoa` ·
+`che` · `DungPilot`. Trần lượt/HTTP đi qua `ApiBudget` của sản phẩm mỗi đề = min(trần mỗi đề, phần còn lại toàn lượt).
+
+### `backend/scripts/g05_pilot_scoring.py` · offline · **0 API call**
+
+Bộ chấm CHÍNH XÁC + phân loại kết cục của pilot G05. `gia_tri_nhan`/`khoa_chinh_xac`/`bang_nhau`: nhãn, `int`,
+`Fraction`, `Radical`, chuỗi hiển thị → khoá `(mu, dấu, giá trị²)`; float ⇒ `None` (không chấm được). Tồn tại vì
+`run_geometry_dev_evaluation.cham_oracle` dùng `Fraction(str(...))` và chấm FAIL mọi đáp số có căn. `phan_loai`: 10 hạng
+(`CATEGORIES`); lỗi provider / dừng lượt / lỗi công cụ / hỏng trước IR KHÔNG BAO GIỜ là từ chối đúng. `v2_cong_thuc`:
+V² theo công thức sách từ kích thước đề (oracle độc lập với sản phẩm).
+
+### `backend/scripts/g05_pilot_scene_replay.py` · offline · **0 API call**
+
+Dựng lại Scene3D của lượt đo từ hợp đồng + chương trình đã lưu bằng `pipeline._dung_scene3d`, rồi kiểm cấu trúc (số
+đỉnh/mặt/cạnh, Euler, mỗi cạnh hai mặt, định hướng được, không suy biến) và hình học CHÍNH XÁC theo `chart_metric`
+(cạnh đáy, đáy đều, chiều cao, vuông góc, tịnh tiến; tứ diện: sáu cạnh). Export: `kiem_mot` · `kiem_tat_ca`. Ghi cảnh ra
+`<lượt>/scenes/` cho `runs/g05-real-model-pilot/scene_world_check.ts` (biến đổi renderer bằng `veKhongGian`).
+
+### `backend/scripts/certify_g05_real_model_pilot.py` · offline · **0 API call**
+
+Chứng nhận công cụ pilot bằng provider GIẢ đóng vai mô hình hoàn hảo: trả đúng payload `analyze` + chương trình mà
+corpus viết tay của run gốc đã dùng (bắt payload bằng cách bọc `build_request_contract`), đi qua đúng đường live
+(`GacCong` → `stage_semantic_*` → `run_pipeline`), ghi `ApiBudget` + usage giả. Export: `dap_an_corpus` · `ProviderGia`
+(tiêm lỗi provider, chương trình hỏng, khoá trong thông điệp, usage thiếu) · `chung_nhan`. Không nói gì về Gemini thật.
+
 ### `backend/scripts/geometry_expectations.py` · offline · **0 API call**
 
 Sở hữu **KỲ VỌNG NGHĨA VỤ** của một tập đề, và hai phép so của chỉ số ③. Export:

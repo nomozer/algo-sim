@@ -1,0 +1,29 @@
+{
+  "run_id": "g05-real-model-pilot",
+  "task_slug": "approved-real-model-e2e-pilot",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-10",
+  "machine": "Claude Code LOCAL (Windows)",
+  "branch": "feat/real-model-pilot-tooling",
+  "start_head": "4cfa547f0989e53b917cc020adf59e250acbf68d (docs/real-model-e2e-readiness; descendant of main 28ac1d61)",
+  "candidate": "93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883",
+  "cache_version": "125",
+  "default_mode": "LLM_ONLY",
+  "MEASUREMENT_CLASS": "DEVELOPMENT_G05_REAL_MODEL_PILOT",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "PARTIAL",
+  "corpus": "PILOT_CASES.json (16 rows, sha256 fda51779f2b79576472e0fd91f85e6a9161a53870ead3a0ad731eba9ddab8c6e, pinned in run_g05_real_model_pilot.CORPUS_SHA256)",
+  "approved_live_scope": "gemini-2.5-flash, 16 problems x k=1, caps 64 logical / 96 HTTP attempts / 400000 tokens, <= 1 USD estimated; PHASE B only, new LOCAL session, after independent verification",
+  "phase_a": {
+    "live_model_requests": 0,
+    "product_changed": false,
+    "files": ["backend/scripts/g05_pilot_scoring.py", "backend/scripts/run_g05_real_model_pilot.py",
+              "backend/scripts/g05_pilot_scene_replay.py", "backend/scripts/certify_g05_real_model_pilot.py",
+              "backend/tests/geometry/test_g05_real_model_pilot.py", "docs/CODE_INDEX.md (four entries)",
+              "docs/evaluation/geometry/runs/g05-real-model-pilot/"],
+    "certification": "CERTIFICATION.json + diagnostics/certification.log: fake provider (corpus hand-written programs) through GacCong -> stage_semantic_* -> run_pipeline: 10/10 SERVED_CORRECT, 6/6 REFUSED_CORRECT (assumption), 32 logical = 32 HTTP attempts, tokens = fake usage x calls; scene replay 10/10; fault injection: provider error on a negative -> PROVIDER_ERROR, broken program -> PARSER_SCHEMA_ERROR, resume -> 0 calls, fake key absent from artifacts — CERTIFIED",
+    "renderer_world_check": "scene_world_check.ts (frontend veKhongGian) on certification_scenes: RENDER_TRANSFORM_OK 10/10 (diagnostics/certification_world_check.log); injection X1 without chart_metric -> MISMATCH; first version had a prism-diagonal pairing bug, caught and fixed before any live call (diagnostics/mutation_check.log)",
+    "tests": "tests/geometry/test_g05_real_model_pilot.py 55 passed; mutation check 7/7 guards caught (diagnostics/mutation_check.log)",
+    "status": "PILOT_TOOLING_IMPLEMENTED_INDEPENDENT_VERIFICATION_REQUIRED"
+  }
+}

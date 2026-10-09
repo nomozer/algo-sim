@@ -1,0 +1,439 @@
+{
+ "MEASUREMENT_CLASS": "DEVELOPMENT_G05_REAL_MODEL_PILOT",
+ "HELD_OUT_CLAIM": "NO",
+ "EVALUATOR_INDEPENDENCE": "PARTIAL",
+ "K": 1,
+ "provider": "FAKE (corpus hand-written programs) — 0 Gemini calls",
+ "pilot": {
+  "summary": {
+   "MEASUREMENT_CLASS": "DEVELOPMENT_G05_REAL_MODEL_PILOT",
+   "HELD_OUT_CLAIM": "NO",
+   "EVALUATOR_INDEPENDENCE": "PARTIAL",
+   "K": 1,
+   "run_id": "certify",
+   "model": "gemini-2.5-flash",
+   "corpus_sha256": "fda51779f2b79576472e0fd91f85e6a9161a53870ead3a0ad731eba9ddab8c6e",
+   "caps": {
+    "logical": 64,
+    "http": 96,
+    "tokens": 400000
+   },
+   "token_reserve_per_call": 20000,
+   "out_dir": "<thư mục tạm, đã xoá>",
+   "theo_hang": {
+    "X1": "SERVED_CORRECT",
+    "X4": "SERVED_CORRECT",
+    "X6": "SERVED_CORRECT",
+    "T2": "SERVED_CORRECT",
+    "T5": "SERVED_CORRECT",
+    "H1": "SERVED_CORRECT",
+    "H2": "SERVED_CORRECT",
+    "H8": "SERVED_CORRECT",
+    "P09": "SERVED_CORRECT",
+    "P06": "SERVED_CORRECT",
+    "NX1": "REFUSED_CORRECT",
+    "NT2": "REFUSED_CORRECT",
+    "NT4": "REFUSED_CORRECT",
+    "NX7": "REFUSED_CORRECT",
+    "N8": "REFUSED_CORRECT",
+    "N02": "REFUSED_CORRECT"
+   },
+   "dem": {
+    "SERVED_CORRECT": 10,
+    "REFUSED_CORRECT": 6
+   },
+   "chi_tiet": {
+    "X1": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "18√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "X4": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "9√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "X6": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "18√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "T2": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "3√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "T5": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "H1": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "6√3",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "H2": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "12",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "H8": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "3√3/4",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "P09": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "3√39",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "P06": {
+     "category": "SERVED_CORRECT",
+     "ground": null,
+     "label_stage_match": null,
+     "value": "18√2",
+     "stage_reached": "served",
+     "error_code": null,
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "NX1": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": null,
+     "value": "3",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "NT2": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": null,
+     "value": "1/2",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "NT4": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": null,
+     "value": "1/2",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "NX7": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": null,
+     "value": "8",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "N8": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": null,
+     "value": "1",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    },
+    "N02": {
+     "category": "REFUSED_CORRECT",
+     "ground": "assumption",
+     "label_stage_match": true,
+     "value": "24",
+     "stage_reached": "assumption",
+     "error_code": "input_not_grounded",
+     "program_calls": 1,
+     "logical_calls": 2,
+     "token_total": 3000
+    }
+   },
+   "positives": 10,
+   "negatives": 6,
+   "provider_calls": 32,
+   "logical_calls": 32,
+   "http_attempts": 32,
+   "retry_requests": 0,
+   "tokens": {
+    "prompt_tokens": 32000,
+    "candidates_tokens": 6400,
+    "cached_content_tokens": 1600,
+    "total_tokens": 48000,
+    "thoughts_tokens": 9600,
+    "calls": 32
+   },
+   "token_total": 48000,
+   "cost_estimate": {
+    "uoc_tinh_duoc": true,
+    "usd": 0.05008,
+    "token_tinh_gia_vao": 33600,
+    "token_tinh_gia_ra": 16000,
+    "don_gia_usd_moi_trieu": {
+     "input": 0.3,
+     "output": 2.5
+    },
+    "ngay_tra_gia": "2026-08-25",
+    "nguon_gia": "ai.google.dev/gemini-api/docs/pricing (tra tay, bậc trả phí)",
+    "khai": "CHẶN TRÊN — token cache tính đầy giá input, không trừ bậc miễn phí."
+   },
+   "stop_reason": null
+  },
+  "out_dir": "<thư mục tạm, đã xoá>"
+ },
+ "scene_replay": {
+  "checked": 10,
+  "ok": 10,
+  "rows": [
+   {
+    "id": "X1",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "translation": true,
+     "sides_b2": true,
+     "lateral_perp_base": true,
+     "height_h2": true,
+     "regular_circumradius": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "X4",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "translation": true,
+     "sides_b2": true,
+     "lateral_perp_base": true,
+     "height_h2": true,
+     "regular_circumradius": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "X6",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "translation": true,
+     "sides_b2": true,
+     "lateral_perp_base": true,
+     "height_h2": true,
+     "regular_circumradius": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "T2",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "translation": true,
+     "sides_b2": true,
+     "lateral_perp_base": true,
+     "height_h2": true,
+     "regular_circumradius": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "T5",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "translation": true,
+     "sides_b2": true,
+     "lateral_perp_base": true,
+     "height_h2": true,
+     "regular_circumradius": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "H1",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "sides_b2": true,
+     "regular_circumradius": true,
+     "apex_on_normal": true,
+     "height_h2": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "H2",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "sides_b2": true,
+     "regular_circumradius": true,
+     "apex_on_normal": true,
+     "height_h2": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "H8",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "sides_b2": true,
+     "regular_circumradius": true,
+     "apex_on_normal": true,
+     "height_h2": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "P09",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "sides_b2": true,
+     "regular_circumradius": true,
+     "apex_on_normal": true,
+     "height_h2": true
+    },
+    "chart_metric": true,
+    "reason": null
+   },
+   {
+    "id": "P06",
+    "ok": true,
+    "checks": {
+     "counts": true,
+     "euler": true,
+     "edge_two_faces": true,
+     "orientable": true,
+     "non_degenerate": true,
+     "six_edges_b2": true
+    },
+    "chart_metric": true,
+    "reason": null
+   }
+  ]
+ },
+ "fault_injection": {
+  "provider_error_on_negative": "PROVIDER_ERROR",
+  "schema_invalid_on_negative": "PARSER_SCHEMA_ERROR",
+  "resume_provider_calls": 0,
+  "leak_in_artifacts": false
+ }
+}

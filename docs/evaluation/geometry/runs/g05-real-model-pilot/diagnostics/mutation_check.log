@@ -1,0 +1,13 @@
+# Mutation check of the pilot tooling tests (tests/geometry/test_g05_real_model_pilot.py), 2026-10-10, LOCAL.
+# Each guard was mutated in backend/scripts/ (backup → sed → pytest → restore; restore verified byte-identical with cmp).
+M1 scorer uses Fraction(str) on Radical (old dev-runner behaviour): 14 failed, 41 passed
+M2 provider-error message not redacted:                            2 failed, 53 passed
+M3 token pre-call check removed:                                   1 failed, 54 passed
+M4 provider errors ignored by the classifier:                      4 failed, 51 passed
+M5 resume skip removed (completed case re-run):                    1 failed, 54 passed
+M6 scene replay ignores the base side length:                      1 failed, 54 passed
+M7 missing-usage check removed:                                    1 failed, 54 passed
+restored g05_pilot_scoring.py / run_g05_real_model_pilot.py / g05_pilot_scene_replay.py — baseline 55 passed
+# Renderer world check (scene_world_check.ts): its first version paired a prism vertex with a quad-face DIAGONAL and
+# reported MISMATCH on all 5 prisms (measured h = √(h² + b²)); fixed to edge adjacency — a real tooling bug caught
+# before any live call. Injection: X1 with chart_metric stripped → MISMATCH (certification_world_check_injection.log).

@@ -1,0 +1,247 @@
+{
+ "schema": "g05-real-model-pilot-cases/1",
+ "measurement_class": "DEVELOPMENT_G05_REAL_MODEL_PILOT",
+ "held_out_claim": "NO",
+ "evaluator_independence": "PARTIAL",
+ "khai": "16 rows copied verbatim (problem_text, expect) from the source labels.json of the named runs; family/k/base_side/dims are the text's own dimensions, used only by the offline Scene3D check. Rows that depend on a hand-written PROGRAM (NX3, NX4, NT3, N4, N5, P02/P03/P18, N11) are excluded: a live model chooses its own layout. Do not edit after the corpus hash is pinned in run_g05_real_model_pilot.CORPUS_SHA256.",
+ "cases": [
+  {
+   "id": "X1",
+   "source": {
+    "run": "regular-prisms",
+    "row": "X1_side_height"
+   },
+   "problem_text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "expect": "served:18√3",
+   "family": "prism",
+   "k": 6,
+   "base_side": "2",
+   "dims": {
+    "height": "3"
+   }
+  },
+  {
+   "id": "X4",
+   "source": {
+    "run": "regular-prisms",
+    "row": "X4_radical_side"
+   },
+   "problem_text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng √3, chiều cao bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "expect": "served:9√3",
+   "family": "prism",
+   "k": 6,
+   "base_side": "√3",
+   "dims": {
+    "height": "2"
+   }
+  },
+  {
+   "id": "X6",
+   "source": {
+    "run": "regular-prisms",
+    "row": "X6_right_prism_hexagon_base"
+   },
+   "problem_text": "Cho hình lăng trụ đứng ABCDEF.A'B'C'D'E'F' có đáy là lục giác đều cạnh 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "expect": "served:18√3",
+   "family": "prism",
+   "k": 6,
+   "base_side": "2",
+   "dims": {
+    "height": "3"
+   }
+  },
+  {
+   "id": "T2",
+   "source": {
+    "run": "regular-prisms",
+    "row": "T2_side_lateral"
+   },
+   "problem_text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "expect": "served:3√3",
+   "family": "prism",
+   "k": 3,
+   "base_side": "2",
+   "dims": {
+    "lateral": "3"
+   }
+  },
+  {
+   "id": "T5",
+   "source": {
+    "run": "regular-prisms",
+    "row": "T5_fractional_side"
+   },
+   "problem_text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2/3, chiều cao bằng 9. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "expect": "served:√3",
+   "family": "prism",
+   "k": 3,
+   "base_side": "2/3",
+   "dims": {
+    "height": "9"
+   }
+  },
+  {
+   "id": "H1",
+   "source": {
+    "run": "regular-hexagonal-pyramid",
+    "row": "H1_side_height"
+   },
+   "problem_text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "expect": "served:6√3",
+   "family": "pyramid",
+   "k": 6,
+   "base_side": "2",
+   "dims": {
+    "height": "3"
+   }
+  },
+  {
+   "id": "H2",
+   "source": {
+    "run": "regular-hexagonal-pyramid",
+    "row": "H2_side_lateral"
+   },
+   "problem_text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, cạnh bên bằng 4. Tính thể tích khối chóp S.ABCDEF.",
+   "expect": "served:12",
+   "family": "pyramid",
+   "k": 6,
+   "base_side": "2",
+   "dims": {
+    "lateral": "4"
+   }
+  },
+  {
+   "id": "H8",
+   "source": {
+    "run": "regular-hexagonal-pyramid",
+    "row": "H8_fractional_side"
+   },
+   "problem_text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 1/2, chiều cao bằng 6. Tính thể tích khối chóp S.ABCDEF.",
+   "expect": "served:3√3/4",
+   "family": "pyramid",
+   "k": 6,
+   "base_side": "1/2",
+   "dims": {
+    "height": "6"
+   }
+  },
+  {
+   "id": "P09",
+   "source": {
+    "run": "exact-dimensions",
+    "row": "P09_base_lateral"
+   },
+   "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5. Tính thể tích khối chóp S.ABC.",
+   "expect": "served:3√39",
+   "family": "pyramid",
+   "k": 3,
+   "base_side": "6",
+   "dims": {
+    "lateral": "5"
+   }
+  },
+  {
+   "id": "P06",
+   "source": {
+    "run": "exact-dimensions",
+    "row": "P06_tetrahedron"
+   },
+   "problem_text": "Cho tứ diện đều ABCD có cạnh bằng 6. Tính thể tích khối tứ diện ABCD.",
+   "expect": "served:18√2",
+   "family": "tetrahedron",
+   "k": 3,
+   "base_side": "6",
+   "dims": {}
+  },
+  {
+   "id": "NX1",
+   "source": {
+    "run": "regular-prisms",
+    "row": "NX1_missing_height"
+   },
+   "problem_text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "expect": "refused",
+   "family": "prism",
+   "k": 6,
+   "base_side": "2",
+   "dims": {}
+  },
+  {
+   "id": "NT2",
+   "source": {
+    "run": "regular-prisms",
+    "row": "NT2_contradiction"
+   },
+   "problem_text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, chiều cao bằng 3, cạnh bên bằng 4. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "expect": "refused",
+   "family": "prism",
+   "k": 3,
+   "base_side": "2",
+   "dims": {
+    "height": "3",
+    "lateral": "4"
+   }
+  },
+  {
+   "id": "NT4",
+   "source": {
+    "run": "regular-prisms",
+    "row": "NT4_oblique_text"
+   },
+   "problem_text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "expect": "refused",
+   "family": "prism",
+   "k": 3,
+   "base_side": "2",
+   "dims": {
+    "lateral": "3"
+   }
+  },
+  {
+   "id": "NX7",
+   "source": {
+    "run": "regular-prisms",
+    "row": "NX7_pentagon_out_of_scope"
+   },
+   "problem_text": "Cho hình lăng trụ ngũ giác đều ABCDE.A'B'C'D'E' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDE.A'B'C'D'E'.",
+   "expect": "refused",
+   "family": "prism",
+   "k": 5,
+   "base_side": "2",
+   "dims": {
+    "height": "3"
+   }
+  },
+  {
+   "id": "N8",
+   "source": {
+    "run": "regular-hexagonal-pyramid",
+    "row": "N8_negation"
+   },
+   "problem_text": "Cho hình chóp S.ABCDEF, không phải là hình chóp lục giác đều S.ABCDEF, có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "expect": "refused",
+   "family": "pyramid",
+   "k": 6,
+   "base_side": "2",
+   "dims": {
+    "height": "3"
+   }
+  },
+  {
+   "id": "N02",
+   "source": {
+    "run": "exact-dimensions",
+    "row": "N02_contradiction"
+   },
+   "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5, chiều cao bằng 4. Tính thể tích khối chóp S.ABC.",
+   "expect": "refused:assumption",
+   "family": "pyramid",
+   "k": 3,
+   "base_side": "6",
+   "dims": {
+    "lateral": "5",
+    "height": "4"
+   }
+  }
+ ]
+}
