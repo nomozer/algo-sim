@@ -21,5 +21,19 @@
     "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ": "OPEN, narrowed to the unnamed phrasing",
     "ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE": "OPEN (new)"
   },
-  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "product_changes": "none LOCAL (product commit stays 7d551535); diff vs main touches only shape_constraint.py + main.py (cache) + identity lock + test pins — no assumption gate, route, compiler, C1 template or frontend change",
+    "c0": "probe.py re-run on a1350da3 and on the branch, logs identical to Cloud's; oracle 27/27; transitions served→refused 10 (all SOURCE_SHAPE_CONTRADICTS_COORDINATES), refused→served 1 (N_K_negation_canonical_notation), served→served 16; reader binds renamed vertices, 'là … ,' form, triangular, solid after coordinates, two pyramids; negation / goal clause not premises; non-regular and unnamed pyramids get no invented claim (P2 rows labelled baseline, same as main)",
+    "c1": "probe_c1_equivalence.py re-run on a1350da3 and on the branch, logs identical to Cloud's; canonical + apex_base + regular_notation × 47 rows all match the independent corpus labels (wildcard-aware); per phrasing refused→served 24 (values equal the corpus labels), served→refused 1 (square/N5_apex_over_vertex: main served SA = 3 from a non-regular program, true √17; label expects refusal), refused→refused 20, served→served 2; canonical rows unchanged; outcome == canonical 94/94",
+    "unnamed_gap": "recomputed: 47 rows, 37 served (22 correct, 4 wrong value, 11 label requires refusal), identical on main and branch ⇒ pre-existing, not fixed (ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE)",
+    "candidate_freeze": "1396878e (frozen at b47945e8; candidate c3f8339927bfe27273b5ff0bc43811928f85b84d76bd1cea839d0883e1aacaec, product 7d551535, cache 121, 102 files; diagnostics/freeze_7d551535.log)",
+    "cache_version": "121 verified: served → refused reproduced (C0 10 + C1 N5 wrong value); refused → served rows were never cached; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 121; 0 model-surface files since a1350da3; pins at 121; fixture_diff 49/49 identical",
+    "targeted": "reader 129/129 + oracle 27/27; C0 §21/§22, C1 regular pyramids, G04, G05, compiler, regression, identity, docs, test_api: 1485/1485; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at 1396878e (pytest 7530 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_1396878e.log)",
+    "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ (unnamed regular pyramid), ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }

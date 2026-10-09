@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 121 trên nhánh `fix/c0-whole-solid-reader` (bộ đọc chóp đều: served → refused; runs/c0-whole-solid-reader/cache/decision.json) · `main`: 120 (c0-whole-solid-grounding: C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ, 15 hàng nhãn served → refused; runs/c0-whole-solid-grounding/cache/decision.json + đính chính LOCAL 16 → 15 trong handoff.md)
-> CANDIDATE = 8c4c01284232121b… (102 file; product commit c11e8c9d; cache 120; đóng băng LOCAL d838cc5b, T3 PASS — runs/c0-whole-solid-grounding/handoff.md; trên `main` từ 11be6092)
+> CANDIDATE = 8c4c01284232121b… trên `main` (product commit c11e8c9d; cache 120); nhánh `fix/c0-whole-solid-reader`: c3f8339927bfe272… (102 file; product commit 7d551535; cache 121; đóng băng LOCAL 1396878e, T3 PASS — runs/c0-whole-solid-reader/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = C0_WHOLE_SOLID_GROUNDING (run `c0-whole-solid-grounding` — Cloud thêm kiểm khẳng định toàn khối vào C0, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
 > FINAL_DECISION = MERGED_AND_PUSHED (c0-whole-solid-grounding: `main` = `origin/main` = `11be6092`, fast-forward từ 9762f441, 2026-10-09; runs/c0-whole-solid-grounding/APPROVAL.md; còn mở ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ ⇒ an toàn C0 toàn khối CHƯA trọn · geometry-grounding-safety: 47d05f22, runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
@@ -64,14 +64,15 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **Bộ đọc chóp đều — run c0-whole-solid-reader (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-reader`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+> **Bộ đọc chóp đều — run c0-whole-solid-reader (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-reader`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
 > | Trước (`a1350da3`) | "có đỉnh S và đáy ABCD" và "chóp đều S.ABCD" không phát khẳng định chóp đều ⇒ 10 đề C0 mâu thuẫn được phục vụ; C1 viết lại: từ chối thay vì như ký hiệu chuẩn, 2 đề phục vụ đáp số sai; phủ định ký hiệu chuẩn bị đọc thành tiền đề |
 > | Sửa | chỉ bộ đọc (`shape_constraint`): hai lối viết phát đúng tập ràng buộc của ký hiệu chuẩn; không đọc sau "không phải (là)" |
 > | Nhãn | 27 hàng C0 ghi trước + oracle độc lập, 27/27; C1 tương đương 94/94 trên hai corpus chóp đều; ký hiệu chuẩn không đổi |
-> | `CACHE_VERSION` · candidate | **121** (served → refused, probe trước/sau; bề mặt mô hình không đổi) · candidate `8c4c0128…` CHƯA đóng băng lại (LOCAL) |
+> | `CACHE_VERSION` · candidate | **121** (served → refused, probe trước/sau; bề mặt mô hình không đổi) · candidate **`c3f83399…`** (product `7d551535`; đóng băng LOCAL `1396878e`, `--verify` khớp) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `1396878e`: pytest 7530 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_1396878e.log`); probe C0 + C1 chạy lại trên `main` và nhánh trùng byte log Cloud; C1: 3 lối viết × 47 hàng khớp nhãn corpus độc lập (24 refused → served đúng giá trị nhãn; N5 served → refused: `main` phục vụ SA = 3 sai, đúng √17) |
 > | Còn mở | chóp đều không tên (`ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ` thu hẹp) · `ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE` (15/37 đề C1 không tên phục vụ sai/không đủ dữ kiện) |
 > | Run | [`c0-whole-solid-reader`](evaluation/geometry/runs/c0-whole-solid-reader/) (`plan.md`, `report.md`, `handoff.md`) |
 
