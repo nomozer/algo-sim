@@ -1,0 +1,402 @@
+{
+ "schema_version": "transitions/1",
+ "run_id": "regular-prisms",
+ "baseline": "ea85216b",
+ "branch_product": "00770c3",
+ "source": "diagnostics/probe_ea85216b.log → probe_candidate.log; diagnostics/probe_extra_ea85216b.log → probe_extra_candidate.log",
+ "labelled_rows": {
+  "refused→served": {
+   "count": 13,
+   "rows": [
+    {
+     "row": "X1_side_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:18√3",
+     "expected": "served:18√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X2_side_lateral",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:18√3",
+     "expected": "served:18√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X3_renamed",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X4_radical_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:9√3",
+     "expected": "served:9√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X5_fractional_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3/2",
+     "expected": "served:3√3/2",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X6_right_prism_hexagon_base",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:18√3",
+     "expected": "served:18√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "X7_khoi_phrasing",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:18√3",
+     "expected": "served:18√3",
+     "matches": true,
+     "scene3d": {
+      "V": 12,
+      "F": 8,
+      "E": 18,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T1_side_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T2_side_lateral",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T3_right_prism_equilateral_base",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T4_radical_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T5_fractional_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:√3",
+     "expected": "served:√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    },
+    {
+     "row": "T6_renamed",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:4√3",
+     "expected": "served:4√3",
+     "matches": true,
+     "scene3d": {
+      "V": 6,
+      "F": 5,
+      "E": 9,
+      "chart_metric": true
+     },
+     "certificate": "C1"
+    }
+   ]
+  },
+  "refused→refused": {
+   "count": 12,
+   "rows": [
+    {
+     "row": "NX1_missing_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX2_contradiction",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX3_program_irregular_base",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX4_program_top_not_translation",
+     "before": "refused:execution:None",
+     "after": "refused:execution:None",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX5_negation",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX6_goal_clause",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NX7_pentagon_out_of_scope",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NT1_missing_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NT2_contradiction",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NT3_program_top_not_translation",
+     "before": "refused:execution:None",
+     "after": "refused:execution:None",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NT4_oblique_text",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "NT5_not_regular_text",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "expected": "refused",
+     "matches": true
+    }
+   ]
+  }
+ },
+ "labelled_summary": {
+  "rows": 25,
+  "match_labels": 25
+ },
+ "extra_rows": {
+  "served→served": {
+   "count": 8,
+   "rows": [
+    {
+     "row": "C0_hex_right",
+     "before": "served:9",
+     "after": "served:9"
+    },
+    {
+     "row": "C0_hex_right_prism_phrase",
+     "before": "served:9",
+     "after": "served:9"
+    },
+    {
+     "row": "C0_hex_plain_prism_skew",
+     "before": "served:6",
+     "after": "served:6"
+    },
+    {
+     "row": "C0_hex_lateral_matches",
+     "before": "served:9",
+     "after": "served:9"
+    },
+    {
+     "row": "C0_tri_right",
+     "before": "served:3/2",
+     "after": "served:3/2"
+    },
+    {
+     "row": "C0_tri_right_prism_phrase",
+     "before": "served:3/2",
+     "after": "served:3/2"
+    },
+    {
+     "row": "C0_tri_plain_prism_skew",
+     "before": "served:3/2",
+     "after": "served:3/2"
+    },
+    {
+     "row": "C0_tri_lateral_matches",
+     "before": "served:3/2",
+     "after": "served:3/2"
+    }
+   ]
+  },
+  "served→refused": {
+   "count": 6,
+   "rows": [
+    {
+     "row": "C0_hex_skew",
+     "before": "served:6",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    },
+    {
+     "row": "C0_hex_lateral_contradicts",
+     "before": "served:9",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    },
+    {
+     "row": "C0_hex_base_side_contradicts",
+     "before": "served:9",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    },
+    {
+     "row": "C0_tri_skew",
+     "before": "served:3/2",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    },
+    {
+     "row": "C0_tri_lateral_contradicts",
+     "before": "served:3/2",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    },
+    {
+     "row": "C0_tri_base_side_contradicts",
+     "before": "served:3/2",
+     "after": "refused:assumption:SOURCE_SHAPE_CONTRADICTS_COORDINATES"
+    }
+   ]
+  },
+  "refused→served": {
+   "count": 3,
+   "rows": [
+    {
+     "row": "EU_height_matches",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3/2"
+    },
+    {
+     "row": "EU_height_differs",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3"
+    },
+    {
+     "row": "EU_right_prism_phrase",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3/2"
+    }
+   ]
+  },
+  "refused→refused": {
+   "count": 1,
+   "rows": [
+    {
+     "row": "EU_missing_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+    }
+   ]
+  }
+ },
+ "extra_note": "C0 rows: coordinates pinned by the text; served → refused only where the text's 'lăng trụ … đều' (right prism, regular base, stated lateral/base side) contradicts the coordinates. EU rows: model-style program with a Euclidean (non-lattice) base; the text's height decides the value (affine semantics, same as T8/T11)."
+}

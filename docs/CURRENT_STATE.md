@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 124 trên `main` từ 55f51395 (regular-hexagonal-pyramid, chóp lục giác đều: H5 đã phục vụ 1 → 6√3 + C0 lục giác mâu thuẫn served → refused; runs/regular-hexagonal-pyramid/cache/decision.json) · trước đó 123 (unnamed-pyramid-vertex-binding, chính sách A; runs/unnamed-pyramid-vertex-binding/cache/decision.json)
+> CACHE_VERSION = 125 trên nhánh `feat/g05-regular-prisms` (lăng trụ tam giác/lục giác đều, T12: C0 "lăng trụ … đều" mâu thuẫn toạ độ served → refused; runs/regular-prisms/cache/decision.json) · `main`: 124 từ 55f51395 (regular-hexagonal-pyramid, chóp lục giác đều: H5 đã phục vụ 1 → 6√3 + C0 lục giác mâu thuẫn served → refused; runs/regular-hexagonal-pyramid/cache/decision.json) · trước đó 123 (unnamed-pyramid-vertex-binding, chính sách A; runs/unnamed-pyramid-vertex-binding/cache/decision.json)
 > CANDIDATE = cf47dd6142f2d46f… trên `main` (102 file; product commit 6c792434; cache 124; đóng băng LOCAL 0fe806ff, T3 PASS — runs/regular-hexagonal-pyramid/handoff.md) · trước đó b13a3ef1c34cd41d… (product commit 56692926; cache 123)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = REGULAR_HEXAGONAL_PYRAMID (run `regular-hexagonal-pyramid` — G05 chóp lục giác đều qua khuôn T11 + khung affine + metric từ đề: Cloud triển khai, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
@@ -63,6 +63,17 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
+
+> **G05 lăng trụ đều — run regular-prisms (2026-10-09, Cloud, nhánh `feat/g05-regular-prisms`; 0 model call; CHƯA tích hợp, chờ LOCAL kiểm + đóng băng):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước (`ea85216b`) | lăng trụ tam giác/lục giác đều: bộ đọc chỉ thấy `prism`, "lăng trụ đứng … đáy tam giác đều" cần góc vuông (T3) ⇒ 13/13 đề dương bị từ chối; C0 "lăng trụ … đều" với toạ độ mâu thuẫn vẫn PHỤC VỤ |
+> | Thêm | bộ đọc lăng trụ đều + khuôn **T12** + metric khung lăng trụ (`do_luong_cua`, A, B, C, A′) + C0 lục giác đều / cạnh bên lăng trụ (amendment §27) — tái dùng khung affine của T8/T11, không engine mới |
+> | Kết quả | 13/13 đề dương phục vụ đúng oracle (C1; Scene3D lục giác 12 đỉnh/8 mặt/18 cạnh, tam giác 6/5/9, Euler 2, `chart_metric`); 12 biên từ chối; không đính chính nhãn |
+> | Đường chạy | LLM_ONLY route trên chương trình kiểu mô hình (`foundation_only`, mô hình chưa đo); compiler: chưa có họ |
+> | `CACHE_VERSION` · candidate | **125** (C0 mâu thuẫn served → refused) · candidate CHƯA đóng băng lại (LOCAL) |
+> | Run | [`regular-prisms`](evaluation/geometry/runs/regular-prisms/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **G05 chóp lục giác đều — run regular-hexagonal-pyramid (2026-10-09, Cloud, nhánh `feat/g05-geometry-capability-expansion`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `55f51395` theo `APPROVAL.md` của run, 2026-10-10):**
 >
