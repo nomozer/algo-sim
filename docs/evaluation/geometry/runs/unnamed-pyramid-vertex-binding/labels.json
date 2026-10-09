@@ -1,0 +1,878 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "unnamed-pyramid-vertex-binding",
+ "written": "2026-10-09, after the baseline probe on a7c56942, before any product change",
+ "rule": "21 rows = scope `unchanged` of ../unnamed-regular-pyramid-grounding/labels.json (unnamed regular pyramid whose text names points without coordinates). `facts` = what the text asserts (givens AND question role words), hand-encoded; helper points (O, G) are defined by the text, not vertices. text_verdict over EVERY injective labelling of the named points onto the regular pyramid's positions: determined:<answer> (all labellings consistent with the text give one answer), ambiguous (two consistent labellings, different answers), contradiction (no consistent labelling), missing (some consistent labelling leaves the answer open). expect_option_b = served:<answer> iff determined and the corpus program is not defective; refused otherwise. Recomputed by oracle.py (own model, no product code).",
+ "rows": {
+  "square/N4_wrong_centre_identity": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "baseline_a7c56942": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "helpers": {
+     "O": {
+      "intersection": [
+       [
+        "A",
+        "C"
+       ],
+       [
+        "B",
+        "D"
+       ]
+      ]
+     }
+    },
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "O"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume",
+    "program_defect": "centre O built as a midpoint, not AC ∩ BD (corpus N4)"
+   },
+   "text_verdict": "determined:16",
+   "expect_option_b": "refused"
+  },
+  "square/S7_named_centre": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4. Gọi O là giao điểm của AC và BD, biết SO = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16",
+   "baseline_a7c56942": "served:16",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "helpers": {
+     "O": {
+      "intersection": [
+       [
+        "A",
+        "C"
+       ],
+       [
+        "B",
+        "D"
+       ]
+      ]
+     }
+    },
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "O"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "determined:16",
+   "expect_option_b": "served:16"
+  },
+  "square/N5_apex_over_vertex": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_a7c56942": "served:3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "S",
+     "A"
+    ],
+    "dims": {
+     "base": "4",
+     "height": "3"
+    },
+    "roles": [
+     [
+      "lateral",
+      [
+       "S",
+       "A"
+      ]
+     ]
+    ],
+    "ask": [
+     "S",
+     "A"
+    ],
+    "program_defect": "program builds the apex over a base vertex (corpus N5)"
+   },
+   "text_verdict": "determined:√17",
+   "expect_option_b": "refused"
+  },
+  "square/S5_lateral_edge_length": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, chiều cao bằng 3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "served:√17",
+   "baseline_a7c56942": "served:√17",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "S",
+     "A"
+    ],
+    "dims": {
+     "base": "4",
+     "height": "3"
+    },
+    "roles": [
+     [
+      "lateral",
+      [
+       "S",
+       "A"
+      ]
+     ]
+    ],
+    "ask": [
+     "S",
+     "A"
+    ]
+   },
+   "text_verdict": "determined:√17",
+   "expect_option_b": "served:√17"
+  },
+  "square/R2_L1_chained_equal_lateral_edges": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "D"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/W5_A_chain_cites_other_member": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "D"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/W5_D_program_value_differs_from_chain": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "D"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume",
+    "program_defect": "program value differs from the chain (corpus W5_D)"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/W5_E_program_segment_outside_chain": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = SC = SD = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "D"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume",
+    "program_defect": "program measures a segment outside the chain (corpus W5_E)"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/R2_N8_lateral_contradiction": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "5"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "contradiction",
+   "expect_option_b": "refused"
+  },
+  "square/R2_N9_contradiction_program_fits_lengths": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3, SB = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_a7c56942": "served:16",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "5"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "contradiction",
+   "expect_option_b": "refused"
+  },
+  "square/R2_S10_lateral_other_vertex": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SC = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/R2_S8_side_AB_lateral_SA": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/R2_S9_side_lateral_named": {
+   "text": "Cho hình chóp tứ giác đều có cạnh đáy bằng 4, cạnh bên SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "served:16/3",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "S",
+     "A"
+    ],
+    "dims": {
+     "base": "4"
+    },
+    "lengths": [
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ]
+    ],
+    "roles": [
+     [
+      "lateral",
+      [
+       "S",
+       "A"
+      ]
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "determined:16/3",
+   "expect_option_b": "served:16/3"
+  },
+  "square/R2_U4_irrational_via_lateral": {
+   "text": "Cho hình chóp tứ giác đều có AB = 2, SA = 2. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "2"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "2"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "square/W5_B_chain_mixed_values": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4, SA = SB = 3, SC = SD = 5. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "C"
+      ],
+      "5"
+     ],
+     [
+      [
+       "S",
+       "D"
+      ],
+      "5"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "contradiction",
+   "expect_option_b": "refused"
+  },
+  "square/W5_C_chain_without_value": {
+   "text": "Cho hình chóp tứ giác đều có AB = 4 và SA = SB = SC = SD. Tính thể tích khối chóp.",
+   "corpus_label": "refused:assumption:*",
+   "baseline_a7c56942": "served:16/3",
+   "facts": {
+    "kind": "square",
+    "names": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "4"
+     ]
+    ],
+    "equal": [
+     [
+      [
+       "S",
+       "A"
+      ],
+      [
+       "S",
+       "B"
+      ],
+      [
+       "S",
+       "C"
+      ],
+      [
+       "S",
+       "D"
+      ]
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "missing",
+   "expect_option_b": "refused"
+  },
+  "triangular/N3_lateral_mixed": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, SA = 3 và SB = 4. Tính thể tích khối chóp.",
+   "corpus_label": "refused:source_invariant:*",
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "facts": {
+    "kind": "tri",
+    "names": [
+     "S",
+     "A",
+     "B"
+    ],
+    "dims": {
+     "base": "3√2"
+    },
+    "lengths": [
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ],
+     [
+      [
+       "S",
+       "B"
+      ],
+      "4"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "contradiction",
+   "expect_option_b": "refused"
+  },
+  "triangular/N4_declared_value_conflict": {
+   "text": "Cho hình chóp tam giác đều có AB = 3√2, SA = 3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "facts": {
+    "kind": "tri",
+    "names": [
+     "A",
+     "B",
+     "S"
+    ],
+    "lengths": [
+     [
+      [
+       "A",
+       "B"
+      ],
+      "3√2"
+     ],
+     [
+      [
+       "S",
+       "A"
+      ],
+      "3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "ambiguous",
+   "expect_option_b": "refused"
+  },
+  "triangular/N6_wrong_centroid_identity": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Gọi G là trọng tâm tam giác ABC, biết SG = √3. Tính thể tích khối chóp.",
+   "corpus_label": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "facts": {
+    "kind": "tri",
+    "names": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "dims": {
+     "base": "3√2"
+    },
+    "helpers": {
+     "G": {
+      "centroid": [
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    },
+    "lengths": [
+     [
+      [
+       "S",
+       "G"
+      ],
+      "√3"
+     ]
+    ],
+    "ask": "volume",
+    "program_defect": "centroid G built as the midpoint of BC (corpus N6)"
+   },
+   "text_verdict": "determined:9/2",
+   "expect_option_b": "refused"
+  },
+  "triangular/P9_named_centroid": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2. Gọi G là trọng tâm tam giác ABC, biết SG = √3. Tính thể tích khối chóp.",
+   "corpus_label": "served:9/2",
+   "baseline_a7c56942": "served:9/2",
+   "facts": {
+    "kind": "tri",
+    "names": [
+     "S",
+     "A",
+     "B",
+     "C"
+    ],
+    "dims": {
+     "base": "3√2"
+    },
+    "helpers": {
+     "G": {
+      "centroid": [
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    },
+    "lengths": [
+     [
+      [
+       "S",
+       "G"
+      ],
+      "√3"
+     ]
+    ],
+    "ask": "volume"
+   },
+   "text_verdict": "determined:9/2",
+   "expect_option_b": "served:9/2"
+  },
+  "triangular/P11_lateral_length": {
+   "text": "Cho hình chóp tam giác đều có cạnh đáy bằng 3√2, chiều cao bằng √3. Tính độ dài cạnh bên SA.",
+   "corpus_label": "served:3",
+   "baseline_a7c56942": "served:3",
+   "facts": {
+    "kind": "tri",
+    "names": [
+     "S",
+     "A"
+    ],
+    "dims": {
+     "base": "3√2",
+     "height": "√3"
+    },
+    "roles": [
+     [
+      "lateral",
+      [
+       "S",
+       "A"
+      ]
+     ]
+    ],
+    "ask": [
+     "S",
+     "A"
+    ]
+   },
+   "text_verdict": "determined:3",
+   "expect_option_b": "served:3"
+  }
+ }
+}

@@ -13,6 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Việc `unnamed-pyramid-vertex-binding` (2026-10-09, run [`unnamed-pyramid-vertex-binding`](evaluation/geometry/runs/unnamed-pyramid-vertex-binding/),
+  Cloud, không sửa sản phẩm):** phương án (b) cho 21 đề chóp đều không tên có tên điểm thiếu toạ độ — nhãn + oracle độc
+  lập (8 xác định, 8 mơ hồ, 4 mâu thuẫn, 1 thiếu); bộ kiểm chỉ từ khuôn T7/T8 không đạt (3/21) ⇒
+  `ARCHITECTURE_DECISION_REQUIRED`: (A) từ chối cả 21, (B) mô hình tham số trong cổng, (C) giữ — `report.md` §3. Sau
+  quyết định: quay lại G05.
+
 - **Việc `unnamed-regular-pyramid-grounding` (2026-10-09, run [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `2d3c510c`):** chóp đều không tên gắn + kiểm khi đề không gọi tên điểm nào thiếu
   toạ độ (26/47 hàng corpus = nhãn; 4 giá trị sai sửa đúng); `CACHE_VERSION` 122; candidate `d07a92de…`, T3 PASS; phê

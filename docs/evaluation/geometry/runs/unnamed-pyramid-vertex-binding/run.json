@@ -1,0 +1,17 @@
+{
+  "run_id": "unnamed-pyramid-vertex-binding",
+  "task_slug": "unnamed-pyramid-vertex-binding",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-09",
+  "machine": "Claude Code Cloud (Linux, Python 3.13)",
+  "branch": "fix/unnamed-pyramid-vertex-binding",
+  "start_head": "a7c56942",
+  "candidate_at_start": "d07a92de…",
+  "cache_version_at_start": "122",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "product_changes": "none",
+  "cache_decision": "no change (no product change)",
+  "result": "ARCHITECTURE_DECISION_REQUIRED",
+  "commits": {}
+}
