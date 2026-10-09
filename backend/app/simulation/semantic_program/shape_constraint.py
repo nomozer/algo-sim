@@ -77,6 +77,10 @@ _DAY = re.compile(
     rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{3,}})\s+)?là\s+(?:một\s+)?(?P<loai>hình\s+chữ\s+nhật|hình\s+vuông"
     rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+đều|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
     rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}){_HET_DO_DAI})?(?![\d/])")
+#: §20.1 — `đáy (ABCD)? là hình thang vuông tại P và Q`: góc vuông tại hai đỉnh KỀ của đáy tứ giác.
+_HINH_THANG_VUONG = re.compile(
+    rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{4}})\s+)?là\s+(?:một\s+)?hình\s+thang\s+vuông\s+{_TAI}\s+(?P<p>{_E})"
+    rf"\s*(?:,|và)\s*(?P<q>{_E})(?![A-Za-z0-9'])")
 #: Tam giác CÓ TÊN vuông tại một đỉnh của nó — `tam giác ABC vuông tại A`, `đáy ABC vuông tại A`.
 _TAM_GIAC_VUONG = re.compile(
     rf"(?:[Tt]am\s+giác|[Đđ]áy)\s+(?P<t>(?:{_E}){{3}})\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E})")
@@ -233,6 +237,17 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         if day or kind == "base_square":
             canh = _phan(m.group("canh")) if (kind in _DAY_CO_CANH and m.group("canh")) else None
             phat(kind, day, canh, m.start(), m.end())
+    for m in _HINH_THANG_VUONG.finditer(de):
+        if khoi is None or not khoi[0] or len(khoi[1]) != 4 or (
+                m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1])):
+            continue
+        day = khoi[1]
+        p, q = (dinh_danh_thuc_the(m.group(k))[0] for k in ("p", "q"))
+        if p not in day or q not in day or (day.index(p) - day.index(q)) % 4 not in (1, 3):
+            continue                           # hai góc vuông của hình thang vuông nằm ở hai đỉnh KỀ
+        for v in (p, q):
+            i = day.index(v)
+            phat("line_perp_line", (v, day[i - 1], v, day[(i + 1) % 4]), None, m.start(), m.end())
     for m in _TAM_GIAC_VUONG.finditer(de):
         tg = _ten(m.group("t"))
         tai = dinh_danh_thuc_the(m.group("tai"))[0]

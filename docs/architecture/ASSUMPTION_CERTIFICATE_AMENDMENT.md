@@ -1268,3 +1268,10 @@ chọn một chiều quay; cạnh khép là hệ quả.
 
 Nhận đáy lõm hay đáy chỉ có một góc vuông (không xác định); suy góc vuông từ toạ độ chương trình; đọc "hình thang"
 không kèm "vuông tại P và Q"; nâng `product_capability` lên `supported` (mô hình chưa đo).
+
+> **Đính chính 2026-10-09 (sau khi viết mã, trước mọi phép đo trên nhãn).** §20.4 ghi đáy khép không lồi ⇒
+> `TEMPLATE_NOT_MATCHED T10: …`. Mã thực hiện cùng phán quyết theo hai chặng sẵn có, không thêm lý do mới: chương
+> trình nào có đáy không lồi trượt ràng buộc `base convex` (§20.3); và hiện thực chính tắc từ độ dài đề cho không lồi
+> thì không tồn tại (`kernel.polygon_from_right_angle_chain` ném `POLYGON_CHAIN_NOT_CONVEX`) ⇒
+> `C1_CROSS_CHECK_NO_CANONICAL_REALISATION`. Cả hai đều `UNDETERMINED` ⇒ từ chối. Hàm bố cục chuỗi nằm ở kernel
+> (`right_angle_chain_start`, `polygon_from_right_angle_chain`) — một thẩm quyền cho T10 và họ compiler `polygon_base_*`.

@@ -18,6 +18,7 @@ Trả `None` ở đây là để một mặt phẳng suy biến trôi tiếp t�
 from __future__ import annotations
 
 from fractions import Fraction
+from typing import Callable
 
 from .exact import (
     ERR_CHUA_TRONG,
@@ -190,3 +191,30 @@ def perpendicular_foot_line(p: Point3, pl: Plane3) -> Line3:
             "vuông góc để dựng",
         )
     return Line3(p, chan - p)
+
+
+#: Đa giác khép từ chuỗi góc vuông không lồi (hoặc suy biến) — §20.4.
+ERR_KHONG_LOI = "POLYGON_CHAIN_NOT_CONVEX"
+
+
+def right_angle_chain_start(k: int, is_right: "Callable[[int], object]") -> int | None:
+    """Chỉ số i đầu tiên mà k − 2 đỉnh i+1 … i+k−2 (theo chu trình k đỉnh) đều có góc vuông; `None` nếu không có.
+
+    Một đa giác k đỉnh LỒI được xác định (sai khác đẳng cự) bởi k − 1 cạnh liên tiếp cùng k − 2 góc vuông giữa
+    chúng: tam giác vuông, hình thang vuông, … (ASSUMPTION_CERTIFICATE_AMENDMENT §20)."""
+    return next((i for i in range(k) if all(is_right((i + t) % k) for t in range(1, k - 1))), None)
+
+
+def polygon_from_right_angle_chain(lengths: "list[Fraction]") -> tuple[Point3, ...]:
+    """Đa giác trong mặt z = 0 từ k − 1 cạnh của chuỗi: cạnh đầu theo +x, quay +90° tại mỗi đỉnh vuông; cạnh cuối
+    khép. Chính xác trong ℚ³. NÉM `ERR_KHONG_LOI` khi đa giác khép không lồi — cách đọc lồi là cách đọc duy nhất được
+    nhận, không đoán chiều quay khác."""
+    huong = (Vec3.of(1, 0, 0), Vec3.of(0, 1, 0), Vec3.of(-1, 0, 0), Vec3.of(0, -1, 0))
+    p = [Vec3.of(0, 0, 0)]
+    for t, d in enumerate(lengths):
+        p.append(p[-1] + huong[t % 4].scale(d))
+    k = len(p)
+    z = Vec3.of(0, 0, 1)
+    if any((p[j] - p[j - 1]).cross(p[(j + 1) % k] - p[j]).dot(z) <= 0 for j in range(k)):
+        raise GeometryError(ERR_KHONG_LOI, "chuỗi góc vuông không khép thành đa giác lồi")
+    return tuple(p)

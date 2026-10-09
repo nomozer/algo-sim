@@ -91,6 +91,17 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             "oblique_prism", "Lăng trụ xiên (chân đường cao tại một đỉnh đáy)", "foundation_only",
             "hệ: khuôn T9 §19 + họ compiler `oblique_prism_volume`, 16 hàng ghi trước (oblique-prism/labels.json, "
             "oracle độc lập) · MÔ HÌNH: chưa đo"),
+        # ── ĐÁY ĐA GIÁC THEO CHUỖI GÓC VUÔNG (general-polygon-base, G05) ──
+        #
+        # Miền HẸP đã khai (ASSUMPTION_CERTIFICATE_AMENDMENT §20): đáy LỒI có k − 2 góc vuông liên tiếp + k − 1 cạnh
+        # (hình thang vuông, tam giác vuông với chân đường cao ở đỉnh bất kỳ, đa giác n cạnh), chóp có SX ⊥ đáy hoặc
+        # lăng trụ đứng. Đa giác đều ngoài hình vuông, đáy theo góc, đáy lõm: từ chối. `foundation_only`: prompt KHÔNG
+        # đổi, chưa đo mô hình thật.
+        NangLucSanPham(
+            "right_angle_chain_base", "Chóp · lăng trụ đứng đáy hình thang vuông / đa giác có các góc vuông liên tiếp",
+            "foundation_only",
+            "hệ: bộ đọc §20.1 + khuôn T10 + họ compiler `polygon_base_*`, 15 hàng ghi trước "
+            "(general-polygon-base/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"),
         # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
         #
         # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).

@@ -29,6 +29,7 @@ from typing import Any, Callable
 
 from ..geometry import metric as _metric
 from ..geometry.exact import GeometryError, Vec3
+from ..geometry.kernel import polygon_from_right_angle_chain, right_angle_chain_start
 from ..geometry.radical import ExactNumber, is_exact_number, parse_exact, sqrt_rational, square
 from .contract import SemanticProgramSpec
 from .domain_profile import geometry_symbol_key
@@ -948,6 +949,83 @@ def _khuon_lang_tru_xien(rb, day: tuple, tren: tuple, ent: tuple, rb_kieu: list,
                   tien_de, chinh_tac)
 
 
+def _vuong_tai_dinh(rb, day: tuple, i: int) -> RangBuoc | None:
+    """Góc vuông của đáy tại `day[i]`: giữa hai cạnh đáy kề nó (`line_perp_line`), hoặc `right_triangle` (k = 3)."""
+    x, ke = day[i], {frozenset((day[i], day[i - 1])), frozenset((day[i], day[(i + 1) % len(day)]))}
+    for r in rb:
+        if r.kind == "line_perp_line" and {frozenset(r.entities[:2]), frozenset(r.entities[2:])} == ke:
+            return r
+        if r.kind == "right_triangle" and len(day) == 3 and r.entities[0] == x and set(r.entities) == set(day):
+            return r
+    return None
+
+
+def _khuon_day_chuoi(rb, day: tuple, ent: tuple, chop: str | None, tren: tuple | None, rb_kieu: list):
+    """T10 (§20) — chóp có cạnh bên SX ⊥ đáy hoặc lăng trụ đứng, đáy LỒI xác định bởi chuỗi k − 2 góc vuông liên tiếp.
+
+    `None` ⇔ khuôn không áp dụng (không chuỗi, không cạnh vuông góc đáy): lý do của khuôn cũ được giữ."""
+    k = len(day)
+    if k < 3:
+        return None
+    i0 = right_angle_chain_start(k, lambda i: _vuong_tai_dinh(rb, day, i))
+    if i0 is None:
+        return None
+    duong = [day[(i0 + t) % k] for t in range(k)]
+    goc = [_vuong_tai_dinh(rb, day, (i0 + t) % k) for t in range(1, k - 1)]
+    vi_tri = {u: j for j, u in enumerate(day)}
+    canh_cua = (lambda u, v: [(u, v), (tren[vi_tri[u]], tren[vi_tri[v]])]) if tren else (lambda u, v: [(u, v)])
+    lop = [_KichThuoc(_nhan(duong[t], duong[t + 1]), canh_cua(duong[t], duong[t + 1]), None,
+                      ("canh", duong[t], duong[t + 1])) for t in range(k - 1)]
+    a, b, c = day[:3]
+    n = lambda V: (V[b] - V[a]).cross(V[c] - V[a])  # noqa: E731
+    rbuoc: list = [
+        ("base planar", lambda V: all((V[p] - V[a]).dot(n(V)) == 0 for p in day)),
+        ("base convex", lambda V: all((V[day[j]] - V[day[j - 1]]).cross(V[day[(j + 1) % k]] - V[day[j]]).dot(n(V)) > 0
+                                      for j in range(k))),
+        *((f"right angle at {duong[t]}", lambda V, t=t: _vuong(V, duong[t], duong[t - 1], duong[t + 1]))
+          for t in range(1, k - 1))]
+    cao, rb_cao = _do_dai_tu_rb(rb, "height", ent)
+    if chop is not None:
+        chan = [(r, (set(r.entities[:2]) - {chop}).pop()) for r in rb
+                if r.kind == "line_perp_plane" and chop in r.entities[:2] and len(set(r.entities[:2])) == 2
+                and (set(r.entities[:2]) - {chop}) <= set(day) and set(r.entities[2:]) <= set(day)
+                and len(set(r.entities[2:])) >= 3]
+        if not chan:
+            return None
+        r_chan, X = chan[0]
+        rbuoc += [("apex edge ⊥ base", lambda V: all((V[chop] - V[X]).dot(V[q] - V[X]) == 0 for q in day if q != X)),
+                  ("apex off the base", lambda V: V[chop] != V[X])]
+        if cao is not None:
+            rbuoc.append(("height", lambda V: (V[chop] - V[X]).dot(V[chop] - V[X]) == square(cao)))
+        lop.append(_KichThuoc(_nhan(chop, X), [(chop, X)], cao, ("phap_tuyen", X, day[:3])))
+        tien_de = [*rb_kieu, r_chan, *goc, *rb_cao]
+        dinh = (chop, *day)
+    else:
+        rbuoc += [(f"translation {day[j]}{tren[j]}", lambda V, j=j: V[tren[j]] - V[day[j]] == V[tren[0]] - V[day[0]])
+                  for j in range(1, k)]
+        rbuoc += [("lateral ⊥ base", lambda V: all((V[tren[0]] - V[day[0]]).dot(V[day[(j + 1) % k]] - V[day[j]]) == 0
+                                                   for j in range(k))),
+                  ("lateral non-zero", lambda V: V[tren[0]] != V[day[0]])]
+        if cao is not None:
+            rbuoc.append(("height", lambda V: (V[tren[0]] - V[day[0]]).dot(V[tren[0]] - V[day[0]]) == square(cao)))
+        lop.append(_KichThuoc(_nhan(day[0], tren[0]), list(zip(day, tren)), cao, ("phap_tuyen", day[0], day[:3])))
+        tien_de = [*rb_kieu, *goc, *rb_cao]
+        dinh = day + tren
+
+    def chinh_tac(L: list) -> dict[str, Vec3] | None:
+        try:
+            V = dict(zip(duong, polygon_from_right_angle_chain(L[:-1])))
+        except GeometryError:
+            return None
+        if chop is not None:
+            V[chop] = V[X] + _o(0, 0, L[-1])
+        else:
+            V.update({tren[vi_tri[u]]: V[u] + _o(0, 0, L[-1]) for u in day})
+        return V
+
+    return _Khuon("T10", dinh, rbuoc, lop, tien_de, chinh_tac)
+
+
 def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_kieu: list, do_dai: dict | None = None):
     k = len(day)
     ben = [(day[i], tren[i]) for i in range(k)]
@@ -1033,9 +1111,14 @@ def _nhan_khuon(rb: tuple[RangBuoc, ...], cm: _ChiMuc, prog: dict, do_dai: dict 
             k = _khuon_chop(rb, ent[0], ent[1:], ent, do_dai)
             if isinstance(k, _Khuon):
                 k.tien_de = rb_kieu + k.tien_de
+            elif k.startswith("TEMPLATE_NOT_MATCHED"):      # §20.2: T10 chỉ khi T1/T2 không khớp
+                k = _khuon_day_chuoi(rb, ent[1:], ent, ent[0], None, rb_kieu) or k
         else:
             n = len(ent) // 2
             k = _khuon_lang_tru(rb, ent[:n], ent[n:], ent, {r.kind for r in rb_kieu}, rb_kieu, do_dai)
+            if isinstance(k, str) and k.startswith("TEMPLATE_NOT_MATCHED") and \
+                    "right_prism" in {r.kind for r in rb_kieu}:
+                k = _khuon_day_chuoi(rb, ent[:n], ent, None, ent[n:], rb_kieu) or k
         return (k, anh_xa) if isinstance(k, _Khuon) else k
     if co_ten:
         return "TEMPLATE_NOT_MATCHED more than one named solid"
