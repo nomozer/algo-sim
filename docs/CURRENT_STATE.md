@@ -64,6 +64,17 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
+> **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; chờ kiểm local + quyết người dùng):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước | hình thang vuông bị từ chối (LLM_ONLY: không đọc cụm; compiler: coi là hình chữ nhật); chóp đáy tam giác vuông với chân ≠ đỉnh vuông bị từ chối |
+> | Thêm | kernel `polygon_from_right_angle_chain` (một thẩm quyền) · bộ đọc "hình thang vuông tại P và Q" · khuôn **T10** (amendment §20) · hai họ compiler `polygon_base_*` (mọi số cạnh, một chuỗi câu lệnh) |
+> | Nhãn | 15 hàng ghi trước, oracle độc lập: 7/7 dương + 8/8 âm trên HAI tuyến; red-before 39 đỏ tại `d5287ff7` |
+> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (4 test danh tính đỏ — việc LOCAL) · **118** (không bump; 49/49 fixture trùng byte) |
+> | Năng lực sản phẩm | `right_angle_chain_base` = `foundation_only` (mô hình chưa đo); đa giác đều/góc/lõm/toạ độ-trên-compiler: `ISSUE-ARCH-G05-REMAINING-BASES` |
+> | Run | [`general-polygon-base`](evaluation/geometry/runs/general-polygon-base/) (`plan.md`, `report.md`, `handoff.md`) |
+
 > **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `a0fdbba4` theo `APPROVAL.md`):**
 >
 > | Mục | Kết quả |

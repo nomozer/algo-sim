@@ -1,0 +1,304 @@
+{
+ "schema_version": "cache-fixture-diff/1",
+ "compared": 49,
+ "identical": 49,
+ "served_pre": 14,
+ "served_and_changed": [],
+ "new_post_only": [],
+ "rows": {
+  "cross_section_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "identical": true
+  },
+  "cross_section_correct_plane.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "6737eea0c492d791f759a4295e20a9cbe2d79bb4ba61f097637afd494c1129e6",
+   "identical": true
+  },
+  "cross_section_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "1f15ac34d9825b4ac2eb48c999dbdc46e58c3d3345b542a0c238768174bad726",
+   "identical": true
+  },
+  "cross_section_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "4d3703b72ef0c47c95bd575e060cd984cc18a8c099af5f9aab2fa53e0264a8db",
+   "identical": true
+  },
+  "cross_section_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "5076330cd55da34594ef8389f22a0321883034c57f77745e458e56707207d8d8",
+   "identical": true
+  },
+  "cross_section_wrong_plane.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "a54c0844230fa2d3dbbfad7484fa1fe3e5ba1c34c0cc8be3d21148c55c3fef87",
+   "identical": true
+  },
+  "cube_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "6639d39b553a6160a2cad780c5c1feac70dfa8b2127394788abbf75b1b5e5208",
+   "identical": true
+  },
+  "cube_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "2d63b25d367c6919f21ca2d3076471f2ee1015b821bac04be46315da4667fe2d",
+   "identical": true
+  },
+  "cube_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "d8d6a83d6bfaec70a83a62dfde2df05ae590e7749c0faca45e80e7c5fbca3743",
+   "identical": true
+  },
+  "cube_system_cause.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "df73ecd46620261be3a97ddfade0c0a322945d996a7be2acf1842acd7f5bc61c",
+   "identical": true
+  },
+  "cube_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "aafd19a6e53c0ce165eec3da6f4f1c320030fb3033a9cea28faff34f3242b8c6",
+   "identical": true
+  },
+  "cuboid_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "9c64ac117f7f611727a3ffb788616e7a181719dd974c455ac592f548038bbc7c",
+   "identical": true
+  },
+  "cuboid_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "2d63b25d367c6919f21ca2d3076471f2ee1015b821bac04be46315da4667fe2d",
+   "identical": true
+  },
+  "cuboid_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "528233082a21859ca03cf2a42c95c0da2df6a5c3ae1a982e5ea9ff32e388341b",
+   "identical": true
+  },
+  "cuboid_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "1e1cc7e9e347611ebf510f67d2f6ad86ed7e4b7ed94b952cf74b4a62b17d62ee",
+   "identical": true
+  },
+  "rectangular_pyramid_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "9756d006ab63f078e8f3090c1df5e4ba2e5add145da74918ecfb614ddad16e3d",
+   "identical": true
+  },
+  "rectangular_pyramid_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "2d63b25d367c6919f21ca2d3076471f2ee1015b821bac04be46315da4667fe2d",
+   "identical": true
+  },
+  "rectangular_pyramid_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "b0d9e65423451e22156fed56843884589743ced89acbddab32b71eff8f6858a9",
+   "identical": true
+  },
+  "rectangular_pyramid_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "47047e1857e89358cbf431b5ed899ba2afe315f15381748413f8b95abb3804fb",
+   "identical": true
+  },
+  "regular_square_pyramid_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d3f8264ea835234292434f3b666358fad2984f1bf7434b2ff1d967cb88ca05aa",
+   "identical": true
+  },
+  "regular_square_pyramid_non_positive.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d3e0b62f5871057e1377e1f425e9bc8f5b74954a349c011ea90269843cd71aae",
+   "identical": true
+  },
+  "regular_square_pyramid_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "2cb361354919e8bc07bb63010cdf9267f0528d99ae152980523d2073c56ce2d1",
+   "identical": true
+  },
+  "regular_square_pyramid_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "bb521e6ec8bba7ad29800e2f2df8c4b65befe0cbed9759cf262ec1877b72c814",
+   "identical": true
+  },
+  "regular_square_pyramid_wrong_centre.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "cdd3a21b87e1f08a763cad960595c2c43a77e7fdec0d6a04d8fc89a3ef814549",
+   "identical": true
+  },
+  "regular_tetrahedron_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "7365906e5d0dc5dd8118abcba783ae5e03982718b249d13b53e89b4757aaf8ab",
+   "identical": true
+  },
+  "regular_tetrahedron_radical_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "303149c108187f44889957555de94f8c95ba701867511cb420badcdfd5676d4f",
+   "identical": true
+  },
+  "regular_triangular_pyramid_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d3f8264ea835234292434f3b666358fad2984f1bf7434b2ff1d967cb88ca05aa",
+   "identical": true
+  },
+  "regular_triangular_pyramid_non_positive.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d05e8ce7f3e143751c1fc905960220f14a77ef4f65381853016a09ca334996a7",
+   "identical": true
+  },
+  "regular_triangular_pyramid_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "6740b59bdf49847da98a6a0549580ebd259fc504420bd05bbaa69b7817acba63",
+   "identical": true
+  },
+  "regular_triangular_pyramid_radical_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d3f8264ea835234292434f3b666358fad2984f1bf7434b2ff1d967cb88ca05aa",
+   "identical": true
+  },
+  "regular_triangular_pyramid_radical_non_positive.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "d05e8ce7f3e143751c1fc905960220f14a77ef4f65381853016a09ca334996a7",
+   "identical": true
+  },
+  "regular_triangular_pyramid_radical_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "cb15a7cbc76c034d36ba99ac752653b6cf22647aa7bb2eceb74f983bd0835478",
+   "identical": true
+  },
+  "regular_triangular_pyramid_radical_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "bb521e6ec8bba7ad29800e2f2df8c4b65befe0cbed9759cf262ec1877b72c814",
+   "identical": true
+  },
+  "regular_triangular_pyramid_radical_wrong_centroid.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "ccfb93e78c04628177906e9992e874976b044754f62f399e4aba621c30281ab8",
+   "identical": true
+  },
+  "regular_triangular_pyramid_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "bb521e6ec8bba7ad29800e2f2df8c4b65befe0cbed9759cf262ec1877b72c814",
+   "identical": true
+  },
+  "regular_triangular_pyramid_wrong_centroid.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "ccfb93e78c04628177906e9992e874976b044754f62f399e4aba621c30281ab8",
+   "identical": true
+  },
+  "triangular_prism_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "8aadc10bc140b3f35177cb3ca977e8badda340c5ce9512934c9d116d0cfa1c6a",
+   "identical": true
+  },
+  "triangular_prism_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "2d63b25d367c6919f21ca2d3076471f2ee1015b821bac04be46315da4667fe2d",
+   "identical": true
+  },
+  "triangular_prism_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "e6695fe6f9dfe2cdce9c005bd2b61fe42853b6eef87e6d6deae7d0250ad39f05",
+   "identical": true
+  },
+  "triangular_prism_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "644d19767e87563c16cd5642fa8fcf4b0604b811ee4d323f6a0a2ba2d387533d",
+   "identical": true
+  },
+  "triangular_pyramid_assumption.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "9756d006ab63f078e8f3090c1df5e4ba2e5add145da74918ecfb614ddad16e3d",
+   "identical": true
+  },
+  "triangular_pyramid_negative.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "2d63b25d367c6919f21ca2d3076471f2ee1015b821bac04be46315da4667fe2d",
+   "identical": true
+  },
+  "triangular_pyramid_positive.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "766ab399d096e238745674bb1d824ae28481c01cff5dd816c95f1ce90073f4f1",
+   "identical": true
+  },
+  "triangular_pyramid_ungrounded.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "47047e1857e89358cbf431b5ed899ba2afe315f15381748413f8b95abb3804fb",
+   "identical": true
+  },
+  "w18_midpoint_mismatch.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "dd80cd5072b152d5074eae4948a675c8823c274005ff901ba59139ffccf0d625",
+   "identical": true
+  },
+  "w18_midpoint_plane_distance.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "9b992a2e423d596af5d92c48002c7c8dce0b27b59c35046d193677b64742603c",
+   "identical": true
+  },
+  "w18_projection_line.json": {
+   "status_pre": "ok",
+   "status_post": "ok",
+   "sha256_pre": "c50c71dfa4eacc048d9bde74b2ec0c9dd21b364adc991b125654582f53a35096",
+   "identical": true
+  },
+  "w18_projection_mismatch.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "cc065000d0cfe9f9acc9a7bee309027dbd73b17a3bec868587d43733e153a598",
+   "identical": true
+  },
+  "w18_unverified.json": {
+   "status_pre": "unsupported",
+   "status_post": "unsupported",
+   "sha256_pre": "8a638bd8f88594f877c826707676cb9a3c50bfd3bb01a8ab30752d280a80dc34",
+   "identical": true
+  }
+ }
+}

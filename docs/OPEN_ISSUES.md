@@ -19,6 +19,26 @@
 - **acceptance:** S1–S3 of the preregistration: every pyramid/prism family shows the required semantic roles as separate observable steps from one code path, with no branch on a family ID.
 - **verify:** the semantic-coverage tests and AST guard named in the preregistration.
 
+### ISSUE-ARCH-G05-REMAINING-BASES
+- **description:** G05 now serves convex bases fixed by a chain of k − 2 consecutive right angles (both routes). Still refused or not compiled: (1) regular polygons other than the square (`lục giác đều`, `ngũ giác đều`) — not read by `shape_constraint` and irrational in an axis frame; (2) parallelogram/rhombus bases given by an angle in degrees; (3) concave bases (kernel volume is exact, no reader/template); (4) polygons given by COORDINATES on the compiler route — the adapter reads only `segment_length`, so the compiler falls back to the LLM, which serves them through C0 (probe: S.ABCDE with coordinates, V = 8, LLM_ONLY served); (5) right trapezoid phrased `hình thang ABCD vuông tại A và B` or `góc A = góc B = 90°` with a non-adjacent wording.
+- **evidence:** `docs/evaluation/geometry/runs/general-polygon-base/labels.json` rows N04, N05, N06; `plan.md` §1.
+- **impact:** Correct refusals; coverage of common textbook bases (regular hexagon, rhombus by angle) remains missing.
+- **scope:** `shape_constraint.py`, `assumption_gate.py`, `geometry_compiler/` (a coordinate fact kind in `fact_graph.py` for item 4).
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** user decision (item 4 is the cheapest: no model-surface change)
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION
+- **description:** The rectangular-pyramid and cuboid compiler families accept a quadrilateral base with NO `base_shape` and a single stated right angle as a rectangle. general-polygon-base removed the case of exactly two adjacent right angles (now the G05 family) but kept the single-right-angle case unchanged to avoid moving served compiler rows.
+- **evidence:** `geometry_compiler/compiler.py` (`_danh_gia_eligibility_rectangular_pyramid`, `_danh_gia_eligibility_cuboid_prism`, `_uu_tien_day_chuoi`).
+- **impact:** Compiler-only (opt-in): the program models an unproven rectangle; the assumption gate still refuses it on the route unless the TEXT states a rectangle/square, so no wrong value is served.
+- **scope:** `geometry_compiler/compiler.py`.
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** before compiler-first routing
+- **default_switch_blocker:** YES
+
 ### ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY
 - **description:** G04 is served only when the problem states `T F ⊥ (base)` with F a NAMED base vertex (`A'B vuông góc với (ABC)`). The common textbook forms are refused: the foot of the lateral height is a midpoint/centroid/centre (`hình chiếu vuông góc của A' lên (ABC) là trung điểm H của BC`), the projection is phrased `hình chiếu … là (điểm) B`, or the obliquity is an angle (`cạnh bên tạo với đáy góc 60°`).
 - **evidence:** `docs/evaluation/geometry/runs/oblique-prism/labels.json` rows ON03, ON08 (refused on both routes); `tests/geometry/test_oblique_prism.py`.
@@ -215,6 +235,7 @@
 - **status:** OPEN
 - **w13_audit:** the description and paths are stale at `bf5a7907` — the package is `backend/app/simulation/geometry_compiler/` and `compiler.py:41-53` supports six families (right-triangle pyramid and prism, rectangular pyramid, cuboid, cube, right square prism). What remains narrow is listed by layer in `docs/architecture/geometry_capability_matrix_v2.json` (`L08 compiler_rule`) and in `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.
 - **oblique-prism (2026-10-09):** seventh family `oblique_prism_volume` (G04: right-triangle/rectangle/square base, foot of a lateral height at a named base vertex, rational height) — `docs/evaluation/geometry/runs/oblique-prism/`. Still narrow: foot at a midpoint/centroid and angle-defined obliquity are refused (`ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`).
+- **general-polygon-base (2026-10-09):** families `polygon_base_pyramid_volume` / `polygon_base_right_prism_volume` (G05: convex base fixed by k − 2 consecutive right angles — right trapezoid, right triangle with the apex edge at any vertex, n-gons). Still narrow: `ISSUE-ARCH-G05-REMAINING-BASES`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES

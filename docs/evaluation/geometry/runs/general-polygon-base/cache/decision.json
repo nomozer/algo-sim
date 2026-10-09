@@ -1,0 +1,24 @@
+{
+ "schema_version": "cache-decision/1",
+ "run_id": "general-polygon-base",
+ "cache_version_before": "118",
+ "decision": "NO_BUMP",
+ "cache_version_after": "118",
+ "rule": "The cache stores only status == ok responses. A bump is required when a response the old code SERVED would now be served differently or refused: the old row would keep the old payload.",
+ "model_surface": "unchanged — prompts, grammar card, synthesis schema, analyze schema and the IR capability hash are not touched; backend/scripts/lock_cache_identity.py --verify matches (118, environment b1714b566e25c912…); tests/test_cache_identity.py green",
+ "pre_tree": "d5287ff7 (clean detached worktree)",
+ "post_tree": "4e30a21 (feat/general-polygon-base)",
+ "fixtures": {
+  "script": "../../oblique-prism/cache/compare_fixtures.py on backend/scripts/generate_generic_tier_a_fixtures.py output",
+  "compared": 49, "identical": 49, "served_pre": 14, "served_and_changed": [],
+  "record": "cache/fixture_diff.json"
+ },
+ "changes_on_the_default_route": [
+  {"change": "shape_constraint reads 'đáy … là hình thang vuông tại P và Q'", "direction": "refused → served only",
+   "why": "before, the phrase was unread text inside the polyhedral region, so no certificate could hold (refused); no corpus, fixture or demo text contains the phrase (grep over backend/ and docs/)"},
+  {"change": "assumption-gate template T10 (§20)", "direction": "refused → served only",
+   "why": "T10 is tried only where T1/T2/T3–T6 returned TEMPLATE_NOT_MATCHED, i.e. where the old code refused; when T10 does not apply the old reason is returned unchanged"},
+  {"change": "kernel functions right_angle_chain_start / polygon_from_right_angle_chain", "direction": "new functions, no existing caller changed"},
+  {"change": "compiler families polygon_base_*", "direction": "not on the default route (GEOMETRY_COMPILER_MODE opt-in)"}
+ ]
+}
