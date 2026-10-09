@@ -13,5 +13,5 @@
   "product_changes": "none",
   "cache_decision": "no change (no product change)",
   "result": "ARCHITECTURE_DECISION_REQUIRED",
-  "commits": {}
+  "commits": {"evidence": "9f9e66d"}
 }
