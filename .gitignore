@@ -45,3 +45,5 @@ CLAUDE.md
 # sinh bởi `create_all` nên KHÔNG có cột mới và cũng không được alembic đóng
 # dấu — giữ lại để tra, không bao giờ commit.
 backend/algosim.db.*.bak
+# Playwright CLI output (may contain credentials)
+.playwright-cli/

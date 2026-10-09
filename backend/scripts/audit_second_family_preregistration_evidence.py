@@ -101,7 +101,10 @@ def audit_precheck() -> dict[str, Any]:
     favicon_not_staged = ("favicon.svg" not in staged_out)
     favicon_disk_exists = (REPO / "frontend" / "public" / "favicon.svg").exists()
     if not favicon_disk_exists:
-        favicon_clean = ("D frontend/public/favicon.svg" in status_short and favicon_not_staged)
+        # Thiếu trên đĩa là sạch khi đó là thay đổi chưa stage của người dùng (" D") HOẶC việc xoá đã được commit (tệp
+        # không còn được theo dõi — người dùng cho phép commit 2026-10-09). Bị stage thì vẫn không sạch.
+        favicon_tracked = run_git(["ls-files", "--error-unmatch", "frontend/public/favicon.svg"])[0] == 0
+        favicon_clean = favicon_not_staged and ("D frontend/public/favicon.svg" in status_short or not favicon_tracked)
     else:
         favicon_clean = favicon_not_staged
 
