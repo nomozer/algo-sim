@@ -1,0 +1,25 @@
+{"row": "X1_side_height", "expect": "served:18√3", "servable": true, "value": "18√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X2_side_lateral", "expect": "served:18√3", "servable": true, "value": "18√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X3_renamed", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X4_radical_side", "expect": "served:9√3", "servable": true, "value": "9√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X5_fractional_side", "expect": "served:3√3/2", "servable": true, "value": "3√3/2", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X6_right_prism_hexagon_base", "expect": "served:18√3", "servable": true, "value": "18√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "X7_khoi_phrasing", "expect": "served:18√3", "servable": true, "value": "18√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 12, "F": 8, "E": 18, "chart_metric": true}}
+{"row": "T1_side_height", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "T2_side_lateral", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "T3_right_prism_equilateral_base", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "T4_radical_side", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "T5_fractional_side", "expect": "served:√3", "servable": true, "value": "√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "T6_renamed", "expect": "served:4√3", "servable": true, "value": "4√3", "stage": "served", "reason": null, "certificate": "C1", "scene": {"V": 6, "F": 5, "E": 9, "chart_metric": true}}
+{"row": "NX1_missing_height", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NX2_contradiction", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NX3_program_irregular_base", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NX4_program_top_not_translation", "expect": "refused", "servable": false, "value": null, "stage": "execution", "reason": null, "certificate": null, "scene": null}
+{"row": "NX5_negation", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NX6_goal_clause", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NX7_pentagon_out_of_scope", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NT1_missing_height", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NT2_contradiction", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NT3_program_top_not_translation", "expect": "refused", "servable": false, "value": null, "stage": "execution", "reason": null, "certificate": null, "scene": null}
+{"row": "NT4_oblique_text", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "scene": null}
+{"row": "NT5_not_regular_text", "expect": "refused", "servable": false, "value": null, "stage": "source_invariant", "reason": null, "certificate": null, "scene": null}

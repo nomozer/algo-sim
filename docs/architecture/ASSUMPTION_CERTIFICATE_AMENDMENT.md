@@ -1342,3 +1342,20 @@ chiều cao. Kích thước: một thẩm quyền `kich_thuoc_t11` (chiều cao 
 thuẫn; h² ≤ 0 ⇒ suy biến). Khung chính tắc: lưới đơn vị cơ sở 60°. C0 (§22): `regular_hexagonal_pyramid` kiểm Euclid trên
 toạ độ đề cho. Ngoài: lăng trụ lục giác đều, chóp lục giác đều không tên, đa giác đều khác (ngũ giác: không có khung affine
 hữu tỉ). Nhãn: `docs/evaluation/geometry/runs/regular-hexagonal-pyramid/`.
+
+## 27. regular-prisms — khuôn T12: lăng trụ tam giác đều / lục giác đều (2026-10-09, G05)
+
+Bộ đọc: `hình/khối lăng trụ tam giác đều | lục giác đều X.Y` và `lăng trụ đứng X.Y có đáy X là tam giác đều | lục giác
+đều` (đáy đúng 3 | 6 đỉnh, không phủ định đứng trước) ⇒ `right_prism(X ∪ Y)` + `base_equilateral(X)` |
+`base_regular_hexagon(X)`; cạnh đáy / cạnh bên của khối lăng trụ đều duy nhất (lăng trụ đứng: cạnh bên = chiều cao);
+mệnh đề mục tiêu không đọc (như §23). Khuôn **T12** (hợp đồng §18.2 của T8, `can=True`), chọn trong `_khuon_lang_tru`
+khi đề nói lăng trụ đứng và đáy đều đúng tập đỉnh đáy: bố cục là KHUNG AFFINE, độ dài và vuông góc theo metric
+`do_luong_cua` dẫn xuất từ b², h² của đề qua A, B, C, A′ (AB² = BC² = b², AC² = b² | 3b², AA′² = h², BA′² = b² + h²,
+CA′² = AC² + h²); nhánh này chỉ chạy khi không có chóp gọi tên (nhánh chóp giữ nguyên). Ràng buộc: mặt trên là tịnh tiến
+của đáy, cạnh bên ⊥ mọi cạnh đáy (theo metric), cạnh bên khác 0, đáy đều (tam giác: ba cạnh bằng nhau; lục giác: đối
+xứng tâm O = A + C − B, AB = BC = CD), cạnh đáy, chiều cao. Kích thước: một thẩm quyền `kich_thuoc_t12` (cạnh đáy từ
+khẳng định hoặc cạnh đáy gọi tên; chiều cao từ chiều cao, cạnh bên hoặc cạnh bên gọi tên; nguồn khác nhau ⇒ mâu thuẫn).
+Khung chính tắc: lưới đơn vị (tam giác (0,0),(1,0),(0,1); lục giác cơ sở 60°), mặt trên z = 1. C0 (§22): `right_prism` +
+`base_equilateral` | `base_regular_hexagon` + cạnh bên lăng trụ (mọi AA′ = cạnh bên đề nói; trước đó `lateral_edge` chỉ
+có nghĩa chóp) kiểm Euclid trên toạ độ đề cho. Ngoài lát cắt: lăng trụ tứ giác đều (đường T3–T6 hiện có, không đổi),
+lăng trụ xiên đáy đều, ngũ giác đều, compiler. Nhãn: `docs/evaluation/geometry/runs/regular-prisms/`.

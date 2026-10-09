@@ -391,7 +391,8 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
-    assert CACHE_VERSION == "124"
+    # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
+    assert CACHE_VERSION == "125"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):

@@ -78,7 +78,7 @@ def _cac_chop(de: str) -> list[re.Match]:
     """Mọi ký hiệu chóp có tên đỉnh/đáy (`S.ABCD` hoặc `có đỉnh S và đáy ABCD`), theo vị trí trong đề."""
     return sorted([*_KHOI_CHOP.finditer(de), *_KHOI_CHOP_DINH_DAY.finditer(de)], key=lambda m: m.start())
 _KHOI_LANG_TRU = re.compile(
-    rf"(?P<noun>(?:[Hh]ình|[Kk]hối)\s+(?:lăng\s+trụ(?:\s+(?:đứng|xiên))?(?:\s+(?:tam|tứ)\s+giác"
+    rf"(?P<noun>(?:[Hh]ình|[Kk]hối)\s+(?:lăng\s+trụ(?:\s+(?:đứng|xiên))?(?:\s+(?:tam|tứ|lục)\s+giác"
     rf"(?:\s+đều)?)?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương)|[Ll]ăng\s+trụ(?:\s+(?:đứng|xiên))?)\s+"
     rf"(?P<day>(?:{_E}){{3,}})\.(?P<tren>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
 _CANH_LAP_PHUONG = re.compile(
@@ -102,7 +102,7 @@ _DANH_TU_KHOI = re.compile(
 _TAI = r"(?:tại|ở\s+đỉnh|ở|đỉnh)"
 _DAY = re.compile(
     rf"[Đđ]áy\s+(?:(?P<ten>(?:{_E}){{3,}})\s+)?là\s+(?:một\s+)?(?P<loai>hình\s+chữ\s+nhật|hình\s+vuông"
-    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+đều|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
+    rf"|hình\s+bình\s+hành|hình\s+thoi|tam\s+giác\s+đều|lục\s+giác\s+đều|tam\s+giác\s+vuông(?:\s+cân)?\s+{_TAI}\s+(?P<tai>{_E}))"
     rf"(?:\s+cạnh\s+(?:bằng\s+|=\s*)?(?P<canh>{_SO}){_HET_DO_DAI})?(?![\d/])")
 #: §20.1 — `đáy (ABCD)? là hình thang vuông tại P và Q`: góc vuông tại hai đỉnh KỀ của đáy tứ giác.
 _HINH_THANG_VUONG = re.compile(
@@ -140,9 +140,10 @@ _KY_HIEU_KHOI_LOI = re.compile(rf"\s+(?:{_E})+\.(?:{_E})+")
 _KIEU_LANG_TRU = (("lập phương", "cube"), ("hộp chữ nhật", "cuboid"), ("đứng", "right_prism"),
                   ("xiên", "oblique_prism"))
 _KIEU_DAY = {"hình chữ nhật": "base_rectangle", "hình vuông": "base_square",
-             "hình bình hành": "base_parallelogram", "hình thoi": "base_rhombus", "tam giác đều": "base_equilateral"}
+             "hình bình hành": "base_parallelogram", "hình thoi": "base_rhombus", "tam giác đều": "base_equilateral",
+             "lục giác đều": "base_regular_hexagon"}
 #: Số đo của đáy đọc được thành value (cạnh): đáy vuông, đáy tam giác đều (§18.1).
-_DAY_CO_CANH = frozenset({"base_square", "base_equilateral"})
+_DAY_CO_CANH = frozenset({"base_square", "base_equilateral", "base_regular_hexagon"})
 
 
 def _ten(chuoi: str) -> tuple[str, ...]:
@@ -240,6 +241,11 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
             phat(kieu, day + tren, None, m.start(), m.end())
         if kieu == "cube" and (c := _CANH_LAP_PHUONG.match(de, m.end())):
             phat("cube_edge", day + tren, _phan(c.group("so")), m.start(), c.end())
+        # regular-prisms: lăng trụ ĐỀU = lăng trụ đứng có đáy là đa giác đều (định nghĩa SGK) — khuôn T12
+        deu = re.search(r"(?P<g>tam|lục)\s+giác\s+đều", m.group("noun"))
+        if deu and len(day) == {"tam": 3, "lục": 6}[deu.group("g")] and not _PHU_DINH.search(de, 0, m.start()):
+            phat("right_prism", day + tren, None, m.start(), m.end())
+            phat("base_equilateral" if len(day) == 3 else "base_regular_hexagon", day, None, m.start(), m.end())
 
     # ── khối duy nhất của phần dữ kiện: chỉ khi ấy "đáy"/"chiều cao" mới gắn ──
     du_kien = de[:t.start()] if (t := _TINH.search(de)) else de
@@ -272,8 +278,8 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
                 phat("right_triangle", (tai, *[d for d in day if d != tai]), None, m.start(), m.end())
             continue
         kind = _KIEU_DAY[loai]
-        if kind == "base_equilateral" and len(day) != 3:
-            continue                           # "tam giác đều" chỉ gắn đáy ba đỉnh có tên
+        if kind == "base_equilateral" and len(day) != 3 or kind == "base_regular_hexagon" and len(day) != 6:
+            continue                           # "tam/lục giác đều" chỉ gắn đáy 3/6 đỉnh có tên
         if day or kind == "base_square":
             canh = _phan(m.group("canh")) if (kind in _DAY_CO_CANH and m.group("canh")) else None
             phat(kind, day, canh, m.start(), m.end())
@@ -330,6 +336,15 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
             elif m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1]):
                 continue
             phat("base_centre", _ten(m.group("o")) + khoi[1], None, m.start(), m.end())
+    # ── số đo của lăng trụ đều duy nhất (T12): cạnh bên của lăng trụ đứng = chiều cao ──
+    if khoi is not None and khoi[0] and len(khoi[0]) == 2 * len(khoi[1]) and any(
+            r.kind == "right_prism" and r.entities == khoi[0] for r in ra):
+        day_kind = {3: "base_equilateral", 6: "base_regular_hexagon"}.get(len(khoi[1]))
+        if day_kind and any(r.kind == day_kind and set(r.entities) == set(khoi[1]) for r in ra):
+            for m in _CANH_DAY.finditer(du_kien):
+                phat(day_kind, khoi[1], _phan(m.group("so")), m.start(), m.end())
+            for m in _CANH_BEN.finditer(du_kien):
+                phat("lateral_edge", khoi[0], _phan(m.group("so")), m.start(), m.end())
     # ── số đo của chóp lục giác đều duy nhất (T11) ──
     if khoi is not None and any(r.kind == "regular_hexagonal_pyramid" and r.entities == khoi[0] for r in ra):
         for m in _CANH_DAY.finditer(du_kien):

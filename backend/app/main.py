@@ -803,7 +803,11 @@ MISSING_KEY_MSG = (
 #       (khuôn T11, metric khung — amendment §26): "hình chóp lục giác đều có đỉnh S và đáy ABCDEF" từng PHỤC VỤ giá trị
 #       sai (1) nay phục vụ 6√3; C0 với toạ độ lục giác mâu thuẫn chiều served → refused. Row 123 sẽ trả envelope cũ
 #       (`runs/regular-hexagonal-pyramid/cache/decision.json`).
-CACHE_VERSION = "124"
+# 125 — 2026-10-09 (regular-prisms, G05): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Lăng trụ tam giác đều / lục giác đều được đọc và
+#       chứng nhận (khuôn T12, metric khung — amendment §27): đề C1 từ chối nay phục vụ (không bị cache); C0 "lăng trụ
+#       … đều" với cạnh bên toạ độ không vuông góc đáy, hoặc cạnh bên / cạnh đáy đề nói trái toạ độ, từng phục vụ nay
+#       chiều served → refused. Row 124 sẽ trả envelope cũ (`runs/regular-prisms/cache/decision.json`).
+CACHE_VERSION = "125"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

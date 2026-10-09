@@ -1103,6 +1103,82 @@ def _khuon_day_chuoi(rb, day: tuple, ent: tuple, chop: str | None, tren: tuple |
     return _Khuon("T10", dinh, rbuoc, lop, tien_de, chinh_tac)
 
 
+_DAY_DEU = {3: "base_equilateral", 6: "base_regular_hexagon"}
+
+
+def la_lang_tru_deu(rb, day: tuple) -> bool:
+    """regular-prisms — đề NÓI đáy là tam giác đều (3 đỉnh) / lục giác đều (6 đỉnh) đúng tập đỉnh đáy này."""
+    kind = _DAY_DEU.get(len(day))
+    return kind is not None and any(r.kind == kind and set(r.entities) == set(day) for r in rb)
+
+
+def kich_thuoc_t12(rb, day: tuple, tren: tuple, ent: tuple, do_dai: dict) -> tuple | str:
+    """Cạnh đáy² b² và chiều cao² h² mà ĐỀ cố định cho lăng trụ đều (`None` = đề không cho) hoặc lý do từ chối. Lăng trụ
+    đứng: cạnh bên = chiều cao. Một thẩm quyền cho khuôn T12 và metric khung (`do_luong_cua`)."""
+    k = len(day)
+    canh = {square(r.value) for r in rb
+            if r.kind == _DAY_DEU[k] and set(r.entities) == set(day) and r.value is not None}
+    canh |= {square(do_dai[frozenset((v[i], v[(i + 1) % k]))]) for v in (day, tren) for i in range(k)
+             if frozenset((v[i], v[(i + 1) % k])) in do_dai}
+    cao = {square(r.value) for r in rb if r.kind in ("height", "lateral_edge") and r.entities == ent
+           and r.value is not None}
+    cao |= {square(do_dai[frozenset((day[i], tren[i]))]) for i in range(k) if frozenset((day[i], tren[i])) in do_dai}
+    if len(canh) > 1:
+        return "TEMPLATE_CONTRADICTION T12: base sides² " + ", ".join(str(x) for x in sorted(canh))
+    if len(cao) > 1:
+        return "TEMPLATE_CONTRADICTION T12: height / lateral edge² " + ", ".join(str(x) for x in sorted(cao))
+    return next(iter(canh), None), next(iter(cao), None)
+
+
+def _khuon_lang_tru_deu(rb, day: tuple, tren: tuple, ent: tuple, rb_kieu: list, do_dai: dict):
+    """T12 (regular-prisms) — lăng trụ ĐỀU đáy tam giác / lục giác: lăng trụ đứng, đáy đa giác đều. Như T8/T11: bố cục
+    là KHUNG AFFINE, độ dài và vuông góc theo metric `do_luong_cua` dẫn xuất từ b², h² của đề."""
+    kt = kich_thuoc_t12(rb, day, tren, ent, do_dai)
+    if isinstance(kt, str):
+        return kt
+    b2, h2 = kt
+    k = len(day)
+    a, b, c = day[:3]
+
+    def v(V):
+        return V[tren[0]] - V[day[0]]
+
+    def d2(V, p, q):
+        return _metric.norm_sq(V[p] - V[q])
+
+    rbuoc: list = [(f"translation {day[i]}{tren[i]}", lambda V, i=i: V[tren[i]] - V[day[i]] == v(V))
+                   for i in range(1, k)]
+    rbuoc += [("lateral ⊥ base", lambda V: all(_metric.dot(v(V), V[day[(i + 1) % k]] - V[day[i]]) == 0
+                                               for i in range(k))),
+              ("lateral non-zero", lambda V: not v(V).is_zero())]
+    if k == 3:
+        rbuoc.append(("base equilateral", lambda V: d2(V, a, b) == d2(V, b, c) == d2(V, c, a)))
+    else:
+        d = day[3]
+        rbuoc += [("base centrally symmetric", lambda V: all(
+                      V[day[i]] + V[day[i + 3]] == (V[a] + V[c] - V[b]).scale(2) for i in range(3))),
+                  ("base regular hexagon", lambda V: d2(V, a, b) == d2(V, b, c) == d2(V, c, d))]
+    if b2 is not None:
+        rbuoc.append(("base side", lambda V: d2(V, a, b) == b2))
+    if h2 is not None:
+        rbuoc.append(("height", lambda V: _metric.norm_sq(v(V)) == h2))
+    tien_de = [*rb_kieu, *[r for r in rb if (r.kind == _DAY_DEU[k] and set(r.entities) == set(day))
+                           or (r.kind in ("height", "lateral_edge") and r.entities == ent)]]
+    luoi = ((0, 0), (1, 0), (0, 1)) if k == 3 else ((1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1), (1, -1))
+
+    def chinh_tac(_L: list[ExactNumber]) -> dict[str, Vec3]:
+        """Khung đơn vị (lục giác: cơ sở 60°) — kích thước KHÔNG nằm trong toạ độ; lượt chạy lại dẫn xuất metric."""
+        return {**{p: _o(x, y) for p, (x, y) in zip(day, luoi)}, **{q: _o(x, y, 1) for q, (x, y) in zip(tren, luoi)}}
+
+    canh_day = [(w[i], w[(i + 1) % k]) for w in (day, tren) for i in range(k)]
+    return _Khuon("T12", day + tren, rbuoc,
+                  [_KichThuoc(_nhan(a, b), canh_day, sqrt_rational(b2) if b2 is not None else None,
+                              ("vi_tu_mat", a, day[:3])),
+                   _KichThuoc(_nhan(day[0], tren[0]), [(day[i], tren[i]) for i in range(k)],
+                              sqrt_rational(h2) if h2 is not None else None, ("phap_tuyen", a, day[:3]))],
+                  tien_de, chinh_tac, can=True)
+
+
 def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_kieu: list, do_dai: dict | None = None):
     k = len(day)
     ben = [(day[i], tren[i]) for i in range(k)]
@@ -1121,6 +1197,8 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
 
     def nap(day_ct: dict[str, Vec3], h: Fraction) -> dict[str, Vec3]:
         return {**day_ct, **{tren[i]: day_ct[day[i]] + _o(0, 0, h) for i in range(k)}}
+    if "right_prism" in kieu and la_lang_tru_deu(rb, day):       # T12: lăng trụ đều đáy tam giác / lục giác
+        return _khuon_lang_tru_deu(rb, day, tren, ent, rb_kieu, do_dai or {})
     if not kieu & {"right_prism", "cuboid", "cube"}:
         xien = _khuon_lang_tru_xien(rb, day, tren, ent, rb_kieu, do_dai or {})
         if xien is not None:
@@ -1467,6 +1545,10 @@ _KIEM_C0.update({
     "cube_edge": lambda V, e, v: (V[e[1]] - V[e[0]]).norm_sq() == square(v),
     "regular_square_pyramid": lambda V, e, _v: _KIEM_C0["base_square"](V, e[1:], None) and _chop_deu(V, e),
     "regular_triangular_pyramid": lambda V, e, _v: _KIEM_C0["base_equilateral"](V, e[1:], None) and _chop_deu(V, e),
+    "base_regular_hexagon": lambda V, e, v: all(V[e[i]] + V[e[3 + i]] == (V[e[0]] + V[e[2]] - V[e[1]]).scale(2)
+                                                for i in range(3)) and len(
+        {(V[e[i + 1]] - V[e[i]]).norm_sq() for i in (0, 1, 2)}) == 1 and (
+        v is None or (V[e[1]] - V[e[0]]).norm_sq() == square(v)),
     # T11: đối xứng tâm qua O = A + C − B, ba cạnh liên tiếp bằng nhau, đỉnh trên pháp tuyến tại tâm
     "regular_hexagonal_pyramid": lambda V, e, _v: all(
         V[e[1 + i]] + V[e[4 + i]] == (V[e[1]] + V[e[3]] - V[e[2]]).scale(2) for i in range(3)) and len(
@@ -1480,12 +1562,16 @@ _KIEM_C0.update({
     "base_centre": lambda V, e, _v: V[e[0]] == _tam(V, e[1:]),
     "height_pyramid": lambda V, e, v: _chieu_cao_sq(V, e, "pyramid") in (None, square(v)),
     "height_prism": lambda V, e, v: _chieu_cao_sq(V, e, "prism") in (None, square(v)),
+    # T12: "cạnh bên" của lăng trụ gọi tên — mọi cạnh day[i]–tren[i]
+    "lateral_prism": lambda V, e, v: all((V[e[i + len(e) // 2]] - V[e[i]]).norm_sq() == square(v)
+                                         for i in range(len(e) // 2)),
 })
 _SO_DINH_C0.update({"cuboid": 8, "cube": 8, "cube_edge": 8, "regular_square_pyramid": 5, "regular_hexagonal_pyramid": 7,
+                    "base_regular_hexagon": 6,
                     "regular_triangular_pyramid": 4, "regular_tetrahedron": 4, "edge_all": 4, "apothem": 5})
-_LANG_TRU_C0 = {"right_prism", "oblique_prism", "height_prism"}
+_LANG_TRU_C0 = {"right_prism", "oblique_prism", "height_prism", "lateral_prism"}
 _CHOP_C0 = {"lateral_edge", "base_centre", "height_pyramid"}
-_CO_GIA_TRI_C0 = {"cube_edge", "edge_all", "lateral_edge", "apothem", "height_pyramid", "height_prism"}
+_CO_GIA_TRI_C0 = {"cube_edge", "edge_all", "lateral_edge", "lateral_prism", "apothem", "height_pyramid", "height_prism"}
 
 
 def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc", inv: tuple = ()) -> list[RangBuoc]:
@@ -1506,7 +1592,8 @@ def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc", inv: tuple = ()) -> l
     khoi = {r.entities: r.kind for r in rb if r.kind in ("pyramid", "prism")}
     sai = []
     for r in rb:
-        kind = f"height_{khoi.get(r.entities)}" if r.kind == "height" else r.kind
+        kind = f"height_{khoi.get(r.entities)}" if r.kind == "height" else (
+            "lateral_prism" if r.kind == "lateral_edge" and khoi.get(r.entities) == "prism" else r.kind)
         kiem, n, so = _KIEM_C0.get(kind), _SO_DINH_C0.get(kind), len(r.entities)
         if kiem is None or (n is not None and so != n) or (r.kind == "line_perp_plane"
                                                            and len(set(r.entities[2:])) < 3):
@@ -1687,8 +1774,8 @@ def _doc_de(de: str) -> tuple:
 def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
     """exact-dimensions — metric của KHUNG chương trình, dẫn xuất từ ĐỀ; `None` = khung Euclid (đồng nhất).
 
-    Chỉ khi đề là chóp tam giác đều / tứ diện đều (`la_chop_tam_giac_deu`) hoặc chóp lục giác đều (T11) và CỐ ĐỊNH b², h²
-    (`kich_thuoc_t8`, cùng thẩm quyền với T8), và chương trình KHAI bốn đỉnh bằng toạ độ khung: sáu độ dài² (ba cạnh
+    Chỉ khi đề là chóp tam giác đều / tứ diện đều (`la_chop_tam_giac_deu`), chóp lục giác đều (T11) hoặc lăng trụ đều
+    (T12, `kich_thuoc_t12`) và CỐ ĐỊNH b², h² (`kich_thuoc_t8`, cùng thẩm quyền với T8), và chương trình KHAI bốn đỉnh bằng toạ độ khung: sáu độ dài² (ba cạnh
     đáy b², ba cạnh bên b²/3 + h²) xác định DUY NHẤT metric (`geometry.metric.gram_from_lengths`). Toạ độ khung
     không mang độ dài nào — nên bố cục không thể thành giả thiết. Metric đồng nhất (khung Euclid sẵn đúng) ⇒ `None`,
     giữ nguyên từng byte đường cũ. Mọi thứ khác (thiếu kích thước, mâu thuẫn, khung phẳng, đỉnh dựng chứ không khai)
@@ -1699,6 +1786,21 @@ def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
     if cach := _cach_doc_chop_khong_ten(rb, de or "", prog):
         rb = _gan_chop(rb, cach[0])
     co_ten = {r.entities for r in rb if r.kind == "pyramid" and r.entities}
+    lang_tru = {r.entities for r in rb if r.kind == "prism" and r.entities}
+    if not co_ten and len(lang_tru) == 1:      # T12: A, B, C, A' — AC² = b² | 3b², AA'² = h², BA'² = b² + h²
+        ent = next(iter(lang_tru))
+        n = len(ent) // 2
+        day, tren = ent[:n], ent[n:]
+        if not any(r.kind == "right_prism" and r.entities == ent for r in rb) or not la_lang_tru_deu(rb, day):
+            return None
+        kt = kich_thuoc_t12(rb, day, tren, ent, do_dai)
+        if isinstance(kt, str) or None in kt:
+            return None
+        b2, h2 = kt
+        ac2 = b2 if n == 3 else 3 * b2
+        dinh, dai = (*day[:3], tren[0]), {(0, 1): b2, (1, 2): b2, (0, 2): ac2, (0, 3): h2, (1, 3): b2 + h2,
+                                          (2, 3): ac2 + h2}
+        return _gram_khung(prog, dinh, dai)
     if len(co_ten) != 1:
         return None
     ent = next(iter(co_ten))
@@ -1719,6 +1821,11 @@ def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
         dinh, dai = (S, *day), {(1, 2): b2, (2, 3): b2, (1, 3): b2, (0, 1): l2, (0, 2): l2, (0, 3): l2}
     else:
         return None
+    return _gram_khung(prog, dinh, dai)
+
+
+def _gram_khung(prog: dict, dinh: tuple, dai: dict) -> "_metric.Metric | None":
+    """Metric khung từ bốn đỉnh KHAI bằng toạ độ khung và sáu độ dài² của đề; đồng nhất ⇒ `None`."""
     toa: dict[str, Any] = {}
     for m in prog.get("memory_declarations", []):
         if m.get("type") == "point3" and isinstance(m.get("initial_value"), list):

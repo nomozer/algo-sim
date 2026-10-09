@@ -112,6 +112,16 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             "regular_hexagonal_pyramid", "Chóp lục giác đều", "foundation_only",
             "hệ: bộ đọc + khuôn T11 + metric khung (do_luong_cua), 17 hàng ghi trước "
             "(regular-hexagonal-pyramid/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"),
+        # ── LĂNG TRỤ ĐỀU (regular-prisms, G05) ───────────────────────────
+        #
+        # Miền đã khai (ASSUMPTION_CERTIFICATE_AMENDMENT §27): `lăng trụ tam giác đều / lục giác đều X.Y`, `lăng trụ đứng
+        # X.Y có đáy … là tam giác đều / lục giác đều`, cạnh đáy + chiều cao hoặc cạnh bên (hữu tỉ hoặc căn). Khung affine +
+        # metric từ đề (như T8/T11). Lăng trụ tứ giác đều, ngũ giác đều, lăng trụ xiên đáy đều: ngoài lát cắt.
+        # `foundation_only`: prompt KHÔNG đổi, chưa đo mô hình; compiler không có họ này.
+        NangLucSanPham(
+            "regular_prism", "Lăng trụ tam giác đều · lăng trụ lục giác đều", "foundation_only",
+            "hệ: bộ đọc + khuôn T12 + metric khung (do_luong_cua), 25 hàng ghi trước "
+            "(regular-prisms/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"),
         # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
         #
         # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).

@@ -208,7 +208,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 117 -> 118 (docs-cleanup): từ chối T8 thiếu kích thước nêu đúng nguyên
     # nhân SOURCE thay cho UNKNOWN; phán quyết vẫn là unsupported.
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
-    assert str(CACHE_VERSION) == "124"
+    # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
+    assert str(CACHE_VERSION) == "125"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
