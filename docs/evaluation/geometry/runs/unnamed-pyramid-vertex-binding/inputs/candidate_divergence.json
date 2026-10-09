@@ -1,0 +1,27 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "unnamed-pyramid-vertex-binding (run unnamed-pyramid-vertex-binding — policy A: refuse unnamed regular pyramids whose vertices the text does not fix)",
+  "corrects": "docs/evaluation/geometry/runs/unnamed-regular-pyramid-grounding/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "b13a3ef1c34cd41dbae0f772c63e3ecdcc9a8243bf84f656c778c02a99422a72",
+  "current_candidate_source_commit": "5669292645d673637c5040e7b7d18e1d38fcf09b",
+  "current_candidate_frozen_at": "1258bbcd3d540d630f873cba54fdaaeb81d86ab6",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/pa freeze) at 1258bbcd; product commit 56692926; 102 files; --verify match (diagnostics/freeze_56692926.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 122 → 123: 12 statements served under 122 are refused now (re-run LOCAL on a7c56942 and on the branch, logs identical to Cloud's); cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "d07a92decc0fe635ff32ea858ef86ddd891cc355ff1eef42ffba1d35685ea17e",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "unnamed-pyramid-vertex-binding backend/app changes (policy A, amendment §25): shape_constraint.neu_khoi_da_dien puts every unnamed regular-pyramid claim `()` in the U3 refusal zone; assumption_gate._nhan_khuon returns TEMPLATE_NOT_MATCHED for such a claim when §24 could not bind it (⇒ ASSUMPTION_INVARIANCE_UNPROVEN); CACHE_VERSION 122 → 123 in main.py. No new parser, kernel, solver, compiler, template, prompt, grammar card, schema or capability change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/shape_constraint.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate b13a3ef1 (product commit 56692926) is the current product identity on fix/unnamed-pyramid-vertex-binding. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 123
+}
