@@ -1,0 +1,1390 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "c0-whole-solid-reader",
+ "written": "2026-10-09, after the inventory, before the baseline probe and before any product change",
+ "rule": "C0 rows: the text pins every vertex by coordinates ({coords} from `points`); contract + LLM-style program (declares the points from their facts, builds `solid`, measures volume) through verify_and_compile, via ../c0-whole-solid-grounding/diagnostics/c0_whole_solid_cases.py. `claims` = the whole-solid premises a human reads in the GIVENS (goal clauses, questions and negations excluded), written by hand; oracle.py checks them on the coordinates without product code. expect = served:<V> | refused | baseline (outcome kept as on main; documented gap).",
+ "c1_rule": "C1 equivalence (no coordinates): every row of the regular-square-pyramid corpus (tests/geometry/test_regular_square_pyramid.py NHAN) and of the regular-triangular-pyramid corpus whose givens use 'hình chóp tứ/tam giác đều X.Y' is re-run with that phrase rewritten as (a) 'hình chóp tứ/tam giác đều có đỉnh X và đáy Y' and (b) 'hình chóp đều X.Y', same program. Expected on the candidate: outcome(rewrite) == outcome(canonical) for every row, and reader output equal to the canonical one up to spans. Canonical rows must not change. Transitions vs main are counted, not assumed to be improvements.",
+ "rows": {
+  "P1_C_square": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "refused"
+  },
+  "P1_K_square": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "served:4"
+  },
+  "P1_C_renamed_fractions": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh P và đáy MNQR, với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     "3/2",
+     0,
+     0
+    ],
+    "Q": [
+     "3/2",
+     "3/2",
+     0
+    ],
+    "R": [
+     0,
+     "3/2",
+     0
+    ],
+    "P": [
+     0,
+     0,
+     2
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "P",
+    "base": [
+     "M",
+     "N",
+     "Q",
+     "R"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "P",
+      [
+       "M",
+       "N",
+       "Q",
+       "R"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "refused"
+  },
+  "P1_K_renamed_fractions": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh P và đáy MNQR, với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     "3/2",
+     0,
+     0
+    ],
+    "Q": [
+     "3/2",
+     "3/2",
+     0
+    ],
+    "R": [
+     0,
+     "3/2",
+     0
+    ],
+    "P": [
+     "3/4",
+     "3/4",
+     2
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "P",
+    "base": [
+     "M",
+     "N",
+     "Q",
+     "R"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "P",
+      [
+       "M",
+       "N",
+       "Q",
+       "R"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "served:3/2"
+  },
+  "P1_C_triangular": {
+   "text": "Cho hình chóp tam giác đều có đỉnh S và đáy ABC với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     2,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "refused"
+  },
+  "P1_K_triangular": {
+   "text": "Cho hình chóp tam giác đều có đỉnh S và đáy ABC với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     "4/3",
+     "4/3",
+     "4/3"
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "served:1/2"
+  },
+  "P1_C_question_names_solid": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "refused"
+  },
+  "P1_C_la_comma_form": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh là S, đáy là ABCD; {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "apex_base",
+   "expect": "refused"
+  },
+  "P1_K_not_regular_no_claim": {
+   "text": "Cho hình chóp có đỉnh S và đáy ABCD với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "apex_base",
+   "expect": "served:4",
+   "note": "no 'đều': no regularity claim; nothing to contradict"
+  },
+  "P3_C_square": {
+   "text": "Cho hình chóp đều S.ABCD với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "refused"
+  },
+  "P3_K_square": {
+   "text": "Cho hình chóp đều S.ABCD với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "served:4"
+  },
+  "P3_C_triangular": {
+   "text": "Cho hình chóp đều S.ABC với {coords}. Tính thể tích khối chóp S.ABC.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     2,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "refused"
+  },
+  "P3_K_triangular": {
+   "text": "Cho hình chóp đều S.ABC với {coords}. Tính thể tích khối chóp S.ABC.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     "4/3",
+     "4/3",
+     "4/3"
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "served:1/2"
+  },
+  "P3_K_renamed_fractions": {
+   "text": "Cho khối chóp đều P.MNQR với {coords}. Tính thể tích khối chóp P.MNQR.",
+   "points": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     "3/2",
+     0,
+     0
+    ],
+    "Q": [
+     "3/2",
+     "3/2",
+     0
+    ],
+    "R": [
+     0,
+     "3/2",
+     0
+    ],
+    "P": [
+     "3/4",
+     "3/4",
+     2
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "P",
+    "base": [
+     "M",
+     "N",
+     "Q",
+     "R"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "P",
+      [
+       "M",
+       "N",
+       "Q",
+       "R"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "served:3/2"
+  },
+  "P3_C_solid_after_coordinates": {
+   "text": "Với {coords}, cho hình chóp đều S.ABCD. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "regular_notation",
+   "expect": "refused"
+  },
+  "P2_C_unnamed": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "phrasing": "unnamed",
+   "expect": "baseline",
+   "note": "the givens name no apex/base; outside the route's polyhedron refusal zone — outcome kept as on main, recorded in report (not a fix target unless the C1 probe shows a safe change)"
+  },
+  "P2_C_unnamed_question_names_solid": {
+   "text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid_unnamed": true
+    }
+   ],
+   "phrasing": "unnamed",
+   "expect": "baseline",
+   "note": "the solid is named only in the question; co-reference not asserted by the givens — kept as on main"
+  },
+  "G_K_goal_clause": {
+   "text": "Cho hình chóp S.ABCD với {coords}. Chứng minh S.ABCD là hình chóp đều. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "goal",
+   "expect": "served:4"
+  },
+  "G_K_goal_clause_apex_base": {
+   "text": "Cho hình chóp S.ABCD với {coords}. Chứng minh rằng hình chóp tứ giác đều có đỉnh S và đáy ABCD có thể dựng được. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "goal",
+   "expect": "served:4"
+  },
+  "Q_K_question_regular_notation": {
+   "text": "Cho các điểm {coords}. Có hình chóp đều S.ABCD nào nhận các điểm đó làm đỉnh không? Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "question",
+   "expect": "served:4"
+  },
+  "N_K_negation_plain": {
+   "text": "Cho hình chóp S.ABCD không phải là hình chóp đều, với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "negation",
+   "expect": "served:4"
+  },
+  "N_K_negation_regular_notation": {
+   "text": "Cho {coords}; S.ABCD không phải là hình chóp đều S.ABCD. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "negation",
+   "expect": "served:4"
+  },
+  "N_K_negation_canonical_notation": {
+   "text": "Cho {coords}; đây không phải là hình chóp tứ giác đều S.ABCD. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [],
+   "phrasing": "negation",
+   "expect": "served:4",
+   "note": "canonical notation negated: a negated claim is not a premise (pre-existing reader behaviour probed at baseline)"
+  },
+  "M_K_two_pyramids": {
+   "text": "Cho hình chóp đều S.ABCD và hình chóp T.ABCD với {coords}. Tính thể tích khối chóp T.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ],
+    "T": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "T",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "several_solids",
+   "expect": "served:4"
+  },
+  "M_C_two_pyramids": {
+   "text": "Cho hình chóp đều S.ABCD và hình chóp T.ABCD với {coords}. Tính thể tích khối chóp T.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     2,
+     3
+    ],
+    "T": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "T",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "several_solids",
+   "expect": "refused"
+  },
+  "M_K_two_pyramids_apex_base": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD, và hình chóp T.ABCD, với {coords}. Tính thể tích khối chóp T.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ],
+    "T": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "T",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "several_solids",
+   "expect": "served:4"
+  },
+  "M_C_two_pyramids_apex_base": {
+   "text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD, và hình chóp T.ABCD, với {coords}. Tính thể tích khối chóp T.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     2,
+     3
+    ],
+    "T": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "T",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "claims": [
+    {
+     "regular_pyramid": [
+      "S",
+      [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "phrasing": "several_solids",
+   "expect": "refused"
+  }
+ }
+}
