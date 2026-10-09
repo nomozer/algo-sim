@@ -1,0 +1,17 @@
+{"row": "H1_side_height", "expect": "served:6√3", "servable": true, "value": "6√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H2_side_lateral", "expect": "served:12", "servable": true, "value": "12", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H3_renamed_vertices", "expect": "served:√3", "servable": true, "value": "√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H4_phrasing_chop_deu", "expect": "served:6√3", "servable": true, "value": "6√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H5_phrasing_apex_base", "expect": "served:6√3", "servable": true, "value": "6√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H6_radical_side", "expect": "served:3√3", "servable": true, "value": "3√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H7_lateral_length", "expect": "served:√13", "servable": true, "value": "√13", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "H8_fractional_side", "expect": "served:3√3/4", "servable": true, "value": "3√3/4", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "N1_missing_height", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N2_contradiction", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N3_degenerate", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N4_program_apex_off_centre", "expect": "refused", "servable": true, "value": "6√3", "stage": "served", "reason": null, "certificate": "C1", "chart_metric": true}
+{"row": "N5_program_not_regular_hexagon", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N6_not_regular_text", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N7_goal_clause", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N8_negation", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}
+{"row": "N9_pentagon_out_of_scope", "expect": "refused", "servable": false, "value": null, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "chart_metric": null}

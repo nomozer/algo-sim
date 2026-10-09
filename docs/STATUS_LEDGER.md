@@ -1563,3 +1563,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `labels.json` · `label_corrections.json` · `oracle.py`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (regular-hexagonal-pyramid, 2026-10-10):** user approval `runs/regular-hexagonal-pyramid/APPROVAL.md`; integration gate `diagnostics/gates_55f51395.log` PASS; `main` fast-forwarded `f20caf8a` → `55f51395` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = REGULAR_PRISMS
+- **RUN_ID:** regular-prisms (task g05-regular-prisms; Cloud implementation, LOCAL verification; branch feat/g05-regular-prisms, deleted after integration)
+- **DATE:** 2026-10-09 (Cloud) · 2026-10-10 (LOCAL verification + integration)
+- **START_BASE:** ea85216b
+- **CODE_COMMIT_OR_NONE:** 00770c34 + d8b9da74 (G05 regular triangular / hexagonal prisms, amendment §27: reader (not with `xiên`); template T12 with a text-derived prism metric (affine chart); C0 regular hexagon + prism lateral edges checked on given coordinates; product_capability row foundation_only; CACHE_VERSION 125)
+- **CANDIDATE:** `93077b51d033c198…` (product `d8b9da74`, 102 files; frozen LOCAL eaeedb38) · CACHE_VERSION 125 (bump: 6 + 2 C0 served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** survey + preregistration 680d830a; product 00770c34; docs efe53d20; fix d8b9da74; docs 0edc5372 + 9148450d; candidate refreeze eaeedb38; LOCAL record 9b783cb4
+- **CLASSIFICATION:** capability slice (G05, template T12); foundation_only (route verified on model-style programs, model not measured)
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at eaeedb38 (pytest 7729 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo 5/5, crash surface 6/6)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-prisms/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-prisms/
+- **PASS:** 13/13 positive rows refused → served, C1, oracle + independent metric check (G == scene chart_metric); 12/12 boundary rows refused → refused; C0 6 prism + 2 pyramid-hexagon-base contradictions served → refused; Scene3D 6/5/9 and 12/8/18, Euler 2; renderer transform 13/13; browser X4, X5, T1, T5; 8 historical probes byte-identical; Tier-A 49/49; new tests 64/64; node harness 102/102
+- **CLOSED:** NONE (ISSUE-ARCH-G05-REMAINING-BASES narrowed: regular triangular / hexagonal prisms served)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward ea85216b → 9b783cb4) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user choice; next G05 slice or another family not started
+- **FINAL_DECISION:** MERGED_AND_PUSHED (capability limits OPEN: foundation_only — no live Gemini result; no compiler T12 family; unnamed regular prism/pyramid, oblique prism with a regular base, some 'tứ giác đều' prism phrasings, 'lăng trụ tam giác đều X.Y' without 'hình/khối', regular pentagon, bases by angle, concave bases; presentation limits: labels on very slender solids, answer-line placement not verified; no token or real-Gemini claim; no mathematical error found)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** capability evidence for the exact-dimensions contract (affine chart + text-derived metric) on the registered corpus only
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `labels.json` · `oracle.py`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (regular-prisms, 2026-10-10):** user approval `runs/regular-prisms/APPROVAL.md`; integration gate `diagnostics/gates_9b783cb4.log` PASS; `main` fast-forwarded `ea85216b` → `9b783cb4` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)

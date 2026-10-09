@@ -50,5 +50,18 @@
     "limits": "foundation_only — route verified on model-style programs, no live Gemini; compiler has no regular-prism family; not supported: unnamed regular prism/pyramid, oblique prism with a regular base, 'lăng trụ (đứng) tứ giác đều X.Y' as a regular prism, 'lăng trụ tam giác đều X.Y' without 'hình/khối', regular pentagon, bases by angle, concave bases; no token-reduction claim; no claim of improved real Gemini capability from the hand-written corpus alone",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "ea85216b96af23eddbad4bb746720fd2d0a316f0",
+    "to": "9b783cb4188a6c5733b27bd86426dbf7a57f64e9",
+    "method": "git merge --ff-only feat/g05-regular-prisms, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 9b783cb4 = main = origin/main",
+    "integration_gate": "diagnostics/gates_9b783cb4.log (candidate 93077b51, cache 125, LLM_ONLY, routing unchanged, model surface: product_capability.py only (foundation_only row, not a capability-hash input), schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at eaeedb38, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "feat/g05-regular-prisms (9b783cb4) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "temp_cleanup": "regression logs kept in diagnostics/local_verification/regression/; D:/tmp/prism-dist and D:/tmp/prism_local verified (created by this run, no process) and removed by exact path; D:/tmp/prism_labels.json not in the approved list — kept",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "capability: foundation_only — no live Gemini result; compiler has no regular-prism (T12) family; unnamed regular prism/pyramid, oblique prism with a regular base, some 'lăng trụ (đứng) tứ giác đều' phrasings, 'lăng trụ tam giác đều X.Y' without 'hình/khối' (refused), regular pentagon, bases by angle, concave bases not supported · presentation: vertex labels may be hidden on very slender solids; answer-line placement in the UI not verified · no token-reduction or real-Gemini-improvement claim · no mathematical error found; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

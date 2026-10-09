@@ -13,12 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
-- **Việc `regular-prisms` (2026-10-09, run [`regular-prisms`](evaluation/geometry/runs/regular-prisms/), Cloud, nhánh
-  `feat/g05-regular-prisms`, LOCAL đã kiểm, CHƯA tích hợp):** lát cắt G05 kế tiếp — lăng trụ tam giác đều và lăng trụ lục giác đều qua
+- **Việc `regular-prisms` (2026-10-09, run [`regular-prisms`](evaluation/geometry/runs/regular-prisms/),
+  Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `9b783cb4`):** lát cắt G05 kế tiếp — lăng trụ tam giác đều và lăng trụ lục giác đều qua
   khuôn T12 + metric khung lăng trụ (amendment §27): 13 đề trước bị từ chối nay phục vụ đúng (C1, Scene3D 12/8/18 và
   6/5/9 có `chart_metric`); 12 biên từ chối; `CACHE_VERSION` 125 (C0 mâu thuẫn served → refused); `foundation_only`;
-  candidate `93077b51…` đóng băng LOCAL, kiểm hình trên trình duyệt (`handoff.md` của run). Việc duy nhất: người dùng quyết
-  merge. Còn trong G05: chóp/lăng trụ đều không tên, lăng trụ xiên đáy đều, ngũ giác đều, đáy theo góc, đáy lõm.
+  candidate `93077b51…` đóng băng LOCAL, kiểm hình trên trình duyệt (`handoff.md` của run); phê duyệt: `APPROVAL.md`
+  của run. Việc kế tiếp: người dùng chọn. Còn trong G05: chóp/lăng trụ đều không tên, lăng trụ xiên đáy đều, ngũ giác đều, đáy theo góc, đáy lõm.
 
 - **Việc `regular-hexagonal-pyramid` (2026-10-09, run [`regular-hexagonal-pyramid`](evaluation/geometry/runs/regular-hexagonal-pyramid/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `55f51395`):** lát cắt G05 đầu tiên sau Policy A — chóp lục
