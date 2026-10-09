@@ -1,0 +1,7 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 6a1801e787753726dab3f043f73896e366d832b4; bash -c cd backend && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/lock_cache_identity.py --verify && D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/generate_generic_tier_a_fixtures.py --out ../docs/evaluation/geometry/runs/classroom-band-fit/inputs
+2026-10-09T05:17:50Z
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 7f3f042309dd1c54…).
+Khoá khớp · CACHE_VERSION 118 · môi trường b1714b566e25c912…
+Wrote 49 frozen fixtures to D:\tmp\class band fit\docs\evaluation\geometry\runs\classroom-band-fit\inputs\fixtures
+exit=0
+2026-10-09T05:17:57Z

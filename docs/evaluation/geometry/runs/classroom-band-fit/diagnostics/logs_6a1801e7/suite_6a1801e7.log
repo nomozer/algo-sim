@@ -1,0 +1,29 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 6a1801e787753726dab3f043f73896e366d832b4; node frontend/scripts/compiler-scene-replay.mjs --suite frontend/scripts/generic-tier-a-scenarios.json --fixture-root docs/evaluation/geometry/runs/classroom-band-fit/inputs --ra docs/evaluation/geometry/runs/classroom-band-fit/results --screenshots D:/tmp/classband-logs-6a1801e7/images --bo-qua-build --anh-che-do toi-thieu
+2026-10-09T06:01:32Z
+▶ triangular_pyramid/desktop 06:01:33
+▶ triangular_pyramid/mobile 06:02:36
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 06:03:25
+▶ triangular_prism/mobile 06:04:33
+triangular_prism: PASS
+▶ rectangular_pyramid/desktop 06:05:17
+▶ rectangular_pyramid/mobile 06:06:10
+rectangular_pyramid: PASS
+▶ cuboid/desktop 06:06:56
+▶ cuboid/mobile 06:07:58
+cuboid: PASS
+▶ cube/desktop 06:08:50
+▶ cube/mobile 06:10:01
+cube: PASS
+▶ cross_section/desktop 06:10:56
+▶ cross_section/mobile 06:12:21
+cross_section: PASS
+▶ regular_square_pyramid/desktop 06:13:57
+▶ regular_square_pyramid/mobile 06:15:11
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 06:16:07
+▶ regular_triangular_pyramid/mobile 06:17:22
+regular_triangular_pyramid: PASS
+Wrote D:\tmp\class band fit\docs\evaluation\geometry\runs\classroom-band-fit\results\BROWSER_EVIDENCE.json: PASS
+exit=0
+2026-10-09T06:18:30Z

@@ -1,0 +1,7 @@
+# diagnostic recheck, NOT evidence: cuboid only @ 6a1801e7, same dist
+2026-10-09T06:46:31Z
+cuboid/desktop: PASS []
+cuboid/low: PASS []
+cuboid/mobile: PASS []
+W05 focus probe: 3/3 PASS
+exit=0

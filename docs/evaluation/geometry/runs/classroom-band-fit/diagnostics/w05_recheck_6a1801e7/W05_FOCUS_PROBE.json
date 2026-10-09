@@ -1,0 +1,1209 @@
+{
+  "schema_version": "w05-focus-probe/1",
+  "application_llm_calls": 0,
+  "commit": "6a1801e787753726dab3f043f73896e366d832b4",
+  "reason_codes": [],
+  "pass": true,
+  "runs": [
+    {
+      "family": "cuboid",
+      "kind": "desktop",
+      "images": {
+        "layout": null,
+        "menu_hien_thi": null,
+        "resized": null,
+        "after_back": null
+      },
+      "viewport": {
+        "w": 1422,
+        "h": 804
+      },
+      "layout": {
+        "nav_bar": false,
+        "focus_root": true,
+        "scroll_width": 1407,
+        "client_width": 1422,
+        "page_height": 804,
+        "back_text": "Trang chủ",
+        "title_text": "Thể tích khối hộp chữ nhật",
+        "tools": [
+          "Đề bài",
+          "Khám phá",
+          "Hiển thị",
+          "Thêm"
+        ],
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1375,
+          "h": 36
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1375,
+          "h": 685
+        },
+        "controls": {
+          "x": 16,
+          "y": 757,
+          "w": 1375,
+          "h": 35
+        },
+        "solution_card": false
+      },
+      "has_faces": true,
+      "tach_khoi": true,
+      "state": {
+        "before": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_menus": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.066786763807741,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 683,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_resize": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.2009855435492065,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 779,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_fullscreen": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.2009855435492065,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 779,
+            "device_pixel_ratio": 1
+          }
+        }
+      },
+      "menus": {
+        "kham-pha": {
+          "opened": true,
+          "items": [
+            "Thành phần",
+            "Đại lượng"
+          ],
+          "box": {
+            "x": 989,
+            "y": 52,
+            "w": 208,
+            "h": 82
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Thành phần",
+          "focus_after_arrow": "menuitemcheckbox|Đại lượng",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "hien-thi": {
+          "opened": true,
+          "items": [
+            "Hiện tất cả số đo",
+            "Lưới nền"
+          ],
+          "box": {
+            "x": 1093.28125,
+            "y": 52,
+            "w": 208,
+            "h": 240
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Hiện tất cả số đo",
+          "focus_after_arrow": "menuitemcheckbox|Lưới nền",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "them": {
+          "opened": true,
+          "items": [
+            "Cách máy dựng",
+            "Toàn màn hình"
+          ],
+          "box": {
+            "x": 1183,
+            "y": 52,
+            "w": 208,
+            "h": 82
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Cách máy dựng",
+          "focus_after_arrow": "menuitem|Toàn màn hình",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        }
+      },
+      "legend_count": 5,
+      "grid": {
+        "on": true,
+        "off": false
+      },
+      "resized": {
+        "viewport": {
+          "w": 1366,
+          "h": 650
+        },
+        "scroll_width": 1351,
+        "client_width": 1366
+      },
+      "fullscreen": {
+        "supported": true,
+        "entered": true,
+        "state_inside": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.2009855435492065,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 779,
+            "device_pixel_ratio": 1
+          }
+        },
+        "exited": true
+      },
+      "back": {
+        "left_workspace": true,
+        "nav_bar_after": true,
+        "textarea_after": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "low",
+      "images": {
+        "layout": null,
+        "menu_hien_thi": null,
+        "resized": null,
+        "after_back": null
+      },
+      "viewport": {
+        "w": 1348,
+        "h": 554
+      },
+      "layout": {
+        "nav_bar": false,
+        "focus_root": true,
+        "scroll_width": 1333,
+        "client_width": 1348,
+        "page_height": 554,
+        "back_text": "Trang chủ",
+        "title_text": "Thể tích khối hộp chữ nhật",
+        "tools": [
+          "Đề bài",
+          "Khám phá",
+          "Hiển thị",
+          "Thêm"
+        ],
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 1301,
+          "h": 36
+        },
+        "canvas": {
+          "x": 16,
+          "y": 60,
+          "w": 1301,
+          "h": 435
+        },
+        "controls": {
+          "x": 16,
+          "y": 507,
+          "w": 1301,
+          "h": 35
+        },
+        "solution_card": false
+      },
+      "has_faces": true,
+      "tach_khoi": true,
+      "state": {
+        "before": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.7148356401698529,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1299,
+            "viewport_height": 433,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_menus": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.7148356401698529,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1299,
+            "viewport_height": 433,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_resize": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.8613850880406656,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1317,
+            "viewport_height": 529,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_fullscreen": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.8613850880406656,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1317,
+            "viewport_height": 529,
+            "device_pixel_ratio": 1
+          }
+        }
+      },
+      "menus": {
+        "kham-pha": {
+          "opened": true,
+          "items": [
+            "Thành phần",
+            "Đại lượng"
+          ],
+          "box": {
+            "x": 915,
+            "y": 52,
+            "w": 208,
+            "h": 82
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Thành phần",
+          "focus_after_arrow": "menuitemcheckbox|Đại lượng",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "hien-thi": {
+          "opened": true,
+          "items": [
+            "Hiện tất cả số đo",
+            "Lưới nền"
+          ],
+          "box": {
+            "x": 1019.28125,
+            "y": 52,
+            "w": 208,
+            "h": 240
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Hiện tất cả số đo",
+          "focus_after_arrow": "menuitemcheckbox|Lưới nền",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "them": {
+          "opened": true,
+          "items": [
+            "Cách máy dựng",
+            "Toàn màn hình"
+          ],
+          "box": {
+            "x": 1109,
+            "y": 52,
+            "w": 208,
+            "h": 82
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Cách máy dựng",
+          "focus_after_arrow": "menuitem|Toàn màn hình",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        }
+      },
+      "legend_count": 5,
+      "grid": {
+        "on": true,
+        "off": false
+      },
+      "resized": {
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "scroll_width": 1425,
+        "client_width": 1440
+      },
+      "fullscreen": {
+        "supported": true,
+        "entered": true,
+        "state_inside": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              8.663350010909554,
+              8.051230592393997,
+              7.601166279412936
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865389,
+              -0.38302222155948834,
+              0.6634139481689391,
+              0,
+              0.7660444431189781,
+              -0.32139380484326874,
+              0.5566703992264194,
+              0,
+              -2.7755575615628907e-17,
+              0.866025403784439,
+              0.49999999999999906,
+              0,
+              -0.5989064101825375,
+              -0.6769318952752243,
+              -14.029852122945314,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.8613850880406656,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1317,
+            "viewport_height": 529,
+            "device_pixel_ratio": 1
+          }
+        },
+        "exited": true
+      },
+      "back": {
+        "left_workspace": true,
+        "nav_bar_after": true,
+        "textarea_after": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "pass": true
+    },
+    {
+      "family": "cuboid",
+      "kind": "mobile",
+      "images": {
+        "layout": null,
+        "menu_hien_thi": null,
+        "resized": null,
+        "after_back": null
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "layout": {
+        "nav_bar": false,
+        "focus_root": true,
+        "scroll_width": 390,
+        "client_width": 390,
+        "page_height": 844,
+        "back_text": "Trang chủ",
+        "title_text": "Thể tích khối hộp chữ nhật",
+        "tools": [
+          "Đề bài",
+          "Khám phá",
+          "Hiển thị",
+          "Thêm"
+        ],
+        "top_row": {
+          "x": 16,
+          "y": 12,
+          "w": 358,
+          "h": 152
+        },
+        "canvas": {
+          "x": 16,
+          "y": 219,
+          "w": 358,
+          "h": 485
+        },
+        "controls": {
+          "x": 16,
+          "y": 716,
+          "w": 358,
+          "h": 82
+        },
+        "solution_card": false
+      },
+      "has_faces": true,
+      "tach_khoi": true,
+      "state": {
+        "before": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              9.491769585620487,
+              8.741475034946086,
+              8.255681437649235
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865393,
+              -0.3830222215594889,
+              0.6634139481689384,
+              0,
+              0.7660444431189779,
+              -0.32139380484326957,
+              0.5566703992264195,
+              0,
+              2.7755575615628907e-17,
+              0.8660254037844386,
+              0.4999999999999999,
+              0,
+              -0.5951664915473386,
+              -0.70461525591695,
+              -15.29093345226217,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.909541692713811,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 483,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_menus": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              9.491769585620487,
+              8.741475034946086,
+              8.255681437649235
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865393,
+              -0.3830222215594889,
+              0.6634139481689384,
+              0,
+              0.7660444431189779,
+              -0.32139380484326957,
+              0.5566703992264195,
+              0,
+              2.7755575615628907e-17,
+              0.8660254037844386,
+              0.4999999999999999,
+              0,
+              -0.5951664915473386,
+              -0.70461525591695,
+              -15.29093345226217,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.909541692713811,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 483,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_resize": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              9.491769585620487,
+              8.741475034946086,
+              8.255681437649235
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865393,
+              -0.3830222215594889,
+              0.6634139481689384,
+              0,
+              0.7660444431189779,
+              -0.32139380484326957,
+              0.5566703992264195,
+              0,
+              2.7755575615628907e-17,
+              0.8660254037844386,
+              0.4999999999999999,
+              0,
+              -0.5951664915473386,
+              -0.70461525591695,
+              -15.29093345226217,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.9117498656772014,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 463,
+            "device_pixel_ratio": 1
+          }
+        },
+        "after_fullscreen": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              9.491769585620487,
+              8.741475034946086,
+              8.255681437649235
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865393,
+              -0.3830222215594889,
+              0.6634139481689384,
+              0,
+              0.7660444431189779,
+              -0.32139380484326957,
+              0.5566703992264195,
+              0,
+              2.7755575615628907e-17,
+              0.8660254037844386,
+              0.4999999999999999,
+              0,
+              -0.5951664915473386,
+              -0.70461525591695,
+              -15.29093345226217,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.9117498656772014,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 463,
+            "device_pixel_ratio": 1
+          }
+        }
+      },
+      "menus": {
+        "kham-pha": {
+          "opened": true,
+          "items": [
+            "Thành phần",
+            "Đại lượng"
+          ],
+          "box": {
+            "x": 16,
+            "y": 168,
+            "w": 358,
+            "h": 98
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Thành phần",
+          "focus_after_arrow": "menuitemcheckbox|Đại lượng",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "hien-thi": {
+          "opened": true,
+          "items": [
+            "Hiện tất cả số đo",
+            "Lưới nền"
+          ],
+          "box": {
+            "x": 16,
+            "y": 168,
+            "w": 358,
+            "h": 185.5
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Hiện tất cả số đo",
+          "focus_after_arrow": "menuitemcheckbox|Lưới nền",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        },
+        "them": {
+          "opened": true,
+          "items": [
+            "Cách máy dựng",
+            "Toàn màn hình"
+          ],
+          "box": {
+            "x": 16,
+            "y": 168,
+            "w": 358,
+            "h": 98
+          },
+          "inside_viewport": true,
+          "focus_in_menu": true,
+          "focus_first": "menuitemcheckbox|Cách máy dựng",
+          "focus_after_arrow": "menuitem|Toàn màn hình",
+          "arrow_moves": true,
+          "escape_closed": true,
+          "focus_returned": true,
+          "outside_closed": true
+        }
+      },
+      "legend_count": 5,
+      "grid": {
+        "on": true,
+        "off": false
+      },
+      "resized": {
+        "viewport": {
+          "w": 430,
+          "h": 932
+        },
+        "scroll_width": 415,
+        "client_width": 430
+      },
+      "fullscreen": {
+        "supported": true,
+        "entered": true,
+        "state_inside": {
+          "step": "Bước 5/5",
+          "selected": "the_tich_khoi_hop",
+          "camera": {
+            "position": [
+              9.491769585620487,
+              8.741475034946086,
+              8.255681437649235
+            ],
+            "view_matrix_column_major": [
+              -0.6427876096865393,
+              -0.3830222215594889,
+              0.6634139481689384,
+              0,
+              0.7660444431189779,
+              -0.32139380484326957,
+              0.5566703992264195,
+              0,
+              2.7755575615628907e-17,
+              0.8660254037844386,
+              0.4999999999999999,
+              0,
+              -0.5951664915473386,
+              -0.70461525591695,
+              -15.29093345226217,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.9117498656772014,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 463,
+            "device_pixel_ratio": 1
+          }
+        },
+        "exited": true
+      },
+      "back": {
+        "left_workspace": true,
+        "nav_bar_after": true,
+        "textarea_after": true
+      },
+      "exceptions": [],
+      "result": {
+        "pass": true,
+        "reason_codes": []
+      },
+      "pass": true
+    }
+  ],
+  "capture_policy": {
+    "mode": "toi-thieu",
+    "review_set_patterns": 0,
+    "oracle_states": [
+      "neutral_final.png",
+      "rotated_neutral.png"
+    ],
+    "goi": 12,
+    "tao": 0,
+    "bo_qua": 12,
+    "loi": 0
+  }
+}

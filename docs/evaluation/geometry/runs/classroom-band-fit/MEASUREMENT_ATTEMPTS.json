@@ -16,6 +16,13 @@
       "logs": "diagnostics/attempts/a2_9284202d/",
       "outcome": "INCOMPLETE",
       "detail": "fixtures + build ok; class band probe measured 24/24 (log) then crashed writing results/CLASS_BAND_PROBE.json (results/ does not exist in a clean worktree — probe bug, fixed: mkdir of the output directory); phone/landscape probe 53/56 = the pre-existing triangular_prism/low FIGURE_LEFT_CANVAS_AFTER_ORBIT + 2 environment errors (cuboid/low POLL_TIMEOUT, regular_triangular_pyramid/landscape WS_OPEN_TIMEOUT); Tier-A suite crashed at start with WS_OPEN_TIMEOUT (Chrome did not open its DevTools socket within 20 s under load: software WebGL renderer ~5 cores); W02 16/16, W04 24/24, W05 24/24. Not evidence: Tier-A did not run and the class band JSON was not written."
+    },
+    {
+      "attempt": 3,
+      "commit": "6a1801e7",
+      "logs": "diagnostics/logs_6a1801e7/",
+      "outcome": "AUTHORITATIVE",
+      "detail": "every step of measure.sh in one run on product 45f5a7f0 / candidate 7f3f0423...: class band 24/24 (2 cases passed after the registered single retry for ENV_STYLESHEET_NOT_APPLIED, recorded in env_retries); phone/landscape probe without a band 55/56 = the pre-existing triangular_prism/low FIGURE_LEFT_CANVAS_AFTER_ORBIT only (same as phone-landscape-layout); Tier-A 8/8 in one run, no family filter; W02 16/16; W04 24/24; W05 23/24 = cuboid/desktop RUN_ERROR POLL_TIMEOUT (page never loaded, no assertion evaluated; a scene without a class band). Diagnostic recheck of the cuboid family alone at the same commit, NOT merged: 3/3 (diagnostics/w05_recheck_6a1801e7/)."
     }
   ]
 }

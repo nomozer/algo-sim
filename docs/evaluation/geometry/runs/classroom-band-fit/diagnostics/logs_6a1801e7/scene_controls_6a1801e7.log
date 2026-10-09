@@ -1,0 +1,21 @@
+# cwd: <worktree '/d/tmp/class band fit'> @ 6a1801e787753726dab3f043f73896e366d832b4; timeout --signal=KILL 2400 node frontend/scripts/check-scene-controls.mjs --ho triangular_pyramid,rectangular_pyramid,triangular_prism,cuboid,cube,cross_section,regular_square_pyramid,regular_triangular_pyramid --fixture-root docs/evaluation/geometry/runs/classroom-band-fit/inputs --ra docs/evaluation/geometry/runs/classroom-band-fit/results --anh D:/tmp/classband-logs-6a1801e7/images --bo-qua-build --anh-che-do toi-thieu
+2026-10-09T06:18:30Z
+triangular_pyramid/desktop: PASS []
+triangular_pyramid/mobile: PASS []
+rectangular_pyramid/desktop: PASS []
+rectangular_pyramid/mobile: PASS []
+triangular_prism/desktop: PASS []
+triangular_prism/mobile: PASS []
+cuboid/desktop: PASS []
+cuboid/mobile: PASS []
+cube/desktop: PASS []
+cube/mobile: PASS []
+cross_section/desktop: PASS []
+cross_section/mobile: PASS []
+regular_square_pyramid/desktop: PASS []
+regular_square_pyramid/mobile: PASS []
+regular_triangular_pyramid/desktop: PASS []
+regular_triangular_pyramid/mobile: PASS []
+W02 probe: 16/16 PASS
+exit=0
+2026-10-09T06:24:06Z

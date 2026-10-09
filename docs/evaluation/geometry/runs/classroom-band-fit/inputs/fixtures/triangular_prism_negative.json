@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "triangular_prism_non_positive",
+  "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 0, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+  "source": "deterministic_compiler_production_refusal",
+  "product_commit_sha": "45f5a7f02fd6769779cabf2eba8fc4b8c892f37e",
+  "product_tree_sha": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "NON_POSITIVE_LENGTH",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "semantic_program_invalid",
+    "stage_reached": "semantic_analyze",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "NON_POSITIVE_LENGTH",
+    "reason_subjects": [
+      "AB"
+    ],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Đề bài cho độ dài AB bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+  },
+  "source_reason_code": "NON_POSITIVE_LENGTH"
+}

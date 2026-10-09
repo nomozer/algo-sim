@@ -1,0 +1,25 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_triangular_pyramid_radical_ungrounded",
+  "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 3√2. Tính thể tích khối chóp S.ABC.",
+  "source": "rtp_w01_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "45f5a7f02fd6769779cabf2eba8fc4b8c892f37e",
+  "product_tree_sha": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "grounding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+    "reason_subjects": [],
+    "refusal_cause": "SOURCE",
+    "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+  },
+  "removed_from_text": "chiều cao bằng √3",
+  "refusal_cause": "SOURCE",
+  "source_reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+}
