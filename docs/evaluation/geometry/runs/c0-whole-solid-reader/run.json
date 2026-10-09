@@ -10,5 +10,16 @@
   "cache_version_at_start": "120",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "3660523",
+    "product_fix": "7d55153",
+    "docs": "a1bedef (handoff/issues/state) + the final evidence commit"
+  },
+  "cache_version_after": "121",
+  "candidate_refreeze_required": true,
+  "issue_status": {
+    "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ": "OPEN, narrowed to the unnamed phrasing",
+    "ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE": "OPEN (new)"
+  },
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

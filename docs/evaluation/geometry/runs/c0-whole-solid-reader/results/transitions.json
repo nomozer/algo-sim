@@ -1,0 +1,363 @@
+{
+ "c0_labels": {
+  "served→refused": {
+   "count": 10,
+   "rows": [
+    "P1_C_square",
+    "P1_C_renamed_fractions",
+    "P1_C_triangular",
+    "P1_C_question_names_solid",
+    "P1_C_la_comma_form",
+    "P3_C_square",
+    "P3_C_triangular",
+    "P3_C_solid_after_coordinates",
+    "M_C_two_pyramids",
+    "M_C_two_pyramids_apex_base"
+   ]
+  },
+  "served→served": {
+   "count": 16,
+   "rows": [
+    "P1_K_square",
+    "P1_K_renamed_fractions",
+    "P1_K_triangular",
+    "P1_K_not_regular_no_claim",
+    "P3_K_square",
+    "P3_K_triangular",
+    "P3_K_renamed_fractions",
+    "P2_C_unnamed",
+    "P2_C_unnamed_question_names_solid",
+    "G_K_goal_clause",
+    "G_K_goal_clause_apex_base",
+    "Q_K_question_regular_notation",
+    "N_K_negation_plain",
+    "N_K_negation_regular_notation",
+    "M_K_two_pyramids",
+    "M_K_two_pyramids_apex_base"
+   ]
+  },
+  "refused→served": {
+   "count": 1,
+   "rows": [
+    "N_K_negation_canonical_notation"
+   ]
+  }
+ },
+ "c1_corpus_variants": {
+  "canonical": {
+   "refused→refused": {
+    "count": 21,
+    "rows": [
+     "square/N1_missing_height",
+     "square/N3_contradiction",
+     "square/N4_wrong_centre_identity",
+     "square/N5_apex_over_vertex",
+     "square/N7_model_only_height",
+     "square/R2_N8_lateral_contradiction",
+     "square/R2_N9_contradiction_program_fits_lengths",
+     "square/R2_U4_irrational_via_lateral",
+     "square/U1_irrational_height",
+     "square/U2_angle_data",
+     "square/W5_B_chain_mixed_values",
+     "square/W5_C_chain_without_value",
+     "square/W5_D_program_value_differs_from_chain",
+     "square/W5_E_program_segment_outside_chain",
+     "triangular/N1_missing_height",
+     "triangular/N2_contradiction",
+     "triangular/N3_lateral_mixed",
+     "triangular/N4_declared_value_conflict",
+     "triangular/N6_wrong_centroid_identity",
+     "triangular/N7_layout_as_data",
+     "triangular/N9_regular_is_not_tetrahedron"
+    ]
+   },
+   "served→served": {
+    "count": 26,
+    "rows": [
+     "square/R2_L1_chained_equal_lateral_edges",
+     "square/R2_S10_lateral_other_vertex",
+     "square/R2_S8_side_AB_lateral_SA",
+     "square/R2_S9_side_lateral_named",
+     "square/S1_side_height_volume",
+     "square/S2_side_apothem_volume",
+     "square/S3_apothem_phrasing",
+     "square/S4_side_lateral_volume",
+     "square/S5_lateral_edge_length",
+     "square/S6_renamed_vertices",
+     "square/S7_named_centre",
+     "square/U3_regular_triangular",
+     "square/W5_A_chain_cites_other_member",
+     "triangular/N5_apex_over_vertex",
+     "triangular/N5b_apex_off_normal",
+     "triangular/P10_frame_six",
+     "triangular/P11_lateral_length",
+     "triangular/P1_side_height",
+     "triangular/P2_side_lateral",
+     "triangular/P4_all_edges_equal",
+     "triangular/P7_renamed_vertices",
+     "triangular/P8_phrasing_variant",
+     "triangular/P9_named_centroid",
+     "triangular/U1_rational_side",
+     "triangular/U3_height_outside_domain",
+     "triangular/U4_side_outside_frames"
+    ]
+   }
+  },
+  "apex_base": {
+   "refused→refused": {
+    "count": 20,
+    "rows": [
+     "square/N1_missing_height",
+     "square/N3_contradiction",
+     "square/N4_wrong_centre_identity",
+     "square/N7_model_only_height",
+     "square/R2_N8_lateral_contradiction",
+     "square/R2_N9_contradiction_program_fits_lengths",
+     "square/R2_U4_irrational_via_lateral",
+     "square/U1_irrational_height",
+     "square/U2_angle_data",
+     "square/W5_B_chain_mixed_values",
+     "square/W5_C_chain_without_value",
+     "square/W5_D_program_value_differs_from_chain",
+     "square/W5_E_program_segment_outside_chain",
+     "triangular/N1_missing_height",
+     "triangular/N2_contradiction",
+     "triangular/N3_lateral_mixed",
+     "triangular/N4_declared_value_conflict",
+     "triangular/N6_wrong_centroid_identity",
+     "triangular/N7_layout_as_data",
+     "triangular/N9_regular_is_not_tetrahedron"
+    ]
+   },
+   "served→refused": {
+    "count": 1,
+    "rows": [
+     "square/N5_apex_over_vertex"
+    ]
+   },
+   "refused→served": {
+    "count": 24,
+    "rows": [
+     "square/R2_L1_chained_equal_lateral_edges",
+     "square/R2_S10_lateral_other_vertex",
+     "square/R2_S8_side_AB_lateral_SA",
+     "square/R2_S9_side_lateral_named",
+     "square/S1_side_height_volume",
+     "square/S2_side_apothem_volume",
+     "square/S3_apothem_phrasing",
+     "square/S4_side_lateral_volume",
+     "square/S6_renamed_vertices",
+     "square/S7_named_centre",
+     "square/U3_regular_triangular",
+     "square/W5_A_chain_cites_other_member",
+     "triangular/N5_apex_over_vertex",
+     "triangular/N5b_apex_off_normal",
+     "triangular/P10_frame_six",
+     "triangular/P1_side_height",
+     "triangular/P2_side_lateral",
+     "triangular/P4_all_edges_equal",
+     "triangular/P7_renamed_vertices",
+     "triangular/P8_phrasing_variant",
+     "triangular/P9_named_centroid",
+     "triangular/U1_rational_side",
+     "triangular/U3_height_outside_domain",
+     "triangular/U4_side_outside_frames"
+    ]
+   },
+   "served→served": {
+    "count": 2,
+    "rows": [
+     "square/S5_lateral_edge_length",
+     "triangular/P11_lateral_length"
+    ]
+   }
+  },
+  "regular_notation": {
+   "refused→refused": {
+    "count": 20,
+    "rows": [
+     "square/N1_missing_height",
+     "square/N3_contradiction",
+     "square/N4_wrong_centre_identity",
+     "square/N7_model_only_height",
+     "square/R2_N8_lateral_contradiction",
+     "square/R2_N9_contradiction_program_fits_lengths",
+     "square/R2_U4_irrational_via_lateral",
+     "square/U1_irrational_height",
+     "square/U2_angle_data",
+     "square/W5_B_chain_mixed_values",
+     "square/W5_C_chain_without_value",
+     "square/W5_D_program_value_differs_from_chain",
+     "square/W5_E_program_segment_outside_chain",
+     "triangular/N1_missing_height",
+     "triangular/N2_contradiction",
+     "triangular/N3_lateral_mixed",
+     "triangular/N4_declared_value_conflict",
+     "triangular/N6_wrong_centroid_identity",
+     "triangular/N7_layout_as_data",
+     "triangular/N9_regular_is_not_tetrahedron"
+    ]
+   },
+   "served→refused": {
+    "count": 1,
+    "rows": [
+     "square/N5_apex_over_vertex"
+    ]
+   },
+   "refused→served": {
+    "count": 24,
+    "rows": [
+     "square/R2_L1_chained_equal_lateral_edges",
+     "square/R2_S10_lateral_other_vertex",
+     "square/R2_S8_side_AB_lateral_SA",
+     "square/R2_S9_side_lateral_named",
+     "square/S1_side_height_volume",
+     "square/S2_side_apothem_volume",
+     "square/S3_apothem_phrasing",
+     "square/S4_side_lateral_volume",
+     "square/S6_renamed_vertices",
+     "square/S7_named_centre",
+     "square/U3_regular_triangular",
+     "square/W5_A_chain_cites_other_member",
+     "triangular/N5_apex_over_vertex",
+     "triangular/N5b_apex_off_normal",
+     "triangular/P10_frame_six",
+     "triangular/P1_side_height",
+     "triangular/P2_side_lateral",
+     "triangular/P4_all_edges_equal",
+     "triangular/P7_renamed_vertices",
+     "triangular/P8_phrasing_variant",
+     "triangular/P9_named_centroid",
+     "triangular/U1_rational_side",
+     "triangular/U3_height_outside_domain",
+     "triangular/U4_side_outside_frames"
+    ]
+   },
+   "served→served": {
+    "count": 2,
+    "rows": [
+     "square/S5_lateral_edge_length",
+     "triangular/P11_lateral_length"
+    ]
+   }
+  },
+  "unnamed": {
+   "refused→refused": {
+    "count": 44,
+    "rows": [
+     "square/N1_missing_height",
+     "square/N3_contradiction",
+     "square/N4_wrong_centre_identity",
+     "square/N7_model_only_height",
+     "square/R2_L1_chained_equal_lateral_edges",
+     "square/R2_N8_lateral_contradiction",
+     "square/R2_N9_contradiction_program_fits_lengths",
+     "square/R2_S10_lateral_other_vertex",
+     "square/R2_S8_side_AB_lateral_SA",
+     "square/R2_S9_side_lateral_named",
+     "square/R2_U4_irrational_via_lateral",
+     "square/S1_side_height_volume",
+     "square/S2_side_apothem_volume",
+     "square/S3_apothem_phrasing",
+     "square/S4_side_lateral_volume",
+     "square/S6_renamed_vertices",
+     "square/S7_named_centre",
+     "square/U1_irrational_height",
+     "square/U2_angle_data",
+     "square/U3_regular_triangular",
+     "square/W5_A_chain_cites_other_member",
+     "square/W5_B_chain_mixed_values",
+     "square/W5_C_chain_without_value",
+     "square/W5_D_program_value_differs_from_chain",
+     "square/W5_E_program_segment_outside_chain",
+     "triangular/N1_missing_height",
+     "triangular/N2_contradiction",
+     "triangular/N3_lateral_mixed",
+     "triangular/N4_declared_value_conflict",
+     "triangular/N5_apex_over_vertex",
+     "triangular/N5b_apex_off_normal",
+     "triangular/N6_wrong_centroid_identity",
+     "triangular/N7_layout_as_data",
+     "triangular/N9_regular_is_not_tetrahedron",
+     "triangular/P10_frame_six",
+     "triangular/P1_side_height",
+     "triangular/P2_side_lateral",
+     "triangular/P4_all_edges_equal",
+     "triangular/P7_renamed_vertices",
+     "triangular/P8_phrasing_variant",
+     "triangular/P9_named_centroid",
+     "triangular/U1_rational_side",
+     "triangular/U3_height_outside_domain",
+     "triangular/U4_side_outside_frames"
+    ]
+   },
+   "served→served": {
+    "count": 3,
+    "rows": [
+     "square/N5_apex_over_vertex",
+     "square/S5_lateral_edge_length",
+     "triangular/P11_lateral_length"
+    ]
+   }
+  },
+  "unnamed_everywhere": {
+   "served→served": {
+    "count": 37,
+    "rows": [
+     "square/N1_missing_height",
+     "square/N3_contradiction",
+     "square/N5_apex_over_vertex",
+     "square/R2_L1_chained_equal_lateral_edges",
+     "square/R2_N9_contradiction_program_fits_lengths",
+     "square/R2_S10_lateral_other_vertex",
+     "square/R2_S8_side_AB_lateral_SA",
+     "square/R2_S9_side_lateral_named",
+     "square/S1_side_height_volume",
+     "square/S2_side_apothem_volume",
+     "square/S3_apothem_phrasing",
+     "square/S4_side_lateral_volume",
+     "square/S5_lateral_edge_length",
+     "square/S6_renamed_vertices",
+     "square/S7_named_centre",
+     "square/U1_irrational_height",
+     "square/U2_angle_data",
+     "square/U3_regular_triangular",
+     "square/W5_A_chain_cites_other_member",
+     "square/W5_C_chain_without_value",
+     "triangular/N1_missing_height",
+     "triangular/N2_contradiction",
+     "triangular/N5_apex_over_vertex",
+     "triangular/N5b_apex_off_normal",
+     "triangular/N7_layout_as_data",
+     "triangular/N9_regular_is_not_tetrahedron",
+     "triangular/P10_frame_six",
+     "triangular/P11_lateral_length",
+     "triangular/P1_side_height",
+     "triangular/P2_side_lateral",
+     "triangular/P4_all_edges_equal",
+     "triangular/P7_renamed_vertices",
+     "triangular/P8_phrasing_variant",
+     "triangular/P9_named_centroid",
+     "triangular/U1_rational_side",
+     "triangular/U3_height_outside_domain",
+     "triangular/U4_side_outside_frames"
+    ]
+   },
+   "refused→refused": {
+    "count": 10,
+    "rows": [
+     "square/N4_wrong_centre_identity",
+     "square/N7_model_only_height",
+     "square/R2_N8_lateral_contradiction",
+     "square/R2_U4_irrational_via_lateral",
+     "square/W5_B_chain_mixed_values",
+     "square/W5_D_program_value_differs_from_chain",
+     "square/W5_E_program_segment_outside_chain",
+     "triangular/N3_lateral_mixed",
+     "triangular/N4_declared_value_conflict",
+     "triangular/N6_wrong_centroid_identity"
+    ]
+   }
+  }
+ }
+}
