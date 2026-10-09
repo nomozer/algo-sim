@@ -1,0 +1,14 @@
+{
+  "run_id": "c0-whole-solid-grounding",
+  "task_slug": "c0-whole-solid-grounding",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-09",
+  "machine": "Claude Code Cloud (Linux, Python 3.13)",
+  "branch": "fix/c0-whole-solid-grounding",
+  "start_head": "9762f441",
+  "candidate_at_start": "bbfa5b0d…",
+  "cache_version_at_start": "119",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "commits": {}
+}

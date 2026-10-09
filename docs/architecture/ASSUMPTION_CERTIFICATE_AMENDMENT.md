@@ -1285,3 +1285,16 @@ Sửa §5. C0 vẫn là "mọi literal trên lát cắt ghim bởi nguồn", và
 `SOURCE_SHAPE_CONTRADICTS_COORDINATES`, `subjects` = ràng buộc theo ký hiệu đề, detail `C0_SHAPE_CONTRADICTION <kind>(…)
 @[a,b]`; nguyên nhân `SOURCE` (đề tự mâu thuẫn), không gửi đi sửa. Ràng buộc có thực thể vắng trong chương trình hoặc kind
 ngoài danh sách: không kiểm, không từ chối. Nhãn: `docs/evaluation/geometry/runs/geometry-grounding-safety/labels.json`.
+
+## 22. c0-whole-solid-grounding — C0 kiểm ràng buộc TOÀN KHỐI trên toạ độ (đăng ký 2026-10-09, TRƯỚC mọi bản sửa)
+
+Mở §21. Thêm vào danh sách kind kiểm chính xác trên toạ độ (cùng điều kiện: mọi điểm có giá trị — chương trình, hoặc
+toạ độ chính đề cho; thiếu ⇒ không kiểm): `right_prism` (đáy trên = đáy dưới + v, v ≠ 0, v ∥ pháp tuyến đáy),
+`oblique_prism` (tịnh tiến, v KHÔNG ∥ pháp tuyến), `cuboid` (lăng trụ đứng + đáy chữ nhật), `cube` (hộp + ba cạnh tại một
+đỉnh bằng nhau), `cube_edge` (lập phương + cạnh² = value²), `regular_square_pyramid` (đáy vuông + đỉnh trên pháp tuyến
+tại tâm đáy, ngoài đáy), `regular_triangular_pyramid` (đáy đều + đỉnh trên pháp tuyến tại trọng tâm, ngoài đáy),
+`regular_tetrahedron` (sáu cạnh bằng nhau), `edge_all` (mọi cạnh² = value²), `lateral_edge` (mọi cạnh bên² = value²),
+`apothem` (khoảng cách² từ đỉnh tới trung điểm mọi cạnh đáy = value²), `base_centre` (điểm tâm = trung bình các đỉnh đáy),
+`height` (chóp: khoảng cách² đỉnh → mặt đáy; lăng trụ: khoảng cách² đỉnh đáy trên → mặt đáy; = value² — KHÔNG phải cạnh
+bên). Khối không tên (`entities = ()`) và `prism` trơn không kiểm ở đây. Mã, nguyên nhân, đường từ chối: như §21.
+Nhãn: `docs/evaluation/geometry/runs/c0-whole-solid-grounding/labels.json`.

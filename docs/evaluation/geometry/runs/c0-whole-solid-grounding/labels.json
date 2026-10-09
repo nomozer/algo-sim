@@ -1,0 +1,1411 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "c0-whole-solid-grounding",
+ "written": "2026-10-09, after the inventory, before the baseline probe and before any product change",
+ "rule": "Every row: the text pins every vertex by coordinates ({coords} is filled from `points`); contract via build_request_contract (point facts); an LLM-style program declares the points from their facts (except `omit_from_program`), builds the solid, measures volume, through verify_and_compile (diagnostics/c0_whole_solid_cases.py). expect = served:<V> | refused. `kinds` = whole-solid constraint kinds the row exercises. Values and contradictions: oracle.py, from the coordinates and the text only.",
+ "rows": {
+  "RP_C_right_prism_oblique_coords": {
+   "text": "Cho lăng trụ đứng ABC.A'B'C' với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     0,
+     5
+    ],
+    "B'": [
+     4,
+     0,
+     5
+    ],
+    "C'": [
+     1,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [
+    "right_prism"
+   ],
+   "expect": "refused"
+  },
+  "RP_K_right_prism": {
+   "text": "Cho lăng trụ đứng ABC.A'B'C' với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [
+    "right_prism"
+   ],
+   "expect": "served:30"
+  },
+  "RP_K_renamed_fractions": {
+   "text": "Cho lăng trụ đứng MNP.QRS với {coords}. Tính thể tích khối lăng trụ MNP.QRS.",
+   "points": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     "3/2",
+     0,
+     0
+    ],
+    "P": [
+     0,
+     2,
+     0
+    ],
+    "Q": [
+     0,
+     0,
+     "5/2"
+    ],
+    "R": [
+     "3/2",
+     0,
+     "5/2"
+    ],
+    "S": [
+     0,
+     2,
+     "5/2"
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "M",
+     "N",
+     "P"
+    ],
+    "top": [
+     "Q",
+     "R",
+     "S"
+    ]
+   },
+   "kinds": [
+    "right_prism"
+   ],
+   "expect": "served:15/4"
+  },
+  "CU_C_cuboid_parallelogram_base": {
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' với {coords}. Tính thể tích khối hộp ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     4,
+     2,
+     0
+    ],
+    "D": [
+     1,
+     2,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     4,
+     2,
+     5
+    ],
+    "D'": [
+     1,
+     2,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cuboid"
+   ],
+   "expect": "refused"
+  },
+  "CU_C_cuboid_oblique_lateral": {
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' với {coords}. Tính thể tích khối hộp ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     3,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     1,
+     0,
+     5
+    ],
+    "B'": [
+     4,
+     0,
+     5
+    ],
+    "C'": [
+     4,
+     2,
+     5
+    ],
+    "D'": [
+     1,
+     2,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cuboid"
+   ],
+   "expect": "refused"
+  },
+  "CU_K_cuboid": {
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' với {coords}. Tính thể tích khối hộp ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     3,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     3,
+     2,
+     5
+    ],
+    "D'": [
+     0,
+     2,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cuboid"
+   ],
+   "expect": "served:30"
+  },
+  "CB_C_cube_is_a_box": {
+   "text": "Cho hình lập phương ABCD.A'B'C'D' với {coords}. Tính thể tích khối lập phương ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     3
+    ],
+    "B'": [
+     2,
+     0,
+     3
+    ],
+    "C'": [
+     2,
+     2,
+     3
+    ],
+    "D'": [
+     0,
+     2,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cube"
+   ],
+   "expect": "refused"
+  },
+  "CB_C_cube_edge_value": {
+   "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 3 với {coords}. Tính thể tích khối lập phương ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     2
+    ],
+    "B'": [
+     2,
+     0,
+     2
+    ],
+    "C'": [
+     2,
+     2,
+     2
+    ],
+    "D'": [
+     0,
+     2,
+     2
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cube",
+    "cube_edge"
+   ],
+   "expect": "refused"
+  },
+  "CB_K_cube": {
+   "text": "Cho hình lập phương ABCD.A'B'C'D' với {coords}. Tính thể tích khối lập phương ABCD.A'B'C'D'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     2
+    ],
+    "B'": [
+     2,
+     0,
+     2
+    ],
+    "C'": [
+     2,
+     2,
+     2
+    ],
+    "D'": [
+     0,
+     2,
+     2
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "kinds": [
+    "cube"
+   ],
+   "expect": "served:8"
+  },
+  "RSP_C_apex_over_vertex": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid"
+   ],
+   "expect": "refused"
+  },
+  "RSP_K": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid"
+   ],
+   "expect": "served:4"
+  },
+  "RSP_C_lateral_edge_value": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh bên bằng 5 với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid",
+    "lateral_edge"
+   ],
+   "expect": "refused"
+  },
+  "RSP_C_apothem_value": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD có trung đoạn bằng 5 với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid",
+    "apothem"
+   ],
+   "expect": "refused"
+  },
+  "RSP_C_centre_off": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD, O là tâm của đáy, với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ],
+    "O": [
+     1,
+     0,
+     0
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid",
+    "base_centre"
+   ],
+   "expect": "refused"
+  },
+  "RSP_C_centre_off_not_declared_by_program": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD, O là tâm của đáy, với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ],
+    "O": [
+     1,
+     0,
+     0
+    ]
+   },
+   "omit_from_program": [
+    "O"
+   ],
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid",
+    "base_centre"
+   ],
+   "expect": "refused"
+  },
+  "RSP_K_centre_without_coordinates": {
+   "text": "Cho hình chóp tứ giác đều S.ABCD, O là tâm của đáy, với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_square_pyramid",
+    "base_centre"
+   ],
+   "expect": "served:4"
+  },
+  "RTP_C_apex_off_centroid": {
+   "text": "Cho hình chóp tam giác đều S.ABC với {coords}. Tính thể tích khối chóp S.ABC.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     2,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "kinds": [
+    "regular_triangular_pyramid"
+   ],
+   "expect": "refused"
+  },
+  "RTP_K": {
+   "text": "Cho hình chóp tam giác đều S.ABC với {coords}. Tính thể tích khối chóp S.ABC.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "S": [
+     "4/3",
+     "4/3",
+     "4/3"
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "kinds": [
+    "regular_triangular_pyramid"
+   ],
+   "expect": "served:1/2"
+  },
+  "RT_C_tetrahedron_not_regular": {
+   "text": "Cho tứ diện đều ABCD với {coords}. Tính thể tích khối tứ diện ABCD.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "D": [
+     2,
+     2,
+     2
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "A",
+    "base": [
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_tetrahedron"
+   ],
+   "expect": "refused"
+  },
+  "RT_K_tetrahedron": {
+   "text": "Cho tứ diện đều ABCD với {coords}. Tính thể tích khối tứ diện ABCD.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "D": [
+     1,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "A",
+    "base": [
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_tetrahedron"
+   ],
+   "expect": "served:1/3"
+  },
+  "H_C_pyramid_height": {
+   "text": "Cho hình chóp S.ABCD có chiều cao bằng 4 với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     3,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "height"
+   ],
+   "expect": "refused"
+  },
+  "H_K_pyramid_height_not_lateral_edge": {
+   "text": "Cho hình chóp S.ABCD có chiều cao bằng 4 với {coords}. Tính thể tích khối chóp S.ABCD.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     3,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     1,
+     1,
+     4
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "height"
+   ],
+   "expect": "served:8"
+  },
+  "H_C_prism_height": {
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có chiều cao bằng 6 với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [
+    "right_prism",
+    "height"
+   ],
+   "expect": "refused"
+  },
+  "P_C_prism_top_not_translate": {
+   "text": "Cho lăng trụ ABC.A'B'C' với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     0,
+     8,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [
+    "prism"
+   ],
+   "expect": "refused"
+  },
+  "OP_C_oblique_word_right_coords": {
+   "text": "Cho lăng trụ xiên ABC.A'B'C' với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [
+    "oblique_prism"
+   ],
+   "expect": "refused"
+  },
+  "G_K_goal_clause_not_premise": {
+   "text": "Cho lăng trụ ABC.A'B'C' với {coords}. Chứng minh ABC.A'B'C' là lăng trụ đứng. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     0,
+     5
+    ],
+    "B'": [
+     4,
+     0,
+     5
+    ],
+    "C'": [
+     1,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [],
+   "expect": "served:30"
+  },
+  "N_K_negation_not_premise": {
+   "text": "Cho lăng trụ ABC.A'B'C' không phải là lăng trụ đứng, với {coords}. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     0,
+     5
+    ],
+    "B'": [
+     4,
+     0,
+     5
+    ],
+    "C'": [
+     1,
+     4,
+     5
+    ]
+   },
+   "solid": {
+    "kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ]
+   },
+   "kinds": [],
+   "expect": "served:30"
+  },
+  "RT_C_tetrahedron_apex_over_centroid_wrong_height": {
+   "text": "Cho tứ diện đều ABCD với {coords}. Tính thể tích khối tứ diện ABCD.",
+   "points": {
+    "A": [
+     "7/3",
+     "7/3",
+     "7/3"
+    ],
+    "B": [
+     1,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     1,
+     0
+    ],
+    "D": [
+     0,
+     0,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "A",
+    "base": [
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "regular_tetrahedron"
+   ],
+   "expect": "refused",
+   "added": "after the baseline probe (diagnostics/probe_9762f441.log), before any product change: RT_C_tetrahedron_not_regular was already refused by the §21 base_equilateral check, so a variant with an equilateral base was needed to tell whether regular_tetrahedron itself is unchecked (it is: served at 9762f441)"
+  }
+ }
+}
