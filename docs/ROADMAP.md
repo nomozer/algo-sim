@@ -15,8 +15,8 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 
 - **Việc `geometry-grounding-safety` (2026-10-09, run [`geometry-grounding-safety`](evaluation/geometry/runs/geometry-grounding-safety/),
   Cloud, nhánh `fix/geometry-grounding-safety`):** đóng `ISSUE-ARCH-C0-SHAPE-TEXT-NOT-CHECKED-AGAINST-COORDINATES` và
-  `ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION`; `CACHE_VERSION` 119. Việc duy nhất: LOCAL kiểm T3 + đóng băng candidate
-  theo `handoff.md` của run, người dùng duyệt.
+  `ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION`; `CACHE_VERSION` 119; candidate `bbfa5b0d…` đóng băng LOCAL, T3 PASS
+  (`handoff.md` của run). Việc duy nhất: người dùng quyết merge. Còn mở: `ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED`.
 
 - **Việc `general-polygon-base` (2026-10-09, run [`general-polygon-base`](evaluation/geometry/runs/general-polygon-base/), Cloud +
   LOCAL, ĐÃ TÍCH HỢP `main` = `9666b861`):** G05 miền hẹp — đáy lồi xác định bởi chuỗi góc vuông (hình thang vuông, tam giác

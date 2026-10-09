@@ -20,16 +20,16 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = main (G05 fast-forward d5287ff7 → 9666b861 và push, 2026-10-09; feat/oblique-prism + feat/general-polygon-base đã xoá local + remote sau tích hợp, theo lệnh người dùng)
-CURRENT_WAVE = general-polygon-base (G05 đáy theo chuỗi góc vuông: kernel + bộ đọc hình thang vuông + khuôn T10 + họ compiler polygon_base_*; handoff.md = kết quả LOCAL; APPROVAL.md = phê duyệt tích hợp + dọn nhánh)
-PRODUCT_STATE = candidate 72d6070acf6ced35… (102 file; product commit 4e30a211; đóng băng f250f5ef; T3 PASS tại f250f5ef), CACHE_VERSION 118, LLM_ONLY; G04 + G05 foundation_only (chưa đo Gemini thật; compiler opt-in)
+CURRENT_BRANCH = fix/geometry-grounding-safety (rẽ từ main e6c3cf68; Cloud sửa C0 + compiler, LOCAL bổ sung 765291ab + kiểm + đóng băng; đã push nhánh, CHƯA merge)
+CURRENT_WAVE = geometry-grounding-safety (C0 kiểm quan hệ hình dạng đề nói trên toạ độ đề cho + compiler không tự giả định hình chữ nhật; CACHE_VERSION 119; runs/geometry-grounding-safety/handoff.md = kết quả LOCAL) · trước đó G05 đã tích hợp main (runs/general-polygon-base/APPROVAL.md)
+PRODUCT_STATE = nhánh: candidate bbfa5b0da3a5353a… (102 file; product commit 765291ab; đóng băng e1dfc851; T3 PASS tại e1dfc851), CACHE_VERSION 119 · main: candidate 72d6070acf6ced35…, CACHE_VERSION 118 · LLM_ONLY; G04 + G05 foundation_only (chưa đo Gemini thật; compiler opt-in)
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
-ORIGIN_MAIN = 9666b861458b2e3d4da294cb37d321ca45dac04c (G05, fast-forward từ d5287ff7, push 2026-10-09, không force; ls-remote khớp; commit ghi kết quả này đi sau)
+ORIGIN_MAIN = e6c3cf6858222e4fab7068f59c009c6e5dbf1426 (G05 9666b861 + commit ghi tích hợp, push 2026-10-09, không force; ls-remote khớp)
 FINAL_DECISION = G05 MERGED_AND_PUSHED (runs/general-polygon-base/APPROVAL.md; cổng tích hợp runs/general-polygon-base/diagnostics/gates_9666b861.log) · G04 MERGED_AND_PUSHED (runs/oblique-prism/APPROVAL.md) · baseline frontend MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md — C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 chưa duyệt; W05 23/24)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = YES · MERGE_EXECUTED = YES (fast-forward, runs/general-polygon-base/APPROVAL.md) · PR_CREATED = NO · BRANCH_DELETED = YES (feat/oblique-prism, feat/general-polygon-base — git branch -d + push --delete, sau kiểm ⊂ origin/main)
-NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo theo ROADMAP §0.2 (G06 chưa bắt đầu; G05 chưa khép toàn họ — ISSUE-ARCH-G05-REMAINING-BASES), rồi OCR; frontend đóng băng; giữ LLM_ONLY; không chuyển compiler-first
+NEXT_ACTION = người dùng quyết merge fix/geometry-grounding-safety (CACHE_VERSION 119) vào main; sau đó chọn họ hình tiếp theo theo ROADMAP §0.2 (G06 chưa bắt đầu; G05 chưa khép toàn họ — ISSUE-ARCH-G05-REMAINING-BASES), rồi OCR; frontend đóng băng; giữ LLM_ONLY; không chuyển compiler-first
 ```
 
 Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã

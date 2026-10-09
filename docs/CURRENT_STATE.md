@@ -55,8 +55,8 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
-> CANDIDATE = 72d6070acf6ced35… (102 file; product commit 4e30a211 — G05 đáy theo chuỗi góc vuông; đóng băng LOCAL f250f5ef, T3 PASS — runs/general-polygon-base/handoff.md; trên `main` từ 9666b861)
+> CACHE_VERSION = 118 trên `main`; nhánh `fix/geometry-grounding-safety`: 119 (C0 mâu thuẫn hình dạng ↔ toạ độ: served → refused; runs/geometry-grounding-safety/cache/decision.json)
+> CANDIDATE = 72d6070acf6ced35… trên `main` (product commit 4e30a211 — G05); nhánh `fix/geometry-grounding-safety`: bbfa5b0da3a5353a… (102 file; product commit 765291ab; cache 119; đóng băng LOCAL e1dfc851, T3 PASS — runs/geometry-grounding-safety/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = GENERAL_POLYGON_BASE (run `general-polygon-base`, G05 miền hẹp — Cloud làm, LOCAL kiểm + đóng băng, đã tích hợp `main`; hai nhánh G04/G05 đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
 > FINAL_DECISION = MERGED_AND_PUSHED (G05: `main` = `origin/main` = `9666b861`, fast-forward từ d5287ff7, 2026-10-09; runs/general-polygon-base/APPROVAL.md; G05 `foundation_only`, miền hẹp · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
@@ -64,14 +64,16 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **Sửa an toàn grounding — run geometry-grounding-safety (2026-10-09, Cloud, nhánh `fix/geometry-grounding-safety`; 0 model call; chờ kiểm local):**
+> **Sửa an toàn grounding — run geometry-grounding-safety (2026-10-09, Cloud, nhánh `fix/geometry-grounding-safety`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
 > | C0 | quan hệ hình dạng đề nói được kiểm chính xác trên toạ độ đề cho; mâu thuẫn ⇒ `SOURCE_SHAPE_CONTRADICTS_COORDINATES` (amendment §21) |
 > | Compiler | tứ giác chưa khai dạng là hình chữ nhật chỉ khi ≥ 3 góc vuông kề; một góc ⇒ `BASE_RECTANGLE_NOT_PROVEN` |
 > | Nhãn | 18 hàng ghi trước + oracle độc lập, 21/21; red-before 10 đỏ |
-> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (5 test danh tính đỏ — LOCAL) · **119** (served → refused, có probe) |
+> | LOCAL bổ sung | điểm chương trình không khai lấy toạ độ chính đề trong phép kiểm C0 (`765291ab`; trước: `E(5;5;0)` + "AE ⊥ AB" vẫn phục vụ) — 3 test, tiêm lỗi đỏ |
+> | Candidate · `CACHE_VERSION` | **`bbfa5b0d…`** (product `765291ab`; đóng băng LOCAL `e1dfc851`, `--verify` khớp) · **119** (served → refused, kiểm độc lập; khoá danh tính khớp) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `e1dfc851`: pytest 7367 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_e1dfc851.log`); còn mở: `ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED` |
 > | Run | [`geometry-grounding-safety`](evaluation/geometry/runs/geometry-grounding-safety/) |
 
 > **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `9666b861` theo `APPROVAL.md`):**

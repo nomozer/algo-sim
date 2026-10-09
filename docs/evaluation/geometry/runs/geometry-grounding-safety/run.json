@@ -16,5 +16,17 @@
   },
   "cache_version": "119 (bump, cache/decision.json)",
   "model_surface": "unchanged",
-  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "local_product_fix": "765291ab — C0 shape check takes the text's own coordinate for a point the program does not declare (before: E(5;5;0) + 'AE vuông góc với AB' served); 3 tests, fault-injected",
+    "edge_probes": "goal clause, question clause and negated perpendicularity stay served (no false refusal); compiler rectangle rule forced open ⇒ assumption gate still refuses (second barrier)",
+    "candidate_freeze": "e1dfc851 (frozen at 765291ab; candidate bbfa5b0da3a5353af80e8777c19b0ec11bc042cc441a658095350569e23dd214, product 765291ab, cache 119, 102 files; diagnostics/freeze_765291ab.log)",
+    "cache_version": "119 verified: served → refused shown before/after; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 119; 0 model-surface files since e6c3cf68",
+    "targeted": "grounding-safety 24/24 + oracle OK; G04 51/51, G05 53/53; regression + identity + docs + test_api 1229/1229; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at e1dfc851 (pytest 7367 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_e1dfc851.log)",
+    "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }
