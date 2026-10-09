@@ -58,7 +58,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
 > CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 83db0e97 tại product commit 45f5a7f0 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = CLASSROOM_BAND_FIT (run `classroom-band-fit`; dải lớp học trên điện thoại gọn thành chip; đo lại trên candidate cuối)
+> CURRENT_WAVE = BROWSER_TEMP_LIFECYCLE (run `browser-temp-lifecycle`; hồ sơ Chrome của bộ đo có chủ và được dọn — chỉ hạ tầng kiểm thử; sản phẩm và bằng chứng nghiệm thu của run `classroom-band-fit` không đổi)
 > FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (cổng T3 + danh tính ở commit tài liệu cuối của run classroom-band-fit — runs/classroom-band-fit/handoff.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng thao tác tay và quyết theo runs/classroom-band-fit/review.md (H-1…H-3, C-1…C-4) và runs/final-acceptance/review.md (G-1…G-9 = E-R6 + F-R7; D-2…D-4), cùng các gói phone-landscape-layout, mobile-canvas-fit, exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)

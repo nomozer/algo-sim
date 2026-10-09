@@ -846,3 +846,13 @@
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** the next UI wave
 - **default_switch_blocker:** NO
+
+### ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK
+- **description:** `frontend/scripts/browser-runner.mjs` created a Chrome user-data profile `%TEMP%\w12-*` (~50 MB, SwiftShader caches) on every `BrowserSession.open()` and never removed it; a failure inside `open()` left the Chrome process running, and `compiler-scene-suite.openFixture` dropped the session (Chrome kept running to the end of the script) when a step after `open()` failed. One `measure.sh` run opens roughly 150 sessions.
+- **evidence:** code (pre-fix `browser-runner.mjs` lines 118, 209, 132–135, 390–395; `openFixture`); reproduction `runs/browser-temp-lifecycle/diagnostics/repro-leak.mjs` (3 sessions ⇒ 3 leaked profiles); inventory `runs/browser-temp-lifecycle/results/TEMP_INVENTORY.json` (671 profiles, 33.5 GB left after the user's partial cleanup; the user reports > 1,700 before it).
+- **impact:** fills drive C: (free space went from 1.54 GB to 43.32 GB after the user's partial cleanup); orphaned software-WebGL Chrome processes add load during long probe runs. No wrong value.
+- **status:** RESOLVED (run `browser-temp-lifecycle`, `3cb0630a`) — sessions own `<root>/w12-XXXX/{owner.json, profile, tmp}` under `D:/tmp/algosim-browser` (`ALGOSIM_BROWSER_TMP`, `%TEMP%/algosim-browser` fallback), Chrome's own TEMP/TMP point inside the session, teardown kills only the session's process tree and removes the directory on close, failed open, reopen and process exit; a hard-killed runner's directory is removed by the next process after `laOrphan` proves the owner dead. Verified with real Chrome: sequential 5, parallel 3, startup death, in-session error, crash, `openFixture` failure, hard kill — 7/7, `%TEMP%` unchanged (`results/LIFECYCLE_VERIFICATION.json`).
+- **residual:** the 671 legacy `%TEMP%\w12-*` profiles (`VERIFIED_ORPHAN`) wait for the user's approval (command in the run's `report.md` §4); 229 `%TEMP%\scoped_dir*` (1.3 GB) stay `UNKNOWN` (any Chromium creates them). Twenty standalone scripts (`certify-*`, `accept-*`, `spot-check-*`, `audit-layout`, `measure-*`, `diagnose-refusal-flake`) still create an un-removed profile per run (other prefixes; none present now) — move them to `BrowserSession` when touched.
+- **owner_class:** OPERATIONS / TEST HARNESS
+- **suggested_wave:** — (resolved; legacy cleanup is the user's decision)
+- **default_switch_blocker:** NO

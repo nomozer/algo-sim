@@ -1268,3 +1268,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** classroom mode on phones
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `results/` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = BROWSER_TEMP_LIFECYCLE
+- **RUN_ID:** browser-temp-lifecycle (task browser-temp-lifecycle; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-09
+- **START_BASE:** 7834ea4e
+- **CODE_COMMIT_OR_NONE:** `3cb0630a` (test harness only)
+- **CANDIDATE:** `7f3f042309dd1c54…` unchanged (product `45f5a7f0`) · CACHE_VERSION 118 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit with lifecycle verification and dry-run temp inventory, 0 model requests, 0 images
+- **CLASSIFICATION:** RESOLVED (ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK); branch acceptance state unchanged (READY_FOR_USER_ACCEPTANCE)
+- **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/browser-temp-lifecycle/handoff.md` §2
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/browser-temp-lifecycle/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/browser-temp-lifecycle/
+- **PASS:** real-Chrome lifecycle 7/7; long session contained; probe smoke 3/3 with no leftovers; browser-runner node test 5/5; node harness 102/102
+- **CLOSED:** ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK (RESOLVED; 671 legacy profiles await the user's approval)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** the user approves (or not) the legacy %TEMP% cleanup; the branch's acceptance steps are unchanged
+- **FINAL_DECISION:** RESOLVED
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

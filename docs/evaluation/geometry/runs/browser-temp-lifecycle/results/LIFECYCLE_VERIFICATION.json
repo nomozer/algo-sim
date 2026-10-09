@@ -1,0 +1,201 @@
+{
+  "schema": "browser-lifecycle-verification/1",
+  "root": "D:/tmp/algosim-browser",
+  "application_llm_calls": 0,
+  "start": {
+    "root_sessions": 0,
+    "temp_w12": 674,
+    "temp_scoped": 233,
+    "ours": 0,
+    "others": 0
+  },
+  "end": {
+    "root_sessions": 0,
+    "temp_w12": 674,
+    "temp_scoped": 233,
+    "ours": 0,
+    "others": 0
+  },
+  "pass": true,
+  "scenarios": [
+    {
+      "name": "A_sequential_5",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "sessions": 5
+      }
+    },
+    {
+      "name": "B_parallel_3_close_one_keeps_others",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "peak": {
+          "root_sessions": 3,
+          "temp_w12": 674,
+          "temp_scoped": 233,
+          "ours": 30,
+          "others": 1
+        },
+        "after_closing_one": {
+          "root_sessions": 2,
+          "temp_w12": 674,
+          "temp_scoped": 233,
+          "ours": 20,
+          "others": 0,
+          "others_dirs_present": true
+        },
+        "others_still_answer": [
+          2,
+          2
+        ],
+        "pass": true
+      }
+    },
+    {
+      "name": "C_chrome_dies_during_startup",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "threw": "WS_OPEN_TIMEOUT: không có trang gỡ lỗi ở cổng 9495",
+        "dir_left": null,
+        "pass": true
+      }
+    },
+    {
+      "name": "D_error_inside_session_closed_in_finally",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "threw": "SIMULATED_TEST_FAILURE",
+        "pass": true
+      }
+    },
+    {
+      "name": "E_chrome_crashes_mid_session_then_close",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "pass": true
+      }
+    },
+    {
+      "name": "F_openFixture_fails_after_open",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "threw": "POLL_TIMEOUT:false",
+        "pass": true
+      }
+    },
+    {
+      "name": "G_runner_hard_killed_next_run_sweeps",
+      "pass": true,
+      "before": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "after": {
+        "root_sessions": 0,
+        "temp_w12": 674,
+        "temp_scoped": 233,
+        "ours": 0,
+        "others": 0
+      },
+      "note": {
+        "leftover_after_kill": {
+          "root_sessions": 1,
+          "temp_w12": 674,
+          "temp_scoped": 233,
+          "ours": 0,
+          "others": 0
+        },
+        "orphan_dir_present_after_kill": true,
+        "removed_by_next_run_sweep": true,
+        "pass": true
+      }
+    }
+  ]
+}

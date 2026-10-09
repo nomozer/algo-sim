@@ -21,7 +21,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = CLASSROOM_BAND_FIT (run classroom-band-fit: dải lớp học trên điện thoại gọn thành chip trạng thái; máy local; cùng nhánh)
+CURRENT_WAVE = BROWSER_TEMP_LIFECYCLE (run browser-temp-lifecycle: hồ sơ Chrome của bộ đo có chủ và được dọn; không đổi sản phẩm; trước đó classroom-band-fit — trạng thái nghiệm thu không đổi; máy local; cùng nhánh)
 PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 45f5a7f0 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 83db0e97), CACHE_VERSION 118, LLM_ONLY
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
@@ -122,6 +122,9 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
+- **browser-temp-lifecycle (hạ tầng kiểm thử):** `ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK` RESOLVED — hồ sơ Chrome của bộ đo ở
+  `D:/tmp/algosim-browser`, xoá khi phiên đóng/hỏng, orphan dọn theo `owner.json`. Chờ người dùng duyệt xoá 671 hồ sơ cũ
+  `%TEMP%\w12-*` (33,5 GB, lệnh ở `runs/browser-temp-lifecycle/report.md` §4).
 - **classroom-band-fit chờ người dùng:** `runs/classroom-band-fit/review.md` H-1…H-3 (ảnh, quyết chip chỉ hiện chấm màu ở
   640–667 px ngang) và C-1…C-4 (thao tác tay chế độ lớp). `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` RESOLVED (chờ duyệt;
   24/24, trước 9/24); giới hạn còn lại ghi trong issue.

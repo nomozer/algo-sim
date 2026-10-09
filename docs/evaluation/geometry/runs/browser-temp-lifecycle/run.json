@@ -1,0 +1,32 @@
+{
+  "run_id": "browser-temp-lifecycle",
+  "task_slug": "browser-temp-lifecycle",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-09",
+  "machine": "local Windows",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "7834ea4e",
+  "commits": { "harness_fix": "3cb0630a" },
+  "product_change": "NONE (frontend/scripts and docs only; backend/app and frontend/src untouched)",
+  "candidate": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0 (102 files, --verify match; product_commit_sha still 45f5a7f0)",
+  "cache_version": "118 (unchanged)",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "root_cause": "BrowserSession.open() created %TEMP%\\w12-* and never removed it; failed open() and openFixture failures after open() left Chrome running",
+  "fix": "session-owned directory with owner.json under D:/tmp/algosim-browser, Chrome TEMP/TMP inside it, per-session process-tree kill then removal on close/failed open/reopen/exit, owner-proven orphan sweep at the next process; openFixture closes on failure",
+  "verification": {
+    "unit": "frontend/scripts/browser-runner.node-test.mjs 5/5; fault injection 2 red",
+    "real_chrome": "results/LIFECYCLE_VERIFICATION.json — 7/7 scenarios (sequential 5, parallel 3, startup death, in-session error, crash, openFixture failure, hard kill + next-run sweep); %TEMP% w12 674 -> 674",
+    "long_session": "150 s session: Chrome temp files inside the session tmp, 0 new scoped_dir in %TEMP%, removed on close",
+    "probe_smoke": "check-focus-mode --ho cuboid via openFixture: 3/3, root 0 -> 0, %TEMP% unchanged, 0 Chrome left",
+    "node_harness": "102/102"
+  },
+  "temp_inventory": {
+    "file": "results/TEMP_INVENTORY.json (dry run, names only)",
+    "w12_verified_orphan": "671 dirs, 33.5 GB — awaiting user approval",
+    "scoped_dir_unknown": "229 dirs, 1.3 GB",
+    "scoped_dir_active": "5 dirs, 1 MB",
+    "removed_by_this_run": ["w12-D7v70g", "w12-Ednq8X", "w12-yEGYcf (created by this run's reproduction)"]
+  },
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

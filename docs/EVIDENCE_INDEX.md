@@ -1261,3 +1261,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** classroom mode on phones; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `results/CLASS_BAND_PROBE.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = BROWSER_TEMP_LIFECYCLE
+- **RUN_ID:** browser-temp-lifecycle (task browser-temp-lifecycle; same branch)
+- **DATE:** 2026-10-09
+- **REPORT:** docs/evaluation/geometry/runs/browser-temp-lifecycle/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/browser-temp-lifecycle/
+- **START_BASE:** 7834ea4e
+- **CODE_COMMIT:** 3cb0630a (test harness: frontend/scripts/browser-runner.mjs, compiler-scene-suite.mjs openFixture)
+- **MEASUREMENT_COMMIT:** working tree of 3cb0630a's harness (local; real Chrome lifecycle scenarios, long session, probe smoke) + dry-run inventory of %TEMP%
+- **EVIDENCE_COMMIT_ROLE:** the run's documentation commit (results JSON, diagnostics scripts)
+- **CLASSIFICATION:** RESOLVED (harness); legacy %TEMP% cleanup awaits the user
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (7f3f0423..., product 45f5a7f0)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none (measurement infrastructure); reproducibility of browser runs
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/LIFECYCLE_VERIFICATION.json` · `results/TEMP_INVENTORY.json` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
