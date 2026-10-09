@@ -293,7 +293,7 @@ def test_C2_policy_tro_dung_corpus_va_candidate(nguong):
 #: Văn bản KHAI độ lệch candidate. Không phải tài liệu đăng ký trước — nó ghi
 #: trạng thái HIỆN TẠI, nên nó được cập nhật, còn chính sách thì không.
 KHAI_LECH = (GOC / "docs" / "evaluation" / "geometry"
-             / "runs" / "geometry-grounding-safety"
+             / "runs" / "c0-whole-solid-grounding"
              / "inputs"
              / "candidate_divergence.json")
 

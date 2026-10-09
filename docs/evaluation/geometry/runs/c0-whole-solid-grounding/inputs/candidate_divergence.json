@@ -1,0 +1,26 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "c0-whole-solid-grounding (run c0-whole-solid-grounding — C0 checks whole-solid claims against the given coordinates)",
+  "corrects": "docs/evaluation/geometry/runs/geometry-grounding-safety/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "8c4c01284232121b60662ea431510629267dd5314ba3be4521de568875ece178",
+  "current_candidate_source_commit": "c11e8c9da60ebcb6be93201a44ae6e6c867e5f27",
+  "current_candidate_frozen_at": "825f109d92968a2bf6463571ae78933e6319770f",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/c0ws freeze) at 825f109d; product commit c11e8c9d; 102 files; --verify match (diagnostics/freeze_c11e8c9d.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 119 → 120: 15 labelled statements served under 119 are refused now (re-run LOCAL on 9762f441 and on the branch); cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "bbfa5b0da3a5353af80e8777c19b0ec11bc042cc441a658095350569e23dd214",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "c0-whole-solid-grounding backend/app changes: assumption_gate C0 checks the whole-solid claims read on a named solid (right/oblique prism, cuboid, cube + edge, regular square/triangular pyramid, regular tetrahedron, all edges, lateral edge, apothem, base centre, height as distance to the base plane) on the given coordinates and refuses SOURCE_SHAPE_CONTRADICTS_COORDINATES; CACHE_VERSION 119 → 120 in main.py. No prompt, grammar card, schema or capability-hash change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 8c4c0128 (product commit c11e8c9d) is the current product identity on fix/c0-whole-solid-grounding. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 120
+}
