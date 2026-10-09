@@ -21,5 +21,23 @@
     "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ": "OPEN, narrowed: unnamed + a point named without coordinates / two solids",
     "ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE": "OPEN, narrowed: 21 texts naming points without coordinates (architecture decision a/b/c)"
   },
-  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "product_changes": "none LOCAL (product commit stays 12edf57a); diff vs main touches shape_constraint.py, assumption_gate.py, formation.py, main.py (cache) + identity lock + test pins + one registered test update — no compiler, template, refusal-code or frontend change",
+    "design_review": "binding only when ten_diem_khong_toa_do(text) is empty and the program builds exactly one solid; bound claims verified by existing templates / §22 (no new engine); contract solid_topology (model output) not used; reader never guesses vertex names (claims stay `()`)",
+    "probes": "probe_c1_equivalence.py and probe.py re-run on ede8d329 and on the branch: all four logs identical to Cloud's",
+    "c1_groups": "bind/correct 13 = corpus labels; bind/wrong_value 4 → corpus value, re-derived by hand (square/U3 3√3, triangular N5b 9/2, U1 3√3/2, U3 3√3); bind/served_label_refused 8 → refused with the label's reason, re-derived (missing height ×4, apothem 5 ≠ 6, lateral √10 ≠ 3, irrational height √2, angle 60°); bind/refused 1 kept; unchanged 21 identical to main",
+    "face_order": "triangular rows re-run with the program's face list rotated (lateral face first): 0 outcome changes",
+    "c0": "11/11 (3 contradictions refused SOURCE_SHAPE_CONTRADICTS_COORDINATES; 6 consistent served C0 incl. other base face first, negation, goal clause; extra coordinate-less point and two solids unchanged)",
+    "other_variants": "canonical, apex_base, regular_notation, unnamed (named in question): 0 changes main → branch",
+    "open_rows": "square/N5 (SA = √17, served 3), square/R2_N9 (SA ≠ SB contradiction, served 16), square/W5_C (height undetermined, served 16/3) reproduced on main and branch — not fixed",
+    "candidate_freeze": "97db084f (frozen at c29f69c7; candidate d07a92decc0fe635ff32ea858ef86ddd891cc355ff1eef42ffba1d35685ea17e, product 12edf57a, cache 122, 102 files; diagnostics/freeze_12edf57a.log)",
+    "cache_version": "122 verified: 11 served → refused + 4 value changes reproduced; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 122; 0 model-surface files since ede8d329; pins at 122; fixture_diff 49/49 identical",
+    "targeted": "unnamed 72/72 + oracle (47 C1 + 11 C0); C0 §21–§23, C1, G04, G05, compiler, regression, identity, docs, test_api: 1557/1557; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at 97db084f (pytest 7602 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_97db084f.log)",
+    "next_decision": "user chose option (b) for the 21 remaining rows — a separate Cloud run after integration; not implemented here",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }

@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 122 trên nhánh `fix/unnamed-regular-pyramid-grounding` (chóp đều không tên: served → refused + giá trị khung T8 đổi; runs/unnamed-regular-pyramid-grounding/cache/decision.json) · `main`: 121 (c0-whole-solid-reader: bộ đọc chóp đều — C0 10 hàng served → refused, C1 N5 đáp số sai → refused; runs/c0-whole-solid-reader/cache/decision.json)
-> CANDIDATE = c3f8339927bfe272… (102 file; product commit 7d551535; cache 121; đóng băng LOCAL 1396878e, T3 PASS — runs/c0-whole-solid-reader/handoff.md; trên `main` từ 81ff8899)
+> CANDIDATE = c3f8339927bfe272… trên `main` (product commit 7d551535; cache 121); nhánh `fix/unnamed-regular-pyramid-grounding`: d07a92decc0fe635… (102 file; product commit 12edf57a; cache 122; đóng băng LOCAL 97db084f, T3 PASS — runs/unnamed-regular-pyramid-grounding/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = C0_WHOLE_SOLID_READER (run `c0-whole-solid-reader` — Cloud sửa bộ đọc chóp đều, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
 > FINAL_DECISION = MERGED_AND_PUSHED (c0-whole-solid-reader: `main` = `origin/main` = `81ff8899`, fast-forward từ a1350da3, 2026-10-09; runs/c0-whole-solid-reader/APPROVAL.md; còn mở ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ (chóp đều không tên) + ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE ⇒ an toàn C0 toàn khối CHƯA trọn · c0-whole-solid-grounding: 11be6092, runs/c0-whole-solid-grounding/APPROVAL.md · geometry-grounding-safety: 47d05f22, runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
@@ -64,14 +64,15 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **Chóp đều không tên — run unnamed-regular-pyramid-grounding (2026-10-09, Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+> **Chóp đều không tên — run unnamed-regular-pyramid-grounding (2026-10-09, Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
 > | Trước (`ede8d329`) | 47 đề chóp đều không tên: 37 phục vụ (22 đúng nhãn, 4 sai giá trị, 11 nhãn đòi từ chối), 10 từ chối — ngoài vùng từ chối U3; 3 đề C0 không tên mâu thuẫn được phục vụ |
 > | Sửa | bộ đọc phát `regular_*_pyramid ()` (không đoán tên); cổng gắn vào khối duy nhất của chương trình CHỈ khi đề không gọi tên điểm nào thiếu toạ độ, rồi KIỂM như `S.ABCD` (amendment §24); vùng U3 thêm các đề ấy |
 > | Kết quả | 26 hàng gắn được = nhãn corpus (13 đúng giữ, 4 sai → đúng giá trị, 8 → từ chối đúng lý do, 1 giữ từ chối); 21 hàng có tên điểm thiếu toạ độ không đổi (3 vẫn phục vụ trái nhãn — quyết định kiến trúc); C0 11/11 nhãn |
-> | `CACHE_VERSION` · candidate | **122** (served → refused + giá trị đổi; bề mặt mô hình không đổi) · candidate `c3f83399…` CHƯA đóng băng lại (LOCAL) |
+> | `CACHE_VERSION` · candidate | **122** (served → refused + giá trị đổi; bề mặt mô hình không đổi) · candidate **`d07a92de…`** (product `12edf57a`; đóng băng LOCAL `97db084f`, `--verify` khớp) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `97db084f`: pytest 7602 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_97db084f.log`); probe C1 + C0 chạy lại trên `main` và nhánh trùng byte log Cloud; 4 giá trị sửa và 8 từ chối kiểm lại bằng công thức; thứ tự mặt của chương trình không đổi kết cục; C0 11/11; lối viết khác 0 đổi. Hướng tiếp (người dùng chọn): phương án (b) ở lượt Cloud riêng |
 > | Run | [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **Bộ đọc chóp đều — run c0-whole-solid-reader (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-reader`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `81ff8899` theo `APPROVAL.md`):**
