@@ -1,0 +1,29 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "oblique-prism (run oblique-prism, G04 — oblique prism)",
+  "corrects": "docs/evaluation/geometry/runs/repo-cleanup/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "02ce5e1e6e819ab22519cd498fa399ee2af1a34f22273cde6e8a20c81adff89f",
+  "current_candidate_source_commit": "0fe4edc5224d0ae7a1b5a02418dbf544b5ae7ba9",
+  "current_candidate_frozen_at": "fcc41452e3cbb055c7b64f043a2f3a99f6e76ec6",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/oblique freeze) at fcc41452; product commit 0fe4edc5; 102 files; --verify match (diagnostics/freeze_0fe4edc5.log). CACHE_VERSION 118 unchanged: cache identity lock verifies (prompts, grammar card, schemas, capability hash, environment b1714b56… unchanged); T9 only turns previously refused oblique-prism statements into served ones, the narration change is compiler-only, and the compiler family is off the default route.",
+  "previous_candidate_hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "oblique-prism backend/app changes: assumption gate template T9 (oblique prism, foot of the lateral height at a base vertex, rational height); compiler family oblique_prism_volume (opt-in DETERMINISTIC_FIRST only); two thin statement builders in primitives.py; compiler-only narration of assign vector_from_points in interpreter.py; product_capability row oblique_prism = foundation_only. No prompt, grammar card, schema or capability-hash change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/simulation/geometry_compiler/compiler.py",
+    "backend/app/simulation/geometry_compiler/primitives.py",
+    "backend/app/simulation/product_capability.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/interpreter.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 02ce5e1e (product commit 0fe4edc5) is the current product identity on feat/oblique-prism. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 118
+}
