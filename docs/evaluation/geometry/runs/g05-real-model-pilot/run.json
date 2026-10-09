@@ -24,6 +24,8 @@
     "certification": "CERTIFICATION.json + diagnostics/certification.log: fake provider (corpus hand-written programs) through GacCong -> stage_semantic_* -> run_pipeline: 10/10 SERVED_CORRECT, 6/6 REFUSED_CORRECT (assumption), 32 logical = 32 HTTP attempts, tokens = fake usage x calls; scene replay 10/10; fault injection: provider error on a negative -> PROVIDER_ERROR, broken program -> PARSER_SCHEMA_ERROR, resume -> 0 calls, fake key absent from artifacts — CERTIFIED",
     "renderer_world_check": "scene_world_check.ts (frontend veKhongGian) on certification_scenes: RENDER_TRANSFORM_OK 10/10 (diagnostics/certification_world_check.log); injection X1 without chart_metric -> MISMATCH; first version had a prism-diagonal pairing bug, caught and fixed before any live call (diagnostics/mutation_check.log)",
     "tests": "tests/geometry/test_g05_real_model_pilot.py 55 passed; mutation check 7/7 guards caught (diagnostics/mutation_check.log)",
+    "full_backend_pytest": "7792 passed, 1 skipped, 2 deselected at f694d086 on a clean tree (test_holdout_readiness::test_bao_cao_da_sinh_va_KHONG_TROI is red only while the working tree is dirty — its blocker is 'CÂY LÀM VIỆC BẨN'); T3 not run: no backend/app, frontend or harness .mjs change",
+    "identity": "freeze_evaluation_candidate --verify: 93077b51 (102 files) match; lock_cache_identity --verify: CACHE_VERSION 125, environment b1714b56 match; git diff 28ac1d61..f694d086 touches no backend/app or frontend path",
     "status": "PILOT_TOOLING_IMPLEMENTED_INDEPENDENT_VERIFICATION_REQUIRED"
   }
 }
