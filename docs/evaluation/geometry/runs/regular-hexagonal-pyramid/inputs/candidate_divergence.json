@@ -1,0 +1,28 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "regular-hexagonal-pyramid (run regular-hexagonal-pyramid — G05 slice: regular hexagonal pyramid through an affine chart and a text-derived metric, template T11)",
+  "corrects": "docs/evaluation/geometry/runs/unnamed-pyramid-vertex-binding/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "cf47dd6142f2d46fd5b9be252fee0d9a7530844d3e1bf07ece47b52b4b433f5a",
+  "current_candidate_source_commit": "6c792434a735f02b12ca9c6b6600e7dbc0e5b322",
+  "current_candidate_frozen_at": "dc974a51ef90d00b8ef9d8cf63fa1981b26aad3f",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/hex freeze) at dc974a51; product commit 6c792434; 102 files; --verify match (diagnostics/freeze_6c792434.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 123 → 124: H5 served the wrong value 1 under 123 and serves 6√3 now; a C0 hexagon claim contradicted by its coordinates was certified C0 under 123 (claim not read) and is refused now (re-run LOCAL on f20caf8a and on the branch, logs identical to Cloud's); cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "b13a3ef1c34cd41dbae0f772c63e3ecdcc9a8243bf84f656c778c02a99422a72",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "regular-hexagonal-pyramid backend/app changes (amendment §26): shape_constraint reads the regular hexagonal pyramid (three phrasings) and its base side / lateral edge; assumption_gate adds template T11 (metric-regular hexagon base, apex on the normal through the centre), kich_thuoc_t11 shared by the template and the metric, the hexagon metric in do_luong_cua, and C0 checks of the hexagon claim on given coordinates; product_capability row regular_hexagonal_pyramid = foundation_only; CACHE_VERSION 123 → 124 in main.py. No kernel, compiler, prompt, grammar card, schema or IR-capability change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/main.py",
+    "backend/app/simulation/product_capability.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/shape_constraint.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate cf47dd61 (product commit 6c792434) is the current product identity on feat/g05-geometry-capability-expansion. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 124
+}
