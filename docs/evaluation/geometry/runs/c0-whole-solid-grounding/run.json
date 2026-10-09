@@ -10,5 +10,12 @@
   "cache_version_at_start": "119",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "3bbd8c2",
+    "preregistration_edge_all_row": "139aa1a",
+    "product_fix": "c11e8c9",
+    "docs": "9d61f37 (report/handoff/state) + the final evidence commit"
+  },
+  "cache_version_after": "120",
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

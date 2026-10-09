@@ -48,7 +48,10 @@ Thiếu dữ kiện ≠ mâu thuẫn: khối không tên, điểm không có to�
 - Probe sau sửa: `diagnostics/probe_c11e8c9.log` — 29/29 khớp nhãn.
 - Hồi quy: C0 §21, G04, G05, compiler, bộ đọc, chứng chỉ giả định, chóp đều, toạ độ điểm — trong toàn bộ pytest; demo
   5/5 (`replay_demo_cases.py`), bề mặt sập 6/6 (`audit_demo_crash_surface.py`).
-- Toàn bộ pytest (worktree sạch, cùng máy): `results/pytest_compare.json`.
+- Toàn bộ pytest (worktree sạch, cùng máy): `c11e8c9` 7261 passed / 136 failed / 4 errors; baseline `139aa1a` (mã
+  `9762f441`) 7232 / 131 / 4 — 131 + 4 có sẵn trùng hệt; 5 đỏ mới = danh tính candidate (mã sản phẩm + `CACHE_VERSION`
+  ghi trong candidate, LOCAL đóng băng lại) — `results/pytest_compare.json`. 49/49 fixture Tier-A trùng byte
+  (`cache/fixture_diff.json`).
 
 ## 4. Cache · schema · candidate
 
