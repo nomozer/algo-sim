@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 121 (c0-whole-solid-reader: bộ đọc chóp đều — C0 10 hàng served → refused, C1 N5 đáp số sai → refused; runs/c0-whole-solid-reader/cache/decision.json)
+> CACHE_VERSION = 122 trên nhánh `fix/unnamed-regular-pyramid-grounding` (chóp đều không tên: served → refused + giá trị khung T8 đổi; runs/unnamed-regular-pyramid-grounding/cache/decision.json) · `main`: 121 (c0-whole-solid-reader: bộ đọc chóp đều — C0 10 hàng served → refused, C1 N5 đáp số sai → refused; runs/c0-whole-solid-reader/cache/decision.json)
 > CANDIDATE = c3f8339927bfe272… (102 file; product commit 7d551535; cache 121; đóng băng LOCAL 1396878e, T3 PASS — runs/c0-whole-solid-reader/handoff.md; trên `main` từ 81ff8899)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = C0_WHOLE_SOLID_READER (run `c0-whole-solid-reader` — Cloud sửa bộ đọc chóp đều, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
@@ -63,6 +63,16 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
+
+> **Chóp đều không tên — run unnamed-regular-pyramid-grounding (2026-10-09, Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước (`ede8d329`) | 47 đề chóp đều không tên: 37 phục vụ (22 đúng nhãn, 4 sai giá trị, 11 nhãn đòi từ chối), 10 từ chối — ngoài vùng từ chối U3; 3 đề C0 không tên mâu thuẫn được phục vụ |
+> | Sửa | bộ đọc phát `regular_*_pyramid ()` (không đoán tên); cổng gắn vào khối duy nhất của chương trình CHỈ khi đề không gọi tên điểm nào thiếu toạ độ, rồi KIỂM như `S.ABCD` (amendment §24); vùng U3 thêm các đề ấy |
+> | Kết quả | 26 hàng gắn được = nhãn corpus (13 đúng giữ, 4 sai → đúng giá trị, 8 → từ chối đúng lý do, 1 giữ từ chối); 21 hàng có tên điểm thiếu toạ độ không đổi (3 vẫn phục vụ trái nhãn — quyết định kiến trúc); C0 11/11 nhãn |
+> | `CACHE_VERSION` · candidate | **122** (served → refused + giá trị đổi; bề mặt mô hình không đổi) · candidate `c3f83399…` CHƯA đóng băng lại (LOCAL) |
+> | Run | [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **Bộ đọc chóp đều — run c0-whole-solid-reader (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-reader`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `81ff8899` theo `APPROVAL.md`):**
 >

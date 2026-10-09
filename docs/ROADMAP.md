@@ -13,6 +13,11 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Việc `unnamed-regular-pyramid-grounding` (2026-10-09, run [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/),
+  Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`, CHƯA tích hợp):** chóp đều không tên gắn + kiểm khi đề không gọi
+  tên điểm nào thiếu toạ độ (26/47 hàng corpus = nhãn; 4 giá trị sai sửa đúng); `CACHE_VERSION` 122; chờ LOCAL. Còn mở
+  (quyết định kiến trúc): đề gọi tên điểm mà không toạ độ, không ký hiệu khối — 21 hàng, 3 phục vụ trái nhãn.
+
 - **Việc `c0-whole-solid-reader` (2026-10-09, run [`c0-whole-solid-reader`](evaluation/geometry/runs/c0-whole-solid-reader/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `81ff8899`):** bộ đọc nhận "có đỉnh S và đáy ABCD" và "chóp đều S.ABCD" như ký hiệu
   chuẩn; phủ định không là tiền đề; `CACHE_VERSION` 121; candidate `c3f83399…`, T3 PASS; phê duyệt: `APPROVAL.md` của run.

@@ -107,8 +107,23 @@ def regular_some_reading(pts: list) -> bool:
     return False
 
 
+def ambiguity_witness() -> bool:
+    """Scope `unchanged` is not a product limit by taste: 'hình chóp tứ giác đều có AB = 4, SA = 3' (square/R2_S8) fits
+    apex S (base side 4, lateral 3 ⇒ h² = 1, V² = (16/3)²) AND apex B (lateral BA = BS = 4, base side SA = 3 ⇒ h² = 23/2,
+    V² = 9·23/2) — two different volumes, so only a labelling the TEXT does not fix picks one."""
+    v2 = []
+    for b2, l2 in ((F(16), F(9)), (F(9), F(16))):       # (base side², lateral²)
+        h2 = l2 - b2 / 2
+        if h2 <= 0:
+            return False
+        v2.append(b2 * b2 * h2 / 9)
+    return len(set(v2)) == 2
+
+
 def main() -> int:
     bad = 0
+    if not ambiguity_witness():
+        print("DISAGREE ambiguity witness"); bad += 1
     for rid, r in D["c1_rows"].items():
         names = sorted(set(TOK.findall(r["text"])))
         if (r["scope"] == "bind") != (not names):

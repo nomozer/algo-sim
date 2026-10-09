@@ -1,0 +1,11 @@
+{"row": "U_C_square", "expect": "refused", "servable": false, "stage": "assumption", "reason": "SOURCE_SHAPE_CONTRADICTS_COORDINATES", "certificate": null}
+{"row": "U_K_square", "expect": "served:4", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_C_square_question_names_solid", "expect": "refused", "servable": false, "stage": "assumption", "reason": "SOURCE_SHAPE_CONTRADICTS_COORDINATES", "certificate": null}
+{"row": "U_K_renamed_fractions", "expect": "served:3/2", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_C_triangular", "expect": "refused", "servable": false, "stage": "assumption", "reason": "SOURCE_SHAPE_CONTRADICTS_COORDINATES", "certificate": null}
+{"row": "U_K_triangular", "expect": "served:1/2", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_K_triangular_program_other_base_first", "expect": "served:1/2", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_K_negated", "expect": "served:4", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_K_goal_clause", "expect": "served:4", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_X_extra_point_without_coordinates", "expect": "unchanged", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
+{"row": "U_X_two_solids", "expect": "unchanged", "servable": true, "stage": "served", "reason": null, "certificate": "C0"}
