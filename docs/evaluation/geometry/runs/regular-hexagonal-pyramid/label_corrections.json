@@ -1,0 +1,12 @@
+{
+ "schema_version": "label-corrections/1",
+ "run_id": "regular-hexagonal-pyramid",
+ "written": "2026-10-09, after the first T11 probe (labels.json and oracle.py stay byte-identical; this overlay is read by the test)",
+ "rows": {
+  "N4_program_apex_off_centre": {
+   "was": "refused",
+   "now": "served:6√3",
+   "why": "The label read the program's layout as Euclidean. Under the product's exact-dimensions contract the layout is an AFFINE chart and lengths/perpendicularity come only from the metric derived from the TEXT (`do_luong_cua`): the chart point (2, 1, 1) is, in that metric, on the normal through the base centre, so the program's figure IS the text's regular hexagonal pyramid and V = 6√3 equals oracle.py's value for the text. Same rule and same outcome as the regular-triangular corpus row `N5_apex_over_vertex` (served 9/2). A base that is not an affine regular hexagon (N5) is still refused: the metric fixes the base plane from A, B, C, and D, E, F must follow by central symmetry."
+  }
+ }
+}

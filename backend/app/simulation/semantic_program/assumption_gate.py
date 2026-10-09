@@ -788,7 +788,82 @@ def _khuon_chop_tam_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
                   tien_de, chinh_tac, can=True)
 
 
+def la_chop_luc_giac_deu(rb, S: str, day: tuple) -> bool:
+    """regular-hexagonal-pyramid — đề NÓI chóp lục giác đều với đúng đỉnh và đáy này (chỉ khẳng định của đề)."""
+    return len(day) == 6 and any(r.kind == "regular_hexagonal_pyramid" and r.entities == (S, *day) for r in rb)
+
+
+def kich_thuoc_t11(rb, S: str, day: tuple, ent: tuple, do_dai: dict) -> tuple | str:
+    """Cạnh đáy² b² và chiều cao² h² mà ĐỀ cố định cho chóp lục giác đều (`None` = đề không cho), hoặc lý do từ chối. Bán
+    kính ngoại tiếp đáy = cạnh đáy ⇒ cạnh bên² = h² + b². Một thẩm quyền: khuôn T11 và metric khung (`do_luong_cua`)."""
+    k = len(day)
+    canh = {square(r.value) for r in rb if r.kind == "base_regular_hexagon" and set(r.entities) == set(day)
+            and r.value is not None}
+    canh |= {square(do_dai[frozenset((day[i], day[(i + 1) % k]))]) for i in range(k)
+             if frozenset((day[i], day[(i + 1) % k])) in do_dai}
+    ben = {square(do_dai[frozenset({S, v})]) for v in day if frozenset({S, v}) in do_dai}
+    ben |= {square(r.value) for r in rb if r.kind == "lateral_edge" and r.entities == ent and r.value is not None}
+    if len(canh) > 1:
+        return "TEMPLATE_CONTRADICTION T11: base sides² " + ", ".join(str(x) for x in sorted(canh))
+    if len(ben) > 1:
+        return "TEMPLATE_CONTRADICTION T11: lateral edges² " + ", ".join(str(x) for x in sorted(ben))
+    b2, l2 = next(iter(canh), None), next(iter(ben), None)
+    ung = [("height", square(r.value)) for r in rb if r.kind == "height" and r.entities == ent and r.value is not None]
+    if b2 is not None and l2 is not None:
+        ung.append(("lateral edge", l2 - b2))
+    if len({v for _, v in ung}) > 1:
+        return "TEMPLATE_CONTRADICTION T11: " + ", ".join(f"{n} ⇒ h² = {v}" for n, v in ung)
+    h2 = ung[0][1] if ung else None
+    if h2 is not None and h2 <= 0:
+        return f"TEMPLATE_NOT_MATCHED T11: degenerate height (h² = {h2})"
+    return b2, h2
+
+
+def _khuon_chop_luc_giac_deu(rb, S: str, day: tuple, ent: tuple, do_dai: dict):
+    """T11 (regular-hexagonal-pyramid) — chóp lục giác ĐỀU, chân đường cao ở TÂM đáy. Như T8: bố cục là KHUNG AFFINE
+    (lục giác đều hữu tỉ trên cơ sở góc 60°), độ dài theo metric `do_luong_cua` dẫn xuất từ b², h² của đề. Đáy đều
+    theo metric ⇔ đối xứng tâm O = A + C − B và ba cạnh liên tiếp AB, BC, CD bằng nhau."""
+    kt = kich_thuoc_t11(rb, S, day, ent, do_dai)
+    if isinstance(kt, str):
+        return kt
+    b2, h2 = kt
+    a, b, c, d, e, f = day
+
+    def O(V):
+        return V[a] + V[c] - V[b]
+
+    def d2(V, p, q):
+        return _metric.norm_sq(V[p] - V[q])
+
+    rbuoc: list = [
+        ("base centrally symmetric", lambda V: all(V[p] + V[q] == O(V).scale(2) for p, q in ((a, d), (b, e), (c, f)))),
+        ("base regular hexagon", lambda V: d2(V, a, b) == d2(V, b, c) == d2(V, c, d)),
+        ("apex above the centre", lambda V: _metric.dot(V[S] - O(V), V[b] - V[a]) == 0
+         and _metric.dot(V[S] - O(V), V[c] - V[b]) == 0),
+        ("apex off the base", lambda V: V[S] != O(V))]
+    if b2 is not None:
+        rbuoc.append(("base side", lambda V: d2(V, a, b) == b2))
+    if h2 is not None:
+        rbuoc.append(("height", lambda V: _metric.norm_sq(V[S] - O(V)) == h2))
+    tien_de = [r for r in rb if (r.kind == "base_regular_hexagon" and set(r.entities) == set(day))
+               or (r.kind in ("height", "lateral_edge") and r.entities == ent)]
+
+    def chinh_tac(_L: list[ExactNumber]) -> dict[str, Vec3]:
+        """Khung đơn vị (cơ sở 60°) — kích thước KHÔNG nằm trong toạ độ; lượt chạy lại dẫn xuất metric riêng (`_chay`)."""
+        luoi = ((1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1), (1, -1))
+        return {**{p: _o(x, y) for p, (x, y) in zip(day, luoi)}, S: _o(0, 0, 1)}
+
+    return _Khuon("T11", (S, *day), rbuoc,
+                  [_KichThuoc(_nhan(a, b), [(day[i], day[(i + 1) % 6]) for i in range(6)],
+                              sqrt_rational(b2) if b2 is not None else None, ("vi_tu_mat", a, day[:3])),
+                   _KichThuoc("chiều cao", [], sqrt_rational(h2) if h2 is not None else None,
+                              ("phap_tuyen", a, day[:3]))],
+                  tien_de, chinh_tac, can=True)
+
+
 def _khuon_chop(rb, S: str, day: tuple, ent: tuple, do_dai: dict | None = None):
+    if la_chop_luc_giac_deu(rb, S, day):
+        return _khuon_chop_luc_giac_deu(rb, S, day, ent, do_dai or {})
     if la_chop_tam_giac_deu(rb, S, day, do_dai or {}):
         return _khuon_chop_tam_giac_deu(rb, S, day, ent, do_dai or {})
     if len(day) == 4 and any(r.kind == "regular_square_pyramid" and r.entities == ent for r in rb):
@@ -1392,6 +1467,10 @@ _KIEM_C0.update({
     "cube_edge": lambda V, e, v: (V[e[1]] - V[e[0]]).norm_sq() == square(v),
     "regular_square_pyramid": lambda V, e, _v: _KIEM_C0["base_square"](V, e[1:], None) and _chop_deu(V, e),
     "regular_triangular_pyramid": lambda V, e, _v: _KIEM_C0["base_equilateral"](V, e[1:], None) and _chop_deu(V, e),
+    # T11: đối xứng tâm qua O = A + C − B, ba cạnh liên tiếp bằng nhau, đỉnh trên pháp tuyến tại tâm
+    "regular_hexagonal_pyramid": lambda V, e, _v: all(
+        V[e[1 + i]] + V[e[4 + i]] == (V[e[1]] + V[e[3]] - V[e[2]]).scale(2) for i in range(3)) and len(
+        {(V[e[i + 1]] - V[e[i]]).norm_sq() for i in (1, 2, 3)}) == 1 and _chop_deu(V, e),
     "regular_tetrahedron": lambda V, e, _v: len({(V[p] - V[q]).norm_sq() for i, p in enumerate(e)
                                                  for q in e[i + 1:]}) == 1,
     "edge_all": lambda V, e, v: all((V[p] - V[q]).norm_sq() == square(v) for i, p in enumerate(e) for q in e[i + 1:]),
@@ -1402,7 +1481,7 @@ _KIEM_C0.update({
     "height_pyramid": lambda V, e, v: _chieu_cao_sq(V, e, "pyramid") in (None, square(v)),
     "height_prism": lambda V, e, v: _chieu_cao_sq(V, e, "prism") in (None, square(v)),
 })
-_SO_DINH_C0.update({"cuboid": 8, "cube": 8, "cube_edge": 8, "regular_square_pyramid": 5,
+_SO_DINH_C0.update({"cuboid": 8, "cube": 8, "cube_edge": 8, "regular_square_pyramid": 5, "regular_hexagonal_pyramid": 7,
                     "regular_triangular_pyramid": 4, "regular_tetrahedron": 4, "edge_all": 4, "apothem": 5})
 _LANG_TRU_C0 = {"right_prism", "oblique_prism", "height_prism"}
 _CHOP_C0 = {"lateral_edge", "base_centre", "height_pyramid"}
@@ -1608,7 +1687,7 @@ def _doc_de(de: str) -> tuple:
 def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
     """exact-dimensions — metric của KHUNG chương trình, dẫn xuất từ ĐỀ; `None` = khung Euclid (đồng nhất).
 
-    Chỉ khi đề là chóp tam giác đều / tứ diện đều (`la_chop_tam_giac_deu`, thẩm quyền duy nhất) và CỐ ĐỊNH b², h²
+    Chỉ khi đề là chóp tam giác đều / tứ diện đều (`la_chop_tam_giac_deu`) hoặc chóp lục giác đều (T11) và CỐ ĐỊNH b², h²
     (`kich_thuoc_t8`, cùng thẩm quyền với T8), và chương trình KHAI bốn đỉnh bằng toạ độ khung: sáu độ dài² (ba cạnh
     đáy b², ba cạnh bên b²/3 + h²) xác định DUY NHẤT metric (`geometry.metric.gram_from_lengths`). Toạ độ khung
     không mang độ dài nào — nên bố cục không thể thành giả thiết. Metric đồng nhất (khung Euclid sẵn đúng) ⇒ `None`,
@@ -1624,12 +1703,22 @@ def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
         return None
     ent = next(iter(co_ten))
     S, day = ent[0], ent[1:]
-    if len(day) != 3 or not la_chop_tam_giac_deu(rb, S, day, do_dai):
+    if la_chop_luc_giac_deu(rb, S, day):       # T11: S, A, B, C — AC² = 3b² (góc 120°), cạnh bên² = b² + h²
+        kt = kich_thuoc_t11(rb, S, day, ent, do_dai)
+        if isinstance(kt, str) or None in kt:
+            return None
+        b2, h2 = kt
+        dinh, dai = (S, *day[:3]), {(1, 2): b2, (2, 3): b2, (1, 3): 3 * b2, (0, 1): b2 + h2, (0, 2): b2 + h2,
+                                    (0, 3): b2 + h2}
+    elif len(day) == 3 and la_chop_tam_giac_deu(rb, S, day, do_dai):
+        kt = kich_thuoc_t8(rb, S, day, ent, do_dai)
+        if isinstance(kt, str) or kt[0] is None or kt[1] is None:
+            return None
+        b2, h2, _l2 = kt
+        l2 = b2 / 3 + h2
+        dinh, dai = (S, *day), {(1, 2): b2, (2, 3): b2, (1, 3): b2, (0, 1): l2, (0, 2): l2, (0, 3): l2}
+    else:
         return None
-    kt = kich_thuoc_t8(rb, S, day, ent, do_dai)
-    if isinstance(kt, str) or kt[0] is None or kt[1] is None:
-        return None
-    b2, h2, _l2 = kt
     toa: dict[str, Any] = {}
     for m in prog.get("memory_declarations", []):
         if m.get("type") == "point3" and isinstance(m.get("initial_value"), list):
@@ -1640,9 +1729,8 @@ def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
     dem = Counter(_khoa(n) for n in toa)
     theo_khoa = {_khoa(n): n for n in toa if dem[_khoa(n)] == 1}
     try:
-        P = tuple(Vec3.of(*[_F(c) for c in toa[theo_khoa[_khoa(e)]]]) for e in (S, *day))
-        l2 = b2 / 3 + h2
-        m = _metric.gram_from_lengths(P, {(1, 2): b2, (2, 3): b2, (1, 3): b2, (0, 1): l2, (0, 2): l2, (0, 3): l2})
+        P = tuple(Vec3.of(*[_F(c) for c in toa[theo_khoa[_khoa(e)]]]) for e in dinh)
+        m = _metric.gram_from_lengths(P, dai)
     except (KeyError, TypeError, ValueError, ZeroDivisionError, GeometryError):
         return None
     return None if _metric.is_identity(m) else m

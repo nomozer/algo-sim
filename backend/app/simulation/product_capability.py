@@ -102,6 +102,16 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             "foundation_only",
             "hệ: bộ đọc §20.1 + khuôn T10 + họ compiler `polygon_base_*`, 15 hàng ghi trước "
             "(general-polygon-base/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"),
+        # ── CHÓP LỤC GIÁC ĐỀU (regular-hexagonal-pyramid, G05) ───────────
+        #
+        # Miền đã khai (ASSUMPTION_CERTIFICATE_AMENDMENT §26): `chóp lục giác đều X.Y` / `chóp đều X.Y` (đáy 6 đỉnh) /
+        # `… có đỉnh X và đáy Y`, cạnh đáy + chiều cao hoặc cạnh bên (hữu tỉ hoặc căn). Khung affine + metric từ đề (như
+        # T8). Lăng trụ lục giác đều, chóp lục giác đều không tên, ngũ giác đều: từ chối. `foundation_only`: prompt KHÔNG
+        # đổi, chưa đo mô hình có tự đặt đáy lục giác trong khung affine hay không; compiler không có họ này.
+        NangLucSanPham(
+            "regular_hexagonal_pyramid", "Chóp lục giác đều", "foundation_only",
+            "hệ: bộ đọc + khuôn T11 + metric khung (do_luong_cua), 17 hàng ghi trước "
+            "(regular-hexagonal-pyramid/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"),
         # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
         #
         # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).

@@ -799,7 +799,11 @@ MISSING_KEY_MSG = (
 # 123 — 2026-10-09 (unnamed-pyramid-vertex-binding, chính sách A): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Chóp đều không tên mà đề gọi
 #       tên điểm thiếu toạ độ (§24 không gắn được) vào vùng từ chối và bị cổng chặn (amendment §25): 12 đề từng phục vụ
 #       chiều served → refused; row 122 sẽ trả thẳng envelope cũ (`runs/unnamed-pyramid-vertex-binding/cache/decision.json`).
-CACHE_VERSION = "123"
+# 124 — 2026-10-09 (regular-hexagonal-pyramid, G05): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Chóp lục giác đều được đọc và chứng nhận
+#       (khuôn T11, metric khung — amendment §26): "hình chóp lục giác đều có đỉnh S và đáy ABCDEF" từng PHỤC VỤ giá trị
+#       sai (1) nay phục vụ 6√3; C0 với toạ độ lục giác mâu thuẫn chiều served → refused. Row 123 sẽ trả envelope cũ
+#       (`runs/regular-hexagonal-pyramid/cache/decision.json`).
+CACHE_VERSION = "124"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

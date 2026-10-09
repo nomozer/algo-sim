@@ -1330,3 +1330,15 @@ toạ độ, hoặc chương trình không dựng đúng một khối) nay nằm
 phải kết luận toán học: theo nhãn `runs/unnamed-pyramid-vertex-binding/labels.json` một số đề này được chính đề xác định
 (S5, S7, R2_S9, P9, P11) — phục vụ chúng cần phương án B (mô hình tham số chóp đều trong cổng), hoãn lại. C0 không đổi:
 đề có toạ độ mà §24 không gắn vẫn qua chứng chỉ C0 như trước.
+
+## 26. regular-hexagonal-pyramid — khuôn T11: chóp lục giác đều (2026-10-09, G05)
+
+Bộ đọc: `hình/khối chóp lục giác đều X.Y`, `chóp đều X.Y` với đáy 6 đỉnh, `chóp lục giác đều có đỉnh X và đáy Y` ⇒
+`regular_hexagonal_pyramid(X, *Y)` + `base_regular_hexagon(Y)`; cạnh đáy / cạnh bên của khối duy nhất; phủ định và mệnh đề
+mục tiêu không đọc (như §23). Khuôn **T11** (cùng hợp đồng §18.2 của T8, `can=True`): bố cục là KHUNG AFFINE, độ dài
+theo metric `do_luong_cua` dẫn xuất từ b², h² của đề qua S, A, B, C (AB² = BC² = b², AC² = 3b², cạnh bên² = b² + h²);
+ràng buộc: đáy đối xứng tâm O = A + C − B, AB = BC = CD (theo metric), đỉnh trên pháp tuyến tại O, ngoài đáy, cạnh đáy,
+chiều cao. Kích thước: một thẩm quyền `kich_thuoc_t11` (chiều cao trực tiếp hoặc từ cạnh bên; nguồn khác nhau ⇒ mâu
+thuẫn; h² ≤ 0 ⇒ suy biến). Khung chính tắc: lưới đơn vị cơ sở 60°. C0 (§22): `regular_hexagonal_pyramid` kiểm Euclid trên
+toạ độ đề cho. Ngoài: lăng trụ lục giác đều, chóp lục giác đều không tên, đa giác đều khác (ngũ giác: không có khung affine
+hữu tỉ). Nhãn: `docs/evaluation/geometry/runs/regular-hexagonal-pyramid/`.

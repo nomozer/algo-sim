@@ -53,7 +53,7 @@ _KHOI_CHOP = re.compile(
 #: c0-whole-solid-reader — chóp tứ/tam giác ĐỀU gọi tên đỉnh và đáy bằng lời: `… có đỉnh (là) S và|, (mặt) đáy (là)
 #: ABCD`. Cùng nhóm `dinh`/`day` với `_KHOI_CHOP`: đọc như ký hiệu `S.ABCD`. Không "đều" ⇒ không đọc (ngoài từ vựng).
 _KHOI_CHOP_DINH_DAY = re.compile(
-    rf"(?:[Hh]ình|[Kk]hối)\s+chóp\s+(?:tam|tứ)\s+giác\s+đều\s*,?\s+có\s+đỉnh\s+(?:là\s+)?(?P<dinh>{_E})\s*(?:,|và)\s*"
+    rf"(?:[Hh]ình|[Kk]hối)\s+chóp\s+(?:tam|tứ|lục)\s+giác\s+đều\s*,?\s+có\s+đỉnh\s+(?:là\s+)?(?P<dinh>{_E})\s*(?:,|và)\s*"
     rf"(?:có\s+)?(?:mặt\s+)?đáy\s+(?:là\s+)?(?P<day>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
 #: Loại chóp đều trong một ký hiệu khối: `chóp đều` (số đỉnh đáy quyết định) hoặc `chóp tứ/tam giác đều`.
 _CHOP_DEU = re.compile(r"chóp\s+(?:(?P<g>tam|tứ|ngũ|lục)\s+giác\s+)?đều")
@@ -215,6 +215,9 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         if len(ent) == 4 and deu.group("g") in (None, "tam"):
             phat("regular_triangular_pyramid", ent, None, m.start(), m.end())
             phat("base_equilateral", ent[1:], None, m.start(), m.end())
+        if len(ent) == 7 and deu.group("g") in (None, "lục"):     # regular-hexagonal-pyramid: khuôn T11
+            phat("regular_hexagonal_pyramid", ent, None, m.start(), m.end())
+            phat("base_regular_hexagon", ent[1:], None, m.start(), m.end())
     for m in _KHOI_TU_DIEN.finditer(de):
         # CHỈ tứ diện ĐỀU (đính chính §18.1 trước khi đo): "tứ diện ABCD" trơn vẫn không phát gì — đưa mọi tứ diện vào
         # vùng đa diện sẽ từ chối các đề tứ diện vuông/ngoại tiếp đang phục vụ (quyết định U3: cổng chỉ từ chối trong
@@ -327,6 +330,12 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
             elif m.group("ten") and set(_ten(m.group("ten"))) != set(khoi[1]):
                 continue
             phat("base_centre", _ten(m.group("o")) + khoi[1], None, m.start(), m.end())
+    # ── số đo của chóp lục giác đều duy nhất (T11) ──
+    if khoi is not None and any(r.kind == "regular_hexagonal_pyramid" and r.entities == khoi[0] for r in ra):
+        for m in _CANH_DAY.finditer(du_kien):
+            phat("base_regular_hexagon", khoi[1], _phan(m.group("so")), m.start(), m.end())
+        for m in _CANH_BEN.finditer(du_kien):
+            phat("lateral_edge", khoi[0], _phan(m.group("so")), m.start(), m.end())
     # ── §18.1: số đo của chóp tam giác đều duy nhất (tứ diện đều là một trường hợp) ──
     if khoi is not None and any(r.kind == "regular_triangular_pyramid" and r.entities == khoi[0] for r in ra):
         for m in _CANH_DAY.finditer(du_kien):
@@ -546,4 +555,4 @@ def la_chop_tam_giac_deu(rb: tuple[RangBuoc, ...], apex: str, day: tuple, do_dai
 
 #: Ràng buộc mà span của nó đã đọc chữ "đều" (luật đọc trọn §7).
 _KIND_DOC_DEU = frozenset({"regular_square_pyramid", "regular_triangular_pyramid", "regular_tetrahedron",
-                           "base_equilateral", "edge_all"})
+                           "base_equilateral", "edge_all", "regular_hexagonal_pyramid", "base_regular_hexagon"})

@@ -124,8 +124,8 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 122 -> 123 (unnamed-pyramid-vertex-binding): chóp đều không tên có tên điểm thiếu toạ độ bị chặn (served -> refused).
-    assert CACHE_VERSION == "123"
+    # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
+    assert CACHE_VERSION == "124"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════
