@@ -242,8 +242,8 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         if kieu == "cube" and (c := _CANH_LAP_PHUONG.match(de, m.end())):
             phat("cube_edge", day + tren, _phan(c.group("so")), m.start(), c.end())
         # regular-prisms: lăng trụ ĐỀU = lăng trụ đứng có đáy là đa giác đều (định nghĩa SGK) — khuôn T12
-        deu = re.search(r"(?P<g>tam|lục)\s+giác\s+đều", m.group("noun"))
-        if deu and len(day) == {"tam": 3, "lục": 6}[deu.group("g")] and not _PHU_DINH.search(de, 0, m.start()):
+        deu = re.search(r"(?P<g>tam|lục)\s+giác\s+đều", m.group("noun"))   # "xiên … đều": không phải lăng trụ đều
+        if deu and "xiên" not in m.group("noun") and len(day) == {"tam": 3, "lục": 6}[deu.group("g")] and not _PHU_DINH.search(de, 0, m.start()):
             phat("right_prism", day + tren, None, m.start(), m.end())
             phat("base_equilateral" if len(day) == 3 else "base_regular_hexagon", day, None, m.start(), m.end())
 

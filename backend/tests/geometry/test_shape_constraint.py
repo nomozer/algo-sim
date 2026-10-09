@@ -216,8 +216,8 @@ def test_do_dai_so_hoac_can_duoc_doc_tron(cau):
     # "cân": bộ đọc chỉ phát right_triangle, bỏ AB = AC
     "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, AB = 3. Cạnh bên SA vuông góc với đáy. "
     "Tính thể tích khối chóp S.ABC.",
-    # "đều": danh từ khối được đọc, tính đều bị bỏ
-    "Cho hình lăng trụ đứng tam giác đều ABC.DEF có AB = 3. Tính thể tích khối lăng trụ ABC.DEF.",
+    # "đều": danh từ khối được đọc, tính đều bị bỏ (tam/lục giác đều nay đọc — regular-prisms §27; tứ giác đều chưa)
+    "Cho hình lăng trụ đứng tứ giác đều ABCD.EFGH có AB = 3. Tính thể tích khối lăng trụ ABCD.EFGH.",
     # cạnh của đáy KHÔNG vuông: span nuốt "cạnh 3" nhưng không phát giá trị
     "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật cạnh 3. Cạnh bên SA vuông góc với đáy, SA = 4. "
     "Tính thể tích khối chóp S.ABCD.",

@@ -148,3 +148,11 @@ def test_c0_lang_tru_deu_toa_do(day, ten, dich, them, mong, monkeypatch):
     assert out.servable and out.assumption_certificate == "C0"
     v = Fraction(str(SemanticProgramInterpreter().execute(sp).final_memory["V"]))
     assert v == Fraction(mong.split(":")[1])
+
+
+def test_lang_tru_xien_day_deu_khong_la_lang_tru_deu():
+    """"lăng trụ xiên tam giác đều" — đáy đều nhưng XIÊN: không phát `right_prism`/đáy đều (T12 không áp), "đều" chưa đọc."""
+    de = "Cho hình lăng trụ xiên tam giác đều ABC.DEF có AB = 3. Tính thể tích khối lăng trụ ABC.DEF."
+    kinds = {r.kind for r in doc_rang_buoc(de)}
+    assert "right_prism" not in kinds and "base_equilateral" not in kinds and "oblique_prism" in kinds
+    assert phan_chua_doc(de)
