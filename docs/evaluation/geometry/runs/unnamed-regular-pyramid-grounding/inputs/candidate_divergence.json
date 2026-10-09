@@ -1,0 +1,28 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "unnamed-regular-pyramid-grounding (run unnamed-regular-pyramid-grounding — unnamed regular pyramids bound to the program's single solid only when the text names no coordinate-less point, then verified)",
+  "corrects": "docs/evaluation/geometry/runs/c0-whole-solid-reader/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "d07a92decc0fe635ff32ea858ef86ddd891cc355ff1eef42ffba1d35685ea17e",
+  "current_candidate_source_commit": "12edf57ab87fa8c0b8f736819654b8fbe5103f6b",
+  "current_candidate_frozen_at": "c29f69c720dbfde8ad5c07331170269ee0f294ff",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/unnamed freeze) at c29f69c7; product commit 12edf57a; 102 files; --verify match (diagnostics/freeze_12edf57a.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 121 → 122: 11 statements served under 121 are refused now (8 C1 unnamed rows, 3 C0 rows) and 4 served values change (re-run LOCAL on ede8d329 and on the branch, logs identical to Cloud's); cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "c3f8339927bfe27273b5ff0bc43811928f85b84d76bd1cea839d0883e1aacaec",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "unnamed-regular-pyramid-grounding backend/app changes: shape_constraint emits `()` regular-pyramid claims for a single unnamed regular pyramid (never guessing vertex names) and exposes ten_diem_khong_toa_do; assumption_gate binds them to the program's single solid's pyramid readings only when that set is empty and verifies them (C1 templates, T8 metric, §22 — C0 contradiction only if no reading satisfies); neu_khoi_da_dien adds exactly those texts to the refusal zone; formation tolerates `()`; CACHE_VERSION 121 → 122 in main.py. No change to the compiler, templates, refusal codes, prompts, grammar card, schemas or capability hash; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/formation.py",
+    "backend/app/simulation/semantic_program/shape_constraint.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate d07a92de (product commit 12edf57a) is the current product identity on fix/unnamed-regular-pyramid-grounding. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 122
+}
