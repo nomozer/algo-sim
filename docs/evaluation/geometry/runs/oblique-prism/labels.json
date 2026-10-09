@@ -1,0 +1,1198 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "oblique-prism",
+ "written": "2026-10-09, after one compiler-draft probe on OP01 (refused at assumption, no value served), before T9 and before any product run on these rows",
+ "rule": "Hand labels. `text` = problem; `topology`/`lengths`/`right_angle`/`perp` = the RequestContract an analyze pass should freeze (built through build_request_contract); `chart` = an LLM-style program layout (every vertex declared with model_assumption, one construct_solid, measure volume) run through verify_and_compile — SYSTEM capability, not evidence that the model writes it. expect.compiler = served:<V> | fallback:<reason_code> | refuse:<reason_code> with GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST; expect.llm = served:<V> | refused[:<reason_code>]. Served values are checked by oracle.py from TEXT sizes only.",
+ "rows": {
+  "OP01_triangle_foot_vertex_height": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC) và A'B = 6. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "A'B": "6"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     6
+    ],
+    "B'": [
+     6,
+     0,
+     6
+    ],
+    "C'": [
+     3,
+     4,
+     6
+    ]
+   },
+   "expect": {
+    "compiler": "served:36",
+    "llm": "served:36"
+   }
+  },
+  "OP02_no_word_oblique_height_from_lateral": {
+   "text": "Cho lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với đáy, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": null
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "AA'": "5"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     4
+    ],
+    "B'": [
+     6,
+     0,
+     4
+    ],
+    "C'": [
+     3,
+     4,
+     4
+    ]
+   },
+   "expect": {
+    "compiler": "served:24",
+    "llm": "served:24"
+   }
+  },
+  "OP03_renamed_right_angle_off_foot": {
+   "text": "Cho hình lăng trụ xiên MNP.QRS có đáy MNP là tam giác vuông tại N, NM = 2, NP = 5, QP vuông góc với mặt phẳng (MNP), QP = 3. Tính thể tích khối lăng trụ MNP.QRS.",
+   "topology": {
+    "base": [
+     "M",
+     "N",
+     "P"
+    ],
+    "top": [
+     "Q",
+     "R",
+     "S"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "NM": "2",
+    "NP": "5",
+    "QP": "3"
+   },
+   "right_angle": [
+    "N",
+    "M",
+    "N",
+    "P"
+   ],
+   "perp": {
+    "line": [
+     "Q",
+     "P"
+    ],
+    "plane": [
+     "M",
+     "N",
+     "P"
+    ]
+   },
+   "chart": {
+    "N": [
+     0,
+     0,
+     0
+    ],
+    "M": [
+     2,
+     0,
+     0
+    ],
+    "P": [
+     0,
+     5,
+     0
+    ],
+    "Q": [
+     0,
+     5,
+     3
+    ],
+    "R": [
+     -2,
+     5,
+     3
+    ],
+    "S": [
+     -2,
+     10,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "served:15",
+    "llm": "served:15"
+   }
+  },
+  "OP04_fractions_foot_other_vertex": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3/2, AC = 2, B'C vuông góc với mặt phẳng (ABC), B'C = 7/3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3/2",
+    "AC": "2",
+    "B'C": "7/3"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "B'",
+     "C"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     "3/2",
+     0,
+     0
+    ],
+    "C": [
+     0,
+     2,
+     0
+    ],
+    "A'": [
+     "-3/2",
+     2,
+     "7/3"
+    ],
+    "B'": [
+     0,
+     2,
+     "7/3"
+    ],
+    "C'": [
+     "-3/2",
+     4,
+     "7/3"
+    ]
+   },
+   "expect": {
+    "compiler": "served:7/2",
+    "llm": "served:7/2"
+   }
+  },
+  "OP05_rectangle_foot_diagonal_from_lateral": {
+   "text": "Cho hình hộp ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 4, AD = 3, A'C ⊥ (ABCD), AA' = 13. Tính thể tích khối hộp ABCD.A'B'C'D'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "lateral_structure": "oblique",
+    "base_shape": "rectangle"
+   },
+   "lengths": {
+    "AB": "4",
+    "AD": "3",
+    "AA'": "13"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "D"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "C"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     4,
+     0,
+     0
+    ],
+    "C": [
+     4,
+     3,
+     0
+    ],
+    "D": [
+     0,
+     3,
+     0
+    ],
+    "A'": [
+     4,
+     3,
+     12
+    ],
+    "B'": [
+     8,
+     3,
+     12
+    ],
+    "C'": [
+     8,
+     6,
+     12
+    ],
+    "D'": [
+     4,
+     6,
+     12
+    ]
+   },
+   "expect": {
+    "compiler": "served:144",
+    "llm": "served:144"
+   }
+  },
+  "OP06_square_renamed_top": {
+   "text": "Cho lăng trụ ABCD.EFGH có đáy là hình vuông cạnh 2, EB vuông góc với mặt phẳng (ABC), EB = 3/2. Tính thể tích khối lăng trụ ABCD.EFGH.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    "lateral_structure": "oblique",
+    "base_shape": "square"
+   },
+   "lengths": {
+    "AB": "2",
+    "EB": "3/2"
+   },
+   "right_angle": null,
+   "perp": {
+    "line": [
+     "E",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "E": [
+     2,
+     0,
+     "3/2"
+    ],
+    "F": [
+     4,
+     0,
+     "3/2"
+    ],
+    "G": [
+     4,
+     2,
+     "3/2"
+    ],
+    "H": [
+     2,
+     2,
+     "3/2"
+    ]
+   },
+   "expect": {
+    "compiler": "served:6",
+    "llm": "served:6"
+   }
+  },
+  "ON01_no_lateral_data": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": null,
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     1,
+     5
+    ],
+    "B'": [
+     4,
+     1,
+     5
+    ],
+    "C'": [
+     1,
+     5,
+     5
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:OBLIQUE_FOOT_NOT_LOCATED",
+    "llm": "refused"
+   }
+  },
+  "ON02_foot_without_height": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC). Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     6
+    ],
+    "B'": [
+     6,
+     0,
+     6
+    ],
+    "C'": [
+     3,
+     4,
+     6
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:REQUIRED_FACT_MISSING",
+    "llm": "refused:ASSUMPTION_DETERMINES_ANSWER"
+   }
+  },
+  "ON03_inclination_angle": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, AA' = 2 và cạnh bên tạo với đáy góc 60°. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "AA'": "2"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": null,
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     0,
+     "1.732"
+    ],
+    "B'": [
+     4,
+     0,
+     "1.732"
+    ],
+    "C'": [
+     1,
+     4,
+     "1.732"
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:OBLIQUE_FOOT_NOT_LOCATED",
+    "llm": "refused"
+   }
+  },
+  "ON04_irrational_height": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC), AA' = 4. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "AA'": "4"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     "2.6458"
+    ],
+    "B'": [
+     6,
+     0,
+     "2.6458"
+    ],
+    "C'": [
+     3,
+     4,
+     "2.6458"
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:IRRATIONAL_HEIGHT",
+    "llm": "refused"
+   }
+  },
+  "ON05_right_edge_contradicts_oblique": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, AA' vuông góc với mặt phẳng (ABC), AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "AA'": "5"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     3,
+     0,
+     5
+    ],
+    "C'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "expect": {
+    "compiler": "refuse:INVALID_CONFLICT",
+    "llm": "refused"
+   }
+  },
+  "ON06_lateral_shorter_than_offset": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC), AA' = 2. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "AA'": "2"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     1
+    ],
+    "B'": [
+     6,
+     0,
+     1
+    ],
+    "C'": [
+     3,
+     4,
+     1
+    ]
+   },
+   "expect": {
+    "compiler": "refuse:INVALID_CONFLICT",
+    "llm": "refused"
+   }
+  },
+  "ON07_height_lateral_mismatch": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC), A'B = 6, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "A'B": "6",
+    "AA'": "5"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     3,
+     0,
+     6
+    ],
+    "B'": [
+     6,
+     0,
+     6
+    ],
+    "C'": [
+     3,
+     4,
+     6
+    ]
+   },
+   "expect": {
+    "compiler": "refuse:INVALID_CONFLICT",
+    "llm": "refused"
+   }
+  },
+  "ON08_foot_at_midpoint": {
+   "text": "Cho lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, hình chiếu vuông góc của A' lên mặt phẳng (ABC) là trung điểm H của BC, A'H = 2. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "A'H": "2"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "H"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     "3/2",
+     2,
+     2
+    ],
+    "B'": [
+     "9/2",
+     2,
+     2
+    ],
+    "C'": [
+     "3/2",
+     6,
+     2
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:OBLIQUE_FOOT_NOT_LOCATED",
+    "llm": "refused"
+   }
+  },
+  "ON09_parallelogram_base": {
+   "text": "Cho hình hộp ABCD.A'B'C'D' có đáy ABCD là hình bình hành, AB = 4, AD = 3, A'C ⊥ (ABCD), A'C = 2. Tính thể tích khối hộp ABCD.A'B'C'D'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "4",
+    "AD": "3",
+    "A'C": "2"
+   },
+   "right_angle": null,
+   "perp": {
+    "line": [
+     "A'",
+     "C"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     4,
+     0,
+     0
+    ],
+    "C": [
+     5,
+     3,
+     0
+    ],
+    "D": [
+     1,
+     3,
+     0
+    ],
+    "A'": [
+     5,
+     3,
+     2
+    ],
+    "B'": [
+     9,
+     3,
+     2
+    ],
+    "C'": [
+     10,
+     6,
+     2
+    ],
+    "D'": [
+     6,
+     6,
+     2
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:BASE_NOT_RECTANGULAR",
+    "llm": "refused"
+   }
+  },
+  "ON10_wrong_llm_layout": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4, A'B vuông góc với mặt phẳng (ABC) và A'B = 6. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "topology": {
+    "base": [
+     "A",
+     "B",
+     "C"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'"
+    ],
+    "lateral_structure": "oblique"
+   },
+   "lengths": {
+    "AB": "3",
+    "AC": "4",
+    "A'B": "6"
+   },
+   "right_angle": [
+    "A",
+    "B",
+    "A",
+    "C"
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     3,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     1,
+     1,
+     6
+    ],
+    "B'": [
+     4,
+     1,
+     6
+    ],
+    "C'": [
+     1,
+     5,
+     6
+    ]
+   },
+   "expect": {
+    "compiler": "served:36",
+    "llm": "refused"
+   }
+  }
+ }
+}

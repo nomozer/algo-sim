@@ -1190,3 +1190,42 @@ làm đổi thể tích. Cổng trả `ASSUMPTION_DETERMINES_ANSWER` **trước*
 Nhánh này không chạy nếu dependency slice không đo thể tích, còn chữ/ràng buộc ngoài vocabulary T8, kích thước mâu
 thuẫn, danh tính khối không duy nhất hoặc đề là tứ diện đều (một scale chung chưa có hợp đồng nhãn riêng). Các ca đó
 giữ đường `ASSUMPTION_INVARIANCE_UNPROVEN`/mã nguồn hiện hành; không ca từ chối nào được chuyển thành phục vụ.
+
+## 19. oblique-prism — T9 lăng trụ xiên, chân đường cao tại một đỉnh đáy (đăng ký 2026-10-09, TRƯỚC mọi bản sửa)
+
+Nhãn ghi trước: `docs/evaluation/geometry/runs/oblique-prism/labels.json` (oracle độc lập `oracle.py`). Từ vựng §2.1
+KHÔNG đổi: T9 chỉ dùng `prism`, `oblique_prism`, `line_perp_plane`, `right_triangle`/`line_perp_line`,
+`base_rectangle`/`base_square`, `height` đã có.
+
+### 19.1 Nhận khuôn
+
+Khối là `prism X.Y` (đáy k = 3 hoặc 4 đỉnh) KHÔNG mang `right_prism`/`cuboid`/`cube`, và có ĐÚNG MỘT cặp (T, F) đọc từ
+`line_perp_plane(P, Q, *mặt)` với {P, Q} = {T, F}, T ∈ đáy trên, F ∈ đáy dưới, mặt ⊆ đáy dưới (≥ 3 đỉnh) và F KHÔNG
+là đỉnh tương ứng với T (đó là cạnh bên ⊥ đáy — lăng trụ đứng, không phải T9). Gọi B₀ là đỉnh đáy dưới tương ứng
+với T. Đáy: k = 3 ⇒ góc vuông tại X (như T1/T3); k = 4 ⇒ `base_rectangle` hoặc `base_square` của đáy.
+
+### 19.2 Ràng buộc chính xác trên đỉnh của chương trình
+
+Tịnh tiến: Yᵢ − Xᵢ = T − B₀ với mọi cặp tương ứng (lăng trụ ⇒ đáy trên là ảnh tịnh tiến); (T − F)·(Xᵢ₊₁ − Xᵢ) = 0
+với mọi cạnh đáy; T ≠ F; đáy: góc vuông tại X (k = 3), hình bình hành + góc vuông (+ hai cạnh kề bằng nhau với
+`base_square`) (k = 4); |TF|² = h² khi h xác định. Mọi độ dài đề cho trên cặp đỉnh khuôn thoả chính xác (§6.2).
+
+### 19.3 Kích thước bắt buộc và chiều cao
+
+Cạnh đáy như T3 (k = 3: hai cạnh góc vuông tại X) / T4–T6 (k = 4: hai cạnh kề, vuông: một cạnh). Chiều cao h — mọi
+nguồn phải trùng bình phương, khác ⇒ `TEMPLATE_CONTRADICTION T9`: `height` của khối; độ dài nguồn |TF|; cạnh bên l
+(mọi cạnh bên đề cho phải bằng nhau, khác ⇒ mâu thuẫn) với h² = l² − |B₀F|² (|B₀F|² tính trên hiện thực chính tắc
+của đáy, cần cạnh đáy hữu tỉ). h² ≤ 0 ⇒ `TEMPLATE_NOT_MATCHED T9: degenerate height`; h² không là bình phương hữu tỉ ⇒
+`TEMPLATE_NOT_REPRESENTABLE T9` (khung trục toạ độ, không toạ độ vô tỉ). Phản ví dụ của chiều cao thiếu: `phap_tuyen`
+neo tại F (kéo dọc pháp tuyến giữ tịnh tiến và chân đường cao).
+
+Hiện thực chính tắc: đáy như T3/T4 (X hoặc đỉnh đầu ở gốc), T = F + (0, 0, h), Yᵢ = Xᵢ + (T − B₀).
+
+**Vì sao duy nhất (sai khác đẳng cự):** đáy xác định bởi các cạnh (c.g.c / hai cạnh kề); T nằm trên pháp tuyến tại F,
+cách mặt đáy h — hai vị trí đối xứng qua mặt đáy; tịnh tiến theo T − B₀ xác định đáy trên.
+
+### 19.4 Không được
+
+Góc nghiêng theo độ, chân là trung điểm/trọng tâm/hình chiếu đọc bằng câu chữ ngoài từ vựng (§2.1) ⇒ không T9
+(từ chối như trước). Không toạ độ xấp xỉ; không suy chân đường cao từ toạ độ của chương trình; không nâng
+`product_capability` lên `supported` (mô hình chưa đo — `foundation_only`).
