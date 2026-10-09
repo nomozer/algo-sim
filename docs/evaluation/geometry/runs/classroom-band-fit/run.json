@@ -1,0 +1,52 @@
+{
+  "run_id": "classroom-band-fit",
+  "task_slug": "classroom-band-fit",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-09",
+  "machine": "local Windows",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "1086da7f",
+  "commits": {
+    "product": ["45f5a7f02fd6769779cabf2eba8fc4b8c892f37e"],
+    "candidate_refreeze": ["83db0e97"],
+    "plan_probe_baseline": ["9284202d", "6a1801e7"],
+    "evidence": "3095e4f0"
+  },
+  "product_commit": "45f5a7f02fd6769779cabf2eba8fc4b8c892f37e",
+  "candidate": {
+    "tree_hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+    "files": 102,
+    "changed": "product_commit_sha only (95a56a17 -> 45f5a7f0); the fix is frontend/src outside MEASURED_SYSTEM_PATHS",
+    "freeze_log": "diagnostics/freeze_45f5a7f0.log"
+  },
+  "cache_version": "118 (unchanged: no envelope or prompt change)",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged",
+  "live_model_requests": 0,
+  "user_decisions_this_run": [
+    "2026-10-09: for the nine tight cases (640x360, 844x340, 360x640) the user chose the compact classroom chip (status in a chip on the first row, full band in a dropdown, icon-only back button where needed)"
+  ],
+  "measurement": {
+    "authoritative": "attempt 3 at 6a1801e7 — every step in one run",
+    "worktree": "D:/tmp/class band fit (clean, detached, CRLF, path with a space); frontend/node_modules junction to the main install",
+    "script": "diagnostics/measure.sh",
+    "logs": "diagnostics/logs_6a1801e7/",
+    "attempts": "MEASUREMENT_ATTEMPTS.json (1: sandbox refused a loopback socket; 2: probe could not write results/, Tier-A did not start)",
+    "baseline": "diagnostics/baseline_95a56a17/CLASS_BAND_PROBE.json — 9/24",
+    "results": {
+      "class_band_probe": "24/24 (baseline 9/24); 2 registered environment retries recorded",
+      "mobile_layout_without_band": "55/56 — only the pre-existing triangular_prism/low FIGURE_LEFT_CANVAS_AFTER_ORBIT",
+      "tier_a_suite": "8/8 in one run, no family filter",
+      "scene_controls_w02": "16/16",
+      "panels_w04": "24/24",
+      "focus_mode_w05": "23/24 — cuboid/desktop RUN_ERROR POLL_TIMEOUT (page never loaded); diagnostic recheck 3/3 not merged",
+      "vitest": "1040/1040"
+    },
+    "not_rerun": "occlusion, playback, evidence builder — renderer, camera fit and canvas sizing untouched",
+    "images": "3 in the run (images/class-band/); other probe screenshots kept outside the repository"
+  },
+  "human_visual_review": "NOT_APPROVED",
+  "manual_phone_checks": "REQUIRES_INTERACTIVE_HUMAN_CHECK (review.md C-1..C-4; E-R6, F-R7, G-1..G-9 still pending)",
+  "final_state": "READY_FOR_USER_ACCEPTANCE",
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

@@ -21,15 +21,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = FINAL_ACCEPTANCE (run final-acceptance: kiểm lại danh tính, đo dải lớp học, chuẩn bị thao tác tay trên điện thoại; không sửa sản phẩm; máy local; cùng nhánh)
-PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 95a56a17 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 5892fefd), CACHE_VERSION 118, LLM_ONLY
-MEASUREMENT = 221ec0a0 lần 3, trọn một lượt (8 họ × 7 khổ: điện thoại/ngang 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 24/24, occlusion pass, phát lại pass); bằng chứng b1ba2575 (worktree tách rời sạch CRLF, có dấu cách)
+CURRENT_WAVE = CLASSROOM_BAND_FIT (run classroom-band-fit: dải lớp học trên điện thoại gọn thành chip trạng thái; máy local; cùng nhánh)
+PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 45f5a7f0 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 83db0e97), CACHE_VERSION 118, LLM_ONLY
+MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (run final-acceptance: candidate --verify khớp, cache 118, LLM_ONLY; T3 + Tier-A 8/8 của phone-landscape-layout thuộc cùng sản phẩm 95a56a17 — runs/final-acceptance/report.md §1)
+FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (T3 + cổng danh tính ở commit tài liệu cuối của run classroom-band-fit — runs/classroom-band-fit/handoff.md §2)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
-USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (giữ nguyên); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
+USER_DIRTY_STATE = D frontend/public/favicon.svg và M .gitignore (dòng .playwright-cli/) ở máy local (giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng thao tác tay trên điện thoại và quyết theo runs/final-acceptance/review.md (G-1…G-9, D-1…D-4), cùng runs/phone-landscape-layout/review.md, runs/mobile-canvas-fit/review.md và các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng thao tác tay trên điện thoại và quyết theo runs/classroom-band-fit/review.md (H-1…H-3, C-1…C-4) và runs/final-acceptance/review.md (G-1…G-9, D-2…D-4), cùng runs/phone-landscape-layout/review.md, runs/mobile-canvas-fit/review.md và các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh (AGENTS.md §2)
 ```
 
 Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
@@ -122,10 +122,12 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
-- **final-acceptance chờ người dùng:** thao tác tay G-1…G-9 (= E-R6 + F-R7; chạm giả lập 8/8 chỉ là hỗ trợ) và D-1…D-4 của
-  `runs/final-acceptance/review.md`. Mới: `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` (có từ `main`, nhánh 11/24 vs 5/24, không
-  hồi quy). UX debt người dùng chấp nhận tạm, vẫn OPEN: bảng nổi che canvas khi ngang, nhãn rời canvas ở màn thấp,
-  `ISSUE-ARCH-MOBILE-HEADER-TOOLBAR-LAYOUT`.
+- **classroom-band-fit chờ người dùng:** `runs/classroom-band-fit/review.md` H-1…H-3 (ảnh, quyết chip chỉ hiện chấm màu ở
+  640–667 px ngang) và C-1…C-4 (thao tác tay chế độ lớp). `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` RESOLVED (chờ duyệt;
+  24/24, trước 9/24); giới hạn còn lại ghi trong issue.
+- **final-acceptance chờ người dùng:** thao tác tay G-1…G-9 (= E-R6 + F-R7; chạm giả lập 8/8 chỉ là hỗ trợ) và D-2…D-4 của
+  `runs/final-acceptance/review.md` (D-1 đã xử lý ở classroom-band-fit). UX debt người dùng chấp nhận tạm, vẫn OPEN: bảng nổi
+  che canvas khi ngang, nhãn rời canvas ở màn thấp, `ISSUE-ARCH-MOBILE-HEADER-TOOLBAR-LAYOUT`.
 - **phone-landscape-layout chờ người dùng:** duyệt `review.md` F-R1–F-R7 (F-R7 + E-R6 cần thao tác tay). Quyết: bảng nổi phủ
   canvas hẹp khi ngang (`ISSUE-ARCH-LANDSCAPE-FLOATING-PANEL-COVERS-CANVAS`), ca xoay màn thấp (`ISSUE-ARCH-ORBIT-LABELS-LEAVE-CANVAS-LOW-SCREEN`,
   khôi phục bằng «Xem lại toàn hình» 56/56). `ISSUE-ARCH-PHONE-LANDSCAPE-CONTROLS-BELOW-FOLD` RESOLVED (chờ duyệt).

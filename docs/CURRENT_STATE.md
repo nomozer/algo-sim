@@ -52,17 +52,28 @@ thuộc thư mục run trong `docs/evaluation/`.
 > ### 🎯 CƠ SỞ KHO MÃ & BẰNG CHỨNG (Base State & Canonical Next Action)
 >
 > ```text
-> PRODUCT_AND_EVIDENCE_BASE_HEAD = 95a56a17 (điện thoại ngang: cột điều khiển cạnh canvas; 360 px; trên nền D5 c9bcdcdb); bằng chứng trình duyệt b1ba2575 (đo 221ec0a0 lần 3, tám họ × bảy khổ, Tier-A 8/8 một lượt, run phone-landscape-layout); cổng T3 ở commit tài liệu cuối của run (runs/phone-landscape-layout/handoff.md §2)
+> PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit và phone-landscape-layout không bump — chỉ frontend)
-> CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 5892fefd tại product commit 95a56a17 — chỉ product_commit_sha dời)
+> CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
+> CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 83db0e97 tại product commit 45f5a7f0 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = FINAL_ACCEPTANCE (run `final-acceptance`; kiểm lại danh tính, đo dải lớp học, chuẩn bị thao tác tay trên điện thoại; không sửa sản phẩm)
-> FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (danh tính kiểm lại ở run final-acceptance; T3 + Tier-A của run phone-landscape-layout thuộc cùng sản phẩm 95a56a17) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng thao tác tay và quyết theo runs/final-acceptance/review.md (G-1…G-9 = E-R6 + F-R7; D-1…D-4), cùng các gói runs/phone-landscape-layout/review.md, runs/mobile-canvas-fit/review.md, runs/exact-dimensions/review.md, runs/regular-triangular-pyramid-w01/REVIEW.md và W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh
+> CURRENT_WAVE = CLASSROOM_BAND_FIT (run `classroom-band-fit`; dải lớp học trên điện thoại gọn thành chip; đo lại trên candidate cuối)
+> FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (cổng T3 + danh tính ở commit tài liệu cuối của run classroom-band-fit — runs/classroom-band-fit/handoff.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng thao tác tay và quyết theo runs/classroom-band-fit/review.md (H-1…H-3, C-1…C-4) và runs/final-acceptance/review.md (G-1…G-9 = E-R6 + F-R7; D-2…D-4), cùng các gói phone-landscape-layout, mobile-canvas-fit, exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Dải lớp học trên điện thoại — run classroom-band-fit (2026-10-09, máy local; đo `6a1801e7` lần 3, worktree tách rời sạch; chờ review người):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Nguyên nhân | ngang thấp: hàng trên một dòng ép tên bài về 0 px, nhóm công cụ còn `flex-wrap` nên bốn nút xếp dọc; dọc 360 px: mỗi mục dải lớp một dòng; ngân sách chiều cao (sàn canvas 320 px, chạm 44 px) không chứa nổi một dòng dải lớp riêng ở 640×360 · 844×340 · 360×640 |
+> | Sửa | tên bài `min-width: 4rem`; công cụ và nút quay lại không co/không xuống dòng; màn chật: dải lớp gọn thành chip trạng thái (`NhomLop` + `LiveClassStrip tomTat`), chạm mở dải đầy đủ — lựa chọn của người dùng; màn rộng và mô phỏng không lớp giữ nguyên |
+> | Trình duyệt | dải lớp 3 vai × 8 khổ 24/24 (trước 9/24); không dải lớp 55/56 như trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 (một trang không tải) |
+> | Còn lại | ở 640–667 px ngang chip chỉ hiện chấm màu + «…» (quyết H-3); giơ tay hai chạm trên màn chật |
+> | Candidate · `CACHE_VERSION` | **`7f3f0423…`** (cây đo không đổi; product `45f5a7f0`) · **118** (không bump) |
+> | Run | [`classroom-band-fit`](evaluation/geometry/runs/classroom-band-fit/) (`review.md`, `report.md`, `handoff.md`) |
 
 > **Nghiệm thu cuối — run final-acceptance (2026-10-09, máy local; không sửa sản phẩm, 0 model call):**
 >

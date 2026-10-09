@@ -13,6 +13,12 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `classroom-band-fit` (2026-10-09, run [`classroom-band-fit`](evaluation/geometry/runs/classroom-band-fit/), máy local):**
+  CLASSROOM_BAND_FIT — dải lớp học trên điện thoại gọn thành chip trạng thái trên màn chật (24/24, trước 9/24), tên bài không
+  mất, công cụ một hàng; product `45f5a7f0`, candidate `7f3f0423…`, Tier-A 8/8 một lượt, `CACHE_VERSION` 118. Việc duy nhất:
+  người dùng thao tác tay + quyết theo `review.md` của run này và của `final-acceptance`; duyệt thì merge, push, xoá nhánh ở
+  lượt LOCAL riêng có lệnh.
+
 - **Việc `final-acceptance` (2026-10-09, run [`final-acceptance`](evaluation/geometry/runs/final-acceptance/), máy local):**
   FINAL_ACCEPTANCE — không sửa sản phẩm; danh tính kiểm lại; dải lớp học trên điện thoại là lỗi có từ `main` (không chặn theo
   đánh giá của run). Việc duy nhất: người dùng thao tác tay + quyết theo `review.md` của run này; duyệt thì merge, push, xoá nhánh

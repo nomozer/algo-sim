@@ -1242,3 +1242,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** merge readiness
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `results/` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = CLASSROOM_BAND_FIT
+- **RUN_ID:** classroom-band-fit (task classroom-band-fit; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-09
+- **START_BASE:** 1086da7f
+- **CODE_COMMIT_OR_NONE:** product `45f5a7f0` · candidate refreeze `83db0e97` · evidence `3095e4f0`
+- **CANDIDATE:** `7f3f042309dd1c54…` (102 file; tree unchanged, product `45f5a7f0`) · CACHE_VERSION 118 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** browser measurement attempt 3 at `6a1801e7` (every step in one run), 0 model requests, 3 images
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (visual review NOT_APPROVED; E-R6/F-R7/G-1..G-9/C-1..C-4 need the user's phone)
+- **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/classroom-band-fit/handoff.md` §2
+- **PRODUCT_CHANGED:** YES — classroom band folds into a status chip on tight phone screens; title floor; tool group no-wrap in short landscape
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/classroom-band-fit/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/classroom-band-fit/
+- **PASS:** class band 24/24 (baseline 9/24); without a band 55/56 (pre-existing orbit case only); Tier-A 8/8 in one run; W02 16/16; W04 24/24; W05 23/24 (one page never loaded, recorded); vitest 1040/1040
+- **CLOSED:** ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW (RESOLVED, human review pending; residual chip-text limitation tracked in the issue)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** the user's phone checks and decisions (`runs/classroom-band-fit/review.md`, `runs/final-acceptance/review.md`), then merge on explicit approval in a separate local run
+- **FINAL_DECISION:** READY_FOR_USER_ACCEPTANCE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** classroom mode on phones
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `results/` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

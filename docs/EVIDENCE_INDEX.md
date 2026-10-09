@@ -1240,3 +1240,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** merge readiness of the branch; classroom band defect (pre-existing on main); emulated-touch support for E-R6/F-R7 (not a device check)
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `results/CLASS_BAND_PROBE.json` · `results/TOUCH_PROXY_PROBE.json` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = CLASSROOM_BAND_FIT
+- **RUN_ID:** classroom-band-fit (task classroom-band-fit; same branch)
+- **DATE:** 2026-10-09
+- **REPORT:** docs/evaluation/geometry/runs/classroom-band-fit/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/classroom-band-fit/
+- **START_BASE:** 1086da7f
+- **CODE_COMMIT:** 45f5a7f0 (product); candidate refreeze 83db0e97; plan/probe/baseline 9284202d, 6a1801e7
+- **MEASUREMENT_COMMIT:** 6a1801e7 attempt 3 (local, clean detached CRLF worktree with a space in its path; every step in one run: class band probe 3 roles x 8 viewports, phone/landscape probe without a band, full Tier-A suite, W02, W04, W05); attempts 1-2 kept (`MEASUREMENT_ATTEMPTS.json`, `diagnostics/attempts/`); baseline on a scratch build of 95a56a17 (`diagnostics/baseline_95a56a17/`)
+- **EVIDENCE_COMMIT_ROLE:** evidence commit 3095e4f0 after the measurement (results, fixtures, 3 images, logs)
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (T3 + identity gates at the run's final documentation commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** YES (frontend only: classroom band chip on tight screens, title floor, tool group no-wrap)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** product_commit_sha only (95a56a17 -> 45f5a7f0); measured-system tree 7f3f0423... unchanged
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (final-acceptance recorded the defect and an unmeasured proposal; that proposal measured 15/24 here and was superseded by the user's chip decision — earlier files untouched)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** classroom mode on phones; human review NOT_APPROVED
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `results/CLASS_BAND_PROBE.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
