@@ -35,7 +35,7 @@ from .assumption_gate import NOT_APPLICABLE as _GD_KHONG_AP_DUNG
 from .assumption_gate import PROVEN_SAFE as _GD_AN_TOAN
 from .assumption_gate import UNDETERMINED as _GD_CHUA_RO
 from ..geometry import metric as _metric
-from .assumption_gate import (MA_CHUA_CHUNG_MINH, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, do_luong_cua,
+from .assumption_gate import (MA_CHUA_CHUNG_MINH, MA_DE_MAU_THUAN, MA_LECH_PHEP_DUNG, MA_NHIEU_DINH_NGHIA, MA_PHU_THUOC, do_luong_cua,
                               kiem_gia_dinh)
 from .construction_binding import MA_CHUA_DOI_CHIEU, MA_TOA_DO_THAY_DUNG, KetQuaDoiChieu, doi_chieu_phep_dung
 from .contract import SemanticProgramSpec
@@ -569,6 +569,7 @@ def _sau_grounding(
             ErrorCode.INPUT_NOT_GROUNDED,
             ("Đáp số phụ thuộc một kích thước đề bài không cho." if gd_ma == MA_PHU_THUOC
              else "Phép dựng thiết diện không dùng đúng thực thể đề nêu." if gd_ma == MA_LECH_PHEP_DUNG
+             else "Mô tả hình trong đề mâu thuẫn với toạ độ đề cho." if gd_ma == MA_DE_MAU_THUAN
              else "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho."),
             details=gd_chi_tiet,
             reason_code=gd_ma,

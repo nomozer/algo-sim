@@ -53,6 +53,8 @@ UNDETERMINED = "UNDETERMINED"
 NOT_APPLICABLE = "NOT_APPLICABLE_NO_NUMERIC_ANSWER"
 MA_PHU_THUOC = "ASSUMPTION_DETERMINES_ANSWER"
 MA_CHUA_CHUNG_MINH = "ASSUMPTION_INVARIANCE_UNPROVEN"
+#: §21: toạ độ ĐỀ CHO trái một quan hệ hình dạng ĐỀ NÓI — đề tự mâu thuẫn.
+MA_DE_MAU_THUAN = "SOURCE_SHAPE_CONTRADICTS_COORDINATES"
 #: §15.1 (W17): câu cắt của đề ĐỌC ĐƯỢC mà phép dựng thiết diện trên lát cắt lệch nó (mặt phẳng,
 #: khối hoặc thiết diện) — đề đủ và đúng, lỗi ở chương trình.
 MA_LECH_PHEP_DUNG = "CONSTRUCTION_NOT_TEXT_BOUND"
@@ -1306,6 +1308,50 @@ def _phan_vi_du(contract, prog: dict, exec_res, ten_da_hoa_giai, khuon: _Khuon, 
             "changes": doi_gia}, "CE_VALID"
 
 
+def _hinh_binh_hanh(V, a, b, c, d) -> bool:
+    return V[b] - V[a] == V[c] - V[d]
+
+
+#: §21 — định nghĩa CHÍNH XÁC của các ràng buộc hình dạng kiểm được trên toạ độ (cùng định nghĩa các khuôn dùng).
+_KIEM_C0: dict[str, Callable[[dict, tuple, Any], bool]] = {
+    "line_perp_line": lambda V, e, _v: (V[e[1]] - V[e[0]]).dot(V[e[3]] - V[e[2]]) == 0,
+    "line_perp_plane": lambda V, e, _v: (V[e[1]] - V[e[0]]).cross(
+        (V[e[3]] - V[e[2]]).cross(V[e[4]] - V[e[2]])).is_zero() and all(
+        (V[e[1]] - V[e[0]]).dot(V[q] - V[e[2]]) == 0 for q in e[2:]),
+    "right_triangle": lambda V, e, _v: _vuong(V, e[0], e[1], e[2]),
+    "base_parallelogram": lambda V, e, _v: _hinh_binh_hanh(V, *e),
+    "base_rectangle": lambda V, e, _v: _hinh_binh_hanh(V, *e) and _vuong(V, e[0], e[1], e[3]),
+    "base_rhombus": lambda V, e, _v: _hinh_binh_hanh(V, *e) and (
+        (V[e[1]] - V[e[0]]).norm_sq() == (V[e[3]] - V[e[0]]).norm_sq()),
+    "base_square": lambda V, e, v: _hinh_binh_hanh(V, *e) and _vuong(V, e[0], e[1], e[3]) and (
+        (V[e[1]] - V[e[0]]).norm_sq() == (V[e[3]] - V[e[0]]).norm_sq()) and (
+        v is None or (V[e[1]] - V[e[0]]).norm_sq() == square(v)),
+    "base_equilateral": lambda V, e, v: len({(V[e[i]] - V[e[i - 1]]).norm_sq() for i in range(3)}) == 1 and (
+        v is None or (V[e[1]] - V[e[0]]).norm_sq() == square(v)),
+}
+_SO_DINH_C0 = {"line_perp_line": 4, "right_triangle": 3, "base_equilateral": 3, "base_parallelogram": 4,
+               "base_rectangle": 4, "base_rhombus": 4, "base_square": 4}
+
+
+def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc") -> list[RangBuoc]:
+    """§21 — ràng buộc hình dạng ĐỀ NÓI mà chính các điểm (toạ độ đề cho) trong chương trình làm sai. Ràng buộc có
+    thực thể vắng trong chương trình, hoặc kind ngoài `_KIEM_C0`, không được kiểm (thiếu mô tả ≠ mâu thuẫn)."""
+    ten = cm.ten_theo_khoa()
+    sai = []
+    for r in rb:
+        kiem, n = _KIEM_C0.get(r.kind), _SO_DINH_C0.get(r.kind)
+        if kiem is None or (n is not None and len(r.entities) != n) or (r.kind == "line_perp_plane"
+                                                                       and len(set(r.entities[2:])) < 3):
+            continue
+        try:
+            V = {e: cm.dinh_nghia(ten[_khoa(e)]).gia_tri for e in set(r.entities)}
+        except (KeyError, _Loi):
+            continue
+        if all(isinstance(v, Vec3) for v in V.values()) and not kiem(V, r.entities, r.value):
+            sai.append(r)
+    return sai
+
+
 # ── cổng ─────────────────────────────────────────────────────────────────────
 
 def _gia_tri_bi_phu(contract: Any, exec_res, ten_da_hoa_giai) -> list[str]:
@@ -1536,6 +1582,12 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     # C0 — lát cắt ghim bởi nguồn
     khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de_gt, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
+        sai = _mau_thuan_c0(rb, cm)
+        if sai:
+            return _ket_qua(UNDETERMINED, details + [f"C0_SHAPE_CONTRADICTION {r.kind}({','.join(r.entities)})"
+                                                     f" @[{r.span[0]},{r.span[1]}]" for r in sai],
+                            reason_code=MA_DE_MAU_THUAN,
+                            subjects=tuple(dict.fromkeys(de[r.span[0]:r.span[1]] for r in sai)))
         return an_toan(details + [f"C0 {len(lc.literal)} literal(s) pinned by the text"], "C0")
     for lit in khong_vai:
         if lit[0] == "mat_phang":

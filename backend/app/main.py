@@ -780,7 +780,11 @@ MISSING_KEY_MSG = (
 #       fixture cũ trùng byte; chóp tam giác đều cạnh hữu tỉ: refused → served (không bị cache).
 # 118 — 2026-10-08: ca thể tích T8 đã bị từ chối vẫn bị từ chối, nhưng envelope nay nêu đúng kích thước nguồn còn
 #       thiếu (`ASSUMPTION_DETERMINES_ANSWER`/SOURCE) thay vì UNKNOWN; row 117 sẽ trả thẳng lời cũ nếu không bump.
-CACHE_VERSION = "118"
+# 119 — 2026-10-09 (geometry-grounding-safety): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Chứng chỉ C0 nay kiểm ràng buộc hình dạng đề nói
+#       trên chính toạ độ đề cho (amendment §21): đề tự mâu thuẫn ("hình thang vuông tại C và D" với toạ độ vuông tại A, B)
+#       chiều served → refused (`SOURCE_SHAPE_CONTRADICTS_COORDINATES`); row 118 sẽ trả thẳng envelope đã phục vụ
+#       (`runs/geometry-grounding-safety/cache/decision.json`, probe trước/sau). 49/49 fixture Tier-A trùng byte.
+CACHE_VERSION = "119"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

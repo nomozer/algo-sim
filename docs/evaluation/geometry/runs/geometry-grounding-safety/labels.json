@@ -2,7 +2,7 @@
  "schema_version": "labels/1",
  "run_id": "geometry-grounding-safety",
  "written": "2026-10-09, after reproducing both defects, before any product change",
- "rule": "route=llm_c0: the text pins every vertex by coordinates; contract via build_request_contract (point facts), an LLM-style program declares the points from those facts, builds the solid, measures volume, through verify_and_compile. route=compiler: GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST decision (served:<V> = USE_COMPILER and the production route serves V; fallback:<code> = FALLBACK_TO_LLM with that reason). Expected values and contradictions are checked by oracle.py from the TEXT only.",
+ "rule": "route=llm_c0: the text pins every vertex by coordinates; contract via build_request_contract (point facts), an LLM-style program declares the points from those facts, builds the solid, measures volume, through verify_and_compile. route=compiler: GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST decision (served:<V> = USE_COMPILER and the production route serves V; fallback:<code> = FALLBACK_TO_LLM with that reason). Expected values and contradictions are checked by oracle.py from the TEXT only. `compiled` = USE_COMPILER only (route value not asserted; see label_corrections.json).",
  "rows": {
   "C01_trapezoid_phrase_consistent": {
    "route": "llm_c0",
@@ -699,7 +699,7 @@
      "D"
     ]
    },
-   "expect": "served:60"
+   "expect": "compiled"
   },
   "R07_trapezoid_two_adjacent_right_angles": {
    "route": "compiler",

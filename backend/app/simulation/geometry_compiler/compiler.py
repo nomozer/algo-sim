@@ -405,6 +405,12 @@ def _danh_gia_eligibility_prism(
     return KetQuaEligibility("SUPPORTED", binding)
 
 
+def _da_chung_minh_chu_nhat(graph: GeometryFactGraph, day: tuple[str, ...]) -> bool:
+    """Tứ giác không khai dạng là HÌNH CHỮ NHẬT chỉ khi đề cho góc vuông (giữa hai cạnh KỀ) ở ≥ 3 đỉnh — góc thứ tư là
+    hệ quả. Một góc vuông không xác định hình: không tự giả định (ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION)."""
+    return sum(_goc_vuong_day(graph, day, i) is not None for i in range(len(day))) >= 3
+
+
 def _danh_gia_eligibility_rectangular_pyramid(
     graph: GeometryFactGraph,
     topo: Any,
@@ -490,6 +496,9 @@ def _danh_gia_eligibility_rectangular_pyramid(
             "UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
             "BASE_PERPENDICULAR_RELATION_MISSING", ("perpendicular_lines",)
         )
+    if base_shape is None and not _da_chung_minh_chu_nhat(graph, base_cycle):
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                 "BASE_RECTANGLE_NOT_PROVEN", ("perpendicular_lines",))
 
     variant = "square" if base_shape == "square" else "rectangle"
 
@@ -662,6 +671,9 @@ def _danh_gia_eligibility_cuboid_prism(
 
     if base_shape is None and not valid_goc_day and subkind not in ("cube", "cuboid"):
         return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None, "BASE_PERPENDICULAR_RELATION_MISSING", ("perpendicular_lines",))
+    if base_shape is None and subkind is None and not _da_chung_minh_chu_nhat(graph, base_cycle):
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                 "BASE_RECTANGLE_NOT_PROVEN", ("perpendicular_lines",))
 
     # Cube validation: must have grounded text
     if subkind == "cube":

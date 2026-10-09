@@ -124,7 +124,8 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    assert CACHE_VERSION == "118"
+    # 118 -> 119 (geometry-grounding-safety): C0 kiểm quan hệ hình dạng đề nói trên toạ độ đề cho (served -> refused).
+    assert CACHE_VERSION == "119"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

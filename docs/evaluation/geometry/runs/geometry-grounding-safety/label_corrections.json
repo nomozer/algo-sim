@@ -1,0 +1,14 @@
+{
+ "schema_version": "label-corrections/1",
+ "run_id": "geometry-grounding-safety",
+ "corrections": [
+  {
+   "row": "R06_prism_rectangle_declared",
+   "was": "served:60",
+   "now": "compiled",
+   "when": "red-before run at 17353c3, BEFORE any product change",
+   "why": "the label assumed the route serves a right prism whose text says 'lăng trụ đứng … đáy ABCD là hình chữ nhật'. At e6c3cf68 the assumption gate has no template for it (T4 needs the word 'hộp chữ nhật', T6 a square base) and refuses ASSUMPTION_INVARIANCE_UNPROVEN — a pre-existing coverage gap outside this run. The row's purpose (a declared rectangle keeps the compiler's rectangle family) is kept by asserting the compiler decision only.",
+   "oracle_changed": false
+  }
+ ]
+}

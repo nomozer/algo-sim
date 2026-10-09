@@ -221,22 +221,25 @@ def test_tuyen_compiler_tat_mac_dinh():
      "topology": {"solid_kind": "prism", "base": ["A", "B", "C", "D"], "top": ["A'", "B'", "C'", "D'"]}},
 ], ids=["chop", "lang_tru"])
 def test_mot_goc_vuong_khong_phuc_vu_hinh_chu_nhat_tu_gia_dinh(hang, monkeypatch):
-    """ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION: compiler còn dựng HÌNH CHỮ NHẬT cho đáy tứ giác chỉ có MỘT góc
-    vuông đề cho; cổng chứng chỉ giả định (chung hai tuyến) phải từ chối — không đáp số, không Scene3D."""
+    """ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION (đóng ở geometry-grounding-safety): đáy tứ giác chỉ có MỘT góc
+    vuông đề cho KHÔNG được compiler coi là hình chữ nhật — eligibility tự từ chối (`BASE_RECTANGLE_NOT_PROVEN`, lùi về
+    LLM), không còn dựa vào cổng giả định làm hàng rào duy nhất; route vẫn không có đáp số, không Scene3D."""
     contract = build_request_contract(_payload(hang), problem_text=hang["text"], domain="hinh_hoc")
+    qd = quyet_dinh_dinh_tuyen(contract, BAT)
+    assert (qd.decision, qd.reason_code) == ("FALLBACK_TO_LLM", "BASE_RECTANGLE_NOT_PROVEN"), qd
+    assert C.bien_dich(A.build_fact_graph(contract).graph).program is None
 
     async def analyze(*_a, **_k):
         return contract, None
 
-    async def khong_goi(*_a, **_k):
-        raise AssertionError("tuyến compiler gọi model")
+    async def khong_tong_hop(*_a, **_k):
+        return None, "test: không gọi synthesis"
 
     monkeypatch.setattr(PL, "stage_semantic_analyze", analyze)
-    monkeypatch.setattr(PL, "call_gemini", khong_goi)
+    monkeypatch.setattr(PL, "stage_semantic_program", khong_tong_hop)
     monkeypatch.setenv("GEOMETRY_COMPILER_MODE", "DETERMINISTIC_FIRST")
     env = asyncio.run(PL.run_pipeline(hang["text"], "fake_key"))
     assert env.get("status") != "ok" and not env.get("scene3d"), env
-    assert (env.get("error") or {}).get("reason_code", env.get("reason_code")) == "ASSUMPTION_INVARIANCE_UNPROVEN", env
 
 
 # ══ TUYẾN LLM_ONLY (chương trình kiểu mô hình) ══════════════════════════════

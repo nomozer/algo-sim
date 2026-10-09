@@ -253,6 +253,8 @@ KHONG_SUA_NGUON = frozenset({
     # chương trình không thêm được dữ kiện vào đề.
     "ASSUMPTION_DETERMINES_ANSWER",
     "ASSUMPTION_INVARIANCE_UNPROVEN",
+    # §21: đề tự mâu thuẫn (quan hệ đề nói trái toạ độ đề cho) — viết lại chương trình không sửa được đề.
+    "SOURCE_SHAPE_CONTRADICTS_COORDINATES",
     # W17 §15.1: phép dựng lệch câu cắt của đề — từ chối ở chặng `assumption`, không sửa.
     # W18 §16.4: cùng mã cho phép dựng điểm lệch quan hệ của đề (chặng `construction_binding`).
     "CONSTRUCTION_NOT_TEXT_BOUND",

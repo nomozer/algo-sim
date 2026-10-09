@@ -166,7 +166,14 @@ _MSG_GIA_DINH_CHUA_CHUNG_MINH = (
     "quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ "
     "các số liệu rồi gửi lại nhé."
 )
+#: §21 — đề nói một quan hệ hình dạng mà chính toạ độ đề cho làm sai.
+_MSG_DE_MAU_THUAN_TOA_DO = (
+    "Đề bài mô tả hình (góc vuông, hình chữ nhật, đường vuông góc…) không khớp với chính toạ độ đề cho, nên không có "
+    "hình nào thoả cả hai. "
+    "AlgoSim dừng lại thay vì chọn một nửa dữ kiện. Em kiểm tra lại mô tả hoặc toạ độ trong đề rồi gửi lại nhé."
+)
 _MSG_THEO_MA_CHI_TIET: dict[str, str] = {
+    "SOURCE_SHAPE_CONTRADICTS_COORDINATES": _MSG_DE_MAU_THUAN_TOA_DO,
     "GIVEN_VALUE_NOT_IN_SOURCE": _MSG_NGUON_THIEU,
     "SOURCE_SPAN_MISMATCH": _MSG_NGUON_MAU_THUAN,
     "SOURCE_EVIDENCE_CONFLICT": _MSG_NGUON_MAU_THUAN,
