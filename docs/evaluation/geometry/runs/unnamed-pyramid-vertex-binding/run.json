@@ -10,8 +10,16 @@
   "cache_version_at_start": "122",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "product_changes": "none",
-  "cache_decision": "no change (no product change)",
-  "result": "ARCHITECTURE_DECISION_REQUIRED",
-  "commits": {"evidence": "9f9e66d"}
+  "product_changes": "shape_constraint.neu_khoi_da_dien, assumption_gate._nhan_khuon, main.CACHE_VERSION",
+  "cache_decision": "BUMP 122 → 123 (cache/decision.json)",
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "commits": {
+    "option_b_study": "9f9e66d, 07afbd4",
+    "policy_a_labels": "1bb5c02",
+    "product_fix": "5669292",
+    "docs": "5d5b955 + the final evidence commit"
+  },
+  "decision": "option A (user, final)",
+  "cache_version_after": "123",
+  "candidate_refreeze_required": true
 }

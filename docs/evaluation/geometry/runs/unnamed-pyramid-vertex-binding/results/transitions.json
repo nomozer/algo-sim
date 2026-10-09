@@ -1,0 +1,184 @@
+{
+ "policy_a_21": {
+  "refused→refused": {
+   "count": 9,
+   "rows": [
+    {
+     "row": "square/N4_wrong_centre_identity",
+     "before": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+     "after": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+     "text_verdict": "determined:16",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/W5_D_program_value_differs_from_chain",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/W5_E_program_segment_outside_chain",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_N8_lateral_contradiction",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "text_verdict": "contradiction",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_U4_irrational_via_lateral",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/W5_B_chain_mixed_values",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "text_verdict": "contradiction",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "triangular/N3_lateral_mixed",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "text_verdict": "contradiction",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "triangular/N4_declared_value_conflict",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "triangular/N6_wrong_centroid_identity",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None",
+     "text_verdict": "determined:9/2",
+     "policy_reason": "safety"
+    }
+   ]
+  },
+  "served→refused": {
+   "count": 12,
+   "rows": [
+    {
+     "row": "square/S7_named_centre",
+     "before": "served:16",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:16",
+     "policy_reason": "capability_limit"
+    },
+    {
+     "row": "square/N5_apex_over_vertex",
+     "before": "served:3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:√17",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/S5_lateral_edge_length",
+     "before": "served:√17",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:√17",
+     "policy_reason": "capability_limit"
+    },
+    {
+     "row": "square/R2_L1_chained_equal_lateral_edges",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/W5_A_chain_cites_other_member",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_N9_contradiction_program_fits_lengths",
+     "before": "served:16",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "contradiction",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_S10_lateral_other_vertex",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_S8_side_AB_lateral_SA",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "ambiguous",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "square/R2_S9_side_lateral_named",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:16/3",
+     "policy_reason": "capability_limit"
+    },
+    {
+     "row": "square/W5_C_chain_without_value",
+     "before": "served:16/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "missing",
+     "policy_reason": "safety"
+    },
+    {
+     "row": "triangular/P9_named_centroid",
+     "before": "served:9/2",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:9/2",
+     "policy_reason": "capability_limit"
+    },
+    {
+     "row": "triangular/P11_lateral_length",
+     "before": "served:3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "text_verdict": "determined:3",
+     "policy_reason": "capability_limit"
+    }
+   ]
+  }
+ },
+ "other_variant_changes": {
+  "count": 3,
+  "rows": [
+   {
+    "key": "square/N5_apex_over_vertex/unnamed",
+    "before": "served:3",
+    "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+   },
+   {
+    "key": "square/S5_lateral_edge_length/unnamed",
+    "before": "served:√17",
+    "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+   },
+   {
+    "key": "triangular/P11_lateral_length/unnamed",
+    "before": "served:3",
+    "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+   }
+  ],
+  "note": "variant `unnamed` of N5, S5, P11: their question has no solid notation, so the text is IDENTICAL to the registered row"
+ },
+ "previous_runs_c0_labels": "unchanged (c0-whole-solid-grounding 29, c0-whole-solid-reader 27, unnamed-regular-pyramid-grounding 11 rows)",
+ "fixtures": "49/49 identical"
+}

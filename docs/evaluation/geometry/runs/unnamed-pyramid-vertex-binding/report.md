@@ -1,35 +1,47 @@
 # unnamed-pyramid-vertex-binding — báo cáo
 
-Kết luận: **`ARCHITECTURE_DECISION_REQUIRED`**. Không sửa mã sản phẩm, `CACHE_VERSION` giữ 122, candidate không đổi.
-Nhánh `fix/unnamed-pyramid-vertex-binding` từ `a7c56942`; chỉ thêm hồ sơ run và cập nhật issue. Chi tiết: `plan.md`.
+Nhánh `fix/unnamed-pyramid-vertex-binding` từ `a7c56942`. Cloud, 0 lượt gọi model, `LLM_ONLY` mặc định, compiler opt-in,
+frontend không đổi. Hai pha: nghiên cứu phương án (b) (`9f9e66d`, `07afbd4` ⇒ `ARCHITECTURE_DECISION_REQUIRED`), rồi
+**triển khai phương án A** theo quyết định cuối cùng của người dùng. Kết luận:
+**`CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED`**.
 
-## 1. Đã làm
+## 1. Ba điều phân biệt
 
-- Tái hiện 21 hàng trên `a7c56942`: 9 phục vụ đúng nhãn/quy ước, 9 từ chối, 3 phục vụ trái nhãn — trùng byte log run trước.
-- Nhãn độc lập (`labels.json`) + oracle (`oracle.py`, OK 21/21): liệt kê mọi ánh xạ tên điểm → vị trí (≤ 120 / đề), mỗi
-  ánh xạ là hệ tuyến tính theo (b², h²). Kết luận theo đề: 8 xác định (5 phục vụ được, 3 chương trình lỗi), 8 mơ hồ thật,
-  4 mâu thuẫn, 1 thiếu dữ kiện. Ba ca được nêu: `square/N5` — đề xác định SA = √17 (vai trò "cạnh bên SA"), lỗi là chương
-  trình dựng đỉnh trên một đỉnh đáy ⇒ phải từ chối; `square/R2_N9` — mâu thuẫn nguồn (không cách hiểu nào thoả
-  SA = 3, SB = 5, AB = 4) ⇒ từ chối; `square/W5_C` — thiếu dữ kiện (chuỗi bằng nhau không giá trị) ⇒ từ chối.
-- Probe khả thi (`diagnostics/template_per_labelling_a7c56942.log`): bộ kiểm chỉ dùng bộ đọc + khuôn T7/T8 hiện có cho
-  từng ánh xạ khớp oracle 3/21 và từ chối cả 5 ca xác định — không hơn phương án từ chối toàn bộ.
+1. **Giảm thiểu an toàn đã làm:** mọi chóp đều không tên mà §24 không gắn được (đề gọi tên điểm thiếu toạ độ) nay nằm
+   trong vùng từ chối U3 và bị cổng chặn (amendment §25). Không còn đáp số nào được phục vụ cho các đề ấy.
+2. **Chưa hỗ trợ (giới hạn năng lực, không phải kết luận toán học):** 5 trong 21 đề do CHÍNH ĐỀ xác định đáp số (S5 √17,
+   S7 16, R2_S9 16/3, P9 9/2, P11 3 — `labels.json`, `oracle.py`) bị từ chối theo chính sách A. Không có đề nào trong 21
+   được tuyên bố là vô nghiệm.
+3. **Hoãn:** phương án B (mô hình tham số chóp đều trong cổng, tiêu chí nghiệm thu sẵn có = `labels.json` + `oracle.py`)
+   là nâng cấp năng lực tuỳ chọn.
 
-## 2. Vì sao dừng
+## 2. Sửa (chỉ lớp vùng từ chối / lý do cổng)
 
-Khuôn T7/T8 đọc độ dài theo vai trò của MỘT cách đặt tên đã biết (cạnh đáy kề, cạnh bên, đỉnh–tâm) và giao phần đối
-chiếu còn lại cho phép kiểm trên toạ độ chương trình; chúng không loại được cách hiểu sai (R2_S9: cạnh đáy 4 vs `SA = 3`
-khi S, A kề nhau), không đọc đường chéo, trọng tâm mặt bên, vai trò "cạnh bên SA" trong câu hỏi, và không sinh độ dài
-đoạn hỏi. Đạt oracle cần đưa vào sản phẩm một mô hình tham số của chóp đều (vị trí, bình phương khoảng cách dạng
-α·b² + β·h², giải hệ hai ẩn, điểm phụ) và mở rộng bộ đọc (vai trò cạnh, định nghĩa điểm phụ) — mô hình hình học thứ hai
-và đại số mới mà brief yêu cầu dừng để quyết.
+- `shape_constraint.neu_khoi_da_dien`: mọi khẳng định chóp đều không tên `()` thuộc vùng U3.
+- `assumption_gate._nhan_khuon`: khẳng định ấy không gắn được ⇒ `TEMPLATE_NOT_MATCHED unnamed regular pyramid: its
+  vertices are not fixed by the text` ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN` (mã hiện hành; không phải
+  `SOURCE_SHAPE_CONTRADICTS_COORDINATES`). Không parser mới, không kernel, không solver, không `solid_topology`.
 
-## 3. Phương án và chi phí (21 hàng)
+## 3. Kết quả (`results/transitions.json`, nhãn chính sách `policy_a_labels.json`)
 
-| | phục vụ | từ chối | 3 ca sai | 9 ca đúng theo quy ước | chi phí |
-|---|---|---|---|---|---|
-| **(A) từ chối cả 21** — đưa vào vùng U3, lý do "đề không cố định đỉnh" | 0 | 21 | sửa | 4 mơ hồ thật từ chối đúng; **5 xác định bị từ chối oan** (S5, S7, R2_S9, P9, P11) | ~5 dòng sản phẩm + test; bump cache (served → refused) |
-| **(B) mô hình tham số trong cổng** — chuyển mô hình của `oracle.py` vào sản phẩm (≤ 120 ánh xạ, khoá ngưỡng), đọc thêm "cạnh bên XY", O = giao hai đường chéo, G = trọng tâm (dùng lại `construction_binding.doc_quan_he_dung`); phục vụ chỉ khi mọi cách hiểu hợp lệ cùng đáp số VÀ chương trình được khuôn kiểm | 5 | 16 | sửa | 5 giữ, 4 từ chối đúng (mơ hồ) | ~150–200 dòng sản phẩm, một mô hình hình học thứ hai cho chóp đều, nhãn + oracle run này làm tiêu chí; bump cache |
-| **(C) giữ nguyên** | 12 | 9 | **còn 3 sai** | 9 giữ | 0 |
+| nhóm | số | trước (`a7c56942`) → sau |
+|---|---|---|
+| served → refused | 12 | 9 đúng theo quy ước (5 do đề xác định — giới hạn năng lực; 4 mơ hồ thật — R2_L1, W5_A, R2_S10, R2_S8 — từ chối đúng) + 3 đáp số sai/không căn cứ (N5 SA = 3, R2_N9 16, W5_C 16/3 — sửa lỗi an toàn); tất cả `assumption` / `ASSUMPTION_INVARIANCE_UNPROVEN` |
+| refused → refused | 9 | giữ đúng chặng và lý do cũ (source_invariant 5, grounding 3, construction_binding 1) |
 
-Đề xuất: **(A)** ngay — đóng lỗ an toàn với thay đổi nhỏ nhất (5 từ chối oan đều là đề viết lại không ký hiệu khối, hiếm
-trong đề thật), rồi quay lại G05; (B) để ngỏ như việc có tiêu chí sẵn (`labels.json`, `oracle.py`). Cần người dùng chọn.
+21/21 từ chối, khớp nhãn chính sách. Biến thể khác: 3 thay đổi, đều là cùng văn bản với hàng đăng ký (`unnamed` của N5,
+S5, P11 — câu hỏi vốn không có ký hiệu khối). 26 hàng gắn được của §24, ký hiệu chuẩn, hai lối viết của run bộ đọc, khối
+gọi tên ở câu hỏi: không đổi. Nhãn C0 của ba run trước (29 + 27 + 11 hàng): không đổi.
+
+**Kiểm chứng:** oracle toán học 21/21 (giữ nguyên); `test_unnamed_pyramid_vertex_binding.py` + test của run trước (cập
+nhật có chủ đích: hàng `unchanged` nay bị từ chối; hàng C0 không gắn vẫn qua C0) 97/97; bộ đọc + C0 §21–§24 + C1 T7/T8 +
+G04 + G05 + cổng giả định trong toàn bộ pytest; không Scene3D qua `run_pipeline`; demo 5/5, bề mặt sập 6/6. Toàn bộ
+pytest (worktree sạch, cùng máy): `5669292` 7487 passed / 136 failed / 4 errors; `a7c56942` 7467 / 131 / 4 — 131 + 4 có
+sẵn trùng hệt; 5 đỏ mới = danh tính candidate (LOCAL đóng băng) — `results/pytest_compare.json`. 49/49 fixture Tier-A
+trùng byte.
+
+## 4. Cache · candidate
+
+Bề mặt mô hình KHÔNG đổi. **`CACHE_VERSION` 122 → 123** (`cache/decision.json`): 12 đề phục vụ ở 122 nay bị từ chối.
+Khoá danh tính sinh lại bằng script; ghim test cập nhật. Mã sản phẩm đổi ⇒ LOCAL đóng băng lại candidate (không sửa hash
+tay). T3 trình duyệt và mô hình thật: không chạy trên Cloud.
