@@ -31,7 +31,7 @@
 
 ### ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION
 - **description:** The rectangular-pyramid and cuboid compiler families accept a quadrilateral base with NO `base_shape` and a single stated right angle as a rectangle. general-polygon-base removed the case of exactly two adjacent right angles (now the G05 family) but kept the single-right-angle case unchanged to avoid moving served compiler rows.
-- **evidence:** `geometry_compiler/compiler.py` (`_danh_gia_eligibility_rectangular_pyramid`, `_danh_gia_eligibility_cuboid_prism`, `_uu_tien_day_chuoi`).
+- **evidence:** `geometry_compiler/compiler.py` (`_danh_gia_eligibility_rectangular_pyramid`, `_danh_gia_eligibility_cuboid_prism`, `_uu_tien_day_chuoi`). LOCAL (2026-10-09): `tests/geometry/test_general_polygon_base.py::test_mot_goc_vuong_khong_phuc_vu_hinh_chu_nhat_tu_gia_dinh` (pyramid + prism through `run_pipeline`, `DETERMINISTIC_FIRST`) — compiler picks the rectangle family, route refuses `ASSUMPTION_INVARIANCE_UNPROVEN`, no Scene3D; fault injection (polyhedral gate switched off) turns both red with `status: ok`, so the shared assumption gate is the only barrier.
 - **impact:** Compiler-only (opt-in): the program models an unproven rectangle; the assumption gate still refuses it on the route unless the TEXT states a rectangle/square, so no wrong value is served.
 - **scope:** `geometry_compiler/compiler.py`.
 - **status:** OPEN

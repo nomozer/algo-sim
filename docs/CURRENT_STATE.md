@@ -56,22 +56,23 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
-> CANDIDATE = 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5 — G04 lăng trụ xiên; đóng băng LOCAL 75c24394, T3 PASS — runs/oblique-prism/handoff.md §4; trên `main` từ a0fdbba4)
+> CANDIDATE = 02ce5e1e6e819ab2… trên `main` (102 file; product commit 0fe4edc5 — G04); nhánh `feat/general-polygon-base`: 72d6070acf6ced35… (102 file; product commit 4e30a211 — G05; đóng băng LOCAL f250f5ef, T3 PASS — runs/general-polygon-base/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = OBLIQUE_PRISM (run `oblique-prism`, G04 — Cloud làm, LOCAL kiểm + đóng băng; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
-> FINAL_DECISION = MERGED_AND_PUSHED (G04: `main` = `origin/main` = `a0fdbba4`, fast-forward từ ba995887, 2026-10-09; runs/oblique-prism/APPROVAL.md; G04 `foundation_only`) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = Cloud G05 lăng trụ/chóp đáy đa giác tổng quát (ROADMAP §0.2) trên kiến trúc sẵn có, rồi OCR; frontend đóng băng; nhánh feat/oblique-prism giữ lại
+> CURRENT_WAVE = GENERAL_POLYGON_BASE (run `general-polygon-base`, G05 miền hẹp — Cloud làm, LOCAL kiểm + đóng băng trên nhánh `feat/general-polygon-base`, chưa merge; G04 đã trên `main`; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
+> FINAL_DECISION = MERGED_AND_PUSHED (G04: `main` = `origin/main` = `a0fdbba4`, fast-forward từ ba995887, 2026-10-09; runs/oblique-prism/APPROVAL.md; G04 `foundation_only`) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng quyết merge G05 (`feat/general-polygon-base`, miền hẹp, `foundation_only`) vào `main`; rồi họ tiếp theo (ROADMAP §0.2), rồi OCR; frontend đóng băng; nhánh feat/oblique-prism giữ lại
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; chờ kiểm local + quyết người dùng):**
+> **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
 > | Trước | hình thang vuông bị từ chối (LLM_ONLY: không đọc cụm; compiler: coi là hình chữ nhật); chóp đáy tam giác vuông với chân ≠ đỉnh vuông bị từ chối |
 > | Thêm | kernel `polygon_from_right_angle_chain` (một thẩm quyền) · bộ đọc "hình thang vuông tại P và Q" · khuôn **T10** (amendment §20) · hai họ compiler `polygon_base_*` (mọi số cạnh, một chuỗi câu lệnh) |
 > | Nhãn | 15 hàng ghi trước, oracle độc lập: 7/7 dương + 8/8 âm trên HAI tuyến; red-before 39 đỏ tại `d5287ff7` |
-> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (4 test danh tính đỏ — việc LOCAL) · **118** (không bump; 49/49 fixture trùng byte) |
+> | Candidate · `CACHE_VERSION` | **`72d6070a…`** (product `4e30a211`; đóng băng LOCAL `f250f5ef`, `--verify` khớp) · **118** (không bump; cache lock verify; ca toạ độ C0 có cụm hình thang vuông trùng byte trước/sau) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `f250f5ef` (worktree tách rời sạch): pytest 7343 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_f250f5ef.log`); compiler tự giả định hình chữ nhật: cổng giả định từ chối, khoá bằng test (`handoff.md` §LOCAL) |
 > | Năng lực sản phẩm | `right_angle_chain_base` = `foundation_only` (mô hình chưa đo); đa giác đều/góc/lõm/toạ độ-trên-compiler: `ISSUE-ARCH-G05-REMAINING-BASES` |
 > | Run | [`general-polygon-base`](evaluation/geometry/runs/general-polygon-base/) (`plan.md`, `report.md`, `handoff.md`) |
 

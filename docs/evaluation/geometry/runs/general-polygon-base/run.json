@@ -20,5 +20,15 @@
   "skills_used": [
     "superpowers:verification-before-completion"
   ],
-  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "rectangle_assumption_probe": "fails closed: compiler picks the rectangle family, route refuses ASSUMPTION_INVARIANCE_UNPROVEN, no Scene3D; locked by test_mot_goc_vuong_khong_phuc_vu_hinh_chu_nhat_tu_gia_dinh (d3feb877), fault injection turns it red",
+    "candidate_freeze": "f250f5ef (frozen at d3feb877; candidate 72d6070acf6ced35dcf4f09588bf1352125b245f2f8590bf5c7691fab9c67a7e, product 4e30a211, 102 files; diagnostics/freeze_4e30a211.log)",
+    "cache_version": "118 verified (lock_cache_identity --verify; 0 model-surface files; C0 trapezoid route outcome byte-identical d5287ff7 vs branch)",
+    "targeted": "G05 53/53 + oracle OK; G04 51/51; regression + identity + docs 910/910; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at f250f5ef (pytest 7343 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_f250f5ef.log)",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }
