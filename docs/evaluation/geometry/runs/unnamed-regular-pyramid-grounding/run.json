@@ -39,5 +39,17 @@
     "next_decision": "user chose option (b) for the 21 remaining rows — a separate Cloud run after integration; not implemented here",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "ede8d329b49666991af5dc8cd5216486678aba01",
+    "to": "2d3c510c57b2c62bf49b66c7b8a11ef81bfa9593",
+    "method": "git merge --ff-only fix/unnamed-regular-pyramid-grounding, git push origin main (no force; first attempt failed on a DNS/network error before reaching the remote, retried unchanged)",
+    "remote_verified": "ls-remote refs/heads/main = 2d3c510c = main = origin/main",
+    "integration_gate": "diagnostics/gates_2d3c510c.log (candidate d07a92de, cache 122, LLM_ONLY, routing unchanged, 0 model-surface files, schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at 97db084f, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "fix/unnamed-regular-pyramid-grounding (2d3c510c) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "26/47 unnamed rows handled, 21 unchanged (square/N5 served 3 vs √17, square/R2_N9 contradiction served 16, square/W5_C undetermined served 16/3); ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ and ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE OPEN; option (b) approved as direction for a separate Cloud run, not implemented; no live Gemini; no token-reduction claim; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

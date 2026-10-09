@@ -1482,3 +1482,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (c0-whole-solid-reader, 2026-10-09):** user approval `runs/c0-whole-solid-reader/APPROVAL.md`; integration gate `diagnostics/gates_81ff8899.log` PASS; `main` fast-forwarded `a1350da3` → `81ff8899` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = UNNAMED_REGULAR_PYRAMID_GROUNDING
+- **RUN_ID:** unnamed-regular-pyramid-grounding (task unnamed-regular-pyramid-grounding; Cloud fix + LOCAL verification; branch fix/unnamed-regular-pyramid-grounding, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** ede8d329
+- **CODE_COMMIT_OR_NONE:** 12edf57a (unnamed regular pyramid: `()` claims, bound to the program's single solid only when the text names no coordinate-less point, then verified; refusal zone extended to exactly those texts; amendment §24; CACHE_VERSION 122)
+- **CANDIDATE:** `d07a92decc0fe635…` (product `12edf57a`, 102 files; frozen LOCAL 97db084f) · CACHE_VERSION 122 (bump: served → refused, served values changed) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration 94b2f89c; fix 12edf57a; docs 3fbb643e + c29f69c7; candidate refreeze 97db084f; LOCAL record 2d3c510c
+- **CLASSIFICATION:** correctness fix (unnamed regular pyramids); not a family expansion
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 97db084f (pytest 7602 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/unnamed-regular-pyramid-grounding/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/unnamed-regular-pyramid-grounding/
+- **PASS:** test_unnamed_regular_pyramid_grounding.py 72/72 + oracle (47 C1 + 11 C0); C1 47 unnamed rows: 13 correct kept, 4 wrong values corrected, 8 now refused with the label's reason, 1 refusal kept, 21 unchanged; C0 11/11 (3 contradictions refused)
+- **CLOSED:** NONE
+- **OPENED:** NONE (ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ and ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE narrowed, still OPEN)
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward ede8d329 → 2d3c510c) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** separate Cloud run for option (b) (approved as direction): check every finite, justified vertex assignment for the 21 texts naming points without coordinates; program naming never source data; equal answers not sole proof; no general solver without new approval
+- **FINAL_DECISION:** MERGED_AND_PUSHED (not 47/47: square/N5 served 3 vs √17, square/R2_N9 contradiction served 16, square/W5_C undetermined served 16/3; no live Gemini; no token-reduction claim)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** soundness evidence (unnamed solids bound only when naming carries no meaning, then verified; registered scope only)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (unnamed-regular-pyramid-grounding, 2026-10-09):** user approval `runs/unnamed-regular-pyramid-grounding/APPROVAL.md`; integration gate `diagnostics/gates_2d3c510c.log` PASS; `main` fast-forwarded `ede8d329` → `2d3c510c` and pushed (no force; first attempt failed on a network error before reaching the remote, retried; ls-remote verified); branch deleted (git branch -d, git push origin --delete)

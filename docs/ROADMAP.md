@@ -14,9 +14,9 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
 - **Việc `unnamed-regular-pyramid-grounding` (2026-10-09, run [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/),
-  Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`, CHƯA tích hợp):** chóp đều không tên gắn + kiểm khi đề không gọi
-  tên điểm nào thiếu toạ độ (26/47 hàng corpus = nhãn; 4 giá trị sai sửa đúng); `CACHE_VERSION` 122; candidate `d07a92de…`
-  đóng băng LOCAL, T3 PASS (`handoff.md` của run). Việc duy nhất: người dùng quyết merge. Còn mở: đề gọi tên điểm mà không
+  Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `2d3c510c`):** chóp đều không tên gắn + kiểm khi đề không gọi tên điểm nào thiếu
+  toạ độ (26/47 hàng corpus = nhãn; 4 giá trị sai sửa đúng); `CACHE_VERSION` 122; candidate `d07a92de…`, T3 PASS; phê
+  duyệt: `APPROVAL.md` của run. Việc kế tiếp: lượt Cloud RIÊNG phương án (b). Còn mở: đề gọi tên điểm mà không
   toạ độ, không ký hiệu khối — 21 hàng, 3 phục vụ trái nhãn; người dùng đã chọn phương án (b) (kiểm mọi phép gán hữu hạn
   có căn cứ) cho một lượt Cloud RIÊNG sau khi bản này được tích hợp.
 
