@@ -15,7 +15,16 @@
 
 ## 2. Cổng
 
-Ghi sau T3 + cổng danh tính ở commit tài liệu cuối của run (commit ghi log đi sau).
+Tại commit tài liệu `1f4e74fe`, worktree tách rời sạch CRLF có dấu cách (`D:/tmp/class band fit`), 0 model call; commit ghi
+log đi sau (chỉ thêm log, `gates.sh` và mục này):
+
+- T3 `FULL_PRODUCT_GATE_PASS` (`diagnostics/t3_1f4e74fe.log`): pytest **7239 passed, 1 skipped, 2 deselected**; vitest
+  **67 files / 1040 tests**; typecheck + build; tập demo; bề mặt sập.
+- Cổng danh tính (`diagnostics/gates_1f4e74fe.log`, từ `1086da7f`): candidate `7f3f0423…` khớp; cache 118 / `b1714b566e25c912…`
+  khớp; xuất lược đồ ×2 trùng byte; `LLM_ONLY`; bề mặt mô hình 0 file đổi; ngoài thư mục run chỉ `EVALUATION_CANDIDATE.json`
+  (product_commit_sha) và `EVIDENCE_INDEX.md` (mục mới); `git diff --check` sạch; docs audit PASS; node harness 95 pass,
+  2 skipped, 0 fail; worktree sạch trước/sau.
+- Trình duyệt trên candidate cuối: lần đo 3 (`6a1801e7`) — `report.md` §3–§4.
 
 ## 3. Việc của người dùng
 
