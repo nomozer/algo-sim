@@ -20,15 +20,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
+CURRENT_BRANCH = feat/regular-square-pyramid (đã fast-forward vào main = caed3809 và push, 2026-10-09; nhánh GIỮ LẠI — xoá nhánh chưa được phép)
 CURRENT_WAVE = FRONTEND_FREEZE (run frontend-freeze: người dùng hoãn phát triển frontend — chưa hài lòng chất lượng UI; ưu tiên kiến trúc hình học + backend; không đổi mã; máy local; cùng nhánh)
 PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 45f5a7f0 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 83db0e97), CACHE_VERSION 118, LLM_ONLY
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
-ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = INTEGRATION_APPROVED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md, lời người dùng 2026-10-09: tích hợp baseline frontend tạm thời có ngoại lệ — C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 chưa duyệt; W05 23/24); fast-forward main + push được phép; xoá nhánh CHƯA được phép
+ORIGIN_MAIN = caed38096f0693702dc0b69668ad8ba58d5fb1fd (fast-forward từ 38d41588, push 2026-10-09, không force; ls-remote khớp; commit ghi kết quả này đi sau)
+FINAL_DECISION = MERGED_AND_PUSHED_WITH_EXCEPTIONS (baseline frontend tạm thời theo runs/frontend-freeze/APPROVAL.md — C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 chưa duyệt; W05 23/24); cổng tích hợp: runs/frontend-freeze/diagnostics/gates_caed3809.log
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
-MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
+MAIN_PUSH_EXECUTED = YES · MERGE_EXECUTED = YES (fast-forward, runs/frontend-freeze/APPROVAL.md) · PR_CREATED = NO · BRANCH_DELETED = NO
 NEXT_ACTION = sau tích hợp: Cloud mở rộng họ hình còn thiếu theo ROADMAP §0.2 trên kiến trúc/hàm sẵn có (runs/frontend-freeze/handoff.md), rồi OCR; frontend đóng băng; giữ LLM_ONLY
 ```
 

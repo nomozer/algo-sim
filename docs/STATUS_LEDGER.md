@@ -1346,3 +1346,4 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** scope decision
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (frontend-freeze, 2026-10-09):** user approval `runs/frontend-freeze/APPROVAL.md`; integration gate `diagnostics/gates_caed3809.log` PASS; `main` fast-forwarded `38d41588` → `caed3809` and pushed (no force; ls-remote verified); branch kept (deletion not allowed); FINAL_DECISION MERGED_AND_PUSHED_WITH_EXCEPTIONS (C1–C6 viewed not approved, P1–P6 PENDING, UX debt OPEN/DEFERRED)
