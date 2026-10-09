@@ -101,6 +101,41 @@ def test_c0_theo_nhan(rid):
         assert out.reason_subjects
 
 
+_HINH_THANG = {"A": (0, 0, 0), "B": (2, 0, 0), "C": (2, 2, 0), "D": (0, 4, 0), "S": (0, 0, 3)}
+_DE_HINH_THANG = "Cho khối chóp S.ABCD với A(0;0;0), B(2;0;0), C(2;2;0), D(0;4;0) và đỉnh S(0;0;3)"
+
+
+@pytest.mark.parametrize("cau_e, mong", [
+    ("điểm E(5;5;0) sao cho AE vuông góc với AB", "SOURCE_SHAPE_CONTRADICTS_COORDINATES"),  # đề tự mâu thuẫn
+    ("điểm E(0;5;0) sao cho AE vuông góc với AB", None),                                    # nhất quán
+    ("điểm E sao cho AE vuông góc với AB", None),                                           # E không toạ độ: thiếu ≠ sai
+], ids=["mau_thuan", "nhat_quan", "khong_toa_do"])
+def test_c0_diem_vang_trong_chuong_trinh_kiem_bang_toa_do_de(cau_e, mong):
+    """LOCAL: quan hệ có điểm chương trình KHÔNG khai (E) vẫn kiểm bằng toạ độ chính đề cho — bỏ qua điểm ấy không được
+    biến một đề tự mâu thuẫn kiểm chứng được thành đề được phục vụ."""
+    de = f"{_DE_HINH_THANG} và {cau_e}. Tính thể tích khối chóp."
+    payload = {"input_facts": [{"id": f"d_{p}", "kind": "point3", "label": p,
+                                "value": [f"({';'.join(map(str, v))})"]} for p, v in _HINH_THANG.items()],
+               "obligations": [{"kind": "volume", "container": "khoi", "witness": "V"}]}
+    contract = build_request_contract(payload, problem_text=de, domain="hinh_hoc")
+    day = ["A", "B", "C", "D"]
+    sp = SemanticProgramSpec.model_validate({
+        "spec_version": "1.0", "title": "Thể tích khối chóp",
+        "memory_declarations": [{"name": p, "type": "point3", "initial_value": [str(c) for c in v],
+                                 "source_fact_id": f"d_{p}"} for p, v in _HINH_THANG.items()]
+        + [{"name": "khoi", "type": "solid"}, {"name": "V", "type": "float"}],
+        "statements": [
+            {"kind": "construct_solid", "target_var": "khoi", "vertices": ["S", *day],
+             "faces": [day] + [["S", day[i], day[(i + 1) % 4]] for i in range(4)]},
+            {"kind": "assign", "target_var": "V", "expr": {"kind": "measure", "quantity": "volume", "of": "khoi"}}]})
+    out = verify_and_compile(contract, sp)
+    if mong is None:
+        assert out.servable and out.assumption_certificate == "C0", (out.stage_reached, out.reason_code, out.details)
+    else:
+        assert not out.servable and out.reason_code == mong, (out.stage_reached, out.reason_code, out.details)
+        assert any(d.startswith("C0_SHAPE_CONTRADICTION line_perp_line(A,E,A,B)") for d in out.details)
+
+
 def test_mau_thuan_la_loi_cua_de_khong_gui_di_sua():
     assert theo_ma("SOURCE_SHAPE_CONTRADICTS_COORDINATES") == "SOURCE"
     assert "SOURCE_SHAPE_CONTRADICTS_COORDINATES" in PL.KHONG_SUA_NGUON

@@ -1333,10 +1333,20 @@ _SO_DINH_C0 = {"line_perp_line": 4, "right_triangle": 3, "base_equilateral": 3, 
                "base_rectangle": 4, "base_rhombus": 4, "base_square": 4}
 
 
-def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc") -> list[RangBuoc]:
-    """§21 — ràng buộc hình dạng ĐỀ NÓI mà chính các điểm (toạ độ đề cho) trong chương trình làm sai. Ràng buộc có
-    thực thể vắng trong chương trình, hoặc kind ngoài `_KIEM_C0`, không được kiểm (thiếu mô tả ≠ mâu thuẫn)."""
+def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc", inv: tuple = ()) -> list[RangBuoc]:
+    """§21 — ràng buộc hình dạng ĐỀ NÓI mà toạ độ đề cho làm sai. Giá trị điểm lấy từ chương trình; điểm chương trình
+    không khai thì lấy toạ độ CHÍNH ĐỀ cho (`point_coordinate` đọc trọn) — đề tự mâu thuẫn dù chương trình bỏ qua điểm
+    ấy. Điểm không có toạ độ ở cả hai nơi, hoặc kind ngoài `_KIEM_C0`, không được kiểm (thiếu mô tả ≠ mâu thuẫn)."""
     ten = cm.ten_theo_khoa()
+    toa_de = {_khoa(i.points[0]): Vec3.of(*(Fraction(c) for c in i.coefficients)) for i in inv
+              if i.kind == "point_coordinate" and len(i.points) == 1 and len(i.coefficients) == 3}
+
+    def gia_tri(e: str):
+        try:
+            return cm.dinh_nghia(ten[_khoa(e)]).gia_tri
+        except (KeyError, _Loi):
+            return toa_de[_khoa(e)]              # KeyError ⇒ không toạ độ nào ⇒ bỏ qua ràng buộc
+
     sai = []
     for r in rb:
         kiem, n = _KIEM_C0.get(r.kind), _SO_DINH_C0.get(r.kind)
@@ -1344,8 +1354,8 @@ def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc") -> list[RangBuoc]:
                                                                        and len(set(r.entities[2:])) < 3):
             continue
         try:
-            V = {e: cm.dinh_nghia(ten[_khoa(e)]).gia_tri for e in set(r.entities)}
-        except (KeyError, _Loi):
+            V = {e: gia_tri(e) for e in set(r.entities)}
+        except KeyError:
             continue
         if all(isinstance(v, Vec3) for v in V.values()) and not kiem(V, r.entities, r.value):
             sai.append(r)
@@ -1582,7 +1592,7 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     # C0 — lát cắt ghim bởi nguồn
     khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de_gt, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
-        sai = _mau_thuan_c0(rb, cm)
+        sai = _mau_thuan_c0(rb, cm, inv)
         if sai:
             return _ket_qua(UNDETERMINED, details + [f"C0_SHAPE_CONTRADICTION {r.kind}({','.join(r.entities)})"
                                                      f" @[{r.span[0]},{r.span[1]}]" for r in sai],
