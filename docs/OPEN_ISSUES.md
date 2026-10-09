@@ -34,7 +34,7 @@
 - **evidence:** `geometry_compiler/compiler.py` (`_danh_gia_eligibility_rectangular_pyramid`, `_danh_gia_eligibility_cuboid_prism`, `_uu_tien_day_chuoi`). LOCAL (2026-10-09): `tests/geometry/test_general_polygon_base.py::test_mot_goc_vuong_khong_phuc_vu_hinh_chu_nhat_tu_gia_dinh` (pyramid + prism through `run_pipeline`, `DETERMINISTIC_FIRST`) — compiler picks the rectangle family, route refuses `ASSUMPTION_INVARIANCE_UNPROVEN`, no Scene3D; fault injection (polyhedral gate switched off) turns both red with `status: ok`, so the shared assumption gate is the only barrier.
 - **impact:** Compiler-only (opt-in): the program models an unproven rectangle; the assumption gate still refuses it on the route unless the TEXT states a rectangle/square, so no wrong value is served.
 - **scope:** `geometry_compiler/compiler.py`.
-- **status:** OPEN
+- **status:** RESOLVED (geometry-grounding-safety, 2026-10-09, `fbade46`) — `compiler._da_chung_minh_chu_nhat`: an untagged quadrilateral is a rectangle only with right angles (between adjacent edges) at ≥ 3 vertices; one right angle ⇒ `UNSUPPORTED_STRUCTURED_RELATION_MISSING` / `BASE_RECTANGLE_NOT_PROVEN` (fallback to LLM) in both the rectangular-pyramid and cuboid families. Eligibility no longer relies on the assumption gate. Declared rectangles/squares/boxes and the G05 chain unchanged (`tests/geometry/test_geometry_grounding_safety.py` R01–R07, `test_general_polygon_base.py::test_mot_goc_vuong_…`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** before compiler-first routing
 - **default_switch_blocker:** YES
@@ -44,7 +44,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/general-polygon-base/diagnostics/probe_c0_shape_text_vs_coordinates.py` + `.log` (offline, 0 model calls): both the consistent and the contradictory text are `PROVEN_SAFE` C0, served `V = 6`, with a byte-identical route outcome at `d5287ff7` (before G05) and at `9666b861` — the behaviour predates G05 and G05 does not change it.
 - **impact:** The served value follows the stated coordinates, so it is the volume of the solid the coordinates define; the learner is not told that the text's shape description disagrees with them. No served value changed; the gap is a missing contradiction refusal (repository rule: contradictions fail closed).
 - **scope:** `backend/app/simulation/semantic_program/assumption_gate.py` (C0 branch: check read `shape_constraint` relations on the pinned coordinates), `shape_constraint.py`.
-- **status:** OPEN
+- **status:** RESOLVED (geometry-grounding-safety, 2026-10-09, `fbade46`) — amendment §21: before C0 is certified, every read `line_perp_line`, `line_perp_plane`, `right_triangle`, `base_rectangle`, `base_square` (+ side), `base_parallelogram`, `base_rhombus`, `base_equilateral` (+ side) whose points exist in the program is checked exactly on the given coordinates; a broken one ⇒ refused `SOURCE_SHAPE_CONTRADICTS_COORDINATES` (cause `SOURCE`, not sent for repair, no Scene3D). `CACHE_VERSION` 118 → 119 (served → refused, `runs/geometry-grounding-safety/cache/decision.json`). Not checked (no reader/predicate): whole-solid kinds (`right_prism`, `cuboid`, `cube`, regular pyramids, `height`) and relations whose points are absent from the program.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** user decision (a refusal turns served C0 rows into refusals ⇒ `CACHE_VERSION` bump by evidence)
 - **default_switch_blocker:** NO

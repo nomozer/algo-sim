@@ -64,6 +64,16 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
+> **Sửa an toàn grounding — run geometry-grounding-safety (2026-10-09, Cloud, nhánh `fix/geometry-grounding-safety`; 0 model call; chờ kiểm local):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | C0 | quan hệ hình dạng đề nói được kiểm chính xác trên toạ độ đề cho; mâu thuẫn ⇒ `SOURCE_SHAPE_CONTRADICTS_COORDINATES` (amendment §21) |
+> | Compiler | tứ giác chưa khai dạng là hình chữ nhật chỉ khi ≥ 3 góc vuông kề; một góc ⇒ `BASE_RECTANGLE_NOT_PROVEN` |
+> | Nhãn | 18 hàng ghi trước + oracle độc lập, 21/21; red-before 10 đỏ |
+> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (5 test danh tính đỏ — LOCAL) · **119** (served → refused, có probe) |
+> | Run | [`geometry-grounding-safety`](evaluation/geometry/runs/geometry-grounding-safety/) |
+
 > **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `9666b861` theo `APPROVAL.md`):**
 >
 > | Mục | Kết quả |

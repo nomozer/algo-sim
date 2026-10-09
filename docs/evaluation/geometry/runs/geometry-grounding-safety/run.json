@@ -10,5 +10,11 @@
   "cache_version_at_start": "118",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "17353c3",
+    "fix_and_cache": "fbade46"
+  },
+  "cache_version": "119 (bump, cache/decision.json)",
+  "model_surface": "unchanged",
+  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }
