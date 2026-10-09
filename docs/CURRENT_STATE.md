@@ -59,9 +59,9 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 83db0e97 tại product commit 45f5a7f0 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = FRONTEND_FREEZE (run `frontend-freeze`; người dùng hoãn phát triển frontend để ưu tiên kiến trúc hình học + backend; không đổi mã; handoff Cloud ở `runs/frontend-freeze/handoff.md`)
-> FINAL_DECISION = WAITING_FOR_EXPLICIT_MERGE_APPROVAL (fast-forward được; C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED — runs/frontend-freeze/report.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng quyết tích hợp baseline tạm thời có ngoại lệ / merge + push / xoá nhánh; agent không tự merge
-> CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
-> TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
+> FINAL_DECISION = INTEGRATION_APPROVED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md, lời người dùng 2026-10-09) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = Cloud mở rộng họ hình còn thiếu (ROADMAP §0.2) trên kiến trúc sẵn có, rồi OCR; frontend đóng băng
+> CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
+> TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
 > **Dải lớp học trên điện thoại — run classroom-band-fit (2026-10-09, máy local; đo `6a1801e7` lần 3, worktree tách rời sạch; chờ review người):**

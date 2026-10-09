@@ -9,9 +9,15 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
-TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
+CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
+TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Quyết định `frontend-freeze` (2026-10-09, run [`frontend-freeze`](evaluation/geometry/runs/frontend-freeze/), máy local):**
+  người dùng hoãn phát triển frontend (chưa phê duyệt chất lượng UI; chỉ sửa lỗi nghiêm trọng ảnh hưởng chức năng cốt lõi) và
+  cho tích hợp baseline có ngoại lệ (`APPROVAL.md`). Việc duy nhất kế tiếp: mở rộng các họ hình còn thiếu theo §0.2 trên kiến
+  trúc, hàm và cơ chế SẴN CÓ — không kiến trúc mới, không hardcode theo đề, giữ `LLM_ONLY`; sau đó OCR (§0.4). Handoff:
+  `runs/frontend-freeze/handoff.md`.
 
 - **Việc `classroom-band-fit` (2026-10-09, run [`classroom-band-fit`](evaluation/geometry/runs/classroom-band-fit/), máy local):**
   CLASSROOM_BAND_FIT — dải lớp học trên điện thoại gọn thành chip trạng thái trên màn chật (24/24, trước 9/24), tên bài không

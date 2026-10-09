@@ -1324,3 +1324,4 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** scope decision (frontend paused; backend architecture next)
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **APPROVAL (2026-10-09):** `frontend-freeze/APPROVAL.md` — the user's verbatim decision: integrate the temporary frontend baseline with exceptions (C1–C6 viewed, not approved; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 not visually approved; W05 23/24); fast-forward main + push allowed; branch deletion not allowed; next: missing-family expansion on the existing architecture, then OCR

@@ -1,4 +1,4 @@
-# frontend-freeze — handoff cho CLOUD (kiến trúc hình học và backend)
+# frontend-freeze — handoff cho CLOUD (mở rộng họ hình trên kiến trúc sẵn có, rồi OCR)
 
 Viết cho: phiên agent Cloud đầu tiên của giai đoạn backend. Đọc trước khi sửa: `AGENTS.md` → `docs/RULES.md` →
 `docs/ARCHITECTURE_MAP.md` §2–§8 → `docs/MIGRATION_CHECKLIST.md` → `docs/OPEN_ISSUES.md` (mục `default_switch_blocker: YES`)
@@ -32,24 +32,27 @@ tứ giác đều) rồi đi qua nguyên bộ cổng của tuyến LLM. 20 cổn
 `…-PRISM-COMPILER-GAP`, `…-REQUEST-CONTRACT-PRISM-GAP`. Năng lực SẢN PHẨM ≠ năng lực HỆ: `simulation/product_capability.py`;
 họ hình trong phạm vi: `docs/evaluation/geometry/missing-family-roadmap-refresh/CAPABILITY_MATRIX.json`.
 
-## 3. Hướng nghiên cứu (chưa có tài liệu trong kho — bắt đầu từ đây)
+## 3. Định hướng (quyết định người dùng 2026-10-09, `APPROVAL.md` §4)
 
-Đề → biểu diễn dữ kiện hình học có cấu trúc → FactGraph/compiler → kernel → Scene3D. **Compact DSL** và **JSON dữ kiện** là
-hai ứng viên biểu diễn phải được đánh giá ĐỘC LẬP (cùng corpus, cùng tiêu chí đăng ký trước), không mặc định bên nào tốt hơn
-khi chưa đo. Semantic Program hiện có là IR bước dựng, không phải biểu diễn dữ kiện — đừng nhập hai tầng.
+Kiến trúc hình học theo hàm **đã có** — Cloud KHÔNG nghiên cứu, thiết kế lại hay xây kiến trúc mới từ đầu (bản nháp trước của
+mục này đề xuất rà soát kiến trúc và so Compact DSL/JSON dữ kiện; đã bỏ theo quyết định trên). Giai đoạn tiếp theo:
+**mở rộng các họ hình còn thiếu theo roadmap đã thống nhất**, tận dụng kiến trúc, hàm và cơ chế sẵn có. Sau giai đoạn ấy:
+**OCR** theo kế hoạch (ROADMAP §0.4, P4 — hiện bằng chứng FIXTURE). Frontend đóng băng: chỉ sửa lỗi nghiêm trọng ảnh hưởng
+chức năng cốt lõi.
 
-## 4. Phạm vi đề xuất cho lượt Cloud đầu tiên
+## 4. Phạm vi lượt Cloud đầu tiên
 
-1. Rà soát kiến trúc: chỉ ra chính xác nút thắt khiến mỗi dạng toán mới cần mã riêng (bằng chứng: mã + `SUPPORTED_FAMILIES`
-   + các nhánh theo họ), không suy từ tên.
-2. Viết hợp đồng vào/ra ổn định giữa AI ↔ biểu diễn dữ kiện ↔ compiler ↔ kernel ↔ renderer (`docs/architecture/`), có lược
-   đồ và ví dụ dương/âm.
-3. Mở rộng primitive/phép dựng tái sử dụng được (không theo họ), mỗi cái có invariant + oracle độc lập.
-4. Một vertical slice chứng minh mở rộng được: một quan hệ/phép dựng mới phục vụ ≥ 2 dạng đề khác nhau mà không thêm nhánh
-   theo họ.
-5. Giữ `LLM_ONLY` chạy được và xanh; mọi đổi tuyến mặc định là quyết định riêng.
+1. Chọn họ kế tiếp từ bảng ứng viên `docs/ROADMAP.md` §0.2 theo thứ tự người dùng duyệt (ROADMAP: «người dùng chọn họ hình
+   từ bảng ứng viên §0.2»), đối chiếu `docs/evaluation/geometry/missing-family-roadmap-refresh/CAPABILITY_MATRIX.json` và
+   `simulation/product_capability.py` — «thêm một họ hình» phải đi qua ma trận ấy trước.
+2. Hiện thực bằng primitive/phép dựng/luật compiler **tổng quát, dùng lại được**, trên `semantic_program/`, `geometry/`,
+   `geometry_compiler/` hiện có — không nhánh theo mã đề, không hardcode dữ kiện/đáp số; mở IR chỉ khi thiếu thật (hỏi trước:
+   thiếu năng lực hay chỉ thiếu cách nói cho mô hình biết).
+3. Giữ `LLM_ONLY` là mặc định và xanh; mọi đổi tuyến mặc định là quyết định riêng.
+4. Hồi quy bắt buộc §0.3 của ROADMAP (sáu họ compiler, corpus gold, demo, bề mặt sập, T3) — không hàng đang phục vụ nào bị
+   từ chối mới mà không có quyết định ghi trước.
 
-Không được tuyên bố «kiến trúc mới hoàn thành» chỉ vì thêm một họ hình hoặc một schema.
+Không tuyên bố «xong» chỉ vì thêm một họ hay một schema: phải có hợp đồng, invariant, oracle độc lập và hồi quy.
 
 ## 5. Kiểm thử giai đoạn backend
 
