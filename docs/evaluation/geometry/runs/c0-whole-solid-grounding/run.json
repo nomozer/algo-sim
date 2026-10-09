@@ -31,5 +31,18 @@
     "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "9762f4413c0bec0eba7344a74ab064ca0ded8c6a",
+    "to": "11be609270ba93267c00c782749c296752576803",
+    "method": "git merge --ff-only fix/c0-whole-solid-grounding, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 11be6092 = main = origin/main",
+    "integration_gate": "diagnostics/gates_11be6092.log (candidate, cache 120, LLM_ONLY, routing unchanged, 0 model-surface files, schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at d838cc5b, only docs changed since",
+    "served_to_refused": "15 labelled rows (LOCAL correction of the 16 in report.md / cache/decision.json, which stay unedited)",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "fix/c0-whole-solid-grounding (11be6092) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ OPEN (three regular-pyramid phrasings not read ⇒ C0 whole-solid safety incomplete); no live Gemini; no token-saving claim; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

@@ -55,16 +55,16 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 120 trên nhánh `fix/c0-whole-solid-grounding` (C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ served → refused; runs/c0-whole-solid-grounding/cache/decision.json) · `main`: 119 (geometry-grounding-safety; runs/geometry-grounding-safety/cache/decision.json)
-> CANDIDATE = bbfa5b0da3a5353a… trên `main` (product commit 765291ab; cache 119); nhánh `fix/c0-whole-solid-grounding`: 8c4c01284232121b… (102 file; product commit c11e8c9d; cache 120; đóng băng LOCAL d838cc5b, T3 PASS — runs/c0-whole-solid-grounding/handoff.md)
+> CACHE_VERSION = 120 (c0-whole-solid-grounding: C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ, 15 hàng nhãn served → refused; runs/c0-whole-solid-grounding/cache/decision.json + đính chính LOCAL 16 → 15 trong handoff.md)
+> CANDIDATE = 8c4c01284232121b… (102 file; product commit c11e8c9d; cache 120; đóng băng LOCAL d838cc5b, T3 PASS — runs/c0-whole-solid-grounding/handoff.md; trên `main` từ 11be6092)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = GEOMETRY_GROUNDING_SAFETY (run `geometry-grounding-safety` — Cloud sửa C0 + compiler, LOCAL bổ sung 765291ab + kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
-> FINAL_DECISION = MERGED_AND_PUSHED (geometry-grounding-safety: `main` = `origin/main` = `47d05f22`, fast-forward từ e6c3cf68, 2026-10-09; runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
+> CURRENT_WAVE = C0_WHOLE_SOLID_GROUNDING (run `c0-whole-solid-grounding` — Cloud thêm kiểm khẳng định toàn khối vào C0, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
+> FINAL_DECISION = MERGED_AND_PUSHED (c0-whole-solid-grounding: `main` = `origin/main` = `11be6092`, fast-forward từ 9762f441, 2026-10-09; runs/c0-whole-solid-grounding/APPROVAL.md; còn mở ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ ⇒ an toàn C0 toàn khối CHƯA trọn · geometry-grounding-safety: 47d05f22, runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **C0 kiểm khẳng định toàn khối — run c0-whole-solid-grounding (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-grounding`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
+> **C0 kiểm khẳng định toàn khối — run c0-whole-solid-grounding (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-grounding`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `11be6092` theo `APPROVAL.md`):**
 >
 > | Mục | Kết quả |
 > |---|---|

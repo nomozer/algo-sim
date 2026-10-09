@@ -1428,3 +1428,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (geometry-grounding-safety, 2026-10-09):** user approval `runs/geometry-grounding-safety/APPROVAL.md`; integration gate `diagnostics/gates_47d05f22.log` PASS; `main` fast-forwarded `e6c3cf68` → `47d05f22` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = C0_WHOLE_SOLID_GROUNDING
+- **RUN_ID:** c0-whole-solid-grounding (task c0-whole-solid-grounding; Cloud fix + LOCAL verification; branch fix/c0-whole-solid-grounding, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** 9762f441
+- **CODE_COMMIT_OR_NONE:** c11e8c9d (C0 checks whole-solid claims on the given coordinates, amendment §22; CACHE_VERSION 120)
+- **CANDIDATE:** `8c4c01284232121b…` (product `c11e8c9d`, 102 files; frozen LOCAL d838cc5b) · CACHE_VERSION 120 (bump: served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration 3bbd8c2f + 139aa1a5; fix c11e8c9d; docs 9d61f375 + 825f109d; candidate refreeze d838cc5b; LOCAL record 11be6092
+- **CLASSIFICATION:** correctness fix (whole-solid C0 contradictions); not a family expansion
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at d838cc5b (pytest 7401 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/c0-whole-solid-grounding/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/c0-whole-solid-grounding/
+- **PASS:** test_c0_whole_solid_grounding.py 34/34 (29 preregistered rows + independent oracle); 15 labelled rows served → refused (LOCAL correction of the reported 16: 3 of the 18 refused rows were already refused on main); red-before 18 red at 9762f441
+- **CLOSED:** ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED
+- **OPENED:** ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ (pre-existing reader gap: three regular-pyramid phrasings)
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward 9762f441 → 11be6092) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** report.md / cache/decision.json count 16 → 15 (correction recorded in handoff.md LOCAL section, run.json and APPROVAL.md; Cloud files unedited)
+- **NEXT_ACTION_AT_TIME:** user choice of the next task (reader gap open; next family per ROADMAP §0.2; G06 not started), then OCR
+- **FINAL_DECISION:** MERGED_AND_PUSHED (C0 whole-solid safety incomplete while ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ is open; no live Gemini; no token-saving claim)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** soundness evidence (fail-closed on self-contradictory whole-solid claims, registered scope only)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (c0-whole-solid-grounding, 2026-10-09):** user approval `runs/c0-whole-solid-grounding/APPROVAL.md`; integration gate `diagnostics/gates_11be6092.log` PASS; `main` fast-forwarded `9762f441` → `11be6092` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
