@@ -21,15 +21,15 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = MERGE_READINESS (run merge-readiness: dọn 671 hồ sơ Chrome mồ côi có xác nhận, commit housekeeping favicon + .gitignore, danh sách nghiệm thu; không đổi candidate; máy local; cùng nhánh)
+CURRENT_WAVE = FRONTEND_FREEZE (run frontend-freeze: người dùng hoãn phát triển frontend — chưa hài lòng chất lượng UI; ưu tiên kiến trúc hình học + backend; không đổi mã; máy local; cùng nhánh)
 PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 45f5a7f0 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 83db0e97), CACHE_VERSION 118, LLM_ONLY
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (T3 + cổng danh tính ở commit tài liệu cuối của run merge-readiness — runs/merge-readiness/handoff.md §2; Tier-A/trình duyệt của run classroom-band-fit vẫn là bằng chứng của product 45f5a7f0)
+FINAL_DECISION = WAITING_FOR_EXPLICIT_MERGE_APPROVAL (fast-forward được; C1–C6 đã xem nhưng chưa phê duyệt chất lượng, P1–P6 PENDING, UX debt OPEN/DEFERRED — runs/frontend-freeze/report.md; T3 tại ac55186e phủ cây mã hiện tại)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng nghiệm thu theo runs/merge-readiness/report.md §4 (điện thoại thật G-1…G-9, chip lớp H-1…H-3 + C-1…C-4, các gói ảnh chưa duyệt, bốn cảnh W14, D-2…D-4); duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng quyết: tích hợp baseline frontend tạm thời có ngoại lệ? merge + push main? xoá nhánh? — nếu có, agent ghi runs/frontend-freeze/APPROVAL.md nguyên văn rồi fast-forward main; sau đó Cloud theo runs/frontend-freeze/handoff.md (kiến trúc hình học + backend; frontend đóng băng)
 ```
 
 Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã
@@ -122,6 +122,9 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 
 ## 5. Còn mở — không được che
 
+- **frontend-freeze (2026-10-09):** người dùng hoãn phát triển frontend (chưa hài lòng chất lượng UI) để ưu tiên kiến trúc
+  hình học + backend. C1–C6 đã xem, chưa phê duyệt; P1–P6 PENDING; UX debt OPEN/DEFERRED; W05 23/24; W14 registry chưa có.
+  Chờ quyết định merge tường minh; handoff Cloud `runs/frontend-freeze/handoff.md`.
 - **merge-readiness (chờ người dùng):** danh sách nghiệm thu tối thiểu `runs/merge-readiness/report.md` §4. 671 hồ sơ cũ
   `%TEMP%\w12-*` đã xoá sau xác nhận (C: trống 43,87 → 77,43 GB); `scoped_dir*` không đụng. Favicon + `.gitignore` đã commit.
 - **browser-temp-lifecycle (hạ tầng kiểm thử):** `ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK` RESOLVED — hồ sơ Chrome của bộ đo ở

@@ -1320,3 +1320,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** none
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = FRONTEND_FREEZE
+- **RUN_ID:** frontend-freeze (task frontend-freeze; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-09
+- **START_BASE:** e0c0cec8
+- **CODE_COMMIT_OR_NONE:** NONE
+- **CANDIDATE:** `7f3f042309dd1c54…` unchanged (product `45f5a7f0`) · CACHE_VERSION 118 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit — the user's decision to pause frontend development, the unchanged acceptance status, the Cloud handoff
+- **CLASSIFICATION:** WAITING_FOR_EXPLICIT_MERGE_APPROVAL (C1–C6 viewed, not approved; P1–P6 PENDING; UX debt OPEN/DEFERRED)
+- **FULL_PRODUCT_SUITE:** not rerun — no code change since T3 at `ac55186e` (`git diff ac55186e HEAD -- ':!docs'` empty)
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/frontend-freeze/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/frontend-freeze/
+- **PASS:** NONE (no new measurement); fast-forward possible (origin/main 38d41588 ⊂ HEAD, 175 ahead, 0 behind)
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** explicit user decision on integrating a temporary frontend baseline with exceptions, merge + push, branch deletion
+- **FINAL_DECISION:** WAITING_FOR_EXPLICIT_MERGE_APPROVAL
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** scope decision
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

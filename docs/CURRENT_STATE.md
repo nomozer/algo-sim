@@ -58,8 +58,8 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
 > CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 83db0e97 tại product commit 45f5a7f0 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = MERGE_READINESS (run `merge-readiness`; dọn 671 hồ sơ Chrome mồ côi có xác nhận, housekeeping Git, danh sách nghiệm thu; product commit và bằng chứng nghiệm thu của run `classroom-band-fit` không đổi)
-> FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (cổng T3 + danh tính ở commit tài liệu cuối của run merge-readiness — runs/merge-readiness/handoff.md §2) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng nghiệm thu theo runs/merge-readiness/report.md §4 (điện thoại thật, chip lớp, các gói ảnh chưa duyệt, bốn cảnh W14); duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh
+> CURRENT_WAVE = FRONTEND_FREEZE (run `frontend-freeze`; người dùng hoãn phát triển frontend để ưu tiên kiến trúc hình học + backend; không đổi mã; handoff Cloud ở `runs/frontend-freeze/handoff.md`)
+> FINAL_DECISION = WAITING_FOR_EXPLICIT_MERGE_APPROVAL (fast-forward được; C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED — runs/frontend-freeze/report.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng quyết tích hợp baseline tạm thời có ngoại lệ / merge + push / xoá nhánh; agent không tự merge
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```

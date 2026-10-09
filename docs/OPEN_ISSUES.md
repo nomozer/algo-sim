@@ -785,6 +785,7 @@
 - **scope / options (decision needed):** keep (W4 floating design); narrower panels in short landscape (less text per line); or give the panel its own column when open — the canvas would resize and the camera re-aspect on open, breaking the approved W4 invariant "opening a panel does not resize the canvas".
 - **status:** OPEN (run `phone-landscape-layout`)
 - **final-acceptance (2026-10-09):** the user accepts the current behaviour as temporary UX debt, to prioritise architecture work; not fixed, not a final approval — stays OPEN.
+- **frontend-freeze (2026-10-09):** frontend development paused by the user to prioritise the geometry architecture and backend; this item stays OPEN/DEFERRED (not accepted as done, not PASS). Fix only if it blocks verifying geometry capability or using a core function.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO
@@ -796,6 +797,7 @@
 - **scope / options (decision needed):** accept (the reset button exists), or fit by the bounding sphere instead of the default projection (smaller figure on every screen).
 - **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched. Evaluated in run `phone-landscape-layout`: one family, one viewport, one 120 × 40 px drag (55/56 other runs keep the labels inside); «Xem lại toàn hình» restores the exact initial camera in 56/56 runs over seven viewports and is always in view. The only shared fix (fit over the orbit sweep / bounding sphere) makes the figure smaller on every screen — an approved invariant — so it waits for the user.
 - **final-acceptance (2026-10-09):** the user accepts it as temporary UX debt («Xem lại toàn hình» is the recovery); not fixed, not a final approval — stays OPEN.
+- **frontend-freeze (2026-10-09):** frontend development paused by the user to prioritise the geometry architecture and backend; this item stays OPEN/DEFERRED (not accepted as done, not PASS). Fix only if it blocks verifying geometry capability or using a core function.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO
@@ -807,6 +809,7 @@
 - **scope / options (proposal, not measured):** in the short-landscape block keep the tool group on one line (`.geo3d-thanh-nut { flex-wrap: nowrap; flex-shrink: 0 }`), give the title a floor (`min-width: 5rem`) and let the assignment label shrink first (`.nav-assignment { flex: 0 1 auto; min-width: 0 }`); default the teacher dock to its existing collapsed state (`live-dock-thu`) at ≤ 48rem. Re-measure with the probe above plus `check-mobile-layout.mjs`.
 - **status:** RESOLVED (run `classroom-band-fit`, product `45f5a7f0`) — waiting for the user's review (`runs/classroom-band-fit/review.md` H-1…H-3, C-1…C-4). The proposal above was measured as a prototype: title floor + tool group that neither shrinks nor wraps + band on a second line reached 15/24; the remaining nine cases (640×360, 844×340, 360×640 × three roles) lacked 14–103 px of height under the kept 320 px canvas floor and 44 px touch targets. User decision (2026-10-09): compact classroom chip. Shipped: `.geo3d-ten-bai` `min-width: 4rem`; `.geo3d-quay-lai` no shrink/wrap; short-landscape `.geo3d-thanh-nut` `flex: none; flex-wrap: nowrap`; `NhomLop` (disclosure next to `MenuCongCu`) keeps the band as top-row items on wide screens (`display: contents`) and folds it into one chip on tight screens — the chip carries the read-only class status (`LiveClassStrip tomTat`) and opens the full band in a dropdown anchored to the top row; ≤ 48rem with a chip ⇒ icon-only back button (`aria-label` kept); no chip without a class context. Measured at `6a1801e7` (`results/CLASS_BAND_PROBE.json`): 24/24 (baseline 9/24 with the same probe); scenes without a band 55/56 as before; Tier-A 8/8.
 - **residual (tracked here, not fixed):** at 640×360 and 667×375 the chip has room only for the status dot + «…» (34–43 px): live/not live reads by colour; mode, class name and the teacher's help count need one tap (the full text stays in the accessibility tree). A student asking for help takes two taps on tight screens. User decision H-3 pending.
+- **frontend-freeze (2026-10-09):** frontend development paused by the user to prioritise the geometry architecture and backend; this item stays OPEN/DEFERRED (not accepted as done, not PASS). Fix only if it blocks verifying geometry capability or using a core function.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** — (resolved; human review pending)
 - **default_switch_blocker:** NO
@@ -817,6 +820,7 @@
 - **impact:** appearance only; every control measured in view and usable (`runs/phone-landscape-layout/results/MOBILE_LAYOUT_PROBE.json`).
 - **status:** OPEN — accepted by the user as temporary UX debt (2026-10-09) to prioritise architecture work; no redesign now; not a final approval.
 - **classroom-band-fit (2026-10-09):** with a classroom chip on tight screens (≤ 48rem) the back button shows only its arrow (label kept in `aria-label`/`title`) — part of this debt, not a redesign.
+- **frontend-freeze (2026-10-09):** frontend development paused by the user to prioritise the geometry architecture and backend; this item stays OPEN/DEFERRED (not accepted as done, not PASS). Fix only if it blocks verifying geometry capability or using a core function.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** a later UI design wave
 - **default_switch_blocker:** NO
