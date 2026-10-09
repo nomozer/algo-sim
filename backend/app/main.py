@@ -788,7 +788,11 @@ MISSING_KEY_MSG = (
 #       (lăng trụ đứng/xiên, hộp chữ nhật, lập phương, chóp đều, tứ diện đều, cạnh bên, trung đoạn, tâm đáy, chiều cao —
 #       amendment §22) trên toạ độ đề cho: đề tự mâu thuẫn chiều served → refused; row 119 sẽ trả thẳng envelope đã phục
 #       vụ (`runs/c0-whole-solid-grounding/cache/decision.json`, probe trước/sau).
-CACHE_VERSION = "120"
+# 121 — 2026-10-09 (c0-whole-solid-reader): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Bộ đọc nhận khẳng định chóp đều viết "có đỉnh S và
+#       đáy ABCD" và "chóp đều S.ABCD" như ký hiệu chuẩn: đề tự mâu thuẫn với toạ độ, và đề C1 từng phục vụ đáp số sai
+#       (đỉnh trên một đỉnh đáy), chiều served → refused; row 120 sẽ trả thẳng envelope đã phục vụ
+#       (`runs/c0-whole-solid-reader/cache/decision.json`, probe trước/sau).
+CACHE_VERSION = "121"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

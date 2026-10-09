@@ -124,8 +124,8 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 119 -> 120 (c0-whole-solid-grounding): C0 kiểm khẳng định toàn khối của đề trên toạ độ đề cho (served -> refused).
-    assert CACHE_VERSION == "120"
+    # 120 -> 121 (c0-whole-solid-reader): bộ đọc nhận hai lối viết chóp đều như ký hiệu chuẩn (served -> refused).
+    assert CACHE_VERSION == "121"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

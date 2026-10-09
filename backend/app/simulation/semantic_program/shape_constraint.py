@@ -48,8 +48,22 @@ _TRUOC = r"(?<![A-Za-z0-9'])"
 _HET_CHU = r"(?![A-Za-zÀ-ỹ])"
 
 _KHOI_CHOP = re.compile(
-    rf"(?:[Hh]ình|[Kk]hối)\s+chóp(?:\s+(?:tam|tứ|ngũ|lục)\s+giác(?:\s+đều)?)?\s+"
+    rf"(?:[Hh]ình|[Kk]hối)\s+chóp(?:\s+(?:tam|tứ|ngũ|lục)\s+giác(?:\s+đều)?|\s+đều)?\s+"
     rf"(?P<dinh>{_E})\.(?P<day>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
+#: c0-whole-solid-reader — chóp tứ/tam giác ĐỀU gọi tên đỉnh và đáy bằng lời: `… có đỉnh (là) S và|, (mặt) đáy (là)
+#: ABCD`. Cùng nhóm `dinh`/`day` với `_KHOI_CHOP`: đọc như ký hiệu `S.ABCD`. Không "đều" ⇒ không đọc (ngoài từ vựng).
+_KHOI_CHOP_DINH_DAY = re.compile(
+    rf"(?:[Hh]ình|[Kk]hối)\s+chóp\s+(?:tam|tứ)\s+giác\s+đều\s*,?\s+có\s+đỉnh\s+(?:là\s+)?(?P<dinh>{_E})\s*(?:,|và)\s*"
+    rf"(?:có\s+)?(?:mặt\s+)?đáy\s+(?:là\s+)?(?P<day>(?:{_E}){{3,}})(?![A-Za-z0-9'])")
+#: Loại chóp đều trong một ký hiệu khối: `chóp đều` (số đỉnh đáy quyết định) hoặc `chóp tứ/tam giác đều`.
+_CHOP_DEU = re.compile(r"chóp\s+(?:(?P<g>tam|tứ|ngũ|lục)\s+giác\s+)?đều")
+#: Khẳng định đứng ngay sau "không phải (là)" là PHỦ ĐỊNH — không phải tiền đề.
+_PHU_DINH = re.compile(r"không\s+phải(?:\s+là)?\s*$")
+
+
+def _cac_chop(de: str) -> list[re.Match]:
+    """Mọi ký hiệu chóp có tên đỉnh/đáy (`S.ABCD` hoặc `có đỉnh S và đáy ABCD`), theo vị trí trong đề."""
+    return sorted([*_KHOI_CHOP.finditer(de), *_KHOI_CHOP_DINH_DAY.finditer(de)], key=lambda m: m.start())
 _KHOI_LANG_TRU = re.compile(
     rf"(?P<noun>(?:[Hh]ình|[Kk]hối)\s+(?:lăng\s+trụ(?:\s+(?:đứng|xiên))?(?:\s+(?:tam|tứ)\s+giác"
     rf"(?:\s+đều)?)?|hộp(?:\s+chữ\s+nhật)?|lập\s+phương)|[Ll]ăng\s+trụ(?:\s+(?:đứng|xiên))?)\s+"
@@ -136,7 +150,7 @@ def _khoi_cua_du_kien(du_kien: str):
     khối không tên; `None` nếu không có hoặc hơn một khối (khi ấy "đáy"/"chiều cao" không gắn)."""
     co_ten: dict[tuple, tuple] = {}
     dau_ky_hieu = set()
-    for m in _KHOI_CHOP.finditer(du_kien):
+    for m in _cac_chop(du_kien):
         ent = _ten(m.group("dinh")) + _ten(m.group("day"))
         co_ten.setdefault(ent, ent[1:])
         dau_ky_hieu.add(m.start())
@@ -174,15 +188,18 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
             ra.append(r)
 
     # ── ký hiệu khối ─────────────────────────────────────────────────────
-    for m in _KHOI_CHOP.finditer(de):
+    for m in _cac_chop(de):
         ent = _ten(m.group("dinh")) + _ten(m.group("day"))
         phat("pyramid", ent, None, m.start(), m.end())
         # Chóp tứ giác ĐỀU: đáy vuông và chân đường cao ở tâm đáy (khuôn T7); chóp tam giác ĐỀU: đáy đều, chân ở
-        # trọng tâm (T8, §18). Ngũ/lục giác đều chưa đọc.
-        if len(ent) == 5 and re.search(r"tứ\s+giác\s+đều", m.group(0)):
+        # trọng tâm (T8, §18). `chóp đều`: số đỉnh đáy quyết định. Ngũ/lục giác đều chưa đọc; phủ định không đọc.
+        deu = _CHOP_DEU.search(m.group(0))
+        if deu is None or _PHU_DINH.search(de, 0, m.start()):
+            continue
+        if len(ent) == 5 and deu.group("g") in (None, "tứ"):
             phat("regular_square_pyramid", ent, None, m.start(), m.end())
             phat("base_square", ent[1:], None, m.start(), m.end())
-        if len(ent) == 4 and re.search(r"tam\s+giác\s+đều", m.group(0)):
+        if len(ent) == 4 and deu.group("g") in (None, "tam"):
             phat("regular_triangular_pyramid", ent, None, m.start(), m.end())
             phat("base_equilateral", ent[1:], None, m.start(), m.end())
     for m in _KHOI_TU_DIEN.finditer(de):

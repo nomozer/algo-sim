@@ -195,8 +195,8 @@ def test_10_danh_tinh_luot_do_khop_he_hien_tai():
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 119 -> 120 (c0-whole-solid-grounding): C0 kiểm khẳng định toàn khối của đề trên toạ độ đề cho (served -> refused).
-    assert CACHE_VERSION == "120"
+    # 120 -> 121 (c0-whole-solid-reader): bộ đọc nhận hai lối viết chóp đều như ký hiệu chuẩn (served -> refused).
+    assert CACHE_VERSION == "121"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`): thẻ văn
     # phạm ĐÃ ĐỔI (`cc105e4f` → `6cbba188`) vì phép giao elip nay nhận cả

@@ -207,8 +207,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 113 -> 114 (regular-square-pyramid-w03): envelope phục vụ đổi (đoạn mà đề hỏi độ dài được dựng).
     # 117 -> 118 (docs-cleanup): từ chối T8 thiếu kích thước nêu đúng nguyên
     # nhân SOURCE thay cho UNKNOWN; phán quyết vẫn là unsupported.
-    # 119 -> 120 (c0-whole-solid-grounding): C0 kiểm khẳng định toàn khối của đề trên toạ độ đề cho (served -> refused).
-    assert str(CACHE_VERSION) == "120"
+    # 120 -> 121 (c0-whole-solid-reader): bộ đọc nhận hai lối viết chóp đều như ký hiệu chuẩn (served -> refused).
+    assert str(CACHE_VERSION) == "121"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
