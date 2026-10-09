@@ -1,0 +1,15 @@
+{
+  "run_id": "regular-hexagonal-pyramid",
+  "task_slug": "g05-geometry-capability-expansion",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-09",
+  "machine": "Claude Code Cloud (Linux, Python 3.13)",
+  "branch": "feat/g05-geometry-capability-expansion",
+  "start_head": "f20caf8a",
+  "product_commit_at_start": "56692926",
+  "candidate_at_start": "b13a3ef1…",
+  "cache_version_at_start": "123",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "commits": {}
+}

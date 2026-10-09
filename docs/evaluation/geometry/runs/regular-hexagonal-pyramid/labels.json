@@ -1,0 +1,220 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "regular-hexagonal-pyramid",
+ "written": "2026-10-09, after the capability survey and the baseline probe on f20caf8a, before any product change",
+ "rule": "Each row: problem text, the dimensions it gives (hand-encoded), the asked quantity, and which model-style program is run through verify_and_compile (diagnostics/cases.py: base vertices declared in an affine lattice chart (60° basis) as LAYOUT_DERIVED, apex above the centre, solid, measure). expect = served:<value> (oracle.py, from the dimensions only) | refused. Baseline (f20caf8a) for every row: diagnostics/probe_f20caf8a.log.",
+ "rows": {
+  "H1_side_height": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:6√3"
+  },
+  "H2_side_lateral": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, cạnh bên bằng 4. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "lateral": "4"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:12"
+  },
+  "H3_renamed_vertices": {
+   "text": "Cho hình chóp lục giác đều S.MNPQRT có cạnh đáy bằng 1, chiều cao bằng 2. Tính thể tích khối chóp S.MNPQRT.",
+   "dims": {
+    "base": "1",
+    "height": "2"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SMNPQRT",
+   "text_claims_regular": true,
+   "expect": "served:√3"
+  },
+  "H4_phrasing_chop_deu": {
+   "text": "Cho hình chóp đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:6√3"
+  },
+  "H5_phrasing_apex_base": {
+   "text": "Cho hình chóp lục giác đều có đỉnh S và đáy ABCDEF, cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:6√3"
+  },
+  "H6_radical_side": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng √3, chiều cao bằng 2. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "√3",
+    "height": "2"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:3√3"
+  },
+  "H7_lateral_length": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính độ dài cạnh bên SA.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "lateral",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:√13"
+  },
+  "H8_fractional_side": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 1/2, chiều cao bằng 6. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "1/2",
+    "height": "6"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "served:3√3/4"
+  },
+  "N1_missing_height": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "height not given"
+  },
+  "N2_contradiction": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3, cạnh bên bằng 5. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3",
+    "lateral": "5"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "lateral² = h² + b² = 13 ≠ 25"
+  },
+  "N3_degenerate": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, cạnh bên bằng 2. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "lateral": "2"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "h² = l² − b² = 0"
+  },
+  "N4_program_apex_off_centre": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "apex_over_vertex",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "program puts the apex over a base vertex"
+  },
+  "N5_program_not_regular_hexagon": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "irregular_base",
+   "names": "SABCDEF",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "program base is not an (affinely) regular hexagon"
+  },
+  "N6_not_regular_text": {
+   "text": "Cho hình chóp lục giác S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": false,
+   "expect": "refused",
+   "note": "no 'đều': the base and apex position are not given"
+  },
+  "N7_goal_clause": {
+   "text": "Cho hình chóp S.ABCDEF có chiều cao bằng 3. Chứng minh S.ABCDEF là hình chóp lục giác đều. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": false,
+   "expect": "refused",
+   "note": "regularity is the goal, not a premise"
+  },
+  "N8_negation": {
+   "text": "Cho hình chóp S.ABCDEF, không phải là hình chóp lục giác đều S.ABCDEF, có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "regular",
+   "names": "SABCDEF",
+   "text_claims_regular": false,
+   "expect": "refused",
+   "note": "negated claim"
+  },
+  "N9_pentagon_out_of_scope": {
+   "text": "Cho hình chóp ngũ giác đều S.ABCDE có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDE.",
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "ask": "volume",
+   "program": "pentagon",
+   "names": "SABCDE",
+   "text_claims_regular": true,
+   "expect": "refused",
+   "note": "regular pentagon: no rational affine chart (golden ratio) — out of scope"
+  }
+ }
+}
