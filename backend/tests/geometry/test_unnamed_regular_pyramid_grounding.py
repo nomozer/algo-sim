@@ -20,7 +20,7 @@ import pytest
 from app.ai import pipeline as PL
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
 from app.simulation.semantic_program.route import verify_and_compile
-from app.simulation.semantic_program.shape_constraint import doc_rang_buoc, neu_khoi_da_dien, ten_diem_khong_toa_do
+from app.simulation.semantic_program.shape_constraint import doc_rang_buoc, ten_diem_khong_toa_do
 from tests.geometry import test_regular_square_pyramid as SQ
 from tests.geometry import test_regular_triangular_pyramid as TR
 
@@ -62,8 +62,8 @@ def test_c1_khong_ten_theo_nhan(rid, monkeypatch):
     ket = _ket_cuc(rid, monkeypatch)
     if r["scope"] == "bind":
         assert _khop(r["expect"], ket), (r["class"], r["expect"], ket)
-    else:                                      # tên điểm thiếu toạ độ: không gắn, giữ như main
-        assert ket == r["baseline_ede8d329"], (r["class"], r["baseline_ede8d329"], ket)
+    else:                                      # tên điểm thiếu toạ độ: không gắn — chính sách A (§25) ⇒ từ chối
+        assert ket.startswith("refused"), (r["class"], r["baseline_ede8d329"], ket)
 
 
 def test_c1_dem_theo_lop():
@@ -89,8 +89,8 @@ def test_c0_khong_ten_theo_nhan(rid):
     elif loai == "refused":
         assert (out.servable, out.stage_reached, out.reason_code) == (False, "assumption", MA), out.details
         assert any(d.startswith("C0_SHAPE_CONTRADICTION regular_") for d in out.details)
-    else:                                      # không gắn được ⇒ ngoài vùng, như main
-        assert out.servable and not neu_khoi_da_dien(de)
+    else:                                      # C0 không gắn được ⇒ chứng chỉ C0 như main (§25 chỉ chặn C1)
+        assert out.servable and out.assumption_certificate == "C0", (out.stage_reached, out.reason_code)
 
 
 def test_mau_thuan_khong_ten_khong_co_scene3d_qua_pipeline(monkeypatch):

@@ -412,11 +412,11 @@ def che_muc_tieu(problem_text: str | None) -> str:
 
 def neu_khoi_da_dien(problem_text: str | None) -> bool:
     """Đề nêu một khối ĐA DIỆN theo từ vựng đóng: ký hiệu chóp/lăng trụ, lăng trụ đứng không tên duy
-    nhất, hoặc chóp đều không tên duy nhất mà cổng gắn được (`ten_diem_khong_toa_do` rỗng). Quyết định U3 (W15): route chỉ TỪ CHỐI theo cổng giả định trong vùng
-    này — nơi lỗ W12/W14 đã đo và có chứng chỉ C0/C1; ngoài vùng cổng chỉ ghi trạng thái."""
+    nhất, hoặc chóp đều không tên duy nhất (§25: kể cả khi cổng KHÔNG gắn được — đề gọi tên điểm thiếu toạ độ — để
+    cổng chặn thay vì phục vụ một cách đặt tên đỉnh đề chưa cố định). Quyết định U3 (W15): route chỉ TỪ CHỐI theo cổng
+    giả định trong vùng này — nơi lỗ W12/W14 đã đo và có chứng chỉ C0/C1; ngoài vùng cổng chỉ ghi trạng thái."""
     return any(r.kind in ("pyramid", "prism") or (r.kind == "right_prism" and not r.entities)
-               or (r.kind in ("regular_square_pyramid", "regular_triangular_pyramid") and not r.entities
-                   and not ten_diem_khong_toa_do(problem_text))
+               or (r.kind in ("regular_square_pyramid", "regular_triangular_pyramid") and not r.entities)
                for r in doc_rang_buoc(problem_text))
 
 

@@ -390,8 +390,8 @@ def test_20_dang_ky_ghi_DANH_TINH_he_duoc_do(dang_ky):
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 121 -> 122 (unnamed-regular-pyramid-grounding): chóp đều không tên gắn + kiểm (served -> refused, giá trị đổi).
-    assert CACHE_VERSION == "122"
+    # 122 -> 123 (unnamed-pyramid-vertex-binding): chóp đều không tên có tên điểm thiếu toạ độ bị chặn (served -> refused).
+    assert CACHE_VERSION == "123"
     assert dt["NONCONVEX_POLYHEDRON_CAPABILITY"] == "foundation_only"
     fp = semantic_environment_fingerprint()
     # ⚠️ ĐÍNH CHÍNH 2026-09-08 (`OBLIQUE_CONE_SECTION_FOUNDATION`):

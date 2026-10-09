@@ -1320,3 +1320,13 @@ trên giá trị chương trình — gắn không phải tin. C0 (§22): mâu th
 gắn được ấy. Đề gọi tên điểm mà không toạ độ (`AB = 4, SA = 3`, `cạnh bên SA`) KHÔNG gắn: đề không nói điểm nào là đỉnh,
 nên chỉ cách đặt tên của chương trình quyết định — giữ như trước (`ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE`).
 Nhãn: `docs/evaluation/geometry/runs/unnamed-regular-pyramid-grounding/`.
+
+## 25. unnamed-pyramid-vertex-binding — chính sách A: chặn chóp đều không tên không gắn được (2026-10-09)
+
+Quyết định của người dùng (phương án A, cuối cùng). Chóp đều không tên mà §24 KHÔNG gắn được (đề gọi tên điểm thiếu
+toạ độ, hoặc chương trình không dựng đúng một khối) nay nằm TRONG vùng U3 (`neu_khoi_da_dien`) và cổng trả
+`TEMPLATE_NOT_MATCHED unnamed regular pyramid: its vertices are not fixed by the text` ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN`
+(chính sách mã hiện hành; không phải `SOURCE_SHAPE_CONTRADICTS_COORDINATES`). Đây là giới hạn năng lực/an toàn, không
+phải kết luận toán học: theo nhãn `runs/unnamed-pyramid-vertex-binding/labels.json` một số đề này được chính đề xác định
+(S5, S7, R2_S9, P9, P11) — phục vụ chúng cần phương án B (mô hình tham số chóp đều trong cổng), hoãn lại. C0 không đổi:
+đề có toạ độ mà §24 không gắn vẫn qua chứng chỉ C0 như trước.

@@ -731,8 +731,8 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # runs/exact-dimensions/cache/decision.json. 43/43 fixture cu trung byte sau khung affine + metric.
     # 117 -> 118: T8 thiếu kích thước vẫn bị từ chối, nhưng nguyên nhân trong
     # envelope đổi từ UNKNOWN sang SOURCE dựa trên phụ thuộc thể tích thực.
-    # 121 -> 122 (unnamed-regular-pyramid-grounding): chóp đều không tên gắn + kiểm (served -> refused, giá trị đổi).
-    assert main_module.CACHE_VERSION == "122"
+    # 122 -> 123 (unnamed-pyramid-vertex-binding): chóp đều không tên có tên điểm thiếu toạ độ bị chặn (served -> refused).
+    assert main_module.CACHE_VERSION == "123"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

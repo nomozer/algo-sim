@@ -207,8 +207,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 113 -> 114 (regular-square-pyramid-w03): envelope phục vụ đổi (đoạn mà đề hỏi độ dài được dựng).
     # 117 -> 118 (docs-cleanup): từ chối T8 thiếu kích thước nêu đúng nguyên
     # nhân SOURCE thay cho UNKNOWN; phán quyết vẫn là unsupported.
-    # 121 -> 122 (unnamed-regular-pyramid-grounding): chóp đều không tên gắn + kiểm (served -> refused, giá trị đổi).
-    assert str(CACHE_VERSION) == "122"
+    # 122 -> 123 (unnamed-pyramid-vertex-binding): chóp đều không tên có tên điểm thiếu toạ độ bị chặn (served -> refused).
+    assert str(CACHE_VERSION) == "123"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

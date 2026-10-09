@@ -1124,6 +1124,10 @@ def _nhan_khuon(rb: tuple[RangBuoc, ...], cm: _ChiMuc, prog: dict, do_dai: dict 
         return (k, anh_xa) if isinstance(k, _Khuon) else k
     if co_ten:
         return "TEMPLATE_NOT_MATCHED more than one named solid"
+    if any(r.kind in _CHOP_DEU_KHONG_TEN and not r.entities for r in rb):
+        # §25: chóp đều không tên mà §24 không gắn được (đề gọi tên điểm thiếu toạ độ / chương trình không đúng một
+        # khối) — đề không cố định đỉnh nào là đỉnh chóp; không chứng nhận một cách đặt tên của chương trình.
+        return "TEMPLATE_NOT_MATCHED unnamed regular pyramid: its vertices are not fixed by the text"
     khong_ten = [r for r in rb if r.entities == () and r.kind in ("right_prism", "base_square", "height")]
     if not any(r.kind == "right_prism" for r in khong_ten) or not any(r.kind == "base_square" for r in khong_ten):
         return "TEMPLATE_NOT_MATCHED no solid notation"

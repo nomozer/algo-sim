@@ -796,7 +796,10 @@ MISSING_KEY_MSG = (
 #       điểm nào thiếu toạ độ) được gắn vào khối duy nhất của chương trình và kiểm như ký hiệu chuẩn (amendment §24): đề
 #       thiếu/mâu thuẫn dữ kiện và toạ độ mâu thuẫn chiều served → refused; khung affine T8 đổi giá trị đã phục vụ (5 →
 #       3√3 …); row 121 sẽ trả thẳng envelope cũ (`runs/unnamed-regular-pyramid-grounding/cache/decision.json`).
-CACHE_VERSION = "122"
+# 123 — 2026-10-09 (unnamed-pyramid-vertex-binding, chính sách A): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Chóp đều không tên mà đề gọi
+#       tên điểm thiếu toạ độ (§24 không gắn được) vào vùng từ chối và bị cổng chặn (amendment §25): 12 đề từng phục vụ
+#       chiều served → refused; row 122 sẽ trả thẳng envelope cũ (`runs/unnamed-pyramid-vertex-binding/cache/decision.json`).
+CACHE_VERSION = "123"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
