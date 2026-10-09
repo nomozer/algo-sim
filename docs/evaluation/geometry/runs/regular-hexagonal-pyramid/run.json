@@ -11,5 +11,14 @@
   "cache_version_at_start": "123",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "3357994",
+    "product": "6c79243",
+    "docs": "68e9fa5 (handoff/state) + the final evidence commit"
+  },
+  "slice": "G05 regular hexagonal pyramid (template T11, affine chart + text-derived metric)",
+  "route_verified": "LLM_ONLY route on model-style programs (foundation_only; model not measured); compiler: no family",
+  "cache_version_after": "124",
+  "candidate_refreeze_required": true,
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

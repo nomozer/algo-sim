@@ -1,0 +1,145 @@
+{
+ "hexagon_rows": {
+  "refused→served": {
+   "count": 8,
+   "rows": [
+    {
+     "row": "H1_side_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:6√3",
+     "expected": "served:6√3",
+     "matches": true
+    },
+    {
+     "row": "H2_side_lateral",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:12",
+     "expected": "served:12",
+     "matches": true
+    },
+    {
+     "row": "H3_renamed_vertices",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:√3",
+     "expected": "served:√3",
+     "matches": true
+    },
+    {
+     "row": "H4_phrasing_chop_deu",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:6√3",
+     "expected": "served:6√3",
+     "matches": true
+    },
+    {
+     "row": "H6_radical_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3",
+     "expected": "served:3√3",
+     "matches": true
+    },
+    {
+     "row": "H7_lateral_length",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:√13",
+     "expected": "served:√13",
+     "matches": true
+    },
+    {
+     "row": "H8_fractional_side",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:3√3/4",
+     "expected": "served:3√3/4",
+     "matches": true
+    },
+    {
+     "row": "N4_program_apex_off_centre",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "served:6√3",
+     "expected": "served:6√3",
+     "matches": true
+    }
+   ]
+  },
+  "served→served (value changed)": {
+   "count": 1,
+   "rows": [
+    {
+     "row": "H5_phrasing_apex_base",
+     "before": "served:1",
+     "after": "served:6√3",
+     "expected": "served:6√3",
+     "matches": true
+    }
+   ]
+  },
+  "refused→refused": {
+   "count": 8,
+   "rows": [
+    {
+     "row": "N1_missing_height",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N2_contradiction",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N3_degenerate",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N5_program_not_regular_hexagon",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N6_not_regular_text",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N7_goal_clause",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N8_negation",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    },
+    {
+     "row": "N9_pentagon_out_of_scope",
+     "before": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN",
+     "expected": "refused",
+     "matches": true
+    }
+   ]
+  }
+ },
+ "unchanged": {
+  "c1_regular_pyramid_variants (incl. policy A rows)": "identical logs",
+  "c0 labels (29 + 27 + 11)": "identical",
+  "tier_a_fixtures": "49/49 identical",
+  "demo": "5/5",
+  "crash_surface": "6/6"
+ }
+}
