@@ -10,5 +10,16 @@
   "cache_version_at_start": "121",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "94b2f89",
+    "product_fix": "12edf57",
+    "docs": "3fbb643 (handoff/issues/state) + the final evidence commit"
+  },
+  "cache_version_after": "122",
+  "candidate_refreeze_required": true,
+  "issue_status": {
+    "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ": "OPEN, narrowed: unnamed + a point named without coordinates / two solids",
+    "ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE": "OPEN, narrowed: 21 texts naming points without coordinates (architecture decision a/b/c)"
+  },
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

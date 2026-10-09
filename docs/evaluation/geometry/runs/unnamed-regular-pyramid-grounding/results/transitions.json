@@ -1,0 +1,302 @@
+{
+ "c1_unnamed_47": {
+  "bind/correct/served→served": {
+   "count": 13,
+   "rows": [
+    {
+     "row": "square/S1_side_height_volume",
+     "before": "served:16",
+     "after": "served:16"
+    },
+    {
+     "row": "square/S2_side_apothem_volume",
+     "before": "served:48",
+     "after": "served:48"
+    },
+    {
+     "row": "square/S3_apothem_phrasing",
+     "before": "served:48",
+     "after": "served:48"
+    },
+    {
+     "row": "square/S4_side_lateral_volume",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "square/S6_renamed_vertices",
+     "before": "served:16",
+     "after": "served:16"
+    },
+    {
+     "row": "triangular/N5_apex_over_vertex",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/P10_frame_six",
+     "before": "served:6",
+     "after": "served:6"
+    },
+    {
+     "row": "triangular/P1_side_height",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/P2_side_lateral",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/P4_all_edges_equal",
+     "before": "served:9",
+     "after": "served:9"
+    },
+    {
+     "row": "triangular/P7_renamed_vertices",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/P8_phrasing_variant",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/U4_side_outside_frames",
+     "before": "served:7/2",
+     "after": "served:7/2"
+    }
+   ]
+  },
+  "bind/refused/refused→refused": {
+   "count": 1,
+   "rows": [
+    {
+     "row": "square/N7_model_only_height",
+     "before": "refused:grounding:GIVEN_VALUE_NOT_IN_SOURCE",
+     "after": "refused:grounding:GIVEN_VALUE_NOT_IN_SOURCE"
+    }
+   ]
+  },
+  "bind/served_label_refused/served→refused": {
+   "count": 8,
+   "rows": [
+    {
+     "row": "square/N1_missing_height",
+     "before": "served:16",
+     "after": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+    },
+    {
+     "row": "square/N3_contradiction",
+     "before": "served:48",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+    },
+    {
+     "row": "square/U1_irrational_height",
+     "before": "served:4/3",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+    },
+    {
+     "row": "square/U2_angle_data",
+     "before": "served:16",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+    },
+    {
+     "row": "triangular/N1_missing_height",
+     "before": "served:9/2",
+     "after": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+    },
+    {
+     "row": "triangular/N2_contradiction",
+     "before": "served:9/2",
+     "after": "refused:assumption:ASSUMPTION_INVARIANCE_UNPROVEN"
+    },
+    {
+     "row": "triangular/N7_layout_as_data",
+     "before": "served:9/2",
+     "after": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+    },
+    {
+     "row": "triangular/N9_regular_is_not_tetrahedron",
+     "before": "served:9",
+     "after": "refused:assumption:ASSUMPTION_DETERMINES_ANSWER"
+    }
+   ]
+  },
+  "bind/wrong_value/served→served (value changed)": {
+   "count": 4,
+   "rows": [
+    {
+     "row": "square/U3_regular_triangular",
+     "before": "served:5",
+     "after": "served:3√3"
+    },
+    {
+     "row": "triangular/N5b_apex_off_normal",
+     "before": "served:3/2",
+     "after": "served:9/2"
+    },
+    {
+     "row": "triangular/U1_rational_side",
+     "before": "served:5/2",
+     "after": "served:3√3/2"
+    },
+    {
+     "row": "triangular/U3_height_outside_domain",
+     "before": "served:9/2",
+     "after": "served:3√3"
+    }
+   ]
+  },
+  "unchanged/correct/served→served": {
+   "count": 9,
+   "rows": [
+    {
+     "row": "square/R2_L1_chained_equal_lateral_edges",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "square/R2_S10_lateral_other_vertex",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "square/R2_S8_side_AB_lateral_SA",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "square/R2_S9_side_lateral_named",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "square/S5_lateral_edge_length",
+     "before": "served:√17",
+     "after": "served:√17"
+    },
+    {
+     "row": "square/S7_named_centre",
+     "before": "served:16",
+     "after": "served:16"
+    },
+    {
+     "row": "square/W5_A_chain_cites_other_member",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    },
+    {
+     "row": "triangular/P11_lateral_length",
+     "before": "served:3",
+     "after": "served:3"
+    },
+    {
+     "row": "triangular/P9_named_centroid",
+     "before": "served:9/2",
+     "after": "served:9/2"
+    }
+   ]
+  },
+  "unchanged/refused/refused→refused": {
+   "count": 9,
+   "rows": [
+    {
+     "row": "square/N4_wrong_centre_identity",
+     "before": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+     "after": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND"
+    },
+    {
+     "row": "square/R2_N8_lateral_contradiction",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None"
+    },
+    {
+     "row": "square/R2_U4_irrational_via_lateral",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None"
+    },
+    {
+     "row": "square/W5_B_chain_mixed_values",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None"
+    },
+    {
+     "row": "square/W5_D_program_value_differs_from_chain",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT"
+    },
+    {
+     "row": "square/W5_E_program_segment_outside_chain",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT"
+    },
+    {
+     "row": "triangular/N3_lateral_mixed",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None"
+    },
+    {
+     "row": "triangular/N4_declared_value_conflict",
+     "before": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+     "after": "refused:grounding:SOURCE_EVIDENCE_CONFLICT"
+    },
+    {
+     "row": "triangular/N6_wrong_centroid_identity",
+     "before": "refused:source_invariant:None",
+     "after": "refused:source_invariant:None"
+    }
+   ]
+  },
+  "unchanged/served_label_refused/served→served": {
+   "count": 3,
+   "rows": [
+    {
+     "row": "square/N5_apex_over_vertex",
+     "before": "served:3",
+     "after": "served:3"
+    },
+    {
+     "row": "square/R2_N9_contradiction_program_fits_lengths",
+     "before": "served:16",
+     "after": "served:16"
+    },
+    {
+     "row": "square/W5_C_chain_without_value",
+     "before": "served:16/3",
+     "after": "served:16/3"
+    }
+   ]
+  }
+ },
+ "c1_other_variants_changed": 0,
+ "c0_rows": {
+  "served→refused": {
+   "count": 3,
+   "rows": [
+    "U_C_square",
+    "U_C_square_question_names_solid",
+    "U_C_triangular"
+   ]
+  },
+  "served→served": {
+   "count": 8,
+   "rows": [
+    "U_K_square",
+    "U_K_renamed_fractions",
+    "U_K_triangular",
+    "U_K_triangular_program_other_base_first",
+    "U_K_negated",
+    "U_K_goal_clause",
+    "U_X_extra_point_without_coordinates",
+    "U_X_two_solids"
+   ]
+  }
+ },
+ "previous_runs_c0_labels": {
+  "c0-whole-solid-grounding (29 rows)": "unchanged",
+  "c0-whole-solid-reader (27 rows)": "P2_C_unnamed, P2_C_unnamed_question_names_solid served → refused (SOURCE_SHAPE_CONTRADICTS_COORDINATES) — the limitation that run labelled `baseline`; 25 unchanged"
+ }
+}
