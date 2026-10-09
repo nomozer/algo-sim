@@ -792,7 +792,11 @@ MISSING_KEY_MSG = (
 #       đáy ABCD" và "chóp đều S.ABCD" như ký hiệu chuẩn: đề tự mâu thuẫn với toạ độ, và đề C1 từng phục vụ đáp số sai
 #       (đỉnh trên một đỉnh đáy), chiều served → refused; row 120 sẽ trả thẳng envelope đã phục vụ
 #       (`runs/c0-whole-solid-reader/cache/decision.json`, probe trước/sau).
-CACHE_VERSION = "121"
+# 122 — 2026-10-09 (unnamed-regular-pyramid-grounding): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Chóp đều không tên (đề không gọi tên
+#       điểm nào thiếu toạ độ) được gắn vào khối duy nhất của chương trình và kiểm như ký hiệu chuẩn (amendment §24): đề
+#       thiếu/mâu thuẫn dữ kiện và toạ độ mâu thuẫn chiều served → refused; khung affine T8 đổi giá trị đã phục vụ (5 →
+#       3√3 …); row 121 sẽ trả thẳng envelope cũ (`runs/unnamed-regular-pyramid-grounding/cache/decision.json`).
+CACHE_VERSION = "122"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

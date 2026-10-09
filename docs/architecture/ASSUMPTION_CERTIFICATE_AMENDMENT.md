@@ -1307,3 +1307,16 @@ Bộ đọc (`shape_constraint`) nhận thêm, như ký hiệu `hình chóp tứ
 tứ giác đều, 3 ⇒ chóp tam giác đều; số khác: chỉ `pyramid`, như ngũ/lục giác). Khẳng định chóp đều đứng ngay sau
 "không phải (là)" không phát (phủ định không phải tiền đề) — áp cho cả ký hiệu chuẩn. Chóp đều KHÔNG tên đỉnh/đáy vẫn
 không phát gì (không gắn khi không có căn cứ duy nhất). Nhãn: `docs/evaluation/geometry/runs/c0-whole-solid-reader/`.
+
+## 24. unnamed-regular-pyramid-grounding — gắn chóp đều KHÔNG TÊN (2026-10-09)
+
+Bộ đọc: khối không tên duy nhất của phần dữ kiện là `hình/khối chóp tứ|tam giác đều` (không ngay sau "không phải (là)")
+⇒ `regular_*_pyramid ()` + `base_* ()`; số đo của khối ấy gắn `()` như §2.1 (tên đỉnh KHÔNG bao giờ được đoán). Cổng
+(`assumption_gate._cach_doc_chop_khong_ten`, `_gan_chop`): CHỈ khi đề không gọi tên điểm nào thiếu toạ độ
+(`shape_constraint.ten_diem_khong_toa_do` rỗng — cách đặt tên đỉnh khi ấy không mang nghĩa đề chưa cố định) và chương
+trình dựng ĐÚNG một khối, mọi ràng buộc `()` được gắn vào từng cách đọc chóp của bảng mặt có số đỉnh đáy khớp (như ký
+hiệu `S.ABCD`, thêm `pyramid`). C1, metric T8 và nhánh thiếu kích thước dùng cách đọc đầu: khuôn T7/T8 KIỂM ràng buộc
+trên giá trị chương trình — gắn không phải tin. C0 (§22): mâu thuẫn chỉ khi KHÔNG cách đọc nào thoả. Vùng U3 thêm các đề
+gắn được ấy. Đề gọi tên điểm mà không toạ độ (`AB = 4, SA = 3`, `cạnh bên SA`) KHÔNG gắn: đề không nói điểm nào là đỉnh,
+nên chỉ cách đặt tên của chương trình quyết định — giữ như trước (`ISSUE-ARCH-UNNAMED-REGULAR-PYRAMID-OUTSIDE-REFUSAL-ZONE`).
+Nhãn: `docs/evaluation/geometry/runs/unnamed-regular-pyramid-grounding/`.

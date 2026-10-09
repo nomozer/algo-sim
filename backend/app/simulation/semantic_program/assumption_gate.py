@@ -43,7 +43,7 @@ from .point_coordinate import bat_bien_toa_do
 from .postconditions import check_postconditions, check_source_invariants
 from .segment_relation import _D, bat_bien_chia_doan, bat_bien_do_dai
 from .shape_constraint import (QuanHeCat, RangBuoc, che_muc_tieu, doc_quan_he_cat, doc_rang_buoc, khoang_muc_tieu,
-                               la_chop_tam_giac_deu, phan_chua_doc)
+                               la_chop_tam_giac_deu, phan_chua_doc, ten_diem_khong_toa_do)
 from .solid_faces import phan_loai_bang_mat
 from .source_entities import dinh_danh_thuc_the
 
@@ -1557,6 +1557,38 @@ def _kiem_phep_dung(contract: Any, prog: dict, cm: _ChiMuc, lc: _LatCat, de: str
     return ra, (MA_LECH_PHEP_DUNG if sai else MA_CHUA_CHUNG_MINH if chua_ro else None), tuple(chu_the)
 
 
+_CHOP_DEU_KHONG_TEN = {"regular_square_pyramid": 4, "regular_triangular_pyramid": 3}
+
+
+def _cach_doc_chop_khong_ten(rb: tuple[RangBuoc, ...], de: str, prog: dict) -> list[tuple[str, ...]]:
+    """§24 — các cách gắn khẳng định chóp đều KHÔNG TÊN (`()`) vào khối duy nhất của chương trình: mỗi cách đọc chóp
+    của bảng mặt (đỉnh, *đáy) có số đỉnh đáy khớp. Chỉ khi đề không gọi tên điểm nào thiếu toạ độ — cách đặt tên đỉnh
+    khi ấy không mang nghĩa đề chưa cố định; ràng buộc gắn vào vẫn được KIỂM (khuôn, §22), không được tin."""
+    k = {_CHOP_DEU_KHONG_TEN[r.kind] for r in rb if r.kind in _CHOP_DEU_KHONG_TEN and not r.entities}
+    khoi = [s for s in prog.get("statements", []) if s.get("kind") == "construct_solid"]
+    if len(k) != 1 or len(khoi) != 1 or ten_diem_khong_toa_do(de):
+        return []
+    dinh = list(khoi[0]["vertices"])
+    try:
+        mat = [[dinh.index(v) if isinstance(v, str) else v for v in f] for f in khoi[0]["faces"]]
+    except ValueError:
+        return []
+    return [tuple(_id(dinh[i]) for i in (*a, *b)) for loai, a, b in phan_loai_bang_mat(len(dinh), mat)
+            if loai == "pyramid" and len(b) in k]
+
+
+def _gan_chop(rb, ent: tuple[str, ...]) -> tuple[RangBuoc, ...]:
+    """Ràng buộc `()` của chóp không tên → thực thể của cách đọc `ent` (như ký hiệu `S.ABCD`), thêm `pyramid(ent)`."""
+    def gan(r: RangBuoc) -> RangBuoc:
+        if r.kind == "base_centre" and len(r.entities) == 1:
+            return RangBuoc(r.kind, r.entities + ent[1:], r.value, r.span)
+        if r.entities:
+            return r
+        return RangBuoc(r.kind, ent[1:] if r.kind.startswith("base_") else ent, r.value, r.span)
+    deu = next(r for r in rb if r.kind in _CHOP_DEU_KHONG_TEN and not r.entities)
+    return tuple(map(gan, rb)) + (RangBuoc("pyramid", ent, None, deu.span),)
+
+
 def _doc_de(de: str) -> tuple:
     """Đề → (đề che mệnh đề mục tiêu, ràng buộc, bất biến nguồn, độ dài đề cho CHÍNH XÁC theo cặp đỉnh)."""
     de_gt = che_muc_tieu(de)
@@ -1581,6 +1613,8 @@ def do_luong_cua(de: str, prog: Any) -> "_metric.Metric | None":
     if not isinstance(prog, dict):
         prog = prog.model_dump(mode="json", exclude_none=True)
     _gt, rb, _inv, do_dai = _doc_de(de or "")
+    if cach := _cach_doc_chop_khong_ten(rb, de or "", prog):
+        rb = _gan_chop(rb, cach[0])
     co_ten = {r.entities for r in rb if r.kind == "pyramid" and r.entities}
     if len(co_ten) != 1:
         return None
@@ -1629,6 +1663,8 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     # đề gốc chỉ còn dùng để CHẶN phản ví dụ (phần chưa đọc, ràng buộc chưa kiểm).
     muc_tieu = khoang_muc_tieu(de)
     de_gt, rb, inv, do_dai = _doc_de(de)
+    cach = _cach_doc_chop_khong_ten(rb, de, prog)
+    rb_tho, rb = rb, (_gan_chop(rb, cach[0]) if cach else rb)
     details, bac = _trang_thai_quan_he(contract, rb)
     details = [f"GOAL_CLAUSE @[{a},{b}]" for a, b in muc_tieu] + details
     if bac:
@@ -1670,7 +1706,9 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
     # C0 — lát cắt ghim bởi nguồn
     khong_vai = [lit for lit in lc.literal if _vai_tro(lit, de_gt, inv, None, mp) != "SOURCE_DATUM"]
     if not khong_vai:
-        sai = _mau_thuan_c0(rb, cm, inv)
+        # §24: chóp không tên mâu thuẫn chỉ khi KHÔNG cách đọc nào của khối thoả khẳng định
+        sai = min((_mau_thuan_c0(_gan_chop(rb_tho, e), cm, inv) for e in cach), key=len) if cach else \
+            _mau_thuan_c0(rb, cm, inv)
         if sai:
             return _ket_qua(UNDETERMINED, details + [f"C0_SHAPE_CONTRADICTION {r.kind}({','.join(r.entities)})"
                                                      f" @[{r.span[0]},{r.span[1]}]" for r in sai],
@@ -1709,7 +1747,10 @@ def kiem_gia_dinh(contract: Any, spec: SemanticProgramSpec, exec_res, ten_da_hoa
         # và đề có mục tiêu thì không thử phản ví dụ.
         chua_doc = phan_chua_doc(de)
         da_kiem = {(r.kind, r.entities, r.value) for r in khuon.tien_de}
-        ngoai = [r for r in doc_rang_buoc(de) if (r.kind, r.entities, r.value) not in da_kiem]
+        doc = doc_rang_buoc(de)
+        ngoai = [r for r in (_gan_chop(doc, cach[0]) if cach and any(x.kind in _CHOP_DEU_KHONG_TEN and not x.entities for x in doc)
+                           else doc)
+                 if (r.kind, r.entities, r.value) not in da_kiem]
         if chua_doc or ngoai or muc_tieu:
             return _ket_qua(UNDETERMINED, details + tien_de + [f"{khuon.loai} MISSING {kt.nhan}" for kt in thieu]
                             + ([f"CE_TEXT_NOT_FULLY_READ {' '.join(chua_doc[:8])}"] if chua_doc else [])

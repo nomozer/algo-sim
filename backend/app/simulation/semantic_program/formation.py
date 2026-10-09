@@ -174,7 +174,7 @@ def _tam_day_deu(cau: list[dict[str, Any]], contract: Any, apex: str, day: tuple
         return [p for p, tam_giac in phep_trong_tam(cau).items() if tam_giac == frozenset(day)]
     if len(day) != 4:
         return []
-    deu = any(r.kind == "regular_square_pyramid" and r.entities[0] == apex and set(r.entities[1:]) == set(day)
+    deu = any(r.kind == "regular_square_pyramid" and r.entities[:1] == (apex,) and set(r.entities[1:]) == set(day)
               for r in doc_rang_buoc(de))
     if not deu:
         return []

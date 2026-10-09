@@ -61,6 +61,19 @@ _CHOP_DEU = re.compile(r"chóp\s+(?:(?P<g>tam|tứ|ngũ|lục)\s+giác\s+)?đề
 _PHU_DINH = re.compile(r"không\s+phải(?:\s+là)?\s*$")
 
 
+#: Đuôi của danh từ khối không tên `hình/khối chóp` khi đó là chóp tứ/tam giác ĐỀU.
+_CHOP_DEU_KHONG_TEN = re.compile(r"\s+(?P<g>tam|tứ)\s+giác\s+đều(?![A-Za-zÀ-ỹ])")
+_TEN_DIEM = re.compile(rf"(?<![a-zà-ỹ])({_E})(?![a-zà-ỹ])")
+_TEN_DIEM_TOA_DO = re.compile(rf"(?<![a-zà-ỹ])({_E})\s*\(")
+
+
+def ten_diem_khong_toa_do(problem_text: str | None) -> set[str]:
+    """Điểm đề GỌI TÊN mà không cho toạ độ. Rỗng ⇔ cách đặt tên đỉnh của một khối không tên không mang nghĩa nào
+    đề chưa cố định (không tên điểm nào, hoặc mọi điểm có toạ độ) — điều kiện duy nhất để gắn khối ấy."""
+    de = problem_text or ""
+    return set(_TEN_DIEM.findall(de)) - set(_TEN_DIEM_TOA_DO.findall(de))
+
+
 def _cac_chop(de: str) -> list[re.Match]:
     """Mọi ký hiệu chóp có tên đỉnh/đáy (`S.ABCD` hoặc `có đỉnh S và đáy ABCD`), theo vị trí trong đề."""
     return sorted([*_KHOI_CHOP.finditer(de), *_KHOI_CHOP_DINH_DAY.finditer(de)], key=lambda m: m.start())
@@ -230,6 +243,13 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
     khoi = _khoi_cua_du_kien(du_kien)
     if khoi is not None and khoi[2] is not None and _kieu(khoi[2].group(0)) == "right_prism":
         phat("right_prism", (), None, khoi[2].start(), khoi[2].end())
+    # unnamed-regular-pyramid-grounding: chóp ĐỀU không tên duy nhất ⇒ khẳng định `()`; cổng gắn nó (hoặc không).
+    if khoi is not None and khoi[2] is not None and (g := _CHOP_DEU_KHONG_TEN.match(du_kien, khoi[2].end())) \
+            and not _PHU_DINH.search(de, 0, khoi[2].start()):
+        a, b = khoi[2].start(), g.end()
+        tu = g.group("g") == "tứ"
+        phat("regular_square_pyramid" if tu else "regular_triangular_pyramid", (), None, a, b)
+        phat("base_square" if tu else "base_equilateral", (), None, a, b)
 
     # ── đáy: loại đáy, tam giác vuông ────────────────────────────────────
     for m in _DAY.finditer(de):
@@ -298,8 +318,8 @@ def doc_rang_buoc(problem_text: str | None) -> tuple[RangBuoc, ...]:
         for mau, kind in ((_CANH_BEN, "lateral_edge"), (_TRUNG_DOAN, "apothem")):
             for m in mau.finditer(du_kien):
                 phat(kind, khoi[0], _phan(m.group("so")), m.start(), m.end())
-        a, b, c, d = khoi[1]
-        cheo = {frozenset({a, c}), frozenset({b, d})}
+        d4 = khoi[1]                           # () cho chóp không tên: không đường chéo nào gọi tên được
+        cheo = {frozenset({d4[0], d4[2]}), frozenset({d4[1], d4[3]})} if len(d4) == 4 else set()
         for m in _TAM_DAY.finditer(du_kien):
             if m.group("p"):
                 if {frozenset(_ten(m.group("p") + m.group("q"))), frozenset(_ten(m.group("r") + m.group("t")))} != cheo:
@@ -391,10 +411,12 @@ def che_muc_tieu(problem_text: str | None) -> str:
 
 
 def neu_khoi_da_dien(problem_text: str | None) -> bool:
-    """Đề nêu một khối ĐA DIỆN theo từ vựng đóng: ký hiệu chóp/lăng trụ, hoặc lăng trụ đứng
-    không tên duy nhất. Quyết định U3 (W15): route chỉ TỪ CHỐI theo cổng giả định trong vùng
+    """Đề nêu một khối ĐA DIỆN theo từ vựng đóng: ký hiệu chóp/lăng trụ, lăng trụ đứng không tên duy
+    nhất, hoặc chóp đều không tên duy nhất mà cổng gắn được (`ten_diem_khong_toa_do` rỗng). Quyết định U3 (W15): route chỉ TỪ CHỐI theo cổng giả định trong vùng
     này — nơi lỗ W12/W14 đã đo và có chứng chỉ C0/C1; ngoài vùng cổng chỉ ghi trạng thái."""
     return any(r.kind in ("pyramid", "prism") or (r.kind == "right_prism" and not r.entities)
+               or (r.kind in ("regular_square_pyramid", "regular_triangular_pyramid") and not r.entities
+                   and not ten_diem_khong_toa_do(problem_text))
                for r in doc_rang_buoc(problem_text))
 
 

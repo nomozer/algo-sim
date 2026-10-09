@@ -418,8 +418,8 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 120 -> 121 (c0-whole-solid-reader): bộ đọc nhận hai lối viết chóp đều như ký hiệu chuẩn (served -> refused).
-    assert CACHE_VERSION == "121"
+    # 121 -> 122 (unnamed-regular-pyramid-grounding): chóp đều không tên gắn + kiểm (served -> refused, giá trị đổi).
+    assert CACHE_VERSION == "122"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

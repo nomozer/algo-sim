@@ -63,9 +63,12 @@ def test_c0_theo_nhan(rid):
 
 @pytest.mark.parametrize("rid", sorted(r for r in ROWS if ROWS[r]["expect"] == "baseline"))
 def test_chop_deu_khong_ten_khong_gan_vao_khoi_nao(rid):
-    """Giới hạn ghi nhận: dữ kiện không gọi tên đỉnh/đáy ⇒ không khẳng định chóp đều nào được phát (không đoán)."""
-    de, _c, _sp = _ca(rid)
-    assert not {r.kind for r in doc_rang_buoc(de)} & DEU
+    """Dữ kiện không gọi tên đỉnh/đáy ⇒ bộ đọc không đoán tên: khẳng định chỉ phát với `()`. Giới hạn `baseline` của run
+    này được unnamed-regular-pyramid-grounding (§24) gỡ: mọi điểm có toạ độ ⇒ cổng gắn vào khối duy nhất và KIỂM."""
+    de, c, sp = _ca(rid)
+    assert {r.entities for r in doc_rang_buoc(de) if r.kind in DEU} == {()}
+    out = verify_and_compile(c, sp)
+    assert (out.servable, out.stage_reached, out.reason_code) == (False, "assumption", MA), out.details
 
 
 @pytest.mark.parametrize("de, deu", [
