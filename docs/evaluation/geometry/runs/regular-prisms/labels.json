@@ -1,0 +1,626 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "regular-prisms",
+ "written": "2026-10-09, after the capability survey and the baseline probe on ea85216b, before any product change",
+ "rule": "Each row: text, the dimensions it gives (hand-encoded), base/top names and the model-style program run through verify_and_compile (diagnostics/cases.py: base in an affine lattice chart — hexagon on a 60° basis, triangle on a 60° basis — top = base + (0,0,1), solid with base, top and lateral faces, measure volume). expect = served:<V> (oracle.py, from the dimensions only) | refused. Baseline: diagnostics/probe_ea85216b.log.",
+ "rows": {
+  "X1_side_height": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:18√3"
+  },
+  "X2_side_lateral": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "lateral": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:18√3"
+  },
+  "X3_renamed": {
+   "text": "Cho hình lăng trụ lục giác đều MNPQRS.M'N'P'Q'R'S' có cạnh đáy bằng 1, chiều cao bằng 2. Tính thể tích khối lăng trụ MNPQRS.M'N'P'Q'R'S'.",
+   "k": 6,
+   "base": [
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S"
+   ],
+   "top": [
+    "M'",
+    "N'",
+    "P'",
+    "Q'",
+    "R'",
+    "S'"
+   ],
+   "dims": {
+    "base": "1",
+    "height": "2"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3"
+  },
+  "X4_radical_side": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng √3, chiều cao bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "√3",
+    "height": "2"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:9√3"
+  },
+  "X5_fractional_side": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 1/2, chiều cao bằng 4. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "1/2",
+    "height": "4"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3/2"
+  },
+  "X6_right_prism_hexagon_base": {
+   "text": "Cho hình lăng trụ đứng ABCDEF.A'B'C'D'E'F' có đáy là lục giác đều cạnh 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:18√3"
+  },
+  "X7_khoi_phrasing": {
+   "text": "Cho khối lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2 và chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:18√3"
+  },
+  "T1_side_height": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3"
+  },
+  "T2_side_lateral": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "lateral": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3"
+  },
+  "T3_right_prism_equilateral_base": {
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3"
+  },
+  "T4_radical_side": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2√3, chiều cao bằng 1. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2√3",
+    "height": "1"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:3√3"
+  },
+  "T5_fractional_side": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2/3, chiều cao bằng 9. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2/3",
+    "height": "9"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:√3"
+  },
+  "T6_renamed": {
+   "text": "Cho hình lăng trụ tam giác đều MNP.QRS có cạnh đáy bằng 4, chiều cao bằng 1. Tính thể tích khối lăng trụ MNP.QRS.",
+   "k": 3,
+   "base": [
+    "M",
+    "N",
+    "P"
+   ],
+   "top": [
+    "Q",
+    "R",
+    "S"
+   ],
+   "dims": {
+    "base": "4",
+    "height": "1"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "served:4√3"
+  },
+  "NX1_missing_height": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "height not given"
+  },
+  "NX2_contradiction": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3, cạnh bên bằng 4. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3",
+    "lateral": "4"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "right prism: lateral = height"
+  },
+  "NX3_program_irregular_base": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "irregular_base",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "program base is not an affine regular hexagon"
+  },
+  "NX4_program_top_not_translation": {
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "top_not_translation",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "one top vertex is not base + v"
+  },
+  "NX5_negation": {
+   "text": "Cho hình lăng trụ ABCDEF.A'B'C'D'E'F', không phải là hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F', có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": false,
+   "expect": "refused",
+   "note": "negated claim"
+  },
+  "NX6_goal_clause": {
+   "text": "Cho hình lăng trụ ABCDEF.A'B'C'D'E'F' có chiều cao bằng 3. Chứng minh ABCDEF.A'B'C'D'E'F' là hình lăng trụ lục giác đều. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "k": 6,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'",
+    "F'"
+   ],
+   "dims": {
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": false,
+   "expect": "refused",
+   "note": "regularity is the goal"
+  },
+  "NX7_pentagon_out_of_scope": {
+   "text": "Cho hình lăng trụ ngũ giác đều ABCDE.A'B'C'D'E' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDE.A'B'C'D'E'.",
+   "k": 5,
+   "base": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'",
+    "D'",
+    "E'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "pentagon",
+   "text_states_regular_right_prism": false,
+   "expect": "refused",
+   "note": "regular pentagon: no rational affine chart"
+  },
+  "NT1_missing_height": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "height not given"
+  },
+  "NT2_contradiction": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, chiều cao bằng 3, cạnh bên bằng 4. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3",
+    "lateral": "4"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "right prism: lateral = height"
+  },
+  "NT3_program_top_not_translation": {
+   "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "top_not_translation",
+   "text_states_regular_right_prism": true,
+   "expect": "refused",
+   "note": "one top vertex is not base + v"
+  },
+  "NT4_oblique_text": {
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "lateral": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": false,
+   "expect": "refused",
+   "note": "text says oblique: no foot of the height given (G04 vocabulary)"
+  },
+  "NT5_not_regular_text": {
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có cạnh AB bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "k": 3,
+   "base": [
+    "A",
+    "B",
+    "C"
+   ],
+   "top": [
+    "A'",
+    "B'",
+    "C'"
+   ],
+   "dims": {
+    "base": "2",
+    "height": "3"
+   },
+   "program": "regular",
+   "text_states_regular_right_prism": false,
+   "expect": "refused",
+   "note": "base shape not stated"
+  }
+ }
+}

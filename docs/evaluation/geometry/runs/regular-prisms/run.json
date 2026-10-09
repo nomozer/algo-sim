@@ -1,0 +1,15 @@
+{
+  "run_id": "regular-prisms",
+  "task_slug": "g05-regular-prisms",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-09",
+  "machine": "Claude Code Cloud (Linux, Python 3.13)",
+  "branch": "feat/g05-regular-prisms",
+  "start_head": "ea85216b",
+  "product_commit_at_start": "6c792434",
+  "candidate_at_start": "cf47dd6142f2d46fd5b9be252fee0d9a7530844d3e1bf07ece47b52b4b433f5a",
+  "cache_version_at_start": "124",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "commits": {}
+}
