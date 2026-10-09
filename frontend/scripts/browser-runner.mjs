@@ -22,9 +22,21 @@
  * quay lại kiểu một-server-mỗi-kịch-bản mà chẳng ai biết.
  *
  * ⚠️ Backtick KHÔNG được xuất hiện trong biểu thức tiêm vào trang.
+ *
+ * ─── VÒNG ĐỜI THƯ MỤC TẠM (browser-temp-lifecycle) ───────────────────────
+ *
+ * Bản trước `mkdtempSync(%TEMP%/w12-)` cho mỗi `open()` và KHÔNG BAO GIỜ xoá: mỗi phiên để lại một hồ sơ Chrome
+ * ~50 MB (đo 2026-10-09: 671 thư mục, 33,5 GB trên C:). Nay mỗi phiên sở hữu `<gốc>/w12-XXXX/{owner.json, profile/,
+ * tmp/}`; Chrome nhận `TEMP`/`TMP` = `tmp/` của phiên (chỉ tiến trình con, không đổi môi trường hệ thống) nên mọi
+ * `scoped_dir*` nó tạo nằm trong phiên. `_donDep()` diệt ĐÚNG cây tiến trình của phiên (`taskkill /PID … /T /F`, không
+ * bao giờ theo tên `chrome.exe`), chờ nó thoát rồi mới xoá thư mục — gọi ở `close()`, khi `open()` hỏng, khi mở lại,
+ * và (đồng bộ) lúc tiến trình Node thoát. Bị giết cứng (`timeout --signal=KILL`) thì `owner.json` còn lại; lần `open()`
+ * đầu của tiến trình sau quét gốc và chỉ dọn thư mục `laOrphan` xác nhận (chủ sở hữu chết, Chrome chết hoặc đúng là
+ * Chrome của phiên ấy). Thư mục không có `owner.json` hợp lệ không bao giờ bị đụng.
  */
-import { spawn } from "node:child_process";
-import { existsSync, mkdtempSync } from "node:fs";
+import { spawn, spawnSync } from "node:child_process";
+import { accessSync, constants, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync }
+  from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -34,6 +46,93 @@ const CHROME = [
 ].find(existsSync);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** Dấu chủ sở hữu ghi trong `owner.json` của mỗi thư mục phiên. */
+export const CHU_SO_HUU = "algo-sim/frontend/scripts/browser-runner.mjs";
+
+/** Gốc thư mục phiên: `ALGOSIM_BROWSER_TMP` → `D:/tmp/algosim-browser` (Windows, D: ghi được) → `%TEMP%/algosim-browser`. */
+export function ungVienGoc(env = process.env, platform = process.platform) {
+  return [env.ALGOSIM_BROWSER_TMP, platform === "win32" ? "D:/tmp/algosim-browser" : null,
+    join(tmpdir(), "algosim-browser")].filter(Boolean);
+}
+
+let gocDaChon = null;
+function datGoc() {
+  if (gocDaChon) return gocDaChon;
+  for (const g of ungVienGoc()) {
+    try { mkdirSync(g, { recursive: true }); accessSync(g, constants.W_OK); gocDaChon = g; return g; } catch { /* thử gốc sau */ }
+  }
+  throw new Error("BROWSER_TMP_ROOT_UNAVAILABLE");
+}
+
+/** Tiến trình còn sống? `EPERM` = có nhưng không có quyền ⇒ vẫn sống. */
+export function conSong(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try { process.kill(pid, 0); return true; } catch (e) { return e.code === "EPERM"; }
+}
+
+/** Tiến trình `pid` còn sống VÀ dòng lệnh của nó chứa `thuMuc` (đúng Chrome của phiên, không phải pid tái dùng). */
+function dungThuMuc(pid, thuMuc) {
+  if (!conSong(pid)) return false;
+  if (process.platform !== "win32") return true;
+  const r = spawnSync("powershell", ["-NoProfile", "-Command",
+    `(Get-CimInstance Win32_Process -Filter "ProcessId=${pid}").CommandLine`], { encoding: "utf8" });
+  return (r.stdout ?? "").replaceAll("\\", "/").toLowerCase().includes(thuMuc.replaceAll("\\", "/").toLowerCase());
+}
+
+/**
+ * Phán quyết cho một thư mục phiên — HÀM THUẦN (test: `browser-runner.node-test.mjs`).
+ * `GIU`: không chứng nhận được (thiếu/sai `owner.json`) hoặc chủ sở hữu còn sống (kể cả pid bị tái dùng — an toàn).
+ * `DON`: chủ sở hữu chết, Chrome không còn dùng thư mục. `DIET_ROI_DON`: chủ sở hữu chết, Chrome của phiên còn sống.
+ */
+export function laOrphan(owner, { runnerSong, chromeDungThuMuc }) {
+  if (!owner || owner.owner !== CHU_SO_HUU || !Number.isInteger(owner.runner_pid)) return "GIU";
+  if (runnerSong(owner.runner_pid)) return "GIU";
+  return Number.isInteger(owner.chrome_pid) && chromeDungThuMuc(owner.chrome_pid) ? "DIET_ROI_DON" : "DON";
+}
+
+/** Diệt cây tiến trình của MỘT pid (đồng bộ). Không bao giờ theo tên ảnh. */
+function dietCay(pid) {
+  if (!Number.isInteger(pid) || !conSong(pid)) return;
+  if (process.platform === "win32") spawnSync("taskkill", ["/PID", String(pid), "/T", "/F"], { stdio: "ignore" });
+  else { try { process.kill(pid, "SIGKILL"); } catch { /* đã chết */ } }
+}
+
+const xoaThuMuc = (d) => { try { rmSync(d, { recursive: true, force: true, maxRetries: 20, retryDelay: 250 }); return !existsSync(d); } catch { return false; } };
+
+/** Quét gốc một lần mỗi tiến trình: dọn orphan đã xác nhận. Trả `{don, giu}` (đếm). */
+export function donOrphan(goc = datGoc()) {
+  const kq = { don: 0, giu: 0, loi: 0 };
+  let ten = [];
+  try { ten = readdirSync(goc); } catch { return kq; }
+  for (const t of ten.filter((x) => x.startsWith("w12-"))) {
+    const d = join(goc, t);
+    let owner = null;
+    try { owner = JSON.parse(readFileSync(join(d, "owner.json"), "utf8")); } catch { /* không chứng nhận ⇒ giữ */ }
+    const pq = laOrphan(owner, { runnerSong: conSong, chromeDungThuMuc: (pid) => dungThuMuc(pid, join(d, "profile")) });
+    if (pq === "GIU") { kq.giu += 1; continue; }
+    if (pq === "DIET_ROI_DON") dietCay(owner.chrome_pid);
+    if (xoaThuMuc(d)) kq.don += 1; else kq.loi += 1;
+  }
+  return kq;
+}
+
+/** Phiên đang mở trong tiến trình này — dọn đồng bộ nếu Node thoát trước khi kịch bản kịp `close()`. */
+const PHIEN = new Set();
+let daDangKyThoat = false;
+function dangKyThoat() {
+  if (daDangKyThoat) return;
+  daDangKyThoat = true;
+  process.on("exit", () => {
+    for (const s of PHIEN) { dietCay(s.chrome?.pid); if (s.thuMuc) xoaThuMuc(s.thuMuc); }
+  });
+  // Ctrl+C / kết thúc mềm: mặc định Node thoát KHÔNG phát `exit` — đổi thành thoát có `exit` (mã như mặc định).
+  const tinHieu = [["SIGINT", 130], ["SIGTERM", 143], ...(process.platform === "win32" ? [["SIGBREAK", 149]] : [])];
+  for (const [sig, ma] of tinHieu) {
+    if (process.listenerCount(sig) === 0) process.once(sig, () => process.exit(ma));
+  }
+}
+let daQuet = false;
 
 /** Vòng đời trình duyệt — mở MỘT lần cho cả lượt chạy. */
 export class BrowserSession {
@@ -108,17 +207,43 @@ export class BrowserSession {
 
   async open() {
     if (!CHROME) throw new Error("Không tìm thấy Chrome.");
+    if (!daQuet) {
+      daQuet = true;
+      const kq = donOrphan();
+      if (kq.don || kq.loi) console.warn(`  browser-runner: dọn ${kq.don} thư mục phiên mồ côi đã xác nhận ở ${datGoc()}`
+        + (kq.loi ? ` (${kq.loi} chưa xoá được)` : ""));
+    }
+    dangKyThoat();
     const t0 = Date.now();
     const port = 9200 + Math.floor(Math.random() * 300);
     const gpuArgs = this.webgl
       ? ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
       : ["--disable-gpu"];
-    this.chrome = spawn(CHROME, ["--headless=new", ...gpuArgs,
-      `--remote-debugging-port=${port}`,
-      `--user-data-dir=${mkdtempSync(join(tmpdir(), "w12-"))}`,
-      `--window-size=${this.viewport},${this.height}`,
-      "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
-    this.serverStarts += 1;
+    this.thuMuc = mkdtempSync(join(datGoc(), "w12-"));
+    const tam = join(this.thuMuc, "tmp");
+    mkdirSync(tam);
+    const ghiChu = (chromePid) => writeFileSync(join(this.thuMuc, "owner.json"), JSON.stringify({
+      owner: CHU_SO_HUU, runner_pid: process.pid, chrome_pid: chromePid, created_at: new Date().toISOString(),
+      script: process.argv[1] ?? null }));
+    ghiChu(null);   // chứng nhận TRƯỚC khi Chrome chạy: thư mục chưa ghi chủ thì lượt quét nào cũng giữ
+    PHIEN.add(this);
+    try {
+      this.chrome = spawn(CHROME, ["--headless=new", ...gpuArgs,
+        `--remote-debugging-port=${port}`,
+        `--user-data-dir=${join(this.thuMuc, "profile")}`,
+        `--window-size=${this.viewport},${this.height}`,
+        "--hide-scrollbars", "about:blank"], { stdio: "ignore", env: { ...process.env, TEMP: tam, TMP: tam } });
+      ghiChu(this.chrome.pid);
+      this.serverStarts += 1;
+      return await this._mo(t0, port);
+    } catch (e) {
+      await this._donDep();
+      throw e;
+    }
+  }
+
+  /** Phần còn lại của `open()` — mọi lỗi ở đây được `open()` dọn phiên rồi ném tiếp. */
+  async _mo(t0, port) {
 
     let wsUrl;
     for (let i = 0; i < 40 && !wsUrl; i++) {
@@ -204,8 +329,7 @@ export class BrowserSession {
         this.pageLoadRetries += 1;
         console.warn(`  ⚠️ trang không dựng (phiên Chrome hỏng) — mở lại lần `
           + `${this.pageLoadRetries}/${BrowserSession.TRAN_MO_LAI}`);
-        try { this.chrome?.kill(); } catch { /* đã chết */ }
-        try { this.ws?.close(); } catch { /* đã đóng */ }
+        await this._donDep();   // phiên hỏng: diệt cây + xoá thư mục của NÓ trước khi mở phiên mới
         return this.open();
       }
       throw new Error(
@@ -389,9 +513,30 @@ export class BrowserSession {
 
   async close() {
     const t0 = Date.now();
-    try { this.ws?.close(); } catch { /* đã đóng */ }
-    try { this.chrome?.kill(); } catch { /* đã chết */ }
+    await this._donDep();
     this.timings.cleanup = Date.now() - t0;
+  }
+
+  /**
+   * Diệt cây tiến trình Chrome CỦA PHIÊN, chờ nó thoát (≤ 10 s), rồi mới xoá thư mục phiên. Gọi lại được (lần sau
+   * không làm gì). Xoá hỏng (tệp còn bị giữ) ⇒ `owner.json` còn đó, lượt quét sau dọn; ghi vào `this.donLoi`.
+   */
+  async _donDep() {
+    try { this.ws?.close(); } catch { /* đã đóng */ }
+    this.ws = null;
+    const pid = this.chrome?.pid;
+    if (pid && this.chrome.exitCode === null && this.chrome.signalCode === null) {
+      const thoat = new Promise((r) => this.chrome.once("exit", r));
+      dietCay(pid);
+      await Promise.race([thoat, sleep(10_000)]);
+    }
+    for (let i = 0; i < 40 && conSong(pid); i++) await sleep(250);
+    this.chrome = null;
+    if (this.thuMuc) {
+      this.donLoi = xoaThuMuc(this.thuMuc) ? null : `DIR_NOT_REMOVED:${this.thuMuc}`;
+      if (!this.donLoi) this.thuMuc = null;
+    }
+    PHIEN.delete(this);
   }
 }
 

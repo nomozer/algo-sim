@@ -643,6 +643,16 @@ một-server-mỗi-kịch-bản không lọt im lặng. Cấp sẵn `loadTarget`
 `loadEnvelope` nạp thẳng vào store nên **bỏ qua** đoạn `analyzeViaServer →
 res.json() → rẽ theo status`. Cộng thêm `_subs` (đăng ký sự kiện CDP); không ai
 đăng ký thì mọi script cũ giữ nguyên hành vi.
+⚠️ Vòng đời thư mục tạm (run `browser-temp-lifecycle`, 2026-10-09): bản trước để lại một hồ sơ Chrome `%TEMP%\w12-*`
+~50 MB mỗi `open()` (671 thư mục, 33,5 GB). Nay mỗi phiên sở hữu `<gốc>/w12-XXXX/{owner.json, profile/, tmp/}` —
+gốc `ungVienGoc`: `ALGOSIM_BROWSER_TMP` → `D:/tmp/algosim-browser` (Windows, ghi được) → `%TEMP%/algosim-browser`;
+Chrome nhận `TEMP`/`TMP` = `tmp/` của phiên (chỉ tiến trình con). `_donDep` diệt đúng cây tiến trình của phiên
+(`taskkill /PID … /T /F`, không theo tên ảnh), chờ thoát rồi xoá thư mục — ở `close()`, khi `open()` hỏng, khi mở
+lại; phiên còn mở lúc Node thoát dọn đồng bộ (`exit`, SIGINT/SIGTERM). `donOrphan` quét gốc ở `open()` đầu mỗi tiến
+trình: chỉ xoá thư mục có `owner.json` mà `laOrphan` (hàm thuần: `GIU`/`DON`/`DIET_ROI_DON`) xác nhận — chủ sở hữu
+chết, Chrome chết hoặc đúng là Chrome của phiên (dòng lệnh chứa thư mục). Test: `browser-runner.node-test.mjs`
+(không Chrome); kiểm Chrome thật: `runs/browser-temp-lifecycle/diagnostics/verify-lifecycle.mjs`.
+`compiler-scene-suite.openFixture` đóng phiên khi bước sau `open()` hỏng (trước: bỏ rơi Chrome tới hết script).
 
 ### `frontend/scripts/certify-product-ui-rendering.mjs` (2026-09-09) · offline (cần `npm run dev`) · **0 API call**
 Chín envelope THẬT của lượt đo cuối `thesis-final-20260908T160224Z`, dựng trong

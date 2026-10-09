@@ -83,6 +83,13 @@ Không nguồn nào tự giải quyết hết; bộ chọn ghép cả ba và **i
   bao giờ trình bày như số ảnh đã xoá. Lỗi tách ba lớp ENVIRONMENT / HARNESS / PRODUCT_ASSERTION; lỗi môi trường
   không giữ cả họ. Bước trình duyệt chạy tuần tự, có `timeout` hữu hạn, in tiến độ; chỉ chạy lại bước đỏ. Tỉa sau đo
   (`prune_evidence_images.py`) chỉ còn cho run cũ / chế độ đầy đủ.
+- **Từ run `browser-temp-lifecycle`: tài nguyên tạm có chủ và có hạn.** Hồ sơ Chrome của bộ đo nằm dưới
+  `D:/tmp/algosim-browser` (hoặc `ALGOSIM_BROWSER_TMP`; thiếu D: thì `%TEMP%/algosim-browser`), xoá khi phiên đóng hoặc
+  hỏng; bị giết cứng thì lượt sau tự dọn theo `owner.json` (`frontend/scripts/browser-runner.mjs`). Không đặt `TEMP`/`TMP`
+  toàn hệ thống, không diệt `chrome.exe` theo tên, không đụng hồ sơ trình duyệt cá nhân. Ảnh không phải bằng chứng
+  (`--anh`/`--screenshots` của bước không cần lưu) ghi vào thư mục tạm của lượt đo và XOÁ khi lượt đo xong; chỉ ảnh
+  oracle, tập duyệt chọn trước và ảnh lỗi vào thư mục run. Cảnh đã duyệt mà thành phần liên quan không đổi thì dùng
+  lại bằng chứng cũ (đối chiếu `git diff` của product commit), không chụp lại.
 
 ## Chi phí đã đo và đã sửa
 

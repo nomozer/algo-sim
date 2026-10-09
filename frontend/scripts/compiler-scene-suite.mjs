@@ -610,7 +610,6 @@ export function assessRoleColors(state) {
 }
 
 export async function openFixture({ port, viewport, fixture }) {
-  const envelope = fixture.envelope;
   const session = new BrowserSession({
     viewport: viewport.width,
     height: viewport.height,
@@ -619,6 +618,18 @@ export async function openFixture({ port, viewport, fixture }) {
     napModuleDev: false,
   });
   await session.open();
+  // browser-temp-lifecycle: lỗi SAU khi mở (POLL_TIMEOUT, TEXTAREA_NOT_READY, …) từng bỏ rơi phiên — người gọi chưa
+  // nhận `session` nên không `close()` được, Chrome (WebGL phần mềm) chạy tới hết script và hồ sơ ở lại.
+  try {
+    return await napFixture(session, viewport, fixture);
+  } catch (e) {
+    await session.close();
+    throw e;
+  }
+}
+
+async function napFixture(session, viewport, fixture) {
+  const envelope = fixture.envelope;
   if (viewport.width < 600) {
     await session._send("Emulation.setDeviceMetricsOverride", {
       width: viewport.width, height: viewport.height, deviceScaleFactor: 2, mobile: true,
