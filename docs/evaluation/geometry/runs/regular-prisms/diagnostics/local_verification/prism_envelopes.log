@@ -1,0 +1,10 @@
+{"row": "X4_radical_side", "status": "ok", "value": "9√3", "program_calls": 1, "chart_metric": true}
+{"row": "X5_fractional_side", "status": "ok", "value": "3√3/2", "program_calls": 1, "chart_metric": true}
+{"row": "T1_side_height", "status": "ok", "value": "3√3", "program_calls": 1, "chart_metric": true}
+{"row": "T5_fractional_side", "status": "ok", "value": "√3", "program_calls": 1, "chart_metric": true}
+{"row": "C0_hex_skew", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}
+{"row": "C0_hex_lateral_contradicts", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}
+{"row": "C0_hex_base_side_contradicts", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}
+{"row": "C0_tri_skew", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}
+{"row": "C0_tri_lateral_contradicts", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}
+{"row": "C0_tri_base_side_contradicts", "status": "unsupported", "scene3d": false, "reason_in_envelope": true, "program_calls": 1}

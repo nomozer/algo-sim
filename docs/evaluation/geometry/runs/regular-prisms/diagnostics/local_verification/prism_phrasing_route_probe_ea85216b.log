@@ -1,0 +1,5 @@
+{"case": "no_hinh_tri", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}
+{"case": "right_tri_regular_noun", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}
+{"case": "oblique_tri_regular_noun", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}
+{"case": "oblique_hex_regular_noun", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}
+{"case": "negation_after", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}

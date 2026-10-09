@@ -1,0 +1,4 @@
+{"case": "C1_lattice_SA_perp", "servable": false, "stage": "assumption", "reason": "ASSUMPTION_INVARIANCE_UNPROVEN", "certificate": null, "value": null}
+{"case": "C0_consistent", "servable": true, "stage": "served", "reason": null, "certificate": "C0", "value": "3"}
+{"case": "C0_side_contradicts", "servable": false, "stage": "assumption", "reason": "SOURCE_SHAPE_CONTRADICTS_COORDINATES", "certificate": null, "value": null}
+{"case": "C0_base_not_regular", "servable": false, "stage": "assumption", "reason": "SOURCE_SHAPE_CONTRADICTS_COORDINATES", "certificate": null, "value": null}

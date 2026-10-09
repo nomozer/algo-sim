@@ -1,0 +1,14 @@
+X1_side_height: k=6 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=972 formula=972 label=18√3 G==chart_metric=True OK
+X2_side_lateral: k=6 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=972 formula=972 label=18√3 G==chart_metric=True OK
+X3_renamed: k=6 b²=1 h²=4 sides²=[Fraction(1, 1)] translation=True lateral⊥base=True |AA′|²=4 V²=27 formula=27 label=3√3 G==chart_metric=True OK
+X4_radical_side: k=6 b²=3 h²=4 sides²=[Fraction(3, 1)] translation=True lateral⊥base=True |AA′|²=4 V²=243 formula=243 label=9√3 G==chart_metric=True OK
+X5_fractional_side: k=6 b²=1/4 h²=16 sides²=[Fraction(1, 4)] translation=True lateral⊥base=True |AA′|²=16 V²=27/4 formula=27/4 label=3√3/2 G==chart_metric=True OK
+X6_right_prism_hexagon_base: k=6 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=972 formula=972 label=18√3 G==chart_metric=True OK
+X7_khoi_phrasing: k=6 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=972 formula=972 label=18√3 G==chart_metric=True OK
+T1_side_height: k=3 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=27 formula=27 label=3√3 G==chart_metric=True OK
+T2_side_lateral: k=3 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=27 formula=27 label=3√3 G==chart_metric=True OK
+T3_right_prism_equilateral_base: k=3 b²=4 h²=9 sides²=[Fraction(4, 1)] translation=True lateral⊥base=True |AA′|²=9 V²=27 formula=27 label=3√3 G==chart_metric=True OK
+T4_radical_side: k=3 b²=12 h²=1 sides²=[Fraction(12, 1)] translation=True lateral⊥base=True |AA′|²=1 V²=27 formula=27 label=3√3 G==chart_metric=True OK
+T5_fractional_side: k=3 b²=4/9 h²=81 sides²=[Fraction(4, 9)] translation=True lateral⊥base=True |AA′|²=81 V²=3 formula=3 label=√3 G==chart_metric=True OK
+T6_renamed: k=3 b²=16 h²=1 sides²=[Fraction(16, 1)] translation=True lateral⊥base=True |AA′|²=1 V²=48 formula=48 label=4√3 G==chart_metric=True OK
+ALL_OK

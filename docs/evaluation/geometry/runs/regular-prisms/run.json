@@ -21,5 +21,34 @@
   "route_verified": "LLM_ONLY route on model-style programs (foundation_only; model not measured); compiler: no family",
   "cache_version_after": "125",
   "candidate_refreeze_required": true,
-  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "branch_head_received": "9148450d5fa55c3b4fbfdbaf7f4f07bc7f6833e7 (= origin; 6 commits on ea85216b = main = origin/main)",
+    "product_commit": "d8b9da749b1337d492bcb9209373109071b049c9 (last commit touching backend/app: 00770c34 + fix d8b9da74)",
+    "product_changes": "none LOCAL; diff vs main: shape_constraint (reader), assumption_gate (T12, kich_thuoc_t12, prism metric, _gram_khung, C0 base_regular_hexagon + lateral_prism), product_capability (foundation_only row), main.py (cache) + identity lock + test pins — no kernel, compiler, prompt, grammar card, schema, routing, frontend, solid_topology use or case-ID logic",
+    "capability_evidence": {
+      "probe": "diagnostics/probe.py + probe_extra.py re-run on ea85216b and on the branch: four logs identical to Cloud's (CR ignored)",
+      "transitions": "13 refused → served (C1, oracle value), 12 refused → refused (same stage/reason); C0: 6 served → refused SOURCE_SHAPE_CONTRADICTS_COORDINATES, 8 consistent rows unchanged (9, 3/2)",
+      "independent_math": "diagnostics/local_verification/prism_independent.py (no product import; metric built from the TRUE Euclidean regular prism pulled back to the corpus chart — a different construction from do_luong_cua): every served row: base and top sides² = b², translation, lateral ⊥ every base edge, |AA′|² = h², V² = textbook ((3√3/2)b²h)² | ((√3/4)b²h)² = label, G == scene chart_metric exactly — ALL_OK",
+      "refusal_envelopes": "diagnostics/local_verification/prism_envelopes.py (run_pipeline, model stubbed): the 6 C0 contradictions → status unsupported, no scene3d, reason in envelope, program stage called once (no LLM repair)",
+      "reader": "diagnostics/local_verification/prism_reader_probe.py (both trees): 'xiên … đều' and 'xiên … đáy là tam giác đều' emit no right_prism / regular base ('đều' left unread, fail-closed); 'đứng tam|lục giác đều' fully read; wrong vertex count, trailing negation, goal clause emit no regular-prism claim",
+      "reader_pin_change": "test_shape_constraint::test_thong_tin_bi_bo_trong_span_tinh_la_chua_doc pins a safety property (information dropped inside a read span counts as unread). The old text (tam giác đều) is now read by T12 — an intended change; the new text 'lăng trụ đứng tứ giác đều' is a true geometric claim whose 'đều' the reader still drops: the pin encodes a fail-closed capability limit, not a false rule. Limitation recorded: 'lăng trụ (đứng) tứ giác đều X.Y' is not read as a regular prism",
+      "local_finding_pyramid_hexagon_base": "diagnostics/local_verification/pyramid_hex_base_probe.py: _DAY now also reads 'đáy là lục giác đều' for a PYRAMID. C1 lattice program still refused on both trees (no new served capability). C0: consistent coordinates still served V = 3; 2 contradicted texts served on main (side contradicts; non-regular base, main served V = 4) now refused SOURCE_SHAPE_CONTRADICTS_COORDINATES — safe direction, covered by the 125 bump"
+    },
+    "engineering_evidence": {
+      "scene3d_payload": "diagnostics/local_verification/prism_scene_dump.py: 13/13 — 1 solid; hexagon 12 vertices / 8 faces (2 hexagons + 6 quads) / 18 edges, triangle 6 / 5 / 9; Euler 2; every edge in exactly two faces; consistently orientable (independent BFS flip; the model-style program's own winding is not consistent — the kernel re-orients by design, mesh is DoubleSide); no degenerate face; chart_metric present — SCENE_OK",
+      "renderer_transform": "diagnostics/local_verification/prism_render_check.ts (frontend veKhongGian bundled with the project's esbuild, no frontend change): regular k-gon of side b (circumradius b | b/√3), planar bases, translation, lateral ⊥ base, height h — RENDER_TRANSFORM_OK 13/13; fault injection (X1 without chart_metric) → RENDER_TRANSFORM_FAILED",
+      "browser_visual": "existing openFixture (compiler-scene-suite.mjs) on vite preview of a fresh build, envelopes from run_pipeline: X4 (√3), X5 (1/2), T1, T5 (2/3) at step 5/5 render regular prisms, parallel congruent bases, straight lateral edges ⊥ base, dashed hidden edges, correct h/b ratio — screenshots in diagnostics/local_verification/; observation: on the two very slender solids (X5, T5) a few vertex labels are hidden (label layout, not geometry); answer text placement not asserted",
+      "regression": "both trees, byte-identical: C1 regular-pyramid equivalence 235 lines (incl. Policy A), c0-whole-solid-grounding 29 + reader gap 3, c0-whole-solid-reader 27, unnamed-regular-pyramid-grounding 11, general-polygon-base C0 6, regular hexagonal pyramid 17, unnamed-pyramid-vertex-binding 21; ten historical oracles OK; Tier-A regenerated on both trees 49/49 identical (14 served, 0 changed), manifest identical",
+      "cache_version": "125 verified: 6 + 2 C0 served → refused reproduced; 13 + 3 refused → served never cached; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 125 (environment b1714b56… unchanged); 0 model-surface files since ea85216b; 7 pins at 125",
+      "candidate_freeze": "eaeedb38 (frozen once at 9148450d in a clean detached worktree; candidate 93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883, product d8b9da74, cache 125, 102 files; taxonomy, primitive set, schema unchanged; diagnostics/freeze_d8b9da74.log); five identity reds green after the freeze",
+      "targeted": "64/64 new; related suites 1453 passed + 4 identity reds before the freeze → identity files 132/132 after; node harness 102/102",
+      "phrasing_route": "diagnostics/local_verification/prism_phrasing_route_probe.py (both trees, corpus lattice program): 'hình lăng trụ đứng tam giác đều' newly served C1 V = 3√3 (correct); 'lăng trụ tam giác đều' without 'hình', 'xiên tam/lục giác đều', trailing negation: refused on both trees",
+      "t3": "FULL_PRODUCT_GATE_PASS once at eaeedb38 in a clean detached worktree (pytest 7729 passed / 1 skipped / 2 deselected = 7665 + 64 new, vitest 1040/1040, typecheck + build, demo 5/5, crash surface 6/6; diagnostics/t3_eaeedb38.log)"
+    },
+    "limits": "foundation_only — route verified on model-style programs, no live Gemini; compiler has no regular-prism family; not supported: unnamed regular prism/pyramid, oblique prism with a regular base, 'lăng trụ (đứng) tứ giác đều X.Y' as a regular prism, 'lăng trụ tam giác đều X.Y' without 'hình/khối', regular pentagon, bases by angle, concave bases; no token-reduction claim; no claim of improved real Gemini capability from the hand-written corpus alone",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }
