@@ -20,16 +20,16 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 ## 2. Repository state hiện tại
 
 ```text
-CURRENT_BRANCH = feat/oblique-prism (rẽ từ main ba995887; Cloud làm G04, LOCAL kiểm + đóng băng; đã push nhánh, CHƯA merge; feat/regular-square-pyramid đã xoá local + remote theo lệnh người dùng)
-CURRENT_WAVE = oblique-prism (G04 lăng trụ xiên: khuôn T9 + họ compiler oblique_prism_volume; runs/oblique-prism/handoff.md §4 = kết quả LOCAL)
-PRODUCT_STATE = nhánh: candidate 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5; đóng băng 75c24394; T3 PASS tại 75c24394) · main: candidate 7f3f042309dd1c54… · CACHE_VERSION 118, LLM_ONLY
+CURRENT_BRANCH = main (G04 fast-forward ba995887 → a0fdbba4 và push, 2026-10-09; feat/oblique-prism GIỮ LẠI local + remote — xoá nhánh chưa được phép; feat/regular-square-pyramid đã xoá theo lệnh người dùng)
+CURRENT_WAVE = oblique-prism (G04 lăng trụ xiên: khuôn T9 + họ compiler oblique_prism_volume; runs/oblique-prism/handoff.md §4 = kết quả LOCAL; APPROVAL.md = phê duyệt tích hợp)
+PRODUCT_STATE = candidate 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5; đóng băng 75c24394; T3 PASS tại 75c24394), CACHE_VERSION 118, LLM_ONLY; G04 foundation_only (chưa đo Gemini thật; compiler opt-in)
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
-ORIGIN_MAIN = caed38096f0693702dc0b69668ad8ba58d5fb1fd (fast-forward từ 38d41588, push 2026-10-09, không force; ls-remote khớp; commit ghi kết quả này đi sau)
-FINAL_DECISION = MERGED_AND_PUSHED_WITH_EXCEPTIONS (baseline frontend tạm thời theo runs/frontend-freeze/APPROVAL.md — C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 chưa duyệt; W05 23/24); cổng tích hợp: runs/frontend-freeze/diagnostics/gates_caed3809.log
+ORIGIN_MAIN = a0fdbba40327200737f9bb366b3cd931c10e2d61 (G04, fast-forward từ ba995887, push 2026-10-09, không force; ls-remote khớp; commit ghi kết quả này đi sau)
+FINAL_DECISION = G04 MERGED_AND_PUSHED (runs/oblique-prism/APPROVAL.md; cổng tích hợp runs/oblique-prism/diagnostics/gates_a0fdbba4.log) · baseline frontend MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md — C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 chưa duyệt; W05 23/24)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
 USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
-MAIN_PUSH_EXECUTED = YES · MERGE_EXECUTED = YES (fast-forward, runs/frontend-freeze/APPROVAL.md) · PR_CREATED = NO · BRANCH_DELETED = NO
-NEXT_ACTION = người dùng quyết merge G04 (feat/oblique-prism) vào main; sau đó tiếp tục mở rộng họ hình theo ROADMAP §0.2, rồi OCR; frontend đóng băng; giữ LLM_ONLY
+MAIN_PUSH_EXECUTED = YES · MERGE_EXECUTED = YES (fast-forward, runs/oblique-prism/APPROVAL.md) · PR_CREATED = NO · BRANCH_DELETED = NO
+NEXT_ACTION = Cloud: G05 lăng trụ/chóp đáy đa giác tổng quát theo ROADMAP §0.2 trên kiến trúc theo hàm hiện có (nhánh mới từ main đã tích hợp), rồi OCR; frontend đóng băng; giữ LLM_ONLY; không chuyển compiler-first
 ```
 
 Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã

@@ -1347,3 +1347,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (frontend-freeze, 2026-10-09):** user approval `runs/frontend-freeze/APPROVAL.md`; integration gate `diagnostics/gates_caed3809.log` PASS; `main` fast-forwarded `38d41588` → `caed3809` and pushed (no force; ls-remote verified); branch kept (deletion not allowed); FINAL_DECISION MERGED_AND_PUSHED_WITH_EXCEPTIONS (C1–C6 viewed not approved, P1–P6 PENDING, UX debt OPEN/DEFERRED)
+
+### WAVE_ID = OBLIQUE_PRISM
+- **RUN_ID:** oblique-prism (task oblique-prism; Cloud implementation + LOCAL verification; branch feat/oblique-prism)
+- **DATE:** 2026-10-09
+- **START_BASE:** ba995887
+- **CODE_COMMIT_OR_NONE:** 0fe4edc5 (assumption-gate template T9, compiler family oblique_prism_volume, two statement builders, compiler-only vector narration, product_capability row)
+- **CANDIDATE:** `02ce5e1e6e819ab2…` (product `0fe4edc5`, 102 files; frozen LOCAL 75c24394) · CACHE_VERSION 118 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration e39ed32e; product + tests 0fe4edc5; docs + cache evidence cd591dda/fcc41452; candidate refreeze 75c24394; LOCAL record a0fdbba4
+- **CLASSIFICATION:** G04 served in a narrow domain (foot of the lateral height at a base vertex, rational height); `oblique_prism` = foundation_only
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 75c24394 (pytest 7290 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/oblique-prism/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/oblique-prism/
+- **PASS:** test_oblique_prism.py 51/51 (16 preregistered labels on both routes, independent oracle); red-before 39 red at ba995887
+- **CLOSED:** NONE
+- **OPENED:** ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY · ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward ba995887 → a0fdbba4) / NO (branch kept)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** Cloud G05 — prism/pyramid with a general polygon base (ROADMAP §0.2), then OCR
+- **FINAL_DECISION:** MERGED_AND_PUSHED (no live Gemini evidence for G04; compiler opt-in; no token-reduction claim; no compiler-first switch)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** family-expansion evidence (deterministic route); not a model-capability claim
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (oblique-prism, 2026-10-09):** user approval `runs/oblique-prism/APPROVAL.md`; integration gate `diagnostics/gates_a0fdbba4.log` PASS; `main` fast-forwarded `ba995887` → `a0fdbba4` and pushed (no force; ls-remote verified); branch kept (deletion not allowed)

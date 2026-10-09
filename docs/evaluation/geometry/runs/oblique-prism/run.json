@@ -16,5 +16,25 @@
   },
   "cache_version": "118 (no bump; cache/decision.json)",
   "model_surface": "unchanged",
-  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "candidate_freeze": "75c24394 (frozen at fcc41452; candidate 02ce5e1e6e819ab22519cd498fa399ee2af1a34f22273cde6e8a20c81adff89f, product 0fe4edc5, 102 files; diagnostics/freeze_0fe4edc5.log)",
+    "cache_version": "118 verified (lock_cache_identity --verify)",
+    "t3": "FULL_PRODUCT_GATE_PASS at 75c24394 (pytest 7290 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_75c24394.log)",
+    "record_commit": "a0fdbba4 (docs only)"
+  },
+  "merge": {
+    "fast_forward": true,
+    "from": "ba995887b8f6c27364547d21caaf0f1c394688ea",
+    "to": "a0fdbba40327200737f9bb366b3cd931c10e2d61",
+    "method": "git merge --ff-only feat/oblique-prism, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = a0fdbba4 = main = origin/main",
+    "integration_gate": "diagnostics/gates_a0fdbba4.log (candidate, cache, LLM_ONLY, routing unchanged, schema x2, docs audit PASS, diff --check, node harness 100/0/2); model-surface list shows product_capability.py (foundation_only row — not an input of stable_capability_hash; cache lock verifies); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at 75c24394, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": false,
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "oblique_prism foundation_only; no live Gemini evidence; compiler opt-in; LLM_ONLY default; ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY and ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION OPEN; no token-reduction claim"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / NO"
 }

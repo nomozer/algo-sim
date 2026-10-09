@@ -56,15 +56,15 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
-> CANDIDATE = 7f3f042309dd1c54… trên `main` (102 file; product commit 45f5a7f0); nhánh `feat/oblique-prism`: 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5; đóng băng LOCAL 75c24394, T3 PASS — runs/oblique-prism/handoff.md §4)
+> CANDIDATE = 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5 — G04 lăng trụ xiên; đóng băng LOCAL 75c24394, T3 PASS — runs/oblique-prism/handoff.md §4; trên `main` từ a0fdbba4)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = FRONTEND_FREEZE (run `frontend-freeze`; người dùng hoãn phát triển frontend để ưu tiên kiến trúc hình học + backend; không đổi mã; handoff Cloud ở `runs/frontend-freeze/handoff.md`)
-> FINAL_DECISION = MERGED_AND_PUSHED_WITH_EXCEPTIONS (`main` = `origin/main` = `caed3809`, fast-forward, 2026-10-09; runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = Cloud mở rộng họ hình còn thiếu (ROADMAP §0.2) trên kiến trúc sẵn có, rồi OCR; frontend đóng băng; nhánh giữ lại
+> CURRENT_WAVE = OBLIQUE_PRISM (run `oblique-prism`, G04 — Cloud làm, LOCAL kiểm + đóng băng; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
+> FINAL_DECISION = MERGED_AND_PUSHED (G04: `main` = `origin/main` = `a0fdbba4`, fast-forward từ ba995887, 2026-10-09; runs/oblique-prism/APPROVAL.md; G04 `foundation_only`) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = Cloud G05 lăng trụ/chóp đáy đa giác tổng quát (ROADMAP §0.2) trên kiến trúc sẵn có, rồi OCR; frontend đóng băng; nhánh feat/oblique-prism giữ lại
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
+> **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `a0fdbba4` theo `APPROVAL.md`):**
 >
 > | Mục | Kết quả |
 > |---|---|
