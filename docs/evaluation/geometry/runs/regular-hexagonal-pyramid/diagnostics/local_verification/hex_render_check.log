@@ -1,0 +1,10 @@
+H1_side_height: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.000000 lateral=3.605551 expected b=2.000000 h=3.000000 → OK
+H2_side_lateral: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.464102 lateral=4.000000 expected b=2.000000 h=3.464102 → OK
+H3_renamed_vertices: chart_metric=true sides=1.000000,1.000000,1.000000,1.000000,1.000000,1.000000 circumradius=1.000000 planar=true apex⊥base=1.000000000 height=2.000000 lateral=2.236068 expected b=1.000000 h=2.000000 → OK
+H4_phrasing_chop_deu: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.000000 lateral=3.605551 expected b=2.000000 h=3.000000 → OK
+H5_phrasing_apex_base: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.000000 lateral=3.605551 expected b=2.000000 h=3.000000 → OK
+H6_radical_side: chart_metric=true sides=1.732051,1.732051,1.732051,1.732051,1.732051,1.732051 circumradius=1.732051 planar=true apex⊥base=1.000000000 height=2.000000 lateral=2.645751 expected b=1.732051 h=2.000000 → OK
+H7_lateral_length: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.000000 lateral=3.605551 expected b=2.000000 h=3.000000 → OK
+H8_fractional_side: chart_metric=true sides=0.500000,0.500000,0.500000,0.500000,0.500000,0.500000 circumradius=0.500000 planar=true apex⊥base=1.000000000 height=6.000000 lateral=6.020797 expected b=0.500000 h=6.000000 → OK
+N4_program_apex_off_centre: chart_metric=true sides=2.000000,2.000000,2.000000,2.000000,2.000000,2.000000 circumradius=2.000000 planar=true apex⊥base=1.000000000 height=3.000000 lateral=3.605551 expected b=2.000000 h=3.000000 → OK
+RENDER_TRANSFORM_OK

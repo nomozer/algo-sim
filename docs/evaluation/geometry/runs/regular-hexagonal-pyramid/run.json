@@ -20,5 +20,29 @@
   "route_verified": "LLM_ONLY route on model-style programs (foundation_only; model not measured); compiler: no family",
   "cache_version_after": "124",
   "candidate_refreeze_required": true,
-  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "product_changes": "none LOCAL (product commit stays 6c792434); diff vs main: shape_constraint (reader), assumption_gate (T11, kich_thuoc_t11, hexagon metric, C0), product_capability (foundation_only row), main.py (cache) + identity lock + test pins — no kernel, compiler, solver, frontend, solid_topology use or case-ID logic",
+    "capability_evidence": {
+      "probe": "diagnostics/probe.py re-run on f20caf8a and on the branch: both logs identical to Cloud's",
+      "transitions": "7 refused → served (H1–H4, H6–H8), H5 served 1 → 6√3, N4 refused → served 6√3 (label correction), 8 boundary rows refused → refused",
+      "independent_math": "diagnostics/local_verification/hex_independent.py (no product import): Gram metric from the text's lengths at S, A, B, C applied to the corpus chart; every served row: six sides² = b², apex on the normal through O, |SO|² = h², V² / SA² = textbook (√3/2)a²h, l² = h² + a² — ALL_OK (H1 6√3, H2 12, H3 √3, H4 6√3, H5 6√3, H6 3√3, H7 √13, H8 3√3/4, N4 6√3)",
+      "n4_correction": "ACCEPTED — with e1 = B−A, e2 = C−A, e3 = S−A (chart S over A): text gives e1·e1 = 4, e2·e2 = 12, e3·e3 = 13, e1·e2 = 6, e1·e3 = 2, e2·e3 = 6; S−O = e3 + e1 − e2 ⇒ (S−O)·e1 = 0, (S−O)·e2 = 0, |S−O|² = 9: in the text-derived metric the apex IS on the normal through the base centre at height 3 — 'over a vertex' is only the affine chart; same contract as T8 N5. Note: oracle.py still encodes the pre-correction rule (program must be 'regular'); it passes because labels.json is unchanged and the correction lives in label_corrections.json",
+      "c0": "hexagon in x + y + z = 0 with side √2, apex (1,1,1): V = (√3/2)·2·√3 = 3 served C0; apex (2,1,0) off the axis refused SOURCE_SHAPE_CONTRADICTS_COORDINATES (main's reader emitted no hexagon claim ⇒ served before)"
+    },
+    "engineering_evidence": {
+      "scene3d_payload": "diagnostics/local_verification/hex_scene_dump.py: every served row — 1 solid, 7 vertices, 7 faces (1 hexagon + 6 triangles), Euler 2, no degenerate face, chart_metric present",
+      "renderer_transform": "diagnostics/local_verification/hex_render_check.ts (frontend veKhongGian bundled with the project's esbuild, no frontend change): world geometry = regular hexagon of side b, planar, apex ⊥ base through the centre, height h, lateral √(b²+h²) — RENDER_TRANSFORM_OK for all 9 incl. H6 (√3) and H8 (1/2)",
+      "browser_visual": "existing openFixture (compiler-scene-suite.mjs) on vite preview of a fresh build: H6, H8, N4 at step 4/4 render a regular hexagonal pyramid with the apex above the centre and dashed hidden edges — screenshots in diagnostics/local_verification/ (RENDER_VISUAL verified for these three; the answer text placement in the UI was not asserted)",
+      "regression": "C1 regular-pyramid probe (235 lines, incl. Policy A) and C0 probes of c0-whole-solid-grounding (29), c0-whole-solid-reader (27), unnamed-regular-pyramid-grounding (11): byte-identical main vs branch",
+      "candidate_freeze": "0fe806ff (frozen at dc974a51; candidate cf47dd6142f2d46fd5b9be252fee0d9a7530844d3e1bf07ece47b52b4b433f5a, product 6c792434, cache 124, 102 files; diagnostics/freeze_6c792434.log)",
+      "cache_version": "124 verified: H5 value change and C0 served → refused reproduced; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 124; 0 model-surface files since f20caf8a; 7 pins at 124; fixture_diff 49/49 identical",
+      "targeted": "38/38 new; related suites incl. T7/T8, C0 §21–§25, Policy A, G04, G05, compiler, identity, docs, test_api: 1620/1620; five oracles OK; node harness 102/102",
+      "t3": "FULL_PRODUCT_GATE_PASS at 0fe806ff (pytest 7665 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_0fe806ff.log)"
+    },
+    "limits": "foundation_only — route verified on model-style programs, no live Gemini; compiler has no hexagon family; not supported: regular hexagonal/triangular prisms, unnamed hexagonal pyramid, regular pentagon, bases by angle, concave bases",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }

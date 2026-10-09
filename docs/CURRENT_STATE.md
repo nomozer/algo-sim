@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 124 trên nhánh `feat/g05-geometry-capability-expansion` (chóp lục giác đều: giá trị đã phục vụ đổi + C0 lục giác mâu thuẫn served → refused; runs/regular-hexagonal-pyramid/cache/decision.json) · `main`: 123 (unnamed-pyramid-vertex-binding, chính sách A: chóp đều không tên chưa gắn được đỉnh bị chặn — 12 served → refused; runs/unnamed-pyramid-vertex-binding/cache/decision.json)
-> CANDIDATE = b13a3ef1c34cd41d… (102 file; product commit 56692926; cache 123; đóng băng LOCAL 39b0fb4a, T3 PASS — runs/unnamed-pyramid-vertex-binding/handoff.md; trên `main` từ 32705882)
+> CANDIDATE = b13a3ef1c34cd41d… trên `main` (product commit 56692926; cache 123); nhánh `feat/g05-geometry-capability-expansion`: cf47dd6142f2d46f… (102 file; product commit 6c792434; cache 124; đóng băng LOCAL 0fe806ff, T3 PASS — runs/regular-hexagonal-pyramid/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = UNNAMED_PYRAMID_VERTEX_BINDING (run `unnamed-pyramid-vertex-binding` — chính sách A: Cloud triển khai, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
 > FINAL_DECISION = MERGED_AND_PUSHED (unnamed-pyramid-vertex-binding: `main` = `origin/main` = `32705882`, fast-forward từ a7c56942, 2026-10-09; runs/unnamed-pyramid-vertex-binding/APPROVAL.md; giảm thiểu an toàn: 21/21 đề chóp đều không tên chưa gắn được đỉnh bị từ chối; GIỚI HẠN NĂNG LỰC còn mở: 5 đề do đề xác định (S5, S7, R2_S9, P9, P11) chưa hỗ trợ; phương án B hoãn · unnamed-regular-pyramid-grounding: 2d3c510c, runs/unnamed-regular-pyramid-grounding/APPROVAL.md · c0-whole-solid-reader: 81ff8899, runs/c0-whole-solid-reader/APPROVAL.md · c0-whole-solid-grounding: 11be6092, runs/c0-whole-solid-grounding/APPROVAL.md · geometry-grounding-safety: 47d05f22, runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
@@ -64,7 +64,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **G05 chóp lục giác đều — run regular-hexagonal-pyramid (2026-10-09, Cloud, nhánh `feat/g05-geometry-capability-expansion`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+> **G05 chóp lục giác đều — run regular-hexagonal-pyramid (2026-10-09, Cloud, nhánh `feat/g05-geometry-capability-expansion`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
@@ -72,7 +72,8 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | Thêm | bộ đọc lục giác đều + khuôn **T11** + metric khung lục giác (`do_luong_cua`) + C0 kiểm lục giác (amendment §26) — tái dùng cơ chế khung affine của T8, không engine mới |
 > | Kết quả | 8/8 đề dương phục vụ đúng giá trị oracle (C1, Scene3D có `chart_metric`); biên từ chối đúng; 1 đính chính nhãn (khung affine, như T8) |
 > | Đường chạy | LLM_ONLY route trên chương trình kiểu mô hình (`foundation_only`, mô hình chưa đo); compiler: chưa có họ |
-> | `CACHE_VERSION` · candidate | **124** · candidate `b13a3ef1…` CHƯA đóng băng lại (LOCAL) |
+> | `CACHE_VERSION` · candidate | **124** · candidate **`cf47dd61…`** (product `6c792434`; đóng băng LOCAL `0fe806ff`, `--verify` khớp) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `0fe806ff`: pytest 7665 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập; 8 đề dương + N4 kiểm bằng metric Gram tính độc lập (V = (√3/2)a²h, l² = h² + a²); N4 (đính chính nhãn) CHẤP NHẬN — dưới metric từ đề, đỉnh nằm đúng trên pháp tuyến tại tâm, h = 3; Scene3D 7 đỉnh / 7 mặt / Euler 2 / `chart_metric`; phép biến đổi khung → thế giới của frontend (`veKhongGian`) cho lục giác đều thật; ảnh chụp trình duyệt thật (H6, H8, N4, bước 4/4) đúng hình — `diagnostics/local_verification/` |
 > | Run | [`regular-hexagonal-pyramid`](evaluation/geometry/runs/regular-hexagonal-pyramid/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **Chính sách A cho chóp đều không tên chưa gắn được — run unnamed-pyramid-vertex-binding (2026-10-09, Cloud, nhánh `fix/unnamed-pyramid-vertex-binding`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `32705882` theo `APPROVAL.md`):**

@@ -1,0 +1,10 @@
+H1_side_height: program=regular sides²=[Fraction(4, 1)] perp=True |SO|²=9 (h²=9) V²=108 formula=108 label=served:6√3 OK
+H2_side_lateral: program=regular sides²=[Fraction(4, 1)] perp=True |SO|²=12 (h²=12) V²=144 formula=144 label=served:12 OK
+H3_renamed_vertices: program=regular sides²=[Fraction(1, 1)] perp=True |SO|²=4 (h²=4) V²=3 formula=3 label=served:√3 OK
+H4_phrasing_chop_deu: program=regular sides²=[Fraction(4, 1)] perp=True |SO|²=9 (h²=9) V²=108 formula=108 label=served:6√3 OK
+H5_phrasing_apex_base: program=regular sides²=[Fraction(4, 1)] perp=True |SO|²=9 (h²=9) V²=108 formula=108 label=served:6√3 OK
+H6_radical_side: program=regular sides²=[Fraction(3, 1)] perp=True |SO|²=4 (h²=4) V²=27 formula=27 label=served:3√3 OK
+H7_lateral_length: program=regular sides²=[Fraction(4, 1)] perp=True |SO|²=9 (h²=9) SA²=13 formula=13 label=served:√13 OK
+H8_fractional_side: program=regular sides²=[Fraction(1, 4)] perp=True |SO|²=36 (h²=36) V²=27/16 formula=27/16 label=served:3√3/4 OK
+N4_program_apex_off_centre: program=apex_over_vertex sides²=[Fraction(4, 1)] perp=True |SO|²=9 (h²=9) V²=108 formula=108 label=served:6√3 OK
+ALL_OK
