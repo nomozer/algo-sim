@@ -9,7 +9,16 @@
 
 ## 2. Cổng
 
-Ghi sau T3 + cổng danh tính ở commit tài liệu cuối của run (commit ghi log đi sau).
+Tại commit tài liệu `ac55186e`, worktree tách rời sạch có dấu cách (`D:/tmp/merge readiness`, favicon thật sự vắng),
+0 model call; commit ghi log đi sau (chỉ thêm log và mục này):
+
+- T3 `FULL_PRODUCT_GATE_PASS` (`diagnostics/t3_ac55186e.log`): pytest **7239 passed, 1 skipped, 2 deselected**; vitest
+  **67 files / 1040 tests**; typecheck + build; tập demo; bề mặt sập.
+- Cổng danh tính (`diagnostics/gates_ac55186e.log`, từ `6c334121`): candidate `7f3f0423…` khớp; cache 118 / `b1714b566e25c912…`
+  khớp; xuất lược đồ ×2 trùng byte; `LLM_ONLY`; bề mặt mô hình 0 file đổi; bằng chứng ngoài thư mục run 0 file đổi (chỉ
+  `EVIDENCE_INDEX.md` thêm mục); `git diff --check` sạch; docs audit PASS; node harness 100 pass, 2 skipped, 0 fail; worktree
+  sạch trước/sau.
+- Sau T3: `D:/tmp/algosim-browser` 0 thư mục phiên, `%TEMP%\w12-*` 0.
 
 ## 3. Việc của người dùng
 
