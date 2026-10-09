@@ -9,5 +9,12 @@
   "start_head": "ba995887",
   "default_mode": "LLM_ONLY",
   "live_model_requests": 0,
-  "commits": {}
+  "commits": {
+    "preregistration": "e39ed32",
+    "product_and_tests": "0fe4edc",
+    "docs_and_cache_evidence": "cd591dd"
+  },
+  "cache_version": "118 (no bump; cache/decision.json)",
+  "model_surface": "unchanged",
+  "conclusion": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
 }

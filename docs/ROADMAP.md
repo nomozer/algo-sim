@@ -13,6 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Việc `oblique-prism` (2026-10-09, run [`oblique-prism`](evaluation/geometry/runs/oblique-prism/), Cloud, nhánh
+  `feat/oblique-prism`):** G04 lăng trụ xiên trên kiến trúc sẵn có — khuôn T9 của cổng giả định (dùng chung hai tuyến) +
+  họ compiler `oblique_prism_volume`; miền: chân đường cao tại một đỉnh đáy, chiều cao hữu tỉ; `CACHE_VERSION` 118,
+  candidate chưa đóng băng lại. Việc duy nhất: LOCAL kiểm T3 + đóng băng candidate theo `handoff.md` của run, người dùng
+  quyết tích hợp và lát G04 kế tiếp (chân ở trung điểm/trọng tâm cần đổi hợp đồng + ngân sách đo live).
+
 - **Quyết định `frontend-freeze` (2026-10-09, run [`frontend-freeze`](evaluation/geometry/runs/frontend-freeze/), máy local):**
   người dùng hoãn phát triển frontend (chưa phê duyệt chất lượng UI; chỉ sửa lỗi nghiêm trọng ảnh hưởng chức năng cốt lõi) và
   cho tích hợp baseline có ngoại lệ (`APPROVAL.md`). Việc duy nhất kế tiếp: mở rộng các họ hình còn thiếu theo §0.2 trên kiến

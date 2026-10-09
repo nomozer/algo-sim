@@ -64,6 +64,18 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
+> **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; chờ kiểm local + quyết người dùng):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước | 0 dạng G04 có đáp số: cổng giả định chỉ có khuôn lăng trụ ĐỨNG; compiler lăng trụ tam giác bỏ qua `lateral_structure` |
+> | Thêm | khuôn **T9** (amendment §19, dùng chung LLM_ONLY + compiler) · họ compiler thứ bảy `oblique_prism_volume` (đáy trên = `translate` do kernel tính, chiều cao = khoảng cách tới mặt đáy) |
+> | Miền | đáy tam giác vuông / chữ nhật / vuông, `T F ⊥ (đáy)` với F một đỉnh đáy, chiều cao hữu tỉ (trực tiếp hoặc từ cạnh bên); góc nghiêng, chân ở trung điểm/trọng tâm ⇒ từ chối (`ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`) |
+> | Nhãn | 16 hàng ghi trước, oracle độc lập: 6/6 dương + 10/10 âm khớp trên HAI tuyến; red-before 39 đỏ tại `ba995887` |
+> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (4 test danh tính đỏ — việc LOCAL) · **118** (không bump; 49/49 fixture trùng byte) |
+> | Năng lực sản phẩm | `oblique_prism` = `foundation_only` (mô hình chưa đo) |
+> | Run | [`oblique-prism`](evaluation/geometry/runs/oblique-prism/) (`plan.md`, `report.md`, `handoff.md`) |
+
 > **Dải lớp học trên điện thoại — run classroom-band-fit (2026-10-09, máy local; đo `6a1801e7` lần 3, worktree tách rời sạch; chờ review người):**
 >
 > | Mục | Kết quả |
