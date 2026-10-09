@@ -32,6 +32,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any
 
+from ..geometry.radical import sqrt_rational
 from . import primitives as P
 from .fact_graph import Fact, GeometryFactGraph, MauThuanFact, kiem_mau_thuan
 
@@ -44,6 +45,9 @@ SUPPORTED_FAMILY_RECT_PYRAMID = "rectangular_base_pyramid_volume"
 SUPPORTED_FAMILY_CUBOID = "rectangular_cuboid_volume"
 SUPPORTED_FAMILY_CUBE = "cube_volume"
 SUPPORTED_FAMILY_SQUARE_PRISM = "right_square_prism_volume"
+#: G04 — lăng trụ XIÊN: đáy tam giác vuông hoặc chữ nhật/vuông, chân đường cao hạ từ một đỉnh đáy trên
+#: rơi vào một đỉnh đáy dưới (quan hệ `line ⟂ plane` CÓ CẤU TRÚC), chiều cao hữu tỉ.
+SUPPORTED_FAMILY_OBLIQUE_PRISM = "oblique_prism_volume"
 SUPPORTED_FAMILIES = (
     SUPPORTED_FAMILY,
     SUPPORTED_FAMILY_PRISM,
@@ -51,6 +55,7 @@ SUPPORTED_FAMILIES = (
     SUPPORTED_FAMILY_CUBOID,
     SUPPORTED_FAMILY_CUBE,
     SUPPORTED_FAMILY_SQUARE_PRISM,
+    SUPPORTED_FAMILY_OBLIQUE_PRISM,
 )
 
 TRANG_THAI_ELIGIBILITY: tuple[str, ...] = (
@@ -58,6 +63,8 @@ TRANG_THAI_ELIGIBILITY: tuple[str, ...] = (
     "UNSUPPORTED_MISSING_FACT",
     "UNSUPPORTED_EXTRA_OBLIGATION",
     "UNSUPPORTED_SYMBOLIC_LENGTH",
+    #: Dữ kiện đủ và nhất quán nhưng toạ độ cần căn (chiều cao √ từ cạnh bên) — ngoài miền ℚ³ của bố cục.
+    "UNSUPPORTED_IRRATIONAL_LAYOUT",
     #: Đề CÓ THỂ nói rõ *"SA vuông góc với (ABC)"* bằng câu chữ — nhưng không ai
     #: khai nó thành quan hệ CÓ CẤU TRÚC. Đây là phán quyết cố ý của `/2`, không
     #: phải một lỗ hổng: tầng dựng không đọc câu chữ.
@@ -156,9 +163,35 @@ class RangBuocCuboid:
 
 
 @dataclass(frozen=True)
+class RangBuocObliquePrism:
+    """Lăng trụ xiên: bố cục đáy (ℚ³), đỉnh neo T trên pháp tuyến tại chân F, cạnh bên = vectơ B0→T."""
+
+    family_id: str
+    base_cycle: tuple[str, ...]
+    top_cycle: tuple[str, ...]
+    correspondence: tuple[tuple[str, str], ...]
+    display_labels: dict[str, str]
+    #: Toạ độ LAYOUT_DERIVED của đáy, theo thứ tự `base_cycle`.
+    base_coords: tuple[tuple[Fraction, Fraction, Fraction], ...]
+    #: Hai đoạn đáy ĐỀ CHO mà bố cục dùng (để khai độ dài + nối bước dựng về nguồn).
+    base_segments: tuple[tuple[str, str], ...]
+    anchor_top: str
+    anchor_base: str
+    foot: str
+    height: Fraction
+    #: Đoạn mang số đo dựng chiều cao: (T, F) khi đề cho chiều cao, (B0, T) khi suy từ cạnh bên.
+    height_segment: tuple[str, str]
+    witness: str
+    container: str
+    foot_source_fact_id: str | None
+    source_fact_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class KetQuaEligibility:
     status: str
-    binding: RangBuocHo | RangBuocPrism | RangBuocRectPyramid | RangBuocCuboid | None = None
+    binding: (RangBuocHo | RangBuocPrism | RangBuocRectPyramid | RangBuocCuboid
+              | RangBuocObliquePrism | None) = None
     reason_code: str | None = None
     diagnostics: tuple[str, ...] = field(default_factory=tuple)
 
@@ -763,6 +796,168 @@ def _danh_gia_eligibility_cuboid_prism(
     return KetQuaEligibility("SUPPORTED", binding)
 
 
+def _gia_tri(f: Fact) -> Fraction | None:
+    try:
+        return Fraction(str(f.value))
+    except (ValueError, ZeroDivisionError, TypeError):
+        return None
+
+
+def _co_chan_lech(graph: GeometryFactGraph, topo: Any) -> bool:
+    """Đề cho `T F ⊥ (đáy)` với F ≠ đỉnh tương ứng của T — tự nó là lăng trụ XIÊN, kể cả khi `lateral_structure`
+    vắng (hợp đồng điền mặc định `right` khi analyze không khai)."""
+    doi = {str(v): str(u) for u, v in topo.correspondence}
+    day = {str(x) for x in topo.base_cycle}
+    for f in graph.fact_theo_loai("perpendicular_line_plane"):
+        if f.status == "GIVEN" and len(f.args) == 5 and set(f.args[2:]) <= day:
+            t, F = f.args[:2] if f.args[0] in doi else f.args[1::-1]
+            if t in doi and F in day and doi[t] != F:
+                return True
+    return False
+
+
+def _danh_gia_eligibility_oblique_prism(
+    graph: GeometryFactGraph,
+    topo: Any,
+    ob: Fact,
+) -> KetQuaEligibility:
+    """G04 — lăng trụ xiên. Bố cục đáy + một chân đường cao là đỉnh đáy; mọi số đo lấy từ FactGraph."""
+    base = tuple(str(x) for x in topo.base_cycle)
+    top = tuple(str(x) for x in topo.top_cycle)
+    corr = tuple((str(u), str(v)) for u, v in topo.correspondence)
+    try:
+        P.construct_prism("_", base, top, corr)  # cùng một phép kiểm tô-pô với câu lệnh sẽ sinh
+    except ValueError:
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT",
+                                 ("MALFORMED_PRISM_TOPOLOGY",))
+    n = len(base)
+    if n not in (3, 4):
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "BASE_POLYGON_NOT_SUPPORTED", (str(n),))
+    tuong_ung = dict(corr)
+    nguoc = {v: u for u, v in corr}
+    tap_day = set(base)
+    Z = Fraction(0)
+
+    # ── 1 · BỐ CỤC ĐÁY (ℚ³) ──────────────────────────────────────────────
+    goc = [f for f in graph.fact_theo_loai("perpendicular_lines") if f.status == "GIVEN"
+           and len(f.args) == 4 and set(f.args) <= tap_day and len(set(f.args[:2]) & set(f.args[2:])) == 1]
+    if n == 3:
+        if not goc:
+            return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                     "BASE_PERPENDICULAR_RELATION_MISSING", ("perpendicular_lines",))
+        dv = next(iter(set(goc[0].args[:2]) & set(goc[0].args[2:])))
+        c1, c2 = next((base[(i + 1) % 3], base[(i + 2) % 3]) for i, u in enumerate(base) if u == dv)
+        f1, f2 = graph.do_dai(dv, c1), graph.do_dai(dv, c2)
+        thieu = [f"{dv}{c}" for c, f in ((c1, f1), (c2, f2)) if f is None]
+        if thieu:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING",
+                                     ("REQUIRED_LENGTH_MISSING", *thieu))
+        a, b = _gia_tri(f1), _gia_tri(f2)
+        doan_day = ((dv, c1), (dv, c2))
+        toa = {dv: (Z, Z, Z), c1: (a, Z, Z), c2: (Z, b, Z)} if a is not None and b is not None else {}
+        nguon_day = [f1, f2, goc[0]]
+    else:
+        shape = getattr(topo, "base_shape", None)
+        if shape not in ("rectangle", "square"):
+            return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                     "BASE_NOT_RECTANGULAR", (str(shape),))
+        v0, v1, v2, v3 = base
+        ngang = [f for f in (graph.do_dai(v0, v1), graph.do_dai(v2, v3)) if f is not None]
+        doc = [f for f in (graph.do_dai(v0, v3), graph.do_dai(v1, v2)) if f is not None]
+        if shape == "square":
+            ngang = doc = ngang + doc
+        for nhom in (ngang, doc):
+            if len({_gia_tri(f) for f in nhom}) > 1:
+                return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT",
+                                         ("RECTANGLE_OPPOSITE_EDGES_UNEQUAL",))
+        if not ngang or not doc:
+            return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING",
+                                     ("REQUIRED_LENGTH_MISSING", f"{v0}{v1}" if not ngang else f"{v0}{v3}"))
+        a, b = _gia_tri(ngang[0]), _gia_tri(doc[0])
+        doan_day = (tuple(ngang[0].args), tuple(doc[0].args))
+        toa = ({v0: (Z, Z, Z), v1: (a, Z, Z), v2: (a, b, Z), v3: (Z, b, Z)}
+               if a is not None and b is not None else {})
+        nguon_day = [ngang[0], doc[0], *goc]
+    if not toa:
+        return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH", ("base",))
+    if a <= 0 or b <= 0:
+        return KetQuaEligibility("INVALID_NON_POSITIVE_LENGTH", None, "NON_POSITIVE_LENGTH", ("base",))
+
+    # ── 2 · CHÂN ĐƯỜNG CAO: `T F ⟂ (đáy)`, T đỉnh đáy trên, F đỉnh đáy dưới ──
+    #
+    # Cạnh bên của CHÍNH T (F = B0) vuông góc đáy là lăng trụ ĐỨNG — mâu thuẫn với `oblique`.
+    chan: list[tuple[Fact, str, str]] = []
+    for f in graph.fact_theo_loai("perpendicular_line_plane"):
+        if f.status != "GIVEN" or len(f.args) != 5 or not set(f.args[2:]) <= tap_day:
+            continue
+        duong = set(f.args[:2])
+        t, F = duong & set(top), duong & tap_day
+        if len(t) != 1 or len(F) != 1:
+            continue
+        t, F = next(iter(t)), next(iter(F))
+        if tuong_ung[F] == t:
+            return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT",
+                                     ("RIGHT_LATERAL_EDGE_FOR_OBLIQUE_PRISM",))
+        chan.append((f, t, F))
+    if not chan:
+        # Đề không định được phương cạnh bên bằng đỉnh có tên (góc nghiêng, chân là trung điểm/trọng tâm
+        # chưa có quan hệ có cấu trúc): không dựng được mà không giả định.
+        return KetQuaEligibility("UNSUPPORTED_STRUCTURED_RELATION_MISSING", None,
+                                 "OBLIQUE_FOOT_NOT_LOCATED", ("perpendicular_line_plane",))
+    if len({(t, F) for _, t, F in chan}) > 1:
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "OBLIQUE_FOOT_NOT_UNIQUE")
+    fact_chan, T, F = chan[0]
+    B0 = nguoc[T]
+
+    # ── 3 · CHIỀU CAO: đề cho TF, hoặc suy từ cạnh bên (Pythagore, PHẢI hữu tỉ) ──
+    canh_ben = [f for u, v in corr if (f := graph.do_dai(u, v)) is not None]
+    gt_ben = {_gia_tri(f) for f in canh_ben}
+    if None in gt_ben:
+        return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH", ("lateral",))
+    if len(gt_ben) > 1:
+        return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT", ("LATERAL_EDGES_UNEQUAL",))
+    lech = sum(((x - y) ** 2 for x, y in zip(toa[B0], toa[F])), Fraction(0))
+    f_cao = graph.do_dai(T, F)
+    if f_cao is not None:
+        h = _gia_tri(f_cao)
+        if h is None:
+            return KetQuaEligibility("UNSUPPORTED_SYMBOLIC_LENGTH", None, "SYMBOLIC_LENGTH", ("height",))
+        if h <= 0:
+            return KetQuaEligibility("INVALID_NON_POSITIVE_LENGTH", None, "NON_POSITIVE_LENGTH", ("height",))
+        if canh_ben and next(iter(gt_ben)) ** 2 != h * h + lech:
+            return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT",
+                                     ("LATERAL_EDGE_HEIGHT_MISMATCH",))
+        doan_cao = (T, F)
+    elif canh_ben:
+        L = next(iter(gt_ben))
+        if L <= 0:
+            return KetQuaEligibility("INVALID_NON_POSITIVE_LENGTH", None, "NON_POSITIVE_LENGTH", ("lateral",))
+        h2 = L * L - lech
+        if h2 <= 0:
+            return KetQuaEligibility("INVALID_CONFLICT", None, "INVALID_CONFLICT",
+                                     ("LATERAL_EDGE_NOT_LONGER_THAN_FOOT_OFFSET",))
+        h = sqrt_rational(h2)
+        if not isinstance(h, Fraction):
+            return KetQuaEligibility("UNSUPPORTED_IRRATIONAL_LAYOUT", None, "IRRATIONAL_HEIGHT", ("height",))
+        f_cao = canh_ben[0]
+        doan_cao = tuple(f_cao.args)
+    else:
+        return KetQuaEligibility("UNSUPPORTED_MISSING_FACT", None, "REQUIRED_FACT_MISSING",
+                                 ("REQUIRED_LENGTH_MISSING", f"{T}{F}"))
+
+    return KetQuaEligibility("SUPPORTED", RangBuocObliquePrism(
+        family_id=SUPPORTED_FAMILY_OBLIQUE_PRISM,
+        base_cycle=base, top_cycle=top, correspondence=corr,
+        display_labels=dict(getattr(topo, "display_labels", {}) or {}),
+        base_coords=tuple(toa[u] for u in base),
+        base_segments=doan_day,
+        anchor_top=T, anchor_base=B0, foot=F, height=h, height_segment=doan_cao,
+        witness=str(ob.value or "the_tich_lang_tru"), container=str(ob.args[1]),
+        foot_source_fact_id=fact_chan.source_fact_id,
+        source_fact_ids=tuple(sorted({f.source_fact_id for f in (*nguon_day, fact_chan, f_cao, *canh_ben)
+                                      if f.source_fact_id}))))
+
+
 # ══ ELIGIBILITY ═════════════════════════════════════════════════════════════
 def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
     """Graph này có thuộc họ lát cắt hỗ trợ không. KHÔNG sinh chương trình một phần."""
@@ -792,6 +987,10 @@ def danh_gia_eligibility(graph: GeometryFactGraph) -> KetQuaEligibility:
     if getattr(graph, "solid_topology", None) is not None:
         topo = graph.solid_topology
         if getattr(topo, "solid_kind", None) == "prism":
+            # Một khối chuyên biệt (hộp, lập phương…) khai `oblique` vẫn đi nhánh của nó để bị từ chối mâu thuẫn.
+            if getattr(topo, "solid_subkind", None) is None and (
+                    getattr(topo, "lateral_structure", None) == "oblique" or _co_chan_lech(graph, topo)):
+                return _danh_gia_eligibility_oblique_prism(graph, topo, do_the_tich[0])
             base_cycle = getattr(topo, "base_cycle", ())
             if len(base_cycle) == 4:
                 return _danh_gia_eligibility_cuboid_prism(graph, topo, do_the_tich[0])
@@ -931,6 +1130,8 @@ def bien_dich(graph: GeometryFactGraph) -> KetQuaBienDich:
         return _bien_dich_rectangular_pyramid(graph, b, t0)
     if isinstance(b, RangBuocCuboid):
         return _bien_dich_cuboid(graph, b, t0)
+    if isinstance(b, RangBuocObliquePrism):
+        return _bien_dich_oblique_prism(graph, b, t0)
 
     Z = Fraction(0)
     # ── BỐ CỤC CHÍNH TẮC (LAYOUT_DERIVED) ────────────────────────────────
@@ -1536,3 +1737,103 @@ def _bien_dich_cuboid(
         elapsed_ms=(time.perf_counter() - t0) * 1000)
 
 
+
+
+def _bien_dich_oblique_prism(
+    graph: GeometryFactGraph,
+    b: RangBuocObliquePrism,
+    t0: float,
+) -> KetQuaBienDich:
+    """G04 — đáy và đỉnh neo do bố cục đặt; đáy trên là ẢNH TỊNH TIẾN của đáy dưới, do KERNEL tính."""
+    nhan = lambda u: b.display_labels.get(u, u)  # noqa: E731
+    ky = lambda *us: "".join(nhan(u) for u in us)  # noqa: E731
+    tuong_ung = dict(b.correspondence)
+    T, B0, F = b.anchor_top, b.anchor_base, b.foot
+    toa_day = dict(zip(b.base_cycle, b.base_coords))
+    fx, fy, fz = toa_day[F]
+
+    ten_day = f"day_{''.join(b.base_cycle)}"
+    ten_mat = f"mat_day_{''.join(b.base_cycle)}"
+    ten_vec = f"vec_{B0}{T}"
+    ten_khoi = b.container
+    ten_dt = f"dien_tich_{ten_day}"
+    ten_cao = f"chieu_cao_{T}"
+    ten_tt = f"the_tich_{ten_khoi}"
+    goi: list[P.LoiGoiPrimitive] = []
+    buoc: list[BuocDung] = []
+    stmts: list[dict[str, Any]] = []
+    khai: list[dict[str, Any]] = []
+    dan_xuat: list[str] = []
+
+    def them(prim: str, st: dict[str, Any], mo_ta: str,
+             src: tuple[str, ...] = (), der: tuple[str, ...] = (),
+             obj: tuple[str, ...] = ()) -> None:
+        stmts.append(st)
+        goi.append(P.LoiGoiPrimitive(prim, len(st), src, der))
+        buoc.append(BuocDung(len(buoc) + 1, prim, mo_ta, src, der, obj))
+        dan_xuat.extend(der)
+
+    def _src(*doan: tuple[str, str]) -> tuple[str, ...]:
+        return tuple(sorted({f.source_fact_id for d in doan
+                             if (f := graph.do_dai(*d)) is not None and f.source_fact_id}))
+
+    # 1 · Đáy dưới theo bố cục chính tắc (ℚ³)
+    for u in b.base_cycle:
+        canh = tuple(d for d in b.base_segments if u in d and toa_day[u] != (0, 0, 0))
+        them("declare_point", P.declare_point(u, toa_day[u], nhan=nhan(u)),
+             f"Đặt đỉnh {nhan(u)} của đáy dưới" + (" theo độ dài cạnh đề cho." if canh else " làm gốc toạ độ."
+                                                   if toa_day[u] == (0, 0, 0) else "."),
+             _src(*canh), (f"layout_{u}",), (u,))
+    them("construct_polygon", P.construct_polygon(ten_day, b.base_cycle, nhan=f"đáy {ky(*b.base_cycle)}"),
+         f"Dựng đáy dưới {ky(*b.base_cycle)}.", der=(f"derived_{ten_day}",), obj=(ten_day,))
+    # 2 · Đỉnh neo trên pháp tuyến của đáy tại chân F (quan hệ ⟂ ĐỀ CHO)
+    them("declare_point", P.declare_point(T, (fx, fy, fz + b.height), nhan=nhan(T)),
+         f"Dựng {nhan(T)} trên đường thẳng vuông góc với đáy tại {nhan(F)} "
+         f"({ky(T, F)} ⊥ đáy), cách đáy đúng chiều cao.",
+         tuple(sorted({*_src(b.height_segment), *((b.foot_source_fact_id,) if b.foot_source_fact_id else ())})),
+         (f"layout_{T}",), (T,))
+    # 3 · Cạnh bên: vectơ B0→T, và các đỉnh đáy trên là ảnh tịnh tiến — kernel tính
+    them("vector_from_points", P.vector_from_points(ten_vec, B0, T),
+         f"Lấy vectơ cạnh bên {ky(B0, T)}.", der=(f"derived_{ten_vec}",))
+    for u in b.base_cycle:
+        if u == B0:
+            continue
+        v = tuong_ung[u]
+        them("translate_point", P.translate_point(v, u, ten_vec, nhan=nhan(v)),
+             f"Tịnh tiến {nhan(u)} theo vectơ {ky(B0, T)} được {nhan(v)} "
+             f"(cạnh bên {ky(u, v)} song song và bằng {ky(B0, T)}).",
+             der=(f"derived_{v}",), obj=(v,))
+    # 4 · Khối
+    khoi = P.construct_prism(ten_khoi, b.base_cycle, b.top_cycle, b.correspondence)
+    khoi["label"] = f"Lăng trụ xiên {ky(*b.base_cycle)}.{ky(*b.top_cycle)}"
+    them("construct_prism", khoi, f"Dựng {khoi['label']} từ hai đáy và các cạnh bên.",
+         der=(f"derived_{ten_khoi}",), obj=(ten_khoi,))
+    # 5 · Đo — diện tích đáy, chiều cao (khoảng cách đỉnh neo tới MẶT PHẲNG đáy), thể tích
+    them("measure_quantity", P.measure_quantity(ten_dt, "area", ten_day),
+         f"Tính diện tích đáy S_{ky(*b.base_cycle)}.", der=(f"derived_{ten_dt}",))
+    them("construct_plane", {"kind": "construct_plane", "target_var": ten_mat,
+                             "through": list(b.base_cycle[:3]), "label": f"({ky(*b.base_cycle[:3])})"},
+         "Mặt phẳng đáy để đo chiều cao.", der=(f"derived_{ten_mat}",), obj=(ten_mat,))
+    them("measure_quantity", P.measure_quantity(ten_cao, "distance", T, wrt=ten_mat),
+         f"Chiều cao lăng trụ = khoảng cách từ {nhan(T)} tới mặt phẳng đáy.", der=(f"derived_{ten_cao}",))
+    them("measure_quantity", P.measure_quantity(ten_tt, "volume", ten_khoi),
+         "Tính thể tích V.", der=(f"derived_{ten_tt}",))
+    them("assign_final_memory", P.assign_final_memory(b.witness, ten_tt),
+         "Ghi thể tích vào biến mà đề yêu cầu.", der=(b.witness,))
+
+    khai.extend(_khai_do_dai_de_cho(graph, tuple(dict.fromkeys((*b.base_segments, b.height_segment)))))
+    for u in (*b.base_cycle, T):
+        khai.append(P.memory_declaration(u, "point3", provenance="LAYOUT_DERIVED"))
+    khai.append(P.memory_declaration(ten_day, "polygon3"))
+    khai.append(P.memory_declaration(ten_khoi, "solid"))
+    for t in dict.fromkeys((ten_dt, ten_cao, ten_tt, b.witness)):
+        khai.append(P.memory_declaration(t, P.KIEU_DAI_LUONG))
+
+    program = {
+        "title": "Thể tích khối lăng trụ xiên",
+        "memory_declarations": khai,
+        "statements": stmts,
+    }
+    return KetQuaBienDich(
+        "COMPILED", program, tuple(goi), tuple(buoc), tuple(dan_xuat),
+        elapsed_ms=(time.perf_counter() - t0) * 1000)

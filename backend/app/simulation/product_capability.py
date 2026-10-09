@@ -81,6 +81,16 @@ NANG_LUC_SAN_PHAM: dict[str, NangLucSanPham] = {
             "regular_triangular_pyramid", "Chóp tam giác đều · tứ diện đều (cạnh dạng k√2, k√6)", "foundation_only",
             "hệ: T8 + bộ đọc §18.1 + độ dài căn §18.3 + binding trọng tâm §18.4, corpus 24 hàng ghi trước "
             "(regular-triangular-pyramid-w01) · MÔ HÌNH: chưa đo"),
+        # ── LĂNG TRỤ XIÊN (oblique-prism, G04) ───────────────────────────
+        #
+        # Miền HẸP đã khai (ASSUMPTION_CERTIFICATE_AMENDMENT §19): đáy tam giác vuông / chữ nhật / vuông, đề nêu
+        # `T F ⊥ (đáy)` với F là một ĐỈNH đáy, chiều cao hữu tỉ. Góc nghiêng, chân ở trung điểm/trọng tâm: từ chối.
+        # `foundation_only`: route tất định (LLM_ONLY trên chương trình kiểu mô hình + compiler opt-in) đi trọn, nhưng
+        # prompt KHÔNG đổi và chưa đo mô hình có tự khai quan hệ chân đường cao hay không.
+        NangLucSanPham(
+            "oblique_prism", "Lăng trụ xiên (chân đường cao tại một đỉnh đáy)", "foundation_only",
+            "hệ: khuôn T9 §19 + họ compiler `oblique_prism_volume`, 16 hàng ghi trước (oblique-prism/labels.json, "
+            "oracle độc lập) · MÔ HÌNH: chưa đo"),
         # ── KHỐI KHÔNG LỒI ───────────────────────────────────────────────
         #
         # THÊM MỚI 2026-09-07 (`NONCONVEX_POLYHEDRON_VOLUME_FOUNDATION`).

@@ -244,6 +244,12 @@ class SemanticProgramInterpreter:
                     elif stmt.target_var == "V":
                         narration = f"Kết luận {target_symbol} = {val}."
 
+            if not narration and self._compiler_geometry and getattr(stmt.expr, "kind", None) == "vector_from_points":
+                # Một vectơ không phải "giá trị vừa tính": kể bằng hai điểm, không in repr của Vec3. Chỉ chương trình
+                # compiler — envelope LLM_ONLY giữ nguyên byte (lỗi lời kể ấy của tuyến LLM: OPEN_ISSUES, cần bump cache).
+                from .source_entities import dinh_danh_thuc_the
+                narration = "Lấy vectơ {}{}.".format(*(dinh_danh_thuc_the(p)[1] for p in (
+                    stmt.expr.from_point, stmt.expr.to_point)))
             if not narration:
                 from .display_names import ky_hieu_dai_luong
                 target_symbol = ky_hieu_dai_luong(stmt.target_var)

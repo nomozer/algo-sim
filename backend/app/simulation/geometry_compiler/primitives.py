@@ -181,6 +181,22 @@ def construct_line(ten: str, diem_dau: str, diem_cuoi: str,
     return st
 
 
+def vector_from_points(ten: str, tu_diem: str, toi_diem: str) -> dict[str, Any]:
+    """Vectơ CÓ HƯỚNG giữa hai điểm ĐÃ CÓ TÊN. Kernel tính, compiler không chép toạ độ."""
+    return {"kind": "assign", "target_var": ten,
+            "expr": {"kind": "vector_from_points", "from_point": tu_diem, "to_point": toi_diem}}
+
+
+def translate_point(ten: str, diem: str, vecto: str,
+                    nhan: str | None = None) -> dict[str, Any]:
+    """Điểm `diem + vecto` — dựng bằng phép `translate` của IR (lăng trụ: đáy trên là ảnh tịnh tiến của đáy dưới)."""
+    st: dict[str, Any] = {"kind": "construct_point", "target_var": ten,
+                          "expr": {"kind": "translate", "point": diem, "vector": vecto}}
+    if nhan:
+        st["label"] = nhan
+    return st
+
+
 def memory_declaration(ten: str, kieu: str,
                        model_assumption: str | None = None,
                        provenance: str | None = None,

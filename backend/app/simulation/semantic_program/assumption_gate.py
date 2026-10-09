@@ -851,7 +851,104 @@ def _khuon_chop(rb, S: str, day: tuple, ent: tuple, do_dai: dict | None = None):
     return "TEMPLATE_NOT_MATCHED pyramid base size"
 
 
-def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_kieu: list):
+def _khuon_lang_tru_xien(rb, day: tuple, tren: tuple, ent: tuple, rb_kieu: list, do_dai: dict):
+    """T9 (§19, oblique-prism) — lăng trụ xiên: chân đường cao hạ từ đỉnh T của đáy trên là một đỉnh F ≠ B₀ của đáy dưới.
+
+    `None` ⇔ đề không nêu quan hệ ấy (luồng T3–T6 tiếp tục như trước). Chiều cao đến trực tiếp (`height`, |TF|) hoặc
+    SUY từ cạnh bên l (h² = l² − |B₀F|²); nguồn khác nhau ⇒ mâu thuẫn; h² không là bình phương hữu tỉ ⇒ ngoài ℚ³."""
+    k = len(day)
+    doi = dict(zip(tren, day))
+    chan = {(T, F, r) for r in rb if r.kind == "line_perp_plane" and len(set(r.entities[:2])) == 2
+            and set(r.entities[2:]) <= set(day) and len(set(r.entities[2:])) >= 3
+            for T, F in (r.entities[:2], r.entities[1::-1]) if T in doi and F in day and doi[T] != F}
+    if not chan:
+        return None
+    if len({(T, F) for T, F, _ in chan}) > 1:
+        return "TEMPLATE_NOT_MATCHED T9: more than one foot of a lateral height"
+    T, F, r_chan = next(iter(chan))
+    B0 = doi[T]
+    tien_de = [*rb_kieu, r_chan]
+    canh_cua = lambda i, j: [(day[i], day[j]), (tren[i], tren[j])]  # noqa: E731
+    rbuoc: list = [(f"translation {day[i]}{tren[i]}", lambda V, i=i: V[tren[i]] - V[day[i]] == V[T] - V[B0])
+                   for i in range(k)]
+    rbuoc += [("foot of the height", lambda V: all((V[T] - V[F]).dot(V[day[(i + 1) % k]] - V[day[i]]) == 0
+                                                   for i in range(k))),
+              ("apex off the base", lambda V: V[T] != V[F])]
+    if k == 3:
+        X, gv = next(((x, g) for x in day if (g := _goc_vuong_tai(rb, day, x))), (None, None))
+        if X is None:
+            return "TEMPLATE_NOT_MATCHED T9: no right angle on the base"
+        Y, Z = [p for p in day if p != X]
+        rbuoc.append(("right angle on the base", lambda V: _vuong(V, X, Y, Z)))
+        i, j, l = day.index(X), day.index(Y), day.index(Z)
+        lop = [_KichThuoc(_nhan(X, Y), canh_cua(i, j), None, ("canh", X, Y)),
+               _KichThuoc(_nhan(X, Z), canh_cua(i, l), None, ("canh", X, Z))]
+        tien_de.append(gv)
+
+        def day_chinh_tac(L: list) -> dict[str, Vec3]:
+            return {X: _o(), Y: _o(L[0]), Z: _o(0, L[1])}
+    elif k == 4:
+        a, b, c, d = day
+        vuong = next((r for r in rb if r.kind == "base_square" and set(r.entities) == set(day)), None)
+        cn = next((r for r in rb if r.kind == "base_rectangle" and set(r.entities) == set(day)), None)
+        if vuong is None and cn is None:
+            return "TEMPLATE_NOT_MATCHED T9: base not stated rectangle/square"
+        rbuoc += [("base parallelogram", lambda V: V[b] - V[a] == V[c] - V[d]),
+                  ("base right angle", lambda V: _vuong(V, a, b, d))]
+        if vuong is not None:
+            rbuoc.append(("base square", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == (V[d] - V[a]).dot(V[d] - V[a])))
+            if vuong.value is not None:
+                rbuoc.append(("base side", lambda V: (V[b] - V[a]).dot(V[b] - V[a]) == square(vuong.value)))
+            lop = [_KichThuoc(_nhan(a, b), canh_cua(0, 1) + canh_cua(1, 2) + canh_cua(2, 3) + canh_cua(3, 0),
+                              vuong.value, ("vi_tu_mat", a, day[:3]))]
+        else:
+            lop = [_KichThuoc(_nhan(a, b), canh_cua(0, 1) + canh_cua(3, 2), None, ("canh", a, b)),
+                   _KichThuoc(_nhan(a, d), canh_cua(0, 3) + canh_cua(1, 2), None, ("canh", a, d))]
+        tien_de.append(vuong or cn)
+
+        def day_chinh_tac(L: list) -> dict[str, Vec3]:
+            return _chu_nhat_chinh_tac(day, L[0], L[-1])
+    else:
+        return "TEMPLATE_NOT_MATCHED T9: prism base size"
+
+    # ── chiều cao: mọi nguồn trùng bình phương ────────────────────────────
+    ben = {square(do_dai[frozenset(p)]) for p in zip(day, tren) if frozenset(p) in do_dai}
+    if len(ben) > 1:
+        return "TEMPLATE_CONTRADICTION T9: lateral edges² " + ", ".join(str(x) for x in sorted(ben))
+    cao, rb_cao = _do_dai_tu_rb(rb, "height", ent)
+    tien_de += rb_cao
+    ung: list[tuple[str, Fraction]] = []
+    if cao is not None:
+        ung.append(("height", square(cao)))
+    if frozenset((T, F)) in do_dai:
+        ung.append(("foot segment", square(do_dai[frozenset((T, F))])))
+    canh_day = [kt.gia_tri if kt.gia_tri is not None else next(
+        (do_dai[frozenset(p)] for p in kt.lop if frozenset(p) in do_dai), None) for kt in lop]
+    if ben and all(isinstance(x, Fraction) for x in canh_day):
+        ct = day_chinh_tac(canh_day)
+        ung.append(("lateral edge", next(iter(ben)) - (ct[B0] - ct[F]).dot(ct[B0] - ct[F])))
+    if len({v for _, v in ung}) > 1:
+        return "TEMPLATE_CONTRADICTION T9: " + ", ".join(f"{n} ⇒ h² = {v}" for n, v in ung)
+    h = None
+    if ung:
+        h2 = ung[0][1]
+        if h2 <= 0:
+            return f"TEMPLATE_NOT_MATCHED T9: degenerate height (h² = {h2})"
+        h = _can_huu_ti(h2)
+        if h is None:
+            return f"TEMPLATE_NOT_REPRESENTABLE T9: h² = {h2} is not a rational square (no rational coordinates)"
+        rbuoc.append(("height", lambda V: (V[T] - V[F]).dot(V[T] - V[F]) == h * h))
+
+    def chinh_tac(L: list) -> dict[str, Vec3]:
+        day_ct = day_chinh_tac(L[:-1])
+        dinh_T = day_ct[F] + _o(0, 0, L[-1])
+        return {**day_ct, **{tren[i]: day_ct[day[i]] + (dinh_T - day_ct[B0]) for i in range(k)}}
+
+    return _Khuon("T9", day + tren, rbuoc, lop + [_KichThuoc(_nhan(T, F), [(T, F)], h, ("phap_tuyen", F, day[:3]))],
+                  tien_de, chinh_tac)
+
+
+def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_kieu: list, do_dai: dict | None = None):
     k = len(day)
     ben = [(day[i], tren[i]) for i in range(k)]
     cao, rb_cao = _do_dai_tu_rb(rb, "height", ent)
@@ -869,6 +966,10 @@ def _khuon_lang_tru(rb, day: tuple, tren: tuple, ent: tuple, kieu: set[str], rb_
 
     def nap(day_ct: dict[str, Vec3], h: Fraction) -> dict[str, Vec3]:
         return {**day_ct, **{tren[i]: day_ct[day[i]] + _o(0, 0, h) for i in range(k)}}
+    if not kieu & {"right_prism", "cuboid", "cube"}:
+        xien = _khuon_lang_tru_xien(rb, day, tren, ent, rb_kieu, do_dai or {})
+        if xien is not None:
+            return xien
     if k == 3 and "right_prism" in kieu:
         X, gv = next(((x, g) for x in day if (g := _goc_vuong_tai(rb, day, x))), (None, None))
         if X is None:
@@ -934,7 +1035,7 @@ def _nhan_khuon(rb: tuple[RangBuoc, ...], cm: _ChiMuc, prog: dict, do_dai: dict 
                 k.tien_de = rb_kieu + k.tien_de
         else:
             n = len(ent) // 2
-            k = _khuon_lang_tru(rb, ent[:n], ent[n:], ent, {r.kind for r in rb_kieu}, rb_kieu)
+            k = _khuon_lang_tru(rb, ent[:n], ent[n:], ent, {r.kind for r in rb_kieu}, rb_kieu, do_dai)
         return (k, anh_xa) if isinstance(k, _Khuon) else k
     if co_ten:
         return "TEMPLATE_NOT_MATCHED more than one named solid"
