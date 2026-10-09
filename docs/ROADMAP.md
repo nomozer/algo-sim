@@ -13,6 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Việc `regular-hexagonal-pyramid` (2026-10-09, run [`regular-hexagonal-pyramid`](evaluation/geometry/runs/regular-hexagonal-pyramid/),
+  Cloud, nhánh `feat/g05-geometry-capability-expansion`, CHƯA tích hợp):** lát cắt G05 đầu tiên sau Policy A — chóp lục
+  giác đều qua khuôn T11 + metric khung (amendment §26): 8 đề trước bị từ chối/phục vụ sai nay phục vụ đúng (C1, Scene3D
+  có `chart_metric`); `CACHE_VERSION` 124; `foundation_only`; chờ LOCAL. Ứng viên G05 kế tiếp: lăng trụ lục giác đều /
+  lăng trụ tam giác đều (ký hiệu lăng trụ + metric lăng trụ, cùng cơ chế).
+
 - **Việc `unnamed-pyramid-vertex-binding` (2026-10-09, run [`unnamed-pyramid-vertex-binding`](evaluation/geometry/runs/unnamed-pyramid-vertex-binding/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `32705882`):** nghiên cứu (b) ⇒ người dùng chọn **A**: chặn 21 đề chóp đều không tên
   có tên điểm thiếu toạ độ (12 served → refused, 9 giữ từ chối; amendment §25); `CACHE_VERSION` 123; candidate

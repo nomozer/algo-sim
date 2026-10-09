@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 123 (unnamed-pyramid-vertex-binding, chính sách A: chóp đều không tên chưa gắn được đỉnh bị chặn — 12 served → refused; runs/unnamed-pyramid-vertex-binding/cache/decision.json)
+> CACHE_VERSION = 124 trên nhánh `feat/g05-geometry-capability-expansion` (chóp lục giác đều: giá trị đã phục vụ đổi + C0 lục giác mâu thuẫn served → refused; runs/regular-hexagonal-pyramid/cache/decision.json) · `main`: 123 (unnamed-pyramid-vertex-binding, chính sách A: chóp đều không tên chưa gắn được đỉnh bị chặn — 12 served → refused; runs/unnamed-pyramid-vertex-binding/cache/decision.json)
 > CANDIDATE = b13a3ef1c34cd41d… (102 file; product commit 56692926; cache 123; đóng băng LOCAL 39b0fb4a, T3 PASS — runs/unnamed-pyramid-vertex-binding/handoff.md; trên `main` từ 32705882)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = UNNAMED_PYRAMID_VERTEX_BINDING (run `unnamed-pyramid-vertex-binding` — chính sách A: Cloud triển khai, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
@@ -63,6 +63,17 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
+
+> **G05 chóp lục giác đều — run regular-hexagonal-pyramid (2026-10-09, Cloud, nhánh `feat/g05-geometry-capability-expansion`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Trước (`f20caf8a`) | chóp lục giác đều: bộ đọc chỉ thấy `pyramid` ⇒ 7/8 đề dương bị từ chối, "… có đỉnh S và đáy ABCDEF" PHỤC VỤ SAI (1 thay 6√3) |
+> | Thêm | bộ đọc lục giác đều + khuôn **T11** + metric khung lục giác (`do_luong_cua`) + C0 kiểm lục giác (amendment §26) — tái dùng cơ chế khung affine của T8, không engine mới |
+> | Kết quả | 8/8 đề dương phục vụ đúng giá trị oracle (C1, Scene3D có `chart_metric`); biên từ chối đúng; 1 đính chính nhãn (khung affine, như T8) |
+> | Đường chạy | LLM_ONLY route trên chương trình kiểu mô hình (`foundation_only`, mô hình chưa đo); compiler: chưa có họ |
+> | `CACHE_VERSION` · candidate | **124** · candidate `b13a3ef1…` CHƯA đóng băng lại (LOCAL) |
+> | Run | [`regular-hexagonal-pyramid`](evaluation/geometry/runs/regular-hexagonal-pyramid/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **Chính sách A cho chóp đều không tên chưa gắn được — run unnamed-pyramid-vertex-binding (2026-10-09, Cloud, nhánh `fix/unnamed-pyramid-vertex-binding`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `32705882` theo `APPROVAL.md`):**
 >
