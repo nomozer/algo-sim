@@ -1,0 +1,28 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "regular-prisms (run regular-prisms — G05 slice: regular triangular and hexagonal prisms through an affine chart and a text-derived metric, template T12)",
+  "corrects": "docs/evaluation/geometry/runs/regular-hexagonal-pyramid/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883",
+  "current_candidate_source_commit": "d8b9da749b1337d492bcb9209373109071b049c9",
+  "current_candidate_frozen_at": "9148450d5fa55c3b4fbfdbaf7f4f07bc7f6833e7",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/prism freeze) at 9148450d; product commit d8b9da74 (the last commit touching backend/app; the Cloud fix after 00770c34); 102 files; --verify match (diagnostics/freeze_d8b9da74.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 124 → 125: six C0 'lăng trụ … đều' texts whose coordinates contradict them were served under 124 and are refused now (re-run LOCAL on ea85216b and on the branch, logs identical to Cloud's); LOCAL also found two C0 pyramid texts 'đáy là lục giác đều' contradicted by coordinates served → refused by the same reader change; cache identity lock regenerated, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "cf47dd6142f2d46fd5b9be252fee0d9a7530844d3e1bf07ece47b52b4b433f5a",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "regular-prisms backend/app changes (amendment §27): shape_constraint reads the regular triangular / hexagonal prism (noun, `lăng trụ đứng … đáy là tam/lục giác đều`; not with `xiên`) and its base side / lateral edge; assumption_gate adds template T12 (translation, lateral ⊥ base and regular base under the metric), kich_thuoc_t12 shared by the template and the metric, the prism metric in do_luong_cua (tail shared as _gram_khung), and C0 checks of the regular hexagon and of the prism's lateral edges on given coordinates; product_capability row regular_prism = foundation_only; CACHE_VERSION 124 → 125 in main.py. No kernel, compiler, prompt, grammar card, schema or IR-capability change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/main.py",
+    "backend/app/simulation/product_capability.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/shape_constraint.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 93077b51 (product commit d8b9da74) is the current product identity on feat/g05-regular-prisms. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 125
+}

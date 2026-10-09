@@ -1,0 +1,17 @@
+# cwd: <worktree 'D:/tmp/prism freeze'/backend> @ 9148450d5fa55c3b4fbfdbaf7f4f07bc7f6833e7; clean detached CRLF; bare freeze then --verify
+2026-10-09T18:53:17Z
+0
+product commit (last touching backend/app, frontend/src): d8b9da749b1337d492bcb9209373109071b049c9
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            9148450d  (cây sạch: True)
+  CACHE_VERSION     125
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       102 file · 93077b51d033c198
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 93077b51d033c198…).
+verify exit=0
+ M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
