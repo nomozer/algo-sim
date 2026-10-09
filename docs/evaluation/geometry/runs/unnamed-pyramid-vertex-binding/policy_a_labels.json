@@ -1,0 +1,135 @@
+{
+ "schema_version": "policy-labels/1",
+ "run_id": "unnamed-pyramid-vertex-binding",
+ "policy": "A (approved 2026-10-09, final)",
+ "written": "2026-10-09, after the user's decision; committed before the policy-A product commit (the expectation — refuse all 21 — is the user's decision, not derived from the product)",
+ "rule": "Policy A: an unnamed regular pyramid whose text names points without coordinates (amendment §24 cannot bind it) is inside the route's refusal zone and is refused by the gate (template not matched: vertices not fixed by the text). Product expectation for all 21 rows: refused — at the assumption gate for the 12 rows served on a7c56942, any earlier stage kept for the 9 already refused. This is a capability/safety POLICY, not a mathematical verdict: labels.json `text_verdict` (unchanged) still says 8 rows are determined by the text; 5 of them (S5, S7, R2_S9, P9, P11) are refused only because no certified labelling mechanism exists (option B deferred). Reason codes: existing policy (ASSUMPTION_INVARIANCE_UNPROVEN), never SOURCE_SHAPE_CONTRADICTS_COORDINATES.",
+ "rows": {
+  "square/N4_wrong_centre_identity": {
+   "baseline_a7c56942": "refused:construction_binding:CONSTRUCTION_NOT_TEXT_BOUND",
+   "text_verdict": "determined:16",
+   "expect_policy_a": "refused",
+   "why": "safety: text determined, but the corpus program is wrong — centre O built as a midpoint, not AC ∩ BD (corpus N4)"
+  },
+  "square/S7_named_centre": {
+   "baseline_a7c56942": "served:16",
+   "text_verdict": "determined:16",
+   "expect_policy_a": "refused",
+   "why": "capability_limit: the text determines the answer (16) but no certified labelling mechanism exists under policy A (option B deferred)"
+  },
+  "square/N5_apex_over_vertex": {
+   "baseline_a7c56942": "served:3",
+   "text_verdict": "determined:√17",
+   "expect_policy_a": "refused",
+   "why": "safety: text determined, but the corpus program is wrong — program builds the apex over a base vertex (corpus N5)"
+  },
+  "square/S5_lateral_edge_length": {
+   "baseline_a7c56942": "served:√17",
+   "text_verdict": "determined:√17",
+   "expect_policy_a": "refused",
+   "why": "capability_limit: the text determines the answer (√17) but no certified labelling mechanism exists under policy A (option B deferred)"
+  },
+  "square/R2_L1_chained_equal_lateral_edges": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "square/W5_A_chain_cites_other_member": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "square/W5_D_program_value_differs_from_chain": {
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: text determined, but the corpus program is wrong — program value differs from the chain (corpus W5_D)"
+  },
+  "square/W5_E_program_segment_outside_chain": {
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: text determined, but the corpus program is wrong — program measures a segment outside the chain (corpus W5_E)"
+  },
+  "square/R2_N8_lateral_contradiction": {
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "text_verdict": "contradiction",
+   "expect_policy_a": "refused",
+   "why": "safety: contradiction under the text's own facts (oracle.py)"
+  },
+  "square/R2_N9_contradiction_program_fits_lengths": {
+   "baseline_a7c56942": "served:16",
+   "text_verdict": "contradiction",
+   "expect_policy_a": "refused",
+   "why": "safety: contradiction under the text's own facts (oracle.py)"
+  },
+  "square/R2_S10_lateral_other_vertex": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "square/R2_S8_side_AB_lateral_SA": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "square/R2_S9_side_lateral_named": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "determined:16/3",
+   "expect_policy_a": "refused",
+   "why": "capability_limit: the text determines the answer (16/3) but no certified labelling mechanism exists under policy A (option B deferred)"
+  },
+  "square/R2_U4_irrational_via_lateral": {
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "square/W5_B_chain_mixed_values": {
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "text_verdict": "contradiction",
+   "expect_policy_a": "refused",
+   "why": "safety: contradiction under the text's own facts (oracle.py)"
+  },
+  "square/W5_C_chain_without_value": {
+   "baseline_a7c56942": "served:16/3",
+   "text_verdict": "missing",
+   "expect_policy_a": "refused",
+   "why": "safety: missing under the text's own facts (oracle.py)"
+  },
+  "triangular/N3_lateral_mixed": {
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "text_verdict": "contradiction",
+   "expect_policy_a": "refused",
+   "why": "safety: contradiction under the text's own facts (oracle.py)"
+  },
+  "triangular/N4_declared_value_conflict": {
+   "baseline_a7c56942": "refused:grounding:SOURCE_EVIDENCE_CONFLICT",
+   "text_verdict": "ambiguous",
+   "expect_policy_a": "refused",
+   "why": "safety: ambiguous under the text's own facts (oracle.py)"
+  },
+  "triangular/N6_wrong_centroid_identity": {
+   "baseline_a7c56942": "refused:source_invariant:None",
+   "text_verdict": "determined:9/2",
+   "expect_policy_a": "refused",
+   "why": "safety: text determined, but the corpus program is wrong — centroid G built as the midpoint of BC (corpus N6)"
+  },
+  "triangular/P9_named_centroid": {
+   "baseline_a7c56942": "served:9/2",
+   "text_verdict": "determined:9/2",
+   "expect_policy_a": "refused",
+   "why": "capability_limit: the text determines the answer (9/2) but no certified labelling mechanism exists under policy A (option B deferred)"
+  },
+  "triangular/P11_lateral_length": {
+   "baseline_a7c56942": "served:3",
+   "text_verdict": "determined:3",
+   "expect_policy_a": "refused",
+   "why": "capability_limit: the text determines the answer (3) but no certified labelling mechanism exists under policy A (option B deferred)"
+  }
+ }
+}
