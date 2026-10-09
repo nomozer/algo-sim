@@ -1,0 +1,14 @@
+{
+  "run_id": "geometry-grounding-safety",
+  "task_slug": "geometry-grounding-safety",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-09",
+  "machine": "Claude Code Cloud (Linux, Python 3.13)",
+  "branch": "fix/geometry-grounding-safety",
+  "start_head": "e6c3cf68",
+  "candidate_at_start": "72d6070a…",
+  "cache_version_at_start": "118",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "commits": {}
+}

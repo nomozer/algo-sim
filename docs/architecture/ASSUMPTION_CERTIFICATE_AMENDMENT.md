@@ -1275,3 +1275,13 @@ không kèm "vuông tại P và Q"; nâng `product_capability` lên `supported` 
 > thì không tồn tại (`kernel.polygon_from_right_angle_chain` ném `POLYGON_CHAIN_NOT_CONVEX`) ⇒
 > `C1_CROSS_CHECK_NO_CANONICAL_REALISATION`. Cả hai đều `UNDETERMINED` ⇒ từ chối. Hàm bố cục chuỗi nằm ở kernel
 > (`right_angle_chain_start`, `polygon_from_right_angle_chain`) — một thẩm quyền cho T10 và họ compiler `polygon_base_*`.
+
+## 21. geometry-grounding-safety — C0 kiểm ràng buộc hình dạng của đề trên toạ độ (đăng ký 2026-10-09, TRƯỚC mọi bản sửa)
+
+Sửa §5. C0 vẫn là "mọi literal trên lát cắt ghim bởi nguồn", và THÊM điều kiện: mọi `RangBuoc` thuộc danh sách
+`line_perp_line`, `line_perp_plane`, `right_triangle`, `base_rectangle`, `base_square`, `base_parallelogram`,
+`base_rhombus`, `base_equilateral` mà mọi thực thể có giá trị điểm trong chương trình phải thoả CHÍNH XÁC trên các giá trị
+ấy (cùng định nghĩa hình học các khuôn §6.2/§18/§20 dùng; cạnh `value` so bình phương). Sai một ⇒ `UNDETERMINED`, mã
+`SOURCE_SHAPE_CONTRADICTS_COORDINATES`, `subjects` = ràng buộc theo ký hiệu đề, detail `C0_SHAPE_CONTRADICTION <kind>(…)
+@[a,b]`; nguyên nhân `SOURCE` (đề tự mâu thuẫn), không gửi đi sửa. Ràng buộc có thực thể vắng trong chương trình hoặc kind
+ngoài danh sách: không kiểm, không từ chối. Nhãn: `docs/evaluation/geometry/runs/geometry-grounding-safety/labels.json`.
