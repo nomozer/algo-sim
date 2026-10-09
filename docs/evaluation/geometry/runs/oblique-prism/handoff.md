@@ -31,3 +31,23 @@ Nhánh `feat/oblique-prism` (rẽ từ `ba995887`), đã push lên `origin` (kh�
    đổi hợp đồng ⇒ cần ngân sách đo live, `ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`) hay sang họ khác của §0.2.
 
 `CACHE_VERSION` giữ 118 (`cache/decision.json`). `LLM_ONLY` mặc định. 0 lượt gọi model.
+
+## 4. Kết quả LOCAL (2026-10-09, Windows, 0 lượt gọi model)
+
+- Nhận nhánh: `feat/oblique-prism` = `fcc41452` khớp `origin`, đúng 4 commit Cloud trên `ba995887`; review mã T9 /
+  họ compiler / builder / lời kể / `foundation_only` — không sửa sản phẩm.
+- Đóng băng candidate MỘT lần trong worktree tách rời sạch tại `fcc41452`: **`02ce5e1e…`** (102 file, product commit
+  `0fe4edc5`, `--verify` khớp — `diagnostics/freeze_0fe4edc5.log`). Lớp khai lệch mới `inputs/candidate_divergence.json`
+  (`corrects` lớp repo-cleanup), log tích luỹ, `KHAI_LECH` của `test_thesis_acceptance_matrix.py` và manifest Tier-A
+  dời theo thủ tục — commit `75c24394`. Bốn đỏ danh tính của Cloud hết nhờ đóng băng, không sửa hash/test tay.
+- `CACHE_VERSION` 118 kiểm độc lập: `lock_cache_identity.py --verify` khớp; T9 trả `None` cho mọi đầu vào ngoài miền
+  ⇒ chỉ đổi từ chối → phục vụ (từ chối không cache); lời kể vectơ chỉ trên tuyến compiler; họ compiler opt-in.
+- Test đích: `test_oblique_prism.py` 51/51; hồi quy compiler/assumption/semantic 430/430; danh tính + tài liệu xanh;
+  node harness manifest 88/0.
+- T3 một lần tại `75c24394` (worktree tách rời sạch, đường dẫn có dấu cách): **`FULL_PRODUCT_GATE_PASS`** — pytest
+  7290 passed / 1 skipped / 2 deselected, vitest 67 file / 1040, build, demo, bề mặt sập; cây sạch sau gate
+  (`diagnostics/t3_75c24394.log`). 131 đỏ + 4 lỗi môi trường Cloud không tái hiện LOCAL.
+- Giới hạn giữ nguyên: LLM_ONLY chỉ kiểm bằng chương trình kiểu mô hình viết tay (`foundation_only`); compiler chỉ
+  opt-in; miền chân tại đỉnh đáy + chiều cao hữu tỉ; `ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY` và
+  `ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION` còn OPEN.
+- Chưa merge `main`, không PR, không xoá nhánh — chờ người dùng phê duyệt.

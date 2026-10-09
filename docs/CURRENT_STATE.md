@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
-> CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 83db0e97 tại product commit 45f5a7f0 — chỉ product_commit_sha dời)
+> CANDIDATE = 7f3f042309dd1c54… trên `main` (102 file; product commit 45f5a7f0); nhánh `feat/oblique-prism`: 02ce5e1e6e819ab2… (102 file; product commit 0fe4edc5; đóng băng LOCAL 75c24394, T3 PASS — runs/oblique-prism/handoff.md §4)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = FRONTEND_FREEZE (run `frontend-freeze`; người dùng hoãn phát triển frontend để ưu tiên kiến trúc hình học + backend; không đổi mã; handoff Cloud ở `runs/frontend-freeze/handoff.md`)
 > FINAL_DECISION = MERGED_AND_PUSHED_WITH_EXCEPTIONS (`main` = `origin/main` = `caed3809`, fast-forward, 2026-10-09; runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = Cloud mở rộng họ hình còn thiếu (ROADMAP §0.2) trên kiến trúc sẵn có, rồi OCR; frontend đóng băng; nhánh giữ lại
@@ -64,7 +64,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; chờ kiểm local + quyết người dùng):**
+> **G04 lăng trụ xiên — run oblique-prism (2026-10-09, Cloud, nhánh `feat/oblique-prism`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
@@ -72,7 +72,8 @@ thuộc thư mục run trong `docs/evaluation/`.
 > | Thêm | khuôn **T9** (amendment §19, dùng chung LLM_ONLY + compiler) · họ compiler thứ bảy `oblique_prism_volume` (đáy trên = `translate` do kernel tính, chiều cao = khoảng cách tới mặt đáy) |
 > | Miền | đáy tam giác vuông / chữ nhật / vuông, `T F ⊥ (đáy)` với F một đỉnh đáy, chiều cao hữu tỉ (trực tiếp hoặc từ cạnh bên); góc nghiêng, chân ở trung điểm/trọng tâm ⇒ từ chối (`ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`) |
 > | Nhãn | 16 hàng ghi trước, oracle độc lập: 6/6 dương + 10/10 âm khớp trên HAI tuyến; red-before 39 đỏ tại `ba995887` |
-> | Candidate · `CACHE_VERSION` | candidate CHƯA đóng băng lại (4 test danh tính đỏ — việc LOCAL) · **118** (không bump; 49/49 fixture trùng byte) |
+> | Candidate · `CACHE_VERSION` | **`02ce5e1e…`** (product `0fe4edc5`; đóng băng LOCAL `75c24394`, `--verify` khớp) · **118** (không bump; 49/49 fixture trùng byte; cache lock verify) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `75c24394` (worktree tách rời sạch): pytest 7290 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_75c24394.log`) |
 > | Năng lực sản phẩm | `oblique_prism` = `foundation_only` (mô hình chưa đo) |
 > | Run | [`oblique-prism`](evaluation/geometry/runs/oblique-prism/) (`plan.md`, `report.md`, `handoff.md`) |
 
