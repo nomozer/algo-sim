@@ -1406,6 +1406,45 @@
    ],
    "expect": "refused",
    "added": "after the baseline probe (diagnostics/probe_9762f441.log), before any product change: RT_C_tetrahedron_not_regular was already refused by the §21 base_equilateral check, so a variant with an equilateral base was needed to tell whether regular_tetrahedron itself is unchecked (it is: served at 9762f441)"
+  },
+  "RT_C_tetrahedron_edge_value": {
+   "text": "Cho tứ diện đều ABCD có cạnh bằng 2 với {coords}. Tính thể tích khối tứ diện ABCD.",
+   "points": {
+    "A": [
+     1,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     1,
+     0
+    ],
+    "C": [
+     0,
+     0,
+     1
+    ],
+    "D": [
+     1,
+     1,
+     1
+    ]
+   },
+   "solid": {
+    "kind": "pyramid",
+    "apex": "A",
+    "base": [
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "kinds": [
+    "edge_all"
+   ],
+   "expect": "refused",
+   "added": "after the baseline probe, before any product change: edge_all was preregistered in plan.md §2 but had no row; the regular tetrahedron of RT_K_tetrahedron (edges √2) stated with edge 2 (served at 9762f441, diagnostics/probe_9762f441_edge_all.log)"
   }
  }
 }

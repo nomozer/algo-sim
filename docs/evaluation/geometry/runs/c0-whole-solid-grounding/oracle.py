@@ -50,7 +50,8 @@ def claims_hold(r: dict, P: dict) -> bool:
     S = P[s["apex"]]
     if "tứ diện đều" in text:
         pts = [S, *day]
-        return len({n2(sub(p, q)) for i, p in enumerate(pts) for q in pts[i + 1:]}) == 1
+        canh = {n2(sub(p, q)) for i, p in enumerate(pts) for q in pts[i + 1:]}
+        return len(canh) == 1 and ("cạnh bằng 2" not in text or canh == {4})
     k = len(day)
     tam = tuple(sum(p[i] for p in day) / k for i in range(3))
     if "đều" in text and cross(sub(S, tam), nrm) != (0, 0, 0):
