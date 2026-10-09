@@ -79,7 +79,7 @@ import {
   hasHiddenByDefault,
   quantitySources,
 } from "./scene3d-annotations";
-import { MenuCongCu, hoTroToanManHinh } from "./scene3d-tool-menu";
+import { MenuCongCu, NhomLop, hoTroToanManHinh } from "./scene3d-tool-menu";
 import { IconBack, IconExperiment, IconReset } from "../../../components/icons";
 
 const NHOM_BUNG = "face";
@@ -173,7 +173,7 @@ const nutMoBang = (id: BangThongTin) =>
     : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
 
 export function Scene3DExplorer({
-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop,
+  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -198,8 +198,10 @@ export function Scene3DExplorer({
    * sống ở component này.
    */
   onFocus?: (selectedId: string | null, action: string) => void;
-  /** Dải phụ trong thanh trên — nơi vỏ cắm chỉ báo lớp / dock giáo viên. */
+  /** Dải phụ trong thanh trên — nơi vỏ cắm chỉ báo lớp / dock giáo viên. Vắng ⇒ không có chip lớp. */
   daiLop?: React.ReactNode;
+  /** Trạng thái lớp (chỉ đọc) cho chip của `NhomLop` khi màn chật gom dải lớp lại. */
+  daiLopTomTat?: React.ReactNode;
 }) {
   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
   const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
@@ -387,11 +389,11 @@ export function Scene3DExplorer({
       {/* ── HÀNG TRÊN (W05 · chế độ tập trung): đường ra · tên bài · công cụ đã NHÓM ─────────────────────────────
           Vỏ không dựng thanh trên toàn cục cho cảnh 3D, nên đường ra nằm ở đây. Thao tác chính có chữ («Đề bài»);
           công cụ cùng loại vào menu («Khám phá», «Hiển thị», «Thêm») — tính năng mới vào một nhóm, không thêm chip. */}
-      <div className="geo3d-thanh">
+      <div className={`geo3d-thanh${daiLop ? " co-lop" : ""}`}>
         {quayLai && (
           <button type="button" className="geo3d-quay-lai" onClick={quayLai.onClick}
-                  title={`Rời mô phỏng, về ${quayLai.nhan}`}>
-            <IconBack size={16} /> {quayLai.nhan}
+                  title={`Rời mô phỏng, về ${quayLai.nhan}`} aria-label={quayLai.nhan}>
+            <IconBack size={16} /> <span className="geo3d-quay-lai-nhan">{quayLai.nhan}</span>
           </button>
         )}
         <h1 className="geo3d-ten-bai" title={tieuDe ?? undefined}>{tieuDe || "Hình dựng theo từng bước"}</h1>
@@ -403,7 +405,7 @@ export function Scene3DExplorer({
             Giáo viên đã đồng bộ lớp
           </span>
         )}
-        {daiLop}
+        {daiLop && <NhomLop tomTat={daiLopTomTat ?? "Lớp học"}>{daiLop}</NhomLop>}
         <div className="geo3d-thanh-nut">
           {de && (
             <button

@@ -2906,9 +2906,10 @@ html {
 
 /* W05 · hàng trên: tên bài là tiêu đề trang (một dòng, cắt bằng dấu ba chấm — đủ chữ ở `title`), nút quay lại và
    các nút nhóm cùng kiểu nút tiện ích của DESIGN.md (bo 8 px, viền hairline, một màu nhấn khi đang mở). */
+/* `min-width: 4rem`, không 0 (classroom-band-fit): trên hàng một dòng, nút nhóm + dải lớp từng ép tên bài về 0 px. */
 .geo3d-ten-bai {
   flex: 1 1 12rem;
-  min-width: 0;
+  min-width: 4rem;
   margin: 0;
   overflow: hidden;
   color: var(--ink);
@@ -2940,6 +2941,12 @@ html {
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
+}
+
+/* Nút quay lại giữ trọn chữ một dòng: co nó lại thì «Bài thực hành» xuống ba dòng, hàng trên cao 77 px. */
+.geo3d-quay-lai {
+  flex: none;
+  white-space: nowrap;
 }
 
 .geo3d-quay-lai:hover,
@@ -3957,8 +3964,11 @@ html {
     margin-left: 0;
   }
 
+  /* Nhóm công cụ không co, không xuống dòng: hàng trên một dòng từng ép nó còn bề rộng một nút ⇒ bốn nút xếp dọc. */
   .geo3d-thanh-nut {
     display: flex;
+    flex: none;
+    flex-wrap: nowrap;
     width: auto;
   }
 
@@ -4204,4 +4214,101 @@ html {
 
 .geo3d-cac-buoc-con {
   padding-left: var(--sp-md);
+}
+
+/* ══ DẢI LỚP GỌN (classroom-band-fit, `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW`) ══════════════════════════
+   `NhomLop` (scene3d-tool-menu.tsx) bọc dải lớp. Màn rộng: vỏ và thân `display: contents` ⇒ nhãn bài, «Giao cho lớp»,
+   dock/chỉ báo vẫn là mục của hàng trên như trước; chip ẩn. */
+.geo3d-lop,
+.geo3d-lop-than {
+  display: contents;
+}
+
+.geo3d-lop-nut {
+  display: none;
+}
+
+.live-tom-tat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xxs);
+}
+
+/* Màn chật — điện thoại ngang thấp (cùng điều kiện khối cột điều khiển) và điện thoại dọc thấp: không còn chiều cao cho
+   dải một dòng riêng (sàn canvas 320 px, vùng chạm 44 px; đo: thanh phát tràn 14–103 px). Dải gom vào MỘT chip trên
+   hàng đầu mang trạng thái lớp; chạm chip mở dải đầy đủ trong hộp thả (dáng `.geo3d-menu-hop`). */
+@media (orientation: landscape) and (max-height: 30rem), (max-width: 48rem) and (max-height: 50rem) {
+  /* Chip chia hàng đầu với tên bài (cùng `flex-basis: 0` — xếp dòng theo cỡ nội dung thì chip 171 px rơi xuống dòng
+     hai ở 360 px), không rộng quá nội dung. Hộp thả neo vào CẢ hàng trên (như hộp menu W05), không vào chip: chip giữa
+     hàng ở 640 px sẽ đẩy hộp neo phải ra ngoài mép trái. */
+  .geo3d-thanh.co-lop {
+    position: relative;
+  }
+
+  .geo3d-lop {
+    display: block;
+    flex: 1 1 0;
+    min-width: 5rem;
+    max-width: max-content;
+  }
+
+  .geo3d-lop-nut {
+    display: inline-flex;
+    max-width: 100%;
+  }
+
+  .geo3d-lop-tom {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Trong chip, trạng thái chảy như chữ thường để cắt bằng «…» — hộp inline-flex bị xén cụt giữa chữ («Đan»). */
+  .geo3d-lop-tom .live-tom-tat,
+  .geo3d-lop-tom .live-chi-bao {
+    display: inline;
+  }
+
+  .geo3d-lop-tom .live-cham {
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .geo3d-lop-than {
+    display: none;
+  }
+
+  .geo3d-lop.la-mo .geo3d-lop-than {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-xs);
+    width: max-content;
+    max-width: min(20rem, calc(100vw - 2 * var(--sp-md)));
+    padding: var(--sp-xs);
+    border: 1px solid var(--hairline);
+    border-radius: var(--rounded-md);
+    background: var(--canvas);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Tên bài ở lại hàng đầu cạnh chip (không xuống một dòng riêng — dòng ấy là thứ đẩy thanh phát khỏi khung). */
+  .geo3d-thanh.co-lop .geo3d-ten-bai {
+    flex: 1 1 0;
+  }
+}
+
+/* Màn chật VÀ hẹp (≤ 48rem): nút quay lại chỉ còn mũi tên khi có chip lớp. Ngang 640–768 px: hàng một dòng không đủ
+   chỗ cho chữ «Bài thực hành», tên bài ≥ 4rem, chip và bốn nút công cụ; dọc 360 px: trả ~90 px cho trạng thái lớp
+   trong chip. Tên gọi giữ ở `aria-label`, chữ đầy đủ ở `title`. Màn rộng hơn giữ chữ. */
+@media (orientation: landscape) and (max-height: 30rem) and (max-width: 48rem), (max-width: 48rem) and (max-height: 50rem) {
+  .geo3d-thanh.co-lop .geo3d-quay-lai-nhan {
+    display: none;
+  }
 }

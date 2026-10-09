@@ -182,3 +182,57 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () => 
     expect(ma).toMatch(/chanMenu=\{[\s\S]*geo3d-chu-giai/);
   });
 });
+
+/* classroom-band-fit (`ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW`): dải lớp từng ép tên bài về 0 px, xếp dọc bốn
+   nút công cụ và đẩy thanh phát khỏi khung trên điện thoại. Bố cục thật đo ở đầu dò trình duyệt của run
+   (`runs/classroom-band-fit/diagnostics/probe-class-band-v2.mjs`); đây khoá cấu trúc + hợp đồng CSS. */
+describe("dải lớp gọn trên màn chật", () => {
+  const css = readFileSync(fileURLToPath(new URL("../../../styles/global.css", import.meta.url)), "utf8");
+  const s = canh("triangular_pyramid");
+  const dai = <span className="nav-assignment">Bài: Thể tích</span>;
+
+  it("không có dải lớp ⇒ không chip, hàng trên y như trước (mô phỏng tự học không đổi)", () => {
+    const h = xuong(s);
+    expect(h).not.toContain("geo3d-lop");
+    expect(h).toMatch(/class="geo3d-thanh"/);
+  });
+
+  it("có dải lớp ⇒ chip disclosure (`aria-expanded`/`aria-controls`) mang trạng thái, dải đầy đủ trong vùng của nó", () => {
+    const h = xuong(s, { daiLop: dai, daiLopTomTat: <span className="live-tom-tat">Đang theo cô/thầy</span> });
+    expect(h).toMatch(/class="geo3d-thanh co-lop"/);
+    const nut = /<button[^>]*class="geo3d-menu-nut geo3d-lop-nut"[^>]*>/.exec(h)?.[0] ?? "";
+    expect(nut).toContain('aria-expanded="false"');
+    const id = /aria-controls="([^"]+)"/.exec(nut)?.[1];
+    expect(id).toBeTruthy();
+    expect(h).toMatch(/class="geo3d-lop-tom"><span class="live-tom-tat">Đang theo cô\/thầy<\/span>/);
+    expect(h).toContain(`<div class="geo3d-lop-than" id="${id}" role="group" aria-label="Lớp học"><span class="nav-assignment">`);
+    expect(nut).not.toContain("aria-haspopup");   // disclosure, không phải menu: trong vùng là nút, nhóm chọn, hộp thoại
+  });
+
+  it("nút quay lại: tên gọi giữ ở `aria-label` khi chữ ẩn (chip lớp, màn hẹp)", () => {
+    expect(xuong(s)).toMatch(/class="geo3d-quay-lai"[^>]*aria-label="Thư viện"[^>]*>.*<span class="geo3d-quay-lai-nhan">Thư viện<\/span>/);
+  });
+
+  it("CSS: tên bài không co về 0; nhóm công cụ không co/không xuống dòng khi ngang thấp; nút quay lại một dòng", () => {
+    expect(css).toMatch(/\.geo3d-ten-bai\s*\{[^}]*min-width:\s*4rem/);
+    expect(css).toMatch(/\.geo3d-quay-lai\s*\{\s*flex:\s*none;\s*white-space:\s*nowrap;/);
+    const ngang = css.slice(css.indexOf("@media (orientation: landscape) and (max-height: 30rem) {"));
+    expect(ngang).toMatch(/\.geo3d-thanh-nut\s*\{[^}]*flex:\s*none;[^}]*flex-wrap:\s*nowrap;/);
+  });
+
+  it("CSS: màn rộng dải lớp là mục của hàng trên (`display: contents`, chip ẩn); màn chật gom vào chip, thân ẩn tới khi mở", () => {
+    expect(css).toMatch(/\.geo3d-lop,\s*\.geo3d-lop-than\s*\{\s*display:\s*contents;/);
+    expect(css).toMatch(/\.geo3d-lop-nut\s*\{\s*display:\s*none;/);
+    const chat = css.slice(css.indexOf(
+      "@media (orientation: landscape) and (max-height: 30rem), (max-width: 48rem) and (max-height: 50rem) {"));
+    expect(chat.length).toBeGreaterThan(0);
+    expect(chat).toMatch(/\.geo3d-lop-nut\s*\{\s*display:\s*inline-flex;/);
+    expect(chat).toMatch(/\.geo3d-lop-than\s*\{\s*display:\s*none;/);
+    expect(chat).toMatch(/\.geo3d-lop\.la-mo \.geo3d-lop-than\s*\{[^}]*position:\s*absolute;[^}]*display:\s*flex;/);
+  });
+
+  it("vỏ chỉ truyền dải lớp khi có bài được giao hoặc là giáo viên; bản tóm tắt không hỏi phiên lần hai", () => {
+    expect(SRC("../../../components/SimulationWorkspace.tsx")).toMatch(/daiLop=\{\(assignment \|\| laGiaoVien\) \?/);
+    expect(SRC("../../../components/LiveClassStrip.tsx")).toMatch(/if \(tomTat \|\| classId === null\) return;/);
+  });
+});

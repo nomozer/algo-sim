@@ -25,7 +25,12 @@ import { useAuthStore } from "../state/auth";
 /** Quá hạn này chưa nghe máy chủ ⇒ nói thật là đang kết nối lại. */
 const CU_MS = NHIP_PHIEN_MS * 4;
 
-export function LiveClassStrip() {
+/**
+ * `tomTat` (classroom-band-fit): bản CHỈ ĐỌC cho chip của `NhomLop` trên màn chật — chấm trạng thái + tên lớp + số
+ * em giơ tay (giáo viên), chỉ báo phiên + đã báo cô/thầy (học sinh); không có lớp ⇒ «Lớp học». Không hỏi phiên: dải
+ * đầy đủ cùng trang đã hỏi, hai bản đọc chung store.
+ */
+export function LiveClassStrip({ tomTat = false }: { tomTat?: boolean } = {}) {
   const user = useAuthStore((s) => s.user);
   const assignment = useAppStore((s) => s.activeAssignment);
   const setView = useAppStore((s) => s.setView);
@@ -48,11 +53,11 @@ export function LiveClassStrip() {
   /* Nhịp hỏi phiên. Chỉ chạy khi ĐANG ở một bài thuộc một lớp — không có lớp
      thì không có gì để hỏi, và hỏi vẫn là đốt một request mỗi 1,5 giây. */
   useEffect(() => {
-    if (classId === null) return;
+    if (tomTat || classId === null) return;
     void loadSession(classId);
     const t = setInterval(() => void loadSession(classId), NHIP_PHIEN_MS);
     return () => clearInterval(t);
-  }, [classId, loadSession]);
+  }, [tomTat, classId, loadSession]);
 
   /* Đồng hồ RIÊNG để tính "đã cũ chưa". Không dùng `fetchedAt` làm dependency
      của một effect ghi state — đó là một vòng lặp render. */
@@ -68,18 +73,28 @@ export function LiveClassStrip() {
     try { await fn(); } finally { setBusy(false); }
   };
 
-  if (!user || classId === null) return null;
+  if (!user || classId === null) return tomTat ? <span className="live-tom-tat">Lớp học</span> : null;
 
   // ── GIÁO VIÊN ────────────────────────────────────────────────────────────
   if (user.role === "teacher") {
     const lop = classes.find((c) => c.id === classId);
     const rows = monitor?.classroomId === classId ? monitor.rows : [];
+    const canGiup = rows.filter((r) => r.helpRequested).length;
+    if (tomTat) {
+      return (
+        <span className="live-tom-tat">
+          <span className={`live-cham${session !== null ? " dang-day" : ""}`} aria-hidden="true" />
+          {canGiup > 0 && <span className="live-canh-bao">{canGiup}</span>}
+          <span className="live-lop">{lop?.name ?? "Lớp"}</span>
+        </span>
+      );
+    }
     return (
       <LiveClassDock
         session={session}
         className={lop?.name ?? "Lớp"}
         studentCount={rows.length}
-        helpCount={rows.filter((r) => r.helpRequested).length}
+        helpCount={canGiup}
         assignmentId={assignment?.id ?? null}
         busy={busy}
         onStart={() => void lam(() =>
@@ -95,6 +110,15 @@ export function LiveClassStrip() {
   }
 
   // ── HỌC SINH ─────────────────────────────────────────────────────────────
+  if (tomTat) {
+    if (session === null && !helpRequested) return <span className="live-tom-tat">Lớp học</span>;
+    return (
+      <span className="live-tom-tat">
+        <StudentLiveIndicator session={session} stale={cu} />
+        {helpRequested && <span className="live-tro-giup la-gui">Đã báo cô/thầy</span>}
+      </span>
+    );
+  }
   return (
     <span className="live-hs">
       <StudentLiveIndicator session={session} stale={cu} />

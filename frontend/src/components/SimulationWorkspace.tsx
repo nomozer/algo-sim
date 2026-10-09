@@ -19,6 +19,7 @@ import { TEN_TRANG } from "./TopNav";
 import { LiveClassStrip } from "./LiveClassStrip";
 import { SimulationInspector } from "./SimulationInspector";
 import { useClassroomStore } from "../state/classroom";
+import { useAuthStore } from "../state/auth";
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
 import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
 
@@ -433,6 +434,9 @@ export function SimulationWorkspace() {
   const returnView = useAppStore((s) => s.returnView);
   const roiXuong = useAppStore((s) => s.roiXuong);
   const assignment = useAppStore((s) => s.activeAssignment);
+  /* Dải lớp có nội dung khi đang ở một bài được giao, hoặc người dùng là giáo viên («Giao cho lớp» — cùng điều kiện
+     vai của `AssignDialog`). Ngoài hai trường hợp ấy không truyền `daiLop`, nên xưởng không dựng chip lớp nào. */
+  const laGiaoVien = useAuthStore((s) => s.user?.role === "teacher");
 
   if (unsupported) {
     return <UnsupportedNotice unsupported={unsupported} />;
@@ -489,7 +493,7 @@ export function SimulationWorkspace() {
         quayLai={{ nhan: TEN_TRANG[returnView] ?? "Trang chủ", onClick: roiXuong }}
         phien={session}
         onFocus={(selectedId, action) => setSemanticFocus({ selectedId, action })}
-        daiLop={(
+        daiLop={(assignment || laGiaoVien) ? (
           <>
             {assignment && (
               <span className="nav-assignment" title={assignment.instruction}>
@@ -499,7 +503,8 @@ export function SimulationWorkspace() {
             <AssignDialog />
             <LiveClassStrip />
           </>
-        )}
+        ) : undefined}
+        daiLopTomTat={<LiveClassStrip tomTat />}
       />
     );
   }

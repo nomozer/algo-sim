@@ -119,3 +119,53 @@ export function MenuCongCu({ nhan, khoa, muc, chanMenu }: {
     </div>
   );
 }
+
+/**
+ * DẢI LỚP GỌN (classroom-band-fit, `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW`).
+ *
+ * Màn rộng: vỏ `display: contents` ⇒ dải lớp vẫn là các mục của hàng trên, y như trước; nút chip ẩn. Màn chật (CSS,
+ * cùng điều kiện với khối ngang thấp + điện thoại dọc thấp): dải gom vào MỘT chip trên hàng đầu — chip mang `tomTat`
+ * (trạng thái lớp, chỉ đọc) — và chạm chip thì dải ĐẦY ĐỦ hiện trong hộp thả. Chiều cao không còn chỗ cho dải một dòng
+ * riêng (sàn canvas 320 px, vùng chạm 44 px). Không phải menu ARIA: trong hộp là nút, nhóm chọn, hộp thoại — mẫu
+ * disclosure (`aria-expanded` + vùng). Bấm ra ngoài / Escape đóng như `MenuCongCu`; hộp thoại con tự lo phím của nó.
+ */
+export function NhomLop({ tomTat, children }: { tomTat: ReactNode; children: ReactNode }) {
+  const [mo, setMo] = useState(false);
+  const goc = useRef<HTMLDivElement>(null);
+  const nut = useRef<HTMLButtonElement>(null);
+  const id = useId();
+
+  useEffect(() => {
+    if (!mo) return undefined;
+    const ngoai = (e: PointerEvent) => {
+      if (!goc.current?.contains(e.target as Node)) setMo(false);
+    };
+    document.addEventListener("pointerdown", ngoai);
+    return () => document.removeEventListener("pointerdown", ngoai);
+  }, [mo]);
+
+  const phim = (e: React.KeyboardEvent) => {
+    if (e.key !== "Escape" || (e.target as Element).closest?.("[role=dialog]")) return;
+    e.preventDefault();
+    setMo(false);
+    nut.current?.focus();
+  };
+
+  return (
+    <div className={`geo3d-lop${mo ? " la-mo" : ""}`} ref={goc} onKeyDown={mo ? phim : undefined}>
+      <button
+        ref={nut}
+        type="button"
+        className="geo3d-menu-nut geo3d-lop-nut"
+        aria-expanded={mo}
+        aria-controls={id}
+        title="Lớp học — trạng thái và điều khiển"
+        onClick={() => setMo((x) => !x)}
+      >
+        <span className="geo3d-lop-tom">{tomTat}</span>
+        <IconChevronDown size={14} />
+      </button>
+      <div className="geo3d-lop-than" id={id} role="group" aria-label="Lớp học">{children}</div>
+    </div>
+  );
+}
