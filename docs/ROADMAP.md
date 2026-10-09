@@ -16,7 +16,7 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 - **Việc `unnamed-pyramid-vertex-binding` (2026-10-09, run [`unnamed-pyramid-vertex-binding`](evaluation/geometry/runs/unnamed-pyramid-vertex-binding/),
   Cloud, nhánh `fix/unnamed-pyramid-vertex-binding`, CHƯA tích hợp):** nghiên cứu (b) ⇒ người dùng chọn **A**: chặn 21 đề
   chóp đều không tên có tên điểm thiếu toạ độ (12 served → refused, 9 giữ từ chối; amendment §25); `CACHE_VERSION` 123;
-  chờ LOCAL. 5 đề do chính đề xác định chưa được hỗ trợ (giới hạn năng lực); phương án B hoãn — nâng cấp tuỳ chọn.
+  candidate `b13a3ef1…` đóng băng LOCAL, T3 PASS (`handoff.md` của run). Việc duy nhất: người dùng quyết merge. 5 đề do chính đề xác định chưa được hỗ trợ (giới hạn năng lực); phương án B hoãn — nâng cấp tuỳ chọn.
   Việc kế tiếp sau tích hợp: quay lại G05.
 
 - **Việc `unnamed-regular-pyramid-grounding` (2026-10-09, run [`unnamed-regular-pyramid-grounding`](evaluation/geometry/runs/unnamed-regular-pyramid-grounding/),

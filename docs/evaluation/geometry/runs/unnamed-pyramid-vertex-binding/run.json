@@ -21,5 +21,19 @@
   },
   "decision": "option A (user, final)",
   "cache_version_after": "123",
-  "candidate_refreeze_required": true
+  "candidate_refreeze_required": true,
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "product_changes": "none LOCAL (product commit stays 56692926 = Cloud's reported 5669292); diff vs main: neu_khoi_da_dien (+ every unnamed regular-pyramid claim in the zone), _nhan_khuon (unbound claim ⇒ TEMPLATE_NOT_MATCHED ⇒ ASSUMPTION_INVARIANCE_UNPROVEN), main.py cache, identity lock, test pins — no parser, kernel, solver, compiler, template, solid_topology use, case-ID logic or SOURCE_SHAPE_CONTRADICTS_COORDINATES for unbound vertices",
+    "probes": "C1 probe (probe_c1_equivalence.py) re-run on a7c56942 and on the branch: both logs identical to Cloud's; C0 probes of c0-whole-solid-grounding (29), c0-whole-solid-reader (27), unnamed-regular-pyramid-grounding (11): byte-identical main vs branch",
+    "policy_rows": "21/21 refused; 12 served → refused (all assumption / ASSUMPTION_INVARIANCE_UNPROVEN, incl. N5 SA = 3, R2_N9 16, W5_C 16/3), 9 refused → refused with the registered stage/reason unchanged; baseline column of policy_a_labels.json matches main for all 21",
+    "capability_limited": "S5 √17, S7 16, R2_S9 16/3, P9 9/2, P11 3 re-derived by hand from the text: well-posed, determined — refused as a capability limit, not a mathematical verdict; math labels and oracle untouched since 07afbd44 (oracle 21/21)",
+    "other_changes": "15 changed C1 lines = 12 policy rows + 3 'unnamed' variant rows whose text equals the registered rows' text; bindable 26, canonical, apex_base, regular_notation: 0 changes",
+    "candidate_freeze": "39b0fb4a (frozen at 1258bbcd; candidate b13a3ef1c34cd41dbae0f772c63e3ecdcc9a8243bf84f656c778c02a99422a72, product 56692926, cache 123, 102 files; diagnostics/freeze_56692926.log)",
+    "cache_version": "123 verified: 12 served → refused reproduced; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 123; 0 model-surface files since a7c56942; pins at 123; fixture_diff 49/49 identical; ASSUMPTION_INVARIANCE_UNPROVEN in the no-repair set",
+    "targeted": "new + updated 97/97; related suites incl. C0 §21–§24, C1 T7/T8, G04, G05, compiler, identity, docs, test_api: 1582/1582; four oracles OK; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at 39b0fb4a (pytest 7627 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_39b0fb4a.log)",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }
