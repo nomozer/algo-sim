@@ -784,7 +784,11 @@ MISSING_KEY_MSG = (
 #       trên chính toạ độ đề cho (amendment §21): đề tự mâu thuẫn ("hình thang vuông tại C và D" với toạ độ vuông tại A, B)
 #       chiều served → refused (`SOURCE_SHAPE_CONTRADICTS_COORDINATES`); row 118 sẽ trả thẳng envelope đã phục vụ
 #       (`runs/geometry-grounding-safety/cache/decision.json`, probe trước/sau). 49/49 fixture Tier-A trùng byte.
-CACHE_VERSION = "119"
+# 120 — 2026-10-09 (c0-whole-solid-grounding): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. C0 nay kiểm cả khẳng định TOÀN KHỐI của đề
+#       (lăng trụ đứng/xiên, hộp chữ nhật, lập phương, chóp đều, tứ diện đều, cạnh bên, trung đoạn, tâm đáy, chiều cao —
+#       amendment §22) trên toạ độ đề cho: đề tự mâu thuẫn chiều served → refused; row 119 sẽ trả thẳng envelope đã phục
+#       vụ (`runs/c0-whole-solid-grounding/cache/decision.json`, probe trước/sau).
+CACHE_VERSION = "120"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

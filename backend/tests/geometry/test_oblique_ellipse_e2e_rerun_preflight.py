@@ -418,8 +418,8 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     #    mặt phẳng cùng thực thể + yêu cầu chứng minh không là tiền đề (served → rejected).
     # 108 → 109 (W17_OPERATION_BINDING_AND_ON_SCENE_ANNOTATIONS, 2026-10-04):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
-    # 118 -> 119 (geometry-grounding-safety): C0 kiểm quan hệ hình dạng đề nói trên toạ độ đề cho (served -> refused).
-    assert CACHE_VERSION == "119"
+    # 119 -> 120 (c0-whole-solid-grounding): C0 kiểm khẳng định toàn khối của đề trên toạ độ đề cho (served -> refused).
+    assert CACHE_VERSION == "120"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

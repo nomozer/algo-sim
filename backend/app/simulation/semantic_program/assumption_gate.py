@@ -1333,10 +1333,83 @@ _SO_DINH_C0 = {"line_perp_line": 4, "right_triangle": 3, "base_equilateral": 3, 
                "base_rectangle": 4, "base_rhombus": 4, "base_square": 4}
 
 
+# §22 — khẳng định TOÀN KHỐI. Toạ độ của đề là Descartes ⇒ phép Euclid thô trên `Vec3` (như §21), không metric khung.
+def _phap_tuyen(V, day) -> Vec3:
+    """Vectơ diện tích của đáy (tổng tích có hướng quanh đỉnh đầu) — khác 0 với mọi đa giác phẳng không suy biến."""
+    o = V[day[0]]
+    n = Vec3.of(0, 0, 0)
+    for p, q in zip(day[1:], day[2:]):
+        n = n + (V[p] - o).cross(V[q] - o)
+    return n
+
+
+def _tam(V, day) -> Vec3:
+    t = Vec3.of(0, 0, 0)
+    for p in day:
+        t = t + V[p]
+    return t.scale(Fraction(1, len(day)))
+
+
+def _tinh_tien(V, e) -> Vec3 | None:
+    """Lăng trụ `day + tren` (tương ứng theo vị trí): vectơ cạnh bên chung v ≠ 0, hoặc None nếu đáy trên không là tịnh tiến."""
+    k = len(e) // 2
+    v = V[e[k]] - V[e[0]]
+    return v if not v.is_zero() and all(V[e[k + i]] - V[e[i]] == v for i in range(k)) else None
+
+
+def _lang_tru_dung(V, e) -> bool:
+    v = _tinh_tien(V, e)
+    return v is not None and v.cross(_phap_tuyen(V, e[:len(e) // 2])).is_zero()
+
+
+def _hop_chu_nhat(V, e) -> bool:
+    return _lang_tru_dung(V, e) and _KIEM_C0["base_rectangle"](V, e[:4], None)
+
+
+def _chop_deu(V, e) -> bool:
+    """Đỉnh e[0] trên pháp tuyến tại tâm đáy e[1:], ngoài mặt đáy."""
+    n, h = _phap_tuyen(V, e[1:]), V[e[0]] - _tam(V, e[1:])
+    return h.cross(n).is_zero() and h.dot(n) != 0
+
+
+def _chieu_cao_sq(V, e, khoi) -> Fraction | None:
+    """Khoảng cách² tới mặt đáy: chóp — từ đỉnh; lăng trụ — từ đỉnh đáy trên. Đáy suy biến ⇒ None (không kiểm)."""
+    day, p = (e[1:], e[0]) if khoi == "pyramid" else (e[:len(e) // 2], e[len(e) // 2])
+    n = _phap_tuyen(V, day)
+    return None if n.is_zero() else (V[p] - V[day[0]]).dot(n) ** 2 / n.norm_sq()
+
+
+_KIEM_C0.update({
+    "right_prism": lambda V, e, _v: _lang_tru_dung(V, e),
+    "oblique_prism": lambda V, e, _v: _tinh_tien(V, e) is not None and not _lang_tru_dung(V, e),
+    "cuboid": lambda V, e, _v: _hop_chu_nhat(V, e),
+    "cube": lambda V, e, _v: _hop_chu_nhat(V, e) and len(
+        {(V[e[i]] - V[e[0]]).norm_sq() for i in (1, 3, 4)}) == 1,
+    "cube_edge": lambda V, e, v: (V[e[1]] - V[e[0]]).norm_sq() == square(v),
+    "regular_square_pyramid": lambda V, e, _v: _KIEM_C0["base_square"](V, e[1:], None) and _chop_deu(V, e),
+    "regular_triangular_pyramid": lambda V, e, _v: _KIEM_C0["base_equilateral"](V, e[1:], None) and _chop_deu(V, e),
+    "regular_tetrahedron": lambda V, e, _v: len({(V[p] - V[q]).norm_sq() for i, p in enumerate(e)
+                                                 for q in e[i + 1:]}) == 1,
+    "edge_all": lambda V, e, v: all((V[p] - V[q]).norm_sq() == square(v) for i, p in enumerate(e) for q in e[i + 1:]),
+    "lateral_edge": lambda V, e, v: all((V[b] - V[e[0]]).norm_sq() == square(v) for b in e[1:]),
+    "apothem": lambda V, e, v: all((V[e[0]] - (V[a] + V[b]).scale(Fraction(1, 2))).norm_sq() == square(v)
+                                   for a, b in zip(e[1:], e[2:] + e[1:2])),
+    "base_centre": lambda V, e, _v: V[e[0]] == _tam(V, e[1:]),
+    "height_pyramid": lambda V, e, v: _chieu_cao_sq(V, e, "pyramid") in (None, square(v)),
+    "height_prism": lambda V, e, v: _chieu_cao_sq(V, e, "prism") in (None, square(v)),
+})
+_SO_DINH_C0.update({"cuboid": 8, "cube": 8, "cube_edge": 8, "regular_square_pyramid": 5,
+                    "regular_triangular_pyramid": 4, "regular_tetrahedron": 4, "edge_all": 4, "apothem": 5})
+_LANG_TRU_C0 = {"right_prism", "oblique_prism", "height_prism"}
+_CHOP_C0 = {"lateral_edge", "base_centre", "height_pyramid"}
+_CO_GIA_TRI_C0 = {"cube_edge", "edge_all", "lateral_edge", "apothem", "height_pyramid", "height_prism"}
+
+
 def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc", inv: tuple = ()) -> list[RangBuoc]:
-    """§21 — ràng buộc hình dạng ĐỀ NÓI mà toạ độ đề cho làm sai. Giá trị điểm lấy từ chương trình; điểm chương trình
-    không khai thì lấy toạ độ CHÍNH ĐỀ cho (`point_coordinate` đọc trọn) — đề tự mâu thuẫn dù chương trình bỏ qua điểm
-    ấy. Điểm không có toạ độ ở cả hai nơi, hoặc kind ngoài `_KIEM_C0`, không được kiểm (thiếu mô tả ≠ mâu thuẫn)."""
+    """§21/§22 — ràng buộc hình dạng (cả khẳng định toàn khối) ĐỀ NÓI mà toạ độ đề cho làm sai. Giá trị điểm lấy từ
+    chương trình; điểm chương trình không khai thì lấy toạ độ CHÍNH ĐỀ cho (`point_coordinate` đọc trọn) — đề tự mâu
+    thuẫn dù chương trình bỏ qua điểm ấy. Điểm không có toạ độ ở cả hai nơi, kind ngoài `_KIEM_C0`, khối không tên hay
+    `height` không gắn được với một chóp/lăng trụ có tên, không được kiểm (thiếu mô tả ≠ mâu thuẫn)."""
     ten = cm.ten_theo_khoa()
     toa_de = {_khoa(i.points[0]): Vec3.of(*(Fraction(c) for c in i.coefficients)) for i in inv
               if i.kind == "point_coordinate" and len(i.points) == 1 and len(i.coefficients) == 3}
@@ -1347,12 +1420,17 @@ def _mau_thuan_c0(rb: tuple[RangBuoc, ...], cm: "_ChiMuc", inv: tuple = ()) -> l
         except (KeyError, _Loi):
             return toa_de[_khoa(e)]              # KeyError ⇒ không toạ độ nào ⇒ bỏ qua ràng buộc
 
+    khoi = {r.entities: r.kind for r in rb if r.kind in ("pyramid", "prism")}
     sai = []
     for r in rb:
-        kiem, n = _KIEM_C0.get(r.kind), _SO_DINH_C0.get(r.kind)
-        if kiem is None or (n is not None and len(r.entities) != n) or (r.kind == "line_perp_plane"
-                                                                       and len(set(r.entities[2:])) < 3):
+        kind = f"height_{khoi.get(r.entities)}" if r.kind == "height" else r.kind
+        kiem, n, so = _KIEM_C0.get(kind), _SO_DINH_C0.get(kind), len(r.entities)
+        if kiem is None or (n is not None and so != n) or (r.kind == "line_perp_plane"
+                                                           and len(set(r.entities[2:])) < 3):
             continue
+        if kind in _LANG_TRU_C0 and (so < 6 or so % 2) or kind in _CHOP_C0 and so < 4 or (
+                kind in _CO_GIA_TRI_C0 and r.value is None):
+            continue                             # khối không tên (entities = ()) / thiếu số đo ⇒ không kiểm
         try:
             V = {e: gia_tri(e) for e in set(r.entities)}
         except KeyError:
