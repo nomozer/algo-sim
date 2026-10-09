@@ -10,7 +10,16 @@
 
 ## 2. Cổng
 
-Ghi sau T3 + cổng danh tính ở commit tài liệu cuối của run (commit ghi log đi sau).
+Tại commit tài liệu `ac7b1d07`, worktree tách rời sạch có dấu cách (`D:/tmp/browser lifecycle`), 0 model call; commit
+ghi log đi sau (chỉ thêm log và mục này):
+
+- T3 `FULL_PRODUCT_GATE_PASS` (`diagnostics/t3_ac7b1d07.log`): pytest **7239 passed, 1 skipped, 2 deselected**; vitest
+  **67 files / 1040 tests**; typecheck + build; tập demo; bề mặt sập.
+- Cổng danh tính (`diagnostics/gates_ac7b1d07.log`, từ `7834ea4e`): candidate `7f3f0423…` khớp; cache 118 / `b1714b566e25c912…`
+  khớp; xuất lược đồ ×2 trùng byte; `LLM_ONLY`; bề mặt mô hình 0 file đổi; bằng chứng ngoài thư mục run 0 file đổi (chỉ
+  `EVIDENCE_INDEX.md` thêm mục); `git diff --check` sạch; docs audit PASS; node harness 100 pass, 2 skipped, 0 fail
+  (gồm `browser-runner.node-test.mjs`); worktree sạch trước/sau.
+- Sau T3: gốc `D:/tmp/algosim-browser` 0 thư mục, `%TEMP%\w12-*` 671 (không tăng), 0 Chrome của bộ đo còn chạy.
 
 ## 3. Việc của người dùng
 
