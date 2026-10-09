@@ -17,5 +17,19 @@
     "docs": "9d61f37 (report/handoff/state) + the final evidence commit"
   },
   "cache_version_after": "120",
-  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED"
+  "result": "CLOUD_IMPLEMENTATION_COMPLETE_LOCAL_VERIFICATION_REQUIRED",
+  "local_verification": {
+    "machine": "Claude Code LOCAL (Windows)",
+    "product_changes": "none LOCAL (product commit stays c11e8c9d)",
+    "labels_rerun": "probe.py on 9762f441 and on the branch: 29/29 labels match on the branch; 15 rows served → refused (Cloud report/decision say 16: 3 of the 18 refused rows were already refused on main — RSP_C_centre_off, P_C_prism_top_not_translate, RT_C_tetrahedron_not_regular via §21); 11 consistent rows served on both; 0 regressions",
+    "edge_probes": "radical lengths (√11 lateral, √10 apothem served; 2√3 refused), height 3 served vs height √11 (= lateral edge) refused, symbolic 'a' not read (not a contradiction), goal clause / question / negation not premises",
+    "reader_gap": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ reproduced 3/3 on branch AND main (pre-existing, not a regression); reader emits no regularity claim, checker never called; with the S.ABCD phrasing the checker refuses the same coordinates",
+    "candidate_freeze": "d838cc5b (frozen at 825f109d; candidate 8c4c01284232121b60662ea431510629267dd5314ba3be4521de568875ece178, product c11e8c9d, cache 120, 102 files; diagnostics/freeze_c11e8c9d.log)",
+    "cache_version": "120 verified: served → refused reproduced; _cache_lookup misses rows whose policy_version differs; lock_cache_identity --verify at 120; 0 model-surface files since 9762f441; pins at 120; fixture_diff 49/49 identical",
+    "targeted": "C0 whole-solid 34/34 + oracle 29/29; grounding-safety 24/24; G04 51/51, G05 53/53; regression + identity + docs + test_api 1314/1314; node harness 102/102",
+    "t3": "FULL_PRODUCT_GATE_PASS at d838cc5b (pytest 7401 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface; diagnostics/t3_d838cc5b.log)",
+    "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ",
+    "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
+  },
+  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
 }

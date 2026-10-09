@@ -56,7 +56,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 120 trên nhánh `fix/c0-whole-solid-grounding` (C0 mâu thuẫn khẳng định toàn khối ↔ toạ độ served → refused; runs/c0-whole-solid-grounding/cache/decision.json) · `main`: 119 (geometry-grounding-safety; runs/geometry-grounding-safety/cache/decision.json)
-> CANDIDATE = bbfa5b0da3a5353a… (102 file; product commit 765291ab; cache 119; đóng băng LOCAL e1dfc851, T3 PASS — runs/geometry-grounding-safety/handoff.md; trên `main` từ 47d05f22)
+> CANDIDATE = bbfa5b0da3a5353a… trên `main` (product commit 765291ab; cache 119); nhánh `fix/c0-whole-solid-grounding`: 8c4c01284232121b… (102 file; product commit c11e8c9d; cache 120; đóng băng LOCAL d838cc5b, T3 PASS — runs/c0-whole-solid-grounding/handoff.md)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = GEOMETRY_GROUNDING_SAFETY (run `geometry-grounding-safety` — Cloud sửa C0 + compiler, LOCAL bổ sung 765291ab + kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
 > FINAL_DECISION = MERGED_AND_PUSHED (geometry-grounding-safety: `main` = `origin/main` = `47d05f22`, fast-forward từ e6c3cf68, 2026-10-09; runs/geometry-grounding-safety/APPROVAL.md · G05: 9666b861, runs/general-polygon-base/APPROVAL.md · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
@@ -64,14 +64,15 @@ thuộc thư mục run trong `docs/evaluation/`.
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **C0 kiểm khẳng định toàn khối — run c0-whole-solid-grounding (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-grounding`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+> **C0 kiểm khẳng định toàn khối — run c0-whole-solid-grounding (2026-10-09, Cloud, nhánh `fix/c0-whole-solid-grounding`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
 >
 > | Mục | Kết quả |
 > |---|---|
 > | Trước (`9762f441`) | 16 đề tự mâu thuẫn được phục vụ C0: lăng trụ đứng/xiên, hộp chữ nhật, lập phương (+ cạnh), chóp tứ giác/tam giác đều (+ cạnh bên, trung đoạn, tâm đáy chỉ có toạ độ trong đề), tứ diện đều (+ cạnh), chiều cao chóp/lăng trụ |
 > | Sửa | `_KIEM_C0` thêm định nghĩa chính xác các khẳng định toàn khối trên khối CÓ TÊN (amendment §22); cùng mã/đường từ chối §21 |
 > | Nhãn | 29 hàng ghi trước + oracle độc lập, 29/29 khớp; thiếu dữ kiện (không toạ độ, khối không tên) không bị coi là mâu thuẫn |
-> | `CACHE_VERSION` · candidate | **120** (served → refused, probe trước/sau; bề mặt mô hình không đổi) · candidate `bbfa5b0d…` CHƯA đóng băng lại (LOCAL) |
+> | `CACHE_VERSION` · candidate | **120** (served → refused, probe trước/sau; bề mặt mô hình không đổi) · candidate **`8c4c0128…`** (product `c11e8c9d`; đóng băng LOCAL `d838cc5b`, `--verify` khớp) |
+> | Kiểm LOCAL | T3 `FULL_PRODUCT_GATE_PASS` tại `d838cc5b`: pytest 7401 passed / 1 skipped, vitest 1040/1040, build, demo, bề mặt sập (`diagnostics/t3_d838cc5b.log`); chạy lại nhãn trên `main` và nhánh: **15** (không phải 16) hàng served → refused, 0 hồi quy; ca biên LOCAL (căn, chiều cao ≠ cạnh bên, ký hiệu `a`, mệnh đề mục tiêu, phủ định) đúng |
 > | Còn mở | `ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ` (bộ đọc không phát khẳng định cho vài cách viết) |
 > | Run | [`c0-whole-solid-grounding`](evaluation/geometry/runs/c0-whole-solid-grounding/) (`plan.md`, `report.md`, `handoff.md`) |
 

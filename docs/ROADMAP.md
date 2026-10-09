@@ -15,8 +15,8 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 
 - **Việc `c0-whole-solid-grounding` (2026-10-09, run [`c0-whole-solid-grounding`](evaluation/geometry/runs/c0-whole-solid-grounding/),
   Cloud, nhánh `fix/c0-whole-solid-grounding`, CHƯA tích hợp):** đóng `ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED`
-  (amendment §22); `CACHE_VERSION` 120; chờ LOCAL kiểm + đóng băng candidate. Mở mới:
-  `ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ`.
+  (amendment §22); `CACHE_VERSION` 120; candidate `8c4c0128…` đóng băng LOCAL, T3 PASS (`handoff.md` của run). Việc duy
+  nhất: người dùng quyết merge. Mở mới: `ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ` (lỗ bộ đọc, có sẵn trên `main`).
 
 - **Việc `geometry-grounding-safety` (2026-10-09, run [`geometry-grounding-safety`](evaluation/geometry/runs/geometry-grounding-safety/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `47d05f22`):** đóng `ISSUE-ARCH-C0-SHAPE-TEXT-NOT-CHECKED-AGAINST-COORDINATES` và
