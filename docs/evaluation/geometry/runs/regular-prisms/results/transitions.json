@@ -2,7 +2,7 @@
  "schema_version": "transitions/1",
  "run_id": "regular-prisms",
  "baseline": "ea85216b",
- "branch_product": "00770c3",
+ "branch_product": "00770c3 + d8b9da7 (probe logs identical on both)",
  "source": "diagnostics/probe_ea85216b.log → probe_candidate.log; diagnostics/probe_extra_ea85216b.log → probe_extra_candidate.log",
  "labelled_rows": {
   "refused→served": {

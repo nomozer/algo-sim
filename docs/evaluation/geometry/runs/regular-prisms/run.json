@@ -14,7 +14,8 @@
   "commits": {
     "preregistration": "680d830",
     "product": "00770c3",
-    "docs": "the final evidence commit (report, handoff, cache, transitions, pytest compare, state pointers)"
+    "docs": "the final evidence commit (report, handoff, cache, transitions, pytest compare, state pointers)",
+    "product_fix": "d8b9da7 (oblique 'xiên … đều' excluded from T12; dropped-'đều' reader pin moved to the square prism)"
   },
   "slice": "G05 regular triangular + regular hexagonal prism (template T12, affine chart + text-derived prism metric)",
   "route_verified": "LLM_ONLY route on model-style programs (foundation_only; model not measured); compiler: no family",

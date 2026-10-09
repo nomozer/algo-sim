@@ -6,6 +6,7 @@ Nhánh `feat/g05-regular-prisms` (từ `ea85216b`), đã push; không merge, kh�
 |---|---|
 | `680d830` | khảo sát G05 lăng trụ đều, tiền đăng ký: plan (ma trận năng lực), 25 nhãn, oracle, ca, probe baseline |
 | `00770c3` | bộ đọc + T12 + metric lăng trụ + C0 lục giác đều / cạnh bên lăng trụ, năng lực sản phẩm, `CACHE_VERSION` 125, khoá, test, ghim, probe ứng viên + probe chuyển trạng thái ngoài nhãn |
+| `d8b9da7` | sửa phát hiện ở so sánh toàn bộ pytest: "lăng trụ xiên … đều" không phát T12; ghim "đều" chưa đọc của `test_shape_constraint` chuyển sang lăng trụ tứ giác đều (cập nhật có chủ đích) |
 | (commit cuối) | report, handoff, bằng chứng cache, chuyển trạng thái, so sánh pytest, OPEN_ISSUES, CODE_INDEX, CURRENT_STATE, ROADMAP |
 
 ## Việc LOCAL
