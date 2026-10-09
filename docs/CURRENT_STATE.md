@@ -58,11 +58,21 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit và phone-landscape-layout không bump — chỉ frontend)
 > CANDIDATE = 7f3f042309dd1c54… (102 file; cây đo không đổi từ f967ba24; đóng băng lại 5892fefd tại product commit 95a56a17 — chỉ product_commit_sha dời)
 > USER_DIRTY_STATE = D frontend/public/favicon.svg ở máy local (của người dùng, giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = PHONE_LANDSCAPE_LAYOUT (run `phone-landscape-layout`; điện thoại ngang + 360 px; nghiệm thu cuối trên candidate cuối)
-> FINAL_DECISION = READY_FOR_HUMAN_VISUAL_REVIEW (cổng T3 + danh tính ở commit tài liệu cuối của run phone-landscape-layout — runs/phone-landscape-layout/handoff.md §2; D5 + điện thoại ngang đã triển khai, chờ duyệt) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng duyệt hình theo runs/phone-landscape-layout/review.md (F-R1–F-R7), runs/mobile-canvas-fit/review.md (E-R1–E-R6) cùng runs/exact-dimensions/review.md, runs/regular-triangular-pyramid-w01/REVIEW.md và gói W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt riêng có lệnh
+> CURRENT_WAVE = FINAL_ACCEPTANCE (run `final-acceptance`; kiểm lại danh tính, đo dải lớp học, chuẩn bị thao tác tay trên điện thoại; không sửa sản phẩm)
+> FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (danh tính kiểm lại ở run final-acceptance; T3 + Tier-A của run phone-landscape-layout thuộc cùng sản phẩm 95a56a17) · HUMAN_VISUAL_REVIEW = NOT_APPROVED · NEXT_ACTION = người dùng thao tác tay và quyết theo runs/final-acceptance/review.md (G-1…G-9 = E-R6 + F-R7; D-1…D-4), cùng các gói runs/phone-landscape-layout/review.md, runs/mobile-canvas-fit/review.md, runs/exact-dimensions/review.md, runs/regular-triangular-pyramid-w01/REVIEW.md và W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh
 > CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 > TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES (sau khi duyệt và merge; họ kế tiếp từ `ROADMAP.md` §0.2)
 > ```
+
+> **Nghiệm thu cuối — run final-acceptance (2026-10-09, máy local; không sửa sản phẩm, 0 model call):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Danh tính | candidate `7f3f0423…` `--verify` khớp; `CACHE_VERSION` 118; `LLM_ONLY`; ngoài `docs/` từ `95a56a17` chỉ dời `product_commit_sha` của manifest Tier-A ⇒ Tier-A 8/8 + T3 của phone-landscape-layout còn hiệu lực |
+> | Dải lớp học trên điện thoại | lỗi thật, **có từ `main`**: nhánh 11/24, `main` 5/24, không hồi quy — `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` (OPEN) |
+> | E-R6 / F-R7 | chạm giả lập 8/8 (hỗ trợ); thao tác tay vẫn chờ người dùng |
+> | UX debt chấp nhận tạm | bảng nổi che canvas khi ngang; nhãn rời canvas sau cú xoay ở màn thấp; header/thanh công cụ mobile — vẫn OPEN |
+> | Run | [`final-acceptance`](evaluation/geometry/runs/final-acceptance/) (`review.md`, `report.md`, `handoff.md`) |
 
 > **Điện thoại ngang + 360 px + nghiệm thu cuối — run phone-landscape-layout (2026-10-08/09, máy local; đo `221ec0a0` lần 3, worktree tách rời sạch; chờ review người):**
 >

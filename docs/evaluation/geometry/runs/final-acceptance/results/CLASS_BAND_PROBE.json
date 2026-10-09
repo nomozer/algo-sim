@@ -1,0 +1,5857 @@
+{
+  "schema": "class-band-probe/1",
+  "application_llm_calls": 0,
+  "api": "stubbed via CDP Fetch (auth/me, classes, assignments, session, monitor); envelope = fixture regular_square_pyramid_positive of run phone-landscape-layout",
+  "script": "diagnostics/probe-class-band.mjs",
+  "witness": "without the band (user null) the official probe measured top row 36-44 px and controls inside on every landscape viewport for this family: runs/phone-landscape-layout/results/MOBILE_LAYOUT_PROBE.json",
+  "builds": {
+    "branch": {
+      "product_commit_sha": "95a56a17d51330d9f2d3c6ba314f783170a028f8",
+      "source": "frontend/src identical to 95a56a17 (git diff --quiet)",
+      "pass": "11/24",
+      "rows": [
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 640,
+            "h": 360
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 200,
+          "scroll_width": 640,
+          "client_width": 640,
+          "controls_bottom": 490,
+          "canvas": {
+            "y": 224,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 74,
+              "r": 96,
+              "b": 151,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 101,
+              "r": 108,
+              "b": 123,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 102,
+              "r": 272,
+              "b": 122,
+              "w": 152,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 284,
+              "y": 77,
+              "r": 346,
+              "b": 147,
+              "w": 62,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 358,
+              "y": 62,
+              "r": 470,
+              "b": 163,
+              "w": 111,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 482,
+              "y": 12,
+              "r": 624,
+              "b": 212,
+              "w": 142,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 62,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 111,
+              "h": 61
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 200,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 490,
+          "canvas": {
+            "y": 224,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 74,
+              "r": 96,
+              "b": 151,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 101,
+              "r": 108,
+              "b": 123,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 102,
+              "r": 281,
+              "b": 122,
+              "w": 161,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 293,
+              "y": 77,
+              "r": 358,
+              "b": 147,
+              "w": 64,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 370,
+              "y": 62,
+              "r": 488,
+              "b": 163,
+              "w": 118,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 500,
+              "y": 12,
+              "r": 651,
+              "b": 212,
+              "w": 151,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 64,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 118,
+              "h": 61
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 84,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 374,
+          "canvas": {
+            "y": 108,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 16,
+              "r": 102,
+              "b": 93,
+              "w": 86,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 114,
+              "y": 43,
+              "r": 114,
+              "b": 65,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 126,
+              "y": 44,
+              "r": 346,
+              "b": 64,
+              "w": 221,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 358,
+              "y": 19,
+              "r": 436,
+              "b": 89,
+              "w": 77,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 448,
+              "y": 12,
+              "r": 609,
+              "b": 96,
+              "w": 162,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 621,
+              "y": 14,
+              "r": 828,
+              "b": 94,
+              "w": 207,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 86,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 77,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 162,
+              "h": 44
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 84,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 374,
+          "canvas": {
+            "y": 108,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 16,
+              "r": 102,
+              "b": 93,
+              "w": 86,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 114,
+              "y": 43,
+              "r": 114,
+              "b": 65,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 126,
+              "y": 44,
+              "r": 346,
+              "b": 64,
+              "w": 221,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 358,
+              "y": 19,
+              "r": 436,
+              "b": 89,
+              "w": 77,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 448,
+              "y": 12,
+              "r": 609,
+              "b": 96,
+              "w": 162,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 621,
+              "y": 14,
+              "r": 828,
+              "b": 94,
+              "w": 207,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 86,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 77,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 162,
+              "h": 44
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 360,
+            "h": 640
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 304,
+          "scroll_width": 360,
+          "client_width": 360,
+          "controls_bottom": 785,
+          "canvas": {
+            "y": 371,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 16,
+              "y": 68,
+              "r": 344,
+              "b": 90,
+              "w": 328,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 102,
+              "r": 276,
+              "b": 122,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 16,
+              "y": 134,
+              "r": 132,
+              "b": 164,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 16,
+              "y": 176,
+              "r": 312,
+              "b": 208,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 220,
+              "r": 344,
+              "b": 316,
+              "w": 328,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "portrait",
+          "size": {
+            "w": 390,
+            "h": 844
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 270,
+          "scroll_width": 390,
+          "client_width": 390,
+          "controls_bottom": 751,
+          "canvas": {
+            "y": 337,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 23,
+              "r": 374,
+              "b": 45,
+              "w": 211,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 68,
+              "r": 276,
+              "b": 88,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 16,
+              "y": 100,
+              "r": 132,
+              "b": 130,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 16,
+              "y": 142,
+              "r": 312,
+              "b": 174,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 186,
+              "r": 374,
+              "b": 282,
+              "w": 358,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 84,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 542,
+          "canvas": {
+            "y": 108,
+            "h": 387
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 609,
+              "b": 41,
+              "w": 445,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 621,
+              "y": 20,
+              "r": 881,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 893,
+              "y": 15,
+              "r": 1009,
+              "b": 45,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 1021,
+              "y": 14,
+              "r": 1317,
+              "b": 46,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 60,
+              "r": 395,
+              "b": 96,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 84,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 792,
+          "canvas": {
+            "y": 108,
+            "h": 637
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 683,
+              "b": 41,
+              "w": 519,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 695,
+              "y": 20,
+              "r": 955,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 967,
+              "y": 15,
+              "r": 1083,
+              "b": 45,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 1095,
+              "y": 14,
+              "r": 1391,
+              "b": 46,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 60,
+              "r": 395,
+              "b": 96,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 640,
+            "h": 360
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 212,
+          "scroll_width": 640,
+          "client_width": 640,
+          "controls_bottom": 502,
+          "canvas": {
+            "y": 236,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 80,
+              "r": 96,
+              "b": 157,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 107,
+              "r": 108,
+              "b": 129,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 108,
+              "r": 228,
+              "b": 128,
+              "w": 108,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 240,
+              "y": 83,
+              "r": 301,
+              "b": 153,
+              "w": 61,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 313,
+              "y": 35,
+              "r": 511,
+              "b": 201,
+              "w": 198,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 523,
+              "y": 12,
+              "r": 624,
+              "b": 224,
+              "w": 101,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 61,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 88,
+              "h": 46
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 107,
+              "h": 46
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 101,
+              "h": 56
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 212,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 502,
+          "canvas": {
+            "y": 236,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 80,
+              "r": 96,
+              "b": 157,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 107,
+              "r": 108,
+              "b": 129,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 108,
+              "r": 235,
+              "b": 128,
+              "w": 115,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 247,
+              "y": 83,
+              "r": 308,
+              "b": 153,
+              "w": 61,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 320,
+              "y": 35,
+              "r": 531,
+              "b": 201,
+              "w": 211,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 543,
+              "y": 12,
+              "r": 651,
+              "b": 224,
+              "w": 108,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 61,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 46
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 115,
+              "h": 46
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 56
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 168,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 458,
+          "canvas": {
+            "y": 192,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 58,
+              "r": 96,
+              "b": 135,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 85,
+              "r": 108,
+              "b": 107,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 86,
+              "r": 281,
+              "b": 106,
+              "w": 161,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 293,
+              "y": 61,
+              "r": 358,
+              "b": 131,
+              "w": 64,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 370,
+              "y": 20,
+              "r": 665,
+              "b": 172,
+              "w": 295,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 677,
+              "y": 12,
+              "r": 828,
+              "b": 180,
+              "w": 151,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 64,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 168,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 458,
+          "canvas": {
+            "y": 192,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 58,
+              "r": 96,
+              "b": 135,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 85,
+              "r": 108,
+              "b": 107,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 86,
+              "r": 281,
+              "b": 106,
+              "w": 161,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 293,
+              "y": 61,
+              "r": 358,
+              "b": 131,
+              "w": 64,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 370,
+              "y": 20,
+              "r": 665,
+              "b": 172,
+              "w": 295,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 677,
+              "y": 12,
+              "r": 828,
+              "b": 180,
+              "w": 151,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 64,
+              "h": 70
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 360,
+            "h": 640
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 384,
+          "scroll_width": 360,
+          "client_width": 360,
+          "controls_bottom": 865,
+          "canvas": {
+            "y": 451,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 16,
+              "y": 68,
+              "r": 344,
+              "b": 90,
+              "w": 328,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 102,
+              "r": 276,
+              "b": 122,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 16,
+              "y": 134,
+              "r": 132,
+              "b": 164,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 16,
+              "y": 176,
+              "r": 344,
+              "b": 288,
+              "w": 328,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 300,
+              "r": 344,
+              "b": 396,
+              "w": 328,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "portrait",
+          "size": {
+            "w": 390,
+            "h": 844
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 350,
+          "scroll_width": 390,
+          "client_width": 390,
+          "controls_bottom": 831,
+          "canvas": {
+            "y": 417,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 23,
+              "r": 374,
+              "b": 45,
+              "w": 211,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 68,
+              "r": 276,
+              "b": 88,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 16,
+              "y": 100,
+              "r": 132,
+              "b": 130,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 16,
+              "y": 142,
+              "r": 374,
+              "b": 254,
+              "w": 358,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 266,
+              "r": 374,
+              "b": 362,
+              "w": 358,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 84,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 542,
+          "canvas": {
+            "y": 108,
+            "h": 387
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 917,
+              "b": 41,
+              "w": 753,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 929,
+              "y": 20,
+              "r": 1189,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 1201,
+              "y": 15,
+              "r": 1317,
+              "b": 45,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 16,
+              "y": 62,
+              "r": 756,
+              "b": 94,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 938,
+              "y": 60,
+              "r": 1317,
+              "b": 96,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 84,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 792,
+          "canvas": {
+            "y": 108,
+            "h": 637
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 991,
+              "b": 41,
+              "w": 827,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 1003,
+              "y": 20,
+              "r": 1263,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "btn-utility",
+              "text": "Giao cho lớp",
+              "x": 1275,
+              "y": 15,
+              "r": 1391,
+              "b": 45,
+              "w": 116,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 16,
+              "y": 62,
+              "r": 756,
+              "b": 94,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 1012,
+              "y": 60,
+              "r": 1391,
+              "b": 96,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Giao cho lớp",
+              "inside": true,
+              "tappable": true,
+              "w": 116,
+              "h": 30
+            },
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 640,
+            "h": 360
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 200,
+          "scroll_width": 640,
+          "client_width": 640,
+          "controls_bottom": 490,
+          "canvas": {
+            "y": 224,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 74,
+              "r": 96,
+              "b": 151,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 101,
+              "r": 108,
+              "b": 123,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 102,
+              "r": 303,
+              "b": 122,
+              "w": 184,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 315,
+              "y": 82,
+              "r": 440,
+              "b": 142,
+              "w": 125,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 452,
+              "y": 12,
+              "r": 624,
+              "b": 212,
+              "w": 172,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 148,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 438,
+          "canvas": {
+            "y": 172,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 48,
+              "r": 96,
+              "b": 125,
+              "w": 80,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 108,
+              "y": 75,
+              "r": 108,
+              "b": 97,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 120,
+              "y": 76,
+              "r": 317,
+              "b": 96,
+              "w": 198,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 329,
+              "y": 56,
+              "r": 454,
+              "b": 116,
+              "w": 125,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 466,
+              "y": 12,
+              "r": 651,
+              "b": 160,
+              "w": 185,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 80,
+              "h": 77
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 80,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 370,
+          "canvas": {
+            "y": 104,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 14,
+              "r": 114,
+              "b": 91,
+              "w": 98,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 126,
+              "y": 41,
+              "r": 126,
+              "b": 63,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 138,
+              "y": 42,
+              "r": 398,
+              "b": 62,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 410,
+              "y": 22,
+              "r": 568,
+              "b": 82,
+              "w": 158,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 580,
+              "y": 12,
+              "r": 828,
+              "b": 92,
+              "w": 248,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 98,
+              "h": 77
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 80,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 370,
+          "canvas": {
+            "y": 104,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 14,
+              "r": 114,
+              "b": 91,
+              "w": 98,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 126,
+              "y": 41,
+              "r": 126,
+              "b": 63,
+              "w": 0,
+              "clipped": true
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 138,
+              "y": 42,
+              "r": 398,
+              "b": 62,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 410,
+              "y": 22,
+              "r": 568,
+              "b": 82,
+              "w": 158,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 580,
+              "y": 12,
+              "r": 828,
+              "b": 92,
+              "w": 248,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 98,
+              "h": 77
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 360,
+            "h": 640
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 262,
+          "scroll_width": 360,
+          "client_width": 360,
+          "controls_bottom": 743,
+          "canvas": {
+            "y": 329,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 16,
+              "y": 68,
+              "r": 344,
+              "b": 90,
+              "w": 328,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 102,
+              "r": 276,
+              "b": 122,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 16,
+              "y": 134,
+              "r": 257,
+              "b": 166,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 178,
+              "r": 344,
+              "b": 274,
+              "w": 328,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 160,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "portrait",
+          "size": {
+            "w": 390,
+            "h": 844
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 228,
+          "scroll_width": 390,
+          "client_width": 390,
+          "controls_bottom": 709,
+          "canvas": {
+            "y": 295,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 56,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 23,
+              "r": 374,
+              "b": 45,
+              "w": 211,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 16,
+              "y": 68,
+              "r": 276,
+              "b": 88,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 16,
+              "y": 100,
+              "r": 257,
+              "b": 132,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 16,
+              "y": 144,
+              "r": 374,
+              "b": 240,
+              "w": 358,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 44
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 175,
+              "h": 44
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 36,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 542,
+          "canvas": {
+            "y": 60,
+            "h": 435
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 401,
+              "b": 41,
+              "w": 238,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 413,
+              "y": 20,
+              "r": 673,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 685,
+              "y": 14,
+              "r": 926,
+              "b": 46,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 938,
+              "y": 12,
+              "r": 1317,
+              "b": 48,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 36,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 792,
+          "canvas": {
+            "y": 60,
+            "h": 685
+          },
+          "children": [
+            {
+              "cls": "geo3d-quay-lai",
+              "text": "Bài thực hành",
+              "x": 16,
+              "y": 12,
+              "r": 151,
+              "b": 48,
+              "w": 135,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Chóp tứ giác đều S.ABCD",
+              "x": 163,
+              "y": 19,
+              "r": 475,
+              "b": 41,
+              "w": 312,
+              "clipped": false
+            },
+            {
+              "cls": "nav-assignment",
+              "text": "Bài: Chóp tứ giác đều — tính thể tích và",
+              "x": 487,
+              "y": 20,
+              "r": 747,
+              "b": 40,
+              "w": 260,
+              "clipped": true
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 759,
+              "y": 14,
+              "r": 1000,
+              "b": 46,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Đề bàiKhám pháHiển thịThêm",
+              "x": 1012,
+              "y": 12,
+              "r": 1391,
+              "b": 48,
+              "w": 379,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Bài thực hành",
+              "inside": true,
+              "tappable": true,
+              "w": 135,
+              "h": 36
+            },
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Đề bài",
+              "inside": true,
+              "tappable": true,
+              "w": 67,
+              "h": 36
+            },
+            {
+              "text": "Khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 110,
+              "h": 36
+            },
+            {
+              "text": "Hiển thị",
+              "inside": true,
+              "tappable": true,
+              "w": 96,
+              "h": 36
+            },
+            {
+              "text": "Thêm",
+              "inside": true,
+              "tappable": true,
+              "w": 82,
+              "h": 36
+            }
+          ]
+        }
+      ]
+    },
+    "main": {
+      "commit": "38d4158826cbbffd013d971a9484b9f0fd2a6130",
+      "source": "clean detached worktree, node_modules junction, removed after build",
+      "pass": "5/24",
+      "rows": [
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 658,
+            "h": 371
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL",
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 658,
+          "client_width": 640,
+          "controls_bottom": 608,
+          "canvas": {
+            "y": 239,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 320,
+              "y": 111,
+              "r": 616,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 608,
+          "canvas": {
+            "y": 239,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 347,
+              "y": 111,
+              "r": 643,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 565,
+          "canvas": {
+            "y": 196,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 524,
+              "y": 111,
+              "r": 820,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 565,
+          "canvas": {
+            "y": 196,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 524,
+              "y": 111,
+              "r": 820,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 658,
+            "h": 1170
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 146,
+          "scroll_width": 658,
+          "client_width": 360,
+          "controls_bottom": 743,
+          "canvas": {
+            "y": 312,
+            "h": 333
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 24,
+              "y": 147,
+              "r": 320,
+              "b": 179,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 336,
+              "b": 257,
+              "w": 312,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "portrait",
+          "size": {
+            "w": 658,
+            "h": 1424
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 146,
+          "scroll_width": 658,
+          "client_width": 390,
+          "controls_bottom": 817,
+          "canvas": {
+            "y": 312,
+            "h": 420
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 24,
+              "y": 147,
+              "r": 320,
+              "b": 179,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 366,
+              "b": 257,
+              "w": 342,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 32,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 525,
+          "canvas": {
+            "y": 155,
+            "h": 321
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 404,
+              "y": 111,
+              "r": 700,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 884,
+              "y": 113,
+              "r": 1309,
+              "b": 142,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_idle",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 32,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 670,
+          "canvas": {
+            "y": 155,
+            "h": 466
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 44,
+              "y": 115,
+              "r": 239,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSBắt đầu tiết",
+              "x": 441,
+              "y": 111,
+              "r": 737,
+              "b": 143,
+              "w": 296,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 939,
+              "y": 113,
+              "r": 1364,
+              "b": 142,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Bắt đầu tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 94,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 658,
+            "h": 371
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL",
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 149,
+          "scroll_width": 658,
+          "client_width": 640,
+          "controls_bottom": 684,
+          "canvas": {
+            "y": 315,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 616,
+              "b": 219,
+              "w": 592,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 231,
+              "r": 449,
+              "b": 260,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 149,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 684,
+          "canvas": {
+            "y": 315,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 643,
+              "b": 219,
+              "w": 619,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 231,
+              "r": 449,
+              "b": 260,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 109,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 601,
+          "canvas": {
+            "y": 232,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 764,
+              "b": 179,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 449,
+              "b": 220,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 109,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 601,
+          "canvas": {
+            "y": 232,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 764,
+              "b": 179,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 449,
+              "b": 220,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 658,
+            "h": 1170
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 226,
+          "scroll_width": 658,
+          "client_width": 360,
+          "controls_bottom": 823,
+          "canvas": {
+            "y": 392,
+            "h": 333
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 336,
+              "b": 259,
+              "w": 312,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 271,
+              "r": 336,
+              "b": 337,
+              "w": 312,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "portrait",
+          "size": {
+            "w": 658,
+            "h": 1424
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 226,
+          "scroll_width": 658,
+          "client_width": 390,
+          "controls_bottom": 897,
+          "canvas": {
+            "y": 392,
+            "h": 420
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 24,
+              "y": 147,
+              "r": 366,
+              "b": 259,
+              "w": 342,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 271,
+              "r": 366,
+              "b": 337,
+              "w": 342,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 566,
+          "canvas": {
+            "y": 196,
+            "h": 321
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 569,
+              "y": 111,
+              "r": 1309,
+              "b": 143,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "teacher_live",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 73,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 711,
+          "canvas": {
+            "y": 196,
+            "h": 466
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 44,
+              "y": 115,
+              "r": 239,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-dock",
+              "text": "11A2 — Toán chuyên0 HSTheo cô/thầyCho tự",
+              "x": 624,
+              "y": 111,
+              "r": 1364,
+              "b": 143,
+              "w": 740,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 44,
+              "y": 155,
+              "r": 468,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "11A2 — Toán chuyên0 HS",
+              "inside": true,
+              "tappable": true,
+              "w": 194,
+              "h": 32
+            },
+            {
+              "text": "Theo cô/thầy",
+              "inside": true,
+              "tappable": true,
+              "w": 104,
+              "h": 32
+            },
+            {
+              "text": "Cho tự khám phá",
+              "inside": true,
+              "tappable": true,
+              "w": 128,
+              "h": 32
+            },
+            {
+              "text": "Gọi cả lớp về đây",
+              "inside": true,
+              "tappable": true,
+              "w": 127,
+              "h": 32
+            },
+            {
+              "text": "Theo dõi",
+              "inside": true,
+              "tappable": true,
+              "w": 78,
+              "h": 32
+            },
+            {
+              "text": "Kết thúc",
+              "inside": true,
+              "tappable": true,
+              "w": 75,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_640",
+          "size": {
+            "w": 640,
+            "h": 360
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 640,
+          "client_width": 640,
+          "controls_bottom": 608,
+          "canvas": {
+            "y": 239,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 375,
+              "y": 111,
+              "r": 616,
+              "b": 143,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_small",
+          "size": {
+            "w": 667,
+            "h": 375
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 667,
+          "client_width": 667,
+          "controls_bottom": 608,
+          "canvas": {
+            "y": 239,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 402,
+              "y": 111,
+              "r": 643,
+              "b": 143,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape",
+          "size": {
+            "w": 844,
+            "h": 390
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 565,
+          "canvas": {
+            "y": 196,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 579,
+              "y": 111,
+              "r": 820,
+              "b": 143,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "landscape_browser",
+          "size": {
+            "w": 844,
+            "h": 340
+          },
+          "pass": false,
+          "failures": [
+            "PLAYER_CONTROLS_OUTSIDE_VIEWPORT"
+          ],
+          "top_row_height": 73,
+          "scroll_width": 844,
+          "client_width": 844,
+          "controls_bottom": 565,
+          "canvas": {
+            "y": 196,
+            "h": 320
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 115,
+              "r": 220,
+              "b": 139,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 579,
+              "y": 111,
+              "r": 820,
+              "b": 143,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 155,
+              "r": 449,
+              "b": 184,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "portrait_small",
+          "size": {
+            "w": 580,
+            "h": 1032
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 146,
+          "scroll_width": 580,
+          "client_width": 360,
+          "controls_bottom": 743,
+          "canvas": {
+            "y": 312,
+            "h": 333
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 24,
+              "y": 147,
+              "r": 265,
+              "b": 179,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 336,
+              "b": 257,
+              "w": 312,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "portrait",
+          "size": {
+            "w": 580,
+            "h": 1256
+          },
+          "pass": false,
+          "failures": [
+            "HORIZONTAL_SCROLL"
+          ],
+          "top_row_height": 146,
+          "scroll_width": 580,
+          "client_width": 390,
+          "controls_bottom": 817,
+          "canvas": {
+            "y": 312,
+            "h": 420
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 111,
+              "r": 220,
+              "b": 135,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 24,
+              "y": 147,
+              "r": 265,
+              "b": 179,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 24,
+              "y": 191,
+              "r": 366,
+              "b": 257,
+              "w": 342,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "low",
+          "size": {
+            "w": 1348,
+            "h": 554
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 32,
+          "scroll_width": 1333,
+          "client_width": 1348,
+          "controls_bottom": 505,
+          "canvas": {
+            "y": 135,
+            "h": 321
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 24,
+              "y": 95,
+              "r": 220,
+              "b": 119,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 432,
+              "y": 91,
+              "r": 672,
+              "b": 123,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 884,
+              "y": 93,
+              "r": 1309,
+              "b": 122,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        },
+        {
+          "role": "student_live",
+          "viewport": "desktop",
+          "size": {
+            "w": 1422,
+            "h": 804
+          },
+          "pass": true,
+          "failures": [],
+          "top_row_height": 32,
+          "scroll_width": 1407,
+          "client_width": 1422,
+          "controls_bottom": 650,
+          "canvas": {
+            "y": 135,
+            "h": 466
+          },
+          "children": [
+            {
+              "cls": "geo3d-ten-bai",
+              "text": "Hình dựng theo từng bước",
+              "x": 44,
+              "y": 95,
+              "r": 239,
+              "b": 119,
+              "w": 196,
+              "clipped": false
+            },
+            {
+              "cls": "live-hs",
+              "text": "Đang theo cô/thầyEm cần hỗ trợ",
+              "x": 469,
+              "y": 91,
+              "r": 709,
+              "b": 123,
+              "w": 241,
+              "clipped": false
+            },
+            {
+              "cls": "geo3d-thanh-nut",
+              "text": "Xem đề Thành phần Hiện tất cả Chi tiết",
+              "x": 939,
+              "y": 93,
+              "r": 1364,
+              "b": 122,
+              "w": 425,
+              "clipped": false
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Em cần hỗ trợ",
+              "inside": true,
+              "tappable": true,
+              "w": 108,
+              "h": 32
+            },
+            {
+              "text": "Xem đề",
+              "inside": true,
+              "tappable": true,
+              "w": 73,
+              "h": 29
+            },
+            {
+              "text": "Thành phần",
+              "inside": true,
+              "tappable": true,
+              "w": 121,
+              "h": 29
+            },
+            {
+              "text": "Hiện tất cả",
+              "inside": true,
+              "tappable": true,
+              "w": 114,
+              "h": 29
+            },
+            {
+              "text": "Chi tiết",
+              "inside": true,
+              "tappable": true,
+              "w": 92,
+              "h": 29
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

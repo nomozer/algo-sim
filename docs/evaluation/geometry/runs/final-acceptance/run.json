@@ -1,0 +1,38 @@
+{
+  "run_id": "final-acceptance",
+  "task_slug": "final-acceptance",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-09",
+  "machine": "local Windows",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "bc989cd2",
+  "product_commit": "95a56a17d51330d9f2d3c6ba314f783170a028f8",
+  "product_change": "NONE",
+  "candidate": {
+    "tree_hash": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0",
+    "files": 102,
+    "verify": "freeze_evaluation_candidate.py --verify: match"
+  },
+  "cache_version": "118 (unchanged)",
+  "default_mode": "LLM_ONLY",
+  "model_surface": "unchanged",
+  "live_model_requests": 0,
+  "reused_evidence": {
+    "tier_a": "runs/phone-landscape-layout/results/BROWSER_EVIDENCE.json (8/8, product 95a56a17, measured 221ec0a0)",
+    "t3": "runs/phone-landscape-layout/diagnostics/t3_d32bdb8d.log (FULL_PRODUCT_GATE_PASS; only docs after d32bdb8d)",
+    "occlusion_w14": "runs/phone-landscape-layout/results/OCCLUSION_MEASUREMENT.json (0 failures, 4 HUMAN_REVIEW_PENDING, REVIEWED_SETS_REPRODUCED 4/4)"
+  },
+  "new_measurements": {
+    "class_band_probe": "results/CLASS_BAND_PROBE.json — branch 11/24, main 38d41588 5/24, no branch regression; script diagnostics/probe-class-band.mjs (API stubbed, scratch builds of 95a56a17 source and of main in a removed detached worktree)",
+    "touch_proxy_probe": "results/TOUCH_PROXY_PROBE.json — 8/8 emulated touch (2 families x 4 phone viewports); first attempt 0/8 was a probe bug; NOT a real-device check"
+  },
+  "images": "1 (images/class-band__student__640x360.png, new defect)",
+  "identity_tests": "test_evaluation_candidate + test_schema_sync + test_current_state_identity: 18 passed",
+  "user_decisions_this_run": [
+    "2026-10-09: accept mobile header/toolbar layout, floating panel over canvas in landscape, labels leaving canvas after orbit on low screen as temporary UX debt; issues stay OPEN; not a final approval"
+  ],
+  "human_visual_review": "NOT_APPROVED",
+  "manual_phone_checks": "REQUIRES_INTERACTIVE_HUMAN_CHECK (review.md G-1..G-9 = E-R6 + F-R7)",
+  "final_state": "READY_FOR_USER_ACCEPTANCE",
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

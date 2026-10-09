@@ -1,0 +1,462 @@
+{
+  "schema": "touch-proxy-probe/1",
+  "note": "emulated touch, headless Chrome; NOT a real-device check",
+  "application_llm_calls": 0,
+  "rows": [
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "portrait",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/8",
+            "Bước 2/8",
+            "Bước 1/8"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/8",
+          "paused_at": "Bước 2/8",
+          "after_1500ms": "Bước 2/8"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "day_ABCD",
+          "tries_on_label_midpoints": 4
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "portrait_small",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/8",
+            "Bước 2/8",
+            "Bước 1/8"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/8",
+          "paused_at": "Bước 2/8",
+          "after_1500ms": "Bước 2/8"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "day_ABCD",
+          "tries_on_label_midpoints": 4
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "landscape",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/8",
+            "Bước 2/8",
+            "Bước 1/8"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/8",
+          "paused_at": "Bước 2/8",
+          "after_1500ms": "Bước 2/8"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "day_ABCD",
+          "tries_on_label_midpoints": 4
+        },
+        "drag_floating_panel_by_touch": {
+          "pass": true,
+          "from": {
+            "x": 369,
+            "y": 85,
+            "w": 270,
+            "h": 61
+          },
+          "to": {
+            "x": 309,
+            "y": 105,
+            "w": 270,
+            "h": 61
+          }
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": true
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "regular_square_pyramid",
+      "viewport": "landscape_640",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/8",
+            "Bước 2/8",
+            "Bước 1/8"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/8",
+          "paused_at": "Bước 2/8",
+          "after_1500ms": "Bước 2/8"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "day_ABCD",
+          "tries_on_label_midpoints": 4
+        },
+        "drag_floating_panel_by_touch": {
+          "pass": true,
+          "from": {
+            "x": 165,
+            "y": 85,
+            "w": 270,
+            "h": 61
+          },
+          "to": {
+            "x": 105,
+            "y": 105,
+            "w": 270,
+            "h": 61
+          }
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": true
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "portrait",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/11",
+            "Bước 2/11",
+            "Bước 1/11"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/11",
+          "paused_at": "Bước 2/11",
+          "after_1500ms": "Bước 2/11"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "ABCD_base",
+          "tries_on_label_midpoints": 4
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "portrait_small",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/11",
+            "Bước 2/11",
+            "Bước 1/11"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/11",
+          "paused_at": "Bước 2/11",
+          "after_1500ms": "Bước 2/11"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "ABCD_base",
+          "tries_on_label_midpoints": 4
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "landscape",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/11",
+            "Bước 2/11",
+            "Bước 1/11"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/11",
+          "paused_at": "Bước 2/11",
+          "after_1500ms": "Bước 2/11"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "ABCD_base",
+          "tries_on_label_midpoints": 4
+        },
+        "drag_floating_panel_by_touch": {
+          "pass": true,
+          "from": {
+            "x": 369,
+            "y": 85,
+            "w": 270,
+            "h": 61
+          },
+          "to": {
+            "x": 309,
+            "y": 105,
+            "w": 270,
+            "h": 61
+          }
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": true
+        }
+      },
+      "pass": true
+    },
+    {
+      "family": "cross_section",
+      "viewport": "landscape_640",
+      "checks": {
+        "orbit_by_touch": {
+          "pass": true,
+          "camera_changed": true,
+          "page_scrolled": false
+        },
+        "overview_by_tap": {
+          "pass": true,
+          "tap": "OK",
+          "camera_restored": true
+        },
+        "step_by_tap": {
+          "pass": true,
+          "back": "OK",
+          "fwd": "OK",
+          "steps": [
+            "Bước 1/11",
+            "Bước 2/11",
+            "Bước 1/11"
+          ]
+        },
+        "play_pause_by_tap": {
+          "pass": true,
+          "play": "OK",
+          "pause": "OK",
+          "started_at": "Bước 1/11",
+          "paused_at": "Bước 2/11",
+          "after_1500ms": "Bước 2/11"
+        },
+        "select_by_tap": {
+          "pass": true,
+          "selected": "ABCD_base",
+          "tries_on_label_midpoints": 4
+        },
+        "drag_floating_panel_by_touch": {
+          "pass": true,
+          "from": {
+            "x": 165,
+            "y": 85,
+            "w": 270,
+            "h": 61
+          },
+          "to": {
+            "x": 105,
+            "y": 105,
+            "w": 270,
+            "h": 61
+          }
+        },
+        "panel_open_collapse_close_by_tap": {
+          "pass": true,
+          "open": "OK",
+          "collapse": "OK",
+          "collapsed": true,
+          "expand": "OK",
+          "close": "OK",
+          "floating": true
+        }
+      },
+      "pass": true
+    }
+  ],
+  "script": "diagnostics/probe-touch.mjs",
+  "product_commit_sha": "95a56a17d51330d9f2d3c6ba314f783170a028f8",
+  "first_attempt": "probe bug (scenes open at step 1, «Bước trước» is a no-op there): 0/8, fixed by stepping forward first, rerun 8/8 on the same build"
+}

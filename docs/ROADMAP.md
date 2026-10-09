@@ -13,6 +13,11 @@ CANONICAL_NEXT_ACTION = HUMAN_VISUAL_REVIEW_OF_REGULAR_PYRAMID_EVIDENCE
 TARGET_NEXT_ACTION_AFTER_WAVE = NEXT_FAMILY_SLICE_WITH_DECIDED_UI_CHANGES
 ```
 
+- **Việc `final-acceptance` (2026-10-09, run [`final-acceptance`](evaluation/geometry/runs/final-acceptance/), máy local):**
+  FINAL_ACCEPTANCE — không sửa sản phẩm; danh tính kiểm lại; dải lớp học trên điện thoại là lỗi có từ `main` (không chặn theo
+  đánh giá của run). Việc duy nhất: người dùng thao tác tay + quyết theo `review.md` của run này; duyệt thì merge, push, xoá nhánh
+  ở lượt LOCAL riêng có lệnh.
+
 - **Việc `phone-landscape-layout` (2026-10-08/09, run [`phone-landscape-layout`](evaluation/geometry/runs/phone-landscape-layout/), máy local):**
   PHONE_LANDSCAPE_LAYOUT — điện thoại ngang: thanh điều khiển thành cột cạnh canvas (hình giữ cỡ, sàn 320 px giữ); 360 px: ba nút
   phát một hàng; nghiệm thu cuối trên candidate `7f3f0423…` (product `95a56a17`), Tier-A 8/8 một lượt, `CACHE_VERSION` 118. Việc duy

@@ -1216,3 +1216,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** learner-facing simulation on phones (landscape, small screens)
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `inputs/REVIEW_SET.json` · `results/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = FINAL_ACCEPTANCE
+- **RUN_ID:** final-acceptance (task final-acceptance; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-09
+- **START_BASE:** bc989cd2
+- **CODE_COMMIT_OR_NONE:** NONE
+- **CANDIDATE:** `7f3f042309dd1c54…` (102 file, `--verify` match, product `95a56a17`) · CACHE_VERSION 118 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit with two one-off probe results, 0 model requests, 1 image
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (visual review NOT_APPROVED; E-R6/F-R7 need the user's phone)
+- **FULL_PRODUCT_SUITE:** not rerun — T3 of phone-landscape-layout at `d32bdb8d` covers the same product; identity tests 18/18 and candidate verify at `bc989cd2`
+- **PRODUCT_CHANGED:** NO
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/final-acceptance/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/final-acceptance/
+- **PASS:** identity (candidate, cache, mode, Tier-A/T3 provenance); emulated touch 8/8 (support only)
+- **CLOSED:** NONE
+- **OPENED:** ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW (branch 11/24, main 5/24, no regression), ISSUE-ARCH-MOBILE-HEADER-TOOLBAR-LAYOUT (UX debt accepted by the user)
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** the user's phone checks and decisions (`runs/final-acceptance/review.md`), then merge on explicit approval in a separate local run
+- **FINAL_DECISION:** READY_FOR_USER_ACCEPTANCE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** merge readiness
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `results/` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

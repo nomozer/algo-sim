@@ -784,6 +784,7 @@
 - **impact:** the learner collapses (one tap) or drags the panel; canvas and camera do not change when it opens (W4 invariant). No wrong value.
 - **scope / options (decision needed):** keep (W4 floating design); narrower panels in short landscape (less text per line); or give the panel its own column when open — the canvas would resize and the camera re-aspect on open, breaking the approved W4 invariant "opening a panel does not resize the canvas".
 - **status:** OPEN (run `phone-landscape-layout`)
+- **final-acceptance (2026-10-09):** the user accepts the current behaviour as temporary UX debt, to prioritise architecture work; not fixed, not a final approval — stays OPEN.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user decides
 - **default_switch_blocker:** NO
@@ -794,8 +795,28 @@
 - **impact:** the learner may need «Xem lại toàn hình» or a zoom after rotating; no wrong value.
 - **scope / options (decision needed):** accept (the reset button exists), or fit by the bounding sphere instead of the default projection (smaller figure on every screen).
 - **status:** OPEN (run `mobile-canvas-fit`) — pre-existing, not touched. Evaluated in run `phone-landscape-layout`: one family, one viewport, one 120 × 40 px drag (55/56 other runs keep the labels inside); «Xem lại toàn hình» restores the exact initial camera in 56/56 runs over seven viewports and is always in view. The only shared fix (fit over the orbit sweep / bounding sphere) makes the figure smaller on every screen — an approved invariant — so it waits for the user.
+- **final-acceptance (2026-10-09):** the user accepts it as temporary UX debt («Xem lại toàn hình» is the recovery); not fixed, not a final approval — stays OPEN.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** after the user decides
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW
+- **description:** The classroom band (`daiLop`: assignment label, the teacher's «Giao cho lớp», the live-class dock or the student's indicator + help button) sits in the scene's top row. On short landscape the row is forced onto one line (`.geo3d-thanh { flex-wrap: nowrap }`, `95a56a17`) while the tool group `.geo3d-thanh-nut` may still wrap inside and the lesson title has `min-width: 0`: the band takes the width, the title shrinks to 0 px (gone), the four tool buttons stack vertically, the row grows to 148–224 px and the canvas and control column are pushed below the screen edge. In narrow portrait (360×640) the band adds one or two rows to the top row and the play bar falls below the edge.
+- **evidence:** `docs/evaluation/geometry/runs/final-acceptance/results/CLASS_BAND_PROBE.json` (API stubbed, 0 model calls; teacher idle/live, student live × 8 viewports): branch `95a56a17` 11/24, `main` `38d41588` 5/24, no row passes on `main` and fails on the branch; `images/class-band__student__640x360.png`. Witness: without the band the official probe measures a 36–44 px top row and controls in view on every landscape viewport (`runs/phone-landscape-layout/results/MOBILE_LAYOUT_PROBE.json`).
+- **impact:** in a class with an assignment open on a phone (landscape ≤ 667 px wide or with the browser bar, 360 px portrait; teacher during a live session also at 844×390) the learner or teacher scrolls to reach the play controls and loses the lesson title in landscape; no wrong value. Pre-existing on `main` (worse there: also horizontal scroll at 360/390 px).
+- **scope / options (proposal, not measured):** in the short-landscape block keep the tool group on one line (`.geo3d-thanh-nut { flex-wrap: nowrap; flex-shrink: 0 }`), give the title a floor (`min-width: 5rem`) and let the assignment label shrink first (`.nav-assignment { flex: 0 1 auto; min-width: 0 }`); default the teacher dock to its existing collapsed state (`live-dock-thu`) at ≤ 48rem. Re-measure with the probe above plus `check-mobile-layout.mjs`.
+- **status:** OPEN (run `final-acceptance`) — not fixed in this run (no UI changes); not a merge blocker by the run's assessment (no regression against `main`); the user decides.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** the next UI wave
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-MOBILE-HEADER-TOOLBAR-LAYOUT
+- **description:** On phones the scene's top row (back button, lesson title, grouped tools) and the tool bar are functional but not visually finished: the 2 × 2 tool grid in portrait, the truncated one-line title in landscape and the spacing of the control column were shaped for fit, not designed.
+- **evidence:** the user's review on 2026-10-09 (brief of run `final-acceptance`); images `runs/phone-landscape-layout/images/mobile/<family>/{portrait,landscape,landscape_small}/layout.png`.
+- **impact:** appearance only; every control measured in view and usable (`runs/phone-landscape-layout/results/MOBILE_LAYOUT_PROBE.json`).
+- **status:** OPEN — accepted by the user as temporary UX debt (2026-10-09) to prioritise architecture work; no redesign now; not a final approval.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** a later UI design wave
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-INFORMATICS-MODEL-SURFACE-AND-IR-VOCABULARY

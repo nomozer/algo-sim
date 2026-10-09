@@ -1219,3 +1219,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** learner-facing simulation on phones in landscape and on small screens; human review NOT_APPROVED
 - **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `plan.md` · `MEASUREMENT_ATTEMPTS.json` · `inputs/REVIEW_SET.json` · `results/MOBILE_LAYOUT_PROBE.json` · `results/BROWSER_EVIDENCE.json` · `results/W02_CLOSURE_PROBE.json` · `results/W04_PANELS_PROBE.json` · `results/W05_FOCUS_PROBE.json` · `results/OCCLUSION_MEASUREMENT.json` · `results/PLAYBACK_EVIDENCE.json` · `images/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = FINAL_ACCEPTANCE
+- **RUN_ID:** final-acceptance (task final-acceptance; same branch)
+- **DATE:** 2026-10-09
+- **REPORT:** docs/evaluation/geometry/runs/final-acceptance/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/final-acceptance/
+- **START_BASE:** bc989cd2
+- **CODE_COMMIT:** NONE (no product change)
+- **MEASUREMENT_COMMIT:** bc989cd2 source (frontend/src identical to 95a56a17); scratch builds of that source and of main 38d41588 (removed detached worktree); two one-off probes (classroom band, emulated touch), 0 model requests
+- **EVIDENCE_COMMIT_ROLE:** the run's documentation commit (results, probes, one image)
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (identity re-verified; Tier-A 8/8 and T3 of phone-landscape-layout reused — same product)
+- **PRODUCT_CHANGE:** NO
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (7f3f0423..., --verify match)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (phone-landscape-layout report §6 listed the classroom band as unmeasured; measured here, earlier files untouched)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** merge readiness of the branch; classroom band defect (pre-existing on main); emulated-touch support for E-R6/F-R7 (not a device check)
+- **AUTHORITATIVE_FILES:** `review.md` · `report.md` · `handoff.md` · `run.json` · `results/CLASS_BAND_PROBE.json` · `results/TOUCH_PROXY_PROBE.json` · `images/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
