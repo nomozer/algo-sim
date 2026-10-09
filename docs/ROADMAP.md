@@ -13,11 +13,12 @@ CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
-- **Việc `general-polygon-base` (2026-10-09, run [`general-polygon-base`](evaluation/geometry/runs/general-polygon-base/), Cloud,
-  nhánh `feat/general-polygon-base`):** G05 — đáy lồi xác định bởi chuỗi góc vuông (hình thang vuông, tam giác vuông với chân
-  bất kỳ, n cạnh) cho chóp và lăng trụ đứng, qua bộ đọc + khuôn T10 (hai tuyến) và hai họ compiler `polygon_base_*`;
-  `CACHE_VERSION` 118, candidate `72d6070a…` đóng băng LOCAL, T3 PASS (`handoff.md` của run). Việc duy nhất: người dùng
-  quyết tích hợp. G05 CHƯA khép toàn họ (`ISSUE-ARCH-G05-REMAINING-BASES`).
+- **Việc `general-polygon-base` (2026-10-09, run [`general-polygon-base`](evaluation/geometry/runs/general-polygon-base/), Cloud +
+  LOCAL, ĐÃ TÍCH HỢP `main` = `9666b861`):** G05 miền hẹp — đáy lồi xác định bởi chuỗi góc vuông (hình thang vuông, tam giác
+  vuông với chân bất kỳ, n cạnh) cho chóp và lăng trụ đứng, qua bộ đọc + khuôn T10 (hai tuyến) và hai họ compiler
+  `polygon_base_*`; `CACHE_VERSION` 118, candidate `72d6070a…`, T3 PASS; `foundation_only`. Phê duyệt: `APPROVAL.md` của
+  run. G05 CHƯA khép toàn họ (`ISSUE-ARCH-G05-REMAINING-BASES`). Việc kế tiếp: người dùng chọn họ tiếp theo theo §0.2 (G06
+  chưa bắt đầu), rồi OCR.
 
 - **Việc `oblique-prism` (2026-10-09, run [`oblique-prism`](evaluation/geometry/runs/oblique-prism/), Cloud + LOCAL,
   ĐÃ TÍCH HỢP `main` = `a0fdbba4`):** G04 lăng trụ xiên trên kiến trúc sẵn có — khuôn T9 của cổng giả định (dùng chung

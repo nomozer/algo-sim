@@ -1,0 +1,8 @@
+# cwd: backend @ 9666b861458b2e3d4da294cb37d321ca45dac04c (main); same result at d5287ff7 (pre-G05) — see handoff.md LOCAL
+with_phrase {"servable": true, "stage_reached": "served", "reason_code": null, "error_code": null, "V": "6", "assumption": []}
+phrase_contradicts_coords {"servable": true, "stage_reached": "served", "reason_code": null, "error_code": null, "V": "6", "assumption": []}
+FULL with_phrase 40d3b59340ab87e8 4967
+ASSUMPTION with_phrase {"grounding_assumptions": [], "assumption_status": "PROVEN_SAFE", "assumption_certificate": "C0", "assumption_enforced": true}
+FULL phrase_contradicts_coords 40d3b59340ab87e8 4967
+ASSUMPTION phrase_contradicts_coords {"grounding_assumptions": [], "assumption_status": "PROVEN_SAFE", "assumption_certificate": "C0", "assumption_enforced": true}
+exit=0

@@ -1374,3 +1374,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (oblique-prism, 2026-10-09):** user approval `runs/oblique-prism/APPROVAL.md`; integration gate `diagnostics/gates_a0fdbba4.log` PASS; `main` fast-forwarded `ba995887` → `a0fdbba4` and pushed (no force; ls-remote verified); branch kept (deletion not allowed)
+
+### WAVE_ID = GENERAL_POLYGON_BASE
+- **RUN_ID:** general-polygon-base (task general-polygon-base; Cloud implementation + LOCAL verification; branch feat/general-polygon-base, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** d5287ff7
+- **CODE_COMMIT_OR_NONE:** 4e30a211 (kernel right-angle-chain layout, right-trapezoid reader, assumption-gate template T10, compiler families polygon_base_*, product_capability row)
+- **CANDIDATE:** `72d6070acf6ced35…` (product `4e30a211`, 102 files; frozen LOCAL f250f5ef) · CACHE_VERSION 118 (no bump) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration 5e1e3e9a; product + tests 4e30a211; docs + cache evidence 45d732f0; LOCAL safety test d3feb877; candidate refreeze f250f5ef; LOCAL record 9666b861
+- **CLASSIFICATION:** G05 served in a narrow domain (convex base fixed by k − 2 consecutive right angles; pyramid with an apex edge ⊥ base or right prism); `right_angle_chain_base` = foundation_only; not the whole G05 family
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at f250f5ef (pytest 7343 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/general-polygon-base/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/general-polygon-base/
+- **PASS:** test_general_polygon_base.py 53/53 (15 preregistered labels on both routes, independent oracle; LOCAL rectangle-assumption refusal lock, fault-injected); red-before 39 red at d5287ff7
+- **CLOSED:** NONE
+- **OPENED:** ISSUE-ARCH-G05-REMAINING-BASES · ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION · ISSUE-ARCH-C0-SHAPE-TEXT-NOT-CHECKED-AGAINST-COORDINATES (pre-existing behaviour, recorded at integration)
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward d5287ff7 → 9666b861) / YES (feat/oblique-prism, feat/general-polygon-base after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user choice of the next family (ROADMAP §0.2; G06 not started), then OCR
+- **FINAL_DECISION:** MERGED_AND_PUSHED (no live Gemini evidence for G05; compiler opt-in; no token-reduction claim; no compiler-first switch)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** family-expansion evidence (deterministic route); not a model-capability claim
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (general-polygon-base, 2026-10-09):** user approval `runs/general-polygon-base/APPROVAL.md`; integration gate `diagnostics/gates_9666b861.log` PASS; `main` fast-forwarded `d5287ff7` → `9666b861` and pushed (no force; ls-remote verified); both integrated feature branches deleted (git branch -d, git push origin --delete)

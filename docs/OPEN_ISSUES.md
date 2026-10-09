@@ -39,6 +39,16 @@
 - **suggested_wave:** before compiler-first routing
 - **default_switch_blocker:** YES
 
+### ISSUE-ARCH-C0-SHAPE-TEXT-NOT-CHECKED-AGAINST-COORDINATES
+- **description:** When the text pins every vertex by coordinates, certificate C0 makes the coordinates the authority: shape constraints the server reads from the same text (for example the right-trapezoid phrase added by general-polygon-base) are not checked against those coordinates. A text whose shape phrase contradicts its own coordinates (`hình thang vuông tại C và D` while the coordinates put the right angles at A and B) is served from the coordinates instead of being refused as contradictory.
+- **evidence:** `docs/evaluation/geometry/runs/general-polygon-base/diagnostics/probe_c0_shape_text_vs_coordinates.py` + `.log` (offline, 0 model calls): both the consistent and the contradictory text are `PROVEN_SAFE` C0, served `V = 6`, with a byte-identical route outcome at `d5287ff7` (before G05) and at `9666b861` — the behaviour predates G05 and G05 does not change it.
+- **impact:** The served value follows the stated coordinates, so it is the volume of the solid the coordinates define; the learner is not told that the text's shape description disagrees with them. No served value changed; the gap is a missing contradiction refusal (repository rule: contradictions fail closed).
+- **scope:** `backend/app/simulation/semantic_program/assumption_gate.py` (C0 branch: check read `shape_constraint` relations on the pinned coordinates), `shape_constraint.py`.
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** user decision (a refusal turns served C0 rows into refusals ⇒ `CACHE_VERSION` bump by evidence)
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY
 - **description:** G04 is served only when the problem states `T F ⊥ (base)` with F a NAMED base vertex (`A'B vuông góc với (ABC)`). The common textbook forms are refused: the foot of the lateral height is a midpoint/centroid/centre (`hình chiếu vuông góc của A' lên (ABC) là trung điểm H của BC`), the projection is phrased `hình chiếu … là (điểm) B`, or the obliquity is an angle (`cạnh bên tạo với đáy góc 60°`).
 - **evidence:** `docs/evaluation/geometry/runs/oblique-prism/labels.json` rows ON03, ON08 (refused on both routes); `tests/geometry/test_oblique_prism.py`.

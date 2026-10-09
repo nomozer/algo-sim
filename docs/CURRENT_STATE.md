@@ -56,15 +56,15 @@ thuộc thư mục run trong `docs/evaluation/`.
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
 > CACHE_VERSION = 118 (bump ở docs-cleanup vì envelope từ chối T8 thiếu kích thước đổi UNKNOWN → SOURCE; mobile-canvas-fit, phone-landscape-layout và classroom-band-fit không bump — chỉ frontend)
-> CANDIDATE = 02ce5e1e6e819ab2… trên `main` (102 file; product commit 0fe4edc5 — G04); nhánh `feat/general-polygon-base`: 72d6070acf6ced35… (102 file; product commit 4e30a211 — G05; đóng băng LOCAL f250f5ef, T3 PASS — runs/general-polygon-base/handoff.md)
+> CANDIDATE = 72d6070acf6ced35… (102 file; product commit 4e30a211 — G05 đáy theo chuỗi góc vuông; đóng băng LOCAL f250f5ef, T3 PASS — runs/general-polygon-base/handoff.md; trên `main` từ 9666b861)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
-> CURRENT_WAVE = GENERAL_POLYGON_BASE (run `general-polygon-base`, G05 miền hẹp — Cloud làm, LOCAL kiểm + đóng băng trên nhánh `feat/general-polygon-base`, chưa merge; G04 đã trên `main`; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
-> FINAL_DECISION = MERGED_AND_PUSHED (G04: `main` = `origin/main` = `a0fdbba4`, fast-forward từ ba995887, 2026-10-09; runs/oblique-prism/APPROVAL.md; G04 `foundation_only`) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng quyết merge G05 (`feat/general-polygon-base`, miền hẹp, `foundation_only`) vào `main`; rồi họ tiếp theo (ROADMAP §0.2), rồi OCR; frontend đóng băng; nhánh feat/oblique-prism giữ lại
+> CURRENT_WAVE = GENERAL_POLYGON_BASE (run `general-polygon-base`, G05 miền hẹp — Cloud làm, LOCAL kiểm + đóng băng, đã tích hợp `main`; hai nhánh G04/G05 đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
+> FINAL_DECISION = MERGED_AND_PUSHED (G05: `main` = `origin/main` = `9666b861`, fast-forward từ d5287ff7, 2026-10-09; runs/general-polygon-base/APPROVAL.md; G05 `foundation_only`, miền hẹp · G04: a0fdbba4, runs/oblique-prism/APPROVAL.md) · baseline frontend: MERGED_AND_PUSHED_WITH_EXCEPTIONS (runs/frontend-freeze/APPROVAL.md) · HUMAN_VISUAL_REVIEW = NOT_APPROVED (C1–C6 đã xem, chưa phê duyệt chất lượng; P1–P6 PENDING; UX debt OPEN/DEFERRED) · NEXT_ACTION = người dùng chọn việc kế tiếp: họ hình tiếp theo (ROADMAP §0.2; G06 chưa bắt đầu) rồi OCR; frontend đóng băng; giữ LLM_ONLY, không chuyển compiler-first
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 
-> **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; LOCAL đã kiểm — chờ người dùng quyết merge):**
+> **G05 đáy đa giác theo chuỗi góc vuông — run general-polygon-base (2026-10-09, Cloud, nhánh `feat/general-polygon-base`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `9666b861` theo `APPROVAL.md`):**
 >
 > | Mục | Kết quả |
 > |---|---|
