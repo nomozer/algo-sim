@@ -54,9 +54,19 @@
 - **evidence:** `backend/app/simulation/semantic_program/assumption_gate.py` (`_KIEM_C0`, `_mau_thuan_c0`); `docs/evaluation/geometry/runs/geometry-grounding-safety/report.md` §5.
 - **impact:** Same class as the resolved C0 issue, narrower: the served value follows the stated coordinates; the contradiction is not refused.
 - **scope:** `assumption_gate.py` (one exact predicate per whole-solid kind, reusing the template definitions), `shape_constraint.py`.
-- **status:** OPEN
+- **status:** RESOLVED on branch `fix/c0-whole-solid-grounding` (c0-whole-solid-grounding, 2026-10-09, `c11e8c9`; LOCAL verification + candidate freeze pending) — amendment §22: before C0 is certified, the whole-solid claims read on a NAMED solid are checked exactly on the coordinates (program, else the text's own `point_coordinate`): `right_prism`, `oblique_prism`, `cuboid`, `cube`, `cube_edge`, `regular_square_pyramid`, `regular_triangular_pyramid`, `regular_tetrahedron`, `edge_all`, `lateral_edge`, `apothem`, `base_centre`, `height` (distance to the base plane, not the lateral edge); broken ⇒ `SOURCE_SHAPE_CONTRADICTS_COORDINATES` (§21 path, no Scene3D, not sent for repair). Baseline `9762f441`: 16 contradictory texts served; now 29/29 labelled rows match (`runs/c0-whole-solid-grounding/diagnostics/probe_9762f441.log` vs `probe_c11e8c9.log`). `CACHE_VERSION` 119 → 120 (`cache/decision.json`). Not checked by design (missing ≠ contradiction): unnamed solids (`entities = ()`), points with no coordinate anywhere, plain `prism` (a non-translated top is already refused at execution). Claims the reader never emits: `ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** user decision (served C0 rows may turn into refusals ⇒ `CACHE_VERSION` decided by evidence)
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-C0-WHOLE-SOLID-CLAIMS-NOT-READ
+- **description:** §22 checks only claims the server reader (`shape_constraint.doc_rang_buoc`) emits. A regular pyramid stated without the `S.ABCD` notation ("hình chóp tứ giác đều có đỉnh S và đáy ABCD", "hình chóp tứ giác đều" with no name) or as "hình chóp đều S.ABCD" (no base-shape word) emits no regularity claim, so contradictory coordinates (apex over a vertex) are still certified C0 and served.
+- **evidence:** `docs/evaluation/geometry/runs/c0-whole-solid-grounding/diagnostics/probe_reader_gap.py` → `probe_reader_gap_c11e8c9.log` (3/3 served at `c11e8c9`).
+- **impact:** Same class as the resolved C0 issues: the served value follows the stated coordinates; the contradiction is not refused.
+- **scope:** `shape_constraint.py` reader phrasings (also feeds the C1 templates — changing it moves C1 rows, so it needs its own labels and a cache decision).
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** user decision
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY

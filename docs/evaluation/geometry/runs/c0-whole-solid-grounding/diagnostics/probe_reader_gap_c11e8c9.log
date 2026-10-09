@@ -1,0 +1,3 @@
+{"text": "Cho hình chóp tứ giác đều có đỉnh S và đáy ABCD với {coords}. Tính thể tích khối chóp.", "read": [], "servable": true, "stage": "served"}
+{"text": "Cho hình chóp tứ giác đều với {coords}. Tính thể tích khối chóp.", "read": [], "servable": true, "stage": "served"}
+{"text": "Cho hình chóp đều S.ABCD với {coords}. Tính thể tích khối chóp S.ABCD.", "read": ["pyramid"], "servable": true, "stage": "served"}
