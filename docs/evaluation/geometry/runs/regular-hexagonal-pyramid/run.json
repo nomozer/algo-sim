@@ -44,5 +44,17 @@
     "limits": "foundation_only — route verified on model-style programs, no live Gemini; compiler has no hexagon family; not supported: regular hexagonal/triangular prisms, unnamed hexagonal pyramid, regular pentagon, bases by angle, concave bases",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "f20caf8a42998a5bcce6b3bd8c3c07f73234f999",
+    "to": "55f513957a3a9a0c02266c66183a6c3cc7a1fd58",
+    "method": "git merge --ff-only feat/g05-geometry-capability-expansion, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 55f51395 = main = origin/main",
+    "integration_gate": "diagnostics/gates_55f51395.log (candidate cf47dd61, cache 124, LLM_ONLY, routing unchanged, model surface: product_capability.py only (foundation_only row, not a capability-hash input), schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at 0fe806ff, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "feat/g05-geometry-capability-expansion (55f51395) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "foundation_only — no live Gemini result; compiler has no hexagon family; not supported: regular hexagonal/triangular prisms, unnamed regular hexagonal pyramid, regular pentagon, bases by angle, concave bases; answer-line placement in the UI not verified in this round; no token-reduction claim; no claim that real Gemini capability improved from the hand-written program corpus alone; N4 correction lives in label_corrections.json — labels.json and oracle.py (pre-correction rule) unchanged and not claimed updated; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }

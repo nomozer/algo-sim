@@ -1536,3 +1536,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `policy_a_labels.json` · `labels.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (unnamed-pyramid-vertex-binding, 2026-10-09):** user approval `runs/unnamed-pyramid-vertex-binding/APPROVAL.md`; integration gate `diagnostics/gates_32705882.log` PASS; `main` fast-forwarded `a7c56942` → `32705882` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = REGULAR_HEXAGONAL_PYRAMID
+- **RUN_ID:** regular-hexagonal-pyramid (task g05-geometry-capability-expansion; Cloud implementation, LOCAL verification; branch feat/g05-geometry-capability-expansion, deleted after integration)
+- **DATE:** 2026-10-09 (Cloud + LOCAL verification) · 2026-10-10 (integration)
+- **START_BASE:** f20caf8a
+- **CODE_COMMIT_OR_NONE:** 6c792434 (G05 regular hexagonal pyramid, amendment §26: reader for three phrasings + base side / lateral edge; template T11 with a text-derived metric (affine chart); C0 hexagon claim checked on given coordinates; product_capability row foundation_only; CACHE_VERSION 124)
+- **CANDIDATE:** `cf47dd6142f2d46f…` (product `6c792434`, 102 files; frozen LOCAL 0fe806ff) · CACHE_VERSION 124 (bump: H5 served 1 → 6√3; C0 served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** survey + preregistration 33579941; fix 6c792434; docs 68e9fa5b + dc974a51; candidate refreeze 0fe806ff; LOCAL record 55f51395
+- **CLASSIFICATION:** capability slice (G05, template T11); foundation_only (route verified on model-style programs, model not measured)
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at 0fe806ff (pytest 7665 passed / 1 skipped / 2 deselected, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/regular-hexagonal-pyramid/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/regular-hexagonal-pyramid/
+- **PASS:** 8/8 positive rows served correctly, C1-certified (7 refused → served, H5 served 1 → 6√3); N4 refused → served 6√3 (label correction accepted by independent metric proof); 8 boundary rows refused → refused; C0 hexagon served, off-axis apex refused; Scene3D 7 vertices / 7 faces / chart_metric; renderer transform + browser check H6, H8, N4; new tests 38/38, related 1620/1620; Tier-A fixtures 49/49 byte-identical
+- **CLOSED:** NONE (ISSUE-ARCH-G05-REMAINING-BASES narrowed: regular hexagonal pyramid served)
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward f20caf8a → 55f51395) / YES (after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (N4 label correction is an overlay `label_corrections.json`; `labels.json` and `oracle.py` unchanged)
+- **NEXT_ACTION_AT_TIME:** user choice; next G05 slice (regular hexagonal / triangular prisms) not started
+- **FINAL_DECISION:** MERGED_AND_PUSHED (limits OPEN: foundation_only — no live Gemini result; no compiler hexagon family; prisms, unnamed regular hexagonal pyramid, regular pentagon, bases by angle, concave bases not supported; answer-line UI placement not verified; no token-reduction claim; no claim of improved real Gemini capability from the hand-written corpus alone)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** capability evidence for the exact-dimensions contract (affine chart + text-derived metric) on the registered corpus only
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `labels.json` · `label_corrections.json` · `oracle.py`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (regular-hexagonal-pyramid, 2026-10-10):** user approval `runs/regular-hexagonal-pyramid/APPROVAL.md`; integration gate `diagnostics/gates_55f51395.log` PASS; `main` fast-forwarded `f20caf8a` → `55f51395` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)

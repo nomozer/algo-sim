@@ -14,10 +14,10 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
 - **Việc `regular-hexagonal-pyramid` (2026-10-09, run [`regular-hexagonal-pyramid`](evaluation/geometry/runs/regular-hexagonal-pyramid/),
-  Cloud, nhánh `feat/g05-geometry-capability-expansion`, CHƯA tích hợp):** lát cắt G05 đầu tiên sau Policy A — chóp lục
+  Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `55f51395`):** lát cắt G05 đầu tiên sau Policy A — chóp lục
   giác đều qua khuôn T11 + metric khung (amendment §26): 8 đề trước bị từ chối/phục vụ sai nay phục vụ đúng (C1, Scene3D
   có `chart_metric`); `CACHE_VERSION` 124; `foundation_only`; candidate `cf47dd61…` đóng băng LOCAL, T3 PASS, kiểm hình
-  trên trình duyệt (`handoff.md` của run). Việc duy nhất: người dùng quyết merge. Ứng viên G05 kế tiếp: lăng trụ lục giác đều /
+  trên trình duyệt (`handoff.md` của run); phê duyệt: `APPROVAL.md` của run. Ứng viên G05 kế tiếp (chưa bắt đầu, người dùng chọn): lăng trụ lục giác đều /
   lăng trụ tam giác đều (ký hiệu lăng trụ + metric lăng trụ, cùng cơ chế).
 
 - **Việc `unnamed-pyramid-vertex-binding` (2026-10-09, run [`unnamed-pyramid-vertex-binding`](evaluation/geometry/runs/unnamed-pyramid-vertex-binding/),
