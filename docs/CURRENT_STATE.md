@@ -55,7 +55,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > PRODUCT_AND_EVIDENCE_BASE_HEAD = 45f5a7f0 (dải lớp học gọn thành chip trên màn chật; trên nền điện thoại ngang 95a56a17 + D5 c9bcdcdb); bằng chứng trình duyệt 3095e4f0 (đo 6a1801e7 lần 3, run classroom-band-fit: dải lớp 24/24, không dải lớp 55/56, Tier-A 8/8 một lượt); cổng T3 ở commit tài liệu cuối của run (runs/classroom-band-fit/handoff.md §2)
 > DOCUMENTATION_COMMIT_ROLE = SELF
 > DEFAULT_MODE = LLM_ONLY
-> CACHE_VERSION = 122 (unnamed-regular-pyramid-grounding: chóp đều không tên — 11 served → refused, 4 đáp số đã phục vụ đổi; runs/unnamed-regular-pyramid-grounding/cache/decision.json)
+> CACHE_VERSION = 123 trên nhánh `fix/unnamed-pyramid-vertex-binding` (chính sách A: chóp đều không tên có tên điểm thiếu toạ độ bị chặn, served → refused; runs/unnamed-pyramid-vertex-binding/cache/decision.json) · `main`: 122 (unnamed-regular-pyramid-grounding: chóp đều không tên — 11 served → refused, 4 đáp số đã phục vụ đổi; runs/unnamed-regular-pyramid-grounding/cache/decision.json)
 > CANDIDATE = d07a92decc0fe635… (102 file; product commit 12edf57a; cache 122; đóng băng LOCAL 97db084f, T3 PASS — runs/unnamed-regular-pyramid-grounding/handoff.md; trên `main` từ 2d3c510c)
 > USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b; index.html không còn trỏ tệp đã xoá); phần dọn Tin học đã kiểm đã commit ở 0d4c4f8b
 > CURRENT_WAVE = UNNAMED_REGULAR_PYRAMID_GROUNDING (run `unnamed-regular-pyramid-grounding` — Cloud gắn + kiểm chóp đều không tên, LOCAL kiểm + đóng băng, đã tích hợp `main`; nhánh đã xoá sau tích hợp; frontend vẫn đóng băng theo `runs/frontend-freeze/`)
@@ -63,6 +63,17 @@ thuộc thư mục run trong `docs/evaluation/`.
 > CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
+
+> **Chính sách A cho chóp đều không tên chưa gắn được — run unnamed-pyramid-vertex-binding (2026-10-09, Cloud, nhánh `fix/unnamed-pyramid-vertex-binding`; 0 model call; CHƯA tích hợp, chờ LOCAL):**
+>
+> | Mục | Kết quả |
+> |---|---|
+> | Nghiên cứu (b) | nhãn + oracle độc lập cho 21 đề: 8 do đề xác định, 8 mơ hồ thật, 4 mâu thuẫn, 1 thiếu; bộ kiểm chỉ từ khuôn T7/T8 đạt 3/21 ⇒ cần mô hình hình học thứ hai |
+> | Quyết định | người dùng chọn **A** (cuối cùng): chặn cả 21 — giảm thiểu an toàn, KHÔNG phải kết luận toán học |
+> | Sửa | vùng U3 gồm mọi chóp đều không tên; §24 không gắn được ⇒ cổng từ chối `ASSUMPTION_INVARIANCE_UNPROVEN` (amendment §25) |
+> | Kết quả | 21/21 từ chối: 12 served → refused (gồm 3 đáp số sai), 9 giữ; 5 đề do đề xác định chưa hỗ trợ (B hoãn) |
+> | `CACHE_VERSION` · candidate | **123** (served → refused; bề mặt mô hình không đổi) · candidate `d07a92de…` CHƯA đóng băng lại (LOCAL) |
+> | Run | [`unnamed-pyramid-vertex-binding`](evaluation/geometry/runs/unnamed-pyramid-vertex-binding/) (`plan.md`, `report.md`, `handoff.md`) |
 
 > **Chóp đều không tên — run unnamed-regular-pyramid-grounding (2026-10-09, Cloud, nhánh `fix/unnamed-regular-pyramid-grounding`; 0 model call; LOCAL đã kiểm; đã tích hợp `main` = `2d3c510c` theo `APPROVAL.md`):**
 >

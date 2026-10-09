@@ -42,3 +42,17 @@ phép kiểm trên toạ độ chương trình:
 Đạt oracle cần trong sản phẩm: mô hình tham số của chóp đều (vị trí, dạng tuyến tính theo b², h²), giải hệ hai ẩn,
 điểm phụ, đọc vai trò "cạnh bên XY" — tức một mô hình hình học thứ hai + đại số mới, nằm ngoài giới hạn brief ⇒
 `ARCHITECTURE_DECISION_REQUIRED`.
+
+## 4. Quyết định của người dùng: phương án A (cuối cùng) — triển khai
+
+Người dùng chọn A: chặn cả 21 đề, chấp nhận không phục vụ 5 đề mà chính đề xác định; B hoãn (nâng cấp năng lực tuỳ
+chọn). Nhãn toán học `labels.json` + `oracle.py` GIỮ NGUYÊN; kỳ vọng sản phẩm riêng: `policy_a_labels.json` (21 ×
+`refused`; 5 `capability_limit`, 16 `safety`), commit `1bb5c02` trước commit sản phẩm.
+
+Sửa (amendment §25), chỉ lớp vùng từ chối + lý do của cổng:
+1. `shape_constraint.neu_khoi_da_dien`: mọi khẳng định chóp đều không tên `()` thuộc vùng U3 (bỏ điều kiện "không tên
+   điểm thiếu toạ độ").
+2. `assumption_gate._nhan_khuon`: khẳng định ấy không được §24 gắn ⇒ `TEMPLATE_NOT_MATCHED unnamed regular pyramid: its
+   vertices are not fixed by the text` ⇒ `ASSUMPTION_INVARIANCE_UNPROVEN` (mã hiện hành, không phải mâu thuẫn toạ độ).
+Không đổi: §24 (26 hàng gắn được), ký hiệu chuẩn, hai lối viết, khối gọi tên ở câu hỏi, C0 (đề toạ độ không gắn vẫn qua
+C0), compiler, kernel, frontend. Kỳ vọng: 12 served → refused, 9 refused → refused.
