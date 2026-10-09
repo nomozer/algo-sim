@@ -1,0 +1,15 @@
+# cwd: <worktree 'D:/tmp/class band fit'/backend> @ 45f5a7f02fd6769779cabf2eba8fc4b8c892f37e; clean detached CRLF; bare freeze then --verify
+2026-10-09T03:58:01Z
+0
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            45f5a7f0  (cây sạch: True)
+  CACHE_VERSION     118
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       102 file · 7f3f042309dd1c54
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 7f3f042309dd1c54…).
+verify exit=0
