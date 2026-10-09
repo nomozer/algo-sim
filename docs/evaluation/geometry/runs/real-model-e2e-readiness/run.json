@@ -1,0 +1,22 @@
+{
+  "run_id": "real-model-e2e-readiness",
+  "task_slug": "real-model-e2e-readiness",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-10",
+  "machine": "Claude Code LOCAL (Windows)",
+  "branch": "docs/real-model-e2e-readiness",
+  "start_head": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "candidate": "93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883",
+  "cache_version": "125",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "product_changed": false,
+  "kind": "readiness survey (docs only)",
+  "checks_0_calls": {
+    "harness_tests": "19 test files of the live runners: 1061 passed",
+    "thesis_final_lock": "run_thesis_final_acceptance BoDo: CANDIDATE_HASH, CACHE_VERSION, MODEL_FACING_HASHES drift (93077b51 vs d72db7c3, 125 vs 94) — runner refuses by design",
+    "dev_scorer_radicals": "run_geometry_dev_evaluation.cham_oracle on correctly served corpus programs X1, T1, X5 (final_memory Radical) vs labels 18√3, 3√3, 3√3/2: FAIL 'không so được' — scorer gap G1",
+    "env": "backend/.env present, gitignored, GEMINI_API_KEY non-empty (value not read); GEMINI_MODEL, ALLOW_LIVE_AI, GEOMETRY_COMPILER_MODE unset"
+  },
+  "result": "NOT_READY_TOOLING_FIX_REQUIRED (scripts only: G1 radical scorer, G2 full run_pipeline path via measure_geometry_stability.mot_luot, G3 refusal scoring, G4 offline Scene3D replay, G5 httpx log silencing); pilot of 16 problems proposed in report.md §5; awaiting user approval (report.md §8)"
+}
