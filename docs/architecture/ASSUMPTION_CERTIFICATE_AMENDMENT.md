@@ -1229,3 +1229,42 @@ cách mặt đáy h — hai vị trí đối xứng qua mặt đáy; tịnh ti�
 Góc nghiêng theo độ, chân là trung điểm/trọng tâm/hình chiếu đọc bằng câu chữ ngoài từ vựng (§2.1) ⇒ không T9
 (từ chối như trước). Không toạ độ xấp xỉ; không suy chân đường cao từ toạ độ của chương trình; không nâng
 `product_capability` lên `supported` (mô hình chưa đo — `foundation_only`).
+
+## 20. general-polygon-base — T10 đáy đa giác xác định bởi chuỗi góc vuông (đăng ký 2026-10-09, TRƯỚC mọi bản sửa)
+
+Nhãn ghi trước: `docs/evaluation/geometry/runs/general-polygon-base/labels.json` (oracle độc lập `oracle.py`).
+
+### 20.1 Từ vựng thêm vào §2.1
+
+| kind | Mẫu | entities |
+|---|---|---|
+| `line_perp_line` (thêm mẫu) | `đáy (XYZT)? là hình thang vuông tại P và Q` — P, Q là hai đỉnh KỀ của đáy khối đã nêu (tên đáy khác đáy khối ⇒ không phát) | mỗi đỉnh V ∈ {P, Q}: (V, V⁻, V, V⁺) với V⁻, V⁺ là hai đỉnh kề V trên chu trình đáy |
+
+Hai đỉnh không kề, đỉnh ngoài đáy, đáy không phải tứ giác ⇒ không phát gì (cụm còn chưa đọc ⇒ §7 chặn phản ví dụ).
+
+### 20.2 T10 — nhận khuôn
+
+Thử CHỈ khi T1/T2 (chóp) hoặc T3–T6 (lăng trụ) trả `TEMPLATE_NOT_MATCHED`; khuôn cũ khớp thì giữ nguyên. Đáy k ≥ 3
+đỉnh có một CHUỖI k − 2 đỉnh LIÊN TIẾP (theo chu trình) mà mỗi đỉnh V có góc vuông giữa hai cạnh đáy kề
+(`line_perp_line(V, V⁻, V, V⁺)` hoặc `right_triangle` tại V khi k = 3). Có nhiều chuỗi ⇒ chọn chuỗi đầu theo chu
+trình bắt đầu từ đỉnh đầu (mọi chuỗi cho cùng đa giác khi đều đúng; mọi góc vuông đề nêu đều được kiểm). Khối:
+`pyramid S.đáy` với `line_perp_plane(S, X, mặt ⊆ đáy)`, X ∈ đáy bất kỳ; hoặc `prism` + `right_prism`.
+
+### 20.3 Ràng buộc chính xác trên đỉnh của chương trình
+
+Đáy phẳng (mọi đỉnh đáy trong mặt phẳng qua ba đỉnh đầu); góc vuông tại mọi đỉnh của chuỗi; đáy LỒI (tích có hướng
+của hai cạnh liên tiếp cùng chiều với pháp tuyến tại MỌI đỉnh, kể cả hai đỉnh khép); chóp: (S − X) ⊥ mọi cạnh đáy,
+S ≠ X, |SX|² = h² khi h xác định; lăng trụ: các cạnh bên là một phép tịnh tiến ⊥ đáy, khác 0.
+
+### 20.4 Kích thước bắt buộc, hiện thực chính tắc, duy nhất
+
+k − 1 cạnh của chuỗi (`canh`), cộng chiều cao (chóp: |SX| hoặc `height`, `phap_tuyen` tại X; lăng trụ: cạnh bên
+hoặc `height`). Hiện thực: đi theo chuỗi từ đỉnh trước chuỗi, cạnh đầu theo +x, mỗi đỉnh vuông quay +90° trong mặt
+z = 0; S = X + (0, 0, h); đáy trên = đáy + (0, 0, h). Không lồi ⇒ `TEMPLATE_NOT_MATCHED T10: chain does not close into a
+convex polygon`. Duy nhất sai khác đẳng cự: các cạnh và góc vuông của chuỗi cố định k − 1 đỉnh liên tiếp; tính lồi
+chọn một chiều quay; cạnh khép là hệ quả.
+
+### 20.5 Không được
+
+Nhận đáy lõm hay đáy chỉ có một góc vuông (không xác định); suy góc vuông từ toạ độ chương trình; đọc "hình thang"
+không kèm "vuông tại P và Q"; nâng `product_capability` lên `supported` (mô hình chưa đo).

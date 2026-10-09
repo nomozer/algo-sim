@@ -1,0 +1,1147 @@
+{
+ "schema_version": "labels/1",
+ "run_id": "general-polygon-base",
+ "written": "2026-10-09, after the read-only inventory probes, before any product change of this run",
+ "rule": "Hand labels. `text` = problem; `topology`/`lengths`/`right_angles`/`perp` = the RequestContract an analyze pass should freeze (built through build_request_contract; right angles as perpendicular_lines between the two base edges at a vertex); `chart` = an LLM-style program (every vertex declared with model_assumption, one construct_solid, measure volume) through verify_and_compile — SYSTEM capability, not evidence the model writes it. expect.compiler = served:<V> | fallback[:<reason>] | refuse:<reason> with GEOMETRY_COMPILER_MODE=DETERMINISTIC_FIRST; expect.llm = served:<V> | refused[:<reason>]. Served values: oracle.py from TEXT sizes only.",
+ "rows": {
+  "P01_trapezoid_pyramid": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4",
+    "SA": "3"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "served:6",
+    "llm": "served:6"
+   }
+  },
+  "P02_trapezoid_pyramid_renamed_foot_at_second_right_angle": {
+   "text": "Cho hình chóp S.MNPQ có đáy MNPQ là hình thang vuông tại M và N, MN = 3, NP = 4, MQ = 2, SN vuông góc với mặt phẳng (MNPQ), SN = 5. Tính thể tích khối chóp S.MNPQ.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "M",
+     "N",
+     "P",
+     "Q"
+    ]
+   },
+   "lengths": {
+    "MN": "3",
+    "NP": "4",
+    "MQ": "2",
+    "SN": "5"
+   },
+   "right_angles": [
+    [
+     "M",
+     "N",
+     "M",
+     "Q"
+    ],
+    [
+     "N",
+     "M",
+     "N",
+     "P"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "N"
+    ],
+    "plane": [
+     "M",
+     "N",
+     "P"
+    ]
+   },
+   "chart": {
+    "M": [
+     0,
+     0,
+     0
+    ],
+    "N": [
+     3,
+     0,
+     0
+    ],
+    "P": [
+     3,
+     4,
+     0
+    ],
+    "Q": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     3,
+     0,
+     5
+    ]
+   },
+   "expect": {
+    "compiler": "served:15",
+    "llm": "served:15"
+   }
+  },
+  "P03_trapezoid_fractions_longer_far_side": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 3/2, BC = 1, AD = 5/2, SA vuông góc với mặt phẳng (ABCD), SA = 4. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "3/2",
+    "BC": "1",
+    "AD": "5/2",
+    "SA": "4"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     "3/2",
+     0,
+     0
+    ],
+    "C": [
+     "3/2",
+     1,
+     0
+    ],
+    "D": [
+     0,
+     "5/2",
+     0
+    ],
+    "S": [
+     0,
+     0,
+     4
+    ]
+   },
+   "expect": {
+    "compiler": "served:7/2",
+    "llm": "served:7/2"
+   }
+  },
+  "P04_trapezoid_right_prism": {
+   "text": "Cho lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, AA' = 5. Tính thể tích khối lăng trụ ABCD.A'B'C'D'.",
+   "topology": {
+    "solid_kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4",
+    "AA'": "5"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "A'",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     2,
+     0,
+     5
+    ],
+    "C'": [
+     2,
+     2,
+     5
+    ],
+    "D'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "expect": {
+    "compiler": "served:30",
+    "llm": "served:30"
+   }
+  },
+  "P05_right_triangle_foot_off_right_vertex": {
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với mặt phẳng (ABC), SA = 6. Tính thể tích khối chóp S.ABC.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "lengths": {
+    "AB": "3",
+    "BC": "4",
+    "SA": "6"
+   },
+   "right_angles": [
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     3,
+     0,
+     0
+    ],
+    "B": [
+     0,
+     0,
+     0
+    ],
+    "C": [
+     0,
+     4,
+     0
+    ],
+    "S": [
+     3,
+     0,
+     6
+    ]
+   },
+   "expect": {
+    "compiler": "served:12",
+    "llm": "served:12"
+   }
+  },
+  "P06_pentagon_three_right_angles": {
+   "text": "Cho hình chóp S.ABCDE có AB ⊥ BC, BC ⊥ CD, CD ⊥ DE, AB = 2, BC = 3, CD = 4, DE = 1, SB ⊥ (ABC), SB = 2. Tính thể tích khối chóp S.ABCDE.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "3",
+    "CD": "4",
+    "DE": "1",
+    "SB": "2"
+   },
+   "right_angles": [
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ],
+    [
+     "C",
+     "B",
+     "C",
+     "D"
+    ],
+    [
+     "D",
+     "C",
+     "D",
+     "E"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     3,
+     0
+    ],
+    "D": [
+     -2,
+     3,
+     0
+    ],
+    "E": [
+     -2,
+     2,
+     0
+    ],
+    "S": [
+     2,
+     0,
+     2
+    ]
+   },
+   "expect": {
+    "compiler": "served:20/3",
+    "llm": "served:20/3"
+   }
+  },
+  "P07_trapezoid_right_at_A_and_D": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và D, AD = 2, AB = 4, DC = 1, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AD": "2",
+    "AB": "4",
+    "DC": "1",
+    "SA": "3"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "D",
+     "A",
+     "D",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     4,
+     0,
+     0
+    ],
+    "C": [
+     1,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "served:5",
+    "llm": "served:5"
+   }
+  },
+  "N01_trapezoid_missing_side": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 2, AD = 4, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "AD": "4",
+    "SA": "3"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:REQUIRED_FACT_MISSING",
+    "llm": "refused"
+   }
+  },
+  "N02_trapezoid_no_height": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, SA vuông góc với mặt phẳng (ABCD). Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:REQUIRED_FACT_MISSING",
+    "llm": "refused:ASSUMPTION_DETERMINES_ANSWER"
+   }
+  },
+  "N03_closing_side_contradicts": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, CD = 5, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4",
+    "CD": "5",
+    "SA": "3"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "refuse:INVALID_CONFLICT",
+    "llm": "refused"
+   }
+  },
+  "N04_regular_hexagon": {
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F"
+    ]
+   },
+   "lengths": {
+    "AB": "2"
+   },
+   "right_angles": [],
+   "perp": null,
+   "chart": {
+    "A": [
+     2,
+     0,
+     0
+    ],
+    "B": [
+     1,
+     "1.7321",
+     0
+    ],
+    "C": [
+     -1,
+     "1.7321",
+     0
+    ],
+    "D": [
+     -2,
+     0,
+     0
+    ],
+    "E": [
+     -1,
+     "-1.7321",
+     0
+    ],
+    "F": [
+     1,
+     "-1.7321",
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "fallback",
+    "llm": "refused"
+   }
+  },
+  "N05_nonconvex_chain": {
+   "text": "Cho hình chóp S.ABCDE có AB ⊥ BC, BC ⊥ CD, CD ⊥ DE, AB = 2, BC = 3, CD = 1, DE = 1, SB ⊥ (ABC), SB = 2. Tính thể tích khối chóp S.ABCDE.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "3",
+    "CD": "1",
+    "DE": "1",
+    "SB": "2"
+   },
+   "right_angles": [
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ],
+    [
+     "C",
+     "B",
+     "C",
+     "D"
+    ],
+    [
+     "D",
+     "C",
+     "D",
+     "E"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "B"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "C"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     3,
+     0
+    ],
+    "D": [
+     1,
+     3,
+     0
+    ],
+    "E": [
+     1,
+     2,
+     0
+    ],
+    "S": [
+     2,
+     0,
+     2
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:BASE_CHAIN_NOT_CONVEX",
+    "llm": "refused"
+   }
+  },
+  "N06_parallelogram_by_angle": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành, AB = 4, AD = 3, góc BAD bằng 60°, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "4",
+    "AD": "3",
+    "SA": "3"
+   },
+   "right_angles": [],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     4,
+     0,
+     0
+    ],
+    "C": [
+     "5.5",
+     "2.598",
+     0
+    ],
+    "D": [
+     "1.5",
+     "2.598",
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "fallback",
+    "llm": "refused"
+   }
+  },
+  "N07_wrong_llm_layout": {
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, SA vuông góc với mặt phẳng (ABCD), SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "topology": {
+    "solid_kind": "pyramid",
+    "apex": "S",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4",
+    "SA": "3"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": {
+    "line": [
+     "S",
+     "A"
+    ],
+    "plane": [
+     "A",
+     "B",
+     "D"
+    ]
+   },
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     -4,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ]
+   },
+   "expect": {
+    "compiler": "served:6",
+    "llm": "refused"
+   }
+  },
+  "N08_trapezoid_prism_not_stated_right": {
+   "text": "Cho lăng trụ ABCD.A'B'C'D' có đáy ABCD là hình thang vuông tại A và B, AB = 2, BC = 2, AD = 4, AA' = 5. Tính thể tích khối lăng trụ ABCD.A'B'C'D'.",
+   "topology": {
+    "solid_kind": "prism",
+    "base": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "top": [
+     "A'",
+     "B'",
+     "C'",
+     "D'"
+    ]
+   },
+   "lengths": {
+    "AB": "2",
+    "BC": "2",
+    "AD": "4",
+    "AA'": "5"
+   },
+   "right_angles": [
+    [
+     "A",
+     "B",
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "A",
+     "B",
+     "C"
+    ]
+   ],
+   "perp": null,
+   "chart": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "A'": [
+     0,
+     0,
+     5
+    ],
+    "B'": [
+     2,
+     0,
+     5
+    ],
+    "C'": [
+     2,
+     2,
+     5
+    ],
+    "D'": [
+     0,
+     4,
+     5
+    ]
+   },
+   "expect": {
+    "compiler": "fallback:LINE_PLANE_RELATION_MISSING",
+    "llm": "refused"
+   }
+  }
+ }
+}
