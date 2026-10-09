@@ -1,0 +1,29 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "general-polygon-base (run general-polygon-base, G05 — pyramid / right prism on a right-angle-chain polygon base)",
+  "corrects": "docs/evaluation/geometry/runs/oblique-prism/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "72d6070acf6ced35dcf4f09588bf1352125b245f2f8590bf5c7691fab9c67a7e",
+  "current_candidate_source_commit": "4e30a211e50a92936ff73f216abeafe29cdd8620",
+  "current_candidate_frozen_at": "d3feb8770a5b3d92e8c9a7241b1a8eb43c39691c",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/polygon freeze) at d3feb877; product commit 4e30a211; 102 files; --verify match (diagnostics/freeze_4e30a211.log). Taxonomy, primitive set and schema hashes unchanged. CACHE_VERSION 118 unchanged: cache identity lock verifies (prompts, grammar card, schemas, capability hash, environment b1714b56… unchanged); the trapezoid reader and T10 only turn previously refused statements into served ones (T10 is tried only after T1/T2/T3–T6 return TEMPLATE_NOT_MATCHED), and the compiler families are off the default route.",
+  "previous_candidate_hash": "02ce5e1e6e819ab22519cd498fa399ee2af1a34f22273cde6e8a20c81adff89f",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "general-polygon-base backend/app changes: kernel right_angle_chain_start / polygon_from_right_angle_chain; shape_constraint reads 'đáy … là hình thang vuông tại P và Q'; assumption gate template T10 (convex base fixed by k − 2 consecutive right angles, pyramid with an apex edge ⊥ base or right prism); compiler families polygon_base_pyramid_volume / polygon_base_right_prism_volume (opt-in DETERMINISTIC_FIRST only); product_capability row right_angle_chain_base = foundation_only. No prompt, grammar card, schema or capability-hash change; LLM_ONLY stays the default route.",
+  "changed_paths": [
+    "backend/app/simulation/geometry/kernel.py",
+    "backend/app/simulation/geometry_compiler/compiler.py",
+    "backend/app/simulation/product_capability.py",
+    "backend/app/simulation/semantic_program/assumption_gate.py",
+    "backend/app/simulation/semantic_program/shape_constraint.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 72d6070a (product commit 4e30a211) is the current product identity on feat/general-polygon-base. It is not used to rescore the historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 118
+}

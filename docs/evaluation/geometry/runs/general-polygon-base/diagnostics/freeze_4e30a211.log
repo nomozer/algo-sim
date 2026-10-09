@@ -1,0 +1,17 @@
+# cwd: <worktree 'D:/tmp/polygon freeze'/backend> @ d3feb8770a5b3d92e8c9a7241b1a8eb43c39691c; clean detached CRLF; bare freeze then --verify
+2026-10-09T10:42:10Z
+0
+product commit (last touching backend/app, frontend/src): 4e30a211e50a92936ff73f216abeafe29cdd8620
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            d3feb877  (cây sạch: True)
+  CACHE_VERSION     118
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       102 file · 72d6070acf6ced35
+  SEALED            DA_NIEM_PHONG
+freeze exit=0
+Candidate khớp bản đã đóng băng (mã sản phẩm: 102 file, 72d6070acf6ced35…).
+verify exit=0
+ M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
