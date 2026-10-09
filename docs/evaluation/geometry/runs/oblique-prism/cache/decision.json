@@ -1,0 +1,27 @@
+{
+ "schema_version": "cache-decision/1",
+ "run_id": "oblique-prism",
+ "cache_version_before": "118",
+ "decision": "NO_BUMP",
+ "cache_version_after": "118",
+ "rule": "The cache stores only status == ok responses. A bump is required when a response the old code SERVED would now be served differently or refused: the old row would keep the old payload.",
+ "model_surface": "unchanged — prompts, grammar card, synthesis schema, analyze schema and the IR capability hash are not touched (cache_identity.lock.json unchanged; tests/test_cache_identity.py green)",
+ "pre_tree": "ba995887 (clean detached worktree)",
+ "post_tree": "feat/oblique-prism (this run)",
+ "fixtures": {
+  "script": "cache/compare_fixtures.py on backend/scripts/generate_generic_tier_a_fixtures.py output",
+  "compared": 49,
+  "identical": 49,
+  "served_pre": 14,
+  "served_and_changed": [],
+  "record": "cache/fixture_diff.json"
+ },
+ "changes_on_the_default_route": [
+  {"change": "assumption gate template T9 (§19)", "direction": "refused → served only",
+   "why": "T9 is tried only for a named prism WITHOUT right_prism/cuboid/cube and only when the text states T F ⊥ (base) with F not T's partner; before this run every such prism ended in TEMPLATE_NOT_MATCHED (T3 needs 'lăng trụ đứng', T4–T6 need cuboid/cube/right_prism) and was refused. When the relation is absent T9 returns None and the old path runs unchanged.",
+   "evidence": "labels OP01–OP06 refused at ba995887 (red-before), served now; 49/49 fixtures byte-identical"},
+  {"change": "narration of assign vector_from_points", "direction": "compiler programs only (interpreter._compiler_geometry)",
+   "why": "LLM_ONLY narration untouched so served envelopes keep their bytes; the LLM-route defect is ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION"},
+  {"change": "compiler family oblique_prism_volume", "direction": "not on the default route (GEOMETRY_COMPILER_MODE opt-in)"}
+ ]
+}

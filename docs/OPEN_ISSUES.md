@@ -19,6 +19,26 @@
 - **acceptance:** S1–S3 of the preregistration: every pyramid/prism family shows the required semantic roles as separate observable steps from one code path, with no branch on a family ID.
 - **verify:** the semantic-coverage tests and AST guard named in the preregistration.
 
+### ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY
+- **description:** G04 is served only when the problem states `T F ⊥ (base)` with F a NAMED base vertex (`A'B vuông góc với (ABC)`). The common textbook forms are refused: the foot of the lateral height is a midpoint/centroid/centre (`hình chiếu vuông góc của A' lên (ABC) là trung điểm H của BC`), the projection is phrased `hình chiếu … là (điểm) B`, or the obliquity is an angle (`cạnh bên tạo với đáy góc 60°`).
+- **evidence:** `docs/evaluation/geometry/runs/oblique-prism/labels.json` rows ON03, ON08 (refused on both routes); `tests/geometry/test_oblique_prism.py`.
+- **impact:** Correct refusals, but the served G04 domain is narrow. Missing links, by layer: (1) `RequestContract`/`RELATION_KINDS` has no structured `midpoint`/`centroid` relation for the foot (model-surface change ⇒ schema export, prompt line, live measurement, cache decision); (2) `shape_constraint` does not read the `hình chiếu … là F` phrase as `line_perp_plane`; (3) angle-defined heights are usually irrational (ℚ³ layout) — needs the affine chart of exact-dimensions or stays out of scope.
+- **scope:** `semantic_program/structured_relations.py`, `analyze_contract.py`, `shape_constraint.py`, `assumption_gate.py` (T9), `geometry_compiler/compiler.py`.
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next G04 slice (user decision: contract extension needs a live budget)
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-LLM-VECTOR-ASSIGN-NARRATION
+- **description:** On the LLM route an `assign v = vector_from_points(P, Q)` is narrated by the shared interpreter fallback as `"Ghi nhận giá trị vừa tính được: Vec3(x=Fraction(…), …)."` — a Python repr in a learner-facing step text. The oblique-prism run fixed it for compiler programs only (`interpreter.py`, `_compiler_geometry`), so that LLM_ONLY envelopes stay byte-identical without a cache bump.
+- **evidence:** `backend/app/simulation/semantic_program/interpreter.py` (fallback narration of `AssignStmt`); `tests/geometry/test_oblique_prism.py::test_buoc_dung_ke_bang_ky_hieu_khong_in_repr` (compiler side).
+- **impact:** A served LLM program that builds a vector shows the repr in «Các bước dựng».
+- **scope:** `semantic_program/interpreter.py`; `CACHE_VERSION` (served envelope content changes ⇒ bump, precedent 103/112).
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** next change that already bumps `CACHE_VERSION`
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-SOURCE-LENGTH-UNLABELLED-PHRASE
 - **description:** A labelled length the source reader does not recognise (*"AB dài 5 cm"*) binds no segment, so the number falls under the standalone-value rule and a program may declare a different segment (`AC = 5`) as GIVEN without any gate objecting.
 - **evidence:** `docs/evaluation/geometry/runs/w13-geometry-preregistration/diagnostics/SOURCE_GROUNDING_PHRASING_PROBE.json` row `standalone_wrong_segment` (offline, 0 model calls); inventory item NA-57.
@@ -194,6 +214,7 @@
 - **scope:** `backend/app/simulation/compiler/`
 - **status:** OPEN
 - **w13_audit:** the description and paths are stale at `bf5a7907` — the package is `backend/app/simulation/geometry_compiler/` and `compiler.py:41-53` supports six families (right-triangle pyramid and prism, rectangular pyramid, cuboid, cube, right square prism). What remains narrow is listed by layer in `docs/architecture/geometry_capability_matrix_v2.json` (`L08 compiler_rule`) and in `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`.
+- **oblique-prism (2026-10-09):** seventh family `oblique_prism_volume` (G04: right-triangle/rectangle/square base, foot of a lateral height at a named base vertex, rational height) — `docs/evaluation/geometry/runs/oblique-prism/`. Still narrow: foot at a midpoint/centroid and angle-defined obliquity are refused (`ISSUE-ARCH-OBLIQUE-PRISM-FOOT-VOCABULARY`).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** P1 (Primitive Compiler Expansion)
 - **default_switch_blocker:** YES
