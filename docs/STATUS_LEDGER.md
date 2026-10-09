@@ -1401,3 +1401,30 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (general-polygon-base, 2026-10-09):** user approval `runs/general-polygon-base/APPROVAL.md`; integration gate `diagnostics/gates_9666b861.log` PASS; `main` fast-forwarded `d5287ff7` → `9666b861` and pushed (no force; ls-remote verified); both integrated feature branches deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = GEOMETRY_GROUNDING_SAFETY
+- **RUN_ID:** geometry-grounding-safety (task geometry-grounding-safety; Cloud fix + LOCAL verification; branch fix/geometry-grounding-safety, deleted after integration)
+- **DATE:** 2026-10-09
+- **START_BASE:** e6c3cf68
+- **CODE_COMMIT_OR_NONE:** fbade460 (C0 shape-vs-coordinates check, compiler rectangle rule, refusal code/message, CACHE_VERSION 119) · 765291ab (LOCAL: absent program points take the text's own coordinate)
+- **CANDIDATE:** `bbfa5b0da3a5353a…` (product `765291ab`, 102 files; frozen LOCAL e1dfc851) · CACHE_VERSION 119 (bump: served → refused) · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** preregistration 17353c31; fix + cache evidence fbade460; docs 175510c4; LOCAL fix 765291ab; candidate refreeze e1dfc851; LOCAL record 47d05f22
+- **CLASSIFICATION:** correctness fix (two confirmed grounding defects); not a family expansion
+- **FULL_PRODUCT_SUITE:** T3 FULL_PRODUCT_GATE_PASS at e1dfc851 (pytest 7367 passed / 1 skipped, vitest 1040/1040, build, demo, crash surface)
+- **PRODUCT_CHANGED:** YES (backend/app only; frontend unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/geometry-grounding-safety/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/geometry-grounding-safety/
+- **PASS:** test_geometry_grounding_safety.py 24/24 (18 preregistered rows + oracle; 3 LOCAL absent-point rows, fault-injected); red-before 10 red at e6c3cf68
+- **CLOSED:** ISSUE-ARCH-C0-SHAPE-TEXT-NOT-CHECKED-AGAINST-COORDINATES · ISSUE-ARCH-COMPILER-UNTAGGED-RECTANGLE-ASSUMPTION
+- **OPENED:** ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED
+- **PUSH / MERGE / BRANCH_DELETION:** YES / YES (fast-forward e6c3cf68 → 47d05f22) / YES (fix/geometry-grounding-safety after ancestry check; user-approved)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user choice of the next family (ROADMAP §0.2; G06 not started), then OCR
+- **FINAL_DECISION:** MERGED_AND_PUSHED (not every geometric contradiction is checked; no live Gemini; no token-reduction claim; no compiler-first switch)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** soundness evidence (fail-closed on self-contradictory sources; compiler no longer assumes unproven shapes)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+- **INTEGRATION (geometry-grounding-safety, 2026-10-09):** user approval `runs/geometry-grounding-safety/APPROVAL.md`; integration gate `diagnostics/gates_47d05f22.log` PASS; `main` fast-forwarded `e6c3cf68` → `47d05f22` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)

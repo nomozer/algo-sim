@@ -28,5 +28,17 @@
     "still_open": "ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED",
     "status": "LOCAL_VERIFIED_AWAITING_USER_MERGE_APPROVAL"
   },
-  "push_merge_pr_branch_deletion": "YES (branch) / NO / NO / NO"
+  "merge": {
+    "fast_forward": true,
+    "from": "e6c3cf6858222e4fab7068f59c009c6e5dbf1426",
+    "to": "47d05f22ab8cd00ae118c9700e94472b9ef4a776",
+    "method": "git merge --ff-only fix/geometry-grounding-safety, git push origin main (no force)",
+    "remote_verified": "ls-remote refs/heads/main = 47d05f22 = main = origin/main",
+    "integration_gate": "diagnostics/gates_47d05f22.log (candidate, cache 119, LLM_ONLY, routing unchanged, 0 model-surface files, schema x2, docs audit PASS, diff --check, node harness 100/0/2); evidence outside run: EVALUATION_CANDIDATE.json + cumulative CANDIDATE_DIVERGENCE.json (refreeze procedure). T3 not rerun — PASS at e1dfc851, only docs changed since",
+    "approval": "APPROVAL.md",
+    "branch_deleted": "fix/geometry-grounding-safety (47d05f22) — git branch -d + git push origin --delete, after ancestry check against origin/main",
+    "status": "MERGED_AND_PUSHED",
+    "limits_kept": "ISSUE-ARCH-C0-WHOLE-SOLID-RELATIONS-NOT-CHECKED OPEN; no schema/prompt/default-pipeline change; no live Gemini; no token-reduction claim; LLM_ONLY default; compiler opt-in"
+  },
+  "push_merge_pr_branch_deletion": "YES / YES (fast-forward) / NO / YES (after integration, user-approved)"
 }
