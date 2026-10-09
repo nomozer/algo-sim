@@ -21,19 +21,19 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ```text
 CURRENT_BRANCH = feat/regular-square-pyramid (rẽ từ main = 38d41588; W1 + W2 trên origin, W3–W5 và việc regular-triangular-pyramid W1 chỉ ở local; chưa merge)
-CURRENT_WAVE = BROWSER_TEMP_LIFECYCLE (run browser-temp-lifecycle: hồ sơ Chrome của bộ đo có chủ và được dọn; không đổi sản phẩm; trước đó classroom-band-fit — trạng thái nghiệm thu không đổi; máy local; cùng nhánh)
+CURRENT_WAVE = MERGE_READINESS (run merge-readiness: dọn 671 hồ sơ Chrome mồ côi có xác nhận, commit housekeeping favicon + .gitignore, danh sách nghiệm thu; không đổi candidate; máy local; cùng nhánh)
 PRODUCT_STATE = candidate 7f3f042309dd1c54… (102 file; product commit 45f5a7f0 — cây đo không đổi, chỉ product_commit_sha dời; đóng băng 83db0e97), CACHE_VERSION 118, LLM_ONLY
 MEASUREMENT = 6a1801e7 lần 3, trọn một lượt (dải lớp 3 vai × 8 khổ 24/24, trước 9/24; không dải lớp 55/56 — còn ca xoay màn thấp có từ trước; Tier-A 8/8 một lượt; W02 16/16, W04 24/24, W05 23/24 — một trang không tải); bằng chứng 3095e4f0 (worktree tách rời sạch CRLF, có dấu cách)
 ORIGIN_MAIN = 38d4158826cbbffd013d971a9484b9f0fd2a6130 (không đổi)
-FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (T3 + cổng danh tính ở commit tài liệu cuối của run classroom-band-fit — runs/classroom-band-fit/handoff.md §2)
+FINAL_DECISION = READY_FOR_USER_ACCEPTANCE (T3 + cổng danh tính ở commit tài liệu cuối của run merge-readiness — runs/merge-readiness/handoff.md §2; Tier-A/trình duyệt của run classroom-band-fit vẫn là bằng chứng của product 45f5a7f0)
 HUMAN_VISUAL_REVIEW = NOT_APPROVED (gói runs/phone-landscape-layout/review.md F-R1–F-R7 + runs/mobile-canvas-fit/review.md E-R1–E-R6 + runs/exact-dimensions/review.md R1–R10 + runs/regular-triangular-pyramid-w01/REVIEW.md R1–R12 + gói W5 R1–R10 + gói W4 R1–R10, gộp W1–W3)
-USER_DIRTY_STATE = D frontend/public/favicon.svg và M .gitignore (dòng .playwright-cli/) ở máy local (giữ nguyên, không stage); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
+USER_DIRTY_STATE = không — xoá frontend/public/favicon.svg và dòng .playwright-cli/ của .gitignore đã commit theo lệnh người dùng (f89a1a8b); phần dọn Tin học đã kiểm đã commit (0d4c4f8b)
 MAIN_PUSH_EXECUTED = NO · MERGE_EXECUTED = NO · PR_CREATED = NO
-NEXT_ACTION = người dùng thao tác tay trên điện thoại và quyết theo runs/classroom-band-fit/review.md (H-1…H-3, C-1…C-4) và runs/final-acceptance/review.md (G-1…G-9, D-2…D-4), cùng runs/phone-landscape-layout/review.md, runs/mobile-canvas-fit/review.md và các gói exact-dimensions, regular-triangular-pyramid-w01, W5/W4; duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh (AGENTS.md §2)
+NEXT_ACTION = người dùng nghiệm thu theo runs/merge-readiness/report.md §4 (điện thoại thật G-1…G-9, chip lớp H-1…H-3 + C-1…C-4, các gói ảnh chưa duyệt, bốn cảnh W14, D-2…D-4); duyệt thì merge vào main, push, xoá nhánh ở lượt LOCAL riêng có lệnh (AGENTS.md §2)
 ```
 
-Deletion favicon là thay đổi của người dùng: không restore, sửa, stage hoặc
-commit. Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
+Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã
+được cho phép và commit ở f89a1a8b). Không amend/rebase/squash chuỗi commit đã được evidence tham chiếu.
 
 ## 3. Tài liệu nằm ở đâu
 
@@ -122,9 +122,10 @@ commit. Không amend/rebase/squash chuỗi commit đã được evidence tham ch
 
 ## 5. Còn mở — không được che
 
+- **merge-readiness (chờ người dùng):** danh sách nghiệm thu tối thiểu `runs/merge-readiness/report.md` §4. 671 hồ sơ cũ
+  `%TEMP%\w12-*` đã xoá sau xác nhận (C: trống 43,87 → 77,43 GB); `scoped_dir*` không đụng. Favicon + `.gitignore` đã commit.
 - **browser-temp-lifecycle (hạ tầng kiểm thử):** `ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK` RESOLVED — hồ sơ Chrome của bộ đo ở
-  `D:/tmp/algosim-browser`, xoá khi phiên đóng/hỏng, orphan dọn theo `owner.json`. Chờ người dùng duyệt xoá 671 hồ sơ cũ
-  `%TEMP%\w12-*` (33,5 GB, lệnh ở `runs/browser-temp-lifecycle/report.md` §4).
+  `D:/tmp/algosim-browser`, xoá khi phiên đóng/hỏng, orphan dọn theo `owner.json`. Còn: 20 script trình duyệt độc lập.
 - **classroom-band-fit chờ người dùng:** `runs/classroom-band-fit/review.md` H-1…H-3 (ảnh, quyết chip chỉ hiện chấm màu ở
   640–667 px ngang) và C-1…C-4 (thao tác tay chế độ lớp). `ISSUE-ARCH-CLASSROOM-BAND-CROWDS-PHONE-TOP-ROW` RESOLVED (chờ duyệt;
   24/24, trước 9/24); giới hạn còn lại ghi trong issue.

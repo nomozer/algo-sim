@@ -1,0 +1,20 @@
+{
+  "run_id": "merge-readiness",
+  "task_slug": "merge-readiness",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md (task name, no wave code)",
+  "date": "2026-10-09",
+  "machine": "local Windows",
+  "branch": "feat/regular-square-pyramid",
+  "start_head": "6c334121",
+  "commits": { "housekeeping": "f89a1a8b" },
+  "product_commit": "45f5a7f02fd6769779cabf2eba8fc4b8c892f37e (unchanged by definition: backend/app + frontend/src)",
+  "frontend_build_changed": "YES — frontend/index.html icon link (one <head> line); frontend/public/favicon.svg removed",
+  "candidate": "7f3f042309dd1c54767d60d111c445298e081e726389bbce2048171613c4d1c0 (102 files, --verify match)",
+  "cache_version": "118 (unchanged)",
+  "default_mode": "LLM_ONLY",
+  "live_model_requests": 0,
+  "temp_cleanup": "results/TEMP_CLEANUP.json — 671 deleted, 0 failed, 0 skipped; C: free 43.87 -> 77.43 GB; scoped_dir untouched (234)",
+  "human_visual_review": "NOT_APPROVED",
+  "final_state": "READY_FOR_USER_ACCEPTANCE",
+  "push_merge_pr_branch_deletion": "NO / NO / NO / NO"
+}

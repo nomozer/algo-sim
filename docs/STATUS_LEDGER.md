@@ -1294,3 +1294,29 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **THESIS_USE:** none
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = MERGE_READINESS
+- **RUN_ID:** merge-readiness (task merge-readiness; local; same branch feat/regular-square-pyramid)
+- **DATE:** 2026-10-09
+- **START_BASE:** 6c334121
+- **CODE_COMMIT_OR_NONE:** `f89a1a8b` (housekeeping)
+- **CANDIDATE:** `7f3f042309dd1c54…` unchanged (product `45f5a7f0`) · CACHE_VERSION 118 · LLM_ONLY
+- **EVIDENCE_COMMIT_ROLE:** documentation commit with the confirmed temp cleanup result and the acceptance checklist, 0 model requests, 0 images
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (visual review NOT_APPROVED)
+- **FULL_PRODUCT_SUITE:** T3 at the run's final documentation commit — `runs/merge-readiness/handoff.md` §2
+- **PRODUCT_CHANGED:** NO (frontend build: index.html icon link, favicon file removed)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/merge-readiness/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/merge-readiness/
+- **PASS:** 671/671 verified orphan profiles deleted (0 failed, 0 skipped; C: free 43.87 → 77.43 GB); favicon-sensitive tests 105/105 after the commit (old precheck: 4 red); build assets resolve
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NOT_ATTEMPTED
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** the user's acceptance per `runs/merge-readiness/report.md` §4, then merge on explicit approval in a separate local run
+- **FINAL_DECISION:** READY_FOR_USER_ACCEPTANCE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

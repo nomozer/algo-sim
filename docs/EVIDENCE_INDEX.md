@@ -1282,3 +1282,24 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **THESIS_USE:** none (measurement infrastructure); reproducibility of browser runs
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/LIFECYCLE_VERIFICATION.json` · `results/TEMP_INVENTORY.json` · `diagnostics/`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+## WAVE_ID = MERGE_READINESS
+- **RUN_ID:** merge-readiness (task merge-readiness; same branch)
+- **DATE:** 2026-10-09
+- **REPORT:** docs/evaluation/geometry/runs/merge-readiness/report.md
+- **ARTIFACT_DIRECTORY:** docs/evaluation/geometry/runs/merge-readiness/
+- **START_BASE:** 6c334121
+- **CODE_COMMIT:** f89a1a8b (housekeeping: favicon removal + .gitignore committed on the user's instruction; index.html icon link; second-family audit precheck accepts a committed favicon deletion)
+- **MEASUREMENT_COMMIT:** none (no browser measurement); temp cleanup applied on the machine after the user's confirmation
+- **EVIDENCE_COMMIT_ROLE:** the run's documentation commit (cleanup result, checklist)
+- **CLASSIFICATION:** READY_FOR_USER_ACCEPTANCE (T3 + identity gates at the run's final documentation commit — `handoff.md` §2)
+- **PRODUCT_CHANGE:** NO by the product_commit_sha definition (backend/app + frontend/src); the frontend BUILD changed (index.html icon link, public/favicon.svg removed)
+- **MODEL_REQUEST_COUNT:** 0
+- **CANDIDATE_CHANGE:** NO (7f3f0423..., product 45f5a7f0)
+- **CACHE_CHANGE:** NO (CACHE_VERSION 118)
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** none (merge preparation)
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `results/TEMP_CLEANUP.json` · `diagnostics/`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
