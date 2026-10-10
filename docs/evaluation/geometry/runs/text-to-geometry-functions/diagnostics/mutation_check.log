@@ -1,0 +1,7 @@
+MUTATION m_foot_centre: CAUGHT
+MUTATION m_no_verify: CAUGHT
+MUTATION m_no_predicate: CAUGHT
+MUTATION m_hex_sign: CAUGHT
+MUTATION m_plan_order: CAUGHT
+MUTATION m_value_not_checked: CAUGHT
+ALL CAUGHT

@@ -1,0 +1,28 @@
+PYR1                       SERVED                                {"c5": "4√3"}
+PYR1_P2                    SERVED                                {"c1": "4√3"}
+PYR1_P3                    SERVED                                {"c5": "4√3"}
+PRISM1                     SERVED                                {"c6": "30"}
+PRISM2                     SERVED                                {"c4": "18√3"}
+COMP1                      SERVED                                {"c10": "12/5", "c9": "4"}
+COMP2                      SERVED                                {"c6": "5", "c5": "6√3"}
+COMP3                      SERVED                                {"c1": "cos²=5/14", "c8": "√14", "c7": "4"}
+REG1                       SERVED                                {"c4": "3√39"}
+REG2                       SERVED                                {"c4": "12"}
+MISS1                      REFUSED  UNDERDETERMINED_POINT        {}
+MISS2                      REFUSED  MISSING_DIMENSION            {}
+CONTRA1                    REFUSED  INCONSISTENT_FACTS           {}
+CONTRA2                    REFUSED  INCONSISTENT_FACTS           {}
+CONTRA3                    REFUSED  INCONSISTENT_FACTS           {}
+OOS1                       REFUSED  OUT_OF_SCOPE                 {}
+OOS2                       REFUSED  UNSUPPORTED_REGULAR_POLYGON  {}
+OOS3                       REFUSED  UNDERDETERMINED_POINT        {}
+NEG1                       REFUSED  NEGATED_CLAUSE               {}
+NEG2                       REFUSED  UNSUPPORTED_BASE_SHAPE       {}
+G1_VALUE_NOT_IN_QUOTE      REFUSED  UNGROUNDED_VALUE             {}
+G2_QUOTE_NOT_IN_TEXT       REFUSED  QUOTE_NOT_IN_SOURCE          {}
+G3_PREDICATE_NOT_IN_QUOTE  REFUSED  PREDICATE_NOT_IN_QUOTE       {}
+G4_UNKNOWN_LABEL           REFUSED  UNKNOWN_LABEL                {}
+G5_UNREGISTERED_FUNCTION   REFUSED  SCHEMA_INVALID               {}
+G6_COORDINATE_SMUGGLED     REFUSED  SCHEMA_INVALID               {}
+G7_AMBIGUOUS_VALUE_QUOTE   REFUSED  AMBIGUOUS_VALUE_QUOTE        {}
+27/27 khớp kết cục đăng ký trước

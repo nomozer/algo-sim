@@ -1,0 +1,350 @@
+{
+ "schema": "text-to-functions-cases/1",
+ "khai": "Fixture ĐĂNG KÝ TRƯỚC cho đường text → function calls → dựng tất định (run text-to-geometry-functions). `calls` đóng vai đầu ra của AI (gán nhãn tay, KHÔNG gọi Gemini). `expect` tính tay bằng công thức sách trước khi có engine. Ca `G*` là đầu ra AI CỐ Ý SAI để kiểm grounding/lược đồ.",
+ "cases": [
+  {
+   "id": "PYR1",
+   "group": "pyramid",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c4", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c5": "4√3"}, "lengths_sq": {"SB": "25", "SC": "25", "SA": "9"}}
+  },
+  {
+   "id": "PYR1_P2",
+   "group": "paraphrase",
+   "paraphrase_of": "PYR1",
+   "text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 3, tam giác ABC đều và AB = 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}},
+    {"id": "c2", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "4"}, "source": {"quote": "AB = 4"}},
+    {"id": "c3", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA ⊥ (ABC)"}},
+    {"id": "c4", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"]}, "source": {"quote": "tam giác ABC đều"}},
+    {"id": "c5", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c6", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c1": "4√3"}, "lengths_sq": {"SB": "25", "SC": "25", "SA": "9"}}
+  },
+  {
+   "id": "PYR1_P3",
+   "group": "paraphrase",
+   "paraphrase_of": "PYR1",
+   "text": "Hình chóp S.ABC có cạnh bên SA vuông góc với mặt phẳng đáy, đáy là tam giác đều ABC có cạnh bằng 4 và SA bằng 3. Tính thể tích của khối chóp.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "Hình chóp S.ABC"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "cạnh bên SA vuông góc với mặt phẳng đáy"}},
+    {"id": "c3", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy là tam giác đều ABC có cạnh bằng 4"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA bằng 3"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích của khối chóp"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c5": "4√3"}, "lengths_sq": {"SB": "25", "SC": "25", "SA": "9"}}
+  },
+  {
+   "id": "PRISM1",
+   "group": "prism",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, AA' = 5. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C"], "top": ["A'", "B'", "C'"], "right": true}, "source": {"quote": "hình lăng trụ đứng ABC.A'B'C'"}},
+    {"id": "c2", "fn": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}, "source": {"quote": "tam giác vuông tại B"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "3"}, "source": {"quote": "AB = 3"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["B", "C"], "value": "4"}, "source": {"quote": "BC = 4"}},
+    {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "A'"], "value": "5"}, "source": {"quote": "AA' = 5"}},
+    {"id": "c6", "fn": "ask_volume", "args": {"solid": "ABC.A'B'C'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABC.A'B'C'"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c6": "30"}, "lengths_sq": {"AC": "25", "A'C": "50", "BB'": "25"}}
+  },
+  {
+   "id": "PRISM2",
+   "group": "prism",
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C", "D", "E", "F"], "top": ["A'", "B'", "C'", "D'", "E'", "F'"], "right": true}, "source": {"quote": "hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F'"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E", "F"], "side": "2"}, "source": {"quote": "lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2"}},
+    {"id": "c3", "fn": "height", "args": {"solid": "ABCDEF.A'B'C'D'E'F'", "value": "3"}, "source": {"quote": "chiều cao bằng 3"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "ABCDEF.A'B'C'D'E'F'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c4": "18√3"}, "lengths_sq": {"AD": "16", "AC": "12", "AA'": "9"}}
+  },
+  {
+   "id": "COMP1",
+   "group": "composite",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC) và SA = 4. Gọi M là trung điểm của SC. Tính thể tích khối chóp M.ABC và khoảng cách từ A đến mặt phẳng (SBC).",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c2", "fn": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}, "source": {"quote": "tam giác vuông tại B"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "3"}, "source": {"quote": "AB = 3"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["B", "C"], "value": "4"}, "source": {"quote": "BC = 4"}},
+    {"id": "c5", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c6", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "4"}, "source": {"quote": "SA = 4"}},
+    {"id": "c7", "fn": "midpoint", "args": {"point": "M", "segment": ["S", "C"]}, "source": {"quote": "M là trung điểm của SC"}},
+    {"id": "c8", "fn": "pyramid", "args": {"apex": "M", "base": ["A", "B", "C"]}, "source": {"quote": "khối chóp M.ABC"}},
+    {"id": "c9", "fn": "ask_volume", "args": {"solid": "M.ABC"}, "source": {"quote": "Tính thể tích khối chóp M.ABC"}},
+    {"id": "c10", "fn": "ask_distance_point_plane", "args": {"point": "A", "plane": ["S", "B", "C"]}, "source": {"quote": "khoảng cách từ A đến mặt phẳng (SBC)"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c9": "4", "c10": "12/5"}, "lengths_sq": {"SC": "41", "SB": "25", "AC": "25"}}
+  },
+  {
+   "id": "COMP2",
+   "group": "composite",
+   "novel_combination": "đáy lục giác đều + chân đường cao tại một ĐỈNH đáy — không có khuôn T* nào cho tổ hợp này",
+   "text": "Cho hình chóp S.ABCDEF có đáy ABCDEF là lục giác đều cạnh 2, SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCDEF và độ dài SD.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D", "E", "F"]}, "source": {"quote": "hình chóp S.ABCDEF"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E", "F"], "side": "2"}, "source": {"quote": "đáy ABCDEF là lục giác đều cạnh 2"}},
+    {"id": "c3", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C", "D", "E", "F"]}, "source": {"quote": "SA vuông góc với mặt phẳng đáy"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABCDEF"}, "source": {"quote": "Tính thể tích khối chóp S.ABCDEF"}},
+    {"id": "c6", "fn": "ask_length", "args": {"segment": ["S", "D"]}, "source": {"quote": "độ dài SD"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c5": "6√3", "c6": "5"}, "lengths_sq": {"AD": "16", "SB": "13"}}
+  },
+  {
+   "id": "COMP3",
+   "group": "composite",
+   "novel_combination": "đáy hình vuông + chân đường cao tại TRUNG ĐIỂM một cạnh đáy (điểm dựng, phụ thuộc hai bậc)",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2. Gọi H là trung điểm của AB, SH vuông góc với (ABCD) và SH = 3. Tính thể tích khối chóp S.ABCD, độ dài SC và góc giữa SC và mặt phẳng (ABCD).",
+   "calls": [
+    {"id": "c1", "fn": "ask_angle_line_plane", "args": {"line": ["S", "C"], "plane": ["A", "B", "C", "D"]}, "source": {"quote": "góc giữa SC và mặt phẳng (ABCD)"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "H"], "plane": ["A", "B", "C", "D"]}, "source": {"quote": "SH vuông góc với (ABCD)"}},
+    {"id": "c3", "fn": "midpoint", "args": {"point": "H", "segment": ["A", "B"]}, "source": {"quote": "H là trung điểm của AB"}},
+    {"id": "c4", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D"], "side": "2"}, "source": {"quote": "đáy ABCD là hình vuông cạnh 2"}},
+    {"id": "c5", "fn": "segment_length", "args": {"segment": ["S", "H"], "value": "3"}, "source": {"quote": "SH = 3"}},
+    {"id": "c6", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "source": {"quote": "hình chóp S.ABCD"}},
+    {"id": "c7", "fn": "ask_volume", "args": {"solid": "S.ABCD"}, "source": {"quote": "Tính thể tích khối chóp S.ABCD"}},
+    {"id": "c8", "fn": "ask_length", "args": {"segment": ["S", "C"]}, "source": {"quote": "độ dài SC"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c7": "4", "c8": "√14", "c1": "cos²=5/14"}, "lengths_sq": {"SA": "10", "SD": "14"}}
+  },
+  {
+   "id": "REG1",
+   "group": "pyramid",
+   "text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp tam giác đều S.ABC"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "6"}, "source": {"quote": "tam giác đều S.ABC có cạnh đáy bằng 6"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "source": {"quote": "cạnh bên bằng 5"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c4": "3√39"}, "lengths_sq": {"SB": "25", "SC": "25"}}
+  },
+  {
+   "id": "REG2",
+   "group": "pyramid",
+   "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, cạnh bên bằng 4. Tính thể tích khối chóp S.ABCDEF.",
+   "calls": [
+    {"id": "c1", "fn": "regular_pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D", "E", "F"]}, "source": {"quote": "hình chóp lục giác đều S.ABCDEF"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E", "F"], "side": "2"}, "source": {"quote": "lục giác đều S.ABCDEF có cạnh đáy bằng 2"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "4"}, "source": {"quote": "cạnh bên bằng 4"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "S.ABCDEF"}, "source": {"quote": "Tính thể tích khối chóp S.ABCDEF"}}
+   ],
+   "expect": {"status": "SERVED", "answers": {"c4": "12"}, "lengths_sq": {"SD": "16"}}
+  },
+  {
+   "id": "MISS1",
+   "group": "missing",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4 và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNDERDETERMINED_POINT"}
+  },
+  {
+   "id": "MISS2",
+   "group": "missing",
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C", "D", "E", "F"], "top": ["A'", "B'", "C'", "D'", "E'", "F'"], "right": true}, "source": {"quote": "hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F'"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E", "F"], "side": "2"}, "source": {"quote": "lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2"}},
+    {"id": "c3", "fn": "ask_volume", "args": {"solid": "ABCDEF.A'B'C'D'E'F'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "MISSING_DIMENSION"}
+  },
+  {
+   "id": "CONTRA1",
+   "group": "contradiction",
+   "text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5, chiều cao bằng 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp tam giác đều S.ABC"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "6"}, "source": {"quote": "tam giác đều S.ABC có cạnh đáy bằng 6"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "source": {"quote": "cạnh bên bằng 5"}},
+    {"id": "c4", "fn": "height", "args": {"solid": "S.ABC", "value": "4"}, "source": {"quote": "chiều cao bằng 4"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "INCONSISTENT_FACTS"}
+  },
+  {
+   "id": "CONTRA2",
+   "group": "contradiction",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC), SA = 3 và SB = 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c3", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c5", "fn": "segment_length", "args": {"segment": ["S", "B"], "value": "4"}, "source": {"quote": "SB = 4"}},
+    {"id": "c6", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "INCONSISTENT_FACTS"}
+  },
+  {
+   "id": "CONTRA3",
+   "group": "contradiction",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có AB = 1, BC = 2, CA = 5 và AA' = 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C"], "top": ["A'", "B'", "C'"], "right": true}, "source": {"quote": "hình lăng trụ đứng ABC.A'B'C'"}},
+    {"id": "c2", "fn": "segment_length", "args": {"segment": ["A", "B"], "value": "1"}, "source": {"quote": "AB = 1"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["B", "C"], "value": "2"}, "source": {"quote": "BC = 2"}},
+    {"id": "c4", "fn": "segment_length", "args": {"segment": ["C", "A"], "value": "5"}, "source": {"quote": "CA = 5"}},
+    {"id": "c5", "fn": "segment_length", "args": {"segment": ["A", "A'"], "value": "3"}, "source": {"quote": "AA' = 3"}},
+    {"id": "c6", "fn": "ask_volume", "args": {"solid": "ABC.A'B'C'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABC.A'B'C'"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "INCONSISTENT_FACTS"}
+  },
+  {
+   "id": "OOS1",
+   "group": "out_of_scope",
+   "text": "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4. Tính thể tích khối nón.",
+   "calls": [
+    {"id": "c1", "fn": "unsupported", "args": {"reason": "khối nón không có trong thư viện hàm"}, "source": {"quote": "hình nón có bán kính đáy bằng 3"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "OUT_OF_SCOPE"}
+  },
+  {
+   "id": "OOS2",
+   "group": "out_of_scope",
+   "text": "Cho hình lăng trụ ngũ giác đều ABCDE.A'B'C'D'E' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDE.A'B'C'D'E'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C", "D", "E"], "top": ["A'", "B'", "C'", "D'", "E'"], "right": true}, "source": {"quote": "hình lăng trụ ngũ giác đều ABCDE.A'B'C'D'E'"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E"], "side": "2"}, "source": {"quote": "ngũ giác đều ABCDE.A'B'C'D'E' có cạnh đáy bằng 2"}},
+    {"id": "c3", "fn": "height", "args": {"solid": "ABCDE.A'B'C'D'E'", "value": "3"}, "source": {"quote": "chiều cao bằng 3"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "ABCDE.A'B'C'D'E'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABCDE.A'B'C'D'E'"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNSUPPORTED_REGULAR_POLYGON"}
+  },
+  {
+   "id": "OOS3",
+   "group": "out_of_scope",
+   "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C"], "top": ["A'", "B'", "C'"], "right": false}, "source": {"quote": "hình lăng trụ xiên ABC.A'B'C'"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "2"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 2"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["A", "A'"], "value": "3"}, "source": {"quote": "cạnh bên bằng 3"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "ABC.A'B'C'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABC.A'B'C'"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNDERDETERMINED_POINT"}
+  },
+  {
+   "id": "NEG1",
+   "group": "negation",
+   "text": "Cho hình chóp S.ABCDEF, không phải là hình chóp lục giác đều S.ABCDEF, có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "calls": [
+    {"id": "c1", "fn": "regular_pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D", "E", "F"]}, "source": {"quote": "không phải là hình chóp lục giác đều S.ABCDEF"}},
+    {"id": "c2", "fn": "height", "args": {"solid": "S.ABCDEF", "value": "3"}, "source": {"quote": "chiều cao bằng 3"}},
+    {"id": "c3", "fn": "ask_volume", "args": {"solid": "S.ABCDEF"}, "source": {"quote": "Tính thể tích khối chóp S.ABCDEF"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "NEGATED_CLAUSE"}
+  },
+  {
+   "id": "NEG2",
+   "group": "negation",
+   "text": "Cho hình chóp S.ABCDEF, không phải là hình chóp lục giác đều S.ABCDEF, có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C", "D", "E", "F"]}, "source": {"quote": "Cho hình chóp S.ABCDEF"}},
+    {"id": "c2", "fn": "height", "args": {"solid": "S.ABCDEF", "value": "3"}, "source": {"quote": "chiều cao bằng 3"}},
+    {"id": "c3", "fn": "ask_volume", "args": {"solid": "S.ABCDEF"}, "source": {"quote": "Tính thể tích khối chóp S.ABCDEF"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNSUPPORTED_BASE_SHAPE"}
+  },
+  {
+   "id": "G1_VALUE_NOT_IN_QUOTE",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "source": {"quote": "SA = 3"}},
+    {"id": "c4", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNGROUNDED_VALUE"}
+  },
+  {
+   "id": "G2_QUOTE_NOT_IN_TEXT",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "source": {"quote": "SA = 5"}},
+    {"id": "c4", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "QUOTE_NOT_IN_SOURCE"}
+  },
+  {
+   "id": "G3_PREDICATE_NOT_IN_QUOTE",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4 và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA = 3"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c4", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c5", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "PREDICATE_NOT_IN_QUOTE"}
+  },
+  {
+   "id": "G4_UNKNOWN_LABEL",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C"], "side": "4"}, "source": {"quote": "đáy ABC là tam giác đều cạnh 4"}},
+    {"id": "c2", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "source": {"quote": "SA vuông góc với (ABC)"}},
+    {"id": "c3", "fn": "segment_length", "args": {"segment": ["S", "A"], "value": "3"}, "source": {"quote": "SA = 3"}},
+    {"id": "c4", "fn": "midpoint", "args": {"point": "K", "segment": ["S", "B"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c5", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"]}, "source": {"quote": "hình chóp S.ABC"}},
+    {"id": "c6", "fn": "ask_volume", "args": {"solid": "S.ABC"}, "source": {"quote": "Tính thể tích khối chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "UNKNOWN_LABEL"}
+  },
+  {
+   "id": "G5_UNREGISTERED_FUNCTION",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "place_point", "args": {"name": "S", "xyz": [0, 0, 3]}, "source": {"quote": "SA = 3"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "SCHEMA_INVALID"}
+  },
+  {
+   "id": "G6_COORDINATE_SMUGGLED",
+   "group": "grounding",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {"id": "c1", "fn": "pyramid", "args": {"apex": "S", "base": ["A", "B", "C"], "apex_xyz": [0, 0, 3]}, "source": {"quote": "hình chóp S.ABC"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "SCHEMA_INVALID"}
+  },
+  {
+   "id": "G7_AMBIGUOUS_VALUE_QUOTE",
+   "group": "grounding",
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "calls": [
+    {"id": "c1", "fn": "prism", "args": {"base": ["A", "B", "C", "D", "E", "F"], "top": ["A'", "B'", "C'", "D'", "E'", "F'"], "right": true}, "source": {"quote": "hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F'"}},
+    {"id": "c2", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D", "E", "F"], "side": "2"}, "source": {"quote": "lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2"}},
+    {"id": "c3", "fn": "height", "args": {"solid": "ABCDEF.A'B'C'D'E'F'", "value": "3"}, "source": {"quote": "cạnh đáy bằng 2, chiều cao bằng 3"}},
+    {"id": "c4", "fn": "ask_volume", "args": {"solid": "ABCDEF.A'B'C'D'E'F'"}, "source": {"quote": "Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'"}}
+   ],
+   "expect": {"status": "REFUSED", "code": "AMBIGUOUS_VALUE_QUOTE"}
+  }
+ ]
+}

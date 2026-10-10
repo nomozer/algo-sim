@@ -685,8 +685,13 @@ def test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler():
     assert goc.name == "app", goc
     lo = []
     for p in goc.rglob("*.py"):
-        if "geometry_compiler" in p.parts or p.name == "__init__.py":
+        # `geometry_functions` (run text-to-geometry-functions) là đường NGHIÊN CỨU tách riêng, tái sử dụng bộ tạo câu
+        # lệnh `geometry_compiler.primitives`; nó không nằm trên đường mặc định — điều đó khoá ở hai dòng dưới.
+        if {"geometry_compiler", "geometry_functions"} & set(p.parts) or p.name == "__init__.py":
             continue
         if "geometry_compiler" in p.read_text(encoding="utf-8"):
             lo.append(str(p.relative_to(goc)))
     assert lo == [], f"đường sản phẩm đã tham chiếu compiler: {lo}"
+    for mac_dinh in (goc / "ai" / "pipeline.py", goc / "main.py"):
+        txt = mac_dinh.read_text(encoding="utf-8")
+        assert "geometry_functions" not in txt and "function_route" not in txt, mac_dinh.name
