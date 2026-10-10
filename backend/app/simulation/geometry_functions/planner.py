@@ -26,7 +26,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .registry import ExactNumber, Label, TuChoi
 
-PLANNER_VERSION = "geometry-fact-planner/1"
+PLANNER_VERSION = "geometry-fact-planner/2"
 MAX_CALLS = 64
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
@@ -52,7 +52,7 @@ class TypedFact(BaseModel):
     shape: Literal["equilateral_triangle", "square", "regular_hexagon", "regular_polygon", "rectangle", "triangle"] | None = None
     at: Label | None = Field(None, description="đỉnh góc vuông · ảnh hình chiếu")
     point: Label | None = None
-    point_kind: Literal["midpoint", "centroid"] | None = None
+    point_kind: Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane"] | None = None
     value: ExactNumber | None = None
     measure: Literal["segment", "base_edge", "lateral_edge", "height", "edge"] | None = Field(
         None, description="độ dài này là của gì: một đoạn có tên, cạnh đáy, cạnh bên, chiều cao, mọi cạnh (lập phương, tứ diện đều)")
@@ -141,7 +141,10 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
     if len({f.id for f in facts}) != len(facts):
         raise TuChoi("SCHEMA_INVALID", "id dữ kiện trùng")
     for f in facts:
-        if thieu := [k for k in _CAN[f.kind] if getattr(f, k) in (None, [])]:
+        required = _CAN[f.kind]
+        if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
+            required = ("point", "point_kind", "points_a", "points_b")
+        if thieu := [k for k in required if getattr(f, k) in (None, [])]:
             raise TuChoi("FACT_INCOMPLETE", f"{f.id} ({f.kind}) thiếu {thieu}", (f.id,))
     return facts
 
@@ -277,8 +280,14 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         dinh, chan = (x, y) if x == kh.dinh else (y, x)
         return phat(f.id, "altitude", {"apex": dinh, "foot": chan, "solid": kh.ten}, q, "altitude")
     if f.kind == "projection":
+        if len(f.points) == 2:
+            return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line": f.points, "image": f.at}, q, "projection(point, line)")
         return phat(f.id, "orthogonal_projection", {"point": f.point, "plane": f.points, "image": f.at}, q, "projection")
     if f.kind == "point_def":
+        if f.point_kind == "intersect_line_line":
+            return phat(f.id, f.point_kind, {"point": f.point, "line1": f.points_a, "line2": f.points_b}, q, "point_def(line–line)")
+        if f.point_kind == "intersect_line_plane":
+            return phat(f.id, f.point_kind, {"point": f.point, "line": f.points_a, "plane": f.points_b}, q, "point_def(line–plane)")
         fn = "midpoint" if f.point_kind == "midpoint" else "centroid"
         args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")

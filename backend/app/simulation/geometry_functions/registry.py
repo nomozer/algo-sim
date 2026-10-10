@@ -33,7 +33,7 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, model_validator
 
-REGISTRY_VERSION = "geometry-functions/2"
+REGISTRY_VERSION = "geometry-functions/3"
 
 
 class TuChoi(Exception):
@@ -131,6 +131,24 @@ class OrthogonalProjectionArgs(_Args):
     point: Label = Field(..., description="điểm được chiếu")
     plane: Poly = Field(..., description="mặt phẳng chiếu lên")
     image: Label = Field(..., description="hình chiếu (ảnh) của điểm")
+
+
+class ProjectionLineArgs(_Args):
+    point: Label
+    line: Seg
+    image: Label
+
+
+class IntersectionLinesArgs(_Args):
+    point: Label
+    line1: Seg
+    line2: Seg
+
+
+class IntersectionPlaneArgs(_Args):
+    point: Label
+    line: Seg
+    plane: Poly
 
 
 class PerpendicularLinesArgs(_Args):
@@ -245,6 +263,12 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        (("đường cao",), ("chóp", "tứ diện")), point_fields=("foot",)),
     _F("orthogonal_projection", OrthogonalProjectionArgs, "fact", "Đề nói hình chiếu vuông góc của một điểm lên một mặt "
        "phẳng là một điểm.", (("hình chiếu",),), plane_fields=("plane",), point_fields=("image",)),
+    _F("orthogonal_projection_line", ProjectionLineArgs, "construct", "Dựng ảnh hình chiếu vuông góc của điểm lên đường thẳng.",
+       (("hình chiếu",),), segment_fields=("line",), point_fields=("image",)),
+    _F("intersect_line_line", IntersectionLinesArgs, "construct", "Dựng giao điểm DUY NHẤT của hai đường thẳng; không phải đoạn hữu hạn.",
+       (("giao điểm",),), segment_fields=("line1", "line2"), point_fields=("point",)),
+    _F("intersect_line_plane", IntersectionPlaneArgs, "construct", "Dựng giao điểm DUY NHẤT của đường thẳng và mặt phẳng.",
+       (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",)),
     _F("perpendicular_lines", PerpendicularLinesArgs, "fact", "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
        (_VUONG,), segment_fields=("line1", "line2")),
     _F("equal_length", EqualLengthArgs, "fact", "Hai đoạn bằng nhau (SA = AB).", (("=", "bằng"),),
@@ -554,9 +578,17 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
             continue
         if c.spec.kind != "ask":
             for (dau, _c), q in zip(vts, c.quotes):
-                if (vai := _vai_tro(de, dau)) == "GOAL":
+                positions = [dau]
+                if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection"):
+                    # A quote may include its own "Nếu" / "Chứng minh" prefix.
+                    # Inspect the actual predicate position in the original source,
+                    # including an antecedent BEFORE its later "thì".
+                    positions += [dau + m.start() for m in re.finditer(
+                        r"[A-Z][0-9]*'?\s+là\s+(?:giao điểm|hình chiếu)|[Hh]ình chiếu", de[dau:_c])]
+                roles = {_vai_tro(de, pos) for pos in positions}
+                if "GOAL" in roles:
                     raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} là điều phải chứng minh, không phải dữ kiện", (c.id,))
-                if vai == "CONDITIONAL":
+                if "CONDITIONAL" in roles:
                     raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: {q!r} nằm trong mệnh đề 'nếu … thì' — không phải dữ kiện", (c.id,))
         if any(_phu_dinh(de, dau, q) for (dau, _c), q in zip(vts, c.quotes)):
             raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {c.quote!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
@@ -585,6 +617,12 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
             mp = getattr(c.args, "plane", None)
             if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
+            if not construction_source_bound(c):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
+        if c.fn == "orthogonal_projection" and c.args.point != c.args.image:
+            if not construction_source_bound(c):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò ảnh và điểm chiếu không khớp nguồn", (c.id,))
         for f in c.spec.value_fields:
             if (v := getattr(c.args, f)) is None:
                 continue
@@ -599,6 +637,45 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
                 raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote cho ô số phải chứa đúng MỘT số, có {len(so)}", (c.id,))
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
+
+
+def construction_source_bound(c: LoiGoi) -> bool:
+    """Bounded construction grammar: bind roles together, never borrow labels across clauses.
+
+    Unknown wording is refused, not semantically guessed. Existing plane-foot
+    source checks still run first, retaining their legacy error classifications.
+    """
+    token = r"[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*"
+    point = r"[A-Z][0-9]*'?"
+    operand = rf"(?:đường thẳng\s+|mặt phẳng\s+)?\(?({token})\)?"
+    a = c.args
+    def labels(s):
+        return re.findall(point, s)
+    for q in c.quotes:
+        if c.fn.startswith("intersect_line_"):
+            pattern = rf"(?<![\w'])({point})\s+là\s+giao điểm\s+(?:của\s+)?{operand}\s+(?:và|với)\s+{operand}(?![\w'])"
+            for m in re.finditer(pattern, q):
+                out, x, y = m.groups()
+                if c.fn == "intersect_line_line":
+                    actual = {frozenset(labels(x)), frozenset(labels(y))}
+                    expected = {frozenset(a.line1), frozenset(a.line2)}
+                    bound = actual == expected and len(labels(x)) == len(labels(y)) == 2
+                else:
+                    bound = ((labels(x) in (a.line, a.line[::-1]) and labels(y) == a.plane) or
+                             (labels(y) in (a.line, a.line[::-1]) and labels(x) == a.plane))
+                if out == a.point and bound:
+                    return True
+        else:
+            target = a.line if c.fn.endswith("_line") else a.plane
+            patterns = [rf"(?<![\w'])({point})\s+là\s+hình chiếu\s+vuông góc\s+của\s+({point})\s+lên\s+{operand}(?![\w'])",
+                        rf"[Hh]ình chiếu\s+vuông góc\s+của\s+({point})\s+lên\s+{operand}\s+là\s+(?:điểm\s+|trọng tâm\s+|trung điểm\s+)?({point})(?![\w'])"]
+            for i, pattern in enumerate(patterns):
+                for m in re.finditer(pattern, q):
+                    out, src, dst = m.groups() if i == 0 else (m[3], m[1], m[2])
+                    pts = labels(dst)
+                    if out == a.image and src == a.point and (pts == target or (len(target) == 2 and pts == target[::-1])):
+                        return True
+    return False
 
 
 def function_declarations() -> list[dict[str, Any]]:

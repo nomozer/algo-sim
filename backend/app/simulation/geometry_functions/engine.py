@@ -29,12 +29,14 @@ from math import isqrt
 from typing import Any
 
 from app.simulation.geometry import metric as _metric
-from app.simulation.geometry.exact import Vec3
+from app.simulation.geometry.exact import GeometryError, Line3, Plane3, Vec3
+from app.simulation.geometry import kernel as K
+from app.simulation.geometry.predicates import point_on_line
 from app.simulation.semantic_program import ir_builders as P
 
 from .registry import LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
-ENGINE_VERSION = "geometry-function-engine/1"
+ENGINE_VERSION = "geometry-function-engine/2"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -132,6 +134,7 @@ class _Dung:
         self.khoi: dict[str, _Khoi] = {}
         self.tam: str | None = None
         self.midpoints: dict[str, tuple[str, str]] = {}
+        self.constructions: dict[str, LoiGoi] = {}
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -329,7 +332,7 @@ class _Dung:
         for k in self.khoi.values():
             can |= set(k.base) | set(k.top) | ({k.apex} if k.apex else set())
         for c in self.calls:
-            if c.spec.kind in ("fact", "ask") and c.fn != "height":
+            if c.spec.kind in ("fact", "ask", "construct") and c.fn != "height":
                 can |= {x for x in _labels(c)}
         if thieu := sorted(can - set(self.pts)):
             raise TuChoi("UNDERDETERMINED_POINT",
@@ -337,6 +340,21 @@ class _Dung:
                          data={"points": thieu})
 
     def _mot_buoc(self) -> bool:
+        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection"):
+            a = c.args
+            p = a.point if c.fn.startswith("intersect") else a.image
+            if c.fn == "orthogonal_projection" and a.point == a.image:
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
+            if p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c)):
+                xyz = self._construct(c)
+                self.constructions[p] = c
+                self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
+                self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
+                                      relation_verified=self._construction_relation(c))
+                if not self.trace[-1]["relation_verified"]:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
+                self.dung.add(c.id)
+                return True
         for c in self.of("midpoint"):
             p, (a, b) = c.args.point, c.args.segment
             if p not in self.pts and a in self.pts and b in self.pts:
@@ -489,6 +507,69 @@ class _Dung:
         raise TuChoi("MISSING_DIMENSION", f"lăng trụ {k.name} chưa có chiều cao hay cạnh bên", (k.call,))
 
     # ── kiểm lại MỌI dữ kiện trên bố cục ────────────────────────────────────
+    def _construction_dependencies(self, c: LoiGoi) -> tuple[str, ...]:
+        a = c.args
+        if c.fn == "intersect_line_line":
+            pts = a.line1 + a.line2
+        elif c.fn == "intersect_line_plane":
+            pts = a.line + a.plane
+        elif c.fn == "orthogonal_projection_line":
+            pts = [a.point] + a.line
+        else:
+            pts = [a.point] + a.plane
+        return tuple(dict.fromkeys(pts))
+
+    def _line(self, labels) -> Line3:
+        return Line3.through(*(Vec3(*self.pts[p]) for p in labels))
+
+    def _plane(self, labels) -> Plane3:
+        plane = Plane3.through(*(Vec3(*self.pts[p]) for p in labels[:3]))
+        if any(plane.signed_eval(Vec3(*self.pts[p])) != 0 for p in labels[3:]):
+            raise GeometryError("NON_COPLANAR_POINTS", "các điểm không cùng nằm trong một mặt phẳng")
+        return plane
+
+    def _construction_objects(self, c: LoiGoi):
+        a = c.args
+        if c.fn == "intersect_line_line":
+            x, y = self._line(a.line1), self._line(a.line2)
+            # Kernel's historic parallel code also covers skew; classify exactly here.
+            if (y.point - x.point).dot(x.direction.cross(y.direction)) != 0:
+                raise GeometryError("SKEW_NO_INTERSECTION", "hai đường chéo nhau không có giao điểm")
+            return x, y
+        if c.fn == "intersect_line_plane":
+            return self._line(a.line), self._plane(a.plane)
+        return Vec3(*self.pts[a.point]), (self._line(a.line) if c.fn.endswith("_line") else self._plane(a.plane))
+
+    def _construct(self, c: LoiGoi) -> V3:
+        try:
+            with _metric.using(self.metric()):
+                x, y = self._construction_objects(c)
+                fn = {"intersect_line_line": K.intersect_line_line, "intersect_line_plane": K.intersect_line_plane,
+                      "orthogonal_projection_line": K.project_point_onto_line,
+                      "orthogonal_projection": K.project_point_onto_plane}[c.fn]
+                p = fn(x, y)
+                return p.x, p.y, p.z
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), (c.id,)) from None
+
+    def _construction_relation(self, c: LoiGoi) -> bool:
+        """Independent incidence/orthogonality checks, not equality to a repeated kernel call."""
+        try:
+            with _metric.using(self.metric()):
+                x, y = self._construction_objects(c)
+                a = c.args
+                p = Vec3(*self.pts[a.point if c.fn.startswith("intersect") else a.image])
+                if c.fn == "intersect_line_line":
+                    return (not x.direction.cross(y.direction).is_zero() and point_on_line(p, x) and point_on_line(p, y))
+                if c.fn == "intersect_line_plane":
+                    return x.direction.dot(y.normal) != 0 and point_on_line(p, x) and y.signed_eval(p) == 0
+                if c.fn.endswith("_line"):
+                    return point_on_line(p, y) and _metric.dot(x - p, y.direction) == 0
+                d = x - p
+                return y.signed_eval(p) == 0 and all(self.g((d.x, d.y, d.z), self._vec(a.plane[0], v)) == 0 for v in a.plane[1:])
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), (c.id,)) from None
+
     def kiem(self) -> None:
         hong = [c for c in self.calls if not self._dung_khong(c)]
         tu_hong = [c for c in hong if c.id in self.dung]
@@ -512,6 +593,10 @@ class _Dung:
 
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
+            return self._construction_relation(c)
+        if c.fn == "orthogonal_projection" and c.args.point in self.pts:
+            return self._construction_relation(c)
         if c.fn == "segment_length":
             return self.d2(*a.segment) == binh_phuong(a.value)
         if c.fn == "regular_polygon":
@@ -579,7 +664,30 @@ class _Dung:
             if s["step"] != "place_point":
                 continue
             t = s["object"]
-            if t in self.midpoints:
+            if t in self.constructions:
+                c = self.constructions[t]
+                a = c.args
+                prefix = "derived_" + ir_name(t)
+                def line(suffix, labels):
+                    name = prefix + suffix
+                    lenh.append(P.construct_line(name, *map(ir_name, labels)))
+                    khai.append(P.memory_declaration(name, "line3"))
+                    return name
+                def plane(labels):
+                    name = prefix + "_plane"
+                    lenh.append({"kind": "construct_plane", "target_var": name, "through": list(map(ir_name, labels[:3]))})
+                    khai.append(P.memory_declaration(name, "plane3"))
+                    return name
+                if c.fn == "intersect_line_line":
+                    expr = {"kind": c.fn, "line_a": line("_line1", a.line1), "line_b": line("_line2", a.line2)}
+                elif c.fn == "intersect_line_plane":
+                    expr = {"kind": c.fn, "line": line("_line", a.line), "plane": plane(a.plane)}
+                else:
+                    target = line("_line", a.line) if c.fn.endswith("_line") else plane(a.plane)
+                    expr = {"kind": "project_onto", "point": ir_name(a.point), "target": target}
+                lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t, "expr": expr})
+                khai.append(P.memory_declaration(ir_name(t), "point3"))
+            elif t in self.midpoints:
                 a, b = self.midpoints[t]
                 lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
                              "expr": {"kind": "midpoint", "a": ir_name(a), "b": ir_name(b)}})

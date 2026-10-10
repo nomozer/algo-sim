@@ -68,14 +68,14 @@ def no_network(monkeypatch):
     monkeypatch.setenv("ALLOW_LIVE_AI", "0")
 
 
-def run(arm, extra, scale=1, rename=None, reverse=False):
+def run(arm, extra, scale=1, rename=None, reverse=False, solid="S.ABCD"):
     """Exercise real provider payload/parser/selector/engine/IR/scene; no direct kernel call."""
     calls = copy.deepcopy(CALLS) + [(fn, args, q) for fn, args, fact, q in extra]
     facts = copy.deepcopy(FACTS) + [fact for fn, args, fact, q in extra]
     quotes = BASE + [q for fn, args, fact, q in extra]
-    query = "Tính thể tích hình chóp S.ABCD."
-    calls.append(("ask_volume", {"solid": "S.ABCD"}, query))
-    facts.append({"kind": "question", "role": "question", "quantity": "volume", "solid": "S.ABCD"})
+    query = f"Tính thể tích hình chóp {solid}."
+    calls.append(("ask_volume", {"solid": solid}, query))
+    facts.append({"kind": "question", "role": "question", "quantity": "volume", "solid": solid})
     quotes.append(query)
     if scale != 1:
         calls[1][1]["side"] = facts[1]["value"] = str(2 * scale)
@@ -121,7 +121,7 @@ def point_oracle(r, label, xyz, length_sq):
     # Independent Euclidean coordinates, not product metric method.
     physical = [F(x) * v for x, v in zip(o["xyz"], (2, 2, 3))]
     assert sum(v * v for v in physical) == F(length_sq)
-    assert o["origin"] == "DERIVED" and o["producer"] and o["depends"] and o["dependency_edges"]
+    assert o["origin"] == "derived" and o["producer"] and o["depends"] and o["dependency_edges"]
     assert r.kernel_check is True
     stmt = next(s for s in r.program["statements"] if s.get("target_var") == o["id"])
     assert stmt["kind"] == "construct_point" and "coords" not in stmt
@@ -212,7 +212,7 @@ def test_composition_midpoint_intersection_projection_quantity(arm):
 def test_wrong_source_roles_rejected(arm, case):
     fn, args, fact, q = copy.deepcopy(case[:4])
     if fn.startswith("intersect"):
-        args["point"] = fact["point"] = "A"
+        args["point"] = fact["point"] = "S" if fn == "intersect_line_plane" else "A"
     else:
         args["point"], args["image"] = args["image"], args["point"]
         fact["point"], fact["at"] = fact["at"], fact["point"]
@@ -226,3 +226,99 @@ def test_inconsistent_two_definitions(arm):
     fn, args, fact, q = copy.deepcopy(POSITIVE[3][:4])
     r, _ = run(arm, [c1, (fn, args, fact, q)])
     assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+def test_derived_length_annotation_and_idempotence(arm):
+    extra = item(POSITIVE[3]) + [
+        ("orthogonal_projection", {"point": "H", "plane": list("SBC"), "image": "K"},
+         {"kind": "projection", "point": "H", "points": list("SBC"), "at": "K"},
+         "Gọi K là hình chiếu vuông góc của H lên (SBC)."),
+        ("ask_length", {"segment": list("DH")},
+         {"kind": "question", "role": "question", "quantity": "length", "points": list("DH")}, "Tính độ dài DH.")]
+    r, _ = run(arm, extra)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert r.answers["c6"] == "6√13/13"
+    assert scene_point(r, "K")["xyz"] == scene_point(r, "H")["xyz"]
+    assert not any(d.get("code") == "ANNOTATION_UNBOUND" for d in r.scene3d.get("diagnostics", []))
+    assert any(o["type"] == "segment3" for o in r.scene3d["objects"])
+    assert any(o["type"] == "polygon3" for o in r.scene3d["objects"])
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+def test_intersection_operand_swap(arm):
+    fn, args, fact, q = copy.deepcopy(POSITIVE[0][:4])
+    args["line1"], args["line2"] = args["line2"], args["line1"]
+    fact["points_a"], fact["points_b"] = fact["points_b"], fact["points_a"]
+    r, _ = run(arm, [(fn, args, fact, q)])
+    point_oracle(r, *POSITIVE[0][4:])
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("prefix,code", [("Nếu ", "CONDITIONAL_CLAUSE"), ("Chứng minh ", "GOAL_CLAUSE_NOT_PREMISE"),
+                                         ("Không phải ", "NEGATED_CLAUSE")])
+def test_construction_not_borrowed_from_condition_goal_negation(arm, prefix, code):
+    fn, args, fact, q = copy.deepcopy(POSITIVE[0][:4])
+    # Model mistakenly calls it a premise; source gate must still catch it.
+    r, _ = run(arm, [(fn, args, fact, prefix + q)])
+    assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+def test_cycle_or_unresolved_operand_no_partial_scene(arm):
+    extra = [("orthogonal_projection_line", {"point": "K", "line": list("AB"), "image": "H"},
+              {"kind": "projection", "point": "K", "points": list("AB"), "at": "H"}, "Gọi H là hình chiếu vuông góc của K lên AB."),
+             ("orthogonal_projection_line", {"point": "H", "line": list("AB"), "image": "K"},
+              {"kind": "projection", "point": "H", "points": list("AB"), "at": "K"}, "Gọi K là hình chiếu vuông góc của H lên AB.")]
+    r, _ = run(arm, extra)
+    assert (r.status, r.code) == ("REFUSED", "UNDERDETERMINED_POINT")
+    assert r.scene3d is None and not r.answers
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+def test_projection_non_diagonal_gram(arm, monkeypatch):
+    monkeypatch.setitem(CALLS[0][1], "base", list("ABC"))
+    monkeypatch.setitem(CALLS[1][1], "vertices", list("ABC"))
+    monkeypatch.setitem(CALLS[2][1], "plane", list("ABC"))
+    monkeypatch.setitem(FACTS[0], "solid", "S.ABC")
+    monkeypatch.setitem(FACTS[1], "points", list("ABC"))
+    monkeypatch.setitem(FACTS[1], "shape", "equilateral_triangle")
+    monkeypatch.setitem(FACTS[2], "points_b", list("ABC"))
+    monkeypatch.setattr(__import__(__name__, fromlist=["BASE"]), "BASE", [
+        "Cho hình chóp S.ABC.", "Đáy ABC là tam giác đều cạnh 2.", "SA vuông góc với (ABC).", "SA = 3."])
+    r, _ = run(arm, [POSITIVE[5][:4]], solid="S.ABC")
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert scene_point(r, "H")["xyz"] == ["1/2", "0", "0"]
+    assert r.scene3d["chart_metric"] == [["4", "2", "0"], ["2", "4", "0"], ["0", "0", "9"]]
+
+
+@pytest.mark.parametrize("mutant", ["source_role_guard", "projection_wrong_parameter", "metric_context", "relation_guard", "trace_provenance"])
+def test_behavioral_mutant_is_killed(mutant, monkeypatch):
+    from contextlib import nullcontext
+    from app.simulation.geometry_functions import engine as EN, registry as RG
+    from app.simulation.geometry.exact import Vec3
+    if mutant == "source_role_guard":
+        monkeypatch.setattr(RG, "construction_source_bound", lambda c: True)
+        with pytest.raises(AssertionError):
+            test_wrong_source_roles_rejected("A", POSITIVE[0])
+    elif mutant == "relation_guard":
+        monkeypatch.setattr(EN._Dung, "_construction_relation", lambda self, c: True)
+        with pytest.raises(AssertionError):
+            test_inconsistent_two_definitions("A")
+    elif mutant == "trace_provenance":
+        original = EN._Dung._dat
+        def lost(self, *args, **kwargs):
+            original(self, *args, **kwargs)
+            self.trace[-1]["provenance"] = "GIVEN"
+        monkeypatch.setattr(EN._Dung, "_dat", lost)
+        with pytest.raises(AssertionError):
+            r, _ = run("A", item(POSITIVE[3]))
+            point_oracle(r, *POSITIVE[3][4:])
+    else:
+        if mutant == "metric_context":
+            monkeypatch.setattr(EN._metric, "using", lambda g: nullcontext())
+        else:
+            monkeypatch.setattr(EN.K, "project_point_onto_plane", lambda p, pl: Vec3(0, 0, 0))
+        with pytest.raises(AssertionError):
+            r, _ = run("A", item(POSITIVE[3]))
+            point_oracle(r, *POSITIVE[3][4:])

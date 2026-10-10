@@ -22,12 +22,14 @@ from app.simulation.geometry_functions.planner import TypedFact
 SYSTEM_PROMPT = (
     "Bạn đọc một đề hình học không gian và CHỈ trích dữ kiện theo lược đồ; KHÔNG chọn phép dựng, KHÔNG tính.\n"
     "1. Mỗi mệnh đề ⇒ một dữ kiện: khối, hình dạng đa giác, góc vuông, độ dài, hai đoạn bằng nhau, vuông góc, đường cao, "
-    "hình chiếu, điểm định nghĩa (trung điểm/trọng tâm), câu hỏi.\n"
+    "hình chiếu, điểm định nghĩa (trung điểm/trọng tâm/giao điểm), câu hỏi.\n"
     "2. `role`: premise (đề cho) · prove (điều phải chứng minh) · condition (trong 'nếu … thì') · question (đề hỏi).\n"
     "3. Mệnh đề phủ định ⇒ `negated = true`. Không chắc cách hiểu ⇒ `ambiguous = true`; không đoán.\n"
     "4. `quotes`: chép NGUYÊN VĂN đoạn đề; không thêm số, không suy hệ quả, không thêm dữ kiện đề không nói.\n"
     "5. Độ dài: `measure` = segment (đoạn có tên) · base_edge · lateral_edge · height · edge (mọi cạnh); giữ ký hiệu a.\n"
-    "6. Không viết toạ độ, không viết mã."
+    "6. Không viết toạ độ, không viết mã. Giao điểm: point_def, point_kind = intersect_line_line hoặc "
+    "intersect_line_plane, point = tên giao điểm, points_a = hai điểm đường thẳng, points_b = đường hoặc mặt. "
+    "Hình chiếu: projection, point = điểm gốc, at = ảnh, points = hai điểm đường hoặc ít nhất ba điểm mặt."
 )
 
 
