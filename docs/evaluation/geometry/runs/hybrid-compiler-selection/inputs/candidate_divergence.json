@@ -1,0 +1,29 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-compiler-selection (run hybrid-compiler-selection — experimental arm B: typed geometric facts → deterministic planner → the same registry/engine/IR/kernel/Scene3D as arm A; offline A/B, fake provider)",
+  "corrects": "docs/evaluation/geometry/runs/ai-function-route/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "2c4ea2d24f65c2e7f945ce3b69f131304404986820592e1c33c9147eb466af59",
+  "current_candidate_source_commit": "65fd032825deab5cc111e572dbd455d1a81e4b99",
+  "current_candidate_frozen_at": "65fd032825deab5cc111e572dbd455d1a81e4b99",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/hcs-freeze) at 65fd0328 (= product commit); 110 files (108 + geometry_functions/planner.py + ai/fact_extraction.py); --verify match (diagnostics/freeze_65fd0328.log). Taxonomy, primitive set and schema hashes unchanged; CACHE_VERSION stays 125 (run_pipeline and main.py do not reach either arm — AST import closure in test_Y); cache identity lock --verify matches, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "168a086e2907577af57dce9be64078c0e6ca2f2a3aa402be82297d7d9accab16",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "hybrid-compiler-selection adds the experimental arm B only: geometry_functions/planner.py (TypedFact contract + rule planner), ai/fact_extraction.py (structured-output adapter, fake provider in tests, guarded live transport unused), ai/function_route.py::run_fact_route (planner → run_function_route, proof-goal and negated-statement checks, FIGURE_NOT_UNIQUE diagnosis), engine.py (KetQuaTuyen details/planner/checker; refusal data), registry.py (cues 'lập phương' and 'chữ nhật' for both arms; TuChoi data). No change to the kernel, interpreter, Scene3D builders, IR schema, LLM_ONLY prompts, grammar card, routing, run_pipeline or main.py; LLM_ONLY stays the default; 0 live model requests.",
+  "changed_paths": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/ai/function_route.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 2c4ea2d2 (product commit 65fd0328) is the current product identity on feat/text-to-geometry-functions. It is not used to rescore any historical run.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 125
+}
