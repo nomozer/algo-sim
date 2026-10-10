@@ -71,9 +71,15 @@ sai dấu khung lục giác, phụ thuộc thứ tự lời gọi, bỏ cổng n
   ::`test_KHONG_module_nao_o_TANG_DUOI_…`), và nhắc `geometry_compiler` (`test_Y…`). Sửa ở gốc: bày cảnh dời lên
   `app/ai/function_route.py`; `test_Y` đổi như bảng §3. Mười lỗi còn lại là candidate lệch (đúng luật, xem dưới), một là
   `test_holdout_readiness` chỉ đỏ khi cây bẩn.
-- Full backend suite sau sửa + đóng băng lại, cây sạch: __SUITE__.
+- Full backend suite sau sửa + đóng băng lại, cây sạch tại `c71cae4c`: **7795 passed, 0 failed**, 1 skipped, 2 deselected.
+- Cổng tài liệu (`test_docs_information_architecture.py`, `test_docs_test_telemetry.py`) xanh sau đóng băng; node harness
+  `compiler-scene-replay-lib.node-test.mjs` (đọc manifest Tier-A vừa ghim) 88/88; `lock_cache_identity --verify` khớp
+  (`CACHE_VERSION` 125, môi trường b1714b56… không đổi).
 - `freeze_evaluation_candidate --verify`: lệch sau khi thêm `backend/app/simulation/geometry_functions/` (đúng luật) ⇒
-  đóng băng lại ở commit riêng — __FREEZE__.
+  đóng băng lại ở commit riêng `c71cae4c`, trong worktree detached sạch tại `86f683e0` (= product commit): candidate
+  `93077b51…` → `8f12f4ab…`, 102 → 106 tệp, taxonomy / primitive set / lược đồ không đổi; lớp lệch mới
+  `inputs/candidate_divergence.json` (đính chính lớp `regular-prisms`), log tích luỹ nối thêm, `test_C2b` trỏ lớp mới,
+  manifest Tier-A ghim `86f683e0` / `8f12f4ab` (`diagnostics/freeze_86f683e0.log`).
 - T3 / frontend: không chạy — không đổi `frontend/`; script `.ts` của run chạy bằng esbuild + node như các run trước.
 
 ## 6. Kiến trúc mới còn phụ thuộc `LLM_ONLY` ở đâu

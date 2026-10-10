@@ -1,0 +1,41 @@
+{
+  "run_id": "text-to-geometry-functions",
+  "task_slug": "text-to-geometry-functions-vertical-slice",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-10",
+  "machine": "Claude Code LOCAL (Windows)",
+  "branch": "feat/text-to-geometry-functions",
+  "start_head": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787 (= main = origin/main)",
+  "preserved_unmerged_work": "feat/real-model-pilot-tooling @ 471a2c79 (G05 real-model pilot, local, awaiting review) — untouched",
+  "candidate_at_start": "93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883",
+  "cache_version_at_start": "125",
+  "default_mode": "LLM_ONLY (unchanged)",
+  "live_model_requests": 0,
+  "MEASUREMENT_CLASS": "FOUNDATION_ONLY_OFFLINE_FIXTURES",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "PARTIAL (expected answers and lengths computed by hand before the engine existed; same author wrote fixtures and engine; test oracle reads Scene3D + chart_metric, not engine internals)",
+  "commits": {
+    "product": "86f683e000e515984588e08e7bf774fb18f493f2 (geometry_functions package, app/ai/function_route.py, fixture runner, tests, fixtures, CODE_INDEX row, run evidence)",
+    "candidate_refreeze": "c71cae4c (EVALUATION_CANDIDATE, divergence layer, cumulative log, test_C2b pointer, Tier-A pins)",
+    "docs": "the final commit of this run (report numbers, run.json)"
+  },
+  "skills_used": ["superpowers:verification-before-completion", "superpowers:test-driven-development", "mattpocock-skills:research (background agent for the literature matrix)"],
+  "audit": "ARCHITECTURE_IMPLEMENTATION_MAP.md — before: kernel, Metric, primitive IR builders, interpreter, Scene3D IMPLEMENTED; family compiler (9 volume families, opt-in, not wired) and FactGraph PARTIAL; AI-facing function registry, source-grounded call contract and layout from typed facts MISSING",
+  "implemented": {
+    "registry": "16 functions, closed Pydantic schemas, no coordinate field; source gate codes QUOTE_NOT_IN_SOURCE, UNKNOWN_LABEL, NEGATED_CLAUSE, PREDICATE_NOT_IN_QUOTE, AMBIGUOUS_VALUE_QUOTE, UNGROUNDED_VALUE; function_declarations() for function calling",
+    "engine": "dependency resolution (midpoint, perpendicular foot at an endpoint on the base, centre of a regular base, right-prism translation), affine chart + rational Gram metric from typed facts (regular 3/4/6-gon, rectangle, triangle by sides + right angle), e3 orthogonal to the base, re-check of every fact (INCONSISTENT_FACTS vs ENGINE_SELF_CHECK_FAILED), IR via geometry_compiler.primitives, existing interpreter under metric.using, kernel cross-check",
+    "entry_point": "app/ai/function_route.py::run_function_route (builds Scene3D; imports no provider/pipeline; not referenced by run_pipeline or main.py)"
+  },
+  "results": {
+    "fixtures": "27/27 match pre-registered outcomes (offline/results.json): 10 SERVED with exact answers equal to hand labels (PYR1 + 2 paraphrases 4√3, PRISM1 30, PRISM2 18√3, COMP1 4 and 12/5, COMP2 6√3 and 5, COMP3 4, √14 and cos²=5/14, REG1 3√39, REG2 12), 17 REFUSED with the expected code",
+    "novel_combinations": "COMP2 (regular hexagon base + foot at a base vertex) and COMP3 (square base + foot at the midpoint of a base edge) — no family or template exists for either",
+    "renderer": "scene_world_metric_check.ts via frontend veKhongGian: RENDER_METRIC_OK on 10 scenes, 183 point pairs, max relative error ≤ 5e-10; injection (render without chart_metric) → MISMATCH, exit 1",
+    "mutations": "6/6 caught (foot at centre, no verification, no predicate check, wrong hexagon chart sign, plan-order dependence, no source gate)",
+    "tests": "tests/geometry/test_text_to_geometry_functions.py 64 passed (red before the module existed)",
+    "full_backend_pytest": "first run 7780 passed / 14 failed (3 real layering faults fixed at the root: scene building moved to app/ai/function_route.py, test_Y updated; 10 candidate-divergence tests; 1 dirty-tree test); after the fix and the refreeze on a clean tree at c71cae4c: 7795 passed, 0 failed, 1 skipped, 2 deselected",
+    "identity": "candidate 93077b51 -> 8f12f4ab (106 files), frozen in a clean detached worktree at 86f683e0; CACHE_VERSION 125 unchanged; cache identity lock --verify matches"
+  },
+  "literature": "LITERATURE_GAP_MATRIX.md — 26 works (7 full text, 19 abstract only); quotes must be re-checked against originals before thesis use",
+  "not_done": "Gemini wiring, default/routing change, LLM_ONLY fixes (P1/P2), frontend, STATUS_LEDGER/CURRENT_STATE/ROADMAP updates (await the user's decision), push, merge",
+  "status": "NEW_TEXT_TO_GEOMETRY_FUNCTIONS_VERTICAL_SLICE_AWAITING_REVIEW"
+}
