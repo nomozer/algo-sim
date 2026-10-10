@@ -68,6 +68,11 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
         return KetQuaTuyen("REFUSED", "INCONSISTENT_FACTS",
                            f"mệnh đề phủ định {dung} lại ĐÚNG trên hình dựng từ các giả thiết khác — đề mâu thuẫn",
                            tuple(dung), trace=r.trace, planner=r.planner)
+    # Phủ định là giả thiết: không kiểm được nó SAI ⇒ hình có thể trái đề ⇒ không phục vụ (mã như nhánh A).
+    if mo := [f for f, v in r.planner["negated_checks"].items() if v == "UNVERIFIABLE"]:
+        return KetQuaTuyen("REFUSED", "NEGATED_CLAUSE",
+                           f"mệnh đề phủ định {mo} không kiểm được trên hình — không phục vụ một hình có thể trái đề",
+                           tuple(mo), trace=r.trace, planner=r.planner)
     return r
 
 

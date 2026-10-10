@@ -683,6 +683,8 @@ def _kiem_tren_hinh(dung: "_Dung"):
     def kiem(call: dict) -> bool | None:
         try:
             (c,) = doc_ke_hoach({"calls": [call]})
+            if c.spec.kind in ("ask", "escape"):            # câu hỏi / mệnh đề ngoài thư viện: không có gì để kiểm
+                return None
             return dung._dung_khong(c)
         except (TuChoi, KeyError, ZeroDivisionError):
             return None

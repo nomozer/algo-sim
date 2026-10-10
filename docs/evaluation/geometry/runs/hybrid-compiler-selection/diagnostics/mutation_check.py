@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, ".")
 import pytest
 from app.ai import function_route as FR
-from app.simulation.geometry_functions import planner as PL
+from app.simulation.geometry_functions import engine as EN, planner as PL
 
 T = "tests/geometry/test_hybrid_compiler_selection.py"
 
@@ -98,6 +98,29 @@ def m8(p):
     p.setattr(FR, "run_fact_route", sai)
 
 
+@m("mệnh đề phủ định KHÔNG kiểm được coi như đã sai (phục vụ im lặng)")
+def m9(p):
+    goc = EN._kiem_tren_hinh
+
+    def sai(dung):
+        kiem = goc(dung)
+        return lambda call: False if kiem(call) is None else kiem(call)
+    p.setattr(EN, "_kiem_tren_hinh", sai)
+
+
+@m("checker coi câu hỏi / mệnh đề ngoài thư viện là ĐÚNG")
+def m10(p):
+    def sai(dung):
+        def kiem(call):
+            try:
+                (c,) = EN.doc_ke_hoach({"calls": [call]})
+                return dung._dung_khong(c)
+            except (EN.TuChoi, KeyError, ZeroDivisionError):
+                return None
+        return kiem
+    p.setattr(EN, "_kiem_tren_hinh", sai)
+
+
 class Plug:
     def __init__(self, f):
         self.f = f
@@ -111,7 +134,7 @@ class Plug:
 
 
 bad = 0
-for f in (m1, m2, m3, m4, m5, m6, m7, m8):
+for f in (m1, m2, m3, m4, m5, m6, m7, m8, m9, m10):
     rc = pytest.main([T, "-q", "-p", "no:cacheprovider", "--no-header", "-x", "--tb=no"], plugins=[Plug(f)])
     print(f"MUTATION {f.__name__} ({f.ten}): {'CAUGHT' if rc != 0 else 'NOT CAUGHT'}", flush=True)
     bad += rc == 0

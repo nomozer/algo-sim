@@ -1,0 +1,30 @@
+H01    V                                            1 vs 1 → OK
+H01    AC'                                          1.73205080757 vs 1.73205080757 → OK
+H02    V                                            6 vs 6 → OK
+H02    d(A,(A'BD))                                  0.857142857143 vs 0.857142857143 → OK
+H03    SA                                           1.41421356237 vs 1.41421356237 → OK
+H03    V                                            0.408248290464 vs 0.408248290464 → OK
+H03    cos²(SA,(ABCD))                              0.25 vs 0.25 → OK
+H04    SA                                           3 vs 3 → OK
+H04    SB                                           3 vs 3 → OK
+H04    V                                            3.77123616633 vs 3.77123616633 → OK
+H04    SC²                                          13 vs 13 → OK
+H05    V (đỉnh trên tâm)                            1.73205080757 vs 1.73205080757 → OK
+H05    V (đỉnh trên A)                              1.73205080757 vs 1.73205080757 → OK
+H05    SA khác nhau ⇒ hình không duy nhất           1 vs 1 → OK
+H06    SA (vị trí 1)                                3 vs 3 → OK
+H06    SA (vị trí 2)                                3 vs 3 → OK
+H06    V khác nhau ⇒ đại lượng không duy nhất       1 vs 1 → OK
+H07    V                                            0.57735026919 vs 0.57735026919 → OK
+H07    BC·AB                                        0 vs 0 → OK
+H07    BC·BS                                        0 vs 0 → OK
+H09    AC'² (cạnh 2)                                12 vs 12 → OK
+H11    d(AM, B'C)                                   0.666666666667 vs 0.666666666667 → OK
+H12    V                                            0.125 vs 0.125 → OK
+H12    cos²(SC,(ABC))                               0.5 vs 0.5 → OK
+H13    BC·AB                                        0 vs 0 → OK
+H13    BC·BS                                        0 vs 0 → OK
+H14    cạnh                                         1 vs 1 → OK
+H14    V                                            0.117851130198 vs 0.117851130198 → OK
+ORACLE_OK
+exit=0

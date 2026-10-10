@@ -147,6 +147,27 @@ def test_dieu_phai_chung_minh_sai_thi_tu_choi():
     assert (r.status, r.code) == ("REFUSED", "PROOF_GOAL_FALSE"), r.reason
 
 
+@pytest.mark.parametrize("phu_dinh", [
+    {"kind": "point_def", "point": "M", "point_kind": "midpoint", "points": ["B", "C"]},   # M không có trên hình
+    {"kind": "unsupported", "reason": "mệnh đề chưa có hàm"},
+])
+def test_menh_de_phu_dinh_khong_kiem_duoc_thi_tu_choi(phu_dinh):
+    """Phủ định là GIẢ THIẾT: không kiểm được nó SAI trên hình ⇒ không phục vụ (bỏ qua im lặng = hình có thể trái đề),
+    cũng không phán mâu thuẫn. Mã giống nhánh A (`NEGATED_CLAUSE`)."""
+    f = _f("H13_NEGATED_RELATION_CONTRADICTS")
+    f[5] = {"id": "f6", "role": "premise", "negated": True, "quotes": ["BC không vuông góc với mặt phẳng (SAB)"], **phu_dinh}
+    r = FR.run_fact_route(HOLD["H13_NEGATED_RELATION_CONTRADICTS"]["text"], {"facts": f})
+    assert (r.status, r.code, r.scene3d) == ("REFUSED", "NEGATED_CLAUSE", None), (r.code, r.reason)
+    assert r.planner["negated_checks"] == {"f6": "UNVERIFIABLE"}
+
+
+def test_dieu_phai_chung_minh_ngoai_thu_vien_khong_tinh_la_dung():
+    f = _f("H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED")
+    f[6] = {"id": "f7", "kind": "unsupported", "role": "prove", "quotes": ["BC vuông góc với (SAB)"], "reason": "x"}
+    r = FR.run_fact_route(HOLD["H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED"]["text"], {"facts": f})
+    assert r.planner["goal_checks"] == {"f7": "UNVERIFIABLE"}
+
+
 def test_hinh_khong_duy_nhat_khong_lay_mau():
     """Không chọn đại một vị trí đỉnh: H05 từ chối kể cả khi V bất biến, và ghi rõ vì sao."""
     r = FR.run_fact_route(HOLD["H05_FIGURE_NOT_UNIQUE_QUANTITY_UNIQUE"]["text"],

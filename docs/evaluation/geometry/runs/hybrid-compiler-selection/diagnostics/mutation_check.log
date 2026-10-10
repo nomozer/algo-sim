@@ -6,4 +6,6 @@ MUTATION m5 (hình không duy nhất: không chẩn đoán (để nguyên UNDERD
 MUTATION m6 (bỏ từ chối mệnh đề điều kiện): CAUGHT
 MUTATION m7 (bỏ mở rộng định nghĩa chóp đều ⇒ đáy đều): CAUGHT
 MUTATION m8 (điều phải chứng minh không kiểm trên hình (luôn coi là đúng)): CAUGHT
+MUTATION m9 (mệnh đề phủ định KHÔNG kiểm được coi như đã sai (phục vụ im lặng)): CAUGHT
+MUTATION m10 (checker coi câu hỏi / mệnh đề ngoài thư viện là ĐÚNG): CAUGHT
 ALL CAUGHT
