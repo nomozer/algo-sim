@@ -1,0 +1,96 @@
+{
+  "schema": "hybrid-safety-oracles/1",
+  "independence": "Expected PASS/refusal codes were written from the source sentences before the grounding/checker repair. They are literals and are not derived through production helpers.",
+  "grounding_cases": [
+    {
+      "id": "NEGATED_RECTANGLE",
+      "class": "negation",
+      "text": "Cho tứ giác ABCD không phải là hình chữ nhật.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["ABCD không phải là hình chữ nhật"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": true, "ambiguous": false, "quotes": ["ABCD không phải là hình chữ nhật"], "points": ["A", "B", "C", "D"], "shape": "rectangle"},
+      "expect_a": "NEGATED_CLAUSE",
+      "expect_b": "NEGATED_CLAUSE"
+    },
+    {
+      "id": "CONDITIONAL_RECTANGLE",
+      "class": "conditional",
+      "text": "Nếu ABCD là hình chữ nhật thì hai đường chéo bằng nhau.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["ABCD là hình chữ nhật"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "condition", "negated": false, "ambiguous": false, "quotes": ["ABCD là hình chữ nhật"], "points": ["A", "B", "C", "D"], "shape": "rectangle"},
+      "expect_a": "CONDITIONAL_CLAUSE",
+      "expect_b": "CONDITIONAL_CLAUSE"
+    },
+    {
+      "id": "PROOF_RECTANGLE",
+      "class": "proof_goal",
+      "text": "Chứng minh ABCD là hình chữ nhật.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["ABCD là hình chữ nhật"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "prove", "negated": false, "ambiguous": false, "quotes": ["ABCD là hình chữ nhật"], "points": ["A", "B", "C", "D"], "shape": "rectangle"},
+      "expect_a": "GOAL_CLAUSE_NOT_PREMISE",
+      "expect_b": "GOAL_NOT_PREMISE"
+    },
+    {
+      "id": "NEAR_NAMED_OBJECT",
+      "class": "near_name",
+      "text": "Cho tứ giác ABCD là hình chữ nhật hóa trong bản vẽ minh họa.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["ABCD là hình chữ nhật hóa"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["ABCD là hình chữ nhật hóa"], "points": ["A", "B", "C", "D"], "shape": "rectangle"},
+      "expect_a": "PREDICATE_NOT_IN_QUOTE",
+      "expect_b": "PREDICATE_NOT_IN_QUOTE"
+    },
+    {
+      "id": "MULTIPLE_OBJECTS_CUBE",
+      "class": "multiple_solids",
+      "text": "Cho hình lập phương ABCD.EFGH và tứ giác KLMN.",
+      "call": {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["K", "L", "M", "N"]}, "source": {"quotes": ["hình lập phương ABCD.EFGH và tứ giác KLMN"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["hình lập phương ABCD.EFGH và tứ giác KLMN"], "points": ["K", "L", "M", "N"], "shape": "square"},
+      "expect_a": "OBJECT_NOT_IN_QUOTE",
+      "expect_b": "OBJECT_NOT_IN_QUOTE"
+    },
+    {
+      "id": "MULTIPLE_OBJECTS_RECTANGLE",
+      "class": "multiple_faces",
+      "text": "Cho hình hộp chữ nhật ABCD.EFGH và tứ giác KLMN.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["K", "L", "M", "N"]}, "source": {"quotes": ["hình hộp chữ nhật ABCD.EFGH và tứ giác KLMN"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["hình hộp chữ nhật ABCD.EFGH và tứ giác KLMN"], "points": ["K", "L", "M", "N"], "shape": "rectangle"},
+      "expect_a": "OBJECT_NOT_IN_QUOTE",
+      "expect_b": "OBJECT_NOT_IN_QUOTE"
+    },
+    {
+      "id": "KEYWORD_WRONG_RELATION",
+      "class": "keyword_wrong_object_or_relation",
+      "text": "Cho hình lập phương ABCD.EFGH; tứ giác KLMN là hình thoi.",
+      "call": {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["K", "L", "M", "N"]}, "source": {"quotes": ["hình lập phương ABCD.EFGH; tứ giác KLMN là hình thoi"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["hình lập phương ABCD.EFGH; tứ giác KLMN là hình thoi"], "points": ["K", "L", "M", "N"], "shape": "square"},
+      "expect_a": "OBJECT_NOT_IN_QUOTE",
+      "expect_b": "OBJECT_NOT_IN_QUOTE"
+    },
+    {
+      "id": "FACT_OUTSIDE_QUOTE",
+      "class": "fact_outside_quote",
+      "text": "Cho hình lập phương ABCD.EFGH. Tứ giác KLMN là hình vuông.",
+      "call": {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["K", "L", "M", "N"]}, "source": {"quotes": ["hình lập phương ABCD.EFGH"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["hình lập phương ABCD.EFGH"], "points": ["K", "L", "M", "N"], "shape": "square"},
+      "expect_a": "OBJECT_NOT_IN_QUOTE",
+      "expect_b": "OBJECT_NOT_IN_QUOTE"
+    },
+    {
+      "id": "EQUIVALENT_CUBE",
+      "class": "mathematical_equivalent_positive",
+      "text": "Cho khối lập phương ABCD.EFGH.",
+      "call": {"id": "c1", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["khối lập phương ABCD.EFGH"]}},
+      "fact": {"id": "f1", "kind": "solid", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["khối lập phương ABCD.EFGH"], "solid": "ABCD.EFGH", "solid_type": "cube"},
+      "expect_a": "PASS",
+      "expect_b": "PASS"
+    },
+    {
+      "id": "EQUIVALENT_RECTANGLE",
+      "class": "mathematical_equivalent_positive",
+      "text": "Cho tứ giác ABCD là hình chữ nhật.",
+      "call": {"id": "c1", "fn": "rectangle", "args": {"vertices": ["A", "B", "C", "D"]}, "source": {"quotes": ["tứ giác ABCD là hình chữ nhật"]}},
+      "fact": {"id": "f1", "kind": "polygon_shape", "role": "premise", "negated": false, "ambiguous": false, "quotes": ["tứ giác ABCD là hình chữ nhật"], "points": ["A", "B", "C", "D"], "shape": "rectangle"},
+      "expect_a": "PASS",
+      "expect_b": "PASS"
+    }
+  ]
+}

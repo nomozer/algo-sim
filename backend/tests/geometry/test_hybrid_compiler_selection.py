@@ -26,6 +26,17 @@ HOLD = {c["id"]: c for c in json.loads((FX / "hybrid_holdout_cases.json").read_t
 LEGACY = [c for f in ("text_to_functions_cases.json", "paraphrase_cases.json", "geometry_expansion_cases.json")
           for c in json.loads((FX / f).read_text(encoding="utf-8"))["cases"]]
 
+# Additive correction layer: the historical fixture remains byte-identical. These are the current safe semantics that Task 3
+# must implement; they intentionally make the pre-repair code RED.
+CURRENT_B_EXPECT = {
+    "H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED": {
+        "status": "SERVED", "answers": {"f8": {"coef": "√3/3", "dim": 3}},
+        "goal_checks": {"f7": {"evidence_state": "TRUE_ON_CONFIGURATION", "proof_status": "UNVERIFIABLE",
+                               "can_present_as_proven": False}},
+    },
+    "H13_NEGATED_RELATION_CONTRADICTS": {"status": "REFUSED", "code": "NEGATED_CLAUSE"},
+}
+
 _sp = importlib.util.spec_from_file_location("_t_hab", Path(__file__).resolve().parents[2] / "scripts" / "hybrid_ab_offline.py")
 AB = importlib.util.module_from_spec(_sp)
 sys.modules[_sp.name] = AB
@@ -63,7 +74,7 @@ def test_holdout_nhanh_A(cid):
 @pytest.mark.parametrize("cid", sorted(HOLD))
 def test_holdout_nhanh_B(cid):
     c = HOLD[cid]
-    _kiem(c["expect_b"], FR.run_fact_route(c["text"], {"facts": c["b_facts"]}), cid + "/B")
+    _kiem(CURRENT_B_EXPECT.get(cid, c["expect_b"]), FR.run_fact_route(c["text"], {"facts": c["b_facts"]}), cid + "/B")
 
 
 def test_hang_phan_loai_dung_tien_dang_ky():
