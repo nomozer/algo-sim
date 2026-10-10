@@ -44,7 +44,7 @@
     "offline_ab_regenerated_after_fix": "byte-identical",
     "candidate_and_tier_a": "112 passed; compiler-scene-replay-lib.node-test.mjs 88/88",
     "docs_gates": "67 passed (test_docs_information_architecture + test_docs_test_telemetry + test_current_state_identity)",
-    "full_backend_pytest": "PENDING",
+    "full_backend_pytest": "7953 passed, 1 skipped, 2 deselected, 0 failed — clean detached worktree at bf05d397 (diagnostics/full_backend_suite_bf05d397.log)",
     "frontend": "not run — no frontend/src change"
   },
   "identity": {

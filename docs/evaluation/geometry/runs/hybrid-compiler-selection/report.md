@@ -68,8 +68,8 @@ câu đó.
 | renderer metric (`scene_world_metric_check.ts` qua `veKhongGian`) | `RENDER_METRIC_OK` 16/16 cảnh |
 | A/B offline tạo lại sau bản sửa | trùng từng byte |
 | candidate + node harness Tier-A | 112 passed; `compiler-scene-replay-lib.node-test.mjs` 88/88 |
-| cổng tài liệu | xem `run.json` |
-| full backend suite (worktree detached sạch) | xem `run.json` |
+| cổng tài liệu | 67/67 |
+| full backend suite (worktree detached sạch tại `bf05d397`, sau đóng băng) | **7953 passed, 0 failed**, 1 skipped, 2 deselected (`diagnostics/full_backend_suite_bf05d397.log`) — đo trong worktree vì cây chính có `frontend/public/favicon.svg` chưa theo dõi |
 
 Không chạy vitest / T3: không đổi `frontend/src`, chỉ đổi ghim manifest Tier-A.
 
