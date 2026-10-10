@@ -467,6 +467,16 @@ def test_remaining_source_gate_codes_have_extraction_taxonomy(code):
     assert P.failure_source(code, "B") == "ai_extraction"
 
 
+def test_invalid_ai_call_schema_is_extraction_not_geometry():
+    from app.ai.function_route import run_function_route
+    route = run_function_route("Cho tam giác đều ABC.", {"calls": [
+        {"id": "bad", "fn": "regular_polygon", "args": {"vertices": ["A"]},
+         "source": {"quote": "tam giác đều ABC"}}]})
+    assert route.code == "SCHEMA_INVALID"
+    assert P.failure_source(route.code, "A") == "ai_extraction"
+    assert P.failure_source(route.code, "B") == "compiler"
+
+
 def _fixture_route(case_id, arm):
     from app.ai.function_route import run_function_route, run_fact_route
     filename = "hybrid_holdout_cases.json" if case_id.startswith("hybrid/") else "paraphrase_cases.json"

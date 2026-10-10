@@ -302,6 +302,8 @@ def failure_source(code: str | None, arm: str) -> str | None:
         return None
     if code.startswith(("PROVIDER", "HTTP", "MODEL_", "USAGE_", "RESPONSE_TRUNCATED")):
         return "infrastructure"
+    if arm == "A" and code in {"SCHEMA_INVALID", "DANGLING_DEPENDENCY", "DEPENDENCY_CYCLE"}:
+        return "ai_extraction"
     if code in {"JSON_INVALID", "NO_CANDIDATE", "NO_FUNCTION_CALL", "MALFORMED_FUNCTION_CALL",
                 "MALFORMED_RESPONSE_PART", "CALL_ID_MISSING", "DUPLICATE_CALL_ID", "OBJECT_NOT_IN_QUOTE",
                 "QUOTE_NOT_IN_SOURCE", "PREDICATE_NOT_IN_QUOTE", "GOAL_CLAUSE_NOT_PREMISE", "NEGATED_CLAUSE",
