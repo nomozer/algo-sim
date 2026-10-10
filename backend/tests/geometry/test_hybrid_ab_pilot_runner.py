@@ -495,6 +495,13 @@ def test_unsafe_negation_refusal_is_not_counted_correct(arm):
     assert P.classify_outcome("hybrid/H13", arm, route) == "obligation_violation"
 
 
+def test_safe_refusal_code_cannot_hide_a_proof_claim_in_negated_checker_metadata():
+    route = _fixture_route("hybrid/H13", "B")
+    assert route.code == "NEGATED_CLAUSE"
+    route.planner["negated_checks"]["f6"].update(proof_status="PROVED_FROM_HYPOTHESES", can_present_as_proven=True)
+    assert P.classify_outcome("hybrid/H13", "B", route) == "obligation_violation"
+
+
 @pytest.mark.parametrize("defect", ["missing_scene", "wrong_metric", "wrong_unit", "false_proof"])
 def test_sealed_geometry_units_and_checker_obligations_are_enforced(defect):
     case = {"missing_scene": "paraphrase/P01", "wrong_metric": "paraphrase/P01",
@@ -542,6 +549,16 @@ def test_obligation_violation_makes_full_score_inconclusive():
     rows = _scoring_rows()
     rows[0]["outcome"] = "obligation_violation"
     assert P.score_pilot(P.PilotMode.FULL_AB, rows)["label"] == "INCONCLUSIVE_INFRASTRUCTURE"
+
+
+def test_served_geometry_violations_count_as_wrong_service_not_infrastructure():
+    rows = _scoring_rows("correct_served", "wrong_served")
+    for row in rows:
+        if row["arm"] == "B":
+            row["obligation_violations"] = ["EXACT_LENGTH:SB"]
+    summary = P.score_pilot(P.PilotMode.FULL_AB, rows)
+    assert summary["label"] == "INFERIOR"
+    assert summary["wrong_served"]["B"]["count"] == 144
 
 
 def test_known_usage_exceeding_reservation_is_recorded_before_stop(tmp_path):

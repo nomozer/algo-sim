@@ -510,6 +510,12 @@ def oracle_violations(case_id: str, arm: str, route: Any) -> list[str]:
     item = next(x for x in _read_json("oracle.json")["rows"] if x["id"] == case_id)
     expected = item.get(arm.lower(), item.get("expected"))
     violations = []
+    if arm == "B" and item.get("safety") in {"configuration_observation_only", "uncertified_negated_clause"}:
+        group = "goal_checks" if item["safety"] == "configuration_observation_only" else "negated_checks"
+        if any(check.get("can_present_as_proven") is not False or check.get("proof_status") != "UNVERIFIABLE" or
+               check.get("evidence_state") not in {"TRUE_ON_CONFIGURATION", "FALSE_ON_CONFIGURATION", "UNVERIFIABLE"}
+               for check in route.planner.get(group, {}).values()):
+            violations.append("PROOF_BOUNDARY")
     if route.status != "SERVED":
         if isinstance(expected, dict) and expected["status"] == "REFUSED":
             if route.code != expected.get("code"):
@@ -545,10 +551,6 @@ def oracle_violations(case_id: str, arm: str, route: Any) -> list[str]:
         checks = expected.get("goal_checks", {})
         if checks and list(route.planner.get("goal_checks", {}).values()) != list(checks.values()):
             violations.append("GOAL_CHECKS")
-        if item.get("safety") == "configuration_observation_only" and any(
-                check.get("can_present_as_proven") is not False or check.get("proof_status") != "UNVERIFIABLE"
-                for check in route.planner.get("goal_checks", {}).values()):
-            violations.append("PROOF_BOUNDARY")
     return violations
 
 
@@ -599,7 +601,8 @@ def score_pilot(mode: PilotMode, rows: list[dict[str, Any]], seed: int = 2026101
     actual = [(x.get("case_id"), x.get("sample"), x.get("arm")) for x in rows]
     if len(actual) != len(required) or set(actual) != required or any(
             x.get("outcome") not in {"correct_served", "wrong_served", "correct_refusal", "false_refusal"} or
-            x.get("obligation_violations") or not isinstance(x.get("usage"), dict) for x in rows):
+            (x.get("obligation_violations") and x.get("outcome") in {"correct_served", "correct_refusal"}) or
+            not isinstance(x.get("usage"), dict) for x in rows):
         return {"label": "INCONCLUSIVE_INFRASTRUCTURE", "completed_rows": len(rows), "expected_rows": len(required)}
     groups = {r.case_id: [x for x in rows if x["case_id"] == r.case_id] for r in locked.rows}
     oracle = _read_json("oracle.json")["rows"]
