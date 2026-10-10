@@ -1693,10 +1693,13 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/
 - **CORRECTS:** HYBRID_COMPILER_SELECTION — exact object-binding; configuration observation is not a proof/global inconsistency.
 - **CANDIDATE:** `12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52`, 110 files; frozen from clean `cfe2ada5`.
 - **CACHE / DEFAULT:** 125 / `LLM_ONLY`, unchanged. Current divergence authority moves additively to this run.
-- **VERIFICATION:** 341 focused PASS, 9 guard-removal mutants killed; 24+288 fake/network=0; renderer14 scenes/194 pairs,
-  metric PASS (not visual acceptance). Final clean backend/docs journals pending at this registration; consult run report.
+- **VERIFICATION:** 344 focused PASS, 9 guard-removal mutants killed; 24+288 fake/network=0; renderer14 scenes/194 pairs,
+  metric PASS (not visual acceptance). Clean backend8068 PASS/1 skip/2 deselected,359.12s at2f1b457c; consult final journals/report.
 - **MODEL_REQUEST_COUNT:** 0, including free tier/countTokens. USD caps unchanged0.60/7; shared output3072; accounted500k/6M.
 - **LIMITS:** local byte+4096 prompt estimator not provider-bound; fake thinking/truncation is not live performance; zero errors
   do not prove population safety; development corpus; strict live billed containment unverified. SMOKE/FULL live NO-GO.
 - **FINAL_DECISION:** HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW. Historical artifact bytes preserved; correction indexed.
-- **AUTHORITATIVE_FILES:** `protocol.md`, `plan.md`, `run.json`, `report.md`, `handoff.md`, `inputs/`, `fake-provider/review-fix/`, `diagnostics/`.
+- **AUTHORITATIVE_FILES:** `protocol.md`, `plan.md`, `run.json`, `report.md`, `handoff.md`, `inputs/`, `fake-provider/verified/`, `diagnostics/`.
+- **FOLLOW_UP_SOURCE:** evaluation-only8aad0673 /2f1b457c; product remainscfe2ada5. Prior successful journals preserved separately.
+- **STORAGE_DISCLOSURE:** two atomic-persistence failures retained locally without resume; cause/errno/winerror UNKNOWN.
+  Fresh instrumented/current certifications each312 complete; not a reliability proof. Persistence issue remains OPEN.

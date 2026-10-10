@@ -937,6 +937,21 @@
 - **suggested_wave:** the next UI wave
 - **default_switch_blocker:** NO
 
+### ISSUE-OPS-HYBRID-PERSISTENCE-FAILURE-UNRECOVERED
+
+- **description:** Two independent offline fake certification attempts hit atomic persistence OSError; cause/errno/winerror
+  not recovered. Latest failure has SMOKE24 complete, FULL109 durable rows plus pending snapshot110; no automatic resume/retry.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md`, `run.json`; original failed journals retained
+  in this task's ignored local scratch, not published as a successful experiment. Fresh certificates subsequently completed312.
+- **impact:** a real pilot could stop after a billed response when its final row cannot be committed. Fail-closed operation is
+  tested; repeated successful fake runs do not establish storage reliability or identify the environmental cause.
+- **status:** OPEN — cause UNKNOWN; no claim of antivirus/sharing-lock cause. No raw exception/traceback retained in docs.
+- **owner_class:** OPERATIONS / MEASUREMENT_PERSISTENCE
+- **suggested_wave:** inspect local storage/locking before real pilot; accept or resolve risk explicitly, preserve uncertain journals.
+- **default_switch_blocker:** YES (live operational acceptance is absent).
+- **acceptance:** recover the I/O cause or explicitly approve a documented operational-risk basis; never retry a provider request
+  whose state/cost is unknown. Existing historical evidence remains unchanged.
+
 ### ISSUE-EVAL-HYBRID-PROMPT-TOKEN-BOUND-UNVERIFIED
 
 - **description:** Hybrid A/B runner reserves actual UTF-8 payload bytes+4096 and a combined3072 output/thinking cap, but

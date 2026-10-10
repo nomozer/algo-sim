@@ -6,7 +6,7 @@
   "environment": "LOCAL",
   "branch": "feat/text-to-geometry-functions",
   "start_head": "5c33406a5697c6f3bac4e56d443f8a9ca6a82fd7",
-  "code_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "code_commit": "2f1b457cc5c08d551ace7ecfea5ad17a5f781620",
   "product_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
   "documentation_commit_role": "SELF",
   "main_unchanged_sha": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
@@ -37,7 +37,7 @@
       },
       "product_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
       "question_obligations_sha256": "8599c6c97acca8df7d58c9b40d31e4922972826d5904a22b5859ede67feccb1f",
-      "runner_sha256": "6426e497cd535ad58fdc7d7c2b94506b6c079d8694a570956ba62124a719ab9f",
+      "runner_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
       "schedule_seed": 2026101048,
       "schedule_sha256": "2c8a5f5c9b9d2972c95d8c77c8e5bd4c432f8a4be0b80f66d13b2a078ddf5d84",
       "surfaces": {
@@ -65,7 +65,7 @@
       },
       "product_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
       "question_obligations_sha256": "8599c6c97acca8df7d58c9b40d31e4922972826d5904a22b5859ede67feccb1f",
-      "runner_sha256": "6426e497cd535ad58fdc7d7c2b94506b6c079d8694a570956ba62124a719ab9f",
+      "runner_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
       "schedule_seed": 2026101012,
       "schedule_sha256": "b5c15d78101060475c0b7dd98b1f7c6d47bec1792f9ac2c5d2f06f61508c48a2",
       "surfaces": {
@@ -75,22 +75,21 @@
     }
   },
   "corrects": "hybrid-compiler-selection",
-  "offline_certification": "fake-provider/review-fix/CERTIFICATION.json",
-  "prior_certification": "fake-provider/CERTIFICATION.json",
+  "offline_certification": "fake-provider/verified/CERTIFICATION.json",
   "prior_certification_note": "Frozen pre-review implementation evidence; superseded for current readiness, not overwritten.",
   "go_no_go": {
-    "offline_runner": "PENDING_CLEAN_FULL_REGRESSION",
+    "offline_runner": "GO_OFFLINE_BOUNDED_CERTIFICATION",
     "smoke_live": "NO_GO",
     "full_live": "NO_GO"
   },
   "verification": {
     "focused": {
-      "passed": 341,
+      "passed": 344,
       "failed": 0,
       "skipped": 0,
       "deselected": 0,
-      "seconds": 49.29,
-      "artifact": "diagnostics/focused-review-fix.xml"
+      "seconds": 50.12,
+      "artifact": "diagnostics/focused-verified.xml"
     },
     "mutation": {
       "killed": 9,
@@ -105,16 +104,60 @@
       "live": 0
     },
     "backend_full": {
-      "status": "PENDING"
+      "status": "PASS",
+      "head": "2f1b457cc5c08d551ace7ecfea5ad17a5f781620",
+      "passed": 8068,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "selected": 8069,
+      "collected": 8071,
+      "seconds": 359.12,
+      "clean_before": true,
+      "clean_after": true,
+      "artifact": "diagnostics/full-backend-authoritative.xml"
     },
     "docs_gates": {
-      "status": "PENDING"
+      "status": "PENDING_FINAL_JOURNAL",
+      "audit": "diagnostics/docs-audit-final.json"
     },
     "renderer_metric": {
       "scenes": 14,
       "point_pairs": 194,
       "max_relative_error": 7.02e-10,
       "visual_acceptance": "NOT_PERFORMED"
+    },
+    "backend_full_prior": {
+      "head": "0b144c8103f06aa2ddde64fd54f5309efccd9208",
+      "passed": 8065,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "seconds": 371.27,
+      "artifact": "diagnostics/full-backend.xml",
+      "role": "PRE_FINAL_RUNNER_TAXONOMY"
+    },
+    "frontend": {
+      "passed": 1040,
+      "failed": 0,
+      "test_files": 67,
+      "seconds": 7.05,
+      "source_unchanged": true,
+      "typecheck": "PASS",
+      "build": "PASS_NEW_VALIDATED_OUTPUT",
+      "original_dist_build": "ENVIRONMENT_EPERM",
+      "visual_acceptance": "NOT_PERFORMED"
+    },
+    "backend_full_prior_taxonomy": {
+      "head": "8aad0673fb20f460472ec3802cffbf6af69037ef",
+      "passed": 8066,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "seconds": 372.93,
+      "artifact": "diagnostics/full-backend-final.xml",
+      "role": "PRE_REFUSAL_METADATA_AND_SCORED_GEOMETRY_CORRECTION"
     }
   },
   "limits": [
@@ -123,5 +166,26 @@
     "Development corpus and repeated samples cannot establish population safety; zero observed wrong_served is not proof.",
     "Fake G05 outputs are unsupported apparatus fixtures, not model extraction quality.",
     "No human visual acceptance or live run authorized."
-  ]
+  ],
+  "prior_certifications": [
+    "fake-provider/CERTIFICATION.json",
+    "fake-provider/review-fix/CERTIFICATION.json",
+    "fake-provider/final/CERTIFICATION.json",
+    "fake-provider/safety-certified/CERTIFICATION.json"
+  ],
+  "measurement_class": "OFFLINE_FAKE_APPARATUS",
+  "independence": "Development corpus. Hybrid parser fixtures handwritten; legacy B facts mechanically converted from A; G05 unsupported fake apparatus responses. Not a live or independent population sample.",
+  "artifact_manifest": "diagnostics/artifact-manifest.json",
+  "storage_failures": {
+    "latest_failed_certification": "LOCAL_SCRATCH_RETAINED",
+    "smoke_completed": 24,
+    "full_durable_rows": 109,
+    "full_pending_snapshot_rows": 110,
+    "errno": "UNKNOWN",
+    "winerror": "UNKNOWN",
+    "cause": "UNKNOWN",
+    "resumed": false,
+    "retried_request": false,
+    "latest_fresh_certification": "CERTIFIED"
+  }
 }

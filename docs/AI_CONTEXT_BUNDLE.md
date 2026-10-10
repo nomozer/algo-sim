@@ -186,8 +186,8 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 ## 6. Bước tiếp theo duy nhất
 
 Run hiện tại: `hybrid-ab-pilot-readiness` (LOCAL, cùng nhánh; product `cfe2ada5`, candidate `12da4768`, cache 125).
-341 focused PASS, 9 mutation killed, 24+288 fake/network=0; full clean regression đang chốt trong `report.md` của run.
-Readiness chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
+344 focused PASS, 9 mutation killed, 24+288 fake/network=0; clean backend8068 PASS/1 skip/2 deselected; report.md của run.
+Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text

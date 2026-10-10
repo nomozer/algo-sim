@@ -1,0 +1,74 @@
+{
+  "schema": "hybrid_ab_verification/1",
+  "source_commit": "2f1b457cc5c08d551ace7ecfea5ad17a5f781620",
+  "product_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "backend": {
+    "passed": 8068,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 1,
+    "deselected": 2,
+    "collected": 8071,
+    "selected": 8069,
+    "seconds": 359.12,
+    "clean_before": true,
+    "clean_after": true,
+    "artifact": "full-backend-authoritative.xml"
+  },
+  "focused": {
+    "passed": 344,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 0,
+    "seconds": 50.12,
+    "artifact": "focused-verified.xml"
+  },
+  "candidate": {
+    "sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+    "files": 110,
+    "verify": "PASS",
+    "cache_version": 125,
+    "cache_verify": "PASS",
+    "frozen_mode_identities": "MATCH_CURRENT_CODE"
+  },
+  "mutation": {
+    "killed": 9,
+    "total": 9,
+    "scope": "in-memory guard-removal; not exhaustive AST mutation"
+  },
+  "fake": {
+    "artifact": "../fake-provider/verified/CERTIFICATION.json",
+    "operations": 312,
+    "network": 0,
+    "live": 0
+  },
+  "renderer": {
+    "scenes": 14,
+    "point_pairs": 194,
+    "max_relative_error": 7.02e-10,
+    "visual_acceptance": "NOT_PERFORMED",
+    "artifact": "renderer-metric.log"
+  },
+  "frontend": {
+    "passed": 1040,
+    "test_files": 67,
+    "seconds": 7.05,
+    "typecheck": "PASS",
+    "original_dist_build": "ENVIRONMENT_EPERM",
+    "fresh_validated_output_build": "PASS",
+    "original_failed_build_partial_cleanup": "NOT_INVENTORIED"
+  },
+  "live_gemini_calls": 0,
+  "count_tokens_calls": 0,
+  "free_tier_calls": 0,
+  "main_unchanged_sha": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "user_favicon_sha256": "5cd57f27376366a639370e0282456529dbdc227c6aa8a950eb6d7116f317dc62",
+  "default_mode": "LLM_ONLY",
+  "full_product_gate": "NOT_CLAIMED",
+  "limits": [
+    "Two demo/component commands not run; do not claim FULL_PRODUCT_GATE_PASS.",
+    "Unverified prompt-count/billing bound; no live performance or population-safety proof.",
+    "Storage failures retained with UNKNOWN cause; fresh certification not reliability proof.",
+    "Final documentation-only checkout/journal recorded separately in run.json."
+  ]
+}

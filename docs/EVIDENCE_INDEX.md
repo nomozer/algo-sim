@@ -18,12 +18,13 @@ CORRECTED_BY = NONE
 CORRECTS = HYBRID_COMPILER_SELECTION
 CLASSIFICATION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW
 CODE_COMMIT = cfe2ada5
+RUNNER_COMMIT = 2f1b457c
 MODEL_REQUEST_COUNT = 0
 
 Authoritative current identity/caps: `run.json`; inputs/oracles: `inputs/`; post-review fake certification:
-`fake-provider/review-fix/CERTIFICATION.json`; 341-pass focused/mutation journal, renderer metric, candidate divergence and
+`fake-provider/verified/CERTIFICATION.json`; 344-pass focused/mutation journal, renderer metric, candidate divergence and
 final clean full regression journal: `diagnostics/`, `report.md`, `handoff.md`. Pre-review fake artifacts remain unchanged,
-superseded for current readiness, not pooled. Offline readiness requires final clean gates; both live modes remain NO-GO.
+superseded for current readiness, not pooled. Clean backend8068 PASS; bounded offline certification GO; both live modes remain NO-GO.
 No population-safety, provider-budget proof or visual-acceptance claim.
 
 > **Tài liệu Canonical cho việc tra cứu toàn bộ bằng chứng thực nghiệm, báo cáo và chuỗi đính chính.**
