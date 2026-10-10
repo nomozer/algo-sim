@@ -40,8 +40,8 @@ def run_function_route(problem_text: str, plan: Any) -> KetQuaTuyen:
 
 def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     """NHÁNH B (thực nghiệm, run `hybrid-compiler-selection`): dữ kiện có kiểu → planner → `run_function_route` (ĐÚNG đường
-    của nhánh A từ lược đồ trở đi). Sau khi dựng: điều phải chứng minh phải ĐÚNG trên hình (sai ⇒ PROOF_GOAL_FALSE), mệnh đề
-    phủ định phải SAI (đúng ⇒ INCONSISTENT_FACTS). Hình không duy nhất ⇒ từ chối, KHÔNG lấy một hình mẫu."""
+    của nhánh A từ lược đồ trở đi). Checker chỉ quan sát một cấu hình dựng từ giả thiết, không là bộ chứng minh tổng quát:
+    mọi goal/negated được ghi tách biệt với proof status. Hình không duy nhất ⇒ từ chối, KHÔNG lấy một hình mẫu."""
     from app.simulation.geometry_functions import TuChoi
     from app.simulation.geometry_functions.planner import PLANNER_VERSION, lap_ke_hoach
 
@@ -56,24 +56,30 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,
                                details={**r.details, "quantity_invariant": "volume = ⅓·S_đáy·h"}, planner=r.planner)
         return r
-    ten = {True: "HOLDS", False: "FAILS", None: "UNVERIFIABLE"}
     for g in k.goals:
-        r.planner["goal_checks"][g["fact"]] = ten[r.checker(g["call"])]
+        r.planner["goal_checks"][g["fact"]] = _quan_sat_cau_hinh(r.checker(g["call"]))
     for n in k.negated:
-        r.planner["negated_checks"][n["fact"]] = ten[r.checker(n["call"])]
-    if sai := [f for f, v in r.planner["goal_checks"].items() if v == "FAILS"]:
-        return KetQuaTuyen("REFUSED", "PROOF_GOAL_FALSE", f"điều phải chứng minh {sai} SAI trên hình dựng từ giả thiết",
-                           tuple(sai), trace=r.trace, planner=r.planner)
-    if dung := [f for f, v in r.planner["negated_checks"].items() if v == "HOLDS"]:
-        return KetQuaTuyen("REFUSED", "INCONSISTENT_FACTS",
-                           f"mệnh đề phủ định {dung} lại ĐÚNG trên hình dựng từ các giả thiết khác — đề mâu thuẫn",
-                           tuple(dung), trace=r.trace, planner=r.planner)
-    # Phủ định là giả thiết: không kiểm được nó SAI ⇒ hình có thể trái đề ⇒ không phục vụ (mã như nhánh A).
-    if mo := [f for f, v in r.planner["negated_checks"].items() if v == "UNVERIFIABLE"]:
+        r.planner["negated_checks"][n["fact"]] = _quan_sat_cau_hinh(r.checker(n["call"]))
+    # Không có certificate chứng minh cho phủ định, bất kể phép kiểm trên một cấu hình cho kết quả gì.
+    if dung := list(r.planner["negated_checks"]):
         return KetQuaTuyen("REFUSED", "NEGATED_CLAUSE",
-                           f"mệnh đề phủ định {mo} không kiểm được trên hình — không phục vụ một hình có thể trái đề",
-                           tuple(mo), trace=r.trace, planner=r.planner)
+                           f"mệnh đề phủ định {dung} chưa có chứng chỉ chứng minh độc lập; không phân loại giả thiết này",
+                           tuple(dung), trace=r.trace, planner=r.planner)
+    # Không có câu hỏi số học để phục vụ: các goal trên một cấu hình không đủ làm proof certificate.
+    if k.goals and not r.answers:
+        return KetQuaTuyen("REFUSED", "PROOF_UNVERIFIABLE",
+                           "checker chỉ quan sát trên một cấu hình; chưa có chứng chỉ suy diễn từ giả thiết",
+                           tuple(r.planner["goal_checks"]), trace=r.trace, planner=r.planner)
     return r
+
+
+def _quan_sat_cau_hinh(value: bool | None) -> dict[str, Any]:
+    """Ghi nhận checker như một quan sát thực nghiệm, tuyệt đối không nâng thành chứng minh định lý."""
+    return {
+        "evidence_state": {True: "TRUE_ON_CONFIGURATION", False: "FALSE_ON_CONFIGURATION", None: "UNVERIFIABLE"}[value],
+        "proof_status": "UNVERIFIABLE",
+        "can_present_as_proven": False,
+    }
 
 
 def _hinh_khong_duy_nhat(k: Any, thieu: list[str]) -> str | None:

@@ -151,11 +151,16 @@ def test_planner_co_tran_loi_goi():
     assert r.code == "PLAN_TOO_LARGE"
 
 
-def test_dieu_phai_chung_minh_sai_thi_tu_choi():
+def test_dieu_phai_chung_minh_sai_chi_la_quan_sat_cau_hinh():
     f = _f("H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED")
     f[6].update(points_a=["A", "C"], quotes=["BC vuông góc với (SAB)"])         # AC ⊥ (SAB) — sai trong hình
     r = FR.run_fact_route(HOLD["H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED"]["text"], {"facts": f})
-    assert (r.status, r.code) == ("REFUSED", "PROOF_GOAL_FALSE"), r.reason
+    assert r.status == "SERVED", r.reason
+    assert r.planner["goal_checks"]["f7"] == {
+        "evidence_state": "FALSE_ON_CONFIGURATION",
+        "proof_status": "UNVERIFIABLE",
+        "can_present_as_proven": False,
+    }
 
 
 @pytest.mark.parametrize("phu_dinh", [
@@ -169,14 +174,22 @@ def test_menh_de_phu_dinh_khong_kiem_duoc_thi_tu_choi(phu_dinh):
     f[5] = {"id": "f6", "role": "premise", "negated": True, "quotes": ["BC không vuông góc với mặt phẳng (SAB)"], **phu_dinh}
     r = FR.run_fact_route(HOLD["H13_NEGATED_RELATION_CONTRADICTS"]["text"], {"facts": f})
     assert (r.status, r.code, r.scene3d) == ("REFUSED", "NEGATED_CLAUSE", None), (r.code, r.reason)
-    assert r.planner["negated_checks"] == {"f6": "UNVERIFIABLE"}
+    assert r.planner["negated_checks"] == {"f6": {
+        "evidence_state": "UNVERIFIABLE",
+        "proof_status": "UNVERIFIABLE",
+        "can_present_as_proven": False,
+    }}
 
 
 def test_dieu_phai_chung_minh_ngoai_thu_vien_khong_tinh_la_dung():
     f = _f("H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED")
     f[6] = {"id": "f7", "kind": "unsupported", "role": "prove", "quotes": ["BC vuông góc với (SAB)"], "reason": "x"}
     r = FR.run_fact_route(HOLD["H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED"]["text"], {"facts": f})
-    assert r.planner["goal_checks"] == {"f7": "UNVERIFIABLE"}
+    assert r.planner["goal_checks"] == {"f7": {
+        "evidence_state": "UNVERIFIABLE",
+        "proof_status": "UNVERIFIABLE",
+        "can_present_as_proven": False,
+    }}
 
 
 def test_hinh_khong_duy_nhat_khong_lay_mau():
@@ -221,7 +234,7 @@ def test_adapter_du_kien_dau_cuoi(cid):
     gia = _Gia(_body(c["b_facts"]))
     r = FE.run_ai_fact_route(c["text"], gia)
     assert gia.goi == 1
-    _kiem(c["expect_b"], r, cid)
+    _kiem(CURRENT_B_EXPECT.get(cid, c["expect_b"]), r, cid)
 
 
 def test_adapter_du_kien_tu_choi_phan_hoi_hong():
